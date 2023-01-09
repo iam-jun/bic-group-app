@@ -7,7 +7,7 @@ import menuActions from '~/storeRedux/menu/actions';
 import { IToastMessage } from '~/interfaces/common';
 import useCommonController from '~/screens/store';
 import { mapProfile } from '~/storeRedux/menu/helper';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 const editMyProfile = (_set) => async ({
@@ -43,7 +43,7 @@ const editMyProfile = (_set) => async ({
       content: toastContent,
       type: ToastType.SUCCESS,
     };
-    useModalStore.getState().actions.showToast(toastMessage);
+    showToast(toastMessage);
 
     if (callback) callback();
   } catch (error) {

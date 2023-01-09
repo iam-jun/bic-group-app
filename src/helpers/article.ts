@@ -1,13 +1,13 @@
 import i18next from 'i18next';
-import useModalStore from '~/store/modal';
 import ImageUploader, { IGetFile, IUploadParam } from '~/services/imageUploader';
+import showToast from '~/store/helper/showToast';
 
 export const uploadImage = async ({ file, onSuccess }: {
   file: any, onSuccess: (file: IGetFile) => void
 }) => {
   const onError = (error) => {
     const content = typeof error === 'string' ? error : i18next.t('post:error_upload_photo_failed');
-    useModalStore.getState().actions.showToast({ content });
+    showToast({ content });
   };
 
   const uploadType = 'post_image';

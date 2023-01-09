@@ -32,7 +32,7 @@ import deletePost from './deletePost';
 import removeAudiencesFromPost from './removeAudiencesFromPost';
 import useDraftPostStore from '../../../screens/Draft/DraftPost/store';
 import useTimelineStore from '~/store/timeline';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 import showToastError from '~/store/helper/showToastError';
 
 const navigation = withNavigation(rootNavigationRef);
@@ -110,7 +110,7 @@ function* postPublishDraftPost({
     const postData: IPost = res.data;
     usePostsStore.getState().actions.addToPosts({ data: postData } as IPayloadAddToAllPost);
     if (res.data?.status === PostStatus.PROCESSING) {
-      useModalStore.getState().actions.showToast({
+      showToast({
         content: 'post:draft:text_processing_publish',
       });
       navigation.goBack();
@@ -174,7 +174,7 @@ function* putEditDraftPost({
         };
         yield call(useDraftPostStore.getState().actions.getDraftPosts, payloadGetDraftPosts);
         navigation.goBack();
-        useModalStore.getState().actions.showToast({
+        showToast({
           content: 'post:draft:text_draft_saved',
         });
       }
@@ -230,7 +230,7 @@ function* getPostDetail({
       yield put(postActions.deletePostLocal(postId));
       yield put(postActions.setCommentErrorCode(e.code));
       if (payload?.showToast) {
-        useModalStore.getState().actions.showToast({
+        showToast({
           content: 'post:error_post_detail_deleted',
         });
       }

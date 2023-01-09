@@ -1,7 +1,7 @@
 import APIErrorCode from '~/constants/apiErrorCode';
-import useModalStore from '../modal';
 import { IToastMessage } from '~/interfaces/common';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import showToast from '~/store/helper/showToast';
 
 const showToastError = (error: any, type = ToastType.ERROR) => {
   /**
@@ -18,7 +18,7 @@ const showToastError = (error: any, type = ToastType.ERROR) => {
     type,
   };
 
-  useModalStore.getState().actions.showToast(toast);
+  showToast(toast);
 };
 
 export default showToastError;

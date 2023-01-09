@@ -5,7 +5,7 @@ import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
 import { IFilePicked } from '~/interfaces/common';
 import { ICreatePostImage } from '~/interfaces/IPost';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
 
@@ -18,7 +18,7 @@ export const useUploadImage = () => {
     const errorContent = t('post:error_reach_upload_photo_limit').replace(
       '%LIMIT%', appConfig.postPhotoLimit,
     );
-    useModalStore.getState().actions.showToast({
+    showToast({
       content: errorContent,
       type: ToastType.ERROR,
     });

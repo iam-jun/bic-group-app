@@ -7,7 +7,7 @@ import showToastError from '~/store/helper/showToastError';
 import approveDeclineCode from '~/constants/approveDeclineCode';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 
 const cancelJoinGroup = (set, get) => async (groupId: string) => {
   try {
@@ -32,7 +32,7 @@ const cancelJoinGroup = (set, get) => async (groupId: string) => {
       content: `${i18next.t('groups:text_cancel_join_group')} ${groupName}`,
     };
 
-    useModalStore.getState().actions.showToast(toastMessage);
+    showToast(toastMessage);
   } catch (error) {
     console.error('cancelJoinGroup error', error);
 

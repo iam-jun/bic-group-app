@@ -11,7 +11,7 @@ import showToastError from '~/store/helper/showToastError';
 import Store from '~/storeRedux';
 import postActions from '~/storeRedux/post/actions';
 import ICommentInputState from '../Interface';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 
 const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
   const {
@@ -40,7 +40,6 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
   }
 
   const { createComment, actions }:ICommentInputState = get() || {};
-  const { showToast } = useModalStore.getState().actions;
   try {
     Store.store.dispatch(postActions.putMarkSeenPost({ postId }));
     if (!!createComment?.loading) {

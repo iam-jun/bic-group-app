@@ -6,7 +6,7 @@ import { IPayloadPutGroupStructureReorder } from '~/interfaces/IGroup';
 import IGroupStructureState from '../Interface';
 import { IToastMessage } from '~/interfaces/common';
 import showToastError from '~/store/helper/showToastError';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -38,7 +38,7 @@ const putGroupStructureReorder = (set, get) => async (payload: IPayloadPutGroupS
       const toastMessage: IToastMessage = {
         content: 'communities:group_structure:text_reorder_success',
       };
-      useModalStore.getState().actions.showToast(toastMessage);
+      showToast(toastMessage);
     } else {
       actions.setGroupStructureReorder({ loading: false, newOrder });
       showToastError(response);

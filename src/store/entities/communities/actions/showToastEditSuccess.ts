@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 
 import { IToastMessage } from '~/interfaces/common';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 
 export default function showToastEditSuccess(editFieldName: string): any {
   let toastContent: string;
@@ -12,5 +12,5 @@ export default function showToastEditSuccess(editFieldName: string): any {
   }
 
   const toastMessage: IToastMessage = { content: toastContent };
-  useModalStore.getState().actions.showToast(toastMessage);
+  showToast(toastMessage);
 }

@@ -6,7 +6,7 @@ import showToastError from '~/store/helper/showToastError';
 import IPermissionSchemeState from '../Interface';
 import { IToastMessage } from '~/interfaces/common';
 import { IScheme } from '~/interfaces/IGroup';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -34,7 +34,7 @@ const updateGeneralScheme = (set, get) => async (communityId: string) => {
     const toastMessage: IToastMessage = {
       content: 'communities:permission:text_update_scheme_success',
     };
-    useModalStore.getState().actions.showToast(toastMessage);
+    showToast(toastMessage);
   } catch (error) {
     console.error('updateGeneralScheme error:', error);
 

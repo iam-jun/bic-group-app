@@ -5,7 +5,7 @@ import approveDeclineCode from '~/constants/approveDeclineCode';
 import { IToastMessage } from '~/interfaces/common';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import showToastError from '~/store/helper/showToastError';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 import groupApi from '../../../api/GroupApi';
 import groupsActions from '../actions';
 
@@ -42,7 +42,7 @@ export default function* approveSingleGroupMemberRequest({
       // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_approved_user')} ${fullName}`,
     };
-    useModalStore.getState().actions.showToast(toastMessage);
+    showToast(toastMessage);
     useGroupDetailStore.getState().actions.getGroupDetail({ groupId }); // to update userCount
   } catch (error: any) {
     console.error('approveSingleGroupMemberRequest: ', error);

@@ -1,7 +1,7 @@
 import streamApi from '~/api/StreamApi';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
 import showToastError from '~/store/helper/showToastError';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 
 const deleteArticle = (_set, _get) => async (id: string) => {
   if (!id) {
@@ -13,7 +13,7 @@ const deleteArticle = (_set, _get) => async (id: string) => {
     const response = await streamApi.deleteArticle(id);
 
     if (response.data) {
-      useModalStore.getState().actions.showToast({ content: 'post:draft:text_draft_deleted' });
+      showToast({ content: 'post:draft:text_draft_deleted' });
       useDraftArticleStore.getState().actions.getDraftArticles({ isRefresh: true });
     }
   } catch (error) {

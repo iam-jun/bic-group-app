@@ -3,10 +3,9 @@ import { IPayloadAddToAllPost, PostType } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import useHomeStore from '~/screens/Home/store';
 import { AttributeFeed, ContentFeed } from '~/interfaces/IFeed';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 
 const unsavePost = (_set, _get) => async (id: string, type: PostType) => {
-  const { showToast } = useModalStore.getState().actions;
   try {
     await streamApi.postUnsavePost(id);
     const post = usePostsStore.getState()?.posts?.[id] || {};

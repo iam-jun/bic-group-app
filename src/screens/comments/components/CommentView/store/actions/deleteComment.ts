@@ -9,7 +9,7 @@ import {
 } from '~/interfaces/IPost';
 import useCommentsStore from '~/store/entities/comments';
 import usePostsStore from '~/store/entities/posts';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 
 const deleteComment = (_set, _get) => async (
   payload: IPayloadDeleteComment,
@@ -77,9 +77,9 @@ const deleteComment = (_set, _get) => async (
     const toastMessage: IToastMessage = {
       content: 'post:comment:text_delete_comment_success',
     };
-    useModalStore.getState().actions.showToast(toastMessage);
+    showToast(toastMessage);
   } catch (e) {
-    useModalStore.getState().actions.showToast({
+    showToast({
       content: 'post:comment:text_delete_comment_error',
       type: ToastType.ERROR,
     });

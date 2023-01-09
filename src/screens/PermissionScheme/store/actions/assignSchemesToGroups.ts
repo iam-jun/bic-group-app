@@ -3,7 +3,7 @@ import { IToastMessage } from '~/interfaces/common';
 import { IPayloadGroupSchemeAssignments } from '~/interfaces/IGroup';
 import showToastError from '~/store/helper/showToastError';
 import IPermissionSchemeState from '../Interface';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 
 const assignSchemesToGroups = (set, get) => async (payload: IPayloadGroupSchemeAssignments) => {
   const { communityId, data, currentAssignments } = payload || {};
@@ -34,7 +34,7 @@ const assignSchemesToGroups = (set, get) => async (payload: IPayloadGroupSchemeA
       const toastMessage: IToastMessage = {
         content: response.meta?.message || 'Success',
       };
-      useModalStore.getState().actions.showToast(toastMessage);
+      showToast(toastMessage);
     } else {
       actions.setGroupSchemeAssigning({
         loading: false,

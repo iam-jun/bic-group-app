@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import { call, put } from 'redux-saga/effects';
 import { IToastMessage } from '~/interfaces/common';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 import groupApi from '~/api/GroupApi';
 import showToastError from '~/store/helper/showToastError';
 import groupsActions from '../actions';
@@ -29,7 +29,7 @@ export default function* approveAllGroupMemberRequests({
       // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_approved_all')}`.replace('{0}', total.toString()),
     };
-    useModalStore.getState().actions.showToast(toastMessage);
+    showToast(toastMessage);
   } catch (err: any) {
     console.error('approveAllGroupMemberRequests: ', err);
 

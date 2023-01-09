@@ -7,7 +7,7 @@ import { IChangePasswordState } from '..';
 import { authErrors } from '~/constants/authConstants';
 import i18n from '~/localization';
 import showToastError from '~/store/helper/showToastError';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -31,7 +31,7 @@ const changePassword = (set, _get) => async (payload: IChangePasswordPayload) =>
 
     navigation.goBack();
     const toastMessage: IToastMessage = { content: 'auth:text_change_password_success_desc' };
-    useModalStore.getState().actions.showToast(toastMessage);
+    showToast(toastMessage);
     set((state: IChangePasswordState) => {
       state.errorText = '';
       state.loading = false;

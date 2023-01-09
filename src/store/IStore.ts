@@ -38,6 +38,7 @@ import { IGroupController } from '~/screens/groups/store';
 import { ITagsState } from './entities/tags';
 import { IGeneralInformationState } from '~/screens/groups/GeneralInformation/store';
 import { IRemoteConfigState } from './remoteConfig';
+import { IModalState } from './modal';
 
 export interface BicStore {
   entities: {
@@ -140,4 +141,5 @@ export interface BicStore {
   myPermissions: IMyPermissionsState;
   tags: ITagsState;
   remoteConfig: IRemoteConfigState;
+  modal: IModalState;
 }

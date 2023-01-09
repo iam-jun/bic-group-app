@@ -9,7 +9,7 @@ import showToastError from '~/store/helper/showToastError';
 import useYourGroupsStore from '~/screens/communities/Communities/components/YourGroups/store';
 import useManagedStore from '~/screens/communities/Communities/components/Managed/store';
 import useGroupDetailStore from '../index';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 const rootNavigation = withNavigation(rootNavigationRef);
@@ -37,7 +37,7 @@ const leaveGroup = () => async (groupId: string, privacy: GroupPrivacyType) => {
       content: 'groups:modal_confirm_leave_group:success_message',
       type: ToastType.SUCCESS,
     };
-    useModalStore.getState().actions.showToast(toastMessage);
+    showToast(toastMessage);
   } catch (err) {
     console.error('leaveGroup:', err);
     showToastError(err);

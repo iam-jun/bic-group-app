@@ -3,7 +3,7 @@ import notificationApi from '~/api/NotificationApi';
 
 import INotificationsState from '../Interface';
 import showToastError from '~/store/helper/showToastError';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 
 const markAsReadAll = (set, get) => (tabId: string) => {
   try {
@@ -28,7 +28,7 @@ const markAsReadAll = (set, get) => (tabId: string) => {
       state.notificationList = { ...state.notificationList, ...notifications };
     }, 'markAsReadAllNotificationSuccess');
 
-    useModalStore.getState().actions.showToast({
+    showToast({
       content: 'notification:mark_all_as_read_success',
     });
   } catch (err) {

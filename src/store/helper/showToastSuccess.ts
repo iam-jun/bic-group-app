@@ -1,4 +1,4 @@
-import useModalStore from '../modal';
+import showToast from '~/store/helper/showToast';
 import { IToastMessage } from '~/interfaces/common';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
@@ -8,7 +8,7 @@ const showToastSuccess = (response: any, defaultContent = 'common:text_success_m
     type: ToastType.SUCCESS,
   };
 
-  useModalStore.getState().actions.showToast(toast);
+  showToast(toast);
 };
 
 export default showToastSuccess;

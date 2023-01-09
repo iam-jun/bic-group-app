@@ -5,7 +5,7 @@ import { rootNavigationRef } from '~/router/refs';
 import showToastError from '~/store/helper/showToastError';
 import IPermissionSchemeState from '../Interface';
 import { IScheme } from '~/interfaces/IGroup';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -30,7 +30,7 @@ const createGeneralScheme = (set, get) => async (communityId: string) => {
       const toastMessage: IToastMessage = {
         content: 'communities:permission:text_create_scheme_success',
       };
-      useModalStore.getState().actions.showToast(toastMessage);
+      showToast(toastMessage);
     } else {
       set((state: IPermissionSchemeState) => {
         state.creatingScheme.creating = false;

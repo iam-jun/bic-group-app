@@ -7,7 +7,7 @@ import groupApi from '~/api/GroupApi';
 import { ICommunity } from '~/interfaces/ICommunity';
 import showToastError from '~/store/helper/showToastError';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 
 const cancelJoinCommunity
   = (_set, _get) => async (communityId: string, communityName: string) => {
@@ -25,7 +25,7 @@ const cancelJoinCommunity
         )} ${communityName}`,
       };
 
-      useModalStore.getState().actions.showToast(toastMessage);
+      showToast(toastMessage);
     } catch (error: any) {
       console.error('cancelJoinCommunity catch', error);
 

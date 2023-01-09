@@ -3,7 +3,7 @@ import { call } from 'redux-saga/effects';
 import { IPayloadAddToAllPost, IPayloadRemoveAudiencesOfPost } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import streamApi from '../../../api/StreamApi';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 import showToastError from '~/store/helper/showToastError';
 
 export default function* removeAudiencesFromPost({
@@ -31,7 +31,7 @@ export default function* removeAudiencesFromPost({
     if (response?.data) {
       const post = response?.data;
       usePostsStore.getState().actions.addToPosts({ data: post } as IPayloadAddToAllPost);
-      useModalStore.getState().actions.showToast({ content: 'post:text_deleted_audiences' });
+      showToast({ content: 'post:text_deleted_audiences' });
     }
   } catch (e: any) {
     console.error('\x1b[31m🐣️ saga removeAudiencesFromPost error: ', e, '\x1b[0m');

@@ -6,7 +6,7 @@ import { rootNavigationRef } from '~/router/refs';
 import usePostsStore from '~/store/entities/posts';
 import { ISeriesState } from '..';
 import i18n from '~/localization';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 const navigation = withNavigation(rootNavigationRef);
@@ -22,7 +22,6 @@ const editSeries = (set, get) => async (
   set((state: ISeriesState) => {
     state.loading = true;
   }, 'editSeries');
-  const { showToast } = useModalStore.getState().actions;
   try {
     const response = await streamApi.editSeries(id, data);
     actions.getSeriesDetail(id);

@@ -8,7 +8,7 @@ import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import showToastSuccess from '~/store/helper/showToastSuccess';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 import { IToastMessage } from '~/interfaces/common';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
@@ -57,7 +57,7 @@ export default function* putEditPost({
       buttonText: i18n.t('common:text_retry'),
       onButtonPress: onRetry,
     };
-    useModalStore.getState().actions.showToast(toast);
+    showToast(toast);
   }
 }
 

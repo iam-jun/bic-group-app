@@ -11,7 +11,7 @@ import useCommunitiesStore from '~/store/entities/communities';
 import useYourCommunitiesStore from '../../Communities/components/YourCommunities/store';
 import showToastError from '~/store/helper/showToastError';
 import useManagedStore from '~/screens/communities/Communities/components/Managed/store';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 const rootNavigation = withNavigation(rootNavigationRef);
@@ -46,7 +46,7 @@ const leaveCommunity = (_set, _get) => async (
       content: 'communities:modal_confirm_leave_community:success_message',
       type: ToastType.SUCCESS,
     };
-    useModalStore.getState().actions.showToast(toastMessage);
+    showToast(toastMessage);
   } catch (err) {
     console.error('leaveCommunity error:', err);
     showToastError(err);

@@ -3,7 +3,7 @@ import { IToastMessage } from '~/interfaces/common';
 import groupApi from '~/api/GroupApi';
 import approveDeclineCode from '~/constants/approveDeclineCode';
 import showToastError from '~/store/helper/showToastError';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 import { IPayloadDeclineSingleCommunityMemberRequest } from '~/interfaces/ICommunity';
 import { ICommunityMemberState } from '../index';
 
@@ -32,7 +32,7 @@ const declineSingleCommunityMemberRequest = (get) => async (
       // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_declined_user')} ${fullName}`,
     };
-    useModalStore.getState().actions.showToast(toastMessage);
+    showToast(toastMessage);
   } catch (e) {
     console.error('declineSingleCommunityMemberRequest: ', e);
 

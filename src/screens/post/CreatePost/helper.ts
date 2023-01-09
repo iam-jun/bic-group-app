@@ -16,7 +16,7 @@ import {
 } from './constanst';
 import useInputHeight from './hooks/useInputHeight';
 import ImageUploader from '~/services/imageUploader';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 export const validateImages = (
@@ -191,7 +191,7 @@ export const validateFilesPicker = (
   }
 
   if (toastMessage) {
-    useModalStore.getState().actions.showToast({
+    showToast({
       content: toastMessage,
       type: ToastType.ERROR,
     });

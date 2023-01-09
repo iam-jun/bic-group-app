@@ -4,7 +4,7 @@ import { IToastMessage } from '~/interfaces/common';
 import { IPayloadDeclineAllCommunityMemberRequests } from '~/interfaces/ICommunity';
 import { ICommunityMemberState } from '../index';
 import showToastError from '~/store/helper/showToastError';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 
 const declineAllCommunityMemberRequests = (get) => async (
   payload: IPayloadDeclineAllCommunityMemberRequests,
@@ -22,7 +22,7 @@ const declineAllCommunityMemberRequests = (get) => async (
       // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_declined_all')}`.replace('{0}', total.toString()),
     };
-    useModalStore.getState().actions.showToast(toastMessage);
+    showToast(toastMessage);
   } catch (e) {
     console.error('declineAllCommunityMemberRequests: ', e);
     showToastError(e);

@@ -29,7 +29,7 @@ import useGroupController from '~/screens/groups/store';
 import useGroupMemberStore from '~/screens/groups/GroupMembers/store';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import useGeneralInformationStore from '~/screens/groups/GeneralInformation/store';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import showToastError from '~/store/helper/showToastError';
 
@@ -216,7 +216,7 @@ function* addMembers({ payload }: {type: string; payload: IGroupAddMembers}) {
       content: i18next.t('common:message_add_member_success_group'),
       type: ToastType.SUCCESS,
     };
-    useModalStore.getState().actions.showToast(toastMessage);
+    showToast(toastMessage);
   } catch (error) {
     console.error('addMembers error:', error);
     showToastError(error);

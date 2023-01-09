@@ -3,7 +3,7 @@ import { IPayloadAddToAllPost } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import { ISeriesState } from '..';
 import showToastError from '~/store/helper/showToastError';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 
 const removeAudiences = (_set, get) => async (id: string, listAudiences: string[]) => {
   if (!id) return;
@@ -22,7 +22,7 @@ const removeAudiences = (_set, get) => async (id: string, listAudiences: string[
     actions.getSeriesDetail(id);
     if (!!response?.data) {
       usePostsStore.getState().actions.addToPosts({ data: response.data } as IPayloadAddToAllPost);
-      useModalStore.getState().actions.showToast({ content: 'series:text_deleted_audiences' });
+      showToast({ content: 'series:text_deleted_audiences' });
     }
   } catch (error) {
     showToastError(error);

@@ -4,7 +4,7 @@ import useCommentsStore from '~/store/entities/comments';
 import { IPayloadAddToAllPost, ICommentData } from '~/interfaces/IPost';
 import showToastError from '~/store/helper/showToastError';
 import { IPayloadReportContent, TargetType } from '~/interfaces/IReport';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 
 const reportContent = () => async (payload: IPayloadReportContent) => {
   const {
@@ -43,7 +43,7 @@ const reportContent = () => async (payload: IPayloadReportContent) => {
         break;
     }
 
-    useModalStore.getState().actions.showToast({ content: 'common:text_report_sent' });
+    showToast({ content: 'common:text_report_sent' });
   } catch (e) {
     console.error('\x1b[31m🐣️ action reportContent error: ', e, '\x1b[0m');
     showToastError(e);

@@ -4,7 +4,7 @@ import { call } from 'redux-saga/effects';
 import { IToastMessage } from '~/interfaces/common';
 import showToastError from '~/store/helper/showToastError';
 import groupApi from '~/api/GroupApi';
-import useModalStore from '~/store/modal';
+import showToast from '~/store/helper/showToast';
 
 export default function* declineAllGroupMemberRequests({
   payload,
@@ -20,7 +20,7 @@ export default function* declineAllGroupMemberRequests({
       // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_declined_all')}`.replace('{0}', total.toString()),
     };
-    useModalStore.getState().actions.showToast(toastMessage);
+    showToast(toastMessage);
   } catch (err: any) {
     console.error('declineAllGroupMemberRequests: ', err);
 
