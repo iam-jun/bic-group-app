@@ -70,10 +70,13 @@ jest.doMock('react-i18next', () => ({
       if (params?.count) {
         suffix = params.count === 1 ? '_one' : '_other';
       }
-      return get(
+
+      const translationResult = get(
         languages,
         `${str}${suffix}`.replaceAll?.(':', '.'),
       )?.replace('{{count}}', params?.count);
+
+      return translationResult || str;
     },
     i18n: {
       changeLanguage: () => new Promise(),
@@ -89,10 +92,13 @@ jest.doMock('i18next', () => ({
     if (params?.count) {
       suffix = params.count === 1 ? '_one' : '_other';
     }
-    return get(languages, `${str}${suffix}`.replaceAll?.(':', '.'))?.replace(
-      '{{count}}',
-      params?.count,
-    );
+
+    const translationResult = get(
+      languages,
+      `${str}${suffix}`.replaceAll?.(':', '.'),
+    )?.replace('{{count}}', params?.count);
+
+    return translationResult || str;
   },
 }));
 

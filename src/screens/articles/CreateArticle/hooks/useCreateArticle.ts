@@ -27,6 +27,7 @@ import { useBaseHook } from '~/hooks';
 import { rootNavigationRef } from '~/router/refs';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
+import useModalStore from '~/store/modal';
 import { PostStatus } from '~/interfaces/IPost';
 
 interface IHandleSaveOptions {
@@ -53,6 +54,8 @@ const useCreateArticle = ({
   const data = useCreateArticleStore((state) => state.data, shallow) || {};
   const loading = useCreateArticleStore((state) => state.loading);
   const isDraft = useCreateArticleStore((state) => state.isDraft);
+
+  const { showToast } = useModalStore((state) => state.actions);
 
   const [isShowToastAutoSave, setShowToastAutoSave] = useState<boolean>(false);
 
@@ -286,11 +289,7 @@ const useCreateArticle = ({
     const payload: IPayloadPublishDraftArticle = {
       draftArticleId: data.id,
       onSuccess: () => {
-        Store.store.dispatch(
-          modalActions.showHideToastMessage({
-            content: 'post:draft:text_draft_article_published',
-          }),
-        );
+        showToast({ content: 'post:draft:text_draft_article_published' });
         goToArticleDetail();
       },
       onError: () => {

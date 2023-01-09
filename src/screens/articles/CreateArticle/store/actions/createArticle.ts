@@ -1,6 +1,6 @@
 import streamApi from '~/api/StreamApi';
 import usePostsStore from '~/store/entities/posts';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 
 const createArticle = (set, _get) => async () => {
   try {
@@ -15,7 +15,7 @@ const createArticle = (set, _get) => async () => {
       usePostsStore.getState().actions.addToPosts({ data });
     } else throw new Error('Create article error');
   } catch (error) {
-    showError(error);
+    showToastError(error);
   }
 };
 

@@ -12,6 +12,7 @@ import { getPostMenus } from '~/helpers/post';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { getLink, LINK_SERIRES } from '~/utils/link';
 import { Button } from '~/baseComponents';
+import useModalStore from '~/store/modal';
 
 const useSeriesMenu = (
   data: IPost,
@@ -23,6 +24,7 @@ const useSeriesMenu = (
   const dispatch = useDispatch();
 
   const commonActions = useCommonController((state) => state.actions);
+  const { showToast } = useModalStore((state) => state.actions);
 
   if (!data) return null;
 
@@ -45,7 +47,7 @@ const useSeriesMenu = (
     Clipboard.setString(getLink(
       LINK_SERIRES, seriesId,
     ));
-    dispatch(modalActions.showHideToastMessage({ content: 'common:text_link_copied_to_clipboard' }));
+    showToast({ content: 'common:text_link_copied_to_clipboard' });
   };
 
   const onPressDelete = () => {

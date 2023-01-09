@@ -3,12 +3,8 @@ import { get } from 'lodash';
 
 import {
   IPayloadShowModal,
-  IToastMessage,
 } from '~/interfaces/common';
-import modalActions, {
-  clearToastMessage,
-  setToastMessage,
-} from './actions';
+import modalActions from './actions';
 import * as types from './constants';
 import modalKeySelector from '~/storeRedux/modal/keySelector';
 import { timeOut } from '~/utils/common';
@@ -17,9 +13,6 @@ import { BottomListProps } from '~/components/BottomList';
 export default function* commonSaga() {
   yield takeLatest(
     types.SHOW_MODAL, showModal,
-  );
-  yield takeLatest(
-    types.SHOW_HIDE_TOAST_MESSAGE, showAndHideToastMessage,
   );
   yield takeLatest(
     types.SHOW_BOTTOM_LIST,
@@ -43,17 +36,6 @@ function* showModal({
     yield timeOut(200);
   }
   yield put(modalActions.setModal(payload));
-}
-
-function* showAndHideToastMessage({
-  payload,
-}: {
-  type: string;
-  payload: IToastMessage;
-}) {
-  yield put(setToastMessage(payload));
-  yield timeOut(payload?.duration || 5000);
-  yield put(clearToastMessage());
 }
 
 function* showBottomList({

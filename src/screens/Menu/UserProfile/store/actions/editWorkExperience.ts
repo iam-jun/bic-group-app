@@ -1,5 +1,5 @@
 import groupApi from '~/api/GroupApi';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import { IUserAddWorkExperience } from '~/interfaces/IAuth';
 
 const editWorkExperience = () => async (
@@ -31,7 +31,7 @@ const editWorkExperience = () => async (
     callback && callback();
   } catch (err) {
     console.error('editWorkExperience error: ', err);
-    showError(err);
+    showToastError(err);
   }
 };
 

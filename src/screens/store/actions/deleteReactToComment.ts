@@ -6,7 +6,7 @@ import {
 } from '~/interfaces/IPost';
 import useCommentsStore from '~/store/entities/comments';
 import streamApi from '~/api/StreamApi';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 
 const deleteReactToComment = (_set, get) => async (
   payload: IPayloadReactToComment,
@@ -38,7 +38,7 @@ const deleteReactToComment = (_set, get) => async (
       reactionsCount,
       comment,
     );
-    showError(e);
+    showToastError(e);
   }
 };
 

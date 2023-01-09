@@ -5,7 +5,7 @@ import { Button } from '~/baseComponents';
 import ApiErrorCode from '~/constants/apiErrorCode';
 import InvalidSeriesTagsContentModal from '~/screens/articles/CreateArticle/components/InvalidSeriesTagsContentModal';
 import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import Store from '~/storeRedux';
 import modalActions from '~/storeRedux/modal/actions';
 
@@ -41,7 +41,7 @@ const handleSaveError = (set, get) => (error, onNext) => {
   if (errorCode === ApiErrorCode.Post.VALIDATION_ERROR) {
     handleValidateSeriesTagsError(set, get, error, onNext);
   } else {
-    showError(error);
+    showToastError(error);
   }
 };
 

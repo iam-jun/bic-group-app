@@ -2,10 +2,10 @@ import { call, put, select } from 'redux-saga/effects';
 import appConfig from '~/configs/appConfig';
 import memberRequestStatus from '~/constants/memberRequestStatus';
 import { IJoiningMember } from '~/interfaces/IGroup';
-import showError from '~/storeRedux/commonSaga/showError';
 import groupApi from '../../../api/GroupApi';
 import { mapItems } from '~/screens/groups/helper/mapper';
 import groupsActions from '../actions';
+import showToastError from '~/store/helper/showToastError';
 
 export default function* getGroupMemberRequests({
   payload,
@@ -53,8 +53,6 @@ export default function* getGroupMemberRequests({
     console.error(
       'getGroupMemberRequests: ', err,
     );
-    yield call(
-      showError, err,
-    );
+    showToastError(err);
   }
 }

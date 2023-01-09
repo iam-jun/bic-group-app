@@ -13,7 +13,6 @@ import { ReactionType } from '~/constants/reactions';
 import { useRootNavigation } from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import * as modalActions from '~/storeRedux/modal/actions';
-import { showHideToastMessage } from '~/storeRedux/modal/actions';
 import Text from '~/baseComponents/Text';
 import { quickReactions } from '~/configs/reactionConfig';
 import { getLink, LINK_COMMENT } from '~/utils/link';
@@ -23,6 +22,7 @@ import ReportContent from '~/components/ReportContent';
 import { TargetType, ReportTo } from '~/interfaces/IReport';
 import { IPostAudience } from '~/interfaces/IPost';
 import { getRootGroupids } from '~/helpers/post';
+import useModalStore from '~/store/modal';
 
 export interface CommentViewMenuProps {
   commentId: string;
@@ -59,6 +59,8 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
   const styles = createStyle(
     theme, insets,
   );
+
+  const { showToast } = useModalStore((state) => state.actions);
 
   const _onPressReaction = (emoji: any) => {
     dispatch(modalActions.hideModal());
@@ -102,7 +104,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
     dispatch(modalActions.hideModal());
     if (content) {
       Clipboard.setString(content);
-      dispatch(showHideToastMessage({ content: 'common:text_copied_to_clipboard' }));
+      showToast({ content: 'common:text_copied_to_clipboard' });
     }
   };
 
@@ -114,7 +116,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
         parentId: parentCommentId || '',
       },
     ));
-    dispatch(showHideToastMessage({ content: 'post:comment_link_copied' }));
+    showToast({ content: 'post:comment_link_copied' });
   };
 
   const _onPressReport = () => {

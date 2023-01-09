@@ -11,6 +11,7 @@ import { useBaseHook } from '~/hooks';
 import Text from '~/baseComponents/Text';
 import ButtonApproveDeclineAllRequests from '~/screens/groups/components/ButtonApproveDeclineAllRequests';
 import { spacing } from '~/theme';
+import useModalStore from '~/store/modal';
 
 const GroupApproveDeclineAllRequests = ({ groupId }: {groupId: string}) => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const GroupApproveDeclineAllRequests = ({ groupId }: {groupId: string}) => {
   const { t } = useBaseHook();
 
   const { total } = useKeySelector(groupsKeySelector.groupMemberRequests);
+  const { showToast, clearToast } = useModalStore((state) => state.actions);
 
   const alertAction = ({
     title,
@@ -74,7 +76,7 @@ const GroupApproveDeclineAllRequests = ({ groupId }: {groupId: string}) => {
 
   const onPressUndo = () => {
     timeOutRef?.current && clearTimeout(timeOutRef?.current);
-    dispatch(modalActions.clearToastMessage());
+    clearToast();
     dispatch(groupsActions.undoDeclinedGroupMemberRequests());
   };
 
@@ -87,13 +89,11 @@ const GroupApproveDeclineAllRequests = ({ groupId }: {groupId: string}) => {
 
     const toastMessage: IToastMessage = {
       content: `${t('groups:text_declining_all')}`.replace('{0}', total),
-      props: {
-        buttonText: t('common:text_undo'),
-        onButtonPress: onPressUndo,
-      },
+      buttonText: t('common:text_undo'),
       duration: 5000,
+      onButtonPress: onPressUndo,
     };
-    dispatch(modalActions.showHideToastMessage(toastMessage));
+    showToast(toastMessage);
 
     timeOutRef.current = setTimeout(
       () => {

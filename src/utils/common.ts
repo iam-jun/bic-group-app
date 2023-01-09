@@ -9,6 +9,7 @@ import { IToastMessage } from '~/interfaces/common';
 import modalActions from '~/storeRedux/modal/actions';
 import Store from '~/storeRedux';
 import { checkPermission, permissionTypes } from './permission';
+import showToast from '~/store/helper/showToast';
 
 export const generateAvatar = (
   name?: string, color?: string,
@@ -16,11 +17,9 @@ export const generateAvatar = (
   name?.toUpperCase() || ''
 }&background=${color || '4c95ff'}&color=fff&size=128`;
 
-export function timeOut(ms?: number) {
+export function timeOut(ms = 100) {
   // eslint-disable-next-line no-promise-executor-return
-  return new Promise((resolve) => setTimeout(
-    resolve, ms || 100,
-  ));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export function titleCase(str: string | undefined) {
@@ -155,7 +154,7 @@ export const downloadImageiOS = (photo: any) => {
       const toastMessage: IToastMessage = {
         content: i18next.t('common:text_downloaded'),
       };
-      Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+      showToast(toastMessage);
     });
   };
 
@@ -192,7 +191,7 @@ export const downloadImageAndroid = (photo: any) => {
       const toastMessage: IToastMessage = {
         content: i18next.t('common:text_downloaded'),
       };
-      Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+      showToast(toastMessage);
     });
   };
 
@@ -244,7 +243,7 @@ export const copyImageFromUrl = (url: string) => {
     const toastMessage: IToastMessage = {
       content: i18next.t('common:copied'),
     };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    showToast(toastMessage);
   });
 };
 

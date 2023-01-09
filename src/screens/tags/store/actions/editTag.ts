@@ -1,12 +1,11 @@
 import streamApi from '~/api/StreamApi';
-import { IToastMessage } from '~/interfaces/common';
 import { EditTag } from '~/interfaces/ITag';
 import useTagsStore from '~/store/entities/tags';
 import { ITagsController } from '..';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
+import showToastSuccess from '~/store/helper/showToastSuccess';
+import showToastError from '~/store/helper/showToastError';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -29,7 +28,7 @@ export const editTag = (set, get) => async (tag: EditTag) => {
       throw new Error('incorrect response');
     }
 
-    const { data, meta } = response;
+    const { data } = response;
 
     useTagsStore.getState().actions.addTags(data);
 
@@ -40,10 +39,7 @@ export const editTag = (set, get) => async (tag: EditTag) => {
       'editTagSuccess',
     );
 
-    const toastMessage: IToastMessage = {
-      content: meta?.message,
-    };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    showToastSuccess(response);
     navigation.goBack();
   } catch (e) {
     console.error('editTag error', e);
@@ -54,11 +50,7 @@ export const editTag = (set, get) => async (tag: EditTag) => {
       'editTagFailed',
     );
 
-    const toastMessage: IToastMessage = {
-      content: e?.meta?.message,
-      props: { type: 'error' },
-    };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    showToastError(e);
   }
 };
 

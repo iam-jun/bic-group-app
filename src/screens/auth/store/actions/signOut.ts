@@ -10,7 +10,7 @@ import FileUploader from '~/services/fileUploader';
 import { deleteTokenMessage } from '~/services/firebase';
 import ImageUploader from '~/services/imageUploader';
 import { getUserFromSharedPreferences, isAppInstalled, saveUserToSharedPreferences } from '~/services/sharePreferences';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import resetAllStores from '~/store/resetAllStores';
 import Store from '~/storeRedux';
 import modalActions from '~/storeRedux/modal/actions';
@@ -48,7 +48,7 @@ const signOut = (set, get) => async () => {
     navigation.replace(rootSwitch.authStack);
   } catch (err) {
     console.error('\x1b[35m🐣️ signOut error: ', err, '\x1b[0m');
-    showError(err);
+    showToastError(err);
     resetAllStores();
     resetAuthStore();
     navigation.replace(rootSwitch.authStack);

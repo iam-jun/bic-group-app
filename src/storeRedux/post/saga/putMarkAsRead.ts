@@ -1,8 +1,8 @@
 import { call } from 'redux-saga/effects';
 import streamApi from '~/api/StreamApi';
-import showError from '~/storeRedux/commonSaga/showError';
 import { IPayloadAddToAllPost, IPayloadPutMarkAsRead } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
+import showToastError from '~/store/helper/showToastError';
 
 function* putMarkAsRead({
   payload,
@@ -33,7 +33,7 @@ function* putMarkAsRead({
     }
   } catch (e) {
     callback?.(false);
-    showError(e);
+    showToastError(e);
   }
 }
 export default putMarkAsRead;

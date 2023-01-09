@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 import groupApi from '~/api/GroupApi';
-import modalActions from '~/storeRedux/modal/actions';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import useModalStore from '~/store/modal';
 import { act, renderHook } from '~/test/testUtils';
 import useGroupDetailStore from '../../GroupDetail/store';
 import useGroupController from '../index';
@@ -63,7 +64,9 @@ describe('editGroupDetail', () => {
       () => ({ actions } as any),
     );
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const toastActions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions: toastActions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useGroupController((state) => state));
@@ -79,7 +82,7 @@ describe('editGroupDetail', () => {
 
     const toastContent = `${editFieldName} ${i18next.t('common:text_updated_successfully')}`;
 
-    expect(spyModalActions).toBeCalledWith({ content: toastContent });
+    expect(showToast).toBeCalledWith({ content: toastContent });
     expect(setGroupDetail).toBeCalled();
   });
 
@@ -123,7 +126,9 @@ describe('editGroupDetail', () => {
     const spy = jest.spyOn(groupApi, 'editGroupDetail').mockImplementation(
       () => Promise.reject(error) as any,
     );
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useGroupController((state) => state));
@@ -143,9 +148,9 @@ describe('editGroupDetail', () => {
       jest.runAllTimers();
     });
 
-    expect(spyModalActions).toBeCalledWith({
+    expect(showToast).toBeCalledWith({
       content: 'common:text_error_message',
-      props: { type: 'error' },
+      type: ToastType.ERROR,
     });
   });
 

@@ -1,13 +1,13 @@
 import i18next from 'i18next';
 import ImageUploader, { IGetFile, IUploadParam } from '~/services/imageUploader';
-import modalActions from '~/storeRedux/modal/actions';
+import showToast from '~/store/helper/showToast';
 
-export const uploadImage = async ({ file, dispatch, onSuccess }: {
-  file: any, dispatch:any, onSuccess: (file: IGetFile) => void
+export const uploadImage = async ({ file, onSuccess }: {
+  file: any, onSuccess: (file: IGetFile) => void
 }) => {
   const onError = (error) => {
     const content = typeof error === 'string' ? error : i18next.t('post:error_upload_photo_failed');
-    dispatch(modalActions.showHideToastMessage({ content }));
+    showToast({ content });
   };
 
   const uploadType = 'post_image';

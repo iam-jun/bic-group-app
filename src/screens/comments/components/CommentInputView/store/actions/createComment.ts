@@ -7,11 +7,11 @@ import useCommentDetailController from '~/screens/comments/CommentDetail/store';
 import { getMentionsFromContent } from '~/helpers/post';
 import useCommentsStore from '~/store/entities/comments';
 import usePostsStore from '~/store/entities/posts';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
 import postActions from '~/storeRedux/post/actions';
 import ICommentInputState from '../Interface';
+import showToast from '~/store/helper/showToast';
 
 const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
   const {
@@ -156,7 +156,7 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
         parentCommentId,
       }));
 
-      Store.store.dispatch(modalActions.showHideToastMessage({ content: 'post:text_comment_deleted' }));
+      showToast({ content: 'post:text_comment_deleted' });
     } else if (e?.code === APIErrorCode.Post.POST_DELETED
       || e?.code === APIErrorCode.Post.VALIDATION_ERROR) {
       if (e?.code === APIErrorCode.Post.POST_DELETED) {
@@ -174,11 +174,11 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
           localId: preComment?.localId,
         }));
       }
-      Store.store.dispatch(modalActions.showHideToastMessage({
+      showToast({
         content: e?.code === APIErrorCode.Post.POST_DELETED ? 'post:text_post_deleted' : e?.meta?.message,
-      }));
+      });
     } else {
-      showError(e);
+      showToastError(e);
     }
   }
 };

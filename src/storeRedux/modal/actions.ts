@@ -6,7 +6,6 @@ import {
 } from '~/interfaces/IModal';
 import {
   IPayloadShowModal,
-  IToastMessage,
 } from '~/interfaces/common';
 import { ReactionType } from '~/constants/reactions';
 import { BottomListProps } from '~/components/BottomList';
@@ -68,20 +67,6 @@ export function hideLoading() {
   };
 }
 
-export const showHideToastMessage = (payload: IToastMessage) => ({
-  type: Actions.SHOW_HIDE_TOAST_MESSAGE,
-  payload,
-});
-
-export const setToastMessage = (payload: IToastMessage) => ({
-  type: Actions.SET_TOAST_MESSAGE,
-  payload,
-});
-
-export const clearToastMessage = () => ({
-  type: Actions.CLEAR_TOAST_MESSAGE,
-});
-
 export const focusSearchInput = (payload: string) => ({
   type: Actions.FOCUS_SEARCH_INPUT,
   payload,
@@ -133,9 +118,6 @@ const modalActions = {
   hideAlertNewFeature,
   showLoading,
   hideLoading,
-  showHideToastMessage,
-  setToastMessage,
-  clearToastMessage,
   focusSearchInput,
   showReactionDetailBottomSheet,
   clearReactionDetailBottomSheet,

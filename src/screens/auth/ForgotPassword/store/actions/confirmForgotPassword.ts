@@ -2,7 +2,7 @@ import { Auth } from 'aws-amplify';
 import i18n from 'i18next';
 import { authErrors, forgotPasswordStages } from '~/constants/authConstants';
 import { IForgotPasswordConfirm } from '~/interfaces/IAuth';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import { IForgotPasswordState } from '..';
 
 const confirmForgotPassword = (set, _get) => async (payload: IForgotPasswordConfirm) => {
@@ -36,14 +36,14 @@ const confirmForgotPassword = (set, _get) => async (payload: IForgotPasswordConf
         }, 'confirmForgotPasswordFailCode');
         break;
       case authErrors.LIMIT_EXCEEDED_EXCEPTION:
-        showError({ meta: { message: i18n.t('auth:text_err_limit_exceeded') } });
+        showToastError({ meta: { message: i18n.t('auth:text_err_limit_exceeded') } });
         set((state: IForgotPasswordState) => {
           state.screenCurrentStage = forgotPasswordStages.INPUT_ID;
           state.loadingConfirm = false;
         }, 'confirmForgotPasswordFail');
         break;
       default:
-        showError(error);
+        showToastError(error);
         set((state: IForgotPasswordState) => {
           state.loadingConfirm = false;
         }, 'confirmForgotPasswordFailShowError');

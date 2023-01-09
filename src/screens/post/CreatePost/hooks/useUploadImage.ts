@@ -1,10 +1,11 @@
 import { useDispatch } from 'react-redux';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import appConfig from '~/configs/appConfig';
 import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
 import { IFilePicked } from '~/interfaces/common';
 import { ICreatePostImage } from '~/interfaces/IPost';
-import { showHideToastMessage } from '~/storeRedux/modal/actions';
+import showToast from '~/store/helper/showToast';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
 
@@ -17,10 +18,10 @@ export const useUploadImage = () => {
     const errorContent = t('post:error_reach_upload_photo_limit').replace(
       '%LIMIT%', appConfig.postPhotoLimit,
     );
-    dispatch(showHideToastMessage({
+    showToast({
       content: errorContent,
-      props: { type: 'error' },
-    }));
+      type: ToastType.ERROR,
+    });
     return currentImage.slice(
       0,
       appConfig.postPhotoLimit,

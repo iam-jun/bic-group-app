@@ -1,11 +1,10 @@
 import StreamApi from '~/api/StreamApi';
-import Store from '~/storeRedux';
 import usePostsStore from '~/store/entities/posts';
 import useCommentsStore from '~/store/entities/comments';
 import { IPayloadAddToAllPost, ICommentData } from '~/interfaces/IPost';
-import modalActions from '~/storeRedux/modal/actions';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import { IPayloadReportContent, TargetType } from '~/interfaces/IReport';
+import showToast from '~/store/helper/showToast';
 
 const reportContent = () => async (payload: IPayloadReportContent) => {
   const {
@@ -44,12 +43,10 @@ const reportContent = () => async (payload: IPayloadReportContent) => {
         break;
     }
 
-    Store.store.dispatch(
-      modalActions.showHideToastMessage({ content: 'common:text_report_sent' }),
-    );
+    showToast({ content: 'common:text_report_sent' });
   } catch (e) {
     console.error('\x1b[31m🐣️ action reportContent error: ', e, '\x1b[0m');
-    showError(e);
+    showToastError(e);
   }
 };
 

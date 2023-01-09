@@ -18,7 +18,7 @@ import {
   PostStatus,
 } from '~/interfaces/IPost';
 
-import modalActions, { showHideToastMessage } from '~/storeRedux/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
@@ -27,6 +27,8 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Divider from '~/beinComponents/Divider';
 import useDraftPostStore from '../store';
 import { PostBody, PostHeader, PostImportant } from '~/components/posts';
+import useModalStore from '~/store/modal';
+import showToastError from '~/store/helper/showToastError';
 
 export interface PostDraftViewProps {
   data: IPost;
@@ -53,6 +55,7 @@ const PostDraftView: FC<PostDraftViewProps> = ({
   const userId = useUserIdAuth();
 
   const { actions } = useDraftPostStore();
+  const { showToast } = useModalStore((state) => state.actions);
 
   const {
     id,
@@ -70,16 +73,6 @@ const PostDraftView: FC<PostDraftViewProps> = ({
     || !content
     || (audience?.groups?.length === 0 && audience?.users?.length === 0);
 
-  const showError = (e: any) => {
-    dispatch(showHideToastMessage({
-      content:
-          e?.meta?.message
-          || e?.meta?.errors?.[0]?.message
-          || 'common:text_error_message',
-      props: { type: 'error' },
-    }));
-  };
-
   const refreshDraftPosts = () => {
     if (userId) {
       const payload: IPayloadGetDraftPosts = { isRefresh: true };
@@ -93,7 +86,7 @@ const PostDraftView: FC<PostDraftViewProps> = ({
       const payload: IPayloadPublishDraftPost = {
         draftPostId: id,
         onSuccess: () => {
-          dispatch(showHideToastMessage({ content: 'post:draft:text_draft_post_published' }));
+          showToast({ content: 'post:draft:text_draft_post_published' });
           refreshDraftPosts();
         },
         onError: () => setPublishing(false),
@@ -120,12 +113,12 @@ const PostDraftView: FC<PostDraftViewProps> = ({
         )
         .then((response) => {
           if (response?.data) {
-            dispatch(showHideToastMessage({ content: 'post:draft:text_draft_deleted' }));
+            showToast({ content: 'post:draft:text_draft_deleted' });
             refreshDraftPosts();
           }
         })
         .catch((e) => {
-          showError(e);
+          showToastError(e);
         });
     }
   };

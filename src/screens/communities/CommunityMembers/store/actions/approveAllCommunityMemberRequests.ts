@@ -1,9 +1,8 @@
 import i18next from 'i18next';
 import { IToastMessage } from '~/interfaces/common';
 import useCommunitiesStore from '~/store/entities/communities';
-import showError from '~/store/helper/showError';
-import modalActions from '~/storeRedux/modal/actions';
-import Store from '~/storeRedux';
+import showToastError from '~/store/helper/showToastError';
+import showToast from '~/store/helper/showToast';
 import { ICommunityMemberState } from '../index';
 import groupApi from '~/api/GroupApi';
 import { IPayloadApproveAllCommunityMemberRequest } from '~/interfaces/ICommunity';
@@ -31,10 +30,10 @@ const approveAllCommunityMemberRequests = (get) => async (
       // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_approved_all')}`.replace('{0}', total.toString()),
     };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    showToast(toastMessage);
   } catch (e) {
     console.error('approveAllCommunityMemberRequest: ', e);
-    showError(e);
+    showToastError(e);
   }
 };
 

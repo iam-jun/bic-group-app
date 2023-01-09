@@ -24,8 +24,6 @@ import postActions from '~/storeRedux/post/actions';
 import putEditPost from '~/storeRedux/post/saga/putEditPost';
 import putMarkAsRead from '~/storeRedux/post/saga/putMarkAsRead';
 import postTypes from '~/storeRedux/post/types';
-import showError from '~/storeRedux/commonSaga/showError';
-import * as modalActions from '~/storeRedux/modal/actions';
 import { timeOut } from '~/utils/common';
 import getPostsContainingVideoInProgress from './getPostsContainingVideoInProgress';
 import putMarkSeenPost from './putMarKSeenPost';
@@ -34,6 +32,8 @@ import deletePost from './deletePost';
 import removeAudiencesFromPost from './removeAudiencesFromPost';
 import useDraftPostStore from '../../../screens/Draft/DraftPost/store';
 import useTimelineStore from '~/store/timeline';
+import showToast from '~/store/helper/showToast';
+import showToastError from '~/store/helper/showToastError';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -102,7 +102,7 @@ function* postPublishDraftPost({
 
     if (!res.data) {
       onError?.();
-      yield showError(res);
+      showToastError(res);
       return;
     }
 
@@ -110,9 +110,9 @@ function* postPublishDraftPost({
     const postData: IPost = res.data;
     usePostsStore.getState().actions.addToPosts({ data: postData } as IPayloadAddToAllPost);
     if (res.data?.status === PostStatus.PROCESSING) {
-      yield put(modalActions.showHideToastMessage({
+      showToast({
         content: 'post:draft:text_processing_publish',
-      }));
+      });
       navigation.goBack();
       yield put(postActions.getAllPostContainingVideoInProgress());
     } else if (replaceWithDetail) {
@@ -131,7 +131,7 @@ function* postPublishDraftPost({
   } catch (e) {
     yield put(postActions.setLoadingCreatePost(false));
     onError?.();
-    yield showError(e);
+    showToastError(e);
   }
 }
 
@@ -174,17 +174,17 @@ function* putEditDraftPost({
         };
         yield call(useDraftPostStore.getState().actions.getDraftPosts, payloadGetDraftPosts);
         navigation.goBack();
-        yield put(modalActions.showHideToastMessage({
+        showToast({
           content: 'post:draft:text_draft_saved',
-        }));
+        });
       }
     } else {
       yield put(postActions.setLoadingCreatePost(false));
-      yield showError(response);
+      showToastError(response);
     }
   } catch (e) {
     yield put(postActions.setLoadingCreatePost(false));
-    yield showError(e);
+    showToastError(e);
   }
 }
 
@@ -230,12 +230,12 @@ function* getPostDetail({
       yield put(postActions.deletePostLocal(postId));
       yield put(postActions.setCommentErrorCode(e.code));
       if (payload?.showToast) {
-        yield put(modalActions.showHideToastMessage({
+        showToast({
           content: 'post:error_post_detail_deleted',
-        }));
+        });
       }
     } else {
-      yield showError(e);
+      showToastError(e);
     }
   }
 }
@@ -270,6 +270,6 @@ function* deletePostLocal({ payload }: {type: string; payload: string}): any {
       usePostsStore.getState().actions.addToPosts({ data: post } as IPayloadAddToAllPost);
     }
   } catch (e) {
-    yield showError(e);
+    yield showToastError(e);
   }
 }

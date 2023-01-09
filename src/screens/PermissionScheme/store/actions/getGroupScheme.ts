@@ -4,7 +4,7 @@ import APIErrorCode from '~/constants/apiErrorCode';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { sortFixedRoles } from '~/screens/groups/helper';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import { getMemberRoleIndex } from '../../CreatePermissionScheme/helper';
 import IPermissionSchemeState from '../Interface';
 
@@ -37,7 +37,7 @@ const getGroupScheme = (set, get) => async ({ communityId, schemeId }: {communit
       navigation.goBack();
     }
 
-    showError(error);
+    showToastError(error);
   }
 };
 

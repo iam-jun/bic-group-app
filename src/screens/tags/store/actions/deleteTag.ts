@@ -1,8 +1,7 @@
 import streamApi from '~/api/StreamApi';
-import { IToastMessage } from '~/interfaces/common';
-import modalActions from '~/storeRedux/modal/actions';
-import Store from '~/storeRedux';
 import { ITagsController } from '..';
+import showToastError from '~/store/helper/showToastError';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const deleteTag = (set, get) => async (idCommunity: string, idTag: string) => {
   try {
@@ -12,8 +11,6 @@ const deleteTag = (set, get) => async (idCommunity: string, idTag: string) => {
 
     const response = await streamApi.deleteTag(idTag);
 
-    const { meta } = response;
-
     set(
       (state: ITagsController) => {
         const newLstIdTags = state.communityTags[idCommunity].ids.filter((id) => id !== idTag);
@@ -22,18 +19,11 @@ const deleteTag = (set, get) => async (idCommunity: string, idTag: string) => {
       'deleteTagSuccess',
     );
 
-    const toastMessage: IToastMessage = {
-      content: meta?.message,
-    };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    showToastSuccess(response);
   } catch (e) {
     console.error('deleteTag error', e);
 
-    const toastMessage: IToastMessage = {
-      content: e?.meta?.message,
-      props: { type: 'error' },
-    };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    showToastError(e);
   }
 };
 

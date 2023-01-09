@@ -1,11 +1,11 @@
 import { call, put, select } from 'redux-saga/effects';
 import appConfig from '~/configs/appConfig';
 import { ICommunity } from '~/interfaces/ICommunity';
-import showError from '~/storeRedux/commonSaga/showError';
 import groupApi from '../../../api/GroupApi';
 import { mapItems } from '~/screens/groups/helper/mapper';
 import groupsActions from '../actions';
 import { isGroup } from '~/helpers/groups';
+import showToastError from '~/store/helper/showToastError';
 
 export default function* getGlobalSearch({
   payload,
@@ -43,6 +43,6 @@ export default function* getGlobalSearch({
   } catch (err) {
     console.error('getGlobalSearch error:', err);
     yield put(groupsActions.setGlobalSearch({ loading: false }));
-    yield showError(err);
+    showToastError(err);
   }
 }

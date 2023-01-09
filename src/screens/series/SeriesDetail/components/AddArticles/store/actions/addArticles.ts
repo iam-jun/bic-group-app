@@ -1,9 +1,8 @@
 import streamApi from '~/api/StreamApi';
 import { IPostArticles } from '~/interfaces/IPost';
 import useSeriesStore from '~/screens/series/store';
-import showError from '~/store/helper/showError';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
+import showToastError from '~/store/helper/showToastError';
+import showToast from '~/store/helper/showToast';
 import { IAddArticlesState } from '..';
 
 const addArticles = (_set, get) => async (seriesId: string, article: IPostArticles) => {
@@ -13,9 +12,9 @@ const addArticles = (_set, get) => async (seriesId: string, article: IPostArticl
     await streamApi.addArticleInSeries(seriesId, { articleIds: [article.id] });
     actions.setSelectingArticle(article);
     useSeriesStore.getState().actions.getSeriesDetail(seriesId);
-    Store.store.dispatch(modalActions.showHideToastMessage({ content: 'series:text_add_articles_success' }));
+    showToast({ content: 'series:text_add_articles_success' });
   } catch (error) {
-    showError(error);
+    showToastError(error);
   }
 };
 

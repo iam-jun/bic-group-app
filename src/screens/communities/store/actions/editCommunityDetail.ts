@@ -1,6 +1,6 @@
 import { IGroupDetailEdit } from '~/interfaces/IGroup';
 import useCommunitiesStore from '~/store/entities/communities';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import groupApi from '~/api/GroupApi';
 import showToastEditSuccess from '~/store/entities/communities/actions/showToastEditSuccess';
 
@@ -26,7 +26,7 @@ const editCommunityDetail = (_set, _get) => async (
     console.error(
       '\x1b[33m', 'editCommunityDetail : error', error, '\x1b[0m',
     );
-    showError(error);
+    showToastError(error);
   }
 };
 

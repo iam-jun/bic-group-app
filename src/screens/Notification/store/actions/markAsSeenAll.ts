@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
 import notificationApi from '~/api/NotificationApi';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 
 import INotificationsState from '../Interface';
 
@@ -23,7 +23,7 @@ const markAsSeenAll = (set, get) => () => {
     console.error(
       '\x1b[33m', 'notification markAsSeenAll error', err, '\x1b[0m',
     );
-    showError(err);
+    showToastError(err);
   }
 };
 

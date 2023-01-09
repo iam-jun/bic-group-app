@@ -26,6 +26,7 @@ import { Button } from '~/baseComponents';
 import useArticleController from '~/screens/articles/store';
 import { ArticleSummary, ArticleTitle } from '~/components/articles';
 import { PostImportant } from '~/components/posts';
+import useModalStore from '~/store/modal';
 
 interface DraftViewProps {
   data: IPost;
@@ -43,6 +44,7 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
 
   const actions = useDraftArticleStore((state) => state.actions);
   const articleActions = useArticleController((state) => state.actions);
+  const { showToast } = useModalStore((state) => state.actions);
 
   const {
     id,
@@ -98,7 +100,7 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
     const payload: IPayloadPublishDraftArticle = {
       draftArticleId: id,
       onSuccess: () => {
-        dispatch(modalActions.showHideToastMessage({ content: 'post:draft:text_draft_article_published' }));
+        showToast({ content: 'post:draft:text_draft_article_published' });
         refreshDraftArticles();
       },
       onError: () => setIsPublishing(false),

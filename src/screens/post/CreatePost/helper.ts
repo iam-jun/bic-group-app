@@ -9,7 +9,6 @@ import {
 } from '~/interfaces/IPost';
 import i18n from '~/localization';
 import FileUploader from '~/services/fileUploader';
-import { showHideToastMessage } from '~/storeRedux/modal/actions';
 import {
   CONTENT_INSET_HEIGHT,
   CONTENT_MIN_HEIGHT,
@@ -17,6 +16,8 @@ import {
 } from './constanst';
 import useInputHeight from './hooks/useInputHeight';
 import ImageUploader from '~/services/imageUploader';
+import showToast from '~/store/helper/showToast';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 export const validateImages = (
   selectingImages: IFilePicked[] | IActivityDataImage[],
@@ -161,7 +162,6 @@ export const validateFilesPicker = (
   files: IFilePicked[],
   totalFiles: number,
   totalSize: number,
-  dispatch: any,
 ): IFilePicked[] => {
   let toastMessage: string | null = null;
 
@@ -191,12 +191,10 @@ export const validateFilesPicker = (
   }
 
   if (toastMessage) {
-    dispatch(
-      showHideToastMessage({
-        content: toastMessage,
-        props: { type: 'error' },
-      }),
-    );
+    showToast({
+      content: toastMessage,
+      type: ToastType.ERROR,
+    });
   }
 
   return results;

@@ -1,9 +1,8 @@
 import streamApi from '~/api/StreamApi';
 import { IPayloadAddToAllPost } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
-import showError from '~/store/helper/showError';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
+import showToastError from '~/store/helper/showToastError';
+import showToast from '~/store/helper/showToast';
 
 const deleteSeries = (_set, _get) => async (id: string, callbackError: any) => {
   if (!id) return;
@@ -17,12 +16,12 @@ const deleteSeries = (_set, _get) => async (id: string, callbackError: any) => {
         deleted: true,
       };
       usePostsStore.getState().actions.addToPosts({ data: deletedSeries } as IPayloadAddToAllPost);
-      Store.store.dispatch(modalActions.showHideToastMessage({ content: 'series:text_delete_series_success' }));
+      showToast({ content: 'series:text_delete_series_success' });
     }
   } catch (error) {
     if (error?.meta?.errors?.groupsDenied) {
       callbackError?.(error.meta.errors.groupsDenied);
-    } else showError(error);
+    } else showToastError(error);
     console.error('delete series error', error);
   }
 };

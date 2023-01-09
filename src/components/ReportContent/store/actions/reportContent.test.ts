@@ -1,8 +1,9 @@
 import StreamApi from '~/api/StreamApi';
 import { act, renderHook } from '~/test/testUtils';
 import useReportContentStore from '../index';
-import modalActions from '~/storeRedux/modal/actions';
 import { TargetType, ReportTo } from '~/interfaces/IReport';
+import useModalStore from '~/store/modal';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 describe('reportContent', () => {
   afterEach(() => {
@@ -47,7 +48,9 @@ describe('reportContent', () => {
     const spy = jest.spyOn(StreamApi, 'reportContent').mockImplementation(
       () => Promise.resolve(response) as any,
     );
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useReportContentStore((state) => state));
@@ -60,7 +63,7 @@ describe('reportContent', () => {
       jest.runAllTimers();
     });
 
-    expect(spyModalActions).toBeCalledWith({
+    expect(showToast).toBeCalledWith({
       content: 'common:text_report_sent',
     });
   });
@@ -75,7 +78,9 @@ describe('reportContent', () => {
     const spy = jest.spyOn(StreamApi, 'reportContent').mockImplementation(
       () => Promise.resolve(response) as any,
     );
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useReportContentStore((state) => state));
@@ -88,7 +93,7 @@ describe('reportContent', () => {
       jest.runAllTimers();
     });
 
-    expect(spyModalActions).toBeCalledWith({
+    expect(showToast).toBeCalledWith({
       content: 'common:text_report_sent',
     });
   });
@@ -103,7 +108,9 @@ describe('reportContent', () => {
     const spy = jest.spyOn(StreamApi, 'reportContent').mockImplementation(
       () => Promise.resolve(response) as any,
     );
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useReportContentStore((state) => state));
@@ -116,7 +123,7 @@ describe('reportContent', () => {
       jest.runAllTimers();
     });
 
-    expect(spyModalActions).toBeCalledWith({
+    expect(showToast).toBeCalledWith({
       content: 'common:text_report_sent',
     });
   });
@@ -131,7 +138,9 @@ describe('reportContent', () => {
     const spy = jest.spyOn(StreamApi, 'reportContent').mockImplementation(
       () => Promise.reject(error) as any,
     );
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useReportContentStore((state) => state));
@@ -144,9 +153,9 @@ describe('reportContent', () => {
       jest.runAllTimers();
     });
 
-    expect(spyModalActions).toBeCalledWith({
+    expect(showToast).toBeCalledWith({
       content: 'common:text_error_message',
-      props: { type: 'error' },
+      type: ToastType.ERROR,
     });
   });
 });

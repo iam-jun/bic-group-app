@@ -3,11 +3,11 @@ import approveDeclineCode from '~/constants/approveDeclineCode';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { IToastMessage } from '~/interfaces/common';
 import useCommunitiesStore from '~/store/entities/communities';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
 import groupApi from '~/api/GroupApi';
 import { ICommunity } from '~/interfaces/ICommunity';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import showToast from '~/store/helper/showToast';
 
 const cancelJoinCommunity
   = (_set, _get) => async (communityId: string, communityName: string) => {
@@ -25,7 +25,7 @@ const cancelJoinCommunity
         )} ${communityName}`,
       };
 
-      Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+      showToast(toastMessage);
     } catch (error: any) {
       console.error('cancelJoinCommunity catch', error);
 
@@ -35,10 +35,10 @@ const cancelJoinCommunity
         useCommunitiesStore.getState().actions.getCommunity(communityId);
 
         // This toast just shows info message, not really an error
-        return showError(error, 'neutral');
+        return showToastError(error, ToastType.NEUTRAL);
       }
 
-      showError(error);
+      showToastError(error);
     }
   };
 

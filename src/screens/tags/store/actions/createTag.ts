@@ -1,10 +1,9 @@
 import streamApi from '~/api/StreamApi';
-import { IToastMessage } from '~/interfaces/common';
 import { CreateTag } from '~/interfaces/ITag';
 import useTagsStore from '~/store/entities/tags';
-import modalActions from '~/storeRedux/modal/actions';
-import Store from '~/storeRedux';
 import { ITagsController } from '..';
+import showToastSuccess from '~/store/helper/showToastSuccess';
+import showToastError from '~/store/helper/showToastError';
 
 const createTag = (set, get) => async (idCommunity: string, tag: CreateTag) => {
   try {
@@ -25,7 +24,7 @@ const createTag = (set, get) => async (idCommunity: string, tag: CreateTag) => {
       throw new Error('incorrect response');
     }
 
-    const { data, meta } = response;
+    const { data } = response;
 
     useTagsStore.getState().actions.addTags(data);
 
@@ -50,10 +49,7 @@ const createTag = (set, get) => async (idCommunity: string, tag: CreateTag) => {
       'addTagSuccess',
     );
 
-    const toastMessage: IToastMessage = {
-      content: meta?.message,
-    };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    showToastSuccess(response);
   } catch (e) {
     console.error('addTag error', e);
     set(
@@ -63,11 +59,7 @@ const createTag = (set, get) => async (idCommunity: string, tag: CreateTag) => {
       'addTagFailed',
     );
 
-    const toastMessage: IToastMessage = {
-      content: e?.meta?.message,
-      props: { type: 'error' },
-    };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    showToastError(e);
   }
 };
 

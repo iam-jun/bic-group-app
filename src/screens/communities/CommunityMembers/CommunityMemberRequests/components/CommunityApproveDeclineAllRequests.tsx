@@ -10,6 +10,7 @@ import Text from '~/baseComponents/Text';
 import { spacing } from '~/theme';
 import { ICommunity } from '~/interfaces/ICommunity';
 import useCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
+import useModalStore from '~/store/modal';
 
 const CommunityApproveDeclineAllRequests = ({ community }: {community: ICommunity}) => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const CommunityApproveDeclineAllRequests = ({ community }: {community: ICommunit
   const { id: communityId, groupId } = community || {};
   const { total } = useCommunityMemberStore((state) => state.communityMemberRequests);
   const communityMemberActions = useCommunityMemberStore((state) => state.actions);
+  const { showToast, clearToast } = useModalStore((state) => state.actions);
 
   const alertAction = ({
     title,
@@ -61,13 +63,11 @@ const CommunityApproveDeclineAllRequests = ({ community }: {community: ICommunit
 
     const toastMessage: IToastMessage = {
       content: `${t('groups:text_declining_all')}`.replace('{0}', String(total)),
-      props: {
-        buttonText: t('common:text_undo'),
-        onButtonPress: onPressUndo,
-      },
+      buttonText: t('common:text_undo'),
+      onButtonPress: onPressUndo,
       duration: 5000,
     };
-    dispatch(modalActions.showHideToastMessage(toastMessage));
+    showToast(toastMessage);
 
     timeOutRef.current = setTimeout(
       () => {
@@ -78,7 +78,7 @@ const CommunityApproveDeclineAllRequests = ({ community }: {community: ICommunit
 
   const onPressUndo = () => {
     timeOutRef?.current && clearTimeout(timeOutRef?.current);
-    dispatch(modalActions.clearToastMessage());
+    clearToast();
     communityMemberActions.undoDeclinedCommunityMemberRequests();
   };
 

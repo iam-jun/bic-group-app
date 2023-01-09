@@ -1,5 +1,5 @@
 import groupApi from '~/api/GroupApi';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import IPermissionSchemeState from '../Interface';
 
 const getSchemes = (set) => async (payload: {communityId: string; isRefreshing?: boolean}) => {
@@ -56,7 +56,7 @@ const getSchemes = (set) => async (payload: {communityId: string; isRefreshing?:
       };
     }, 'getSchemesError');
 
-    showError(error);
+    showToastError(error);
   }
 };
 

@@ -1,5 +1,5 @@
 import streamApi from '~/api/StreamApi';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 import { mockArticle } from '~/test/mock_data/article';
 import { mockSeries } from '~/test/mock_data/series';
 import { act, renderHook } from '~/test/testUtils';
@@ -20,7 +20,9 @@ describe('addArticles in series', () => {
       () => Promise.resolve(response) as any,
     );
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useAddArticlesStore((state) => state));
@@ -38,7 +40,7 @@ describe('addArticles in series', () => {
     const expectSelectingArticles = { [article.id]: { ...article } };
 
     expect(JSON.stringify(result.current.selectingArticles)).toBe(JSON.stringify(expectSelectingArticles));
-    expect(spyModalActions).toBeCalledWith({ content: 'series:text_add_articles_success' });
+    expect(showToast).toBeCalledWith({ content: 'series:text_add_articles_success' });
   });
 
   it('should do nothing when seriesId is empty:', () => {
@@ -73,7 +75,9 @@ describe('addArticles in series', () => {
       () => Promise.reject(error) as any,
     );
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useAddArticlesStore((state) => state));
@@ -92,7 +96,7 @@ describe('addArticles in series', () => {
       jest.runAllTimers();
     });
 
-    expect(spyModalActions).toBeCalled();
+    expect(showToast).toBeCalled();
   });
 
   afterEach(() => {

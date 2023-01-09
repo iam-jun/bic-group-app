@@ -3,7 +3,8 @@ import { act, renderHook } from '~/test/testUtils';
 import groupApi from '~/api/GroupApi';
 import useCommunityMemberStore from '../index';
 import { IPayloadApproveAllCommunityMemberRequest } from '~/interfaces/ICommunity';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 describe('approveAllCommunityMemberRequests', () => {
   afterEach(() => {
@@ -22,7 +23,9 @@ describe('approveAllCommunityMemberRequests', () => {
     const spy = jest.spyOn(groupApi, 'approveAllGroupMemberRequests').mockImplementation(
       () => Promise.reject(error) as any,
     );
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
 
@@ -42,11 +45,9 @@ describe('approveAllCommunityMemberRequests', () => {
       jest.runAllTimers();
     });
 
-    expect(spyModalActions).toBeCalledWith({
+    expect(showToast).toBeCalledWith({
       content: 'common:text_error_message',
-      props: {
-        type: 'error',
-      },
+      type: ToastType.ERROR,
     });
   });
 
@@ -82,7 +83,9 @@ describe('approveAllCommunityMemberRequests', () => {
     const spy = jest.spyOn(groupApi, 'approveAllGroupMemberRequests').mockImplementation(
       () => Promise.resolve(response) as any,
     );
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
 
@@ -97,7 +100,7 @@ describe('approveAllCommunityMemberRequests', () => {
       jest.runAllTimers();
     });
 
-    expect(spyModalActions).toBeCalledWith({
+    expect(showToast).toBeCalledWith({
       content: `${i18next.t('groups:text_approved_all')}`.replace('{0}', payload.total.toString()),
     });
   });

@@ -1,6 +1,6 @@
 import groupApi from '~/api/GroupApi';
 import useCommunitiesStore from '~/store/entities/communities';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 
 const updateCommunityJoinSetting = (_, _get) => async (
   communityId: string,
@@ -14,7 +14,7 @@ const updateCommunityJoinSetting = (_, _get) => async (
     useCommunitiesStore.getState().actions.getCommunity(communityId);
   } catch (error) {
     console.error('updateCommunityJoinSetting error:', error);
-    showError(error);
+    showToastError(error);
   }
 };
 

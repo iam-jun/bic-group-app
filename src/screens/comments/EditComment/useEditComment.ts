@@ -24,6 +24,8 @@ import { IGiphy } from '~/interfaces/IGiphy';
 import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
 import { formatTextWithEmoji } from '~/utils/emojiUtils';
 import { getImagePastedFromClipboard } from '~/utils/common';
+import useModalStore from '~/store/modal';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -56,6 +58,8 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
   const [uploading, setUploading] = useState(false);
 
   const [contentLoading, setContentLoading] = useState(true);
+
+  const { showToast } = useModalStore((state) => state.actions);
 
   const isContentHasChange = text !== oldContent;
   const isImageHasChange = oldImages?.[0]?.origin_name
@@ -174,14 +178,13 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
   // only support for iOS
   const onPasteImage = (_, files) => {
     if (!isEmpty(selectedImage) || !isEmpty(selectedGiphy)) {
-      Store.store.dispatch(
-        modalActions.showHideToastMessage({
-          content: t('upload:text_upload_error', {
-            file_type: t('file_type:image'),
-          }),
-          props: { type: 'error' },
+      showToast({
+        content: t('upload:text_upload_error', {
+          file_type: t('file_type:image'),
         }),
-      );
+        type: ToastType.ERROR,
+      });
+
       return;
     }
     setUploading(true);
