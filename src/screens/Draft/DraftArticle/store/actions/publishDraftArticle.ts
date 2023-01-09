@@ -1,7 +1,9 @@
 import Store from '~/storeRedux';
 import streamApi from '~/api/StreamApi';
 import { IPayloadPublishDraftArticle } from '~/interfaces/IArticle';
-import { IPayloadAddToAllPost, IPayloadGetDraftPosts, IPost } from '~/interfaces/IPost';
+import {
+  IPayloadAddToAllPost, IPayloadGetDraftPosts, IPost, PostStatus,
+} from '~/interfaces/IPost';
 import showToastError from '~/store/helper/showToastError';
 import { rootNavigationRef } from '~/router/refs';
 import { withNavigation } from '~/router/helper';
@@ -45,8 +47,10 @@ const publishDraftArticle = (set, get) => async (payload: IPayloadPublishDraftAr
     const contentData: IPost = response.data;
     usePostsStore.getState().actions.addToPosts({ data: contentData } as IPayloadAddToAllPost);
 
-    if (response.data?.isProcessing) {
-      useModalStore.getState().actions.showToast({ content: 'post:draft:text_processing_publish' });
+    if (response.data?.status === PostStatus.PROCESSING) {
+      useModalStore.getState().actions.showToast({
+        content: 'post:draft:text_processing_publish',
+      });
       // navigation.goBack();
       Store.store.dispatch(postActions.getAllPostContainingVideoInProgress());
     } else if (replaceWithDetail) {

@@ -18,6 +18,14 @@ export enum TargetType {
   COMMENT_POST = 'COMMENT.POST',
 }
 
+export enum PostStatus {
+  DRAFT = 'DRAFT',
+  PROCESSING = 'PROCESSING',
+  PUBLISHED = 'PUBLISHED',
+  WAITING_SCHEDULE = 'WAITING_SCHEDULE',
+  SCHEDULE_FAILED = 'SCHEDULE_FAILED',
+}
+
 export interface IPost {
   id?: string;
   audience?: IPostAudience;
@@ -27,7 +35,7 @@ export interface IPost {
   highlight?: string;
   media?: IPostMedia;
   setting?: IPostSetting;
-  isDraft?: boolean;
+  status?: PostStatus;
   isProcessing?: boolean;
   actor?: IAudienceUser;
   mentions?: any;
@@ -250,7 +258,7 @@ export interface IPostCreatePost {
   media?: any;
   setting?: any;
   mentions?: any;
-  isDraft?: boolean;
+  status?: PostStatus;
   linkPreview?: ILinkPreview;
   createFromGroupId?: string;
 }
@@ -285,7 +293,6 @@ export interface IPayloadPutEditComment {
 
 export interface IPayloadDeletePost {
   id: string;
-  isDraftPost?: boolean;
   callbackError?: (listAudiences: string[]) => void;
 }
 

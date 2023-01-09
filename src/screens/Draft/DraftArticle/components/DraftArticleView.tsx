@@ -70,7 +70,7 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
     || categories?.length === 0;
 
   const onDelete = () => {
-    articleActions.deleteArticle({ id, isDraft: true });
+    articleActions.deleteArticle(id);
   };
 
   const onPressDelete = () => {

@@ -15,7 +15,7 @@ const postsSelector = {
   getCommentsCount: (id: string) => (state: IPostsState) => state?.posts?.[id]?.commentsCount,
   getCommentOnlyCount: (id: string) => (state: IPostsState) => state?.posts?.[id]?.comments?.meta?.hasNextPage,
   getCommentList: (id: string) => (state: IPostsState) => state?.posts?.[id]?.comments?.list,
-  getIsDraft: (id: string) => (state: IPostsState) => state?.posts?.[id]?.isDraft,
+  getStatus: (id: string) => (state: IPostsState) => state?.posts?.[id]?.status,
   getDeleted: (id: string) => (state: IPostsState) => state?.posts?.[id]?.deleted,
   getMarkedRead: (id: string) => (state: IPostsState) => state?.posts?.[id]?.markedReadPost,
   getMarkedReadSuccess: (id: string) => (state: IPostsState) => state?.posts?.[id]?.markedReadSuccess,

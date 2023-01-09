@@ -28,6 +28,7 @@ import { rootNavigationRef } from '~/router/refs';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
 import useModalStore from '~/store/modal';
+import { PostStatus } from '~/interfaces/IPost';
 
 interface IHandleSaveOptions {
   isShowLoading?: boolean;
@@ -158,7 +159,7 @@ const useCreateArticle = ({
       coverMedia,
       series,
       tags,
-      isDraft,
+      status,
     } = article;
     const audienceIds: IEditArticleAudience
       = getAudienceIdsFromAudienceObject(audienceObject);
@@ -175,7 +176,7 @@ const useCreateArticle = ({
       tags,
     };
     actions.setData(data);
-    actions.setIsDraft(isDraft);
+    actions.setIsDraft(status === PostStatus.DRAFT);
   };
 
   useEffect(() => {

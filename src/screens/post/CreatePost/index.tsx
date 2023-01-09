@@ -9,7 +9,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
 import appConfig from '~/configs/appConfig';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
-import { IAudience, ICreatePostParams } from '~/interfaces/IPost';
+import { IAudience, ICreatePostParams, PostStatus } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import useCreatePost from '~/screens/post/CreatePost/hooks/useCreatePost';
 import postActions from '~/storeRedux/post/actions';
@@ -98,7 +98,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   const shouldDisablePostSettings = audienceListWithNoPermission.length === chosenAudiences.length;
 
   const sPostId = sPostData?.id;
-  const isEdit = !!(sPostId && !sPostData?.isDraft);
+  const isEdit = !!(sPostId && !(sPostData?.status === PostStatus.DRAFT));
 
   let imageDisabled; let fileDisabled; let
     videoDisabled;

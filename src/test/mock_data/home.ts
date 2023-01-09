@@ -1,3 +1,5 @@
+import { PostStatus } from '~/interfaces/IPost';
+
 export const feedData = {
   data: [
     '1cc6669f-6c3d-486c-af0d-a2b833a9886d',
@@ -51,7 +53,7 @@ export const mockDataFeedResponse = {
         isImportant: false,
         importantExpiredAt: null,
       },
-      isDraft: false,
+      status: PostStatus.PUBLISHED,
       isProcessing: false,
       actor: {
         id: '6235bc91-2255-4f4b-bcfa-bebcd24e27ac',
@@ -126,7 +128,7 @@ export const mockDataFeedResponse = {
         isImportant: false,
         importantExpiredAt: null,
       },
-      isDraft: false,
+      status: PostStatus.PUBLISHED,
       isProcessing: false,
       actor: {
         id: '077d4420-3c80-41d9-89ec-0da039657629',
