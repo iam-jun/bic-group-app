@@ -1,4 +1,3 @@
-import i18next from 'i18next';
 import groupApi from '~/api/GroupApi';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import useModalStore from '~/store/modal';
@@ -51,7 +50,6 @@ describe('editGroupDetail', () => {
       data: {},
       meta: {},
     };
-    const editFieldName = 'Descritpion';
     const spy = jest.spyOn(groupApi, 'editGroupDetail').mockImplementation(
       () => Promise.resolve(response) as any,
     );
@@ -71,7 +69,7 @@ describe('editGroupDetail', () => {
     jest.useFakeTimers();
     const { result } = renderHook(() => useGroupController((state) => state));
     act(() => {
-      result.current.actions.editGroupDetail(editGroupPayload, editFieldName);
+      result.current.actions.editGroupDetail(editGroupPayload);
     });
 
     expect(spy).toBeCalled();
@@ -80,9 +78,7 @@ describe('editGroupDetail', () => {
       jest.runAllTimers();
     });
 
-    const toastContent = `${editFieldName} ${i18next.t('common:text_updated_successfully')}`;
-
-    expect(showToast).toBeCalledWith({ content: toastContent });
+    expect(showToast).toBeCalled();
     expect(setGroupDetail).toBeCalled();
   });
 
@@ -108,7 +104,7 @@ describe('editGroupDetail', () => {
     jest.useFakeTimers();
     const { result } = renderHook(() => useGroupController((state) => state));
     act(() => {
-      result.current.actions.editGroupDetail(editGroupPayload, '', callback);
+      result.current.actions.editGroupDetail(editGroupPayload, callback);
     });
 
     expect(spy).toBeCalled();

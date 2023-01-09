@@ -1,12 +1,11 @@
 import { IGroupDetailEdit } from '~/interfaces/IGroup';
 import useCommunitiesStore from '~/store/entities/communities';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 import showToastError from '~/store/helper/showToastError';
 import groupApi from '~/api/GroupApi';
-import showToastEditSuccess from '~/store/entities/communities/actions/showToastEditSuccess';
 
 const editCommunityDetail = (_set, _get) => async (
   data: IGroupDetailEdit,
-  editFieldName?: string,
   callback?: () => void,
 ) => {
   try {
@@ -19,7 +18,7 @@ const editCommunityDetail = (_set, _get) => async (
       useCommunitiesStore.getState().actions.getCommunity(communityId);
     }
 
-    if (editFieldName) showToastEditSuccess(editFieldName);
+    showToastSuccess(response);
 
     callback?.();
   } catch (error) {

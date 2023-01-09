@@ -1,5 +1,4 @@
 import { ExtendedTheme, useNavigation, useTheme } from '@react-navigation/native';
-import i18next from 'i18next';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import Divider from '~/beinComponents/Divider';
@@ -42,13 +41,12 @@ const EditDescription = (props: any) => {
 
   const onSave = () => {
     const data = { id, rootGroupId, description: text?.trim() || null };
-    const editFieldName = i18next.t('common:text_description');
     const callback = onNavigateBack;
 
     if (type === 'group') {
-      groupActions.editGroupDetail(data, editFieldName, callback);
+      groupActions.editGroupDetail(data, callback);
     } else {
-      actions.editCommunityDetail(data, editFieldName, callback);
+      actions.editCommunityDetail(data, callback);
     }
   };
 

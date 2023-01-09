@@ -1,12 +1,11 @@
 import groupApi from '~/api/GroupApi';
 import { IGroupDetailEdit } from '~/interfaces/IGroup';
-import showToastEditSuccess from '~/store/entities/communities/actions/showToastEditSuccess';
 import useGroupDetailStore from '../../GroupDetail/store';
 import showToastError from '~/store/helper/showToastError';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const editGroupDetail = (_set, _get) => async (
   data: IGroupDetailEdit,
-  editFieldName?: string,
   callback?: () => void,
 ) => {
   try {
@@ -16,8 +15,7 @@ const editGroupDetail = (_set, _get) => async (
 
     const response = await groupApi.editGroupDetail(groupId, data);
 
-    if (editFieldName) showToastEditSuccess(editFieldName);
-
+    showToastSuccess(response);
     useGroupDetailStore.getState().actions.setGroupDetail(response?.data);
     callback?.();
   } catch (err) {

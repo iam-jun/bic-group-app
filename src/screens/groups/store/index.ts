@@ -10,11 +10,7 @@ export interface IGroupController {
   actions: {
     assignGroupAdmin: (groupId: string, userIds: string[]) => void;
     revokeGroupAdmin: (groupId: string, userId: string) => void;
-    editGroupDetail: (
-      data: IGroupDetailEdit,
-      editFieldName?: string,
-      callback?: () => void,
-  ) => void;
+    editGroupDetail: (data: IGroupDetailEdit, callback?: () => void) => void;
   }
 }
 

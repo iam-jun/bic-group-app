@@ -1,4 +1,3 @@
-import i18next from 'i18next';
 import {
   call, put, select, takeLatest,
 } from 'redux-saga/effects';
@@ -93,14 +92,11 @@ function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
     });
 
     const editData = { id, rootGroupId, [fieldName]: data.url };
-    const editFieldName = fieldName === 'icon'
-      ? i18next.t('common:text_avatar')
-      : i18next.t('common:text_cover');
 
     if (destination === 'group') {
-      useGroupController.getState().actions.editGroupDetail(editData, editFieldName);
+      useGroupController.getState().actions.editGroupDetail(editData);
     } else {
-      actions.editCommunityDetail(editData, editFieldName);
+      actions.editCommunityDetail(editData);
     }
     yield updateLoadingImageState(
       payload.fieldName, false,
