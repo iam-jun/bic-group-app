@@ -27,6 +27,7 @@ import { useBaseHook } from '~/hooks';
 import useCreateArticle from './hooks/useCreateArticle';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
+import { PostStatus } from '~/interfaces/IPost';
 
 enum SectionName {
   Title,
@@ -162,7 +163,7 @@ const CreateArticle: FC<CreateArticleProps> = ({ route }: CreateArticleProps) =>
         title={`article:title:${screenTitle}`}
         onPressBack={isFromDraftScreen ? onPressBackToDraft : undefined}
         {
-         ...(article.isDraft && btnPublish)
+         ...(article.status === PostStatus.DRAFT && btnPublish)
          }
       />
       <FlatList

@@ -20,6 +20,7 @@ import {
   IPayloadPutEditPost,
   IPost,
   IPostCreatePost,
+  PostStatus,
 } from '~/interfaces/IPost';
 import postActions from '~/storeRedux/post/actions';
 import streamApi from '~/api/StreamApi';
@@ -153,9 +154,9 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
   });
 
   const sPostId = sPostData?.id;
-  const isEdit = !!(sPostId && !sPostData?.isDraft);
-  const isDraftPost = !!(sPostId && sPostData?.isDraft);
-  const isNewsfeed = !(initPostData?.id && initPostData?.isDraft);
+  const isEdit = !!(sPostId && !(sPostData?.status === PostStatus.DRAFT));
+  const isDraftPost = !!(sPostId && sPostData?.status === PostStatus.DRAFT);
+  const isNewsfeed = !(initPostData?.id && initPostData?.status === PostStatus.DRAFT);
 
   const isAutoSave = isDraftPost || !isEdit;
 
@@ -436,7 +437,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
       setting,
       mentions,
       linkPreview,
-      isDraft: false,
+      status: sPostData.status || PostStatus.DRAFT,
     };
 
     return data;
@@ -496,7 +497,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
       }
 
       if (isDraftPost && sPostId) {
-        data.isDraft = true;
+        data.status = PostStatus.DRAFT;
         const newPayload: IParamPutEditPost = {
           postId: sPostId,
           data,
@@ -510,7 +511,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
         );
       } else if (!sPostId) {
         setLoading(true);
-        data.isDraft = true;
+        data.status = PostStatus.DRAFT;
         const resp = await streamApi.postCreateNewPost(data);
         refIsRefresh.current = true;
         if (resp?.data) {

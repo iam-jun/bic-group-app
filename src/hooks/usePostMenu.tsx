@@ -35,7 +35,7 @@ const usePostMenu = (
   if (!data) return null;
 
   const {
-    id: postId, isDraft, reactionsCount, isSaved, type, audience,
+    id: postId, reactionsCount, isSaved, type, audience,
   } = data;
 
   const groupAudience = audience?.groups || [];
@@ -109,7 +109,6 @@ const usePostMenu = (
         confirmBtnProps: { type: 'ghost' },
         onConfirm: () => dispatch(postActions.deletePost({
           id: postId,
-          isDraftPost: isDraft,
           callbackError: handleDeletePostError,
         })),
       }),

@@ -157,11 +157,10 @@ export const streamApiConfig = {
     method: 'put',
     data,
   }),
-  deletePost: (id: string, isDraftPost?: boolean): HttpApiRequestConfig => ({
+  deletePost: (id: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}posts/${id}`,
     method: 'delete',
-    ...(isDraftPost ? { params: { is_draft: true } } : {}),
   }),
   deleteComment: (id: string): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -379,11 +378,10 @@ export const streamApiConfig = {
     url: `${provider.url}articles/${draftArticleId}/publish`,
     method: 'put',
   }),
-  deleteArticle: (id: string, isDraft?: boolean): HttpApiRequestConfig => ({
+  deleteArticle: (id: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}articles/${id}`,
     method: 'delete',
-    ...(isDraft ? { params: { is_draft: true } } : {}),
   }),
   getTotalDraft: (): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -551,8 +549,8 @@ const streamApi = {
   ),
   putEditPost: (param: IParamPutEditPost) => withHttpRequestPromise(streamApiConfig.putEditPost, param),
   putEditComment: (id: string, data: ICommentData) => withHttpRequestPromise(streamApiConfig.putEditComment, id, data),
-  deletePost: (id: string, isDraftPost?: boolean) => withHttpRequestPromise(
-    streamApiConfig.deletePost, id, isDraftPost,
+  deletePost: (id: string) => withHttpRequestPromise(
+    streamApiConfig.deletePost, id,
   ),
   deleteComment: (id: string) => withHttpRequestPromise(streamApiConfig.deleteComment, id),
   getCommentsByPostId: (params: IRequestGetPostComment) => {
@@ -657,8 +655,8 @@ const streamApi = {
   publishDraftArticle: (draftArticleId: string) => withHttpRequestPromise(
     streamApiConfig.publishDraftArticle, draftArticleId,
   ),
-  deleteArticle: (id: string, isDraft?: boolean) => withHttpRequestPromise(
-    streamApiConfig.deleteArticle, id, isDraft,
+  deleteArticle: (id: string) => withHttpRequestPromise(
+    streamApiConfig.deleteArticle, id,
   ),
   getUsersInterestedPost: (params: IRequestGetUsersInterestedPost) => withHttpRequestPromise(
     streamApiConfig.getUsersInterestedPost, params,

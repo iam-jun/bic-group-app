@@ -15,6 +15,7 @@ import {
   IPayloadGetDraftPosts,
   IPayloadPublishDraftPost,
   IPost,
+  PostStatus,
 } from '~/interfaces/IPost';
 
 import modalActions, { showHideToastMessage } from '~/storeRedux/modal/actions';
@@ -58,12 +59,12 @@ const PostDraftView: FC<PostDraftViewProps> = ({
     audience,
     content,
     setting,
-    isDraft,
-    isProcessing,
+    status,
     communities,
   } = data || {};
 
   const { isImportant, importantExpiredAt } = setting || {};
+  const isProcessing = status === PostStatus.PROCESSING;
 
   const disableButtonPost = publishing
     || !content
@@ -115,7 +116,7 @@ const PostDraftView: FC<PostDraftViewProps> = ({
     if (id) {
       streamApi
         .deletePost(
-          id, isDraft,
+          id,
         )
         .then((response) => {
           if (response?.data) {

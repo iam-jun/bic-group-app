@@ -12,6 +12,7 @@ import {
   IPayloadPublishDraftPost,
   IPayloadPutEditDraftPost,
   IPost,
+  PostStatus,
 } from '~/interfaces/IPost';
 import { rootNavigationRef } from '~/router/refs';
 import { withNavigation } from '~/router/helper';
@@ -108,7 +109,7 @@ function* postPublishDraftPost({
     onSuccess?.();
     const postData: IPost = res.data;
     usePostsStore.getState().actions.addToPosts({ data: postData } as IPayloadAddToAllPost);
-    if (res.data?.isProcessing) {
+    if (res.data?.status === PostStatus.PROCESSING) {
       yield put(modalActions.showHideToastMessage({
         content: 'post:draft:text_processing_publish',
       }));

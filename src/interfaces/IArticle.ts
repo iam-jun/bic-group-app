@@ -45,11 +45,6 @@ export interface IPayloadPublishDraftArticle {
   onError?: () => void;
 }
 
-export interface IPayloadDeleteArticle {
-  id: string;
-  isDraft?: boolean;
-}
-
 export interface IPayloadPutEditArticle {
   articleId: string;
   data: IEditArticleData;

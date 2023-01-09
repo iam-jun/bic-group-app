@@ -1,3 +1,5 @@
+import { PostStatus } from '~/interfaces/IPost';
+
 export const POST_DETAIL = {
   ownerReactions: [
     {
@@ -30,7 +32,7 @@ export const POST_DETAIL = {
     isImportant: false,
     importantExpiredAt: null,
   },
-  isDraft: false,
+  status: PostStatus.PUBLISHED,
   actor: {
     id: '33',
     username: 'ngoclinh',
@@ -198,7 +200,7 @@ export const POST_DETAIL_2 = {
     isImportant: true,
     importantExpiredAt: '2022-04-20T11:07:08.129Z',
   },
-  isDraft: false,
+  status: PostStatus.PUBLISHED,
   actor: {
     id: '33',
     username: 'ngoclinh',
@@ -419,7 +421,7 @@ export const POST_DETAIL_3 = {
     isImportant: true,
     importantExpiredAt: '2022-04-20T11:07:08.129Z',
   },
-  isDraft: false,
+  status: PostStatus.PUBLISHED,
   actor: {
     id: '33',
     username: 'ngoclinh',

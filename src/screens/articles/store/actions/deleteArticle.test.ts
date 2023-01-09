@@ -6,7 +6,6 @@ import modalActions from '~/storeRedux/modal/actions';
 
 describe('deleteArticle', () => {
   const id = '1';
-  const isDraft = true;
 
   afterEach(() => {
     jest.runOnlyPendingTimers();
@@ -33,7 +32,7 @@ describe('deleteArticle', () => {
 
     const { result } = renderHook(() => useArticleController((state) => state));
     act(() => {
-      result.current.actions.deleteArticle({ id, isDraft });
+      result.current.actions.deleteArticle(id);
     });
 
     act(() => {
@@ -62,7 +61,7 @@ describe('deleteArticle', () => {
 
     const { result } = renderHook(() => useArticleController((state) => state));
     act(() => {
-      result.current.actions.deleteArticle({ isDraft } as any);
+      result.current.actions.deleteArticle('');
     });
 
     act(() => {
@@ -87,7 +86,7 @@ describe('deleteArticle', () => {
     const { result } = renderHook(() => useArticleController((state) => state));
     act(() => {
       try {
-        result.current.actions.deleteArticle({ id, isDraft });
+        result.current.actions.deleteArticle(id);
       } catch (error) {
         expect(error).toBeInstanceOf(TypeError);
         expect(error).toBe(error);
@@ -115,7 +114,7 @@ describe('deleteArticle', () => {
 
     const { result } = renderHook(() => useArticleController((state) => state));
     act(() => {
-      result.current.actions.deleteArticle({ id, isDraft });
+      result.current.actions.deleteArticle(id);
     });
 
     act(() => {

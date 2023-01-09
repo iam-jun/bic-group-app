@@ -1,3 +1,5 @@
+import { PostStatus } from '~/interfaces/IPost';
+
 export const LIST_DRAFT_POST = [
   {
     actor: {
@@ -202,7 +204,7 @@ export const POST_CONTAINING_VIDEO_PROCESS = {
     isImportant: false,
     importantExpiredAt: null,
   },
-  isDraft: true,
+  status: PostStatus.DRAFT,
   isProcessing: true,
   actor: {
     id: 58,

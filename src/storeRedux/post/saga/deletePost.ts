@@ -13,13 +13,13 @@ export default function* deletePost({
   type: string;
   payload: IPayloadDeletePost;
 }): any {
-  const { id, isDraftPost, callbackError } = payload || {};
+  const { id, callbackError } = payload || {};
   if (!id) {
     console.warn('\x1b[31m🐣️ saga deletePost: id not found\x1b[0m');
     return;
   }
   try {
-    const response = yield streamApi.deletePost(id, isDraftPost);
+    const response = yield streamApi.deletePost(id);
     if (response?.data) {
       const post = usePostsStore.getState()?.posts?.[id] || {};
       const deletedPost = {
