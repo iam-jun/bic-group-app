@@ -1,11 +1,9 @@
-import i18next from 'i18next';
 import { put, call, select } from 'redux-saga/effects';
 
 import approveDeclineCode from '~/constants/approveDeclineCode';
-import { IToastMessage } from '~/interfaces/common';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import showToastError from '~/store/helper/showToastError';
-import showToast from '~/store/helper/showToast';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 import groupApi from '../../../api/GroupApi';
 import groupsActions from '../actions';
 
@@ -19,9 +17,9 @@ export default function* approveSingleGroupMemberRequest({
     fullName: string;
   };
 }) {
-  const { groupId, requestId, fullName } = payload;
+  const { groupId, requestId } = payload;
   try {
-    yield call(
+    const response = yield call(
       groupApi.approveSingleGroupMemberRequest,
       groupId,
       requestId,
@@ -38,11 +36,7 @@ export default function* approveSingleGroupMemberRequest({
       items: requestItems,
     }));
 
-    const toastMessage: IToastMessage = {
-      // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
-      content: `${i18next.t('groups:text_approved_user')} ${fullName}`,
-    };
-    showToast(toastMessage);
+    showToastSuccess(response);
     useGroupDetailStore.getState().actions.getGroupDetail({ groupId }); // to update userCount
   } catch (error: any) {
     console.error('approveSingleGroupMemberRequest: ', error);

@@ -1,10 +1,8 @@
-import i18next from 'i18next';
 import { call, put, select } from 'redux-saga/effects';
 
 import approveDeclineCode from '~/constants/approveDeclineCode';
-import { IToastMessage } from '~/interfaces/common';
 import showToastError from '~/store/helper/showToastError';
-import showToast from '~/store/helper/showToast';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 import groupApi from '../../../api/GroupApi';
 import groupsActions from '../actions';
 
@@ -14,9 +12,9 @@ export default function* declineSingleGroupMemberRequest({
   type: string;
   payload: {groupId: string; requestId: string; fullName: string};
 }) {
-  const { groupId, requestId, fullName } = payload;
+  const { groupId, requestId } = payload;
   try {
-    yield call(
+    const response = yield call(
       groupApi.declineSingleGroupMemberRequest,
       groupId,
       requestId,
@@ -33,11 +31,7 @@ export default function* declineSingleGroupMemberRequest({
       items: requestItems,
     }));
 
-    const toastMessage: IToastMessage = {
-      // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
-      content: `${i18next.t('groups:text_declined_user')} ${fullName}`,
-    };
-    showToast(toastMessage);
+    showToastSuccess(response);
   } catch (error: any) {
     console.error('declineSingleGroupMemberRequest: ', error);
 

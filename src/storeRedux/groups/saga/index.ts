@@ -11,7 +11,7 @@ import {
 import groupApi from '~/api/GroupApi';
 import groupsActions from '~/storeRedux/groups/actions';
 import groupsTypes from '~/storeRedux/groups/types';
-import { IResponseData, IToastMessage } from '~/interfaces/common';
+import { IResponseData } from '~/interfaces/common';
 import { mapData } from '~/screens/groups/helper/mapper';
 import appConfig from '~/configs/appConfig';
 import ImageUploader, { IGetFile } from '~/services/imageUploader';
@@ -29,8 +29,7 @@ import useGroupController from '~/screens/groups/store';
 import useGroupMemberStore from '~/screens/groups/GroupMembers/store';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import useGeneralInformationStore from '~/screens/groups/GeneralInformation/store';
-import showToast from '~/store/helper/showToast';
-import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 import showToastError from '~/store/helper/showToastError';
 
 export default function* groupsSaga() {
@@ -197,7 +196,7 @@ function* addMembers({ payload }: {type: string; payload: IGroupAddMembers}) {
 
     const { groupId } = payload;
     const selectedUserIds = selectedUsers.map((user: IUser) => user.id);
-    yield call(groupApi.addUsers, groupId, selectedUserIds);
+    const response = yield call(groupApi.addUsers, groupId, selectedUserIds);
 
     // removed added users from current joinable user list
     const newUpdatedJoinableUsers = joinableUsers.filter(
@@ -212,11 +211,7 @@ function* addMembers({ payload }: {type: string; payload: IGroupAddMembers}) {
     // refresh group detail after adding new members
     yield refreshGroupMembers(groupId);
 
-    const toastMessage: IToastMessage = {
-      content: i18next.t('common:message_add_member_success_group'),
-      type: ToastType.SUCCESS,
-    };
-    showToast(toastMessage);
+    showToastSuccess(response);
   } catch (error) {
     console.error('addMembers error:', error);
     showToastError(error);

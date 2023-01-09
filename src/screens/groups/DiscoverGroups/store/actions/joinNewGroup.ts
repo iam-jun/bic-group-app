@@ -1,10 +1,8 @@
-import i18next from 'i18next';
 import groupApi from '~/api/GroupApi';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import IDiscoverGroupsState from '../Interface';
-import { IToastMessage } from '~/interfaces/common';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
-import showToast from '~/store/helper/showToast';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 import showToastError from '~/store/helper/showToastError';
 
 const joinNewGroup = (set, get) => async (groupId: string) => {
@@ -15,30 +13,18 @@ const joinNewGroup = (set, get) => async (groupId: string) => {
 
     const response = await groupApi.joinGroup(groupId);
     const joinStatus = response?.data?.joinStatus;
-    const hasRequested = joinStatus === GroupJoinStatus.REQUESTED;
-    const groupName = currentState.items[groupId]?.name;
 
     const currentItem = {
       ...currentState.items[groupId],
       joinStatus,
     };
+
     set((state:IDiscoverGroupsState) => {
       state.items[groupId] = { ...currentItem };
     }, 'joinNewGroupSuccess');
     useGroupDetailStore.getState().actions.getGroupDetail({ groupId });
 
-    if (hasRequested) {
-      const toastMessage: IToastMessage = {
-        content: `${i18next.t('groups:text_request_join_group')} ${groupName}`,
-      };
-      showToast(toastMessage);
-      return;
-    }
-
-    const toastMessage: IToastMessage = {
-      content: `${i18next.t('groups:text_successfully_join_group')} ${groupName}`,
-    };
-    showToast(toastMessage);
+    showToastSuccess(response);
   } catch (error) {
     console.error('joinNewGroup catch', error);
     showToastError(error);
