@@ -87,10 +87,12 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
     data.forEach((item) => {
       if (item.url) {
         result.push({
+          name: item.origin_name || item.name,
           uri: item.url,
         });
       } else if (item.name) {
         result.push({
+          name: item.origin_name || item.name,
           uri: item.name.includes('http')
             ? item.name
             : getResourceUrl(
@@ -204,6 +206,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
             visible={galleryVisible}
             source={getImageUrls()}
             onPressClose={() => setGalleryVisible(false)}
+            isShowImgName={false}
           />
         </View>
       )}

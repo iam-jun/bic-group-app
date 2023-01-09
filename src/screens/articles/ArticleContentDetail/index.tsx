@@ -138,6 +138,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
         source={listImage}
         initIndex={initIndex}
         onPressClose={() => setGalleryVisible(false)}
+        isShowImgName={false}
       />
     </ScreenWrapper>
   );

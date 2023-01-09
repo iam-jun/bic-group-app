@@ -146,6 +146,7 @@
     "content_not_available": "Nội dung không tồn tại",
     "dont_have_permission_to_access": "Bạn không có quyền truy cập trang này",
     "btn_go_back_to_home": "Quay về trang chủ",
+    "btn_back_to_home": "Quay về trang chủ",
     "text_upcoming": "Sắp tới",
     "text_expires_on": "Hết hạn vào ",
     "text_never_expire": "Bài đăng này sẽ không bao giờ hết hạn.",
@@ -169,7 +170,11 @@
     "text_share": "Chia sẻ",
     "btn_go_back": "Quay về",
     "text_unsupport_feature": "Chúng tôi chưa hỗ trợ tính năng này trên thiết bị di động. Vui lòng xem chi tiết trên phiên bản web",
-    "text_select_file": "Chọn file"
+    "text_select_file": "Chọn file",
+    "content_unavailable": {
+      "title": "Nội dung này hiện không khả dụng",
+      "content": "Khi điều này xảy ra, thường là do chủ sở hữu chỉ chia sẻ nó với một nhóm người, đã thay đổi người có thể nhìn thấy nó hoặc nó đã bị xóa."
+    }
   },
   "auth": {
     "text_kickout_title": "Notice",

@@ -16,12 +16,14 @@ const getArticleDetail = (set, get) => async (id: string) => {
     const data = response?.data;
     set((state) => {
       delete state.requestings[id];
+      state.errors[id] = false;
     }, 'getArticlesSuccess');
 
     usePostsStore.getState().actions.addToPosts({ data, handleComment: true });
   } catch (error) {
     set((state) => {
       delete state.requestings[id];
+      state.errors[id] = true;
     }, 'getArticlesError');
     console.error('getArticleDetail', error);
   }

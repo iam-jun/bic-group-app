@@ -16,6 +16,7 @@ export interface ISeriesState extends IBaseState{
   data: ISeriesData;
   requestings: IObject<boolean>;
   groups: any[];
+  errors: IObject<boolean>;
 
   actions?: {
     setData: (data: ISeriesData) => void;
@@ -48,6 +49,7 @@ const initialState = {
   },
   requestings: {},
   groups: [],
+  errors: {},
 };
 
 const useSeries = (set, get) => ({

@@ -241,6 +241,7 @@ const useCreateArticle = ({
   }, [data.content]);
 
   const handleSave = (options?: IHandleSaveOptions) => {
+    Keyboard.dismiss();
     const {
       isNavigateBack = true, isShowLoading = true, isShowToast = true, shouldValidateSeriesTags,
     } = options || {};
