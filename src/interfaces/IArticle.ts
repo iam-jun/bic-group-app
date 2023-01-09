@@ -42,7 +42,7 @@ export interface IPayloadPublishDraftArticle {
   replaceWithDetail?: boolean;
   refreshDraftArticles?: boolean;
   onSuccess?: () => void;
-  onError?: () => void;
+  onError?: (error) => void;
 }
 
 export interface IPayloadDeleteArticle {
@@ -56,6 +56,7 @@ export interface IPayloadPutEditArticle {
   isNavigateBack?: boolean;
   isShowToast?: boolean;
   isShowLoading?: boolean;
+  onSuccess?: () => void;
 }
 
 export interface IParamPutEditArticle

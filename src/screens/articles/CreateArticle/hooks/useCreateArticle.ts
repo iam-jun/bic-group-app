@@ -33,6 +33,7 @@ interface IHandleSaveOptions {
   isNavigateBack?: boolean;
   isShowToast?: boolean;
   shouldValidateSeriesTags?: boolean;
+  onSuccess?: () => void;
 }
 
 const navigation = withNavigation(rootNavigationRef);
@@ -240,7 +241,7 @@ const useCreateArticle = ({
   const handleSave = (options?: IHandleSaveOptions) => {
     Keyboard.dismiss();
     const {
-      isNavigateBack = true, isShowLoading = true, isShowToast = true, shouldValidateSeriesTags,
+      isNavigateBack = true, isShowLoading = true, isShowToast = true, shouldValidateSeriesTags, onSuccess,
     } = options || {};
     updateMentions();
 
@@ -255,6 +256,7 @@ const useCreateArticle = ({
       isNavigateBack,
       isShowToast,
       isShowLoading,
+      onSuccess,
     } as IPayloadPutEditArticle;
 
     if (shouldValidateSeriesTags) {
@@ -264,12 +266,12 @@ const useCreateArticle = ({
         series: dataUpdate?.series?.map?.((item) => item.id) || [],
         tags: dataUpdate?.tags?.map?.((item) => item.id) || [],
       };
-      const onSuccess = () => actions.putEditArticle(putEditArticleParams);
-      const onError = (error) => {
+      const onValidateSuccess = () => actions.putEditArticle(putEditArticleParams);
+      const onValidateError = (error) => {
         actions.setLoading(false);
         actions.handleSaveError(error, () => handleSave(options));
       };
-      actions.validateSeriesTags(validateParams, onSuccess, onError);
+      actions.validateSeriesTags(validateParams, onValidateSuccess, onValidateError);
     } else {
       actions.putEditArticle(putEditArticleParams);
     }
@@ -282,6 +284,13 @@ const useCreateArticle = ({
       navigation.replace(articleStack.articleDetail, { articleId: data.id });
     };
 
+    const onHandleSaveErrorDone = () => handleSave({
+      isNavigateBack: false,
+      isShowLoading: true,
+      isShowToast: false,
+      onSuccess: () => handlePublish(),
+    });
+
     const payload: IPayloadPublishDraftArticle = {
       draftArticleId: data.id,
       onSuccess: () => {
@@ -292,9 +301,7 @@ const useCreateArticle = ({
         );
         goToArticleDetail();
       },
-      onError: () => {
-        // do something
-      },
+      onError: (error) => actions.handleSaveError(error, onHandleSaveErrorDone),
     };
     useDraftArticleStore.getState().actions.publishDraftArticle(payload);
   };

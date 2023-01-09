@@ -17,7 +17,7 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
   const createArticleActions = state?.actions;
 
   const {
-    articleId, data, isNavigateBack = true, isShowToast = true, isShowLoading = true,
+    articleId, data, isNavigateBack = true, isShowToast = true, isShowLoading = true, onSuccess,
   } = params || {};
   if (isShowLoading) {
     set((state: ICreateArticleState) => {
@@ -46,6 +46,7 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
     }
 
     useArticlesStore.getState().actions.getArticleDetail(articleId);
+    onSuccess?.();
 
     set((state: ICreateArticleState) => {
       state.loading = false;
