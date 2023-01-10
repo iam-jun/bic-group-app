@@ -1,4 +1,5 @@
 import { Linking } from 'react-native';
+import InAppBrowser from 'react-native-inappbrowser-reborn';
 import { chatSchemes } from '~/constants/chat';
 import { PREFIX_DEEPLINK_GROUP, PREFIX_HTTPS } from '~/router/config';
 import getEnv from '~/utils/env';
@@ -225,3 +226,13 @@ export function getInjectableJSMessage(message) {
     })();
   `;
 }
+
+export const openInAppBrowser = async (url) => {
+  const isAvailable = await InAppBrowser.isAvailable();
+
+  if (isAvailable) {
+    await InAppBrowser.open(url);
+  } else {
+    openUrl(url);
+  }
+};
