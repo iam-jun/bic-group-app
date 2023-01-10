@@ -8,11 +8,11 @@ import { useBaseHook } from '~/hooks';
 import useMyPermissionsStore from '~/store/permissions';
 import useGroupMemberStore from '../store';
 import MemberOptionsMenu from '~/components/Member/MemberOptionsMenu';
-import useGroupController from '../../store';
 import { PermissionKey } from '~/constants/permissionScheme';
 import ReportContent from '~/components/ReportContent';
 import { TargetType } from '~/interfaces/IReport';
-import useGroupDetailStore from '../../GroupDetail/store';
+import useGroupsStore from '~/store/entities/groups';
+import groupsSelector from '~/store/entities/groups/selectors';
 
 interface GroupMemberOptionsMenuProps {
   groupId: string;
@@ -30,9 +30,10 @@ const GroupMemberOptionsMenu = ({
   const dispatch = useDispatch();
   const { t } = useBaseHook();
 
-  const { communityId } = useGroupDetailStore((state) => state.groupDetail.group);
+  const groupDetail = useGroupsStore(groupsSelector.getGroup(groupId, {}));
+  const { group: { communityId } } = groupDetail || {};
 
-  const actions = useGroupController((state) => state.actions);
+  const actions = useGroupMemberStore((state) => state.actions);
   const deleteRemoveGroupMember = useGroupMemberStore(
     (state) => state.actions.deleteRemoveGroupMember,
   );

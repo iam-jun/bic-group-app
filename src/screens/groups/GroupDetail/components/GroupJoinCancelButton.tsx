@@ -9,7 +9,7 @@ import { useBaseHook } from '~/hooks';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import useDiscoverGroupsStore from '../../DiscoverGroups/store';
 import IDiscoverGroupsState from '../../DiscoverGroups/store/Interface';
-import useGroupDetailStore, { IGroupDetailState } from '../store';
+import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 
 interface GroupJoinCancelButtonProps {
   style?: StyleProp<ViewStyle>;
@@ -18,11 +18,12 @@ interface GroupJoinCancelButtonProps {
 const GroupJoinCancelButton = ({ style }: GroupJoinCancelButtonProps) => {
   const dispatch = useDispatch();
   const { t } = useBaseHook();
-  const { group: infoDetail, joinStatus } = useGroupDetailStore((state: IGroupDetailState) => state.groupDetail);
+  const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
+  const { group: infoDetail, joinStatus } = groups[currentGroupId] || {};
   const {
     privacy,
     id: groupId,
-  } = infoDetail;
+  } = infoDetail || {};
   const communityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
   const community = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
   const joinStatusCommunity = community?.joinStatus;

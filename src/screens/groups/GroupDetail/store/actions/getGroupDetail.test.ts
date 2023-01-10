@@ -1,5 +1,6 @@
 import groupApi from '~/api/GroupApi';
 import useGeneralInformationStore from '~/screens/groups/GeneralInformation/store';
+import useGroupsStore from '~/store/entities/groups';
 import { groupDetailData } from '~/test/mock_data/group';
 import { act, renderHook } from '~/test/testUtils';
 import useGroupDetailStore from '../index';
@@ -34,10 +35,12 @@ describe('getGroupDetail', () => {
       jest.runAllTimers();
     });
 
+    const groupDetail = useGroupsStore.getState().groups[groupDetailData.group.id];
+
     expect(setLoadingAvatar).toBeCalledWith(false);
     expect(setLoadingCover).toBeCalledWith(false);
     expect(result.current.loadingGroupDetail).toBe(false);
-    expect(result.current.groupDetail).toEqual(response.data);
+    expect(groupDetail).toEqual(response.data);
   });
 
   it('should get group detail no data', () => {

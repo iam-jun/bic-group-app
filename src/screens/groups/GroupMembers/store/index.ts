@@ -1,8 +1,10 @@
 import { IGroupGetMembers } from '~/interfaces/IGroup';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore } from '~/store/utils';
+import assignGroupAdmin from './actions/assignGroupAdmin';
 import getGroupMembers from './actions/getGroupMembers';
 import removeGroupMember from './actions/removeGroupMember';
+import revokeGroupAdmin from './actions/revokeGroupAdmin';
 import updateGroupJoinSetting from './actions/updateGroupJoinSetting';
 
 export interface IGroupMemberState extends IBaseState {
@@ -16,6 +18,8 @@ export interface IGroupMemberState extends IBaseState {
     getGroupMembers: (payload: IGroupGetMembers) => void;
     clearGroupMembers: () => void;
     updateGroupJoinSetting: (payload: { groupId: string; isJoinApproval: boolean }) => void;
+    assignGroupAdmin: (groupId: string, userIds: string[]) => void;
+    revokeGroupAdmin: (groupId: string, userId: string) => void;
   };
 }
 
@@ -38,6 +42,8 @@ const groupMemberStore = (set, get) => ({
       }, 'clearGroupMembers');
     },
     updateGroupJoinSetting: updateGroupJoinSetting(set, get),
+    assignGroupAdmin: assignGroupAdmin(set, get),
+    revokeGroupAdmin: revokeGroupAdmin(set, get),
   },
 });
 

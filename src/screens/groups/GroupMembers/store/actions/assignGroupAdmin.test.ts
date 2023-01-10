@@ -2,7 +2,7 @@ import groupApi from '~/api/GroupApi';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import useModalStore from '~/store/modal';
 import { act, renderHook } from '~/test/testUtils';
-import useGroupController from '../index';
+import useGroupMemberStore from '../index';
 
 describe('assignGroupAdmin', () => {
   const userIds = ['fedf1226-edb2-4517-a156-c77879c8a1be'];
@@ -27,7 +27,7 @@ describe('assignGroupAdmin', () => {
     jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
-    const { result } = renderHook(() => useGroupController((state) => state));
+    const { result } = renderHook(() => useGroupMemberStore((state) => state));
     act(() => {
       result.current.actions.assignGroupAdmin(groupId, userIds);
     });
@@ -55,7 +55,7 @@ describe('assignGroupAdmin', () => {
     jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
-    const { result } = renderHook(() => useGroupController((state) => state));
+    const { result } = renderHook(() => useGroupMemberStore((state) => state));
 
     act(() => {
       try {

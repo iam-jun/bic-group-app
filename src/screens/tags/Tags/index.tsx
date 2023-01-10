@@ -11,7 +11,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { spacing } from '~/theme';
 import ListTags from './components/ListTags';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
-import useGroupDetailStore, { IGroupDetailState } from '~/screens/groups/GroupDetail/store';
+import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 
 type TagsProps = {
     route: {
@@ -26,8 +26,8 @@ const Tags: FC<TagsProps> = (props) => {
   const { params } = props.route || {};
   const { id, type } = params || {};
 
-  const { group: groupInfo } = useGroupDetailStore((state: IGroupDetailState) => state.groupDetail);
-  const { name: nameGroup, communityId } = groupInfo;
+  const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
+  const { group: { name: nameGroup, communityId } } = groups[currentGroupId] || {};
 
   const community = useCommunitiesStore(useCallback((
     state: ICommunitiesState,

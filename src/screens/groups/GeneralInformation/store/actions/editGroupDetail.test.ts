@@ -1,9 +1,9 @@
 import i18next from 'i18next';
 import groupApi from '~/api/GroupApi';
+import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import useModalStore from '~/store/modal';
 import { act, renderHook } from '~/test/testUtils';
-import useGroupDetailStore from '../../GroupDetail/store';
 import useGroupController from '../index';
 
 describe('editGroupDetail', () => {

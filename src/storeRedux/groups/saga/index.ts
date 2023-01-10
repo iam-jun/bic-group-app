@@ -25,10 +25,10 @@ import getGroupMemberRequests from './getGroupMemberRequests';
 import getGlobalSearch from './getGlobalSearch';
 import { IUser } from '~/interfaces/IAuth';
 import useCommunityController from '~/screens/communities/store';
-import useGroupController from '~/screens/groups/store';
 import useGroupMemberStore from '~/screens/groups/GroupMembers/store';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import useGeneralInformationStore from '~/screens/groups/GeneralInformation/store';
+import useGroupsStore from '~/store/entities/groups';
 import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import showToastError from '~/store/helper/showToastError';
@@ -99,7 +99,7 @@ function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
       : i18next.t('common:text_cover');
 
     if (destination === 'group') {
-      useGroupController.getState().actions.editGroupDetail(editData, editFieldName);
+      useGeneralInformationStore.getState().actions.editGroupDetail(editData, editFieldName);
     } else {
       actions.editCommunityDetail(editData, editFieldName);
     }
@@ -182,7 +182,7 @@ function* mergeExtraJoinableUsers() {
 
   if (!loading && canLoadMore) {
     // continue to load more data in advance if possible
-    const { id: groupId } = useGroupDetailStore.getState().groupDetail.group;
+    const { currentGroupId: groupId } = useGroupsStore.getState();
     if (groupId) {
       yield put(groupsActions.getJoinableUsers({ groupId, params }));
     }

@@ -34,10 +34,10 @@ import { ICreateArticleSeriesState } from '~/screens/articles/CreateArticle/scre
 import { ICreateArticleCategoryState } from '~/screens/articles/CreateArticle/screens/CreateArticleCategory/store';
 import { IGroupDetailState } from '~/screens/groups/GroupDetail/store';
 import { IMyPermissionsState } from './permissions';
-import { IGroupController } from '~/screens/groups/store';
 import { ITagsState } from './entities/tags';
 import { IGeneralInformationState } from '~/screens/groups/GeneralInformation/store';
 import { IRemoteConfigState } from './remoteConfig';
+import { IGroupsState } from './entities/groups';
 import { IModalState } from './modal';
 
 export interface BicStore {
@@ -45,6 +45,7 @@ export interface BicStore {
     posts: IPostsState;
     comments: ICommentsState;
     communities: ICommunitiesState;
+    groups: IGroupsState;
   };
   // components
   SelectAudience: {
@@ -70,7 +71,6 @@ export interface BicStore {
     seriesStore: ISeriesState,
   };
   groups: {
-    groupController: IGroupController;
     GeneralInformation: {
       generalInformationStore: IGeneralInformationState;
     };

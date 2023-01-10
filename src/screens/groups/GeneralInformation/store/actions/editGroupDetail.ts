@@ -1,7 +1,7 @@
 import groupApi from '~/api/GroupApi';
 import { IGroupDetailEdit } from '~/interfaces/IGroup';
+import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import showToastEditSuccess from '~/store/entities/communities/actions/showToastEditSuccess';
-import useGroupDetailStore from '../../GroupDetail/store';
 import showToastError from '~/store/helper/showToastError';
 
 const editGroupDetail = (_set, _get) => async (
