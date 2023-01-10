@@ -31,6 +31,7 @@ const getCommentDetail = (_set, _get) => async (payload: IPayloadGetCommentsById
       useCommentsStore.getState().actions.addToCommentsByParentIdWithComments({
         id: comment?.postId,
         commentIds: [comment.id],
+        isMerge: true,
       });
     }
     callbackLoading?.(false);
