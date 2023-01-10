@@ -543,7 +543,8 @@
       "link_placeholder": "Nhập URL của video:"
     },
     "modal_invalid_series_tags": {
-      "title": "Xoá đối tượng",
+      "title": "Xung đột đối tượng",
+      "title_remove_audience": "Xoá đối tượng",
       "content_header": "Các thông tin dưới đây sẽ bị xoá khi đối tượng bài viết bị xoá:",
       "content_confirm": "Bạn có chắc muốn xoá?"
     },

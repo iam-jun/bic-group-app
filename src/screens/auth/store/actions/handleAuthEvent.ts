@@ -53,7 +53,8 @@ const handleAuthEvent = (set, get) => async (data: HubCapsule) => {
         name: name || '',
         email: attributes?.email || '',
 
-        id: userProfile?.id,
+        userId: userProfile?.id,
+        id: username,
         role: username,
       };
 

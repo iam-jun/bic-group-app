@@ -34,6 +34,7 @@ interface IHandleSaveOptions {
   isShowToast?: boolean;
   shouldValidateSeriesTags?: boolean;
   onSuccess?: () => void;
+  titleAlert?: string;
 }
 
 const navigation = withNavigation(rootNavigationRef);
@@ -241,7 +242,7 @@ const useCreateArticle = ({
   const handleSave = (options?: IHandleSaveOptions) => {
     Keyboard.dismiss();
     const {
-      isNavigateBack = true, isShowLoading = true, isShowToast = true, shouldValidateSeriesTags, onSuccess,
+      isNavigateBack = true, isShowLoading = true, isShowToast = true, shouldValidateSeriesTags, onSuccess, titleAlert,
     } = options || {};
     updateMentions();
 
@@ -269,7 +270,7 @@ const useCreateArticle = ({
       const onValidateSuccess = () => actions.putEditArticle(putEditArticleParams);
       const onValidateError = (error) => {
         actions.setLoading(false);
-        actions.handleSaveError(error, () => handleSave(options));
+        actions.handleSaveError(error, () => handleSave(options), titleAlert);
       };
       actions.validateSeriesTags(validateParams, onValidateSuccess, onValidateError);
     } else {
