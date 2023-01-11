@@ -78,6 +78,7 @@ exports[`ArticleWebview Component renders correctly 1`] = `
           },
         ]
       }
+      testID="webview"
       textInteractionEnabled={true}
       useSharedProcessPool={true}
     />

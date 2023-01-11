@@ -495,7 +495,7 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                           "color": "#181C32",
                           "flex": 1,
                           "fontFamily": "BeVietnamPro-Light",
-                          "fontSize": 15,
+                          "fontSize": 14,
                           "margin": 12,
                           "padding": 0,
                         }
@@ -864,6 +864,11 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                   </View>
                 </View>
                 <View
+                  accessibilityState={
+                    Object {
+                      "disabled": true,
+                    }
+                  }
                   accessible={true}
                   focusable={true}
                   onClick={[Function]}

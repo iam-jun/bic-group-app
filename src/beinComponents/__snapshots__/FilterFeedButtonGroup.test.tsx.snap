@@ -14,7 +14,7 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
         "borderBottomColor": "#F1F2F8",
         "borderBottomWidth": 1,
         "flexDirection": "row",
-        "height": 44,
+        "height": 48,
         "marginHorizontal": 16,
       }
     }
@@ -30,6 +30,7 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
             "alignItems": "center",
             "flex": 1,
             "flexDirection": "row",
+            "marginLeft": -8,
           },
         ]
       }
@@ -64,8 +65,9 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
                 "shadowRadius": 1,
               },
               "justifyContent": "center",
+              "marginLeft": 8,
               "opacity": 1,
-              "paddingHorizontal": 12,
+              "paddingHorizontal": 8,
               "paddingVertical": 6,
             }
           }
@@ -77,7 +79,7 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
                 Object {
                   "color": "#353E6E",
                   "fontFamily": "BeVietnamPro-Medium",
-                  "fontSize": 11,
+                  "fontSize": 13,
                 },
                 Object {},
                 Array [
@@ -118,8 +120,9 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
                 "shadowRadius": 1,
               },
               "justifyContent": "center",
+              "marginLeft": 8,
               "opacity": 1,
-              "paddingHorizontal": 12,
+              "paddingHorizontal": 8,
               "paddingVertical": 6,
             }
           }
@@ -131,7 +134,7 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
                 Object {
                   "color": "#353E6E",
                   "fontFamily": "BeVietnamPro-Medium",
-                  "fontSize": 11,
+                  "fontSize": 13,
                 },
                 Object {},
                 Array [
@@ -172,8 +175,9 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
                 "shadowRadius": 1,
               },
               "justifyContent": "center",
+              "marginLeft": 8,
               "opacity": 1,
-              "paddingHorizontal": 12,
+              "paddingHorizontal": 8,
               "paddingVertical": 6,
             }
           }
@@ -185,7 +189,7 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
                 Object {
                   "color": "#353E6E",
                   "fontFamily": "BeVietnamPro-Medium",
-                  "fontSize": 11,
+                  "fontSize": 13,
                 },
                 Object {},
                 Array [
@@ -226,8 +230,9 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
                 "shadowRadius": 1,
               },
               "justifyContent": "center",
+              "marginLeft": 8,
               "opacity": 1,
-              "paddingHorizontal": 12,
+              "paddingHorizontal": 8,
               "paddingVertical": 6,
             }
           }
@@ -239,7 +244,7 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
                 Object {
                   "color": "#353E6E",
                   "fontFamily": "BeVietnamPro-Medium",
-                  "fontSize": 11,
+                  "fontSize": 13,
                 },
                 Object {},
                 Array [
@@ -260,7 +265,7 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
   <View
     style={
       Object {
-        "height": 30,
+        "height": 36,
         "paddingHorizontal": 16,
       }
     }
@@ -276,6 +281,7 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
             "alignItems": "center",
             "flex": 1,
             "flexDirection": "row",
+            "marginLeft": -8,
           },
         ]
       }
@@ -300,6 +306,7 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
               "borderBottomColor": "#7335C0",
               "borderBottomWidth": 0,
               "justifyContent": "center",
+              "marginLeft": 8,
               "opacity": 1,
               "padding": 12,
               "paddingHorizontal": 8,
@@ -314,7 +321,7 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
                 Object {
                   "color": "#353E6E",
                   "fontFamily": "BeVietnamPro-Medium",
-                  "fontSize": 11,
+                  "fontSize": 13,
                 },
                 Object {
                   "color": "#7335C0",
@@ -343,6 +350,7 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
               "borderBottomColor": "#353E6E",
               "borderBottomWidth": 0,
               "justifyContent": "center",
+              "marginLeft": 8,
               "opacity": 1,
               "padding": 12,
               "paddingHorizontal": 8,
@@ -357,7 +365,7 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
                 Object {
                   "color": "#353E6E",
                   "fontFamily": "BeVietnamPro-Medium",
-                  "fontSize": 11,
+                  "fontSize": 13,
                 },
                 Object {
                   "color": "#353E6E",
@@ -386,6 +394,7 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
               "borderBottomColor": "#353E6E",
               "borderBottomWidth": 0,
               "justifyContent": "center",
+              "marginLeft": 8,
               "opacity": 1,
               "padding": 12,
               "paddingHorizontal": 8,
@@ -400,7 +409,7 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
                 Object {
                   "color": "#353E6E",
                   "fontFamily": "BeVietnamPro-Medium",
-                  "fontSize": 11,
+                  "fontSize": 13,
                 },
                 Object {
                   "color": "#353E6E",

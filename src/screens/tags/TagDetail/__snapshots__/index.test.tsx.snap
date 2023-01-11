@@ -246,8 +246,8 @@ exports[`TagDetail component renders correctly 1`] = `
                 },
                 "justifyContent": "center",
                 "opacity": 1,
-                "paddingHorizontal": 16,
-                "paddingVertical": 8,
+                "paddingHorizontal": 12,
+                "paddingVertical": 6,
               }
             }
             testID="undefined-selected"
@@ -258,7 +258,7 @@ exports[`TagDetail component renders correctly 1`] = `
                   Object {
                     "color": "#353E6E",
                     "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 13,
+                    "fontSize": 14,
                   },
                   Object {},
                   Array [
@@ -311,8 +311,8 @@ exports[`TagDetail component renders correctly 1`] = `
                 },
                 "justifyContent": "center",
                 "opacity": 1,
-                "paddingHorizontal": 16,
-                "paddingVertical": 8,
+                "paddingHorizontal": 12,
+                "paddingVertical": 6,
               }
             }
             testID="undefined-selected"
@@ -323,7 +323,7 @@ exports[`TagDetail component renders correctly 1`] = `
                   Object {
                     "color": "#353E6E",
                     "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 13,
+                    "fontSize": 14,
                   },
                   Object {},
                   Array [
@@ -646,8 +646,8 @@ exports[`TagDetail component renders list article success 1`] = `
                 },
                 "justifyContent": "center",
                 "opacity": 1,
-                "paddingHorizontal": 16,
-                "paddingVertical": 8,
+                "paddingHorizontal": 12,
+                "paddingVertical": 6,
               }
             }
             testID="undefined-selected"
@@ -658,7 +658,7 @@ exports[`TagDetail component renders list article success 1`] = `
                   Object {
                     "color": "#353E6E",
                     "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 13,
+                    "fontSize": 14,
                   },
                   Object {},
                   Array [
@@ -711,8 +711,8 @@ exports[`TagDetail component renders list article success 1`] = `
                 },
                 "justifyContent": "center",
                 "opacity": 1,
-                "paddingHorizontal": 16,
-                "paddingVertical": 8,
+                "paddingHorizontal": 12,
+                "paddingVertical": 6,
               }
             }
             testID="undefined-selected"
@@ -723,7 +723,7 @@ exports[`TagDetail component renders list article success 1`] = `
                   Object {
                     "color": "#353E6E",
                     "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 13,
+                    "fontSize": 14,
                   },
                   Object {},
                   Array [

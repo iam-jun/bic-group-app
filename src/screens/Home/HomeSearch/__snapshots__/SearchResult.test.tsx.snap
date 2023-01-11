@@ -73,8 +73,8 @@ exports[`SearchResult component should render empty search result 1`] = `
                 },
                 "justifyContent": "center",
                 "opacity": 1,
-                "paddingHorizontal": 16,
-                "paddingVertical": 8,
+                "paddingHorizontal": 12,
+                "paddingVertical": 6,
               }
             }
             testID="undefined-selected"
@@ -85,7 +85,7 @@ exports[`SearchResult component should render empty search result 1`] = `
                   Object {
                     "color": "#353E6E",
                     "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 13,
+                    "fontSize": 14,
                   },
                   Object {},
                   Array [
@@ -138,8 +138,8 @@ exports[`SearchResult component should render empty search result 1`] = `
                 },
                 "justifyContent": "center",
                 "opacity": 1,
-                "paddingHorizontal": 16,
-                "paddingVertical": 8,
+                "paddingHorizontal": 12,
+                "paddingVertical": 6,
               }
             }
             testID="undefined-selected"
@@ -150,7 +150,7 @@ exports[`SearchResult component should render empty search result 1`] = `
                   Object {
                     "color": "#353E6E",
                     "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 13,
+                    "fontSize": 14,
                   },
                   Object {},
                   Array [
@@ -457,8 +457,8 @@ exports[`SearchResult component should render list search result 1`] = `
                 },
                 "justifyContent": "center",
                 "opacity": 1,
-                "paddingHorizontal": 16,
-                "paddingVertical": 8,
+                "paddingHorizontal": 12,
+                "paddingVertical": 6,
               }
             }
             testID="undefined-selected"
@@ -469,7 +469,7 @@ exports[`SearchResult component should render list search result 1`] = `
                   Object {
                     "color": "#353E6E",
                     "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 13,
+                    "fontSize": 14,
                   },
                   Object {},
                   Array [
@@ -522,8 +522,8 @@ exports[`SearchResult component should render list search result 1`] = `
                 },
                 "justifyContent": "center",
                 "opacity": 1,
-                "paddingHorizontal": 16,
-                "paddingVertical": 8,
+                "paddingHorizontal": 12,
+                "paddingVertical": 6,
               }
             }
             testID="undefined-selected"
@@ -534,7 +534,7 @@ exports[`SearchResult component should render list search result 1`] = `
                   Object {
                     "color": "#353E6E",
                     "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 13,
+                    "fontSize": 14,
                   },
                   Object {},
                   Array [
@@ -1139,7 +1139,7 @@ exports[`SearchResult component should render list search result 1`] = `
                     }
                     testID="time_view"
                   >
-                    Apr 20 at 05:06 PM
+                    Apr 20, 2022
                   </Text>
                 </View>
               </View>
@@ -1589,8 +1589,8 @@ exports[`SearchResult component should render loading search result 1`] = `
                 },
                 "justifyContent": "center",
                 "opacity": 1,
-                "paddingHorizontal": 16,
-                "paddingVertical": 8,
+                "paddingHorizontal": 12,
+                "paddingVertical": 6,
               }
             }
             testID="undefined-selected"
@@ -1601,7 +1601,7 @@ exports[`SearchResult component should render loading search result 1`] = `
                   Object {
                     "color": "#353E6E",
                     "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 13,
+                    "fontSize": 14,
                   },
                   Object {},
                   Array [
@@ -1654,8 +1654,8 @@ exports[`SearchResult component should render loading search result 1`] = `
                 },
                 "justifyContent": "center",
                 "opacity": 1,
-                "paddingHorizontal": 16,
-                "paddingVertical": 8,
+                "paddingHorizontal": 12,
+                "paddingVertical": 6,
               }
             }
             testID="undefined-selected"
@@ -1666,7 +1666,7 @@ exports[`SearchResult component should render loading search result 1`] = `
                   Object {
                     "color": "#353E6E",
                     "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 13,
+                    "fontSize": 14,
                   },
                   Object {},
                   Array [

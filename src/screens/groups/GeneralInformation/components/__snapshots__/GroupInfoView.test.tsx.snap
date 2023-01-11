@@ -194,7 +194,7 @@ exports[`GroupInfoView component renders correctly 1`] = `
         }
         testID="info_card.title"
       >
-        Privacy
+        Privacy & Terms
       </Text>
     </View>
     <View>

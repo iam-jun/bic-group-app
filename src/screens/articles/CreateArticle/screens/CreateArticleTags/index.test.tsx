@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { act, renderWithRedux } from '~/test/testUtils';
+import { act, renderWithRedux, waitFor } from '~/test/testUtils';
 import CreateArticleTags from '.';
 import { mockArticle } from '~/test/mock_data/article';
 import MockedNavigator from '~/test/MockedNavigator';
@@ -9,6 +9,7 @@ import { IPost } from '~/interfaces/IPost';
 import { mockGetTagsInArticle } from '~/test/mock_data/tags';
 import streamApi from '~/api/StreamApi';
 import useCreateArticleStore from '../../store';
+import useCreateArticleTags from './store';
 
 describe('CreateArticleTags screen', () => {
   it('should not enable button Save if tags is empty', () => {
@@ -103,5 +104,29 @@ describe('CreateArticleTags screen', () => {
 
     const titleInfoSelectingList = wrapper.queryByTestId('aritcles.slecting_list_info.info_title');
     expect(titleInfoSelectingList).toBeDefined();
+  });
+
+  it('should not fetch tag list if audience group is empty', async () => {
+    const article = { ...mockArticle };
+    article.audience.groups = [];
+
+    act(() => {
+      usePostsStore.getState().actions.addToPosts({ data: article as IPost });
+    });
+
+    renderWithRedux(
+      <MockedNavigator
+        component={() => (
+          <CreateArticleTags
+            route={{ params: { articleId: mockArticle.id } }}
+          />
+        )}
+      />,
+    );
+
+    await waitFor(() => {
+      const loadingTags = useCreateArticleTags.getState().listTag.loading;
+      expect(loadingTags).toBeFalsy();
+    });
   });
 });

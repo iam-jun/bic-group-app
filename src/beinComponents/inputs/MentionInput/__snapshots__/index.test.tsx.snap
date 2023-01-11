@@ -25,6 +25,9 @@ Array [
         Array [
           null,
           Object {},
+          Object {
+            "fontSize": 14,
+          },
         ]
       }
       testID="_mention_input.input"
@@ -156,6 +159,9 @@ Array [
             Array [
               null,
               Object {},
+              Object {
+                "fontSize": 14,
+              },
             ],
           ]
         }
@@ -210,6 +216,7 @@ Array [
                 Array [
                   Object {
                     "color": "#181C32",
+                    "flex": 1,
                     "fontFamily": "BeVietnamPro-Light",
                     "fontSize": 15,
                     "lineHeight": 22,
@@ -1768,7 +1775,7 @@ Array [
           "color": "#181C32",
           "flex": 1,
           "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 15,
+          "fontSize": 14,
           "margin": 12,
           "padding": 0,
         }

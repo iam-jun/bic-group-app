@@ -29,8 +29,8 @@ exports[`PillTabButton renders selected button with type primary and size medium
       },
       "justifyContent": "center",
       "opacity": 1,
-      "paddingHorizontal": 16,
-      "paddingVertical": 8,
+      "paddingHorizontal": 12,
+      "paddingVertical": 6,
     }
   }
   testID="hometab-selected"
@@ -41,7 +41,7 @@ exports[`PillTabButton renders selected button with type primary and size medium
         Object {
           "color": "#353E6E",
           "fontFamily": "BeVietnamPro-Medium",
-          "fontSize": 13,
+          "fontSize": 14,
         },
         Object {},
         Array [
@@ -87,7 +87,7 @@ exports[`PillTabButton renders selected button with type secondary and size larg
       },
       "justifyContent": "center",
       "opacity": 1,
-      "paddingHorizontal": 16,
+      "paddingHorizontal": 12,
       "paddingVertical": 8,
     }
   }
@@ -145,7 +145,7 @@ exports[`PillTabButton renders selected button with type secondary and size smal
       },
       "justifyContent": "center",
       "opacity": 1,
-      "paddingHorizontal": 12,
+      "paddingHorizontal": 8,
       "paddingVertical": 6,
     }
   }
@@ -157,7 +157,7 @@ exports[`PillTabButton renders selected button with type secondary and size smal
         Object {
           "color": "#353E6E",
           "fontFamily": "BeVietnamPro-Medium",
-          "fontSize": 11,
+          "fontSize": 13,
         },
         Object {},
         Array [
@@ -202,8 +202,8 @@ exports[`PillTabButton renders unselected button with size medium correctly 1`] 
       },
       "justifyContent": "center",
       "opacity": 1,
-      "paddingHorizontal": 16,
-      "paddingVertical": 8,
+      "paddingHorizontal": 12,
+      "paddingVertical": 6,
     }
   }
   testID="hometab-notselected"
@@ -214,7 +214,7 @@ exports[`PillTabButton renders unselected button with size medium correctly 1`] 
         Object {
           "color": "#353E6E",
           "fontFamily": "BeVietnamPro-Medium",
-          "fontSize": 13,
+          "fontSize": 14,
         },
         Object {},
         Array [

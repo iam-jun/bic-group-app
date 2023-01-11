@@ -152,7 +152,7 @@ exports[`PendingUserItem component should render data correctly 1`] = `
           ]
         }
       >
-        Requested at Jun 06 at 03:12 PM
+        Requested at Jun 06, 2022
       </Text>
       <View
         style={
