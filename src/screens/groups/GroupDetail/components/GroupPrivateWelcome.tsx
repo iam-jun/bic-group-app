@@ -2,6 +2,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
+import { ICommunity } from '~/interfaces/ICommunity';
 
 import { IGroup } from '~/interfaces/IGroup';
 import AboutContent from '~/screens/communities/CommunityDetail/components/AboutContent';
@@ -11,13 +12,13 @@ import GroupJoinCancelButton from './GroupJoinCancelButton';
 
 interface GroupPrivateWelcomeProps {
   infoDetail: IGroup;
-  communityName: string;
+  community: ICommunity;
   onScroll: (e: any) => void;
   onGetInfoLayout: (e: any) => void;
 }
 
 const GroupPrivateWelcome = ({
-  infoDetail, communityName, onScroll, onGetInfoLayout,
+  infoDetail, community, onScroll, onGetInfoLayout,
 }: GroupPrivateWelcomeProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -33,10 +34,10 @@ const GroupPrivateWelcome = ({
       <View onLayout={onGetInfoLayout}>
         <InfoHeader
           infoDetail={infoDetail}
-          insideCommunityName={communityName}
+          insideCommunityName={community?.name}
         />
         <View style={styles.space} />
-        <GroupJoinCancelButton />
+        <GroupJoinCancelButton community={community} />
       </View>
 
       <AboutContent profileInfo={infoDetail as any} showPrivate />

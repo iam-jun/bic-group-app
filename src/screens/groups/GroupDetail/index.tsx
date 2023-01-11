@@ -299,7 +299,7 @@ const GroupDetail = (props: any) => {
           onScroll={onScrollHandler}
           onGetInfoLayout={onGetInfoLayout}
           infoDetail={groupInfo}
-          communityName={communityName}
+          community={communityDetail}
         />
       );
     }
@@ -366,7 +366,7 @@ const GroupDetail = (props: any) => {
           {renderGroupContent()}
         </Animated.View>
         <Animated.View onLayout={onButtonBottomLayout} style={[styles.button, buttonStyle]}>
-          <GroupJoinCancelButton style={styles.joinBtn} />
+          <GroupJoinCancelButton style={styles.joinBtn} community={communityDetail} />
         </Animated.View>
         <ContentSearch searchViewRef={searchViewRef} groupId={groupId} />
       </>

@@ -96,7 +96,7 @@ const GroupContent = ({
         communityId={communityId}
         teamName={teamName}
       />
-      <GroupJoinCancelButton />
+      <GroupJoinCancelButton community={community} />
       <Divider color={colors.gray5} size={spacing.padding.large} />
       <FilterFeedButtonGroup
         contentFilter={contentFilter}

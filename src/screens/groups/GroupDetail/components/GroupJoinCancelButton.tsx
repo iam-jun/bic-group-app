@@ -6,16 +6,17 @@ import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import JoinCancelButton from '../../components/JoinCancelButton';
 import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
-import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import useDiscoverGroupsStore from '../../DiscoverGroups/store';
 import IDiscoverGroupsState from '../../DiscoverGroups/store/Interface';
 import useGroupDetailStore, { IGroupDetailState } from '../store';
+import { ICommunity } from '~/interfaces/ICommunity';
 
 interface GroupJoinCancelButtonProps {
   style?: StyleProp<ViewStyle>;
+  community: ICommunity;
 }
 
-const GroupJoinCancelButton = ({ style }: GroupJoinCancelButtonProps) => {
+const GroupJoinCancelButton = ({ style, community }: GroupJoinCancelButtonProps) => {
   const dispatch = useDispatch();
   const { t } = useBaseHook();
   const { group: infoDetail, joinStatus } = useGroupDetailStore((state: IGroupDetailState) => state.groupDetail);
@@ -23,8 +24,6 @@ const GroupJoinCancelButton = ({ style }: GroupJoinCancelButtonProps) => {
     privacy,
     id: groupId,
   } = infoDetail;
-  const communityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
-  const community = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
   const joinStatusCommunity = community?.joinStatus;
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
   const isMemberOfCommunity = joinStatusCommunity === GroupJoinStatus.MEMBER;
