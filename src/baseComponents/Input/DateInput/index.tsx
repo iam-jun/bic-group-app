@@ -16,6 +16,7 @@ import dimension from '~/theme/dimension';
 import Icon from '~/baseComponents/Icon';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
 import { formatDate } from '~/utils/formatData';
+import DatePickerComponentProps from '~/beinComponents/DateTimePicker/DatePickerComponentProps';
 
 const getTextDateDisplay = (
   value?: string,
@@ -32,7 +33,7 @@ const getTextDateDisplay = (
   return !!placeholder ? placeholder : 'HH:MM';
 };
 
-interface DateInputProps {
+interface DateInputProps extends Partial<DatePickerComponentProps> {
   mode: 'date' | 'time';
   testID?: string;
   testIDValue?: string;
@@ -50,6 +51,7 @@ interface DateInputProps {
   maxDate?: Date;
   onConfirm: (date: Date) => void;
   disabled?: boolean;
+  keepPlaceholder?: boolean;
 }
 
 const DateInput: React.FC<DateInputProps> = ({
@@ -68,16 +70,21 @@ const DateInput: React.FC<DateInputProps> = ({
   maxDate,
   onConfirm,
   disabled,
+  keepPlaceholder,
+  ...propsDateTimePicker
 }: DateInputProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = themeStyles(theme, textColor);
-  const [text, setText] = useState<string>(getTextDateDisplay(value, mode, placeholder));
+
+  const displayDate = () => (keepPlaceholder ? getTextDateDisplay('', mode, placeholder) : getTextDateDisplay(value, mode, placeholder));
+
+  const [text, setText] = useState<string>(displayDate());
   const [isSelecting, setSelecting] = useState<boolean>(false);
 
   useEffect(() => {
-    setText(getTextDateDisplay(value, mode, placeholder));
-  }, [value]);
+    setText(displayDate());
+  }, [value, keepPlaceholder]);
 
   const getIcon = () => {
     if (mode === 'date') return 'Calendar';
@@ -141,6 +148,7 @@ const DateInput: React.FC<DateInputProps> = ({
             onConfirm={_onConfirm}
             // eslint-disable-next-line @typescript-eslint/no-empty-function
             onCancel={_onClosePopup}
+            {...propsDateTimePicker}
           />
         )}
       </View>

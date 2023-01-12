@@ -174,7 +174,9 @@
     "content_unavailable": {
       "title": "Nội dung này hiện không khả dụng",
       "content": "Khi điều này xảy ra, thường là do chủ sở hữu chỉ chia sẻ nó với một nhóm người, đã thay đổi người có thể nhìn thấy nó hoặc nó đã bị xóa."
-    }
+    },
+    "text_date": "Ngày",
+    "text_time": "Giờ"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -556,7 +558,11 @@
     "text_add_audience": "Thêm đối tượng",
     "text_add_series": "Thêm series",
     "text_add_tag": "Thêm thẻ",
-    "text_add_content": "Thêm nội dung"
+    "text_add_content": "Thêm nội dung",
+    "article_schedule_title": "Đặt lịch bài viết",
+    "text_schedule": "Đặt lịch",
+    "fail_schedule": "Đặt lịch thất bại",
+    "successful_schedule": "Đặt lịch thành công"
   },
   "post": {
     "news_feed": "News Feed",

@@ -205,7 +205,9 @@
     "content_unavailable": {
       "title": "This content isn’t available right now",
       "content": "When this happens, it’s usually because the owner only shared it with a small group of people, changed who can see it or it’s been deleted."
-    }
+    },
+    "text_date": "Date",
+    "text_time": "Time"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -596,7 +598,11 @@
     "text_add_audience": "Add audience",
     "text_add_series": "Add series",
     "text_add_tag": "Add tag",
-    "text_add_content": "Add content"
+    "text_add_content": "Add content",
+    "article_schedule_title": "Article Schedule",
+    "text_schedule": "Schedule",
+    "fail_schedule": "Fail Schedule",
+    "successful_schedule": "Successful Schedule"
   },
   "post": {
     "news_feed": "News Feed",

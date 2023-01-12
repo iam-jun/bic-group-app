@@ -25,9 +25,7 @@ import TagsSection from './screens/CreateArticleTags/TagsSection';
 import ContentSection from './screens/CreateArticleContent/ContentSection';
 import { useBaseHook } from '~/hooks';
 import useCreateArticle from './hooks/useCreateArticle';
-import usePostsStore from '~/store/entities/posts';
-import postsSelector from '~/store/entities/posts/selectors';
-import { PostStatus } from '~/interfaces/IPost';
+import Schedule from './components/Schedule';
 
 enum SectionName {
   Title,
@@ -44,24 +42,59 @@ type OptionType = {
   name: SectionName;
   title: string;
   screen: string;
-}
+};
 
 const options: OptionType[] = [
-  { name: SectionName.Cover, title: 'article:text_option_edit_cover', screen: articleStack.createArticleCover },
-  { name: SectionName.Title, title: 'article:text_option_edit_title', screen: articleStack.createArticleTitle },
-  { name: SectionName.Summary, title: 'article:text_option_edit_summary', screen: articleStack.createArticleSummary },
-  { name: SectionName.Category, title: 'article:text_option_edit_category', screen: articleStack.createArticleCategory },
-  { name: SectionName.Audience, title: 'article:text_option_edit_audience', screen: articleStack.createArticleAudience },
-  { name: SectionName.Series, title: 'article:text_option_edit_series', screen: articleStack.createArticleSeries },
-  { name: SectionName.Tags, title: 'article:text_option_edit_tags', screen: articleStack.createArticleTags },
-  { name: SectionName.Content, title: 'article:text_option_edit_content', screen: articleStack.createArticleContent },
+  {
+    name: SectionName.Cover,
+    title: 'article:text_option_edit_cover',
+    screen: articleStack.createArticleCover,
+  },
+  {
+    name: SectionName.Title,
+    title: 'article:text_option_edit_title',
+    screen: articleStack.createArticleTitle,
+  },
+  {
+    name: SectionName.Summary,
+    title: 'article:text_option_edit_summary',
+    screen: articleStack.createArticleSummary,
+  },
+  {
+    name: SectionName.Category,
+    title: 'article:text_option_edit_category',
+    screen: articleStack.createArticleCategory,
+  },
+  {
+    name: SectionName.Audience,
+    title: 'article:text_option_edit_audience',
+    screen: articleStack.createArticleAudience,
+  },
+  {
+    name: SectionName.Series,
+    title: 'article:text_option_edit_series',
+    screen: articleStack.createArticleSeries,
+  },
+  {
+    name: SectionName.Tags,
+    title: 'article:text_option_edit_tags',
+    screen: articleStack.createArticleTags,
+  },
+  {
+    name: SectionName.Content,
+    title: 'article:text_option_edit_content',
+    screen: articleStack.createArticleContent,
+  },
 ];
 
-const CreateArticle: FC<CreateArticleProps> = ({ route }: CreateArticleProps) => {
+const CreateArticle: FC<CreateArticleProps> = ({
+  route,
+}: CreateArticleProps) => {
   const articleIdParams = route?.params?.articleId;
   const isFromDraftScreen = route?.params?.isFromDraftScreen;
   const isCreateNewArticle = !articleIdParams;
-  const screenTitle = isCreateNewArticle || isFromDraftScreen ? 'create' : 'edit';
+  const screenTitle
+    = isCreateNewArticle || isFromDraftScreen ? 'create' : 'edit';
 
   const dispatch = useDispatch();
   const { t } = useBaseHook();
@@ -71,16 +104,15 @@ const CreateArticle: FC<CreateArticleProps> = ({ route }: CreateArticleProps) =>
 
   const articleData = useCreateArticleStore((state) => state.data);
   const actions = useCreateArticleStore((state) => state.actions);
+  const isDraft = useCreateArticleStore((state) => state.isDraft);
   const draftActions = useDraftArticleStore((state) => state.actions);
-  const articleActions = useArticlesStore((state: IArticlesState) => state.actions);
+  const articleActions = useArticlesStore(
+    (state: IArticlesState) => state.actions,
+  );
 
   const [articleId, setArticleId] = useState(articleIdParams);
 
-  const article = usePostsStore(postsSelector.getPost(articleId, {}));
-
-  const {
-    handlePublish, validButtonPublish,
-  } = useCreateArticle({ articleId });
+  const { handlePublish, validButtonPublish } = useCreateArticle({ articleId });
   const isPublishing = useDraftArticleStore((state) => state.isPublishing);
 
   const resetEditArticleStore = useCreateArticleStore((state) => state.reset);
@@ -122,6 +154,13 @@ const CreateArticle: FC<CreateArticleProps> = ({ route }: CreateArticleProps) =>
     onPressButton: onPressPublish,
   };
 
+  const renderBtnSchedule = () => <Schedule articleId={articleId} />;
+
+  const headerButton = isDraft && {
+    renderCustomComponent: renderBtnSchedule,
+    ...btnPublish,
+  };
+
   const onPressItem = (item: OptionType) => () => {
     if (!item.screen) {
       dispatch(modalActions.showAlertNewFeature());
@@ -141,7 +180,9 @@ const CreateArticle: FC<CreateArticleProps> = ({ route }: CreateArticleProps) =>
       case SectionName.Category:
         return <CategorySection onPress={onPressItem(item)} />;
       case SectionName.Audience:
-        return <AudienceSection articleId={articleId} onPress={onPressItem(item)} />;
+        return (
+          <AudienceSection articleId={articleId} onPress={onPressItem(item)} />
+        );
       case SectionName.Series:
         return <SeriesSection onPress={onPressItem(item)} />;
       case SectionName.Tags:
@@ -153,7 +194,9 @@ const CreateArticle: FC<CreateArticleProps> = ({ route }: CreateArticleProps) =>
     }
   };
 
-  const renderItemSeparator = () => <ViewSpacing height={spacing.margin.large} />;
+  const renderItemSeparator = () => (
+    <ViewSpacing height={spacing.margin.large} />
+  );
   const keyExtractor = (item) => `create_article_option_${item.title}`;
 
   return (
@@ -162,9 +205,7 @@ const CreateArticle: FC<CreateArticleProps> = ({ route }: CreateArticleProps) =>
         useI18n
         title={`article:title:${screenTitle}`}
         onPressBack={isFromDraftScreen ? onPressBackToDraft : undefined}
-        {
-         ...(article.status === PostStatus.DRAFT && btnPublish)
-         }
+        {...headerButton}
       />
       <FlatList
         data={options}

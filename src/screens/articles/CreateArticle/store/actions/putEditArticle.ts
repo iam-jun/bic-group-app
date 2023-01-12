@@ -14,7 +14,7 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
   const createArticleActions = state?.actions;
 
   const {
-    articleId, data, isNavigateBack = true, isShowToast = true, isShowLoading = true,
+    articleId, data, isNavigateBack = true, isShowToast = true, isShowLoading = true, onSuccess,
   } = params || {};
   if (isShowLoading) {
     set((state: ICreateArticleState) => {
@@ -51,6 +51,7 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
     if (isShowToast) {
       showToastSuccess(response, 'article:text_edit_article_success');
     }
+    onSuccess?.();
     if (isNavigateBack) {
       navigation.goBack();
     }

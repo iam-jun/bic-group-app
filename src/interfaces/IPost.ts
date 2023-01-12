@@ -63,6 +63,7 @@ export interface IPost {
   tags?: ITag[];
   series?: any[];
   reported?: boolean;
+  publishedAt?: string;
 }
 
 export interface IPostAudience {

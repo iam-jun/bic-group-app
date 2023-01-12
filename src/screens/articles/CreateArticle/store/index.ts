@@ -3,7 +3,8 @@ import {
   IEditArticleAudience,
   IEditArticleData,
   IEditArticleSeries,
-  IEditArticleTags, IParamsValidateSeriesTags,
+  IEditArticleTags,
+  IParamsValidateSeriesTags,
   IPayloadPutEditArticle,
 } from '~/interfaces/IArticle';
 import { IArticleCover } from '~/interfaces/IPost';
@@ -13,8 +14,16 @@ import validateSeriesTags from './actions/validateSeriesTags';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
 import createArticle from './actions/createArticle';
+import scheduleArticle from './actions/scheduleArticle';
 
 export interface ICreateArticleState extends IBaseState {
+  schedule: {
+    publishedAt: string;
+    errorSubmiting: string;
+    isSubmitingSuccess: boolean;
+    isSubmiting: boolean;
+  };
+  isValidating: boolean;
   loading: boolean;
   data: IEditArticleData;
   isDraft: boolean;
@@ -26,7 +35,7 @@ export interface ICreateArticleState extends IBaseState {
     setSummary: (summary: string) => void;
     setAudience: (audience: IEditArticleAudience) => void;
     setMentions: (mentions: any) => void;
-    setCover: (cover?:IArticleCover) => void;
+    setCover: (cover?: IArticleCover) => void;
     setCategories: (categories?: ICategory[]) => void;
     addCategory: (category: ICategory) => void;
     removeCategory: (category: ICategory) => void;
@@ -37,6 +46,13 @@ export interface ICreateArticleState extends IBaseState {
     setTags: (tags?: IEditArticleTags[]) => void;
     addTag: (tag: IEditArticleTags) => void;
     removeTag: (tag: IEditArticleTags) => void;
+    setPublishedAt: (publishedAt: string) => void;
+    setErrorScheduleSubmiting: (errorScheduleSubmiting: string) => void;
+    setIsValidating: (isValidating: boolean) => void;
+    setIsScheduleSubmitingSuccess: (
+      isScheduleSubmitingSuccess: boolean
+    ) => void;
+    scheduleArticle: () => void;
     putEditArticle: (params: IPayloadPutEditArticle) => void;
     createArticle: () => void;
     validateSeriesTags: (
@@ -49,6 +65,13 @@ export interface ICreateArticleState extends IBaseState {
 }
 
 const initialState: InitStateType<ICreateArticleState> = {
+  schedule: {
+    publishedAt: '',
+    errorSubmiting: '',
+    isSubmitingSuccess: false,
+    isSubmiting: false,
+  },
+  isValidating: false,
   loading: false,
   data: {
     id: '',
@@ -87,7 +110,7 @@ const useCreateArticle = (set, get) => ({
     },
     setData: (data?: IEditArticleData) => {
       set((state: ICreateArticleState) => {
-        state.data = data || initialState.data as IEditArticleData;
+        state.data = data || (initialState.data as IEditArticleData);
       }, 'setData');
     },
     setTitle: (title: string) => {
@@ -105,17 +128,17 @@ const useCreateArticle = (set, get) => ({
         state.data.summary = summary;
       }, 'setSummary');
     },
-    setAudience: (audience?:IEditArticleAudience) => {
+    setAudience: (audience?: IEditArticleAudience) => {
       set((state: ICreateArticleState) => {
-        state.data.audience = audience || {} as IEditArticleAudience;
+        state.data.audience = audience || ({} as IEditArticleAudience);
       }, 'setAudience');
     },
-    setMentions: (mentions?:any) => {
+    setMentions: (mentions?: any) => {
       set((state: ICreateArticleState) => {
         state.data.mentions = mentions || {};
       }, 'setMentions');
     },
-    setCover: (cover?:IArticleCover) => {
+    setCover: (cover?: IArticleCover) => {
       set((state: ICreateArticleState) => {
         state.data.coverMedia = cover || {};
       }, 'setCover');
@@ -127,7 +150,8 @@ const useCreateArticle = (set, get) => ({
     },
     addCategory: (category: ICategory) => {
       const selecting = get().data.categories || [];
-      const isAdded = selecting.findIndex((catItem) => catItem?.name === category?.name) > -1;
+      const isAdded
+        = selecting.findIndex((catItem) => catItem?.name === category?.name) > -1;
       if (!isAdded) {
         const newSelecting = [...selecting];
         newSelecting.push(category);
@@ -138,7 +162,9 @@ const useCreateArticle = (set, get) => ({
     },
     removeCategory: (category: ICategory) => {
       const selecting = get().data.categories || [];
-      const newSelecting = selecting.filter((catItem) => catItem?.name !== category?.name);
+      const newSelecting = selecting.filter(
+        (catItem) => catItem?.name !== category?.name,
+      );
       set((state) => {
         state.data.categories = newSelecting;
       }, 'removeCategory');
@@ -155,7 +181,8 @@ const useCreateArticle = (set, get) => ({
     },
     addSeries: (seriesData: IEditArticleSeries) => {
       const selecting = get().data.series || [];
-      const isAdded = selecting.findIndex((item) => item?.id === seriesData?.id) > -1;
+      const isAdded
+        = selecting.findIndex((item) => item?.id === seriesData?.id) > -1;
       if (!isAdded) {
         const newSelecting = [...selecting];
         newSelecting.push(seriesData);
@@ -166,7 +193,9 @@ const useCreateArticle = (set, get) => ({
     },
     removeSeries: (seriesData: IEditArticleSeries) => {
       const selecting = get().data.series || [];
-      const newSelecting = selecting.filter((item) => item?.id !== seriesData?.id);
+      const newSelecting = selecting.filter(
+        (item) => item?.id !== seriesData?.id,
+      );
       set((state) => {
         state.data.series = newSelecting;
       }, 'removeSeries');
@@ -194,6 +223,32 @@ const useCreateArticle = (set, get) => ({
         state.data.tags = newSelecting;
       }, 'removeTags');
     },
+    setPublishedAt: (publishedAt: string) => {
+      set((state: ICreateArticleState) => {
+        state.schedule.publishedAt = publishedAt;
+      }, 'setPublishedAt');
+    },
+    setErrorScheduleSubmiting: (errorScheduleSubmiting: string) => {
+      set((state: ICreateArticleState) => {
+        state.schedule.errorSubmiting = errorScheduleSubmiting;
+      }, 'setErrorScheduleSubmiting');
+    },
+    setIsScheduleSubmiting: (isScheduleSubmiting: boolean) => {
+      set((state: ICreateArticleState) => {
+        state.schedule.isSubmiting = isScheduleSubmiting;
+      }, 'setIsScheduleSubmiting');
+    },
+    setIsValidating: (isValidating: boolean) => {
+      set((state: ICreateArticleState) => {
+        state.isValidating = isValidating;
+      }, 'setIsValidating');
+    },
+    setIsScheduleSubmitingSuccess: (isScheduleSubmitingSuccess: boolean) => {
+      set((state: ICreateArticleState) => {
+        state.schedule.isSubmitingSuccess = isScheduleSubmitingSuccess;
+      }, 'setIsScheduleSubmitingSuccess');
+    },
+    scheduleArticle: scheduleArticle(set, get),
     putEditArticle: putEditArticle(set, get),
     createArticle: createArticle(set, get),
     validateSeriesTags: validateSeriesTags(set, get),
@@ -202,6 +257,7 @@ const useCreateArticle = (set, get) => ({
   reset: () => resetStore(initialState, set),
 });
 
-const useCreateArticleStore = createStore<ICreateArticleState>(useCreateArticle);
+const useCreateArticleStore
+  = createStore<ICreateArticleState>(useCreateArticle);
 
 export default useCreateArticleStore;

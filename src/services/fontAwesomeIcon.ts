@@ -38,6 +38,7 @@ import { faLockKeyhole as faLockKeyholeSolid } from '@fortawesome/pro-solid-svg-
 import { faGlobe } from '@fortawesome/pro-regular-svg-icons/faGlobe';
 import { faGlobe as faGlobeSolid } from '@fortawesome/pro-solid-svg-icons/faGlobe';
 import { faCalendar } from '@fortawesome/pro-regular-svg-icons/faCalendar';
+import { faCalendarDays as faCalendarDaysSolid } from '@fortawesome/pro-solid-svg-icons/faCalendarDays';
 import { faUserXmark } from '@fortawesome/pro-regular-svg-icons/faUserXmark';
 import { faSquareUser } from '@fortawesome/pro-regular-svg-icons/faSquareUser';
 import { faUserCheck } from '@fortawesome/pro-regular-svg-icons/faUserCheck';
@@ -259,6 +260,7 @@ export const initFontAwesomeIcon = () => {
     faGlobe,
     faGlobeSolid,
     faCalendar,
+    faCalendarDaysSolid,
     faUserXmark,
     faSquareUser,
     faUserCheck,
@@ -463,6 +465,7 @@ export const fontAwesomeIcons = {
   Globe: 'fa-regular fa-globe',
   GlobeSolid: 'fa-solid fa-globe',
   Calendar: 'fa-regular fa-calendar',
+  CalendarDaysSolid: 'fa-solid fa-calendar-days',
   UserXmark: 'fa-regular fa-user-xmark',
   SquareUser: 'fa-regular fa-square-user',
   UserCheck: 'fa-regular fa-user-check',

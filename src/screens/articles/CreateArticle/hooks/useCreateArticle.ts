@@ -5,6 +5,7 @@ import {
 import { Keyboard } from 'react-native';
 
 import shallow from 'zustand/shallow';
+import moment from 'moment';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
 import {
@@ -35,6 +36,7 @@ interface IHandleSaveOptions {
   isNavigateBack?: boolean;
   isShowToast?: boolean;
   shouldValidateSeriesTags?: boolean;
+  onSuccess?: () => void;
 }
 
 const navigation = withNavigation(rootNavigationRef);
@@ -53,7 +55,9 @@ const useCreateArticle = ({
 
   const data = useCreateArticleStore((state) => state.data, shallow) || {};
   const loading = useCreateArticleStore((state) => state.loading);
+  const isValidating = useCreateArticleStore((state) => state.isValidating);
   const isDraft = useCreateArticleStore((state) => state.isDraft);
+  const publishedAt = useCreateArticleStore((state) => state.schedule.publishedAt);
 
   const { showToast } = useModalStore((state) => state.actions);
 
@@ -72,6 +76,8 @@ const useCreateArticle = ({
   );
 
   const { t } = useBaseHook();
+
+  const isValidScheduleTime = moment(publishedAt).isSameOrAfter(moment());
 
   // auto save for draft article, so no need to check if content is empty
   const isDraftContentUpdated
@@ -160,6 +166,7 @@ const useCreateArticle = ({
       series,
       tags,
       status,
+      publishedAt,
     } = article;
     const audienceIds: IEditArticleAudience
       = getAudienceIdsFromAudienceObject(audienceObject);
@@ -176,7 +183,11 @@ const useCreateArticle = ({
       tags,
     };
     actions.setData(data);
-    actions.setIsDraft(status === PostStatus.DRAFT);
+    const isDraft = [PostStatus.DRAFT, PostStatus.WAITING_SCHEDULE].includes(status);
+    actions.setIsDraft(isDraft);
+    if (isDraft) {
+      actions.setPublishedAt(publishedAt || '');
+    }
   };
 
   useEffect(() => {
@@ -195,6 +206,10 @@ const useCreateArticle = ({
 
   const handleTitleChange = (newTitle: string) => {
     actions.setTitle(newTitle);
+  };
+
+  const resetPublishedAt = () => {
+    actions.setPublishedAt(article?.publishedAt || '');
   };
 
   const updateMentions = () => {
@@ -241,10 +256,20 @@ const useCreateArticle = ({
     }
   }, [data.content]);
 
+  const validateSeriesTags = (onSuccess: (response) => void, onError: (error) => void) => {
+    const dataUpdate = useCreateArticleStore.getState().data;
+    const validateParams: IParamsValidateSeriesTags = {
+      groups: dataUpdate?.audience?.groupIds || [],
+      series: dataUpdate?.series?.map?.((item) => item.id) || [],
+      tags: dataUpdate?.tags?.map?.((item) => item.id) || [],
+    };
+    actions.validateSeriesTags(validateParams, onSuccess, onError);
+  };
+
   const handleSave = (options?: IHandleSaveOptions) => {
     Keyboard.dismiss();
     const {
-      isNavigateBack = true, isShowLoading = true, isShowToast = true, shouldValidateSeriesTags,
+      isNavigateBack = true, isShowLoading = true, isShowToast = true, shouldValidateSeriesTags, onSuccess,
     } = options || {};
     updateMentions();
 
@@ -259,21 +284,15 @@ const useCreateArticle = ({
       isNavigateBack,
       isShowToast,
       isShowLoading,
+      onSuccess,
     } as IPayloadPutEditArticle;
 
     if (shouldValidateSeriesTags) {
-      actions.setLoading(true);
-      const validateParams: IParamsValidateSeriesTags = {
-        groups: dataUpdate?.audience?.groupIds || [],
-        series: dataUpdate?.series?.map?.((item) => item.id) || [],
-        tags: dataUpdate?.tags?.map?.((item) => item.id) || [],
-      };
       const onSuccess = () => actions.putEditArticle(putEditArticleParams);
       const onError = (error) => {
-        actions.setLoading(false);
         actions.handleSaveError(error, () => handleSave(options));
       };
-      actions.validateSeriesTags(validateParams, onSuccess, onError);
+      validateSeriesTags(onSuccess, onError);
     } else {
       actions.putEditArticle(putEditArticleParams);
     }
@@ -299,6 +318,17 @@ const useCreateArticle = ({
     useDraftArticleStore.getState().actions.publishDraftArticle(payload);
   };
 
+  const handleSchedule = () => {
+    if (!validButtonPublish) return;
+
+    if (!isValidScheduleTime) {
+      actions.setErrorScheduleSubmiting(t('article:fail_schedule'));
+      return;
+    }
+
+    actions.scheduleArticle();
+  };
+
   const handleBack = (showAlert = false) => {
     if (isChanged || showAlert) {
       Keyboard.dismiss();
@@ -322,6 +352,7 @@ const useCreateArticle = ({
 
   return {
     loading,
+    isValidating,
     isShowToastAutoSave,
     enableButtonSave,
     validButtonPublish,
@@ -334,6 +365,9 @@ const useCreateArticle = ({
     handleBack,
     handleAudiencesChange,
     handlePublish,
+    handleSchedule,
+    validateSeriesTags,
+    resetPublishedAt,
   };
 };
 

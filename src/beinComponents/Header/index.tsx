@@ -70,6 +70,7 @@ export interface HeaderProps {
   stickyHeaderComponent?: React.ReactNode;
   titleHeight?: number;
   headerHeight?: number;
+  renderCustomComponent?: () => ReactElement;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -111,6 +112,7 @@ const Header: React.FC<HeaderProps> = ({
   stickyHeaderComponent,
   titleHeight = 25,
   headerHeight = 210,
+  renderCustomComponent,
 }: HeaderProps) => {
   const [isShowSearch, setIsShowSearch] = useState(false);
   const inputRef = useRef<any>();
@@ -334,6 +336,7 @@ const Header: React.FC<HeaderProps> = ({
             onPress={onPressMenu}
           />
         )}
+        {!!renderCustomComponent && renderCustomComponent()}
         {(!!buttonText || !!buttonProps) && onPressButton && (
           <Button.Primary
             testID="header.button"

@@ -51,6 +51,7 @@ export interface IPayloadPutEditArticle {
   isNavigateBack?: boolean;
   isShowToast?: boolean;
   isShowLoading?: boolean;
+  onSuccess?: () => void;
 }
 
 export interface IParamPutEditArticle
