@@ -49,7 +49,9 @@ Array [
           ]
         }
         testID="notice_panel.title"
-      />
+      >
+        Processing video (count)
+      </Text>
       <Text
         style={
           Array [
@@ -68,6 +70,71 @@ Array [
       >
         The video of your post is being processed. We'll send you a notification when it's completed
       </Text>
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Array [
+          Object {
+            "borderRadius": 8,
+          },
+          Object {
+            "marginLeft": 8,
+          },
+        ]
+      }
+      testID="notice_panel.button_update"
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "borderRadius": 8,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "paddingVertical": 4,
+            },
+            undefined,
+            Object {
+              "backgroundColor": "#7335C0",
+              "height": 36,
+              "paddingHorizontal": 12,
+            },
+          ]
+        }
+        testID="button.content"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
+              },
+              Object {
+                "color": "#FFFFFF",
+              },
+              Array [
+                Object {
+                  "textAlign": "center",
+                },
+                undefined,
+              ],
+            ]
+          }
+          testID="button.text"
+        />
+      </View>
     </View>
     <View
       accessible={true}

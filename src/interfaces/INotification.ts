@@ -21,3 +21,21 @@ export interface IParamSetNotifications {
   unseen?: number;
   notifications?: any[];
 }
+
+export interface INotificationActivitie {
+  id?: string;
+  actor?: any;
+  meida?: any;
+}
+
+export interface ISocketNotification {
+  activities?: INotificationActivitie[];
+  extra?: {
+    type: string;
+  };
+  id?: string;
+  isRead?: boolean;
+  isSeen?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}

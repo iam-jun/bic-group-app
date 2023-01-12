@@ -15,6 +15,16 @@ Array [
   <View
     style={
       Object {
+        "height": 16,
+        "paddingHorizontal": undefined,
+        "paddingVertical": undefined,
+        "width": undefined,
+      }
+    }
+  />
+  <View
+    style={
+      Object {
         "backgroundColor": "#FFFFFF",
         "elevation": 2,
         "flex": 1,

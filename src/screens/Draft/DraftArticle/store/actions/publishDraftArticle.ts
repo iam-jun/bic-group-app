@@ -1,4 +1,3 @@
-import Store from '~/storeRedux';
 import streamApi from '~/api/StreamApi';
 import { IPayloadPublishDraftArticle } from '~/interfaces/IArticle';
 import {
@@ -8,9 +7,9 @@ import showToastError from '~/store/helper/showToastError';
 import { rootNavigationRef } from '~/router/refs';
 import { withNavigation } from '~/router/helper';
 import usePostsStore from '~/store/entities/posts';
-import postActions from '~/storeRedux/post/actions';
 import useHomeStore from '~/screens/Home/store';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
 import { IDraftArticleState } from '..';
 import showToast from '~/store/helper/showToast';
 
@@ -52,7 +51,7 @@ const publishDraftArticle = (set, get) => async (payload: IPayloadPublishDraftAr
         content: 'post:draft:text_processing_publish',
       });
       // navigation.goBack();
-      Store.store.dispatch(postActions.getAllPostContainingVideoInProgress());
+      usePostsInProgressStore.getState().actions.getPosts();
     } else if (replaceWithDetail) {
       navigation.replace(
         articleStack.articleDetail, { articleId: contentData?.id },

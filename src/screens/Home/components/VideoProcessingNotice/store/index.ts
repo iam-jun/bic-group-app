@@ -1,0 +1,56 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
+import { createStore, resetStore } from '~/store/utils';
+import getPostsInProgress from './actions/getPostsInProgress';
+import updatePostsInProgress from './actions/updatePostsInProgress';
+import { ISocketNotification } from '~/interfaces/INotification';
+
+export interface IPostsInProgressState extends IBaseState{
+    total: number,
+    data: any[],
+
+  actions: {
+    setTotal: (newTotal: number) => void;
+    getPosts: () => void;
+    updatePosts: (payload: ISocketNotification) => void;
+  }
+
+  reset?: () => void;
+}
+
+const initialState: InitStateType<IPostsInProgressState> = {
+  total: 0,
+  data: [],
+};
+
+const postsContainingVideoInProgressStore = (set, get) => ({
+  ...initialState,
+
+  actions: {
+    setTotal: (newTotal: number) => {
+      set((state: IPostsInProgressState) => {
+        state.total = newTotal;
+      }, 'updatePostInProgressByNoti');
+    },
+    getPosts: getPostsInProgress(set, get),
+    updatePosts: updatePostsInProgress(set, get),
+  },
+
+  reset: () => resetStore(initialState, set),
+});
+
+const usePostsInProgressStore = createStore<IPostsInProgressState>(
+  postsContainingVideoInProgressStore,
+  {
+    persist: {
+      name: 'PostContainerStore',
+      getStorage: () => AsyncStorage,
+      partialize: (state) => ({
+        total: state.total,
+        data: state.data,
+      }),
+    },
+  },
+);
+
+export default usePostsInProgressStore;

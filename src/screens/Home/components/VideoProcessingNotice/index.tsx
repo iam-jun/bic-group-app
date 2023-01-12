@@ -1,17 +1,13 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
 import { useBaseHook } from '~/hooks';
-import postActions from '~/storeRedux/post/actions';
-import { useKeySelector } from '~/hooks/selector';
-import postKeySelector from '~/storeRedux/post/keySelector';
 import NoticePanel from '~/components/NoticePanel';
+import usePostsInProgressStore from './store';
 
 const VideoProcessingNotice = () => {
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
-
-  const total = useKeySelector(postKeySelector.allPostContainingVideoInProgress);
+  const total = usePostsInProgressStore((state) => state.total);
+  const actions = usePostsInProgressStore((state) => state.actions);
 
   const title = t('home:notice_post_video_uploading:title').replace(
     '(count)',
@@ -19,9 +15,7 @@ const VideoProcessingNotice = () => {
   );
 
   const onClose = () => {
-    dispatch(postActions.setAllPostContainingVideoInProgress({
-      total: 0,
-    }));
+    actions.setTotal(0);
   };
 
   if (!total) return null;

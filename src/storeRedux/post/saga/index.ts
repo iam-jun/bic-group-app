@@ -25,13 +25,12 @@ import putEditPost from '~/storeRedux/post/saga/putEditPost';
 import putMarkAsRead from '~/storeRedux/post/saga/putMarkAsRead';
 import postTypes from '~/storeRedux/post/types';
 import { timeOut } from '~/utils/common';
-import getPostsContainingVideoInProgress from './getPostsContainingVideoInProgress';
 import putMarkSeenPost from './putMarKSeenPost';
-import updatePostsContainingVideoInProgress from './updatePostsContainingVideoInProgress';
 import deletePost from './deletePost';
 import removeAudiencesFromPost from './removeAudiencesFromPost';
 import useDraftPostStore from '../../../screens/Draft/DraftPost/store';
 import useTimelineStore from '~/store/timeline';
+import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
 import showToast from '~/store/helper/showToast';
 import showToastError from '~/store/helper/showToastError';
 
@@ -65,14 +64,6 @@ export default function* postSaga() {
   );
   yield takeLatest(
     postTypes.DELETE_POST_LOCAL, deletePostLocal,
-  );
-  yield takeLatest(
-    postTypes.GET_POSTS_CONTAINING_VIDEO_IN_PROGRESS,
-    getPostsContainingVideoInProgress,
-  );
-  yield takeLatest(
-    postTypes.UPDATE_POSTS_CONTAINING_VIDEO_IN_PROGRESS,
-    updatePostsContainingVideoInProgress,
   );
   yield takeLatest(
     postTypes.REMOVE_POST_AUDIENCES,
@@ -114,7 +105,7 @@ function* postPublishDraftPost({
         content: 'post:draft:text_processing_publish',
       });
       navigation.goBack();
-      yield put(postActions.getAllPostContainingVideoInProgress());
+      usePostsInProgressStore.getState().actions.getPosts();
     } else if (replaceWithDetail) {
       navigation.replace(
         homeStack.postDetail, { post_id: postData?.id },

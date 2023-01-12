@@ -39,6 +39,7 @@ import { IGeneralInformationState } from '~/screens/groups/GeneralInformation/st
 import { IRemoteConfigState } from './remoteConfig';
 import { IGroupsState } from './entities/groups';
 import { IModalState } from './modal';
+import { IPostsInProgressState } from '~/screens/Home/components/VideoProcessingNotice/store';
 
 export interface BicStore {
   entities: {
@@ -142,4 +143,5 @@ export interface BicStore {
   tags: ITagsState;
   remoteConfig: IRemoteConfigState;
   modal: IModalState;
+  postsContainingVideoInProgress: IPostsInProgressState;
 }

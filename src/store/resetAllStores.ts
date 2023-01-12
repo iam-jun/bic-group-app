@@ -44,6 +44,7 @@ import useTagsStore from './entities/tags';
 import useTagsControllerStore from '~/screens/tags/store';
 import useGeneralInformationStore from '~/screens/groups/GeneralInformation/store';
 import useRemoteConfigStore from './remoteConfig';
+import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
 import useCommentInputStore from '~/screens/comments/components/CommentInputView/store';
 
 export const excludedStore = [
@@ -102,6 +103,7 @@ const stores = [
   useTagsControllerStore,
   useGeneralInformationStore,
   useRemoteConfigStore,
+  usePostsInProgressStore,
   useCommentInputStore,
 ];
 
