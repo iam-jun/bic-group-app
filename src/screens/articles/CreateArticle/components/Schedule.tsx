@@ -10,9 +10,10 @@ import ScheduleModal from './ScheduleModal';
 
 type ScheduleProps = {
   articleId: string;
+  isFromReviewSchedule?: boolean;
 };
 
-const Schedule: FC<ScheduleProps> = ({ articleId }) => {
+const Schedule: FC<ScheduleProps> = ({ articleId, isFromReviewSchedule }) => {
   const styles = createStyle();
   const dispatch = useDispatch();
 
@@ -70,7 +71,7 @@ const Schedule: FC<ScheduleProps> = ({ articleId }) => {
   };
 
   const onValidateSuccess = () => {
-    showModal(<ScheduleModal articleId={articleId} />, {
+    showModal(<ScheduleModal articleId={articleId} isFromReviewSchedule={isFromReviewSchedule} />, {
       onClose,
       ...modalizeProps,
     });

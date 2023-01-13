@@ -1,5 +1,7 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React, { FC, useEffect, useState } from 'react';
+import React, {
+  FC, useEffect, useState, useCallback,
+} from 'react';
 import {
   FlatList, ListRenderItem, StyleSheet, View,
 } from 'react-native';
@@ -26,6 +28,9 @@ import ContentSection from './screens/CreateArticleContent/ContentSection';
 import { useBaseHook } from '~/hooks';
 import useCreateArticle from './hooks/useCreateArticle';
 import Schedule from './components/Schedule';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
+import { ArticleBoxScheduleTime } from '~/components/articles';
 
 enum SectionName {
   Title,
@@ -92,6 +97,7 @@ const CreateArticle: FC<CreateArticleProps> = ({
 }: CreateArticleProps) => {
   const articleIdParams = route?.params?.articleId;
   const isFromDraftScreen = route?.params?.isFromDraftScreen;
+  const isFromReviewSchedule = route?.params?.isFromReviewSchedule;
   const isCreateNewArticle = !articleIdParams;
   const screenTitle
     = isCreateNewArticle || isFromDraftScreen ? 'create' : 'edit';
@@ -101,6 +107,11 @@ const CreateArticle: FC<CreateArticleProps> = ({
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
+
+  const articleDetailData = usePostsStore(
+    useCallback(postsSelector.getPost(articleIdParams, {}), [articleIdParams]),
+  );
+  const { publishedAt, status } = articleDetailData;
 
   const articleData = useCreateArticleStore((state) => state.data);
   const actions = useCreateArticleStore((state) => state.actions);
@@ -148,15 +159,19 @@ const CreateArticle: FC<CreateArticleProps> = ({
 
   const disabled = !validButtonPublish || isPublishing;
 
-  const btnPublish = {
+  const btnPublish = (isDraft && !isFromReviewSchedule) && {
     buttonProps: { disabled, loading: isPublishing, style: styles.btnPublish },
     buttonText: t('common:btn_publish'),
     onPressButton: onPressPublish,
   };
 
-  const renderBtnSchedule = () => <Schedule articleId={articleId} />;
+  const renderBtnSchedule = () => {
+    if (isDraft) return (<Schedule articleId={articleId} />);
 
-  const headerButton = isDraft && {
+    return null;
+  };
+
+  const headerButton = {
     renderCustomComponent: renderBtnSchedule,
     ...btnPublish,
   };
@@ -194,6 +209,18 @@ const CreateArticle: FC<CreateArticleProps> = ({
     }
   };
 
+  const renderHeaderComponent = () => (
+    <>
+      {isFromReviewSchedule && (
+        <ArticleBoxScheduleTime
+          publishedAt={publishedAt}
+          status={status}
+        />
+      )}
+      <ViewSpacing height={spacing.margin.large} />
+    </>
+  );
+
   const renderItemSeparator = () => (
     <ViewSpacing height={spacing.margin.large} />
   );
@@ -206,13 +233,14 @@ const CreateArticle: FC<CreateArticleProps> = ({
         title={`article:title:${screenTitle}`}
         onPressBack={isFromDraftScreen ? onPressBackToDraft : undefined}
         {...headerButton}
+        removeBorderAndShadow={isFromReviewSchedule}
       />
       <FlatList
         data={options}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         ItemSeparatorComponent={renderItemSeparator}
-        ListHeaderComponent={renderItemSeparator}
+        ListHeaderComponent={renderHeaderComponent}
         ListFooterComponent={renderItemSeparator}
       />
     </View>

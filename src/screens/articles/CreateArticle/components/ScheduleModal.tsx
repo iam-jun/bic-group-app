@@ -8,6 +8,7 @@ import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { spacing } from '~/theme';
 import useCreateArticle from '../hooks/useCreateArticle';
+import useArticlesStore from '../../ArticleDetail/store';
 import Icon from '~/baseComponents/Icon';
 import modalActions from '~/storeRedux/modal/actions';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
@@ -15,18 +16,24 @@ import { DateInput } from '~/baseComponents/Input';
 import useCreateArticleStore from '../store';
 import { Button } from '~/baseComponents';
 import { useRootNavigation } from '~/hooks/navigation';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 
 type ScheduleModalProps = {
   articleId: string;
+  isFromReviewSchedule?: boolean;
 };
 
-const ScheduleModal: FC<ScheduleModalProps> = ({ articleId }) => {
+const ScheduleModal: FC<ScheduleModalProps> = ({
+  articleId,
+  isFromReviewSchedule = false,
+}) => {
   const dispatch = useDispatch();
   const { t } = useBaseHook();
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
   const { rootNavigation } = useRootNavigation();
+  const articlesActions = useArticlesStore((state) => state.actions);
 
   const { handleSchedule } = useCreateArticle({
     articleId,
@@ -47,9 +54,11 @@ const ScheduleModal: FC<ScheduleModalProps> = ({ articleId }) => {
   const onScheduleSubmitingSuccess = () => {
     setTimeout(() => {
       closeModal();
-      //      rootNavigation.replace(
-      // /* preview schedule article screen here */
-      // , { articleId });
+      if (isFromReviewSchedule) {
+        articlesActions.getArticleDetail(articleId);
+      } else {
+        rootNavigation.replace(articleStack.articleReviewSchedule, { articleId });
+      }
     }, 5000);
   };
 

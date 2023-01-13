@@ -599,6 +599,8 @@
     "text_add_series": "Add series",
     "text_add_tag": "Add tag",
     "text_add_content": "Add content",
+    "text_article_schedule": "Your article is sheduled to publish:",
+    "text_article_schedule_fail": "Failure",
     "article_schedule_title": "Article Schedule",
     "text_schedule": "Schedule",
     "fail_schedule": "Fail Schedule",

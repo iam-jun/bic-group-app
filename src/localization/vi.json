@@ -559,6 +559,8 @@
     "text_add_series": "Thêm series",
     "text_add_tag": "Thêm thẻ",
     "text_add_content": "Thêm nội dung",
+    "text_article_schedule": "Bài báo của bạn dự kiến đăng:",
+    "text_article_schedule_fail": "Thất bại",
     "article_schedule_title": "Đặt lịch bài viết",
     "text_schedule": "Đặt lịch",
     "fail_schedule": "Đặt lịch thất bại",

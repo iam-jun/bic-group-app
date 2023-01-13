@@ -121,6 +121,7 @@ export interface CreateArticleProps {
     params?: {
       articleId?: string;
       isFromDraftScreen?: boolean;
+      isFromReviewSchedule?: boolean;
     };
   };
 }
