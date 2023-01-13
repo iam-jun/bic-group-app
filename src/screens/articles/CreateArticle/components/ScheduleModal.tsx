@@ -182,7 +182,7 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
   );
 
   return (
-    <View>
+    <View testID="schedule_modal">
       {!hasResultSchedule && (
         <ViewSpacing height={spacing.padding.extraLarge} />
       )}

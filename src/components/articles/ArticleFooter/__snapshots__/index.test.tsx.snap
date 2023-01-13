@@ -35,7 +35,6 @@ exports[`ArticleFooter Component renders correctly 1`] = `
         Object {
           "height": 28,
           "marginBottom": 8,
-          "marginTop": 2,
         },
       ]
     }

@@ -23,7 +23,7 @@ exports[`Collapsible Text component renders correctly 1`] = `
         Object {
           "color": "#212745",
           "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 15,
+          "fontSize": 14,
         },
         Object {},
         undefined,
@@ -90,7 +90,7 @@ exports[`Collapsible Text component renders correctly testID 1`] = `
         Object {
           "color": "#212745",
           "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 15,
+          "fontSize": 14,
         },
         Object {},
         undefined,

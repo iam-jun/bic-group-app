@@ -123,7 +123,7 @@ exports[`TitleSection should render correctly 1`] = `
                   Object {
                     "color": "#212745",
                     "fontFamily": "BeVietnamPro-Light",
-                    "fontSize": 15,
+                    "fontSize": 14,
                   },
                   Object {
                     "color": "#282E53",

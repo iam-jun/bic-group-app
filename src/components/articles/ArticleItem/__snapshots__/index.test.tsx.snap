@@ -741,24 +741,26 @@ exports[`ArticleItem Component renders correctly 1`] = `
         </Text>
       </Text>
     </View>
-    <View
-      style={
-        Array [
-          Object {
-            "alignSelf": "stretch",
-            "backgroundColor": "#E3E6F2",
-            "height": 1,
-            "marginHorizontal": 0,
-            "width": undefined,
-          },
-          Object {
-            "marginTop": 12,
-          },
-        ]
-      }
-      testID="divider"
-    />
   </View>
+  <View
+    style={
+      Array [
+        Object {
+          "alignSelf": "stretch",
+          "backgroundColor": "#E3E6F2",
+          "height": 1,
+          "marginHorizontal": 0,
+          "width": undefined,
+        },
+        Object {
+          "marginBottom": 8,
+          "marginHorizontal": 16,
+          "marginTop": 12,
+        },
+      ]
+    }
+    testID="divider"
+  />
   <View
     testID="article_footer"
   >
@@ -1010,7 +1012,7 @@ exports[`ArticleItem Component renders correctly 1`] = `
                   Object {
                     "color": "#212745",
                     "fontFamily": "BeVietnamPro-Light",
-                    "fontSize": 15,
+                    "fontSize": 14,
                   },
                   Object {
                     "color": "#282E53",
@@ -1141,7 +1143,7 @@ exports[`ArticleItem Component renders correctly 1`] = `
                   Object {
                     "color": "#212745",
                     "fontFamily": "BeVietnamPro-Light",
-                    "fontSize": 15,
+                    "fontSize": 14,
                   },
                   Object {
                     "color": "#282E53",

@@ -1,17 +1,14 @@
 import React from 'react';
 
-import {
-  act, fireEvent, renderWithRedux,
-} from '~/test/testUtils';
+import { act, fireEvent, renderWithRedux } from '~/test/testUtils';
 import { mockArticle } from '~/test/mock_data/article';
 import MockedNavigator from '~/test/MockedNavigator';
 import usePostsStore from '~/store/entities/posts';
 import { IPost, PostStatus } from '~/interfaces/IPost';
-import Schedule from './Schedule';
-import streamApi from '~/api/StreamApi';
+import ScheduleModal from './ScheduleModal';
 import useCreateArticleStore from '../store';
 
-describe('Schedule', () => {
+describe('ScheduleModal', () => {
   it('should render correctly', () => {
     const article = { ...mockArticle };
     article.status = PostStatus.DRAFT;
@@ -23,7 +20,7 @@ describe('Schedule', () => {
     const wrapper = renderWithRedux(
       <MockedNavigator
         component={() => (
-          <Schedule
+          <ScheduleModal
             articleId={article.id}
           />
         )}
@@ -33,22 +30,20 @@ describe('Schedule', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should validate series vs tags', async () => {
-    const spyApiValidateSeriesTagsOfArticle = jest.spyOn(streamApi, 'validateSeriesTagsOfArticle').mockImplementation(
-      () => Promise.resolve() as any,
-    );
-
+  it('should enable button schedule if date time is set', () => {
     const article = { ...mockArticle };
     article.status = PostStatus.DRAFT;
+    article.publishedAt = '2023-01-13T11:00:00.963Z';
 
     act(() => {
       usePostsStore.getState().actions.addToPosts({ data: article as IPost });
+      useCreateArticleStore.getState().actions.setPublishedAt(article.publishedAt);
     });
 
     const wrapper = renderWithRedux(
       <MockedNavigator
         component={() => (
-          <Schedule
+          <ScheduleModal
             articleId={article.id}
           />
         )}
@@ -56,31 +51,23 @@ describe('Schedule', () => {
     );
 
     const btn = wrapper.getByTestId('button.content');
-
-    act(() => {
-      fireEvent.press(btn);
-    });
-
-    expect(useCreateArticleStore.getState().isValidating).toBe(true);
-    expect(spyApiValidateSeriesTagsOfArticle).toBeCalled();
+    expect(btn).toBeDefined();
+    expect(btn.props?.style?.[2]?.backgroundColor).toBe('#7335C0');
   });
 
-  it('validate series vs tags fail', async () => {
-    const spyApiValidateSeriesTagsOfArticle = jest.spyOn(streamApi, 'validateSeriesTagsOfArticle').mockImplementation(
-      () => Promise.reject() as any,
-    );
-
+  it('should show error if date time is smaller than current', () => {
     const article = { ...mockArticle };
     article.status = PostStatus.DRAFT;
 
     act(() => {
       usePostsStore.getState().actions.addToPosts({ data: article as IPost });
+      useCreateArticleStore.getState().actions.setPublishedAt('2023-01-11T11:00:00.963Z');
     });
 
     const wrapper = renderWithRedux(
       <MockedNavigator
         component={() => (
-          <Schedule
+          <ScheduleModal
             articleId={article.id}
           />
         )}
@@ -88,11 +75,30 @@ describe('Schedule', () => {
     );
 
     const btn = wrapper.getByTestId('button.content');
+    expect(btn).toBeDefined();
+    fireEvent.press(btn);
+    expect(useCreateArticleStore.getState().schedule.errorSubmiting).toBeTruthy();
+  });
+
+  it('should show success if schedule success', () => {
+    const article = { ...mockArticle };
+    article.status = PostStatus.DRAFT;
 
     act(() => {
-      fireEvent.press(btn);
+      usePostsStore.getState().actions.addToPosts({ data: article as IPost });
+      useCreateArticleStore.getState().actions.setIsScheduleSubmitingSuccess(true);
     });
 
-    expect(spyApiValidateSeriesTagsOfArticle).toBeCalled();
+    const wrapper = renderWithRedux(
+      <MockedNavigator
+        component={() => (
+          <ScheduleModal
+            articleId={article.id}
+          />
+        )}
+      />,
+    );
+
+    expect(wrapper).toMatchSnapshot();
   });
 });

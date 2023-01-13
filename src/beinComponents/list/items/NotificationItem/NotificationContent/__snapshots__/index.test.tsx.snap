@@ -36,7 +36,7 @@ exports[`NotificationContent component renders correctly 1`] = `
               Object {
                 "color": "#212745",
                 "fontFamily": "BeVietnamPro-Light",
-                "fontSize": 15,
+                "fontSize": 14,
                 "fontWeight": "bold",
               }
             }
@@ -47,7 +47,7 @@ exports[`NotificationContent component renders correctly 1`] = `
                   Object {
                     "color": "#212745",
                     "fontFamily": "BeVietnamPro-Light",
-                    "fontSize": 15,
+                    "fontSize": 14,
                     "fontWeight": "bold",
                   },
                   Object {},
@@ -63,7 +63,7 @@ exports[`NotificationContent component renders correctly 1`] = `
                 Object {
                   "color": "#212745",
                   "fontFamily": "BeVietnamPro-Light",
-                  "fontSize": 15,
+                  "fontSize": 14,
                 },
                 Object {},
               ]
@@ -82,7 +82,7 @@ exports[`NotificationContent component renders correctly 1`] = `
         Object {
           "color": "#212745",
           "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 15,
+          "fontSize": 14,
         },
         Object {
           "color": "#282E53",
@@ -112,7 +112,7 @@ exports[`NotificationContent component renders correctly 1`] = `
     }
     testID="notification_item.time_view"
   >
-    33w
+    35w
   </Text>
 </View>
 `;

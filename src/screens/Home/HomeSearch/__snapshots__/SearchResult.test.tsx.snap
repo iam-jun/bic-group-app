@@ -350,7 +350,7 @@ exports[`SearchResult component should render empty search result 1`] = `
               Object {
                 "color": "#212745",
                 "fontFamily": "BeVietnamPro-Light",
-                "fontSize": 15,
+                "fontSize": 14,
               },
               Object {},
               Object {
@@ -683,7 +683,6 @@ exports[`SearchResult component should render list search result 1`] = `
           "createdBy": 33,
           "highlight": "==Important== post",
           "id": "29",
-          "isDraft": false,
           "media": Object {
             "files": Array [],
             "images": Array [],
@@ -699,6 +698,7 @@ exports[`SearchResult component should render list search result 1`] = `
             "importantExpiredAt": "2022-04-20T11:07:08.129Z",
             "isImportant": true,
           },
+          "status": "PUBLISHED",
         },
       ]
     }
@@ -1308,7 +1308,7 @@ exports[`SearchResult component should render list search result 1`] = `
                                 Object {
                                   "color": "#212745",
                                   "fontFamily": "BeVietnamPro-Light",
-                                  "fontSize": 15,
+                                  "fontSize": 14,
                                 },
                                 Object {},
                                 Object {
@@ -1325,7 +1325,7 @@ exports[`SearchResult component should render list search result 1`] = `
                                   Object {
                                     "color": "#212745",
                                     "fontFamily": "BeVietnamPro-Light",
-                                    "fontSize": 15,
+                                    "fontSize": 14,
                                   },
                                   Object {},
                                 ]
@@ -1340,7 +1340,7 @@ exports[`SearchResult component should render list search result 1`] = `
                                 Object {
                                   "color": "#212745",
                                   "fontFamily": "BeVietnamPro-Light",
-                                  "fontSize": 15,
+                                  "fontSize": 14,
                                 },
                                 Object {},
                               ]
