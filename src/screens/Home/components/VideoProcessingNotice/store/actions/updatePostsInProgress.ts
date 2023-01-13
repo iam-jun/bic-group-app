@@ -6,12 +6,39 @@ import useHomeStore from '~/screens/Home/store';
 import { AttributeFeed, ContentFeed } from '~/interfaces/IFeed';
 import { IPostsInProgressState } from '..';
 import { ISocketNotification } from '~/interfaces/INotification';
+import postActions from '~/storeRedux/post/actions';
+import Store from '~/storeRedux';
 
 const updatePostsInProgress = (set, get) => async (
   payload: ISocketNotification,
 ) => {
   try {
-    const postId = payload?.activities?.[0]?.id || '';
+    const activities = payload?.activities || [];
+    if (activities?.length > 0) {
+      const postData = activities[0];
+      const postId = postData?.id || '';
+      const type = payload?.extra?.type || '';
+      updateData(set, get)(type, postId, postData);
+    } else {
+      const { type, postId } = payload || {};
+      if (!!postId) {
+        Store.store.dispatch(postActions.getPostDetail({ postId }));
+        updateData(set, get)(type, postId);
+      }
+    }
+  } catch (e: any) {
+    console.error(
+      '\x1b[31m🐣️ updatePostsContainingVideoInProgress error: ',
+      e,
+      '\x1b[0m',
+    );
+  }
+};
+
+const updateData = (set, get) => (
+  type: string, postId: string, postData?: any,
+) => {
+  try {
     if (!!postId) {
       const data:IPostsInProgressState = get();
       const { total = 0, data: posts = [] } = data;
@@ -23,22 +50,23 @@ const updatePostsInProgress = (set, get) => async (
           state.data = newPosts;
         }, 'updatePostContainingVideoInProgressByNoti');
         if (
-          payload?.extra?.type
-          === NOTIFICATION_TYPE.POST_VIDEO_TO_USER_SUCCESSFUL
+          type === NOTIFICATION_TYPE.POST_VIDEO_TO_USER_SUCCESSFUL
         ) {
           const feed
-            = useHomeStore.getState().feed[ContentFeed.ALL][AttributeFeed.ALL];
+              = useHomeStore.getState().feed[ContentFeed.ALL][AttributeFeed.ALL];
           const homePosts = feed.data || [];
           const filterPosts = homePosts.filter((item) => item === postId);
           const isExisted = filterPosts.length > 0;
           if (!isExisted) {
             const newHomePosts = [
-              payload.activities[0].id,
+              postId,
               ...homePosts,
             ] as any;
-            usePostsStore.getState().actions.addToPosts({
-              data: { ...payload.activities[0] },
-            } as IPayloadAddToAllPost);
+            if (!!postData) {
+              usePostsStore.getState().actions.addToPosts({
+                data: { ...postData },
+              } as IPayloadAddToAllPost);
+            }
             useHomeStore
               .getState()
               .actions.setDataFeed(
@@ -52,7 +80,7 @@ const updatePostsInProgress = (set, get) => async (
     }
   } catch (e: any) {
     console.error(
-      '\x1b[31m🐣️ updatePostsInProgress error: ',
+      '\x1b[31m🐣️ update data error: ',
       e,
       '\x1b[0m',
     );

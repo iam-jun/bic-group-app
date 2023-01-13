@@ -11,6 +11,7 @@ import markAsUnRead from './actions/markAsUnRead';
 import registerPushToken from './actions/registerPushToken';
 import update from './actions/update';
 import INotificationsState from './Interface';
+import handleNotiBackground from './actions/handleNotiBackground';
 
 const initState: INotificationsState = {
   loading: false,
@@ -64,6 +65,7 @@ const notificationStore = (set, get) => ({
       }, 'setPushToken');
     },
     registerPushToken: registerPushToken(set, get),
+    handleNotiBackground: handleNotiBackground(set, get),
   },
 
   reset: () => resetStore(initState, set),

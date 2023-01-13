@@ -38,4 +38,6 @@ export interface ISocketNotification {
   isSeen?: boolean;
   createdAt?: string;
   updatedAt?: string;
+  type?: string;
+  postId?: string;
 }
