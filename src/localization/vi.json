@@ -1003,9 +1003,8 @@
     "community_menu": {
       "your_communities": "Cộng đồng đã tham gia",
       "your_groups": "Nhóm đã tham gia",
-      "managed": "Quản lý",
       "owner": "Sở hữu",
-      "manage": "Quản trị",
+      "managed_groups": "Quản lý nhóm",
       "you_have_not_owner_community": "Bạn không sở hữu cộng đồng nào",
       "you_have_not_manage_communiy_or_group": "Bạn không quản lý cộng đồng hoặc nhóm nào",
       "you_dont_have_any_community_group": "You don't have any communities or groups"

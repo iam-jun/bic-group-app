@@ -40,10 +40,6 @@ describe('leaveGroup', () => {
       .spyOn(groupApi, 'getManagedCommunityAndGroup')
       .mockImplementation(() => Promise.resolve(response) as any);
 
-    const spyApiGetOwnerCommunity = jest
-      .spyOn(groupApi, 'getOwnerCommunity')
-      .mockImplementation(() => Promise.resolve(response) as any);
-
     const showToast = jest.fn();
     const actions = { showToast };
     jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
@@ -62,7 +58,6 @@ describe('leaveGroup', () => {
     expect(spyApiGetGroupDetail).toBeCalledWith(groupId);
     expect(spyApiGetJoinedAllGroups).toBeCalled();
     expect(spyApiGetManagedCommunityAndGroup).toBeCalled();
-    expect(spyApiGetOwnerCommunity).toBeCalled();
     expect(showToast).toBeCalledWith({
       content: 'groups:modal_confirm_leave_group:success_message',
       type: ToastType.SUCCESS,

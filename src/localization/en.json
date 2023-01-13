@@ -1061,9 +1061,8 @@
     "community_menu": {
       "your_communities": "Your Communities",
       "your_groups": "Your Groups",
-      "managed": "Managed",
       "owner": "Own",
-      "manage": "Manage",
+      "managed_groups": "Managed Groups",
       "you_have_not_owner_community": "You don't own any communities",
       "you_have_not_manage_communiy_or_group": "You don't manage any communities or groups",
       "you_dont_have_any_community_group": "You don't have any communities or groups"

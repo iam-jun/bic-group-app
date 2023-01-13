@@ -32,10 +32,6 @@ describe('leaveCommunity', () => {
       .spyOn(groupApi, 'getManagedCommunityAndGroup')
       .mockImplementation(() => Promise.resolve(response) as any);
 
-    const spyApiGetOwnerCommunity = jest
-      .spyOn(groupApi, 'getOwnerCommunity')
-      .mockImplementation(() => Promise.resolve(response) as any);
-
     const spyApiGetJoinedCommunities = jest
       .spyOn(groupApi, 'getJoinedCommunities')
       .mockImplementation(() => Promise.resolve(response) as any);
@@ -59,7 +55,6 @@ describe('leaveCommunity', () => {
       data: { joinStatus: status },
     });
     expect(spyApiGetManagedCommunityAndGroup).toBeCalled();
-    expect(spyApiGetOwnerCommunity).toBeCalled();
     expect(spyApiGetJoinedCommunities).toBeCalled();
     expect(showToast).toBeCalledWith({
       content: 'communities:modal_confirm_leave_community:success_message',

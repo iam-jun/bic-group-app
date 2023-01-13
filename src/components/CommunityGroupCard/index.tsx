@@ -23,6 +23,7 @@ type CommunityGroupCardProps = {
   item: any;
   testID?: string;
   shouldShowAlertJoinTheCommunityFirst?: boolean;
+  isManagedGroups?: boolean;
   onJoin?: (id: string, name: string, isGroup?: boolean)=>void;
   onCancel?: (id: string, name: string, isGroup?: boolean)=>void;
 };
@@ -31,6 +32,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
   item,
   testID,
   shouldShowAlertJoinTheCommunityFirst,
+  isManagedGroups,
   onJoin,
   onCancel,
 }) => {
@@ -108,6 +110,13 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
     }
   };
 
+  const renderLabel = () => {
+    if (isGroup(item) || isManagedGroups) {
+      return t('common:text_group');
+    }
+    return t('common:text_community');
+  };
+
   return (
     <View testID={testID} style={[styles.container, elevations.e1]}>
       {isGroup(item) && (
@@ -158,9 +167,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
                 style={styles.tagContainer}
                 type="secondary"
                 size="small"
-                label={t(
-                  isGroup(item) ? 'common:text_group' : 'common:text_community',
-                )}
+                label={renderLabel()}
               />
             </View>
           </View>
