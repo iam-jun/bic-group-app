@@ -10,11 +10,15 @@ import Icon from '~/baseComponents/Icon';
 type EditActionProps = {
     style?: StyleProp<ViewStyle>;
     onPress: () => void;
-    type: 'add' | 'edit'
+    type: 'add' | 'edit';
+    disabled?: boolean;
 }
 
-const EditAction: FC<EditActionProps> = ({ style, onPress, type }) => {
+const EditAction: FC<EditActionProps> = ({
+  style, onPress, type, disabled,
+}) => {
   const theme: ExtendedTheme = useTheme();
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const iconName = type === 'add' ? 'Plus' : 'Pen';
@@ -23,10 +27,11 @@ const EditAction: FC<EditActionProps> = ({ style, onPress, type }) => {
     <Button
       style={[StyleSheet.absoluteFillObject]}
       onPress={onPress}
+      disabled={disabled}
     >
       <View style={styles.btnPosition}>
         <View style={[styles.container, style]}>
-          <Icon icon={iconName} size={14} tintColor={theme.colors.neutral40} />
+          <Icon icon={iconName} size={14} tintColor={disabled ? colors.neutral20 : colors.neutral40} />
         </View>
       </View>
     </Button>

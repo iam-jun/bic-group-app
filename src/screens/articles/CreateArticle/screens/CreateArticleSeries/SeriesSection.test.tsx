@@ -31,4 +31,28 @@ describe('SeriesSection', () => {
 
     expect(wrapper).toMatchSnapshot();
   });
+
+  it('should disabled if audience is empty', () => {
+    const article = { ...mockArticle };
+    article.audience.groups = [];
+
+    act(() => {
+      usePostsStore.getState().actions.addToPosts({ data: article as IPost });
+    });
+    renderHook(() => useCreateArticle({ articleId: article.id }));
+
+    const wrapper = renderWithRedux(
+      <MockedNavigator
+        component={() => (
+          <SeriesSection
+            onPress={() => {
+              // do something
+            }}
+          />
+        )}
+      />,
+    );
+
+    expect(wrapper).toMatchSnapshot();
+  });
 });

@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
+import { isEmpty } from 'lodash';
 import { useBaseHook } from '~/hooks';
 import useCreateArticleStore from '../../store';
 import PreviewSection from '../../components/PreviewSection';
@@ -14,7 +15,10 @@ const SeriesSection: FC<SeriesSectionProps> = ({ onPress }) => {
   const { t } = useBaseHook();
   const styles = createStyle();
 
+  const audience = useCreateArticleStore((state) => state.data.audience);
   const series = useCreateArticleStore((state) => state.data.series);
+
+  const hasAudience = !(isEmpty(audience?.groupIds) && isEmpty(audience?.userIds));
 
   const renderContent = () => {
     if (!series || series.length === 0) return null;
@@ -44,6 +48,7 @@ const SeriesSection: FC<SeriesSectionProps> = ({ onPress }) => {
         onPress={onPress}
         placeholder={t('article:text_add_series')}
         content={renderContent()}
+        disabled={!hasAudience}
       />
     </View>
   );
