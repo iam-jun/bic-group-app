@@ -1,7 +1,6 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 import { Avatar, Button } from '~/baseComponents';
 import Icon from '~/baseComponents/Icon';
 import Tag from '~/baseComponents/Tag';
@@ -14,10 +13,10 @@ import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { isGroup } from '~/helpers/groups';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
-import modalActions from '~/storeRedux/modal/actions';
 import { spacing } from '~/theme';
 import { formatLargeNumber } from '~/utils/formatData';
 import ButtonCommunityGroupCard from './ButtonCommunityGroupCard';
+import useModalStore from '~/store/modal';
 
 type CommunityGroupCardProps = {
   item: any;
@@ -36,7 +35,6 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
   onJoin,
   onCancel,
 }) => {
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
@@ -56,6 +54,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
   const privacyData: any = GroupPrivacyDetail[privacy] || {};
   const { icon: privacyIcon, title: privacyTitle } = privacyData;
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const onView = () => {
     if (isGroup(item)) {
@@ -85,11 +84,11 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
 
   const handleJoin = () => {
     if (!!shouldShowAlertJoinTheCommunityFirst && community?.joinStatus === GroupJoinStatus.VISITOR) {
-      dispatch(modalActions.showAlert({
+      showAlert({
         title: t('communities:browse_groups:guest_view_alert:title'),
         content: t('communities:browse_groups:guest_view_alert:content'),
         confirmLabel: t('common:text_ok'),
-      }));
+      });
       return;
     }
     if (!!onJoin) {

@@ -13,6 +13,7 @@ import ReportContent from '~/components/ReportContent';
 import { TargetType } from '~/interfaces/IReport';
 import useGroupsStore from '~/store/entities/groups';
 import groupsSelector from '~/store/entities/groups/selectors';
+import useModalStore from '~/store/modal';
 
 interface GroupMemberOptionsMenuProps {
   groupId: string;
@@ -32,6 +33,7 @@ const GroupMemberOptionsMenu = ({
 
   const groupDetail = useGroupsStore(groupsSelector.getGroup(groupId, {}));
   const { group: { communityId } } = groupDetail || {};
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const actions = useGroupMemberStore((state) => state.actions);
   const deleteRemoveGroupMember = useGroupMemberStore(
@@ -60,13 +62,13 @@ const GroupMemberOptionsMenu = ({
   const onPressRevokeAdminRole = () => {
     if (!selectedMember?.id) return;
 
-    dispatch(modalActions.showAlert({
+    showAlert({
       title: t('groups:modal_confirm_remove_admin:title'),
       content: t('groups:modal_confirm_remove_admin:content').replace('{0}', selectedMember.fullname),
       confirmLabel: t('groups:modal_confirm_remove_admin:button_confirm'),
       cancelBtn: true,
       onConfirm: onConfirmRemoveAdminRole,
-    }));
+    });
   };
 
   const onConfirmRemoveMember = () => {
@@ -76,13 +78,13 @@ const GroupMemberOptionsMenu = ({
   };
 
   const onPressRemoveMember = () => {
-    dispatch(modalActions.showAlert({
+    showAlert({
       title: t('groups:modal_confirm_remove_member:title'),
       content: t('groups:modal_confirm_remove_member:content'),
       confirmLabel: t('groups:modal_confirm_remove_member:button_remove'),
       cancelBtn: true,
       onConfirm: onConfirmRemoveMember,
-    }));
+    });
   };
 
   const onPressReportMember = () => {

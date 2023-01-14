@@ -3,7 +3,6 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { cloneDeep, debounce, isEmpty } from 'lodash';
-import { useDispatch } from 'react-redux';
 import Text from '~/baseComponents/Text';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
@@ -11,12 +10,12 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import { IGroup } from '~/interfaces/IGroup';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import modalActions from '~/storeRedux/modal/actions';
 import AlertAssignGroupConfirmContent from '~/screens/PermissionScheme/GroupSchemeAssignment/components/AlertAssignGroupConfirmContent';
 import spacing from '~/theme/spacing';
 import usePermissionSchemeStore from '../store';
 import { GroupTreeItem } from '~/components/groups';
 import useGroupTreeStore from '~/components/groups/store';
+import useModalStore from '~/store/modal';
 
  interface Props {
   route?: {
@@ -28,10 +27,11 @@ import useGroupTreeStore from '~/components/groups/store';
 
 const GroupSchemeAssignment = ({ route }: Props) => {
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
+
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const communityId = route?.params?.communityId;
   const { loading: loadingSchemes, allSchemes } = usePermissionSchemeStore((state) => state.schemes) || {};
@@ -50,14 +50,14 @@ const GroupSchemeAssignment = ({ route }: Props) => {
 
   const onPressBack = () => {
     if (!isEmpty(dataAssigning)) {
-      dispatch(modalActions.showAlert({
+      showAlert({
         title: t('communities:permission:text_title_discard_create_scheme'),
         content: t('communities:permission:text_desc_discard_create_scheme'),
         cancelBtn: true,
         cancelLabel: t('common:btn_discard'),
         confirmLabel: t('communities:permission:btn_continue'),
         onCancel: rootNavigation.goBack,
-      }));
+      });
     } else {
       rootNavigation.goBack();
     }
@@ -106,7 +106,7 @@ const GroupSchemeAssignment = ({ route }: Props) => {
 
   const onPressAssign = () => {
     if (communityId && !isEmpty(dataAssigning)) {
-      dispatch(modalActions.showAlert({
+      showAlert({
         title: t('communities:permission:text_title_assign_group_confirm'),
         cancelBtn: true,
         cancelLabel: t('common:btn_cancel'),
@@ -114,7 +114,7 @@ const GroupSchemeAssignment = ({ route }: Props) => {
         onConfirm: assignSchemesToGroups,
         style: { width: '90%' },
         children: <AlertAssignGroupConfirmContent />,
-      }));
+      });
     }
   };
 

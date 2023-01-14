@@ -23,7 +23,6 @@ import { ITabTypes } from '~/interfaces/IRouter';
 import NewsfeedSearch from '~/screens/Home/HomeSearch';
 import homeActions from '~/storeRedux/home/actions';
 import homeKeySelector from '~/storeRedux/home/keySelector';
-import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import { openUrl } from '~/utils/link';
 import getEnv from '~/utils/env';
@@ -31,6 +30,7 @@ import HomeHeader from '~/screens/Home/components/HomeHeader';
 import useHomeStore from '~/screens/Home/store';
 import useCommonController from '../store';
 import useFilterToolbarStore from '~/components/FilterToolbar/store';
+import useModalStore from '~/store/modal';
 import usePostsInProgressStore from './components/VideoProcessingNotice/store';
 
 const Home = () => {
@@ -47,6 +47,7 @@ const Home = () => {
 
   const commonActions = useCommonController((state) => state.actions);
   const resetFilter = useFilterToolbarStore((state) => state.reset);
+  const { showAlert } = useModalStore((state) => state.actions);
   const postContainingVideoInProgressActions = usePostsInProgressStore((state) => state.actions);
 
   const token = useAuthController(getAuthToken);
@@ -168,10 +169,10 @@ const Home = () => {
 
   const navigateToChat = () => {
     openUrl(getEnv('BEIN_CHAT_DEEPLINK'), () => {
-      dispatch(modalActions.showAlert({
+      showAlert({
         title: t('home:title_install_chat'),
         content: t('home:text_desc_install_chat'),
-      }));
+      });
     });
   };
 

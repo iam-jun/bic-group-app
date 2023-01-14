@@ -17,9 +17,9 @@ import useCommentsStore from '~/store/entities/comments';
 import commentsSelector from '~/store/entities/comments/selectors';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import modalActions from '~/storeRedux/modal/actions';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
+import useModalStore from '~/store/modal';
 
 const usePostDetailContent = ({ postId, notificationId, HeaderImageComponent }) => {
   const dispatch = useDispatch();
@@ -33,6 +33,7 @@ const usePostDetailContent = ({ postId, notificationId, HeaderImageComponent }) 
   const internetReachableRef = useRef(true);
 
   const userId = useUserIdAuth();
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const actor = usePostsStore(useCallback(postsSelector.getActor(postId), [postId]));
   const deleted = usePostsStore(useCallback(postsSelector.getDeleted(postId), [postId]));
@@ -61,29 +62,25 @@ const usePostDetailContent = ({ postId, notificationId, HeaderImageComponent }) 
   const showNotice = (isSetRefreshing?: boolean) => {
     isSetRefreshing && setRefreshing(true);
     setIsEmptyContent(true);
-    dispatch(
-      modalActions.showAlert({
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        HeaderImageComponent,
-        title: t('post:deleted_post:title'),
-        titleProps: { style: { flex: 1, textAlign: 'center' } },
-        cancelBtn: false,
-        isDismissible: true,
-        onConfirm: () => {
-          rootNavigation.canGoBack && rootNavigation.goBack();
-        },
-        confirmLabel: t('post:deleted_post:button_text'),
-        content: t('post:deleted_post:description'),
-        contentProps: { style: { textAlign: 'center' } },
-        ContentComponent: Text.BodyS,
-        buttonViewStyle: { justifyContent: 'center' },
-        headerStyle: { marginBottom: 0 },
-        onDismiss: () => {
-          rootNavigation.canGoBack && rootNavigation.goBack();
-        },
-      }),
-    );
+    showAlert({
+      HeaderImageComponent,
+      title: t('post:deleted_post:title'),
+      titleProps: { style: { flex: 1, textAlign: 'center' } },
+      cancelBtn: false,
+      isDismissible: true,
+      onConfirm: () => {
+        rootNavigation.canGoBack && rootNavigation.goBack();
+      },
+      confirmLabel: t('post:deleted_post:button_text'),
+      content: t('post:deleted_post:description'),
+      contentProps: { style: { textAlign: 'center' } },
+      ContentComponent: Text.BodyS,
+      buttonViewStyle: { justifyContent: 'center' },
+      headerStyle: { marginBottom: 0 },
+      onDismiss: () => {
+        rootNavigation.canGoBack && rootNavigation.goBack();
+      },
+    });
     isSetRefreshing && setRefreshing(false);
   };
 

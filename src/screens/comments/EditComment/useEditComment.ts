@@ -13,7 +13,6 @@ import useEditCommentController from './store';
 import useCommentInputStore from '../components/CommentInputView/store';
 import ICommentInputState from '../components/CommentInputView/store/Interface';
 import ImageUploader from '~/services/imageUploader';
-import modalActions from '~/storeRedux/modal/actions';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { useBaseHook } from '~/hooks';
@@ -59,7 +58,7 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
 
   const [contentLoading, setContentLoading] = useState(true);
 
-  const { showToast } = useModalStore((state) => state.actions);
+  const { showToast, showAlert } = useModalStore((state) => state.actions);
 
   const isContentHasChange = text !== oldContent;
   const isImageHasChange = oldImages?.[0]?.origin_name
@@ -255,14 +254,14 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
     Keyboard.dismiss();
 
     if (isEditHasChange) {
-      Store.store.dispatch(modalActions.showAlert({
+      showAlert({
         title: t('common:label_discard_changes'),
         content: t('common:text_discard_warning'),
         cancelBtn: true,
         cancelLabel: t('common:btn_continue_editing'),
         confirmLabel: t('common:btn_discard'),
         onConfirm: () => navigation.goBack(),
-      }));
+      });
       return;
     }
     navigation.goBack();

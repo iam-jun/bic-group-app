@@ -5,9 +5,8 @@ import { Button } from '~/baseComponents';
 import ApiErrorCode from '~/constants/apiErrorCode';
 import InvalidSeriesTagsContentModal from '~/screens/articles/CreateArticle/components/InvalidSeriesTagsContentModal';
 import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
+import showAlert from '~/store/helper/showAlert';
 import showToastError from '~/store/helper/showToastError';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
 
 const handleValidateSeriesTagsError = (set, get, error: any, onNext: () => void) => {
   const {
@@ -25,7 +24,7 @@ const handleValidateSeriesTagsError = (set, get, error: any, onNext: () => void)
     onNext?.();
   };
 
-  Store.store.dispatch(modalActions.showAlert({
+  showAlert({
     title: i18next.t('article:modal_invalid_series_tags:title'),
     children: <InvalidSeriesTagsContentModal seriesNames={seriesNames} tagNames={tagNames} />,
     cancelBtn: true,
@@ -33,7 +32,7 @@ const handleValidateSeriesTagsError = (set, get, error: any, onNext: () => void)
     ConfirmBtnComponent: Button.Danger,
     onConfirm: removeSeriesTags,
     confirmBtnProps: { type: 'ghost' },
-  }));
+  });
 };
 
 const handleSaveError = (set, get) => (error, onNext) => {

@@ -1,15 +1,14 @@
 import { StyleSheet, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import Text from '~/baseComponents/Text';
 import { Toggle } from '~/baseComponents';
 import { spacing } from '~/theme';
 import Icon from '~/baseComponents/Icon';
-import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
 import { CommunityPrivacyType, GroupPrivacyType } from '~/constants/privacyTypes';
+import useModalStore from '~/store/modal';
 
 interface JoinRequestSettingProps {
   type: 'community' | 'group';
@@ -31,7 +30,7 @@ const JoinRequestSetting = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
   const [isChecked, setIsChecked] = useState(isJoinApproval || false);
-  const dispatch = useDispatch();
+  const { showAlert } = useModalStore((state) => state.actions);
   const { t } = useBaseHook();
 
   const isSecretPrivacy = privacy === CommunityPrivacyType.SECRET
@@ -81,7 +80,7 @@ const JoinRequestSetting = ({
       confirmLabel: t('common:btn_cancel'),
     };
 
-    dispatch(modalActions.showAlert(alertPayload));
+    showAlert(alertPayload);
   };
 
   const onShowAlertTurnOn = () => {

@@ -189,6 +189,7 @@
     "text_sign_in_welcome_back": "Chào mừng bạn đã trở lại!",
     "text_sign_up": "Đăng ký",
     "text_sign_out": "Đăng xuất",
+    "text_sign_out_content": "Bạn có muốn đăng xuất?",
     "input_label_first_name": "Tên",
     "input_label_last_name": "Họ",
     "input_label_username": "Tên tài khoản",

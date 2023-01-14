@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import { useDispatch } from 'react-redux';
 import { isEqual } from 'lodash';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
@@ -12,10 +11,10 @@ import MoveGroupTargets from '~/screens/groups/GroupStructureSettings/MoveGroup/
 import Text from '~/baseComponents/Text';
 import { spacing } from '~/theme';
 import groupApi from '~/api/GroupApi';
-import modalActions from '~/storeRedux/modal/actions';
 import useGroupStructureStore from '../store';
 import IGroupStructureState from '../store/Interface';
 import Icon from '~/baseComponents/Icon';
+import useModalStore from '~/store/modal';
 
 export interface MoveGroupProps {
   route: {
@@ -27,7 +26,6 @@ export interface MoveGroupProps {
 }
 
 const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
@@ -39,6 +37,7 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
   const { id: groupId } = initGroup || {};
 
   const groupStructureActions = useGroupStructureStore((state) => state.actions);
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const {
     loading, targetGroups, movingGroup, selecting, key,
@@ -107,22 +106,20 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
         setLoadingButton(false);
         groupStructureActions.setGroupStructureMoveSelecting(currentSelecting);
         const title = renderAlertTitle();
-        dispatch(
-          modalActions.showAlert({
-            title,
-            children: renderAlertContent(moveMemberCount),
-            cancelBtn: true,
-            confirmLabel: t('common:btn_confirm'),
-            cancelLabel: t('common:btn_cancel'),
-            onConfirm: () => {
-              groupStructureActions.putGroupStructureMoveToTarget({
-                communityId,
-                moveId: groupId,
-                targetId: selecting.id,
-              });
-            },
-          }),
-        );
+        showAlert({
+          title,
+          children: renderAlertContent(moveMemberCount),
+          cancelBtn: true,
+          confirmLabel: t('common:btn_confirm'),
+          cancelLabel: t('common:btn_cancel'),
+          onConfirm: () => {
+            groupStructureActions.putGroupStructureMoveToTarget({
+              communityId,
+              moveId: groupId,
+              targetId: selecting.id,
+            });
+          },
+        });
       }).catch((err:any) => {
         setLoadingButton(false);
         groupStructureActions.setGroupStructureMoveSelecting(currentSelecting);

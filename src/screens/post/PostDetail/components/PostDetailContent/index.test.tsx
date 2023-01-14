@@ -7,8 +7,8 @@ import MockedNavigator from '~/test/MockedNavigator';
 import { USER_PROFILE } from '~/test/mock_data/menu';
 import postActions from '~/storeRedux/post/actions';
 import * as navigationHook from '~/hooks/navigation';
-import modalActions from '~/storeRedux/modal/actions';
 import PostDetailContent from '.';
+import useModalStore from '~/store/modal';
 
 describe('PostDetailContent component', () => {
   const props = { route: { params: { post_id: POST_DETAIL.id } } };
@@ -123,7 +123,9 @@ describe('PostDetailContent component', () => {
   });
 
   it('should show alert when back after input comment content', () => {
-    const spy = jest.spyOn(modalActions, 'showAlert');
+    const showAlert = jest.fn();
+    const actions = { showAlert };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
     const goBack = jest.fn();
     const rootNavigation = { canGoBack: true, goBack };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
@@ -137,7 +139,7 @@ describe('PostDetailContent component', () => {
     fireEvent.changeText(commentInput, 'comment');
     const btnBack = wrapper.getByTestId('header.back.button');
     fireEvent.press(btnBack);
-    expect(spy).toBeCalled();
+    expect(showAlert).toBeCalled();
   });
 
   it('should navigate to newsfeed if cant go back', () => {

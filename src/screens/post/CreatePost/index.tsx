@@ -28,8 +28,8 @@ import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
 import { useBaseHook } from '~/hooks';
-import modalActions from '~/storeRedux/modal/actions';
 import Text from '~/baseComponents/Text';
+import useModalStore from '~/store/modal';
 
 export interface CreatePostProps {
   route?: {
@@ -50,6 +50,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const refTextInput = useRef<any>();
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const { actions: draftPostActions } = useDraftPostStore();
 
@@ -154,16 +155,14 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   );
 
   const onPressBack = () => {
-    handleBack(
-      !!(isEditPost && !isEditDraftPost),
+    handleBack({
+      isEditPost: !!(isEditPost && !isEditDraftPost),
       isEditPostHasChange,
-      !!(sPostId && refIsRefresh.current),
-      theme,
+      hasPostId: !!(sPostId && refIsRefresh.current),
       rootNavigation,
-      dispatch,
       isNewsfeed,
       onPressDraftPost,
-    );
+    });
   };
 
   const onPressDraftPost = () => {
@@ -192,7 +191,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
         onConfirm: null,
         cancelBtn: true,
       };
-      dispatch(modalActions.showAlert(alertPayload));
+      showAlert(alertPayload);
       return;
     }
 

@@ -21,8 +21,6 @@ import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import { getMentionsFromContent } from '~/helpers/post';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
 
 import { rootNavigationRef } from '~/router/refs';
@@ -59,7 +57,7 @@ const useCreateArticle = ({
   const isDraft = useCreateArticleStore((state) => state.isDraft);
   const publishedAt = useCreateArticleStore((state) => state.schedule.publishedAt);
 
-  const { showToast } = useModalStore((state) => state.actions);
+  const { showToast, showAlert } = useModalStore((state) => state.actions);
 
   const [isShowToastAutoSave, setShowToastAutoSave] = useState<boolean>(false);
 
@@ -329,22 +327,20 @@ const useCreateArticle = ({
     actions.scheduleArticle();
   };
 
-  const handleBack = (showAlert = false) => {
-    if (isChanged || showAlert) {
+  const handleBack = (shouldShowAlert = false) => {
+    if (isChanged || shouldShowAlert) {
       Keyboard.dismiss();
-      Store.store.dispatch(
-        modalActions.showAlert({
-          title: t('discard_alert:title'),
-          content: t('discard_alert:content'),
-          cancelBtn: true,
-          cancelLabel: t('common:btn_discard'),
-          confirmLabel: t('common:btn_stay_here'),
-          onCancel: () => {
-            initEditStoreData();
-            navigation.goBack();
-          },
-        }),
-      );
+      showAlert({
+        title: t('discard_alert:title'),
+        content: t('discard_alert:content'),
+        cancelBtn: true,
+        cancelLabel: t('common:btn_discard'),
+        confirmLabel: t('common:btn_stay_here'),
+        onCancel: () => {
+          initEditStoreData();
+          navigation.goBack();
+        },
+      });
       return;
     }
     navigation.goBack();

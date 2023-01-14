@@ -6,7 +6,6 @@ import { GROUP_TREE } from '~/test/mock_data/group';
 afterEach(cleanup);
 
 describe('Group functions helper', () => {
-  const dispatch = jest.fn();
   const mainCallback = jest.fn();
 
   it('handleLeaveInnerGroups should call prop callback correctly', async () => {
@@ -19,7 +18,6 @@ describe('Group functions helper', () => {
     const result = await handleLeaveInnerGroups(
       '1',
       'username',
-      dispatch,
       mainCallback,
     );
     expect(result).toBeTruthy();
@@ -32,7 +30,6 @@ describe('Group functions helper', () => {
     const result = await handleLeaveInnerGroups(
       '1',
       'username',
-      dispatch,
       mainCallback,
     );
     expect(result).toBeFalsy();

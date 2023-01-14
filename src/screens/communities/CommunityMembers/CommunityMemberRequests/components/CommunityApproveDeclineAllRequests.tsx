@@ -1,9 +1,7 @@
 import React, { useRef } from 'react';
-import { useDispatch } from 'react-redux';
 import { StyleSheet } from 'react-native';
 
 import ButtonApproveDeclineAllRequests from '~/screens/groups/components/ButtonApproveDeclineAllRequests';
-import modalActions from '~/storeRedux/modal/actions';
 import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
 import Text from '~/baseComponents/Text';
@@ -13,14 +11,13 @@ import useCommunityMemberStore from '~/screens/communities/CommunityMembers/stor
 import useModalStore from '~/store/modal';
 
 const CommunityApproveDeclineAllRequests = ({ community }: {community: ICommunity}) => {
-  const dispatch = useDispatch();
   const timeOutRef = useRef<any>();
   const { t } = useBaseHook();
 
   const { id: communityId, groupId } = community || {};
   const { total } = useCommunityMemberStore((state) => state.communityMemberRequests);
   const communityMemberActions = useCommunityMemberStore((state) => state.actions);
-  const { showToast, clearToast } = useModalStore((state) => state.actions);
+  const { showToast, clearToast, showAlert } = useModalStore((state) => state.actions);
 
   const alertAction = ({
     title,
@@ -44,7 +41,7 @@ const CommunityApproveDeclineAllRequests = ({ community }: {community: ICommunit
       onConfirm: doAction,
     };
 
-    dispatch(modalActions.showAlert(alertPayload));
+    showAlert(alertPayload);
   };
 
   const onPressDeclineAll = () => {

@@ -220,6 +220,7 @@
     "text_sign_in_welcome_back": "Welcome back!",
     "text_sign_up": "Sign Up",
     "text_sign_out": "Log Out",
+    "text_sign_out_content": "Do you want to Log Out?",
     "input_label_first_name": "First Name",
     "input_label_last_name": "Last Name",
     "input_label_username": "User Name",

@@ -17,7 +17,6 @@ import Header from '~/beinComponents/Header';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/storeRedux/post/keySelector';
-import modalActions from '~/storeRedux/modal/actions';
 import {
   checkChangeAudiences,
   ISelectAudienceParams,
@@ -29,6 +28,7 @@ import useMounted from '~/hooks/mounted';
 import SelectAudience, { ContentType } from '~/components/SelectAudience';
 import useSelectAudienceStore from '~/components/SelectAudience/store';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
+import useModalStore from '~/store/modal';
 
 export interface PostSelectAudienceProps {
   route?: {
@@ -54,6 +54,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const isEditAudience = !isEmpty(initAudiences);
 
   const selectedAudiences = useMemo(() => getAllAudiences(allAudiences), [allAudiences]);
+  const alertActions = useModalStore((state) => state.actions);
 
   // check audience has been changed, currently check only group
   // when allow select user as audience, this function should be updated
@@ -75,14 +76,14 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   });
 
   const showAlert = (title, content) => {
-    dispatch(modalActions.showAlert({
+    alertActions.showAlert({
       title,
       content,
       cancelBtn: true,
       cancelLabel: t('common:btn_discard'),
       confirmLabel: t('common:btn_stay_here'),
       onCancel: rootNavigation.goBack,
-    }));
+    });
   };
 
   const saveAudiences = () => {
@@ -120,7 +121,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
         homeStack.createPost, params as any,
       );
     } else if (isEditAudience && isAudiencesHasChanged) {
-      dispatch(modalActions.showAlert({
+      alertActions.showAlert({
         title: t('post:create_post:title_audience_changed'),
         content: t('post:create_post:text_discard_change_audience'),
         cancelBtn: true,
@@ -130,7 +131,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
           saveAudiences();
           rootNavigation.goBack();
         },
-      }));
+      });
     } else {
       dispatch(postActions.setCreatePostChosenAudiences(selectedAudiences));
       rootNavigation.goBack();

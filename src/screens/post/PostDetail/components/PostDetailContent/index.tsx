@@ -13,7 +13,6 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
@@ -23,19 +22,19 @@ import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
 import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import CommentInputView from '~/screens/comments/components/CommentInputView';
-import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import PostDetailContentHeader from '../PostDetailContentHeader';
 import usePostDetailContent from './hooks/usePostDetailContent';
 import usePostDetailContentHandler from './hooks/usePostDetailContentHandler';
+import useModalStore from '~/store/modal';
 
 const _PostDetailContent = (props) => {
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const { rootNavigation, goHome } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = useMemo(() => createStyle(theme), [theme]);
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const params = props?.route?.params;
   const { post_id: postId, focus_comment: focusComment, noti_id: notificationId = '' } = params || {};
@@ -81,16 +80,14 @@ const _PostDetailContent = (props) => {
     const newCommentSelectedImage = commentInputRef?.current?.hasMedia?.();
 
     if (newCommentInput !== '' || newCommentSelectedImage) {
-      dispatch(
-        modalActions.showAlert({
-          title: t('post:title_discard_comment'),
-          content: t('post:text_discard_comment'),
-          cancelBtn: true,
-          cancelLabel: t('post:btn_continue_comment'),
-          confirmLabel: t('post:btn_discard_comment'),
-          onConfirm: () => rootNavigation.goBack(),
-        }),
-      );
+      showAlert({
+        title: t('post:title_discard_comment'),
+        content: t('post:text_discard_comment'),
+        cancelBtn: true,
+        cancelLabel: t('post:btn_continue_comment'),
+        confirmLabel: t('post:btn_discard_comment'),
+        onConfirm: () => rootNavigation.goBack(),
+      });
       return;
     }
     if (!rootNavigation.canGoBack) {

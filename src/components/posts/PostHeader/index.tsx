@@ -11,9 +11,9 @@ import useMyPermissionsStore from '~/store/permissions';
 import usePostMenu from '~/hooks/usePostMenu';
 import { IAudienceGroup } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import modalActions from '~/storeRedux/modal/actions';
 import postActions from '~/storeRedux/post/actions';
 import AlertDeleteAudiences from '../AlertDeleteAudiences';
+import useModalStore from '~/store/modal';
 
 export interface PostHeaderProps extends Partial<ContentHeaderProps> {
   data: any,
@@ -30,6 +30,7 @@ const PostHeader: FC<PostHeaderProps> = ({
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const dispatch = useDispatch();
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const {
     id: postId, actor, audience, createdAt,
@@ -64,42 +65,38 @@ const PostHeader: FC<PostHeaderProps> = ({
       return _audience;
     });
     if (canDeleteOwnPost) {
-      dispatch(
-        modalActions.showAlert({
-          title: t('post:title_delete_audiences_of_post'),
-          children: (
-            <AlertDeleteAudiences
-              data={listAudiences}
-              textContent={t('post:content_delete_audiences_of_post')}
-            />
-          ),
-          cancelBtn: true,
-          confirmLabel: t('common:text_remove'),
-          ConfirmBtnComponent: Button.Danger,
-          onConfirm: () => dispatch(
-            postActions.removePostAudiences({
-              id: postId,
-              listAudiences: listIdAudiences,
-            }),
-          ),
-          confirmBtnProps: { type: 'ghost' },
-        }),
-      );
+      showAlert({
+        title: t('post:title_delete_audiences_of_post'),
+        children: (
+          <AlertDeleteAudiences
+            data={listAudiences}
+            textContent={t('post:content_delete_audiences_of_post')}
+          />
+        ),
+        cancelBtn: true,
+        confirmLabel: t('common:text_remove'),
+        ConfirmBtnComponent: Button.Danger,
+        onConfirm: () => dispatch(
+          postActions.removePostAudiences({
+            id: postId,
+            listAudiences: listIdAudiences,
+          }),
+        ),
+        confirmBtnProps: { type: 'ghost' },
+      });
     } else {
-      dispatch(
-        modalActions.showAlert({
-          title: t('post:title_delete_audiences_of_post'),
-          children: (
-            <AlertDeleteAudiences
-              data={listAudiences}
-              textContent={t('post:content_not_able_delete_of_post')}
-            />
-          ),
-          cancelBtn: true,
-          cancelLabel: t('common:btn_close'),
-          onConfirm: null,
-        }),
-      );
+      showAlert({
+        title: t('post:title_delete_audiences_of_post'),
+        children: (
+          <AlertDeleteAudiences
+            data={listAudiences}
+            textContent={t('post:content_not_able_delete_of_post')}
+          />
+        ),
+        cancelBtn: true,
+        cancelLabel: t('common:btn_close'),
+        onConfirm: null,
+      });
     }
   };
 

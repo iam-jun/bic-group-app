@@ -5,13 +5,12 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { EditTag as EditTagType, ITag } from '~/interfaces/ITag';
 import { spacing } from '~/theme';
 import useTagsControllerStore from '../store';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
 import Header from '~/beinComponents/Header';
 import TextInput from '~/baseComponents/Input/TextInput';
 import Text from '~/baseComponents/Text';
 import { borderRadius } from '~/theme/spacing';
+import useModalStore from '~/store/modal';
 
 type EditTagProps = {
     route: {
@@ -35,6 +34,7 @@ const EditTag: FC<EditTagProps> = (props) => {
 
   const loading = useTagsControllerStore((state) => state.loading);
   const actions = useTagsControllerStore((state) => state.actions);
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const handleSave = () => {
     const tagUpdate: EditTagType = {
@@ -46,14 +46,14 @@ const EditTag: FC<EditTagProps> = (props) => {
   };
 
   const onSave = () => {
-    Store.store.dispatch(modalActions.showAlert({
+    showAlert({
       title: t('tags:edit_tag'),
       content: t('tags:do_you_want_to_change_this_tag'),
       cancelBtn: true,
       cancelLabel: t('common:btn_cancel'),
       confirmLabel: t('common:btn_edit'),
       onConfirm: () => handleSave(),
-    }));
+    });
   };
 
   const isChanged = nameTagState !== name;
@@ -63,14 +63,14 @@ const EditTag: FC<EditTagProps> = (props) => {
   const handleBack = () => {
     if (isChanged) {
       Keyboard.dismiss();
-      Store.store.dispatch(modalActions.showAlert({
+      showAlert({
         title: t('discard_alert:title'),
         content: t('discard_alert:content'),
         cancelBtn: true,
         cancelLabel: t('common:btn_discard'),
         confirmLabel: t('common:btn_stay_here'),
         onCancel: () => rootNavigation.goBack(),
-      }));
+      });
       return;
     }
     rootNavigation.goBack();

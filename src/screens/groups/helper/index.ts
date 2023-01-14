@@ -7,7 +7,6 @@ import showToastError from '~/store/helper/showToastError';
 export const handleLeaveInnerGroups = async (
   groupId: string,
   username: string,
-  dispatch: any,
   callback: (innerGroups: any) => void,
 ) => {
   let testingFlag = false; // for testing purpose

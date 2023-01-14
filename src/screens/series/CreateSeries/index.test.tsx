@@ -2,13 +2,13 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import * as React from 'react';
 import streamApi from '~/api/StreamApi';
 import usePostsStore from '~/store/entities/posts';
-import modalActions from '~/storeRedux/modal/actions';
 import { mockSeries } from '~/test/mock_data/series';
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import CreateSeries from '.';
 import * as navigationHook from '~/hooks/navigation';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import useSeriesStore from '../store';
+import useModalStore from '~/store/modal';
 
 describe('CreateSeries component', () => {
   const seriesId = '5264f1b3-c8b8-428a-9fb8-7f075f03d0c8';
@@ -98,7 +98,9 @@ describe('CreateSeries component', () => {
   it('should show alert when changed value and click back with role edit series', () => {
     Keyboard.dismiss = jest.fn();
 
-    const spyModalActions = jest.spyOn(modalActions, 'showAlert');
+    const showAlert = jest.fn();
+    const actions = { showAlert };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     const { result: postStoreResult } = renderHook(() => usePostsStore());
 
@@ -115,7 +117,7 @@ describe('CreateSeries component', () => {
     const buttonBack = wrapper.getByTestId('header.back');
     fireEvent.press(buttonBack);
     expect(Keyboard.dismiss).toBeCalled();
-    expect(spyModalActions).toBeCalled();
+    expect(showAlert).toBeCalled();
   });
 
   it('should back to previous screen successfully when click back with role create new series but cover media is empty', () => {
@@ -209,7 +211,9 @@ describe('CreateSeries component', () => {
       () => Promise.reject(error) as any,
     );
 
-    const spyModalActions = jest.spyOn(modalActions, 'showAlert');
+    const showAlert = jest.fn();
+    const actions = { showAlert };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
 
@@ -241,7 +245,7 @@ describe('CreateSeries component', () => {
 
     expect(Keyboard.dismiss).toBeCalled();
     expect(spyApiEditSeries).toBeCalled();
-    expect(spyModalActions).toBeCalled();
+    expect(showAlert).toBeCalled();
   });
 
   afterEach(() => {

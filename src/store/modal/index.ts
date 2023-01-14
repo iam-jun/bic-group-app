@@ -2,19 +2,40 @@ import IBaseState from '../interfaces/IBaseState';
 import {
   createStore, resetStore,
 } from '~/store/utils';
-import { IToastMessage } from '~/interfaces/common';
+import { IAlertModal, IToastMessage } from '~/interfaces/common';
 
 export interface IModalState extends IBaseState {
   toast: IToastMessage;
+  alert: IAlertModal;
 
   actions: {
     showToast: (payload: IToastMessage) => void;
     clearToast: () => void;
+    showAlert: (payload: IAlertModal) => void;
+    hideAlert: () => void;
   }
 }
 
 const initialState = {
   toast: null,
+
+  alert: {
+    visible: false,
+    isDismissible: true,
+    title: '',
+    content: '',
+    cancelBtn: false,
+    cancelLabel: '',
+    confirmLabel: '',
+    style: {},
+    children: null as React.ReactNode,
+    onConfirm: () => {
+      // do something
+    },
+    onCancel: () => {
+      // do something
+    },
+  },
 };
 
 const modalStore = (set, get) => ({
@@ -45,6 +66,21 @@ const modalStore = (set, get) => ({
           }, delayTimeToHideToast),
         };
       }, 'setShowToast');
+    },
+
+    hideAlert: () => {
+      set((state: IModalState) => {
+        state.alert = initialState.alert;
+      }, 'setHideAlert');
+    },
+    showAlert: (payload: any) => {
+      set((state: IModalState) => {
+        state.alert = {
+          ...state.alert,
+          ...payload,
+          visible: true,
+        };
+      }, 'setShowAlert');
     },
   },
 

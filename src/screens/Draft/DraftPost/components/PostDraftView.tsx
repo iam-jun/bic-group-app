@@ -55,7 +55,7 @@ const PostDraftView: FC<PostDraftViewProps> = ({
   const userId = useUserIdAuth();
 
   const { actions } = useDraftPostStore();
-  const { showToast } = useModalStore((state) => state.actions);
+  const { showToast, showAlert } = useModalStore((state) => state.actions);
 
   const {
     id,
@@ -125,7 +125,7 @@ const PostDraftView: FC<PostDraftViewProps> = ({
 
   const onPressDelete = () => {
     dispatch(modalActions.hideModal());
-    dispatch(modalActions.showAlert({
+    showAlert({
       title: t('post:title_delete_post'),
       content: t('post:content_delete_post'),
       cancelBtn: true,
@@ -134,7 +134,7 @@ const PostDraftView: FC<PostDraftViewProps> = ({
       ConfirmBtnComponent: Button.Danger,
       confirmBtnProps: { type: 'ghost' },
       onConfirm: onDelete,
-    }));
+    });
   };
 
   const renderFooter = () => {

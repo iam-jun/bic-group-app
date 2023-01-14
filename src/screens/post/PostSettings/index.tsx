@@ -14,7 +14,6 @@ import Toggle from '~/baseComponents/Toggle';
 import { useRootNavigation } from '~/hooks/navigation';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import modalActions from '~/storeRedux/modal/actions';
 
 import { useBaseHook } from '~/hooks';
 import { usePostSettings } from '~/screens/post/PostSettings/usePostSettings';
@@ -36,6 +35,7 @@ import { DateInput } from '~/baseComponents/Input';
 import { Button } from '~/baseComponents';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
+import useModalStore from '~/store/modal';
 
 export interface PostSettingsProps {
   route?: {
@@ -53,6 +53,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
 
   const audienceSheetRef = useRef<any>();
   const expireTimeSheetRef = useRef<any>();
+  const { showAlert } = useModalStore((state) => state.actions);
 
   let chosenAudiences: any[];
   const screenParams = route?.params || {};
@@ -101,14 +102,14 @@ const PostSettings = ({ route }: PostSettingsProps) => {
     if (disableButtonSave) {
       rootNavigation.goBack();
     } else {
-      dispatch(modalActions.showAlert({
+      showAlert({
         title: t('discard_alert:title'),
         content: t('discard_alert:content'),
         cancelBtn: true,
         cancelLabel: t('common:btn_discard'),
         confirmLabel: t('common:btn_stay_here'),
         onCancel: () => rootNavigation.goBack(),
-      }));
+      });
     }
   };
 

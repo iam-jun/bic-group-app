@@ -18,7 +18,6 @@ import useCommentsStore from '~/store/entities/comments';
 import commentsSelector from '~/store/entities/comments/selectors';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import modalActions from '~/storeRedux/modal/actions';
 
 import CommentInputView from '~/screens/comments/components/CommentInputView';
 import postActions from '~/storeRedux/post/actions';
@@ -50,7 +49,7 @@ const CommentDetailContent = (props: any) => {
   const { rootNavigation, goHome } = useRootNavigation();
 
   const commentDetailController = useCommentDetailController((state) => state.actions);
-  const { showToast } = useModalStore((state) => state.actions);
+  const { showToast, showAlert } = useModalStore((state) => state.actions);
 
   const listRef = useRef<any>();
   const commentInputRef = useRef<any>();
@@ -195,46 +194,43 @@ const CommentDetailContent = (props: any) => {
   };
 
   const showNotice = (type = 'deleted_comment') => {
-    dispatch(
-      modalActions.showAlert({
-        // @ts-ignore
-        HeaderImageComponent: (
-          <View style={{ alignItems: 'center' }}>
-            <SVGIcon
+    showAlert({
+      HeaderImageComponent: (
+        <View style={{ alignItems: 'center' }}>
+          <SVGIcon
               // @ts-ignore
-              source={CommentNotFoundImg}
-              width={120}
-              height={120}
-              tintColor="none"
-            />
-          </View>
-        ),
-        title: t(`post:${type}:title`),
-        titleProps: { style: { flex: 1, textAlign: 'center' } },
-        cancelBtn: false,
-        isDismissible: true,
-        onConfirm: () => {
-          if (type === 'deleted_post') {
-            rootNavigation.popToTop();
-          } else {
-            rootNavigation.goBack();
-          }
-        },
-        confirmLabel: t(`post:${type}:button_text`),
-        content: t(`post:${type}:description`),
-        contentProps: { style: { textAlign: 'center' } },
-        ContentComponent: Text.BodyS,
-        buttonViewStyle: { justifyContent: 'center' },
-        headerStyle: { marginBottom: 0 },
-        onDismiss: () => {
-          if (type === 'deleted_post') {
-            rootNavigation.popToTop();
-          } else {
-            rootNavigation.goBack();
-          }
-        },
-      }),
-    );
+            source={CommentNotFoundImg}
+            width={120}
+            height={120}
+            tintColor="none"
+          />
+        </View>
+      ),
+      title: t(`post:${type}:title`),
+      titleProps: { style: { flex: 1, textAlign: 'center' } },
+      cancelBtn: false,
+      isDismissible: true,
+      onConfirm: () => {
+        if (type === 'deleted_post') {
+          rootNavigation.popToTop();
+        } else {
+          rootNavigation.goBack();
+        }
+      },
+      confirmLabel: t(`post:${type}:button_text`),
+      content: t(`post:${type}:description`),
+      contentProps: { style: { textAlign: 'center' } },
+      ContentComponent: Text.BodyS,
+      buttonViewStyle: { justifyContent: 'center' },
+      headerStyle: { marginBottom: 0 },
+      onDismiss: () => {
+        if (type === 'deleted_post') {
+          rootNavigation.popToTop();
+        } else {
+          rootNavigation.goBack();
+        }
+      },
+    });
   };
 
   const onRefresh = () => {

@@ -11,6 +11,7 @@ import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 import ReportContent from '~/components/ReportContent';
 import { TargetType } from '~/interfaces/IReport';
+import useModalStore from '~/store/modal';
 
 interface CommunityMemberOptionsMenuProps {
   community: ICommunity;
@@ -28,6 +29,8 @@ const CommunityMemberOptionsMenu = ({
   const { id: communityId, groupId } = community;
   const dispatch = useDispatch();
   const { t } = useBaseHook();
+
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const removeCommunityMember = useCommunityMemberStore(
     (state) => state.actions.removeCommunityMember,
@@ -57,13 +60,13 @@ const CommunityMemberOptionsMenu = ({
   const onPressRevokeAdminRole = () => {
     if (!selectedMember?.id) return;
 
-    dispatch(modalActions.showAlert({
+    showAlert({
       title: t('communities:modal_confirm_remove_admin:title'),
       content: t('communities:modal_confirm_remove_admin:content').replace('{0}', selectedMember.fullname),
       confirmLabel: t('communities:modal_confirm_remove_admin:button_confirm'),
       cancelBtn: true,
       onConfirm: onConfirmRemoveAdminRole,
-    }));
+    });
   };
 
   const onConfirmRemoveMember = () => {
@@ -72,13 +75,13 @@ const CommunityMemberOptionsMenu = ({
   };
 
   const onPressRemoveMember = () => {
-    dispatch(modalActions.showAlert({
+    showAlert({
       title: t('communities:modal_confirm_remove_member:title'),
       content: t('communities:modal_confirm_remove_member:content'),
       confirmLabel: t('communities:modal_confirm_remove_member:button_remove'),
       cancelBtn: true,
       onConfirm: onConfirmRemoveMember,
-    }));
+    });
   };
 
   const onPressReportMember = () => {

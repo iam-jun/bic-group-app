@@ -45,6 +45,7 @@ import spacing from '~/theme/spacing';
 import useCommentInputStore from '../CommentInputView/store';
 import useDeleteCommentController from './store';
 import { PlaceHolderRemoveContent } from '~/baseComponents';
+import useModalStore from '~/store/modal';
 
 export interface CommentViewProps {
   postId: string;
@@ -85,6 +86,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
 
   const setting = usePostsStore(postsSelector.getSetting(postId));
   const cancelCommentFailed = useCommentsStore((state) => state.actions.cancelCommentFailed);
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const _commentData = comment || commentData || {};
   const {
@@ -224,7 +226,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
       confirmLabel: t('common:btn_delete'),
       ConfirmBtnComponent: Button.Danger,
     };
-    dispatch(modalActions.showAlert(alertPayload));
+    showAlert(alertPayload);
   };
 
   const onLongPress = () => {
