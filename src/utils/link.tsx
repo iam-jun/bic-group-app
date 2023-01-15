@@ -1,6 +1,11 @@
+import React from 'react';
 import { Linking } from 'react-native';
+import InAppBrowser from 'react-native-inappbrowser-reborn';
+import BrowserModal from '~/components/BrowserModal';
 import { chatSchemes } from '~/constants/chat';
 import { PREFIX_DEEPLINK_GROUP, PREFIX_HTTPS } from '~/router/config';
+import storeRedux from '~/storeRedux';
+import modalActions from '~/storeRedux/modal/actions';
 import getEnv from '~/utils/env';
 import { getWebDomain } from './common';
 import ConvertHelper from './convertHelper';
@@ -225,3 +230,17 @@ export function getInjectableJSMessage(message) {
     })();
   `;
 }
+
+export const openInAppBrowser = async (url) => {
+  const isAvailable = await InAppBrowser.isAvailable();
+
+  if (isAvailable) {
+    await InAppBrowser.open(url);
+  } else {
+    storeRedux.store.dispatch(modalActions.showModal({
+      isOpen: true,
+      isFullScreen: true,
+      ContentComponent: (<BrowserModal url={url} />),
+    }));
+  }
+};

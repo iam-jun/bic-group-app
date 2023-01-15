@@ -8,7 +8,7 @@ import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
 import showAlert from '~/store/helper/showAlert';
 import showToastError from '~/store/helper/showToastError';
 
-const handleValidateSeriesTagsError = (set, get, error: any, onNext: () => void) => {
+const handleValidateSeriesTagsError = (set, get, error: any, onNext: () => void, titleAlert?: string) => {
   const {
     seriesNames, tagNames, seriesIds = [], tagIds = [],
   } = error?.meta?.errors || {};
@@ -25,7 +25,7 @@ const handleValidateSeriesTagsError = (set, get, error: any, onNext: () => void)
   };
 
   showAlert({
-    title: i18next.t('article:modal_invalid_series_tags:title'),
+    title: i18next.t(titleAlert || 'article:modal_invalid_series_tags:title'),
     children: <InvalidSeriesTagsContentModal seriesNames={seriesNames} tagNames={tagNames} />,
     cancelBtn: true,
     confirmLabel: i18next.t('common:text_remove'),
@@ -35,10 +35,10 @@ const handleValidateSeriesTagsError = (set, get, error: any, onNext: () => void)
   });
 };
 
-const handleSaveError = (set, get) => (error, onNext) => {
+const handleSaveError = (set, get) => (error, onNext, titleAlert) => {
   const errorCode = error?.code;
   if (errorCode === ApiErrorCode.Post.VALIDATION_ERROR) {
-    handleValidateSeriesTagsError(set, get, error, onNext);
+    handleValidateSeriesTagsError(set, get, error, onNext, titleAlert);
   } else {
     showToastError(error);
   }

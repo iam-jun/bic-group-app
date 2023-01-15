@@ -28,7 +28,7 @@ import ReviewMarkdown from '~/screens/post/CreatePost/components/ReviewMarkdown'
 import ToolbarButton from '~/components/posts/ToolbarButton';
 import { getTotalFileSize } from '~/storeRedux/post/selectors';
 import spacing from '~/theme/spacing';
-import { getChatDomain, openUrl } from '~/utils/link';
+import { getChatDomain, openInAppBrowser } from '~/utils/link';
 import { checkPermission, permissionTypes } from '~/utils/permission';
 import { clearExistingFiles, validateFilesPicker } from '../../helper';
 import useUploadImage from '../../hooks/useUploadImage';
@@ -184,7 +184,7 @@ const PostToolbar: FC<PostToolbarProps> = ({
 
   const onPressHelp = () => {
     const DOMAIN = getChatDomain();
-    openUrl(`${DOMAIN}/help/formatting`);
+    openInAppBrowser(`${DOMAIN}/help/formatting`);
   };
 
   const renderToolbar = () => (

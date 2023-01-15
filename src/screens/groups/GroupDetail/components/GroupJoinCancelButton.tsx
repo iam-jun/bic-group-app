@@ -4,17 +4,18 @@ import { StyleProp, ViewStyle } from 'react-native';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import JoinCancelButton from '../../components/JoinCancelButton';
 import { useBaseHook } from '~/hooks';
-import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import useDiscoverGroupsStore from '../../DiscoverGroups/store';
 import IDiscoverGroupsState from '../../DiscoverGroups/store/Interface';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 import useModalStore from '~/store/modal';
+import { ICommunity } from '~/interfaces/ICommunity';
 
 interface GroupJoinCancelButtonProps {
   style?: StyleProp<ViewStyle>;
+  community: ICommunity;
 }
 
-const GroupJoinCancelButton = ({ style }: GroupJoinCancelButtonProps) => {
+const GroupJoinCancelButton = ({ style, community }: GroupJoinCancelButtonProps) => {
   const { t } = useBaseHook();
   const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
   const { group: infoDetail, joinStatus } = groups[currentGroupId] || {};
@@ -22,8 +23,6 @@ const GroupJoinCancelButton = ({ style }: GroupJoinCancelButtonProps) => {
     privacy,
     id: groupId,
   } = infoDetail || {};
-  const communityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
-  const community = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
   const joinStatusCommunity = community?.joinStatus;
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
   const isMemberOfCommunity = joinStatusCommunity === GroupJoinStatus.MEMBER;

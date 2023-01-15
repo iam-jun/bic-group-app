@@ -94,7 +94,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
 
   const { images, imageUploading } = validateImages(selectingImages, t);
   const { video, videoUploading } = validateVideo(selectingVideo, t);
-  const { files, fileUploading } = validateFiles(selectingFiles, t);
+  const { files, fileUploading, fileError } = validateFiles(selectingFiles, t);
 
   // const [hasVideoProgress, setHasVideoProgress] = useState(videoUploading);
 
@@ -188,6 +188,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     = imageUploading
     || videoUploading
     || fileUploading
+    || fileError
     || content?.trim?.()?.length === 0
     || chosenAudiences.length === 0
     || isLoadingLinkPreview

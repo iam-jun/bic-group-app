@@ -35,6 +35,7 @@ interface IHandleSaveOptions {
   isShowToast?: boolean;
   shouldValidateSeriesTags?: boolean;
   onSuccess?: () => void;
+  titleAlert?: string;
 }
 
 const navigation = withNavigation(rootNavigationRef);
@@ -267,7 +268,7 @@ const useCreateArticle = ({
   const handleSave = (options?: IHandleSaveOptions) => {
     Keyboard.dismiss();
     const {
-      isNavigateBack = true, isShowLoading = true, isShowToast = true, shouldValidateSeriesTags, onSuccess,
+      isNavigateBack = true, isShowLoading = true, isShowToast = true, shouldValidateSeriesTags, onSuccess, titleAlert,
     } = options || {};
     updateMentions();
 
@@ -288,7 +289,7 @@ const useCreateArticle = ({
     if (shouldValidateSeriesTags) {
       const onSuccess = () => actions.putEditArticle(putEditArticleParams);
       const onError = (error) => {
-        actions.handleSaveError(error, () => handleSave(options));
+        actions.handleSaveError(error, () => handleSave(options), titleAlert);
       };
       validateSeriesTags(onSuccess, onError);
     } else {
@@ -303,15 +304,20 @@ const useCreateArticle = ({
       navigation.replace(articleStack.articleDetail, { articleId: data.id });
     };
 
+    const onHandleSaveErrorDone = () => handleSave({
+      isNavigateBack: false,
+      isShowLoading: true,
+      isShowToast: false,
+      onSuccess: () => handlePublish(),
+    });
+
     const payload: IPayloadPublishDraftArticle = {
       draftArticleId: data.id,
       onSuccess: () => {
         showToast({ content: 'post:draft:text_draft_article_published' });
         goToArticleDetail();
       },
-      onError: () => {
-        // do something
-      },
+      onError: (error) => actions.handleSaveError(error, onHandleSaveErrorDone),
     };
     useDraftArticleStore.getState().actions.publishDraftArticle(payload);
   };

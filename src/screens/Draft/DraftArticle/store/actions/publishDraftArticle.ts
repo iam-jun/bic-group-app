@@ -34,8 +34,7 @@ const publishDraftArticle = (set, get) => async (payload: IPayloadPublishDraftAr
       set((state: IDraftArticleState) => {
         state.isPublishing = false;
       }, 'publishDraftArticle error');
-      onError?.();
-      showToastError(response);
+      onError ? onError(response) : showToastError(response);
       return;
     }
 
@@ -68,8 +67,7 @@ const publishDraftArticle = (set, get) => async (payload: IPayloadPublishDraftAr
     set((state: IDraftArticleState) => {
       state.isPublishing = false;
     }, 'publishDraftArticle error');
-    onError?.();
-    showToastError(error);
+    onError ? onError(error) : showToastError(error);
   }
 };
 

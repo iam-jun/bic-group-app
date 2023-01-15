@@ -60,7 +60,7 @@ export interface ICreateArticleState extends IBaseState {
       onSuccess: (response) => void,
       onError: (error) => void
     ) => void;
-    handleSaveError: (error: any, onNext?: () => void) => void;
+    handleSaveError: (error: any, onNext?: () => void, titleAlert?: string) => void;
   };
 }
 

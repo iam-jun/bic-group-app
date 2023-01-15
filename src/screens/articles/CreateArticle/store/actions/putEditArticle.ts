@@ -43,6 +43,7 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
     }
 
     useArticlesStore.getState().actions.getArticleDetail(articleId);
+    onSuccess?.();
 
     set((state: ICreateArticleState) => {
       state.loading = false;
