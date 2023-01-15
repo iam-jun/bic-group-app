@@ -8,7 +8,7 @@ import useCommunityController from '../index';
 
 describe('leaveCommunity', () => {
   const communityId = '879c8129-0840-437f-8f23-a7585dc6ba22';
-  const privacy = CommunityPrivacyType.PUBLIC;
+  const privacy = CommunityPrivacyType.OPEN;
   const status = GroupJoinStatus.VISITOR;
 
   it('should leave community success:', () => {

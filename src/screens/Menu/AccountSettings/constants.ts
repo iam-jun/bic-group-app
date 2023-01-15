@@ -1,10 +1,5 @@
 export const accountSettingsMenu = [
   {
-    type: 'userProfile',
-    title: 'settings:title_user_profile',
-    icon: 'User',
-  },
-  {
     type: 'securityLogin',
     title: 'settings:title_security_login',
     icon: 'iconPrivate',

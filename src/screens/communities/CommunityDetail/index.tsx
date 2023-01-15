@@ -29,7 +29,6 @@ import modalActions from '~/storeRedux/modal/actions';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
-import { useMyPermissions } from '~/hooks/permissions';
 import CommunityTabHeader from './components/CommunityTabHeader';
 import { getHeaderMenu } from './helper';
 import { BottomListProps } from '~/components/BottomList';
@@ -47,6 +46,8 @@ import useCommunityController from '../store';
 import homeActions from '~/storeRedux/home/actions';
 import ContentSearch from '~/screens/Home/HomeSearch';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
+import { PermissionKey } from '~/constants/permissionScheme';
+import useMyPermissionsStore from '~/store/permissions';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -97,12 +98,12 @@ const CommunityDetail = (props: any) => {
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
   const searchViewRef = useRef(null);
 
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canSetting = hasPermissionsOnScopeWithId(
+  const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
+  const canSetting = shouldHavePermission(
     groupId,
     [
-      PERMISSION_KEY.EDIT_INFO,
-      PERMISSION_KEY.EDIT_PRIVACY,
+      PermissionKey.EDIT_INFO,
+      PermissionKey.EDIT_PRIVACY,
     ],
   );
   const isPrivateCommunity = !isMember && privacy === CommunityPrivacyType.PRIVATE;
@@ -119,7 +120,7 @@ const CommunityDetail = (props: any) => {
     /* Avoid getting group posts of the nonexisting group,
       which will lead to endless fetching group posts in
       httpApiRequest > makeGetStreamRequest */
-    const privilegeToFetchPost = isMember || privacy === CommunityPrivacyType.PUBLIC;
+    const privilegeToFetchPost = isMember || privacy === CommunityPrivacyType.OPEN;
 
     if (isLoadingCommunity || isEmpty(community) || !privilegeToFetchPost) {
       return;
@@ -139,6 +140,12 @@ const CommunityDetail = (props: any) => {
       getCommunityDetail();
     }
   }, [isMounted, communityId]);
+
+  useEffect(() => () => {
+    useCommunitiesStore.setState({
+      currentCommunityId: '',
+    });
+  }, []);
 
   useEffect(() => {
     if (isEmpty(timelines[groupId]) && isEmpty(communityPost?.ids)) {

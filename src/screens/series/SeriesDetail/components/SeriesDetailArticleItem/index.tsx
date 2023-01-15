@@ -1,11 +1,14 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { IPost } from '~/interfaces/IPost';
 import { spacing } from '~/theme';
 import TitleArticle from './TitleArticle';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import ContentArticleItem from './ContentArticleItem';
+import { useRootNavigation } from '~/hooks/navigation';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import { Button } from '~/baseComponents';
 
 type SeriesDetailArticleItemProps = {
     article: IPost;
@@ -23,12 +26,22 @@ const SeriesDetailArticleItem: FC<SeriesDetailArticleItemProps> = ({
   const theme = useTheme();
   const styles = createStyle(theme);
 
+  const { rootNavigation } = useRootNavigation();
+
+  const goToArticleDetail = () => {
+    rootNavigation.navigate(articleStack.articleContentDetail, { articleId: article?.id });
+  };
+
   return (
-    <View style={styles.container}>
+    <Button
+      style={styles.container}
+      onPress={goToArticleDetail}
+      testID="series_detail.list_article.article_item"
+    >
       <TitleArticle index={index} article={article} seriesId={seriesId} isActor={isActor} />
       <ViewSpacing height={spacing.margin.extraLarge} />
       <ContentArticleItem actor={actor} coverMedia={coverMedia} summary={summary} />
-    </View>
+    </Button>
   );
 };
 

@@ -1,12 +1,13 @@
 import { GroupPrivacyType } from '~/constants/privacyTypes';
 import { IFilePicked } from './common';
 import { IUploadType } from '~/configs/resourceConfig';
+import { RoleType } from '~/constants/permissionScheme';
 
 export interface IRole {
   id?: string;
   name?: string;
   scope: string;
-  type: string;
+  type: RoleType;
   permissions: string[];
 }
 
@@ -88,6 +89,9 @@ export interface IGroup {
   collapsed?: boolean;
   path?: string;
   treeData?: IGroup;
+  settings?: {
+    isJoinApproval?: boolean;
+  };
 }
 
 export interface IParsedGroup extends IGroup {

@@ -4,6 +4,6 @@ export interface ImageGalleryModalProps {
   onPressClose: () => void;
   initIndex?: number;
   alwaysShowFileName?: boolean;
-
+  isShowImgName?: boolean;
   // web
 }

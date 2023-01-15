@@ -1,6 +1,6 @@
 import { isEmpty, isEqual } from 'lodash';
 import React, {
-  FC, memo, useCallback, useRef,
+  FC, memo, useMemo, useRef,
 } from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -54,20 +54,17 @@ const _PostBody: FC<PostBodyProps> = ({
     }
   }).current;
 
-  const renderBottomRightComponent = useCallback(() => {
+  const BottomRightComponent = useMemo(() => {
     if (isDraft) return null;
 
     return (
       <ContentInterestedUserCount
-        isLite
         id={postId}
         interestedUserCount={totalUsersSeen}
         style={styles.interestedUserCount}
       />
     );
   }, [isDraft, postId, totalUsersSeen]);
-
-  const BottomRightComponent = renderBottomRightComponent();
 
   const renderContent = () => {
     if (isLite) {

@@ -1,20 +1,12 @@
-import { cloneDeep } from 'lodash';
-import { ICommunityMembers } from '~/interfaces/ICommunity';
 import groupsTypes from '~/storeRedux/groups/types';
 import { IUser } from '~/interfaces/IAuth';
 import {
-  IGroupDetail,
   IGroupMembers,
   IJoiningMember,
 } from '~/interfaces/IGroup';
 import { IObject } from '~/interfaces/common';
 
 export const groupInitState = {
-  myPermissions: {
-    loading: false,
-    data: {},
-    timeGetMyPermissions: null,
-  },
   permissionScheme: {
     assignGroupScheme: {
       assignments: {
@@ -52,28 +44,6 @@ export const groupInitState = {
     loading: true,
     list: [],
   },
-  yourGroupsList: {
-    loading: true,
-    list: [],
-  },
-  yourGroupsSearch: {
-    showSearch: false,
-    loading: false,
-    key: '',
-    list: [],
-  },
-  loadingPage: false,
-  isLoadingGroupDetailError: false,
-  loadingGroupDetail: false,
-  groupDetail: {
-    group: {},
-  } as IGroupDetail,
-  loadingGroupMember: false,
-  groupMembers: {
-    loading: true,
-    canLoadMore: true,
-    offset: 0, // current fetched data count
-  },
   groupSearchMembers: {
     loading: false,
     canLoadMore: true,
@@ -86,9 +56,6 @@ export const groupInitState = {
     canLoadMore: true,
   },
   selectedUsers: [] as IUser[],
-
-  loadingAvatar: false,
-  loadingCover: false,
 
   groupMemberRequests: {
     total: 0,
@@ -134,32 +101,6 @@ export const groupInitState = {
   },
   isGettingInfoDetailError: false,
   isGettingInfoDetail: false,
-  communityMembers: {
-    loading: true,
-    canLoadMore: true,
-    offset: 0, // current fetched data count
-    // community_admin: {}, community_member: {}
-  },
-  communitySearchMembers: {
-    loading: false,
-    canLoadMore: true,
-    data: [] as ICommunityMembers[],
-  },
-  communityMemberRequests: {
-    total: 0,
-    loading: true,
-    canLoadMore: true,
-    ids: [] as string[],
-    items: {} as IObject<IJoiningMember>,
-  },
-  // temporarily stores data for `undo` action
-  undoCommunityMemberRequests: {
-    total: 0,
-    loading: null,
-    canLoadMore: null,
-    ids: [],
-    items: {} as IObject<IJoiningMember>,
-  },
   globalSearch: {
     loading: false,
     canLoadMore: true,
@@ -179,61 +120,11 @@ function groupsReducer(state = groupInitState, action: any = {}) {
   const {
     selectedUsers,
     groupMemberRequests,
-    communityMembers,
-    communitySearchMembers,
-    groupMembers,
     groupSearchMembers,
-    communityMemberRequests,
     globalSearch,
   } = state;
 
   switch (type) {
-    case groupsTypes.SET_MY_PERMISSIONS:
-      return {
-        ...state,
-        myPermissions: {
-          ...cloneDeep(state.myPermissions),
-          ...payload,
-        },
-      };
-
-    // Group Structure Settings
-    case groupsTypes.SET_GROUP_DETAIL_ERROR:
-      return {
-        ...state,
-        isLoadingGroupDetailError: payload,
-      };
-    case groupsTypes.GET_GROUP_DETAIL:
-      return {
-        ...state,
-        loadingGroupDetail: true,
-      };
-    case groupsTypes.SET_GROUP_DETAIL:
-      return {
-        ...state,
-        loadingCover: false,
-        loadingAvatar: false,
-        loadingGroupDetail: false,
-        isLoadingGroupDetailError: false,
-        groupDetail: {
-          group: {}, // init state
-          ...action.payload,
-        },
-      };
-
-    case groupsTypes.CLEAR_GROUP_MEMBER:
-      return {
-        ...state,
-        groupMembers: groupInitState.groupMembers,
-      };
-    case groupsTypes.SET_GROUP_MEMBER:
-      return {
-        ...state,
-        groupMembers: {
-          ...groupMembers,
-          ...payload,
-        },
-      };
     case groupsTypes.CLEAR_GROUP_SEARCH_MEMBERS:
       return {
         ...state,
@@ -294,22 +185,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         users: groupInitState.users,
       };
 
-    case groupsTypes.SET_LOADING_AVATAR:
-      return {
-        ...state,
-        loadingAvatar: payload,
-      };
-    case groupsTypes.SET_LOADING_COVER:
-      return {
-        ...state,
-        loadingCover: payload,
-      };
-    case groupsTypes.SET_LOADING_PAGE:
-      return {
-        ...state,
-        loadingPage: payload,
-      };
-
     // PENDING MEMBER REQUESTS
     case groupsTypes.SET_GROUP_MEMBER_REQUESTS:
       return {
@@ -361,35 +236,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         loadingJoinedGroups: true,
         joinedGroups: groupInitState.joinedGroups,
       };
-    case groupsTypes.SET_COMMUNITY_MEMBERS: {
-      return {
-        ...state,
-        communityMembers: {
-          ...communityMembers,
-          ...payload,
-        },
-      };
-    }
-    case groupsTypes.RESET_COMMUNITY_MEMBERS:
-      return {
-        ...state,
-        communityMembers: groupInitState.communityMembers,
-      };
 
-    case groupsTypes.RESET_COMMUNITY_SEARCH_MEMBERS:
-      return {
-        ...state,
-        communitySearchMembers: groupInitState.communitySearchMembers,
-      };
-    case groupsTypes.SET_COMMUNITY_SEARCH_MEMBERS: {
-      return {
-        ...state,
-        communitySearchMembers: {
-          ...communitySearchMembers,
-          ...payload,
-        },
-      };
-    }
     case groupsTypes.EDIT_DISCOVER_COMMUNITY_ITEM:
       return {
         ...state,
@@ -406,50 +253,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
               },
             }
             : globalSearch,
-      };
-
-    case groupsTypes.SET_COMMUNITY_MEMBER_REQUESTS:
-      return {
-        ...state,
-        communityMemberRequests: {
-          ...communityMemberRequests,
-          ...payload,
-        },
-      };
-    case groupsTypes.RESET_COMMUNITY_MEMBER_REQUESTS:
-      return {
-        ...state,
-        communityMemberRequests: groupInitState.communityMemberRequests,
-      };
-    case groupsTypes.STORE_UNDO_COMMUNITY_MEMBER_REQUESTS:
-      return {
-        ...state,
-        undoCommunityMemberRequests: { ...communityMemberRequests },
-      };
-    case groupsTypes.UNDO_DECLINED_COMMUNITY_MEMBER_REQUESTS:
-      return {
-        ...state,
-        communityMemberRequests: { ...state.undoCommunityMemberRequests },
-        undoCommunityMemberRequests: groupInitState.undoCommunityMemberRequests,
-      };
-    case groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS:
-      return {
-        ...state,
-        undoCommunityMemberRequests: groupInitState.undoCommunityMemberRequests,
-      };
-    case groupsTypes.EDIT_COMMUNITY_MEMBER_REQUEST:
-      return {
-        ...state,
-        communityMemberRequests: {
-          ...communityMemberRequests,
-          items: {
-            ...communityMemberRequests.items,
-            [payload.id]: {
-              ...communityMemberRequests.items[payload.id],
-              ...payload.data,
-            },
-          },
-        },
       };
     case groupsTypes.SET_GLOBAL_SEARCH:
       return {

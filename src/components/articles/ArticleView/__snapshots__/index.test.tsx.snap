@@ -1,14 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ArticleView Component renders correctly 1`] = `
-<View
-  style={
-    Object {
-      "backgroundColor": "#FFFFFF",
+Array [
+  <View
+    style={
+      Object {
+        "height": 16,
+        "paddingHorizontal": undefined,
+        "paddingVertical": undefined,
+        "width": undefined,
+      }
     }
-  }
-  testID="article_view"
->
+  />,
   <View
     style={
       Object {
@@ -273,7 +276,7 @@ exports[`ArticleView Component renders correctly 1`] = `
             }
             testID="time_view"
           >
-            Nov 14 at 03:39 PM
+            Nov 14, 2022
           </Text>
         </View>
       </View>
@@ -533,6 +536,151 @@ exports[`ArticleView Component renders correctly 1`] = `
             1234567890-= lalalalallalallalalala and I will be there at the
           </Text>
         </Text>
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+              "flexWrap": "wrap",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "marginTop": 8,
+                "maxWidth": 718,
+                "paddingRight": 8,
+              }
+            }
+          >
+            <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 4,
+                  "left": 4,
+                  "right": 4,
+                  "top": 4,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#FFFFFF",
+                  "borderColor": "#E3E6F2",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                  "flexDirection": "row",
+                  "height": 24,
+                  "justifyContent": "center",
+                  "marginRight": 0,
+                  "opacity": 1,
+                  "paddingLeft": 4,
+                  "paddingRight": 8,
+                }
+              }
+              testID="tag_item_21a08db3-92d2-4758-a64c-d22e2ba01f33.button_navigate"
+            >
+              <Text
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "color": "#212745",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 11,
+                    },
+                    Object {},
+                    Object {
+                      "color": "#353E6E",
+                      "paddingLeft": 4,
+                    },
+                  ]
+                }
+                testID="tag.label"
+              >
+                tag 1
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "marginTop": 8,
+                "maxWidth": 718,
+                "paddingRight": 8,
+              }
+            }
+          >
+            <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 4,
+                  "left": 4,
+                  "right": 4,
+                  "top": 4,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#FFFFFF",
+                  "borderColor": "#E3E6F2",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                  "flexDirection": "row",
+                  "height": 24,
+                  "justifyContent": "center",
+                  "marginRight": 0,
+                  "opacity": 1,
+                  "paddingLeft": 4,
+                  "paddingRight": 8,
+                }
+              }
+              testID="tag_item_f8614f2a-c746-493e-a861-60029ec75f8c.button_navigate"
+            >
+              <Text
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "color": "#212745",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 11,
+                    },
+                    Object {},
+                    Object {
+                      "color": "#353E6E",
+                      "paddingLeft": 4,
+                    },
+                  ]
+                }
+                testID="tag.label"
+              >
+                tag 2
+              </Text>
+            </View>
+          </View>
+        </View>
       </View>
     </View>
     <View
@@ -604,24 +752,26 @@ exports[`ArticleView Component renders correctly 1`] = `
           </Text>
         </Text>
       </View>
-      <View
-        style={
-          Array [
-            Object {
-              "alignSelf": "stretch",
-              "backgroundColor": "#E3E6F2",
-              "height": 1,
-              "marginHorizontal": 0,
-              "width": undefined,
-            },
-            Object {
-              "marginTop": 12,
-            },
-          ]
-        }
-        testID="divider"
-      />
     </View>
+    <View
+      style={
+        Array [
+          Object {
+            "alignSelf": "stretch",
+            "backgroundColor": "#E3E6F2",
+            "height": 1,
+            "marginHorizontal": 0,
+            "width": undefined,
+          },
+          Object {
+            "marginBottom": 8,
+            "marginHorizontal": 16,
+            "marginTop": 12,
+          },
+        ]
+      }
+      testID="divider"
+    />
     <View
       testID="article_footer"
     >
@@ -757,6 +907,8 @@ exports[`ArticleView Component renders correctly 1`] = `
               "alignItems": "center",
               "flexDirection": "row",
               "height": 44,
+              "marginBottom": 8,
+              "paddingHorizontal": 16,
             },
             false,
           ]
@@ -871,10 +1023,10 @@ exports[`ArticleView Component renders correctly 1`] = `
                     Object {
                       "color": "#212745",
                       "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
+                      "fontSize": 14,
                     },
                     Object {
-                      "color": "#181C32",
+                      "color": "#282E53",
                     },
                     Object {
                       "textAlign": "center",
@@ -1002,10 +1154,10 @@ exports[`ArticleView Component renders correctly 1`] = `
                     Object {
                       "color": "#212745",
                       "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
+                      "fontSize": 14,
                     },
                     Object {
-                      "color": "#181C32",
+                      "color": "#282E53",
                     },
                     Object {
                       "textAlign": "center",
@@ -1021,23 +1173,31 @@ exports[`ArticleView Component renders correctly 1`] = `
         </View>
       </View>
     </View>
-  </View>
+  </View>,
   <View
     style={
-      Array [
-        Object {
-          "alignSelf": "stretch",
-          "backgroundColor": "#E3E6F2",
-          "height": 1,
-          "marginHorizontal": 0,
-          "width": undefined,
-        },
-        Object {
-          "marginHorizontal": 16,
-        },
-      ]
+      Object {
+        "backgroundColor": "#FFFFFF",
+      }
     }
-    testID="divider"
-  />
-</View>
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignSelf": "stretch",
+            "backgroundColor": "#E3E6F2",
+            "height": 1,
+            "marginHorizontal": 0,
+            "width": undefined,
+          },
+          Object {
+            "marginHorizontal": 16,
+          },
+        ]
+      }
+      testID="divider"
+    />
+  </View>,
+]
 `;

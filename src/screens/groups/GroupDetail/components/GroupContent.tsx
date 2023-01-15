@@ -5,8 +5,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Animated from 'react-native-reanimated';
 import { isEmpty } from 'lodash';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import spacing from '~/theme/spacing';
 import GroupTabHeader from './GroupTabHeader';
 import InfoHeader from '../../components/InfoHeader';
@@ -19,6 +17,7 @@ import { ICommunity } from '~/interfaces/ICommunity';
 import ContentItem from '~/components/ContentItem';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 import Divider from '~/beinComponents/Divider';
+import useGroupDetailStore from '../store';
 
 interface GroupContentProps {
   community: ICommunity;
@@ -36,8 +35,7 @@ const GroupContent = ({
   const styles = themeStyles();
   const isMounted = useMounted();
 
-  const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
-  const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
+  const { groupDetail: { group: groupData, joinStatus } } = useGroupDetailStore((state) => state);
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
   const { id: groupId, teamName } = groupData;
   const communityId = community?.id;
@@ -98,6 +96,7 @@ const GroupContent = ({
         communityId={communityId}
         teamName={teamName}
       />
+      <GroupJoinCancelButton community={community} />
       <Divider color={colors.gray5} size={spacing.padding.large} />
       <FilterFeedButtonGroup
         contentFilter={contentFilter}
@@ -105,7 +104,7 @@ const GroupContent = ({
         onPressContentFilterTab={_onPressContentFilterTab}
         onPressAttributeFilterTab={_onPressAttributeFilterTab}
       />
-      <GroupJoinCancelButton />
+      <Divider color={colors.neutral5} size={spacing.padding.tiny} />
       {isLoadingPosts && renderLoading()}
     </View>
   );
@@ -122,7 +121,7 @@ const GroupContent = ({
     return <ViewSpacing height={spacing.margin.base} />;
   };
 
-  const renderItemSeparator = () => <ViewSpacing height={spacing.margin.base} />;
+  const renderItemSeparator = () => <ViewSpacing height={spacing.margin.large} />;
 
   return (
     <Animated.FlatList

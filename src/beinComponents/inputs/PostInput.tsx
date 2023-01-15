@@ -11,6 +11,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { PastedFile } from 'react-native-paste-image-input';
 import AutoGrowingTextInput from '~/beinComponents/inputs/AutoGrowingTextInput';
 import { useBaseHook } from '~/hooks';
 import dimension from '~/theme/dimension';
@@ -31,6 +32,10 @@ export interface PostInputProps extends TextInputProps {
   onSelectionChange?:
     | ((e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => void)
     | undefined;
+  onPasteImage?: (
+    error: string | null | undefined,
+    files: Array<PastedFile>
+  ) => void;
   value: string;
   inputRef?: any;
 }
@@ -46,6 +51,7 @@ const PostInput: React.FC<PostInputProps> = ({
   returnKeyType,
   onSubmitEditing = () => Keyboard.dismiss,
   onSelectionChange,
+  onPasteImage,
   value,
   inputRef,
   ...props
@@ -100,10 +106,10 @@ const PostInput: React.FC<PostInputProps> = ({
       returnKeyType={returnKeyType}
       onSubmitEditing={onSubmitEditing}
       onSelectionChange={onSelectionChange}
+      value={value}
+      onPaste={onPasteImage}
       {...props}
-    >
-      {value}
-    </AutoGrowingTextInput>
+    />
   );
 };
 

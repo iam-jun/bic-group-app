@@ -12,18 +12,12 @@ describe('GroupMembers component', () => {
   const component = () => <GroupMembers route={{ params: { groupId } }} />;
 
   it('should render search input correctly', () => {
-    const state = { ...initialState };
-    state.auth.user = { username: 'username' };
-
     const wrapper = renderWithRedux(<MockedNavigator component={component} />);
     const searchInput = wrapper.getByTestId('group_members.search');
     expect(searchInput).toBeDefined();
   });
 
   it('should render list data correctly', () => {
-    const state = { ...initialState };
-    state.auth.user = { username: 'username' };
-
     const wrapper = renderWithRedux(<MockedNavigator component={component} />);
     const memberListComp = wrapper.getByTestId('member_list');
     expect(memberListComp).toBeDefined();
@@ -31,7 +25,6 @@ describe('GroupMembers component', () => {
 
   it('should render Invite member button and navigate to Invite member screen correctly when user can manage member', () => {
     const state = { ...initialState };
-    state.auth.user = { username: 'username' };
     // @ts-ignore
     state.groups.myPermissions = {
       data: {
@@ -55,7 +48,6 @@ describe('GroupMembers component', () => {
 
   it('should NOT render Invite member button correctly when user cannot manage member', () => {
     const state = { ...initialState };
-    state.auth.user = { username: 'username' };
     // @ts-ignore
     state.groups.myPermissions = { data: { groups: {} } };
     const wrapper = renderWithRedux(<MockedNavigator component={component} />);

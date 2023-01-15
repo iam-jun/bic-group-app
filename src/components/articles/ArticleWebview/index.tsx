@@ -76,7 +76,7 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
   };
 
   const _onInitializeEnd = () => {
-    _webViewRef.current?.requestFocus();
+    // _webViewRef.current?.requestFocus();
     onInitializeEnd?.();
   };
 
@@ -100,6 +100,7 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
   return (
     <View testID="article_webview" style={[styles.container, style]}>
       <WebView
+        testID="webview"
         key="article-webview"
         ref={_webViewRef}
         style={styles.webview}

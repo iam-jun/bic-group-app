@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { ICommunity, ICommunityMembers } from '~/interfaces/ICommunity';
 import MemberList from '~/screens/groups/components/MemberList';
-import actions from '~/storeRedux/groups/actions';
-import { useMyPermissions } from '~/hooks/permissions';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
+import useMyPermissionsStore from '~/store/permissions';
+import { PermissionKey } from '~/constants/permissionScheme';
+import useCommunityMemberStore from '../store';
 
 interface CommunityMemberListProps {
   community: ICommunity;
@@ -15,15 +13,16 @@ interface CommunityMemberListProps {
 
 const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProps) => {
   const { groupId } = community;
-  const dispatch = useDispatch();
-  const { canLoadMore } = useKeySelector(groupsKeySelector.communityMembers);
+  const actions = useCommunityMemberStore((state) => state.actions);
+  const resetStore = useCommunityMemberStore((state) => state.reset);
+  const canLoadMore = useCommunityMemberStore((state) => state.communityMembers.canLoadMore);
 
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canManageMember = hasPermissionsOnScopeWithId(
+  const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
+  const canManageMember = shouldHavePermission(
     groupId,
     [
-      PERMISSION_KEY.REMOVE_MEMBER,
-      PERMISSION_KEY.ASSIGN_UNASSIGN_ROLE,
+      PermissionKey.REMOVE_MEMBER,
+      PermissionKey.ASSIGN_UNASSIGN_ROLE,
     ],
   );
 
@@ -39,11 +38,11 @@ const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProp
 
   const getCommunityMembers = (isRefreshing?: boolean) => {
     if (!groupId) return;
-    dispatch(actions.getCommunityMembers({ groupId, isRefreshing }));
+    actions.getCommunityMembers(groupId, isRefreshing);
   };
 
   const resetCommunityMembers = () => {
-    dispatch(actions.resetCommunityMembers());
+    resetStore();
   };
 
   const onLoadMore = () => {

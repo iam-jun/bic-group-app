@@ -9,6 +9,7 @@ const articleStack = {
   createArticleCover: 'create-article-cover',
   createArticleAudience: 'create-article-audience',
   createArticleSeries: 'create-article-series',
+  createArticleTags: 'create-article-tags',
 };
 
 export default articleStack;

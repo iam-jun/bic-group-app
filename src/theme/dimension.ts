@@ -42,7 +42,7 @@ export const sizes = {
   subtitleM: 15,
   subtitleS: 13,
   subtitleXS: 11,
-  bodyM: 15,
+  bodyM: 14,
   bodyMMedium: 15,
   bodyS: 13,
   bodySMedium: 13,
@@ -55,8 +55,8 @@ export const sizes = {
   buttonM: 15,
   buttonS: 13,
   tabL: 15,
-  tabM: 13,
-  tabS: 11,
+  tabM: 14,
+  tabS: 13,
   linkM: 15,
   linkS: 13,
   badgeL: 16,
@@ -92,7 +92,7 @@ export const lineHeights = {
   subtitleM: 24,
   subtitleS: 20,
   subtitleXS: 16,
-  bodyM: 24,
+  bodyM: 22,
   bodyMMedium: 24,
   bodyS: 20,
   bodySMedium: 20,
@@ -102,7 +102,7 @@ export const lineHeights = {
   buttonL: 26,
   buttonM: 24,
   buttonS: 20,
-  tabL: 26,
+  tabL: 24,
   tabM: 24,
   tabS: 20,
   linkM: 22,
@@ -188,9 +188,9 @@ export const maxNewsfeedWidth = 584;
 export const bottomBarHeight = 52;
 export const permissionRoleSectionHeaderHeight = 56;
 
-export const homeHeaderLogoHeight = 48;
-export const homeHeaderTabHeight = 44;
-export const homeHeaderAttributeContainerHeight = 30;
+export const homeHeaderLogoHeight = 44;
+export const homeHeaderTabHeight = 48;
+export const homeHeaderAttributeContainerHeight = 36;
 export const homeHeaderHeight = homeHeaderLogoHeight + homeHeaderTabHeight + homeHeaderAttributeContainerHeight;
 const isPhoneWithInsets = Platform.OS === 'ios' && deviceInfoModule.hasNotch();
 

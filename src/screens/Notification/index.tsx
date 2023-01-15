@@ -2,15 +2,20 @@ import { useIsFocused } from '@react-navigation/native';
 
 import i18next from 'i18next';
 import React, { useCallback, useEffect, useState } from 'react';
+import { StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { BottomListItemProps } from '~/components/BottomList/BottomListItem';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import { useRootNavigation } from '~/hooks/navigation';
+import { TargetType } from '~/interfaces/IPost';
+import commonStack from '~/router/navigator/commonStack/stack';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
+import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { notificationMenuData } from '~/screens/Notification/constants';
 import modalActions from '~/storeRedux/modal/actions';
 import { MEMBER_TABS } from '../communities/CommunityMembers';
@@ -18,6 +23,7 @@ import { MEMBER_TAB_TYPES } from '../communities/constants';
 import ScrollableTabBar from './components/ScrollableTabBar';
 import useNotificationStore from './store';
 import INotificationsState from './store/Interface';
+import spacing from '~/theme/spacing';
 
 const Notification = () => {
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
@@ -105,6 +111,7 @@ const Notification = () => {
     (item?: any) => {
       const type = item?.extra?.type || undefined;
       const act = item?.activities?.[0];
+      const target = item?.target;
 
       try {
         if (type !== undefined) {
@@ -120,12 +127,16 @@ const Notification = () => {
             case NOTIFICATION_TYPE.POST_IMPORTANT_TO_MENTIONED_USER_IN_POST_IN_MULTIPLE_GROUPS:
             case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR:
             case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR_AGGREGATED: {
-              rootNavigation.navigate(
-                homeStack.postDetail, {
-                  post_id: act?.id,
-                  noti_id: item.id,
-                },
-              );
+              if (target === TargetType.ARTICLE) {
+                rootNavigation.navigate(articleStack.articleDetail, { articleId: act.id });
+              } else {
+                rootNavigation.navigate(
+                  homeStack.postDetail, {
+                    post_id: act?.id,
+                    noti_id: item.id,
+                  },
+                );
+              }
               break;
             }
             case NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL: {
@@ -138,16 +149,19 @@ const Notification = () => {
             case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_POST_AGGREGATED:
             case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST:
             case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST_AGGREGATED: {
-              rootNavigation.navigate(
-                homeStack.postDetail, {
-                  post_id: act?.id,
-                  noti_id: item.id,
-                  focus_comment: true,
-                },
-              );
+              if (target === TargetType.ARTICLE) {
+                rootNavigation.navigate(articleStack.articleDetail, { articleId: act.id, focusComment: true });
+              } else {
+                rootNavigation.navigate(
+                  homeStack.postDetail, {
+                    post_id: act?.id,
+                    noti_id: item.id,
+                    focus_comment: true,
+                  },
+                );
+              }
               break;
             }
-
             case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_COMMENT:
             case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_PARENT_COMMENT:
             case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_PARENT_COMMENT_AGGREGATED:
@@ -257,6 +271,25 @@ const Notification = () => {
               }
               break;
             }
+            case NOTIFICATION_TYPE.POST_SERIES_TO_USER_IN_ONE_GROUP:
+            case NOTIFICATION_TYPE.POST_SERIES_TO_USER_IN_MULTIPLE_GROUPS:
+            case NOTIFICATION_TYPE.ADD_ARTICLE_TO_USER: {
+              rootNavigation.navigate(seriesStack.seriesDetail, { seriesId: act.id });
+              break;
+            }
+            case NOTIFICATION_TYPE.POST_ARTICLE_TO_USER_IN_ONE_GROUP:
+            case NOTIFICATION_TYPE.POST_ARTICLE_TO_USER_IN_MULTIPLE_GROUPS: {
+              rootNavigation.navigate(articleStack.articleDetail, { articleId: act.id });
+              break;
+            }
+            case NOTIFICATION_TYPE.REPORT_USER_TO_USER:
+            case NOTIFICATION_TYPE.REPORT_USER_TO_USER_AGGREGATED:
+            case NOTIFICATION_TYPE.CONTENT_HIDE_TO_USER:
+            case NOTIFICATION_TYPE.CONTENT_REPORT_TO_USER:
+            case NOTIFICATION_TYPE.CONTENT_REPORT_TO_USER_AGGREGATED: {
+              rootNavigation.navigate(commonStack.unsupportFeature);
+              break;
+            }
             default:
               console.warn(`Notification type ${type} have not implemented yet`);
               break;
@@ -289,7 +322,7 @@ const Notification = () => {
     <ScreenWrapper testID="NotfiticationScreen" isFullView>
       <Header
         title="tabs:notification"
-        titleTextProps={{ useI18n: true }}
+        titleTextProps={{ useI18n: true, style: styles.textHeader }}
         removeBorderAndShadow
         hideBack
         onPressMenu={onPressMenu}
@@ -304,5 +337,11 @@ const Notification = () => {
     </ScreenWrapper>
   );
 };
+
+const styles = StyleSheet.create({
+  textHeader: {
+    marginLeft: spacing.margin.small,
+  },
+});
 
 export default Notification;

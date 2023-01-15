@@ -6,22 +6,19 @@ import { SearchInput } from '~/baseComponents/Input';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
+import ArticleSelectingInfo from '~/components/articles/ArticleSelectingInfo';
+import ArticleSelectingListInfo from '~/components/articles/ArticleSelectingListInfo';
 
 import { useBaseHook } from '~/hooks';
-import { useRootNavigation } from '~/hooks/navigation';
+import { useBackPressListener } from '~/hooks/navigation';
 import { CreateArticleProps, ICategory } from '~/interfaces/IArticle';
-import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import spacing from '~/theme/spacing';
-import CategoryItem from './components/CategoryItem';
-import SelectingCategory from './components/SelectingCategory';
 import useCreateArticleCategoryStore from './store';
 
 const CreateArticleCategory: FC<CreateArticleProps> = ({ route }: CreateArticleProps) => {
   const articleId = route?.params?.articleId;
-
-  const { rootNavigation } = useRootNavigation();
 
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
@@ -31,7 +28,6 @@ const CreateArticleCategory: FC<CreateArticleProps> = ({ route }: CreateArticleP
 
   const selectedCategories = useCreateArticleStore((state) => state.data.categories);
   const editArticleActions = useCreateArticleStore((state) => state.actions);
-  const isPublishing = useCreateArticleStore((state) => state.isPublishing);
 
   const categoriesData = useCreateArticleCategoryStore((state) => state.categories);
   const { items: categoryItems, loading: loadingCategories } = categoriesData || {};
@@ -42,10 +38,12 @@ const CreateArticleCategory: FC<CreateArticleProps> = ({ route }: CreateArticleP
   const listData = searchKey ? searchItems : categoryItems;
 
   const {
-    handleBack, handleSave, enableButtonSave, validButtonNext, loading,
+    handleBack, handleSave, enableButtonSave, loading,
   } = useCreateArticle({ articleId });
 
-  const disabled = (isPublishing ? !validButtonNext.isCategoriesValid : !enableButtonSave) || loading;
+  const disabled = !enableButtonSave || loading;
+
+  useBackPressListener(handleBack);
 
   useEffect(() => {
     if (isEmpty(categoryItems) && !loadingCategories) {
@@ -72,40 +70,36 @@ const CreateArticleCategory: FC<CreateArticleProps> = ({ route }: CreateArticleP
   const renderItem = ({ item }) => {
     const isChecked = selectedCategories.findIndex((selected) => selected.id === item.id) > -1;
     return (
-      <CategoryItem
+      <ArticleSelectingInfo
         data={item}
         isChecked={isChecked}
-        onAddCategory={onAddCategory}
-        onRemoveCategory={onRemoveCategory}
+        onAddItem={onAddCategory}
+        onRemoveItem={onRemoveCategory}
       />
     );
   };
 
   const renderFooter = () => <View style={styles.footer} />;
 
-  const goNextStep = () => {
-    rootNavigation.navigate(articleStack.createArticleAudience, { articleId });
-  };
-
-  const goBack = () => {
-    rootNavigation.goBack();
-  };
-
   return (
     <View style={styles.container}>
       <Header
         title={t('article:text_option_edit_category')}
-        buttonProps={{ disabled, loading, style: styles.btnNext }}
-        buttonText={t(isPublishing ? 'common:btn_next' : 'common:btn_save')}
-        onPressButton={isPublishing ? goNextStep : handleSave}
-        onPressBack={isPublishing ? goBack : handleBack}
+        buttonProps={{ disabled, loading, style: styles.btnSave }}
+        buttonText={t('common:btn_save')}
+        onPressButton={handleSave}
+        onPressBack={handleBack}
       />
       <SearchInput
         style={styles.searchInput}
         placeholder={t('article:text_search_category_placeholder')}
         onChangeText={onChangeText}
       />
-      <SelectingCategory />
+      <ArticleSelectingListInfo
+        type="category"
+        data={selectedCategories}
+        onRemoveItem={onRemoveCategory}
+      />
       <Divider />
       <FlatList
         data={listData || []}
@@ -131,13 +125,10 @@ const createStyle = (theme: ExtendedTheme) => {
     searchInput: {
       margin: spacing.margin.large,
     },
-    label: {
-      paddingHorizontal: spacing.padding.large,
-    },
     footer: {
       marginBottom: spacing.margin.base,
     },
-    btnNext: {
+    btnSave: {
       marginRight: spacing.margin.small,
     },
   });

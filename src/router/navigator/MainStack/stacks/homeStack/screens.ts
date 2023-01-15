@@ -5,12 +5,12 @@ import DraftPost from '~/screens/Draft/DraftPost';
 import UserProfile from '~/screens/Menu/UserProfile';
 import PostSettings from '~/screens/post/PostSettings';
 import CommentDetail from '~/screens/comments/CommentDetail';
-import CreateComment from '~/screens/comments/CreateComment';
+import EditComment from '~/screens/comments/EditComment';
 
 const homeScreens = {
   'post-detail': PostDetail,
   'create-post': CreatePost,
-  'create-comment': CreateComment,
+  'edit-comment': EditComment,
   'post-select-audience': PostSelectAudience,
   'draft-post': DraftPost,
   'user-profile': UserProfile,

@@ -7,7 +7,7 @@ import Avatar from '~/baseComponents/Avatar';
 import Text from '~/baseComponents/Text';
 import images from '~/resources/images';
 import dimension, { scaleCoverHeight } from '~/theme/dimension';
-import { groupPrivacyListDetail } from '~/constants/privacyTypes';
+import { GroupPrivacyDetail } from '~/constants/privacyTypes';
 import spacing from '~/theme/spacing';
 import { useBaseHook } from '~/hooks';
 import { ICommunity } from '~/interfaces/ICommunity';
@@ -30,8 +30,8 @@ const _InfoHeader = ({
   const {
     name, userCount, backgroundImgUrl, icon, privacy,
   } = infoDetail;
-  const privacyData = groupPrivacyListDetail.find((item) => item.type === privacy);
-  const { icon: iconPrivacy, privacyTitle }: any = privacyData || {};
+  const privacyData = GroupPrivacyDetail[privacy] || {};
+  const { icon: iconPrivacy, privacyTitle }: any = privacyData;
 
   const renderCoverAvatar = () => (
     <View testID="info_header.cover" style={styles.coverAvatarContainer}>

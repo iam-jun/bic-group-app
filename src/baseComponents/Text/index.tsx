@@ -53,6 +53,7 @@ export interface TextProps extends RNTextProps {
   color?: string;
   useI18n?: boolean;
   maxLength?: number;
+  numberOfLines?: number;
 }
 
 const TextComponent: React.FC<TextProps> = ({

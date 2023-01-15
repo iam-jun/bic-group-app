@@ -1,10 +1,7 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
 import PendingUserItem from '~/screens/groups/components/PendingUserItem';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
-import groupsActions from '~/storeRedux/groups/actions';
+import useCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
 
 const CommunityPendingUserItemWrapper = ({
   requestId,
@@ -13,9 +10,8 @@ const CommunityPendingUserItemWrapper = ({
   requestId: string;
   organizationId: string;
 }) => {
-  const dispatch = useDispatch();
-
-  const communityMemberRequests = useKeySelector(groupsKeySelector.communityMemberRequests);
+  const communityMemberRequests = useCommunityMemberStore((state) => state.communityMemberRequests);
+  const communityMemberActions = useCommunityMemberStore((state) => state.actions);
   const { items } = communityMemberRequests;
 
   const requestItem = items[requestId];
@@ -23,20 +19,20 @@ const CommunityPendingUserItemWrapper = ({
   const { fullname: fullName } = user;
 
   const onPressApprove = () => {
-    dispatch(groupsActions.approveSingleCommunityMemberRequest({
+    communityMemberActions.approveSingleCommunityMemberRequest({
       communityId,
       groupId,
       requestId,
       fullName,
-    }));
+    });
   };
 
   const onPressDecline = () => {
-    dispatch(groupsActions.declineSingleCommunityMemberRequest({
+    communityMemberActions.declineSingleCommunityMemberRequest({
       groupId,
       requestId,
       fullName,
-    }));
+    });
   };
 
   return (

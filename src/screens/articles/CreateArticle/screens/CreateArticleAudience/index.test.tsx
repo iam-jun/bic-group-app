@@ -4,28 +4,18 @@ import { act, renderWithRedux } from '~/test/testUtils';
 import EditArticleAudience from '.';
 import { mockArticle } from '~/test/mock_data/article';
 import MockedNavigator from '~/test/MockedNavigator';
-import { IEditArticleAudience, IEditArticleData } from '~/interfaces/IArticle';
-import { getAudienceIdsFromAudienceObject } from '../../helper';
 import usePostsStore from '~/store/entities/posts';
 import { IPost } from '~/interfaces/IPost';
 import useCreateArticleStore from '../../store';
+import useSelectAudienceStore from '~/components/SelectAudience/store';
 
-describe('EditArticleAudience screen', () => {
-  it('should not enable button next if audience is empty', () => {
+describe('CreateArticleAudience screen', () => {
+  it('should not enable button save if audience is empty', () => {
     const article = { ...mockArticle };
     article.audience = null;
 
     act(() => {
       usePostsStore.getState().actions.addToPosts({ data: article as IPost });
-      const {
-        id, title, content, audience: audienceObject, mentions, summary, categories, coverMedia, series,
-      } = article;
-      const audienceIds: IEditArticleAudience = getAudienceIdsFromAudienceObject(audienceObject);
-      const data: IEditArticleData = {
-        id, title, content: content || '', audience: audienceIds, mentions, summary, categories, coverMedia, series,
-      };
-      useCreateArticleStore.getState().actions.setData(data);
-      useCreateArticleStore.getState().actions.setIsPublishing(true);
     });
 
     const wrapper = renderWithRedux(
@@ -40,25 +30,16 @@ describe('EditArticleAudience screen', () => {
 
     const btnText = wrapper.getByTestId('button.text');
     expect(btnText).toBeDefined();
-    expect(btnText.props?.children).toBe('Next');
+    expect(btnText.props?.children).toBe('Save');
 
     const btnNext = wrapper.getByTestId('button.content');
     expect(btnNext).toBeDefined();
     expect(btnNext.props?.style?.[2]?.backgroundColor).toBe('#F4EFFB');
   });
 
-  it('should enable button next if audience is not empty', () => {
+  it('should enable button save if audience is not empty & changed', () => {
     act(() => {
       usePostsStore.getState().actions.addToPosts({ data: mockArticle as IPost });
-      const {
-        id, title, content, audience: audienceObject, mentions, summary, categories, coverMedia, series,
-      } = mockArticle;
-      const audienceIds: IEditArticleAudience = getAudienceIdsFromAudienceObject(audienceObject);
-      const data: IEditArticleData = {
-        id, title, content: content || '', audience: audienceIds, mentions, summary, categories, coverMedia, series,
-      };
-      useCreateArticleStore.getState().actions.setData(data);
-      useCreateArticleStore.getState().actions.setIsPublishing(true);
     });
 
     const wrapper = renderWithRedux(
@@ -71,9 +52,14 @@ describe('EditArticleAudience screen', () => {
       />,
     );
 
+    act(() => {
+      useSelectAudienceStore.getState().actions.setSelectedAudiences({ 1: {} });
+      useCreateArticleStore.getState().actions.setAudience({ groupIds: ['1'], userIds: [] });
+    });
+
     const btnText = wrapper.getAllByTestId('button.text');
     expect(btnText[0]).toBeDefined();
-    expect(btnText[0].props?.children).toBe('Next');
+    expect(btnText[0].props?.children).toBe('Save');
 
     const btnNext = wrapper.getAllByTestId('button.content');
     expect(btnNext[0]).toBeDefined();

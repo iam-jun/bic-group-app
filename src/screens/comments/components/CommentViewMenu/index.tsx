@@ -19,6 +19,10 @@ import { quickReactions } from '~/configs/reactionConfig';
 import { getLink, LINK_COMMENT } from '~/utils/link';
 import spacing from '~/theme/spacing';
 import BottomListItem from '~/components/BottomList/BottomListItem';
+import ReportContent from '~/components/ReportContent';
+import { TargetType, ReportTo } from '~/interfaces/IReport';
+import { IPostAudience } from '~/interfaces/IPost';
+import { getRootGroupids } from '~/helpers/post';
 
 export interface CommentViewMenuProps {
   commentId: string;
@@ -27,6 +31,7 @@ export interface CommentViewMenuProps {
   content: string;
   groupIds: string;
   isActor: boolean;
+  audience: IPostAudience;
   onPressMoreReaction: (e: any) => void;
   onAddReaction: (reactionId: ReactionType) => void;
   onPressReply: () => void;
@@ -40,6 +45,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
   groupIds,
   postId,
   isActor,
+  audience,
   onPressMoreReaction,
   onAddReaction,
   onPressReply,
@@ -66,12 +72,15 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
 
   const _onPressEdit = () => {
     dispatch(modalActions.hideModal());
-    rootNavigation.navigate(
-      homeStack.createComment, {
-        commentId,
-        groupIds,
-      },
-    );
+    // Wait to hide modal success
+    setTimeout(() => {
+      rootNavigation.navigate(
+        homeStack.editComment, {
+          commentId,
+          groupIds,
+        },
+      );
+    }, 200);
   };
 
   const _onPress = () => {
@@ -106,6 +115,30 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
       },
     ));
     dispatch(showHideToastMessage({ content: 'post:comment_link_copied' }));
+  };
+
+  const _onPressReport = () => {
+    const rootGroupIds = getRootGroupids(audience);
+    const dataComment = {
+      parentCommentId,
+      postId,
+    };
+
+    dispatch(modalActions.hideModal());
+
+    // in this sprint default reportTo is COMMUNITY
+    setTimeout(() => {
+      dispatch(modalActions.showModal({
+        isOpen: true,
+        ContentComponent: <ReportContent
+          targetId={commentId}
+          groupIds={rootGroupIds}
+          targetType={TargetType.COMMENT}
+          reportTo={ReportTo.COMMUNITY}
+          dataComment={dataComment}
+        />,
+      }));
+    }, 350);
   };
 
   const renderReactItem = (
@@ -174,6 +207,14 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
           leftIcon="TrashCan"
           title={t('post:comment_menu_delete')}
           onPress={_onPressDelete}
+        />
+      )}
+      {!isActor && (
+        <BottomListItem
+          testID="comment_view_menu.report"
+          leftIcon="Flag"
+          title={t('common:btn_report_content')}
+          onPress={_onPressReport}
         />
       )}
     </View>

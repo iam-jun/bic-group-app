@@ -13,7 +13,7 @@ exports[`CodeInputView component renders correctly 1`] = `
   <View
     style={
       Object {
-        "marginBottom": 12,
+        "marginBottom": 32,
       }
     }
   >
@@ -23,14 +23,14 @@ exports[`CodeInputView component renders correctly 1`] = `
           Object {
             "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
-            "fontSize": 13,
+            "fontSize": 20,
           },
           Object {},
           undefined,
         ]
       }
     >
-      We sent a code to your email
+      Check Your Mail
     </Text>
     <Text
       style={
@@ -38,17 +38,17 @@ exports[`CodeInputView component renders correctly 1`] = `
           Object {
             "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 13,
+            "fontSize": 15,
           },
           Object {},
           Object {
-            "marginBottom": 12,
-            "marginTop": 4,
+            "marginBottom": 16,
+            "marginTop": 16,
           },
         ]
       }
     >
-      Enter the 6-digit verification code sent to thuquyen@tgm.vn. If you don’t see the email in your inbox, please check your spam folder
+      We’ve sent a 6-digit confirmation code to thuquyen@tgm.vn. Make sure you enter correct code.
     </Text>
     <View
       style={
@@ -57,7 +57,13 @@ exports[`CodeInputView component renders correctly 1`] = `
             "flexDirection": "column",
             "marginVertical": 4,
           },
-          undefined,
+          Object {
+            "height": 0,
+            "left": -1000,
+            "position": "absolute",
+            "top": 100,
+            "width": 0,
+          },
         ]
       }
       testID="text_input"
@@ -113,6 +119,7 @@ exports[`CodeInputView component renders correctly 1`] = `
               <TextInput
                 editable={true}
                 keyboardType="numeric"
+                maxLength={6}
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
@@ -141,6 +148,268 @@ exports[`CodeInputView component renders correctly 1`] = `
         </View>
       </View>
     </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <View
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F8F9FF",
+            "borderColor": "#E3E6F2",
+            "borderWidth": 1,
+            "height": 48,
+            "justifyContent": "center",
+            "marginHorizontal": 4,
+            "width": 40,
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 17,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          _
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F8F9FF",
+            "borderColor": "#E3E6F2",
+            "borderWidth": 1,
+            "height": 48,
+            "justifyContent": "center",
+            "marginHorizontal": 4,
+            "width": 40,
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 17,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          _
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F8F9FF",
+            "borderColor": "#E3E6F2",
+            "borderWidth": 1,
+            "height": 48,
+            "justifyContent": "center",
+            "marginHorizontal": 4,
+            "width": 40,
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 17,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          _
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F8F9FF",
+            "borderColor": "#E3E6F2",
+            "borderWidth": 1,
+            "height": 48,
+            "justifyContent": "center",
+            "marginHorizontal": 4,
+            "width": 40,
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 17,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          _
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F8F9FF",
+            "borderColor": "#E3E6F2",
+            "borderWidth": 1,
+            "height": 48,
+            "justifyContent": "center",
+            "marginHorizontal": 4,
+            "width": 40,
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 17,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          _
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F8F9FF",
+            "borderColor": "#E3E6F2",
+            "borderWidth": 1,
+            "height": 48,
+            "justifyContent": "center",
+            "marginHorizontal": 4,
+            "width": 40,
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 17,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          _
+        </Text>
+      </View>
+    </View>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 13,
+          },
+          Object {},
+          Object {
+            "marginTop": 8,
+            "textAlign": "center",
+          },
+        ]
+      }
+    >
+      Expiring in 60m
+    </Text>
     <Text
       style={
         Array [
@@ -150,11 +419,15 @@ exports[`CodeInputView component renders correctly 1`] = `
             "fontSize": 13,
           },
           Object {},
-          undefined,
+          Object {
+            "color": "#9FA6D1",
+            "marginTop": 8,
+            "textAlign": "center",
+          },
         ]
       }
     >
-      Haven’t received code yet,
+      Didn’t receive an email? Check in spam or
        
       <Text
         onPress={[Function]}
@@ -167,21 +440,21 @@ exports[`CodeInputView component renders correctly 1`] = `
             },
             Object {},
             Object {
-              "color": "#3F4350",
+              "color": "#007AFF",
             },
           ]
         }
         suppressHighlighting={true}
         testID="forgot_password.button_resend_code"
       >
-        Resend code
+        Resend
       </Text>
     </Text>
   </View>
   <View
     style={
       Object {
-        "marginBottom": 12,
+        "marginBottom": 32,
       }
     }
   >
@@ -191,16 +464,33 @@ exports[`CodeInputView component renders correctly 1`] = `
           Object {
             "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
-            "fontSize": 13,
+            "fontSize": 20,
           },
           Object {},
           Object {
-            "marginBottom": 8,
+            "marginBottom": 16,
           },
         ]
       }
     >
       Choose new password
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#353E6E",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {},
+          Object {
+            "marginBottom": 4,
+          },
+        ]
+      }
+    >
+      New password
     </Text>
     <View
       style={
@@ -360,6 +650,368 @@ exports[`CodeInputView component renders correctly 1`] = `
         </View>
       </View>
     </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "marginTop": 4,
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          Object {
+            "disabled": true,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              Object {
+                "marginRight": 4,
+              },
+              Object {
+                "backgroundColor": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View />
+          </View>
+        </View>
+      </View>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 13,
+            },
+            Object {},
+            Object {
+              "color": "#BAC0DE",
+            },
+          ]
+        }
+      >
+        Passwords must be at least 8-20 characters
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "marginTop": 4,
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          Object {
+            "disabled": true,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              Object {
+                "marginRight": 4,
+              },
+              Object {
+                "backgroundColor": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View />
+          </View>
+        </View>
+      </View>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 13,
+            },
+            Object {},
+            Object {
+              "color": "#BAC0DE",
+            },
+          ]
+        }
+      >
+        Please use at least one upper case letter (A-Z)
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "marginTop": 4,
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          Object {
+            "disabled": true,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              Object {
+                "marginRight": 4,
+              },
+              Object {
+                "backgroundColor": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View />
+          </View>
+        </View>
+      </View>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 13,
+            },
+            Object {},
+            Object {
+              "color": "#BAC0DE",
+            },
+          ]
+        }
+      >
+        Please use at least one least digits (0-9)
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "marginTop": 4,
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          Object {
+            "disabled": true,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              Object {
+                "marginRight": 4,
+              },
+              Object {
+                "backgroundColor": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View />
+          </View>
+        </View>
+      </View>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 13,
+            },
+            Object {},
+            Object {
+              "color": "#BAC0DE",
+            },
+          ]
+        }
+      >
+        Please use at least one special character
+      </Text>
+    </View>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#353E6E",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {},
+          Object {
+            "marginBottom": 4,
+            "marginTop": 12,
+          },
+        ]
+      }
+    >
+      Confirm new password
+    </Text>
     <View
       style={
         Array [
@@ -535,13 +1187,12 @@ exports[`CodeInputView component renders correctly 1`] = `
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
     style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#D1D4DB",
-        "borderRadius": 4,
-        "paddingHorizontal": 12,
-        "paddingVertical": 8,
-      }
+      Array [
+        Object {
+          "borderRadius": 8,
+        },
+        undefined,
+      ]
     }
     testID="forgot_password.button_change_password"
   >
@@ -550,35 +1201,52 @@ exports[`CodeInputView component renders correctly 1`] = `
         Array [
           Object {
             "alignItems": "center",
+            "borderRadius": 8,
             "flexDirection": "row",
             "justifyContent": "center",
+            "paddingVertical": 4,
           },
           undefined,
+          Object {
+            "backgroundColor": "#F4EFFB",
+            "height": 44,
+            "paddingHorizontal": 16,
+          },
         ]
       }
-      testID="button_wrapper.content"
+      testID="button.content"
     >
       <Text
         style={
           Array [
             Object {
               "color": "#212745",
-              "fontFamily": "BeVietnamPro-Light",
+              "fontFamily": "BeVietnamPro-Medium",
               "fontSize": 15,
             },
             Object {
-              "color": "#A4A9B7",
+              "color": "#BAC0DE",
             },
-            Object {
-              "textAlign": "center",
-            },
+            Array [
+              Object {
+                "textAlign": "center",
+              },
+              undefined,
+            ],
           ]
         }
-        testID="button_wrapper.text"
+        testID="button.text"
       >
-        Submit
+        Change Password
       </Text>
     </View>
   </View>
+  <View
+    style={
+      Object {
+        "paddingBottom": 32,
+      }
+    }
+  />
 </View>
 `;

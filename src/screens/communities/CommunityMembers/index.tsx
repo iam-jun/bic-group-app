@@ -15,14 +15,14 @@ import CommunityMemberList from './CommunityMemberList';
 import Tab from '~/baseComponents/Tab';
 import { MEMBER_TAB_TYPES } from '../constants';
 import { spacing } from '~/theme';
-import { useMyPermissions } from '~/hooks/permissions';
 import CommunityMemberRequests from './CommunityMemberRequests';
 import modalActions from '~/storeRedux/modal/actions';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { IconType } from '~/resources/icons';
 import MemberOptionsMenu from './components/CommunityMemberOptionsMenu';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
+import useCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
+import { PermissionKey } from '~/constants/permissionScheme';
+import useMyPermissionsStore from '~/store/permissions';
 
 export const MEMBER_TABS = [
   { id: MEMBER_TAB_TYPES.MEMBER_LIST, text: 'communities:member_tab_types:title_member_list' },
@@ -40,7 +40,7 @@ const CommunityMembers = ({ route }: any) => {
 
   const [selectedIndex, setSelectedIndex] = useState<number>(targetIndex || 0);
   const [isOpen, setIsOpen] = useState(false);
-  const { ids } = useKeySelector(groupsKeySelector.communityMemberRequests);
+  const { ids } = useCommunityMemberStore((state) => state.communityMemberRequests);
   const [selectedMember, setSelectedMember] = useState<ICommunityMembers>();
   const baseSheetRef: any = useRef();
 
@@ -50,18 +50,18 @@ const CommunityMembers = ({ route }: any) => {
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
 
   const { groupId } = community || {};
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canApproveRejectJoiningRequests = hasPermissionsOnScopeWithId(
+  const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
+  const canApproveRejectJoiningRequests = shouldHavePermission(
     groupId,
-    PERMISSION_KEY.APPROVE_REJECT_JOINING_REQUESTS,
+    PermissionKey.APPROVE_REJECT_JOINING_REQUESTS,
   );
-  const canEditJoinSetting = hasPermissionsOnScopeWithId(
+  const canEditJoinSetting = shouldHavePermission(
     groupId,
-    PERMISSION_KEY.EDIT_JOIN_SETTING,
+    PermissionKey.EDIT_JOIN_SETTING,
   );
-  const canAddMember = hasPermissionsOnScopeWithId(
+  const canAddMember = shouldHavePermission(
     groupId,
-    PERMISSION_KEY.ADD_MEMBER,
+    PermissionKey.ADD_MEMBER,
   );
 
   useEffect(() => {

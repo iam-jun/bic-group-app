@@ -10,10 +10,11 @@ import modalActions from '~/storeRedux/modal/actions';
 import postActions from '~/storeRedux/post/actions';
 import useHomeStore from '~/screens/Home/store';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import { IDraftArticleState } from '..';
 
 const navigation = withNavigation(rootNavigationRef);
 
-const publishDraftArticle = (_set, get) => async (payload: IPayloadPublishDraftArticle) => {
+const publishDraftArticle = (set, get) => async (payload: IPayloadPublishDraftArticle) => {
   const {
     draftArticleId,
     replaceWithDetail,
@@ -22,15 +23,24 @@ const publishDraftArticle = (_set, get) => async (payload: IPayloadPublishDraftA
   } = payload;
   const { actions } = get();
   try {
+    set((state: IDraftArticleState) => {
+      state.isPublishing = true;
+    }, 'publishDraftArticle');
+
     const response = await streamApi.publishDraftArticle(draftArticleId);
 
     if (!response.data) {
-      onError?.();
-      showError(response);
+      set((state: IDraftArticleState) => {
+        state.isPublishing = false;
+      }, 'publishDraftArticle error');
+      onError ? onError(response) : showError(response);
       return;
     }
 
     onSuccess?.();
+    set((state: IDraftArticleState) => {
+      state.isPublishing = false;
+    }, 'publishDraftArticle success');
     const contentData: IPost = response.data;
     usePostsStore.getState().actions.addToPosts({ data: contentData } as IPayloadAddToAllPost);
 
@@ -53,8 +63,10 @@ const publishDraftArticle = (_set, get) => async (payload: IPayloadPublishDraftA
     actions.getDraftArticles(payloadGetDraftArticles);
   } catch (error) {
     console.error('publishDraftArticle error:', error);
-    onError?.();
-    showError(error);
+    set((state: IDraftArticleState) => {
+      state.isPublishing = false;
+    }, 'publishDraftArticle error');
+    onError ? onError(error) : showError(error);
   }
 };
 

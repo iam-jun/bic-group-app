@@ -39,6 +39,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   onPressMarkSeenPost,
 }: PostPhotoPreviewProps) => {
   const [galleryVisible, setGalleryVisible] = useState(false);
+  const [initIndex, setInitIndex] = useState(0);
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -67,10 +68,11 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
     backgroundColor: data?.length === 1 ? colors.gray40 : colors.white,
   };
 
-  const _onPress = (e: any) => {
+  const _onPress = (e: any, indexImg: number) => {
     if (onPress) {
       onPress(e);
     } else {
+      setInitIndex(indexImg);
       setGalleryVisible(true);
       onPressMarkSeenPost?.();
     }
@@ -113,6 +115,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   );
 
   const renderSmallImage = (
+    indexImg: number,
     fileName?: string,
     url?: string,
     separate?: boolean,
@@ -124,7 +127,13 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
     return (
       <>
         {separate && <ViewSpacing width={4} height={4} />}
-        <View style={styles.flex1}>
+        <Button
+          style={styles.flex1}
+          disabled={disabled}
+          activeOpacity={0.8}
+          onPress={(e) => _onPress(e, indexImg)}
+          onLongPress={_onLongPress}
+        >
           <UploadingImage
             style={styles.image}
             uploadType={uploadType}
@@ -134,30 +143,33 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
             url={url}
           />
           {isRenderMore && renderMore()}
-        </View>
+        </Button>
       </>
     );
   };
 
   return (
-    <Button
+    <View
       testID="post_photo_preview"
-      disabled={disabled}
-      activeOpacity={0.8}
-      onPress={_onPress}
-      onLongPress={_onLongPress}
       style={StyleSheet.flatten([wrapperStyle, style])}
     >
       <View style={StyleSheet.flatten([styles.container, containerStyle])}>
         <View style={{ flex: data?.length === 2 ? 1 : 2 }}>
-          <UploadingImage
-            style={styles.image}
-            uploadType={uploadType}
-            width="100%"
-            height="100%"
-            fileName={data[0].origin_name}
-            url={data[0].url || data[0].name}
-          />
+          <Button
+            disabled={disabled}
+            activeOpacity={0.8}
+            onPress={(e) => _onPress(e, 0)}
+            onLongPress={_onLongPress}
+          >
+            <UploadingImage
+              style={styles.image}
+              uploadType={uploadType}
+              width="100%"
+              height="100%"
+              fileName={data[0].origin_name}
+              url={data[0].url || data[0].name}
+            />
+          </Button>
         </View>
         {data?.length > 1 && (
           <>
@@ -166,15 +178,18 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
               style={{ flex: 1, flexDirection: isVertical ? 'column' : 'row' }}
             >
               {renderSmallImage(
+                1,
                 data?.[1]?.origin_name || data?.[1]?.name,
                 data?.[1]?.url || data?.[1]?.name,
               )}
               {renderSmallImage(
+                2,
                 data?.[2]?.origin_name || data?.[2]?.name,
                 data?.[2]?.url || data?.[2]?.name,
                 true,
               )}
               {renderSmallImage(
+                3,
                 data?.[3]?.origin_name || data?.[3]?.name,
                 data?.[3]?.url || data?.[3]?.name,
                 true,
@@ -187,13 +202,15 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
       {enableGalleryModal && (
         <View>
           <ImageGalleryModal
+            initIndex={initIndex}
             visible={galleryVisible}
             source={getImageUrls()}
             onPressClose={() => setGalleryVisible(false)}
+            isShowImgName={false}
           />
         </View>
       )}
-    </Button>
+    </View>
   );
 };
 

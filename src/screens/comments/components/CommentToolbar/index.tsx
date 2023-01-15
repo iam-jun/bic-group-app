@@ -10,62 +10,65 @@ import spacing from '~/theme/spacing';
 
 export interface CommentToolbarProps {
   style?: StyleProp<ViewStyle>;
+  disableImageOption?: boolean;
+  disableGifOption?: boolean;
+
+  onSelectEmoij?: () => void;
   onSelectImage?: () => void;
-  onSelectFile?: () => void;
   onSelectGif?: () => void;
-  onSelectVideo?: () => void;
 }
 
 const CommentToolbar: FC<CommentToolbarProps> = ({
   style,
+  disableImageOption,
+  disableGifOption,
+  onSelectEmoij,
   onSelectImage,
-  onSelectFile,
   onSelectGif,
-  onSelectVideo,
 }: CommentToolbarProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
-
-  if (!onSelectImage && !onSelectFile && !onSelectGif && !onSelectVideo) {
-    return null;
-  }
+  const { colors } = theme;
 
   return (
     <View style={[styles.container, style]}>
+      {!!onSelectEmoij
+      && (
+      <Button
+        testID="comment_toolbar.btn_icon"
+        style={styles.button}
+        onPress={onSelectEmoij}
+      >
+        <Icon
+          icon="iconReact"
+        />
+      </Button>
+      )}
       {!!onSelectImage && (
         <Button
           testID="comment_toolbar.btn_image"
+          disabled={disableImageOption}
           style={styles.button}
           onPress={onSelectImage}
         >
-          <Icon icon="Image" />
-        </Button>
-      )}
-      {!!onSelectFile && (
-        <Button
-          testID="comment_toolbar.btn_file"
-          style={styles.button}
-          onPress={onSelectFile}
-        >
-          <Icon icon="Link" />
+          <Icon
+            icon="Image"
+            size={18}
+            tintColor={disableImageOption ? colors.gray20 : colors.neutral40}
+          />
         </Button>
       )}
       {!!onSelectGif && (
         <Button
           testID="comment_toolbar.btn_gif"
+          disabled={disableGifOption}
           style={styles.button}
           onPress={onSelectGif}
         >
-          <Icon icon="iconAddGif" />
-        </Button>
-      )}
-      {!!onSelectVideo && (
-        <Button
-          testID="comment_toolbar.btn_video"
-          style={styles.button}
-          onPress={onSelectVideo}
-        >
-          <Icon icon="Video" />
+          <Icon
+            icon="iconAddGif"
+            tintColor={disableGifOption ? colors.gray20 : colors.neutral40}
+          />
         </Button>
       )}
     </View>
@@ -83,11 +86,11 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingHorizontal: spacing.padding.large,
       backgroundColor: colors.white,
       borderTopWidth: 1,
-      borderColor: colors.gray40,
+      borderColor: colors.neutral5,
+      zIndex: 3,
     },
     button: {
-      padding: 2,
-      marginRight: spacing.margin.large,
+      padding: spacing.padding.xSmall,
     },
   });
 };

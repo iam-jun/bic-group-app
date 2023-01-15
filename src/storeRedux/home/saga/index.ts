@@ -1,7 +1,6 @@
 import { takeEvery } from 'redux-saga/effects';
 import homeTypes from '~/storeRedux/home/types';
 import getSearchPosts from '~/storeRedux/home/saga/getSearchPosts';
-import getSearchPostUsers from '~/storeRedux/home/saga/getSearchPostUsers';
 import deleteClearRecentSearch from '~/storeRedux/home/saga/deleteClearRecentSearch';
 import getRecentSearchKeywords from '~/storeRedux/home/saga/getRecentSearchKeywords';
 import deleteRecentSearchById from '~/storeRedux/home/saga/deleteRecentSearchById';
@@ -9,9 +8,6 @@ import deleteRecentSearchById from '~/storeRedux/home/saga/deleteRecentSearchByI
 export default function* homeSaga() {
   yield takeEvery(
     homeTypes.GET_SEARCH_POSTS, getSearchPosts,
-  );
-  yield takeEvery(
-    homeTypes.GET_SEARCH_POSTS_USERS, getSearchPostUsers,
   );
   yield takeEvery(
     homeTypes.GET_RECENT_SEARCH_KEYWORDS,

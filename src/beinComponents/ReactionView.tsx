@@ -13,6 +13,7 @@ import commonActions, { IAction } from '~/constants/commonActions';
 import appConfig from '~/configs/appConfig';
 import spacing from '~/theme/spacing';
 import Icon from '../baseComponents/Icon';
+import useEmojiPickerStore from '~/baseComponents/EmojiPicker/store';
 
 export interface ReactionViewProps {
   style?: StyleProp<ViewStyle>;
@@ -39,10 +40,12 @@ const ReactionView: FC<ReactionViewProps> = ({
 }: ReactionViewProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
+  const actions = useEmojiPickerStore((state) => state.actions);
 
   const onActionReaction = (reactionId: ReactionType, action: IAction) => {
     if (action === commonActions.selectEmoji) {
       onAddReaction?.(reactionId);
+      actions.addToRecently(reactionId);
     } else {
       onRemoveReaction?.(reactionId);
     }

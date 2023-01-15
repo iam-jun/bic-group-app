@@ -13,11 +13,6 @@ export interface IPayloadSetNewsfeedSearch {
   groupId?: string;
 }
 
-export interface IPayloadSetNewsfeedSearchFilter {
-  createdBy?: 'me' | undefined | any;
-  date?: any;
-}
-
 export interface IPayloadSetNewsfeedSearchUsers {
   key?: string;
   limit?: number;
@@ -47,7 +42,7 @@ export interface IParamGetFeed {
 }
 
 export interface IParamGetSearchPost {
-  contentSearch: string;
+  contentSearch?: string;
   actors?: string;
   startTime?: string;
   endTime?: string;
@@ -60,6 +55,7 @@ export interface IParamGetSearchPost {
   idGt?: number;
   idLt?: number;
   groupId?: string;
+  tagName?: string;
 }
 
 export type IRecentSearchTarget = 'post' | 'user' | 'article' | 'all';
@@ -89,6 +85,7 @@ export interface IPayloadGetSearchPosts {
   endDate?: string;
   isLoadMore?: boolean;
   groupId?: string;
+  tagName?: string;
 }
 
 export interface ISelectedFilterUser {

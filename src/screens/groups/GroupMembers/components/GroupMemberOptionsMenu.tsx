@@ -5,10 +5,14 @@ import { IGroupMembers } from '~/interfaces/IGroup';
 
 import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
-import { useMyPermissions } from '~/hooks/permissions';
-import useRemoveGroupMemberStore from '../store';
+import useMyPermissionsStore from '~/store/permissions';
+import useGroupMemberStore from '../store';
 import MemberOptionsMenu from '~/components/Member/MemberOptionsMenu';
 import useGroupController from '../../store';
+import { PermissionKey } from '~/constants/permissionScheme';
+import ReportContent from '~/components/ReportContent';
+import { TargetType } from '~/interfaces/IReport';
+import useGroupDetailStore from '../../GroupDetail/store';
 
 interface GroupMemberOptionsMenuProps {
   groupId: string;
@@ -26,19 +30,21 @@ const GroupMemberOptionsMenu = ({
   const dispatch = useDispatch();
   const { t } = useBaseHook();
 
+  const { communityId } = useGroupDetailStore((state) => state.groupDetail.group);
+
   const actions = useGroupController((state) => state.actions);
-  const deleteRemoveGroupMember = useRemoveGroupMemberStore(
+  const deleteRemoveGroupMember = useGroupMemberStore(
     (state) => state.actions.deleteRemoveGroupMember,
   );
 
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canRemoveMember = hasPermissionsOnScopeWithId(
+  const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
+  const canRemoveMember = shouldHavePermission(
     groupId,
-    PERMISSION_KEY.REMOVE_MEMBER,
+    PermissionKey.REMOVE_MEMBER,
   );
-  const canAssignUnassignRole = hasPermissionsOnScopeWithId(
+  const canAssignUnassignRole = shouldHavePermission(
     groupId,
-    PERMISSION_KEY.ASSIGN_UNASSIGN_ROLE,
+    PermissionKey.ASSIGN_UNASSIGN_ROLE,
   );
 
   const onPressSetAdminRole = () => {
@@ -78,6 +84,23 @@ const GroupMemberOptionsMenu = ({
     }));
   };
 
+  const onPressReportMember = () => {
+    if (!selectedMember?.id) return;
+
+    const dataReportMember = {
+      communityId,
+    };
+
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      ContentComponent: <ReportContent
+        targetId={selectedMember?.id}
+        targetType={TargetType.MEMBER}
+        dataReportMember={dataReportMember}
+      />,
+    }));
+  };
+
   return (
     <MemberOptionsMenu
       modalizeRef={modalizeRef}
@@ -88,6 +111,7 @@ const GroupMemberOptionsMenu = ({
       onPressSetAdminRole={onPressSetAdminRole}
       onPressRevokeAdminRole={onPressRevokeAdminRole}
       onPressRemoveMember={onPressRemoveMember}
+      onPressReportMember={onPressReportMember}
     />
   );
 };

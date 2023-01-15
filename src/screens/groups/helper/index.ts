@@ -2,7 +2,7 @@ import { cloneDeep, isEmpty } from 'lodash';
 import modalActions from '~/storeRedux/modal/actions';
 import groupApi from '~/api/GroupApi';
 import { IGroup, IRole, IScheme } from '~/interfaces/IGroup';
-import { ROLE_TYPE } from '~/constants/permissionScheme';
+import { RoleType } from '~/constants/permissionScheme';
 
 export const checkLastAdmin = async (
   groupId: string,
@@ -131,9 +131,9 @@ export const sortFixedRoles = (data: IScheme) => {
   const customRoles: IRole[] = [];
 
   const desiredFixedOrder = [
-    ROLE_TYPE.COMMUNITY_ADMIN,
-    ROLE_TYPE.GROUP_ADMIN,
-    ROLE_TYPE.MEMBER,
+    RoleType.COMMUNITY_ADMIN,
+    RoleType.GROUP_ADMIN,
+    RoleType.MEMBER,
   ];
 
   roles?.forEach((role: IRole) => {

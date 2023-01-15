@@ -55,6 +55,7 @@ import { faImageLandscape } from '@fortawesome/pro-regular-svg-icons/faImageLand
 import { faImages } from '@fortawesome/pro-regular-svg-icons/faImages';
 import { faPenLine } from '@fortawesome/pro-regular-svg-icons/faPenLine';
 import { faPenLine as faPenLineSolid } from '@fortawesome/pro-solid-svg-icons/faPenLine';
+import { faPen } from '@fortawesome/pro-regular-svg-icons/faPen';
 import { faPaperclip } from '@fortawesome/pro-regular-svg-icons/faPaperclip';
 import { faBell } from '@fortawesome/pro-regular-svg-icons/faBell';
 import { faBell as faBellSolid } from '@fortawesome/pro-solid-svg-icons/faBell';
@@ -83,6 +84,8 @@ import { faPenToSquare } from '@fortawesome/pro-regular-svg-icons/faPenToSquare'
 import { faPenToSquare as faPenToSquareSolid } from '@fortawesome/pro-solid-svg-icons/faPenToSquare';
 import { faFileLock } from '@fortawesome/pro-regular-svg-icons/faFileLock';
 import { faFilePen } from '@fortawesome/pro-regular-svg-icons/faFilePen';
+import { faFilePen as faFilePenSolid } from '@fortawesome/pro-solid-svg-icons/faFilePen';
+import { faAlbumCollection as faAlbumCollectionSolid } from '@fortawesome/pro-solid-svg-icons/faAlbumCollection';
 import { faDeleteLeft } from '@fortawesome/pro-regular-svg-icons/faDeleteLeft';
 import { faArrowTurnDownRight } from '@fortawesome/pro-regular-svg-icons/faArrowTurnDownRight';
 import { faCloudArrowDown } from '@fortawesome/pro-regular-svg-icons/faCloudArrowDown';
@@ -273,6 +276,7 @@ export const initFontAwesomeIcon = () => {
     faImages,
     faPenLine,
     faPenLineSolid,
+    faPen,
     faPaperclip,
     faBell,
     faBellSolid,
@@ -301,6 +305,8 @@ export const initFontAwesomeIcon = () => {
     faPenToSquareSolid,
     faFileLock,
     faFilePen,
+    faFilePenSolid,
+    faAlbumCollectionSolid,
     faDeleteLeft,
     faArrowTurnDownRight,
     faCloudArrowDown,
@@ -474,6 +480,7 @@ export const fontAwesomeIcons = {
   Images: 'fa-regular fa-images',
   PenLine: 'fa-regular fa-pen-line',
   PenLineSolid: 'fa-solid fa-pen-line',
+  Pen: 'fa-regular fa-pen',
   Paperclip: 'fa-regular fa-paperclip',
   Bell: 'fa-regular fa-bell',
   BellSolid: 'fa-solid fa-bell',
@@ -503,6 +510,8 @@ export const fontAwesomeIcons = {
   PenToSquareSolid: 'fa-solid fa-pen-to-square',
   FileLock: 'fa-regular fa-file-lock',
   FilePen: 'fa-regular fa-file-pen',
+  FilePenSolid: 'fa-solid fa-file-pen',
+  AlbumCollectionSolid: 'fa-solid fa-album-collection',
   DeleteLeft: 'fa-regular fa-delete-left',
   Keyboard: 'fa-regular fa-keyboard',
   ArrowTurnDownRight: 'fa-regular fa-arrow-turn-down-right',

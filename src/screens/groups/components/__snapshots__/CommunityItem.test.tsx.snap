@@ -211,7 +211,7 @@ exports[`CommunitItem component should render data correctly 1`] = `
             ]
           }
         >
-          Public
+          Open
         </Text>
         <Text
           style={

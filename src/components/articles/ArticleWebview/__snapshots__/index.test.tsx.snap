@@ -3,10 +3,13 @@
 exports[`ArticleWebview Component renders correctly 1`] = `
 <View
   style={
-    Object {
-      "backgroundColor": "#FFFFFF",
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "backgroundColor": "#FFFFFF",
+        "flex": 1,
+      },
+      undefined,
+    ]
   }
   testID="article_webview"
 >
@@ -46,9 +49,10 @@ exports[`ArticleWebview Component renders correctly 1`] = `
       onLoadingStart={[Function]}
       onMessage={[Function]}
       onShouldStartLoadWithRequest={[Function]}
+      overScrollMode="never"
       saveFormDataDisabled={true}
       scalesPageToFit={true}
-      scrollEnabled={true}
+      scrollEnabled={false}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       source={
@@ -65,15 +69,13 @@ exports[`ArticleWebview Component renders correctly 1`] = `
           Object {
             "backgroundColor": "#ffffff",
           },
-          Array [
-            Object {
-              "height": "100%",
-              "opacity": 0.99,
-              "overflow": "hidden",
-              "width": "100%",
-            },
-            undefined,
-          ],
+          Object {
+            "flex": 1,
+            "height": "100%",
+            "opacity": 0.99,
+            "overflow": "hidden",
+            "width": "100%",
+          },
         ]
       }
       textInteractionEnabled={true}

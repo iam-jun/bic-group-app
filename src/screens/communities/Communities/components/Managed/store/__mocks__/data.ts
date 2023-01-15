@@ -1,5 +1,5 @@
 export const responseOwnCommunity = {
-  code: 'OK',
+  code: 'api.ok',
   meta: {
     message: 'Success',
   },
@@ -19,7 +19,7 @@ export const responseOwnCommunity = {
 };
 
 export const responseManage = {
-  code: 'OK',
+  code: 'api.ok',
   meta: {
     message: 'Success',
     total: 3,

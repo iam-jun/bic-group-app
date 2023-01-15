@@ -1,0 +1,43 @@
+export const myPermissionsData = {
+  communities: {
+    '4fee270a-074a-48b3-a988-7f009418d93f': ['manage'],
+  },
+  groups: {
+    '0b69fb1e-51b4-4e3b-ad38-7afec387203c': [
+      'invite_member',
+      'add_member',
+      'assign_unassign_role',
+      'edit_post_setting',
+      'send_message',
+    ],
+    'f67e9053-8490-4264-9fbb-47bd53a7fa5c': [
+      'crud_post_article',
+      'send_message',
+      'edit_own_message',
+      'delete_own_message',
+      'crud_uc',
+    ],
+    '0f5c4bb8-323b-41ee-8aed-b064fecf492b': [
+      'invite_member',
+      'assign_unassign_role',
+      'edit_join_setting',
+      'edit_info',
+      'edit_privacy',
+      'edit_post_approval_setting',
+      'crud_series',
+      'edit_post_of_inactive_user',
+      'edit_post_setting',
+      'publish_unpublish_post',
+      'send_message',
+      'edit_own_message',
+      'delete_own_message',
+      'channel_mentions',
+      'delete_others_message',
+      'add_member',
+      'remove_member',
+      'approve_reject_jr',
+      'crud_post_article',
+      'crud_uc',
+    ],
+  },
+};

@@ -1,4 +1,5 @@
 import React from 'react';
+import useAuthController, { IAuthState } from '~/screens/auth/store';
 
 import {
   createTestStore, fireEvent, renderWithRedux,
@@ -12,7 +13,10 @@ describe('Home screen', () => {
   it('should call open chat', () => {
     const user = { signInUserSession: { idToken: { jwtToken: 'jwt' } } };
     const baseStore = { ...initialState };
-    baseStore.auth.user = user as any;
+    useAuthController.setState((state:IAuthState) => {
+      state.authUser = user as any;
+      return state;
+    });
     jest.useFakeTimers();
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function

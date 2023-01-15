@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useRootNavigation } from '~/hooks/navigation';
+import mainTabStack from '~/router/navigator/MainStack/stack';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import TabButtonHeader from '../../../../groups/components/TabButtonHeader';
 
@@ -25,6 +26,10 @@ const CommunityTabHeader = ({ communityId, isMember, teamName }: CommunityTabHea
     rootNavigation.navigate(groupStack.communityMembers, { communityId, isMember });
   };
 
+  const onPressTags = () => {
+    rootNavigation.navigate(mainTabStack.tags, { id: communityId, type: 'community' });
+  };
+
   return (
     <TabButtonHeader
       isMember={isMember}
@@ -33,6 +38,7 @@ const CommunityTabHeader = ({ communityId, isMember, teamName }: CommunityTabHea
       onPressAbout={onPressAbout}
       onPressMembers={onPressMembers}
       onPressDiscover={onPressDiscover}
+      onPressTags={onPressTags}
     />
   );
 };

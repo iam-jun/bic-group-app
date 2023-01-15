@@ -11,13 +11,18 @@ import { PostImportant } from '~/components/posts';
 import ArticleHeader from '../ArticleHeader';
 import ArticleFooter from '../ArticleFooter';
 import { ContentFooterLite, ContentInterestedUserCount } from '~/components/ContentView';
-import { Button } from '~/baseComponents';
+import { Button, PlaceHolderRemoveContent } from '~/baseComponents';
 import { IPost } from '~/interfaces/IPost';
 import { formatLargeNumber } from '~/utils/formatData';
 import { ArticleSummary, ArticleTitle } from '../ArticleText';
 import { getTotalReactions } from '~/helpers/post';
 import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import TagsView from '~/components/TagsView';
+import useCommunitiesStore from '~/store/entities/communities';
+import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
+import { ITag } from '~/interfaces/ITag';
+import Divider from '~/beinComponents/Divider';
 
 export interface ArticleItemProps {
   data: IPost;
@@ -49,6 +54,8 @@ const ArticleItem: FC<ArticleItemProps> = ({
     coverMedia,
     markedReadPost,
     communities,
+    tags,
+    reported,
   } = data || {};
 
   const {
@@ -64,6 +71,10 @@ const ArticleItem: FC<ArticleItemProps> = ({
 
   const goToContentDetail = () => rootNavigation.navigate(articleStack.articleContentDetail, { articleId: id });
   const goToDetail = () => rootNavigation.navigate(articleStack.articleDetail, { articleId: id, focusComment: true });
+  const goToTagDetail = (tagData: ITag) => {
+    const communityId = useCommunitiesStore.getState().currentCommunityId;
+    rootNavigation.navigate(tagsStack.tagDetail, { tagData, communityId });
+  };
 
   const renderImportant = () => (
     <PostImportant
@@ -100,15 +111,21 @@ const ArticleItem: FC<ArticleItemProps> = ({
           <ArticleSummary text={summaryArticle} />
         </>
       )}
+      {tags?.length > 0 && (
+        <TagsView data={tags} onPressTag={goToTagDetail} />
+      )}
     </View>
   );
 
   const renderInterestedBy = () => (
-    <ContentInterestedUserCount
-      id={id}
-      testIDPrefix="article_item"
-      interestedUserCount={totalUsersSeen}
-    />
+    <>
+      <ContentInterestedUserCount
+        id={id}
+        testIDPrefix="article_item"
+        interestedUserCount={totalUsersSeen}
+      />
+      <Divider style={styles.divider} />
+    </>
   );
 
   const renderFooter = () => (
@@ -134,6 +151,10 @@ const ArticleItem: FC<ArticleItemProps> = ({
       />
     </>
   );
+
+  if (reported) {
+    return (<PlaceHolderRemoveContent label="common:text_article_reported" />);
+  }
 
   return (
     <View testID="article_item" style={styles.container}>
@@ -173,6 +194,11 @@ const themeStyles = (theme: ExtendedTheme) => {
       paddingHorizontal: 0,
       paddingBottom: 0,
       paddingTop: 0,
+    },
+    divider: {
+      marginTop: spacing.margin.base,
+      marginBottom: spacing.margin.small,
+      marginHorizontal: spacing.margin.large,
     },
   });
 };

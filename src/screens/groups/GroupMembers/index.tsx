@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import i18next from 'i18next';
 
 import { useKeySelector } from '~/hooks/selector';
-import groupsActions from '~/storeRedux/groups/actions';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IGroupMembers } from '~/interfaces/IGroup';
@@ -15,13 +13,16 @@ import Header, { HeaderProps } from '~/beinComponents/Header';
 import MemberOptionsMenu from './components/GroupMemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
 import spacing from '~/theme/spacing';
-import { useMyPermissions } from '~/hooks/permissions';
 import GroupMemberList from './GroupMemberList';
 import Tab from '~/baseComponents/Tab';
 import { MEMBER_TABS } from '~/screens/communities/CommunityMembers';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import GroupMemberRequests from './GroupMemberRequests';
 import { IconType } from '~/resources/icons';
+import useGroupMemberStore, { IGroupMemberState } from './store';
+import { PermissionKey } from '~/constants/permissionScheme';
+import useMyPermissionsStore from '~/store/permissions';
+import useGroupDetailStore from '../GroupDetail/store';
 
 const _GroupMembers = ({ route }: any) => {
   const { groupId, targetIndex, isMemberCommunity } = route.params;
@@ -34,36 +35,35 @@ const _GroupMembers = ({ route }: any) => {
   const [needReloadWhenReconnected, setNeedReloadWhenReconnected] = useState(false);
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
   const { rootNavigation } = useRootNavigation();
   const baseSheetRef: any = useRef();
+  const { actions, groupMembers: { offset } } = useGroupMemberStore((state: IGroupMemberState) => state);
+  const { getGroupDetail } = useGroupDetailStore((state) => state.actions);
 
-  const { offset } = useKeySelector(groupsKeySelector.groupMembers);
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canAddMember = hasPermissionsOnScopeWithId(
+  const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
+  const canAddMember = shouldHavePermission(
     groupId,
-    PERMISSION_KEY.ADD_MEMBER,
+    PermissionKey.ADD_MEMBER,
   );
-  const canApproveRejectJoiningRequests = hasPermissionsOnScopeWithId(
+  const canApproveRejectJoiningRequests = shouldHavePermission(
     groupId,
-    PERMISSION_KEY.APPROVE_REJECT_JOINING_REQUESTS,
+    PermissionKey.APPROVE_REJECT_JOINING_REQUESTS,
   );
-  const canEditJoinSetting = hasPermissionsOnScopeWithId(
+  const canEditJoinSetting = shouldHavePermission(
     groupId,
-    PERMISSION_KEY.EDIT_JOIN_SETTING,
+    PermissionKey.EDIT_JOIN_SETTING,
   );
 
   const getGroupProfile = () => {
-    dispatch(groupsActions.getGroupDetail({ groupId }));
+    getGroupDetail({ groupId });
   };
 
   const getMembers = () => {
-    if (groupId) {
-      dispatch(groupsActions.getGroupMembers({ groupId }));
-    }
+    if (!groupId) return;
+    actions.getGroupMembers({ groupId });
   };
 
   useEffect(

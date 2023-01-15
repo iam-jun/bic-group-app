@@ -2,11 +2,20 @@ import { IFilePicked } from '~/interfaces/common';
 import { ReactionType } from '~/constants/reactions';
 import { ICategory } from '~/interfaces/IArticle';
 import { IGiphy } from './IGiphy';
+import { ITag } from './ITag';
 
 export enum PostType {
   POST = 'POST',
   ARTICLE = 'ARTICLE',
   SERIES = 'SERIES',
+}
+
+export enum TargetType {
+  POST = 'POST',
+  ARTICLE = 'ARTICLE',
+  COMMENT = 'COMMENT',
+  COMMENT_ARTICLE = 'COMMENT.ARTICLE',
+  COMMENT_POST = 'COMMENT.POST',
 }
 
 export interface IPost {
@@ -43,6 +52,9 @@ export interface IPost {
   coverMedia?: IArticleCover;
   categories?: ICategory[];
   isSaved?: boolean;
+  tags?: ITag[];
+  series?: any[];
+  reported?: boolean;
 }
 
 export interface IPostAudience {
@@ -76,6 +88,7 @@ export interface IAudienceGroup {
   name?: string;
   icon?: string;
   child?: number[];
+  rootGroupId?: string;
 }
 
 export interface IMarkdownAudience {
@@ -157,6 +170,7 @@ export interface ICommentData {
   giphyId?: string;
   giphyUrl?: string;
   edited?: boolean;
+  reported?: boolean;
 }
 
 export interface ICreatePostImage {
@@ -373,7 +387,7 @@ export interface IMentionUser {
 export interface IParamGetReactionDetail {
   reactionName: ReactionType;
   targetId: string;
-  target: 'POST' | 'COMMENT';
+  target: TargetType;
   limit?: number;
   order?: 'ASC' | 'DESC';
   latestId?: string;
@@ -409,12 +423,12 @@ export interface IPayloadReactToComment {
 
 export interface IParamPutReaction {
   reactionName: string;
-  target: 'POST' | 'COMMENT';
+  target: TargetType;
   targetId: string;
 }
 
 export interface IParamDeleteReaction {
-  target: 'POST' | 'COMMENT';
+  target: TargetType;
   reactionId: string;
   targetId: string;
   reactionName: string;
@@ -424,7 +438,6 @@ export interface IPayloadUpdateCommentsById {
   id: string;
   commentIds: string[];
   isMerge?: boolean;
-  isReplace?: boolean;
   commentId?: string;
 }
 

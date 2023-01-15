@@ -14,8 +14,8 @@ import { IAccountSettingsState } from '~/screens/Menu/AccountSettings/store';
 import IGroupStructureState from '~/screens/groups/GroupStructureSettings/store/Interface';
 import IPermissionSchemeState from '~/screens/PermissionScheme/store/Interface';
 import IDiscoverGroupsState from '~/screens/groups/DiscoverGroups/store/Interface';
-import { IRemoveCommunityMemberState } from '~/screens/communities/CommunityMembers/store';
-import IRemoveGroupMemberState from '~/screens/groups/GroupMembers/store/Interface';
+import { ICommunityMemberState } from '~/screens/communities/CommunityMembers/store';
+import { IGroupMemberState } from '~/screens/groups/GroupMembers/store';
 import IUserInterestedPostState from '~/components/posts/UserInterestedPost/store/Interface';
 import { IDiscoverCommunitiesState } from '~/screens/Discover/components/DiscoverCommunities/store/Interface';
 import { ICommunitiesState } from './entities/communities';
@@ -33,11 +33,17 @@ import { ITopicState } from '~/screens/topic/store';
 import { ICreateArticleSeriesState } from '~/screens/articles/CreateArticle/screens/CreateArticleSeries/store';
 import { ICreateArticleCategoryState } from '~/screens/articles/CreateArticle/screens/CreateArticleCategory/store';
 import { IGroupDetailState } from '~/screens/groups/GroupDetail/store';
+import { IMyPermissionsState } from './permissions';
+import { IGroupController } from '~/screens/groups/store';
+import { ITagsState } from './entities/tags';
+import { IGeneralInformationState } from '~/screens/groups/GeneralInformation/store';
+import { IRemoteConfigState } from './remoteConfig';
 
 export interface BicStore {
   entities: {
     posts: IPostsState;
     comments: ICommentsState;
+    communities: ICommunitiesState;
   };
   // components
   SelectAudience: {
@@ -63,22 +69,43 @@ export interface BicStore {
     seriesStore: ISeriesState,
   };
   groups: {
+    groupController: IGroupController;
+    GeneralInformation: {
+      generalInformationStore: IGeneralInformationState;
+    };
     components: {
       CommunityJoinedGroupTree: {
         communityJoinedGroupTreeStore: ICommunityJoinedGroupTreeState;
       };
       groupStructure: IGroupStructureState;
       discoverGroups: IDiscoverGroupsState;
-      groupDetail: IGroupDetailState;
     };
-    removeGroupMemberStore: IRemoveGroupMemberState;
-    discoverCommunitiesStore: IDiscoverCommunitiesState;
-    discoverCommunitiesSearchStore: IDiscoverCommunitiesSearchState;
+    GroupMembers: {
+      groupMemberStore: IGroupMemberState;
+    };
+    GroupDetail: {
+      groupDetailStore: IGroupDetailState;
+    };
     managedStore: IManagedState;
     yourCommunitiesStore: IYourCommunitiesState;
     yourGroupsStore: IYourGroupsState;
     searchJoinedCommunitiesStore: ISearchJoinedCommunitiesState;
   };
+  Discover: {
+    components: {
+      DiscoverCommunities: {
+        discoverCommunitiesStore: IDiscoverCommunitiesState
+      }
+      SearchDiscoverCommunity: {
+        discoverCommunitiesSearchStore: IDiscoverCommunitiesSearchState;
+      }
+    }
+  };
+  communities: {
+    communityMember: {
+      communityMemberStore: ICommunityMemberState,
+    },
+  }
   Home: {
     homeStore: IHomeState;
   };
@@ -108,8 +135,9 @@ export interface BicStore {
 
   // others
   chat: IChatState;
-  communities: ICommunitiesState;
-  removeCommunityMemberStore: IRemoveCommunityMemberState;
   giphy: IGiphyState;
   codePush: ICodePushState;
+  myPermissions: IMyPermissionsState;
+  tags: ITagsState;
+  remoteConfig: IRemoteConfigState;
 }

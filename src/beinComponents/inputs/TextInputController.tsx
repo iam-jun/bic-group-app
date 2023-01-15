@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+  TextInput as RNTextInput,
+} from 'react-native';
+
 import { useController } from 'react-hook-form';
 import { TextInput } from '~/baseComponents/Input';
 import { TextInputProps } from '~/baseComponents/Input/TextInput';
@@ -9,7 +13,7 @@ interface Props extends Partial<TextInputProps> {
   useFormData: IObject<any>;
   validateValue: (text: string) => void;
   name: string;
-  rules: any;
+  rules?: any;
   defaultValue?: any;
   testID: string;
   label?: string;
@@ -17,6 +21,7 @@ interface Props extends Partial<TextInputProps> {
   helperActionOnPress?: () => void;
   helperAction?: string;
   helperContent?: string;
+  textInputRef?: React.Ref<RNTextInput>;
 }
 
 const TextInputController: React.FC<Props> = ({
@@ -31,6 +36,7 @@ const TextInputController: React.FC<Props> = ({
   label,
   placeholder,
   helperContent,
+  textInputRef,
   ...props
 }) => {
   const {
@@ -63,9 +69,14 @@ const TextInputController: React.FC<Props> = ({
       }
       helperAction={helperAction}
       helperActionOnPress={helperActionOnPress}
+      ref={textInputRef}
       {...props}
     />
   );
 };
 
-export default TextInputController;
+const _TextInputController = React.forwardRef((props: Props, ref?: React.Ref<RNTextInput>) => (
+  <TextInputController textInputRef={ref} {...props} />
+));
+
+export default React.memo(_TextInputController);

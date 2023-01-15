@@ -13,13 +13,13 @@ import {
   NativeSyntheticEvent,
   StyleProp,
   StyleSheet,
-  TextInput,
   TextInputSelectionChangeEventData,
   View,
   ViewStyle,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
+import PasteInput from 'react-native-paste-image-input';
 import Button from '~/beinComponents/Button';
 import Icon from '~/baseComponents/Icon';
 import Image from '~/beinComponents/Image';
@@ -41,6 +41,7 @@ import spacing from '~/theme/spacing';
 import { checkPermission, permissionTypes } from '~/utils/permission';
 import { formatTextWithEmoji } from '~/utils/emojiUtils';
 import { IGiphy } from '~/interfaces/IGiphy';
+import { getImagePastedFromClipboard } from '~/utils/common';
 
 export interface ICommentInputSendParam {
   content: string;
@@ -167,7 +168,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const _onPressSelectImage = () => {
     checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
       if (canOpenPicker) {
-        ImagePicker.openPickerSingle().then((file) => {
+        ImagePicker.openPickerSingle({ mediaType: 'photo' }).then((file) => {
           if (!file) return;
           setSelectedGiphy(undefined);
           if (!isHandleUpload) {
@@ -350,6 +351,20 @@ const CommentInput: React.FC<CommentInputProps> = ({
     onKeyPress?.(e);
   };
 
+  // only support for iOS
+  const onPasteImage = (_, files) => {
+    const img = getImagePastedFromClipboard(files);
+    if (img) {
+      setSelectedImage({
+        name: img.fileName,
+        filename: img.fileName,
+        type: img.type,
+        size: img.fileSize,
+        uri: img.uri,
+      });
+    }
+  };
+
   const renderSelectedMedia = () => {
     if (selectedGiphy) {
       if (!text) return null;
@@ -432,7 +447,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
         {HeaderComponent}
         <View style={styles.container}>
           <Animated.View style={{ flex: 1, zIndex: 1, height: heightAnimated }}>
-            <TextInput
+            <PasteInput
               {...props}
               multiline
               testID={testID}
@@ -448,9 +463,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
               onChangeText={_onChangeText}
               onSelectionChange={_onSelectionChange}
               onContentSizeChange={_onContentSizeChange}
-            >
-              {text}
-            </TextInput>
+              onPaste={onPasteImage}
+              value={text}
+            />
           </Animated.View>
           <CommentInputFooter
             useTestID={useTestID}
@@ -517,6 +532,7 @@ const createStyle = (theme: ExtendedTheme, insets: any, loading: boolean) => {
       alignItems: 'center',
     },
     textInput: {
+      flex: 1,
       width: '100%',
       lineHeight: 22,
       paddingTop: spacing.padding.small,

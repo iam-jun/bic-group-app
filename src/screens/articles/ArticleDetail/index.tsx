@@ -5,13 +5,14 @@ import {
   RefreshControl, SectionList, StyleSheet, View,
 } from 'react-native';
 
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { ExtendedTheme, useTheme, useIsFocused } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
 import { useDispatch } from 'react-redux';
 import { IAudienceGroup } from '~/interfaces/IPost';
 
 import Header from '~/beinComponents/Header';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { ArticlePlaceholder, ArticleView } from '~/components/articles';
 import CommentInputView from '~/screens/comments/components/CommentInputView';
 import useMounted from '~/hooks/mounted';
@@ -25,13 +26,18 @@ import postActions from '~/storeRedux/post/actions';
 import spacing from '~/theme/spacing';
 import usePostDetailContentHandler from '~/screens/post/PostDetail/components/PostDetailContent/hooks/usePostDetailContentHandler';
 import { getSectionData } from '~/helpers/post';
+import { useRootNavigation } from '~/hooks/navigation';
+import ContentUnavailable from '~/components/ContentUnavailable';
 
 const _ArticleDetail: FC<IRouteParams> = (props) => {
   const { params } = props.route;
   const id = params?.articleId;
   const focusComment = params?.focusComment;
+  const isFocused = useIsFocused();
+  const { rootNavigation } = useRootNavigation();
 
   const theme: ExtendedTheme = useTheme();
+  const { colors } = theme;
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
 
@@ -45,9 +51,10 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const firstCommentId = comments[0]?.id || '';
   const sectionData = useMemo(() => getSectionData(comments), [comments]);
 
-  const actions = useArticlesStore((state: IArticlesState) => state.actions);
+  const { actions, errors } = useArticlesStore((state: IArticlesState) => state);
+  const isFetchError = errors[id];
 
-  const { audience, setting } = data;
+  const { audience, setting, reported } = data || {};
 
   const {
     onLayout,
@@ -72,6 +79,14 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     if (isMounted) { actions.getArticleDetail(id); }
   }, [isMounted]);
 
+  useEffect(() => {
+    if (reported && isFocused) {
+      setTimeout(() => {
+        rootNavigation.goBack();
+      }, 200);
+    }
+  }, [reported, isFocused]);
+
   const onRefresh = () => {
     setRefreshing(false);
     actions.getArticleDetail(id);
@@ -89,6 +104,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
       isReplyingComment={false}
       commentData={data?.item}
       groupIds={data?.groupIds}
+      audience={audience}
       commentParent={data?.section?.comment}
       onPressReply={onPressReplyCommentItem}
       onPressMarkSeenPost={onPressMarkSeenPost}
@@ -109,6 +125,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
         postId={id}
         index={data?.index}
         groupIds={groupIds}
+        audience={audience}
         isReplyingComment={false}
         commentData={data?.comment}
         onPressReply={onPressReplySectionHeader}
@@ -124,10 +141,10 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
       || sectionData.length === 0
       || sectionData[0].type === 'empty'
     ) {
-      return null;
+      return <View style={styles.footer} />;
     }
 
-    return <View style={styles.footer} />;
+    return null;
   };
 
   const renderLoading = () => (
@@ -169,10 +186,17 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     );
   };
 
-  if (!isMounted || !data) return renderLoading();
+  if (!isMounted || !data || (isEmpty(data) && !isFetchError)) return renderLoading();
 
+  if (isFetchError) {
+    return <ContentUnavailable />;
+  }
   return (
-    <View testID="article_detail" style={styles.container}>
+    <ScreenWrapper
+      testID="article_detail"
+      backgroundColor={colors.neutral5}
+      isFullView
+    >
       <Header />
       <View style={styles.contentContainer}>
         <SectionList
@@ -192,17 +216,13 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
         />
       </View>
       {renderCommentInput()}
-    </View>
+    </ScreenWrapper>
   );
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: colors.neutral,
-    },
     contentContainer: {
       flex: 1,
     },

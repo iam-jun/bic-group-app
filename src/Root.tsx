@@ -7,6 +7,7 @@ import React, { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LogBox, NativeModules, Platform } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import useAuthController from '~/screens/auth/store';
 
 /* State Redux */
 import { AppConfig, languages } from './configs';
@@ -19,7 +20,6 @@ import RootNavigator from '~/router';
 import { getScreenAndParams, isNavigationRefReady } from '~/router/helper';
 import { initFontAwesomeIcon } from '~/services/fontAwesomeIcon';
 import localStorage from '~/services/localStorage';
-import Store from '~/storeRedux';
 
 moment.updateLocale(
   'en', moments.en,
@@ -76,9 +76,6 @@ const Root = (): React.ReactElement => {
   };
 
   const handleInitialNotification = (remoteMessage: FirebaseMessagingTypes.RemoteMessage | null) => {
-    // Do not call user outside this scope, as it will get outdated value
-    const user: IUserResponse | boolean = Store.getCurrentUser();
-
     if (!isNavigationRefReady?.current) {
       // On low performance device, retry until navigation ready
       setTimeout(
@@ -89,6 +86,8 @@ const Root = (): React.ReactElement => {
       return;
     }
 
+    // Do not call user outside this scope, as it will get outdated value
+    const user: IUserResponse = useAuthController?.getState?.()?.authUser;
     if (!user) return;
 
     const data = handleMessageData(remoteMessage);

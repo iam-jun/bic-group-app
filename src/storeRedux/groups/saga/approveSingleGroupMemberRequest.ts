@@ -3,6 +3,7 @@ import { put, call, select } from 'redux-saga/effects';
 
 import approveDeclineCode from '~/constants/approveDeclineCode';
 import { IToastMessage } from '~/interfaces/common';
+import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import showError from '~/storeRedux/commonSaga/showError';
 import modalActions from '~/storeRedux/modal/actions';
 import groupApi from '../../../api/GroupApi';
@@ -42,7 +43,7 @@ export default function* approveSingleGroupMemberRequest({
       content: `${i18next.t('groups:text_approved_user')} ${fullName}`,
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
-    yield put(groupsActions.getGroupDetail({ groupId })); // to update userCount
+    useGroupDetailStore.getState().actions.getGroupDetail({ groupId }); // to update userCount
   } catch (error: any) {
     console.error('approveSingleGroupMemberRequest: ', error);
 

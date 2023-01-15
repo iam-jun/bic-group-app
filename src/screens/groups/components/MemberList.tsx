@@ -11,11 +11,11 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 import Text from '~/baseComponents/Text';
 import MemberItem from './MemberItem';
-import { getMembersSection } from '~/storeRedux/groups/selectors';
 import appConfig from '~/configs/appConfig';
 import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { formatLargeNumber } from '~/utils/formatData';
+import useMemberSection from '~/hooks/useMemberSection';
 
 interface MemberListProps {
   type: 'group' | 'community';
@@ -36,7 +36,8 @@ const MemberList = ({
   const { colors } = theme;
   const styles = createStyles(theme);
 
-  const memberSectionData = getMembersSection(type);
+  const memberSectionData = useMemberSection(type);
+
   const { loading, canLoadMore, sectionList } = memberSectionData;
 
   const renderEmpty = () => (!loading ? <NoSearchResultsFound /> : null);

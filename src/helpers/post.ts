@@ -161,11 +161,24 @@ export const getPostMenus = (data: any[], isActor: boolean, reactionsCount: any)
     const requireActor = item.requireIsActor && isActor;
     const hasReaction = reactionsCount && Object.keys(reactionsCount)?.[0];
     const requireReactionCounts = item?.requireReactionCounts && reactionsCount && hasReaction;
+    const notShowForActor = item?.notShowForActor;
 
-    if (requireNothing || requireActor || requireReactionCounts) {
+    if (item.shouldBeHidden) return;
+
+    if ((requireNothing || requireActor || requireReactionCounts) && !notShowForActor) {
       result.push({ ...item });
     }
   });
 
+  return result;
+};
+
+export const getRootGroupids = (audience: IPostAudience) => {
+  const result = [];
+  audience?.groups?.forEach((item) => {
+    if (!result?.includes(item?.rootGroupId)) {
+      result.push(item?.rootGroupId);
+    }
+  });
   return result;
 };

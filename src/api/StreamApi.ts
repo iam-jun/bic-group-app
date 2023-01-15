@@ -26,11 +26,13 @@ import {
 import { IParamGetGroupPosts } from '~/interfaces/IGroup';
 import {
   IGetSearchArticleInSeries,
+  IGetSearchTags,
   IParamGetArticleDetail,
   IParamGetArticles,
   IParamGetCategories,
   IParamGetDraftArticles,
   IParamPutEditArticle,
+  IParamsValidateSeriesTags,
 } from '~/interfaces/IArticle';
 import appConfig from '~/configs/appConfig';
 import { IGetGiphyTrendingParams, IGetSearchGiphyParams } from '~/interfaces/IGiphy';
@@ -38,6 +40,8 @@ import {
   IAddArticleInSeries,
   IGetSeries, IParamGetSeriesDetail, IPostCreateSeries, IReorderArticles, IRemoveArticleInSeries,
 } from '~/interfaces/ISeries';
+import { IParamsReportContent } from '~/interfaces/IReport';
+import { CreateTag, EditTag, IParamGetCommunityTags } from '~/interfaces/ITag';
 
 const DEFAULT_LIMIT = 10;
 
@@ -428,6 +432,47 @@ export const streamApiConfig = {
     method: 'delete',
     data: { ...params },
   }),
+  reportContent: (params: IParamsReportContent): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}reports/content`,
+    method: 'post',
+    data: { ...params },
+  }),
+  searchTagsInAudiences: (params?: IGetSearchTags): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}tags`,
+    params,
+  }),
+  validateSeriesTagsOfArticle: (params: IParamsValidateSeriesTags): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}articles/validate-series-tags`,
+    method: 'post',
+    data: { ...params },
+  }),
+  getTags: (params: IParamGetCommunityTags): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}tags`,
+    params: {
+      ...params,
+    },
+  }),
+  addTag: (tag: CreateTag): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}tags`,
+    method: 'post',
+    data: { ...tag },
+  }),
+  editTag: (tag: EditTag): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}tags/${tag.id}`,
+    method: 'put',
+    data: { name: tag.name },
+  }),
+  deleteTag: (id: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}tags/${id}`,
+    method: 'delete',
+  }),
 };
 
 const streamApi = {
@@ -684,6 +729,25 @@ const streamApi = {
       return Promise.reject(e);
     }
   },
+  reportContent: (params: IParamsReportContent) => withHttpRequestPromise(streamApiConfig.reportContent, params),
+  searchTagsInAudiences: (params?: IGetSearchTags) => withHttpRequestPromise(
+    streamApiConfig.searchTagsInAudiences, params,
+  ),
+  validateSeriesTagsOfArticle: (params: IParamsValidateSeriesTags) => withHttpRequestPromise(
+    streamApiConfig.validateSeriesTagsOfArticle, params,
+  ),
+  getTags: (params: IParamGetCommunityTags) => withHttpRequestPromise(
+    streamApiConfig.getTags, params,
+  ),
+  addTag: (tag: CreateTag) => withHttpRequestPromise(
+    streamApiConfig.addTag, tag,
+  ),
+  editTag: (tag: EditTag) => withHttpRequestPromise(
+    streamApiConfig.editTag, tag,
+  ),
+  deleteTag: (id: string) => withHttpRequestPromise(
+    streamApiConfig.deleteTag, id,
+  ),
 };
 
 export default streamApi;

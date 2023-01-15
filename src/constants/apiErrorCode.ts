@@ -1,5 +1,5 @@
 const Common = {
-  SUCCESS: 'OK',
+  SUCCESS: 'api.ok',
   SYSTEM_ISSUE: 0,
 };
 
@@ -12,7 +12,7 @@ const Post = {
   COPIED_COMMENT_IS_DELETED: 'app.comment.not_existing.app_error',
   POST_PRIVACY: 'api.forbidden',
   POST_DELETED: 'app.post.not_existing.app_error',
-  POST_CANNOT_COMMENT_OR_REACT: 'api.validation_error',
+  VALIDATION_ERROR: 'api.validation_error',
 };
 
 const Group = {

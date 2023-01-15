@@ -7,12 +7,6 @@ export interface ISignIn {
   password: string;
 }
 
-export interface ISignUp {
-  username: string;
-  email: string;
-  password: string;
-}
-
 export interface IForgotPasswordConfirm {
   code: string;
   email: string;
@@ -42,6 +36,7 @@ export interface IUserResponse extends IUser {
   attributes?: any;
   name: string; // merge from attributes
   email: string; // merge from attributes
+  userId?: string;
 }
 
 export interface IForgotPasswordError {
@@ -153,4 +148,11 @@ export interface ICityResponseItem {
   name: string;
   isoCode: string;
   countryCode: string;
+}
+
+export interface IFormCheckPw {
+  isLimitCharacter: boolean;
+  isUppercaseLetter: boolean;
+  isDigits: boolean;
+  isSpecialCharacter: boolean;
 }

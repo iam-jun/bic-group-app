@@ -35,7 +35,9 @@ const FilterFeedButtonGroup: React.FC<FilterFeedButtonGroupProps> = ({
       <View style={styles.tabContainer}>
         <Tab
           style={styles.tabs}
-          buttonProps={{ size: 'small', type: 'primary', useI18n: true }}
+          buttonProps={{
+            size: 'small', type: 'primary', useI18n: true, style: styles.contentFilterTab,
+          }}
           data={HEADER_CONTENT_FEED_FILTER}
           type="pill"
           onPressTab={onPressContentFilterTab}
@@ -71,16 +73,21 @@ const createStyle = (theme: ExtendedTheme) => {
       borderBottomColor: colors.neutral2,
       marginHorizontal: spacing.margin.large,
     },
+    contentFilterTab: {
+      marginLeft: spacing.margin.small,
+    },
     tabs: {
       flex: 1,
       alignItems: 'center',
       flexDirection: 'row',
+      marginLeft: -spacing.margin.small,
     },
     attributeContainer: {
       height: homeHeaderAttributeContainerHeight,
       paddingHorizontal: spacing.padding.large,
     },
     attributeTab: {
+      marginLeft: spacing.margin.small,
       paddingHorizontal: spacing.padding.small,
       paddingVertical: 0,
       alignItems: 'center',

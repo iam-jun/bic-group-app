@@ -8,6 +8,8 @@ import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import MemberRequestList from '../../components/MemberRequestList';
 import GroupApproveDeclineAllRequests from './components/GroupApproveDeclineAllRequests';
 import JoinRequestSetting from '~/screens/communities/CommunityMembers/CommunityMemberRequests/components/JoinRequestSetting';
+import useGroupDetailStore, { IGroupDetailState } from '../../GroupDetail/store';
+import useGroupMemberStore from '../store';
 
 interface GroupMemberRequestsProps {
   groupId: string;
@@ -26,24 +28,29 @@ const GroupMemberRequests = ({
 }: GroupMemberRequestsProps) => {
   const dispatch = useDispatch();
   const { ids, canLoadMore, total } = useKeySelector(groupsKeySelector.groupMemberRequests);
-  const { id, settings, privacy } = useKeySelector(groupsKeySelector.groupDetail.group);
+  const {
+    groupDetail: {
+      group: { id, settings, privacy },
+    },
+    actions: { getGroupDetail },
+  } = useGroupDetailStore((state: IGroupDetailState) => state);
   const { isJoinApproval } = settings || {};
+  const actions = useGroupMemberStore((state) => state.actions);
 
   useEffect(
     () => {
       if (!id || id !== groupId) {
         // get data if navigation from notification screen
-        dispatch(groupsActions.getGroupDetail({ groupId }));
+        getGroupDetail({ groupId });
       }
 
-      if (canApproveRejectJoiningRequests) {
-        getData();
+      if (!canApproveRejectJoiningRequests) return;
 
-        return () => {
-          dispatch(groupsActions.resetGroupMemberRequests());
-        };
-      }
-    }, [groupId, canApproveRejectJoiningRequests],
+      getData();
+      return () => {
+        dispatch(groupsActions.resetGroupMemberRequests());
+      };
+    }, [id, groupId, canApproveRejectJoiningRequests],
   );
 
   const getData = (isRefreshing?: boolean) => {
@@ -51,7 +58,8 @@ const GroupMemberRequests = ({
   };
 
   const onLoadMore = () => {
-    canLoadMore && getData();
+    if (!canLoadMore) return;
+    getData();
   };
 
   const onRefresh = () => {
@@ -59,7 +67,7 @@ const GroupMemberRequests = ({
   };
 
   const onUpdateJoinSetting = (isJoinApproval: boolean) => {
-    dispatch(groupsActions.updateGroupJoinSetting({ groupId, isJoinApproval }));
+    actions.updateGroupJoinSetting({ groupId, isJoinApproval });
   };
 
   const onPressApproveAll = () => {

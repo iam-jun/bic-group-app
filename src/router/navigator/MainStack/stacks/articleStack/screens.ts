@@ -8,6 +8,7 @@ import {
   CreateArticleSummary,
   CreateArticleTitle,
 } from '~/screens/articles/CreateArticle/screens';
+import CreateArticleTags from '~/screens/articles/CreateArticle/screens/CreateArticleTags';
 
 const articleScreens = {
   'article-detail': ArticleDetail,
@@ -20,6 +21,7 @@ const articleScreens = {
   'create-article-cover': CreateArticleCover,
   'create-article-audience': CreateArticleAudience,
   'create-article-series': CreateArticleSeries,
+  'create-article-tags': CreateArticleTags,
 };
 
 export default articleScreens;

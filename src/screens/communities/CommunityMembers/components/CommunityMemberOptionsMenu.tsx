@@ -2,12 +2,15 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { ICommunity, ICommunityMembers } from '~/interfaces/ICommunity';
-import { useMyPermissions } from '~/hooks/permissions';
 import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
-import useRemoveCommunityMemberStore from '../store';
+import useCommunityMemberStore from '../store';
 import useCommunityController from '../../store';
 import MemberOptionsMenu from '~/components/Member/MemberOptionsMenu';
+import { PermissionKey } from '~/constants/permissionScheme';
+import useMyPermissionsStore from '~/store/permissions';
+import ReportContent from '~/components/ReportContent';
+import { TargetType } from '~/interfaces/IReport';
 
 interface CommunityMemberOptionsMenuProps {
   community: ICommunity;
@@ -26,19 +29,19 @@ const CommunityMemberOptionsMenu = ({
   const dispatch = useDispatch();
   const { t } = useBaseHook();
 
-  const deleteRemoveCommunityMember = useRemoveCommunityMemberStore(
-    (state) => state.actions.deleteRemoveCommunityMember,
+  const removeCommunityMember = useCommunityMemberStore(
+    (state) => state.actions.removeCommunityMember,
   );
   const actions = useCommunityController((state) => state.actions);
 
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canRemoveMember = hasPermissionsOnScopeWithId(
+  const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
+  const canRemoveMember = shouldHavePermission(
     groupId,
-    PERMISSION_KEY.REMOVE_MEMBER,
+    PermissionKey.REMOVE_MEMBER,
   );
-  const canAssignUnassignRole = hasPermissionsOnScopeWithId(
+  const canAssignUnassignRole = shouldHavePermission(
     groupId,
-    PERMISSION_KEY.ASSIGN_UNASSIGN_ROLE,
+    PermissionKey.ASSIGN_UNASSIGN_ROLE,
   );
 
   const onPressSetAdminRole = () => {
@@ -65,8 +68,7 @@ const CommunityMemberOptionsMenu = ({
 
   const onConfirmRemoveMember = () => {
     if (!selectedMember?.id) return;
-
-    deleteRemoveCommunityMember({ communityId, groupId, userId: selectedMember.id });
+    removeCommunityMember({ communityId, groupId, userId: selectedMember.id });
   };
 
   const onPressRemoveMember = () => {
@@ -76,6 +78,23 @@ const CommunityMemberOptionsMenu = ({
       confirmLabel: t('communities:modal_confirm_remove_member:button_remove'),
       cancelBtn: true,
       onConfirm: onConfirmRemoveMember,
+    }));
+  };
+
+  const onPressReportMember = () => {
+    if (!selectedMember?.id) return;
+
+    const dataReportMember = {
+      communityId,
+    };
+
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      ContentComponent: <ReportContent
+        targetId={selectedMember?.id}
+        targetType={TargetType.MEMBER}
+        dataReportMember={dataReportMember}
+      />,
     }));
   };
 
@@ -89,6 +108,7 @@ const CommunityMemberOptionsMenu = ({
       onPressSetAdminRole={onPressSetAdminRole}
       onPressRevokeAdminRole={onPressRevokeAdminRole}
       onPressRemoveMember={onPressRemoveMember}
+      onPressReportMember={onPressReportMember}
     />
   );
 };

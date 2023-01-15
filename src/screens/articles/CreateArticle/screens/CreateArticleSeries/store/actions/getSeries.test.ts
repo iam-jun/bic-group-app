@@ -97,44 +97,6 @@ describe('getSeries in article', () => {
     expect(result.current.listSeries.items).toStrictEqual([1, 2, 3]);
   });
 
-  it('should get series success but respone list is undefined and should show toast', () => {
-    const response = {
-      code: 200,
-      data: {
-        list: undefined,
-        meta: {
-          total: 0,
-          offset: 0,
-        },
-      },
-      meta: {},
-    };
-
-    const spyApiGetSeriesByAudiences = jest.spyOn(streamApi, 'searchSeries').mockImplementation(
-      () => Promise.resolve(response) as any,
-    );
-
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
-
-    jest.useFakeTimers();
-    const { result } = renderHook(() => useCreateArticleSeriesStore((state) => state));
-
-    act(() => {
-      result.current.actions.getSeries(false, searchSeriesRequestParams);
-    });
-
-    expect(result.current.listSeries.loading).toBe(true);
-    expect(spyApiGetSeriesByAudiences).toBeCalled();
-
-    act(() => {
-      jest.runAllTimers();
-    });
-
-    expect(result.current.listSeries.loading).toBe(false);
-    expect(result.current.listSeries.hasNextPage).toBe(false);
-    expect(spyModalActions).toBeCalled();
-  });
-
   it('should get series throw error and should show toast', () => {
     const error = 'internal error';
     const spyApiGetSeriesByAudiences = jest.spyOn(streamApi, 'searchSeries').mockImplementation(

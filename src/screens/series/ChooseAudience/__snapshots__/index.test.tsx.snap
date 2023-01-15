@@ -92,7 +92,16 @@ exports[`CreateSeries component renders correctly if this is first step in creat
                   "paddingTop": 0,
                   "paddingVertical": 4,
                 },
-                false,
+                Object {
+                  "elevation": 2,
+                  "shadowColor": "rgba(0, 0, 0, 1)",
+                  "shadowOffset": Object {
+                    "height": 2,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.12,
+                  "shadowRadius": 1.5,
+                },
                 undefined,
               ]
             }
@@ -250,7 +259,7 @@ exports[`CreateSeries component renders correctly if this is first step in creat
                 style={
                   Array [
                     Object {
-                      "borderRadius": 6,
+                      "borderRadius": 8,
                     },
                     Object {
                       "marginRight": 4,
@@ -264,7 +273,7 @@ exports[`CreateSeries component renders correctly if this is first step in creat
                     Array [
                       Object {
                         "alignItems": "center",
-                        "borderRadius": 6,
+                        "borderRadius": 8,
                         "flexDirection": "row",
                         "justifyContent": "center",
                         "paddingVertical": 4,

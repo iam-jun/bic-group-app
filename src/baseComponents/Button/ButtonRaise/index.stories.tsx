@@ -23,7 +23,7 @@ const ButtonRaiseStory = {
 const baseProps = {
   onPress: () => alert('Button Pressed!'),
   size: 'medium' as ButtonSize,
-  icon: 'iconPublic' as any,
+  icon: 'iconOpen' as any,
   color: light.colors.neutral70,
   backgroundColor: light.colors.neutral,
   children: 'Public Group',

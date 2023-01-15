@@ -35,9 +35,10 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import Button from '~/baseComponents/Button';
 import { useBaseHook } from '~/hooks';
-import NoticePanel from '../NoticePanel';
+import VideoProcessingNotice from '../VideoProcessingNotice';
 import { AttributeFeed, ContentFeed } from '~/interfaces/IFeed';
 import ContentItem from '~/components/ContentItem';
+import NewUpdateNotice from '../NewUpdateNotice';
 
 export interface NewsfeedListProps {
   data?: any;
@@ -202,7 +203,6 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   const renderItem = ({ item }: any) => (
     <ContentItem
       id={item}
-      style={styles.itemStyle}
       testID="newsfeed_list.post.item"
       btnReactTestID="newsfeed_list.post.btn_react"
       btnCommentTestID="newsfeed_list.post.btn_comment"
@@ -321,8 +321,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
             />
           )}
           ListFooterComponent={renderFooter}
-          ItemSeparatorComponent={() => <ViewSpacing height={8} />}
-          style={styles.mainColor}
+          ItemSeparatorComponent={() => <ViewSpacing height={spacing.margin.large} />}
           contentContainerStyle={styles.mainColor}
         />
       ) : (
@@ -347,7 +346,8 @@ const NewsfeedListHeader = ({
   return (
     <View style={styles.headerContainer}>
       {!!HeaderComponent && HeaderComponent}
-      {isNewsfeed ? <NoticePanel /> : null}
+      <NewUpdateNotice />
+      {isNewsfeed ? <VideoProcessingNotice /> : null}
       <View style={styles.headerDivider} />
     </View>
   );
@@ -399,9 +399,6 @@ const createStyle = (theme: ExtendedTheme, insets: any) => {
       paddingTop: 34,
       paddingHorizontal: spacing.padding.large,
       alignItems: 'center',
-    },
-    itemStyle: {
-      marginBottom: spacing.margin.small,
     },
     textEmpty: {
       marginTop: spacing.margin.small,

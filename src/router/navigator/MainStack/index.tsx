@@ -82,7 +82,6 @@ const MainStack = (): React.ReactElement => {
       <CommonModal />
       <BottomList />
       {debuggerVisible && <LoggerView /> }
-      {/* <LoggerView /> */}
     </View>
   );
 };

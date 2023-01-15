@@ -2,6 +2,7 @@ import {
   ICommentData,
   IPayloadReactToComment,
   IReaction,
+  TargetType,
 } from '~/interfaces/IPost';
 import useCommentsStore from '~/store/entities/comments';
 import streamApi from '~/api/StreamApi';
@@ -21,7 +22,7 @@ const deleteReactToComment = (_set, get) => async (
 
       await streamApi.deleteReaction({
         reactionId: rId,
-        target: 'COMMENT',
+        target: TargetType.COMMENT,
         targetId: id,
         reactionName: reactionId,
       });

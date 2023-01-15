@@ -1,17 +1,25 @@
 import {
-  ICategory, IEditAritcleError, IEditArticleAudience, IEditArticleData, IEditArticleSeries, IPayloadPutEditArticle,
+  ICategory,
+  IEditArticleAudience,
+  IEditArticleData,
+  IEditArticleSeries,
+  IEditArticleTags, IParamsValidateSeriesTags,
+  IPayloadPutEditArticle,
 } from '~/interfaces/IArticle';
 import { IArticleCover } from '~/interfaces/IPost';
-import putEditArticle from '~/screens/articles/CreateArticle/store/actions/putEditArticle';
-import IBaseState from '~/store/interfaces/IBaseState';
+import handleSaveError from './actions/handleSaveError';
+import putEditArticle from './actions/putEditArticle';
+import validateSeriesTags from './actions/validateSeriesTags';
+import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
 import createArticle from './actions/createArticle';
 
 export interface ICreateArticleState extends IBaseState {
   loading: boolean;
   data: IEditArticleData;
-  isPublishing: boolean;
+  isDraft: boolean;
   actions: {
+    setLoading: (isLoading: boolean) => void;
     setData: (data: IEditArticleData) => void;
     setTitle: (title: string) => void;
     setContent: (content: string) => void;
@@ -22,19 +30,25 @@ export interface ICreateArticleState extends IBaseState {
     setCategories: (categories?: ICategory[]) => void;
     addCategory: (category: ICategory) => void;
     removeCategory: (category: ICategory) => void;
-    setIsPublishing: (isPublishing: boolean) => void;
+    setIsDraft: (setIsDraft: boolean) => void;
     setSeries: (series?: IEditArticleSeries[]) => void;
     addSeries: (series: IEditArticleSeries) => void;
     removeSeries: (series: IEditArticleSeries) => void;
-    putEditArticle: (
-      params: IPayloadPutEditArticle,
-      callbackError: (data: IEditAritcleError) => void,
-      ) => void;
+    setTags: (tags?: IEditArticleTags[]) => void;
+    addTag: (tag: IEditArticleTags) => void;
+    removeTag: (tag: IEditArticleTags) => void;
+    putEditArticle: (params: IPayloadPutEditArticle) => void;
     createArticle: () => void;
+    validateSeriesTags: (
+      data: IParamsValidateSeriesTags,
+      onSuccess: (response) => void,
+      onError: (error) => void
+    ) => void;
+    handleSaveError: (error: any, onNext?: () => void, titleAlert?: string) => void;
   };
 }
 
-const initialState = {
+const initialState: InitStateType<ICreateArticleState> = {
   loading: false,
   data: {
     id: '',
@@ -43,12 +57,13 @@ const initialState = {
     summary: '',
     categories: [],
     series: [],
+    tags: [],
     hashtags: [],
     audience: {
       userIds: [],
       groupIds: [],
     },
-    media: {},
+    coverMedia: {},
     setting: {
       canShare: true,
       canReact: true,
@@ -58,13 +73,18 @@ const initialState = {
     },
     mentions: {},
   },
-  isPublishing: false,
+  isDraft: false,
 };
 
 const useCreateArticle = (set, get) => ({
   ...initialState,
 
   actions: {
+    setLoading: (isLoading: boolean) => {
+      set((state: ICreateArticleState) => {
+        state.loading = isLoading;
+      }, 'setLoading');
+    },
     setData: (data?: IEditArticleData) => {
       set((state: ICreateArticleState) => {
         state.data = data || initialState.data as IEditArticleData;
@@ -123,10 +143,10 @@ const useCreateArticle = (set, get) => ({
         state.data.categories = newSelecting;
       }, 'removeCategory');
     },
-    setIsPublishing: (isPublishing: boolean) => {
+    setIsDraft: (isDraft: boolean) => {
       set((state: ICreateArticleState) => {
-        state.isPublishing = isPublishing;
-      }, 'setIsPublishing');
+        state.isDraft = isDraft;
+      }, 'setIsDraft');
     },
     setSeries: (series?: IEditArticleSeries[]) => {
       set((state: ICreateArticleState) => {
@@ -151,8 +171,33 @@ const useCreateArticle = (set, get) => ({
         state.data.series = newSelecting;
       }, 'removeSeries');
     },
+    setTags: (tags?: IEditArticleTags[]) => {
+      set((state: ICreateArticleState) => {
+        state.data.tags = tags || [];
+      }, 'setTags');
+    },
+    addTag: (tag: IEditArticleTags) => {
+      const selecting = get().data.tags || [];
+      const isAdded = selecting.findIndex((item) => item?.id === tag?.id) > -1;
+      if (!isAdded) {
+        const newSelecting = [...selecting];
+        newSelecting.push(tag);
+        set((state) => {
+          state.data.tags = newSelecting;
+        }, 'addTag');
+      }
+    },
+    removeTag: (tag: IEditArticleTags) => {
+      const selecting = get().data.tags || [];
+      const newSelecting = selecting.filter((item) => item?.id !== tag?.id);
+      set((state) => {
+        state.data.tags = newSelecting;
+      }, 'removeTags');
+    },
     putEditArticle: putEditArticle(set, get),
     createArticle: createArticle(set, get),
+    validateSeriesTags: validateSeriesTags(set, get),
+    handleSaveError: handleSaveError(set, get),
   },
   reset: () => resetStore(initialState, set),
 });

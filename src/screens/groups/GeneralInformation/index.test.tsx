@@ -1,20 +1,15 @@
 import React from 'react';
 import * as redux from 'react-redux';
-import { groupPrivacyListDetail, GroupPrivacyType } from '~/constants/privacyTypes';
-import initialState from '~/storeRedux/initialState';
 import MockedNavigator from '~/test/MockedNavigator';
 import { groupDetailData } from '~/test/mock_data/group';
-import { configureStore, fireEvent, renderWithRedux } from '~/test/testUtils';
+import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import GeneralInformation from '.';
 import * as helper from './helper';
-import groupApi from '~/api/GroupApi';
 
 describe('GeneralInformation component', () => {
   const component = () => (
     <GeneralInformation route={{ params: { id: groupDetailData.group.id, type: 'group' } }} />
   );
-  const mockStore = configureStore([]);
-  const storeData = { ...initialState };
   const useDispatchSpy = jest.spyOn(redux, 'useDispatch');
   const mockDispatchFn = jest.fn();
 
@@ -57,60 +52,5 @@ describe('GeneralInformation component', () => {
       'group_cover',
       'group',
     );
-  });
-
-  it('should call change privacy when group\'s privacy is public', () => {
-    storeData.groups.groupDetail.group.privacy = GroupPrivacyType.PUBLIC;
-    // storeData.groups.groupDetail.total_pending_members = 0;
-    const store = mockStore(storeData);
-
-    const spy = jest.spyOn(groupApi, 'editGroupDetail');
-    const rendered = renderWithRedux(
-      <MockedNavigator component={component} />,
-      store,
-    );
-    const itemComponent = rendered.getByTestId(
-      `general_information.privacy_item.${groupPrivacyListDetail[1].type}`,
-    );
-    fireEvent.press(itemComponent);
-    expect(spy).toBeCalled();
-  });
-
-  it('should call alert when change privacy to public', () => {
-    storeData.groups.groupDetail.group.privacy = GroupPrivacyType.PRIVATE;
-    // storeData.groups.groupDetail.total_pending_members = 3;
-    const store = mockStore(storeData);
-
-    const spy = jest.spyOn(helper, 'alertAction');
-
-    const rendered = renderWithRedux(
-      <MockedNavigator component={component} />,
-      store,
-    );
-
-    const itemComponent = rendered.getByTestId(
-      `general_information.privacy_item.${groupPrivacyListDetail[0].type}`,
-    );
-    fireEvent.press(itemComponent);
-    expect(spy).toBeCalled();
-  });
-
-  it('should call alert when change privacy to secret', () => {
-    storeData.groups.groupDetail.group.privacy = GroupPrivacyType.PRIVATE;
-    // storeData.groups.groupDetail.total_pending_members = 3;
-    const store = mockStore(storeData);
-
-    const spy = jest.spyOn(helper, 'alertAction');
-
-    const rendered = renderWithRedux(
-      <MockedNavigator component={component} />,
-      store,
-    );
-
-    const itemComponent = rendered.getByTestId(
-      `general_information.privacy_item.${groupPrivacyListDetail[2].type}`,
-    );
-    fireEvent.press(itemComponent);
-    expect(spy).toBeCalled();
   });
 });

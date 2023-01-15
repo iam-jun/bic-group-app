@@ -7,7 +7,7 @@ import Icon from '~/baseComponents/Icon';
 import PermissionItem from '~/screens/PermissionScheme/CreatePermissionScheme/components/PermissionItem';
 import { ICategory, IPermission, IRole } from '~/interfaces/IGroup';
 import { permissionRoleSectionHeaderHeight } from '~/theme/dimension';
-import { CATEGORY_KEY, ROLE_TYPE } from '~/constants/permissionScheme';
+import { CategoryKey, RoleType } from '~/constants/permissionScheme';
 import spacing from '~/theme/spacing';
 
 export interface RoleItemProps {
@@ -49,8 +49,8 @@ const RoleItem: FC<RoleItemProps> = ({
       {isExpand
         && categories?.map?.((cat: ICategory) => {
           if (
-            role?.type === ROLE_TYPE.GROUP_ADMIN
-            && cat?.key === CATEGORY_KEY.COMMUNITY
+            role?.type === RoleType.GROUP_ADMIN
+            && cat?.key === CategoryKey.COMMUNITY
           ) return null;
 
           return (
@@ -66,7 +66,7 @@ const RoleItem: FC<RoleItemProps> = ({
                     const isInherited = inheritedRole?.permissions?.includes(per?.key);
                     const { fixedForRoles = [] } = per;
                     const isFixed = fixedForRoles?.includes?.(role.type);
-                    const isFixedForCreator = fixedForRoles?.includes?.(ROLE_TYPE.CREATOR);
+                    const isFixedForCreator = fixedForRoles?.includes?.(RoleType.CREATOR);
                     if (
                       selectedRolesOnly
                       && !isChecked

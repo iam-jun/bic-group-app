@@ -98,7 +98,16 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                   "paddingTop": 0,
                   "paddingVertical": 4,
                 },
-                false,
+                Object {
+                  "elevation": 2,
+                  "shadowColor": "rgba(0, 0, 0, 1)",
+                  "shadowOffset": Object {
+                    "height": 2,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.12,
+                  "shadowRadius": 1.5,
+                },
                 Object {
                   "borderBottomColor": "#E3E6F2",
                   "borderBottomWidth": 1,
@@ -259,7 +268,7 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                 style={
                   Array [
                     Object {
-                      "borderRadius": 6,
+                      "borderRadius": 8,
                     },
                     Object {
                       "borderWidth": 0,
@@ -273,7 +282,7 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                     Array [
                       Object {
                         "alignItems": "center",
-                        "borderRadius": 6,
+                        "borderRadius": 8,
                         "flexDirection": "row",
                         "justifyContent": "center",
                         "paddingVertical": 4,
@@ -474,6 +483,7 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                       onChangeText={[Function]}
                       onContentSizeChange={[Function]}
                       onKeyPress={[Function]}
+                      onPaste={[Function]}
                       onSelectionChange={[Function]}
                       onSubmitEditing={[Function]}
                       placeholder="Write your post here..."
@@ -497,9 +507,8 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                           "current": undefined,
                         }
                       }
-                    >
-                      
-                    </TextInput>
+                      value=""
+                    />
                   </View>
                   <View
                     onLayout={[Function]}
@@ -1020,7 +1029,7 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                       style={
                         Array [
                           Object {
-                            "borderRadius": 6,
+                            "borderRadius": 8,
                           },
                           Object {
                             "marginRight": 4,
@@ -1034,7 +1043,7 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                           Array [
                             Object {
                               "alignItems": "center",
-                              "borderRadius": 6,
+                              "borderRadius": 8,
                               "flexDirection": "row",
                               "justifyContent": "center",
                               "paddingVertical": 4,

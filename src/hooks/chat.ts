@@ -3,10 +3,12 @@ import NetInfo from '@react-native-community/netinfo';
 import { Auth } from 'aws-amplify';
 import { debounce } from 'lodash';
 import { useEffect, useRef } from 'react';
-import { useAuthToken, useAuthTokenExpire, useUserIdAuth } from '~/hooks/auth';
+import { useUserIdAuth } from '~/hooks/auth';
+import useAuthController from '~/screens/auth/store';
+import { getAuthToken, getTokenExpiration } from '~/screens/auth/store/selectors';
 
 import chatSocketClient from '~/services/chatSocket';
-import { getTokenAndCallBackBein } from '~/api/apiRequest';
+import { refreshTokenThenExecuteQueueRetry } from '~/api/apiRequest';
 import useChatStore from '~/store/chat';
 import getEnv from '~/utils/env';
 import useCommonController from '~/screens/store';
@@ -15,10 +17,9 @@ const useChatSocket = () => {
   const isConnectedRef = useRef(true);
 
   const userId = useUserIdAuth();
-  const token = useAuthToken();
-  const tokenExp = useAuthTokenExpire();
+  const token = useAuthController(getAuthToken);
+  const tokenExp = useAuthController(getTokenExpiration);
   const myProfile = useCommonController((state) => state.myProfile);
-  // const { initChat, handleChatEvent } = useChatStore();
   const initChat = useChatStore((state) => state.initChat);
   const handleChatEvent = useChatStore((state) => state.handleChatEvent);
 
@@ -38,8 +39,9 @@ const useChatSocket = () => {
         chatSocketClient.initialize(
           tokenRef.current, websocketOpts,
         );
-        console.log(`\x1b[32m🐣️ Chat useChatSocket token ${token.slice(-10)}
-           will expire at: ${new Date(tokenExp * 1000).toISOString()}\x1b[0m`);
+        console.log(`\x1b[32m🐣️ Chat useChatSocket token ${token.slice(-10)} will expire at: ${
+          new Date(tokenExp * 1000).toISOString()
+        }\x1b[0m`);
       }
     }, 1000,
   );
@@ -55,7 +57,7 @@ const useChatSocket = () => {
         refreshToken();
         return;
       }
-      await getTokenAndCallBackBein('');
+      await refreshTokenThenExecuteQueueRetry('');
     }, 1000,
   );
 
@@ -86,12 +88,13 @@ const useChatSocket = () => {
           chatSocketClient.close(true);
           return;
         }
-        if (isTokenExpired()) {
+        const isTokenExpired = checkTokenExpired(tokenExpRef.current);
+        if (isTokenExpired) {
           chatSocketClient.close(true); // close to disable retry
           refreshToken();
         }
       });
-    }, [userId],
+    }, [userId, myProfile?.chatUserId],
   );
 
   useEffect(
@@ -122,12 +125,12 @@ const useChatSocket = () => {
     }, [tokenExp],
   );
 
-  const isTokenExpired = () => {
-    const nowMs = new Date().getTime() / 1000;
-    return (tokenExpRef.current || 0) - nowMs < 0;
-  };
-
   return {};
 };
 
 export default useChatSocket;
+
+const checkTokenExpired = (tokenExp: number) => {
+  const nowMs = new Date().getTime() / 1000;
+  return (tokenExp || 0) - nowMs < 0;
+};

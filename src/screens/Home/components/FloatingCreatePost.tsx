@@ -53,7 +53,6 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
 
     rootNavigation.navigate(
       articleStack.createArticle,
-      { isFirstStep: true },
     );
   };
 

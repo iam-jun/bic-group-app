@@ -12,6 +12,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import MemberItem from './MemberItem';
 import spacing from '~/theme/spacing';
 import NoSearchResultsFound from '~/components/NoSearchResultsFound';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 
 interface MemberSearchResultProps {
   canManageMember: boolean;
@@ -41,7 +42,7 @@ const MemberSearchResult = ({
   );
 
   const renderEmptyComponent = () => {
-    if (loading) return null;
+    if (loading) return <LoadingIndicator />;
     return <NoSearchResultsFound />;
   };
 

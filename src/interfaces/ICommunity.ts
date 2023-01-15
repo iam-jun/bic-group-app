@@ -1,4 +1,6 @@
 import { CommunityPrivacyType } from '~/constants/privacyTypes';
+import { IObject } from '~/interfaces/common';
+import { IJoiningMember } from '~/interfaces/IGroup';
 
 export interface ICommunity {
   id: string;
@@ -33,12 +35,6 @@ export interface IPreviewMember {
   avatar: string;
 }
 
-export interface IParamGetCommunityMembers {
-  key?: string;
-  offset?: number;
-  limit?: number;
-}
-
 export interface ICommunityMembers extends IPreviewMember {
   roles: {name: string};
   chatUserId: string;
@@ -70,4 +66,54 @@ export interface ISetCommunitySearchMembers {
   loading?: boolean;
   canLoadMore?: boolean;
   data?: ICommunityMembers[];
+}
+
+export interface IPayloadGetCommunityMemberRequests {
+  groupId: string;
+  isRefreshing?: boolean;
+  params?: any
+}
+
+export interface IPayloadApproveSingleCommunityMemberRequest {
+  communityId: string;
+  groupId: string;
+  requestId: string;
+  fullName: string;
+}
+
+export interface IPayloadApproveAllCommunityMemberRequest {
+  communityId: string;
+  groupId: string;
+  total: number;
+}
+
+export interface IPayloadSetCommunityMemberRequests {
+  total?: number;
+  loading?: boolean;
+  canLoadMore?: boolean;
+  ids?: string[];
+  items?: IObject<IJoiningMember>;
+}
+
+export interface IPayloadDeclineSingleCommunityMemberRequest {
+  groupId: string;
+  requestId: string;
+  fullName: string;
+}
+
+export interface IPayloadDeclineAllCommunityMemberRequests {
+  groupId: string;
+  total:number;
+}
+
+export interface IRemoveCommunityMember {
+  communityId: string,
+  groupId: string,
+  userId: string,
+}
+
+export interface ISearchCommunityMembers {
+  key: string,
+  groupId: string,
+  isLoadMore?: boolean,
 }

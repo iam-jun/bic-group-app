@@ -16,6 +16,8 @@ jobs:
              echo -e $STG_ENV > .env.staging
              echo APP_VERSION=${STG_APP_VERSION} >> .env.staging
              echo UPDATE_DESC=${STG_UPDATE_DESC} >> .env.staging
+             echo REMOTE_CONFIG_CACHE_TIME=${STG_REMOTE_CONFIG_CACHE_TIME} >> .env.staging
+             echo NOTICE_WEBHOOK=${NOTICE_WEBHOOK} >> .env.staging
              echo -e $STG_FASTLANE_ENV > fastlane/.env
       - run:
           name: Install NPM
@@ -42,6 +44,8 @@ jobs:
               echo -e $PRO_ENV > .env.production
               echo APP_VERSION=${PRO_APP_VERSION} >> .env.production
               echo UPDATE_DESC=${PRO_UPDATE_DESC} >> .env.production
+              echo REMOTE_CONFIG_CACHE_TIME=${PRO_REMOTE_CONFIG_CACHE_TIME} >> .env.production
+              echo NOTICE_WEBHOOK=${NOTICE_WEBHOOK} >> .env.production
               echo -e $PRO_FASTLANE_ENV > fastlane/.env
       - run:
           name: Install NPM
@@ -68,6 +72,8 @@ jobs:
             echo -e $STG_ENV > .env.staging
             echo APP_VERSION=${STG_APP_VERSION} >> .env.staging
             echo UPDATE_DESC=${STG_UPDATE_DESC} >> .env.staging
+            echo REMOTE_CONFIG_CACHE_TIME=${STG_REMOTE_CONFIG_CACHE_TIME} >> .env.staging
+            echo NOTICE_WEBHOOK=${NOTICE_WEBHOOK} >> .env.staging
             echo -e $STG_FASTLANE_ENV > fastlane/.env
             echo $API_KEY | base64 --decode >  fastlane/api_key_info.json
             echo $STG_GOOGLE_SERVICES_PLIST_IOS | base64 --decode > ios/Firebase/GoogleService-Info-Staging.plist
@@ -102,6 +108,8 @@ jobs:
             echo -e $PRO_ENV > .env.production
             echo APP_VERSION=${PRO_APP_VERSION} >> .env.production
             echo UPDATE_DESC=${PRO_UPDATE_DESC} >> .env.production
+            echo REMOTE_CONFIG_CACHE_TIME=${PRO_REMOTE_CONFIG_CACHE_TIME} >> .env.production
+            echo NOTICE_WEBHOOK=${NOTICE_WEBHOOK} >> .env.production
             echo -e $PRO_FASTLANE_ENV > fastlane/.env
             echo $API_KEY | base64 --decode >  fastlane/api_key_info.json
             echo $PRO_GOOGLE_SERVICES_PLIST_IOS | base64 --decode > ios/Firebase/GoogleService-Info-Production.plist
@@ -138,6 +146,8 @@ jobs:
               echo -e $STG_ENV > .env.staging
               echo APP_VERSION=${STG_APP_VERSION} >> .env.staging
               echo UPDATE_DESC=${STG_UPDATE_DESC} >> .env.staging
+              echo REMOTE_CONFIG_CACHE_TIME=${STG_REMOTE_CONFIG_CACHE_TIME} >> .env.staging
+              echo NOTICE_WEBHOOK=${NOTICE_WEBHOOK} >> .env.staging
               echo -e $STG_FASTLANE_ENV > fastlane/.env
       - run:
           name: Install NPM
@@ -164,6 +174,8 @@ jobs:
               echo -e $PRO_ENV > .env.production
               echo APP_VERSION=${PRO_APP_VERSION} >> .env.production
               echo UPDATE_DESC=${PRO_UPDATE_DESC} >> .env.production
+              echo REMOTE_CONFIG_CACHE_TIME=${PRO_REMOTE_CONFIG_CACHE_TIME} >> .env.production
+              echo NOTICE_WEBHOOK=${NOTICE_WEBHOOK} >> .env.production
               echo -e $PRO_FASTLANE_ENV > fastlane/.env
       - run:
           name: Install NPM
@@ -190,6 +202,8 @@ jobs:
             echo -e $STG_ENV > .env.staging
             echo APP_VERSION=${STG_APP_VERSION} >> .env.staging
             echo UPDATE_DESC=${STG_UPDATE_DESC} >> .env.staging
+            echo REMOTE_CONFIG_CACHE_TIME=${STG_REMOTE_CONFIG_CACHE_TIME} >> .env.staging
+            echo NOTICE_WEBHOOK=${NOTICE_WEBHOOK} >> .env.staging
             echo -e $STG_FASTLANE_ENV > fastlane/.env
             mkdir -p android/app/src/staging
             echo $STG_GOOGLE_SERVICES_JSON_ANDROID | base64 --decode > android/app/src/staging/google-services.json
@@ -230,6 +244,8 @@ jobs:
             echo -e $PRO_ENV > .env.production
             echo APP_VERSION=${PRO_APP_VERSION} >> .env.production
             echo UPDATE_DESC=${PRO_UPDATE_DESC} >> .env.production
+            echo REMOTE_CONFIG_CACHE_TIME=${PRO_REMOTE_CONFIG_CACHE_TIME} >> .env.production
+            echo NOTICE_WEBHOOK=${NOTICE_WEBHOOK} >> .env.production
             echo -e $PRO_FASTLANE_ENV > fastlane/.env
             mkdir -p a android/app/src/production
             echo $PRO_GOOGLE_SERVICES_JSON_ANDROID | base64 --decode > android/app/src/production/google-services.json

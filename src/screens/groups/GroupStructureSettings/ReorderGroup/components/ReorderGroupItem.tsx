@@ -8,7 +8,7 @@ import Text from '~/baseComponents/Text';
 import { IGroup } from '~/interfaces/IGroup';
 import Avatar from '~/baseComponents/Avatar';
 import Icon from '~/baseComponents/Icon';
-import { groupPrivacyListDetail } from '~/constants/privacyTypes';
+import { GroupPrivacyDetail } from '~/constants/privacyTypes';
 import spacing from '~/theme/spacing';
 
 export interface ReorderGroupItemProps {
@@ -32,8 +32,8 @@ const ReorderGroupItem: FC<ReorderGroupItemProps> = ({
   const styles = createStyle(theme);
 
   const { privacy, icon, name } = group || {};
-  const privacyData = groupPrivacyListDetail.find((i) => i?.type === privacy) || {};
-  const { icon: privacyIcon }: any = privacyData || {};
+  const privacyData = GroupPrivacyDetail[privacy] || {};
+  const { icon: privacyIcon }: any = privacyData;
 
   return (
     <View style={[styles.container, style]}>

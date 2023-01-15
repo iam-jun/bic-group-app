@@ -89,6 +89,11 @@ const AlertModal: React.FC<AlertModalProps> = ({
     }
   };
 
+  const _onConfirm = () => {
+    dispatch(actions.hideAlert());
+    onConfirm(text);
+  };
+
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const _onPressContent = () => {};
 
@@ -149,10 +154,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
           testID="alert_modal.confirm"
           disabled={input && !text}
           style={{ minWidth: 64 }}
-          onPress={() => {
-            dispatch(actions.hideAlert());
-            onConfirm(text);
-          }}
+          onPress={_onConfirm}
           {...confirmBtnProps}
         >
           {confirmLabel || t('common:btn_confirm')}

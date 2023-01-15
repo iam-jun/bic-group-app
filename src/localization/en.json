@@ -18,8 +18,8 @@
     "text_unconnected_title": "No Internet Connection",
     "text_unconnected_content": "Please check your internet connection and try again",
     "btn_try_again": "Try again",
-    "text_show_more": "Show More",
-    "text_show_less": "Show Less",
+    "text_show_more": "See More",
+    "text_show_less": "See Less",
     "text_see_all": "See all",
     "text_member": "Members",
     "text_copied_to_clipboard": "Copied to clipboard",
@@ -75,9 +75,11 @@
     "text_uploading": "Uploading...",
     "text_download": "Download",
     "text_downloaded": "Downloaded!",
-    "text_input_description": "Input description...",
+    "text_input_summary": "Input description...",
     "text_input_title": "Input title...",
     "text_send": "Send",
+    "text_tags": "Tags",
+    "text_series": "Series",
     "label_confirm_send_file": "Send this file?",
     "label_confirm_send_image": "Send this photo?",
     "label_confirm_send_video": "Send this video?",
@@ -128,6 +130,13 @@
     "btn_decline": "Decline",
     "btn_approve_all": "Approve All",
     "btn_decline_all": "Decline All",
+    "btn_submit": "Submit",
+    "btn_report_content": "Report Content",
+    "text_report_sent": "Your report was sent",
+    "text_report_content": "Report Content to Community Admin",
+    "text_post_reported": "Post reported",
+    "text_article_reported": "Article reported",
+    "text_comment_reported": "Comment reported",
     "text_request_one": "Request",
     "text_request_other": "Requests",
     "text_admin": "Admin",
@@ -167,6 +176,7 @@
     "content_not_available": "This content is not available",
     "dont_have_permission_to_access": "You don’t have permission to access this page.",
     "btn_go_back_to_home": "Go back to Home",
+    "btn_back_to_home": "Back to Home",
     "text_upcoming": "Upcoming",
     "text_expires_on": "Expires on ",
     "text_never_expire": "This post will never expire.",
@@ -188,7 +198,14 @@
     "text_unsave_fail": "Unsave fail.",
     "copy_photo": "Copy Photo",
     "copied": "Copied!",
-    "text_share": "Share"
+    "text_share": "Share",
+    "btn_go_back": "Back",
+    "text_unsupport_feature": "We are not supporting this feature on mobile. Please see the detail on web version",
+    "text_select_file": "Select File",
+    "content_unavailable": {
+      "title": "This content isn’t available right now",
+      "content": "When this happens, it’s usually because the owner only shared it with a small group of people, changed who can see it or it’s been deleted."
+    }
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -216,7 +233,6 @@
     "btn_sign_in_fb": "Sign In With Facebook",
     "btn_sign_in_gg": "Sign In With Google",
     "btn_sign_in_apple": "Sign In With Apple",
-    "btn_sign_in_now": "Sign-in now",
     "btn_sign_up": "Sign Up",
     "btn_send": "Send",
     "btn_send_recover_code": "Send code",
@@ -243,10 +259,12 @@
     "text_err_confirm_password_not_matched": "Confirmed password doesn’t match.",
     "text_err_confirm_new_password_not_matched": "Your new password is not matched.",
     "text_err_limit_exceeded": "Your account is deactivated in 2 hours for requesting too many time. Please try again later.",
-    "text_err_wrong_code": "Incorrect code, please try again. ",
+    "text_err_wrong_code": "Invalid code",
+    "text_err_expired_code": "Code is expired!",
     "text_err_missing_token": "Oops, something went wrong. ",
     "text_err_wrong_current_password": "Wrong current password",
-    "text_request_new_code": "Haven’t received code yet,",
+    "text_expiring_time_code": "Expiring in 60m",
+    "text_request_new_code": "Didn’t receive an email? Check in spam or",
     "text_title_success": "Successfully!",
     "text_sign_up_desc": "Don’t have an account? ",
     "text_sign_up_success": "Please check your email to confirm your account.",
@@ -257,8 +275,8 @@
     "text_or": "Or",
     "text_forgot_password": "Forgot password",
     "text_forgot_password_input_desc": "Please enter your email address or mobile number to search for your account.",
-    "text_forgot_password_input_code_title": "We sent a code to your email",
-    "text_forgot_password_input_code_desc": "Enter the 6-digit verification code sent to (email). If you don’t see the email in your inbox, please check your spam folder",
+    "text_forgot_password_input_code_title": "Check Your Mail",
+    "text_forgot_password_input_code_desc": "We’ve sent a 6-digit confirmation code to (email). Make sure you enter correct code.",
     "text_forgot_password_input_pw_title": "Choose new password",
     "text_forgot_password_input_pw_desc": "Create your new password",
     "text_forgot_password_complete_title": "Password changed",
@@ -266,14 +284,14 @@
     "text_change_password_complete_title": "Your new password have been changed",
     "text_change_password_complete_desc": "For us, your privacy and security is our most priority",
     "text_forgot_password_email_not_found": "This email is not linked to any account.",
-    "btn_resend_code": "Resend code",
-    "btn_submit": "Submit",
-    "text_err_password_characters": "Passwords must be at least 8-20 characters long.",
+    "btn_resend_code": "Resend",
+    "btn_submit": "Change Password",
+    "text_err_password_characters": "Passwords must be at least 8-20 characters",
     "text_err_password_required": "Password required!",
     "text_err_password_required_lower_case": "Please use at least one lowercase (a-z)!",
-    "text_err_password_required_upper_case": "Please use at least one uppercase (A-Z)!",
-    "text_err_password_required_number": "Please use at least one number!",
-    "text_err_password_required_symbols": "Please use at least one special characters including common punctuation and symbols!"
+    "text_err_password_required_upper_case": "Please use at least one upper case letter (A-Z)",
+    "text_err_password_required_number": "Please use at least one least digits (0-9)",
+    "text_err_password_required_symbols": "Please use at least one special character"
   },
   "tabs": {
     "home": "Home",
@@ -298,7 +316,7 @@
     "subtitle_two_factor_authentication": "We will ask you a code if we notice an unrecognized device attempted to login",
     "title_login_logs": "Login Logs",
     "subtitle_login_logs": "It's always better to use a strong password that you not using it elsewhere",
-    "title_privacy": "Privacy",
+    "title_privacy": "Privacy & Terms",
     "title_notification": "Notification",
     "title_appearance": "Appearance",
     "title_language": "Language",
@@ -342,9 +360,9 @@
     "text_help_center": "Help center is coming soon 🤗",
     "text_popup_message": "Function has not been developed. Stay tuned for further releases 😀",
     "text_got_it": "Got it",
-    "title_public": "Public",
-    "title_public_subtitle_community": "Everyone can discover or search in-app and global to find this community. The content & activities inside are visible to everyone.",
-    "title_public_subtitle_group": "Everyone can discover or search in-app and global to find this group. The content & activities inside are visible to everyone.",
+    "title_open": "Open",
+    "title_open_subtitle_community": "Everyone can discover or search in-app and global to find this community. The content & activities inside are visible to everyone.",
+    "title_open_subtitle_group": "Everyone can discover or search in-app and global to find this group. The content & activities inside are visible to everyone.",
     "title_private": "Private",
     "title_private_subtitle_community": "All registered users can discover and search in-app to find this community. The content & activities inside are not visible to all users.",
     "title_private_subtitle_group": "All registered users can discover and search in-app to find this group. The content & activities inside are not visible to all users.",
@@ -352,8 +370,8 @@
     "title_secret": "Secret",
     "title_secret_subtitle_community": "All registered users cannot discover and search to find this community. The content & activities inside are not visible to all users.",
     "title_secret_subtitle_group": "All registered users cannot discover and search to find this group. The content & activities inside are not visible to all users.",
-    "title_open": "Open",
-    "title_open_subtitle_group": "All members in the same community can discover and search in-app to find this group. The content & activities inside are visible to all members. For all registered users who are not in the community, the content & activities inside are not visible to them.",
+    "title_closed": "Closed",
+    "title_closed_subtitle_group": "All members in the same community can discover and search in-app to find this group. The content & activities inside are visible to all members. For all registered users who are not in the community, the content & activities inside are not visible to them.",
     "title_privacy_note": "All members and admins will receive a notification that the privacy settings have changed.",
     "text_secret_community_banner_message": "According to the privacy, the join request setting is disabled and all pending requests will be also declined. Member must be invited to join the community.",
     "text_secret_group_banner_message": "According to the privacy, the join request setting is disabled and all pending requests will be also declined. Member must be invited to join the group.",
@@ -417,10 +435,10 @@
     "title_set_a_custom_status": "Set a custom status",
     "title_about_bein_app": "About Bein App",
     "title_help_and_support": "Help & Support",
-    "privacy_public": "Public",
+    "privacy_open": "Open",
     "privacy_private": "Private",
     "privacy_secret": "Secret",
-    "privacy_open": "Open",
+    "privacy_closed": "Closed",
     "title_community_name": "Community Name",
     "title_edit_community_name": "Edit Community Name",
     "title_community_description": "Description",
@@ -501,8 +519,10 @@
   "menu": {
     "title_discover": "Discover",
     "title_your_community": "Your community",
-    "title_create_post": "Create a Post",
-    "title_draft": "Draft",
+    "title_write_post": "Write Post",
+    "title_write_article": "Write Article",
+    "title_write_series": "Write Series",
+    "title_draft": "My Draft",
     "title_saved_items": "Saved Items",
     "title_media": "Media",
     "title_settings": "Settings",
@@ -526,11 +546,12 @@
     "title_edit_content": "Edit Content",
     "title_edit_series": "Edit Series",
     "text_option_edit_title": "Title",
-    "text_option_edit_description": "Description",
+    "text_option_edit_summary": "Description",
     "text_option_edit_cover": "Cover",
     "text_option_edit_category": "Topics",
-    "text_option_edit_audience": "Audience",
+    "text_option_edit_audience": "Audiences",
     "text_option_edit_series": "Series",
+    "text_option_edit_tags": "Tags",
     "text_option_edit_content": "Content",
     "text_change_cover": "Change cover",
     "text_select_cover": "Select cover",
@@ -560,7 +581,23 @@
     "modal_add_video": {
       "title": "Embed Video",
       "link_placeholder": "Enter the URL of the embed:"
-    }
+    },
+    "modal_invalid_series_tags": {
+      "title": "Audience Conflict",
+      "title_remove_audience": "Remove Audience",
+      "content_header": "The following information will be removed when removed audiences:",
+      "content_confirm": "Are you sure you want to remove audience?"
+    },
+    "tags_maximum_message_info": "Maxium input 5 Tags",
+    "text_add_title": "Add title",
+    "text_title_require_max_length": "Maximum 64 characters",
+    "text_description_require_max_length": "Maximum 255 characters",
+    "text_add_summary": "Add description",
+    "text_add_category": "Add topic",
+    "text_add_audience": "Add audience",
+    "text_add_series": "Add series",
+    "text_add_tag": "Add tag",
+    "text_add_content": "Add content"
   },
   "post": {
     "news_feed": "News Feed",
@@ -688,7 +725,8 @@
     "text_update_post_setting_success": "Post Settings updated",
     "text_update_post_setting_failed": "Post Settings was failed to update",
     "text_comment_from": "This is comment from ",
-    "title_comment_detail_of": "{{name}}'s post",
+    "title_comment_detail_of_post": "{{name}}'s post",
+    "title_comment_detail_of_article": "{{name}}'s article",
     "newsfeed": {
       "title_empty_no_post": "This place looks lonely...",
       "text_empty_no_post": "Join in a community to get updated",
@@ -755,6 +793,11 @@
     },
     "text_important_warning_1": "Cannot set because you don't have this permission at",
     "text_important_warning_2": ". Please remove them or contact your admin",
+    "post_setting_permissions_alert": {
+      "title": "Alert",
+      "description_1": "You don't have this permission at ",
+      "description_2": ". Please remove them or contact your admin."
+    },
     "text_saved": "Post saved.",
     "text_unsaved": "Post unsaved.",
     "article_menu": {
@@ -811,7 +854,8 @@
       "btn_channel": "Channel",
       "btn_about": "About",
       "btn_members": "Members",
-      "btn_files": "Files"
+      "btn_files": "Files",
+      "btn_tags": "Tags"
     },
     "text_members_one": "member",
     "text_members_other": "members",
@@ -834,7 +878,8 @@
     "member_menu": {
       "label_set_as_admin": "Set Admin Role",
       "label_revoke_admin_role": "Revoke Admin Role",
-      "label_remove_member": "Remove Member"
+      "label_remove_member": "Remove Member",
+      "label_report_member": "Report This Member"
     },
     "private_group_welcome_message": {
       "title": "This group is private.",
@@ -1179,7 +1224,7 @@
   },
   "emoji_categories": {
     "custom": "Custom",
-    "recently": "Recently",
+    "recent": "Frequently",
     "smileys-emotion": "Smileys & Emotion",
     "people-body": "People & Body",
     "animals-nature": "Animals & Nature",
@@ -1224,5 +1269,30 @@
     "text_add_articles_success": "Add successful",
     "text_remove_article": "Do you want to remove this article?",
     "text_article_removed": "Article removed"
+  },
+  "tags": {
+    "create_tag": "Create Tag",
+    "input_tag": "Input tag",
+    "input_tag_require_max_length": "Maximum 32 characters",
+    "create": "Create",
+    "do_you_want_to_delete_this_tag": "Do you want to delete this tag ?",
+    "delete_tag_confirm": "Delete Tag",
+    "title_header_list_tags": "Tags",
+    "empty_list_tags": "No result",
+    "edit_tag": "Edit Tag",
+    "do_you_want_to_change_this_tag": "Do you want to change this tag?",
+    "message_notice": "The tag will be automatically converted to lowercase after created or updated."
+  },
+  "notice": {
+    "force_update": {
+      "title": "We’re better than ever",
+      "description": "New version is available. Please update to get the best experience.",
+      "confirm": "Update"
+    },
+    "new_version": {
+      "title": "New version available",
+      "description": "New version is available. Please update to get the best experience.",
+      "confirm": "Update"
+    }
   }
 }

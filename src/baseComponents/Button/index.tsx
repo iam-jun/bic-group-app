@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   ActivityIndicator,
+  Insets,
   StyleProp, StyleSheet, TouchableHighlight, View, ViewStyle,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -26,6 +27,7 @@ export interface ButtonProps extends ButtonWrapperProps {
   useI18n?: boolean;
   icon?: IconType;
   iconSize?: number;
+  hitSlop?: Insets;
 }
 
 export const ButtonComponent: React.FC<ButtonProps> = ({
@@ -118,13 +120,13 @@ export const ButtonComponent: React.FC<ButtonProps> = ({
 
 const styles = StyleSheet.create({
   wrapper: {
-    borderRadius: borderRadius.base,
+    borderRadius: borderRadius.large,
   },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: borderRadius.base,
+    borderRadius: borderRadius.large,
     paddingVertical: padding.tiny,
   },
   icon: {

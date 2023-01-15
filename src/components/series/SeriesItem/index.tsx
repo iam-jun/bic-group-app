@@ -5,9 +5,7 @@ import { IPost } from '~/interfaces/IPost';
 import DeletedItem from '../DeletedItem';
 import SeriesContent from '../SeriesContent';
 import SeriesHeader from '../SeriesHeader';
-import SeriesFooter from '../SeriesFooter';
 import { PostImportant } from '~/components/posts';
-import SeriesFooterLite from '../SeriesFooterLite';
 
 type SeriesItemProps = {
     data: IPost;
@@ -51,7 +49,6 @@ const SeriesItem: FC<SeriesItemProps> = ({ data: series, isLite }) => {
         disabled={false}
       />
       <SeriesContent series={series} isLite={isLite} />
-      {isLite ? <SeriesFooterLite series={series} /> : <SeriesFooter series={series} />}
     </View>
   );
 };

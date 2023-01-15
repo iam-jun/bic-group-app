@@ -26,20 +26,18 @@ import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePl
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
-import useAuth, { useUserIdAuth } from '~/hooks/auth';
+import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
-import { useMyPermissions } from '~/hooks/permissions';
-import { useKeySelector } from '~/hooks/selector';
+import useMyPermissionsStore from '~/store/permissions';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { rootSwitch } from '~/router/stack';
+import useAuthController, { IAuthState } from '~/screens/auth/store';
 import GroupContent from '~/screens/groups/GroupDetail/components/GroupContent';
-import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import {
   formatChannelLink, getGroupLink, openUrl,
 } from '~/utils/link';
-import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import GroupPrivateWelcome from './components/GroupPrivateWelcome';
 import useLeaveGroup from './hooks/useLeaveGroup';
 import GroupTabHeader from './components/GroupTabHeader';
@@ -54,6 +52,8 @@ import useTimelineStore, { ITimelineState } from '~/store/timeline';
 import homeActions from '~/storeRedux/home/actions';
 import ContentSearch from '~/screens/Home/HomeSearch';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
+import { PermissionKey } from '~/constants/permissionScheme';
+import useGroupDetailStore from './store';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -64,15 +64,20 @@ const GroupDetail = (props: any) => {
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
 
-  const { user } = useAuth();
+  const user = useAuthController(useCallback((state: IAuthState) => state.authUser, []));
   const userId = useUserIdAuth();
   const dispatch = useDispatch();
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
+  const {
+    isLoadingGroupDetailError,
+    loadingGroupDetail,
+    groupDetail: { group: groupInfo, joinStatus },
+    actions: { getGroupDetail },
+  } = useGroupDetailStore((state) => state);
 
   const headerRef = useRef<any>();
   const [groupInfoHeight, setGroupInfoHeight] = useState(300);
 
-  const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
   const { name, privacy, id: idCurrentGroupDetail } = groupInfo;
   const currentCommunityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
   const communityId = paramCommunityId || currentCommunityId;
@@ -81,15 +86,8 @@ const GroupDetail = (props: any) => {
   );
   const { name: communityName, joinStatus: joinStatusCommunity }
     = communityDetail || {};
-  const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
   const isMemberCommunity = joinStatusCommunity === GroupJoinStatus.MEMBER;
-  const isLoadingGroupDetailError = useKeySelector(
-    groupsKeySelector.isLoadingGroupDetailError,
-  );
-  const loadingGroupDetail = useKeySelector(
-    groupsKeySelector.loadingGroupDetail,
-  );
 
   // Temporarily comment this snippet code
   // Because old data will show up before being replaced by new data
@@ -100,15 +98,15 @@ const GroupDetail = (props: any) => {
 
   const shouldShowPlaceholder = idCurrentGroupDetail !== groupId;
 
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canSetting = hasPermissionsOnScopeWithId(groupId, [
-    PERMISSION_KEY.EDIT_INFO,
-    PERMISSION_KEY.EDIT_PRIVACY,
+  const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
+  const canSetting = shouldHavePermission(groupId, [
+    PermissionKey.EDIT_INFO,
+    PermissionKey.EDIT_PRIVACY,
   ]);
   const showPrivate
     = !isMember
     && (privacy === GroupPrivacyType.PRIVATE
-      || (!isMemberCommunity && privacy === GroupPrivacyType.OPEN));
+      || (!isMemberCommunity && privacy === GroupPrivacyType.CLOSED));
 
   // post
   const timelineActions = useTimelineStore((state: ITimelineState) => state.actions);
@@ -133,23 +131,14 @@ const GroupDetail = (props: any) => {
     }
   });
 
-  const getGroupDetail = () => {
-    dispatch(
-      groupsActions.getGroupDetail({
-        groupId,
-        loadingPage: true,
-      }),
-    );
-  };
-
   const getGroupPosts = useCallback(() => {
     /* Avoid getting group posts of the nonexisting group,
     which will lead to endless fetching group posts in
     httpApiRequest > makeGetStreamRequest */
     const privilegeToFetchPost
       = isMember
-      || privacy === GroupPrivacyType.PUBLIC
-      || privacy === GroupPrivacyType.OPEN;
+      || privacy === GroupPrivacyType.OPEN
+      || privacy === GroupPrivacyType.CLOSED;
 
     if (loadingGroupDetail || isEmpty(groupInfo) || !privilegeToFetchPost) {
       return;
@@ -164,20 +153,19 @@ const GroupDetail = (props: any) => {
     if (!communityDetail?.id) {
       actions.getCommunity(communityId);
     }
-    getGroupDetail();
+    getGroupDetail({ groupId });
   }, [groupId]);
 
   useEffect(() => {
     if (isEmpty(timelines[groupId]) && isEmpty(groupPost?.ids)) {
       // for the 1st time timelines[groupId] can be undefined so we must init Data
       if (groupId) timelineActions.initDataTimeline(groupId);
-      getGroupPosts();
     }
   }, [groupInfo]);
 
   useEffect(() => {
     getGroupPosts();
-  }, [contentFilter, attributeFilter]);
+  }, [contentFilter, attributeFilter, groupInfo]);
 
   useEffect(() => () => {
     if (groupId) timelineActions.resetTimeline(groupId);
@@ -281,13 +269,13 @@ const GroupDetail = (props: any) => {
   };
 
   const onPressChat = () => {
-    const link = formatChannelLink(groupInfo.teamName || groupInfo.team_name, groupInfo.slug);
+    const link = formatChannelLink(groupInfo.teamName, groupInfo.slug);
     openUrl(link);
   };
 
   const onGoBackOnNotFound = () => {
     // clear all state
-    dispatch(groupsActions.setGroupDetail(null));
+    useGroupDetailStore.getState().actions.setGroupDetail(null);
   };
 
   const onPressSearch = () => {
@@ -311,7 +299,7 @@ const GroupDetail = (props: any) => {
           onScroll={onScrollHandler}
           onGetInfoLayout={onGetInfoLayout}
           infoDetail={groupInfo}
-          communityName={communityName}
+          community={communityDetail}
         />
       );
     }
@@ -378,7 +366,7 @@ const GroupDetail = (props: any) => {
           {renderGroupContent()}
         </Animated.View>
         <Animated.View onLayout={onButtonBottomLayout} style={[styles.button, buttonStyle]}>
-          <GroupJoinCancelButton style={styles.joinBtn} />
+          <GroupJoinCancelButton style={styles.joinBtn} community={communityDetail} />
         </Animated.View>
         <ContentSearch searchViewRef={searchViewRef} groupId={groupId} />
       </>

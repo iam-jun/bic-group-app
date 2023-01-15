@@ -10,6 +10,7 @@ const getMyProfile = (set, _get) => async ({ userId, params }: IGetUserProfile) 
     const response = await groupApi.getUserProfile(userId, params);
 
     await updateUserFromSharedPreferences({
+      id: response?.data?.chatUserId,
       name: response?.data?.fullname,
       avatar: response?.data?.avatar,
     });

@@ -17,6 +17,7 @@ export interface CreatePostFooterProps {
   videoDisabled?: boolean;
   fileDisabled?: boolean;
   isSetting?: boolean;
+  settingDisabled?: boolean;
   onPressBack?: () => void;
   onPressSetting: () => void;
 }
@@ -28,6 +29,7 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
   videoDisabled,
   fileDisabled,
   isSetting,
+  settingDisabled,
   onPressBack,
   onPressSetting,
 }: CreatePostFooterProps) => {
@@ -62,6 +64,7 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
         onPressBack={onPressBack}
         onPressSetting={onPressSetting}
         isSetting={isSetting}
+        settingDisabled={settingDisabled}
       />
       <Animated.View
         testID="create_post_footer.mention_bar_container"

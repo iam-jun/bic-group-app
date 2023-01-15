@@ -18,10 +18,8 @@ import ImagePicker from '~/beinComponents/ImagePicker';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import Text from '~/baseComponents/Text';
 import appConfig from '~/configs/appConfig';
-import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
 import { ICreatePostImage } from '~/interfaces/IPost';
-import { showHideToastMessage } from '~/storeRedux/modal/actions';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
 
@@ -30,9 +28,10 @@ import ReviewMarkdown from '~/screens/post/CreatePost/components/ReviewMarkdown'
 import ToolbarButton from '~/components/posts/ToolbarButton';
 import { getTotalFileSize } from '~/storeRedux/post/selectors';
 import spacing from '~/theme/spacing';
-import { getChatDomain, openUrl } from '~/utils/link';
+import { getChatDomain, openInAppBrowser } from '~/utils/link';
 import { checkPermission, permissionTypes } from '~/utils/permission';
 import { clearExistingFiles, validateFilesPicker } from '../../helper';
+import useUploadImage from '../../hooks/useUploadImage';
 
 export interface PostToolbarProps {
   toolbarRef?: any;
@@ -42,9 +41,10 @@ export interface PostToolbarProps {
   imageDisabled?: boolean;
   videoDisabled?: boolean;
   fileDisabled?: boolean;
+  isSetting?:boolean;
+  settingDisabled?: boolean;
   onPressBack?: () => void;
   onPressSetting: ()=> void;
-  isSetting?:boolean;
 }
 
 const PostToolbar: FC<PostToolbarProps> = ({
@@ -55,6 +55,7 @@ const PostToolbar: FC<PostToolbarProps> = ({
   videoDisabled,
   fileDisabled,
   isSetting,
+  settingDisabled,
   onPressBack,
   onPressSetting,
   ...props
@@ -62,9 +63,7 @@ const PostToolbar: FC<PostToolbarProps> = ({
   const animated = useRef(new Animated.Value(0)).current;
 
   const dispatch = useDispatch();
-  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const { colors } = theme;
   const styles = createStyle(theme);
   const modalizeRef = useRef<any>();
 
@@ -74,6 +73,10 @@ const PostToolbar: FC<PostToolbarProps> = ({
   const { totalFiles, totalSize } = getTotalFileSize();
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const { handleImage } = useUploadImage();
+
+  const iconSettingColor = getPostSettingIconColor({ settingDisabled, isSetting, theme });
 
   const openModal = throttle(
     (e?: any) => {
@@ -146,34 +149,12 @@ const PostToolbar: FC<PostToolbarProps> = ({
       });
   };
 
-  const checkCurrentImages = (currentImage: ICreatePostImage[]) => {
-    const errorContent = t('post:error_reach_upload_photo_limit').replace(
-      '%LIMIT%', appConfig.postPhotoLimit,
-    );
-    dispatch(showHideToastMessage({
-      content: errorContent,
-      props: { type: 'error' },
-    }));
-    return currentImage.slice(
-      0,
-      appConfig.postPhotoLimit,
-    );
-  };
-
   const openGallery = () => {
     ImagePicker.openPickerMultiple({
+      mediaType: 'photo',
       maxFiles: appConfig.postPhotoLimit,
     }).then((images) => {
-      const newImages: ICreatePostImage[] = [];
-      images.forEach((item) => {
-        newImages.push({ fileName: item.filename, file: item });
-      });
-      let newCurrentImages = [...selectedImagesDraft, ...newImages];
-      if (newCurrentImages.length > appConfig.postPhotoLimit) {
-        newCurrentImages = checkCurrentImages(newCurrentImages);
-      }
-      dispatch(postActions.setCreatePostImagesDraft(newCurrentImages));
-      dispatch(postActions.setCreatePostImages(newCurrentImages));
+      handleImage(images);
     });
   };
 
@@ -204,7 +185,7 @@ const PostToolbar: FC<PostToolbarProps> = ({
 
   const onPressHelp = () => {
     const DOMAIN = getChatDomain();
-    openUrl(`${DOMAIN}/help/formatting`);
+    openInAppBrowser(`${DOMAIN}/help/formatting`);
   };
 
   const renderToolbar = () => (
@@ -241,7 +222,8 @@ const PostToolbar: FC<PostToolbarProps> = ({
           size="medium"
           testID="header.menuIcon.button"
           icon="Sliders"
-          color={isSetting ? colors.purple50 : colors.neutral40}
+          disabled={settingDisabled}
+          color={iconSettingColor}
           onPress={onPressSetting}
         />
       </View>
@@ -315,3 +297,15 @@ const createStyle = (theme: ExtendedTheme) => {
 };
 
 export default PostToolbar;
+
+const getPostSettingIconColor = ({
+  settingDisabled, isSetting, theme,
+}: {
+  settingDisabled: boolean, isSetting: boolean; theme: ExtendedTheme
+}) => {
+  if (settingDisabled) return theme.colors.neutral20;
+
+  if (isSetting) return theme.colors.purple50;
+
+  return theme.colors.neutral40;
+};

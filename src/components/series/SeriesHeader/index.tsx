@@ -5,13 +5,14 @@ import { ContentHeader } from '~/components/ContentView';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
-import { useMyPermissions } from '~/hooks/permissions';
 import { IAudienceGroup, IPost } from '~/interfaces/IPost';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { AlertDeleteAudiences } from '~/components/posts';
 import modalActions from '~/storeRedux/modal/actions';
 import useSeriesStore, { ISeriesState } from '~/screens/series/store';
 import useSeriesMenu from '~/hooks/useSeriesMenu';
+import { PermissionKey } from '~/constants/permissionScheme';
+import useMyPermissionsStore from '~/store/permissions';
 
 type SeriesHeaderProps = {
   series: IPost;
@@ -28,11 +29,10 @@ const SeriesHeader: FC<SeriesHeaderProps> = ({ series, disabled }) => {
 
   const actions = useSeriesStore((state: ISeriesState) => state.actions);
 
-  const { hasPermissionsOnAtLeastOneScope, PERMISSION_KEY }
-    = useMyPermissions();
-  const canDeleteOwnPost = hasPermissionsOnAtLeastOneScope(
+  const { shouldHavePermissionOnSomeAudience } = useMyPermissionsStore((state) => state.actions);
+  const canDeleteOwnPost = shouldHavePermissionOnSomeAudience(
     audience?.groups,
-    PERMISSION_KEY.CRUD_POST_ARTICLE,
+    PermissionKey.CRUD_POST_ARTICLE,
   );
 
   const goToSeriesDetail = () => {

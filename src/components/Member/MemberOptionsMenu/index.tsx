@@ -1,14 +1,14 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import { Button } from '~/baseComponents';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import Text from '~/baseComponents/Text';
-import useAuth from '~/hooks/auth';
 import { ICommunityMembers } from '~/interfaces/ICommunity';
 import { IGroupMembers } from '~/interfaces/IGroup';
+import useAuthController, { IAuthState } from '~/screens/auth/store';
 import modalActions from '~/storeRedux/modal/actions';
 import { spacing } from '~/theme';
 
@@ -21,12 +21,14 @@ interface MemberOptionsMenuProps {
   onPressSetAdminRole: () => void;
   onPressRevokeAdminRole: () => void;
   onPressRemoveMember: () => void;
+  onPressReportMember: () => void;
 }
 
 enum MemberOptions {
   SET_ADMIN_ROLE = 'set-admin',
   REVOKE_ADMIN_ROLE = 'revoke-admin',
-  REMOVE_MEMBER = 'remove-member'
+  REMOVE_MEMBER = 'remove-member',
+  REPORT_MEMBER = 'report-member',
 }
 
 const MemberOptionsMenu = ({
@@ -38,12 +40,13 @@ const MemberOptionsMenu = ({
   onPressSetAdminRole,
   onPressRevokeAdminRole,
   onPressRemoveMember,
+  onPressReportMember,
 }: MemberOptionsMenuProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const dispatch = useDispatch();
   const styles = createStyles();
-  const { user } = useAuth();
+  const user = useAuthController(useCallback((state: IAuthState) => state.authUser, []));
   const isMe = selectedMember?.username === user?.username;
 
   const onPressMenuOption = (type: MemberOptions) => {
@@ -59,6 +62,10 @@ const MemberOptionsMenu = ({
 
       case MemberOptions.REMOVE_MEMBER:
         onPressRemoveMember();
+        break;
+
+      case MemberOptions.REPORT_MEMBER:
+        onPressReportMember();
         break;
 
       default:
@@ -115,6 +122,16 @@ const MemberOptionsMenu = ({
     return null;
   };
 
+  const renderReportMemberOption = () => {
+    if (isMe) return null;
+
+    return renderItem({
+      testID: 'member_options_menu.report_member',
+      content: 'groups:member_menu:label_report_member',
+      onPress: () => onPressMenuOption(MemberOptions.REPORT_MEMBER),
+    });
+  };
+
   return (
     <BottomSheet
       modalizeRef={modalizeRef}
@@ -124,6 +141,7 @@ const MemberOptionsMenu = ({
           {renderRevokeAdminRoleOption()}
           {renderSetAdminRoleOption()}
           {renderRemoveMemberOption()}
+          {renderReportMemberOption()}
         </View>
       )}
     />
