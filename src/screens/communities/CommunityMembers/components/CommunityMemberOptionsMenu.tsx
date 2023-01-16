@@ -9,7 +9,7 @@ import useCommunityController from '../../store';
 import MemberOptionsMenu from '~/components/Member/MemberOptionsMenu';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
-import ReportContent from '~/components/ReportContent';
+import ReportContent from '~/components/Report/ReportContent';
 import { TargetType } from '~/interfaces/IReport';
 import useModalStore from '~/store/modal';
 

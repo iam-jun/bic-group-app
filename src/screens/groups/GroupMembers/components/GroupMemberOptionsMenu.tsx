@@ -9,7 +9,7 @@ import useMyPermissionsStore from '~/store/permissions';
 import useGroupMemberStore from '../store';
 import MemberOptionsMenu from '~/components/Member/MemberOptionsMenu';
 import { PermissionKey } from '~/constants/permissionScheme';
-import ReportContent from '~/components/ReportContent';
+import ReportContent from '~/components/Report/ReportContent';
 import { TargetType } from '~/interfaces/IReport';
 import useGroupsStore from '~/store/entities/groups';
 import groupsSelector from '~/store/entities/groups/selectors';

@@ -22,6 +22,8 @@ import useContentActions from '~/hooks/useContentActions';
 import { isEmptyPost } from '~/helpers/post';
 import { PlaceHolderRemoveContent } from '~/baseComponents';
 import Divider from '~/beinComponents/Divider';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 
 export interface PostViewProps {
   style?: any;
@@ -82,6 +84,8 @@ const _PostView: FC<PostViewProps> = ({
     targetType: TargetType.POST,
   });
 
+  const isReported = usePostsStore(postsSelector.getIsReported(postId));
+
   const _onPress = () => {
     if (pressNavigateToDetail) {
       rootNavigation.navigate(homeStack.postDetail, { post_id: postId });
@@ -100,6 +104,46 @@ const _PostView: FC<PostViewProps> = ({
 
   const shouldShowInterested = highlight?.length < appConfig.shortPostContentLength
   || content?.length < appConfig.shortPostContentLength || isPostDetail;
+
+  const renderContent = () => {
+    if (isReported) {
+      return null;
+    }
+    return (
+      <>
+        {!isLite && <Divider style={styles.divider} />}
+        {!isLite && !!canReact && (
+        <ReactionView
+          style={styles.reactions}
+          ownerReactions={ownerReactions}
+          reactionsCount={reactionsCount}
+          hasReactPermission={hasReactPermission}
+          onAddReaction={onAddReaction}
+          onRemoveReaction={onRemoveReaction}
+          onLongPressReaction={onLongPressReaction}
+        />
+        )}
+        <PostFooter
+          postId={postId}
+          isLite={isLite}
+          btnReactTestID={btnReactTestID}
+          btnCommentTestID={btnCommentTestID}
+          hasReactPermission={hasReactPermission}
+          onPressComment={onPressComment}
+          onAddReaction={onAddReaction}
+        />
+        {!isLite && (
+          <ButtonMarkAsRead
+            postId={postId}
+            markedReadPost={markedReadPost}
+            isImportant={isImportant}
+            expireTime={importantExpiredAt}
+            isActor={actor?.id == userId}
+          />
+        )}
+      </>
+    );
+  };
 
   return (
     <TouchableOpacity
@@ -133,36 +177,7 @@ const _PostView: FC<PostViewProps> = ({
         {!isLite && shouldShowInterested && (
           <ContentInterestedUserCount id={postId} interestedUserCount={totalUsersSeen} />
         )}
-        {!isLite && (<Divider style={styles.divider} />)}
-        {!isLite && !!canReact && (
-          <ReactionView
-            style={styles.reactions}
-            ownerReactions={ownerReactions}
-            reactionsCount={reactionsCount}
-            hasReactPermission={hasReactPermission}
-            onAddReaction={onAddReaction}
-            onRemoveReaction={onRemoveReaction}
-            onLongPressReaction={onLongPressReaction}
-          />
-        )}
-        <PostFooter
-          postId={postId}
-          isLite={isLite}
-          btnReactTestID={btnReactTestID}
-          btnCommentTestID={btnCommentTestID}
-          hasReactPermission={hasReactPermission}
-          onPressComment={onPressComment}
-          onAddReaction={onAddReaction}
-        />
-        {!isLite && (
-          <ButtonMarkAsRead
-            postId={postId}
-            markedReadPost={markedReadPost}
-            isImportant={isImportant}
-            expireTime={importantExpiredAt}
-            isActor={actor?.id == userId}
-          />
-        )}
+        {renderContent()}
       </View>
     </TouchableOpacity>
   );

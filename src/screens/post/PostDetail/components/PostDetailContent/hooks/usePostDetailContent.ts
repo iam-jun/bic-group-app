@@ -21,7 +21,9 @@ import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import useModalStore from '~/store/modal';
 
-const usePostDetailContent = ({ postId, notificationId, HeaderImageComponent }) => {
+const usePostDetailContent = ({
+  postId, notificationId, HeaderImageComponent, isReported,
+}) => {
   const dispatch = useDispatch();
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
@@ -160,6 +162,7 @@ const usePostDetailContent = ({ postId, notificationId, HeaderImageComponent }) 
         postId,
         callbackLoading,
         showToast: !!notificationId,
+        isReported,
       };
       dispatch(postActions.getPostDetail(payload));
     }

@@ -284,10 +284,37 @@ const Notification = () => {
             }
             case NOTIFICATION_TYPE.REPORT_USER_TO_USER:
             case NOTIFICATION_TYPE.REPORT_USER_TO_USER_AGGREGATED:
-            case NOTIFICATION_TYPE.CONTENT_HIDE_TO_USER:
             case NOTIFICATION_TYPE.CONTENT_REPORT_TO_USER:
             case NOTIFICATION_TYPE.CONTENT_REPORT_TO_USER_AGGREGATED: {
               rootNavigation.navigate(commonStack.unsupportFeature);
+              break;
+            }
+            case NOTIFICATION_TYPE.CONTENT_HIDE_TO_USER: {
+              const targetType = act?.report?.targetType;
+              const targetId = act?.report?.targetId;
+
+              if (targetType === TargetType.POST) {
+                rootNavigation.navigate(
+                  homeStack.postDetail, {
+                    post_id: targetId,
+                    noti_id: item.id,
+                    is_reported: true,
+                  },
+                );
+              } else if (targetType === TargetType.ARTICLE) {
+                rootNavigation.navigate(articleStack.articleContentDetail, {
+                  articleId: targetId,
+                  is_reported: true,
+                });
+              } else {
+                rootNavigation.navigate(
+                  homeStack.commentDetail, {
+                    commentId: targetId,
+                    notiId: item.id,
+                    isReported: true,
+                  },
+                );
+              }
               break;
             }
             default:

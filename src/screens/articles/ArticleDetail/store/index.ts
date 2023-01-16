@@ -11,7 +11,7 @@ export interface IArticlesState extends IBaseState {
   errors: IObject<boolean>;
 
   actions: {
-    getArticleDetail: (id: string) => void,
+    getArticleDetail: (id: string, isReported?: boolean) => void,
   }
 }
 

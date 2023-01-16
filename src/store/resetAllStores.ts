@@ -46,6 +46,7 @@ import useGeneralInformationStore from '~/screens/groups/GeneralInformation/stor
 import useRemoteConfigStore from './remoteConfig';
 import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
 import useCommentInputStore from '~/screens/comments/components/CommentInputView/store';
+import useReportContentStore from '~/components/Report/store';
 
 export const excludedStore = [
   useAuthController,
@@ -55,6 +56,9 @@ const stores = [
   // entities
   usePostsStore,
   useCommentsStore,
+
+  // components
+  useReportContentStore,
 
   // screens
   useHomeStore,

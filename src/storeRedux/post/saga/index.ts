@@ -30,9 +30,13 @@ import deletePost from './deletePost';
 import removeAudiencesFromPost from './removeAudiencesFromPost';
 import useDraftPostStore from '../../../screens/Draft/DraftPost/store';
 import useTimelineStore from '~/store/timeline';
+import { mockReportReason } from '~/test/mock_data/report';
+import { IParamGetReportContent, TargetType } from '~/interfaces/IReport';
 import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
 import showToast from '~/store/helper/showToast';
 import showToastError from '~/store/helper/showToastError';
+import { moveItemOthersToEndInArray } from '~/helpers/common';
+import useReportContentStore from '~/components/Report/store';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -185,7 +189,9 @@ function* getPostDetail({
   type: string;
   payload: IPayloadGetPostDetail;
 }): any {
-  const { callbackLoading, postId, ...restParams } = payload || {};
+  const {
+    callbackLoading, postId, isReported, ...restParams
+  } = payload || {};
   if (!postId) {
     return;
   }
@@ -199,12 +205,32 @@ function* getPostDetail({
       // is_draft
       ...restParams,
     };
-    const response = yield call(
-      streamApi.getPostDetail, params,
-    );
+
+    let response = null;
+
+    if (isReported) {
+      const paramGetReportContent: IParamGetReportContent = {
+        order: 'ASC',
+        offset: 0,
+        limit: mockReportReason.length,
+        targetIds: [postId],
+        targetType: TargetType.POST,
+      };
+      const responeReportContent = yield call(streamApi.getReportContent, paramGetReportContent);
+      if (responeReportContent?.data) {
+        response = moveItemOthersToEndInArray(responeReportContent.data.list[0]);
+        useReportContentStore.getState().actions.addToReportDetailsPost(response);
+      }
+    } else {
+      const responePostDetail = yield call(streamApi.getPostDetail, params);
+      if (responePostDetail?.data) {
+        response = responePostDetail.data;
+      }
+    }
+
     yield timeOut(500);
     usePostsStore.getState().actions.addToPosts(
-      { data: response?.data || {}, handleComment: true } as IPayloadAddToAllPost,
+      { data: response || {}, handleComment: true } as IPayloadAddToAllPost,
     );
     callbackLoading?.(false, true);
     yield put(postActions.setLoadingGetPostDetail(false));

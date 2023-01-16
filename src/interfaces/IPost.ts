@@ -3,6 +3,7 @@ import { ReactionType } from '~/constants/reactions';
 import { ICategory } from '~/interfaces/IArticle';
 import { IGiphy } from './IGiphy';
 import { ITag } from './ITag';
+import { IReportDetail } from './IReport';
 
 export enum PostType {
   POST = 'POST',
@@ -63,6 +64,8 @@ export interface IPost {
   tags?: ITag[];
   series?: any[];
   reported?: boolean;
+  reportDetails?: IReportDetail[];
+  isReported?: boolean;
   publishedAt?: string;
 }
 
@@ -180,6 +183,7 @@ export interface ICommentData {
   giphyUrl?: string;
   edited?: boolean;
   reported?: boolean;
+  reportDetails?: IReportDetail[];
 }
 
 export interface ICreatePostImage {
@@ -320,6 +324,7 @@ export interface IParamPutEditPost {
 export interface IPayloadGetPostDetail extends IParamGetPostDetail {
   callbackLoading?: (loading: boolean, success: boolean) => void;
   showToast?: boolean;
+  isReported?: boolean;
 }
 
 export type IReactionKind = 'comment' | 'seen' | ReactionType;
@@ -353,6 +358,7 @@ export interface IPayloadGetCommentsById {
   position?: string;
   commentId?: string;
   params?: IRequestGetPostComment;
+  isReported?: boolean;
   callbackLoading?: (loading: boolean, canLoadMore?: boolean) => void;
 }
 

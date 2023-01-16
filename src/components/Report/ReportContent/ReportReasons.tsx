@@ -3,8 +3,8 @@ import { StyleSheet, ScrollView } from 'react-native';
 
 import { Radio } from '~/baseComponents';
 import { spacing } from '~/theme';
-import useReportContentStore from './store';
 import { IReason, TargetType } from '~/interfaces/IReport';
+import useReportContentStore from '../store';
 
 interface ReportReasonsProps {
   reasonState: IReason;

@@ -40,7 +40,7 @@ import {
   IAddArticleInSeries,
   IGetSeries, IParamGetSeriesDetail, IPostCreateSeries, IReorderArticles, IRemoveArticleInSeries,
 } from '~/interfaces/ISeries';
-import { IParamsReportContent } from '~/interfaces/IReport';
+import { IParamGetReportContent, IParamsReportContent } from '~/interfaces/IReport';
 import { CreateTag, EditTag, IParamGetCommunityTags } from '~/interfaces/ITag';
 
 const DEFAULT_LIMIT = 10;
@@ -479,6 +479,13 @@ export const streamApiConfig = {
     url: `${provider.url}tags/${id}`,
     method: 'delete',
   }),
+  getReportContent: (params: IParamGetReportContent): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}reports/me/content`,
+    params: {
+      ...params,
+    },
+  }),
 };
 
 const streamApi = {
@@ -756,6 +763,9 @@ const streamApi = {
   ),
   deleteTag: (id: string) => withHttpRequestPromise(
     streamApiConfig.deleteTag, id,
+  ),
+  getReportContent: (params: IParamGetReportContent) => withHttpRequestPromise(
+    streamApiConfig.getReportContent, params,
   ),
 };
 

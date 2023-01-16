@@ -33,6 +33,7 @@ import Divider from '~/beinComponents/Divider';
 import { getTitle, replacePostDetail } from './helper';
 import useModalStore from '~/store/modal';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import BannerReport from '~/components/Report/BannerReport';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -56,7 +57,7 @@ const CommentDetailContent = (props: any) => {
 
   const params = props?.route?.params;
   const {
-    postId, replyItem, commentParent, commentId, parentId, notiId,
+    postId, replyItem, commentParent, commentId, parentId, notiId, isReported,
   }
     = params || {};
   const id = postId;
@@ -67,7 +68,15 @@ const CommentDetailContent = (props: any) => {
   const postDetailLoadingState = useKeySelector(
     postKeySelector.loadingGetPostDetail,
   );
-  const comments = useCommentsStore(commentsSelector.getCommentsByParentId(id));
+
+  let comments = null;
+  if (isReported) {
+    const comment = useCommentsStore(commentsSelector.getComment(commentId));
+    comments = [{ ...comment }];
+  } else {
+    comments = useCommentsStore(commentsSelector.getCommentsByParentId(id));
+  }
+
   const {
     childrenComments = [],
     newCommentData,
@@ -117,6 +126,7 @@ const CommentDetailContent = (props: any) => {
       commentDetailController.getCommentDetail({
         commentId,
         params: { postId },
+        isReported,
         callbackLoading: (loading: boolean) => {
           setLoading(loading);
           if (!loading && !!replyItem) {
@@ -252,6 +262,7 @@ const CommentDetailContent = (props: any) => {
     commentDetailController.getCommentDetail({
       commentId: parentId || commentId,
       params: { postId },
+      isReported,
       callbackLoading: (_loading: boolean) => {
         setRefreshing(_loading);
       },
@@ -294,6 +305,24 @@ const CommentDetailContent = (props: any) => {
     return <View style={styles.footerList} />;
   };
 
+  const renderCommentInputView = () => {
+    if (isReported) {
+      return null;
+    }
+    return (
+      <CommentInputView
+        commentInputRef={commentInputRef}
+        postId={id}
+        groupIds={groupIds}
+        autoFocus={!!replyItem}
+        isCommentLevel1Screen
+        showHeader
+        viewMore={viewMore}
+        defaultReplyTargetId={newCommentData?.id}
+      />
+    );
+  };
+
   if (loading || postDetailLoadingState) {
     return <CommentViewPlaceholder />;
   }
@@ -305,6 +334,7 @@ const CommentDetailContent = (props: any) => {
   }
   return (
     <View style={{ flex: 1 }}>
+      <BannerReport commentId={commentId} />
       <FlatList
         ref={listRef}
         testID="list"
@@ -318,6 +348,7 @@ const CommentDetailContent = (props: any) => {
             groupIds={groupIds}
             audience={audience}
             id={id}
+            isReported={isReported}
             onPress={goToPostDetail}
             onPressMarkSeenPost={onPressMarkSeenPost}
           />
@@ -336,16 +367,7 @@ const CommentDetailContent = (props: any) => {
         )}
         contentContainerStyle={styles.contentContainerStyle}
       />
-      <CommentInputView
-        commentInputRef={commentInputRef}
-        postId={id}
-        groupIds={groupIds}
-        autoFocus={!!replyItem}
-        isCommentLevel1Screen
-        showHeader
-        viewMore={viewMore}
-        defaultReplyTargetId={newCommentData?.id}
-      />
+      {renderCommentInputView()}
     </View>
   );
 };
@@ -357,8 +379,9 @@ const CommentLevel1 = ({
   audience,
   onPressMarkSeenPost,
   color,
+  isReported,
 }: any) => {
-  if (!id) {
+  if (!id && !isReported) {
     return null;
   }
 

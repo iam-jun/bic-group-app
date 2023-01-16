@@ -107,6 +107,7 @@ const PostHeader: FC<PostHeaderProps> = ({
   return (
     <ContentHeader
       {...props}
+      postId={postId}
       actor={actor}
       audience={audience}
       createdAt={createdAt}

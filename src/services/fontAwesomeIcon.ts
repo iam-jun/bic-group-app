@@ -184,6 +184,7 @@ import { faSymbols } from '@fortawesome/pro-regular-svg-icons/faSymbols';
 import { faInputText } from '@fortawesome/pro-regular-svg-icons/faInputText';
 import { faChartTreeMap } from '@fortawesome/pro-regular-svg-icons/faChartTreeMap';
 import { faFlag } from '@fortawesome/pro-regular-svg-icons/faFlag';
+import { faFlag as faFlagSolid } from '@fortawesome/pro-solid-svg-icons/faFlag';
 import { faFileInvoice as faFileInvoiceSolid } from '@fortawesome/pro-solid-svg-icons/faFileInvoice';
 import { faBookmarkSlash } from '@fortawesome/pro-regular-svg-icons/faBookmarkSlash';
 import { faBarsSort } from '@fortawesome/pro-regular-svg-icons/faBarsSort';
@@ -405,6 +406,7 @@ export const initFontAwesomeIcon = () => {
     faInputText,
     faChartTreeMap,
     faFlag,
+    faFlagSolid,
     faFileInvoiceSolid,
     faBookmarkSlash,
     faBarsSort,
@@ -612,6 +614,7 @@ export const fontAwesomeIcons = {
   InputText: 'fa-regular fa-input-text',
   ChartTreeMap: 'fa-regular fa-chart-tree-map',
   Flag: 'fa-regular fa-flag',
+  FlagSolid: 'fa-solid fa-flag',
   FileInvoiceSolid: 'fa-solid fa-file-invoice',
   BarsSort: 'fa-regular fa-bars-sort',
   Bold: 'fa-regular fa-bold',

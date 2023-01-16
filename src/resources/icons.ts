@@ -105,6 +105,7 @@ const icons = {
   iconCheckCircle: fontAwesomeIcons.CircleCheck,
   iconExpand: fontAwesomeIcons.UpRightAndDownLeftFromCenter,
   iconCircleExclamation: fontAwesomeIcons.CircleExclamation,
+  iconFlagSolid: fontAwesomeIcons.FlagSolid,
 
   // PRIVACY
   iconOpen: fontAwesomeIcons.GlobeSolid,

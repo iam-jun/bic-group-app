@@ -37,6 +37,7 @@ import { IMyPermissionsState } from './permissions';
 import { ITagsState } from './entities/tags';
 import { IGeneralInformationState } from '~/screens/groups/GeneralInformation/store';
 import { IRemoteConfigState } from './remoteConfig';
+import { IReportContentState } from '~/components/Report/store';
 import { IGroupsState } from './entities/groups';
 import { IModalState } from './modal';
 import { IPostsInProgressState } from '~/screens/Home/components/VideoProcessingNotice/store';
@@ -50,7 +51,10 @@ export interface BicStore {
   };
   // components
   SelectAudience: {
-    selectAudienceStore: ISelectAudienceState
+    selectAudienceStore: ISelectAudienceState;
+  };
+  Report: {
+    reportContentStore: IReportContentState;
   };
 
   // screens

@@ -26,6 +26,7 @@ import spacing from '~/theme/spacing';
 import PostDetailContentHeader from '../PostDetailContentHeader';
 import usePostDetailContent from './hooks/usePostDetailContent';
 import usePostDetailContentHandler from './hooks/usePostDetailContentHandler';
+import BannerReport from '~/components/Report/BannerReport';
 import useModalStore from '~/store/modal';
 
 const _PostDetailContent = (props) => {
@@ -37,7 +38,12 @@ const _PostDetailContent = (props) => {
   const { showAlert } = useModalStore((state) => state.actions);
 
   const params = props?.route?.params;
-  const { post_id: postId, focus_comment: focusComment, noti_id: notificationId = '' } = params || {};
+  const {
+    post_id: postId,
+    focus_comment: focusComment,
+    noti_id: notificationId = '',
+    is_reported: isReported = false,
+  } = params || {};
 
   const HeaderImageComponent = (
     <View style={{ alignItems: 'center' }}>
@@ -53,7 +59,9 @@ const _PostDetailContent = (props) => {
   const {
     refreshing, isEmptyContent, actor, setting, deleted, createdAt,
     commentLeft, groupIds, comments, sectionData, audience, onRefresh, onPressMarkSeenPost,
-  } = usePostDetailContent({ postId, notificationId, HeaderImageComponent });
+  } = usePostDetailContent({
+    postId, notificationId, HeaderImageComponent, isReported,
+  });
 
   const commentInputRef = useRef<any>();
 
@@ -71,9 +79,11 @@ const _PostDetailContent = (props) => {
     postId, comments, sectionData, focusComment, listRef, commentInputRef,
   });
 
-  const headerTitle = actor?.fullname
-    ? t('post:title_post_detail_of', { name: actor?.fullname })
-    : t('post:title_post_detail');
+  const headerTitle = isReported
+    ? t('report:title')
+    : actor?.fullname
+      ? t('post:title_post_detail_of', { name: actor?.fullname })
+      : t('post:title_post_detail');
 
   const onPressBack = () => {
     const newCommentInput = commentInputRef?.current?.getText?.() || '';
@@ -113,7 +123,7 @@ const _PostDetailContent = (props) => {
     const { section } = sectionData || {};
     const { comment, index } = section || {};
 
-    if (sectionData?.section?.type === 'empty') {
+    if (sectionData?.section?.type === 'empty' || isReported) {
       return <View />;
     }
 
@@ -150,6 +160,20 @@ const _PostDetailContent = (props) => {
     );
   };
 
+  const renderCommentInputView = () => {
+    if (setting?.canComment && !isReported) {
+      return (
+        <CommentInputView
+          commentInputRef={commentInputRef}
+          postId={postId}
+          groupIds={groupIds}
+          autoFocus={focusComment}
+        />
+      );
+    }
+    return null;
+  };
+
   const renderContent = () => {
     if (!createdAt) return <PostViewPlaceholder />;
 
@@ -158,6 +182,7 @@ const _PostDetailContent = (props) => {
     return (
       <View style={styles.container}>
         <View style={styles.postDetailContainer}>
+          <BannerReport postId={postId} />
           <SectionList
             ref={listRef}
             sections={sectionData}
@@ -189,15 +214,7 @@ const _PostDetailContent = (props) => {
               />
             )}
           />
-
-          {setting?.canComment && (
-            <CommentInputView
-              commentInputRef={commentInputRef}
-              postId={postId}
-              groupIds={groupIds}
-              autoFocus={focusComment}
-            />
-          )}
+          {renderCommentInputView()}
         </View>
       </View>
     );

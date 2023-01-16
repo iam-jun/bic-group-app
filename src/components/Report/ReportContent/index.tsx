@@ -14,7 +14,7 @@ import ReportReasons from './ReportReasons';
 import {
   TargetType, ReportTo, IPayloadReportContent, IPayloadReportMember,
 } from '~/interfaces/IReport';
-import useReportContentStore from './store';
+import useReportContentStore from '../store';
 
 const screenHeight = Dimensions.get('window').height;
 const modalHeight = 0.35 * screenHeight;

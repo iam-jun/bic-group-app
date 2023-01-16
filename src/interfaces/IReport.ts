@@ -56,3 +56,17 @@ export interface IParamsReportMember {
   userId: string;
   reason: string;
 }
+
+export interface IParamGetReportContent {
+  order: 'ASC' | 'DESC';
+  offset: number;
+  limit: number;
+  targetIds: string[];
+  targetType: TargetType;
+}
+
+export interface IReportDetail {
+  total: number;
+  reasonType: string;
+  description: string;
+}

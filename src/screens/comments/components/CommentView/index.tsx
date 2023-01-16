@@ -83,6 +83,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
 
   const commonController = useCommonController((state) => state.actions);
   const comment = useCommentsStore(useCallback(commentsSelector.getComment(commentData?.id), [commentData?.id]));
+  const isReported = comment?.reportDetails?.length > 0;
 
   const setting = usePostsStore(postsSelector.getSetting(postId));
   const cancelCommentFailed = useCommentsStore((state) => state.actions.cancelCommentFailed);
@@ -230,6 +231,9 @@ const _CommentView: React.FC<CommentViewProps> = ({
   };
 
   const onLongPress = () => {
+    if (isReported) {
+      return null;
+    }
     dispatch(
       modalActions.showModal({
         isOpen: true,
@@ -270,49 +274,52 @@ const _CommentView: React.FC<CommentViewProps> = ({
     cancelCommentFailed(commentData);
   };
 
-  const renderReactionsReplyView = () => (
-    isActive && (
-      <View style={{ marginTop: spacing.margin.tiny }}>
-        <ReactionView
-          style={styles.reactionView}
-          ownerReactions={ownerReactions}
-          reactionsCount={reactionsCount}
-          onAddReaction={onAddReaction}
-          onRemoveReaction={onRemoveReaction}
-          onLongPressReaction={onLongPressReaction}
-        />
-        <View style={styles.buttonContainer}>
-          { !!setting?.canReact ? (
-            <>
-              <ButtonWrapper onPress={onPressReact} testID="comment_view.react">
-                <Text.BodySMedium useI18n color={colors.neutral40}>
-                  post:button_react
-                </Text.BodySMedium>
-              </ButtonWrapper>
-              <ViewSpacing width={16} />
-            </>
-          ) : null}
-          <ButtonWrapper onPress={_onPressReply} testID="comment_view.reply">
-            <Text.BodySMedium useI18n color={colors.neutral40}>
-              post:button_reply
-            </Text.BodySMedium>
-          </ButtonWrapper>
-          <ViewSpacing width={16} />
-          <TimeView
-            time={edited ? updatedAt : createdAt}
-            type="short"
-            textProps={{ variant: 'bodyS', colors: colors.neutral40 }}
+  const renderReactionsReplyView = () => {
+    if (isActive && !isReported) {
+      return (
+        <View style={{ marginTop: spacing.margin.tiny }}>
+          <ReactionView
+            style={styles.reactionView}
+            ownerReactions={ownerReactions}
+            reactionsCount={reactionsCount}
+            onAddReaction={onAddReaction}
+            onRemoveReaction={onRemoveReaction}
+            onLongPressReaction={onLongPressReaction}
           />
-          <ViewSpacing width={16} />
-          {edited && (
-          <Text.BodyS useI18n color={colors.neutral40}>
-            post:comment:text_edited
-          </Text.BodyS>
-          )}
+          <View style={styles.buttonContainer}>
+            {!!setting?.canReact ? (
+              <>
+                <ButtonWrapper onPress={onPressReact} testID="comment_view.react">
+                  <Text.BodySMedium useI18n color={colors.neutral40}>
+                    post:button_react
+                  </Text.BodySMedium>
+                </ButtonWrapper>
+                <ViewSpacing width={16} />
+              </>
+            ) : null}
+            <ButtonWrapper onPress={_onPressReply} testID="comment_view.reply">
+              <Text.BodySMedium useI18n color={colors.neutral40}>
+                post:button_reply
+              </Text.BodySMedium>
+            </ButtonWrapper>
+            <ViewSpacing width={16} />
+            <TimeView
+              time={edited ? updatedAt : createdAt}
+              type="short"
+              textProps={{ variant: 'bodyS', colors: colors.neutral40 }}
+            />
+            <ViewSpacing width={16} />
+            {edited && (
+              <Text.BodyS useI18n color={colors.neutral40}>
+                post:comment:text_edited
+              </Text.BodyS>
+            )}
+          </View>
         </View>
-      </View>
-    )
-  );
+      );
+    }
+    return null;
+  };
 
   const renderErrorState = () => commentStatus === 'failed' && (
   <View style={styles.errorLine}>

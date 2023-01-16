@@ -28,7 +28,7 @@ import { getTitle, replacePostDetail } from './helper';
 
 const CommentDetail: FC<IRouteParams> = (props) => {
   const params = props?.route?.params;
-  const { postId, commentId } = params || {};
+  const { postId, commentId, isReported } = params || {};
 
   const { rootNavigation, goHome } = useRootNavigation();
   const isFocused = useIsFocused();
@@ -93,23 +93,33 @@ const CommentDetail: FC<IRouteParams> = (props) => {
     }
   };
 
+  const renderTitle = () => {
+    if (isReported) {
+      return 'report:title';
+    }
+    return 'post:label_comment';
+  };
+
+  const renderSubTitle = () => {
+    if (isReported) {
+      return null;
+    }
+    return (
+      <Text.SubtitleXS>
+        {`${t('common:in')} `}
+        <Text.SubtitleXS onPress={goToPostDetail} suppressHighlighting style={styles.highlightText}>
+          {headerTitle}
+        </Text.SubtitleXS>
+      </Text.SubtitleXS>
+    );
+  };
+
   return (
     <ScreenWrapper isFullView backgroundColor={colors.neutral5}>
       <Header
         titleTextProps={{ useI18n: true }}
-        title="post:label_comment"
-        subTitle={(
-          <Text.SubtitleXS>
-            {`${t('common:in')} `}
-            <Text.SubtitleXS
-              onPress={goToPostDetail}
-              suppressHighlighting
-              style={styles.highlightText}
-            >
-              {headerTitle}
-            </Text.SubtitleXS>
-          </Text.SubtitleXS>
-        )}
+        title={renderTitle()}
+        subTitle={renderSubTitle()}
         onPressBack={onBack}
       />
 
