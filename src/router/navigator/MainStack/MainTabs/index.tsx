@@ -1,7 +1,7 @@
 import { GiphySDK } from '@giphy/react-native-sdk';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React, { useEffect } from 'react';
-import { DeviceEventEmitter } from 'react-native';
+import { AppState, DeviceEventEmitter } from 'react-native';
 import { useUserIdAuth } from '~/hooks/auth';
 import useChatSocket from '~/hooks/chat';
 import useNotificationSocket from '~/hooks/notificationSocket';
@@ -16,6 +16,7 @@ import INotificationsState from '~/screens/Notification/store/Interface';
 import useMyPermissionsStore from '~/store/permissions';
 import useAuthController from '~/screens/auth/store';
 import { getAuthToken } from '~/screens/auth/store/selectors';
+import { getUserFromSharedPreferences, isAppInstalled } from '~/services/sharePreferences';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -55,7 +56,14 @@ const MainTabs = () => {
         .catch((e) => console.error(
           'error when delete push token at auth stack', e,
         ));
+
+      const appStateChangeEvent = AppState.addEventListener(
+        'change',
+        checkAuthSessions,
+      );
+
       return () => {
+        appStateChangeEvent.remove();
         tokenRefreshSubscription && tokenRefreshSubscription();
       };
     }, [userId],
@@ -83,6 +91,14 @@ const MainTabs = () => {
       clearInterval(interval);
     };
   }, [token, userId]);
+
+  const checkAuthSessions = async () => {
+    const isInstalled = await isAppInstalled();
+    const user = await getUserFromSharedPreferences();
+    if (isInstalled && !user) {
+      useAuthController.getState().actions.signOut();
+    }
+  };
 
   const getMyPermissions = () => {
     if (!token || !userId) return;

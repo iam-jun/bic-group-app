@@ -9,7 +9,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
 import appConfig from '~/configs/appConfig';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
-import { IAudience, ICreatePostParams } from '~/interfaces/IPost';
+import { IAudience, ICreatePostParams, PostStatus } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import useCreatePost from '~/screens/post/CreatePost/hooks/useCreatePost';
 import postActions from '~/storeRedux/post/actions';
@@ -28,8 +28,8 @@ import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
 import { useBaseHook } from '~/hooks';
-import modalActions from '~/storeRedux/modal/actions';
 import Text from '~/baseComponents/Text';
+import useModalStore from '~/store/modal';
 
 export interface CreatePostProps {
   route?: {
@@ -50,6 +50,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const refTextInput = useRef<any>();
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const { actions: draftPostActions } = useDraftPostStore();
 
@@ -98,7 +99,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   const shouldDisablePostSettings = audienceListWithNoPermission.length === chosenAudiences.length;
 
   const sPostId = sPostData?.id;
-  const isEdit = !!(sPostId && !sPostData?.isDraft);
+  const isEdit = !!(sPostId && !(sPostData?.status === PostStatus.DRAFT));
 
   let imageDisabled; let fileDisabled; let
     videoDisabled;
@@ -154,16 +155,14 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   );
 
   const onPressBack = () => {
-    handleBack(
-      !!(isEditPost && !isEditDraftPost),
+    handleBack({
+      isEditPost: !!(isEditPost && !isEditDraftPost),
       isEditPostHasChange,
-      !!(sPostId && refIsRefresh.current),
-      theme,
+      hasPostId: !!(sPostId && refIsRefresh.current),
       rootNavigation,
-      dispatch,
       isNewsfeed,
       onPressDraftPost,
-    );
+    });
   };
 
   const onPressDraftPost = () => {
@@ -192,7 +191,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
         onConfirm: null,
         cancelBtn: true,
       };
-      dispatch(modalActions.showAlert(alertPayload));
+      showAlert(alertPayload);
       return;
     }
 

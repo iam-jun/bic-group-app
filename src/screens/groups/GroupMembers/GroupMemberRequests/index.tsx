@@ -10,6 +10,7 @@ import GroupApproveDeclineAllRequests from './components/GroupApproveDeclineAllR
 import JoinRequestSetting from '~/screens/communities/CommunityMembers/CommunityMemberRequests/components/JoinRequestSetting';
 import useGroupDetailStore, { IGroupDetailState } from '../../GroupDetail/store';
 import useGroupMemberStore from '../store';
+import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 
 interface GroupMemberRequestsProps {
   groupId: string;
@@ -28,13 +29,13 @@ const GroupMemberRequests = ({
 }: GroupMemberRequestsProps) => {
   const dispatch = useDispatch();
   const { ids, canLoadMore, total } = useKeySelector(groupsKeySelector.groupMemberRequests);
+  const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
+  const { group } = groups[currentGroupId] || {};
+  const { id, settings, privacy } = group || {};
+  const { isJoinApproval } = settings || {};
   const {
-    groupDetail: {
-      group: { id, settings, privacy },
-    },
     actions: { getGroupDetail },
   } = useGroupDetailStore((state: IGroupDetailState) => state);
-  const { isJoinApproval } = settings || {};
   const actions = useGroupMemberStore((state) => state.actions);
 
   useEffect(

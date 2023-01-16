@@ -1,6 +1,7 @@
 const articleStack = {
   articleDetail: 'article-detail',
   articleContentDetail: 'article-content-detail',
+  articleReviewSchedule: 'article-review-schedule',
   createArticle: 'create-article',
   createArticleContent: 'create-article-content',
   createArticleTitle: 'create-article-title',

@@ -1,11 +1,9 @@
-import { call, put } from 'redux-saga/effects';
-
 import { IPayloadAddToAllPost, IPayloadDeletePost } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
-import modalActions from '~/storeRedux/modal/actions';
 import streamApi from '../../../api/StreamApi';
 import { timeOut } from '~/utils/common';
-import showError from '~/storeRedux/commonSaga/showError';
+import showToast from '~/store/helper/showToast';
+import showToastError from '~/store/helper/showToastError';
 
 export default function* deletePost({
   payload,
@@ -13,13 +11,13 @@ export default function* deletePost({
   type: string;
   payload: IPayloadDeletePost;
 }): any {
-  const { id, isDraftPost, callbackError } = payload || {};
+  const { id, callbackError } = payload || {};
   if (!id) {
     console.warn('\x1b[31m🐣️ saga deletePost: id not found\x1b[0m');
     return;
   }
   try {
-    const response = yield streamApi.deletePost(id, isDraftPost);
+    const response = yield streamApi.deletePost(id);
     if (response?.data) {
       const post = usePostsStore.getState()?.posts?.[id] || {};
       const deletedPost = {
@@ -30,13 +28,11 @@ export default function* deletePost({
 
       yield timeOut(500);
 
-      yield put(
-        modalActions.showHideToastMessage({ content: 'post:delete_post_complete' }),
-      );
+      showToast({ content: 'post:delete_post_complete' });
     }
   } catch (e: any) {
     if (e?.meta?.errors?.groupsDenied) {
       callbackError?.(e.meta.errors.groupsDenied);
-    } else yield call(showError, e);
+    } else showToastError(e);
   }
 }

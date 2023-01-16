@@ -30,7 +30,7 @@ exports[`TabButton renders selected button with size medium 1`] = `
         Object {
           "color": "#353E6E",
           "fontFamily": "BeVietnamPro-Medium",
-          "fontSize": 13,
+          "fontSize": 14,
         },
         Object {
           "color": "#7335C0",

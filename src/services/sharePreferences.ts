@@ -45,6 +45,11 @@ export const saveUserToSharedPreferences = async (payload: any) => {
     'pref_user_info',
     payload,
   );
+
+  // Need to initiate chat data, otherwise user will be force to logout
+  if (Platform.OS === 'android') {
+    await saveDataToSharedStorage(getEnv('APP_CHAT_PACKAGE_NAME_ANDROID'), 'pref_user_info', payload);
+  }
 };
 
 export const getUserFromSharedPreferences = () => {
@@ -66,3 +71,12 @@ export const updateUserFromSharedPreferences = async (payload: any) => {
 };
 
 export const isAppInstalled = () => Linking.canOpenURL(chatSchemes.PREFIX_DEEPLINK);
+
+export const clearAllSharedPreferences = async () => {
+  if (Platform.OS === 'ios') {
+    await saveDataToSharedStorage(getEnv('APP_GROUP_PACKAGE_NAME_IOS'), 'pref_user_info', null);
+  } else {
+    await saveDataToSharedStorage(getEnv('APP_GROUP_PACKAGE_NAME_IOS'), 'pref_user_info', null);
+    await saveDataToSharedStorage(getEnv('APP_CHAT_PACKAGE_NAME_ANDROID'), 'pref_user_info', null);
+  }
+};

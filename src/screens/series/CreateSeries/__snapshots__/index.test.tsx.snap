@@ -24,28 +24,29 @@ exports[`CreateSeries component renders correctly without data 1`] = `
     testID="header"
   >
     <View
+      animatedStyle={
+        Object {
+          "value": Object {},
+        }
+      }
+      collapsable={false}
       style={
-        Array [
-          Object {
-            "alignItems": "flex-end",
-            "backgroundColor": "#FFFFFF",
-            "flexDirection": "row",
-            "minHeight": 44,
-            "paddingTop": 0,
-            "paddingVertical": 4,
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "elevation": 2,
+          "flexDirection": "row",
+          "minHeight": 44,
+          "paddingTop": 0,
+          "paddingVertical": 4,
+          "shadowColor": "rgba(0, 0, 0, 1)",
+          "shadowOffset": Object {
+            "height": 2,
+            "width": 0,
           },
-          Object {
-            "elevation": 2,
-            "shadowColor": "rgba(0, 0, 0, 1)",
-            "shadowOffset": Object {
-              "height": 2,
-              "width": 0,
-            },
-            "shadowOpacity": 0.12,
-            "shadowRadius": 1.5,
-          },
-          undefined,
-        ]
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
+        }
       }
       testID="header.content"
     >
@@ -129,15 +130,18 @@ exports[`CreateSeries component renders correctly without data 1`] = `
           </View>
         </View>
         <View
+          animatedStyle={
+            Object {
+              "value": Object {},
+            }
+          }
+          collapsable={false}
           style={
-            Array [
-              Object {
-                "flex": 1,
-                "justifyContent": "center",
-                "paddingVertical": 8,
-              },
-              Object {},
-            ]
+            Object {
+              "flex": 1,
+              "justifyContent": "center",
+              "paddingVertical": 8,
+            }
           }
         >
           <View
@@ -305,7 +309,7 @@ exports[`CreateSeries component renders correctly without data 1`] = `
           Object {
             "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
+            "fontSize": 14,
           },
           Object {
             "color": "#353E6E",
@@ -626,7 +630,7 @@ exports[`CreateSeries component renders correctly without data 1`] = `
                         Object {
                           "flex": 1,
                           "fontFamily": "BeVietnamPro-Light",
-                          "fontSize": 15,
+                          "fontSize": 14,
                           "height": 40,
                           "paddingHorizontal": 16,
                         },
@@ -734,7 +738,7 @@ exports[`CreateSeries component renders correctly without data 1`] = `
                   "color": "#353E6E",
                   "flex": 1,
                   "fontFamily": "BeVietnamPro-Light",
-                  "fontSize": 15,
+                  "fontSize": 14,
                 }
               }
               testID="create_series.description"

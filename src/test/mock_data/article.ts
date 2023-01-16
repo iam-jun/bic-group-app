@@ -1,3 +1,4 @@
+import { PostStatus } from '~/interfaces/IPost';
 import { mockTagsInArticle } from './tags';
 
 export const mockArticle = {
@@ -25,7 +26,7 @@ export const mockArticle = {
     isImportant: false,
     importantExpiredAt: null,
   },
-  isDraft: false,
+  status: PostStatus.PUBLISHED,
   isProcessing: false,
   actor: {
     id: 'a0143446-0e51-4903-b280-8c794d470903',
@@ -118,4 +119,5 @@ export const mockArticle = {
     createdAt: '2022-11-14T08:39:17.784Z',
   },
   tags: mockTagsInArticle,
+  publishedAt: '',
 };

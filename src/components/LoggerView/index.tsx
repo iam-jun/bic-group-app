@@ -12,7 +12,6 @@ import Animated, {
   useAnimatedStyle, useSharedValue, withSpring, ZoomInEasyUp, ZoomOutEasyDown,
 } from 'react-native-reanimated';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useDispatch } from 'react-redux';
 import { Button } from '~/baseComponents';
 import Checkbox from '~/baseComponents/Checkbox';
 import Markdown from '~/beinComponents/Markdown';
@@ -20,10 +19,10 @@ import MarkdownView from '~/beinComponents/MarkdownView';
 import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { getUserFromSharedPreferences } from '~/services/sharePreferences';
-import modalActions from '~/storeRedux/modal/actions';
 import { dimension } from '~/theme';
 import getEnv from '~/utils/env';
 import { ILogger, LogType } from './Interface';
+import useModalStore from '~/store/modal';
 
 export const EVENT_LOGGER_TAG = 'debug-logger-on-new-log';
 const MAX_LOGS = 200;
@@ -37,7 +36,6 @@ const LoggerView = () => {
   const [settingVisible, setSettingVisible] = useState(false);
   const [settings, setSettings] = useState([LogType.API, 'auto-scroll']);
   const [authSession, setAuthSessions] = useState(null);
-  const dispatch = useDispatch();
   const listRef = useRef<FlatList>();
   const offset = useRef(0);
   const isEndReached = useRef(true);
@@ -46,6 +44,7 @@ const LoggerView = () => {
   const defaultY = dimension.deviceHeight / 2;
   const translateX = useSharedValue(defaultX);
   const translateY = useSharedValue(defaultY);
+  const { showToast } = useModalStore((state) => state.actions);
 
   const host = getEnv('BEIN_API');
   const env = {
@@ -108,7 +107,7 @@ const LoggerView = () => {
 
   const copy = (copyContent: any) => {
     Clipboard.setString(JSON.stringify(copyContent, null, 2));
-    dispatch(modalActions.showHideToastMessage({ content: 'Copied' }));
+    showToast({ content: 'common:text_copied' });
   };
 
   const formatJson = useCallback((value: any) => {

@@ -3,6 +3,7 @@ import { ReactionType } from '~/constants/reactions';
 import { ICategory } from '~/interfaces/IArticle';
 import { IGiphy } from './IGiphy';
 import { ITag } from './ITag';
+import { IReportDetail } from './IReport';
 
 export enum PostType {
   POST = 'POST',
@@ -18,6 +19,14 @@ export enum TargetType {
   COMMENT_POST = 'COMMENT.POST',
 }
 
+export enum PostStatus {
+  DRAFT = 'DRAFT',
+  PROCESSING = 'PROCESSING',
+  PUBLISHED = 'PUBLISHED',
+  WAITING_SCHEDULE = 'WAITING_SCHEDULE',
+  SCHEDULE_FAILED = 'SCHEDULE_FAILED',
+}
+
 export interface IPost {
   id?: string;
   audience?: IPostAudience;
@@ -27,7 +36,7 @@ export interface IPost {
   highlight?: string;
   media?: IPostMedia;
   setting?: IPostSetting;
-  isDraft?: boolean;
+  status?: PostStatus;
   isProcessing?: boolean;
   actor?: IAudienceUser;
   mentions?: any;
@@ -55,6 +64,9 @@ export interface IPost {
   tags?: ITag[];
   series?: any[];
   reported?: boolean;
+  reportDetails?: IReportDetail[];
+  isReported?: boolean;
+  publishedAt?: string;
 }
 
 export interface IPostAudience {
@@ -171,6 +183,7 @@ export interface ICommentData {
   giphyUrl?: string;
   edited?: boolean;
   reported?: boolean;
+  reportDetails?: IReportDetail[];
 }
 
 export interface ICreatePostImage {
@@ -250,7 +263,7 @@ export interface IPostCreatePost {
   media?: any;
   setting?: any;
   mentions?: any;
-  isDraft?: boolean;
+  status?: PostStatus;
   linkPreview?: ILinkPreview;
   createFromGroupId?: string;
 }
@@ -285,7 +298,6 @@ export interface IPayloadPutEditComment {
 
 export interface IPayloadDeletePost {
   id: string;
-  isDraftPost?: boolean;
   callbackError?: (listAudiences: string[]) => void;
 }
 
@@ -312,6 +324,7 @@ export interface IParamPutEditPost {
 export interface IPayloadGetPostDetail extends IParamGetPostDetail {
   callbackLoading?: (loading: boolean, success: boolean) => void;
   showToast?: boolean;
+  isReported?: boolean;
 }
 
 export type IReactionKind = 'comment' | 'seen' | ReactionType;
@@ -345,6 +358,7 @@ export interface IPayloadGetCommentsById {
   position?: string;
   commentId?: string;
   params?: IRequestGetPostComment;
+  isReported?: boolean;
   callbackLoading?: (loading: boolean, canLoadMore?: boolean) => void;
 }
 
@@ -571,4 +585,10 @@ export interface IAddChildCommentToComment {
   shouldAddChildrenCount?: boolean;
   meta?: any;
   isAddFirst?: boolean;
+}
+
+export interface IParamsGetPostByParams {
+  status: string[];
+  offset?: number;
+  limit?: number;
 }

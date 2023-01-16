@@ -1,7 +1,7 @@
 import streamApi from '~/api/StreamApi';
 import { ICategory } from '~/interfaces/IArticle';
 import { ICreateArticleCategoryState } from '..';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 
 const getSearchCategories = (set, _get) => async (key: string) => {
   set((state: ICreateArticleCategoryState) => {
@@ -22,7 +22,7 @@ const getSearchCategories = (set, _get) => async (key: string) => {
     }, 'getSearchCategories');
   } catch (e) {
     console.error('\x1b[35m🐣️ getSearchCategories error: ', e, '\x1b[0m');
-    showError(e);
+    showToastError(e);
   }
 };
 

@@ -5,8 +5,8 @@ import { IFilePicked } from '~/interfaces/common';
 import { IUserImageUpload } from '~/interfaces/IEditUser';
 import ImageUploader, { IGetFile } from '~/services/imageUploader';
 import menuActions from '../actions';
-import showError from '~/storeRedux/commonSaga/showError';
 import useMenuController from '~/screens/Menu/store';
+import showToastError from '~/store/helper/showToastError';
 
 export default function* uploadImage({
   payload,
@@ -38,7 +38,7 @@ export default function* uploadImage({
     yield updateLoadingImageState(
       payload.fieldName, false,
     );
-    yield showError(err);
+    showToastError(err);
   }
 }
 

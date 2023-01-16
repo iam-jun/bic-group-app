@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
 import { Button } from '~/baseComponents';
 import { ContentHeader } from '~/components/ContentView';
 import { useBaseHook } from '~/hooks';
@@ -8,11 +7,11 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { IAudienceGroup, IPost } from '~/interfaces/IPost';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { AlertDeleteAudiences } from '~/components/posts';
-import modalActions from '~/storeRedux/modal/actions';
 import useSeriesStore, { ISeriesState } from '~/screens/series/store';
 import useSeriesMenu from '~/hooks/useSeriesMenu';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
+import useModalStore from '~/store/modal';
 
 type SeriesHeaderProps = {
   series: IPost;
@@ -25,7 +24,7 @@ const SeriesHeader: FC<SeriesHeaderProps> = ({ series, disabled }) => {
   const userId = useUserIdAuth();
   const { t } = useBaseHook();
 
-  const dispatch = useDispatch();
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const actions = useSeriesStore((state: ISeriesState) => state.actions);
 
@@ -55,37 +54,33 @@ const SeriesHeader: FC<SeriesHeaderProps> = ({ series, disabled }) => {
       return _audience;
     });
     if (canDeleteOwnPost) {
-      dispatch(
-        modalActions.showAlert({
-          title: t('series:title_delete_audiences_of_series'),
-          children: (
-            <AlertDeleteAudiences
-              data={listAudiences}
-              textContent={t('series:content_delete_audiences_of_series')}
-            />
-          ),
-          cancelBtn: true,
-          confirmLabel: t('common:text_remove'),
-          ConfirmBtnComponent: Button.Danger,
-          onConfirm: () => actions.removeAudiences(id, listIdAudiences),
-          confirmBtnProps: { type: 'ghost' },
-        }),
-      );
+      showAlert({
+        title: t('series:title_delete_audiences_of_series'),
+        children: (
+          <AlertDeleteAudiences
+            data={listAudiences}
+            textContent={t('series:content_delete_audiences_of_series')}
+          />
+        ),
+        cancelBtn: true,
+        confirmLabel: t('common:text_remove'),
+        ConfirmBtnComponent: Button.Danger,
+        onConfirm: () => actions.removeAudiences(id, listIdAudiences),
+        confirmBtnProps: { type: 'ghost' },
+      });
     } else {
-      dispatch(
-        modalActions.showAlert({
-          title: t('series:title_delete_audiences_of_series'),
-          children: (
-            <AlertDeleteAudiences
-              data={listAudiences}
-              textContent={t('series:content_not_able_delete_of_series')}
-            />
-          ),
-          cancelBtn: true,
-          cancelLabel: t('common:btn_close'),
-          onConfirm: null,
-        }),
-      );
+      showAlert({
+        title: t('series:title_delete_audiences_of_series'),
+        children: (
+          <AlertDeleteAudiences
+            data={listAudiences}
+            textContent={t('series:content_not_able_delete_of_series')}
+          />
+        ),
+        cancelBtn: true,
+        cancelLabel: t('common:btn_close'),
+        onConfirm: null,
+      });
     }
   };
 

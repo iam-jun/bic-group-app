@@ -21,31 +21,41 @@ exports[`StickerView component renders correctly 1`] = `
       }
     >
       <View
-        style={
-          Array [
-            Object {
+        animatedStyle={
+          Object {
+            "value": Object {
               "height": -0,
             },
-            Object {
-              "backgroundColor": "#FFFFFF",
-              "borderTopLeftRadius": 20,
-              "borderTopRightRadius": 20,
-              "elevation": 2,
-              "justifyContent": "flex-start",
-              "minHeight": 80,
-              "shadowColor": "rgba(0, 0, 0, 1)",
-              "shadowOffset": Object {
-                "height": 2,
-                "width": 0,
-              },
-              "shadowOpacity": 0.12,
-              "shadowRadius": 1.5,
+          }
+        }
+        collapsable={false}
+        style={
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "borderTopLeftRadius": 20,
+            "borderTopRightRadius": 20,
+            "elevation": 2,
+            "height": -0,
+            "justifyContent": "flex-start",
+            "minHeight": 80,
+            "shadowColor": "rgba(0, 0, 0, 1)",
+            "shadowOffset": Object {
+              "height": 2,
+              "width": 0,
             },
-          ]
+            "shadowOpacity": 0.12,
+            "shadowRadius": 1.5,
+          }
         }
       >
         <View
+          animatedStyle={
+            Object {
+              "value": Object {},
+            }
+          }
           collapsable={false}
+          forwardedRef={[Function]}
           hitSlop={
             Object {
               "bottom": 10,
@@ -55,7 +65,6 @@ exports[`StickerView component renders correctly 1`] = `
             }
           }
           onGestureHandlerEvent={[Function]}
-          onGestureHandlerStateChange={[Function]}
           style={
             Object {
               "alignItems": "center",
@@ -189,6 +198,7 @@ exports[`StickerView component renders correctly 1`] = `
                     onChangeText={[Function]}
                     onFocus={[Function]}
                     onSubmitEditing={[Function]}
+                    placeholder="sticker:search_336"
                     placeholderTextColor="#BAC0DE"
                     returnKeyType="search"
                     selectionColor="#767D93"
@@ -213,6 +223,14 @@ exports[`StickerView component renders correctly 1`] = `
     </View>
   </View>
   <View
+    animatedStyle={
+      Object {
+        "value": Object {
+          "height": 0,
+        },
+      }
+    }
+    collapsable={false}
     style={
       Object {
         "height": 0,

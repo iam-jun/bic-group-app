@@ -45,11 +45,6 @@ export interface IPayloadPublishDraftArticle {
   onError?: (error) => void;
 }
 
-export interface IPayloadDeleteArticle {
-  id: string;
-  isDraft?: boolean;
-}
-
 export interface IPayloadPutEditArticle {
   articleId: string;
   data: IEditArticleData;
@@ -126,6 +121,7 @@ export interface CreateArticleProps {
     params?: {
       articleId?: string;
       isFromDraftScreen?: boolean;
+      isFromReviewSchedule?: boolean;
     };
   };
 }
@@ -145,4 +141,10 @@ export interface IParamsValidateSeriesTags {
   groups: string[],
   series: string [],
   tags: string[]
+}
+
+export interface IPayloadGetScheduleArticles {
+  isRefresh?: boolean;
+  offset?: number;
+  isProcessing?: boolean;
 }

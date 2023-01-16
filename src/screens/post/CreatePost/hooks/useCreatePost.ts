@@ -10,7 +10,6 @@ import {
 } from '~/screens/post/CreatePost/helper';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import modalActions from '~/storeRedux/modal/actions';
 import {
   IAudience,
   ICreatePostParams,
@@ -20,6 +19,7 @@ import {
   IPayloadPutEditPost,
   IPost,
   IPostCreatePost,
+  PostStatus,
 } from '~/interfaces/IPost';
 import postActions from '~/storeRedux/post/actions';
 import streamApi from '~/api/StreamApi';
@@ -34,6 +34,8 @@ import IDraftPostState from '../../../Draft/DraftPost/store/Interface';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
 import useLinkPreview from './useLinkPreview';
+import useModalStore from '~/store/modal';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 interface IUseCreatePost {
   screenParams: ICreatePostParams;
@@ -50,6 +52,7 @@ export type handlePressPostResultType =
 const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
   const dispatch = useDispatch();
   const { t } = useBaseHook();
+  const { showToast } = useModalStore((state) => state.actions);
 
   const {
     postId,
@@ -153,9 +156,9 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
   });
 
   const sPostId = sPostData?.id;
-  const isEdit = !!(sPostId && !sPostData?.isDraft);
-  const isDraftPost = !!(sPostId && sPostData?.isDraft);
-  const isNewsfeed = !(initPostData?.id && initPostData?.isDraft);
+  const isEdit = !!(sPostId && !(sPostData?.status === PostStatus.DRAFT));
+  const isDraftPost = !!(sPostId && sPostData?.status === PostStatus.DRAFT);
+  const isNewsfeed = !(initPostData?.id && initPostData?.status === PostStatus.DRAFT);
 
   const isAutoSave = isDraftPost || !isEdit;
 
@@ -437,7 +440,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
       setting,
       mentions,
       linkPreview,
-      isDraft: false,
+      status: sPostData.status || PostStatus.DRAFT,
     };
 
     return data;
@@ -480,12 +483,10 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
 
       if (invalidData || !isAutoSave || imageError || videoError || fileError) {
         if (imageError) {
-          dispatch(
-            modalActions.showHideToastMessage({
-              content: imageError,
-              props: { type: 'error' },
-            }),
-          );
+          showToast({
+            content: imageError,
+            type: ToastType.ERROR,
+          });
         }
         return;
       }
@@ -497,7 +498,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
       }
 
       if (isDraftPost && sPostId) {
-        data.isDraft = true;
+        data.status = PostStatus.DRAFT;
         const newPayload: IParamPutEditPost = {
           postId: sPostId,
           data,
@@ -511,7 +512,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
         );
       } else if (!sPostId) {
         setLoading(true);
-        data.isDraft = true;
+        data.status = PostStatus.DRAFT;
         const resp = await streamApi.postCreateNewPost(data);
         refIsRefresh.current = true;
         if (resp?.data) {
@@ -558,12 +559,10 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     const { imageError } = validateImages(selectingImages, t);
 
     if (imageError) {
-      dispatch(
-        modalActions.showHideToastMessage({
-          content: imageError,
-          props: { type: 'error' },
-        }),
-      );
+      showToast({
+        content: imageError,
+        type: ToastType.ERROR,
+      });
       return 'attachmentError';
     }
 

@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Platform, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useDispatch } from 'react-redux';
 
-import { useKeySelector } from '~/hooks/selector';
-import { IToastMessage } from '~/interfaces/common';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 import { dimension, spacing } from '~/theme';
 import BaseToast from './BaseToast';
 import { useKeyboardStatus } from '~/hooks/keyboard';
 
 const Toast = () => {
-  const { content, props, duration }: IToastMessage = useKeySelector('modal.toastMessage') || {};
   const {
-    buttonText, onButtonPress, onPressClose, ...rest
-  } = props || {};
+    duration, buttonText, onButtonPress, onClose, ...props
+  } = useModalStore((state) => state.toast) || {};
+  const { clearToast } = useModalStore((state) => state.actions);
   const durationInSeconds = duration / 1000;
   const [countDown, setCountDown] = useState(durationInSeconds);
   const { height: keyboardHeight } = useKeyboardStatus();
 
-  const dispatch = useDispatch();
   const styles = createStyle(keyboardHeight);
 
   useEffect(() => {
@@ -34,17 +30,15 @@ const Toast = () => {
     };
   }, [duration]);
 
-  if (!content) return null;
-
-  const hideToast = () => dispatch(modalActions.clearToastMessage());
+  const hideToast = () => clearToast();
 
   const _onButtonPress = () => {
     onButtonPress?.();
     hideToast();
   };
 
-  const _onPressClose = () => {
-    onPressClose?.();
+  const _onClose = () => {
+    onClose?.();
     hideToast();
   };
 
@@ -59,12 +53,10 @@ const Toast = () => {
   return (
     <BaseToast
       style={styles.toast}
-      content={content}
       buttonText={newButtonText}
       onButtonPress={_onButtonPress}
-      onPressClose={_onPressClose}
-      useI18n
-      {...rest}
+      onClose={_onClose}
+      {...props}
     />
   );
 };

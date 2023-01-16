@@ -1,5 +1,6 @@
 import groupApi from '~/api/GroupApi';
-import modalActions from '~/storeRedux/modal/actions';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import useModalStore from '~/store/modal';
 import { act, renderHook } from '~/test/testUtils';
 import useGroupMemberStore from '../index';
 
@@ -22,7 +23,9 @@ describe('removeGroupMember', () => {
       .spyOn(groupApi, 'getGroupDetail')
       .mockImplementation(() => Promise.resolve(response) as any);
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useGroupMemberStore((state) => state));
@@ -35,9 +38,9 @@ describe('removeGroupMember', () => {
     });
 
     expect(spyApiGetGroupDetail).toBeCalledWith(groupId);
-    expect(spyModalActions).toBeCalledWith({
+    expect(showToast).toBeCalledWith({
       content: response.meta.message,
-      props: { type: 'success' },
+      type: ToastType.SUCCESS,
     });
   });
 
@@ -50,7 +53,9 @@ describe('removeGroupMember', () => {
 
     const spy = jest.spyOn(groupApi, 'removeGroupMembers').mockImplementation(() => Promise.reject(error) as any);
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useGroupMemberStore((state) => state));
@@ -67,9 +72,9 @@ describe('removeGroupMember', () => {
       jest.runAllTimers();
     });
 
-    expect(spyModalActions).toBeCalledWith({
+    expect(showToast).toBeCalledWith({
       content: error.meta.message,
-      props: { type: 'error' },
+      type: ToastType.ERROR,
     });
   });
 });

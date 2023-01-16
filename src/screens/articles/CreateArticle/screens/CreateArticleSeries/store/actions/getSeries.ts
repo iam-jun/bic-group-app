@@ -1,6 +1,6 @@
 import streamApi from '~/api/StreamApi';
 import { ICreateArticleSeriesState } from '..';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import { IGetSeries } from '~/interfaces/ISeries';
 
 const getSeries = (set, get) => async (isLoadMore :boolean, params?: IGetSeries) => {
@@ -36,7 +36,7 @@ const getSeries = (set, get) => async (isLoadMore :boolean, params?: IGetSeries)
       state.listSeries.loading = false;
     }, 'getSeriesFailed');
     console.error('\x1b[35m🐣️ getSeries error: ', e, '\x1b[0m');
-    showError(e);
+    showToastError(e);
   }
 };
 

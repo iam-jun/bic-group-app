@@ -1,6 +1,6 @@
 import groupApi from '~/api/GroupApi';
 import appConfig from '~/configs/appConfig';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import { ICommunityMemberState } from '..';
 
 const getCommunityMembers = (set, get) => async (groupId: string, isRefreshing?: boolean) => {
@@ -57,7 +57,7 @@ const getCommunityMembers = (set, get) => async (groupId: string, isRefreshing?:
     set((state: ICommunityMemberState) => {
       state.communityMembers.loading = false;
     }, 'getCommunityMembersFailed');
-    showError(error);
+    showToastError(error);
   }
 };
 

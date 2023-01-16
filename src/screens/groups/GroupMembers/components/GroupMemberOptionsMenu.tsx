@@ -8,11 +8,12 @@ import { useBaseHook } from '~/hooks';
 import useMyPermissionsStore from '~/store/permissions';
 import useGroupMemberStore from '../store';
 import MemberOptionsMenu from '~/components/Member/MemberOptionsMenu';
-import useGroupController from '../../store';
 import { PermissionKey } from '~/constants/permissionScheme';
-import ReportContent from '~/components/ReportContent';
+import ReportContent from '~/components/Report/ReportContent';
 import { TargetType } from '~/interfaces/IReport';
-import useGroupDetailStore from '../../GroupDetail/store';
+import useGroupsStore from '~/store/entities/groups';
+import groupsSelector from '~/store/entities/groups/selectors';
+import useModalStore from '~/store/modal';
 
 interface GroupMemberOptionsMenuProps {
   groupId: string;
@@ -30,9 +31,12 @@ const GroupMemberOptionsMenu = ({
   const dispatch = useDispatch();
   const { t } = useBaseHook();
 
-  const { communityId } = useGroupDetailStore((state) => state.groupDetail.group);
+  const groupDetail = useGroupsStore(groupsSelector.getGroup(groupId, {}));
+  const { group } = groupDetail || {};
+  const { communityId } = group || {};
+  const { showAlert } = useModalStore((state) => state.actions);
 
-  const actions = useGroupController((state) => state.actions);
+  const actions = useGroupMemberStore((state) => state.actions);
   const deleteRemoveGroupMember = useGroupMemberStore(
     (state) => state.actions.deleteRemoveGroupMember,
   );
@@ -59,13 +63,13 @@ const GroupMemberOptionsMenu = ({
   const onPressRevokeAdminRole = () => {
     if (!selectedMember?.id) return;
 
-    dispatch(modalActions.showAlert({
+    showAlert({
       title: t('groups:modal_confirm_remove_admin:title'),
       content: t('groups:modal_confirm_remove_admin:content').replace('{0}', selectedMember.fullname),
       confirmLabel: t('groups:modal_confirm_remove_admin:button_confirm'),
       cancelBtn: true,
       onConfirm: onConfirmRemoveAdminRole,
-    }));
+    });
   };
 
   const onConfirmRemoveMember = () => {
@@ -75,13 +79,13 @@ const GroupMemberOptionsMenu = ({
   };
 
   const onPressRemoveMember = () => {
-    dispatch(modalActions.showAlert({
+    showAlert({
       title: t('groups:modal_confirm_remove_member:title'),
       content: t('groups:modal_confirm_remove_member:content'),
       confirmLabel: t('groups:modal_confirm_remove_member:button_remove'),
       cancelBtn: true,
       onConfirm: onConfirmRemoveMember,
-    }));
+    });
   };
 
   const onPressReportMember = () => {

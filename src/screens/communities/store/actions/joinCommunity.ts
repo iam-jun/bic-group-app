@@ -6,9 +6,9 @@ import { IToastMessage } from '~/interfaces/common';
 import useCommunitiesStore from '~/store/entities/communities';
 import Store from '~/storeRedux';
 import groupsActions from '~/storeRedux/groups/actions';
-import modalActions from '~/storeRedux/modal/actions';
 import { ICommunity } from '~/interfaces/ICommunity';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
+import showToast from '~/store/helper/showToast';
 
 const joinCommunity
   = (_set, _get) => async (communityId: string, communityName: string) => {
@@ -40,7 +40,7 @@ const joinCommunity
             'groups:text_request_join_community',
           )} ${communityName}`,
         };
-        Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+        showToast(toastMessage);
         return;
       }
 
@@ -50,10 +50,10 @@ const joinCommunity
         )} ${communityName}`,
       };
 
-      Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+      showToast(toastMessage);
     } catch (error) {
       console.error('joinCommunity catch', error);
-      showError(error);
+      showToastError(error);
     }
   };
 

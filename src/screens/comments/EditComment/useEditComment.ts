@@ -13,7 +13,6 @@ import useEditCommentController from './store';
 import useCommentInputStore from '../components/CommentInputView/store';
 import ICommentInputState from '../components/CommentInputView/store/Interface';
 import ImageUploader from '~/services/imageUploader';
-import modalActions from '~/storeRedux/modal/actions';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { useBaseHook } from '~/hooks';
@@ -24,6 +23,8 @@ import { IGiphy } from '~/interfaces/IGiphy';
 import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
 import { formatTextWithEmoji } from '~/utils/emojiUtils';
 import { getImagePastedFromClipboard } from '~/utils/common';
+import useModalStore from '~/store/modal';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -56,6 +57,8 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
   const [uploading, setUploading] = useState(false);
 
   const [contentLoading, setContentLoading] = useState(true);
+
+  const { showToast, showAlert } = useModalStore((state) => state.actions);
 
   const isContentHasChange = text !== oldContent;
   const isImageHasChange = oldImages?.[0]?.origin_name
@@ -174,14 +177,13 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
   // only support for iOS
   const onPasteImage = (_, files) => {
     if (!isEmpty(selectedImage) || !isEmpty(selectedGiphy)) {
-      Store.store.dispatch(
-        modalActions.showHideToastMessage({
-          content: t('upload:text_upload_error', {
-            file_type: t('file_type:image'),
-          }),
-          props: { type: 'error' },
+      showToast({
+        content: t('upload:text_upload_error', {
+          file_type: t('file_type:image'),
         }),
-      );
+        type: ToastType.ERROR,
+      });
+
       return;
     }
     setUploading(true);
@@ -252,14 +254,14 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
     Keyboard.dismiss();
 
     if (isEditHasChange) {
-      Store.store.dispatch(modalActions.showAlert({
+      showAlert({
         title: t('common:label_discard_changes'),
         content: t('common:text_discard_warning'),
         cancelBtn: true,
         cancelLabel: t('common:btn_continue_editing'),
         confirmLabel: t('common:btn_discard'),
         onConfirm: () => navigation.goBack(),
-      }));
+      });
       return;
     }
     navigation.goBack();

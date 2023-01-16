@@ -1,13 +1,13 @@
 import i18next from 'i18next';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import IDiscoverGroupsState from '../Interface';
-import Store from '~/storeRedux';
 import groupApi from '~/api/GroupApi';
 import { IToastMessage } from '~/interfaces/common';
-import modalActions from '~/storeRedux/modal/actions';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import approveDeclineCode from '~/constants/approveDeclineCode';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import showToast from '~/store/helper/showToast';
 
 const cancelJoinGroup = (set, get) => async (groupId: string) => {
   try {
@@ -32,7 +32,7 @@ const cancelJoinGroup = (set, get) => async (groupId: string) => {
       content: `${i18next.t('groups:text_cancel_join_group')} ${groupName}`,
     };
 
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    showToast(toastMessage);
   } catch (error) {
     console.error('cancelJoinGroup error', error);
 
@@ -48,7 +48,7 @@ const cancelJoinGroup = (set, get) => async (groupId: string) => {
       }, 'cancelJoinGroupApproved');
 
       // This toast just shows info message, not really an error
-      return showError(error, 'neutral');
+      return showToastError(error, ToastType.NEUTRAL);
     }
 
     if (error?.code === approveDeclineCode.DECLINED) {
@@ -63,10 +63,10 @@ const cancelJoinGroup = (set, get) => async (groupId: string) => {
       }, 'cancelJoinGroupDeclined');
 
       // This toast just shows info message, not really an error
-      return showError(error, 'neutral');
+      return showToastError(error, ToastType.NEUTRAL);
     }
 
-    showError(error);
+    showToastError(error);
   }
 };
 

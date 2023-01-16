@@ -7,7 +7,7 @@ import {
   TargetType,
 } from '~/interfaces/IPost';
 import useCommentsStore from '~/store/entities/comments';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import streamApi from '~/api/StreamApi';
 
 const putReactionToComment = (_set, get) => async (payload: IPayloadReactToComment) => {
@@ -112,7 +112,7 @@ const putReactionToComment = (_set, get) => async (payload: IPayloadReactToComme
       reactionsCount,
       comment,
     );
-    showError(e);
+    showToastError(e);
   }
 };
 

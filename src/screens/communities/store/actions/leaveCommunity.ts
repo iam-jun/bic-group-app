@@ -1,7 +1,6 @@
 import groupApi from '~/api/GroupApi';
 import { IToastMessage } from '~/interfaces/common';
 import groupsActions from '~/storeRedux/groups/actions';
-import modalActions from '~/storeRedux/modal/actions';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { CommunityPrivacyType } from '~/constants/privacyTypes';
@@ -10,8 +9,10 @@ import useMenuController from '~/screens/Menu/store';
 import Store from '~/storeRedux';
 import useCommunitiesStore from '~/store/entities/communities';
 import useYourCommunitiesStore from '../../Communities/components/YourCommunities/store';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import useManagedStore from '~/screens/communities/Communities/components/Managed/store';
+import showToast from '~/store/helper/showToast';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 const rootNavigation = withNavigation(rootNavigationRef);
 
@@ -43,12 +44,12 @@ const leaveCommunity = (_set, _get) => async (
 
     const toastMessage: IToastMessage = {
       content: 'communities:modal_confirm_leave_community:success_message',
-      props: { type: 'success' },
+      type: ToastType.SUCCESS,
     };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    showToast(toastMessage);
   } catch (err) {
     console.error('leaveCommunity error:', err);
-    showError(err);
+    showToastError(err);
   }
 };
 

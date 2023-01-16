@@ -1,62 +1,12 @@
 import { cloneDeep, isEmpty } from 'lodash';
-import modalActions from '~/storeRedux/modal/actions';
 import groupApi from '~/api/GroupApi';
 import { IGroup, IRole, IScheme } from '~/interfaces/IGroup';
 import { RoleType } from '~/constants/permissionScheme';
-
-export const checkLastAdmin = async (
-  groupId: string,
-  userId: string,
-  dispatch: any,
-  mainCallback: () => void,
-  onPressRight: () => void,
-  type: 'leave' | 'remove' = 'leave',
-) => {
-  let testingAdminCount: number; // for testing purpose
-  try {
-    const response = await groupApi.getInnerGroupsLastAdmin(
-      groupId,
-      userId,
-    );
-
-    const { data } = response;
-    if (data === null || data.length === 0) {
-      testingAdminCount = 1;
-      mainCallback();
-    } else if (data.length === 1 && data[0].id === groupId) {
-      testingAdminCount = 2;
-      dispatch(modalActions.showHideToastMessage({
-        content: 'groups:error:last_admin_leave',
-        props: { type: 'error' },
-      }));
-    } else {
-      testingAdminCount = 3;
-      dispatch(modalActions.showHideToastMessage({
-        content: `groups:error:last_admin_inner_group_${type}`,
-        props: { type: 'error' },
-      }));
-    }
-  } catch (err: any) {
-    testingAdminCount = -1;
-    console.error(
-      '[ERROR] error while fetching group members', err,
-    );
-    dispatch(modalActions.showHideToastMessage({
-      content:
-          err?.meta?.errors?.[0]?.message
-          || err?.meta?.message
-          || 'common:text_error_message',
-      props: { type: 'error' },
-    }));
-  }
-
-  return testingAdminCount;
-};
+import showToastError from '~/store/helper/showToastError';
 
 export const handleLeaveInnerGroups = async (
   groupId: string,
   username: string,
-  dispatch: any,
   callback: (innerGroups: any) => void,
 ) => {
   let testingFlag = false; // for testing purpose
@@ -73,13 +23,7 @@ export const handleLeaveInnerGroups = async (
     console.error(
       'Error while fetching user inner groups', err,
     );
-    dispatch(modalActions.showHideToastMessage({
-      content:
-          err?.meta?.errors?.[0]?.message
-          || err?.meta?.message
-          || 'common:text_error_message',
-      props: { type: 'error' },
-    }));
+    showToastError(err);
   }
   return testingFlag;
 };

@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
+import { isEmpty } from 'lodash';
 import { useBaseHook } from '~/hooks';
 import useCreateArticleStore from '../../store';
 import PreviewSection from '../../components/PreviewSection';
@@ -14,7 +15,10 @@ const TagsSection: FC<TagsSectionProps> = ({ onPress }) => {
   const { t } = useBaseHook();
   const styles = createStyle();
 
+  const audience = useCreateArticleStore((state) => state.data.audience);
   const tags = useCreateArticleStore((state) => state.data.tags);
+
+  const hasAudience = !(isEmpty(audience?.groupIds) && isEmpty(audience?.userIds));
 
   const renderContent = () => {
     if (!tags || tags.length === 0) return null;
@@ -44,6 +48,7 @@ const TagsSection: FC<TagsSectionProps> = ({ onPress }) => {
         onPress={onPress}
         placeholder={t('article:text_add_tag')}
         content={renderContent()}
+        disabled={!hasAudience}
       />
     </View>
   );

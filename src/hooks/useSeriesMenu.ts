@@ -12,6 +12,7 @@ import { getPostMenus } from '~/helpers/post';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { getLink, LINK_SERIRES } from '~/utils/link';
 import { Button } from '~/baseComponents';
+import useModalStore from '~/store/modal';
 
 const useSeriesMenu = (
   data: IPost,
@@ -23,6 +24,7 @@ const useSeriesMenu = (
   const dispatch = useDispatch();
 
   const commonActions = useCommonController((state) => state.actions);
+  const { showToast, showAlert } = useModalStore((state) => state.actions);
 
   if (!data) return null;
 
@@ -45,24 +47,20 @@ const useSeriesMenu = (
     Clipboard.setString(getLink(
       LINK_SERIRES, seriesId,
     ));
-    dispatch(modalActions.showHideToastMessage({ content: 'common:text_link_copied_to_clipboard' }));
+    showToast({ content: 'common:text_link_copied_to_clipboard' });
   };
 
   const onPressDelete = () => {
     dispatch(modalActions.hideBottomList());
-    dispatch(
-      modalActions.showAlert({
-        title: i18next.t('series:menu_text_delete_series'),
-        content: i18next.t('series:content_delete_series'),
-        cancelBtn: true,
-        confirmLabel: i18next.t('common:btn_delete'),
-        ConfirmBtnComponent: Button.Danger,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        confirmBtnProps: { type: 'ghost' },
-        onConfirm: handleConfirmDelete,
-      }),
-    );
+    showAlert({
+      title: i18next.t('series:menu_text_delete_series'),
+      content: i18next.t('series:content_delete_series'),
+      cancelBtn: true,
+      confirmLabel: i18next.t('common:btn_delete'),
+      ConfirmBtnComponent: Button.Danger,
+      confirmBtnProps: { type: 'ghost' },
+      onConfirm: handleConfirmDelete,
+    });
   };
 
   const onPressSave = () => {

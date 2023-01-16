@@ -38,6 +38,7 @@ import { faLockKeyhole as faLockKeyholeSolid } from '@fortawesome/pro-solid-svg-
 import { faGlobe } from '@fortawesome/pro-regular-svg-icons/faGlobe';
 import { faGlobe as faGlobeSolid } from '@fortawesome/pro-solid-svg-icons/faGlobe';
 import { faCalendar } from '@fortawesome/pro-regular-svg-icons/faCalendar';
+import { faCalendarDays as faCalendarDaysSolid } from '@fortawesome/pro-solid-svg-icons/faCalendarDays';
 import { faUserXmark } from '@fortawesome/pro-regular-svg-icons/faUserXmark';
 import { faSquareUser } from '@fortawesome/pro-regular-svg-icons/faSquareUser';
 import { faUserCheck } from '@fortawesome/pro-regular-svg-icons/faUserCheck';
@@ -183,6 +184,7 @@ import { faSymbols } from '@fortawesome/pro-regular-svg-icons/faSymbols';
 import { faInputText } from '@fortawesome/pro-regular-svg-icons/faInputText';
 import { faChartTreeMap } from '@fortawesome/pro-regular-svg-icons/faChartTreeMap';
 import { faFlag } from '@fortawesome/pro-regular-svg-icons/faFlag';
+import { faFlag as faFlagSolid } from '@fortawesome/pro-solid-svg-icons/faFlag';
 import { faFileInvoice as faFileInvoiceSolid } from '@fortawesome/pro-solid-svg-icons/faFileInvoice';
 import { faBookmarkSlash } from '@fortawesome/pro-regular-svg-icons/faBookmarkSlash';
 import { faBarsSort } from '@fortawesome/pro-regular-svg-icons/faBarsSort';
@@ -200,6 +202,7 @@ import { faAlignRight } from '@fortawesome/pro-regular-svg-icons/faAlignRight';
 import { faAlignCenter } from '@fortawesome/pro-regular-svg-icons/faAlignCenter';
 import { faAlignJustify } from '@fortawesome/pro-regular-svg-icons/faAlignJustify';
 import { faAnglesLeft } from '@fortawesome/pro-regular-svg-icons/faAnglesLeft';
+import { faBallotCheck as faBallotCheckSolid } from '@fortawesome/pro-solid-svg-icons/faBallotCheck';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -259,6 +262,7 @@ export const initFontAwesomeIcon = () => {
     faGlobe,
     faGlobeSolid,
     faCalendar,
+    faCalendarDaysSolid,
     faUserXmark,
     faSquareUser,
     faUserCheck,
@@ -403,6 +407,7 @@ export const initFontAwesomeIcon = () => {
     faInputText,
     faChartTreeMap,
     faFlag,
+    faFlagSolid,
     faFileInvoiceSolid,
     faBookmarkSlash,
     faBarsSort,
@@ -420,6 +425,7 @@ export const initFontAwesomeIcon = () => {
     faAlignCenter,
     faAlignJustify,
     faAnglesLeft,
+    faBallotCheckSolid,
   );
 };
 
@@ -463,6 +469,7 @@ export const fontAwesomeIcons = {
   Globe: 'fa-regular fa-globe',
   GlobeSolid: 'fa-solid fa-globe',
   Calendar: 'fa-regular fa-calendar',
+  CalendarDaysSolid: 'fa-solid fa-calendar-days',
   UserXmark: 'fa-regular fa-user-xmark',
   SquareUser: 'fa-regular fa-square-user',
   UserCheck: 'fa-regular fa-user-check',
@@ -609,6 +616,7 @@ export const fontAwesomeIcons = {
   InputText: 'fa-regular fa-input-text',
   ChartTreeMap: 'fa-regular fa-chart-tree-map',
   Flag: 'fa-regular fa-flag',
+  FlagSolid: 'fa-solid fa-flag',
   FileInvoiceSolid: 'fa-solid fa-file-invoice',
   BarsSort: 'fa-regular fa-bars-sort',
   Bold: 'fa-regular fa-bold',
@@ -625,6 +633,7 @@ export const fontAwesomeIcons = {
   AlignCenter: 'fa-regular fa-align-center',
   AlignJustify: 'fa-regular fa-align-justify',
   AnglesLeft: 'fa-regular fa-angles-left',
+  BallotCheckSolid: 'fa-solid fa-ballot-check',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

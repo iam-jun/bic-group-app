@@ -5,7 +5,6 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { isEmpty } from 'lodash';
-import { useDispatch } from 'react-redux';
 import Text from '~/baseComponents/Text';
 import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import { IFilePicked } from '~/interfaces/common';
@@ -14,12 +13,12 @@ import Button from '~/beinComponents/Button';
 import { formatBytes } from '~/utils/formatData';
 import FileUploader, { IGetFile } from '~/services/fileUploader';
 import { useBaseHook } from '~/hooks';
-import modalActions from '~/storeRedux/modal/actions';
 import { supportedTypes } from '~/beinComponents/DocumentPicker';
 import { openUrl } from '~/utils/link';
 import { getFileIcons } from '~/configs';
 import { IconType } from '~/resources/icons';
 import spacing from '~/theme/spacing';
+import useModalStore from '~/store/modal';
 
 export interface UploadingFileProps {
   style?: StyleProp<ViewStyle>;
@@ -48,7 +47,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
 
-  const dispatch = useDispatch();
+  const { showAlert } = useModalStore((state) => state.actions);
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -124,7 +123,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
     } else {
       const type = uploadType?.split('_')[1];
 
-      dispatch(modalActions.showAlert({
+      showAlert({
         title: t(
           'upload:title_delete_file', {
             file_type: t(`file_type:${type}`),
@@ -142,7 +141,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
           setError('');
           onClose?.(file);
         },
-      }));
+      });
     }
   };
 

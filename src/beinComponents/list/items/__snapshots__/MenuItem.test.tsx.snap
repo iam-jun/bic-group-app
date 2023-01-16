@@ -58,7 +58,9 @@ exports[`Menu Item component renders correctly 1`] = `
             ]
           }
           testID="menu_item.title"
-        />
+        >
+          Menu Item Title
+        </Text>
       </View>
       <View
         style={
@@ -130,7 +132,9 @@ exports[`Menu Item component renders correctly RightComponent 1`] = `
             ]
           }
           testID="menu_item.title"
-        />
+        >
+          Menu Item Title
+        </Text>
       </View>
       <View
         style={
@@ -262,7 +266,9 @@ exports[`Menu Item component renders correctly item disable 1`] = `
             ]
           }
           testID="menu_item.title"
-        />
+        >
+          Menu Item Title
+        </Text>
       </View>
       <View
         style={
@@ -334,7 +340,9 @@ exports[`Menu Item component renders correctly rightSubIcon 1`] = `
             ]
           }
           testID="menu_item.title"
-        />
+        >
+          Menu Item Title
+        </Text>
       </View>
       <View
         style={
@@ -468,7 +476,9 @@ exports[`Menu Item component renders correctly rightSubTitle 1`] = `
             ]
           }
           testID="menu_item.title"
-        />
+        >
+          Menu Item Title
+        </Text>
       </View>
       <View
         style={
@@ -492,7 +502,9 @@ exports[`Menu Item component renders correctly rightSubTitle 1`] = `
             ]
           }
           testID="menu_item.right_sub_title"
-        />
+        >
+          Right Sub Title
+        </Text>
       </View>
     </View>
   </View>
@@ -557,7 +569,9 @@ exports[`Menu Item component renders correctly subTitle 1`] = `
             ]
           }
           testID="menu_item.title"
-        />
+        >
+          Menu Item Title
+        </Text>
         <Text
           numberOfLines={2}
           style={
@@ -572,7 +586,9 @@ exports[`Menu Item component renders correctly subTitle 1`] = `
             ]
           }
           testID="menu_item.sub_title"
-        />
+        >
+          Sub Title
+        </Text>
       </View>
       <View
         style={
@@ -645,7 +661,9 @@ exports[`Menu Item component renders correctly testID 1`] = `
             ]
           }
           testID="menu_item.title"
-        />
+        >
+          Menu Item Title
+        </Text>
       </View>
       <View
         style={
@@ -717,7 +735,9 @@ exports[`Menu Item component should render NotificationsBadge 1`] = `
             ]
           }
           testID="menu_item.title"
-        />
+        >
+          Menu Item Title
+        </Text>
       </View>
       <View
         style={
@@ -889,7 +909,9 @@ exports[`Menu Item component should render icon with iconProps 1`] = `
             ]
           }
           testID="menu_item.title"
-        />
+        >
+          Menu Item Title
+        </Text>
       </View>
       <View
         style={

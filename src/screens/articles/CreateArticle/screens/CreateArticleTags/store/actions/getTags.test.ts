@@ -1,24 +1,10 @@
 import streamApi from '~/api/StreamApi';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 import { mockGetTagsInArticle, searchTagsRequestParams } from '~/test/mock_data/tags';
 import { act, renderHook } from '~/test/testUtils';
 import useCreateArticleTagsStore, { ICreateArticleTagsState } from '../index';
 
 describe('getTags in article', () => {
-  it('should do nothing if isLoadMore but hasNextPage = false', () => {
-    useCreateArticleTagsStore.setState((state: ICreateArticleTagsState) => {
-      state.listTag.hasNextPage = false;
-      return state;
-    });
-
-    const { result } = renderHook(() => useCreateArticleTagsStore((state) => state));
-    act(() => {
-      result.current.actions.getTags(true, {});
-    });
-
-    expect(result.current.listTag.loading).not.toBe(true);
-  });
-
   it('should get list tags success:', () => {
     const response = {
       code: 200,
@@ -103,7 +89,9 @@ describe('getTags in article', () => {
       () => Promise.reject(error) as any,
     );
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useCreateArticleTagsStore((state) => state));
@@ -125,7 +113,21 @@ describe('getTags in article', () => {
     });
 
     expect(result.current.listTag.loading).toBe(false);
-    expect(spyModalActions).toBeCalled();
+    expect(showToast).toBeCalled();
+  });
+
+  it('should setListTagLoading action correctly', () => {
+    const { result } = renderHook(() => useCreateArticleTagsStore((state) => state));
+
+    act(() => {
+      result.current.actions.setListTagLoading(true);
+    });
+    expect(result.current.listTag.loading).toBe(true);
+
+    act(() => {
+      result.current.actions.setListTagLoading(false);
+    });
+    expect(result.current.listTag.loading).toBe(false);
   });
 
   afterEach(() => {

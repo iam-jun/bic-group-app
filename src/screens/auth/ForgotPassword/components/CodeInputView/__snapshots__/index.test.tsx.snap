@@ -38,7 +38,7 @@ exports[`CodeInputView component renders correctly 1`] = `
           Object {
             "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
+            "fontSize": 14,
           },
           Object {},
           Object {
@@ -131,7 +131,7 @@ exports[`CodeInputView component renders correctly 1`] = `
                     Object {
                       "flex": 1,
                       "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
+                      "fontSize": 14,
                       "height": 40,
                       "paddingHorizontal": 16,
                     },
@@ -567,7 +567,7 @@ exports[`CodeInputView component renders correctly 1`] = `
                     Object {
                       "flex": 1,
                       "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
+                      "fontSize": 14,
                       "height": 40,
                       "paddingHorizontal": 16,
                     },
@@ -1087,7 +1087,7 @@ exports[`CodeInputView component renders correctly 1`] = `
                     Object {
                       "flex": 1,
                       "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
+                      "fontSize": 14,
                       "height": 40,
                       "paddingHorizontal": 16,
                     },

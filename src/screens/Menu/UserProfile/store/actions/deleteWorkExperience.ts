@@ -1,6 +1,6 @@
 import groupApi from '~/api/GroupApi';
 import { mapWorkExperience } from '../../../store/helpler';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import { IUserProfileState } from '../../store';
 
 const deleteWorkExperience = (set, get) => async (
@@ -22,7 +22,7 @@ const deleteWorkExperience = (set, get) => async (
     callback && callback();
   } catch (err) {
     console.error('deleteWorkExperience error: ', err);
-    showError(err);
+    showToastError(err);
   }
 };
 

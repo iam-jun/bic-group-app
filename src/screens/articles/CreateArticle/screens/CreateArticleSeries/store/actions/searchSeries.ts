@@ -1,6 +1,6 @@
 import streamApi from '~/api/StreamApi';
 import { ICreateArticleSeriesState } from '..';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import { IGetSeries } from '~/interfaces/ISeries';
 
 const searchSeries = (set, _get) => async (params: IGetSeries) => {
@@ -20,7 +20,7 @@ const searchSeries = (set, _get) => async (params: IGetSeries) => {
       state.search.loading = false;
     }, 'searchSeriesFailed');
     console.error('\x1b[35m🐣️ searchSeries error: ', e, '\x1b[0m');
-    showError(e);
+    showToastError(e);
   }
 };
 

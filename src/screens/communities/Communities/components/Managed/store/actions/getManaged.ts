@@ -1,7 +1,7 @@
 const getManaged
   = (set, get) => async (isRefreshing?: boolean) => {
     try {
-      const { getOwnerCommunity, getManagedCommunityAndGroup } = get().actions;
+      const { getManagedCommunityAndGroup } = get().actions;
 
       set(
         {
@@ -10,7 +10,6 @@ const getManaged
         'getManaged',
       );
 
-      getOwnerCommunity();
       getManagedCommunityAndGroup(isRefreshing);
 
       set(

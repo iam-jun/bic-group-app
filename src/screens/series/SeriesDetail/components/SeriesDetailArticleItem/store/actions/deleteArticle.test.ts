@@ -1,5 +1,5 @@
 import streamApi from '~/api/StreamApi';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 import { listArticle, mockSeries } from '~/test/mock_data/series';
 import { act, renderHook } from '~/test/testUtils';
 import useSeriesDetailArticleItemStore from '../index';
@@ -41,7 +41,9 @@ describe('deleteArticleInSeries', () => {
       () => Promise.resolve(getSeriesDetailResponse) as any,
     );
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useSeriesDetailArticleItemStore((state) => state));
@@ -56,7 +58,7 @@ describe('deleteArticleInSeries', () => {
     });
 
     expect(spyApiGetSeriesDetail).toBeCalled();
-    expect(spyModalActions).toBeCalledWith({ content: 'series:text_article_removed' });
+    expect(showToast).toBeCalledWith({ content: 'series:text_article_removed' });
   });
 
   it('should delete aritcle throw error and should show toast', () => {
@@ -65,7 +67,9 @@ describe('deleteArticleInSeries', () => {
       () => Promise.reject(error) as any,
     );
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useSeriesDetailArticleItemStore((state) => state));
@@ -85,7 +89,7 @@ describe('deleteArticleInSeries', () => {
       jest.runAllTimers();
     });
 
-    expect(spyModalActions).toBeCalled();
+    expect(showToast).toBeCalled();
   });
 
   // afterEach(() => {

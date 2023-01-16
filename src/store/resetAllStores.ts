@@ -44,7 +44,10 @@ import useTagsStore from './entities/tags';
 import useTagsControllerStore from '~/screens/tags/store';
 import useGeneralInformationStore from '~/screens/groups/GeneralInformation/store';
 import useRemoteConfigStore from './remoteConfig';
+import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
 import useCommentInputStore from '~/screens/comments/components/CommentInputView/store';
+import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
+import useReportContentStore from '~/components/Report/store';
 
 export const excludedStore = [
   useAuthController,
@@ -54,6 +57,9 @@ const stores = [
   // entities
   usePostsStore,
   useCommentsStore,
+
+  // components
+  useReportContentStore,
 
   // screens
   useHomeStore,
@@ -72,6 +78,7 @@ const stores = [
   useDraftArticleStore,
   useArticleController,
   useTopicStore,
+  useScheduleArticlesStore,
 
   // others
   useChatStore,
@@ -102,6 +109,7 @@ const stores = [
   useTagsControllerStore,
   useGeneralInformationStore,
   useRemoteConfigStore,
+  usePostsInProgressStore,
   useCommentInputStore,
 ];
 

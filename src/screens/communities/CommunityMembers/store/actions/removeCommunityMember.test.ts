@@ -1,5 +1,6 @@
 import groupApi from '~/api/GroupApi';
-import modalActions from '~/storeRedux/modal/actions';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import useModalStore from '~/store/modal';
 import { act, renderHook } from '~/test/testUtils';
 import useCommunityMemberStore from '../index';
 
@@ -21,7 +22,9 @@ describe('removeCommunityMember', () => {
 
     const spyGetCommunityDetail = jest.spyOn(groupApi, 'getCommunityDetail');
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useCommunityMemberStore((state) => state));
@@ -34,9 +37,9 @@ describe('removeCommunityMember', () => {
     });
 
     expect(spyGetCommunityDetail).toBeCalledWith(communityId);
-    expect(spyModalActions).toBeCalledWith({
+    expect(showToast).toBeCalledWith({
       content: response.meta.message,
-      props: { type: 'success' },
+      type: ToastType.SUCCESS,
     });
   });
 
@@ -49,7 +52,9 @@ describe('removeCommunityMember', () => {
 
     const spy = jest.spyOn(groupApi, 'removeGroupMembers').mockImplementation(() => Promise.reject(error) as any);
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useCommunityMemberStore((state) => state));
@@ -66,9 +71,9 @@ describe('removeCommunityMember', () => {
       jest.runAllTimers();
     });
 
-    expect(spyModalActions).toBeCalledWith({
+    expect(showToast).toBeCalledWith({
       content: error.meta.message,
-      props: { type: 'error' },
+      type: ToastType.ERROR,
     });
   });
 });

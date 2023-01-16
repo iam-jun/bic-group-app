@@ -18,7 +18,7 @@ exports[`InfoItem component renders correctly 1`] = `
         Object {
           "color": "#212745",
           "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 15,
+          "fontSize": 14,
         },
         Object {
           "color": "#353E6E",
@@ -27,7 +27,9 @@ exports[`InfoItem component renders correctly 1`] = `
       ]
     }
     testID="info_item.title"
-  />
+  >
+    title
+  </Text>
   <Text
     style={
       Array [
@@ -43,6 +45,8 @@ exports[`InfoItem component renders correctly 1`] = `
       ]
     }
     testID="info_item.value"
-  />
+  >
+    value
+  </Text>
 </View>
 `;

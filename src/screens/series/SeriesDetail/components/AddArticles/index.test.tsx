@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import * as React from 'react';
 import streamApi from '~/api/StreamApi';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 import { listArticle, mockSeries, searchSeriesRequestParams } from '~/test/mock_data/series';
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import AddArticles from '.';
@@ -175,7 +175,9 @@ describe('AddArticles component', () => {
       () => Promise.resolve(response) as any,
     );
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     useAddArticlesStore.setState((state: IAddArticlesState) => {
       state.items = listArticle as any;
@@ -207,7 +209,7 @@ describe('AddArticles component', () => {
 
     expect(result.current.loading).toBe(false);
     expect(spyApiAddArticles).toHaveBeenLastCalledWith(seriesId, { articleIds: [listArticle[0].id] });
-    expect(spyModalActions).toHaveBeenCalled();
+    expect(showToast).toHaveBeenCalled();
   });
   it('should do nothing when click add but item is added: ', () => {
     const response = {

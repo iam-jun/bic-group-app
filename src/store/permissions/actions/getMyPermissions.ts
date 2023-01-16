@@ -1,5 +1,5 @@
 import groupApi from '~/api/GroupApi';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import { IMyPermissionsState } from '../index';
 
 const getMyPermissions = (set, get) => async () => {
@@ -24,7 +24,7 @@ const getMyPermissions = (set, get) => async () => {
       state.loading = false;
     }, 'getMyPermissionsError');
 
-    showError(error);
+    showToastError(error);
   }
 };
 

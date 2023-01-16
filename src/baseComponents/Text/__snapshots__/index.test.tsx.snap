@@ -7,7 +7,7 @@ exports[`Text component renders correctly 1`] = `
       Object {
         "color": "#212745",
         "fontFamily": "BeVietnamPro-Light",
-        "fontSize": 15,
+        "fontSize": 14,
       },
       Object {},
       undefined,
@@ -23,7 +23,7 @@ exports[`Text component renders correctly children 1`] = `
       Object {
         "color": "#212745",
         "fontFamily": "BeVietnamPro-Light",
-        "fontSize": 15,
+        "fontSize": 14,
       },
       Object {},
       undefined,
@@ -41,13 +41,15 @@ exports[`Text component renders correctly children with useI18n 1`] = `
       Object {
         "color": "#212745",
         "fontFamily": "BeVietnamPro-Light",
-        "fontSize": 15,
+        "fontSize": 14,
       },
       Object {},
       undefined,
     ]
   }
-/>
+>
+  renders correctly children
+</Text>
 `;
 
 exports[`Text component renders correctly variant 1`] = `

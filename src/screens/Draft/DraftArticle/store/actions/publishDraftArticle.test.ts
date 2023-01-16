@@ -2,8 +2,7 @@ import { renderHook, act } from '~/test/testUtils';
 import streamApi from '~/api/StreamApi';
 import useDraftArticleStore from '../index';
 import { POST_DETAIL } from '~/test/mock_data/post';
-import modalActions from '~/storeRedux/modal/actions';
-import postActions from '~/storeRedux/post/actions';
+import useModalStore from '~/store/modal';
 
 describe('publishDraftArticle', () => {
   const draftArticleId = '1';
@@ -86,9 +85,11 @@ describe('publishDraftArticle', () => {
       () => Promise.resolve({}) as any,
     );
 
-    const spyShowHideToastMessage = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
-    const spyGetAllPostContainingVideoInProgress = jest.spyOn(postActions, 'getAllPostContainingVideoInProgress');
+    const spyGetAllPostContainingVideoInProgress = jest.spyOn(streamApi, 'getDraftPosts');
 
     jest.useFakeTimers();
 
@@ -105,7 +106,7 @@ describe('publishDraftArticle', () => {
     });
 
     expect(onSuccess).toBeCalled();
-    expect(spyShowHideToastMessage).toBeCalled();
+    expect(showToast).toBeCalled();
     expect(spyGetAllPostContainingVideoInProgress).toBeCalled();
     expect(spyGetDraftArticles).toBeCalled();
   });

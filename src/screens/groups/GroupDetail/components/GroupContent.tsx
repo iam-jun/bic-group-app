@@ -17,7 +17,7 @@ import { ICommunity } from '~/interfaces/ICommunity';
 import ContentItem from '~/components/ContentItem';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 import Divider from '~/beinComponents/Divider';
-import useGroupDetailStore from '../store';
+import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 
 interface GroupContentProps {
   community: ICommunity;
@@ -35,9 +35,11 @@ const GroupContent = ({
   const styles = themeStyles();
   const isMounted = useMounted();
 
-  const { groupDetail: { group: groupData, joinStatus } } = useGroupDetailStore((state) => state);
+  const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
+  const { group: groupData, joinStatus } = groups[currentGroupId] || {};
+  const { id: groupId, teamName } = groupData || {};
+
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
-  const { id: groupId, teamName } = groupData;
   const communityId = community?.id;
   const communityName = community?.name;
   const isMemberCommunity = community?.joinStatus === GroupJoinStatus.MEMBER;

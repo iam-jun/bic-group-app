@@ -1,4 +1,5 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { t } from 'i18next';
 import React, {
   FC, useCallback, useEffect, useRef, useState,
 } from 'react';
@@ -9,6 +10,7 @@ import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { ArticleFooter } from '~/components/articles';
 import ArticleWebview, { ArticleWebviewRef } from '~/components/articles/ArticleWebview';
+import BannerReport from '~/components/Report/BannerReport';
 import useMounted from '~/hooks/mounted';
 import { IRouteParams } from '~/interfaces/IRouter';
 import usePostsStore from '~/store/entities/posts';
@@ -20,7 +22,7 @@ import { handleMessage } from './helper';
 const HEADER_HEIGHT = 244;
 
 const ArticleContentDetail: FC<IRouteParams> = (props) => {
-  const id = props?.route?.params?.articleId;
+  const { articleId: id, is_reported: isReported } = props?.route?.params || {};
   const theme: ExtendedTheme = useTheme();
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets);
@@ -56,7 +58,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
     },
   };
 
-  const isMounted = useMounted(() => actions.getArticleDetail(id));
+  const isMounted = useMounted(() => actions.getArticleDetail(id, isReported));
 
   /**
    * API feed does not return series, so must await
@@ -109,20 +111,18 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
     });
   };
 
-  return (
-    <ScreenWrapper testID="article_content_detail" isFullView style={styles.container}>
-      <Header
-        headerRef={headerRef}
-        title={title}
-        useAnimationTitle
-        headerHeight={HEADER_HEIGHT}
-      />
-      <ArticleWebview
-        ref={ref}
-        initScript={initScript}
-        onMessage={onMessage}
-        onScroll={onScroll}
-      />
+  const renderTitle = () => {
+    if (isReported) {
+      return t('report:title');
+    }
+    return '';
+  };
+
+  const renderArticleFooter = () => {
+    if (isReported) {
+      return null;
+    }
+    return (
       <ArticleFooter
         hideReaction
         reactionToDetail
@@ -133,6 +133,24 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
         reactionsCount={reactionsCount}
         ownerReactions={ownerReactions}
       />
+    );
+  };
+
+  return (
+    <ScreenWrapper testID="article_content_detail" isFullView style={styles.container}>
+      <Header
+        headerRef={headerRef}
+        title={renderTitle()}
+        headerHeight={HEADER_HEIGHT}
+      />
+      <BannerReport postId={id} />
+      <ArticleWebview
+        ref={ref}
+        initScript={initScript}
+        onMessage={onMessage}
+        onScroll={onScroll}
+      />
+      {renderArticleFooter()}
       <ImageGalleryModal
         visible={galleryVisible}
         source={listImage}
@@ -151,7 +169,6 @@ const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
       flex: 1,
       backgroundColor: colors.white,
       paddingBottom: insets.bottom,
-
     },
   });
 };

@@ -1,7 +1,7 @@
 import {
-  StyleProp, ViewStyle, StyleSheet, ScrollView,
+  StyleProp, ViewStyle, StyleSheet, ScrollView, Dimensions,
 } from 'react-native';
-import React from 'react';
+import React, { useRef } from 'react';
 
 import PillTabButton, { PillTabButtonProps } from './PillTabButton';
 import TabButton from './TabButton';
@@ -12,6 +12,7 @@ interface TabProps {
   type?: 'pill' | 'normal';
   buttonProps?: PillTabButtonProps;
   style?: StyleProp<ViewStyle>;
+  isScrollToIndex?: boolean;
   onPressTab?: (item: any, index: number) => void;
 }
 
@@ -21,11 +22,24 @@ const Tab = ({
   type = 'normal',
   buttonProps,
   style,
+  isScrollToIndex,
   onPressTab,
 }: TabProps) => {
+  const scrollViewRef = useRef<ScrollView>();
   const TabButtonComponent = type === 'normal' ? TabButton : PillTabButton;
 
-  const renderItem = (item: any, index: number) => {
+  const onPress = (item: any, index: number) => {
+    onPressTab?.(item, index);
+    if (isScrollToIndex) {
+      if (!index) {
+        scrollViewRef?.current?.scrollTo({ x: 0, animated: true });
+      } else {
+        scrollViewRef?.current?.scrollTo({ x: Dimensions.get('window').width * index, animated: true });
+      }
+    }
+  };
+
+  function renderItem(item: any, index: number) {
     const isSelected = index === activeIndex;
 
     return (
@@ -34,13 +48,13 @@ const Tab = ({
         isSelected={isSelected}
         key={`tab-button-${item?.id || item?.text}`}
         testID={`tab-button-${item?.text}`}
-        onPress={() => onPressTab?.(item, index)}
+        onPress={() => onPress(item, index)}
         {...buttonProps}
       >
         {item?.text}
       </TabButtonComponent>
     );
-  };
+  }
 
   return (
     <ScrollView
@@ -48,6 +62,7 @@ const Tab = ({
       horizontal
       alwaysBounceHorizontal={false}
       showsHorizontalScrollIndicator={false}
+      ref={scrollViewRef}
     >
       {data?.map?.(renderItem)}
     </ScrollView>

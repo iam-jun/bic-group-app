@@ -1,3 +1,7 @@
+import { StyleProp, ViewStyle } from 'react-native';
+import { TextInputProps } from '~/beinComponents/inputs/TextInput';
+import { ButtonProps } from '~/baseComponents/Button';
+import { TextProps } from '~/baseComponents/Text';
 import { languages } from '~/configs';
 import { IconType } from '~/resources/icons';
 import { BaseToastProps } from '~/baseComponents/Toast/BaseToast';
@@ -38,10 +42,36 @@ export interface IResponseData {
   meta: any;
 }
 
-export interface IToastMessage {
-  content: string;
-  props?: BaseToastProps;
+export interface IToastMessage extends BaseToastProps {
   duration?: number;
+  timeout?: NodeJS.Timeout;
+}
+
+export interface IAlertModal {
+  visible?: boolean;
+  isDismissible?: boolean;
+  title?: string | any;
+  titleProps?: TextProps;
+  content?: string;
+  ContentComponent?: any;
+  contentProps?: TextProps;
+  input?: boolean;
+  inputProps?: TextInputProps
+  confirmLabel?: string;
+  confirmBtnProps?: ButtonProps;
+  ConfirmBtnComponent?: any;
+  cancelBtn?: boolean;
+  cancelLabel?: string;
+  cancelBtnProps?: ButtonProps;
+  CancelBtnComponent?: any;
+  style?: StyleProp<ViewStyle>;
+  children?: React.ReactNode;
+  buttonViewStyle?: StyleProp<ViewStyle>;
+  headerStyle?: StyleProp<ViewStyle>;
+  HeaderImageComponent?: any
+  onCancel?: () => void;
+  onConfirm?: () => void;
+  onDismiss?: () => void;
 }
 
 export interface IPayloadShowModal {

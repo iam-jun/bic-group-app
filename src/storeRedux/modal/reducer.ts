@@ -1,4 +1,3 @@
-import React from 'react';
 import * as actions from './constants';
 
 export const modalInitState = {
@@ -6,24 +5,6 @@ export const modalInitState = {
   modal: {
     isOpen: false,
     ContentComponent: undefined,
-  },
-  alert: {
-    visible: false,
-    title: '',
-    content: '',
-    cancelBtn: false,
-    cancelLabel: '',
-    onConfirm: () => {
-      // do something
-    },
-    onCancel: () => {
-      // do something
-    },
-    iconName: '',
-    confirmLabel: '',
-    isDismissible: true,
-    style: {},
-    children: null as React.ReactNode,
   },
   alertNewFeature: {
     visible: false,
@@ -68,18 +49,6 @@ function commonReducer(
         ...state,
         modal: modalInitState.modal,
       };
-    case actions.SHOW_ALERT:
-      return {
-        ...state,
-        alert: {
-          ...state.alert,
-          ...payload,
-          visible: true,
-        },
-      };
-
-    case actions.HIDE_ALERT:
-      return modalInitState;
 
     case actions.SHOW_ALERT_NEW_FEATURE:
       return {
@@ -113,16 +82,6 @@ function commonReducer(
         },
       };
 
-    case actions.SET_TOAST_MESSAGE:
-      return {
-        ...state,
-        toastMessage: payload,
-      };
-    case actions.CLEAR_TOAST_MESSAGE:
-      return {
-        ...state,
-        toastMessage: modalInitState.toastMessage,
-      };
     case actions.FOCUS_SEARCH_INPUT:
       return {
         ...state,

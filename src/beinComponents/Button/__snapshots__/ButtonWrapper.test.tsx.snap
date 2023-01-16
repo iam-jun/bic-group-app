@@ -280,7 +280,7 @@ exports[`Button Wrapper component renders correctly children with useI18n 1`] = 
           Object {
             "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
+            "fontSize": 14,
           },
           Object {},
           Object {
@@ -289,7 +289,9 @@ exports[`Button Wrapper component renders correctly children with useI18n 1`] = 
         ]
       }
       testID="button_wrapper.text"
-    />
+    >
+      See less
+    </Text>
   </View>
 </View>
 `;

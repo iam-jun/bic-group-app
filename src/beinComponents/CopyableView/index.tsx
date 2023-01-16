@@ -9,12 +9,11 @@ import {
   View,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
-import { showHideToastMessage } from '~/storeRedux/modal/actions';
 
 import spacing from '~/theme/spacing';
 import ButtonWrapper from '../Button/ButtonWrapper';
 import Text from '../../baseComponents/Text';
+import useModalStore from '~/store/modal';
 
 interface Props {
   content: string;
@@ -34,11 +33,11 @@ const CopyableView = ({
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
-  const dispatch = useDispatch();
 
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [tooltopPosition, setTooltipPosition] = useState({ left: 0, top: 0 });
   const tooltipSize = useRef({ width: 50, height: 40 });
+  const { showToast } = useModalStore((state) => state.actions);
 
   const showTooltip = (
     left: number, top: number,
@@ -50,7 +49,7 @@ const CopyableView = ({
 
   const copyContent = () => {
     Clipboard.setString(content);
-    dispatch(showHideToastMessage({ content: 'common:text_copied_to_clipboard' }));
+    showToast({ content: 'common:text_copied_to_clipboard' });
     hideTooltip();
   };
 

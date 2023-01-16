@@ -1,7 +1,6 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
-import { useDispatch } from 'react-redux';
 import { isEmpty } from 'lodash';
 import { Button } from '~/baseComponents';
 import Header from '~/beinComponents/Header';
@@ -11,7 +10,6 @@ import { IAudienceGroup } from '~/interfaces/IPost';
 import AlertDeleteAudiencesConfirmContent from '~/components/posts/AlertDeleteAudiences';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import modalActions from '~/storeRedux/modal/actions';
 import DeletedItem from '../../../components/series/DeletedItem';
 import SeriesDetailHeader from './components/SeriesDetailHeader';
 import SeriesDetailArticleItem from './components/SeriesDetailArticleItem';
@@ -23,6 +21,7 @@ import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 import ContentUnavailable from '~/components/ContentUnavailable';
 import useMounted from '~/hooks/mounted';
+import useModalStore from '~/store/modal';
 
 const SeriesDetail = ({ route }: any) => {
   const { params } = route || {};
@@ -30,10 +29,10 @@ const SeriesDetail = ({ route }: any) => {
   const theme = useTheme();
   const styles = createStyle(theme);
   const userId = useUserIdAuth();
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
 
   const [isOpenSearch, setIsOpenSearch] = useState(false);
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const series = usePostsStore(useCallback(postsSelector.getPost(seriesId, {}), [seriesId]));
 
@@ -78,37 +77,33 @@ const SeriesDetail = ({ route }: any) => {
       return _audience;
     });
     if (canDeleteOwnPost) {
-      dispatch(
-        modalActions.showAlert({
-          title: t('series:title_delete_audiences_of_series'),
-          children: (
-            <AlertDeleteAudiencesConfirmContent
-              data={listAudiences}
-              textContent={t('series:content_delete_audiences_of_series')}
-            />
-          ),
-          cancelBtn: true,
-          confirmLabel: t('common:text_remove'),
-          ConfirmBtnComponent: Button.Danger,
-          onConfirm: () => actions.removeAudiences(id, listIdAudiences),
-          confirmBtnProps: { type: 'ghost' },
-        }),
-      );
+      showAlert({
+        title: t('series:title_delete_audiences_of_series'),
+        children: (
+          <AlertDeleteAudiencesConfirmContent
+            data={listAudiences}
+            textContent={t('series:content_delete_audiences_of_series')}
+          />
+        ),
+        cancelBtn: true,
+        confirmLabel: t('common:text_remove'),
+        ConfirmBtnComponent: Button.Danger,
+        onConfirm: () => actions.removeAudiences(id, listIdAudiences),
+        confirmBtnProps: { type: 'ghost' },
+      });
     } else {
-      dispatch(
-        modalActions.showAlert({
-          title: t('series:title_delete_audiences_of_series'),
-          children: (
-            <AlertDeleteAudiencesConfirmContent
-              data={listAudiences}
-              textContent={t('series:content_not_able_delete_of_series')}
-            />
-          ),
-          cancelBtn: true,
-          cancelLabel: t('common:btn_close'),
-          onConfirm: null,
-        }),
-      );
+      showAlert({
+        title: t('series:title_delete_audiences_of_series'),
+        children: (
+          <AlertDeleteAudiencesConfirmContent
+            data={listAudiences}
+            textContent={t('series:content_not_able_delete_of_series')}
+          />
+        ),
+        cancelBtn: true,
+        cancelLabel: t('common:btn_close'),
+        onConfirm: null,
+      });
     }
   };
 

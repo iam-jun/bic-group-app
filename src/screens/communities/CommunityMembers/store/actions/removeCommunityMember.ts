@@ -1,11 +1,9 @@
 import groupApi from '~/api/GroupApi';
 import { removeMemberFromMemberList } from '~/helpers/common';
 import { IRemoveCommunityMember } from '~/interfaces/ICommunity';
-import { IToastMessage } from '~/interfaces/common';
 import useCommunitiesStore from '~/store/entities/communities';
-import showError from '~/store/helper/showError';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
+import showToastError from '~/store/helper/showToastError';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const removeCommunityMember = (set, get) => async (
   { communityId, groupId, userId }: IRemoveCommunityMember,
@@ -25,15 +23,11 @@ const removeCommunityMember = (set, get) => async (
     // to update userCount
     useCommunitiesStore.getState().actions.getCommunity(communityId);
 
-    const toastMessage: IToastMessage = {
-      content: response?.meta?.message || 'common:text_success_message',
-      props: { type: 'success' },
-    };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    showToastSuccess(response);
   } catch (error) {
     console.error('removeCommunityMember error:', error);
 
-    showError(error);
+    showToastError(error);
   }
 };
 
