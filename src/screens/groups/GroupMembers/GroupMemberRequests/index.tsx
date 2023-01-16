@@ -30,7 +30,9 @@ const GroupMemberRequests = ({
   const dispatch = useDispatch();
   const { ids, canLoadMore, total } = useKeySelector(groupsKeySelector.groupMemberRequests);
   const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
-  const { group: { id, settings: { isJoinApproval }, privacy } } = groups[currentGroupId] || {};
+  const { group } = groups[currentGroupId] || {};
+  const { id, settings, privacy } = group || {};
+  const { isJoinApproval } = settings || {};
   const {
     actions: { getGroupDetail },
   } = useGroupDetailStore((state: IGroupDetailState) => state);

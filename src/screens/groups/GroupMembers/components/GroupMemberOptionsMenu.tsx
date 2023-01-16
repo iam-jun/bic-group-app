@@ -32,7 +32,8 @@ const GroupMemberOptionsMenu = ({
   const { t } = useBaseHook();
 
   const groupDetail = useGroupsStore(groupsSelector.getGroup(groupId, {}));
-  const { group: { communityId } } = groupDetail || {};
+  const { group } = groupDetail || {};
+  const { communityId } = group || {};
   const { showAlert } = useModalStore((state) => state.actions);
 
   const actions = useGroupMemberStore((state) => state.actions);

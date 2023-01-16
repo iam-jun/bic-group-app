@@ -27,7 +27,8 @@ const GroupAdministration = (props: any) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
-  const { group: { name } } = groups[currentGroupId] || {};
+  const { group } = groups[currentGroupId] || {};
+  const { name } = group || {};
 
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
   const canEditProfileInfo = shouldHavePermission(

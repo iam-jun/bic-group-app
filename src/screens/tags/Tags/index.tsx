@@ -27,7 +27,8 @@ const Tags: FC<TagsProps> = (props) => {
   const { id, type } = params || {};
 
   const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
-  const { group: { name: nameGroup, communityId } } = groups[currentGroupId] || {};
+  const { group } = groups[currentGroupId] || {};
+  const { name: nameGroup, communityId } = group || {};
 
   const community = useCommunitiesStore(useCallback((
     state: ICommunitiesState,
