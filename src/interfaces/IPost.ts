@@ -586,3 +586,9 @@ export interface IAddChildCommentToComment {
   meta?: any;
   isAddFirst?: boolean;
 }
+
+export interface IParamsGetPostByParams {
+  status: string[];
+  offset?: number;
+  limit?: number;
+}

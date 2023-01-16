@@ -46,6 +46,7 @@ import useGeneralInformationStore from '~/screens/groups/GeneralInformation/stor
 import useRemoteConfigStore from './remoteConfig';
 import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
 import useCommentInputStore from '~/screens/comments/components/CommentInputView/store';
+import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import useReportContentStore from '~/components/Report/store';
 
 export const excludedStore = [
@@ -77,6 +78,7 @@ const stores = [
   useDraftArticleStore,
   useArticleController,
   useTopicStore,
+  useScheduleArticlesStore,
 
   // others
   useChatStore,

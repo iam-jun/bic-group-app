@@ -26,6 +26,7 @@ import { useBaseHook } from '~/hooks';
 import { rootNavigationRef } from '~/router/refs';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
+import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import useModalStore from '~/store/modal';
 import { PostStatus } from '~/interfaces/IPost';
 
@@ -182,7 +183,7 @@ const useCreateArticle = ({
       tags,
     };
     actions.setData(data);
-    const isDraft = [PostStatus.DRAFT, PostStatus.WAITING_SCHEDULE].includes(status);
+    const isDraft = [PostStatus.DRAFT, PostStatus.WAITING_SCHEDULE, PostStatus.SCHEDULE_FAILED].includes(status);
     actions.setIsDraft(isDraft);
     if (isDraft) {
       actions.setPublishedAt(publishedAt || '');
@@ -316,6 +317,7 @@ const useCreateArticle = ({
       onSuccess: () => {
         showToast({ content: 'post:draft:text_draft_article_published' });
         goToArticleDetail();
+        useScheduleArticlesStore.getState().actions.getScheduleArticles({ isRefresh: true });
       },
       onError: (error) => actions.handleSaveError(error, onHandleSaveErrorDone),
     };

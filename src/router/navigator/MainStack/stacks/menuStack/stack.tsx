@@ -9,6 +9,7 @@ const menuStack = {
   addWork: 'add-work',
   discover: 'discover',
   draft: 'draft',
+  yourContent: 'your-content',
 };
 
 export default menuStack;

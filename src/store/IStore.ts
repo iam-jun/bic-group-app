@@ -40,6 +40,7 @@ import { IRemoteConfigState } from './remoteConfig';
 import { IReportContentState } from '~/components/Report/store';
 import { IGroupsState } from './entities/groups';
 import { IModalState } from './modal';
+import { IScheduleArticlesState } from '~/screens/YourContent/components/ScheduledArticles/store';
 import { IPostsInProgressState } from '~/screens/Home/components/VideoProcessingNotice/store';
 
 export interface BicStore {
@@ -138,6 +139,9 @@ export interface BicStore {
   topic: {
     topicStore: ITopicState;
   };
+  YourContent: {
+    scheduleArticleStore: IScheduleArticlesState;
+  },
 
   // others
   chat: IChatState;

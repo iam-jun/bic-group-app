@@ -4,6 +4,7 @@ import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
 import useArticlesStore from '~/screens/articles/ArticleDetail/store';
+import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import showToastError from '~/store/helper/showToastError';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 
@@ -53,6 +54,7 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
       showToastSuccess(response, 'article:text_edit_article_success');
     }
     onSuccess?.();
+    useScheduleArticlesStore.getState().actions.getScheduleArticles({ isRefresh: true });
     if (isNavigateBack) {
       navigation.goBack();
     }

@@ -142,3 +142,9 @@ export interface IParamsValidateSeriesTags {
   series: string [],
   tags: string[]
 }
+
+export interface IPayloadGetScheduleArticles {
+  isRefresh?: boolean;
+  offset?: number;
+  isProcessing?: boolean;
+}

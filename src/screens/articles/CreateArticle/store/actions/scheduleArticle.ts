@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import streamApi from '~/api/StreamApi';
-import { IPayloadGetDraftPosts } from '~/interfaces/IPost';
-import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
+import { IPayloadGetScheduleArticles } from '~/interfaces/IArticle';
+import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import { ICreateArticleState } from '..';
 
 const scheduleArticle = (set, get) => async () => {
@@ -18,10 +18,10 @@ const scheduleArticle = (set, get) => async () => {
       state.schedule.isSubmitingSuccess = true;
     }, 'scheduleArticle success');
 
-    const payloadGetDraftArticles: IPayloadGetDraftPosts = {
+    const payloadGetScheduleArticles: IPayloadGetScheduleArticles = {
       isRefresh: true,
     };
-    useDraftArticleStore.getState().actions.getDraftArticles(payloadGetDraftArticles);
+    useScheduleArticlesStore.getState().actions.getScheduleArticles(payloadGetScheduleArticles);
   } catch (e) {
     set((state: ICreateArticleState) => {
       state.schedule.isSubmiting = false;

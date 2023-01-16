@@ -16,6 +16,7 @@ import {
   IRequestPostComment,
   IRequestReplyComment,
   IRequestGetUsersInterestedPost,
+  IParamsGetPostByParams,
 } from '~/interfaces/IPost';
 import {
   IParamGetFeed,
@@ -479,6 +480,24 @@ export const streamApiConfig = {
     url: `${provider.url}tags/${id}`,
     method: 'delete',
   }),
+  getPostByParams: (params: IParamsGetPostByParams): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}posts/params`,
+    params: {
+      status: params?.status,
+      offset: params?.offset || 0,
+      limit: params?.limit || 10,
+    },
+  }),
+  getArticleByParams: (params: IParamsGetPostByParams): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}articles/params`,
+    params: {
+      status: params?.status,
+      offset: params?.offset || 0,
+      limit: params?.limit || 10,
+    },
+  }),
   getReportContent: (params: IParamGetReportContent): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}reports/me/content`,
@@ -764,6 +783,38 @@ const streamApi = {
   deleteTag: (id: string) => withHttpRequestPromise(
     streamApiConfig.deleteTag, id,
   ),
+  getPostByParams: async (params: IParamsGetPostByParams) => {
+    try {
+      const response: any = await makeHttpRequest(streamApiConfig.getPostByParams(params));
+      if (response && response?.data?.data) {
+        return Promise.resolve({
+          data: response.data.data?.list || [],
+          canLoadMore: (params?.offset || 0) + (params?.limit || DEFAULT_LIMIT)
+            <= response.data.data?.meta?.total,
+          total: response.data.data?.meta?.total,
+        });
+      }
+      return Promise.reject(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getArticleByParams: async (params: IParamsGetPostByParams) => {
+    try {
+      const response: any = await makeHttpRequest(streamApiConfig.getArticleByParams(params));
+      if (response && response?.data?.data) {
+        return Promise.resolve({
+          data: response.data.data?.list || [],
+          canLoadMore: (params?.offset || 0) + (params?.limit || DEFAULT_LIMIT)
+            <= response.data.data?.meta?.total,
+          total: response.data.data?.meta?.total,
+        });
+      }
+      return Promise.reject(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
   getReportContent: (params: IParamGetReportContent) => withHttpRequestPromise(
     streamApiConfig.getReportContent, params,
   ),
