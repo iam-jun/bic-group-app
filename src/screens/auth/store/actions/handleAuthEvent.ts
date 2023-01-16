@@ -70,6 +70,7 @@ const handleAuthEvent = (set, get) => async (data: HubCapsule) => {
 
       // saveUserToSharedPreferences
       const payload = {
+        ...sessionData,
         currentSession,
         name: userResponse.name,
         email: userResponse.email,
