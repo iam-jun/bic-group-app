@@ -21,6 +21,7 @@ import Schedule from '../CreateArticle/components/Schedule';
 import { useBaseHook } from '~/hooks';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
 import spacing from '~/theme/spacing';
+import useCreateArticleStore from '../CreateArticle/store';
 
 const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
   const { articleId } = props?.route?.params || {};
@@ -50,6 +51,7 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
   } = data;
   const isPublishing = useDraftArticleStore((state) => state.isPublishing);
   const { handlePublish } = useCreateArticle({ articleId });
+  const resetEditArticleStore = useCreateArticleStore((state) => state.reset);
 
   const initScript = {
     type: 'initView',
@@ -77,6 +79,11 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
   useEffect(() => {
     getImageUrls();
   }, []);
+
+  useEffect(
+    () => resetEditArticleStore,
+    [],
+  );
 
   const injectJavaScript = (script: any) => {
     ref?.current?.injectJavaScript?.(script);
