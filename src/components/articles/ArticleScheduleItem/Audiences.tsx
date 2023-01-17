@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import { IPostAudience } from '~/interfaces/IPost';
 import { useRootNavigation } from '~/hooks/navigation';
 import Text from '~/baseComponents/Text';
@@ -9,12 +10,15 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useBaseHook } from '~/hooks';
 import mainStack from '~/router/navigator/MainStack/stack';
 import Tag from '~/baseComponents/Tag';
+import modalActions from '~/storeRedux/modal/actions';
+import { PostAudiencesModal } from '~/components/posts';
 
 interface IAudiences {
-    audience: IPostAudience;
+  audience: IPostAudience;
 }
 
 const Audiences: React.FC<IAudiences> = ({ audience }) => {
+  const dispatch = useDispatch();
   const theme = useTheme();
   const { colors } = theme;
   const { rootNavigation } = useRootNavigation();
@@ -38,31 +42,66 @@ const Audiences: React.FC<IAudiences> = ({ audience }) => {
     }
   };
 
-  const renderItem = ({ item }) => (
-    <Tag
-      style={styles.tagContainer}
-      type="neutral"
-      size="small"
-      label={item.name}
-      onActionPress={() => onPressAudience(item)}
-    />
-  );
+  const onPressMoreItem = () => {
+    dispatch(
+      modalActions.showModal({
+        isOpen: true,
+        isFullScreen: true,
+        titleFullScreen: t('post:title_post_to'),
+        ContentComponent: <PostAudiencesModal data={groups || []} onPressItemAudience={onPressAudience} />,
+      }),
+    );
+  };
 
-  const keyExtractor = (item) => `audiences_${item?.id}`;
+  const renderContent = () => {
+    if (groups.length === 0) {
+      return null;
+    }
+    return (
+      <>
+        {renderItem()}
+        {renderMoreItem()}
+      </>
+    );
+  };
+
+  const renderItem = () => {
+    const firstItem = groups[0];
+    return (
+      <Tag
+        style={styles.tagContainer}
+        type="neutral"
+        size="small"
+        label={firstItem.name}
+        onActionPress={() => onPressAudience(firstItem)}
+        textProps={{ numberOfLines: 1 }}
+      />
+    );
+  };
+
+  const renderMoreItem = () => {
+    if (groups.length === 1) {
+      return null;
+    }
+    return (
+      <Tag
+        style={styles.tagContainer}
+        type="neutral"
+        size="small"
+        label={renderLabelMoreItem()}
+        onActionPress={onPressMoreItem}
+        textProps={{ numberOfLines: 1 }}
+      />
+    );
+  };
+
+  const renderLabelMoreItem = () => t('common:text_other_audience', { count: groups.length - 1 });
 
   return (
     <View style={styles.boxAudience}>
-      <Text.BodyXS color={colors.neutral60}>
-        {`${t('common:audiences')}:`}
-      </Text.BodyXS>
+      <Text.BodyXS color={colors.neutral60}>{`${t('common:audiences')}:`}</Text.BodyXS>
       <ViewSpacing width={spacing.margin.small} />
-      <FlatList
-        data={groups}
-        renderItem={renderItem}
-        keyExtractor={keyExtractor}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-      />
+      <ScrollView horizontal>{renderContent()}</ScrollView>
     </View>
   );
 };
@@ -75,6 +114,7 @@ const styles = StyleSheet.create({
   },
   tagContainer: {
     alignSelf: 'baseline',
+    maxWidth: 255,
   },
 });
 

@@ -194,6 +194,8 @@
     "articles": "Articles",
     "last_updated": "Last updated",
     "audiences": "Audiences",
+    "text_other_audience_one": "+ {{count}} other",
+    "text_other_audience_other": "+ {{count}} others",
     "text_save_fail": "Save fail.",
     "text_unsave_fail": "Unsave fail.",
     "copy_photo": "Copy Photo",
