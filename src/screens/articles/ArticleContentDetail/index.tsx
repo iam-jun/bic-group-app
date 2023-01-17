@@ -70,8 +70,10 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
   }, [series, content, isMounted]);
 
   useEffect(() => {
-    getImageUrls();
-  }, []);
+    if (content) {
+      getImageUrls();
+    }
+  }, [content]);
 
   const onScroll = (event: {offsetY: number}) => {
     const offsetY = event?.offsetY;
