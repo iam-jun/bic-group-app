@@ -113,7 +113,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   tagContainer: {
-    alignSelf: 'baseline',
     maxWidth: 255,
   },
 });

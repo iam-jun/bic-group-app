@@ -77,7 +77,7 @@ const useCreateArticle = ({
 
   const { t } = useBaseHook();
 
-  const isValidScheduleTime = moment(publishedAt).isSameOrAfter(moment());
+  const isValidScheduleTime = () => moment(publishedAt).isSameOrAfter(moment());
 
   // auto save for draft article, so no need to check if content is empty
   const isDraftContentUpdated
@@ -327,7 +327,7 @@ const useCreateArticle = ({
   const handleSchedule = () => {
     if (!validButtonPublish) return;
 
-    if (!isValidScheduleTime) {
+    if (!isValidScheduleTime()) {
       actions.setErrorScheduleSubmiting(t('article:fail_schedule'));
       return;
     }
