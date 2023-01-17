@@ -533,6 +533,7 @@
     "title_settings_privacy": "Settings & privacy",
     "title_billing_payment": "Billing and payment",
     "title_help_support": "Help & Support",
+    "title_report_problem": "Report a problem",
     "title_logout": "Log Out",
     "title_your_content": "Your Content"
   },
@@ -613,7 +614,8 @@
     "article_schedule_title": "Article Schedule",
     "text_schedule": "Schedule",
     "fail_schedule": "Fail Schedule",
-    "successful_schedule": "Successful Schedule"
+    "successful_schedule": "Successful Schedule",
+    "text_delete_article_success": "Article deleted"
   },
   "post": {
     "news_feed": "News Feed",

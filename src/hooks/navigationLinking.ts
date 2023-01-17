@@ -41,7 +41,11 @@ const getLinkingCustomConfig = (
               seriesId: match.seriesId,
             });
             break;
-
+          case DEEP_LINK_TYPES.ARTICLE_DETAIL:
+            navigation?.navigate?.(mainStack.articleContentDetail, {
+              articleId: match.articleId,
+            });
+            break;
           default:
             listener(url);
         }

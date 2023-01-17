@@ -493,6 +493,7 @@
     "title_settings_privacy": "Cài đặt & riêng tư",
     "title_billing_payment": "Hoá đơn và thanh toán",
     "title_help_support": "Trung tâm trợ giúp",
+    "title_report_problem": "Báo cáo sự cố",
     "title_logout": "Đăng xuất",
     "title_your_content": "Nội dung của bạn"
   },
@@ -573,7 +574,8 @@
     "article_schedule_title": "Đặt lịch bài viết",
     "text_schedule": "Đặt lịch",
     "fail_schedule": "Đặt lịch thất bại",
-    "successful_schedule": "Đặt lịch thành công"
+    "successful_schedule": "Đặt lịch thành công",
+    "text_delete_article_success": "Đã xóa bài viết"
   },
   "post": {
     "news_feed": "News Feed",

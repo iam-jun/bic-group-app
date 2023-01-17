@@ -141,7 +141,10 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
   };
 
   return (
-    <ScreenWrapper style={styles.container}>
+    <ScreenWrapper
+      style={styles.container}
+      testID="article_review_schedule"
+    >
       <Header
         removeBorderAndShadow
         rightIcon="menu"

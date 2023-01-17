@@ -44,7 +44,10 @@ const ArticleBoxScheduleTime: React.FC<ArticleBoxScheduleTimeProps> = ({
   } = isFail ? scheduleTimeStyle.fail : scheduleTimeStyle.normal;
 
   return (
-    <View style={[styles.container, { backgroundColor }]}>
+    <View
+      style={[styles.container, { backgroundColor }]}
+      testID="article_box_schedule_time"
+    >
       <View style={styles.boxTop}>
         <Text.BodyXS color={textColor} useI18n>
           article:text_article_schedule

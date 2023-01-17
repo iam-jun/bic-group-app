@@ -31,8 +31,8 @@ export default function* deletePost({
       showToast({ content: 'post:delete_post_complete' });
     }
   } catch (e: any) {
-    if (e?.meta?.errors?.groupsDenied) {
-      callbackError?.(e.meta.errors.groupsDenied);
+    if (e?.meta?.errors?.groupsDenied && !!callbackError) {
+      callbackError(e.meta.errors.groupsDenied);
     } else showToastError(e);
   }
 }

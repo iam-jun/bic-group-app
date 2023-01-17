@@ -23,6 +23,7 @@ import useCommunitiesStore from '~/store/entities/communities';
 import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import { ITag } from '~/interfaces/ITag';
 import Divider from '~/beinComponents/Divider';
+import DeletedItem from '~/components/DeletedItem';
 
 export interface ArticleItemProps {
   data: IPost;
@@ -56,6 +57,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
     communities,
     tags,
     reported,
+    deleted = false,
   } = data || {};
 
   const {
@@ -151,6 +153,10 @@ const ArticleItem: FC<ArticleItemProps> = ({
       />
     </>
   );
+
+  if (deleted) {
+    return <DeletedItem title="article:text_delete_article_success" />;
+  }
 
   if (reported) {
     return (<PlaceHolderRemoveContent label="common:text_article_reported" />);

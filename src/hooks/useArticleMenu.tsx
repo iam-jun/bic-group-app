@@ -1,5 +1,6 @@
 import React from 'react';
 import i18next from 'i18next';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 import { useDispatch } from 'react-redux';
 import { Keyboard } from 'react-native';
@@ -12,6 +13,10 @@ import useCommonController from '~/screens/store';
 import { getPostMenus, getRootGroupids } from '~/helpers/post';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import { TargetType, ReportTo } from '~/interfaces/IReport';
+import { getLink, LINK_ARTICLE } from '~/utils/link';
+import useModalStore from '~/store/modal';
+import { Button } from '~/baseComponents';
+import postActions from '~/storeRedux/post/actions';
 
 const useArticleMenu = (
   data: IPost,
@@ -21,17 +26,13 @@ const useArticleMenu = (
   const dispatch = useDispatch();
 
   const commonActions = useCommonController((state) => state.actions);
+  const { showToast, showAlert } = useModalStore((state) => state.actions);
 
   if (!data) return null;
 
   const {
     id: articleId, reactionsCount, isSaved, type, audience,
   } = data;
-
-  const onPress = () => {
-    dispatch(modalActions.hideBottomList());
-    dispatch(modalActions.showAlertNewFeature());
-  };
 
   const onPressEdit = () => {
     dispatch(modalActions.hideBottomList());
@@ -64,6 +65,30 @@ const useArticleMenu = (
     }));
   };
 
+  const onDelete = () => {
+    dispatch(modalActions.hideBottomList());
+    showAlert({
+      title: i18next.t('article:menu:delete'),
+      content: i18next.t('post:content_delete_article'),
+      cancelBtn: true,
+      confirmLabel: i18next.t('common:btn_delete'),
+      ConfirmBtnComponent: Button.Danger,
+      confirmBtnProps: { type: 'ghost' },
+      onConfirm: () => dispatch(postActions.deletePost({
+        id: articleId,
+        // callbackError: handleDeletePostError,
+      })),
+    });
+  };
+
+  const onPressCopyLink = () => {
+    dispatch(modalActions.hideBottomList());
+    Clipboard.setString(getLink(
+      LINK_ARTICLE, articleId,
+    ));
+    showToast({ content: 'common:text_link_copied_to_clipboard' });
+  };
+
   const defaultData = [
     {
       id: 1,
@@ -87,7 +112,7 @@ const useArticleMenu = (
       leftIcon: 'LinkHorizontal',
       title: i18next.t('article:menu:copy_link'),
       requireIsActor: false,
-      onPress,
+      onPress: onPressCopyLink,
     },
     {
       id: 4,
@@ -95,7 +120,7 @@ const useArticleMenu = (
       leftIcon: 'TrashCan',
       title: i18next.t('article:menu:delete'),
       requireIsActor: true,
-      onPress,
+      onPress: onDelete,
     },
     {
       id: 5,
