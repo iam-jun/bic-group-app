@@ -164,6 +164,8 @@
     "articles": "Bài viết",
     "last_updated": "Cập nhật",
     "audiences": "Đối tượng",
+    "text_other_audience_one": "+ {{count}} đối tượng",
+    "text_other_audience_other": "+ {{count}} đối tượng",
     "text_save_fail": "Lưu thất bại.",
     "text_unsave_fail": "Bỏ lưu thất bại.",
     "copy_photo": "Sao chép ảnh",
