@@ -10,7 +10,7 @@ import { IAudienceGroup } from '~/interfaces/IPost';
 import AlertDeleteAudiencesConfirmContent from '~/components/posts/AlertDeleteAudiences';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import DeletedItem from '../../../components/series/DeletedItem';
+import DeletedItem from '../../../components/DeletedItem';
 import SeriesDetailHeader from './components/SeriesDetailHeader';
 import SeriesDetailArticleItem from './components/SeriesDetailArticleItem';
 import useSeriesStore, { ISeriesState } from '../store';
