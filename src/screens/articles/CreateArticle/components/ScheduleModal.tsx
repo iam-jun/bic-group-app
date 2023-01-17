@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC, useEffect, useState } from 'react';
-import { View, StyleSheet, Modal } from 'react-native';
+import {
+  View, StyleSheet, Modal, Platform,
+} from 'react-native';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import Text from '~/baseComponents/Text';
@@ -81,6 +82,8 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
 
   const minDateTime = getMinDateTime();
 
+  const isValidTime = (time: Date) => moment(time).isSameOrAfter(minDateTime);
+
   const handleChangeDatePicker = (datetime?: Date) => {
     setIsSetDate(true);
     const selectedDate = moment(datetime || minDateTime);
@@ -92,8 +95,14 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
   };
 
   const handleChangeTimePicker = (datetime?: Date) => {
+    let pickedTime = datetime;
+    // on Android, timepicker doesn't support min time,
+    // so we need to recheck valid selected time here
+    if (Platform.OS === 'android' && !isValidTime(datetime)) {
+      pickedTime = new Date(publishedAt) || minDateTime;
+    }
     setIsSetTime(true);
-    const selectedTime = moment(datetime || minDateTime);
+    const selectedTime = moment(pickedTime || minDateTime);
     const newPublishedAt = moment(publishedAt || minDateTime)
       .hour(selectedTime.hour())
       .minute(selectedTime.minute())
