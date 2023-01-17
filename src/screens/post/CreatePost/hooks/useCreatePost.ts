@@ -289,8 +289,9 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
       const notExpired
         = new Date().getTime()
         < new Date(initPostData?.setting?.importantExpiredAt).getTime();
+
       const initImportant = {
-        active: !!notExpired || initPostData?.setting?.isImportant,
+        active: !!notExpired && initPostData?.setting?.isImportant,
         expiresTime: !!notExpired
           ? initPostData?.setting?.importantExpiredAt
           : null,
