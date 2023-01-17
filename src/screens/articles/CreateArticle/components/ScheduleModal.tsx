@@ -99,7 +99,7 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
     // on Android, timepicker doesn't support min time,
     // so we need to recheck valid selected time here
     if (Platform.OS === 'android' && !isValidTime(datetime)) {
-      pickedTime = new Date(publishedAt) || minDateTime;
+      pickedTime = new Date(publishedAt || minDateTime);
     }
     setIsSetTime(true);
     const selectedTime = moment(pickedTime || minDateTime);
