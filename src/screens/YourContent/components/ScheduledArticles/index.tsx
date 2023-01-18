@@ -39,14 +39,16 @@ const ScheduledArticles = () => {
   };
 
   const onLoadMore = () => {
-    getData(false);
+    if (hasNextPage) {
+      getData(false);
+    }
   };
 
   const renderEmptyComponent = () => {
     if (hasNextPage) return null;
 
     return (
-      <View style={styles.boxEmpty}>
+      <View style={styles.boxEmpty} testID="schedule_article.empty_view">
         <Image
           resizeMode="contain"
           source={images.img_empty_search_post}
@@ -81,6 +83,7 @@ const ScheduledArticles = () => {
 
   return (
     <FlatList
+      testID="schedule_article.content"
       data={data}
       renderItem={renderItem}
       keyExtractor={keyExtractor}

@@ -4,12 +4,11 @@ import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { rootSwitch } from '~/router/stack';
 import { IAuthState } from '~/screens/auth/store';
-import FileUploader from '~/services/fileUploader';
 import { deleteTokenMessage } from '~/services/firebase';
-import ImageUploader from '~/services/imageUploader';
 import { clearAllSharedPreferences } from '~/services/sharePreferences';
 import showToastError from '~/store/helper/showToastError';
 import resetAllStores from '~/store/resetAllStores';
+import useUploaderStore from '~/store/uploader';
 import Store from '~/storeRedux';
 import modalActions from '~/storeRedux/modal/actions';
 
@@ -54,8 +53,7 @@ const signOut = (set, get) => async () => {
 };
 
 const resetUploader = () => {
-  FileUploader.getInstance()?.resetData?.();
-  ImageUploader.getInstance()?.resetData?.();
+  useUploaderStore.getState().reset();
 };
 
 const removePushToken = async () => {

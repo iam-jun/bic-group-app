@@ -3,9 +3,10 @@ import { IUploadType } from '~/configs/resourceConfig';
 import { IFilePicked } from '~/interfaces/common';
 
 import { IUserImageUpload } from '~/interfaces/IEditUser';
-import ImageUploader, { IGetFile } from '~/services/imageUploader';
 import menuActions from '../actions';
 import useMenuController from '~/screens/Menu/store';
+import { makeHttpRequest } from '~/api/apiRequest';
+import { uploadApiConfig } from '~/api/UploadApi';
 import showToastError from '~/store/helper/showToastError';
 
 export default function* uploadImage({
@@ -23,12 +24,12 @@ export default function* uploadImage({
     yield updateLoadingImageState(
       fieldName, true,
     );
-    const data: IGetFile = yield call(
+    const data = yield call(
       upload, file, uploadType,
     );
 
     useMenuController.getState().actions.editMyProfile({
-      data: { id, [fieldName]: data?.url },
+      data: { id, [fieldName]: data?.url || data?.src },
     });
     if (callback) return callback();
   } catch (err) {
@@ -45,11 +46,10 @@ export default function* uploadImage({
 function* upload(
   file: IFilePicked, uploadType: IUploadType,
 ) {
-  const data: IGetFile = yield ImageUploader.getInstance().upload({
-    file,
-    uploadType,
-  });
-  return data;
+  const uploadResponse = yield makeHttpRequest(uploadApiConfig.uploadImage(
+    uploadType, file,
+  ));
+  return uploadResponse?.data?.data;
 }
 
 function* updateLoadingImageState(

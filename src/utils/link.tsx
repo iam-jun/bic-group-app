@@ -243,6 +243,13 @@ export function getInjectableJSMessage(message) {
   `;
 }
 
+export const getErrorMessageFromResponse = (response: any) => {
+  if (typeof response === 'string') return response;
+
+  const meta = response?.data?.meta || {};
+  return meta?.errors?.[0]?.message || meta?.message;
+};
+
 export const openInAppBrowser = async (url) => {
   const isAvailable = await InAppBrowser.isAvailable();
 

@@ -12,7 +12,6 @@ import commentsSelector from '~/store/entities/comments/selectors';
 import useEditCommentController from './store';
 import useCommentInputStore from '../components/CommentInputView/store';
 import ICommentInputState from '../components/CommentInputView/store/Interface';
-import ImageUploader from '~/services/imageUploader';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { useBaseHook } from '~/hooks';
@@ -25,6 +24,8 @@ import { formatTextWithEmoji } from '~/utils/emojiUtils';
 import { getImagePastedFromClipboard } from '~/utils/common';
 import useModalStore from '~/store/modal';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import useUploaderStore, { IGetFile } from '~/store/uploader';
+import showToastError from '~/store/helper/showToastError';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -54,11 +55,20 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
   const [selectedImage, setSelectedImage] = useState<ICreatePostImage>();
   const [selectedGiphy, setSelectedGiphy] = useState<IGiphy>();
   const [selectedEmoji, setSelectedEmoji] = useState<string>();
-  const [uploading, setUploading] = useState(false);
 
   const [contentLoading, setContentLoading] = useState(true);
 
   const { showToast, showAlert } = useModalStore((state) => state.actions);
+
+  const uploadActions = useUploaderStore((state) => state.actions);
+  const uploadedFile = useUploaderStore(useCallback(
+    (state) => state.uploadedFiles[selectedImage?.file?.name], [selectedImage],
+  ));
+  const uploadError = useUploaderStore(useCallback(
+    (state) => state.errors[selectedImage?.file?.name], [selectedImage],
+  ));
+
+  const isUploading = useUploaderStore.getState().uploadingFiles?.[selectedImage?.file?.name] >= 0;
 
   const isContentHasChange = text !== oldContent;
   const isImageHasChange = oldImages?.[0]?.origin_name
@@ -69,7 +79,7 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
   const isEditHasChange = isImageHasChange || isGifHasChange || isContentHasChange;
   const isContentEmpty = !text?.trim?.() && !selectedImage?.fileName;
 
-  const enableButtonSave = isEditHasChange && !isContentEmpty && (!loading || !uploading);
+  const enableButtonSave = isEditHasChange && !isContentEmpty && (!loading || !isUploading);
   const disableImageOption = !!selectedImage;
   const disableGifOption = !!selectedGiphy;
 
@@ -123,8 +133,20 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
     }, [],
   );
 
+  useEffect(() => {
+    if (selectedImage) {
+      uploadActions.upload({ type: 'image', file: selectedImage.file, uploadType: uploadTypes.commentImage });
+    }
+  }, [selectedImage]);
+
+  useEffect(() => {
+    if (uploadError) {
+      const content = typeof uploadError === 'string' ? uploadError : t('post:error_upload_photo_failed');
+      showToastError(content);
+    }
+  }, [uploadError]);
+
   const clearState = () => {
-    setUploading(false);
     setText('');
     setSelectedImage(undefined);
     setSelectedGiphy(undefined);
@@ -149,7 +171,6 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
         if (canOpenPicker) {
           ImagePicker.openPickerSingle().then((file) => {
             if (!file) return;
-            setUploading(true);
             const image: ICreatePostImage = {
               fileName: file.filename,
               file,
@@ -162,16 +183,14 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
     );
   };
 
-  const handleUploadImageSuccess = (url: string, filename: string) => {
-    if (selectedImage?.fileName === filename) {
-      setSelectedImage({ ...selectedImage, url });
+  const handleUploadImageSuccess = (file: IGetFile) => {
+    if (selectedImage?.fileName === file?.name) {
+      setSelectedImage({ ...selectedImage, url: file?.url });
     }
-    setUploading(false);
   };
 
   const handleRemoveImage = () => {
     setSelectedImage(undefined);
-    setUploading(false);
   };
 
   // only support for iOS
@@ -186,7 +205,6 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
 
       return;
     }
-    setUploading(true);
     const img = getImagePastedFromClipboard(files);
     if (img) {
       setSelectedImage({
@@ -221,9 +239,8 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
       const images = [];
       let giphy;
       if (selectedImage) {
-        const fileUploaded = ImageUploader.getInstance().getFile(selectedImage?.fileName);
         const imageData: IActivityDataImage = {
-          id: fileUploaded?.result?.id,
+          id: uploadedFile?.result?.id,
           name: selectedImage?.url || selectedImage?.fileName || '',
           origin_name: selectedImage?.fileName,
           width: selectedImage?.file?.width,

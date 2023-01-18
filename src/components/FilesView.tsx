@@ -14,11 +14,11 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import appConfig from '~/configs/appConfig';
 import { useBaseHook } from '~/hooks';
 import { IActivityDataFile } from '~/interfaces/IPost';
-import { IGetFile } from '~/services/fileUploader';
 
 import spacing from '~/theme/spacing';
 import { formatBytes } from '~/utils/formatData';
 import Icon from '~/baseComponents/Icon';
+import { IGetFile } from '~/store/uploader';
 
 interface Props extends Partial<UploadingFileProps> {
   files: IGetFile[] | IActivityDataFile[];
@@ -55,7 +55,7 @@ const FilesView = ({
   ) => data.map((
     item: any, index: number,
   ) => (
-    <View key={`create-post-file-${position}-${index}`}>
+    <View key={`create-post-file-${position}-${item?.id || item?.name}-${index}`}>
       <UploadingFile
         file={item}
         onClose={() => onRemoveFile?.(item)}
@@ -70,7 +70,7 @@ const FilesView = ({
   const data = collapsible ? topData : files;
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       {renderFiles(
         data, 'top',
       )}
@@ -108,6 +108,9 @@ const FilesView = ({
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
+    container: {
+      flex: 1,
+    },
     remainingText: {
       marginHorizontal: spacing.margin.large,
       marginTop: spacing.margin.small,

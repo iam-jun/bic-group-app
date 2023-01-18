@@ -9,7 +9,6 @@ export interface IScheduleArticlesState extends IBaseState {
         data: IPost[];
         loading: boolean;
         refreshing: boolean,
-        total: number,
         hasNextPage: boolean,
     },
 
@@ -23,7 +22,6 @@ const initState: InitStateType<IScheduleArticlesState> = {
     data: [],
     loading: false,
     refreshing: false,
-    total: 0,
     hasNextPage: true,
   },
 };

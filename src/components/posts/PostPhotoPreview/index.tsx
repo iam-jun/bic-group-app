@@ -45,7 +45,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   const { colors } = theme;
   const styles = createStyle();
 
-  if (data?.length === 0) {
+  if (!data || data?.length === 0) {
     return null;
   }
   const imageRatio = (data?.[0]?.width || 1) / (data?.[0]?.height || 1);
@@ -151,9 +151,9 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   return (
     <View
       testID="post_photo_preview"
-      style={StyleSheet.flatten([wrapperStyle, style])}
+      style={[wrapperStyle, style]}
     >
-      <View style={StyleSheet.flatten([styles.container, containerStyle])}>
+      <View style={[styles.container, containerStyle]}>
         <View style={{ flex: data?.length === 2 ? 1 : 2 }}>
           <Button
             disabled={disabled}

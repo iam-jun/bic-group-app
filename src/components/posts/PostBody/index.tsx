@@ -126,7 +126,7 @@ const _PostBody: FC<PostBodyProps> = ({
       <View style={styles.contentContainer}>{renderContent()}</View>
       <>
         <PostPhotoPreview
-          data={images || []}
+          data={images}
           uploadType="postImage"
           enableGalleryModal
           onPressMarkSeenPost={onPressMarkSeenPost}

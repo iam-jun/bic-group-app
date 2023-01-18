@@ -21,7 +21,7 @@ import {
 import { IGroup } from '~/interfaces/IGroup';
 import { IUser } from '~/interfaces/IAuth';
 import { IFilePicked } from '~/interfaces/common';
-import { IGetFile } from '~/services/imageUploader';
+import { IGetFile } from '~/store/uploader';
 
 const postActions = {
   setLoadingCreatePost: (payload: boolean) => ({

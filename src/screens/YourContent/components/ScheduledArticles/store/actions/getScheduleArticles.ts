@@ -3,52 +3,51 @@ import { IScheduleArticlesState } from '../index';
 import { IPayloadGetScheduleArticles } from '~/interfaces/IArticle';
 import { PostStatus } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
+import showToastError from '~/store/helper/showToastError';
 
 const getScheduleArticles = (set, get) => async (payload: IPayloadGetScheduleArticles) => {
   const { isRefresh = true } = payload;
   const { scheduleArticles }: IScheduleArticlesState = get();
   const {
     data: listScheduleArticle,
-    hasNextPage,
-    refreshing,
     loading,
   } = scheduleArticles;
+  if (loading) return;
 
   try {
-    if (!refreshing && !loading && (isRefresh || hasNextPage)) {
-      set((state: IScheduleArticlesState) => {
-        if (isRefresh) {
-          state.scheduleArticles.refreshing = true;
-          state.scheduleArticles.total = 0;
-        } else {
-          state.scheduleArticles.loading = true;
-        }
-      }, 'getScheduleArticles');
+    set((state: IScheduleArticlesState) => {
+      if (isRefresh) {
+        state.scheduleArticles.refreshing = true;
+      } else {
+        state.scheduleArticles.loading = true;
+      }
+    }, 'getScheduleArticles');
 
-      const offset = isRefresh ? 0 : listScheduleArticle?.length || 0;
-      const response = await streamApi.getArticleByParams({
-        status: [PostStatus.WAITING_SCHEDULE, PostStatus.SCHEDULE_FAILED],
-        offset,
-      });
-      const newScheduleArticles = isRefresh ? response?.data || [] : listScheduleArticle?.concat(response?.data || []);
+    const offset = isRefresh ? 0 : listScheduleArticle?.length || 0;
+    const params = {
+      status: `${PostStatus.WAITING_SCHEDULE}, ${PostStatus.SCHEDULE_FAILED}`,
+      offset,
+      limit: 10,
+    };
+    const response = await streamApi.getArticleByParams(params);
+    const newScheduleArticles
+      = isRefresh ? response?.data?.list || [] : listScheduleArticle?.concat(response?.data?.list || []);
 
-      set((state: IScheduleArticlesState) => {
-        state.scheduleArticles.data = newScheduleArticles;
-        state.scheduleArticles.hasNextPage = response?.canLoadMore;
-        state.scheduleArticles.refreshing = false;
-        state.scheduleArticles.loading = false;
-        state.scheduleArticles.total = response?.total;
-      }, 'getScheduleArticlesSuccess');
-      usePostsStore.getState().actions.addToPosts({ data: newScheduleArticles });
-    } else {
-      console.warn('\x1b[36m🐣️ action getScheduleArticles cant load more\x1b[0m');
-    }
+    set((state: IScheduleArticlesState) => {
+      state.scheduleArticles.data = newScheduleArticles;
+      state.scheduleArticles.hasNextPage = response?.data?.meta?.hasNextPage;
+      state.scheduleArticles.refreshing = false;
+      state.scheduleArticles.loading = false;
+    }, 'getScheduleArticlesSuccess');
+    usePostsStore.getState().actions.addToPosts({ data: newScheduleArticles });
   } catch (e) {
     set((state: IScheduleArticlesState) => {
       state.scheduleArticles.refreshing = false;
       state.scheduleArticles.loading = false;
+      state.scheduleArticles.hasNextPage = false;
     }, 'getScheduleArticlesError');
     console.error('\x1b[31m🐣️ action getScheduleArticles error: ', e, '\x1b[0m');
+    showToastError(e);
   }
 };
 
