@@ -10,13 +10,14 @@ import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { ArticleFooter } from '~/components/articles';
 import ArticleWebview, { ArticleWebviewRef } from '~/components/articles/ArticleWebview';
+import ContentUnavailable from '~/components/ContentUnavailable';
 import BannerReport from '~/components/Report/BannerReport';
 import useMounted from '~/hooks/mounted';
 import { IRouteParams } from '~/interfaces/IRouter';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import { parseSafe } from '~/utils/common';
-import useArticlesStore from '../ArticleDetail/store';
+import useArticlesStore, { IArticlesState } from '../ArticleDetail/store';
 import { handleMessage } from './helper';
 
 const HEADER_HEIGHT = 244;
@@ -31,7 +32,8 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
   const headerRef = useRef<any>();
 
   const data = usePostsStore(useCallback(postsSelector.getPost(id, {}), [id]));
-  const actions = useArticlesStore((state) => state.actions);
+  const { actions, errors } = useArticlesStore((state: IArticlesState) => state);
+  const isFetchError = errors[id];
 
   const [galleryVisible, setGalleryVisible] = useState(false);
   const [listImage, setListImage] = useState([]);
@@ -137,6 +139,10 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
       />
     );
   };
+
+  if (isFetchError) {
+    return <ContentUnavailable />;
+  }
 
   return (
     <ScreenWrapper testID="article_content_detail" isFullView style={styles.container}>

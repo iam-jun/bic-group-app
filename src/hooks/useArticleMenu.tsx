@@ -4,6 +4,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 
 import { useDispatch } from 'react-redux';
 import { Keyboard } from 'react-native';
+import useArticleController from '~/screens/articles/store';
 import modalActions from '~/storeRedux/modal/actions';
 import { IPost } from '~/interfaces/IPost';
 import { useRootNavigation } from './navigation';
@@ -16,7 +17,6 @@ import { TargetType, ReportTo } from '~/interfaces/IReport';
 import { getLink, LINK_ARTICLE } from '~/utils/link';
 import useModalStore from '~/store/modal';
 import { Button } from '~/baseComponents';
-import postActions from '~/storeRedux/post/actions';
 
 const useArticleMenu = (
   data: IPost,
@@ -74,10 +74,9 @@ const useArticleMenu = (
       confirmLabel: i18next.t('common:btn_delete'),
       ConfirmBtnComponent: Button.Danger,
       confirmBtnProps: { type: 'ghost' },
-      onConfirm: () => dispatch(postActions.deletePost({
-        id: articleId,
-        // callbackError: handleDeletePostError,
-      })),
+      onConfirm: () => useArticleController.getState().actions.deleteArticle(
+        articleId, 'article:text_delete_article_success',
+      ),
     });
   };
 
