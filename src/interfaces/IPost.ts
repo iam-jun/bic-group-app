@@ -588,7 +588,7 @@ export interface IAddChildCommentToComment {
 }
 
 export interface IParamsGetPostByParams {
-  status: string[];
+  status: string;
   offset?: number;
   limit?: number;
 }

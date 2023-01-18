@@ -493,9 +493,7 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}articles/params`,
     params: {
-      status: params?.status,
-      offset: params?.offset || 0,
-      limit: params?.limit || 10,
+      ...params,
     },
   }),
   getReportContent: (params: IParamGetReportContent): HttpApiRequestConfig => ({
@@ -799,22 +797,9 @@ const streamApi = {
       return Promise.reject(e);
     }
   },
-  getArticleByParams: async (params: IParamsGetPostByParams) => {
-    try {
-      const response: any = await makeHttpRequest(streamApiConfig.getArticleByParams(params));
-      if (response && response?.data?.data) {
-        return Promise.resolve({
-          data: response.data.data?.list || [],
-          canLoadMore: (params?.offset || 0) + (params?.limit || DEFAULT_LIMIT)
-            <= response.data.data?.meta?.total,
-          total: response.data.data?.meta?.total,
-        });
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  getArticleByParams: async (params: IParamsGetPostByParams) => withHttpRequestPromise(
+    streamApiConfig.getArticleByParams, params,
+  ),
   getReportContent: (params: IParamGetReportContent) => withHttpRequestPromise(
     streamApiConfig.getReportContent, params,
   ),

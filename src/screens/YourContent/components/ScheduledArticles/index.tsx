@@ -39,7 +39,9 @@ const ScheduledArticles = () => {
   };
 
   const onLoadMore = () => {
-    getData(false);
+    if (hasNextPage) {
+      getData(false);
+    }
   };
 
   const renderEmptyComponent = () => {
