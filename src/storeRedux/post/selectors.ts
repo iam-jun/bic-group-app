@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import { get } from 'lodash';
-import { IGetFile } from '~/services/imageUploader';
+import { IGetFile } from '~/store/uploader';
 
 export const getTotalFileSize = () => useSelector(createSelector(
   (state) => get(

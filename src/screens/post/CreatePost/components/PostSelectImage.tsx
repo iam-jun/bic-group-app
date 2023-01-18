@@ -11,6 +11,7 @@ import dimension from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
 import postActions from '~/storeRedux/post/actions';
+import { IGetFile } from '~/store/uploader';
 
 const PostSelectImage = () => {
   const theme: ExtendedTheme = useTheme();
@@ -20,20 +21,16 @@ const PostSelectImage = () => {
   const selectedImagesDraft: ICreatePostImage[] = useKeySelector(postKeySelector.createPost.imagesDraft) || [];
 
   const onUploadSuccess = (
-    url: string, fileName: string, index:number,
+    file: IGetFile,
   ) => {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[36m🐣️ index onUploadSuccess ${fileName}: ${url}\x1b[0m`);
-    const newList = [];
-    for (let imageIndex = 0; imageIndex < selectedImagesDraft.length; imageIndex++) {
-      const image = selectedImagesDraft[imageIndex];
-      if (imageIndex === index) {
-        newList.push({ ...image, fileName, uploading: false });
-        // eslint-disable-next-line no-continue
-        continue;
-      }
-      newList.push(image);
-    }
+    console.log(`\x1b[36m🐣️ index onUploadSuccess ${file?.name}: ${file?.url}\x1b[0m`);
+
+    const newList = selectedImagesDraft.map((selectImage) => (selectImage?.file?.name === file?.name
+      ? { ...selectImage, uploading: false }
+      : selectImage
+    ));
+
     dispatch(postActions.setCreatePostImagesDraft(newList));
     dispatch(postActions.setCreatePostImages(newList));
   };
@@ -66,7 +63,7 @@ const PostSelectImage = () => {
         url={url}
         width={dfWidth}
         height={dfWidth * ratio}
-        onUploadSuccess={(url: string, fileName: string) => { onUploadSuccess(url, fileName, index); }}
+        onUploadSuccess={onUploadSuccess}
         onPressRemove={() => onPressRemoveImage(
           item, index,
         )}

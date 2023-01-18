@@ -28,12 +28,12 @@ import postKeySelector from '~/storeRedux/post/keySelector';
 import { useBaseHook } from '~/hooks';
 import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
 import { getMentionsFromContent } from '~/helpers/post';
-import { IGetFile } from '~/services/fileUploader';
 import useDraftPostStore from '../../../Draft/DraftPost/store';
 import IDraftPostState from '../../../Draft/DraftPost/store/Interface';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
 import useLinkPreview from './useLinkPreview';
+import { IGetFile } from '~/store/uploader';
 import useModalStore from '~/store/modal';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 

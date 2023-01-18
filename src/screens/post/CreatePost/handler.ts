@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import { Keyboard } from 'react-native';
-import FileUploader from '~/services/fileUploader';
+import useUploaderStore from '~/store/uploader';
 import showAlert from '~/store/helper/showAlert';
 import showToast from '~/store/helper/showToast';
 
@@ -35,7 +35,7 @@ export const handleBack = ({
       return;
     }
   } else if (hasPostId) {
-    const hasUploadingProcess = FileUploader.getInstance().hasUploadingProcess();
+    const hasUploadingProcess = Object.keys(useUploaderStore.getState().uploadingFiles).length > 0;
 
     if (hasUploadingProcess) {
       showAlert({
@@ -45,7 +45,7 @@ export const handleBack = ({
         cancelLabel: i18next.t('common:btn_leave'),
         confirmLabel: i18next.t('common:btn_stay_on_this_page'),
         onCancel: () => {
-          FileUploader.getInstance().cancelAllFiles();
+          useUploaderStore.getState().actions.cancelAllFiles();
           rootNavigation.goBack();
         },
       });
