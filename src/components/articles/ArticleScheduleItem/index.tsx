@@ -29,7 +29,10 @@ const ArticleScheduleItem: React.FC<ArticleScheduleItemProps> = ({ data }) => {
   };
 
   return (
-    <Button onPress={goToArticleReviewSchedule}>
+    <Button
+      onPress={goToArticleReviewSchedule}
+      testID="article_schedule.btn_content"
+    >
       <ArticleBoxScheduleTime
         publishedAt={publishedAt}
         status={status}
