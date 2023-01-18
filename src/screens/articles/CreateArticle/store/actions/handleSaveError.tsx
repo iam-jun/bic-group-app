@@ -37,7 +37,7 @@ const handleValidateSeriesTagsError = (set, get, error: any, onNext: () => void,
 
 const handleSaveError = (set, get) => (error, onNext, titleAlert) => {
   const errorCode = error?.code;
-  if (errorCode === ApiErrorCode.Post.VALIDATION_ERROR) {
+  if (errorCode === ApiErrorCode.Post.ARTICLE_INVALID_PARAM) {
     handleValidateSeriesTagsError(set, get, error, onNext, titleAlert);
   } else {
     showToastError(error);

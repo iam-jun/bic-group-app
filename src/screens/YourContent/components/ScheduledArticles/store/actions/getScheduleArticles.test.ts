@@ -44,7 +44,6 @@ describe('getScheduleArticles', () => {
 
     useScheduleArticlesStore.setState((state: IScheduleArticlesState) => {
       state.scheduleArticles.data = [];
-      state.scheduleArticles.total = 0;
       state.scheduleArticles.hasNextPage = false;
       return state;
     });
@@ -82,7 +81,6 @@ describe('getScheduleArticles', () => {
       result.current.actions.getScheduleArticles({ isRefresh: true });
     });
     expect(result.current.scheduleArticles.refreshing).toBe(true);
-    expect(result.current.scheduleArticles.total).toBe(0);
     expect(spy).toBeCalled();
 
     act(() => {
@@ -93,7 +91,6 @@ describe('getScheduleArticles', () => {
     expect(result.current.scheduleArticles.hasNextPage).toBe(true);
     expect(result.current.scheduleArticles.refreshing).toBe(false);
     expect(result.current.scheduleArticles.loading).toBe(false);
-    expect(result.current.scheduleArticles.total).toBe(1);
   });
 
   it('should call api getArticleByParams when isRefresh = false success', () => {
@@ -124,6 +121,5 @@ describe('getScheduleArticles', () => {
     expect(result.current.scheduleArticles.data).toEqual(response.data);
     expect(result.current.scheduleArticles.refreshing).toBe(false);
     expect(result.current.scheduleArticles.loading).toBe(false);
-    expect(result.current.scheduleArticles.total).toBe(1);
   });
 });

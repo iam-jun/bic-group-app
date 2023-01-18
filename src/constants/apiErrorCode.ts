@@ -12,7 +12,8 @@ const Post = {
   COPIED_COMMENT_IS_DELETED: 'app.comment.not_existing.app_error',
   POST_PRIVACY: 'api.forbidden',
   POST_DELETED: 'app.post.not_existing.app_error',
-  VALIDATION_ERROR: 'api.validation_error',
+  VALIDATION_ERROR: 'api.validation_error', // invalid input send to backend
+  ARTICLE_INVALID_PARAM: 'app.article.invalid_parameter', // invalid series or tags of article
 };
 
 const Group = {

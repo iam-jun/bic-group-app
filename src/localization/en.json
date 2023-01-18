@@ -617,7 +617,7 @@
     "text_schedule": "Schedule",
     "fail_schedule": "Fail Schedule",
     "successful_schedule": "Successful Schedule",
-    "text_delete_article_success": "Article deleted"
+    "text_delete_article_success": "Your article has been deleted"
   },
   "post": {
     "news_feed": "News Feed",

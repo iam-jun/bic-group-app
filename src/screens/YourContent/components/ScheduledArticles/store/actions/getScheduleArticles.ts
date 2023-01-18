@@ -25,7 +25,7 @@ const getScheduleArticles = (set, get) => async (payload: IPayloadGetScheduleArt
 
     const offset = isRefresh ? 0 : listScheduleArticle?.length || 0;
     const params = {
-      status: `${PostStatus.WAITING_SCHEDULE}, ${PostStatus.SCHEDULE_FAILED}`,
+      status: `${PostStatus.WAITING_SCHEDULE},${PostStatus.SCHEDULE_FAILED}`,
       offset,
       limit: 10,
     };
