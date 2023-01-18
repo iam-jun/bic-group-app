@@ -9,7 +9,6 @@ describe('ScheduledArticles component', () => {
   it('render correctly', () => {
     useScheduleArticlesStore.setState((state: IScheduleArticlesState) => {
       state.scheduleArticles.data = [mockArticle] as IPost[];
-      state.scheduleArticles.total = 1;
       return state;
     });
     const rendered = renderWithRedux(<ScheduledArticles />);
@@ -22,7 +21,6 @@ describe('ScheduledArticles component', () => {
   it('should render empty view when schedule aritcles are empty end cant load more', () => {
     useScheduleArticlesStore.setState((state: IScheduleArticlesState) => {
       state.scheduleArticles.data = [] as IPost[];
-      state.scheduleArticles.total = 0;
       state.scheduleArticles.hasNextPage = false;
       return state;
     });
