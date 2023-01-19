@@ -135,6 +135,7 @@ import { faSquareMinus as faSquareMinusSolid } from '@fortawesome/pro-solid-svg-
 import { faHouse } from '@fortawesome/pro-regular-svg-icons/faHouse';
 import { faHouse as faHouseSolid } from '@fortawesome/pro-solid-svg-icons/faHouse';
 import { faBallot } from '@fortawesome/pro-regular-svg-icons/faBallot';
+import { faBallotCheck } from '@fortawesome/pro-regular-svg-icons/faBallotCheck';
 import { faBallot as faBallotSolid } from '@fortawesome/pro-solid-svg-icons/faBallot';
 import { faCompass as faCompassSolid } from '@fortawesome/pro-solid-svg-icons/faCompass';
 import { faWallet } from '@fortawesome/pro-regular-svg-icons/faWallet';
@@ -361,6 +362,7 @@ export const initFontAwesomeIcon = () => {
     faHouse,
     faHouseSolid,
     faBallot,
+    faBallotCheck,
     faBallotSolid,
     faCompassSolid,
     faWallet,
@@ -570,6 +572,7 @@ export const fontAwesomeIcons = {
   House: 'fa-regular fa-house',
   HouseSolid: 'fa-solid fa-house',
   Ballot: 'fa-regular fa-ballot',
+  BallotCheck: 'fa-regular fa-ballot-check',
   BallotSolid: 'fa-solid fa-ballot',
   CompassSolid: 'fa-solid fa-compass',
   Wallet: 'fa-regular fa-wallet',

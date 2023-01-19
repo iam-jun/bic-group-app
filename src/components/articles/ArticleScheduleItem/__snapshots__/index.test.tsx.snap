@@ -31,6 +31,7 @@ exports[`ArticleScheduleItem component render correctly 1`] = `
         },
       ]
     }
+    testID="article_box_schedule_time"
   >
     <View
       style={
@@ -359,6 +360,153 @@ exports[`ArticleScheduleItem component render correctly 1`] = `
     <View
       style={
         Object {
+          "marginTop": 8,
+        }
+      }
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "flexDirection": "row",
+            "opacity": 1,
+          }
+        }
+        testID="button_wrapper"
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "borderRadius": 4,
+                "height": 24,
+                "width": 24,
+              },
+              undefined,
+            ]
+          }
+          testID="avatar"
+        >
+          <View
+            style={
+              Array [
+                Array [
+                  Object {
+                    "borderRadius": 4,
+                    "height": 24,
+                    "width": 24,
+                  },
+                  Object {
+                    "borderRadius": 12,
+                  },
+                ],
+                Object {},
+              ]
+            }
+            testID="avatar_container"
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "overflow": "hidden",
+                  },
+                  Array [
+                    Array [
+                      Object {
+                        "borderRadius": 4,
+                        "height": 24,
+                        "width": 24,
+                      },
+                      Object {
+                        "borderRadius": 12,
+                      },
+                    ],
+                    Object {
+                      "borderColor": "#F2F5F8",
+                      "borderWidth": 2,
+                    },
+                    Object {
+                      "backgroundColor": "#FFFFFF",
+                    },
+                  ],
+                ]
+              }
+            >
+              <FastImageView
+                onFastImageError={[Function]}
+                resizeMode="cover"
+                source={
+                  Object {
+                    "uri": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/c6b8b056-7d77-4382-b95c-010c2fda4809.jpg",
+                  }
+                }
+                style={
+                  Object {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  }
+                }
+                testID="avatar.image"
+              />
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "height": undefined,
+              "paddingHorizontal": undefined,
+              "paddingVertical": undefined,
+              "width": 8,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "flex": 1,
+            }
+          }
+        >
+          <Text
+            numberOfLines={1}
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 11,
+                },
+                Object {
+                  "color": "#282E53",
+                },
+                undefined,
+              ]
+            }
+          >
+            Nguyen Thi Thu Quyền
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
           "alignItems": "center",
           "flexDirection": "row",
           "marginTop": 8,
@@ -393,166 +541,106 @@ exports[`ArticleScheduleItem component render correctly 1`] = `
         }
       />
       <RCTScrollView
-        data={
-          Array [
-            Object {
-              "communityId": "020a31b5-25a4-443a-a04d-9f3cfe2ca6b0",
-              "icon": "https://evolgroup.vn/wp-content/uploads/sites/18/2020/04/Thumb-EVOL.jpg",
-              "id": "452f371c-58c3-45cb-abca-d68c70b82df2",
-              "isCommunity": true,
-              "name": "Community của Hoàng",
-              "privacy": "PUBLIC",
-              "rootGroupId": "452f371c-58c3-45cb-abca-d68c70b82df2",
-            },
-            Object {
-              "communityId": "ce58beb6-6b0d-414b-ab0b-a5f37bebe68f",
-              "icon": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/a5f52b92-9e6a-4ff9-9420-c14861d1be16.jpg",
-              "id": "91830f8b-3ab1-4899-8811-c4d18af457b5",
-              "isCommunity": true,
-              "name": "Bock Bock",
-              "privacy": "PUBLIC",
-              "rootGroupId": "91830f8b-3ab1-4899-8811-c4d18af457b5",
-            },
-          ]
-        }
-        getItem={[Function]}
-        getItemCount={[Function]}
         horizontal={true}
-        keyExtractor={[Function]}
-        onContentSizeChange={[Function]}
-        onLayout={[Function]}
-        onMomentumScrollBegin={[Function]}
-        onMomentumScrollEnd={[Function]}
-        onScroll={[Function]}
-        onScrollBeginDrag={[Function]}
-        onScrollEndDrag={[Function]}
-        removeClippedSubviews={false}
-        renderItem={[Function]}
-        scrollEventThrottle={50}
-        showsHorizontalScrollIndicator={false}
-        stickyHeaderIndices={Array []}
-        viewabilityConfigCallbackPairs={Array []}
       >
         <View>
           <View
-            onLayout={[Function]}
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
-                  "flexDirection": "row",
-                },
-                null,
-              ]
-            }
-          >
-            <View
-              accessible={true}
-              collapsable={false}
-              focusable={true}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "alignItems": "center",
-                  "alignSelf": "baseline",
-                  "backgroundColor": "#F1F2F8",
-                  "borderRadius": 100,
-                  "flexDirection": "row",
-                  "height": 24,
-                  "justifyContent": "center",
-                  "marginRight": 8,
-                  "opacity": 1,
-                  "paddingLeft": 4,
-                  "paddingRight": 8,
-                }
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F1F2F8",
+                "borderRadius": 100,
+                "flexDirection": "row",
+                "height": 24,
+                "justifyContent": "center",
+                "marginRight": 8,
+                "maxWidth": 255,
+                "opacity": 1,
+                "paddingLeft": 4,
+                "paddingRight": 8,
               }
-              testID="tag.item"
+            }
+            testID="audiences.tag_item"
+          >
+            <Text
+              numberOfLines={1}
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Light",
+                    "fontSize": 11,
+                  },
+                  Object {},
+                  Object {
+                    "color": "#2D3039",
+                    "paddingLeft": 4,
+                  },
+                ]
+              }
+              testID="tag.label"
             >
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 11,
-                    },
-                    Object {},
-                    Object {
-                      "color": "#2D3039",
-                      "paddingLeft": 4,
-                    },
-                  ]
-                }
-                testID="tag.label"
-              >
-                Community của Hoàng
-              </Text>
-            </View>
+              Community của Hoàng
+            </Text>
           </View>
           <View
-            onLayout={[Function]}
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
-                  "flexDirection": "row",
-                },
-                null,
-              ]
-            }
-          >
-            <View
-              accessible={true}
-              collapsable={false}
-              focusable={true}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "alignItems": "center",
-                  "alignSelf": "baseline",
-                  "backgroundColor": "#F1F2F8",
-                  "borderRadius": 100,
-                  "flexDirection": "row",
-                  "height": 24,
-                  "justifyContent": "center",
-                  "marginRight": 8,
-                  "opacity": 1,
-                  "paddingLeft": 4,
-                  "paddingRight": 8,
-                }
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F1F2F8",
+                "borderRadius": 100,
+                "flexDirection": "row",
+                "height": 24,
+                "justifyContent": "center",
+                "marginRight": 8,
+                "maxWidth": 255,
+                "opacity": 1,
+                "paddingLeft": 4,
+                "paddingRight": 8,
               }
-              testID="tag.item"
+            }
+            testID="audiences.tag_more_item"
+          >
+            <Text
+              numberOfLines={1}
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Light",
+                    "fontSize": 11,
+                  },
+                  Object {},
+                  Object {
+                    "color": "#2D3039",
+                    "paddingLeft": 4,
+                  },
+                ]
+              }
+              testID="tag.label"
             >
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 11,
-                    },
-                    Object {},
-                    Object {
-                      "color": "#2D3039",
-                      "paddingLeft": 4,
-                    },
-                  ]
-                }
-                testID="tag.label"
-              >
-                Bock Bock
-              </Text>
-            </View>
+              + 1 other
+            </Text>
           </View>
         </View>
       </RCTScrollView>

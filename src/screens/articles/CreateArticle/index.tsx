@@ -131,7 +131,7 @@ const CreateArticle: FC<CreateArticleProps> = ({
 
   useEffect(() => {
     if (isCreateNewArticle) actions.createArticle();
-    else articleActions.getArticleDetail(articleId);
+    else articleActions.getArticleDetail({ articleId });
   }, []);
 
   useEffect(

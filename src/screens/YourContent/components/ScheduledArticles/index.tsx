@@ -62,7 +62,7 @@ const ScheduledArticles = () => {
   };
 
   const renderItem = ({ item }) => (
-    <ArticleScheduleItem data={item} />
+    <ArticleScheduleItem data={item} showAvatar={false} />
   );
 
   const renderHeaderComponent = () => <ViewSpacing height={spacing.margin.large} />;

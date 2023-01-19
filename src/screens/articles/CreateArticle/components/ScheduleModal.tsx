@@ -56,7 +56,7 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
     setTimeout(() => {
       closeModal();
       if (isFromReviewSchedule) {
-        articlesActions.getArticleDetail(articleId);
+        articlesActions.getArticleDetail({ articleId });
       } else {
         rootNavigation.replace(articleStack.articleReviewSchedule, { articleId });
       }

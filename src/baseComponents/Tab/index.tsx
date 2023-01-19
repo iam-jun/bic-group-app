@@ -31,11 +31,7 @@ const Tab = ({
   const onPress = (item: any, index: number) => {
     onPressTab?.(item, index);
     if (isScrollToIndex) {
-      if (!index) {
-        scrollViewRef?.current?.scrollTo({ x: 0, animated: true });
-      } else {
-        scrollViewRef?.current?.scrollTo({ x: Dimensions.get('window').width * index, animated: true });
-      }
+      scrollViewRef?.current?.scrollTo({ x: Dimensions.get('window').width * index, animated: true });
     }
   };
 

@@ -209,7 +209,8 @@
       "content": "When this happens, it’s usually because the owner only shared it with a small group of people, changed who can see it or it’s been deleted."
     },
     "text_date": "Date",
-    "text_time": "Time"
+    "text_time": "Time",
+    "text_no_data": "No data"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -351,6 +352,7 @@
     "title_membership_settings": "Membership Settings",
     "title_post_settings": "Post Settings",
     "title_module_settings": "Module Settings",
+    "title_schedule_content": "Schedule Content",
     "title_group_name": "Group Name",
     "title_edit_group_name": "Edit Group Name",
     "title_group_description": "Description",

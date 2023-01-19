@@ -3,6 +3,7 @@ import {
   CreateArticle,
   ArticleContentDetail,
   ArticleReviewSchedule,
+  ArticleScheduleContent,
 } from '~/screens/articles';
 import {
   CreateArticleAudience,
@@ -19,6 +20,7 @@ const articleScreens = {
   'article-detail': ArticleDetail,
   'article-content-detail': ArticleContentDetail,
   'article-review-schedule': ArticleReviewSchedule,
+  'article-schedule-content': ArticleScheduleContent,
   'create-article': CreateArticle,
   'create-article-content': CreateArticleContent,
   'create-article-title': CreateArticleTitle,

@@ -5,7 +5,8 @@ import CommunityAdmin from './index';
 
 describe('CommunityAdmin component', () => {
   it('should render data correctly', () => {
-    const wrapper = renderWithRedux(<CommunityAdmin />);
+    const props = { route: { params: { communityId: '123' } } };
+    const wrapper = renderWithRedux(<CommunityAdmin {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
 });

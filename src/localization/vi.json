@@ -178,7 +178,8 @@
       "content": "Khi điều này xảy ra, thường là do chủ sở hữu chỉ chia sẻ nó với một nhóm người, đã thay đổi người có thể nhìn thấy nó hoặc nó đã bị xóa."
     },
     "text_date": "Ngày",
-    "text_time": "Giờ"
+    "text_time": "Giờ",
+    "text_no_data": "Không có dữ liệu"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -317,6 +318,7 @@
     "title_membership_settings": "Cài đặt thành viên",
     "title_post_settings": "Cài đặt bài viết",
     "title_module_settings": "Module Settings",
+    "title_schedule_content": "Lên lịch nội dung",
     "title_group_name": "Tên nhóm",
     "title_edit_group_name": "Chỉnh sửa Tên nhóm",
     "title_group_description": "Mô tả",

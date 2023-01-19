@@ -148,3 +148,22 @@ export interface IPayloadGetScheduleArticles {
   offset?: number;
   isProcessing?: boolean;
 }
+
+export interface IPayloadGetArticleScheduleContent {
+  isRefresh: boolean;
+  groupId: string;
+}
+
+export interface IParamsGetArticleScheduleContent {
+  order: 'ASC' | 'DESC';
+  limit?: number;
+  offset: number;
+  groupIds: string;
+  status: string;
+}
+
+export interface IPayloadGetArticleDetail {
+  articleId: string;
+  isReported?: boolean;
+  isAdmin?: boolean;
+}

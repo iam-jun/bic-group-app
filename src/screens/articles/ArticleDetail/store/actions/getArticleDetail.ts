@@ -1,11 +1,13 @@
 import streamApi from '~/api/StreamApi';
 import { getReportContent } from '~/helpers/common';
-import { IParamGetArticleDetail } from '~/interfaces/IArticle';
+import { IParamGetArticleDetail, IPayloadGetArticleDetail } from '~/interfaces/IArticle';
 import { TargetType } from '~/interfaces/IReport';
 import usePostsStore from '~/store/entities/posts';
+import showToastError from '~/store/helper/showToastError';
 import { IArticlesState } from '..';
 
-const getArticleDetail = (set, get) => async (id: string, isReported?: boolean) => {
+const getArticleDetail = (set, get) => async (payload: IPayloadGetArticleDetail) => {
+  const { articleId: id, isReported, isAdmin } = payload || {};
   const { requestings }: IArticlesState = get();
 
   if (requestings[id]) return;
@@ -15,14 +17,20 @@ const getArticleDetail = (set, get) => async (id: string, isReported?: boolean) 
   }, 'requestingGetArticleDetail');
 
   try {
-    const params = { withComment: true, commentLimit: 10 } as IParamGetArticleDetail;
-
     let response = null;
 
     if (isReported) {
       response = await getReportContent({ id, type: TargetType.ARTICLE });
     } else {
-      const responeArticleDetail = await streamApi.getArticleDetail(id, params);
+      const params = {
+        withComment: !isAdmin,
+        ...(!isAdmin && { commentLimit: 10 }),
+      } as IParamGetArticleDetail;
+
+      const responeArticleDetail = isAdmin
+        ? await streamApi.getArticleDetailByAdmin(id, params)
+        : await streamApi.getArticleDetail(id, params);
+
       if (responeArticleDetail?.data) {
         response = responeArticleDetail.data;
       }
@@ -40,6 +48,7 @@ const getArticleDetail = (set, get) => async (id: string, isReported?: boolean) 
       state.errors[id] = true;
     }, 'getArticlesError');
     console.error('getArticleDetail', error);
+    showToastError(error);
   }
 };
 

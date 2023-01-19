@@ -1,4 +1,5 @@
 import { IObject } from '~/interfaces/common';
+import { IPayloadGetArticleDetail } from '~/interfaces/IArticle';
 import IBaseState from '~/store/interfaces/IBaseState';
 import {
   resetStore,
@@ -11,7 +12,7 @@ export interface IArticlesState extends IBaseState {
   errors: IObject<boolean>;
 
   actions: {
-    getArticleDetail: (id: string, isReported?: boolean) => void,
+    getArticleDetail: (payload: IPayloadGetArticleDetail) => void,
   }
 }
 

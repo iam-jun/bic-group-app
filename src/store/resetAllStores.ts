@@ -48,6 +48,7 @@ import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNo
 import useCommentInputStore from '~/screens/comments/components/CommentInputView/store';
 import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import useReportContentStore from '~/components/Report/store';
+import useArticleScheduleContentStore from '~/screens/articles/ArticleScheduleContent/store';
 
 export const excludedStore = [
   useAuthController,
@@ -79,6 +80,7 @@ const stores = [
   useArticleController,
   useTopicStore,
   useScheduleArticlesStore,
+  useArticleScheduleContentStore,
 
   // others
   useChatStore,
