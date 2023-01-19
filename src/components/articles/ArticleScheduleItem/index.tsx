@@ -8,9 +8,11 @@ import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack
 
 interface ArticleScheduleItemProps {
     data: IPost;
+    showAvatar?: boolean;
+    isAdmin?: boolean;
 }
 
-const ArticleScheduleItem: React.FC<ArticleScheduleItemProps> = ({ data }) => {
+const ArticleScheduleItem: React.FC<ArticleScheduleItemProps> = ({ data, showAvatar = true, isAdmin = false }) => {
   const { rootNavigation } = useRootNavigation();
 
   const {
@@ -25,7 +27,7 @@ const ArticleScheduleItem: React.FC<ArticleScheduleItemProps> = ({ data }) => {
   } = data || {};
 
   const goToArticleReviewSchedule = () => {
-    rootNavigation.navigate(articleStack.articleReviewSchedule, { articleId: id });
+    rootNavigation.navigate(articleStack.articleReviewSchedule, { articleId: id, isAdmin });
   };
 
   return (
@@ -43,7 +45,7 @@ const ArticleScheduleItem: React.FC<ArticleScheduleItemProps> = ({ data }) => {
         audience={audience}
         coverMedia={coverMedia}
         summary={summary}
-        showAvatar={false}
+        showAvatar={showAvatar}
       />
     </Button>
   );

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CommunityAdmin component should render data correctly 1`] = `
+exports[`GroupAdministration component should render data correctly 1`] = `
 <View
   style={
     Array [
@@ -13,7 +13,7 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
       undefined,
     ]
   }
-  testID="CommunityAdmin"
+  testID="GroupAdministration"
 >
   <View
     style={
@@ -164,11 +164,13 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
         Object {
           "alignSelf": "stretch",
           "backgroundColor": "#E3E6F2",
-          "height": 4,
+          "height": 1,
           "marginHorizontal": 0,
           "width": undefined,
         },
-        Object {},
+        Object {
+          "height": 5,
+        },
       ]
     }
     testID="divider"
@@ -198,7 +200,7 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
         ]
       }
     >
-      Community Moderating
+      Group Moderating
     </Text>
     <View>
       <View
@@ -222,7 +224,7 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
             "opacity": 1,
           }
         }
-        testID="community_admin.pending_posts"
+        testID="group_administration.pending_posts"
       >
         <View
           style={
@@ -356,7 +358,7 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
                 ]
               }
             >
-              99+
+              23
             </Text>
           </View>
           <View
@@ -449,7 +451,7 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
         ]
       }
     >
-      Community Settings
+      Group Settings
     </Text>
     <View>
       <View
@@ -473,7 +475,7 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
             "opacity": 1,
           }
         }
-        testID="community_admin.post_settings"
+        testID="group_administration.post_settings"
       >
         <View
           style={
@@ -664,7 +666,198 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
             "opacity": 1,
           }
         }
-        testID="community_admin.schedule_content"
+        testID="group_administration.membership_settings"
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "paddingHorizontal": 16,
+                "paddingVertical": 12,
+              },
+              undefined,
+            ]
+          }
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": true,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={false}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  undefined,
+                  Object {
+                    "backgroundColor": undefined,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View />
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "flex": 1,
+                "marginLeft": 16,
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {},
+                  undefined,
+                ]
+              }
+              testID="menu_item.title"
+            >
+              Membership Settings
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "flexDirection": "row",
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                Object {
+                  "disabled": true,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              hitSlop={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    },
+                    Object {
+                      "marginLeft": 12,
+                    },
+                    Object {
+                      "backgroundColor": undefined,
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      undefined,
+                      undefined,
+                      undefined,
+                    ]
+                  }
+                >
+                  <View
+                    testID="menu_item.right_sub_icon"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        accessibilityState={
+          Object {
+            "disabled": false,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="group_administration.schedule_content"
       >
         <View
           style={

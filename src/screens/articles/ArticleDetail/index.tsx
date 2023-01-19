@@ -77,7 +77,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const isMounted = useMounted();
 
   useEffect(() => {
-    if (isMounted) { actions.getArticleDetail(id); }
+    if (isMounted) { actions.getArticleDetail({ articleId: id }); }
   }, [isMounted]);
 
   useEffect(() => {
@@ -90,7 +90,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
 
   const onRefresh = () => {
     setRefreshing(false);
-    actions.getArticleDetail(id);
+    actions.getArticleDetail({ articleId: id });
   };
 
   const onPressMarkSeenPost = useCallback(() => {

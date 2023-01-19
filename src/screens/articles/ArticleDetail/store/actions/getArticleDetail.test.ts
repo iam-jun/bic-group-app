@@ -15,7 +15,7 @@ describe('getArticleDetail', () => {
     const { result } = renderHook(() => useArticlesStore((state) => state));
     act(() => {
       try {
-        result.current.actions.getArticleDetail(mockArticle.id);
+        result.current.actions.getArticleDetail({ articleId: mockArticle.id });
       } catch (e) {
         expect(e).toBeInstanceOf(TypeError);
         expect(e).toBe(error);
@@ -46,7 +46,7 @@ describe('getArticleDetail', () => {
     jest.useFakeTimers();
     const { result } = renderHook(() => useArticlesStore((state) => state));
     act(() => {
-      result.current.actions.getArticleDetail(mockArticle.id);
+      result.current.actions.getArticleDetail({ articleId: mockArticle.id });
     });
     expect(result.current.requestings[mockArticle.id]).toBeTruthy();
     expect(spy).toBeCalled();

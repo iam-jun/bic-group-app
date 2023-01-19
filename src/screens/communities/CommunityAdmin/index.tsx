@@ -16,6 +16,7 @@ import spacing from '~/theme/spacing';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 
 const CommunityAdmin = (props: any) => {
   const { params } = props.route;
@@ -45,6 +46,12 @@ const CommunityAdmin = (props: any) => {
         id: communityId,
         type: 'community',
       },
+    );
+  };
+
+  const onPressScheduleContent = () => {
+    rootNavigation.navigate(
+      articleStack.articleScheduleContent, { groupId },
     );
   };
 
@@ -101,6 +108,14 @@ const CommunityAdmin = (props: any) => {
         iconProps={{ icon: 'Copy', tintColor: theme.colors.purple50 }}
         rightSubIcon="AngleRightSolid"
         onPress={displayNewFeature}
+      />
+      <MenuItem
+        testID="community_admin.schedule_content"
+        title="settings:title_schedule_content"
+        icon="BallotCheck"
+        iconProps={{ icon: 'BallotCheck', tintColor: theme.colors.purple50 }}
+        rightSubIcon="AngleRightSolid"
+        onPress={onPressScheduleContent}
       />
     </>
   );

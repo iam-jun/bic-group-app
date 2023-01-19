@@ -75,6 +75,7 @@ const Audiences: React.FC<IAudiences> = ({ audience }) => {
         label={firstItem.name}
         onActionPress={() => onPressAudience(firstItem)}
         textProps={{ numberOfLines: 1 }}
+        testID="audiences.tag_item"
       />
     );
   };
@@ -91,6 +92,7 @@ const Audiences: React.FC<IAudiences> = ({ audience }) => {
         label={renderLabelMoreItem()}
         onActionPress={onPressMoreItem}
         textProps={{ numberOfLines: 1 }}
+        testID="audiences.tag_more_item"
       />
     );
   };

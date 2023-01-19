@@ -60,7 +60,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
     },
   };
 
-  const isMounted = useMounted(() => actions.getArticleDetail(id, isReported));
+  const isMounted = useMounted(() => actions.getArticleDetail({ articleId: id, isReported }));
 
   /**
    * API feed does not return series, so must await

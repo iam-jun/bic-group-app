@@ -33,6 +33,7 @@ import {
   IParamGetCategories,
   IParamGetDraftArticles,
   IParamPutEditArticle,
+  IParamsGetArticleScheduleContent,
   IParamsValidateSeriesTags,
 } from '~/interfaces/IArticle';
 import appConfig from '~/configs/appConfig';
@@ -315,6 +316,13 @@ export const streamApiConfig = {
       childCommentLimit: params?.childCommentLimit || 10,
     },
   }),
+  getArticleDetailByAdmin: (
+    id: string, params?: IParamGetArticleDetail,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}admin/posts/${id}`,
+    params,
+  }),
   getGiphyTrending: (
     params: IGetGiphyTrendingParams,
   ): HttpApiRequestConfig => ({
@@ -503,6 +511,14 @@ export const streamApiConfig = {
       ...params,
     },
   }),
+  getArticleScheduleContent: (params: IParamsGetArticleScheduleContent): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}admin/posts/params`,
+    params: {
+      ...params,
+      limit: params?.limit || DEFAULT_LIMIT,
+    },
+  }),
 };
 
 const streamApi = {
@@ -665,6 +681,9 @@ const streamApi = {
   getArticleDetail: (id: string, params?: IParamGetArticleDetail) => withHttpRequestPromise(
     streamApiConfig.getArticleDetail, id, params,
   ),
+  getArticleDetailByAdmin: (id: string, params?: IParamGetArticleDetail) => withHttpRequestPromise(
+    streamApiConfig.getArticleDetailByAdmin, id, params,
+  ),
   getDraftArticles: async (param: IParamGetDraftArticles) => {
     try {
       const response: any = await makeHttpRequest(
@@ -802,6 +821,9 @@ const streamApi = {
   ),
   getReportContent: (params: IParamGetReportContent) => withHttpRequestPromise(
     streamApiConfig.getReportContent, params,
+  ),
+  getArticleScheduleContent: async (params: IParamsGetArticleScheduleContent) => withHttpRequestPromise(
+    streamApiConfig.getArticleScheduleContent, params,
   ),
 };
 

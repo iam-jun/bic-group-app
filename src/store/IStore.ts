@@ -42,6 +42,7 @@ import { IGroupsState } from './entities/groups';
 import { IModalState } from './modal';
 import { IScheduleArticlesState } from '~/screens/YourContent/components/ScheduledArticles/store';
 import { IPostsInProgressState } from '~/screens/Home/components/VideoProcessingNotice/store';
+import { IArticleScheduleContentState } from '~/screens/articles/ArticleScheduleContent/store';
 
 export interface BicStore {
   entities: {
@@ -71,6 +72,9 @@ export interface BicStore {
         editArticleCategoryStore: ICreateArticleCategoryState,
         editArticleSeriesStore: ICreateArticleSeriesState,
       }
+    }
+    ArticleScheduleContent: {
+      articleScheduleContentStore: IArticleScheduleContentState;
     }
   };
   series: {

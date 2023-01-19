@@ -24,7 +24,7 @@ import spacing from '~/theme/spacing';
 import useCreateArticleStore from '../CreateArticle/store';
 
 const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
-  const { articleId } = props?.route?.params || {};
+  const { articleId, isAdmin } = props?.route?.params || {};
   const ref = useRef<ArticleWebviewRef>();
   const { t } = useBaseHook();
 
@@ -69,7 +69,7 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
     },
   };
 
-  const isMounted = useMounted(() => actions.getArticleDetail(articleId));
+  const isMounted = useMounted(() => actions.getArticleDetail({ articleId, isAdmin }));
   const isCreator = actor?.id === userId;
 
   useEffect(() => {
@@ -77,8 +77,10 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
   }, [series, content, isMounted]);
 
   useEffect(() => {
-    getImageUrls();
-  }, []);
+    if (content) {
+      getImageUrls();
+    }
+  }, [content]);
 
   useEffect(
     () => resetEditArticleStore,
@@ -147,17 +149,19 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
     );
   };
 
+  const renderHeader = () => {
+    if (isAdmin) {
+      return <Header removeBorderAndShadow />;
+    }
+    return <Header removeBorderAndShadow rightIcon="menu" onRightPress={showMenu} {...headerButton} />;
+  };
+
   return (
     <ScreenWrapper
       style={styles.container}
       testID="article_review_schedule"
     >
-      <Header
-        removeBorderAndShadow
-        rightIcon="menu"
-        onRightPress={showMenu}
-        {...headerButton}
-      />
+      {renderHeader()}
       {renderArticleBoxScheduleTime()}
       <ArticleWebview
         ref={ref}

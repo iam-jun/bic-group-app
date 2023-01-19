@@ -17,6 +17,7 @@ import spacing from '~/theme/spacing';
 import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 
 const GroupAdministration = (props: any) => {
   const { params } = props.route;
@@ -44,6 +45,12 @@ const GroupAdministration = (props: any) => {
   const goToGeneralInfo = () => {
     rootNavigation.navigate(
       groupStack.generalInfo, { id: groupId },
+    );
+  };
+
+  const goToScheduleContent = () => {
+    rootNavigation.navigate(
+      articleStack.articleScheduleContent, { groupId },
     );
   };
 
@@ -117,6 +124,13 @@ const GroupAdministration = (props: any) => {
         displayNewFeature,
         undefined,
         'group_administration.membership_settings',
+      )}
+      {renderItem(
+        'BallotCheck',
+        'settings:title_schedule_content',
+        goToScheduleContent,
+        undefined,
+        'group_administration.schedule_content',
       )}
     </>
   );
