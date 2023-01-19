@@ -105,6 +105,10 @@ const UploadingImage: FC<UploadingImageProps> = ({
     }, [url, fileName, file],
   );
 
+  useEffect(() => {
+    setImageUrl(url);
+  }, [url]);
+
   const renderRemove = () => {
     if (!onPressRemove) {
       return null;
