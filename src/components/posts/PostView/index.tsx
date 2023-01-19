@@ -35,6 +35,7 @@ export interface PostViewProps {
   btnCommentTestID?: string;
   hasReactPermission?: boolean;
   pressNavigateToDetail?: boolean;
+  shouldHideBannerImportant?: boolean;
 
   onPress?: () => void;
   onPressHeader?: () => void;
@@ -52,6 +53,7 @@ const _PostView: FC<PostViewProps> = ({
   btnCommentTestID,
   hasReactPermission = true,
   pressNavigateToDetail,
+  shouldHideBannerImportant,
 
   onPress,
   onPressHeader,
@@ -84,7 +86,7 @@ const _PostView: FC<PostViewProps> = ({
     targetType: TargetType.POST,
   });
 
-  const isReported = usePostsStore(postsSelector.getIsReported(postId));
+  const isHidden = usePostsStore(postsSelector.getIsHidden(postId));
 
   const _onPress = () => {
     if (pressNavigateToDetail) {
@@ -106,7 +108,7 @@ const _PostView: FC<PostViewProps> = ({
   || content?.length < appConfig.shortPostContentLength || isPostDetail;
 
   const renderContent = () => {
-    if (isReported) {
+    if (isHidden) {
       return null;
     }
     return (
@@ -159,6 +161,7 @@ const _PostView: FC<PostViewProps> = ({
         expireTime={importantExpiredAt}
         markedReadPost={markedReadPost}
         listCommunity={communities}
+        shouldBeHidden={shouldHideBannerImportant}
       />
       <View style={[styles.container]} onLayout={onContentLayout}>
         <PostHeader
@@ -174,7 +177,7 @@ const _PostView: FC<PostViewProps> = ({
           isPostDetail={isPostDetail}
           onPressMarkSeenPost={onPressMarkSeenPost}
         />
-        {!isLite && shouldShowInterested && (
+        {!isLite && shouldShowInterested && !isHidden && (
           <ContentInterestedUserCount id={postId} interestedUserCount={totalUsersSeen} />
         )}
         {renderContent()}

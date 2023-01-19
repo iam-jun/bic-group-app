@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Platform, View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import spacing from '~/theme/spacing';
 import Tab from '~/baseComponents/Tab';
 import Header from '~/beinComponents/Header';
 import ScheduledArticles from './components/ScheduledArticles';
+import ReportedContents from './components/ReportedContents';
+import useReportContentStore from '~/components/Report/store';
 
 const HEADER_TAB = [
   {
@@ -27,6 +29,12 @@ const YourContent = () => {
   // in this sprint default tab is Schedule Article
   const [activeTab, setActiveTab] = useState<number>(1);
 
+  const { clearReportedContents } = useReportContentStore((state) => state.actions);
+
+  useEffect(() => () => {
+    clearReportedContents();
+  }, []);
+
   const onPressTab = (item: any, index: number) => {
     setActiveTab(index);
   };
@@ -41,7 +49,7 @@ const YourContent = () => {
     }
 
     if (activeTab === 2) {
-      // render Reported Content
+      return <ReportedContents />;
     }
 
     return null;

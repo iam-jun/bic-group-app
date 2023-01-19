@@ -543,7 +543,8 @@
     "title_draft": "Draft",
     "title_schedule_article": "Scheduled Articles",
     "title_report_content": "Reported Contents",
-    "text_empty": "No result"
+    "text_empty": "No result",
+    "text_no_reported_content": "You have no reported content now!"
   },
   "article": {
     "title": {

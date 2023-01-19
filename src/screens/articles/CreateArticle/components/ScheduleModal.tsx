@@ -76,7 +76,7 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
   const getMinDateTime = () => {
     const now = moment();
     const remainder = 30 - (now.minute() % 30);
-    now.add(remainder, 'minutes').second(0);
+    now.add(remainder, 'minutes').second(0).millisecond(0);
     return new Date(now.toISOString());
   };
 
@@ -106,7 +106,8 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
     const newPublishedAt = moment(publishedAt || minDateTime)
       .hour(selectedTime.hour())
       .minute(selectedTime.minute())
-      .second(0);
+      .second(0)
+      .millisecond(0);
     actions.setPublishedAt(newPublishedAt.toISOString());
   };
 

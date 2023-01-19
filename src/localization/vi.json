@@ -503,7 +503,8 @@
     "title_draft": "Nháp",
     "title_schedule_article": "Bài báo đã lên lịch",
     "title_report_content": "Nội dung được báo cáo",
-    "text_empty": "Không có kết quả"
+    "text_empty": "Không có kết quả",
+    "text_no_reported_content": "Không có nội dung!"
   },
   "article": {
     "title": {

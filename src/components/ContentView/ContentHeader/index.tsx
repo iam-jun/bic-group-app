@@ -55,7 +55,7 @@ const ContentHeader: FC<ContentHeaderProps> = ({
   const { rootNavigation } = useRootNavigation();
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
-  const isReported = usePostsStore(postsSelector.getIsReported(postId));
+  const isHidden = usePostsStore(postsSelector.getIsHidden(postId));
 
   const textAudiences = getAudiencesText(audience, t);
 
@@ -84,14 +84,18 @@ const ContentHeader: FC<ContentHeaderProps> = ({
           isOpen: true,
           isFullScreen: true,
           titleFullScreen: t('post:title_post_to'),
-          ContentComponent: <PostAudiencesModal data={audience?.groups || []} />,
+          ContentComponent: (
+            <PostAudiencesModal
+              data={audience?.groups || []}
+              showBlockedIcon={isHidden}
+            />),
         }),
       );
     }
   };
 
   const renderIconReportContent = () => {
-    if (isReported) {
+    if (isHidden) {
       return (
         <>
           <Icon icon="iconCircleExclamation" size={14} tintColor={colors.neutral40} />

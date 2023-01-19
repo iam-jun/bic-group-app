@@ -28,6 +28,7 @@ import usePostDetailContentHandler from '~/screens/post/PostDetail/components/Po
 import { getSectionData } from '~/helpers/post';
 import { useRootNavigation } from '~/hooks/navigation';
 import ContentUnavailable from '~/components/ContentUnavailable';
+import BannerReport from '~/components/Report/BannerReport';
 
 const _ArticleDetail: FC<IRouteParams> = (props) => {
   const { params } = props.route;
@@ -198,6 +199,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
       isFullView
     >
       <Header />
+      <BannerReport postId={id} />
       <View style={styles.contentContainer}>
         <SectionList
           ref={listRef}
