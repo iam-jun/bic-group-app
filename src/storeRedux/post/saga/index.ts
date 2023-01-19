@@ -35,7 +35,6 @@ import { IParamGetReportContent, TargetType } from '~/interfaces/IReport';
 import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
 import showToast from '~/store/helper/showToast';
 import showToastError from '~/store/helper/showToastError';
-import { moveItemOthersToEndInArray } from '~/helpers/common';
 import useReportContentStore from '~/components/Report/store';
 
 const navigation = withNavigation(rootNavigationRef);
@@ -218,7 +217,7 @@ function* getPostDetail({
       };
       const responeReportContent = yield call(streamApi.getReportContent, paramGetReportContent);
       if (responeReportContent?.data) {
-        response = moveItemOthersToEndInArray(responeReportContent.data.list[0]);
+        response = responeReportContent.data.list;
         useReportContentStore.getState().actions.addToReportDetailsPost(response);
       }
     } else {

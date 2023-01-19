@@ -66,6 +66,7 @@ export interface IPost {
   reported?: boolean;
   reportDetails?: IReportDetail[];
   isReported?: boolean;
+  isHidden?: boolean;
   publishedAt?: string;
 }
 

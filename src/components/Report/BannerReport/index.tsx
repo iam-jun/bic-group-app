@@ -28,33 +28,32 @@ const BannerReport: FC<Props> = ({ postId, commentId }) => {
 
   const reportDetailsPost = useReportContentStore(reportSelector.getReportDetailsPost(postId));
 
-  let isReported = null;
+  let isHidden = null;
   let reportDetails = null;
   if (postId) {
     // Use case Post and Article
-    isReported = usePostsStore(postsSelector.getIsReported(postId));
+    isHidden = usePostsStore(postsSelector.getIsHidden(postId));
     reportDetails = usePostsStore(postsSelector.getReportDetails(postId)) || reportDetailsPost;
   } else {
     // Use case Comment
     const report = useCommentsStore(commentsSelector.getComment(commentId))?.reportDetails;
-    isReported = report?.length > 0;
+    isHidden = report?.length > 0;
     reportDetails = report;
   }
 
   const reportReasons = reportDetails?.map((item: IReportDetail) => item.description).join(', ');
 
-  if (isReported) {
-    return (
-      <View style={styles.reportContentContainer}>
-        <Text.BodyS style={styles.textReportContent}>
-          {t('report:banner_report_content')}
-          <Text.SubtitleS>{reportReasons}</Text.SubtitleS>
-        </Text.BodyS>
-        <Icon icon="iconFlagSolid" size={14} tintColor={colors.neutral40} />
-      </View>
-    );
-  }
-  return null;
+  if (!isHidden) return null;
+
+  return (
+    <View style={styles.reportContentContainer}>
+      <Text.BodyS style={styles.textReportContent}>
+        {t('report:banner_report_content')}
+        <Text.SubtitleS>{reportReasons}</Text.SubtitleS>
+      </Text.BodyS>
+      <Icon icon="iconFlagSolid" size={16} tintColor={colors.neutral40} />
+    </View>
+  );
 };
 
 const createStyle = (theme: ExtendedTheme) => {

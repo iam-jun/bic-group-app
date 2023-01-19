@@ -28,11 +28,13 @@ import DeletedItem from '~/components/DeletedItem';
 export interface ArticleItemProps {
   data: IPost;
   isLite?: boolean;
+  shouldHideBannerImportant?: boolean;
 }
 
 const ArticleItem: FC<ArticleItemProps> = ({
   data = {},
   isLite,
+  shouldHideBannerImportant,
 }: ArticleItemProps) => {
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
@@ -58,6 +60,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
     tags,
     reported,
     deleted = false,
+    isHidden,
   } = data || {};
 
   const {
@@ -84,6 +87,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
       expireTime={importantExpiredAt}
       markedReadPost={markedReadPost}
       listCommunity={communities}
+      shouldBeHidden={shouldHideBannerImportant}
     />
   );
 
@@ -120,25 +124,30 @@ const ArticleItem: FC<ArticleItemProps> = ({
   );
 
   const renderInterestedBy = () => (
-    <>
-      <ContentInterestedUserCount
-        id={id}
-        testIDPrefix="article_item"
-        interestedUserCount={totalUsersSeen}
-      />
-      <Divider style={styles.divider} />
-    </>
+    !isHidden && (
+      <>
+        <ContentInterestedUserCount
+          id={id}
+          testIDPrefix="article_item"
+          interestedUserCount={totalUsersSeen}
+        />
+        <Divider style={styles.divider} />
+      </>
+    )
   );
 
   const renderFooter = () => (
-    <ArticleFooter
-      articleId={id}
-      canReact={setting?.canReact}
-      canComment={setting?.canComment}
-      commentsCount={commentsCount}
-      reactionsCount={reactionsCount}
-      ownerReactions={ownerReactions}
-    />
+    !isHidden && (
+      <ArticleFooter
+        articleId={id}
+        canReact={setting?.canReact}
+        canComment={setting?.canComment}
+        commentsCount={commentsCount}
+        reactionsCount={reactionsCount}
+        ownerReactions={ownerReactions}
+      />
+
+    )
   );
 
   const renderLite = () => (

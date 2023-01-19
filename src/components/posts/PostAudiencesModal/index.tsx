@@ -13,10 +13,15 @@ import spacing from '~/theme/spacing';
 
 export interface PostAudiencesModalProps {
   data: IGroup[] | any;
+  showBlockedIcon?: boolean;
   onPressItemAudience?: any;
 }
 
-const PostAudiencesModal: FC<PostAudiencesModalProps> = ({ data, onPressItemAudience }: PostAudiencesModalProps) => {
+const PostAudiencesModal: FC<PostAudiencesModalProps> = ({
+  data,
+  showBlockedIcon,
+  onPressItemAudience,
+}: PostAudiencesModalProps) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
@@ -54,6 +59,7 @@ const PostAudiencesModal: FC<PostAudiencesModalProps> = ({ data, onPressItemAudi
       showPrivacyAvatar
       disableHorizontal
       showInfo={false}
+      showBlockedIcon={showBlockedIcon}
       onPressItem={() => onPressItem(item)}
       groupStyle={styles.groupItem}
     />
