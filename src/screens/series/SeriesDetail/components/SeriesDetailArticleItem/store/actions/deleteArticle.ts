@@ -2,7 +2,7 @@ import streamApi from '~/api/StreamApi';
 import { IRemoveArticleInSeries } from '~/interfaces/ISeries';
 import useSeriesStore from '~/screens/series/store';
 import showToastError from '~/store/helper/showToastError';
-import showToast from '~/store/helper/showToast';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const deleteArticle = (_set, _get) => async (seriesId: string, articleId: string) => {
   if (!seriesId || !articleId) return;
@@ -13,7 +13,7 @@ const deleteArticle = (_set, _get) => async (seriesId: string, articleId: string
     const response = await streamApi.removeArticleFromSeriesDetail(seriesId, body);
     if (!!response) {
       useSeriesStore.getState().actions.getSeriesDetail(seriesId);
-      showToast({ content: 'series:text_article_removed' });
+      showToastSuccess(response);
     }
   } catch (error) {
     console.error('\x1b[31m🐣️ deleteArticle error: \x1b[0m', error);

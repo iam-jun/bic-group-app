@@ -2,10 +2,10 @@ import streamApi from '~/api/StreamApi';
 import { IPayloadAddToAllPost } from '~/interfaces/IPost';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
 import usePostsStore from '~/store/entities/posts';
-import showToast from '~/store/helper/showToast';
 import showToastError from '~/store/helper/showToastError';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
-const deleteArticle = (_set, _get) => async (id: string, successMessage = 'post:draft:text_draft_deleted') => {
+const deleteArticle = (_set, _get) => async (id: string) => {
   if (!id) {
     console.warn('\x1b[31m🐣️ deleteArticle: id not found\x1b[0m');
     return;
@@ -22,7 +22,7 @@ const deleteArticle = (_set, _get) => async (id: string, successMessage = 'post:
       };
       usePostsStore.getState().actions.addToPosts({ data: deletedPost } as IPayloadAddToAllPost);
       useDraftArticleStore.getState().actions.getDraftArticles({ isRefresh: true });
-      showToast({ content: successMessage });
+      showToastSuccess(response);
     }
   } catch (error) {
     console.error('deleteArticle error:', error);

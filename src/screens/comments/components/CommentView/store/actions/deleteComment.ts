@@ -1,7 +1,5 @@
 import { cloneDeep } from 'lodash';
 import streamApi from '~/api/StreamApi';
-import { ToastType } from '~/baseComponents/Toast/BaseToast';
-import { IToastMessage } from '~/interfaces/common';
 import {
   ICommentData,
   IPayloadDeleteComment,
@@ -9,7 +7,8 @@ import {
 } from '~/interfaces/IPost';
 import useCommentsStore from '~/store/entities/comments';
 import usePostsStore from '~/store/entities/posts';
-import showToast from '~/store/helper/showToast';
+import showToastSuccess from '~/store/helper/showToastSuccess';
+import showToastError from '~/store/helper/showToastError';
 
 const deleteComment = (_set, _get) => async (
   payload: IPayloadDeleteComment,
@@ -22,7 +21,7 @@ const deleteComment = (_set, _get) => async (
   const allComments = useCommentsStore.getState().comments || {};
   const comment: ICommentData = allComments?.[commentId] || {};
   try {
-    await streamApi.deleteComment(commentId);
+    const response = await streamApi.deleteComment(commentId);
 
     // update allCommentsByParentId
     const allCommentsByParentIds = useCommentsStore.getState().commentsByParentId || {};
@@ -73,16 +72,9 @@ const deleteComment = (_set, _get) => async (
     // }
     usePostsStore.getState().actions.setPosts({ ...newAllPosts, [postId]: post });
 
-    // show toast success
-    const toastMessage: IToastMessage = {
-      content: 'post:comment:text_delete_comment_success',
-    };
-    showToast(toastMessage);
+    showToastSuccess(response);
   } catch (e) {
-    showToast({
-      content: 'post:comment:text_delete_comment_error',
-      type: ToastType.ERROR,
-    });
+    showToastError(e);
   }
 };
 

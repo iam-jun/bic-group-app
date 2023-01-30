@@ -29,6 +29,7 @@ import useDraftPostStore from '../store';
 import { PostBody, PostHeader, PostImportant } from '~/components/posts';
 import useModalStore from '~/store/modal';
 import showToastError from '~/store/helper/showToastError';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 export interface PostDraftViewProps {
   data: IPost;
@@ -55,7 +56,7 @@ const PostDraftView: FC<PostDraftViewProps> = ({
   const userId = useUserIdAuth();
 
   const { actions } = useDraftPostStore();
-  const { showToast, showAlert } = useModalStore((state) => state.actions);
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const {
     id,
@@ -86,7 +87,6 @@ const PostDraftView: FC<PostDraftViewProps> = ({
       const payload: IPayloadPublishDraftPost = {
         draftPostId: id,
         onSuccess: () => {
-          showToast({ content: 'post:draft:text_draft_post_published' });
           refreshDraftPosts();
         },
         onError: () => setPublishing(false),
@@ -108,12 +108,10 @@ const PostDraftView: FC<PostDraftViewProps> = ({
     dispatch(modalActions.hideModal());
     if (id) {
       streamApi
-        .deletePost(
-          id,
-        )
+        .deletePost(id)
         .then((response) => {
           if (response?.data) {
-            showToast({ content: 'post:draft:text_draft_deleted' });
+            showToastSuccess(response);
             refreshDraftPosts();
           }
         })

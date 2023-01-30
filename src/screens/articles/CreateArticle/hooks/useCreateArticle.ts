@@ -59,7 +59,7 @@ const useCreateArticle = ({
   const isDraft = useCreateArticleStore((state) => state.isDraft);
   const publishedAt = useCreateArticleStore((state) => state.schedule.publishedAt);
 
-  const { showToast, showAlert } = useModalStore((state) => state.actions);
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const [isShowToastAutoSave, setShowToastAutoSave] = useState<boolean>(false);
 
@@ -319,7 +319,6 @@ const useCreateArticle = ({
     const payload: IPayloadPublishDraftArticle = {
       draftArticleId: data.id,
       onSuccess: () => {
-        showToast({ content: 'post:draft:text_draft_article_published' });
         goToArticleDetail();
         useScheduleArticlesStore.getState().actions.getScheduleArticles({ isRefresh: true });
       },

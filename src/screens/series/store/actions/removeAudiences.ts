@@ -3,7 +3,7 @@ import { IPayloadAddToAllPost } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import { ISeriesState } from '..';
 import showToastError from '~/store/helper/showToastError';
-import showToast from '~/store/helper/showToast';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const removeAudiences = (_set, get) => async (id: string, listAudiences: string[]) => {
   if (!id) return;
@@ -22,7 +22,7 @@ const removeAudiences = (_set, get) => async (id: string, listAudiences: string[
     actions.getSeriesDetail(id);
     if (!!response?.data) {
       usePostsStore.getState().actions.addToPosts({ data: response.data } as IPayloadAddToAllPost);
-      showToast({ content: 'series:text_deleted_audiences' });
+      showToastSuccess(response);
     }
   } catch (error) {
     showToastError(error);

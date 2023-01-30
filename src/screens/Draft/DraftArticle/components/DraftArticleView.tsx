@@ -41,7 +41,7 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
 
   const actions = useDraftArticleStore((state) => state.actions);
   const articleActions = useArticleController((state) => state.actions);
-  const { showToast, showAlert } = useModalStore((state) => state.actions);
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const {
     id,
@@ -97,7 +97,6 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
     const payload: IPayloadPublishDraftArticle = {
       draftArticleId: id,
       onSuccess: () => {
-        showToast({ content: 'post:draft:text_draft_article_published' });
         refreshDraftArticles();
       },
       onError: () => setIsPublishing(false),

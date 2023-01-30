@@ -3,11 +3,11 @@ import notificationApi from '~/api/NotificationApi';
 
 import INotificationsState from '../Interface';
 import showToastError from '~/store/helper/showToastError';
-import showToast from '~/store/helper/showToast';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
-const markAsReadAll = (set, get) => (tabId: string) => {
+const markAsReadAll = (set, get) => async (tabId: string) => {
   try {
-    notificationApi.markAsReadAll(tabId);
+    const response = await notificationApi.markAsReadAll(tabId);
     const data: INotificationsState = get();
 
     // get all notifications from store
@@ -28,9 +28,7 @@ const markAsReadAll = (set, get) => (tabId: string) => {
       state.notificationList = { ...state.notificationList, ...notifications };
     }, 'markAsReadAllNotificationSuccess');
 
-    showToast({
-      content: 'notification:mark_all_as_read_success',
-    });
+    showToastSuccess(response);
   } catch (err) {
     console.error(
       '\x1b[33m', 'notification markAsReadAll error', err, '\x1b[0m',

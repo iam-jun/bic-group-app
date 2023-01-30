@@ -12,6 +12,7 @@ import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack
 import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
 import { IDraftArticleState } from '..';
 import showToast from '~/store/helper/showToast';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -38,6 +39,7 @@ const publishDraftArticle = (set, get) => async (payload: IPayloadPublishDraftAr
       return;
     }
 
+    showToastSuccess(response);
     onSuccess?.();
     set((state: IDraftArticleState) => {
       state.isPublishing = false;

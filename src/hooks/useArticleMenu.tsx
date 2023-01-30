@@ -75,7 +75,7 @@ const useArticleMenu = (
       ConfirmBtnComponent: Button.Danger,
       confirmBtnProps: { type: 'ghost' },
       onConfirm: () => useArticleController.getState().actions.deleteArticle(
-        articleId, 'article:text_delete_article_success',
+        articleId,
       ),
     });
   };

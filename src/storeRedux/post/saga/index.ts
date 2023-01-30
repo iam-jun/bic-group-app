@@ -34,8 +34,9 @@ import { mockReportReason } from '~/test/mock_data/report';
 import { IParamGetReportContent, TargetType } from '~/interfaces/IReport';
 import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
 import showToast from '~/store/helper/showToast';
-import showToastError from '~/store/helper/showToastError';
 import useReportContentStore from '~/components/Report/store';
+import showToastSuccess from '~/store/helper/showToastSuccess';
+import showToastError from '~/store/helper/showToastError';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -100,6 +101,7 @@ function* postPublishDraftPost({
       return;
     }
 
+    showToastSuccess(res);
     onSuccess?.();
     const postData: IPost = res.data;
     usePostsStore.getState().actions.addToPosts({ data: postData } as IPayloadAddToAllPost);
@@ -236,9 +238,7 @@ function* getPostDetail({
   } catch (e: any) {
     yield timeOut(500);
     yield put(postActions.setLoadingGetPostDetail(false));
-    callbackLoading?.(
-      false, false,
-    );
+    callbackLoading?.(false, false);
     if (
       e?.code === APIErrorCode.Post.POST_DELETED
       || e?.code === APIErrorCode.Post.POST_PRIVACY
@@ -246,9 +246,7 @@ function* getPostDetail({
       yield put(postActions.deletePostLocal(postId));
       yield put(postActions.setCommentErrorCode(e.code));
       if (payload?.showToast) {
-        showToast({
-          content: 'post:error_post_detail_deleted',
-        });
+        showToastError(e);
       }
     } else {
       showToastError(e);

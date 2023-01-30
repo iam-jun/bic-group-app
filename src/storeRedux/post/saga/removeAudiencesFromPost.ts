@@ -3,8 +3,8 @@ import { call } from 'redux-saga/effects';
 import { IPayloadAddToAllPost, IPayloadRemoveAudiencesOfPost } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import streamApi from '../../../api/StreamApi';
-import showToast from '~/store/helper/showToast';
 import showToastError from '~/store/helper/showToastError';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 export default function* removeAudiencesFromPost({
   payload,
@@ -31,7 +31,7 @@ export default function* removeAudiencesFromPost({
     if (response?.data) {
       const post = response?.data;
       usePostsStore.getState().actions.addToPosts({ data: post } as IPayloadAddToAllPost);
-      showToast({ content: 'post:text_deleted_audiences' });
+      showToastSuccess(response);
     }
   } catch (e: any) {
     console.error('\x1b[31m🐣️ saga removeAudiencesFromPost error: ', e, '\x1b[0m');

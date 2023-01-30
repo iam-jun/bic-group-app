@@ -8,6 +8,7 @@ import { ISeriesState } from '..';
 import i18n from '~/localization';
 import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -29,7 +30,7 @@ const editSeries = (set, get) => async (
       state.loading = false;
     }, 'editSeriesSuccess');
     usePostsStore.getState().actions.addToPosts({ data: response.data } as IPayloadAddToAllPost);
-    showToast({ content: 'series:text_edit_series_success' });
+    showToastSuccess(response);
 
     if (shouldReplaceWithDetail) {
       navigation.replace(seriesStack.seriesDetail, { seriesId: id });
@@ -44,7 +45,7 @@ const editSeries = (set, get) => async (
       callbackError?.(error.meta.errors.groupsDenied);
     } else {
       showToast({
-        content: 'series:text_edit_series_failed',
+        content: error?.meta?.message || 'series:text_edit_series_failed',
         type: ToastType.ERROR,
         buttonText: i18n.t('common:text_retry'),
         onButtonPress: onRetry,

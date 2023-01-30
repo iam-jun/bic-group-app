@@ -760,28 +760,12 @@ const streamApi = {
   searchArticleInSeries: (params: IGetSearchArticleInSeries) => withHttpRequestPromise(
     streamApiConfig.searchArticleInSeries, params,
   ),
-  addArticleInSeries: async (id: string, data: IAddArticleInSeries) => {
-    try {
-      const response: any = await makeHttpRequest(streamApiConfig.addArticleInSeries(id, data));
-      if (response && response?.data) {
-        return Promise.resolve(true);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  removeArticleFromSeriesDetail: async (id: string, params: IRemoveArticleInSeries) => {
-    try {
-      const response: any = await makeHttpRequest(streamApiConfig.removeArticleFromSeriesDetail(id, params));
-      if (response && response?.data) {
-        return Promise.resolve(true);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  addArticleInSeries: async (id: string, data: IAddArticleInSeries) => withHttpRequestPromise(
+    streamApiConfig.addArticleInSeries, id, data,
+  ),
+  removeArticleFromSeriesDetail: async (id: string, params: IRemoveArticleInSeries) => withHttpRequestPromise(
+    streamApiConfig.removeArticleFromSeriesDetail, id, params,
+  ),
   reportContent: (params: IParamsReportContent) => withHttpRequestPromise(streamApiConfig.reportContent, params),
   searchTagsInAudiences: (params?: IGetSearchTags) => withHttpRequestPromise(
     streamApiConfig.searchTagsInAudiences, params,

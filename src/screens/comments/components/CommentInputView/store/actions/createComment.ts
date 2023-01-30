@@ -11,7 +11,6 @@ import showToastError from '~/store/helper/showToastError';
 import Store from '~/storeRedux';
 import postActions from '~/storeRedux/post/actions';
 import ICommentInputState from '../Interface';
-import showToast from '~/store/helper/showToast';
 
 const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
   const {
@@ -156,7 +155,7 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
         parentCommentId,
       }));
 
-      showToast({ content: 'post:text_comment_deleted' });
+      showToastError(e);
     } else if (e?.code === APIErrorCode.Post.POST_DELETED
       || e?.code === APIErrorCode.Post.VALIDATION_ERROR) {
       if (e?.code === APIErrorCode.Post.POST_DELETED) {
@@ -174,9 +173,7 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
           localId: preComment?.localId,
         }));
       }
-      showToast({
-        content: e?.code === APIErrorCode.Post.POST_DELETED ? 'post:text_post_deleted' : e?.meta?.message,
-      });
+      showToastError(e);
     } else {
       showToastError(e);
     }
