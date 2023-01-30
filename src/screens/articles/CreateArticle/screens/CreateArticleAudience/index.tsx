@@ -42,10 +42,11 @@ const CreateArticleAudience: FC<CreateArticleProps> = ({ route }: CreateArticleP
   const isChanged = !isEqual(initAudienceIds, selectedAudienceIds);
 
   const {
-    handleBack, handleSave, loading, handleAudiencesChange,
+    handleBack, handleSave, loading, isValidating, handleAudiencesChange,
   } = useCreateArticle({ articleId });
 
-  const disabled = !isAudienceValidForSave || loading;
+  const disabled = !isAudienceValidForSave || isValidating || loading;
+  const isLoading = isValidating || loading;
 
   useBackPressListener(handleBack);
 
@@ -67,13 +68,17 @@ const CreateArticleAudience: FC<CreateArticleProps> = ({ route }: CreateArticleP
     handleBack(isChanged);
   };
 
+  const onPressSave = () => handleSave(
+    { shouldValidateSeriesTags: true, titleAlert: 'article:modal_invalid_series_tags:title_remove_audience' },
+  );
+
   return (
     <View style={styles.container}>
       <Header
         title={t('article:text_option_edit_audience')}
-        buttonProps={{ disabled, loading, style: styles.btnSave }}
+        buttonProps={{ disabled, loading: isLoading, style: styles.btnSave }}
         buttonText={t('common:btn_save')}
-        onPressButton={() => handleSave({ shouldValidateSeriesTags: true })}
+        onPressButton={onPressSave}
         onPressBack={onBack}
       />
       <SelectAudience contentType={ContentType.ARTICLE} />

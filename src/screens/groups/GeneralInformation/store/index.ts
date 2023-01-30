@@ -1,5 +1,7 @@
+import { IGroupDetailEdit } from '~/interfaces/IGroup';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore } from '~/store/utils';
+import editGroupDetail from './actions/editGroupDetail';
 
 export interface IGeneralInformationState extends IBaseState {
   loadingAvatar: boolean;
@@ -7,6 +9,7 @@ export interface IGeneralInformationState extends IBaseState {
   actions: {
     setLoadingAvatar: (payload: boolean) => void;
     setLoadingCover: (payload: boolean) => void;
+    editGroupDetail: (data: IGroupDetailEdit, callback?: () => void) => void;
   };
 }
 
@@ -15,9 +18,10 @@ const initialState: InitStateType<IGeneralInformationState> = {
   loadingCover: false,
 };
 
-const generalInformationStore = (set) => ({
+const generalInformationStore = (set, get) => ({
   ...initialState,
   actions: {
+    editGroupDetail: editGroupDetail(set, get),
     setLoadingAvatar: (payload: boolean) => {
       set((state: IGeneralInformationState) => {
         state.loadingAvatar = payload;

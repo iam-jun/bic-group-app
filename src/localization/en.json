@@ -194,6 +194,8 @@
     "articles": "Articles",
     "last_updated": "Last updated",
     "audiences": "Audiences",
+    "text_other_audience_one": "+ {{count}} other",
+    "text_other_audience_other": "+ {{count}} others",
     "text_save_fail": "Save fail.",
     "text_unsave_fail": "Unsave fail.",
     "copy_photo": "Copy Photo",
@@ -205,7 +207,10 @@
     "content_unavailable": {
       "title": "This content isn’t available right now",
       "content": "When this happens, it’s usually because the owner only shared it with a small group of people, changed who can see it or it’s been deleted."
-    }
+    },
+    "text_date": "Date",
+    "text_time": "Time",
+    "text_no_data": "No data"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -218,6 +223,7 @@
     "text_sign_in_welcome_back": "Welcome back!",
     "text_sign_up": "Sign Up",
     "text_sign_out": "Log Out",
+    "text_sign_out_content": "Do you want to Log Out?",
     "input_label_first_name": "First Name",
     "input_label_last_name": "Last Name",
     "input_label_username": "User Name",
@@ -346,6 +352,7 @@
     "title_membership_settings": "Membership Settings",
     "title_post_settings": "Post Settings",
     "title_module_settings": "Module Settings",
+    "title_schedule_content": "Schedule Content",
     "title_group_name": "Group Name",
     "title_edit_group_name": "Edit Group Name",
     "title_group_description": "Description",
@@ -530,7 +537,16 @@
     "title_settings_privacy": "Settings & privacy",
     "title_billing_payment": "Billing and payment",
     "title_help_support": "Help & Support",
-    "title_logout": "Log Out"
+    "title_report_problem": "Report a problem",
+    "title_logout": "Log Out",
+    "title_your_content": "Your Content"
+  },
+  "your_content": {
+    "title_draft": "Draft",
+    "title_schedule_article": "Scheduled Articles",
+    "title_report_content": "Reported Contents",
+    "text_empty": "No result",
+    "text_no_reported_content": "You have no reported content now!"
   },
   "article": {
     "title": {
@@ -583,7 +599,8 @@
       "link_placeholder": "Enter the URL of the embed:"
     },
     "modal_invalid_series_tags": {
-      "title": "Remove Audience",
+      "title": "Audience Conflict",
+      "title_remove_audience": "Remove Audience",
       "content_header": "The following information will be removed when removed audiences:",
       "content_confirm": "Are you sure you want to remove audience?"
     },
@@ -596,7 +613,14 @@
     "text_add_audience": "Add audience",
     "text_add_series": "Add series",
     "text_add_tag": "Add tag",
-    "text_add_content": "Add content"
+    "text_add_content": "Add content",
+    "text_article_schedule": "Your article is sheduled to publish:",
+    "text_article_schedule_fail": "Failure",
+    "article_schedule_title": "Article Schedule",
+    "text_schedule": "Schedule",
+    "fail_schedule": "Fail Schedule",
+    "successful_schedule": "Successful Schedule",
+    "text_delete_article_success": "Your article has been deleted"
   },
   "post": {
     "news_feed": "News Feed",
@@ -1053,9 +1077,8 @@
     "community_menu": {
       "your_communities": "Your Communities",
       "your_groups": "Your Groups",
-      "managed": "Managed",
       "owner": "Own",
-      "manage": "Manage",
+      "managed_groups": "Managed Groups",
       "you_have_not_owner_community": "You don't own any communities",
       "you_have_not_manage_communiy_or_group": "You don't manage any communities or groups",
       "you_dont_have_any_community_group": "You don't have any communities or groups"
@@ -1293,5 +1316,9 @@
       "description": "New version is available. Please update to get the best experience.",
       "confirm": "Update"
     }
+  },
+  "report": {
+    "title": "Report Content",
+    "banner_report_content": "Your content was reported because of "
   }
 }

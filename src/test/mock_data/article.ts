@@ -119,4 +119,5 @@ export const mockArticle = {
     createdAt: '2022-11-14T08:39:17.784Z',
   },
   tags: mockTagsInArticle,
+  publishedAt: '',
 };

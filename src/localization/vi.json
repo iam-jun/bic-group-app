@@ -164,6 +164,8 @@
     "articles": "Bài viết",
     "last_updated": "Cập nhật",
     "audiences": "Đối tượng",
+    "text_other_audience_one": "+ {{count}} đối tượng",
+    "text_other_audience_other": "+ {{count}} đối tượng",
     "text_save_fail": "Lưu thất bại.",
     "text_unsave_fail": "Bỏ lưu thất bại.",
     "copy_photo": "Sao chép ảnh",
@@ -174,7 +176,10 @@
     "content_unavailable": {
       "title": "Nội dung này hiện không khả dụng",
       "content": "Khi điều này xảy ra, thường là do chủ sở hữu chỉ chia sẻ nó với một nhóm người, đã thay đổi người có thể nhìn thấy nó hoặc nó đã bị xóa."
-    }
+    },
+    "text_date": "Ngày",
+    "text_time": "Giờ",
+    "text_no_data": "Không có dữ liệu"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -187,6 +192,7 @@
     "text_sign_in_welcome_back": "Chào mừng bạn đã trở lại!",
     "text_sign_up": "Đăng ký",
     "text_sign_out": "Đăng xuất",
+    "text_sign_out_content": "Bạn có muốn đăng xuất?",
     "input_label_first_name": "Tên",
     "input_label_last_name": "Họ",
     "input_label_username": "Tên tài khoản",
@@ -312,6 +318,7 @@
     "title_membership_settings": "Cài đặt thành viên",
     "title_post_settings": "Cài đặt bài viết",
     "title_module_settings": "Module Settings",
+    "title_schedule_content": "Lên lịch nội dung",
     "title_group_name": "Tên nhóm",
     "title_edit_group_name": "Chỉnh sửa Tên nhóm",
     "title_group_description": "Mô tả",
@@ -490,7 +497,16 @@
     "title_settings_privacy": "Cài đặt & riêng tư",
     "title_billing_payment": "Hoá đơn và thanh toán",
     "title_help_support": "Trung tâm trợ giúp",
-    "title_logout": "Đăng xuất"
+    "title_report_problem": "Báo cáo sự cố",
+    "title_logout": "Đăng xuất",
+    "title_your_content": "Nội dung của bạn"
+  },
+  "your_content": {
+    "title_draft": "Nháp",
+    "title_schedule_article": "Bài báo đã lên lịch",
+    "title_report_content": "Nội dung được báo cáo",
+    "text_empty": "Không có kết quả",
+    "text_no_reported_content": "Không có nội dung!"
   },
   "article": {
     "title": {
@@ -543,7 +559,8 @@
       "link_placeholder": "Nhập URL của video:"
     },
     "modal_invalid_series_tags": {
-      "title": "Xoá đối tượng",
+      "title": "Xung đột đối tượng",
+      "title_remove_audience": "Xoá đối tượng",
       "content_header": "Các thông tin dưới đây sẽ bị xoá khi đối tượng bài viết bị xoá:",
       "content_confirm": "Bạn có chắc muốn xoá?"
     },
@@ -556,7 +573,14 @@
     "text_add_audience": "Thêm đối tượng",
     "text_add_series": "Thêm series",
     "text_add_tag": "Thêm thẻ",
-    "text_add_content": "Thêm nội dung"
+    "text_add_content": "Thêm nội dung",
+    "text_article_schedule": "Bài báo của bạn dự kiến đăng:",
+    "text_article_schedule_fail": "Thất bại",
+    "article_schedule_title": "Đặt lịch bài viết",
+    "text_schedule": "Đặt lịch",
+    "fail_schedule": "Đặt lịch thất bại",
+    "successful_schedule": "Đặt lịch thành công",
+    "text_delete_article_success": "Bài viết của bạn đã được xoá"
   },
   "post": {
     "news_feed": "News Feed",
@@ -995,9 +1019,8 @@
     "community_menu": {
       "your_communities": "Cộng đồng đã tham gia",
       "your_groups": "Nhóm đã tham gia",
-      "managed": "Quản lý",
       "owner": "Sở hữu",
-      "manage": "Quản trị",
+      "managed_groups": "Quản lý nhóm",
       "you_have_not_owner_community": "Bạn không sở hữu cộng đồng nào",
       "you_have_not_manage_communiy_or_group": "Bạn không quản lý cộng đồng hoặc nhóm nào",
       "you_dont_have_any_community_group": "You don't have any communities or groups"
@@ -1233,5 +1256,9 @@
       "description": "Đã có phiên bản mới. Hãy cập nhật để có trải nghiệm tốt nhất.",
       "confirm": "Cập nhật"
     }
+  },
+  "report": {
+    "title": "Báo cáo nội dung",
+    "banner_report_content": "Nội dung của bạn đã được báo cáo vì "
   }
 }

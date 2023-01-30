@@ -308,7 +308,7 @@ exports[`ItemExperience component renders correctly 1`] = `
           Object {
             "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
+            "fontSize": 14,
           },
           Object {
             "color": "#353E6E",
@@ -335,7 +335,9 @@ exports[`ItemExperience component renders correctly 1`] = `
         ]
       }
       testID="info_item.value"
-    />
+    >
+      titlePosition
+    </Text>
   </View>
   <View
     style={
@@ -354,7 +356,7 @@ exports[`ItemExperience component renders correctly 1`] = `
           Object {
             "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
+            "fontSize": 14,
           },
           Object {
             "color": "#353E6E",
@@ -381,7 +383,9 @@ exports[`ItemExperience component renders correctly 1`] = `
         ]
       }
       testID="info_item.value"
-    />
+    >
+      location
+    </Text>
   </View>
   <View
     style={
@@ -400,7 +404,7 @@ exports[`ItemExperience component renders correctly 1`] = `
           Object {
             "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
+            "fontSize": 14,
           },
           Object {
             "color": "#353E6E",
@@ -427,7 +431,9 @@ exports[`ItemExperience component renders correctly 1`] = `
         ]
       }
       testID="info_item.value"
-    />
+    >
+      Mar 7, 2022
+    </Text>
   </View>
   <View
     style={
@@ -446,7 +452,7 @@ exports[`ItemExperience component renders correctly 1`] = `
           Object {
             "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
+            "fontSize": 14,
           },
           Object {
             "color": "#353E6E",
@@ -473,7 +479,9 @@ exports[`ItemExperience component renders correctly 1`] = `
         ]
       }
       testID="info_item.value"
-    />
+    >
+      Present
+    </Text>
   </View>
   <View
     style={
@@ -492,7 +500,7 @@ exports[`ItemExperience component renders correctly 1`] = `
           Object {
             "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
+            "fontSize": 14,
           },
           Object {
             "color": "#353E6E",

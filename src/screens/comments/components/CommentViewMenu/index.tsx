@@ -18,7 +18,7 @@ import { quickReactions } from '~/configs/reactionConfig';
 import { getLink, LINK_COMMENT } from '~/utils/link';
 import spacing from '~/theme/spacing';
 import BottomListItem from '~/components/BottomList/BottomListItem';
-import ReportContent from '~/components/ReportContent';
+import ReportContent from '~/components/Report/ReportContent';
 import { TargetType, ReportTo } from '~/interfaces/IReport';
 import { IPostAudience } from '~/interfaces/IPost';
 import { getRootGroupids } from '~/helpers/post';

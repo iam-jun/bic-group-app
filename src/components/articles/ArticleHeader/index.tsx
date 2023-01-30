@@ -21,9 +21,9 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({
   const { rootNavigation } = useRootNavigation();
   const userId = useUserIdAuth();
   const isCreator = actor?.id == userId;
+  const { id: articleId } = data;
 
   const _onPressHeader = () => {
-    const { id: articleId } = data;
     if (onPressHeader) {
       onPressHeader?.();
     } else {
@@ -36,6 +36,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({
   return (
     <ContentHeader
       {...props}
+      postId={articleId}
       actor={actor}
       disabled={disabled}
       onPressHeader={_onPressHeader}

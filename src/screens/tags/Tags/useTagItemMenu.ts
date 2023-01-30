@@ -9,16 +9,18 @@ import { Button } from '~/baseComponents';
 import { ITag } from '~/interfaces/ITag';
 import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import useTagsControllerStore from '../store';
+import useModalStore from '~/store/modal';
 
 const useTagItemMenu = (communityId: string,
   tag: ITag) => {
   const { rootNavigation } = useRootNavigation();
   const dispatch = useDispatch();
+  const { showAlert } = useModalStore((state) => state.actions);
   const actions = useTagsControllerStore((state) => state.actions);
 
   const onPressDelete = () => {
     Store.store.dispatch(modalActions.hideBottomList());
-    Store.store.dispatch(modalActions.showAlert({
+    showAlert({
       title: i18next.t('tags:delete_tag_confirm'),
       content: i18next.t('tags:do_you_want_to_delete_this_tag'),
       cancelBtn: true,
@@ -28,7 +30,7 @@ const useTagItemMenu = (communityId: string,
         actions.deleteTag(communityId, tag.id);
       },
       confirmBtnProps: { type: 'ghost' },
-    }));
+    });
   };
 
   const onPressEdit = () => {

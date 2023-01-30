@@ -4,9 +4,6 @@ import { ICreateArticleCategoryState } from '..';
 import showToastError from '~/store/helper/showToastError';
 
 const getCategories = (set, get) => async (isLoadMore) => {
-  set((state: ICreateArticleCategoryState) => {
-    state.categories.loading = true;
-  }, 'getCategories');
   try {
     const categoryData = get().categories || {};
     const params: IParamGetCategories = { offset: 0, limit: 25 };
@@ -14,6 +11,10 @@ const getCategories = (set, get) => async (isLoadMore) => {
     if (isLoadMore && !categoryData.hasNextPage) {
       return;
     }
+
+    set((state: ICreateArticleCategoryState) => {
+      state.categories.loading = true;
+    }, 'getCategories');
 
     if (isLoadMore) {
       params.offset = categoryData?.items?.length;

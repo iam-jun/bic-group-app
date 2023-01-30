@@ -28,6 +28,7 @@ import usePostDetailContentHandler from '~/screens/post/PostDetail/components/Po
 import { getSectionData } from '~/helpers/post';
 import { useRootNavigation } from '~/hooks/navigation';
 import ContentUnavailable from '~/components/ContentUnavailable';
+import BannerReport from '~/components/Report/BannerReport';
 
 const _ArticleDetail: FC<IRouteParams> = (props) => {
   const { params } = props.route;
@@ -76,7 +77,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const isMounted = useMounted();
 
   useEffect(() => {
-    if (isMounted) { actions.getArticleDetail(id); }
+    if (isMounted) { actions.getArticleDetail({ articleId: id }); }
   }, [isMounted]);
 
   useEffect(() => {
@@ -89,7 +90,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
 
   const onRefresh = () => {
     setRefreshing(false);
-    actions.getArticleDetail(id);
+    actions.getArticleDetail({ articleId: id });
   };
 
   const onPressMarkSeenPost = useCallback(() => {
@@ -198,6 +199,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
       isFullView
     >
       <Header />
+      <BannerReport postId={id} />
       <View style={styles.contentContainer}>
         <SectionList
           ref={listRef}

@@ -14,7 +14,7 @@ import postActions from '~/storeRedux/post/actions';
 import { Button } from '~/baseComponents';
 import { useRootNavigation } from './navigation';
 import { BottomListProps } from '~/components/BottomList';
-import ReportContent from '~/components/ReportContent';
+import ReportContent from '~/components/Report/ReportContent';
 import useCommonController from '~/screens/store';
 import { getPostMenus, getRootGroupids } from '~/helpers/post';
 import { TargetType, ReportTo } from '~/interfaces/IReport';
@@ -32,7 +32,7 @@ const usePostMenu = (
   const dispatch = useDispatch();
 
   const commonActions = useCommonController((state) => state.actions);
-  const { showToast } = useModalStore((state) => state.actions);
+  const { showToast, showAlert } = useModalStore((state) => state.actions);
 
   if (!data) return null;
 
@@ -99,22 +99,18 @@ const usePostMenu = (
 
   const onPressDelete = () => {
     dispatch(modalActions.hideBottomList());
-    dispatch(
-      modalActions.showAlert({
-        title: i18next.t('post:title_delete_post'),
-        content: i18next.t('post:content_delete_post'),
-        cancelBtn: true,
-        confirmLabel: i18next.t('common:btn_delete'),
-        ConfirmBtnComponent: Button.Danger,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        confirmBtnProps: { type: 'ghost' },
-        onConfirm: () => dispatch(postActions.deletePost({
-          id: postId,
-          callbackError: handleDeletePostError,
-        })),
-      }),
-    );
+    showAlert({
+      title: i18next.t('post:title_delete_post'),
+      content: i18next.t('post:content_delete_post'),
+      cancelBtn: true,
+      confirmLabel: i18next.t('common:btn_delete'),
+      ConfirmBtnComponent: Button.Danger,
+      confirmBtnProps: { type: 'ghost' },
+      onConfirm: () => dispatch(postActions.deletePost({
+        id: postId,
+        callbackError: handleDeletePostError,
+      })),
+    });
   };
 
   const onPressReport = () => {

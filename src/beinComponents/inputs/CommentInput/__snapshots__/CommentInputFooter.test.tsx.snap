@@ -2,6 +2,20 @@
 
 exports[`CommentInputFooter component renders correctly mention bar invisible 1`] = `
 <View
+  animatedStyle={
+    Object {
+      "value": Object {
+        "display": "flex",
+        "opacity": 0,
+        "transform": Array [
+          Object {
+            "translateX": 0,
+          },
+        ],
+      },
+    }
+  }
+  collapsable={false}
   style={
     Object {
       "display": "flex",
@@ -417,10 +431,21 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
     </View>
   </View>
   <View
+    animatedStyle={
+      Object {
+        "value": Object {
+          "left": 0,
+          "opacity": 0,
+          "position": "absolute",
+          "right": 0,
+        },
+      }
+    }
+    collapsable={false}
     style={
       Object {
         "left": 0,
-        "opacity": undefined,
+        "opacity": 0,
         "position": "absolute",
         "right": 0,
       }
@@ -432,6 +457,20 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
 
 exports[`CommentInputFooter component renders correctly mention bar with item 1`] = `
 <View
+  animatedStyle={
+    Object {
+      "value": Object {
+        "display": "flex",
+        "opacity": 0,
+        "transform": Array [
+          Object {
+            "translateX": 0,
+          },
+        ],
+      },
+    }
+  }
+  collapsable={false}
   style={
     Object {
       "display": "flex",
@@ -847,10 +886,21 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
     </View>
   </View>
   <View
+    animatedStyle={
+      Object {
+        "value": Object {
+          "left": 0,
+          "opacity": 0,
+          "position": "absolute",
+          "right": 0,
+        },
+      }
+    }
+    collapsable={false}
     style={
       Object {
         "left": 0,
-        "opacity": undefined,
+        "opacity": 0,
         "position": "absolute",
         "right": 0,
       }

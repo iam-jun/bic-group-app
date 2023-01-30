@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { StyleSheet } from 'react-native';
 
-import modalActions from '~/storeRedux/modal/actions';
 import groupsActions from '~/storeRedux/groups/actions';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
@@ -19,7 +18,7 @@ const GroupApproveDeclineAllRequests = ({ groupId }: {groupId: string}) => {
   const { t } = useBaseHook();
 
   const { total } = useKeySelector(groupsKeySelector.groupMemberRequests);
-  const { showToast, clearToast } = useModalStore((state) => state.actions);
+  const { showToast, clearToast, showAlert } = useModalStore((state) => state.actions);
 
   const alertAction = ({
     title,
@@ -43,7 +42,7 @@ const GroupApproveDeclineAllRequests = ({ groupId }: {groupId: string}) => {
       onConfirm: doAction,
     };
 
-    dispatch(modalActions.showAlert(alertPayload));
+    showAlert(alertPayload);
   };
 
   const onPressApproveAll = () => {

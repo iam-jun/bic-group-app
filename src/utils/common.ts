@@ -6,10 +6,10 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { PastedFile } from 'react-native-paste-image-input';
 import { linkRegex } from '~/constants/commonRegex';
 import { IToastMessage } from '~/interfaces/common';
-import modalActions from '~/storeRedux/modal/actions';
 import Store from '~/storeRedux';
 import { checkPermission, permissionTypes } from './permission';
 import showToast from '~/store/helper/showToast';
+import showAlert from '~/store/helper/showAlert';
 
 export const generateAvatar = (
   name?: string, color?: string,
@@ -159,7 +159,7 @@ export const downloadImageiOS = (photo: any) => {
   };
 
   const onPermissionRefused = () => {
-    Store.store.dispatch(modalActions.showAlert({
+    showAlert({
       title: i18next.t('error:alert_title'),
       content: i18next.t('common:permission_add_photo_blocked'),
       cancelBtn: true,
@@ -167,7 +167,7 @@ export const downloadImageiOS = (photo: any) => {
       onConfirm: () => {
         Linking.openSettings();
       },
-    }));
+    });
   };
 
   const onCallback = (isGranted: boolean) => {
@@ -196,7 +196,7 @@ export const downloadImageAndroid = (photo: any) => {
   };
 
   const onPermissionRefused = () => {
-    Store.store.dispatch(modalActions.showAlert({
+    showAlert({
       title: i18next.t('error:alert_title'),
       content: i18next.t('common:permission_add_photo_blocked'),
       cancelBtn: true,
@@ -204,7 +204,7 @@ export const downloadImageAndroid = (photo: any) => {
       onConfirm: () => {
         Linking.openSettings();
       },
-    }));
+    });
   };
 
   const onCallback = (isGranted: boolean) => {

@@ -5,6 +5,7 @@ import {
 import { Keyboard } from 'react-native';
 
 import shallow from 'zustand/shallow';
+import moment from 'moment';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
 import {
@@ -20,13 +21,12 @@ import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import { getMentionsFromContent } from '~/helpers/post';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
 
 import { rootNavigationRef } from '~/router/refs';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
+import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import useModalStore from '~/store/modal';
 import { PostStatus } from '~/interfaces/IPost';
 
@@ -35,6 +35,8 @@ interface IHandleSaveOptions {
   isNavigateBack?: boolean;
   isShowToast?: boolean;
   shouldValidateSeriesTags?: boolean;
+  onSuccess?: () => void;
+  titleAlert?: string;
 }
 
 const navigation = withNavigation(rootNavigationRef);
@@ -53,9 +55,11 @@ const useCreateArticle = ({
 
   const data = useCreateArticleStore((state) => state.data, shallow) || {};
   const loading = useCreateArticleStore((state) => state.loading);
+  const isValidating = useCreateArticleStore((state) => state.isValidating);
   const isDraft = useCreateArticleStore((state) => state.isDraft);
+  const publishedAt = useCreateArticleStore((state) => state.schedule.publishedAt);
 
-  const { showToast } = useModalStore((state) => state.actions);
+  const { showToast, showAlert } = useModalStore((state) => state.actions);
 
   const [isShowToastAutoSave, setShowToastAutoSave] = useState<boolean>(false);
 
@@ -72,6 +76,8 @@ const useCreateArticle = ({
   );
 
   const { t } = useBaseHook();
+
+  const isValidScheduleTime = () => moment(publishedAt).isSameOrAfter(moment());
 
   // auto save for draft article, so no need to check if content is empty
   const isDraftContentUpdated
@@ -160,6 +166,7 @@ const useCreateArticle = ({
       series,
       tags,
       status,
+      publishedAt,
     } = article;
     const audienceIds: IEditArticleAudience
       = getAudienceIdsFromAudienceObject(audienceObject);
@@ -176,7 +183,11 @@ const useCreateArticle = ({
       tags,
     };
     actions.setData(data);
-    actions.setIsDraft(status === PostStatus.DRAFT);
+    const isDraft = [PostStatus.DRAFT, PostStatus.WAITING_SCHEDULE, PostStatus.SCHEDULE_FAILED].includes(status);
+    actions.setIsDraft(isDraft);
+    if (isDraft) {
+      actions.setPublishedAt(publishedAt || '');
+    }
   };
 
   useEffect(() => {
@@ -195,6 +206,10 @@ const useCreateArticle = ({
 
   const handleTitleChange = (newTitle: string) => {
     actions.setTitle(newTitle);
+  };
+
+  const resetPublishedAt = () => {
+    actions.setPublishedAt(article?.publishedAt || '');
   };
 
   const updateMentions = () => {
@@ -241,10 +256,24 @@ const useCreateArticle = ({
     }
   }, [data.content]);
 
+  useEffect(() => () => {
+    actions.setIsDraft(false);
+  }, []);
+
+  const validateSeriesTags = (onSuccess: (response) => void, onError: (error) => void) => {
+    const dataUpdate = useCreateArticleStore.getState().data;
+    const validateParams: IParamsValidateSeriesTags = {
+      groups: dataUpdate?.audience?.groupIds || [],
+      series: dataUpdate?.series?.map?.((item) => item.id) || [],
+      tags: dataUpdate?.tags?.map?.((item) => item.id) || [],
+    };
+    actions.validateSeriesTags(validateParams, onSuccess, onError);
+  };
+
   const handleSave = (options?: IHandleSaveOptions) => {
     Keyboard.dismiss();
     const {
-      isNavigateBack = true, isShowLoading = true, isShowToast = true, shouldValidateSeriesTags,
+      isNavigateBack = true, isShowLoading = true, isShowToast = true, shouldValidateSeriesTags, onSuccess, titleAlert,
     } = options || {};
     updateMentions();
 
@@ -259,21 +288,15 @@ const useCreateArticle = ({
       isNavigateBack,
       isShowToast,
       isShowLoading,
+      onSuccess,
     } as IPayloadPutEditArticle;
 
     if (shouldValidateSeriesTags) {
-      actions.setLoading(true);
-      const validateParams: IParamsValidateSeriesTags = {
-        groups: dataUpdate?.audience?.groupIds || [],
-        series: dataUpdate?.series?.map?.((item) => item.id) || [],
-        tags: dataUpdate?.tags?.map?.((item) => item.id) || [],
-      };
       const onSuccess = () => actions.putEditArticle(putEditArticleParams);
       const onError = (error) => {
-        actions.setLoading(false);
-        actions.handleSaveError(error, () => handleSave(options));
+        actions.handleSaveError(error, () => handleSave(options), titleAlert);
       };
-      actions.validateSeriesTags(validateParams, onSuccess, onError);
+      validateSeriesTags(onSuccess, onError);
     } else {
       actions.putEditArticle(putEditArticleParams);
     }
@@ -286,35 +309,50 @@ const useCreateArticle = ({
       navigation.replace(articleStack.articleDetail, { articleId: data.id });
     };
 
+    const onHandleSaveErrorDone = () => handleSave({
+      isNavigateBack: false,
+      isShowLoading: true,
+      isShowToast: false,
+      onSuccess: () => handlePublish(),
+    });
+
     const payload: IPayloadPublishDraftArticle = {
       draftArticleId: data.id,
       onSuccess: () => {
         showToast({ content: 'post:draft:text_draft_article_published' });
         goToArticleDetail();
+        useScheduleArticlesStore.getState().actions.getScheduleArticles({ isRefresh: true });
       },
-      onError: () => {
-        // do something
-      },
+      onError: (error) => actions.handleSaveError(error, onHandleSaveErrorDone),
     };
     useDraftArticleStore.getState().actions.publishDraftArticle(payload);
   };
 
-  const handleBack = (showAlert = false) => {
-    if (isChanged || showAlert) {
+  const handleSchedule = () => {
+    if (!validButtonPublish) return;
+
+    if (!isValidScheduleTime()) {
+      actions.setErrorScheduleSubmiting(t('article:fail_schedule'));
+      return;
+    }
+
+    actions.scheduleArticle();
+  };
+
+  const handleBack = (shouldShowAlert = false) => {
+    if (isChanged || shouldShowAlert) {
       Keyboard.dismiss();
-      Store.store.dispatch(
-        modalActions.showAlert({
-          title: t('discard_alert:title'),
-          content: t('discard_alert:content'),
-          cancelBtn: true,
-          cancelLabel: t('common:btn_discard'),
-          confirmLabel: t('common:btn_stay_here'),
-          onCancel: () => {
-            initEditStoreData();
-            navigation.goBack();
-          },
-        }),
-      );
+      showAlert({
+        title: t('discard_alert:title'),
+        content: t('discard_alert:content'),
+        cancelBtn: true,
+        cancelLabel: t('common:btn_discard'),
+        confirmLabel: t('common:btn_stay_here'),
+        onCancel: () => {
+          initEditStoreData();
+          navigation.goBack();
+        },
+      });
       return;
     }
     navigation.goBack();
@@ -322,6 +360,7 @@ const useCreateArticle = ({
 
   return {
     loading,
+    isValidating,
     isShowToastAutoSave,
     enableButtonSave,
     validButtonPublish,
@@ -334,6 +373,9 @@ const useCreateArticle = ({
     handleBack,
     handleAudiencesChange,
     handlePublish,
+    handleSchedule,
+    validateSeriesTags,
+    resetPublishedAt,
   };
 };
 

@@ -12,10 +12,11 @@ type PreviewSectionProps = {
     onPress: () => void;
     placeholder: string;
     content: ReactElement;
+    disabled?: boolean;
 }
 
 const PreviewSection: FC<PreviewSectionProps> = ({
-  title, optional, onPress, placeholder, content,
+  title, optional, onPress, placeholder, content, disabled,
 }) => {
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
@@ -25,13 +26,13 @@ const PreviewSection: FC<PreviewSectionProps> = ({
   return (
     <View style={styles.container}>
       <View style={styles.row}>
-        <Text.H4 color={colors.neutral80}>{title}</Text.H4>
+        <Text.H4 color={disabled ? colors.neutral20 : colors.neutral80}>{title}</Text.H4>
         {optional && <Text.H4 style={styles.textOptional} color={colors.neutral20}>{`(${t('common:text_optional')})`}</Text.H4>}
       </View>
       <View style={styles.content}>
         {!!content ? content : <Text.BodyM color={colors.neutral20}>{placeholder}</Text.BodyM>}
       </View>
-      <EditAction type={!!content ? 'edit' : 'add'} onPress={onPress} />
+      <EditAction type={!!content ? 'edit' : 'add'} onPress={onPress} disabled={disabled} />
     </View>
   );
 };

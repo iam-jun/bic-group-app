@@ -5,11 +5,10 @@ import { Button } from '~/baseComponents';
 import ApiErrorCode from '~/constants/apiErrorCode';
 import InvalidSeriesTagsContentModal from '~/screens/articles/CreateArticle/components/InvalidSeriesTagsContentModal';
 import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
+import showAlert from '~/store/helper/showAlert';
 import showToastError from '~/store/helper/showToastError';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
 
-const handleValidateSeriesTagsError = (set, get, error: any, onNext: () => void) => {
+const handleValidateSeriesTagsError = (set, get, error: any, onNext: () => void, titleAlert?: string) => {
   const {
     seriesNames, tagNames, seriesIds = [], tagIds = [],
   } = error?.meta?.errors || {};
@@ -25,21 +24,21 @@ const handleValidateSeriesTagsError = (set, get, error: any, onNext: () => void)
     onNext?.();
   };
 
-  Store.store.dispatch(modalActions.showAlert({
-    title: i18next.t('article:modal_invalid_series_tags:title'),
+  showAlert({
+    title: i18next.t(titleAlert || 'article:modal_invalid_series_tags:title'),
     children: <InvalidSeriesTagsContentModal seriesNames={seriesNames} tagNames={tagNames} />,
     cancelBtn: true,
     confirmLabel: i18next.t('common:text_remove'),
     ConfirmBtnComponent: Button.Danger,
     onConfirm: removeSeriesTags,
     confirmBtnProps: { type: 'ghost' },
-  }));
+  });
 };
 
-const handleSaveError = (set, get) => (error, onNext) => {
+const handleSaveError = (set, get) => (error, onNext, titleAlert) => {
   const errorCode = error?.code;
-  if (errorCode === ApiErrorCode.Post.VALIDATION_ERROR) {
-    handleValidateSeriesTagsError(set, get, error, onNext);
+  if (errorCode === ApiErrorCode.Post.ARTICLE_INVALID_PARAM) {
+    handleValidateSeriesTagsError(set, get, error, onNext, titleAlert);
   } else {
     showToastError(error);
   }

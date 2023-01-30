@@ -30,7 +30,7 @@ const AudienceSection: FC<AudienceSectionProps> = ({ articleId, onPress }) => {
           <View style={styles.tagView} key={`tagview-${group.id}`}>
             <Tag
               style={styles.tag}
-              type="neutral"
+              type="secondary"
               size="medium"
               label={group.name}
               textProps={{ numberOfLines: 1 }}

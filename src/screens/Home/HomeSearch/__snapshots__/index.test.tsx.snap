@@ -4,17 +4,22 @@ exports[`NewsfeedSearch component should render null 1`] = `null`;
 
 exports[`NewsfeedSearch component should render search 1`] = `
 <View
+  animatedStyle={
+    Object {
+      "value": Object {},
+    }
+  }
+  collapsable={false}
+  entering={[Function]}
+  exiting={[Function]}
   style={
-    Array [
-      Object {
-        "backgroundColor": "#FFFFFF",
-        "height": "100%",
-        "position": "absolute",
-        "width": "100%",
-        "zIndex": 99,
-      },
-      undefined,
-    ]
+    Object {
+      "backgroundColor": "#FFFFFF",
+      "height": "100%",
+      "position": "absolute",
+      "width": "100%",
+      "zIndex": 99,
+    }
   }
 >
   <View
@@ -135,7 +140,7 @@ exports[`NewsfeedSearch component should render search 1`] = `
               "color": "#181C32",
               "flex": 1,
               "fontFamily": "BeVietnamPro-Light",
-              "fontSize": 15,
+              "fontSize": 14,
               "height": "100%",
             },
             Object {
@@ -316,17 +321,22 @@ exports[`NewsfeedSearch component should render search 1`] = `
 
 exports[`NewsfeedSearch component should render suggestion 1`] = `
 <View
+  animatedStyle={
+    Object {
+      "value": Object {},
+    }
+  }
+  collapsable={false}
+  entering={[Function]}
+  exiting={[Function]}
   style={
-    Array [
-      Object {
-        "backgroundColor": "#FFFFFF",
-        "height": "100%",
-        "position": "absolute",
-        "width": "100%",
-        "zIndex": 99,
-      },
-      undefined,
-    ]
+    Object {
+      "backgroundColor": "#FFFFFF",
+      "height": "100%",
+      "position": "absolute",
+      "width": "100%",
+      "zIndex": 99,
+    }
   }
 >
   <View
@@ -447,7 +457,7 @@ exports[`NewsfeedSearch component should render suggestion 1`] = `
               "color": "#181C32",
               "flex": 1,
               "fontFamily": "BeVietnamPro-Light",
-              "fontSize": 15,
+              "fontSize": 14,
               "height": "100%",
             },
             Object {

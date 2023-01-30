@@ -2,14 +2,13 @@ import React, { FC } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { isEqual } from 'lodash';
 
-import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
-import modalActions from '~/storeRedux/modal/actions';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 
 import { IScheme } from '~/interfaces/IGroup';
 import usePermissionSchemeStore from '../../store';
+import useModalStore from '~/store/modal';
 
 export interface CreateSchemeHeaderProps {
   style?: StyleProp<ViewStyle>;
@@ -30,9 +29,9 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
   communityId,
 }: CreateSchemeHeaderProps) => {
   const { rootNavigation } = useRootNavigation();
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
 
+  const { showAlert } = useModalStore((state) => state.actions);
   const actions = usePermissionSchemeStore((state) => state.actions);
   const groupSchemeData = usePermissionSchemeStore((state) => state.groupScheme.data) || {};
   const creating = usePermissionSchemeStore((state) => state.creatingScheme.creating);
@@ -68,14 +67,14 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
         initRoles || groupSchemeData?.roles, // initRoles = undefined for group
       )
     ) {
-      dispatch(modalActions.showAlert({
+      showAlert({
         title: t('communities:permission:text_title_discard_create_scheme'),
         content: t('communities:permission:text_desc_discard_create_scheme'),
         cancelBtn: true,
         cancelLabel: t('common:btn_discard'),
         confirmLabel: t('communities:permission:btn_continue'),
         onCancel: () => rootNavigation.goBack(),
-      }));
+      });
     } else {
       rootNavigation.goBack();
     }

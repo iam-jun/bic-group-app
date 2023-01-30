@@ -95,24 +95,5 @@ exports[`UserHeader component renders correctly 1`] = `
       </Text>
     </Text>
   </View>
-  <Text
-    style={
-      Array [
-        Object {
-          "color": "#212745",
-          "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 15,
-        },
-        Object {},
-        Object {
-          "marginTop": 8,
-          "textAlign": "center",
-        },
-      ]
-    }
-    testID="user_profile.description"
-  >
-    description
-  </Text>
 </View>
 `;

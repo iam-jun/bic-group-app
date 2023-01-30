@@ -100,7 +100,7 @@ exports[`BaseToast component renders error toast correctly 1`] = `
           Object {
             "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
+            "fontSize": 14,
           },
           Object {
             "color": "#FFFFFF",
@@ -226,7 +226,7 @@ exports[`BaseToast component renders full toast with button correctly 1`] = `
           Object {
             "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
+            "fontSize": 14,
           },
           Object {
             "color": "#FFFFFF",
@@ -391,7 +391,7 @@ exports[`BaseToast component renders success toast correctly 1`] = `
           Object {
             "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
+            "fontSize": 14,
           },
           Object {
             "color": "#FFFFFF",

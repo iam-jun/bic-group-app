@@ -69,10 +69,6 @@ export const postInitState = {
   },
   loadingGetPostDetail: false,
   commentErrorCode: '',
-  allPostContainingVideoInProgress: {
-    total: 0,
-    data: [],
-  },
 };
 
 function postReducer(
@@ -337,19 +333,6 @@ function postReducer(
         ...state,
         allCommentsByParentIds: allCommentsByPost,
         allPosts: newAllPosts,
-      };
-    }
-    case postTypes.SET_POSTS_CONTAINING_VIDEO_IN_PROGRESS: {
-      const newAllPostContainingVideoInProgress = {
-        total: payload?.total || 0,
-        data:
-          payload?.data || state.allPostContainingVideoInProgress?.data || [],
-      };
-      return {
-        ...state,
-        allPostContainingVideoInProgress: {
-          ...newAllPostContainingVideoInProgress,
-        },
       };
     }
     case postTypes.UPDATE_LINK_PREVIEW:

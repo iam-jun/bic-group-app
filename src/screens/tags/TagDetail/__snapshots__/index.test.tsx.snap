@@ -18,19 +18,21 @@ exports[`TagDetail component renders correctly 1`] = `
     testID="header"
   >
     <View
+      animatedStyle={
+        Object {
+          "value": Object {},
+        }
+      }
+      collapsable={false}
       style={
-        Array [
-          Object {
-            "alignItems": "flex-end",
-            "backgroundColor": "#FFFFFF",
-            "flexDirection": "row",
-            "minHeight": 44,
-            "paddingTop": 0,
-            "paddingVertical": 4,
-          },
-          false,
-          undefined,
-        ]
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "minHeight": 44,
+          "paddingTop": 0,
+          "paddingVertical": 4,
+        }
       }
       testID="header.content"
     >
@@ -114,15 +116,18 @@ exports[`TagDetail component renders correctly 1`] = `
           </View>
         </View>
         <View
+          animatedStyle={
+            Object {
+              "value": Object {},
+            }
+          }
+          collapsable={false}
           style={
-            Array [
-              Object {
-                "flex": 1,
-                "justifyContent": "center",
-                "paddingVertical": 8,
-              },
-              Object {},
-            ]
+            Object {
+              "flex": 1,
+              "justifyContent": "center",
+              "paddingVertical": 8,
+            }
           }
         >
           <View
@@ -246,8 +251,8 @@ exports[`TagDetail component renders correctly 1`] = `
                 },
                 "justifyContent": "center",
                 "opacity": 1,
-                "paddingHorizontal": 16,
-                "paddingVertical": 8,
+                "paddingHorizontal": 12,
+                "paddingVertical": 6,
               }
             }
             testID="undefined-selected"
@@ -258,7 +263,7 @@ exports[`TagDetail component renders correctly 1`] = `
                   Object {
                     "color": "#353E6E",
                     "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 13,
+                    "fontSize": 14,
                   },
                   Object {},
                   Array [
@@ -311,8 +316,8 @@ exports[`TagDetail component renders correctly 1`] = `
                 },
                 "justifyContent": "center",
                 "opacity": 1,
-                "paddingHorizontal": 16,
-                "paddingVertical": 8,
+                "paddingHorizontal": 12,
+                "paddingVertical": 6,
               }
             }
             testID="undefined-selected"
@@ -323,7 +328,7 @@ exports[`TagDetail component renders correctly 1`] = `
                   Object {
                     "color": "#353E6E",
                     "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 13,
+                    "fontSize": 14,
                   },
                   Object {},
                   Array [
@@ -418,19 +423,21 @@ exports[`TagDetail component renders list article success 1`] = `
     testID="header"
   >
     <View
+      animatedStyle={
+        Object {
+          "value": Object {},
+        }
+      }
+      collapsable={false}
       style={
-        Array [
-          Object {
-            "alignItems": "flex-end",
-            "backgroundColor": "#FFFFFF",
-            "flexDirection": "row",
-            "minHeight": 44,
-            "paddingTop": 0,
-            "paddingVertical": 4,
-          },
-          false,
-          undefined,
-        ]
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "minHeight": 44,
+          "paddingTop": 0,
+          "paddingVertical": 4,
+        }
       }
       testID="header.content"
     >
@@ -514,15 +521,18 @@ exports[`TagDetail component renders list article success 1`] = `
           </View>
         </View>
         <View
+          animatedStyle={
+            Object {
+              "value": Object {},
+            }
+          }
+          collapsable={false}
           style={
-            Array [
-              Object {
-                "flex": 1,
-                "justifyContent": "center",
-                "paddingVertical": 8,
-              },
-              Object {},
-            ]
+            Object {
+              "flex": 1,
+              "justifyContent": "center",
+              "paddingVertical": 8,
+            }
           }
         >
           <View
@@ -646,8 +656,8 @@ exports[`TagDetail component renders list article success 1`] = `
                 },
                 "justifyContent": "center",
                 "opacity": 1,
-                "paddingHorizontal": 16,
-                "paddingVertical": 8,
+                "paddingHorizontal": 12,
+                "paddingVertical": 6,
               }
             }
             testID="undefined-selected"
@@ -658,7 +668,7 @@ exports[`TagDetail component renders list article success 1`] = `
                   Object {
                     "color": "#353E6E",
                     "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 13,
+                    "fontSize": 14,
                   },
                   Object {},
                   Array [
@@ -711,8 +721,8 @@ exports[`TagDetail component renders list article success 1`] = `
                 },
                 "justifyContent": "center",
                 "opacity": 1,
-                "paddingHorizontal": 16,
-                "paddingVertical": 8,
+                "paddingHorizontal": 12,
+                "paddingVertical": 6,
               }
             }
             testID="undefined-selected"
@@ -723,7 +733,7 @@ exports[`TagDetail component renders list article success 1`] = `
                   Object {
                     "color": "#353E6E",
                     "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 13,
+                    "fontSize": 14,
                   },
                   Object {},
                   Array [

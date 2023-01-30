@@ -8,12 +8,12 @@ import UploadingImage from '~/beinComponents/UploadingImage';
 import { uploadTypes } from '~/configs/resourceConfig';
 import { IFilePicked } from '~/interfaces/common';
 import dimension, { scaleSize } from '~/theme/dimension';
-import ImageUploader from '~/services/imageUploader';
 import Icon from '~/baseComponents/Icon';
 import { Button } from '~/baseComponents';
 import { checkPermission, permissionTypes } from '~/utils/permission';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import { IArticleCover } from '~/interfaces/IPost';
+import { IGetFile } from '~/store/uploader';
 
 const COVER_WIDTH = dimension.deviceWidth;
 const COVER_HEIGHT = scaleSize(200);
@@ -50,8 +50,7 @@ const CoverImage = ({
     );
   };
 
-  const handleUploadSuccess = (url: string, fileName: string) => {
-    const file = ImageUploader.getInstance().getFile(fileName);
+  const handleUploadSuccess = (file: IGetFile) => {
     if (file?.result?.id && file?.result?.url) {
       onUploadSuccess(file.result as IArticleCover);
     } else {

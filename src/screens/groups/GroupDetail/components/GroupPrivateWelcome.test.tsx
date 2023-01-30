@@ -4,12 +4,13 @@ import { renderWithRedux } from '~/test/testUtils';
 import GroupPrivateWelcome from './GroupPrivateWelcome';
 import { groupDetailData } from '~/test/mock_data/group';
 import { IGroup } from '~/interfaces/IGroup';
+import { communityDetailData } from '~/test/mock_data/communities';
 
 describe('GroupPrivateWelcome component', () => {
   const baseProps = {
     infoDetail: groupDetailData as unknown as IGroup,
     isMember: false,
-    communityName: 'communityName',
+    community: communityDetailData,
     onScroll: jest.fn(),
     onGetInfoLayout: jest.fn(),
   };

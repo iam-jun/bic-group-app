@@ -21,6 +21,8 @@ import { IconType } from '~/resources/icons';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 import { Button } from '~/baseComponents';
+import Tag from '~/baseComponents/Tag';
+import { useBaseHook } from '~/hooks';
 
 export interface GroupItemProps extends IParsedGroup {
   groupStyle?: StyleProp<ViewStyle>;
@@ -37,6 +39,8 @@ export interface GroupItemProps extends IParsedGroup {
   iconVariant?: AvatarType;
   nameLines?: number;
   menuIcon?: IconType;
+  showBlockedIcon?: boolean;
+  isCommunity?: boolean;
 
   onPressItem?: (item: GroupItemProps) => void;
   onToggleItem?: (item: GroupItemProps) => void;
@@ -54,6 +58,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     name,
     icon,
     testID = 'group_item',
+    isCommunity,
 
     childrenUiIds = [],
     isChecked = false,
@@ -68,6 +73,8 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     iconVariant = 'base',
     nameLines = 2,
     menuIcon = 'menu',
+    showBlockedIcon = false,
+
     onPressItem,
     onToggleItem,
     onPressMenu,
@@ -87,6 +94,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 
   const privacyData = GroupPrivacyDetail[privacy] || {};
   const { icon: privacyIcon }: any = privacyData;
+  const { t } = useBaseHook();
 
   const _onPressItem = () => {
     if (onPressItem) {
@@ -164,6 +172,12 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     return null;
   };
 
+  const renderTagLabel = () => {
+    if (isCommunity) return t('common:text_community');
+
+    return t('common:text_group');
+  };
+
   return (
     <TouchableOpacity
       testID="group_item.container"
@@ -187,6 +201,11 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
             >
               {name}
             </Text.BodyMMedium>
+            <Tag
+              style={styles.tagContainer}
+              type="secondary"
+              label={renderTagLabel()}
+            />
             {_renderExtraInfo?.()}
           </View>
           {onCheckedItem && (
@@ -207,6 +226,13 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
                 onPress={_onPressMenu}
               />
             </View>
+          )}
+          {showBlockedIcon && (
+            <Icon
+              icon="CircleExclamationSolid"
+              tintColor={theme.colors.neutral20}
+              size={14}
+            />
           )}
         </View>
       </View>
@@ -255,8 +281,9 @@ const themeStyles = (theme: ExtendedTheme) => {
     itemContainer: {
       flex: 1,
       flexDirection: 'row',
-      paddingLeft: spacing.padding.small,
+      paddingHorizontal: spacing.padding.small,
       paddingVertical: spacing?.padding.small,
+      alignItems: 'center',
     },
     avatarContainer: {
       width: dimension?.avatarSizes.medium,
@@ -272,6 +299,9 @@ const themeStyles = (theme: ExtendedTheme) => {
     btnMenu: {
       marginRight: spacing.margin.tiny,
       justifyContent: 'center',
+    },
+    tagContainer: {
+      alignSelf: 'baseline',
     },
   });
 };

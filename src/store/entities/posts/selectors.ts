@@ -23,6 +23,8 @@ const postsSelector = {
   getLinkPreview: (id: string) => (state: IPostsState) => state?.posts?.[id]?.linkPreview,
   getReported: (id: string) => (state: IPostsState) => state?.posts?.[id]?.reported,
   getType: (id: string) => (state: IPostsState) => state?.posts?.[id]?.type,
+  getReportDetails: (id: string) => (state: IPostsState) => state?.posts?.[id]?.reportDetails,
+  getIsHidden: (id: string) => (state: IPostsState) => state?.posts?.[id]?.isHidden,
 };
 
 export default postsSelector;

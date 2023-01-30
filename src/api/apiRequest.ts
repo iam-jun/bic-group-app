@@ -66,9 +66,10 @@ const interceptorsResponseSuccess = (response: AxiosResponse) => {
 const interceptorsResponseError = async (error: AxiosError) => handleResponseError(error);
 
 const makeHttpRequest = async (requestConfig: HttpApiRequestConfig): Promise<AxiosResponse<any, any>> => {
-  const tokenHeaders: any = {
+  const token = getBeinIdToken();
+  const tokenHeaders: any = token ? {
     Authorization: getBeinIdToken(),
-  };
+  } : {};
 
   const beinHeaders = {
     ...commonHeaders,

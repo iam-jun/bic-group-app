@@ -2,8 +2,6 @@ export const SET_MODAL = 'common/SET_MODAL';
 export const SHOW_MODAL = 'common/SHOW_MODAL';
 export const HIDE_MODAL = 'common/HIDE_MODAL';
 
-export const SHOW_ALERT = 'common/SHOW_ALERT';
-export const HIDE_ALERT = 'common/HIDE_ALERT';
 export const SHOW_ALERT_NEW_FEATURE = 'common/SHOW_ALERT_NEW_FEATURE';
 export const HIDE_ALERT_NEW_FEATURE = 'common/HIDE_ALERT_NEW_FEATURE';
 export const SHOW_LOADING = 'common/SHOW_LOADING';

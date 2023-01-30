@@ -16,6 +16,7 @@ const PostDetailContentHeader = ({
   idLessThan,
 }: any) => {
   const postData = usePostsStore(useCallback(postsSelector.getPost(id, {}), [id]));
+  const isHidden = usePostsStore(useCallback(postsSelector.getIsHidden(id), [id]));
 
   if (!postData) {
     return null;
@@ -27,6 +28,7 @@ const PostDetailContentHeader = ({
       <PostView
         isPostDetail
         data={postData}
+        hasReactPermission={!isHidden}
         onPressComment={onPressComment}
         onContentLayout={onContentLayout}
         btnReactTestID="post_detail_content.btn_react"

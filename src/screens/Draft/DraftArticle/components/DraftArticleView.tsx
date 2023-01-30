@@ -1,7 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
@@ -20,7 +19,6 @@ import { ContentHeader } from '~/components/ContentView';
 import { IPayloadPublishDraftArticle } from '~/interfaces/IArticle';
 import { useUserIdAuth } from '~/hooks/auth';
 import useDraftArticleStore from '../store';
-import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
 import { Button } from '~/baseComponents';
 import useArticleController from '~/screens/articles/store';
@@ -39,12 +37,11 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
   const styles = createStyles(theme);
   const { rootNavigation } = useRootNavigation();
   const userId = useUserIdAuth();
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
 
   const actions = useDraftArticleStore((state) => state.actions);
   const articleActions = useArticleController((state) => state.actions);
-  const { showToast } = useModalStore((state) => state.actions);
+  const { showToast, showAlert } = useModalStore((state) => state.actions);
 
   const {
     id,
@@ -74,7 +71,7 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
   };
 
   const onPressDelete = () => {
-    dispatch(modalActions.showAlert({
+    showAlert({
       title: t('post:title_delete_article'),
       content: t('post:content_delete_article'),
       cancelBtn: true,
@@ -83,7 +80,7 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
       ConfirmBtnComponent: Button.Danger,
       confirmBtnProps: { type: 'ghost' },
       onConfirm: onDelete,
-    }));
+    });
   };
 
   const refreshDraftArticles = () => {

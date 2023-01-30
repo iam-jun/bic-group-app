@@ -1,27 +1,25 @@
 import useAuthController, { IAuthState } from '~/screens/auth/store';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 import { act, renderHook } from '~/test/testUtils';
 
 describe('announceSessionExpire', () => {
   it('should show alert session expire', () => {
-    const spyShowAlert = jest.spyOn(
-      modalActions,
-      'showAlert',
-    );
+    const showAlert = jest.fn();
+    const actions = { showAlert };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     const { result } = renderHook(() => useAuthController((state) => state));
 
     act(() => {
       result.current.actions.announceSessionExpire();
     });
-    expect(spyShowAlert).toBeCalled();
+    expect(showAlert).toBeCalled();
   });
 
   it('should not show alert session expire because of it is showing', () => {
-    const spyShowAlert = jest.spyOn(
-      modalActions,
-      'showAlert',
-    );
+    const showAlert = jest.fn();
+    const actions = { showAlert };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     useAuthController.setState((state: IAuthState) => {
       state.showingNoticeSession = true;
@@ -33,6 +31,6 @@ describe('announceSessionExpire', () => {
     act(() => {
       result.current.actions.announceSessionExpire();
     });
-    expect(spyShowAlert).not.toBeCalled();
+    expect(showAlert).not.toBeCalled();
   });
 });

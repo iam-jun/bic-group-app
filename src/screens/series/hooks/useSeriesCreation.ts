@@ -5,8 +5,6 @@ import i18next from 'i18next';
 import { useCallback, useEffect } from 'react';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
 
 import useSeriesStore, { ISeriesState } from '../store';
 import useSelectAudienceStore, { ISelectAudienceState } from '~/components/SelectAudience/store';
@@ -15,6 +13,7 @@ import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { getAudienceIdsFromAudienceObject } from '~/screens/articles/CreateArticle/helper';
 import { IEditArticleAudience } from '~/interfaces/IArticle';
 import { useRootNavigation } from '~/hooks/navigation';
+import useModalStore from '~/store/modal';
 
 export interface IUseSeriesCreation {
     seriesId?: string;
@@ -51,6 +50,7 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
   const dataGroups = useSeriesStore((state: ISeriesState) => state.groups || []);
 
   const audienceActions = useSelectAudienceStore((state: ISelectAudienceState) => state.actions);
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const names = getNames(dataGroups);
 
@@ -111,14 +111,14 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
   const handleBack = () => {
     if (enableButtonSave) {
       Keyboard.dismiss();
-      Store.store.dispatch(modalActions.showAlert({
+      showAlert({
         title: i18next.t('discard_alert:title'),
         content: i18next.t('discard_alert:content'),
         cancelBtn: true,
         cancelLabel: i18next.t('common:btn_discard'),
         confirmLabel: i18next.t('common:btn_stay_here'),
         onCancel: () => rootNavigation.goBack(),
-      }));
+      });
       return;
     }
     rootNavigation.goBack();

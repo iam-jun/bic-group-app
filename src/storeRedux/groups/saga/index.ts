@@ -13,7 +13,6 @@ import groupsTypes from '~/storeRedux/groups/types';
 import { IResponseData } from '~/interfaces/common';
 import { mapData } from '~/screens/groups/helper/mapper';
 import appConfig from '~/configs/appConfig';
-import ImageUploader, { IGetFile } from '~/services/imageUploader';
 
 import getGroupSearchMembers from './getGroupSearchMembers';
 import approveAllGroupMemberRequests from './approveAllGroupMemberRequests';
@@ -24,11 +23,13 @@ import getGroupMemberRequests from './getGroupMemberRequests';
 import getGlobalSearch from './getGlobalSearch';
 import { IUser } from '~/interfaces/IAuth';
 import useCommunityController from '~/screens/communities/store';
-import useGroupController from '~/screens/groups/store';
 import useGroupMemberStore from '~/screens/groups/GroupMembers/store';
+import { makeHttpRequest } from '~/api/apiRequest';
+import { uploadApiConfig } from '~/api/UploadApi';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import useGeneralInformationStore from '~/screens/groups/GeneralInformation/store';
 import showToastSuccess from '~/store/helper/showToastSuccess';
+import useGroupsStore from '~/store/entities/groups';
 import showToastError from '~/store/helper/showToastError';
 
 export default function* groupsSaga() {
@@ -86,15 +87,16 @@ function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
       fieldName, true,
     );
 
-    const data: IGetFile = yield ImageUploader.getInstance().upload({
-      file,
-      uploadType,
-    });
+    const uploadResponse = yield makeHttpRequest(uploadApiConfig.uploadImage(
+      uploadType, file,
+    ));
 
-    const editData = { id, rootGroupId, [fieldName]: data.url };
+    const uploadedUrl = uploadResponse?.data?.data?.url || uploadResponse?.data?.data?.src;
+
+    const editData = { id, rootGroupId, [fieldName]: uploadedUrl };
 
     if (destination === 'group') {
-      useGroupController.getState().actions.editGroupDetail(editData);
+      useGeneralInformationStore.getState().actions.editGroupDetail(editData);
     } else {
       actions.editCommunityDetail(editData);
     }
@@ -177,7 +179,7 @@ function* mergeExtraJoinableUsers() {
 
   if (!loading && canLoadMore) {
     // continue to load more data in advance if possible
-    const { id: groupId } = useGroupDetailStore.getState().groupDetail.group;
+    const { currentGroupId: groupId } = useGroupsStore.getState();
     if (groupId) {
       yield put(groupsActions.getJoinableUsers({ groupId, params }));
     }

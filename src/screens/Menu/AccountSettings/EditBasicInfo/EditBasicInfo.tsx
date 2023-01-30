@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { StyleSheet, Keyboard, ScrollView } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import { isEqual } from 'lodash';
 
 import { useBaseHook } from '~/hooks';
@@ -13,7 +12,6 @@ import {
   RELATIONSHIP_TYPE,
 } from '~/interfaces/IEditUser';
 import OptionMenu from './fragments/OptionMenu';
-import * as modalActions from '~/storeRedux/modal/actions';
 import { useRootNavigation } from '~/hooks/navigation';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -30,6 +28,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Gender from './fragments/Gender';
 import useCommonController from '~/screens/store';
 import useMenuController from '../../store';
+import useModalStore from '~/store/modal';
 
 const EditBasicInfo = () => {
   const theme: ExtendedTheme = useTheme();
@@ -37,7 +36,7 @@ const EditBasicInfo = () => {
   const { t } = useBaseHook();
 
   const styles = themeStyles(theme);
-  const dispatch = useDispatch();
+  const { showAlert } = useModalStore((state) => state.actions);
   const { rootNavigation } = useRootNavigation();
 
   const myProfileData = useCommonController((state) => state.myProfile);
@@ -122,18 +121,16 @@ const EditBasicInfo = () => {
   const _onPressBack = () => {
     if (isValid) {
       Keyboard.dismiss();
-      dispatch(
-        modalActions.showAlert({
-          title: t('common:label_discard_changes'),
-          cancelBtn: true,
-          isDismissible: false,
-          onConfirm: () => {
-            rootNavigation.goBack();
-          },
-          confirmLabel: t('common:btn_discard'),
-          content: t('common:text_not_saved_changes_warning'),
-        }),
-      );
+      showAlert({
+        title: t('common:label_discard_changes'),
+        cancelBtn: true,
+        isDismissible: false,
+        onConfirm: () => {
+          rootNavigation.goBack();
+        },
+        confirmLabel: t('common:btn_discard'),
+        content: t('common:text_not_saved_changes_warning'),
+      });
     } else {
       rootNavigation.goBack();
     }

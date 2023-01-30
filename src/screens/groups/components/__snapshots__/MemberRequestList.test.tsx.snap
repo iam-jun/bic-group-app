@@ -194,7 +194,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
                 ]
               }
             >
-              Requested at Jun 06 at 03:12 PM
+              Requested at Jun 06, 2022
             </Text>
             <View
               style={
@@ -276,7 +276,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
                     Object {
                       "color": "#212745",
                       "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
+                      "fontSize": 14,
                     },
                     Object {
                       "color": "#353E6E",
@@ -363,7 +363,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
                     Object {
                       "color": "#212745",
                       "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
+                      "fontSize": 14,
                     },
                     Object {
                       "color": "#353E6E",

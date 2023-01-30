@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { io } from 'socket.io-client';
 import {
   notificationActions,
@@ -8,7 +7,6 @@ import {
 } from '~/constants/notifications';
 import useAuthController from '~/screens/auth/store';
 import { getAuthToken } from '~/screens/auth/store/selectors';
-import postActions from '~/storeRedux/post/actions';
 import { parseSafe } from '~/utils/common';
 import getEnv from '~/utils/env';
 import { getMsgPackParser } from '~/utils/socket';
@@ -18,13 +16,14 @@ import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import useCommonController from '~/screens/store';
 import INotificationsState from '~/screens/Notification/store/Interface';
 import useNotificationStore from '~/screens/Notification/store';
+import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
 
 const useNotificationSocket = () => {
-  const dispatch = useDispatch();
   const token = useAuthController(getAuthToken);
   const userId = useUserIdAuth();
   const commonController = useCommonController((state) => state.actions);
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
+  const postActions = usePostsInProgressStore((state) => state.actions);
 
   const handleNotification = (data: any) => {
     switch (data.action) {
@@ -35,7 +34,7 @@ const useNotificationSocket = () => {
           || data?.extra?.type
             === NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL
         ) {
-          dispatch(postActions.updateAllPostContainingVideoInProgress(data));
+          postActions.updatePosts(data);
         }
         return notiActions.attach(data);
       case notificationActions.DETACH:

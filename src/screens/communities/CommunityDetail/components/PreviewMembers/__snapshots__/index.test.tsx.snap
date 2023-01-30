@@ -1318,7 +1318,7 @@ Array [
         Object {
           "color": "#212745",
           "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 15,
+          "fontSize": 14,
         },
         Object {
           "color": "#353E6E",
@@ -1660,7 +1660,7 @@ Array [
         Object {
           "color": "#212745",
           "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 15,
+          "fontSize": 14,
         },
         Object {
           "color": "#353E6E",
@@ -1874,7 +1874,7 @@ Array [
         Object {
           "color": "#212745",
           "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 15,
+          "fontSize": 14,
         },
         Object {
           "color": "#353E6E",

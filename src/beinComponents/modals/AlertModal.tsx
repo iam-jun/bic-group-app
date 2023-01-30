@@ -10,19 +10,16 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import { useDispatch } from 'react-redux';
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import Text from '~/baseComponents/Text';
-import * as actions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import TextInput from '../inputs/TextInput';
-import { useKeySelector } from '~/hooks/selector';
 import { Button } from '~/baseComponents';
 import { useBaseHook } from '~/hooks';
+import useModalStore from '~/store/modal';
 
 export interface AlertModalProps {
   style?: StyleProp<ViewStyle>;
-  children?: React.ReactNode;
 }
 
 const AlertModal: React.FC<AlertModalProps> = ({
@@ -32,7 +29,6 @@ const AlertModal: React.FC<AlertModalProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
-  const { alert } = useKeySelector('modal');
   const {
     isDismissible,
     visible,
@@ -42,9 +38,6 @@ const AlertModal: React.FC<AlertModalProps> = ({
     contentProps,
     input,
     inputProps,
-    onCancel,
-    onConfirm,
-    onDismiss,
     confirmLabel,
     confirmBtnProps,
     ConfirmBtnComponent,
@@ -58,7 +51,10 @@ const AlertModal: React.FC<AlertModalProps> = ({
     buttonViewStyle,
     headerStyle,
     HeaderImageComponent,
-  } = alert;
+    onCancel,
+    onConfirm,
+    onDismiss,
+  } = useModalStore((state) => state.alert) || {};
   const _cancelLabel = cancelLabel || t('common:btn_cancel');
 
   const Content = ContentComponent || Text.ParagraphM;
@@ -66,7 +62,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
   const ConfirmBtn = ConfirmBtnComponent || Button.Primary;
   const CancelBtn = CancelBtnComponent || Button.Neutral;
 
-  const dispatch = useDispatch();
+  const actions = useModalStore((state) => state.actions);
   const [text, setText] = useState(inputProps?.value || '');
 
   useEffect(
@@ -77,21 +73,21 @@ const AlertModal: React.FC<AlertModalProps> = ({
 
   const _onDismiss = () => {
     onDismiss && onDismiss();
-    dispatch(actions.hideAlert());
+    actions.hideAlert();
   };
 
   const _onCancel = () => {
     if (onCancel) {
       onCancel();
-      dispatch(actions.hideAlert());
+      actions.hideAlert();
     } else {
       _onDismiss();
     }
   };
 
   const _onConfirm = () => {
-    dispatch(actions.hideAlert());
-    onConfirm(text);
+    actions.hideAlert();
+    onConfirm?.();
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function

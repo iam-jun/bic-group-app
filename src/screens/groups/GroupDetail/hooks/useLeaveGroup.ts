@@ -1,11 +1,10 @@
-import { useDispatch } from 'react-redux';
 import i18next from 'i18next';
 
-import modalActions from '~/storeRedux/modal/actions';
 import Text from '~/baseComponents/Text';
 import { handleLeaveInnerGroups } from '../../helper';
 import useGroupDetailStore from '../store';
 import { GroupPrivacyType } from '~/constants/privacyTypes';
+import useModalStore from '~/store/modal';
 
 interface IUseLeaveGroup {
   groupId: string;
@@ -14,8 +13,8 @@ interface IUseLeaveGroup {
 }
 
 const useLeaveGroup = ({ groupId, username, privacy }: IUseLeaveGroup) => {
-  const dispatch = useDispatch();
   const actions = useGroupDetailStore((state) => state.actions);
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const doLeaveGroup = () => {
     actions.leaveGroup(groupId, privacy);
@@ -42,13 +41,11 @@ const useLeaveGroup = ({ groupId, username, privacy }: IUseLeaveGroup) => {
         groupsLeaveToString,
       );
     }
-    dispatch(modalActions.showAlert(alertPayload));
+    showAlert(alertPayload);
   };
 
   const alertLeaveGroup = () => {
-    handleLeaveInnerGroups(
-      groupId, username, dispatch, getInnerGroupsText,
-    );
+    handleLeaveInnerGroups(groupId, username, getInnerGroupsText);
   };
 
   return alertLeaveGroup;

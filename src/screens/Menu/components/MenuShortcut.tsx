@@ -46,8 +46,8 @@ const MenuShortcut = () => {
     dispatch(modalActions.showAlertNewFeature());
   };
 
-  const onPressMedia = () => {
-    dispatch(modalActions.showAlertNewFeature());
+  const onPressYourContent = () => {
+    rootNavigation.navigate(menuStack.yourContent);
   };
 
   const renderButton = (icon, name, onPress) => (
@@ -67,11 +67,11 @@ const MenuShortcut = () => {
       </View>
       <View style={styles.directionRow}>
         {renderButton('AlbumCollectionSolid', t('menu:title_write_series'), onPressWriteSeries)}
-        {renderButton('FloppyDiskPenSolid', t('menu:title_draft'), onPressDraft)}
+        {renderButton('BallotCheckSolid', t('menu:title_your_content'), onPressYourContent)}
       </View>
       <View style={styles.directionRow}>
         {renderButton('BookmarkSolid', t('menu:title_saved_items'), onPressSavedItems)}
-        {renderButton('PhotoFilmSolid', t('menu:title_media'), onPressMedia)}
+        {renderButton('FloppyDiskPenSolid', t('menu:title_draft'), onPressDraft)}
       </View>
     </View>
   );

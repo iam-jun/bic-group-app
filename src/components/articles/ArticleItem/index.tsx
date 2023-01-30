@@ -23,15 +23,18 @@ import useCommunitiesStore from '~/store/entities/communities';
 import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import { ITag } from '~/interfaces/ITag';
 import Divider from '~/beinComponents/Divider';
+import DeletedItem from '~/components/DeletedItem';
 
 export interface ArticleItemProps {
   data: IPost;
   isLite?: boolean;
+  shouldHideBannerImportant?: boolean;
 }
 
 const ArticleItem: FC<ArticleItemProps> = ({
   data = {},
   isLite,
+  shouldHideBannerImportant,
 }: ArticleItemProps) => {
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
@@ -56,6 +59,8 @@ const ArticleItem: FC<ArticleItemProps> = ({
     communities,
     tags,
     reported,
+    deleted = false,
+    isHidden,
   } = data || {};
 
   const {
@@ -82,6 +87,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
       expireTime={importantExpiredAt}
       markedReadPost={markedReadPost}
       listCommunity={communities}
+      shouldBeHidden={shouldHideBannerImportant}
     />
   );
 
@@ -118,25 +124,30 @@ const ArticleItem: FC<ArticleItemProps> = ({
   );
 
   const renderInterestedBy = () => (
-    <>
-      <ContentInterestedUserCount
-        id={id}
-        testIDPrefix="article_item"
-        interestedUserCount={totalUsersSeen}
-      />
-      <Divider style={styles.divider} />
-    </>
+    !isHidden && (
+      <>
+        <ContentInterestedUserCount
+          id={id}
+          testIDPrefix="article_item"
+          interestedUserCount={totalUsersSeen}
+        />
+        <Divider style={styles.divider} />
+      </>
+    )
   );
 
   const renderFooter = () => (
-    <ArticleFooter
-      articleId={id}
-      canReact={setting?.canReact}
-      canComment={setting?.canComment}
-      commentsCount={commentsCount}
-      reactionsCount={reactionsCount}
-      ownerReactions={ownerReactions}
-    />
+    !isHidden && (
+      <ArticleFooter
+        articleId={id}
+        canReact={setting?.canReact}
+        canComment={setting?.canComment}
+        commentsCount={commentsCount}
+        reactionsCount={reactionsCount}
+        ownerReactions={ownerReactions}
+      />
+
+    )
   );
 
   const renderLite = () => (
@@ -151,6 +162,10 @@ const ArticleItem: FC<ArticleItemProps> = ({
       />
     </>
   );
+
+  if (deleted) {
+    return <DeletedItem title="article:text_delete_article_success" />;
+  }
 
   if (reported) {
     return (<PlaceHolderRemoveContent label="common:text_article_reported" />);

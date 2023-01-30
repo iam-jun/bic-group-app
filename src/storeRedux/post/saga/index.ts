@@ -25,15 +25,17 @@ import putEditPost from '~/storeRedux/post/saga/putEditPost';
 import putMarkAsRead from '~/storeRedux/post/saga/putMarkAsRead';
 import postTypes from '~/storeRedux/post/types';
 import { timeOut } from '~/utils/common';
-import getPostsContainingVideoInProgress from './getPostsContainingVideoInProgress';
 import putMarkSeenPost from './putMarKSeenPost';
-import updatePostsContainingVideoInProgress from './updatePostsContainingVideoInProgress';
 import deletePost from './deletePost';
 import removeAudiencesFromPost from './removeAudiencesFromPost';
 import useDraftPostStore from '../../../screens/Draft/DraftPost/store';
 import useTimelineStore from '~/store/timeline';
+import { mockReportReason } from '~/test/mock_data/report';
+import { IParamGetReportContent, TargetType } from '~/interfaces/IReport';
+import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
 import showToast from '~/store/helper/showToast';
 import showToastError from '~/store/helper/showToastError';
+import useReportContentStore from '~/components/Report/store';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -65,14 +67,6 @@ export default function* postSaga() {
   );
   yield takeLatest(
     postTypes.DELETE_POST_LOCAL, deletePostLocal,
-  );
-  yield takeLatest(
-    postTypes.GET_POSTS_CONTAINING_VIDEO_IN_PROGRESS,
-    getPostsContainingVideoInProgress,
-  );
-  yield takeLatest(
-    postTypes.UPDATE_POSTS_CONTAINING_VIDEO_IN_PROGRESS,
-    updatePostsContainingVideoInProgress,
   );
   yield takeLatest(
     postTypes.REMOVE_POST_AUDIENCES,
@@ -114,7 +108,7 @@ function* postPublishDraftPost({
         content: 'post:draft:text_processing_publish',
       });
       navigation.goBack();
-      yield put(postActions.getAllPostContainingVideoInProgress());
+      usePostsInProgressStore.getState().actions.getPosts();
     } else if (replaceWithDetail) {
       navigation.replace(
         homeStack.postDetail, { post_id: postData?.id },
@@ -194,7 +188,9 @@ function* getPostDetail({
   type: string;
   payload: IPayloadGetPostDetail;
 }): any {
-  const { callbackLoading, postId, ...restParams } = payload || {};
+  const {
+    callbackLoading, postId, isReported, ...restParams
+  } = payload || {};
   if (!postId) {
     return;
   }
@@ -208,12 +204,32 @@ function* getPostDetail({
       // is_draft
       ...restParams,
     };
-    const response = yield call(
-      streamApi.getPostDetail, params,
-    );
+
+    let response = null;
+
+    if (isReported) {
+      const paramGetReportContent: IParamGetReportContent = {
+        order: 'ASC',
+        offset: 0,
+        limit: mockReportReason.length,
+        targetIds: [postId],
+        targetType: TargetType.POST,
+      };
+      const responeReportContent = yield call(streamApi.getReportContent, paramGetReportContent);
+      if (responeReportContent?.data) {
+        response = responeReportContent.data.list;
+        useReportContentStore.getState().actions.addToReportDetailsPost(response);
+      }
+    } else {
+      const responePostDetail = yield call(streamApi.getPostDetail, params);
+      if (responePostDetail?.data) {
+        response = responePostDetail.data;
+      }
+    }
+
     yield timeOut(500);
     usePostsStore.getState().actions.addToPosts(
-      { data: response?.data || {}, handleComment: true } as IPayloadAddToAllPost,
+      { data: response || {}, handleComment: true } as IPayloadAddToAllPost,
     );
     callbackLoading?.(false, true);
     yield put(postActions.setLoadingGetPostDetail(false));

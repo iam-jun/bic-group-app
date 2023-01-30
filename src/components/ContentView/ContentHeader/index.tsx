@@ -18,6 +18,9 @@ import { useRootNavigation } from '~/hooks/navigation';
 import mainTabStack from '~/router/navigator/MainStack/stack';
 import { Button } from '~/baseComponents';
 import { getAudiencesText } from '~/helpers/post';
+import Icon from '~/baseComponents/Icon';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 
 export interface ContentHeaderProps {
   style?: StyleProp<ViewStyle>;
@@ -26,6 +29,7 @@ export interface ContentHeaderProps {
   actor: any;
   audience?: IPostAudience;
   disabled?: boolean;
+  postId?: string;
 
   onPressHeader?: () => void;
   onPressMenu?: (e: any) => void;
@@ -39,6 +43,7 @@ const ContentHeader: FC<ContentHeaderProps> = ({
   actor,
   audience,
   disabled = false,
+  postId,
 
   onPressHeader,
   onPressMenu,
@@ -50,6 +55,7 @@ const ContentHeader: FC<ContentHeaderProps> = ({
   const { rootNavigation } = useRootNavigation();
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isHidden = usePostsStore(postsSelector.getIsHidden(postId));
 
   const textAudiences = getAudiencesText(audience, t);
 
@@ -78,10 +84,26 @@ const ContentHeader: FC<ContentHeaderProps> = ({
           isOpen: true,
           isFullScreen: true,
           titleFullScreen: t('post:title_post_to'),
-          ContentComponent: <PostAudiencesModal data={audience?.groups || []} />,
+          ContentComponent: (
+            <PostAudiencesModal
+              data={audience?.groups || []}
+              showBlockedIcon={isHidden}
+            />),
         }),
       );
     }
+  };
+
+  const renderIconReportContent = () => {
+    if (isHidden) {
+      return (
+        <>
+          <Icon icon="iconCircleExclamation" size={14} tintColor={colors.neutral40} />
+          {' '}
+        </>
+      );
+    }
+    return null;
   };
 
   return (
@@ -120,6 +142,7 @@ const ContentHeader: FC<ContentHeaderProps> = ({
             color={colors.neutral80}
             onPress={onPressAudience}
           >
+            {renderIconReportContent()}
             {textAudiences}
           </Text.SubtitleS>
         </View>

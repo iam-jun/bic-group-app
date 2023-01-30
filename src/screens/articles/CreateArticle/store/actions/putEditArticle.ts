@@ -4,6 +4,7 @@ import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
 import useArticlesStore from '~/screens/articles/ArticleDetail/store';
+import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import showToastError from '~/store/helper/showToastError';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 
@@ -14,7 +15,7 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
   const createArticleActions = state?.actions;
 
   const {
-    articleId, data, isNavigateBack = true, isShowToast = true, isShowLoading = true,
+    articleId, data, isNavigateBack = true, isShowToast = true, isShowLoading = true, onSuccess,
   } = params || {};
   if (isShowLoading) {
     set((state: ICreateArticleState) => {
@@ -42,7 +43,8 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
       return;
     }
 
-    useArticlesStore.getState().actions.getArticleDetail(articleId);
+    useArticlesStore.getState().actions.getArticleDetail({ articleId });
+    onSuccess?.();
 
     set((state: ICreateArticleState) => {
       state.loading = false;
@@ -51,6 +53,8 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
     if (isShowToast) {
       showToastSuccess(response, 'article:text_edit_article_success');
     }
+    onSuccess?.();
+    useScheduleArticlesStore.getState().actions.getScheduleArticles({ isRefresh: true });
     if (isNavigateBack) {
       navigation.goBack();
     }

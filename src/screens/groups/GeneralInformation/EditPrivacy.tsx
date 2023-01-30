@@ -12,8 +12,8 @@ import useCommunityController from '~/screens/communities/store';
 import { useRootNavigation } from '~/hooks/navigation';
 import Icon from '~/baseComponents/Icon';
 import { CheckBox } from '~/baseComponents';
-import useGroupController from '../store';
 import useGroupMemberStore from '../GroupMembers/store';
+import useGeneralInformationStore from './store';
 
 const EditPrivacy = (props: any) => {
   const {
@@ -29,7 +29,7 @@ const EditPrivacy = (props: any) => {
   const isGroupScope = type === 'group';
   const privacyType = isGroupScope ? GroupPrivacyType : CommunityPrivacyType;
   const controller = useCommunityController((state) => state.actions);
-  const groupActions = useGroupController((state) => state.actions);
+  const groupActions = useGeneralInformationStore((state) => state.actions);
   const actions = useGroupMemberStore((state) => state.actions);
 
   const shouldSelectSecretPrivacy = selectedPrivacy === privacyType.SECRET;

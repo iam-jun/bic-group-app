@@ -2,7 +2,6 @@
 import * as Actions from './constants';
 import {
   IPayloadReactionDetailBottomSheet,
-  IShowAlert,
 } from '~/interfaces/IModal';
 import {
   IPayloadShowModal,
@@ -27,19 +26,6 @@ export function showModal(payload: IPayloadShowModal) {
 export function hideModal() {
   return {
     type: Actions.HIDE_MODAL,
-  };
-}
-
-export function showAlert(payload: IShowAlert) {
-  return {
-    type: Actions.SHOW_ALERT,
-    payload,
-  };
-}
-
-export function hideAlert() {
-  return {
-    type: Actions.HIDE_ALERT,
   };
 }
 
@@ -112,8 +98,6 @@ const modalActions = {
   setModal,
   showModal,
   hideModal,
-  showAlert,
-  hideAlert,
   showAlertNewFeature,
   hideAlertNewFeature,
   showLoading,

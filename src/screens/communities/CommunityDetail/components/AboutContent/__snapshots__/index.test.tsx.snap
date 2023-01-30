@@ -76,7 +76,7 @@ exports[`AboutContent component should render correctly 1`] = `
               Object {
                 "color": "#212745",
                 "fontFamily": "BeVietnamPro-Light",
-                "fontSize": 15,
+                "fontSize": 14,
               },
               Object {},
               undefined,
@@ -193,7 +193,9 @@ exports[`AboutContent component should render correctly 1`] = `
             },
           ]
         }
-      />
+      >
+        Open
+      </Text>
     </View>
     <View
       accessibilityState={
@@ -295,7 +297,9 @@ exports[`AboutContent component should render correctly 1`] = `
             },
           ]
         }
-      />
+      >
+        5
+      </Text>
       <View
         accessibilityState={
           Object {
@@ -768,7 +772,7 @@ exports[`AboutContent component should render correctly 1`] = `
           Object {
             "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
+            "fontSize": 14,
           },
           Object {
             "color": "#353E6E",

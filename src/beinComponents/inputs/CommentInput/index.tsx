@@ -33,7 +33,6 @@ import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import { useBaseHook } from '~/hooks';
 import { IFilePicked } from '~/interfaces/common';
 import { IActivityDataImage } from '~/interfaces/IPost';
-import ImageUploader, { IGetFile } from '~/services/imageUploader';
 import modalActions from '~/storeRedux/modal/actions';
 import dimension from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';
@@ -41,6 +40,8 @@ import spacing from '~/theme/spacing';
 import { checkPermission, permissionTypes } from '~/utils/permission';
 import { formatTextWithEmoji } from '~/utils/emojiUtils';
 import { IGiphy } from '~/interfaces/IGiphy';
+import useUploaderStore from '~/store/uploader';
+import { getErrorMessageFromResponse } from '~/utils/link';
 import { getImagePastedFromClipboard } from '~/utils/common';
 
 export interface ICommentInputSendParam {
@@ -64,7 +65,6 @@ export interface CommentInputProps {
   uploadImageType?: IUploadType;
   uploadVideoType?: IUploadType;
   uploadFileType?: IUploadType;
-  uploadFilePromise?: any;
   disableKeyboardSpacer?: boolean;
   HeaderComponent?: React.ReactNode;
 
@@ -96,7 +96,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
   isHandleUpload,
   clearWhenUploadDone,
   uploadImageType = uploadTypes.commentImage,
-  uploadFilePromise,
   disableKeyboardSpacer,
 
   onChangeText,
@@ -109,6 +108,18 @@ const CommentInput: React.FC<CommentInputProps> = ({
 }: CommentInputProps) => {
   const testID = useTestID ? 'comment_input' : undefined;
   const [text, setText] = useState<string>(value || '');
+
+  const [selectedImage, setSelectedImage] = useState<IFilePicked>();
+  const [selectedGiphy, setSelectedGiphy] = useState<IGiphy>();
+  const [selectedEmoji, setSelectedEmoji] = useState<string>();
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState('');
+
+  const actions = useUploaderStore((state) => state.actions);
+  const uploadError = useUploaderStore(useCallback((state) => state.errors[selectedImage?.name], [selectedImage]));
+  const uploadedFile = useUploaderStore(useCallback(
+    (state) => state.uploadedFiles[selectedImage?.name], [selectedImage],
+  ));
 
   const [textTextInputHeight, setTextInputHeight] = useState(DEFAULT_HEIGHT);
   const heightAnimated = useRef(new Animated.Value(DEFAULT_HEIGHT)).current;
@@ -124,12 +135,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
       useNativeDriver: false,
     }).start();
   };
-
-  const [selectedImage, setSelectedImage] = useState<IFilePicked>();
-  const [selectedGiphy, setSelectedGiphy] = useState<IGiphy>();
-  const [selectedEmoji, setSelectedEmoji] = useState<string>();
-  const [uploading, setUploading] = useState(false);
-  const [uploadError, setUploadError] = useState('');
 
   const emojiViewRef = useRef<any>();
   const giphyViewRef = useRef<any>();
@@ -155,6 +160,27 @@ const CommentInput: React.FC<CommentInputProps> = ({
   }, [selectedGiphy]);
 
   useEffect(() => {
+    if (!selectedImage) return;
+
+    const imageData: IActivityDataImage = {
+      id: uploadedFile?.result?.id,
+      name: uploadedFile?.url || '',
+      origin_name: selectedImage.filename,
+      width: selectedImage.width,
+      height: selectedImage.height,
+    };
+    !clearWhenUploadDone
+            && onPressSend?.({ content: text, image: imageData });
+    clearWhenUploadDone && clear();
+  }, [uploadedFile]);
+
+  useEffect(() => {
+    const errorMessage = getErrorMessageFromResponse(uploadError) || t('post:error_upload_photo_failed');
+    setError(errorMessage);
+    setUploading(false);
+  }, [uploadError]);
+
+  useEffect(() => {
     emojiViewRef?.current?.hide?.();
     if (selectedEmoji) {
       const completeStr = formatTextWithEmoji(text, selectedEmoji, cursorPosition.current);
@@ -174,7 +200,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           if (!isHandleUpload) {
             onPressSelectImage?.(file);
           } else {
-            setUploadError('');
+            setError('');
             setSelectedImage(file);
           }
           focus();
@@ -220,36 +246,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const handleUpload = () => {
     if (selectedImage) {
       setUploading(true);
-      const param = {
-        file: selectedImage,
-        uploadType: uploadImageType,
-      };
-      const promise = uploadFilePromise
-        ? uploadFilePromise({ ...param, text })
-        : ImageUploader.getInstance().upload(param);
-      promise
-        .then((result: IGetFile) => {
-          setUploading(false);
-          const imageData: IActivityDataImage = {
-            id: result?.result?.id,
-            name: result?.url || '',
-            origin_name: selectedImage.filename,
-            width: selectedImage.width,
-            height: selectedImage.height,
-          };
-          !clearWhenUploadDone
-            && onPressSend?.({ content: text, image: imageData });
-          clearWhenUploadDone && clear();
-        })
-        .catch((e: any) => {
-          console.error('\x1b[31m🐣️ CommentInput upload Error:', e, '\x1b[0m');
-          const errorMessage
-            = typeof e === 'string'
-              ? e
-              : e?.meta?.message || t('post:error_upload_photo_failed');
-          setUploading(false);
-          setUploadError(errorMessage);
-        });
+      actions.upload({ type: 'image', file: selectedImage, uploadType: uploadImageType });
     } else {
       onPressSend?.({ content: text });
     }
@@ -316,7 +313,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const clear = () => {
     setText('');
-    setUploadError('');
+    setError('');
     setUploading(false);
     setSelectedImage(undefined);
     setSelectedGiphy(undefined);
@@ -393,10 +390,10 @@ const CommentInput: React.FC<CommentInputProps> = ({
     }
     return (
       <View style={{ backgroundColor: colors.white }}>
-        {!!uploadError && (
+        {!!error && (
           <View style={styles.selectedImageErrorContainer}>
             <Text color={colors.red60}>
-              <Text color={colors.red60}>{uploadError}</Text>
+              <Text color={colors.red60}>{error}</Text>
               <Text color={colors.red60}>
                 {' • '}
                 <Text.BodyM useI18n color={colors.red60} onPress={handleUpload}>
@@ -416,11 +413,11 @@ const CommentInput: React.FC<CommentInputProps> = ({
                   : selectedImage?.base64
               }
             />
-            {(_loading || !!uploadError) && (
+            {(_loading || !!error) && (
               <View
                 style={[
                   styles.selectedImageFilter,
-                  { borderWidth: uploadError ? 1 : 0 },
+                  { borderWidth: error ? 1 : 0 },
                 ]}
               >
                 {_loading && <LoadingIndicator />}

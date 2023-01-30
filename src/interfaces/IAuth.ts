@@ -36,6 +36,7 @@ export interface IUserResponse extends IUser {
   attributes?: any;
   name: string; // merge from attributes
   email: string; // merge from attributes
+  userId?: string;
 }
 
 export interface IForgotPasswordError {

@@ -42,7 +42,7 @@ export interface IPayloadPublishDraftArticle {
   replaceWithDetail?: boolean;
   refreshDraftArticles?: boolean;
   onSuccess?: () => void;
-  onError?: () => void;
+  onError?: (error) => void;
 }
 
 export interface IPayloadPutEditArticle {
@@ -51,6 +51,7 @@ export interface IPayloadPutEditArticle {
   isNavigateBack?: boolean;
   isShowToast?: boolean;
   isShowLoading?: boolean;
+  onSuccess?: () => void;
 }
 
 export interface IParamPutEditArticle
@@ -120,6 +121,7 @@ export interface CreateArticleProps {
     params?: {
       articleId?: string;
       isFromDraftScreen?: boolean;
+      isFromReviewSchedule?: boolean;
     };
   };
 }
@@ -139,4 +141,29 @@ export interface IParamsValidateSeriesTags {
   groups: string[],
   series: string [],
   tags: string[]
+}
+
+export interface IPayloadGetScheduleArticles {
+  isRefresh?: boolean;
+  offset?: number;
+  isProcessing?: boolean;
+}
+
+export interface IPayloadGetArticleScheduleContent {
+  isRefresh: boolean;
+  groupId: string;
+}
+
+export interface IParamsGetArticleScheduleContent {
+  order: 'ASC' | 'DESC';
+  limit?: number;
+  offset: number;
+  groupIds: string;
+  status: string;
+}
+
+export interface IPayloadGetArticleDetail {
+  articleId: string;
+  isReported?: boolean;
+  isAdmin?: boolean;
 }

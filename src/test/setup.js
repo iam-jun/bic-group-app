@@ -290,4 +290,8 @@ jest.doMock('expo-av', () => ({
   },
   ResizeMode: { CONTAIN: 'CONTAIN' },
 }));
-jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'));
+
+// Fix case - TypeError: Cannot read properties of undefined (reading 'now')
+global.ReanimatedDataMock = {
+  now: () => 0,
+};

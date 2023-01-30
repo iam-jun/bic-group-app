@@ -16,11 +16,11 @@ import CreatePost from '.';
 import { GROUP_AUDIENCE, POST_DETAIL } from '~/test/mock_data/post';
 import * as navigationHook from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import modalActions from '~/storeRedux/modal/actions';
 import useCreatePost, {
   handlePressPostResultType,
 } from '~/screens/post/CreatePost/hooks/useCreatePost';
 import MockedNavigator from '~/test/MockedNavigator';
+import useModalStore from '~/store/modal';
 
 describe('Create Post screen', () => {
   let Platform: any;
@@ -147,7 +147,9 @@ describe('Edit Post screen', () => {
   } as any;
 
   it('should not show alert when press back edit post without change content', () => {
-    const spy = jest.spyOn(modalActions, 'showAlert');
+    const showAlert = jest.fn();
+    const actions = { showAlert };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
     const store = createTestStore(editPostStoreData);
     const wrapper = renderWithRedux(
       <MockedNavigator
@@ -161,11 +163,13 @@ describe('Edit Post screen', () => {
     expect(headerText.props.children).toBe(languages.post.title_edit_post);
     const btnBack = wrapper.getByTestId('header.back');
     fireEvent.press(btnBack);
-    expect(spy).not.toBeCalled();
+    expect(showAlert).not.toBeCalled();
   });
 
   it('should show alert when press back edit post with content changed', () => {
-    const spy = jest.spyOn(modalActions, 'showAlert');
+    const showAlert = jest.fn();
+    const actions = { showAlert };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
     const store = createTestStore(editPostStoreData);
     const wrapper = renderWithRedux(
       <MockedNavigator
@@ -181,7 +185,7 @@ describe('Edit Post screen', () => {
     const input = wrapper.getByTestId('_mention_input.input');
     fireEvent.changeText(input, 'hello');
     fireEvent.press(btnBack);
-    expect(spy).toBeCalled();
+    expect(showAlert).toBeCalled();
   });
 
   it('handlePressPost should done with editPost', async () => {

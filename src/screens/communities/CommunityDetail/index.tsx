@@ -65,7 +65,7 @@ const CommunityDetail = (props: any) => {
   const styles = themeStyles(theme, insets);
   const { t } = useBaseHook();
   const isMounted = useMounted();
-  const { showToast } = useModalStore((state) => state.actions);
+  const { showToast, showAlert } = useModalStore((state) => state.actions);
 
   // community detail
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
@@ -194,23 +194,21 @@ const CommunityDetail = (props: any) => {
 
   const onPressLeave = () => {
     dispatch(modalActions.hideBottomList());
-    dispatch(
-      modalActions.showAlert({
-        title: t('communities:modal_confirm_leave_community:title'),
-        confirmLabel: t(
-          'communities:modal_confirm_leave_community:button_leave',
-        ),
-        cancelBtn: true,
-        children: (
-          <Text.ParagraphM style={styles.childrenText}>
-            {t('communities:modal_confirm_leave_community:description')}
-            <Text.BodyMMedium>{name}</Text.BodyMMedium>
-            ?
-          </Text.ParagraphM>
-        ),
-        onConfirm: onConfirmLeaveCommunity,
-      }),
-    );
+    showAlert({
+      title: t('communities:modal_confirm_leave_community:title'),
+      confirmLabel: t(
+        'communities:modal_confirm_leave_community:button_leave',
+      ),
+      cancelBtn: true,
+      children: (
+        <Text.ParagraphM style={styles.childrenText}>
+          {t('communities:modal_confirm_leave_community:description')}
+          <Text.BodyMMedium>{name}</Text.BodyMMedium>
+          ?
+        </Text.ParagraphM>
+      ),
+      onConfirm: onConfirmLeaveCommunity,
+    });
   };
 
   const onRightPress = () => {

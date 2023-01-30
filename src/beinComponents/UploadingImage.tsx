@@ -1,4 +1,6 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, {
+  FC, useCallback, useEffect, useState,
+} from 'react';
 import {
   StyleProp, StyleSheet, View, ViewStyle,
 } from 'react-native';
@@ -11,9 +13,11 @@ import Text from '~/baseComponents/Text';
 import { getResourceUrl, IUploadType } from '~/configs/resourceConfig';
 import { useBaseHook } from '~/hooks';
 import { IFilePicked } from '~/interfaces/common';
-import ImageUploader, { IGetFile, IUploadParam } from '~/services/imageUploader';
 
 import spacing from '~/theme/spacing';
+import useUploaderStore, { IGetFile } from '~/store/uploader';
+import { AppConfig } from '~/configs';
+import { formatBytes } from '~/utils/formatData';
 
 export interface UploadingImageProps {
   style?: StyleProp<ViewStyle>;
@@ -23,7 +27,7 @@ export interface UploadingImageProps {
   url?: string;
   width?: number | string;
   height?: number | string;
-  onUploadSuccess?: (url: string, fileName: string) => void;
+  onUploadSuccess?: (file: IGetFile) => void;
   onPressRemove?: () => void;
   onError?: (error) => void;
   renderError?: any;
@@ -42,20 +46,37 @@ const UploadingImage: FC<UploadingImageProps> = ({
   onError,
   renderError,
 }: UploadingImageProps) => {
-  const [imageUrl, setImageUrl] = useState<string>();
-  const [error, setError] = useState('');
-
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
+  const actions = useUploaderStore((state) => state.actions);
+  const uploadError = useUploaderStore(useCallback((state) => state.errors[fileName], [fileName]));
+  const uploadedFile = useUploaderStore(useCallback((state) => state.uploadedFiles[fileName], [fileName]));
+
+  const [imageUrl, setImageUrl] = useState<string>(url);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (uploadError) {
+      const error = typeof uploadError === 'string' ? uploadError : t('post:error_upload_photo_failed');
+      setError(error);
+    }
+  }, [uploadError]);
 
   useEffect(() => {
     onError?.(error);
   }, [error]);
 
+  useEffect(() => {
+    if (uploadedFile) {
+      _setImageUrl(uploadedFile.url);
+      onUploadSuccess?.(uploadedFile);
+    }
+  }, [uploadedFile]);
+
   const _setImageUrl = (url: string) => {
-    if (url.includes('http')) {
+    if (url?.includes('http')) {
       setImageUrl(url);
     } else {
       setImageUrl(getResourceUrl(
@@ -65,56 +86,28 @@ const UploadingImage: FC<UploadingImageProps> = ({
   };
 
   const upload = async () => {
+    if (file?.size > AppConfig.maxFileSize.image) {
+      const error = t('common:error:file:over_file_size').replace('{n}', formatBytes(AppConfig.maxFileSize.image, 0));
+      setError(error);
+      return;
+    }
+
     if (url) {
       _setImageUrl(url);
     } else if (file) {
-      const param: IUploadParam = {
-        uploadType,
-        file,
-        onSuccess: (data: IGetFile) => {
-          setError('');
-          _setImageUrl(data.url || '');
-          onUploadSuccess?.(
-            data.url || '', fileName || '',
-          );
-        },
-        onError: (e) => {
-          setError(typeof e === 'string' ? e : t('post:error_upload_photo_failed'));
-        },
-      };
-      try {
-        await ImageUploader.getInstance().upload(param);
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.log(
-          '\x1b[35m🐣️ UploadingImage upload error:', e, '\x1b[0m',
-        );
-      }
-    } else if (fileName) {
-      const result: IGetFile = ImageUploader.getInstance().getFile(
-        fileName,
-        (data: IGetFile) => {
-          _setImageUrl(data.url || '');
-          onUploadSuccess?.(
-            data.url || '', fileName || '',
-          );
-        },
-        undefined,
-        (e) => {
-          setError(typeof e === 'string' ? e : t('post:error_upload_photo_failed'));
-        },
-      );
-      if (result?.url) {
-        _setImageUrl(result?.url);
-      }
+      actions.upload({ type: 'image', file, uploadType });
     }
   };
 
   useEffect(
     () => {
-      upload();
+      if (file) upload();
     }, [url, fileName, file],
   );
+
+  useEffect(() => {
+    setImageUrl(url);
+  }, [url]);
 
   const renderRemove = () => {
     if (!onPressRemove) {

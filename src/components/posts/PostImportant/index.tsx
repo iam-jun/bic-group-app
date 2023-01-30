@@ -23,6 +23,7 @@ export interface PostImportantProps {
   markedReadPost: boolean;
   isLite?: boolean;
   listCommunity?: IPostCommunities[];
+  shouldBeHidden?: boolean;
 }
 
 const PostImportant: FC<PostImportantProps> = ({
@@ -31,6 +32,7 @@ const PostImportant: FC<PostImportantProps> = ({
   markedReadPost,
   isLite,
   listCommunity,
+  shouldBeHidden,
 }: PostImportantProps) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
@@ -85,6 +87,7 @@ const PostImportant: FC<PostImportantProps> = ({
       isImportant={isImportant}
       listCommunity={listCommunity}
       onPressBanner={_onPressBanner}
+      shouldBeHidden={shouldBeHidden}
     />
   );
 };

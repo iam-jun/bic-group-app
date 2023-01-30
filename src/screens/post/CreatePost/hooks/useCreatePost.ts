@@ -28,12 +28,12 @@ import postKeySelector from '~/storeRedux/post/keySelector';
 import { useBaseHook } from '~/hooks';
 import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
 import { getMentionsFromContent } from '~/helpers/post';
-import { IGetFile } from '~/services/fileUploader';
 import useDraftPostStore from '../../../Draft/DraftPost/store';
 import IDraftPostState from '../../../Draft/DraftPost/store/Interface';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
 import useLinkPreview from './useLinkPreview';
+import { IGetFile } from '~/store/uploader';
 import useModalStore from '~/store/modal';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
@@ -94,7 +94,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
 
   const { images, imageUploading } = validateImages(selectingImages, t);
   const { video, videoUploading } = validateVideo(selectingVideo, t);
-  const { files, fileUploading } = validateFiles(selectingFiles, t);
+  const { files, fileUploading, fileError } = validateFiles(selectingFiles, t);
 
   // const [hasVideoProgress, setHasVideoProgress] = useState(videoUploading);
 
@@ -188,6 +188,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     = imageUploading
     || videoUploading
     || fileUploading
+    || fileError
     || content?.trim?.()?.length === 0
     || chosenAudiences.length === 0
     || isLoadingLinkPreview
@@ -288,8 +289,9 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
       const notExpired
         = new Date().getTime()
         < new Date(initPostData?.setting?.importantExpiredAt).getTime();
+
       const initImportant = {
-        active: !!notExpired || initPostData?.setting?.isImportant,
+        active: !!notExpired && initPostData?.setting?.isImportant,
         expiresTime: !!notExpired
           ? initPostData?.setting?.importantExpiredAt
           : null,

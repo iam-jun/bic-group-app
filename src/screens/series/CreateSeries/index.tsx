@@ -3,7 +3,6 @@ import {
   StyleSheet, ScrollView, Platform, KeyboardAvoidingView,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import spacing from '~/theme/spacing';
@@ -16,8 +15,8 @@ import useSeriesCreation from '../hooks/useSeriesCreation';
 import { CreationSeriesProps } from '~/interfaces/ISeries';
 import useSeriesStore, { ISeriesState } from '../store';
 import { IAudienceGroup } from '~/interfaces/IPost';
-import modalActions from '~/storeRedux/modal/actions';
 import AlertDeleteAudiencesConfirmContent from '~/components/posts/AlertDeleteAudiences';
+import useModalStore from '~/store/modal';
 
 const CreateSeries = ({ route }: CreationSeriesProps) => {
   const { seriesId, isFromDetail } = route?.params || {};
@@ -25,7 +24,7 @@ const CreateSeries = ({ route }: CreationSeriesProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const scrollRef = useRef<any>(null);
 
@@ -44,20 +43,18 @@ const CreateSeries = ({ route }: CreationSeriesProps) => {
       );
       return _audience;
     });
-    dispatch(
-      modalActions.showAlert({
-        title: t('series:title_edit_audience_failed'),
-        children: (
-          <AlertDeleteAudiencesConfirmContent
-            data={listAudiences}
-            textContent={t('series:content_edit_audience_failed')}
-          />
-        ),
-        cancelBtn: true,
-        cancelLabel: t('common:btn_close'),
-        onConfirm: null,
-      }),
-    );
+    showAlert({
+      title: t('series:title_edit_audience_failed'),
+      children: (
+        <AlertDeleteAudiencesConfirmContent
+          data={listAudiences}
+          textContent={t('series:content_edit_audience_failed')}
+        />
+      ),
+      cancelBtn: true,
+      cancelLabel: t('common:btn_close'),
+      onConfirm: null,
+    });
   };
 
   const {

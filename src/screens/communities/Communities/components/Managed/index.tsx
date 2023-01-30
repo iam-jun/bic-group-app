@@ -40,7 +40,7 @@ const GroupItem: FC<GroupItemProps> = ({ id, section }) => {
       ? `managed_owner_item_${id}`
       : `managed_manage_item_${id}`;
 
-  return <CommunityGroupCard item={item} testID={testID} />;
+  return <CommunityGroupCard item={item} testID={testID} isManagedGroups />;
 };
 
 const SectionTitle: FC<SectionTitleProps> = ({ title }) => {
@@ -97,11 +97,7 @@ const Managed = () => {
   const { ids: idsManage, hasNextPage, loading } = manage;
   const data = hasNextPage || idsOwner.length !== 0 || idsManage.length !== 0 ? [
     {
-      title: 'communities:community_menu:owner',
-      data: idsOwner,
-    },
-    {
-      title: 'communities:community_menu:manage',
+      title: 'communities:community_menu:managed_groups',
       data: idsManage,
     },
   ] : [];

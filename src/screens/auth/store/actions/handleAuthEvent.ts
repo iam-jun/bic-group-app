@@ -1,17 +1,33 @@
 import { HubCapsule } from '@aws-amplify/core/src/Hub';
 import { Auth } from 'aws-amplify';
+import { makeHttpRequest } from '~/api/apiRequest';
+import { groupsApiConfig } from '~/api/GroupApi';
 import { IObject } from '~/interfaces/common';
 import { IUserResponse } from '~/interfaces/IAuth';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { rootSwitch } from '~/router/stack';
 import { IAuthState } from '~/screens/auth/store';
+import useCommonController from '~/screens/store';
 import { getUserFromSharedPreferences, saveUserToSharedPreferences } from '~/services/sharePreferences';
 import Store from '~/storeRedux';
+import { mapProfile } from '~/storeRedux/menu/helper';
 import modalActions from '~/storeRedux/modal/actions';
 import { timeOut } from '~/utils/common';
 
 const navigation = withNavigation(rootNavigationRef);
+
+const getUserProfile = async (username, token) => {
+  try {
+    const requestConfig = groupsApiConfig.getUserProfile(username, { type: 'username' });
+    requestConfig.headers = { ...requestConfig.headers, Authorization: token };
+    const response = await makeHttpRequest(requestConfig);
+    return response?.data?.data || {};
+  } catch (error) {
+    console.error('\x1b[35m🐣️ handleAuthEvent getUserId error:', error, '\x1b[0m');
+    return {};
+  }
+};
 
 const handleAuthEvent = (set, get) => async (data: HubCapsule) => {
   const state: IAuthState = get() || {};
@@ -27,6 +43,9 @@ const handleAuthEvent = (set, get) => async (data: HubCapsule) => {
         ? attributes?.name
         : attributes?.email?.match?.(/^([^@]*)@/)[1];
 
+      const userProfile = await getUserProfile(username, signInUserSession?.idToken?.jwtToken);
+      useCommonController.getState().actions.setMyProfile(mapProfile(userProfile));
+
       const userResponse: IUserResponse = {
         username: username || '',
         signInUserSession: signInUserSession || {},
@@ -34,6 +53,7 @@ const handleAuthEvent = (set, get) => async (data: HubCapsule) => {
         name: name || '',
         email: attributes?.email || '',
 
+        userId: userProfile?.id,
         id: username,
         role: username,
       };
@@ -50,6 +70,7 @@ const handleAuthEvent = (set, get) => async (data: HubCapsule) => {
 
       // saveUserToSharedPreferences
       const payload = {
+        ...sessionData,
         currentSession,
         name: userResponse.name,
         email: userResponse.email,

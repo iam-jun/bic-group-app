@@ -15,6 +15,9 @@ const PostDetail = (props: any) => {
   const { colors } = theme;
   const styles = createStyle(theme);
 
+  const params = props?.route?.params;
+  const { is_reported: isReported = false } = params || {};
+
   useEffect(
     () => {
       const taskId = requestAnimationFrame(() => {
@@ -31,6 +34,13 @@ const PostDetail = (props: any) => {
     }, [],
   );
 
+  const renderTitle = () => {
+    if (isReported) {
+      return 'report:title';
+    }
+    return 'post:title_post_detail';
+  };
+
   return (
     <ScreenWrapper isFullView backgroundColor={colors.neutral5}>
       {showContent && (
@@ -40,7 +50,7 @@ const PostDetail = (props: any) => {
         <View style={styles.loadingContainer}>
           <Header
             titleTextProps={{ useI18n: true }}
-            title="post:title_post_detail"
+            title={renderTitle()}
           />
           <PostViewPlaceholder testID="post_detail.post_view_placeholder" />
         </View>

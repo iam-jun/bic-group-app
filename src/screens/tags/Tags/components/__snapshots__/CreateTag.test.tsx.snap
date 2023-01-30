@@ -114,7 +114,7 @@ exports[`CreateTag component render correctly with default state 1`] = `
                   Object {
                     "flex": 1,
                     "fontFamily": "BeVietnamPro-Light",
-                    "fontSize": 15,
+                    "fontSize": 14,
                     "height": 40,
                     "paddingHorizontal": 16,
                   },

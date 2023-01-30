@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import { useDispatch } from 'react-redux';
 import Text from '~/baseComponents/Text';
 import Button from '~/beinComponents/Button';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -12,10 +11,10 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import TextBadge from '~/beinComponents/Badge/TextBadge';
 import Icon from '~/baseComponents/Icon';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 import usePermissionSchemeStore from '../store';
+import useModalStore from '~/store/modal';
 
 export interface GeneralSchemeProps {
   style?: StyleProp<ViewStyle>;
@@ -24,7 +23,6 @@ export interface GeneralSchemeProps {
 
 const GeneralScheme: FC<GeneralSchemeProps> = ({ communityId }) => {
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
@@ -34,6 +32,7 @@ const GeneralScheme: FC<GeneralSchemeProps> = ({ communityId }) => {
   const deleting = usePermissionSchemeStore((state) => state.generalScheme.deleting);
   const generalScheme = usePermissionSchemeStore((state) => state.generalScheme.data);
   const actions = usePermissionSchemeStore((state) => state.actions);
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const { name = '', description = '' } = generalScheme || {};
 
@@ -48,14 +47,14 @@ const GeneralScheme: FC<GeneralSchemeProps> = ({ communityId }) => {
   };
 
   const onPressDelete = () => {
-    dispatch(modalActions.showAlert({
+    showAlert({
       title: t('communities:permission:text_title_delete_community_scheme'),
       content: t('communities:permission:text_desc_delete_community_scheme'),
       cancelBtn: true,
       cancelLabel: t('common:btn_cancel'),
       confirmLabel: t('common:btn_delete'),
       onConfirm: () => actions.deleteGeneralScheme(communityId),
-    }));
+    });
   };
 
   const renderButtons = () => {

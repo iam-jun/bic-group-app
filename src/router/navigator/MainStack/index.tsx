@@ -13,7 +13,6 @@ import {
   EVENT_NAVIGATION_BACK_PRESSED,
 } from '~/router/config';
 import { useKeySelector } from '~/hooks/selector';
-import MenuSidebarDrawer from '~/router/components/MenuSidebarDrawer';
 import { getActiveRouteState } from '~/router/helper';
 import appActions from '~/storeRedux/app/actions';
 
@@ -76,13 +75,11 @@ const MainStack = (): React.ReactElement => {
           ))}
         </Stack.Navigator>
       </View>
-      <MenuSidebarDrawer />
       <ReactionBottomSheet />
       <ReactionDetailBottomSheet />
       <CommonModal />
       <BottomList />
       {debuggerVisible && <LoggerView /> }
-      {/* <LoggerView /> */}
     </View>
   );
 };

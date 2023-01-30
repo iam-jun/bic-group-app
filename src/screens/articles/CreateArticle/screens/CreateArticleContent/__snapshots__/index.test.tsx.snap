@@ -81,28 +81,29 @@ exports[`CreateArticleContent screen should render correctly 1`] = `
           testID="header"
         >
           <View
+            animatedStyle={
+              Object {
+                "value": Object {},
+              }
+            }
+            collapsable={false}
             style={
-              Array [
-                Object {
-                  "alignItems": "flex-end",
-                  "backgroundColor": "#FFFFFF",
-                  "flexDirection": "row",
-                  "minHeight": 44,
-                  "paddingTop": 0,
-                  "paddingVertical": 4,
+              Object {
+                "alignItems": "flex-end",
+                "backgroundColor": "#FFFFFF",
+                "elevation": 2,
+                "flexDirection": "row",
+                "minHeight": 44,
+                "paddingTop": 0,
+                "paddingVertical": 4,
+                "shadowColor": "rgba(0, 0, 0, 1)",
+                "shadowOffset": Object {
+                  "height": 2,
+                  "width": 0,
                 },
-                Object {
-                  "elevation": 2,
-                  "shadowColor": "rgba(0, 0, 0, 1)",
-                  "shadowOffset": Object {
-                    "height": 2,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.12,
-                  "shadowRadius": 1.5,
-                },
-                undefined,
-              ]
+                "shadowOpacity": 0.12,
+                "shadowRadius": 1.5,
+              }
             }
             testID="header.content"
           >
@@ -186,15 +187,18 @@ exports[`CreateArticleContent screen should render correctly 1`] = `
                 </View>
               </View>
               <View
+                animatedStyle={
+                  Object {
+                    "value": Object {},
+                  }
+                }
+                collapsable={false}
                 style={
-                  Array [
-                    Object {
-                      "flex": 1,
-                      "justifyContent": "center",
-                      "paddingVertical": 8,
-                    },
-                    Object {},
-                  ]
+                  Object {
+                    "flex": 1,
+                    "justifyContent": "center",
+                    "paddingVertical": 8,
+                  }
                 }
               >
                 <View
@@ -444,6 +448,14 @@ exports[`CreateArticleContent screen should render correctly 1`] = `
               style={Object {}}
             />
             <View
+              animatedStyle={
+                Object {
+                  "value": Object {
+                    "height": 0,
+                  },
+                }
+              }
+              collapsable={false}
               style={
                 Object {
                   "height": 0,
@@ -548,28 +560,29 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
           testID="header"
         >
           <View
+            animatedStyle={
+              Object {
+                "value": Object {},
+              }
+            }
+            collapsable={false}
             style={
-              Array [
-                Object {
-                  "alignItems": "flex-end",
-                  "backgroundColor": "#FFFFFF",
-                  "flexDirection": "row",
-                  "minHeight": 44,
-                  "paddingTop": 0,
-                  "paddingVertical": 4,
+              Object {
+                "alignItems": "flex-end",
+                "backgroundColor": "#FFFFFF",
+                "elevation": 2,
+                "flexDirection": "row",
+                "minHeight": 44,
+                "paddingTop": 0,
+                "paddingVertical": 4,
+                "shadowColor": "rgba(0, 0, 0, 1)",
+                "shadowOffset": Object {
+                  "height": 2,
+                  "width": 0,
                 },
-                Object {
-                  "elevation": 2,
-                  "shadowColor": "rgba(0, 0, 0, 1)",
-                  "shadowOffset": Object {
-                    "height": 2,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.12,
-                  "shadowRadius": 1.5,
-                },
-                undefined,
-              ]
+                "shadowOpacity": 0.12,
+                "shadowRadius": 1.5,
+              }
             }
             testID="header.content"
           >
@@ -653,15 +666,18 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                 </View>
               </View>
               <View
+                animatedStyle={
+                  Object {
+                    "value": Object {},
+                  }
+                }
+                collapsable={false}
                 style={
-                  Array [
-                    Object {
-                      "flex": 1,
-                      "justifyContent": "center",
-                      "paddingVertical": 8,
-                    },
-                    Object {},
-                  ]
+                  Object {
+                    "flex": 1,
+                    "justifyContent": "center",
+                    "paddingVertical": 8,
+                  }
                 }
               >
                 <View
@@ -910,7 +926,15 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
               collapsable={false}
               style={Object {}}
             />
-            <View>
+            <View
+              animatedStyle={
+                Object {
+                  "value": Object {},
+                }
+              }
+              collapsable={false}
+              entering={[Function]}
+            >
               <View
                 style={
                   Object {
@@ -1544,31 +1568,41 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                     }
                   >
                     <View
-                      style={
-                        Array [
-                          Object {
+                      animatedStyle={
+                        Object {
+                          "value": Object {
                             "height": -0,
                           },
-                          Object {
-                            "backgroundColor": "#FFFFFF",
-                            "borderTopLeftRadius": 20,
-                            "borderTopRightRadius": 20,
-                            "elevation": 2,
-                            "justifyContent": "flex-start",
-                            "minHeight": 80,
-                            "shadowColor": "rgba(0, 0, 0, 1)",
-                            "shadowOffset": Object {
-                              "height": 2,
-                              "width": 0,
-                            },
-                            "shadowOpacity": 0.12,
-                            "shadowRadius": 1.5,
+                        }
+                      }
+                      collapsable={false}
+                      style={
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                          "borderTopLeftRadius": 20,
+                          "borderTopRightRadius": 20,
+                          "elevation": 2,
+                          "height": -0,
+                          "justifyContent": "flex-start",
+                          "minHeight": 80,
+                          "shadowColor": "rgba(0, 0, 0, 1)",
+                          "shadowOffset": Object {
+                            "height": 2,
+                            "width": 0,
                           },
-                        ]
+                          "shadowOpacity": 0.12,
+                          "shadowRadius": 1.5,
+                        }
                       }
                     >
                       <View
+                        animatedStyle={
+                          Object {
+                            "value": Object {},
+                          }
+                        }
                         collapsable={false}
+                        forwardedRef={[Function]}
                         hitSlop={
                           Object {
                             "bottom": 10,
@@ -1578,7 +1612,6 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                           }
                         }
                         onGestureHandlerEvent={[Function]}
-                        onGestureHandlerStateChange={[Function]}
                         style={
                           Object {
                             "alignItems": "center",
@@ -1788,6 +1821,14 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                   </View>
                 </View>
                 <View
+                  animatedStyle={
+                    Object {
+                      "value": Object {
+                        "height": 0,
+                      },
+                    }
+                  }
+                  collapsable={false}
                   style={
                     Object {
                       "height": 0,
@@ -1797,6 +1838,14 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
               </View>
             </View>
             <View
+              animatedStyle={
+                Object {
+                  "value": Object {
+                    "height": 0,
+                  },
+                }
+              }
+              collapsable={false}
               style={
                 Object {
                   "height": 0,

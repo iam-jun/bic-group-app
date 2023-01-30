@@ -74,31 +74,7 @@ exports[`ArticlePlaceholder Component renders correctly 1`] = `
                 "borderRadius": 3,
                 "height": 12,
                 "marginBottom": 12,
-                "width": "43%",
-              },
-              Object {
-                "marginBottom": 8,
-              },
-              Object {
-                "overflow": "hidden",
-              },
-            ]
-          }
-        >
-          <View
-            collapsable={false}
-            style={Object {}}
-          />
-        </View>
-        <View
-          style={
-            Array [
-              Object {
-                "backgroundColor": "#efefef",
-                "borderRadius": 3,
-                "height": 12,
-                "marginBottom": 12,
-                "width": "63%",
+                "width": "49%",
               },
               Object {
                 "marginBottom": 8,
@@ -123,6 +99,30 @@ exports[`ArticlePlaceholder Component renders correctly 1`] = `
                 "height": 12,
                 "marginBottom": 12,
                 "width": "41%",
+              },
+              Object {
+                "marginBottom": 8,
+              },
+              Object {
+                "overflow": "hidden",
+              },
+            ]
+          }
+        >
+          <View
+            collapsable={false}
+            style={Object {}}
+          />
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "backgroundColor": "#efefef",
+                "borderRadius": 3,
+                "height": 12,
+                "marginBottom": 12,
+                "width": "49%",
               },
               Object {
                 "marginBottom": 0,
@@ -257,127 +257,7 @@ exports[`ArticlePlaceholder Component renders correctly 1`] = `
                 "borderRadius": 3,
                 "height": 12,
                 "marginBottom": 12,
-                "width": "100%",
-              },
-              Object {
-                "marginBottom": 8,
-              },
-              Object {
-                "overflow": "hidden",
-              },
-            ]
-          }
-        >
-          <View
-            collapsable={false}
-            style={Object {}}
-          />
-        </View>
-        <View
-          style={
-            Array [
-              Object {
-                "backgroundColor": "#efefef",
-                "borderRadius": 3,
-                "height": 12,
-                "marginBottom": 12,
-                "width": "100%",
-              },
-              Object {
-                "marginBottom": 8,
-              },
-              Object {
-                "overflow": "hidden",
-              },
-            ]
-          }
-        >
-          <View
-            collapsable={false}
-            style={Object {}}
-          />
-        </View>
-        <View
-          style={
-            Array [
-              Object {
-                "backgroundColor": "#efefef",
-                "borderRadius": 3,
-                "height": 12,
-                "marginBottom": 12,
-                "width": "100%",
-              },
-              Object {
-                "marginBottom": 8,
-              },
-              Object {
-                "overflow": "hidden",
-              },
-            ]
-          }
-        >
-          <View
-            collapsable={false}
-            style={Object {}}
-          />
-        </View>
-        <View
-          style={
-            Array [
-              Object {
-                "backgroundColor": "#efefef",
-                "borderRadius": 3,
-                "height": 12,
-                "marginBottom": 12,
-                "width": "100%",
-              },
-              Object {
-                "marginBottom": 8,
-              },
-              Object {
-                "overflow": "hidden",
-              },
-            ]
-          }
-        >
-          <View
-            collapsable={false}
-            style={Object {}}
-          />
-        </View>
-        <View
-          style={
-            Array [
-              Object {
-                "backgroundColor": "#efefef",
-                "borderRadius": 3,
-                "height": 12,
-                "marginBottom": 12,
-                "width": "100%",
-              },
-              Object {
-                "marginBottom": 8,
-              },
-              Object {
-                "overflow": "hidden",
-              },
-            ]
-          }
-        >
-          <View
-            collapsable={false}
-            style={Object {}}
-          />
-        </View>
-        <View
-          style={
-            Array [
-              Object {
-                "backgroundColor": "#efefef",
-                "borderRadius": 3,
-                "height": 12,
-                "marginBottom": 12,
-                "width": "27%",
+                "width": "32%",
               },
               Object {
                 "marginBottom": 0,
@@ -646,31 +526,7 @@ exports[`ArticlePlaceholder Component renders correctly 1`] = `
                 "borderRadius": 3,
                 "height": 12,
                 "marginBottom": 12,
-                "width": "100%",
-              },
-              Object {
-                "marginBottom": 8,
-              },
-              Object {
-                "overflow": "hidden",
-              },
-            ]
-          }
-        >
-          <View
-            collapsable={false}
-            style={Object {}}
-          />
-        </View>
-        <View
-          style={
-            Array [
-              Object {
-                "backgroundColor": "#efefef",
-                "borderRadius": 3,
-                "height": 12,
-                "marginBottom": 12,
-                "width": "61%",
+                "width": "67%",
               },
               Object {
                 "marginBottom": 0,

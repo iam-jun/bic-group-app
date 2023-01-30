@@ -16,7 +16,9 @@ import useMyPermissionsStore from '~/store/permissions';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import Divider from '~/beinComponents/Divider';
 import { PermissionKey } from '~/constants/permissionScheme';
-import useGroupDetailStore, { IGroupDetailState } from '../GroupDetail/store';
+import useGroupDetailStore from '../GroupDetail/store';
+import useGroupsStore from '~/store/entities/groups';
+import groupsSelector from '~/store/entities/groups/selectors';
 
 const GeneralInformation = (props: any) => {
   const { params } = props.route;
@@ -41,16 +43,17 @@ const GeneralInformation = (props: any) => {
   let isJoinApproval: boolean;
   let rootGroupId: string;
   if (type === 'group') {
-    const groupDetail = useGroupDetailStore((state: IGroupDetailState) => state.groupDetail.group);
+    const groupDetail = useGroupsStore(groupsSelector.getGroup(id, {}));
+    const { group } = groupDetail || {};
     rootGroupId = id;
     canEditInfo = shouldHavePermission(id, PermissionKey.EDIT_INFO);
     canEditPrivacy = shouldHavePermission(id, PermissionKey.EDIT_PRIVACY);
-    avatar = groupDetail?.icon || '';
-    backgroundUrl = groupDetail?.backgroundImgUrl || '';
-    organizationName = groupDetail?.name || '';
-    organizationDescription = groupDetail?.description || '';
-    organizationPrivacy = groupDetail?.privacy || '';
-    isJoinApproval = groupDetail?.settings?.isJoinApproval;
+    avatar = group?.icon || '';
+    backgroundUrl = group?.backgroundImgUrl || '';
+    organizationName = group?.name || '';
+    organizationDescription = group?.description || '';
+    organizationPrivacy = group?.privacy || '';
+    isJoinApproval = group?.settings?.isJoinApproval;
   } else {
     const communityDetail = useCommunitiesStore((state: ICommunitiesState) => state.data[id]);
     rootGroupId = communityDetail?.groupId;

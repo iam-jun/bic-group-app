@@ -5,16 +5,15 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { cloneDeep } from 'lodash';
 
-import { useDispatch } from 'react-redux';
 import Text from '~/baseComponents/Text';
 import TextBadge from '~/beinComponents/Badge/TextBadge';
 import Button from '~/beinComponents/Button';
-import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
 import usePermissionSchemeStore from '../store';
+import useModalStore from '~/store/modal';
 
 export interface SystemSchemeProps {
   style?: StyleProp<ViewStyle>;
@@ -22,7 +21,6 @@ export interface SystemSchemeProps {
 
 const SystemScheme: FC<SystemSchemeProps> = () => {
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const { colors } = theme || {};
@@ -33,6 +31,7 @@ const SystemScheme: FC<SystemSchemeProps> = () => {
 
   const systemScheme = usePermissionSchemeStore((state) => state.systemScheme);
   const actions = usePermissionSchemeStore((state) => state.actions);
+  const { showAlert } = useModalStore((state) => state.actions);
 
   useEffect(
     () => {
@@ -51,11 +50,11 @@ const SystemScheme: FC<SystemSchemeProps> = () => {
   };
 
   const onPressApply = () => {
-    dispatch(modalActions.showAlert({
+    showAlert({
       title: t('communities:permission:text_title_apply_system_scheme'),
       content: t('communities:permission:text_desc_apply_system_scheme'),
       confirmLabel: t('common:btn_close'),
-    }));
+    });
   };
 
   return (

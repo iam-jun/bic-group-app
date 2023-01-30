@@ -8,6 +8,7 @@ import EditContact from '~/screens/Menu/AccountSettings/EditContact';
 import AddWork from '~/screens/Menu/AccountSettings/WorkExperience/AddWork';
 import Discover from '~/screens/Discover';
 import Draft from '~/screens/Draft';
+import YourContent from '~/screens/YourContent';
 
 const menuScreens = {
   menu: Menu,
@@ -20,6 +21,7 @@ const menuScreens = {
   'add-work': AddWork,
   discover: Discover,
   draft: Draft,
+  'your-content': YourContent,
 };
 
 export default menuScreens;
