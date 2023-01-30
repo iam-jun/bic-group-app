@@ -501,6 +501,7 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}articles/params`,
     params: {
+      order: 'ASC',
       ...params,
     },
   }),
