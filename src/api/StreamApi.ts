@@ -515,8 +515,9 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}admin/posts/params`,
     params: {
-      ...params,
+      order: 'ASC',
       limit: params?.limit || DEFAULT_LIMIT,
+      ...params,
     },
   }),
 };
