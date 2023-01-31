@@ -59,8 +59,10 @@ const UploadingImage: FC<UploadingImageProps> = ({
 
   useEffect(() => {
     if (uploadError) {
-      const error = typeof uploadError === 'string' ? uploadError : t('post:error_upload_photo_failed');
-      setError(error);
+      const errorMessage = typeof uploadError === 'string' ? uploadError : t('post:error_upload_photo_failed');
+      setError(errorMessage);
+    } else {
+      setError('');
     }
   }, [uploadError]);
 
@@ -70,6 +72,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
 
   useEffect(() => {
     if (uploadedFile) {
+      setError('');
       _setImageUrl(uploadedFile.url);
       onUploadSuccess?.(uploadedFile);
     }
@@ -99,11 +102,11 @@ const UploadingImage: FC<UploadingImageProps> = ({
     }
   };
 
-  useEffect(
-    () => {
-      if (file) upload();
-    }, [url, fileName, file],
-  );
+  useEffect(() => {
+    // clear error when user select new file
+    setError('');
+    if (file) upload();
+  }, [url, fileName, file]);
 
   useEffect(() => {
     setImageUrl(url);
