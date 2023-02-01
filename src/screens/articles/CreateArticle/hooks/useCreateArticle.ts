@@ -4,8 +4,8 @@ import {
 } from 'react';
 import { Keyboard } from 'react-native';
 
-import shallow from 'zustand/shallow';
 import moment from 'moment';
+import { useShallow } from '~/store/utils';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
 import {
@@ -53,7 +53,7 @@ const useCreateArticle = ({
 
   const actions = useCreateArticleStore((state) => state.actions);
 
-  const data = useCreateArticleStore((state) => state.data, shallow) || {};
+  const data = useCreateArticleStore((state) => state.data, useShallow) || {};
   const loading = useCreateArticleStore((state) => state.loading);
   const isValidating = useCreateArticleStore((state) => state.isValidating);
   const isDraft = useCreateArticleStore((state) => state.isDraft);

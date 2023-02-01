@@ -1,8 +1,9 @@
-import create from 'zustand';
+import { create } from 'zustand';
 import {
   persist,
   PersistOptions,
 } from 'zustand/middleware';
+import { shallow } from 'zustand/shallow';
 import { immer } from 'zustand/middleware/immer';
 import zustandFlipper from 'react-native-flipper-zustand';
 
@@ -31,4 +32,5 @@ export {
   createStore,
   create as createZustand,
   resetStore,
+  shallow as useShallow,
 };

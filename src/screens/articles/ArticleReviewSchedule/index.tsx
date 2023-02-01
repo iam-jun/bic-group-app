@@ -22,6 +22,9 @@ import { useBaseHook } from '~/hooks';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
 import spacing from '~/theme/spacing';
 import useCreateArticleStore from '../CreateArticle/store';
+import PlaceHolderRemoveContent from '~/baseComponents/PlaceHolderRemoveContent';
+import { useRootNavigation } from '~/hooks/navigation';
+import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 
 const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
   const { articleId, isAdmin } = props?.route?.params || {};
@@ -48,10 +51,14 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
     tags,
     publishedAt,
     status,
+    deleted,
   } = data;
   const isPublishing = useDraftArticleStore((state) => state.isPublishing);
   const { handlePublish } = useCreateArticle({ articleId });
   const resetEditArticleStore = useCreateArticleStore((state) => state.reset);
+  const { actions: scheduleArticleActions } = useScheduleArticlesStore();
+
+  const { rootNavigation } = useRootNavigation();
 
   const initScript = {
     type: 'initView',
@@ -138,6 +145,13 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
 
   const { showMenu } = useArticleScheduleMenu(data, isCreator);
 
+  const handleBack = () => {
+    if (deleted) {
+      scheduleArticleActions.getScheduleArticles({ isRefresh: true });
+    }
+    rootNavigation.goBack();
+  };
+
   const renderArticleBoxScheduleTime = () => {
     if (!isMounted || !publishedAt) return null;
 
@@ -155,6 +169,18 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
     }
     return <Header removeBorderAndShadow rightIcon="menu" onRightPress={showMenu} {...headerButton} />;
   };
+
+  if (deleted) {
+    return (
+      <ScreenWrapper
+        style={styles.container}
+        testID="article_review_schedule"
+      >
+        <Header onPressBack={handleBack} />
+        <PlaceHolderRemoveContent label="article:text_delete_article_success" />
+      </ScreenWrapper>
+    );
+  }
 
   return (
     <ScreenWrapper

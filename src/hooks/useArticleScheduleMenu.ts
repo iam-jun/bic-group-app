@@ -7,6 +7,9 @@ import { useRootNavigation } from './navigation';
 import { BottomListProps } from '~/components/BottomList';
 import { getPostMenus } from '~/helpers/post';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import useArticleController from '~/screens/articles/store';
+import showAlert from '~/store/helper/showAlert';
+import Button from '~/baseComponents/Button';
 
 const useArticleScheduleMenu = (
   data: IPost,
@@ -27,6 +30,23 @@ const useArticleScheduleMenu = (
   const onPress = () => {
     dispatch(modalActions.hideBottomList());
     dispatch(modalActions.showAlertNewFeature());
+  };
+
+  const onDelete = () => {
+    dispatch(modalActions.hideBottomList());
+    showAlert({
+      title: i18next.t('article:menu:delete'),
+      content: i18next.t('post:content_delete_article'),
+      cancelBtn: true,
+      confirmLabel: i18next.t('common:btn_delete'),
+      ConfirmBtnComponent: Button.Danger,
+      confirmBtnProps: { type: 'ghost' },
+      onConfirm: () => {
+        useArticleController.getState().actions.deleteArticle(
+          articleId, 'article:text_delete_article_success',
+        );
+      },
+    });
   };
 
   const defaultData = [
@@ -52,7 +72,7 @@ const useArticleScheduleMenu = (
       leftIcon: 'TrashCan',
       title: i18next.t('article:menu:delete'),
       requireIsActor: true,
-      onPress,
+      onPress: onDelete,
     },
   ];
 
