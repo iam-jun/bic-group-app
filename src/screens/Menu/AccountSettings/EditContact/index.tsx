@@ -91,7 +91,6 @@ const EditContact = () => {
         countryCode: phoneNumber ? countryCodeState : null,
         city: cityState,
       },
-      editFieldToastMessage: t('settings:text_contact_info_update_success'),
       callback: navigateBack,
     });
   };

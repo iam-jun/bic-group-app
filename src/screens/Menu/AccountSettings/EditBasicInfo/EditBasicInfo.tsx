@@ -93,7 +93,6 @@ const EditBasicInfo = () => {
         language: languageState,
         relationshipStatus: relationshipState,
       },
-      editFieldToastMessage: null,
       callback: () => rootNavigation.goBack(),
     });
   };

@@ -14,7 +14,6 @@ interface IMenuController extends IBaseState{
   }) => void;
     editMyProfile: (payload: {
       data: IUserEdit;
-      editFieldToastMessage?: string;
       callback?: () => void;
   }) => void;
 

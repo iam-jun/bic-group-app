@@ -106,9 +106,7 @@ function* postPublishDraftPost({
     const postData: IPost = res.data;
     usePostsStore.getState().actions.addToPosts({ data: postData } as IPayloadAddToAllPost);
     if (res.data?.status === PostStatus.PROCESSING) {
-      showToast({
-        content: 'post:draft:text_processing_publish',
-      });
+      showToastSuccess(res);
       navigation.goBack();
       usePostsInProgressStore.getState().actions.getPosts();
     } else if (replaceWithDetail) {
