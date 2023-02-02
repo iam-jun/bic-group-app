@@ -473,7 +473,7 @@ exports[`CodeInputView component renders correctly 1`] = `
         ]
       }
     >
-      Choose new password
+      Create New Password
     </Text>
     <Text
       style={
@@ -490,7 +490,7 @@ exports[`CodeInputView component renders correctly 1`] = `
         ]
       }
     >
-      New password
+      New Password
     </Text>
     <View
       style={
@@ -1010,7 +1010,7 @@ exports[`CodeInputView component renders correctly 1`] = `
         ]
       }
     >
-      Confirm new password
+      Confirm New Password
     </Text>
     <View
       style={
@@ -1078,7 +1078,7 @@ exports[`CodeInputView component renders correctly 1`] = `
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
-                placeholder="Confirm new password"
+                placeholder="Confirm password"
                 placeholderTextColor="#BAC0DE"
                 secureTextEntry={true}
                 selectionColor="#767D93"

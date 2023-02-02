@@ -61,8 +61,6 @@ const UploadingImage: FC<UploadingImageProps> = ({
     if (uploadError) {
       const errorMessage = typeof uploadError === 'string' ? uploadError : t('post:error_upload_photo_failed');
       setError(errorMessage);
-    } else {
-      setError('');
     }
   }, [uploadError]);
 
