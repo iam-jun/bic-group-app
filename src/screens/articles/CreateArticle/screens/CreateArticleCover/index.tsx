@@ -81,7 +81,7 @@ const CreateArticleCover: FC<CreateArticleCoverProps> = ({ articleId }) => {
   );
 
   const renderButton = () => {
-    if (uploadingImage) return null;
+    if (uploadingImage || error) return null;
 
     if (!coverMedia?.url) {
       return (
@@ -91,9 +91,7 @@ const CreateArticleCover: FC<CreateArticleCoverProps> = ({ articleId }) => {
         </Button>
       );
     }
-    if (error) {
-      return null;
-    }
+
     return (
       <EditAction style={styles.btnEdit} onPress={onPressSelect} type="edit" />
     );
