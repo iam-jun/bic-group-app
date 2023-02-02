@@ -207,7 +207,7 @@ exports[`EmailInputView component renders correctly 1`] = `
         }
         testID="button.text"
       >
-        Send code
+        Send Code
       </Text>
     </View>
   </View>
