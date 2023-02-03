@@ -25,9 +25,7 @@ const ScheduledArticles = () => {
   } = scheduleArticles || {};
 
   useEffect(() => {
-    if (data?.length === 0) {
-      getData(true);
-    }
+    getData(true);
   }, []);
 
   const getData = (isRefresh?: boolean) => {
