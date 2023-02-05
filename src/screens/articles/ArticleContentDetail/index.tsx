@@ -1,7 +1,7 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { t } from 'i18next';
 import React, {
-  FC, useCallback, useEffect, useRef, useState,
+  FC, useEffect, useRef, useState,
 } from 'react';
 import { StyleSheet } from 'react-native';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -31,7 +31,8 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
   const ref = useRef<ArticleWebviewRef>();
   const headerRef = useRef<any>();
 
-  const data = usePostsStore(useCallback(postsSelector.getPost(id, {}), [id]));
+  // Not use useCallback because id change before get new content => data is outdated
+  const data = usePostsStore(postsSelector.getPost(id, {}));
   const { actions, errors } = useArticlesStore((state: IArticlesState) => state);
   const isFetchError = errors[id];
 
@@ -61,6 +62,17 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
   };
 
   const isMounted = useMounted(() => actions.getArticleDetail({ articleId: id, isReported }));
+
+  /**
+   * In case navigate to article content detail when it already in stack, we should get data and inject to webview again
+   * E.g: Newsfeed => Article detail => Article content detail => Series detail
+   * => press article item, navigate to article detail
+   */
+  useEffect(() => {
+    if (isMounted && id) {
+      actions.getArticleDetail({ articleId: id, isReported });
+    }
+  }, [id]);
 
   /**
    * API feed does not return series, so must await
