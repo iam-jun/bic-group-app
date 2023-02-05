@@ -11,6 +11,8 @@ describe('ArticleScheduleContent screen', () => {
       <ArticleScheduleContent {...props} />,
     );
 
+    expect(rendered).toMatchSnapshot();
+
     const containerView = rendered.queryByTestId('article_schedule_content');
     expect(containerView).not.toBeNull();
   });
