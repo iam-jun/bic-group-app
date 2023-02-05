@@ -513,10 +513,8 @@
       "from_to": "From - To",
       "text_banner_search": "Searched results are removed all text formats to make sure looking the precise content"
     },
-    "notice_post_video_uploading": {
-      "title": "Processing video (count)",
-      "description": "The video of your post is being processed. We'll send you a notification when it's completed"
-    },
+    "notice_post_video_uploading": "A video is being processed. We’ll notify you when it’s completed.",
+    "notice_posts_video_uploading": "{count} videos are being processed. We’ll notify you when it’s completed.",
     "create_content_options": {
       "write_post": "Write Post",
       "write_article": "Write Article",

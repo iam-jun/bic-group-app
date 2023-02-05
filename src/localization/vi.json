@@ -473,10 +473,8 @@
       "from_to": "Từ ngày - Đến ngày",
       "text_banner_search": "Kết quả tìm kiếm được lược bỏ đi định dạng chữ để có nội dung chính xác"
     },
-    "notice_post_video_uploading": {
-      "title": "Bài viết có video đang xử lý (count)",
-      "description": "Bài viết có video của bạn đang được xử lý. Chúng tôi sẽ gửi cho bạn thông báo khi quá trình hoàn tất"
-    },
+    "notice_post_video_uploading": "Đang có video được xử lý. Chúng tôi sẽ gửi cho bạn thông báo khi quá trình hoàn tất",
+    "notice_posts_video_uploading": "Đang có {count} video được xử lý. Chúng tôi sẽ gửi cho bạn thông báo khi quá trình hoàn tất",
     "create_content_options": {
       "write_post": "Viết Bài Đăng",
       "write_article": "Viết Bài Viết",
