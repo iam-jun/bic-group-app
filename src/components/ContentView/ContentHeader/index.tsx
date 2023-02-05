@@ -88,7 +88,8 @@ const ContentHeader: FC<ContentHeaderProps> = ({
             <PostAudiencesModal
               data={audience?.groups || []}
               showBlockedIcon={isHidden}
-            />),
+            />
+          ),
         }),
       );
     }
