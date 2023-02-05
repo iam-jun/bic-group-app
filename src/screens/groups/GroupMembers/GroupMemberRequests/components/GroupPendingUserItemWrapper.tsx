@@ -1,39 +1,34 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
-import groupsActions from '~/storeRedux/groups/actions';
 import PendingUserItem from '~/screens/groups/components/PendingUserItem';
+import useGroupMemberStore from '../../store';
 
 const GroupPendingUserItemWrapper = ({
   requestId,
 }: {
   requestId: string;
 }) => {
-  const dispatch = useDispatch();
-
-  const groupMemberRequests = useKeySelector(groupsKeySelector.groupMemberRequests);
+  const groupMemberRequests = useGroupMemberStore((state) => state.groupMemberRequests);
   const { items } = groupMemberRequests;
+  const actions = useGroupMemberStore((state) => state.actions);
 
   const requestItem = items[requestId];
   const { groupId, user } = requestItem;
   const { fullname: fullName } = user;
 
   const onPressApprove = () => {
-    dispatch(groupsActions.approveSingleGroupMemberRequest({
+    actions.approveSingleGroupMemberRequest({
       groupId,
       requestId,
       fullName,
-    }));
+    });
   };
 
   const onPressDecline = () => {
-    dispatch(groupsActions.declineSingleGroupMemberRequest({
+    actions.declineSingleGroupMemberRequest({
       groupId,
       requestId,
       fullName,
-    }));
+    });
   };
 
   return (

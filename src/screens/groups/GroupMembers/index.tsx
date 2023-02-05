@@ -4,7 +4,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import i18next from 'i18next';
 
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IGroupMembers } from '~/interfaces/IGroup';
 
@@ -30,7 +29,7 @@ const _GroupMembers = ({ route }: any) => {
   const [selectedMember, setSelectedMember] = useState<IGroupMembers>();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(targetIndex || 0);
-  const { ids } = useKeySelector(groupsKeySelector.groupMemberRequests);
+  const { ids } = useGroupMemberStore((state) => state.groupMemberRequests);
 
   const [needReloadWhenReconnected, setNeedReloadWhenReconnected] = useState(false);
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');

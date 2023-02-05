@@ -1,23 +1,20 @@
 import React, { useRef } from 'react';
-import { useDispatch } from 'react-redux';
 import { StyleSheet } from 'react-native';
 
-import groupsActions from '~/storeRedux/groups/actions';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
 import Text from '~/baseComponents/Text';
 import ButtonApproveDeclineAllRequests from '~/screens/groups/components/ButtonApproveDeclineAllRequests';
 import { spacing } from '~/theme';
 import useModalStore from '~/store/modal';
+import useGroupMemberStore from '../../store';
 
 const GroupApproveDeclineAllRequests = ({ groupId }: {groupId: string}) => {
-  const dispatch = useDispatch();
   const timeOutRef = useRef<any>();
   const { t } = useBaseHook();
 
-  const { total } = useKeySelector(groupsKeySelector.groupMemberRequests);
+  const { total } = useGroupMemberStore((state) => state.groupMemberRequests);
+  const actions = useGroupMemberStore((state) => state.actions);
   const { showToast, clearToast, showAlert } = useModalStore((state) => state.actions);
 
   const alertAction = ({
@@ -61,7 +58,7 @@ const GroupApproveDeclineAllRequests = ({ groupId }: {groupId: string}) => {
   };
 
   const doApproveAll = () => {
-    dispatch(groupsActions.approveAllGroupMemberRequests({ groupId, total }));
+    actions.approveAllGroupMemberRequests({ groupId, total });
   };
 
   const onPressDeclineAll = () => {
@@ -76,18 +73,18 @@ const GroupApproveDeclineAllRequests = ({ groupId }: {groupId: string}) => {
   const onPressUndo = () => {
     timeOutRef?.current && clearTimeout(timeOutRef?.current);
     clearToast();
-    dispatch(groupsActions.undoDeclinedGroupMemberRequests());
+    actions.undoDeclinedGroupMemberRequests();
   };
 
   const doDeclineAll = () => {
-    dispatch(groupsActions.storeUndoGroupMemberRequests());
-    dispatch(groupsActions.resetGroupMemberRequests());
+    actions.storeUndoGroupMemberRequests();
+    actions.resetGroupMemberRequests();
 
     // to show Empty screen component
-    dispatch(groupsActions.setGroupMemberRequests({ loading: false }));
+    actions.setGroupMemberRequests({ loading: false });
 
     const toastMessage: IToastMessage = {
-      content: `${t('groups:text_declining_all')}`.replace('{0}', total),
+      content: `${t('groups:text_declining_all')}`.replace('{0}', String(total)),
       buttonText: t('common:text_undo'),
       duration: 5000,
       onButtonPress: onPressUndo,
@@ -96,7 +93,7 @@ const GroupApproveDeclineAllRequests = ({ groupId }: {groupId: string}) => {
 
     timeOutRef.current = setTimeout(
       () => {
-        dispatch(groupsActions.declineAllGroupMemberRequests({ groupId, total }));
+        actions.declineAllGroupMemberRequests({ groupId, total });
       }, 5500,
     );
   };

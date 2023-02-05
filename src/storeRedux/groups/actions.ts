@@ -5,7 +5,6 @@ import {
   IGroupAddMembers,
   IGroupGetJoinableMembers,
   IGroupGetMembers,
-  IJoiningMember,
   IGroupMembers,
 } from '~/interfaces/IGroup';
 import { IUser } from '~/interfaces/IAuth';
@@ -75,70 +74,6 @@ const groupsActions = {
   }),
   addMembers: (payload: IGroupAddMembers) => ({
     type: groupsTypes.ADD_MEMBERS,
-    payload,
-  }),
-
-  getGroupMemberRequests: (payload: {
-    groupId: string;
-    isRefreshing?: boolean;
-    params?: any;
-  }) => ({
-    type: groupsTypes.GET_GROUP_MEMBER_REQUESTS,
-    payload,
-  }),
-  setGroupMemberRequests: (payload: {
-    total?: number;
-    loading?: boolean;
-    canLoadMore?: boolean;
-    ids?: string[];
-    items?: IObject<IJoiningMember>;
-  }) => ({
-    type: groupsTypes.SET_GROUP_MEMBER_REQUESTS,
-    payload,
-  }),
-  resetGroupMemberRequests: () => ({
-    type: groupsTypes.RESET_GROUP_MEMBER_REQUESTS,
-  }),
-  undoDeclinedGroupMemberRequests: () => ({
-    type: groupsTypes.UNDO_DECLINED_GROUP_MEMBER_REQUESTS,
-  }),
-  approveSingleGroupMemberRequest: (payload: {
-    groupId: string;
-    requestId: string;
-    fullName: string;
-  }) => ({
-    type: groupsTypes.APPROVE_SINGLE_GROUP_MEMBER_REQUEST,
-    payload,
-  }),
-  approveAllGroupMemberRequests: (payload: {
-    groupId: string;
-    total: number;
-    callback?: () => void;
-  }) => ({
-    type: groupsTypes.APPROVE_ALL_GROUP_MEMBER_REQUESTS,
-    payload,
-  }),
-  declineSingleGroupMemberRequest: (payload: {
-    groupId: string;
-    requestId: string;
-    fullName: string;
-  }) => ({
-    type: groupsTypes.DECLINE_SINGLE_GROUP_MEMBER_REQUEST,
-    payload,
-  }),
-  declineAllGroupMemberRequests: (payload: {
-    groupId: string;
-    total: number;
-    callback?: () => void;
-  }) => ({
-    type: groupsTypes.DECLINE_ALL_GROUP_MEMBER_REQUESTS,
-    payload,
-  }),
-  storeUndoGroupMemberRequests: () => ({
-    type: groupsTypes.STORE_UNDO_GROUP_MEMBER_REQUESTS,
-  }),
-  editGroupMemberRequest: (payload: {id: string; data: any}) => ({
-    type: groupsTypes.EDIT_GROUP_MEMBER_REQUEST,
     payload,
   }),
 

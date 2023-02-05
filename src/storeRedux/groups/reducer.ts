@@ -2,9 +2,7 @@ import groupsTypes from '~/storeRedux/groups/types';
 import { IUser } from '~/interfaces/IAuth';
 import {
   IGroupMembers,
-  IJoiningMember,
 } from '~/interfaces/IGroup';
-import { IObject } from '~/interfaces/common';
 
 export const groupInitState = {
   permissionScheme: {
@@ -57,21 +55,6 @@ export const groupInitState = {
   },
   selectedUsers: [] as IUser[],
 
-  groupMemberRequests: {
-    total: 0,
-    loading: true,
-    ids: [] as string[],
-    items: {} as IObject<IJoiningMember>,
-    canLoadMore: true,
-  },
-  // temporarily stores data for `undo` action
-  undoGroupMemberRequests: {
-    total: 0,
-    loading: null,
-    canLoadMore: null,
-    data: [],
-    items: {} as IObject<IJoiningMember>,
-  },
   joinedCommunities: {
     loading: false,
     canLoadMore: true,
@@ -119,7 +102,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
   const { type, payload } = action;
   const {
     selectedUsers,
-    groupMemberRequests,
     groupSearchMembers,
     globalSearch,
   } = state;
@@ -183,51 +165,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       return {
         ...state,
         users: groupInitState.users,
-      };
-
-    // PENDING MEMBER REQUESTS
-    case groupsTypes.SET_GROUP_MEMBER_REQUESTS:
-      return {
-        ...state,
-        groupMemberRequests: {
-          ...groupMemberRequests,
-          ...payload,
-        },
-      };
-    case groupsTypes.RESET_GROUP_MEMBER_REQUESTS:
-      return {
-        ...state,
-        groupMemberRequests: groupInitState.groupMemberRequests,
-      };
-    case groupsTypes.DECLINE_ALL_GROUP_MEMBER_REQUESTS:
-      return {
-        ...state,
-        undoGroupMemberRequests: groupInitState.undoGroupMemberRequests,
-      };
-    case groupsTypes.UNDO_DECLINED_GROUP_MEMBER_REQUESTS:
-      return {
-        ...state,
-        groupMemberRequests: { ...state.undoGroupMemberRequests },
-        undoGroupMemberRequests: groupInitState.undoGroupMemberRequests,
-      };
-    case groupsTypes.STORE_UNDO_GROUP_MEMBER_REQUESTS:
-      return {
-        ...state,
-        undoGroupMemberRequests: { ...groupMemberRequests },
-      };
-    case groupsTypes.EDIT_GROUP_MEMBER_REQUEST:
-      return {
-        ...state,
-        groupMemberRequests: {
-          ...groupMemberRequests,
-          items: {
-            ...groupMemberRequests.items,
-            [payload.id]: {
-              ...groupMemberRequests.items[payload.id],
-              ...payload.data,
-            },
-          },
-        },
       };
 
     case groupsTypes.GET_COMMUNITY_GROUPS:
