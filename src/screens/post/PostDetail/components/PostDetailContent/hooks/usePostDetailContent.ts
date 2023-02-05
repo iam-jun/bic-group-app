@@ -15,7 +15,7 @@ import { rootSwitch } from '~/router/stack';
 import { defaultList, getSectionData } from '~/helpers/post';
 import useCommentsStore from '~/store/entities/comments';
 import commentsSelector from '~/store/entities/comments/selectors';
-import usePostsStore from '~/store/entities/posts';
+import usePostsStore, { IPostsState } from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
@@ -44,6 +44,7 @@ const usePostDetailContent = ({
   const commentLeft = usePostsStore(useCallback(postsSelector.getCommentOnlyCount(postId), [postId]));
   const setting = usePostsStore(useCallback(postsSelector.getSetting(postId), [postId]));
   const reported = usePostsStore(useCallback(postsSelector.getReported(postId), [postId]));
+  const { deletePostLocal, putMarkSeenPost } = usePostsStore((state: IPostsState) => state.actions);
 
   const comments = useCommentsStore(useCallback(commentsSelector.getCommentsByParentId(postId), [postId]));
   const commentError = useKeySelector(postKeySelector.commentErrorCode);
@@ -98,7 +99,7 @@ const usePostDetailContent = ({
   };
 
   const onPressMarkSeenPost = useCallback(() => {
-    dispatch(postActions.putMarkSeenPost({ postId }));
+    putMarkSeenPost({ postId });
   }, [postId]);
 
   useEffect(() => {
@@ -112,7 +113,7 @@ const usePostDetailContent = ({
   useEffect(
     () => () => {
       if (commentError === APIErrorCode.Post.POST_DELETED) {
-        dispatch(postActions.deletePostLocal(postId));
+        deletePostLocal(postId);
       }
     },
     [commentError],

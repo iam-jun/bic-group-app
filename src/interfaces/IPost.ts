@@ -550,7 +550,6 @@ export interface IPayloadPutMarkAsRead {
 }
 export interface IPayloadPutMarkSeenPost {
   postId: string;
-  callback?: (isSuccess: boolean) => void;
 }
 export interface IRequestGetUsersInterestedPost {
   postId: string;

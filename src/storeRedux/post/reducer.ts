@@ -5,7 +5,6 @@ import postTypes from './types';
 
 export const postInitState = {
   createPost: {
-    loading: false,
     isOpenModal: false,
     data: {
       content: '',
@@ -77,14 +76,6 @@ function postReducer(
   const { type, payload } = action;
 
   switch (type) {
-    case postTypes.SET_LOADING_CREATE_POST:
-      return {
-        ...state,
-        createPost: {
-          ...state.createPost,
-          loading: payload,
-        },
-      };
     case postTypes.CLEAR_CREATE_POST:
       return {
         ...state,

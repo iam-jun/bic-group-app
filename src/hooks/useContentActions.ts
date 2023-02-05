@@ -6,8 +6,8 @@ import {
   IOwnReaction, IPayloadReactToPost, IReactionCounts, TargetType,
 } from '~/interfaces/IPost';
 import useCommonController from '~/screens/store';
+import usePostsStore, { IPostsState } from '~/store/entities/posts';
 import modalActions from '~/storeRedux/modal/actions';
-import postActions from '~/storeRedux/post/actions';
 
 export interface Props {
   postId: string;
@@ -23,9 +23,10 @@ const useContentActions = (props: Props) => {
   const dispatch = useDispatch();
 
   const commonController = useCommonController((state) => state.actions);
+  const { putMarkSeenPost } = usePostsStore((state: IPostsState) => state.actions);
 
   const onPressMarkSeenPost = useCallback(() => {
-    dispatch(postActions.putMarkSeenPost({ postId }));
+    putMarkSeenPost({ postId });
   }, [postId]);
 
   const onAddReaction = (reactionId: ReactionType) => {

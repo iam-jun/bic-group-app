@@ -15,7 +15,7 @@ const navigation = withNavigation(rootNavigationRef);
 const editComment = (_set, _get) => async (payload: IPayloadPutEditComment) => {
   const { id, comment, data } = payload;
   if (!id || !data || !comment) {
-    console.error('\x1b[31m🐣️ saga putEditPost: id or data not found\x1b[0m');
+    console.error('\x1b[31m🐣️ saga editComment: id or data not found\x1b[0m');
     return;
   }
   try {

@@ -21,12 +21,9 @@ import useHomeStore from '~/screens/Home/store';
 import usePostsStore from '~/store/entities/posts';
 import streamApi from '~/api/StreamApi';
 import postActions from '~/storeRedux/post/actions';
-import putEditPost from '~/storeRedux/post/saga/putEditPost';
 import putMarkAsRead from '~/storeRedux/post/saga/putMarkAsRead';
 import postTypes from '~/storeRedux/post/types';
 import { timeOut } from '~/utils/common';
-import putMarkSeenPost from './putMarKSeenPost';
-import deletePost from './deletePost';
 import removeAudiencesFromPost from './removeAudiencesFromPost';
 import useDraftPostStore from '../../../screens/Draft/DraftPost/store';
 import useTimelineStore from '~/store/timeline';
@@ -36,16 +33,11 @@ import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNo
 import showToast from '~/store/helper/showToast';
 import showToastError from '~/store/helper/showToastError';
 import useReportContentStore from '~/components/Report/store';
+import useCreatePostStore from '~/screens/post/CreatePost/store';
 
 const navigation = withNavigation(rootNavigationRef);
 
 export default function* postSaga() {
-  yield takeLatest(
-    postTypes.PUT_EDIT_POST, putEditPost,
-  );
-  yield takeEvery(
-    postTypes.DELETE_POST, deletePost,
-  );
   yield takeLatest(
     postTypes.GET_POST_DETAIL, getPostDetail,
   );
@@ -58,15 +50,9 @@ export default function* postSaga() {
   yield takeLatest(
     postTypes.PUT_MARK_AS_READ, putMarkAsRead,
   );
-  yield takeLatest(
-    postTypes.PUT_MARK_SEEN_POST, putMarkSeenPost,
-  );
   yield takeEvery(
     postTypes.GET_CREATE_POST_INIT_AUDIENCES,
     getCreatePostInitAudiences,
-  );
-  yield takeLatest(
-    postTypes.DELETE_POST_LOCAL, deletePostLocal,
   );
   yield takeLatest(
     postTypes.REMOVE_POST_AUDIENCES,
@@ -88,11 +74,11 @@ function* postPublishDraftPost({
     createFromGroupId,
   } = payload || {};
   try {
-    yield put(postActions.setLoadingCreatePost(true));
+    useCreatePostStore.getState().actions.setLoadingCreatePost(true);
     const res = yield call(
       streamApi.postPublishDraftPost, draftPostId,
     );
-    yield put(postActions.setLoadingCreatePost(false));
+    useCreatePostStore.getState().actions.setLoadingCreatePost(false);
 
     if (!res.data) {
       onError?.();
@@ -123,7 +109,7 @@ function* postPublishDraftPost({
     useHomeStore.getState().actions.refreshHome();
     yield call(useDraftPostStore.getState().actions.getDraftPosts, payloadGetDraftPosts);
   } catch (e) {
-    yield put(postActions.setLoadingCreatePost(false));
+    useCreatePostStore.getState().actions.setLoadingCreatePost(false);
     onError?.();
     showToastError(e);
   }
@@ -144,7 +130,7 @@ function* putEditDraftPost({
   }
 
   try {
-    yield put(postActions.setLoadingCreatePost(true));
+    useCreatePostStore.getState().actions.setLoadingCreatePost(true);
     const isSavingDraftPost = yield select((state) => state?.post?.createPost?.isSavingDraftPost);
     if (isSavingDraftPost) {
       yield timeOut(300);
@@ -162,7 +148,7 @@ function* putEditDraftPost({
         };
         yield put(postActions.postPublishDraftPost(p));
       } else {
-        yield put(postActions.setLoadingCreatePost(false));
+        useCreatePostStore.getState().actions.setLoadingCreatePost(false);
         const payloadGetDraftPosts: IPayloadGetDraftPosts = {
           isRefresh: true,
         };
@@ -173,11 +159,11 @@ function* putEditDraftPost({
         });
       }
     } else {
-      yield put(postActions.setLoadingCreatePost(false));
+      useCreatePostStore.getState().actions.setLoadingCreatePost(false);
       showToastError(response);
     }
   } catch (e) {
-    yield put(postActions.setLoadingCreatePost(false));
+    useCreatePostStore.getState().actions.setLoadingCreatePost(false);
     showToastError(e);
   }
 }
@@ -243,7 +229,7 @@ function* getPostDetail({
       e?.code === APIErrorCode.Post.POST_DELETED
       || e?.code === APIErrorCode.Post.POST_PRIVACY
     ) {
-      yield put(postActions.deletePostLocal(postId));
+      usePostsStore.getState().actions.deletePostLocal(postId);
       yield put(postActions.setCommentErrorCode(e.code));
       if (payload?.showToast) {
         showToast({
@@ -271,21 +257,5 @@ function* getCreatePostInitAudiences({
     console.log(
       '\x1b[31m🐣️ saga getCreatePostInitAudiences e:', e, '\x1b[0m',
     );
-  }
-}
-
-function* deletePostLocal({ payload }: {type: string; payload: string}): any {
-  if (!payload) {
-    console.log('\x1b[31m🐣️ saga deletePost: id not found\x1b[0m');
-    return;
-  }
-  try {
-    const post = usePostsStore.getState()?.posts?.[payload] || {};
-    if (post) {
-      post.deleted = true;
-      usePostsStore.getState().actions.addToPosts({ data: post } as IPayloadAddToAllPost);
-    }
-  } catch (e) {
-    yield showToastError(e);
   }
 }

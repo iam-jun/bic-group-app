@@ -9,7 +9,7 @@ import {
   IPostSetting,
 } from '~/interfaces/IPost';
 import { useKeySelector } from '~/hooks/selector';
-import usePostsStore from '~/store/entities/posts';
+import usePostsStore, { IPostsState } from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import postActions from '~/storeRedux/post/actions';
@@ -42,6 +42,8 @@ export const usePostSettings = (params?: IUsePostSettings) => {
   const {
     important, currentSettings, canReact, canComment,
   } = useKeySelector(postKeySelector.createPost.all);
+
+  const { putEditPost } = usePostsStore((state: IPostsState) => state.actions);
 
   const [disableButtonSave, setDisableButtonSave] = useState<boolean>(true);
   const [showWarning, setShowWarning] = useState<boolean>(false);
@@ -217,9 +219,9 @@ export const usePostSettings = (params?: IUsePostSettings) => {
       disableNavigate: true,
       msgSuccess: 'post:text_update_post_setting_success',
       msgError: 'post:text_update_post_setting_failed',
-      onRetry: () => dispatch(postActions.putEditPost(payload)),
+      onRetry: () => putEditPost(payload),
     };
-    dispatch(postActions.putEditPost(payload));
+    putEditPost(payload);
     rootNavigation.goBack();
     return 'dispatchPutEditPost';
   };

@@ -696,7 +696,6 @@
     "select_audience": "Select Audiences",
     "expiring_time": "Expiring Time",
     "expire_time_desc": "This post stay on top of feed until expire time.",
-    "delete_post_complete": "Your post has been deleted.",
     "search_results": "Search results",
     "search_audiences_placeholder": "Search Audience...",
     "text_chosen_audience": "Chosen audience",
