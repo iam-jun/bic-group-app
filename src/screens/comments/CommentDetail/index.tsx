@@ -44,6 +44,7 @@ const CommentDetail: FC<IRouteParams> = (props) => {
   const copyCommentError = useKeySelector(postKeySelector.commentErrorCode);
   const [showPrivacyPost, setShowPrivacyPost] = useState(false);
   const comment = useCommentsStore(useCallback(commentsSelector.getComment(commentId), [commentId]));
+  const commentActions = useCommentsStore((state) => state.actions);
   const { reported } = comment || {};
 
   useEffect(() => {
@@ -79,7 +80,7 @@ const CommentDetail: FC<IRouteParams> = (props) => {
       if (copyCommentError === APIErrorCode.Post.COMMENT_DELETED) {
         const params = props?.route?.params;
         const { postId, commentId } = params || {};
-        dispatch(postActions.removeCommentLevel1Deleted({ postId, commentId }));
+        commentActions.removeCommentDeleted({ postId, commentId });
       }
     },
     [copyCommentError],

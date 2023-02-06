@@ -9,7 +9,7 @@ export interface IPayloadUpdateCreatedComment {
   parentCommentId?: string;
 }
 
-const updateCreatedComment = (set, get) => (payload: IPayloadUpdateCreatedComment) => {
+const updateCreatedComment = (_set, get) => (payload: IPayloadUpdateCreatedComment) => {
   // update pre-comment with data receiving from API
   const {
     localId, postId, resultComment, parentCommentId,

@@ -130,16 +130,8 @@ const postActions = {
     type: postTypes.SET_COMMENT_ERROR_CODE,
     payload,
   }),
-  removeChildComment: (payload: any) => ({
-    type: postTypes.REMOVE_CHILD_COMMENT,
-    payload,
-  }),
   putMarkAsRead: (payload: IPayloadPutMarkAsRead) => ({
     type: postTypes.PUT_MARK_AS_READ,
-    payload,
-  }),
-  removeCommentLevel1Deleted: (payload: any) => ({
-    type: postTypes.REMOVE_COMMENT_DELETED,
     payload,
   }),
   removePostAudiences: (payload:IPayloadRemoveAudiencesOfPost) => ({

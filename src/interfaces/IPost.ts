@@ -592,3 +592,15 @@ export interface IParamsGetPostByParams {
   offset?: number;
   limit?: number;
 }
+
+export interface IRemoveChildComment {
+  localId: string;
+  parentCommentId: string;
+  postId: string;
+}
+
+export interface IRemoveComment {
+  commentId?: string;
+  localId?: string;
+  postId: string;
+}

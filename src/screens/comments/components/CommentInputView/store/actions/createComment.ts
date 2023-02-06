@@ -150,11 +150,11 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
     actions.setCreateComment({ loading: false });
     if (!!parentCommentId && e?.code === APIErrorCode.Post.COMMENT_DELETED) {
       Store.store.dispatch(postActions.setCommentErrorCode(APIErrorCode.Post.COMMENT_DELETED));
-      Store.store.dispatch(postActions.removeChildComment({
-        localId: preComment?.localId,
+      useCommentsStore.getState().actions.removeChildComment({
+        localId: preComment?.localId?.toString(),
         postId,
         parentCommentId,
-      }));
+      });
 
       showToast({ content: 'post:text_comment_deleted' });
     } else if (e?.code === APIErrorCode.Post.POST_DELETED
@@ -163,16 +163,16 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
         Store.store.dispatch(postActions.setCommentErrorCode(APIErrorCode.Post.POST_DELETED));
       }
       if (parentCommentId) {
-        Store.store.dispatch(postActions.removeChildComment({
-          localId: preComment?.localId,
+        useCommentsStore.getState().actions.removeChildComment({
+          localId: preComment?.localId?.toString(),
           postId,
           parentCommentId,
-        }));
+        });
       } else {
-        Store.store.dispatch(postActions.removeCommentLevel1Deleted({
+        useCommentsStore.getState().actions.removeCommentDeleted({
           postId,
-          localId: preComment?.localId,
-        }));
+          localId: preComment?.localId?.toString(),
+        });
       }
       showToast({
         content: e?.code === APIErrorCode.Post.POST_DELETED ? 'post:text_post_deleted' : e?.meta?.message,
