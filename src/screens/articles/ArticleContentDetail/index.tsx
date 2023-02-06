@@ -79,11 +79,25 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
    * getArticleDetail response then init webview again
    */
   useEffect(() => {
-    // reload webview after content change
     if (isMounted) injectJavaScript(initScript);
-  }, [series, content, isMounted]);
+  }, [series, isMounted]);
 
+  /**
+   * Webview init content only one time, if we want update new content, we must set null for web init again
+   */
   useEffect(() => {
+    // reload webview after content change
+    if (isMounted) {
+      const emptyContentScript = {
+        ...initScript,
+        payload: {
+          ...initScript.payload,
+          contentState: null,
+        },
+      };
+      injectJavaScript(emptyContentScript);
+      injectJavaScript(initScript);
+    }
     if (content) {
       getImageUrls();
     }
