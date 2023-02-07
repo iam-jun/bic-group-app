@@ -266,6 +266,7 @@
     "text_err_confirm_password_not_matched": "Confirmed password doesn’t match.",
     "text_err_confirm_new_password_not_matched": "Your new password is not matched.",
     "text_err_limit_exceeded": "Your account is deactivated in 2 hours for requesting too many time. Please try again later.",
+    "text_change_password_err_limit_exceeded": "You exceeded over the limit of password change. Please try again after 1 hour",
     "text_err_wrong_code": "Invalid code",
     "text_err_expired_code": "Code is expired!",
     "text_err_missing_token": "Oops, something went wrong. ",
