@@ -150,7 +150,7 @@ exports[`ScheduledArticles component render correctly 1`] = `
   refreshControl={
     <RefreshControlMock
       onRefresh={[Function]}
-      refreshing={false}
+      refreshing={true}
       tintColor="#A4A9B7"
     />
   }
@@ -597,7 +597,6 @@ exports[`ScheduledArticles component render correctly 1`] = `
                       "height": 24,
                       "justifyContent": "center",
                       "marginRight": 8,
-                      "maxWidth": 255,
                       "opacity": 1,
                       "paddingLeft": 4,
                       "paddingRight": 8,
@@ -616,7 +615,7 @@ exports[`ScheduledArticles component render correctly 1`] = `
                         },
                         Object {},
                         Object {
-                          "color": "#2D3039",
+                          "maxWidth": 255,
                           "paddingLeft": 4,
                         },
                       ]
@@ -646,7 +645,6 @@ exports[`ScheduledArticles component render correctly 1`] = `
                       "height": 24,
                       "justifyContent": "center",
                       "marginRight": 8,
-                      "maxWidth": 255,
                       "opacity": 1,
                       "paddingLeft": 4,
                       "paddingRight": 8,
@@ -665,7 +663,7 @@ exports[`ScheduledArticles component render correctly 1`] = `
                         },
                         Object {},
                         Object {
-                          "color": "#2D3039",
+                          "maxWidth": 255,
                           "paddingLeft": 4,
                         },
                       ]

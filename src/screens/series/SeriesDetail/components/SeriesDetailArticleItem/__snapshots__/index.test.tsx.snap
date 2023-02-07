@@ -2,14 +2,26 @@
 
 exports[`SeriesDetailArticleItem component render correctly 1`] = `
 <View
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
   style={
     Object {
       "backgroundColor": "#FFFFFF",
       "borderBottomColor": "#F2F5F8",
       "borderBottomWidth": 1,
+      "opacity": 1,
       "padding": 16,
     }
   }
+  testID="series_detail.list_article.article_item"
 >
   <View
     style={

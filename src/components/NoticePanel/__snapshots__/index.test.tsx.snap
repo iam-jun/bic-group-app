@@ -50,7 +50,7 @@ Array [
         }
         testID="notice_panel.title"
       >
-        Processing video (count)
+        home:notice_post_video_uploading:title
       </Text>
       <Text
         style={
@@ -68,7 +68,7 @@ Array [
           ]
         }
       >
-        The video of your post is being processed. We'll send you a notification when it's completed
+        home:notice_post_video_uploading:description
       </Text>
     </View>
     <View
