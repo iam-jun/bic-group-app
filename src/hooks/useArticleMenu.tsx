@@ -14,7 +14,7 @@ import useCommonController from '~/screens/store';
 import { getPostMenus, getRootGroupids } from '~/helpers/post';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import { TargetType, ReportTo } from '~/interfaces/IReport';
-import { getLink, LINK_ARTICLE } from '~/utils/link';
+import { generateLink, LINK_ARTICLE } from '~/utils/link';
 import useModalStore from '~/store/modal';
 import { Button } from '~/baseComponents';
 
@@ -82,7 +82,7 @@ const useArticleMenu = (
 
   const onPressCopyLink = () => {
     dispatch(modalActions.hideBottomList());
-    Clipboard.setString(getLink(
+    Clipboard.setString(generateLink(
       LINK_ARTICLE, articleId,
     ));
     showToast({ content: 'common:text_link_copied_to_clipboard' });

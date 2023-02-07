@@ -15,7 +15,7 @@ import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import * as modalActions from '~/storeRedux/modal/actions';
 import Text from '~/baseComponents/Text';
 import { quickReactions } from '~/configs/reactionConfig';
-import { getLink, LINK_COMMENT } from '~/utils/link';
+import { generateLink, LINK_COMMENT } from '~/utils/link';
 import spacing from '~/theme/spacing';
 import BottomListItem from '~/components/BottomList/BottomListItem';
 import ReportContent from '~/components/Report/ReportContent';
@@ -110,7 +110,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
 
   const _onPressCopyLink = () => {
     dispatch(modalActions.hideModal());
-    Clipboard.setString(getLink(
+    Clipboard.setString(generateLink(
       LINK_COMMENT, postId, {
         commentId,
         parentId: parentCommentId || '',

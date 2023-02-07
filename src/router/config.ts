@@ -3,7 +3,8 @@ import getEnv from '~/utils/env';
 
 export const PREFIX_DEEPLINK_GROUP = 'bic://';
 
-export const PREFIX_HTTPS = 'https://';
+// added www because related to performance, auth,...
+export const PREFIX_URL = 'https://www.';
 
 export const customBackHandlerRoutes = [
   'home',
@@ -42,7 +43,7 @@ export const bottomTabIconsFocused = {
 
 export const linkingConfig = {
   prefixes: [
-    __DEV__ ? 'http://localhost:8088' : `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}`,
+    __DEV__ ? 'http://localhost:8088' : `${PREFIX_URL}${getEnv('SELF_DOMAIN')}`,
     PREFIX_DEEPLINK_GROUP,
   ],
 };

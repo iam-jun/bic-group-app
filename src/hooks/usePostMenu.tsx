@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { Keyboard } from 'react-native';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import modalActions from '~/storeRedux/modal/actions';
-import { getLink, LINK_POST } from '~/utils/link';
+import { generateLink, LINK_POST } from '~/utils/link';
 import { IPost, IReaction } from '~/interfaces/IPost';
 import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
 import { Button } from '~/baseComponents';
@@ -77,7 +77,7 @@ const usePostMenu = (
 
   const onPressCopyLink = () => {
     dispatch(modalActions.hideBottomList());
-    Clipboard.setString(getLink(
+    Clipboard.setString(generateLink(
       LINK_POST, postId,
     ));
     showToast({ content: 'common:text_link_copied_to_clipboard' });
