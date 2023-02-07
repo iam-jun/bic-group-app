@@ -11,7 +11,6 @@ import {
   IPayloadPutEditDraftPost,
   IPostAudience,
   IParamGetPostAudiences,
-  IPayloadPutMarkAsRead,
   IPayloadRemoveAudiencesOfPost,
   IPayloadUpdateLinkPreview,
 } from '~/interfaces/IPost';
@@ -128,10 +127,6 @@ const postActions = {
   }),
   setCommentErrorCode: (payload: boolean | string) => ({
     type: postTypes.SET_COMMENT_ERROR_CODE,
-    payload,
-  }),
-  putMarkAsRead: (payload: IPayloadPutMarkAsRead) => ({
-    type: postTypes.PUT_MARK_AS_READ,
     payload,
   }),
   removePostAudiences: (payload:IPayloadRemoveAudiencesOfPost) => ({

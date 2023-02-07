@@ -2,15 +2,14 @@ import React, { FC, useState } from 'react';
 import {
   StyleProp, StyleSheet, View, ViewStyle,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { Button } from '~/baseComponents';
 import { isPostExpired } from '~/helpers/post';
 import { useBaseHook } from '~/hooks';
 import { IPayloadPutMarkAsRead } from '~/interfaces/IPost';
-import postActions from '~/storeRedux/post/actions';
 import { spacing } from '~/theme';
+import useButtonMarkAsReadStore, { IButtonMarkAsReadState } from './store';
 
 export interface ButtonMarkAsReadProps {
   style?: StyleProp<ViewStyle>;
@@ -32,9 +31,10 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
   const [loading, setLoading] = useState(false);
 
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
+
+  const { putMarkAsRead } = useButtonMarkAsReadStore((state: IButtonMarkAsReadState) => state.actions);
 
   const isExpired = !!expireTime ? isPostExpired(expireTime) : !isImportant;
 
@@ -56,7 +56,7 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
           setLoading(false);
         },
       };
-      dispatch(postActions.putMarkAsRead(payload));
+      putMarkAsRead(payload);
     }
   };
 

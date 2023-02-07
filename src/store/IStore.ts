@@ -43,6 +43,7 @@ import { IModalState } from './modal';
 import { IScheduleArticlesState } from '~/screens/YourContent/components/ScheduledArticles/store';
 import { IPostsInProgressState } from '~/screens/Home/components/VideoProcessingNotice/store';
 import { IArticleScheduleContentState } from '~/screens/articles/ArticleScheduleContent/store';
+import { IButtonMarkAsReadState } from '~/components/posts/ButtonMarkAsRead/store';
 import { ICreatePostState } from '~/screens/post/CreatePost/store';
 
 export interface BicStore {
@@ -52,6 +53,7 @@ export interface BicStore {
     communities: ICommunitiesState;
     groups: IGroupsState;
   };
+
   // components
   SelectAudience: {
     selectAudienceStore: ISelectAudienceState;
@@ -59,6 +61,11 @@ export interface BicStore {
   Report: {
     reportContentStore: IReportContentState;
   };
+  posts: {
+    ButtonMarkAsRead: {
+      buttonMarkAsReadStore: IButtonMarkAsReadState;
+    }
+  }
 
   // screens
   post: {

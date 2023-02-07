@@ -21,7 +21,6 @@ import useHomeStore from '~/screens/Home/store';
 import usePostsStore from '~/store/entities/posts';
 import streamApi from '~/api/StreamApi';
 import postActions from '~/storeRedux/post/actions';
-import putMarkAsRead from '~/storeRedux/post/saga/putMarkAsRead';
 import postTypes from '~/storeRedux/post/types';
 import { timeOut } from '~/utils/common';
 import removeAudiencesFromPost from './removeAudiencesFromPost';
@@ -46,9 +45,6 @@ export default function* postSaga() {
   );
   yield takeLatest(
     postTypes.PUT_EDIT_DRAFT_POST, putEditDraftPost,
-  );
-  yield takeLatest(
-    postTypes.PUT_MARK_AS_READ, putMarkAsRead,
   );
   yield takeEvery(
     postTypes.GET_CREATE_POST_INIT_AUDIENCES,
