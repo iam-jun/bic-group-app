@@ -3,6 +3,7 @@ import { removeMemberFromMemberList } from '~/helpers/common';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import showToastError from '~/store/helper/showToastError';
 import showToastSuccess from '~/store/helper/showToastSuccess';
+import { IGroupMemberState } from '..';
 
 const removeGroupMember = (set, get) => async (
   { groupId, userId }: {groupId: string; userId: string},
@@ -10,7 +11,7 @@ const removeGroupMember = (set, get) => async (
   try {
     const response = await groupApi.removeGroupMembers(groupId, [userId]);
 
-    const { groupMembers } = get() || {};
+    const { groupMembers, search, actions }: IGroupMemberState = get() || {};
     const newUpdatedData = removeMemberFromMemberList(userId, groupMembers);
     set((state) => {
       state.groupMembers = {
@@ -21,6 +22,13 @@ const removeGroupMember = (set, get) => async (
 
     // to update userCount
     useGroupDetailStore.getState().actions.getGroupDetail({ groupId });
+
+    // if the user is standing on search member screen,
+    // need to update the current search
+    const { key } = search;
+    if (key.length > 0) {
+      actions.getGroupSearchMembers({ groupId, silentRefresh: true, params: { key } });
+    }
 
     showToastSuccess(response);
   } catch (error) {

@@ -9,10 +9,11 @@ import {
   IPayloadDeclineSingleGroupMemberRequest,
 } from '~/interfaces/IGroup';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
+import { createStore, resetStore } from '~/store/utils';
 import { IObject } from '~/interfaces/common';
-import { createStore } from '~/store/utils';
 import assignGroupAdmin from './actions/assignGroupAdmin';
 import getGroupMembers from './actions/getGroupMembers';
+import getGroupSearchMembers from './actions/getGroupSearchMembers';
 import removeGroupMember from './actions/removeGroupMember';
 import revokeGroupAdmin from './actions/revokeGroupAdmin';
 import updateGroupJoinSetting from './actions/updateGroupJoinSetting';
@@ -27,6 +28,12 @@ export interface IGroupMemberState extends IBaseState {
     loading: boolean;
     canLoadMore: boolean;
     offset: number; // current fetched data count
+  };
+  search: {
+    loading: boolean;
+    canLoadMore: boolean;
+    key: string;
+    data: any;
   };
   groupMemberRequests: {
     total: number;
@@ -43,9 +50,11 @@ export interface IGroupMemberState extends IBaseState {
     ids: string[];
     items: IObject<IJoiningMember>;
   };
-
   actions: {
-    deleteRemoveGroupMember: (payload: { groupId: string; userId: string }) => void;
+    deleteRemoveGroupMember: (payload: {
+      groupId: string;
+      userId: string;
+    }) => void;
     getGroupMembers: (payload: IGroupGetMembers) => void;
     clearGroupMembers: () => void;
     updateGroupJoinSetting: (payload: { groupId: string; isJoinApproval: boolean }) => void;
@@ -65,6 +74,8 @@ export interface IGroupMemberState extends IBaseState {
 
     assignGroupAdmin: (groupId: string, userIds: string[]) => void;
     revokeGroupAdmin: (groupId: string, userId: string) => void;
+    getGroupSearchMembers: (payload: IGroupGetMembers) => void;
+    clearGroupSearchMembers: () => void;
   };
 }
 
@@ -73,6 +84,12 @@ const initialState: InitStateType<IGroupMemberState> = {
     loading: true,
     canLoadMore: true,
     offset: 0,
+  },
+  search: {
+    loading: false,
+    canLoadMore: true,
+    key: '',
+    data: [],
   },
   groupMemberRequests: {
     total: 0,
@@ -155,7 +172,14 @@ const groupMemberStore = (set, get) => ({
 
     assignGroupAdmin: assignGroupAdmin(set, get),
     revokeGroupAdmin: revokeGroupAdmin(set, get),
+    getGroupSearchMembers: getGroupSearchMembers(set, get),
+    clearGroupSearchMembers: () => {
+      set((state: IGroupMemberState) => {
+        state.search = initialState.search;
+      }, 'clearGroupSearchMembers');
+    },
   },
+  reset: () => resetStore(initialState, set),
 });
 
 const useGroupMemberStore = createStore<IGroupMemberState>(groupMemberStore);

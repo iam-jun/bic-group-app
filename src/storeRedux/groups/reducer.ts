@@ -1,8 +1,5 @@
 import groupsTypes from '~/storeRedux/groups/types';
 import { IUser } from '~/interfaces/IAuth';
-import {
-  IGroupMembers,
-} from '~/interfaces/IGroup';
 
 export const groupInitState = {
   permissionScheme: {
@@ -41,11 +38,6 @@ export const groupInitState = {
   yourGroupsTree: {
     loading: true,
     list: [],
-  },
-  groupSearchMembers: {
-    loading: false,
-    canLoadMore: true,
-    data: [] as IGroupMembers[],
   },
   users: {
     loading: false,
@@ -102,24 +94,10 @@ function groupsReducer(state = groupInitState, action: any = {}) {
   const { type, payload } = action;
   const {
     selectedUsers,
-    groupSearchMembers,
     globalSearch,
   } = state;
 
   switch (type) {
-    case groupsTypes.CLEAR_GROUP_SEARCH_MEMBERS:
-      return {
-        ...state,
-        groupSearchMembers: groupInitState.groupSearchMembers,
-      };
-    case groupsTypes.SET_GROUP_SEARCH_MEMBERS:
-      return {
-        ...state,
-        groupSearchMembers: {
-          ...groupSearchMembers,
-          ...payload,
-        },
-      };
     case groupsTypes.SET_JOINABLE_USERS:
       return {
         ...state,
