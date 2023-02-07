@@ -7,61 +7,62 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import getEnv from '~/utils/env';
 import { DEEP_LINK_TYPES, matchDeepLink, openInAppBrowser } from '~/utils/link';
 
+export const onReceiveURL = ({ url, navigation, listener }: { url: string, navigation:any, listener?: any }) => {
+  const match = matchDeepLink(url);
+
+  if (match) {
+    switch (match.type) {
+      case DEEP_LINK_TYPES.POST_DETAIL:
+        navigation?.navigate?.(mainStack.postDetail, { post_id: match.postId });
+        break;
+
+      case DEEP_LINK_TYPES.COMMENT_DETAIL:
+        navigation?.navigate?.(mainStack.commentDetail, {
+          ...match.params,
+          postId: match.postId,
+        });
+        break;
+
+      case DEEP_LINK_TYPES.COMMUNTY_DETAIL:
+        navigation?.navigate?.(mainStack.communityDetail, { communityId: match.communityId });
+        break;
+
+      case DEEP_LINK_TYPES.GROUP_DETAIL:
+        navigation?.navigate?.(mainStack.groupDetail, {
+          communityId: match.communityId,
+          groupId: match.groupId,
+        });
+        break;
+      case DEEP_LINK_TYPES.SERIES_DETAIL:
+        navigation?.navigate?.(mainStack.seriesDetail, {
+          seriesId: match.seriesId,
+        });
+        break;
+      case DEEP_LINK_TYPES.ARTICLE_DETAIL:
+        navigation?.navigate?.(mainStack.articleContentDetail, {
+          articleId: match.articleId,
+        });
+        break;
+      default:
+        listener?.(url);
+    }
+  } else {
+    /**
+     * convert back to normal web link to open on browser
+     * for unsupported deep link
+     */
+    const webLink = url.replace(PREFIX_DEEPLINK_GROUP, PREFIX_URL + getEnv('SELF_DOMAIN'));
+    openInAppBrowser(webLink);
+  }
+};
+
 const getLinkingCustomConfig = (
   config: any, navigation: any,
 ) => ({
   ...config,
   subscribe(listener: any) {
-    const onReceiveURL = ({ url }: { url: string }) => {
-      const match = matchDeepLink(url);
-
-      if (match) {
-        switch (match.type) {
-          case DEEP_LINK_TYPES.POST_DETAIL:
-            navigation?.navigate?.(mainStack.postDetail, { post_id: match.postId });
-            break;
-
-          case DEEP_LINK_TYPES.COMMENT_DETAIL:
-            navigation?.navigate?.(mainStack.commentDetail, {
-              ...match.params,
-              postId: match.postId,
-            });
-            break;
-
-          case DEEP_LINK_TYPES.COMMUNTY_DETAIL:
-            navigation?.navigate?.(mainStack.communityDetail, { communityId: match.communityId });
-            break;
-
-          case DEEP_LINK_TYPES.GROUP_DETAIL:
-            navigation?.navigate?.(mainStack.groupDetail, {
-              communityId: match.communityId,
-              groupId: match.groupId,
-            });
-            break;
-          case DEEP_LINK_TYPES.SERIES_DETAIL:
-            navigation?.navigate?.(mainStack.seriesDetail, {
-              seriesId: match.seriesId,
-            });
-            break;
-          case DEEP_LINK_TYPES.ARTICLE_DETAIL:
-            navigation?.navigate?.(mainStack.articleContentDetail, {
-              articleId: match.articleId,
-            });
-            break;
-          default:
-            listener(url);
-        }
-      } else {
-        /**
-         * convert back to normal web link to open on browser
-         * for unsupported deep link
-         */
-        const webLink = url.replace(PREFIX_DEEPLINK_GROUP, PREFIX_URL + getEnv('SELF_DOMAIN'));
-        openInAppBrowser(webLink);
-      }
-    };
     const linkingListener = Linking.addEventListener(
-      'url', onReceiveURL,
+      'url', ({ url }: {url: string}) => onReceiveURL({ url, navigation, listener }),
     );
 
     return () => {

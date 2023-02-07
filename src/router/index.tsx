@@ -2,7 +2,9 @@ import NetInfo from '@react-native-community/netinfo';
 import { NavigationContainer, useTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useEffect } from 'react';
-import { StatusBar, StyleSheet, View } from 'react-native';
+import {
+  Linking, StatusBar, StyleSheet, View,
+} from 'react-native';
 import { Host } from 'react-native-portalize';
 
 import { useDispatch } from 'react-redux';
@@ -15,7 +17,7 @@ import InternetConnectionStatus from '~/components/network/InternetConnectionSta
 import SystemIssueModal from '~/components/network/SystemIssueModal';
 import noInternetActions from '~/storeRedux/network/actions';
 import { makeRemovePushTokenRequest } from '~/api/apiRequest';
-import { isNavigationRefReady } from './helper';
+import { isNavigationRefReady, withNavigation } from './helper';
 
 import { rootNavigationRef } from './refs';
 import { rootSwitch } from './stack';
@@ -24,12 +26,13 @@ import { registerNavigationContainerWithSentry } from '~/services/sentry';
 
 import AuthStack from '~/router/navigator/AuthStack';
 import MainStack from '~/router/navigator/MainStack';
-import useNavigationLinkingConfig from '~/hooks/navigationLinking';
+import useNavigationLinkingConfig, { onReceiveURL } from '~/hooks/navigationLinking';
 import { useAuthValidateSession, useUserIdAuth } from '~/hooks/auth';
 import VideoPlayerWebView from '~/components/VideoPlayerWebView';
 import ForceUpdateView from '~/components/ForceUpdateView';
 
 const Stack = createNativeStackNavigator();
+const rootNavigation = withNavigation(rootNavigationRef);
 
 const RootNavigator = (): React.ReactElement => {
   const theme = useTheme();
@@ -40,6 +43,16 @@ const RootNavigator = (): React.ReactElement => {
   const userId = useUserIdAuth();
 
   const linkingConfig = useNavigationLinkingConfig();
+
+  useEffect(() => {
+    const getInitialUrl = async () => {
+      const url = await Linking.getInitialURL();
+      if (url) {
+        onReceiveURL({ url, navigation: rootNavigation });
+      }
+    };
+    getInitialUrl();
+  }, []);
 
   useEffect(
     () => {
