@@ -152,9 +152,10 @@ exports[`Group Item component renders correctly 1`] = `
       style={
         Array [
           Object {
+            "alignItems": "center",
             "flex": 1,
             "flexDirection": "row",
-            "paddingLeft": 8,
+            "paddingHorizontal": 8,
             "paddingVertical": 8,
           },
           undefined,
@@ -260,6 +261,54 @@ exports[`Group Item component renders correctly 1`] = `
         >
           EVOL Community
         </Text>
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "alignSelf": "baseline",
+              "backgroundColor": "#EBF4FF",
+              "borderRadius": 100,
+              "flexDirection": "row",
+              "height": 24,
+              "justifyContent": "center",
+              "marginRight": 8,
+              "opacity": 1,
+              "paddingLeft": 4,
+              "paddingRight": 8,
+            }
+          }
+          testID="tag.item"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 11,
+                },
+                Object {},
+                Object {
+                  "color": "#007AFF",
+                  "paddingLeft": 4,
+                },
+              ]
+            }
+            testID="tag.label"
+          >
+            Group
+          </Text>
+        </View>
       </View>
     </View>
   </View>
@@ -431,9 +480,10 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
       style={
         Array [
           Object {
+            "alignItems": "center",
             "flex": 1,
             "flexDirection": "row",
-            "paddingLeft": 8,
+            "paddingHorizontal": 8,
             "paddingVertical": 8,
           },
           undefined,
@@ -539,6 +589,54 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
         >
           EVOL Community
         </Text>
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "alignSelf": "baseline",
+              "backgroundColor": "#EBF4FF",
+              "borderRadius": 100,
+              "flexDirection": "row",
+              "height": 24,
+              "justifyContent": "center",
+              "marginRight": 8,
+              "opacity": 1,
+              "paddingLeft": 4,
+              "paddingRight": 8,
+            }
+          }
+          testID="tag.item"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 11,
+                },
+                Object {},
+                Object {
+                  "color": "#007AFF",
+                  "paddingLeft": 4,
+                },
+              ]
+            }
+            testID="tag.label"
+          >
+            Group
+          </Text>
+        </View>
       </View>
     </View>
   </View>
@@ -626,9 +724,10 @@ exports[`Group Item component should render default prop 1`] = `
       style={
         Array [
           Object {
+            "alignItems": "center",
             "flex": 1,
             "flexDirection": "row",
-            "paddingLeft": 8,
+            "paddingHorizontal": 8,
             "paddingVertical": 8,
           },
           undefined,
@@ -734,6 +833,54 @@ exports[`Group Item component should render default prop 1`] = `
         >
           EVOL Community
         </Text>
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "alignSelf": "baseline",
+              "backgroundColor": "#EBF4FF",
+              "borderRadius": 100,
+              "flexDirection": "row",
+              "height": 24,
+              "justifyContent": "center",
+              "marginRight": 8,
+              "opacity": 1,
+              "paddingLeft": 4,
+              "paddingRight": 8,
+            }
+          }
+          testID="tag.item"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 11,
+                },
+                Object {},
+                Object {
+                  "color": "#007AFF",
+                  "paddingLeft": 4,
+                },
+              ]
+            }
+            testID="tag.label"
+          >
+            Group
+          </Text>
+        </View>
       </View>
     </View>
   </View>
@@ -892,9 +1039,10 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
       style={
         Array [
           Object {
+            "alignItems": "center",
             "flex": 1,
             "flexDirection": "row",
-            "paddingLeft": 8,
+            "paddingHorizontal": 8,
             "paddingVertical": 8,
           },
           undefined,
@@ -1000,6 +1148,54 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
         >
           EVOL Community
         </Text>
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "alignSelf": "baseline",
+              "backgroundColor": "#EBF4FF",
+              "borderRadius": 100,
+              "flexDirection": "row",
+              "height": 24,
+              "justifyContent": "center",
+              "marginRight": 8,
+              "opacity": 1,
+              "paddingLeft": 4,
+              "paddingRight": 8,
+            }
+          }
+          testID="tag.item"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 11,
+                },
+                Object {},
+                Object {
+                  "color": "#007AFF",
+                  "paddingLeft": 4,
+                },
+              ]
+            }
+            testID="tag.label"
+          >
+            Group
+          </Text>
+        </View>
       </View>
     </View>
   </View>
