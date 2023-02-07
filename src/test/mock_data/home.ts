@@ -198,3 +198,146 @@ export const mockDataFeedResponse = {
     hasNextPage: true,
   },
 };
+
+export const recentSearchKeywords = {
+  target: 'post',
+  recentSearches: [
+    {
+      id: '88e17c1e-5065-4081-b837-f76cfd20439b',
+      keyword: 'hu',
+    },
+    {
+      id: 'b3779916-21ac-4ca3-a192-e7e5ee19e499',
+      keyword: 'k',
+    },
+    {
+      id: '788cb89d-1153-41d7-88af-4f47174d35b0',
+      keyword: 'testasd',
+    },
+    {
+      id: '61d374ab-63b8-4e3d-aa13-bc82d3bca738',
+      keyword: 'hihi',
+    },
+    {
+      id: 'dee5db07-0479-412e-812f-ad22ea268542',
+      keyword: 'sssssss',
+    },
+    {
+      id: '37f1aff4-50c5-414d-a0ea-b75745928137',
+      keyword: 'tétasd',
+    },
+    {
+      id: '3ea49ce2-8b6f-4825-894a-ef1a4d071b58',
+      keyword: 'tests add',
+    },
+    {
+      id: 'bfffc767-6b6c-4bef-9512-c03ff27d1298',
+      keyword: 'serries cua tui',
+    },
+    {
+      id: 'ae3ee283-fb07-4822-824a-4b725358d7e4',
+      keyword: 'serries',
+    },
+    {
+      id: '01e4c862-bf76-463a-a625-ade3a71552bd',
+      keyword: 'serried',
+    },
+  ],
+};
+
+export const responseSearchPost = {
+  list: [
+    {
+      id: 'a52fe0b0-b2d8-4b7c-845e-3faeb921cb12',
+      type: 'POST',
+      createdAt: '2022-06-06T04:56:19.855Z',
+      createdBy: '45a7942e-0369-4c78-9915-1aeb46463172',
+      coverMedia: null,
+      media: {
+        files: [],
+        videos: [],
+        images: [],
+      },
+      content: "Hư cấu quá :'( @ngoclinh ",
+      title: null,
+      summary: null,
+      categories: [],
+      articles: [],
+      tags: [],
+      highlight: "==Hư== cấu quá :'( @ngoclinh ",
+      commentsCount: 0,
+      totalUsersSeen: 6,
+      setting: {
+        importantExpiredAt: null,
+        isImportant: false,
+        canReact: true,
+        canShare: true,
+        canComment: true,
+      },
+      reactionsCount: [
+        {
+          grinning: 3,
+        },
+        {
+          grinningFaceWithStarEyes: 3,
+        },
+        {
+          heartEyes: 3,
+        },
+        {
+          kissing: 4,
+        },
+        {
+          kissingClosedEyes: 2,
+        },
+        {
+          kissingSmilingEyes: 2,
+        },
+        {
+          yum: 2,
+        },
+        {
+          upsideDownFace: 2,
+        },
+        {
+          rollingOnTheFloorLaughing: 2,
+        },
+      ],
+      audience: {
+        groups: [
+          {
+            id: '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
+            name: 'EVOL Community',
+            communityId: '15337361-1577-4b7b-a31d-990df06aa446',
+            icon: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/26a806d3-3557-4f7a-b96a-132a9befccff',
+            privacy: 'OPEN',
+            isCommunity: true,
+            rootGroupId: '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
+          },
+        ],
+      },
+      communities: [
+        {
+          id: '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
+          name: 'EVOL Community',
+          communityId: '15337361-1577-4b7b-a31d-990df06aa446',
+          icon: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/26a806d3-3557-4f7a-b96a-132a9befccff',
+          privacy: 'OPEN',
+        },
+      ],
+      actor: {
+        id: '45a7942e-0369-4c78-9915-1aeb46463172',
+        fullname: 'Thân Thế Văn',
+        email: 'thevan@tgm.vn',
+        username: 'thanthevan',
+        avatar: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/206550db-26f1-4115-80dc-98134e4d8590.webp',
+      },
+      mentions: [],
+    },
+  ],
+  meta: {
+    total: 1,
+    limit: 25,
+    offset: 0,
+  },
+};

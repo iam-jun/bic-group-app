@@ -15,7 +15,6 @@ import { IResponseData, IToastMessage } from '~/interfaces/common';
 import { mapData } from '~/screens/groups/helper/mapper';
 import appConfig from '~/configs/appConfig';
 
-import getGroupSearchMembers from './getGroupSearchMembers';
 import getGlobalSearch from './getGlobalSearch';
 import { IUser } from '~/interfaces/IAuth';
 import useCommunityController from '~/screens/communities/store';
@@ -30,9 +29,6 @@ import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import showToastError from '~/store/helper/showToastError';
 
 export default function* groupsSaga() {
-  yield takeLatest(
-    groupsTypes.GET_GROUP_SEARCH_MEMBERS, getGroupSearchMembers,
-  );
   yield takeLatest(
     groupsTypes.UPLOAD_IMAGE, uploadImage,
   );

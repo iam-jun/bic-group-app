@@ -4,30 +4,12 @@ import {
   IGroupImageUpload,
   IGroupAddMembers,
   IGroupGetJoinableMembers,
-  IGroupGetMembers,
-  IGroupMembers,
 } from '~/interfaces/IGroup';
 import { IUser } from '~/interfaces/IAuth';
 import { IObject } from '~/interfaces/common';
 import { IParamGetDiscoverGroups } from '~/interfaces/ICommunity';
 
 const groupsActions = {
-  getGroupSearchMembers: (payload: IGroupGetMembers) => ({
-    type: groupsTypes.GET_GROUP_SEARCH_MEMBERS,
-    payload,
-  }),
-  setGroupSearchMembers: (payload: {
-    loading?: boolean;
-    canLoadMore?: boolean;
-    data?: IGroupMembers[];
-  }) => ({
-    type: groupsTypes.SET_GROUP_SEARCH_MEMBERS,
-    payload,
-  }),
-  clearGroupSearchMembers: () => ({
-    type: groupsTypes.CLEAR_GROUP_SEARCH_MEMBERS,
-  }),
-
   selectJoinableUsers: (payload: IUser) => ({
     type: groupsTypes.SELECT_JOINABLE_USERS,
     payload,

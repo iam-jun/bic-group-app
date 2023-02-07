@@ -11,6 +11,7 @@ import FilterDate from './FilterDate';
 import * as modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import useFilterToolbarStore from './store';
+import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
 
 const FilterToolbar = () => {
   const scrollRef = useRef<any>();
@@ -22,6 +23,8 @@ const FilterToolbar = () => {
   const filterCreatedBy = useFilterToolbarStore((state) => state.createdBy);
   const filterDate = useFilterToolbarStore((state) => state.datePosted);
   const { startDate, endDate } = filterDate || {};
+
+  const actionsFeedSearch = useFeedSearchStore((state) => state.actions);
 
   const showModal = (ContentComponent: any, props: any = {}) => {
     dispatch(modalActions.showModal({
@@ -46,9 +49,13 @@ const FilterToolbar = () => {
   };
 
   const onSelectDate = (
-    startDate?: string, endDate?: string,
+    startDateSelected?: string, endDateSelected?: string,
   ) => {
-    actions.setFilterDatePosted({ startDate, endDate });
+    actionsFeedSearch.setNewsfeedSearch({
+      searchResults: [],
+      hasNextPage: true,
+    });
+    actions.setFilterDatePosted({ startDate: startDateSelected, endDate: endDateSelected });
   };
 
   const onPressFilterDate = () => {
@@ -62,6 +69,10 @@ const FilterToolbar = () => {
   };
 
   const onSelectCreatedBy = (selected?: ISelectedFilterUser) => {
+    actionsFeedSearch.setNewsfeedSearch({
+      searchResults: [],
+      hasNextPage: true,
+    });
     actions.setFilterCreateBy(selected);
   };
 

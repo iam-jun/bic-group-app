@@ -43,12 +43,12 @@ import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import useMounted from '~/hooks/mounted';
 import useTimelineStore, { ITimelineState } from '~/store/timeline';
 import useCommunityController from '../store';
-import homeActions from '~/storeRedux/home/actions';
 import ContentSearch from '~/screens/Home/HomeSearch';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 import useModalStore from '~/store/modal';
+import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -97,8 +97,9 @@ const CommunityDetail = (props: any) => {
     ]),
   );
 
+  const actionsFeedSearch = useFeedSearchStore((state) => state.actions);
+
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
-  const searchViewRef = useRef(null);
 
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
   const canSetting = shouldHavePermission(
@@ -287,7 +288,7 @@ const CommunityDetail = (props: any) => {
   };
 
   const onPressSearch = () => {
-    dispatch(homeActions.setNewsfeedSearch({ isShow: true, searchViewRef }));
+    actionsFeedSearch.setNewsfeedSearch({ isShow: true });
   };
 
   const hasNoDataInStore = !groupId;
@@ -367,7 +368,7 @@ const CommunityDetail = (props: any) => {
           isMember={isMember}
         />
       </Animated.View>
-      <ContentSearch searchViewRef={searchViewRef} groupId={groupId} />
+      <ContentSearch groupId={groupId} />
     </View>
   );
 };

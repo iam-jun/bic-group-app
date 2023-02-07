@@ -6,10 +6,8 @@ export interface IPayloadSetNewsfeedSearch {
   searchText?: string;
   loadingSuggestion?: boolean;
   loadingResult?: boolean;
-  suggestionResults?: any[];
   searchResults?: any[];
-  searchViewRef?: any;
-  totalResult?: number;
+  hasNextPage?: boolean;
   groupId?: string;
 }
 
@@ -25,7 +23,7 @@ export interface IPayloadSetNewsfeedSearchUsers {
 
 export interface IPayloadSetNewsfeedSearchRecentKeywords {
   loading?: boolean;
-  data?: any[];
+  data?: RecentSearchKeywordItem[];
 }
 
 export interface IParamGetFeed {
@@ -83,7 +81,6 @@ export interface IPayloadGetSearchPosts {
   actors?: string;
   startDate?: string;
   endDate?: string;
-  isLoadMore?: boolean;
   groupId?: string;
   tagName?: string;
 }
@@ -91,4 +88,9 @@ export interface IPayloadGetSearchPosts {
 export interface ISelectedFilterUser {
   id?: string;
   name?: string;
+}
+
+export interface RecentSearchKeywordItem {
+  id: string;
+  keyword: string;
 }

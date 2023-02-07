@@ -3,7 +3,6 @@ import { View, StyleSheet, FlatList } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { debounce } from 'lodash';
-import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import FilterToolbar from '~/components/FilterToolbar';
 import useFilterToolbarStore from '~/components/FilterToolbar/store';
@@ -16,7 +15,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import appConfig from '~/configs/appConfig';
 import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import homeActions from '~/storeRedux/home/actions';
+import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
 
 const TagDetail: React.FC<any> = ({ route }) => {
   const { params } = route || {};
@@ -25,7 +24,6 @@ const TagDetail: React.FC<any> = ({ route }) => {
 
   const theme = useTheme();
   const styles = createStyle(theme);
-  const dispatch = useDispatch();
 
   const filterCreatedBy = useFilterToolbarStore((state) => state.createdBy);
   const filterDate = useFilterToolbarStore((state) => state.datePosted);
@@ -40,21 +38,20 @@ const TagDetail: React.FC<any> = ({ route }) => {
   const community = useCommunitiesStore((state) => state.data[communityId]);
   const { groupId, name: communityName } = community || {};
 
+  const actionsFeedSearch = useFeedSearchStore((state) => state.actions);
+  const resetFeedSearchStore = useFeedSearchStore((state) => state.reset);
+
   useEffect(() => {
     getData();
-    dispatch(
-      homeActions.setNewsfeedSearch({
-        groupId,
-      }),
-    );
+    actionsFeedSearch.setNewsfeedSearch({
+      groupId,
+    });
   }, [filterCreatedBy, filterDate?.startDate, filterDate?.endDate, groupId, tagId]);
 
   useEffect(() => () => {
     resetTag();
     resetFilter();
-    dispatch(
-      homeActions.clearAllNewsfeedSearch(),
-    );
+    resetFeedSearchStore();
   }, [tagId]);
 
   const getData = (isLoadMore = false) => {

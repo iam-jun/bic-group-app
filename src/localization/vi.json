@@ -1103,11 +1103,11 @@
       "title_member_requests": "Yêu cầu tham gia"
     },
     "join_request_setting": {
-      "title": "Thiết lập yêu cầu tham gia",
-      "description_on_community": "Người dùng phải được phê duyệt mới được tham gia",
-      "description_on_group": "Người dùng phải được phê duyệt mới được tham gia",
-      "description_off_community": "Người dùng được tùy ý tham gia mà không cần phê duyệt",
-      "description_off_group": "Người dùng được tùy ý tham gia mà không cần phê duyệt",
+      "title": "Yêu cầu phê duyệt để được tham gia",
+      "description_on_community": "Người dùng không phải thành viên phải yêu cầu phê duyệt mới được tham gia cộng đồng này",
+      "description_on_group": "Người dùng không phải thành viên phải yêu cầu phê duyệt mới được tham gia nhóm này",
+      "description_off_community": "Người dùng không phải thành viên có thể tham gia cộng đồng này mà không cần yêu cầu phê duyệt",
+      "description_off_group": "Người dùng không phải thành viên có thể tham gia nhóm này mà không cần yêu cầu phê duyệt",
       "description_disabled": "Thiết lập này không khả dụng do đang trong quyền riêng tư Bí mật",
       "pop_up_on": {
         "title": "Mở thiết lập phê duyệt yêu cầu tham gia",
