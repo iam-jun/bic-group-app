@@ -1,7 +1,7 @@
 import groupApi from '~/api/GroupApi';
 import APIErrorCode from '~/constants/apiErrorCode';
 import { sortFixedRoles } from '~/screens/groups/helper';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import IPermissionSchemeState from '../Interface';
 
 const getGeneralScheme = (set) => async (communityId: string) => {
@@ -32,7 +32,7 @@ const getGeneralScheme = (set) => async (communityId: string) => {
     }, 'getGeneralSchemeError');
 
     if (error?.code !== APIErrorCode.Group.SCHEME_NOT_FOUND) {
-      showError(error);
+      showToastError(error);
     }
   }
 };

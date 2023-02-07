@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, StyleSheet,
+  View, StyleSheet, Linking,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
@@ -23,6 +23,10 @@ import { APP_ENV } from '~/configs/appConfig';
 import { useKeySelector } from '~/hooks/selector';
 import { AppConfig } from '~/configs';
 import useCommonController from '~/screens/store';
+import useModalStore from '~/store/modal';
+import { IAlertModal } from '~/interfaces/common';
+
+const REPORT_URL = 'https://report.beincom.com/';
 
 const MenuSettings = () => {
   const { rootNavigation } = useRootNavigation();
@@ -32,21 +36,21 @@ const MenuSettings = () => {
   const styles = createStyle(theme);
 
   const authActions = useAuthController(getActions) || {};
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const isProduction = getEnv('APP_ENV') === APP_ENV.PRODUCTION;
   const debuggerVisible = useKeySelector('app.debuggerVisible');
   const myProfile = useCommonController((state) => state.myProfile);
 
   const onLogout = () => {
-    const alertPayload = {
+    const alertPayload: IAlertModal = {
       title: t('auth:text_sign_out'),
-      content: 'Do you want to Log Out?',
-      iconName: 'ArrowRightFromArc',
+      content: t('auth:text_sign_out_content'),
       cancelBtn: true,
       onConfirm: authActions.signOut,
       confirmLabel: t('auth:text_sign_out'),
     };
-    dispatch(modalActions.showAlert(alertPayload));
+    showAlert(alertPayload);
   };
 
   const onPressHelp = () => {
@@ -56,6 +60,10 @@ const MenuSettings = () => {
     } else {
       dispatch(appActions.setDebuggerVisible(!debuggerVisible));
     }
+  };
+
+  const onPressReportProblem = () => {
+    Linking.openURL(REPORT_URL);
   };
 
   const settingItems = [
@@ -78,6 +86,11 @@ const MenuSettings = () => {
       icon: 'MessagesQuestion',
       title: t('menu:title_help_support'),
       onPress: onPressHelp,
+    },
+    {
+      icon: 'FlagSolid',
+      title: t('menu:title_report_problem'),
+      onPress: onPressReportProblem,
     },
   ];
 

@@ -1,5 +1,5 @@
 import streamApi from '~/api/StreamApi';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 import { mockListSeriesOfArticle, searchSeriesRequestParams } from '~/test/mock_data/series';
 import { act, renderHook } from '~/test/testUtils';
 import useCreateArticleSeriesStore from '../index';
@@ -46,7 +46,9 @@ describe('searchSeries in article', () => {
       () => Promise.reject(error) as any,
     );
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useCreateArticleSeriesStore((state) => state));
@@ -69,6 +71,6 @@ describe('searchSeries in article', () => {
     });
 
     expect(result.current.search.loading).toBe(false);
-    expect(spyModalActions).toBeCalled();
+    expect(showToast).toBeCalled();
   });
 });

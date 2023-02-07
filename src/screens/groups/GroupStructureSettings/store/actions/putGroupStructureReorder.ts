@@ -5,9 +5,8 @@ import { timeOut } from '~/utils/common';
 import { IPayloadPutGroupStructureReorder } from '~/interfaces/IGroup';
 import IGroupStructureState from '../Interface';
 import { IToastMessage } from '~/interfaces/common';
-import modalActions from '~/storeRedux/modal/actions';
-import Store from '~/storeRedux';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
+import showToast from '~/store/helper/showToast';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -39,17 +38,17 @@ const putGroupStructureReorder = (set, get) => async (payload: IPayloadPutGroupS
       const toastMessage: IToastMessage = {
         content: 'communities:group_structure:text_reorder_success',
       };
-      Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+      showToast(toastMessage);
     } else {
       actions.setGroupStructureReorder({ loading: false, newOrder });
-      showError(response);
+      showToastError(response);
     }
   } catch (err: any) {
     actions.setGroupStructureReorder({ loading: false, newOrder });
     console.error(
       'putGroupStructureReorder error:', err,
     );
-    showError(err);
+    showToastError(err);
   }
 };
 

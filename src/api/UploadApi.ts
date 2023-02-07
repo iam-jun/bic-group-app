@@ -1,6 +1,7 @@
 import { Method } from 'axios';
 import { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
 import appConfig from '~/configs/appConfig';
+import { IFilePicked } from '~/interfaces/common';
 
 const provider = apiProviders.beinUpload;
 const defaultConfig = {
@@ -34,9 +35,19 @@ export const uploadApiConfig = {
   }),
   uploadImage: (
     type: any,
-    data: FormData,
+    file: IFilePicked,
     onUploadProgress?: (progressEvent: any) => void,
   ): HttpApiRequestConfig => {
+    const data = new FormData();
+    data.append('file', file as any, file.name);
+    data.append(
+      'description',
+      JSON.stringify({
+        size: file.size,
+        type: file.type,
+      }),
+    );
+
     const groupUploadEndPoint: any = {
       user_avatar: 'upload/user-avatar',
       user_cover: 'upload/user-cover',
@@ -90,11 +101,16 @@ export const uploadApiConfig = {
   uploadFile: (
     id: string,
     uploadType: string,
-    data: FormData,
-    onUploadProgress?: (progressEvent: any) => void,
+    file: IFilePicked,
     abortSignal?: AbortSignal,
+    onUploadProgress?: (progressEvent: any) => void,
   ): HttpApiRequestConfig => {
     const type = uploadType.split('_')[1];
+
+    const data = new FormData();
+    data.append('file', file as any, file.name);
+    data.append('upload_type', uploadType);
+
     return {
       ...defaultConfig,
       url: `${provider.url}${type}s/${id}`,

@@ -1,5 +1,6 @@
 import groupApi from '~/api/GroupApi';
 import useGeneralInformationStore from '~/screens/groups/GeneralInformation/store';
+import useGroupsStore from '~/store/entities/groups';
 import { IGroupDetailState } from '..';
 
 const getGroupDetail = (set) => async (payload: { groupId: string }) => {
@@ -24,11 +25,9 @@ const getGroupDetail = (set) => async (payload: { groupId: string }) => {
     set((state: IGroupDetailState) => {
       state.loadingGroupDetail = false;
       state.isLoadingGroupDetailError = false;
-      state.groupDetail = {
-        group: {},
-        ...response.data,
-      };
     }, 'getGroupDetailSuccess');
+
+    useGroupsStore.getState().actions.addToGroups(response.data);
   } catch (err) {
     console.error('getGroupDetail:', err);
     set((state: IGroupDetailState) => {

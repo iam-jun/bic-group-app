@@ -1,10 +1,10 @@
 import groupApi from '~/api/GroupApi';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import IDiscoverGroupsState from '../Interface';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
 import { IToastMessage } from '~/interfaces/common';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
+import showToast from '~/store/helper/showToast';
+import showToastError from '~/store/helper/showToastError';
 
 const joinNewGroup = (set, get) => async (groupId: string) => {
   try {
@@ -26,18 +26,11 @@ const joinNewGroup = (set, get) => async (groupId: string) => {
 
     const toastMessage: IToastMessage = {
       content: response?.meta?.message || 'common:text_success_message',
-      props: { type: 'success' },
     };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    showToast(toastMessage);
   } catch (error) {
     console.error('joinNewGroup catch', error);
-    Store.store.dispatch(modalActions.showHideToastMessage({
-      content:
-        error?.meta?.errors?.[0]?.message
-        || error?.meta?.message
-        || 'common:text_error_message',
-      props: { type: 'error' },
-    }));
+    showToastError(error);
   }
 };
 

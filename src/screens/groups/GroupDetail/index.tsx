@@ -54,6 +54,8 @@ import ContentSearch from '~/screens/Home/HomeSearch';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useGroupDetailStore from './store';
+import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
+import useModalStore from '~/store/modal';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -71,14 +73,18 @@ const GroupDetail = (props: any) => {
   const {
     isLoadingGroupDetailError,
     loadingGroupDetail,
-    groupDetail: { group: groupInfo, joinStatus },
     actions: { getGroupDetail },
   } = useGroupDetailStore((state) => state);
+  const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
+  const { group: groupInfo, joinStatus } = groups[currentGroupId] || {};
+  const {
+    name, privacy, teamName, slug,
+  } = groupInfo || {};
+  const { showToast } = useModalStore((state) => state.actions);
 
   const headerRef = useRef<any>();
   const [groupInfoHeight, setGroupInfoHeight] = useState(300);
 
-  const { name, privacy, id: idCurrentGroupDetail } = groupInfo;
   const currentCommunityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
   const communityId = paramCommunityId || currentCommunityId;
   const communityDetail = useCommunitiesStore(
@@ -96,7 +102,7 @@ const GroupDetail = (props: any) => {
   // const hasNoDataInStore = !groupInfo;
   // const shouldShowPlaceholder = hasNoDataInStore && isLoadingGroup;
 
-  const shouldShowPlaceholder = idCurrentGroupDetail !== groupId;
+  const shouldShowPlaceholder = currentGroupId !== groupId;
 
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
   const canSetting = shouldHavePermission(groupId, [
@@ -156,6 +162,12 @@ const GroupDetail = (props: any) => {
     getGroupDetail({ groupId });
   }, [groupId]);
 
+  useEffect(() => () => {
+    useGroupsStore.setState({
+      currentGroupId: '',
+    });
+  }, []);
+
   useEffect(() => {
     if (isEmpty(timelines[groupId]) && isEmpty(groupPost?.ids)) {
       // for the 1st time timelines[groupId] can be undefined so we must init Data
@@ -179,11 +191,7 @@ const GroupDetail = (props: any) => {
   const onPressCopyLink = () => {
     dispatch(modalActions.hideBottomList());
     Clipboard.setString(getGroupLink({ communityId: communityDetail?.id, groupId }));
-    dispatch(
-      modalActions.showHideToastMessage({
-        content: 'common:text_link_copied_to_clipboard',
-      }),
-    );
+    showToast({ content: 'common:text_link_copied_to_clipboard' });
   };
 
   const onPressShare = () => {
@@ -269,7 +277,7 @@ const GroupDetail = (props: any) => {
   };
 
   const onPressChat = () => {
-    const link = formatChannelLink(groupInfo.teamName, groupInfo.slug);
+    const link = formatChannelLink(teamName, slug);
     openUrl(link);
   };
 
@@ -347,7 +355,7 @@ const GroupDetail = (props: any) => {
                   isMemberCommunity={isMemberCommunity}
                   isMember={isMember}
                   communityId={communityId}
-                  teamName={groupInfo.teamName}
+                  teamName={teamName}
                 />
                 <FilterFeedButtonGroup
                   contentFilter={contentFilter}

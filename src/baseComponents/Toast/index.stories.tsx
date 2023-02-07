@@ -1,5 +1,5 @@
 import { ComponentMeta } from '@storybook/react-native';
-import BaseToast from './BaseToast';
+import BaseToast, { ToastType } from './BaseToast';
 import { getStoryComponent } from '~/storybook';
 
 export default {
@@ -10,7 +10,7 @@ export default {
       control: {
         type: 'select',
       },
-      options: ['success', 'neutral', 'error'],
+      options: [ToastType.SUCCESS, ToastType.NEUTRAL, ToastType.ERROR],
     },
   },
 } as ComponentMeta<typeof BaseToast>;
@@ -19,7 +19,7 @@ const StoryComponent = getStoryComponent(BaseToast);
 
 export const ToastNoIcon = StoryComponent.bind({});
 ToastNoIcon.args = {
-  type: 'success',
+  type: ToastType.SUCCESS,
   content: 'Internet connection was restored',
 };
 

@@ -18,7 +18,6 @@ import useCommentsStore from '~/store/entities/comments';
 import commentsSelector from '~/store/entities/comments/selectors';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import modalActions from '~/storeRedux/modal/actions';
 
 import CommentInputView from '~/screens/comments/components/CommentInputView';
 import postActions from '~/storeRedux/post/actions';
@@ -32,6 +31,9 @@ import spacing from '~/theme/spacing';
 import useCommentDetailController from './store';
 import Divider from '~/beinComponents/Divider';
 import { getTitle, replacePostDetail } from './helper';
+import useModalStore from '~/store/modal';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import BannerReport from '~/components/Report/BannerReport';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -48,13 +50,14 @@ const CommentDetailContent = (props: any) => {
   const { rootNavigation, goHome } = useRootNavigation();
 
   const commentDetailController = useCommentDetailController((state) => state.actions);
+  const { showToast, showAlert } = useModalStore((state) => state.actions);
 
   const listRef = useRef<any>();
   const commentInputRef = useRef<any>();
 
   const params = props?.route?.params;
   const {
-    postId, replyItem, commentParent, commentId, parentId, notiId,
+    postId, replyItem, commentParent, commentId, parentId, notiId, isReported,
   }
     = params || {};
   const id = postId;
@@ -65,7 +68,15 @@ const CommentDetailContent = (props: any) => {
   const postDetailLoadingState = useKeySelector(
     postKeySelector.loadingGetPostDetail,
   );
-  const comments = useCommentsStore(commentsSelector.getCommentsByParentId(id));
+
+  let comments = null;
+  if (isReported) {
+    const comment = useCommentsStore(commentsSelector.getComment(commentId));
+    comments = [{ ...comment }];
+  } else {
+    comments = useCommentsStore(commentsSelector.getCommentsByParentId(id));
+  }
+
   const {
     childrenComments = [],
     newCommentData,
@@ -99,19 +110,15 @@ const CommentDetailContent = (props: any) => {
       && !postDetailLoadingState
     ) {
       setIsEmpty(true);
-      dispatch(
-        modalActions.showHideToastMessage({
-          content: 'post:text_comment_was_deleted',
-          props: { type: 'error' },
-        }),
-      );
+      showToast({
+        content: 'post:text_comment_was_deleted',
+        type: ToastType.ERROR,
+      });
       replacePostDetail(type, postId);
     }
     if (copyCommentError === APIErrorCode.Post.POST_DELETED && !!notiId) {
       dispatch(postActions.deletePostLocal(id));
-      dispatch(
-        modalActions.showHideToastMessage({ content: 'post:error_post_detail_deleted' }),
-      );
+      showToast({ content: 'post:error_post_detail_deleted' });
       rootNavigation.popToTop();
     }
     if (!postDetailLoadingState && !copyCommentError) {
@@ -119,6 +126,7 @@ const CommentDetailContent = (props: any) => {
       commentDetailController.getCommentDetail({
         commentId,
         params: { postId },
+        isReported,
         callbackLoading: (loading: boolean) => {
           setLoading(loading);
           if (!loading && !!replyItem) {
@@ -141,12 +149,10 @@ const CommentDetailContent = (props: any) => {
       && !isEmpty
       && !copyCommentError
     ) {
-      dispatch(
-        modalActions.showHideToastMessage({
-          content: 'error:not_found_desc',
-          props: { type: 'error' },
-        }),
-      );
+      showToast({
+        content: 'error:not_found_desc',
+        type: ToastType.ERROR,
+      });
       goHome();
     }
   }, [notFoundComment, loading, isEmpty, copyCommentError]);
@@ -198,46 +204,43 @@ const CommentDetailContent = (props: any) => {
   };
 
   const showNotice = (type = 'deleted_comment') => {
-    dispatch(
-      modalActions.showAlert({
-        // @ts-ignore
-        HeaderImageComponent: (
-          <View style={{ alignItems: 'center' }}>
-            <SVGIcon
+    showAlert({
+      HeaderImageComponent: (
+        <View style={{ alignItems: 'center' }}>
+          <SVGIcon
               // @ts-ignore
-              source={CommentNotFoundImg}
-              width={120}
-              height={120}
-              tintColor="none"
-            />
-          </View>
-        ),
-        title: t(`post:${type}:title`),
-        titleProps: { style: { flex: 1, textAlign: 'center' } },
-        cancelBtn: false,
-        isDismissible: true,
-        onConfirm: () => {
-          if (type === 'deleted_post') {
-            rootNavigation.popToTop();
-          } else {
-            rootNavigation.goBack();
-          }
-        },
-        confirmLabel: t(`post:${type}:button_text`),
-        content: t(`post:${type}:description`),
-        contentProps: { style: { textAlign: 'center' } },
-        ContentComponent: Text.BodyS,
-        buttonViewStyle: { justifyContent: 'center' },
-        headerStyle: { marginBottom: 0 },
-        onDismiss: () => {
-          if (type === 'deleted_post') {
-            rootNavigation.popToTop();
-          } else {
-            rootNavigation.goBack();
-          }
-        },
-      }),
-    );
+            source={CommentNotFoundImg}
+            width={120}
+            height={120}
+            tintColor="none"
+          />
+        </View>
+      ),
+      title: t(`post:${type}:title`),
+      titleProps: { style: { flex: 1, textAlign: 'center' } },
+      cancelBtn: false,
+      isDismissible: true,
+      onConfirm: () => {
+        if (type === 'deleted_post') {
+          rootNavigation.popToTop();
+        } else {
+          rootNavigation.goBack();
+        }
+      },
+      confirmLabel: t(`post:${type}:button_text`),
+      content: t(`post:${type}:description`),
+      contentProps: { style: { textAlign: 'center' } },
+      ContentComponent: Text.BodyS,
+      buttonViewStyle: { justifyContent: 'center' },
+      headerStyle: { marginBottom: 0 },
+      onDismiss: () => {
+        if (type === 'deleted_post') {
+          rootNavigation.popToTop();
+        } else {
+          rootNavigation.goBack();
+        }
+      },
+    });
   };
 
   const onRefresh = () => {
@@ -259,6 +262,7 @@ const CommentDetailContent = (props: any) => {
     commentDetailController.getCommentDetail({
       commentId: parentId || commentId,
       params: { postId },
+      isReported,
       callbackLoading: (_loading: boolean) => {
         setRefreshing(_loading);
       },
@@ -301,6 +305,24 @@ const CommentDetailContent = (props: any) => {
     return <View style={styles.footerList} />;
   };
 
+  const renderCommentInputView = () => {
+    if (isReported) {
+      return null;
+    }
+    return (
+      <CommentInputView
+        commentInputRef={commentInputRef}
+        postId={id}
+        groupIds={groupIds}
+        autoFocus={!!replyItem}
+        isCommentLevel1Screen
+        showHeader
+        viewMore={viewMore}
+        defaultReplyTargetId={newCommentData?.id}
+      />
+    );
+  };
+
   if (loading || postDetailLoadingState) {
     return <CommentViewPlaceholder />;
   }
@@ -312,6 +334,7 @@ const CommentDetailContent = (props: any) => {
   }
   return (
     <View style={{ flex: 1 }}>
+      <BannerReport commentId={commentId} />
       <FlatList
         ref={listRef}
         testID="list"
@@ -325,6 +348,7 @@ const CommentDetailContent = (props: any) => {
             groupIds={groupIds}
             audience={audience}
             id={id}
+            isReported={isReported}
             onPress={goToPostDetail}
             onPressMarkSeenPost={onPressMarkSeenPost}
           />
@@ -343,16 +367,7 @@ const CommentDetailContent = (props: any) => {
         )}
         contentContainerStyle={styles.contentContainerStyle}
       />
-      <CommentInputView
-        commentInputRef={commentInputRef}
-        postId={id}
-        groupIds={groupIds}
-        autoFocus={!!replyItem}
-        isCommentLevel1Screen
-        showHeader
-        viewMore={viewMore}
-        defaultReplyTargetId={newCommentData?.id}
-      />
+      {renderCommentInputView()}
     </View>
   );
 };
@@ -364,8 +379,9 @@ const CommentLevel1 = ({
   audience,
   onPressMarkSeenPost,
   color,
+  isReported,
 }: any) => {
-  if (!id) {
+  if (!id && !isReported) {
     return null;
   }
 

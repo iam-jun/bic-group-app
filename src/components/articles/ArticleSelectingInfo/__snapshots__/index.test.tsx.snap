@@ -17,7 +17,7 @@ exports[`ArticleSelectingInfo Component renders correctly 1`] = `
         Object {
           "color": "#212745",
           "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 15,
+          "fontSize": 14,
         },
         Object {},
         Object {
@@ -157,7 +157,7 @@ exports[`ArticleSelectingInfo Component renders correctly with prop disabled = t
         Object {
           "color": "#212745",
           "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 15,
+          "fontSize": 14,
         },
         Object {},
         Object {
@@ -299,7 +299,7 @@ exports[`ArticleSelectingInfo Component renders correctly with prop isChecked = 
         Object {
           "color": "#212745",
           "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 15,
+          "fontSize": 14,
         },
         Object {},
         Object {

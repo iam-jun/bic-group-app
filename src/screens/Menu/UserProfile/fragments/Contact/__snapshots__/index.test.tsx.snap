@@ -164,7 +164,7 @@ exports[`Contact component renders correctly 1`] = `
             Object {
               "color": "#212745",
               "fontFamily": "BeVietnamPro-Light",
-              "fontSize": 15,
+              "fontSize": 14,
             },
             Object {
               "color": "#353E6E",
@@ -191,7 +191,9 @@ exports[`Contact component renders correctly 1`] = `
           ]
         }
         testID="info_item.value"
-      />
+      >
+        email
+      </Text>
     </View>
     <View
       style={
@@ -210,7 +212,7 @@ exports[`Contact component renders correctly 1`] = `
             Object {
               "color": "#212745",
               "fontFamily": "BeVietnamPro-Light",
-              "fontSize": 15,
+              "fontSize": 14,
             },
             Object {
               "color": "#353E6E",
@@ -237,7 +239,9 @@ exports[`Contact component renders correctly 1`] = `
           ]
         }
         testID="info_item.value"
-      />
+      >
+        (84) phone
+      </Text>
     </View>
     <View
       style={
@@ -258,7 +262,7 @@ exports[`Contact component renders correctly 1`] = `
             Object {
               "color": "#212745",
               "fontFamily": "BeVietnamPro-Light",
-              "fontSize": 15,
+              "fontSize": 14,
             },
             Object {
               "color": "#353E6E",
@@ -285,7 +289,9 @@ exports[`Contact component renders correctly 1`] = `
           ]
         }
         testID="info_item.value"
-      />
+      >
+        city
+      </Text>
     </View>
   </View>
 </View>
@@ -455,7 +461,7 @@ exports[`Contact component renders location Not set 1`] = `
             Object {
               "color": "#212745",
               "fontFamily": "BeVietnamPro-Light",
-              "fontSize": 15,
+              "fontSize": 14,
             },
             Object {
               "color": "#353E6E",
@@ -482,7 +488,9 @@ exports[`Contact component renders location Not set 1`] = `
           ]
         }
         testID="info_item.value"
-      />
+      >
+        email
+      </Text>
     </View>
     <View
       style={
@@ -501,7 +509,7 @@ exports[`Contact component renders location Not set 1`] = `
             Object {
               "color": "#212745",
               "fontFamily": "BeVietnamPro-Light",
-              "fontSize": 15,
+              "fontSize": 14,
             },
             Object {
               "color": "#353E6E",
@@ -528,7 +536,9 @@ exports[`Contact component renders location Not set 1`] = `
           ]
         }
         testID="info_item.value"
-      />
+      >
+        (84) phone
+      </Text>
     </View>
     <View
       style={
@@ -549,7 +559,7 @@ exports[`Contact component renders location Not set 1`] = `
             Object {
               "color": "#212745",
               "fontFamily": "BeVietnamPro-Light",
-              "fontSize": 15,
+              "fontSize": 14,
             },
             Object {
               "color": "#353E6E",

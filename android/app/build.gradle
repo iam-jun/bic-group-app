@@ -143,12 +143,19 @@ android {
             resolutionStrategy { force 'androidx.browser:browser:1.3.0' }
             resolutionStrategy { force 'androidx.core:core-ktx:1.6.0' }
             resolutionStrategy { force 'androidx.appcompat:appcompat:1.3.1' }
+            resolutionStrategy {
+                eachDependency {
+                    if ((requested.group == "org.jetbrains.kotlin") && (requested.name.startsWith("kotlin-stdlib"))) {
+                        useVersion("1.8.0")
+                    }
+                }
+            }
         }
         applicationId "com.beincom.group"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode project.hasProperty('versionCode') ? project.property('versionCode') as int : 1
-        versionName "0.2.7"
+        versionName "0.2.8"
         testBuildType System.getProperty('testBuildType', 'debug')  // This will later be used to control the test apk build type
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         missingDimensionStrategy 'react-native-camera', 'general'

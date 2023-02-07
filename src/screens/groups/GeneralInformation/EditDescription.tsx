@@ -12,7 +12,7 @@ import dimension from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';
 
 import spacing from '~/theme/spacing';
-import useGroupController from '../store';
+import useGeneralInformationStore from './store';
 
 const EditDescription = (props: any) => {
   const {
@@ -27,7 +27,7 @@ const EditDescription = (props: any) => {
   const navigation = useNavigation();
 
   const actions = useCommunityController((state) => state.actions);
-  const groupActions = useGroupController((state) => state.actions);
+  const groupActions = useGeneralInformationStore((state) => state.actions);
 
   const [text, setText] = useState<string>(description);
   const _onChangeText = (value: string) => {

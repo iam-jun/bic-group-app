@@ -1,14 +1,12 @@
-import i18next from 'i18next';
 import streamApi from '~/api/StreamApi';
-import { IToastMessage } from '~/interfaces/common';
 import { IPayloadPutEditArticle } from '~/interfaces/IArticle';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
 import useArticlesStore from '~/screens/articles/ArticleDetail/store';
-import showError from '~/store/helper/showError';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
+import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
+import showToastError from '~/store/helper/showToastError';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -38,14 +36,14 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
     const response = await streamApi.putEditArticle(articleId, params);
 
     if (!response?.data) {
-      showError(response);
+      showToastError(response);
       set((state: ICreateArticleState) => {
         state.loading = false;
       }, 'putEditArticleError');
       return;
     }
 
-    useArticlesStore.getState().actions.getArticleDetail(articleId);
+    useArticlesStore.getState().actions.getArticleDetail({ articleId });
     onSuccess?.();
 
     set((state: ICreateArticleState) => {
@@ -53,11 +51,10 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
     }, 'putEditArticleSuccess');
 
     if (isShowToast) {
-      const toastMessage: IToastMessage = {
-        content: response?.meta?.message || i18next.t('article:text_edit_article_success'),
-      };
-      Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+      showToastSuccess(response, 'article:text_edit_article_success');
     }
+    onSuccess?.();
+    useScheduleArticlesStore.getState().actions.getScheduleArticles({ isRefresh: true });
     if (isNavigateBack) {
       navigation.goBack();
     }

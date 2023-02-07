@@ -8,7 +8,7 @@ import CollapsibleText from '~/baseComponents/Text/CollapsibleText';
 import PostPhotoPreview from '~/components/posts/PostPhotoPreview';
 import { uploadTypes } from '~/configs/resourceConfig';
 import { useRootNavigation } from '~/hooks/navigation';
-import { IMarkdownAudience, IPost } from '~/interfaces/IPost';
+import { IMarkdownAudience, IPost, PostStatus } from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
 import CopyableView from '~/beinComponents/CopyableView';
 import Markdown from '~/beinComponents/Markdown';
@@ -39,7 +39,7 @@ const _PostBody: FC<PostBodyProps> = ({
   const { rootNavigation } = useRootNavigation();
 
   const {
-    id: postId, mentions, isDraft, media, content: postContent, highlight, linkPreview, totalUsersSeen,
+    id: postId, mentions, status, media, content: postContent, highlight, linkPreview, totalUsersSeen,
   } = data;
 
   const { images, videos, files } = media || {};
@@ -55,7 +55,7 @@ const _PostBody: FC<PostBodyProps> = ({
   }).current;
 
   const BottomRightComponent = useMemo(() => {
-    if (isDraft) return null;
+    if (status === PostStatus.DRAFT) return null;
 
     return (
       <ContentInterestedUserCount
@@ -64,7 +64,7 @@ const _PostBody: FC<PostBodyProps> = ({
         style={styles.interestedUserCount}
       />
     );
-  }, [isDraft, postId, totalUsersSeen]);
+  }, [status, postId, totalUsersSeen]);
 
   const renderContent = () => {
     if (isLite) {
@@ -126,7 +126,7 @@ const _PostBody: FC<PostBodyProps> = ({
       <View style={styles.contentContainer}>{renderContent()}</View>
       <>
         <PostPhotoPreview
-          data={images || []}
+          data={images}
           uploadType="postImage"
           enableGalleryModal
           onPressMarkSeenPost={onPressMarkSeenPost}

@@ -9,14 +9,15 @@ import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import AboutContent from '~/screens/communities/CommunityDetail/components/AboutContent';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
-import useGroupDetailStore, { IGroupDetailState } from '../GroupDetail/store';
+import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 
 const GroupAbout = () => {
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const { group: groupInfo, joinStatus } = useGroupDetailStore((state: IGroupDetailState) => state.groupDetail);
-  const { name, id } = groupInfo;
+  const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
+  const { group: groupInfo, joinStatus } = groups[currentGroupId] || {};
+  const { name, id } = groupInfo || {};
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
 
   const onPressTotalMember = () => {

@@ -1,6 +1,6 @@
 import { IPayloadReactToPost, IReaction, TargetType } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import streamApi from '~/api/StreamApi';
 
 const deleteReactToPost
@@ -31,7 +31,7 @@ const deleteReactToPost
       }
     } catch (e) {
       actions.onUpdateReactionOfPostById(id, ownReaction, reactionsCount); // rollback
-      showError(e);
+      showToastError(e);
     }
   };
 

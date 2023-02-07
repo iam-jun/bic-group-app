@@ -25,6 +25,9 @@ Array [
         Array [
           null,
           Object {},
+          Object {
+            "fontSize": 14,
+          },
         ]
       }
       testID="_mention_input.input"
@@ -156,6 +159,9 @@ Array [
             Array [
               null,
               Object {},
+              Object {
+                "fontSize": 14,
+              },
             ],
           ]
         }
@@ -210,8 +216,9 @@ Array [
                 Array [
                   Object {
                     "color": "#181C32",
+                    "flex": 1,
                     "fontFamily": "BeVietnamPro-Light",
-                    "fontSize": 15,
+                    "fontSize": 14,
                     "lineHeight": 22,
                     "paddingBottom": 8,
                     "paddingHorizontal": 16,
@@ -225,6 +232,20 @@ Array [
             />
           </View>
           <View
+            animatedStyle={
+              Object {
+                "value": Object {
+                  "display": "none",
+                  "opacity": 0,
+                  "transform": Array [
+                    Object {
+                      "translateX": 0,
+                    },
+                  ],
+                },
+              }
+            }
+            collapsable={false}
             style={
               Object {
                 "display": "none",
@@ -645,10 +666,21 @@ Array [
               </View>
             </View>
             <View
+              animatedStyle={
+                Object {
+                  "value": Object {
+                    "left": 0,
+                    "opacity": 0,
+                    "position": "absolute",
+                    "right": 0,
+                  },
+                }
+              }
+              collapsable={false}
               style={
                 Object {
                   "left": 0,
-                  "opacity": undefined,
+                  "opacity": 0,
                   "position": "absolute",
                   "right": 0,
                 }
@@ -658,6 +690,20 @@ Array [
           </View>
         </View>
         <View
+          animatedStyle={
+            Object {
+              "value": Object {
+                "display": "flex",
+                "opacity": 0,
+                "transform": Array [
+                  Object {
+                    "translateX": 0,
+                  },
+                ],
+              },
+            }
+          }
+          collapsable={false}
           style={
             Object {
               "display": "flex",
@@ -1078,10 +1124,21 @@ Array [
             </View>
           </View>
           <View
+            animatedStyle={
+              Object {
+                "value": Object {
+                  "left": 0,
+                  "opacity": 0,
+                  "position": "absolute",
+                  "right": 0,
+                },
+              }
+            }
+            collapsable={false}
             style={
               Object {
                 "left": 0,
-                "opacity": undefined,
+                "opacity": 0,
                 "position": "absolute",
                 "right": 0,
               }
@@ -1110,31 +1167,41 @@ Array [
             }
           >
             <View
-              style={
-                Array [
-                  Object {
+              animatedStyle={
+                Object {
+                  "value": Object {
                     "height": -0,
                   },
-                  Object {
-                    "backgroundColor": "#FFFFFF",
-                    "borderTopLeftRadius": 20,
-                    "borderTopRightRadius": 20,
-                    "elevation": 2,
-                    "justifyContent": "flex-start",
-                    "minHeight": 80,
-                    "shadowColor": "rgba(0, 0, 0, 1)",
-                    "shadowOffset": Object {
-                      "height": 2,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.12,
-                    "shadowRadius": 1.5,
+                }
+              }
+              collapsable={false}
+              style={
+                Object {
+                  "backgroundColor": "#FFFFFF",
+                  "borderTopLeftRadius": 20,
+                  "borderTopRightRadius": 20,
+                  "elevation": 2,
+                  "height": -0,
+                  "justifyContent": "flex-start",
+                  "minHeight": 80,
+                  "shadowColor": "rgba(0, 0, 0, 1)",
+                  "shadowOffset": Object {
+                    "height": 2,
+                    "width": 0,
                   },
-                ]
+                  "shadowOpacity": 0.12,
+                  "shadowRadius": 1.5,
+                }
               }
             >
               <View
+                animatedStyle={
+                  Object {
+                    "value": Object {},
+                  }
+                }
                 collapsable={false}
+                forwardedRef={[Function]}
                 hitSlop={
                   Object {
                     "bottom": 10,
@@ -1144,7 +1211,6 @@ Array [
                   }
                 }
                 onGestureHandlerEvent={[Function]}
-                onGestureHandlerStateChange={[Function]}
                 style={
                   Object {
                     "alignItems": "center",
@@ -1354,6 +1420,14 @@ Array [
           </View>
         </View>
         <View
+          animatedStyle={
+            Object {
+              "value": Object {
+                "height": 0,
+              },
+            }
+          }
+          collapsable={false}
           style={
             Object {
               "height": 0,
@@ -1381,31 +1455,41 @@ Array [
             }
           >
             <View
-              style={
-                Array [
-                  Object {
+              animatedStyle={
+                Object {
+                  "value": Object {
                     "height": -0,
                   },
-                  Object {
-                    "backgroundColor": "#FFFFFF",
-                    "borderTopLeftRadius": 20,
-                    "borderTopRightRadius": 20,
-                    "elevation": 2,
-                    "justifyContent": "flex-start",
-                    "minHeight": 80,
-                    "shadowColor": "rgba(0, 0, 0, 1)",
-                    "shadowOffset": Object {
-                      "height": 2,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.12,
-                    "shadowRadius": 1.5,
+                }
+              }
+              collapsable={false}
+              style={
+                Object {
+                  "backgroundColor": "#FFFFFF",
+                  "borderTopLeftRadius": 20,
+                  "borderTopRightRadius": 20,
+                  "elevation": 2,
+                  "height": -0,
+                  "justifyContent": "flex-start",
+                  "minHeight": 80,
+                  "shadowColor": "rgba(0, 0, 0, 1)",
+                  "shadowOffset": Object {
+                    "height": 2,
+                    "width": 0,
                   },
-                ]
+                  "shadowOpacity": 0.12,
+                  "shadowRadius": 1.5,
+                }
               }
             >
               <View
+                animatedStyle={
+                  Object {
+                    "value": Object {},
+                  }
+                }
                 collapsable={false}
+                forwardedRef={[Function]}
                 hitSlop={
                   Object {
                     "bottom": 10,
@@ -1415,7 +1499,6 @@ Array [
                   }
                 }
                 onGestureHandlerEvent={[Function]}
-                onGestureHandlerStateChange={[Function]}
                 style={
                   Object {
                     "alignItems": "center",
@@ -1625,6 +1708,14 @@ Array [
           </View>
         </View>
         <View
+          animatedStyle={
+            Object {
+              "value": Object {
+                "height": 0,
+              },
+            }
+          }
+          collapsable={false}
           style={
             Object {
               "height": 0,
@@ -1768,7 +1859,7 @@ Array [
           "color": "#181C32",
           "flex": 1,
           "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 15,
+          "fontSize": 14,
           "margin": 12,
           "padding": 0,
         }

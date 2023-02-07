@@ -8,15 +8,15 @@ import {
   ILinkPreviewCreatePost,
 } from '~/interfaces/IPost';
 import i18n from '~/localization';
-import FileUploader from '~/services/fileUploader';
-import { showHideToastMessage } from '~/storeRedux/modal/actions';
 import {
   CONTENT_INSET_HEIGHT,
   CONTENT_MIN_HEIGHT,
   TOAST_MIN_HEIGHT,
 } from './constanst';
 import useInputHeight from './hooks/useInputHeight';
-import ImageUploader from '~/services/imageUploader';
+import useUploaderStore from '~/store/uploader';
+import showToast from '~/store/helper/showToast';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 export const validateImages = (
   selectingImages: IFilePicked[] | IActivityDataImage[],
@@ -35,10 +35,12 @@ export const validateImages = (
         height: item?.file?.height,
       });
     } else {
+      const isUploading = useUploaderStore.getState().uploadingFiles?.[item?.fileName] >= 0;
+      const uploadedFile = useUploaderStore.getState().uploadedFiles?.[item?.fileName];
+      const { url, result } = uploadedFile || {};
       const { file, fileName } = item || {};
-      const { url, uploading, result }
-        = ImageUploader.getInstance().getFile(fileName) || {};
-      if (uploading) {
+
+      if (isUploading) {
         imageUploading = true;
         imageError = t('post:error_wait_uploading');
       } else if (!url) {
@@ -73,14 +75,15 @@ export const validateVideo = (
       = selectingVideo?.fileName
       || selectingVideo?.filename
       || selectingVideo?.name;
-    const { uploading, result } = FileUploader.getInstance().getFile(filename);
-    if (uploading) {
+    const isUploading = useUploaderStore.getState().uploadingFiles?.[filename] >= 0;
+    const uploadedFile = useUploaderStore.getState().uploadedFiles?.[filename];
+    if (isUploading) {
       videoUploading = true;
       videoError = t('post:error_wait_uploading');
-    } else if (!result?.id) {
+    } else if (!uploadedFile?.id) {
       videoError = t('post:error_upload_failed');
     } else {
-      video = result;
+      video = uploadedFile;
     }
   }
 
@@ -139,9 +142,10 @@ export const validateFiles = (selectingFiles: IFilePicked[], t: any) => {
         origin_name: item?.name,
       });
     } else {
-      const { url, uploading, result }
-        = FileUploader.getInstance().getFile(item.name) || {};
-      if (uploading) {
+      const isUploading = useUploaderStore.getState().uploadingFiles?.[item?.name] >= 0;
+      const uploadedFile = useUploaderStore.getState().uploadedFiles?.[item?.name];
+      const { url, result } = uploadedFile || {};
+      if (isUploading) {
         fileUploading = true;
         fileError = t('post:error_wait_uploading');
       } else if (!url) {
@@ -161,7 +165,6 @@ export const validateFilesPicker = (
   files: IFilePicked[],
   totalFiles: number,
   totalSize: number,
-  dispatch: any,
 ): IFilePicked[] => {
   let toastMessage: string | null = null;
 
@@ -191,12 +194,10 @@ export const validateFilesPicker = (
   }
 
   if (toastMessage) {
-    dispatch(
-      showHideToastMessage({
-        content: toastMessage,
-        props: { type: 'error' },
-      }),
-    );
+    showToast({
+      content: toastMessage,
+      type: ToastType.ERROR,
+    });
   }
 
   return results;

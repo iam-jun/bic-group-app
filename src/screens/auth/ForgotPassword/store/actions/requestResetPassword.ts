@@ -1,7 +1,7 @@
 import { Auth } from 'aws-amplify';
 import { authErrors, forgotPasswordStages } from '~/constants/authConstants';
 import i18n from '~/localization';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import { IForgotPasswordState } from '..';
 
 const requestResetPassword = (set, _get) => async (email: string) => {
@@ -25,9 +25,9 @@ const requestResetPassword = (set, _get) => async (email: string) => {
       }, 'requestResetPasswordError');
     } else {
       if (error?.code === authErrors.LIMIT_EXCEEDED_EXCEPTION) {
-        showError({ meta: { message: i18n.t('auth:text_err_limit_exceeded') } });
+        showToastError({ meta: { message: i18n.t('auth:text_err_limit_exceeded') } });
       } else {
-        showError(error);
+        showToastError(error);
       }
       set((state: IForgotPasswordState) => {
         state.errorRequest = '';

@@ -165,7 +165,6 @@ const PostToolbar: FC<PostToolbarProps> = ({
         files,
         totalFiles,
         totalSize,
-        dispatch,
       );
       if (validFiles.length === 0) return;
 

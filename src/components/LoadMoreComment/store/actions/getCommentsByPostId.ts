@@ -5,7 +5,7 @@ import {
 } from '~/interfaces/IPost';
 import useCommentsStore from '~/store/entities/comments';
 import usePostsStore from '~/store/entities/posts';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 
 const getCommentsByPostId = (_set, _get) => async (payload: IPayloadGetCommentsById) => {
   const {
@@ -60,7 +60,7 @@ const getCommentsByPostId = (_set, _get) => async (payload: IPayloadGetCommentsB
       '\x1b[31m🐣️ saga getCommentsByPostId error: ', e, '\x1b[0m',
     );
     callbackLoading?.(false);
-    showError(e);
+    showToastError(e);
   }
 };
 

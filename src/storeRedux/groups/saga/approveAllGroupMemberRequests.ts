@@ -2,9 +2,9 @@ import i18next from 'i18next';
 import { call, put } from 'redux-saga/effects';
 import { IToastMessage } from '~/interfaces/common';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
-import showError from '~/storeRedux/commonSaga/showError';
-import modalActions from '~/storeRedux/modal/actions';
-import groupApi from '../../../api/GroupApi';
+import showToast from '~/store/helper/showToast';
+import groupApi from '~/api/GroupApi';
+import showToastError from '~/store/helper/showToastError';
 import groupsActions from '../actions';
 
 export default function* approveAllGroupMemberRequests({
@@ -29,10 +29,10 @@ export default function* approveAllGroupMemberRequests({
       // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_approved_all')}`.replace('{0}', total.toString()),
     };
-    yield put(modalActions.showHideToastMessage(toastMessage));
+    showToast(toastMessage);
   } catch (err: any) {
     console.error('approveAllGroupMemberRequests: ', err);
 
-    yield call(showError, err);
+    showToastError(err);
   }
 }

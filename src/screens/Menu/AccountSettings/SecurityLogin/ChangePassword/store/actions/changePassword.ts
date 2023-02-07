@@ -4,11 +4,10 @@ import { IChangePasswordPayload } from '~/interfaces/IAuth';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { IChangePasswordState } from '..';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
 import { authErrors } from '~/constants/authConstants';
 import i18n from '~/localization';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
+import showToast from '~/store/helper/showToast';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -32,7 +31,7 @@ const changePassword = (set, _get) => async (payload: IChangePasswordPayload) =>
 
     navigation.goBack();
     const toastMessage: IToastMessage = { content: 'auth:text_change_password_success_desc' };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    showToast(toastMessage);
     set((state: IChangePasswordState) => {
       state.errorText = '';
       state.loading = false;
@@ -45,10 +44,10 @@ const changePassword = (set, _get) => async (payload: IChangePasswordPayload) =>
         errCurrentPassword = i18n.t('auth:text_err_wrong_current_password');
         break;
       case authErrors.LIMIT_EXCEEDED_EXCEPTION:
-        showError({ message: i18n.t('auth:text_err_limit_exceeded') });
+        showToastError({ message: i18n.t('auth:text_err_limit_exceeded') });
         break;
       default:
-        showError(error);
+        showToastError(error);
     }
     set((state: IChangePasswordState) => {
       state.errorText = errCurrentPassword;

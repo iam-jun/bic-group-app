@@ -1,6 +1,6 @@
 import streamApi from '~/api/StreamApi';
 import usePostsStore from '~/store/entities/posts';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 import { mockSeries, mockSeriesRequest, mockSeriesResponseRemovedAudiences } from '~/test/mock_data/series';
 import { act, renderHook } from '~/test/testUtils';
 import useSeriesStore, { ISeriesState } from '../index';
@@ -43,7 +43,9 @@ describe('removeAudiences', () => {
     };
     jest.spyOn(usePostsStore, 'getState').mockImplementation(() => ({ actions } as any));
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const toastActions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions: toastActions } as any));
 
     useSeriesStore.setState((state: ISeriesState) => {
       state.data = mockSeriesRequest as any;
@@ -64,7 +66,7 @@ describe('removeAudiences', () => {
 
     expect(spyApiGetSeriesDetail).toBeCalled();
     expect(addToPosts).toBeCalledWith({ data: mockSeriesResponseRemovedAudiences });
-    expect(spyModalActions).toBeCalledWith({ content: 'series:text_deleted_audiences' });
+    expect(showToast).toBeCalledWith({ content: 'series:text_deleted_audiences' });
   });
 
   it('should remove audiences from series throw error', () => {
@@ -73,7 +75,9 @@ describe('removeAudiences', () => {
       () => Promise.reject(error) as any,
     );
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     useSeriesStore.setState((state:ISeriesState) => {
       state.data = mockSeriesRequest as any;
@@ -97,6 +101,6 @@ describe('removeAudiences', () => {
       jest.runAllTimers();
     });
 
-    expect(spyModalActions).toBeCalled();
+    expect(showToast).toBeCalled();
   });
 });

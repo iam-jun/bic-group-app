@@ -12,10 +12,10 @@ import initialState from '~/storeRedux/initialState';
 import PostSettings from '~/screens/post/PostSettings/index';
 import colors from '~/theme/theme';
 import * as navigationHook from '~/hooks/navigation';
-import modalActions from '~/storeRedux/modal/actions';
 import postActions from '../../../storeRedux/post/actions';
 import { usePostSettings } from '~/screens/post/PostSettings/usePostSettings';
 import { POST_DETAIL } from '~/test/mock_data/post';
+import useModalStore from '~/store/modal';
 
 describe('Post Setting Screen', () => {
   let storeData: any;
@@ -124,7 +124,9 @@ describe('Post Setting Screen', () => {
   });
 
   it('should show alert when press back with changed', () => {
-    const spy = jest.spyOn(modalActions, 'showAlert');
+    const showAlert = jest.fn();
+    const actions = { showAlert };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(<PostSettings />, store);
@@ -138,7 +140,7 @@ describe('Post Setting Screen', () => {
     const btnBack = wrapper.getByTestId('header.back.button');
     fireEvent.press(btnBack);
 
-    expect(spy).toBeCalled();
+    expect(showAlert).toBeCalled();
   });
 
   it('should dispatch setCreatePostSettings then go back when press back with changed', async () => {

@@ -148,7 +148,9 @@ exports[`Button component renders correctly 1`] = `
               ]
             }
             testID="button.text"
-          />
+          >
+            Public Group
+          </Text>
         </View>
       </View>
     </View>

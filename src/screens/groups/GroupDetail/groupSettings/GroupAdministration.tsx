@@ -16,7 +16,8 @@ import MenuItem from '~/beinComponents/list/items/MenuItem';
 import spacing from '~/theme/spacing';
 import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
-import useGroupDetailStore, { IGroupDetailState } from '../store';
+import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 
 const GroupAdministration = (props: any) => {
   const { params } = props.route;
@@ -26,7 +27,9 @@ const GroupAdministration = (props: any) => {
   const styles = themeStyles();
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
-  const { name } = useGroupDetailStore((state: IGroupDetailState) => state.groupDetail.group);
+  const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
+  const { group } = groups[currentGroupId] || {};
+  const { name } = group || {};
 
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
   const canEditProfileInfo = shouldHavePermission(
@@ -42,6 +45,12 @@ const GroupAdministration = (props: any) => {
   const goToGeneralInfo = () => {
     rootNavigation.navigate(
       groupStack.generalInfo, { id: groupId },
+    );
+  };
+
+  const goToScheduleContent = () => {
+    rootNavigation.navigate(
+      articleStack.articleScheduleContent, { groupId },
     );
   };
 
@@ -115,6 +124,13 @@ const GroupAdministration = (props: any) => {
         displayNewFeature,
         undefined,
         'group_administration.membership_settings',
+      )}
+      {renderItem(
+        'BallotCheck',
+        'settings:title_schedule_content',
+        goToScheduleContent,
+        undefined,
+        'group_administration.schedule_content',
       )}
     </>
   );

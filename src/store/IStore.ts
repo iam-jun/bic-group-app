@@ -34,20 +34,29 @@ import { ICreateArticleSeriesState } from '~/screens/articles/CreateArticle/scre
 import { ICreateArticleCategoryState } from '~/screens/articles/CreateArticle/screens/CreateArticleCategory/store';
 import { IGroupDetailState } from '~/screens/groups/GroupDetail/store';
 import { IMyPermissionsState } from './permissions';
-import { IGroupController } from '~/screens/groups/store';
 import { ITagsState } from './entities/tags';
 import { IGeneralInformationState } from '~/screens/groups/GeneralInformation/store';
 import { IRemoteConfigState } from './remoteConfig';
+import { IReportContentState } from '~/components/Report/store';
+import { IGroupsState } from './entities/groups';
+import { IModalState } from './modal';
+import { IScheduleArticlesState } from '~/screens/YourContent/components/ScheduledArticles/store';
+import { IPostsInProgressState } from '~/screens/Home/components/VideoProcessingNotice/store';
+import { IArticleScheduleContentState } from '~/screens/articles/ArticleScheduleContent/store';
 
 export interface BicStore {
   entities: {
     posts: IPostsState;
     comments: ICommentsState;
     communities: ICommunitiesState;
+    groups: IGroupsState;
   };
   // components
   SelectAudience: {
-    selectAudienceStore: ISelectAudienceState
+    selectAudienceStore: ISelectAudienceState;
+  };
+  Report: {
+    reportContentStore: IReportContentState;
   };
 
   // screens
@@ -64,12 +73,14 @@ export interface BicStore {
         editArticleSeriesStore: ICreateArticleSeriesState,
       }
     }
+    ArticleScheduleContent: {
+      articleScheduleContentStore: IArticleScheduleContentState;
+    }
   };
   series: {
     seriesStore: ISeriesState,
   };
   groups: {
-    groupController: IGroupController;
     GeneralInformation: {
       generalInformationStore: IGeneralInformationState;
     };
@@ -132,6 +143,9 @@ export interface BicStore {
   topic: {
     topicStore: ITopicState;
   };
+  YourContent: {
+    scheduleArticleStore: IScheduleArticlesState;
+  },
 
   // others
   chat: IChatState;
@@ -140,4 +154,6 @@ export interface BicStore {
   myPermissions: IMyPermissionsState;
   tags: ITagsState;
   remoteConfig: IRemoteConfigState;
+  modal: IModalState;
+  postsContainingVideoInProgress: IPostsInProgressState;
 }

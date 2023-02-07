@@ -114,7 +114,7 @@ export const toNumber = (
 };
 
 export function formatBytes(
-  bytes: number, decimals = 1,
+  bytes = 0, decimals = 1,
 ) {
   if (bytes <= 0) return '0 Bytes';
 

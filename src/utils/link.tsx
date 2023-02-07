@@ -14,6 +14,7 @@ const LINK_POST = 'LINK_POST';
 const LINK_COMMENT = 'LINK_COMMENT';
 const LINK_COMMUNITY = 'LINK_COMMUNITY';
 const LINK_SERIRES = 'LINK_SERIRES';
+const LINK_ARTICLE = 'LINK_ARTICLE';
 
 export const CUSTOM_META = 'const meta = document.createElement(\'meta\'); meta.setAttribute(\'content\', \'width=device-width, initial-scale=1, maximum-scale=0.99, user-scalable=0\'); meta.setAttribute(\'name\', \'viewport\'); document.getElementsByTagName(\'head\')[0].appendChild(meta); ';
 export const USER_AGENT_DESKTOP = 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0';
@@ -26,6 +27,7 @@ export const DEEP_LINK_TYPES = {
   COMMUNTY_DETAIL: 'community-detail',
   GROUP_DETAIL: 'group-detail',
   SERIES_DETAIL: 'series-detail',
+  ARTICLE_DETAIL: 'article-detail',
 };
 
 const formatParams = (params?: any):string => {
@@ -75,6 +77,8 @@ const getLink = (
       return `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}/communities/${id}${formatParams(params)}`;
     case LINK_SERIRES:
       return `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}/series/${id}${formatParams(params)}`;
+    case LINK_ARTICLE:
+      return `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}/article/${id}${formatParams(params)}`;
     default:
       return '';
   }
@@ -87,7 +91,7 @@ const getGroupLink = ({
 }) => `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}/communities/${communityId}/groups/${groupId}${formatParams(params)}`;
 
 export {
-  LINK_POST, LINK_COMMENT, LINK_COMMUNITY, LINK_SERIRES, getLink, getGroupLink,
+  LINK_POST, LINK_COMMENT, LINK_COMMUNITY, LINK_SERIRES, LINK_ARTICLE, getLink, getGroupLink,
 };
 
 export const getChatDomain = () => (
@@ -198,6 +202,14 @@ export const matchDeepLink = (url: string) => {
     return { type: DEEP_LINK_TYPES.SERIES_DETAIL, seriesId: match[1] };
   }
 
+  // bic:///article/8465397a-dfb3-4d7f-a21f-adec5a0508701
+  match = new RegExp(
+    `^${PREFIX_DEEPLINK_GROUP}\\/article\\/(${UUID_V4_PATTERN})$`,
+  ).exec(url);
+  if (match) {
+    return { type: DEEP_LINK_TYPES.ARTICLE_DETAIL, articleId: match[1] };
+  }
+
   return null;
 };
 
@@ -230,6 +242,13 @@ export function getInjectableJSMessage(message) {
     })();
   `;
 }
+
+export const getErrorMessageFromResponse = (response: any) => {
+  if (typeof response === 'string') return response;
+
+  const meta = response?.data?.meta || {};
+  return meta?.errors?.[0]?.message || meta?.message;
+};
 
 export const openInAppBrowser = async (url) => {
   const isAvailable = await InAppBrowser.isAvailable();

@@ -1,7 +1,7 @@
 import groupApi from '~/api/GroupApi';
 import { IGetUserProfile } from '~/interfaces/IAuth';
 import { updateUserFromSharedPreferences } from '~/services/sharePreferences';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import { mapProfile } from '~/storeRedux/menu/helper';
 import { ICommonController } from '..';
 
@@ -20,7 +20,7 @@ const getMyProfile = (set, _get) => async ({ userId, params }: IGetUserProfile) 
     }, 'getMyProfileSuccess');
   } catch (error) {
     console.error('getMyProfile error:', error);
-    showError(error);
+    showToastError(error);
   }
 };
 

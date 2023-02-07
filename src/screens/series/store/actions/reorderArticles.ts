@@ -1,13 +1,11 @@
-import i18next from 'i18next';
 import streamApi from '~/api/StreamApi';
 import { IReorderArticles } from '~/interfaces/ISeries';
 import usePostsStore from '~/store/entities/posts';
 import { ISeriesState } from '..';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
-import { IToastMessage } from '~/interfaces/common';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
+import showToastSuccess from '~/store/helper/showToastSuccess';
+import showToastError from '~/store/helper/showToastError';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -43,10 +41,7 @@ export const reorderArticles = (set, _) => async (id: string, indexArticlesOrder
       state.loading = false;
     }, 'reorderArticles success');
 
-    const toastMessage: IToastMessage = {
-      content: response?.meta?.message || i18next.t('series:reorder_successful'),
-    };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    showToastSuccess(response, 'series:reorder_successful');
 
     navigation.goBack();
   } catch (e) {
@@ -54,10 +49,6 @@ export const reorderArticles = (set, _) => async (id: string, indexArticlesOrder
       state.loading = false;
     }, 'reorderArticles error');
 
-    const toastMessage: IToastMessage = {
-      content: e?.meta?.message || i18next.t('series:reorder_failed'),
-      props: { type: 'error' },
-    };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    showToastError(e);
   }
 };

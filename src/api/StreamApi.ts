@@ -16,6 +16,7 @@ import {
   IRequestPostComment,
   IRequestReplyComment,
   IRequestGetUsersInterestedPost,
+  IParamsGetPostByParams,
 } from '~/interfaces/IPost';
 import {
   IParamGetFeed,
@@ -32,6 +33,7 @@ import {
   IParamGetCategories,
   IParamGetDraftArticles,
   IParamPutEditArticle,
+  IParamsGetArticleScheduleContent,
   IParamsValidateSeriesTags,
 } from '~/interfaces/IArticle';
 import appConfig from '~/configs/appConfig';
@@ -40,7 +42,7 @@ import {
   IAddArticleInSeries,
   IGetSeries, IParamGetSeriesDetail, IPostCreateSeries, IReorderArticles, IRemoveArticleInSeries,
 } from '~/interfaces/ISeries';
-import { IParamsReportContent } from '~/interfaces/IReport';
+import { IParamGetReportContent, IParamsReportContent } from '~/interfaces/IReport';
 import { CreateTag, EditTag, IParamGetCommunityTags } from '~/interfaces/ITag';
 
 const DEFAULT_LIMIT = 10;
@@ -157,11 +159,10 @@ export const streamApiConfig = {
     method: 'put',
     data,
   }),
-  deletePost: (id: string, isDraftPost?: boolean): HttpApiRequestConfig => ({
+  deletePost: (id: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}posts/${id}`,
     method: 'delete',
-    ...(isDraftPost ? { params: { is_draft: true } } : {}),
   }),
   deleteComment: (id: string): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -315,6 +316,13 @@ export const streamApiConfig = {
       childCommentLimit: params?.childCommentLimit || 10,
     },
   }),
+  getArticleDetailByAdmin: (
+    id: string, params?: IParamGetArticleDetail,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}admin/posts/${id}`,
+    params,
+  }),
   getGiphyTrending: (
     params: IGetGiphyTrendingParams,
   ): HttpApiRequestConfig => ({
@@ -379,11 +387,18 @@ export const streamApiConfig = {
     url: `${provider.url}articles/${draftArticleId}/publish`,
     method: 'put',
   }),
-  deleteArticle: (id: string, isDraft?: boolean): HttpApiRequestConfig => ({
+  scheduleArticle: (draftArticleId: string, publishedAt: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}articles/${draftArticleId}/schedule`,
+    method: 'put',
+    data: {
+      publishedAt,
+    },
+  }),
+  deleteArticle: (id: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}articles/${id}`,
     method: 'delete',
-    ...(isDraft ? { params: { is_draft: true } } : {}),
   }),
   getTotalDraft: (): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -473,6 +488,39 @@ export const streamApiConfig = {
     url: `${provider.url}tags/${id}`,
     method: 'delete',
   }),
+  getPostByParams: (params: IParamsGetPostByParams): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}posts/params`,
+    params: {
+      status: params?.status,
+      offset: params?.offset || 0,
+      limit: params?.limit || 10,
+    },
+  }),
+  getArticleByParams: (params: IParamsGetPostByParams): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}articles/params`,
+    params: {
+      order: 'ASC',
+      ...params,
+    },
+  }),
+  getReportContent: (params: IParamGetReportContent): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}reports/me/content`,
+    params: {
+      ...params,
+    },
+  }),
+  getArticleScheduleContent: (params: IParamsGetArticleScheduleContent): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}admin/posts/params`,
+    params: {
+      order: 'ASC',
+      limit: params?.limit || DEFAULT_LIMIT,
+      ...params,
+    },
+  }),
 };
 
 const streamApi = {
@@ -551,8 +599,8 @@ const streamApi = {
   ),
   putEditPost: (param: IParamPutEditPost) => withHttpRequestPromise(streamApiConfig.putEditPost, param),
   putEditComment: (id: string, data: ICommentData) => withHttpRequestPromise(streamApiConfig.putEditComment, id, data),
-  deletePost: (id: string, isDraftPost?: boolean) => withHttpRequestPromise(
-    streamApiConfig.deletePost, id, isDraftPost,
+  deletePost: (id: string) => withHttpRequestPromise(
+    streamApiConfig.deletePost, id,
   ),
   deleteComment: (id: string) => withHttpRequestPromise(streamApiConfig.deleteComment, id),
   getCommentsByPostId: (params: IRequestGetPostComment) => {
@@ -635,6 +683,9 @@ const streamApi = {
   getArticleDetail: (id: string, params?: IParamGetArticleDetail) => withHttpRequestPromise(
     streamApiConfig.getArticleDetail, id, params,
   ),
+  getArticleDetailByAdmin: (id: string, params?: IParamGetArticleDetail) => withHttpRequestPromise(
+    streamApiConfig.getArticleDetailByAdmin, id, params,
+  ),
   getDraftArticles: async (param: IParamGetDraftArticles) => {
     try {
       const response: any = await makeHttpRequest(
@@ -657,8 +708,11 @@ const streamApi = {
   publishDraftArticle: (draftArticleId: string) => withHttpRequestPromise(
     streamApiConfig.publishDraftArticle, draftArticleId,
   ),
-  deleteArticle: (id: string, isDraft?: boolean) => withHttpRequestPromise(
-    streamApiConfig.deleteArticle, id, isDraft,
+  scheduleArticle: (draftArticleId: string, publishedAt: string) => withHttpRequestPromise(
+    streamApiConfig.scheduleArticle, draftArticleId, publishedAt,
+  ),
+  deleteArticle: (id: string) => withHttpRequestPromise(
+    streamApiConfig.deleteArticle, id,
   ),
   getUsersInterestedPost: (params: IRequestGetUsersInterestedPost) => withHttpRequestPromise(
     streamApiConfig.getUsersInterestedPost, params,
@@ -747,6 +801,31 @@ const streamApi = {
   ),
   deleteTag: (id: string) => withHttpRequestPromise(
     streamApiConfig.deleteTag, id,
+  ),
+  getPostByParams: async (params: IParamsGetPostByParams) => {
+    try {
+      const response: any = await makeHttpRequest(streamApiConfig.getPostByParams(params));
+      if (response && response?.data?.data) {
+        return Promise.resolve({
+          data: response.data.data?.list || [],
+          canLoadMore: (params?.offset || 0) + (params?.limit || DEFAULT_LIMIT)
+            <= response.data.data?.meta?.total,
+          total: response.data.data?.meta?.total,
+        });
+      }
+      return Promise.reject(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getArticleByParams: async (params: IParamsGetPostByParams) => withHttpRequestPromise(
+    streamApiConfig.getArticleByParams, params,
+  ),
+  getReportContent: (params: IParamGetReportContent) => withHttpRequestPromise(
+    streamApiConfig.getReportContent, params,
+  ),
+  getArticleScheduleContent: async (params: IParamsGetArticleScheduleContent) => withHttpRequestPromise(
+    streamApiConfig.getArticleScheduleContent, params,
   ),
 };
 

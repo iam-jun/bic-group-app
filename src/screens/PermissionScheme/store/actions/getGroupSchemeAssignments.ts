@@ -1,5 +1,5 @@
 import groupApi from '~/api/GroupApi';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import IPermissionSchemeState from '../Interface';
 
 const getGroupSchemeAssignments = (set) => async ({
@@ -34,7 +34,7 @@ const getGroupSchemeAssignments = (set) => async ({
       state.assignGroupScheme.assignments.data = undefined;
     }, 'getGroupSchemeAssignmentsError');
 
-    showError(error);
+    showToastError(error);
   }
 };
 

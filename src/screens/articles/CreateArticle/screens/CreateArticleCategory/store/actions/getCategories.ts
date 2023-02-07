@@ -1,12 +1,9 @@
 import streamApi from '~/api/StreamApi';
 import { ICategory, IParamGetCategories } from '~/interfaces/IArticle';
 import { ICreateArticleCategoryState } from '..';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 
 const getCategories = (set, get) => async (isLoadMore) => {
-  set((state: ICreateArticleCategoryState) => {
-    state.categories.loading = true;
-  }, 'getCategories');
   try {
     const categoryData = get().categories || {};
     const params: IParamGetCategories = { offset: 0, limit: 25 };
@@ -14,6 +11,10 @@ const getCategories = (set, get) => async (isLoadMore) => {
     if (isLoadMore && !categoryData.hasNextPage) {
       return;
     }
+
+    set((state: ICreateArticleCategoryState) => {
+      state.categories.loading = true;
+    }, 'getCategories');
 
     if (isLoadMore) {
       params.offset = categoryData?.items?.length;
@@ -39,11 +40,11 @@ const getCategories = (set, get) => async (isLoadMore) => {
       set((state: ICreateArticleCategoryState) => {
         state.categories.loading = false;
       }, 'getCategories');
-      showError(response);
+      showToastError(response);
     }
   } catch (e) {
     console.error('\x1b[35m🐣️ getCategories error: ', e, '\x1b[0m');
-    showError(e);
+    showToastError(e);
   }
 };
 

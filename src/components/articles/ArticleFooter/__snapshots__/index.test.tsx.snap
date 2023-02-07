@@ -29,13 +29,12 @@ exports[`ArticleFooter Component renders correctly 1`] = `
       Array [
         Object {
           "alignItems": "center",
-          "backgroundColor": "#F1F2F8",
           "flex": 1,
           "justifyContent": "center",
         },
         Object {
-          "height": 36,
-          "marginTop": 4,
+          "height": 28,
+          "marginBottom": 8,
         },
       ]
     }

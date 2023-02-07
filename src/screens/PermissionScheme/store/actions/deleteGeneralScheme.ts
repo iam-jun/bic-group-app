@@ -1,5 +1,5 @@
 import groupApi from '~/api/GroupApi';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import IPermissionSchemeState from '../Interface';
 
 const deleteGeneralScheme = (set) => async (communityId: string) => {
@@ -31,7 +31,7 @@ const deleteGeneralScheme = (set) => async (communityId: string) => {
       state.generalScheme.deleting = false;
     }, 'deleteGeneralSchemeError');
 
-    showError(error);
+    showToastError(error);
   }
 };
 

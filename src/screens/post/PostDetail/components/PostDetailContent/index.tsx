@@ -13,7 +13,6 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
@@ -23,22 +22,28 @@ import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
 import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import CommentInputView from '~/screens/comments/components/CommentInputView';
-import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import PostDetailContentHeader from '../PostDetailContentHeader';
 import usePostDetailContent from './hooks/usePostDetailContent';
 import usePostDetailContentHandler from './hooks/usePostDetailContentHandler';
+import BannerReport from '~/components/Report/BannerReport';
+import useModalStore from '~/store/modal';
 
 const _PostDetailContent = (props) => {
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const { rootNavigation, goHome } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = useMemo(() => createStyle(theme), [theme]);
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const params = props?.route?.params;
-  const { post_id: postId, focus_comment: focusComment, noti_id: notificationId = '' } = params || {};
+  const {
+    post_id: postId,
+    focus_comment: focusComment,
+    noti_id: notificationId = '',
+    is_reported: isReported = false,
+  } = params || {};
 
   const HeaderImageComponent = (
     <View style={{ alignItems: 'center' }}>
@@ -54,7 +59,9 @@ const _PostDetailContent = (props) => {
   const {
     refreshing, isEmptyContent, actor, setting, deleted, createdAt,
     commentLeft, groupIds, comments, sectionData, audience, onRefresh, onPressMarkSeenPost,
-  } = usePostDetailContent({ postId, notificationId, HeaderImageComponent });
+  } = usePostDetailContent({
+    postId, notificationId, HeaderImageComponent, isReported,
+  });
 
   const commentInputRef = useRef<any>();
 
@@ -72,25 +79,25 @@ const _PostDetailContent = (props) => {
     postId, comments, sectionData, focusComment, listRef, commentInputRef,
   });
 
-  const headerTitle = actor?.fullname
-    ? t('post:title_post_detail_of', { name: actor?.fullname })
-    : t('post:title_post_detail');
+  const headerTitle = isReported
+    ? t('report:title')
+    : actor?.fullname
+      ? t('post:title_post_detail_of', { name: actor?.fullname })
+      : t('post:title_post_detail');
 
   const onPressBack = () => {
     const newCommentInput = commentInputRef?.current?.getText?.() || '';
     const newCommentSelectedImage = commentInputRef?.current?.hasMedia?.();
 
     if (newCommentInput !== '' || newCommentSelectedImage) {
-      dispatch(
-        modalActions.showAlert({
-          title: t('post:title_discard_comment'),
-          content: t('post:text_discard_comment'),
-          cancelBtn: true,
-          cancelLabel: t('post:btn_continue_comment'),
-          confirmLabel: t('post:btn_discard_comment'),
-          onConfirm: () => rootNavigation.goBack(),
-        }),
-      );
+      showAlert({
+        title: t('post:title_discard_comment'),
+        content: t('post:text_discard_comment'),
+        cancelBtn: true,
+        cancelLabel: t('post:btn_continue_comment'),
+        confirmLabel: t('post:btn_discard_comment'),
+        onConfirm: () => rootNavigation.goBack(),
+      });
       return;
     }
     if (!rootNavigation.canGoBack) {
@@ -116,7 +123,7 @@ const _PostDetailContent = (props) => {
     const { section } = sectionData || {};
     const { comment, index } = section || {};
 
-    if (sectionData?.section?.type === 'empty') {
+    if (sectionData?.section?.type === 'empty' || isReported) {
       return <View />;
     }
 
@@ -153,6 +160,20 @@ const _PostDetailContent = (props) => {
     );
   };
 
+  const renderCommentInputView = () => {
+    if (setting?.canComment && !isReported) {
+      return (
+        <CommentInputView
+          commentInputRef={commentInputRef}
+          postId={postId}
+          groupIds={groupIds}
+          autoFocus={focusComment}
+        />
+      );
+    }
+    return null;
+  };
+
   const renderContent = () => {
     if (!createdAt) return <PostViewPlaceholder />;
 
@@ -161,6 +182,7 @@ const _PostDetailContent = (props) => {
     return (
       <View style={styles.container}>
         <View style={styles.postDetailContainer}>
+          <BannerReport postId={postId} />
           <SectionList
             ref={listRef}
             sections={sectionData}
@@ -192,15 +214,7 @@ const _PostDetailContent = (props) => {
               />
             )}
           />
-
-          {setting?.canComment && (
-            <CommentInputView
-              commentInputRef={commentInputRef}
-              postId={postId}
-              groupIds={groupIds}
-              autoFocus={focusComment}
-            />
-          )}
+          {renderCommentInputView()}
         </View>
       </View>
     );

@@ -22,6 +22,8 @@ import useContentActions from '~/hooks/useContentActions';
 import { isEmptyPost } from '~/helpers/post';
 import { PlaceHolderRemoveContent } from '~/baseComponents';
 import Divider from '~/beinComponents/Divider';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 
 export interface PostViewProps {
   style?: any;
@@ -33,6 +35,7 @@ export interface PostViewProps {
   btnCommentTestID?: string;
   hasReactPermission?: boolean;
   pressNavigateToDetail?: boolean;
+  shouldHideBannerImportant?: boolean;
 
   onPress?: () => void;
   onPressHeader?: () => void;
@@ -50,6 +53,7 @@ const _PostView: FC<PostViewProps> = ({
   btnCommentTestID,
   hasReactPermission = true,
   pressNavigateToDetail,
+  shouldHideBannerImportant,
 
   onPress,
   onPressHeader,
@@ -82,6 +86,8 @@ const _PostView: FC<PostViewProps> = ({
     targetType: TargetType.POST,
   });
 
+  const isHidden = usePostsStore(postsSelector.getIsHidden(postId));
+
   const _onPress = () => {
     if (pressNavigateToDetail) {
       rootNavigation.navigate(homeStack.postDetail, { post_id: postId });
@@ -101,49 +107,23 @@ const _PostView: FC<PostViewProps> = ({
   const shouldShowInterested = highlight?.length < appConfig.shortPostContentLength
   || content?.length < appConfig.shortPostContentLength || isPostDetail;
 
-  return (
-    <TouchableOpacity
-      testID={testID}
-      activeOpacity={0.8}
-      disabled={(!onPress && !pressNavigateToDetail) || !hasReactPermission}
-      onPress={_onPress}
-      style={style}
-    >
-      <PostImportant
-        isLite={isLite}
-        isImportant={!!isImportant}
-        expireTime={importantExpiredAt}
-        markedReadPost={markedReadPost}
-        listCommunity={communities}
-      />
-      <View style={[styles.container]} onLayout={onContentLayout}>
-        <PostHeader
-          useDefaultMenu
-          data={data}
-          disabled={!hasReactPermission}
-          onPressHeader={onPressHeader}
-        />
-        <PostBody
-          data={data}
-          isLite={isLite}
-          isEmptyPost={isEmpty}
-          isPostDetail={isPostDetail}
-          onPressMarkSeenPost={onPressMarkSeenPost}
-        />
-        {!isLite && shouldShowInterested && (
-          <ContentInterestedUserCount id={postId} interestedUserCount={totalUsersSeen} />
-        )}
-        {!isLite && (<Divider style={styles.divider} />)}
+  const renderContent = () => {
+    if (isHidden) {
+      return null;
+    }
+    return (
+      <>
+        {!isLite && <Divider style={styles.divider} />}
         {!isLite && !!canReact && (
-          <ReactionView
-            style={styles.reactions}
-            ownerReactions={ownerReactions}
-            reactionsCount={reactionsCount}
-            hasReactPermission={hasReactPermission}
-            onAddReaction={onAddReaction}
-            onRemoveReaction={onRemoveReaction}
-            onLongPressReaction={onLongPressReaction}
-          />
+        <ReactionView
+          style={styles.reactions}
+          ownerReactions={ownerReactions}
+          reactionsCount={reactionsCount}
+          hasReactPermission={hasReactPermission}
+          onAddReaction={onAddReaction}
+          onRemoveReaction={onRemoveReaction}
+          onLongPressReaction={onLongPressReaction}
+        />
         )}
         <PostFooter
           postId={postId}
@@ -163,6 +143,44 @@ const _PostView: FC<PostViewProps> = ({
             isActor={actor?.id == userId}
           />
         )}
+      </>
+    );
+  };
+
+  return (
+    <TouchableOpacity
+      testID={testID}
+      activeOpacity={0.8}
+      disabled={(!onPress && !pressNavigateToDetail) || !hasReactPermission}
+      onPress={_onPress}
+      style={style}
+    >
+      <PostImportant
+        isLite={isLite}
+        isImportant={!!isImportant}
+        expireTime={importantExpiredAt}
+        markedReadPost={markedReadPost}
+        listCommunity={communities}
+        shouldBeHidden={shouldHideBannerImportant}
+      />
+      <View style={[styles.container]} onLayout={onContentLayout}>
+        <PostHeader
+          useDefaultMenu
+          data={data}
+          disabled={!hasReactPermission}
+          onPressHeader={onPressHeader}
+        />
+        <PostBody
+          data={data}
+          isLite={isLite}
+          isEmptyPost={isEmpty}
+          isPostDetail={isPostDetail}
+          onPressMarkSeenPost={onPressMarkSeenPost}
+        />
+        {!isLite && shouldShowInterested && !isHidden && (
+          <ContentInterestedUserCount id={postId} interestedUserCount={totalUsersSeen} />
+        )}
+        {renderContent()}
       </View>
     </TouchableOpacity>
   );

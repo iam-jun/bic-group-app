@@ -6,7 +6,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { useDispatch } from 'react-redux';
 import { Keyboard } from 'react-native';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import modalActions, { showHideToastMessage } from '~/storeRedux/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import { getLink, LINK_POST } from '~/utils/link';
 import { IPost, IReaction } from '~/interfaces/IPost';
 import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
@@ -14,12 +14,13 @@ import postActions from '~/storeRedux/post/actions';
 import { Button } from '~/baseComponents';
 import { useRootNavigation } from './navigation';
 import { BottomListProps } from '~/components/BottomList';
-import ReportContent from '~/components/ReportContent';
+import ReportContent from '~/components/Report/ReportContent';
 import useCommonController from '~/screens/store';
 import { getPostMenus, getRootGroupids } from '~/helpers/post';
 import { TargetType, ReportTo } from '~/interfaces/IReport';
 import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
+import useModalStore from '~/store/modal';
 
 const usePostMenu = (
   data: IPost,
@@ -31,11 +32,12 @@ const usePostMenu = (
   const dispatch = useDispatch();
 
   const commonActions = useCommonController((state) => state.actions);
+  const { showToast, showAlert } = useModalStore((state) => state.actions);
 
   if (!data) return null;
 
   const {
-    id: postId, isDraft, reactionsCount, isSaved, type, audience,
+    id: postId, reactionsCount, isSaved, type, audience,
   } = data;
 
   const groupAudience = audience?.groups || [];
@@ -77,7 +79,7 @@ const usePostMenu = (
     Clipboard.setString(getLink(
       LINK_POST, postId,
     ));
-    dispatch(showHideToastMessage({ content: 'common:text_link_copied_to_clipboard' }));
+    showToast({ content: 'common:text_link_copied_to_clipboard' });
   };
 
   const onPressViewReactions = () => {
@@ -97,23 +99,18 @@ const usePostMenu = (
 
   const onPressDelete = () => {
     dispatch(modalActions.hideBottomList());
-    dispatch(
-      modalActions.showAlert({
-        title: i18next.t('post:title_delete_post'),
-        content: i18next.t('post:content_delete_post'),
-        cancelBtn: true,
-        confirmLabel: i18next.t('common:btn_delete'),
-        ConfirmBtnComponent: Button.Danger,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        confirmBtnProps: { type: 'ghost' },
-        onConfirm: () => dispatch(postActions.deletePost({
-          id: postId,
-          isDraftPost: isDraft,
-          callbackError: handleDeletePostError,
-        })),
-      }),
-    );
+    showAlert({
+      title: i18next.t('post:title_delete_post'),
+      content: i18next.t('post:content_delete_post'),
+      cancelBtn: true,
+      confirmLabel: i18next.t('common:btn_delete'),
+      ConfirmBtnComponent: Button.Danger,
+      confirmBtnProps: { type: 'ghost' },
+      onConfirm: () => dispatch(postActions.deletePost({
+        id: postId,
+        callbackError: handleDeletePostError,
+      })),
+    });
   };
 
   const onPressReport = () => {

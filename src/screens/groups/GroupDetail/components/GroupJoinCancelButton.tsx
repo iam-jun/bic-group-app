@@ -1,14 +1,13 @@
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
-import { useDispatch } from 'react-redux';
 
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import JoinCancelButton from '../../components/JoinCancelButton';
-import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
 import useDiscoverGroupsStore from '../../DiscoverGroups/store';
 import IDiscoverGroupsState from '../../DiscoverGroups/store/Interface';
-import useGroupDetailStore, { IGroupDetailState } from '../store';
+import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
+import useModalStore from '~/store/modal';
 import { ICommunity } from '~/interfaces/ICommunity';
 
 interface GroupJoinCancelButtonProps {
@@ -17,29 +16,30 @@ interface GroupJoinCancelButtonProps {
 }
 
 const GroupJoinCancelButton = ({ style, community }: GroupJoinCancelButtonProps) => {
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
-  const { group: infoDetail, joinStatus } = useGroupDetailStore((state: IGroupDetailState) => state.groupDetail);
+  const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
+  const { group: infoDetail, joinStatus } = groups[currentGroupId] || {};
   const {
     privacy,
     id: groupId,
-  } = infoDetail;
+  } = infoDetail || {};
   const joinStatusCommunity = community?.joinStatus;
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
   const isMemberOfCommunity = joinStatusCommunity === GroupJoinStatus.MEMBER;
 
   const joinNewGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doJoinNewGroup);
   const cancelJoinGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doCancelJoinGroup);
+  const { showAlert } = useModalStore((state) => state.actions);
 
   if (isMember) return null;
 
   const onPressJoin = () => {
     if (!isMemberOfCommunity) {
-      dispatch(modalActions.showAlert({
+      showAlert({
         title: t('error:alert_title'),
         content: t('communities:text_must_be_member_first'),
         confirmLabel: t('common:text_ok'),
-      }));
+      });
       return;
     }
 

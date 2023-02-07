@@ -1,6 +1,6 @@
 import groupApi from '~/api/GroupApi';
 import { IPayloadGetGroupStructureCommunityTree } from '~/interfaces/IGroup';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import IGroupStructureState from '../Interface';
 
 const getGroupStructureCommunityTree = (set, _) => async (payload: IPayloadGetGroupStructureCommunityTree) => {
@@ -24,7 +24,7 @@ const getGroupStructureCommunityTree = (set, _) => async (payload: IPayloadGetGr
       state.communityTree.loading = false;
     }, 'getGroupStructureCommunityTreeError');
     console.error('\x1b[31m🐣️ action getGroupStructureCommunityTree error: ', e, '\x1b[0m');
-    showError(e);
+    showToastError(e);
   }
 };
 

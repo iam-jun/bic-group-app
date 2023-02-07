@@ -9,38 +9,44 @@ import Text from '~/baseComponents/Text';
 import { spacing } from '~/theme';
 import Icon from '~/baseComponents/Icon/';
 
+export enum ToastType {
+  SUCCESS = 'success',
+  NEUTRAL = 'neutral',
+  ERROR = 'error',
+}
+
 export interface BaseToastProps {
   style?: StyleProp<ViewStyle>;
-  type?: 'success' | 'neutral' | 'error';
+  type?: ToastType;
   icon?: IconType;
   content?: string;
-  useI18n?: boolean;
   buttonText?: string;
   onButtonPress?: () => void;
-  onPressClose?: () => void;
+  onClose?: () => void;
 }
 
 const BaseToast = ({
   style,
-  type = 'neutral',
+  type = ToastType.NEUTRAL,
   icon,
   content,
-  useI18n,
   buttonText,
   onButtonPress,
-  onPressClose,
+  onClose,
 }: BaseToastProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyles(theme);
 
   const iconColor = {
-    success: colors.green50,
-    neutral: colors.neutral20,
-    error: colors.red40,
+    [ToastType.SUCCESS]: colors.green50,
+    [ToastType.NEUTRAL]: colors.neutral20,
+    [ToastType.ERROR]: colors.red40,
   };
 
-  const iconName = type === 'error' ? 'CircleExclamationSolid' : icon;
+  const iconName = type === ToastType.ERROR ? 'CircleExclamationSolid' : icon;
+
+  if (!content) return null;
 
   return (
     <View style={[styles.container, style]}>
@@ -53,21 +59,23 @@ const BaseToast = ({
             tintColor={iconColor[type]}
           />
         )}
-        <Text.BodyM style={styles.flex1} color={colors.white} useI18n={useI18n}>{content}</Text.BodyM>
+        <Text.BodyM style={styles.flex1} color={colors.white} useI18n>
+          {content}
+        </Text.BodyM>
       </View>
 
       <View style={styles.rightContainer}>
         {!!buttonText && (
           <TouchableOpacity style={styles.actionButton} onPress={onButtonPress} testID="toast_button_action">
-            <Text.ButtonS useI18n={useI18n}>{buttonText}</Text.ButtonS>
+            <Text.ButtonS useI18n>{buttonText}</Text.ButtonS>
           </TouchableOpacity>
         )}
         <Icon
           icon="iconClose"
           size={12}
-          ingoreInternet
+          ignoreInternet
           tintColor={colors.neutral20}
-          onPress={onPressClose}
+          onPress={onClose}
           buttonTestID="toast_button_close"
         />
       </View>

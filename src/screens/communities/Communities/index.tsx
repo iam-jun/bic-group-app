@@ -19,7 +19,7 @@ const HEADER_TAB = [
     text: 'communities:community_menu:your_communities',
   },
   { id: 'community-tab-2', text: 'communities:community_menu:your_groups' },
-  { id: 'community-tab-3', text: 'communities:community_menu:managed' },
+  { id: 'community-tab-3', text: 'communities:community_menu:managed_groups' },
 ];
 
 const Index = () => {
@@ -88,6 +88,7 @@ const Index = () => {
             type="pill"
             onPressTab={onPressTab}
             activeIndex={selectedIndex}
+            isScrollToIndex
           />
         </View>
         {renderContent()}

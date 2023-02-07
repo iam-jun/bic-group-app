@@ -3,7 +3,7 @@ import routerHelper from '~/router/helper';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { rootNavigationRef } from '~/router/refs';
 import useHomeStore from '~/screens/Home/store';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import { ISeriesState } from '..';
 
 const navigation = routerHelper.withNavigation(rootNavigationRef);
@@ -29,7 +29,7 @@ const postCreateNewSeries = (set, get) => async () => {
     set((state: ISeriesState) => {
       state.loading = false;
     }, 'postCreateNewSeriesError');
-    showError(error);
+    showToastError(error);
   }
 };
 

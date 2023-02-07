@@ -18,9 +18,8 @@ import ArticleReorderItem, {
 import ReorderList from '~/beinComponents/ReorderList';
 import { isIndexEqualValue } from './helper';
 import useSeriesStore from '~/screens/series/store';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
 import { useRootNavigation } from '~/hooks/navigation';
+import useModalStore from '~/store/modal';
 
 const ReorderArticles = ({ route }: any) => {
   const { params } = route || {};
@@ -29,6 +28,7 @@ const ReorderArticles = ({ route }: any) => {
   const insets = useSafeAreaInsets();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme, insets);
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const { rootNavigation } = useRootNavigation();
 
@@ -52,7 +52,7 @@ const ReorderArticles = ({ route }: any) => {
   const isChanged = !isIndexEqualValue(articlesIndexOrderState);
 
   const onPressSave = () => {
-    Store.store.dispatch(modalActions.showAlert({
+    showAlert({
       title: i18next.t('series:notice_changing_the_order'),
       content: i18next.t('series:notice_sure_to_do_this'),
       cancelBtn: true,
@@ -61,19 +61,19 @@ const ReorderArticles = ({ route }: any) => {
       onConfirm: () => {
         actions.reorderArticles(id, articlesIndexOrderState);
       },
-    }));
+    });
   };
 
   const handleBack = () => {
     if (isChanged) {
-      Store.store.dispatch(modalActions.showAlert({
+      showAlert({
         title: i18next.t('discard_alert:title'),
         content: i18next.t('discard_alert:content'),
         cancelBtn: true,
         cancelLabel: i18next.t('common:btn_discard'),
         confirmLabel: i18next.t('common:btn_stay_here'),
         onCancel: () => rootNavigation.goBack(),
-      }));
+      });
       return;
     }
     rootNavigation.goBack();

@@ -1,25 +1,25 @@
 import * as React from 'react';
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
-import BaseToast from '.';
+import BaseToast, { ToastType } from '.';
 
 describe('BaseToast component', () => {
   const content = 'Internet connection was restored';
   const onButtonPress = jest.fn();
-  const onPressClose = jest.fn();
+  const onClose = jest.fn();
 
   it('renders success toast correctly', () => {
-    const rendered = renderWithRedux(<BaseToast type="success" content={content} />).toJSON();
+    const rendered = renderWithRedux(<BaseToast type={ToastType.SUCCESS} content={content} />).toJSON();
     expect(rendered).toMatchSnapshot();
   });
 
   it('renders error toast correctly', () => {
-    const rendered = renderWithRedux(<BaseToast type="error" content={content} />).toJSON();
+    const rendered = renderWithRedux(<BaseToast type={ToastType.ERROR} content={content} />).toJSON();
     expect(rendered).toMatchSnapshot();
   });
 
   it('renders full toast with button correctly', () => {
     const rendered = renderWithRedux(<BaseToast
-      type="success"
+      type={ToastType.SUCCESS}
       content={content}
       buttonText="Undo"
       onButtonPress={onButtonPress}
@@ -29,7 +29,7 @@ describe('BaseToast component', () => {
 
   it('should call prop onButtonPress', () => {
     const rendered = renderWithRedux(<BaseToast
-      type="success"
+      type={ToastType.SUCCESS}
       content={content}
       buttonText="Undo"
       onButtonPress={onButtonPress}
@@ -43,14 +43,14 @@ describe('BaseToast component', () => {
 
   it('should call prop onPressClose', () => {
     const rendered = renderWithRedux(<BaseToast
-      type="success"
+      type={ToastType.SUCCESS}
       content={content}
-      onPressClose={onPressClose}
+      onClose={onClose}
     />);
 
     const button = rendered.getByTestId('toast_button_close');
     expect(button).toBeDefined();
     fireEvent.press(button);
-    expect(onPressClose).toBeCalled();
+    expect(onClose).toBeCalled();
   });
 });

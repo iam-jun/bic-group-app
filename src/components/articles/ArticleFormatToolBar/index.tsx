@@ -1,6 +1,6 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, {
-  FC, useCallback, useRef, useState,
+  FC, useCallback, useEffect, useRef, useState,
 } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
@@ -11,9 +11,11 @@ import { Button } from '~/baseComponents';
 import Divider from '~/beinComponents/Divider';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import StickerView from '~/components/StickerView';
-import { uploadImage } from '~/helpers/article';
+import { useBaseHook } from '~/hooks';
+import { IFilePicked } from '~/interfaces/common';
 import { IGiphy } from '~/interfaces/IGiphy';
-import { IGetFile } from '~/services/imageUploader';
+import showToastError from '~/store/helper/showToastError';
+import useUploaderStore from '~/store/uploader';
 import modalActions from '~/storeRedux/modal/actions';
 import { borderRadius, margin, padding } from '~/theme/spacing';
 import { Icon, IconBack, IconButton } from './components/Icon';
@@ -45,12 +47,34 @@ const ArticleFormatToolBar: FC<ArticleFormatToolBarProps> = ({
   toggleList,
   toggleHeading,
 }) => {
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const stickerViewRef = useRef<any>();
   const dispatch = useDispatch();
 
+  const [selectedImage, setSelectedImage] = useState<IFilePicked>();
+  const actions = useUploaderStore((state) => state.actions);
+  const uploadedFile = useUploaderStore(useCallback(
+    (state) => state.uploadedFiles[selectedImage?.name], [selectedImage],
+  ));
+  const uploadError = useUploaderStore(useCallback((state) => state.errors[selectedImage?.name], [selectedImage]));
+
   const [ovelayType, setOverlayType] = useState<''|'text'|'paragraph'>('');
+
+  useEffect(() => {
+    if (uploadedFile) {
+      insertImage(uploadedFile?.url);
+      setSelectedImage(null);
+    }
+  }, [uploadedFile]);
+
+  useEffect(() => {
+    if (uploadError) {
+      const content = typeof uploadError === 'string' ? uploadError : t('post:error_upload_photo_failed');
+      showToastError(content);
+    }
+  }, [uploadError]);
 
   const onTextIconPress = () => setOverlayType('text');
 
@@ -62,8 +86,8 @@ const ArticleFormatToolBar: FC<ArticleFormatToolBarProps> = ({
     const image = await ImagePicker.openPickerSingle({
       mediaType: 'photo',
     });
-
-    uploadImage({ file: image, dispatch, onSuccess: (file: IGetFile) => insertImage(file?.url) });
+    setSelectedImage(image);
+    actions.upload({ type: 'image', file: image, uploadType: 'post_image' });
   };
 
   const openGiphy = () => {

@@ -1,14 +1,7 @@
-// fieldName: field name in group profile to be edited
-
-import { ExtendedTheme } from '@react-navigation/native';
-import i18next from 'i18next';
-import { Button } from '~/baseComponents';
 import ImagePicker from '~/beinComponents/ImagePicker';
-import Markdown from '~/beinComponents/Markdown';
 import { IUploadType } from '~/configs/resourceConfig';
 import { IFilePicked } from '~/interfaces/common';
 import groupsActions from '~/storeRedux/groups/actions';
-import modalActions from '~/storeRedux/modal/actions';
 import { groupProfileImageCropRatio } from '~/theme/dimension';
 
 import { checkPermission, permissionTypes } from '~/utils/permission';
@@ -66,27 +59,4 @@ export const _openImagePicker = async ({
 
   // for testing
   return false;
-};
-
-export const alertAction = (
-  dispatch: any,
-  theme: ExtendedTheme,
-  title: string,
-  content: string,
-  doAction: () => void,
-) => {
-  const alertPayload = {
-    title,
-    content,
-    ContentComponent: Markdown,
-    contentProps: {
-      value: content,
-    },
-    cancelBtn: true,
-    onConfirm: () => doAction(),
-    confirmLabel: i18next.t('common:btn_confirm'),
-    ConfirmBtnComponent: Button.Primary,
-  };
-
-  dispatch(modalActions.showAlert(alertPayload));
 };

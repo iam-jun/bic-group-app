@@ -2,7 +2,7 @@ import {
   IOwnReaction, IPayloadReactToPost, IReaction, TargetType,
 } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import streamApi from '../../../api/StreamApi';
 
 const putReactionToPost = (_set, get) => async (
@@ -95,7 +95,7 @@ const putReactionToPost = (_set, get) => async (
     actions.onUpdateReactionOfPostById(
       id, ownReaction, reactionsCount,
     );
-    showError(e);
+    showToastError(e);
   }
 };
 

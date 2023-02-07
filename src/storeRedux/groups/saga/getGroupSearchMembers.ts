@@ -3,8 +3,8 @@ import { put, call, select } from 'redux-saga/effects';
 import actions from '~/storeRedux/groups/actions';
 import groupApi from '~/api/GroupApi';
 import appConfig from '~/configs/appConfig';
-import showError from '~/storeRedux/commonSaga/showError';
 import { IGroupGetMembers } from '~/interfaces/IGroup';
+import showToastError from '~/store/helper/showToastError';
 
 export default function* getGroupSearchMembers({
   payload,
@@ -49,8 +49,6 @@ export default function* getGroupSearchMembers({
     console.error(
       'getGroupSearchMembers error:', err,
     );
-    yield call(
-      showError, err,
-    );
+    showToastError(err);
   }
 }

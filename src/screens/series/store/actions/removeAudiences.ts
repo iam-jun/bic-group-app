@@ -2,9 +2,8 @@ import streamApi from '~/api/StreamApi';
 import { IPayloadAddToAllPost } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import { ISeriesState } from '..';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
+import showToast from '~/store/helper/showToast';
 
 const removeAudiences = (_set, get) => async (id: string, listAudiences: string[]) => {
   if (!id) return;
@@ -23,10 +22,10 @@ const removeAudiences = (_set, get) => async (id: string, listAudiences: string[
     actions.getSeriesDetail(id);
     if (!!response?.data) {
       usePostsStore.getState().actions.addToPosts({ data: response.data } as IPayloadAddToAllPost);
-      Store.store.dispatch(modalActions.showHideToastMessage({ content: 'series:text_deleted_audiences' }));
+      showToast({ content: 'series:text_deleted_audiences' });
     }
   } catch (error) {
-    showError(error);
+    showToastError(error);
     console.error('removeAudiencesError', error);
   }
 };

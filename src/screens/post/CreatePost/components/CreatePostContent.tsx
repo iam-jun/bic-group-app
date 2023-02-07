@@ -17,7 +17,6 @@ import { uploadTypes } from '~/configs/resourceConfig';
 import { useBaseHook } from '~/hooks';
 import { useKeyboardStatus } from '~/hooks/keyboard';
 import { IFilePicked } from '~/interfaces/common';
-import modalActions from '~/storeRedux/modal/actions';
 import { fontFamilies } from '~/theme/fonts';
 
 import postActions from '~/storeRedux/post/actions';
@@ -25,7 +24,6 @@ import { CONTENT_MIN_HEIGHT, MIN_INPUT_HEIGHT } from '../constanst';
 import { calculateInputHeight, isAndroidAnimated } from '../helper';
 import ToastAutoSave from './ToastAutoSave';
 import FilesView from '~/components/FilesView';
-import { IGetFile } from '~/services/fileUploader';
 import { getTotalFileSize } from '~/storeRedux/post/selectors';
 import appConfig from '~/configs/appConfig';
 import Button from '~/beinComponents/Button';
@@ -34,8 +32,11 @@ import dimension from '~/theme/dimension';
 import PostSelectImage from './PostSelectImage';
 import PostVideoPlayer from '~/components/posts/PostVideoPlayer';
 import LinkPreview from '~/components/LinkPreview';
+import { IGetFile } from '~/store/uploader';
 import useUploadImage from '../hooks/useUploadImage';
 import { getImagePastedFromClipboard } from '~/utils/common';
+import useModalStore from '~/store/modal';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 interface Props {
   groupIds: any[];
@@ -50,6 +51,7 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
   const mentionInputRef = useRef<any>();
   const { t } = useBaseHook();
   const refTextInput = inputRef;
+  const { showToast } = useModalStore((state) => state.actions);
 
   const {
     sPostData,
@@ -146,27 +148,23 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
   };
 
   const onUploadError = (type: string) => {
-    dispatch(
-      modalActions.showHideToastMessage({
-        content: t('upload:text_upload_error', {
-          file_type: t(`file_type:${type}`),
-        }),
-        props: { type: 'error' },
+    showToast({
+      content: t('upload:text_upload_error', {
+        file_type: t(`file_type:${type}`),
       }),
-    );
+      type: ToastType.ERROR,
+    });
   };
 
   // only support for iOS
   const onPasteImage = (_, images) => {
     if (!isEmpty(video) || !isEmpty(files)) {
-      dispatch(
-        modalActions.showHideToastMessage({
-          content: t('upload:text_upload_error', {
-            file_type: t('file_type:image'),
-          }),
-          props: { type: 'error' },
+      showToast({
+        content: t('upload:text_upload_error', {
+          file_type: t('file_type:image'),
         }),
-      );
+        type: ToastType.ERROR,
+      });
       return;
     }
 

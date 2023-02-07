@@ -8,6 +8,7 @@ import { groupDetailData } from '~/test/mock_data/group';
 import { GroupPrivacyType } from '~/constants/privacyTypes';
 import useGroupDetailStore from './store';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
+import useGroupsStore from '~/store/entities/groups';
 
 describe('GroupDetail component', () => {
   afterEach(() => {
@@ -26,18 +27,10 @@ describe('GroupDetail component', () => {
   });
 
   it('renders GroupPrivateWelcome when user is a visitor to a private group', () => {
-    jest.useFakeTimers();
-    act(() => {
-      useGroupDetailStore.setState({
-        groupDetail: {
-          ...groupDetailData,
-          joinStatus: GroupJoinStatus.VISITOR,
-          group: { ...groupDetailData.group, privacy: GroupPrivacyType.PRIVATE },
-        },
-      });
-    });
-    act(() => {
-      jest.runAllTimers();
+    useGroupsStore.getState().actions.addToGroups({
+      ...groupDetailData,
+      joinStatus: GroupJoinStatus.VISITOR,
+      group: { ...groupDetailData.group, privacy: GroupPrivacyType.PRIVATE },
     });
 
     const wrapper = renderWithRedux(<MockedNavigator component={component} />);

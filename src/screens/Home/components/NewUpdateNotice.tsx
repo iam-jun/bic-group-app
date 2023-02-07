@@ -4,9 +4,8 @@ import { compare } from 'compare-versions';
 import getEnv from '~/utils/env';
 import NoticePanel from '~/components/NoticePanel';
 import useRemoteConfigStore from '~/store/remoteConfig';
-import { useKeySelector } from '~/hooks/selector';
-import postKeySelector from '~/storeRedux/post/keySelector';
 import { openUrl } from '~/utils/link';
+import usePostsInProgressStore from './VideoProcessingNotice/store';
 
 const NewUpdateNotice = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -15,7 +14,7 @@ const NewUpdateNotice = () => {
   const newAppVersion = useRemoteConfigStore((state) => state.appVersion);
   const shouldShowNotice = compare(getEnv('APP_VERSION'), newAppVersion, '<');
 
-  const total = useKeySelector(postKeySelector.allPostContainingVideoInProgress);
+  const total = usePostsInProgressStore((state) => state.total);
 
   useEffect(() => {
     /**

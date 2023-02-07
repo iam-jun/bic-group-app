@@ -11,13 +11,10 @@ import {
 import groupApi from '~/api/GroupApi';
 import groupsActions from '~/storeRedux/groups/actions';
 import groupsTypes from '~/storeRedux/groups/types';
-import * as modalActions from '~/storeRedux/modal/actions';
 import { IResponseData, IToastMessage } from '~/interfaces/common';
 import { mapData } from '~/screens/groups/helper/mapper';
 import appConfig from '~/configs/appConfig';
-import ImageUploader, { IGetFile } from '~/services/imageUploader';
 
-import showError from '~/storeRedux/commonSaga/showError';
 import getGroupSearchMembers from './getGroupSearchMembers';
 import approveAllGroupMemberRequests from './approveAllGroupMemberRequests';
 import declineAllGroupMemberRequests from './declineAllGroupMemberRequests';
@@ -27,10 +24,15 @@ import getGroupMemberRequests from './getGroupMemberRequests';
 import getGlobalSearch from './getGlobalSearch';
 import { IUser } from '~/interfaces/IAuth';
 import useCommunityController from '~/screens/communities/store';
-import useGroupController from '~/screens/groups/store';
 import useGroupMemberStore from '~/screens/groups/GroupMembers/store';
+import { makeHttpRequest } from '~/api/apiRequest';
+import { uploadApiConfig } from '~/api/UploadApi';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import useGeneralInformationStore from '~/screens/groups/GeneralInformation/store';
+import useGroupsStore from '~/store/entities/groups';
+import showToast from '~/store/helper/showToast';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import showToastError from '~/store/helper/showToastError';
 
 export default function* groupsSaga() {
   yield takeLatest(
@@ -87,18 +89,19 @@ function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
       fieldName, true,
     );
 
-    const data: IGetFile = yield ImageUploader.getInstance().upload({
-      file,
-      uploadType,
-    });
+    const uploadResponse = yield makeHttpRequest(uploadApiConfig.uploadImage(
+      uploadType, file,
+    ));
 
-    const editData = { id, rootGroupId, [fieldName]: data.url };
+    const uploadedUrl = uploadResponse?.data?.data?.url || uploadResponse?.data?.data?.src;
+
+    const editData = { id, rootGroupId, [fieldName]: uploadedUrl };
     const editFieldName = fieldName === 'icon'
       ? i18next.t('common:text_avatar')
       : i18next.t('common:text_cover');
 
     if (destination === 'group') {
-      useGroupController.getState().actions.editGroupDetail(editData, editFieldName);
+      useGeneralInformationStore.getState().actions.editGroupDetail(editData, editFieldName);
     } else {
       actions.editCommunityDetail(editData, editFieldName);
     }
@@ -112,7 +115,7 @@ function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
     yield updateLoadingImageState(
       payload.fieldName, false,
     );
-    yield showError(err);
+    showToastError(err);
   }
 }
 
@@ -162,7 +165,7 @@ function* getJoinableUsers({
     }
   } catch (error) {
     console.error('getJoinableUsers error:', error);
-    yield call(showError, error);
+    showToastError(error);
   }
 }
 
@@ -181,7 +184,7 @@ function* mergeExtraJoinableUsers() {
 
   if (!loading && canLoadMore) {
     // continue to load more data in advance if possible
-    const { id: groupId } = useGroupDetailStore.getState().groupDetail.group;
+    const { currentGroupId: groupId } = useGroupsStore.getState();
     if (groupId) {
       yield put(groupsActions.getJoinableUsers({ groupId, params }));
     }
@@ -213,12 +216,12 @@ function* addMembers({ payload }: {type: string; payload: IGroupAddMembers}) {
 
     const toastMessage: IToastMessage = {
       content: i18next.t('common:message_add_member_success_group'),
-      props: { type: 'success' },
+      type: ToastType.SUCCESS,
     };
-    yield put(modalActions.showHideToastMessage(toastMessage));
+    showToast(toastMessage);
   } catch (error) {
     console.error('addMembers error:', error);
-    yield call(showError, error);
+    showToastError(error);
   }
 }
 

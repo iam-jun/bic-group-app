@@ -169,7 +169,7 @@ const CodeInputView: React.FC<Props> = ({ useFormData }) => {
           }}
           loading={loadingConfirm}
           testID="forgot_password.input_confirm_password"
-          placeholder={t('auth:input_label_confirm_new_password')}
+          placeholder={t('auth:input_placeholder_confirm_password')}
           validateValue={validateConfirmPassword}
           textContentType="oneTimeCode"
         />

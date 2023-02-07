@@ -12,6 +12,7 @@ import {
   IPayloadPublishDraftPost,
   IPayloadPutEditDraftPost,
   IPost,
+  PostStatus,
 } from '~/interfaces/IPost';
 import { rootNavigationRef } from '~/router/refs';
 import { withNavigation } from '~/router/helper';
@@ -23,16 +24,18 @@ import postActions from '~/storeRedux/post/actions';
 import putEditPost from '~/storeRedux/post/saga/putEditPost';
 import putMarkAsRead from '~/storeRedux/post/saga/putMarkAsRead';
 import postTypes from '~/storeRedux/post/types';
-import showError from '~/storeRedux/commonSaga/showError';
-import * as modalActions from '~/storeRedux/modal/actions';
 import { timeOut } from '~/utils/common';
-import getPostsContainingVideoInProgress from './getPostsContainingVideoInProgress';
 import putMarkSeenPost from './putMarKSeenPost';
-import updatePostsContainingVideoInProgress from './updatePostsContainingVideoInProgress';
 import deletePost from './deletePost';
 import removeAudiencesFromPost from './removeAudiencesFromPost';
 import useDraftPostStore from '../../../screens/Draft/DraftPost/store';
 import useTimelineStore from '~/store/timeline';
+import { mockReportReason } from '~/test/mock_data/report';
+import { IParamGetReportContent, TargetType } from '~/interfaces/IReport';
+import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
+import showToast from '~/store/helper/showToast';
+import showToastError from '~/store/helper/showToastError';
+import useReportContentStore from '~/components/Report/store';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -66,14 +69,6 @@ export default function* postSaga() {
     postTypes.DELETE_POST_LOCAL, deletePostLocal,
   );
   yield takeLatest(
-    postTypes.GET_POSTS_CONTAINING_VIDEO_IN_PROGRESS,
-    getPostsContainingVideoInProgress,
-  );
-  yield takeLatest(
-    postTypes.UPDATE_POSTS_CONTAINING_VIDEO_IN_PROGRESS,
-    updatePostsContainingVideoInProgress,
-  );
-  yield takeLatest(
     postTypes.REMOVE_POST_AUDIENCES,
     removeAudiencesFromPost,
   );
@@ -101,19 +96,19 @@ function* postPublishDraftPost({
 
     if (!res.data) {
       onError?.();
-      yield showError(res);
+      showToastError(res);
       return;
     }
 
     onSuccess?.();
     const postData: IPost = res.data;
     usePostsStore.getState().actions.addToPosts({ data: postData } as IPayloadAddToAllPost);
-    if (res.data?.isProcessing) {
-      yield put(modalActions.showHideToastMessage({
+    if (res.data?.status === PostStatus.PROCESSING) {
+      showToast({
         content: 'post:draft:text_processing_publish',
-      }));
+      });
       navigation.goBack();
-      yield put(postActions.getAllPostContainingVideoInProgress());
+      usePostsInProgressStore.getState().actions.getPosts();
     } else if (replaceWithDetail) {
       navigation.replace(
         homeStack.postDetail, { post_id: postData?.id },
@@ -130,7 +125,7 @@ function* postPublishDraftPost({
   } catch (e) {
     yield put(postActions.setLoadingCreatePost(false));
     onError?.();
-    yield showError(e);
+    showToastError(e);
   }
 }
 
@@ -173,17 +168,17 @@ function* putEditDraftPost({
         };
         yield call(useDraftPostStore.getState().actions.getDraftPosts, payloadGetDraftPosts);
         navigation.goBack();
-        yield put(modalActions.showHideToastMessage({
+        showToast({
           content: 'post:draft:text_draft_saved',
-        }));
+        });
       }
     } else {
       yield put(postActions.setLoadingCreatePost(false));
-      yield showError(response);
+      showToastError(response);
     }
   } catch (e) {
     yield put(postActions.setLoadingCreatePost(false));
-    yield showError(e);
+    showToastError(e);
   }
 }
 
@@ -193,7 +188,9 @@ function* getPostDetail({
   type: string;
   payload: IPayloadGetPostDetail;
 }): any {
-  const { callbackLoading, postId, ...restParams } = payload || {};
+  const {
+    callbackLoading, postId, isReported, ...restParams
+  } = payload || {};
   if (!postId) {
     return;
   }
@@ -207,12 +204,32 @@ function* getPostDetail({
       // is_draft
       ...restParams,
     };
-    const response = yield call(
-      streamApi.getPostDetail, params,
-    );
+
+    let response = null;
+
+    if (isReported) {
+      const paramGetReportContent: IParamGetReportContent = {
+        order: 'ASC',
+        offset: 0,
+        limit: mockReportReason.length,
+        targetIds: [postId],
+        targetType: TargetType.POST,
+      };
+      const responeReportContent = yield call(streamApi.getReportContent, paramGetReportContent);
+      if (responeReportContent?.data) {
+        response = responeReportContent.data.list;
+        useReportContentStore.getState().actions.addToReportDetailsPost(response);
+      }
+    } else {
+      const responePostDetail = yield call(streamApi.getPostDetail, params);
+      if (responePostDetail?.data) {
+        response = responePostDetail.data;
+      }
+    }
+
     yield timeOut(500);
     usePostsStore.getState().actions.addToPosts(
-      { data: response?.data || {}, handleComment: true } as IPayloadAddToAllPost,
+      { data: response || {}, handleComment: true } as IPayloadAddToAllPost,
     );
     callbackLoading?.(false, true);
     yield put(postActions.setLoadingGetPostDetail(false));
@@ -229,12 +246,12 @@ function* getPostDetail({
       yield put(postActions.deletePostLocal(postId));
       yield put(postActions.setCommentErrorCode(e.code));
       if (payload?.showToast) {
-        yield put(modalActions.showHideToastMessage({
+        showToast({
           content: 'post:error_post_detail_deleted',
-        }));
+        });
       }
     } else {
-      yield showError(e);
+      showToastError(e);
     }
   }
 }
@@ -269,6 +286,6 @@ function* deletePostLocal({ payload }: {type: string; payload: string}): any {
       usePostsStore.getState().actions.addToPosts({ data: post } as IPayloadAddToAllPost);
     }
   } catch (e) {
-    yield showError(e);
+    yield showToastError(e);
   }
 }

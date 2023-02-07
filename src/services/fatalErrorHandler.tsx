@@ -8,9 +8,8 @@ import {
 } from 'react-native-exception-handler';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { captureExceptionWithSentry } from '~/services/sentry';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
 import Text from '~/baseComponents/Text';
+import showAlert from '~/store/helper/showAlert';
 
 const initFatalErrorHandler = () => {
   /**
@@ -30,7 +29,7 @@ const errorHandler = (
     const content = `Copied error, please send to BIC Devs...
 
 Error: ${isFatal ? 'Fatal:' : ''} ${e.name} ${e.message}`;
-    Store.store.dispatch(modalActions.showAlert({
+    showAlert({
       title: '(×﹏×)',
       isDismissible: false,
       onConfirm: () => RNRestart.Restart(),
@@ -43,7 +42,7 @@ Error: ${isFatal ? 'Fatal:' : ''} ${e.name} ${e.message}`;
           </ScrollView>
         </View>
       ),
-    }));
+    });
   } else {
     console.error(e); // So that we can see it in the ADB logs in case of Android if needed
   }

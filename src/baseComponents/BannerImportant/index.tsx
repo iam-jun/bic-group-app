@@ -18,6 +18,7 @@ interface BannerImportantProps {
   isImportant?: boolean;
   isExpired?: boolean;
   listCommunity?: IPostCommunities[];
+  shouldBeHidden?: boolean;
   onPressBanner?: any;
 }
 
@@ -27,6 +28,7 @@ const BannerImportant = ({
   isImportant,
   isExpired,
   listCommunity = [],
+  shouldBeHidden = false,
   onPressBanner,
 }: BannerImportantProps) => {
   const theme: ExtendedTheme = useTheme();
@@ -67,6 +69,8 @@ const BannerImportant = ({
       />
     );
   };
+
+  if (shouldBeHidden) return null;
 
   if (!isImportant && (!listCommunity || listCommunity?.length === 0)) return null;
 

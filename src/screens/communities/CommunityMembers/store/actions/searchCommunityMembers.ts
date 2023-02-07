@@ -1,7 +1,7 @@
 import groupApi from '~/api/GroupApi';
 import appConfig from '~/configs/appConfig';
 import { ISearchCommunityMembers } from '~/interfaces/ICommunity';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 
 const searchCommunityMembers = (set, get) => async (
   { isLoadMore = false, key, groupId }: ISearchCommunityMembers,
@@ -46,7 +46,7 @@ const searchCommunityMembers = (set, get) => async (
     set((state) => {
       state.search.loading = false;
     }, 'searchCommunityMembersFailed');
-    showError(err);
+    showToastError(err);
   }
 };
 

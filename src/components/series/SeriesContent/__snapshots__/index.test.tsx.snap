@@ -235,7 +235,7 @@ exports[`SeriesContent component given summaryHighlight and isLite === false sho
           Object {
             "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
+            "fontSize": 14,
           },
           Object {
             "color": "#353E6E",
@@ -250,7 +250,7 @@ exports[`SeriesContent component given summaryHighlight and isLite === false sho
             Object {
               "color": "#212745",
               "fontFamily": "BeVietnamPro-Light",
-              "fontSize": 15,
+              "fontSize": 14,
             },
             Object {},
             Object {
@@ -597,7 +597,7 @@ exports[`SeriesContent component given summaryHighlight and isLite === true shou
           Object {
             "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
+            "fontSize": 14,
           },
           Object {
             "color": "#353E6E",
@@ -612,7 +612,7 @@ exports[`SeriesContent component given summaryHighlight and isLite === true shou
             Object {
               "color": "#212745",
               "fontFamily": "BeVietnamPro-Light",
-              "fontSize": 15,
+              "fontSize": 14,
             },
             Object {},
             Object {
@@ -629,7 +629,7 @@ exports[`SeriesContent component given summaryHighlight and isLite === true shou
             Object {
               "color": "#212745",
               "fontFamily": "BeVietnamPro-Light",
-              "fontSize": 15,
+              "fontSize": 14,
             },
             Object {},
             Object {
@@ -646,7 +646,7 @@ exports[`SeriesContent component given summaryHighlight and isLite === true shou
             Object {
               "color": "#212745",
               "fontFamily": "BeVietnamPro-Light",
-              "fontSize": 15,
+              "fontSize": 14,
             },
             Object {},
             Object {
@@ -1673,7 +1673,7 @@ exports[`SeriesContent component render with description view 1`] = `
           Object {
             "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
+            "fontSize": 14,
           },
           Object {
             "color": "#353E6E",
@@ -1688,7 +1688,7 @@ exports[`SeriesContent component render with description view 1`] = `
             Object {
               "color": "#212745",
               "fontFamily": "BeVietnamPro-Light",
-              "fontSize": 15,
+              "fontSize": 14,
             },
             Object {},
             Object {

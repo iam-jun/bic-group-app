@@ -1,6 +1,6 @@
 import streamApi from '~/api/StreamApi';
 import usePostsStore from '~/store/entities/posts';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 import { mockSeries, mockSeriesRequest } from '~/test/mock_data/series';
 import { act, renderHook } from '~/test/testUtils';
 import useSeriesStore, { ISeriesState } from '../index';
@@ -40,7 +40,9 @@ describe('editSeries', () => {
     };
     const spyPostStore = jest.spyOn(usePostsStore, 'getState').mockImplementation(() => ({ actions } as any));
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const toastActions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions: toastActions } as any));
 
     useSeriesStore.setState((state: ISeriesState) => {
       state.data = mockSeriesRequest as any;
@@ -64,7 +66,7 @@ describe('editSeries', () => {
     expect(result.current.loading).toBe(false);
     expect(spyPostStore).toBeCalled();
     expect(addToPosts).toBeCalledWith({ data: mockSeries });
-    expect(spyModalActions).toBeCalledWith({ content: 'series:text_edit_series_success' });
+    expect(showToast).toBeCalledWith({ content: 'series:text_edit_series_success' });
   });
 
   it('should put edit series throw error and should show toast', () => {
@@ -73,7 +75,9 @@ describe('editSeries', () => {
       () => Promise.reject(error) as any,
     );
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     const onRetry = jest.fn();
 
@@ -101,7 +105,7 @@ describe('editSeries', () => {
     });
 
     expect(result.current.loading).toBe(false);
-    expect(spyModalActions).toBeCalled();
+    expect(showToast).toBeCalled();
   });
 
   it('should put edit series throw error and props callbackError should called', () => {

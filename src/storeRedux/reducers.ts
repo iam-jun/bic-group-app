@@ -14,7 +14,7 @@ import modal from './modal/reducer';
 const postPersistConfig = {
   key: 'post',
   storage: AsyncStorage,
-  whitelist: ['allPostContainingVideoInProgress'],
+  whitelist: [],
 };
 
 export const appReducer = combineReducers({

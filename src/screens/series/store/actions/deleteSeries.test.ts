@@ -1,6 +1,6 @@
 import streamApi from '~/api/StreamApi';
 import usePostsStore from '~/store/entities/posts';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 import { mockSeries, mockSeriesRequest } from '~/test/mock_data/series';
 import { act, renderHook } from '~/test/testUtils';
 import useSeriesStore, { ISeriesState } from '../index';
@@ -48,7 +48,9 @@ describe('deleteSeries', () => {
       },
     } as any));
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const toastActions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions: toastActions } as any));
 
     const deletedSeries = {
       ...mockSeries,
@@ -68,7 +70,7 @@ describe('deleteSeries', () => {
     });
 
     expect(addToPosts).toBeCalledWith({ data: deletedSeries });
-    expect(spyModalActions).toBeCalledWith({ content: 'series:text_delete_series_success' });
+    expect(showToast).toBeCalledWith({ content: 'series:text_delete_series_success' });
   });
 
   it('should delete series throw error and should show toast', () => {
@@ -77,7 +79,9 @@ describe('deleteSeries', () => {
       () => Promise.reject(error) as any,
     );
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     const callbackError = jest.fn();
 
@@ -103,7 +107,7 @@ describe('deleteSeries', () => {
       jest.runAllTimers();
     });
 
-    expect(spyModalActions).toBeCalled();
+    expect(showToast).toBeCalled();
   });
 
   it('should delete series throw error and props callbackError should called', () => {

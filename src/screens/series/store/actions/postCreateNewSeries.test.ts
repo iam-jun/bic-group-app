@@ -1,5 +1,5 @@
 import streamApi from '~/api/StreamApi';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 import { mockSeries, mockSeriesRequest } from '~/test/mock_data/series';
 import { act, renderHook } from '~/test/testUtils';
 import useSeriesStore, { ISeriesState } from '../index';
@@ -65,7 +65,9 @@ describe('postCreateNewSeries', () => {
       () => Promise.reject(error) as any,
     );
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     useSeriesStore.setState((state:ISeriesState) => {
       state.data = mockSeriesRequest as any;
@@ -91,6 +93,6 @@ describe('postCreateNewSeries', () => {
     });
 
     expect(result.current.loading).toBe(false);
-    expect(spyModalActions).toBeCalled();
+    expect(showToast).toBeCalled();
   });
 });

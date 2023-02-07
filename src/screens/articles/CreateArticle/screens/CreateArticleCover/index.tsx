@@ -13,7 +13,7 @@ import { IFilePicked } from '~/interfaces/common';
 import { IArticleCover } from '~/interfaces/IPost';
 import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
-import ImageUploader from '~/services/imageUploader';
+import { IGetFile } from '~/store/uploader';
 import dimension, { scaleSize } from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 import { checkPermission, permissionTypes } from '~/utils/permission';
@@ -57,8 +57,7 @@ const CreateArticleCover: FC<CreateArticleCoverProps> = ({ articleId }) => {
     );
   };
 
-  const onUploadSuccess = (url: string, fileName: string) => {
-    const file = ImageUploader.getInstance().getFile(fileName);
+  const onUploadSuccess = (file: IGetFile) => {
     if (file?.result?.id && file?.result?.url) {
       actions.setCover(file.result as IArticleCover);
       setUploadingImage(false);
@@ -82,7 +81,7 @@ const CreateArticleCover: FC<CreateArticleCoverProps> = ({ articleId }) => {
   );
 
   const renderButton = () => {
-    if (uploadingImage) return null;
+    if (uploadingImage || error) return null;
 
     if (!coverMedia?.url) {
       return (
@@ -92,9 +91,7 @@ const CreateArticleCover: FC<CreateArticleCoverProps> = ({ articleId }) => {
         </Button>
       );
     }
-    if (error) {
-      return null;
-    }
+
     return (
       <EditAction style={styles.btnEdit} onPress={onPressSelect} type="edit" />
     );

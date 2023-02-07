@@ -1,17 +1,14 @@
 import { Auth } from 'aws-amplify';
-import { Platform } from 'react-native';
 import { makeRemovePushTokenRequest } from '~/api/apiRequest';
-import { IObject } from '~/interfaces/common';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { rootSwitch } from '~/router/stack';
 import { IAuthState } from '~/screens/auth/store';
-import FileUploader from '~/services/fileUploader';
 import { deleteTokenMessage } from '~/services/firebase';
-import ImageUploader from '~/services/imageUploader';
-import { getUserFromSharedPreferences, isAppInstalled, saveUserToSharedPreferences } from '~/services/sharePreferences';
-import showError from '~/store/helper/showError';
+import { clearAllSharedPreferences } from '~/services/sharePreferences';
+import showToastError from '~/store/helper/showToastError';
 import resetAllStores from '~/store/resetAllStores';
+import useUploaderStore from '~/store/uploader';
 import Store from '~/storeRedux';
 import modalActions from '~/storeRedux/modal/actions';
 
@@ -33,7 +30,7 @@ const signOut = (set, get) => async () => {
 
     await Auth.signOut();
 
-    await updateSharedPreferences();
+    await clearAllSharedPreferences();
 
     await removePushToken();
 
@@ -48,47 +45,15 @@ const signOut = (set, get) => async () => {
     navigation.replace(rootSwitch.authStack);
   } catch (err) {
     console.error('\x1b[35m🐣️ signOut error: ', err, '\x1b[0m');
-    showError(err);
+    showToastError(err);
     resetAllStores();
     resetAuthStore();
     navigation.replace(rootSwitch.authStack);
   }
 };
 
-const updateSharedPreferences = async () => {
-  /**
-  * For android, we stored authentication in separated DB.
-  * So only remove its own session
-  */
-  if (Platform.OS === 'android') {
-    await saveUserToSharedPreferences(null);
-    return;
-  }
-
-  const sessionData: IObject<any> = await getUserFromSharedPreferences();
-  const isInstalled = await isAppInstalled();
-  const activeSessions = sessionData?.activeSessions || {};
-
-  /**
-   * if BIC chat is installed and has active session
-   *  just only remove chat session
-   */
-  if (isInstalled && activeSessions.chat) {
-    delete activeSessions?.community;
-    const data = {
-      ...sessionData,
-      activeSessions,
-    };
-    await saveUserToSharedPreferences(data);
-  } else {
-    // clear all session
-    await saveUserToSharedPreferences(null);
-  }
-};
-
 const resetUploader = () => {
-  FileUploader.getInstance()?.resetData?.();
-  ImageUploader.getInstance()?.resetData?.();
+  useUploaderStore.getState().reset();
 };
 
 const removePushToken = async () => {

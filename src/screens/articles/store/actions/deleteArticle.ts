@@ -1,28 +1,32 @@
 import streamApi from '~/api/StreamApi';
-import { IPayloadDeleteArticle } from '~/interfaces/IArticle';
+import { IPayloadAddToAllPost } from '~/interfaces/IPost';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
-import { showHideToastMessage } from '~/storeRedux/modal/actions';
-import Store from '~/storeRedux';
-import showError from '~/store/helper/showError';
+import usePostsStore from '~/store/entities/posts';
+import showToast from '~/store/helper/showToast';
+import showToastError from '~/store/helper/showToastError';
 
-const deleteArticle = (_set, _get) => async (payload: IPayloadDeleteArticle) => {
-  const { id, isDraft } = payload;
-
+const deleteArticle = (_set, _get) => async (id: string, successMessage = 'post:draft:text_draft_deleted') => {
   if (!id) {
     console.warn('\x1b[31m🐣️ deleteArticle: id not found\x1b[0m');
     return;
   }
 
   try {
-    const response = await streamApi.deleteArticle(id, isDraft);
+    const response = await streamApi.deleteArticle(id);
 
     if (response.data) {
-      Store.store.dispatch(showHideToastMessage({ content: 'post:draft:text_draft_deleted' }));
+      const post = usePostsStore.getState()?.posts?.[id] || {};
+      const deletedPost = {
+        ...post,
+        deleted: true,
+      };
+      usePostsStore.getState().actions.addToPosts({ data: deletedPost } as IPayloadAddToAllPost);
       useDraftArticleStore.getState().actions.getDraftArticles({ isRefresh: true });
+      showToast({ content: successMessage });
     }
   } catch (error) {
     console.error('deleteArticle error:', error);
-    showError(error);
+    showToastError(error);
   }
 };
 

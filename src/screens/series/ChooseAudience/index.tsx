@@ -4,18 +4,17 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { isEmpty, isEqual } from 'lodash';
-import { useDispatch } from 'react-redux';
 
 import Header from '~/beinComponents/Header';
 import SelectAudience, { ContentType } from '~/components/SelectAudience';
 import useSelectAudienceStore from '~/components/SelectAudience/store';
 import { useBaseHook } from '~/hooks';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
-import modalActions from '~/storeRedux/modal/actions';
 import { CreationSeriesProps } from '~/interfaces/ISeries';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { getAudienceIdsFromAudienceObject } from '~/screens/articles/CreateArticle/helper';
 import useSeriesStore, { ISeriesState } from '../store';
+import useModalStore from '~/store/modal';
 
 const ChooseSeriesAudience = ({ route }: CreationSeriesProps) => {
   const { isFirstStep, isEditAudience, initAudienceGroups = [] } = route?.params || {};
@@ -23,7 +22,7 @@ const ChooseSeriesAudience = ({ route }: CreationSeriesProps) => {
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
-  const dispatch = useDispatch();
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const { rootNavigation } = useRootNavigation();
 
@@ -65,7 +64,7 @@ const ChooseSeriesAudience = ({ route }: CreationSeriesProps) => {
   const handleBack = () => {
     if (!disabled || isAudienceUpdated) {
       Keyboard.dismiss();
-      dispatch(modalActions.showAlert({
+      showAlert({
         title: t('discard_alert:title'),
         content: t('discard_alert:content'),
         cancelBtn: true,
@@ -75,7 +74,7 @@ const ChooseSeriesAudience = ({ route }: CreationSeriesProps) => {
           setInitDataToSelectingAudiences();
           rootNavigation.goBack();
         },
-      }));
+      });
       return;
     }
     rootNavigation.goBack();
@@ -92,7 +91,7 @@ const ChooseSeriesAudience = ({ route }: CreationSeriesProps) => {
       );
     } else if (isEditAudience) {
       if (isAudienceUpdated) {
-        dispatch(modalActions.showAlert({
+        showAlert({
           title: t('post:create_post:title_audience_changed'),
           content: t('post:create_post:text_discard_change_audience'),
           cancelBtn: true,
@@ -103,7 +102,7 @@ const ChooseSeriesAudience = ({ route }: CreationSeriesProps) => {
             seriesActions.setAudienceGroups(selectingAudienceGroups);
             rootNavigation.goBack();
           },
-        }));
+        });
       } else {
         seriesActions.setAudience(selectingAudienceIds);
         seriesActions.setAudienceGroups(selectingAudienceGroups);

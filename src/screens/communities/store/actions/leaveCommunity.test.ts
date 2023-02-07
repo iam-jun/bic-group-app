@@ -1,8 +1,9 @@
 import groupApi from '~/api/GroupApi';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { CommunityPrivacyType } from '~/constants/privacyTypes';
+import useModalStore from '~/store/modal';
 import groupsActions from '~/storeRedux/groups/actions';
-import modalActions from '~/storeRedux/modal/actions';
 import { act, renderHook } from '~/test/testUtils';
 import useCommunityController from '../index';
 
@@ -31,18 +32,13 @@ describe('leaveCommunity', () => {
       .spyOn(groupApi, 'getManagedCommunityAndGroup')
       .mockImplementation(() => Promise.resolve(response) as any);
 
-    const spyApiGetOwnerCommunity = jest
-      .spyOn(groupApi, 'getOwnerCommunity')
-      .mockImplementation(() => Promise.resolve(response) as any);
-
     const spyApiGetJoinedCommunities = jest
       .spyOn(groupApi, 'getJoinedCommunities')
       .mockImplementation(() => Promise.resolve(response) as any);
 
-    const spyModalActions = jest.spyOn(
-      modalActions,
-      'showHideToastMessage',
-    );
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useCommunityController((state) => state));
@@ -59,11 +55,10 @@ describe('leaveCommunity', () => {
       data: { joinStatus: status },
     });
     expect(spyApiGetManagedCommunityAndGroup).toBeCalled();
-    expect(spyApiGetOwnerCommunity).toBeCalled();
     expect(spyApiGetJoinedCommunities).toBeCalled();
-    expect(spyModalActions).toBeCalledWith({
+    expect(showToast).toBeCalledWith({
       content: 'communities:modal_confirm_leave_community:success_message',
-      props: { type: 'success' },
+      type: ToastType.SUCCESS,
     });
   });
 
@@ -74,10 +69,9 @@ describe('leaveCommunity', () => {
       .spyOn(groupApi, 'leaveCommunity')
       .mockImplementation(() => Promise.reject(error) as any);
 
-    const spyModalActions = jest.spyOn(
-      modalActions,
-      'showHideToastMessage',
-    );
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useCommunityController((state) => state));
@@ -94,6 +88,6 @@ describe('leaveCommunity', () => {
       jest.runAllTimers();
     });
 
-    expect(spyModalActions).toBeCalled();
+    expect(showToast).toBeCalled();
   });
 });

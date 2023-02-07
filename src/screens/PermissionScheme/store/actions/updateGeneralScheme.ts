@@ -1,13 +1,12 @@
-import Store from '~/storeRedux';
 import groupApi from '~/api/GroupApi';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { sortFixedRoles } from '~/screens/groups/helper';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import IPermissionSchemeState from '../Interface';
-import modalActions from '~/storeRedux/modal/actions';
 import { IToastMessage } from '~/interfaces/common';
 import { IScheme } from '~/interfaces/IGroup';
+import showToast from '~/store/helper/showToast';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -35,7 +34,7 @@ const updateGeneralScheme = (set, get) => async (communityId: string) => {
     const toastMessage: IToastMessage = {
       content: 'communities:permission:text_update_scheme_success',
     };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    showToast(toastMessage);
   } catch (error) {
     console.error('updateGeneralScheme error:', error);
 
@@ -43,7 +42,7 @@ const updateGeneralScheme = (set, get) => async (communityId: string) => {
       state.creatingScheme.creating = false;
     }, 'updateGeneralSchemeError');
 
-    showError(error);
+    showToastError(error);
   }
 };
 
