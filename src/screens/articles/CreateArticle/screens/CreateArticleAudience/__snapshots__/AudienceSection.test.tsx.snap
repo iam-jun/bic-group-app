@@ -148,7 +148,7 @@ exports[`AudienceSection should render correctly 1`] = `
                     Object {
                       "alignItems": "center",
                       "alignSelf": "baseline",
-                      "backgroundColor": "#F1F2F8",
+                      "backgroundColor": "#EBF4FF",
                       "borderRadius": 100,
                       "flexDirection": "row",
                       "height": 28,
@@ -172,7 +172,7 @@ exports[`AudienceSection should render correctly 1`] = `
                         },
                         Object {},
                         Object {
-                          "color": "#2D3039",
+                          "color": "#007AFF",
                           "paddingLeft": 4,
                         },
                       ]
@@ -206,7 +206,7 @@ exports[`AudienceSection should render correctly 1`] = `
                     Object {
                       "alignItems": "center",
                       "alignSelf": "baseline",
-                      "backgroundColor": "#F1F2F8",
+                      "backgroundColor": "#EBF4FF",
                       "borderRadius": 100,
                       "flexDirection": "row",
                       "height": 28,
@@ -230,7 +230,7 @@ exports[`AudienceSection should render correctly 1`] = `
                         },
                         Object {},
                         Object {
-                          "color": "#2D3039",
+                          "color": "#007AFF",
                           "paddingLeft": 4,
                         },
                       ]

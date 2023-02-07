@@ -22,4 +22,4 @@ beforeEach(async () => {
   }));
 });
 
-export default create;
+export { create };

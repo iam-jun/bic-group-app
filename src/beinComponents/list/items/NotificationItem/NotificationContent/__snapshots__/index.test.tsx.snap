@@ -112,7 +112,7 @@ exports[`NotificationContent component renders correctly 1`] = `
     }
     testID="notification_item.time_view"
   >
-    35w
+    38w
   </Text>
 </View>
 `;
