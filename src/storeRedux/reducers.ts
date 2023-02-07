@@ -3,7 +3,6 @@ import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 
 import groupsReducer from '~/storeRedux/groups/reducer';
-import homeReducer from '~/storeRedux/home/reducer';
 import menuReducer from '~/storeRedux/menu/reducer';
 import postReducer from '~/storeRedux/post/reducer';
 
@@ -24,7 +23,6 @@ export const appReducer = combineReducers({
     postPersistConfig, postReducer,
   ),
   groups: groupsReducer,
-  home: homeReducer,
   menu: menuReducer,
   noInternet: noInternetReducer,
 });

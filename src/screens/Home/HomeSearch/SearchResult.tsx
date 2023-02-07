@@ -3,12 +3,8 @@ import {
   View, StyleSheet, FlatList, ActivityIndicator,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
-import { useKeySelector } from '~/hooks/selector';
 import { IPayloadGetSearchPosts } from '~/interfaces/IHome';
-import homeKeySelector from '~/storeRedux/home/keySelector';
-import homeActions from '~/storeRedux/home/actions';
 
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
@@ -23,9 +19,9 @@ import { PostView } from '~/components/posts';
 import SeriesItem from '~/components/series/SeriesItem';
 import FilterToolbar from '~/components/FilterToolbar';
 import useFilterToolbarStore from '~/components/FilterToolbar/store';
+import useFeedSearchStore from './store';
 
 const SearchResult = () => {
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
@@ -34,9 +30,10 @@ const SearchResult = () => {
     loadingResult = false,
     searchResults = [],
     searchText = '',
-    totalResult,
+    hasNextPage,
     groupId,
-  } = useKeySelector(homeKeySelector.newsfeedSearchState) || {};
+  } = useFeedSearchStore((state) => state.newsfeedSearch);
+  const actions = useFeedSearchStore((state) => state.actions);
 
   const filterCreatedBy = useFilterToolbarStore((state) => state.createdBy);
   const filterDate = useFilterToolbarStore((state) => state.datePosted);
@@ -45,7 +42,7 @@ const SearchResult = () => {
     getData();
   }, [searchText, filterCreatedBy, filterDate?.startDate, filterDate?.endDate, groupId]);
 
-  const getData = (isLoadMore = false) => {
+  const getData = () => {
     if (searchText) {
       const payload: IPayloadGetSearchPosts = {
         searchText,
@@ -53,18 +50,17 @@ const SearchResult = () => {
         startDate: filterDate?.startDate,
         endDate: filterDate?.endDate,
         groupId,
-        isLoadMore,
       };
-      dispatch(homeActions.getSearchPosts(payload));
+      actions.getSearchPosts(payload);
     }
   };
 
   const onEndReached = () => {
-    getData(true);
+    getData();
   };
 
   const renderEmpty = () => {
-    if (loadingResult) {
+    if (loadingResult || hasNextPage) {
       return null;
     }
     return (
@@ -82,7 +78,7 @@ const SearchResult = () => {
   };
 
   const renderFooter = () => {
-    if (totalResult === searchResults.length) return <ViewSpacing height={spacing.margin.large} />;
+    if (!hasNextPage) return <ViewSpacing height={spacing.margin.large} />;
 
     return (
       <View style={styles.footer}>

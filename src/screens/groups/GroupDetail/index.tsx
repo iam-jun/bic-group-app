@@ -49,13 +49,13 @@ import NotFound from '~/screens/NotFound/components/NotFound';
 import { GroupPrivacyType } from '~/constants/privacyTypes';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import useTimelineStore, { ITimelineState } from '~/store/timeline';
-import homeActions from '~/storeRedux/home/actions';
 import ContentSearch from '~/screens/Home/HomeSearch';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useGroupDetailStore from './store';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 import useModalStore from '~/store/modal';
+import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -126,10 +126,11 @@ const GroupDetail = (props: any) => {
     ]),
   );
 
+  const actionsFeedSearch = useFeedSearchStore((state) => state.actions);
+
   const buttonShow = useSharedValue(0);
   const containerPaddingBottom = useSharedValue(0);
   const heightButtonBottom = useSharedValue(0);
-  const searchViewRef = useRef(null);
 
   useFocusEffect(() => {
     if (!userId) {
@@ -287,7 +288,7 @@ const GroupDetail = (props: any) => {
   };
 
   const onPressSearch = () => {
-    dispatch(homeActions.setNewsfeedSearch({ isShow: true, searchViewRef }));
+    actionsFeedSearch.setNewsfeedSearch({ isShow: true });
   };
 
   const _onPressContentFilterTab = (item: any) => {
@@ -376,7 +377,7 @@ const GroupDetail = (props: any) => {
         <Animated.View onLayout={onButtonBottomLayout} style={[styles.button, buttonStyle]}>
           <GroupJoinCancelButton style={styles.joinBtn} community={communityDetail} />
         </Animated.View>
-        <ContentSearch searchViewRef={searchViewRef} groupId={groupId} />
+        <ContentSearch groupId={groupId} />
       </>
     );
   };

@@ -49,6 +49,7 @@ import useCommentInputStore from '~/screens/comments/components/CommentInputView
 import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import useReportContentStore from '~/components/Report/store';
 import useArticleScheduleContentStore from '~/screens/articles/ArticleScheduleContent/store';
+import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
 import useButtonMarkAsReadStore from '~/components/posts/ButtonMarkAsRead/store';
 import useCreatePostStore from '~/screens/post/CreatePost/store';
 
@@ -119,6 +120,7 @@ const stores = [
   useRemoteConfigStore,
   usePostsInProgressStore,
   useCommentInputStore,
+  useFeedSearchStore,
 ];
 
 export const resetAllStores = () => {
