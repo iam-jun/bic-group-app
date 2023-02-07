@@ -348,11 +348,6 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
         >
           <View>
             <View
-              accessibilityState={
-                Object {
-                  "disabled": false,
-                }
-              }
               accessible={true}
               collapsable={false}
               focusable={true}

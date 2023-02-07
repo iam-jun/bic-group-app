@@ -10,13 +10,12 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import EmptyScreen from '~/components/EmptyScreen';
 import Divider from '~/beinComponents/Divider';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import GroupPendingUserItemWrapper from '~/screens/groups/GroupMembers/GroupMemberRequests/components/GroupPendingUserItemWrapper';
 import CommunityPendingUserItemWrapper from '~/screens/communities/CommunityMembers/CommunityMemberRequests/components/CommunityPendingUserItemWrapper';
 import spacing from '~/theme/spacing';
 import { Button } from '~/baseComponents';
 import useCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
+import useGroupMemberStore from '../GroupMembers/store';
 
 interface MemberRequestListProps {
   id?: string;
@@ -40,7 +39,7 @@ const MemberRequestList = ({
   const {
     loading, ids, canLoadMore,
   } = type === 'group'
-    ? useKeySelector(groupsKeySelector[`${type}MemberRequests`])
+    ? useGroupMemberStore((state) => state.groupMemberRequests)
     : useCommunityMemberStore((state) => state.communityMemberRequests);
 
   const onPressAddMemmbers = () => {

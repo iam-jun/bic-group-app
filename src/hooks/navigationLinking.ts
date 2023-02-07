@@ -1,9 +1,11 @@
 import { Linking } from 'react-native';
 import { useRootNavigation } from '~/hooks/navigation';
-import { linkingConfig, PREFIX_DEEPLINK_GROUP, PREFIX_HTTPS } from '~/router/config';
+import {
+  linkingConfig, PREFIX_DEEPLINK_GROUP, PREFIX_URL,
+} from '~/router/config';
 import mainStack from '~/router/navigator/MainStack/stack';
 import getEnv from '~/utils/env';
-import { DEEP_LINK_TYPES, matchDeepLink } from '~/utils/link';
+import { DEEP_LINK_TYPES, matchDeepLink, openInAppBrowser } from '~/utils/link';
 
 const getLinkingCustomConfig = (
   config: any, navigation: any,
@@ -54,8 +56,8 @@ const getLinkingCustomConfig = (
          * convert back to normal web link to open on browser
          * for unsupported deep link
          */
-        const webLink = url.replace(PREFIX_DEEPLINK_GROUP, PREFIX_HTTPS + getEnv('SELF_DOMAIN'));
-        Linking.openURL(webLink);
+        const webLink = url.replace(PREFIX_DEEPLINK_GROUP, PREFIX_URL + getEnv('SELF_DOMAIN'));
+        openInAppBrowser(webLink);
       }
     };
     const linkingListener = Linking.addEventListener(

@@ -3,7 +3,7 @@ import { Linking } from 'react-native';
 import InAppBrowser from 'react-native-inappbrowser-reborn';
 import BrowserModal from '~/components/BrowserModal';
 import { chatSchemes } from '~/constants/chat';
-import { PREFIX_DEEPLINK_GROUP, PREFIX_HTTPS } from '~/router/config';
+import { PREFIX_DEEPLINK_GROUP, PREFIX_URL } from '~/router/config';
 import storeRedux from '~/storeRedux';
 import modalActions from '~/storeRedux/modal/actions';
 import getEnv from '~/utils/env';
@@ -65,20 +65,20 @@ const formatParamsVer2 = (params?: any) : string => {
   return result;
 };
 
-const getLink = (
+const generateLink = (
   linkType: string, id?: string, params?: any,
 ): string => {
   switch (linkType) {
     case LINK_POST:
-      return `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}/posts/${id}${formatParams(params)}`;
+      return `${PREFIX_URL}${getEnv('SELF_DOMAIN')}/posts/${id}${formatParams(params)}`;
     case LINK_COMMENT:
-      return `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}/posts/${id}${formatParamsVer2(params)}`;
+      return `${PREFIX_URL}${getEnv('SELF_DOMAIN')}/posts/${id}${formatParamsVer2(params)}`;
     case LINK_COMMUNITY:
-      return `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}/communities/${id}${formatParams(params)}`;
+      return `${PREFIX_URL}${getEnv('SELF_DOMAIN')}/communities/${id}${formatParams(params)}`;
     case LINK_SERIRES:
-      return `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}/series/${id}${formatParams(params)}`;
+      return `${PREFIX_URL}${getEnv('SELF_DOMAIN')}/series/${id}${formatParams(params)}`;
     case LINK_ARTICLE:
-      return `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}/article/${id}${formatParams(params)}`;
+      return `${PREFIX_URL}${getEnv('SELF_DOMAIN')}/article/${id}${formatParams(params)}`;
     default:
       return '';
   }
@@ -88,10 +88,10 @@ const getGroupLink = ({
   communityId, groupId, params,
 }: {
   communityId: string; groupId: string; params?: any
-}) => `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}/communities/${communityId}/groups/${groupId}${formatParams(params)}`;
+}) => `${PREFIX_URL}${getEnv('SELF_DOMAIN')}/communities/${communityId}/groups/${groupId}${formatParams(params)}`;
 
 export {
-  LINK_POST, LINK_COMMENT, LINK_COMMUNITY, LINK_SERIRES, LINK_ARTICLE, getLink, getGroupLink,
+  LINK_POST, LINK_COMMENT, LINK_COMMUNITY, LINK_SERIRES, LINK_ARTICLE, generateLink, getGroupLink,
 };
 
 export const getChatDomain = () => (
@@ -134,36 +134,38 @@ const validateBICGroupDomain = (url: string) => {
 
 export function openUrl(url: string, onError?: (e: any) => void, onSuccess?: (e: any) => void) {
   const selfDomain = getEnv('SELF_DOMAIN');
-  const isBICGroupDomain = validateBICGroupDomain(url);
+  const selfDomainPosition = url.indexOf(selfDomain);
+  const deepLinkUrl = PREFIX_DEEPLINK_GROUP + url.substring(selfDomainPosition).replace(selfDomain, '');
 
-  if (isBICGroupDomain) {
-    const selfDomainPosition = url.indexOf(selfDomain);
-    const deepLinkUrl = PREFIX_DEEPLINK_GROUP + url.substring(selfDomainPosition).replace(selfDomain, '');
-
-    Linking.canOpenURL(deepLinkUrl)
-      .then((supported) => {
-        if (supported) {
-          Linking.openURL(deepLinkUrl).then(onSuccess).catch(onError);
-        } else {
-          Linking.openURL(url).then(onSuccess).catch(onError);
-        }
-      })
-      .catch((e) => {
-        console.error('error when open link:', e);
-      });
-    return;
-  }
-
-  Linking.openURL(url).then(onSuccess).catch(onError);
+  Linking.canOpenURL(url)
+    .then((supported) => {
+      if (supported) {
+        Linking.openURL(deepLinkUrl).then(onSuccess).catch(onError);
+      } else {
+        Linking.openURL(url).then(onSuccess).catch(onError);
+      }
+    })
+    .catch((e) => {
+      console.error('error when open link:', e);
+    });
 }
 
 export const matchDeepLink = (url: string) => {
   if (!url) return null;
 
+  let deepLinkUrl = url;
+
+  const selfDomain = getEnv('SELF_DOMAIN');
+  const isBICGroupDomain = validateBICGroupDomain(url);
+
+  if (isBICGroupDomain) {
+    const selfDomainPosition = url.indexOf(selfDomain);
+    deepLinkUrl = PREFIX_DEEPLINK_GROUP + url.substring(selfDomainPosition).replace(selfDomain, '');
+  }
   // bic:///posts/99ca53ec-5195-4e28-9506-c0f602e1becb
   let match = new RegExp(
     `^${PREFIX_DEEPLINK_GROUP}\\/posts\\/(${UUID_V4_PATTERN})$`,
-  ).exec(url);
+  ).exec(deepLinkUrl);
   if (match) {
     return { type: DEEP_LINK_TYPES.POST_DETAIL, postId: match[1] };
   }
@@ -171,7 +173,7 @@ export const matchDeepLink = (url: string) => {
   // bic:///posts/99ca53ec-5195-4e28-9506-c0f602e1becb?commentId=690541f1-d7ae-4f73-8186-8194c5e2eb5f
   match = new RegExp(
     `^${PREFIX_DEEPLINK_GROUP}\\/posts\\/(${UUID_V4_PATTERN})\\?(\\S+)$`,
-  ).exec(url);
+  ).exec(deepLinkUrl);
   if (match) {
     const urlParams = match[2];
     const newParams = getURLParams(urlParams);
@@ -181,7 +183,7 @@ export const matchDeepLink = (url: string) => {
   // bic:///communities/ba6016d4-168f-44de-aca9-4a51055e6201
   match = new RegExp(
     `^${PREFIX_DEEPLINK_GROUP}\\/communities\\/(${UUID_V4_PATTERN})$`,
-  ).exec(url);
+  ).exec(deepLinkUrl);
   if (match) {
     return { type: DEEP_LINK_TYPES.COMMUNTY_DETAIL, communityId: match[1] };
   }
@@ -189,7 +191,7 @@ export const matchDeepLink = (url: string) => {
   // bic:///communities/ba6016d4-168f-44de-aca9-4a51055e6201/groups/5578fb11-de70-49e3-9c01-27e26f5b42d8
   match = new RegExp(
     `^${PREFIX_DEEPLINK_GROUP}\\/communities\\/(${UUID_V4_PATTERN})\\/groups\\/(${UUID_V4_PATTERN})$`,
-  ).exec(url);
+  ).exec(deepLinkUrl);
   if (match) {
     return { type: DEEP_LINK_TYPES.GROUP_DETAIL, communityId: match[1], groupId: match[2] };
   }
@@ -197,7 +199,7 @@ export const matchDeepLink = (url: string) => {
   // bic:///series/47e14e0b-ea99-4771-bf20-0f0893788a51
   match = new RegExp(
     `^${PREFIX_DEEPLINK_GROUP}\\/series\\/(${UUID_V4_PATTERN})$`,
-  ).exec(url);
+  ).exec(deepLinkUrl);
   if (match) {
     return { type: DEEP_LINK_TYPES.SERIES_DETAIL, seriesId: match[1] };
   }
@@ -205,7 +207,7 @@ export const matchDeepLink = (url: string) => {
   // bic:///article/8465397a-dfb3-4d7f-a21f-adec5a0508701
   match = new RegExp(
     `^${PREFIX_DEEPLINK_GROUP}\\/article\\/(${UUID_V4_PATTERN})$`,
-  ).exec(url);
+  ).exec(deepLinkUrl);
   if (match) {
     return { type: DEEP_LINK_TYPES.ARTICLE_DETAIL, articleId: match[1] };
   }

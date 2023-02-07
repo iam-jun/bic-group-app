@@ -7,10 +7,9 @@ import { useDispatch } from 'react-redux';
 import { Keyboard } from 'react-native';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import modalActions from '~/storeRedux/modal/actions';
-import { getLink, LINK_POST } from '~/utils/link';
+import { generateLink, LINK_POST } from '~/utils/link';
 import { IPost, IReaction } from '~/interfaces/IPost';
 import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
-import postActions from '~/storeRedux/post/actions';
 import { Button } from '~/baseComponents';
 import { useRootNavigation } from './navigation';
 import { BottomListProps } from '~/components/BottomList';
@@ -21,6 +20,7 @@ import { TargetType, ReportTo } from '~/interfaces/IReport';
 import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useModalStore from '~/store/modal';
+import usePostsStore, { IPostsState } from '~/store/entities/posts';
 
 const usePostMenu = (
   data: IPost,
@@ -33,6 +33,7 @@ const usePostMenu = (
 
   const commonActions = useCommonController((state) => state.actions);
   const { showToast, showAlert } = useModalStore((state) => state.actions);
+  const { deletePost } = usePostsStore((state: IPostsState) => state.actions);
 
   if (!data) return null;
 
@@ -76,7 +77,7 @@ const usePostMenu = (
 
   const onPressCopyLink = () => {
     dispatch(modalActions.hideBottomList());
-    Clipboard.setString(getLink(
+    Clipboard.setString(generateLink(
       LINK_POST, postId,
     ));
     showToast({ content: 'common:text_link_copied_to_clipboard' });
@@ -106,10 +107,10 @@ const usePostMenu = (
       confirmLabel: i18next.t('common:btn_delete'),
       ConfirmBtnComponent: Button.Danger,
       confirmBtnProps: { type: 'ghost' },
-      onConfirm: () => dispatch(postActions.deletePost({
+      onConfirm: () => deletePost({
         id: postId,
         callbackError: handleDeletePostError,
-      })),
+      }),
     });
   };
 

@@ -7,8 +7,11 @@ import updateCreatedComment from '~/store/entities/comments/actions/updateCreate
 import { createStore, resetStore } from '~/store/utils';
 import addChildCommentToComment from './actions/addChildCommentToComment';
 import ICommentsState from './Interface';
+import removeChildComment from './actions/removeChildComment';
+import { InitStateType } from '~/store/interfaces/IBaseState';
+import removeCommentDeleted from './actions/removeCommentDeleted';
 
-const initState: ICommentsState = {
+const initState: InitStateType<ICommentsState> = {
   comments: {},
   commentsByParentId: {},
 };
@@ -35,6 +38,8 @@ const commentsStore = (set, get) => ({
     updateCreatedComment: updateCreatedComment(set, get),
     cancelCommentFailed: cancelCommentFailed(set, get),
     addChildCommentToComment: addChildCommentToComment(set, get),
+    removeChildComment: removeChildComment(set, get),
+    removeCommentDeleted: removeCommentDeleted(set, get),
   },
 
   reset: () => resetStore(initState, set),

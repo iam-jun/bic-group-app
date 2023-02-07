@@ -1,24 +1,19 @@
-import { call } from 'redux-saga/effects';
-import streamApi from '~/api/StreamApi';
 import { IPayloadAddToAllPost, IPayloadPutMarkAsRead } from '~/interfaces/IPost';
-import usePostsStore from '~/store/entities/posts';
+import streamApi from '~/api/StreamApi';
 import showToastError from '~/store/helper/showToastError';
+import usePostsStore from '~/store/entities/posts';
 
-function* putMarkAsRead({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadPutMarkAsRead;
-}): any {
+const putMarkAsRead = () => async (payload: IPayloadPutMarkAsRead) => {
   const { postId, callback } = payload;
+
   if (!postId) {
     console.error('\x1b[36m🐣️ postMarkAsRead postId not found\x1b[0m');
     return;
   }
+
   try {
-    const response = yield call(
-      streamApi.putMarkAsRead, postId,
-    );
+    const response = await streamApi.putMarkAsRead(postId);
+
     const isSuccess = !!response?.data;
     callback?.(isSuccess);
     if (isSuccess) {
@@ -31,9 +26,10 @@ function* putMarkAsRead({
         },
       } as IPayloadAddToAllPost);
     }
-  } catch (e) {
+  } catch (error) {
     callback?.(false);
-    showToastError(e);
+    showToastError(error);
   }
-}
+};
+
 export default putMarkAsRead;

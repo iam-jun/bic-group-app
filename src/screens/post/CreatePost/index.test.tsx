@@ -21,6 +21,7 @@ import useCreatePost, {
 } from '~/screens/post/CreatePost/hooks/useCreatePost';
 import MockedNavigator from '~/test/MockedNavigator';
 import useModalStore from '~/store/modal';
+import useCreatePostStore, { ICreatePostState } from './store';
 
 describe('Create Post screen', () => {
   let Platform: any;
@@ -113,7 +114,10 @@ describe('Create Post screen', () => {
 
   it('handlePressPost should done with loading', async () => {
     const stateData = { ...initialState };
-    stateData.post.createPost = { loading: true } as any;
+    useCreatePostStore.setState((state: ICreatePostState) => {
+      state.loading = true;
+      return state;
+    });
     const store = createTestStore(stateData);
     const wrapper = getHookReduxWrapper(store);
     const { result } = renderHook(

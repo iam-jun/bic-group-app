@@ -1,11 +1,9 @@
 /* eslint-disable no-unsafe-optional-chaining */
 import { IFilePicked } from '~/interfaces/common';
-import { ICommentData } from '~/interfaces/IPost';
 import postTypes from './types';
 
 export const postInitState = {
   createPost: {
-    loading: false,
     isOpenModal: false,
     data: {
       content: '',
@@ -77,14 +75,6 @@ function postReducer(
   const { type, payload } = action;
 
   switch (type) {
-    case postTypes.SET_LOADING_CREATE_POST:
-      return {
-        ...state,
-        createPost: {
-          ...state.createPost,
-          loading: payload,
-        },
-      };
     case postTypes.CLEAR_CREATE_POST:
       return {
         ...state,
@@ -263,78 +253,6 @@ function postReducer(
         ...state,
         commentErrorCode: payload,
       };
-    case postTypes.REMOVE_CHILD_COMMENT: {
-      const allCommentsByPost: any = { ...state.allCommentsByParentIds };
-
-      // eslint-disable-next-line no-case-declarations
-      const { localId, postId, parentCommentId } = payload || {};
-      // eslint-disable-next-line no-case-declarations
-      const postComments = [...allCommentsByPost[postId]];
-
-      if (parentCommentId) {
-        // find parent comment
-        const pIndex = postComments.findIndex((item: ICommentData) => item.id === parentCommentId);
-
-        // find and update target reply comment
-        if (postComments?.[pIndex]?.child?.list) {
-          postComments[pIndex].child = {
-            list: postComments[pIndex].child.list?.filter?.((cmt: ICommentData) => cmt?.localId !== localId),
-          };
-        }
-        if (postComments?.[pIndex]?.totalReply) {
-          postComments[pIndex].totalReply = Math.max(
-            (postComments[pIndex].totalReply || 0) - 1,
-            0,
-          );
-        }
-      }
-      allCommentsByPost[postId] = postComments;
-
-      return {
-        ...state,
-        allCommentsByParentIds: allCommentsByPost,
-      };
-    }
-    case postTypes.REMOVE_COMMENT_DELETED: {
-      const allCommentsByPost: any = { ...state.allCommentsByParentIds };
-      const newAllPosts: any = { ...state.allPosts };
-      const { postId, commentId, localId } = payload || {};
-
-      const deleteCommentPost = { ...newAllPosts[postId] };
-      const postComments = [...allCommentsByPost[postId]];
-      if (commentId && postComments) {
-        const pIndexCommentNeedDelete = postComments.findIndex((item: ICommentData) => item.id === commentId);
-
-        deleteCommentPost.commentsCount = Math.max(
-          0,
-          (deleteCommentPost.commentsCount || 0)
-            - 1
-            - postComments[pIndexCommentNeedDelete].totalReply,
-        );
-
-        const newPostComments = postComments?.filter?.((cmt: ICommentData) => cmt.id !== commentId);
-        newAllPosts[postId] = { ...deleteCommentPost };
-        allCommentsByPost[postId] = newPostComments;
-      } else if (localId && postComments) {
-        const pIndexCommentNeedDelete = postComments.findIndex((item: ICommentData) => item.localId === localId);
-
-        deleteCommentPost.commentsCount = Math.max(
-          0,
-          (deleteCommentPost.commentsCount || 0)
-            - 1
-            - postComments[pIndexCommentNeedDelete].totalReply,
-        );
-
-        const newPostComments = postComments?.filter?.((cmt: ICommentData) => cmt.localId !== localId);
-        newAllPosts[postId] = { ...deleteCommentPost };
-        allCommentsByPost[postId] = newPostComments;
-      }
-      return {
-        ...state,
-        allCommentsByParentIds: allCommentsByPost,
-        allPosts: newAllPosts,
-      };
-    }
     case postTypes.UPDATE_LINK_PREVIEW:
       return {
         ...state,

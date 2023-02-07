@@ -824,3 +824,137 @@ export const NOTI_REACT_POST = {
     },
   ],
 };
+
+export const NOTI_HIDE_POST = {
+  ownerReactions: [
+    {
+      id: '92b2d2bf-7588-4390-a9fe-7273450980af',
+      postId: '2fca27cf-179c-466d-8653-7b699e804f6f',
+      reactionName: 'bic_clapping_hands',
+      createdBy: 'c14364d3-a26f-4393-b07b-e17a45c1edd2',
+      createdAt: '2023-01-10T05:43:02.021Z',
+    },
+  ],
+  id: '2fca27cf-179c-466d-8653-7b699e804f6f',
+  content: 'test report 124545454555555566666783s',
+  lang: 'en',
+  media: {
+    videos: [],
+    images: [],
+    files: [],
+  },
+  setting: {
+    canReact: false,
+    canComment: false,
+    canShare: true,
+    isImportant: false,
+    importantExpiredAt: '2023-01-17T14:19:56.938Z',
+  },
+  status: 'PUBLISHED',
+  actor: {
+    id: 'c14364d3-a26f-4393-b07b-e17a45c1edd2',
+    username: 'ptlw1',
+    fullname: 'Tam Chieu Moi',
+    avatar:
+      'https://bic-stg-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/0019a7b5-8d7f-4f20-88cb-cbf2237ef77c.jpg',
+    email: 'tamchieumoi@yopmail.com',
+  },
+  mentions: {},
+  commentsCount: 1,
+  totalUsersSeen: 3,
+  reactionsCount: {},
+  markedReadPost: true,
+  isSaved: false,
+  createdAt: '2023-01-09T04:19:28.654Z',
+  updatedAt: '2023-01-16T14:34:01.179Z',
+  createdBy: 'c14364d3-a26f-4393-b07b-e17a45c1edd2',
+  audience: {
+    groups: [
+      {
+        id: '33088ddf-089f-4834-a495-0ec40571a238',
+        name: 'OutApp',
+        icon: 'https://bic-stg-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/group/default-avatar.png',
+        privacy: 'OPEN',
+        rootGroupId: '33088ddf-089f-4834-a495-0ec40571a238',
+        communityId: '13b6985e-7599-413f-a3de-e2d724d5f28f',
+        isCommunity: true,
+        isReported: false,
+      },
+    ],
+  },
+  type: 'POST',
+  privacy: 'OPEN',
+  linkPreview: null,
+  articles: [],
+  communities: [
+    {
+      id: '33088ddf-089f-4834-a495-0ec40571a238',
+      icon: 'https://bic-stg-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/group/default-avatar.png',
+      name: 'OutApp',
+      privacy: 'OPEN',
+      communityId: '13b6985e-7599-413f-a3de-e2d724d5f28f',
+    },
+  ],
+  tags: [],
+  isReported: true,
+  isHidden: true,
+  title: null,
+  summary: null,
+  categories: [],
+  views: 0,
+  coverMedia: null,
+  publishedAt: null,
+  reportDetails: [
+    {
+      total: 1,
+      reasonType: 'illegal',
+      description: 'Illegal',
+    },
+    {
+      total: 1,
+      reasonType: 'others',
+      description: 'Others',
+    },
+    {
+      total: 1,
+      reasonType: 'violent_or_porn',
+      description: 'Violent, pornographic, or sexually explicit',
+    },
+  ],
+};
+
+export const NOTI_HIDE_COMMENT = {
+  edited: false,
+  totalReply: 1,
+  ownerReactions: [],
+  id: 'c6bb489c-d730-4ecb-a80e-3e1ffc06ab9b',
+  actor: {
+    id: 'c14364d3-a26f-4393-b07b-e17a45c1edd2',
+    username: 'ptlw1',
+    fullname: 'Tam Chieu Moi',
+    avatar:
+      'https://bic-stg-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/0019a7b5-8d7f-4f20-88cb-cbf2237ef77c.jpg',
+    email: 'tamchieumoi@yopmail.com',
+  },
+  parentId: '00000000-0000-0000-0000-000000000000',
+  postId: 'b7379b15-c1b7-473a-9e78-f1098b7c3e65',
+  content: 'test rp comment',
+  giphyId: '',
+  createdAt: '2023-01-11T02:58:19.300Z',
+  updatedAt: '2023-01-11T03:02:43.285Z',
+  createdBy: 'c14364d3-a26f-4393-b07b-e17a45c1edd2',
+  media: {
+    videos: [],
+    images: [],
+    files: [],
+  },
+  reactionsCount: {},
+  mentions: [],
+  reportDetails: [
+    {
+      total: 2,
+      reasonType: 'spam',
+      description: 'Spam',
+    },
+  ],
+};

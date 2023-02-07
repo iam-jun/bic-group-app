@@ -20,7 +20,7 @@ import ContentView from './components/CommunityContentView';
 import CommunityJoinCancelButton from './components/CommunityJoinCancelButton';
 import {
   formatChannelLink,
-  getLink,
+  generateLink,
   LINK_COMMUNITY,
   openUrl,
 } from '~/utils/link';
@@ -184,7 +184,7 @@ const CommunityDetail = (props: any) => {
 
   const onPressCopyLink = () => {
     dispatch(modalActions.hideBottomList());
-    Clipboard.setString(getLink(LINK_COMMUNITY, communityId));
+    Clipboard.setString(generateLink(LINK_COMMUNITY, communityId));
     showToast({ content: 'common:text_copied' });
   };
 

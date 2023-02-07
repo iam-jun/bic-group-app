@@ -2,7 +2,6 @@ import postTypes from './types';
 import {
   IAudience,
   IActivityData,
-  IPayloadPutEditPost,
   IPayloadReplying,
   IPayloadGetPostDetail,
   ICreatePostImage,
@@ -12,9 +11,6 @@ import {
   IPayloadPutEditDraftPost,
   IPostAudience,
   IParamGetPostAudiences,
-  IPayloadDeletePost,
-  IPayloadPutMarkAsRead,
-  IPayloadPutMarkSeenPost,
   IPayloadRemoveAudiencesOfPost,
   IPayloadUpdateLinkPreview,
 } from '~/interfaces/IPost';
@@ -24,10 +20,6 @@ import { IFilePicked } from '~/interfaces/common';
 import { IGetFile } from '~/store/uploader';
 
 const postActions = {
-  setLoadingCreatePost: (payload: boolean) => ({
-    type: postTypes.SET_LOADING_CREATE_POST,
-    payload,
-  }),
   clearCreatPostData: () => ({
     type: postTypes.CLEAR_CREATE_POST,
   }),
@@ -102,14 +94,6 @@ const postActions = {
     type: postTypes.SET_SCROLL_TO_LATEST_ITEM,
     payload,
   }),
-  putEditPost: (payload: IPayloadPutEditPost) => ({
-    type: postTypes.PUT_EDIT_POST,
-    payload,
-  }),
-  deletePost: (payload: IPayloadDeletePost) => ({
-    type: postTypes.DELETE_POST,
-    payload,
-  }),
   hidePostAudiencesBottomSheet: () => ({
     type: postTypes.HIDE_POST_AUDIENCES_BOTTOM_SHEET,
   }),
@@ -143,26 +127,6 @@ const postActions = {
   }),
   setCommentErrorCode: (payload: boolean | string) => ({
     type: postTypes.SET_COMMENT_ERROR_CODE,
-    payload,
-  }),
-  removeChildComment: (payload: any) => ({
-    type: postTypes.REMOVE_CHILD_COMMENT,
-    payload,
-  }),
-  putMarkAsRead: (payload: IPayloadPutMarkAsRead) => ({
-    type: postTypes.PUT_MARK_AS_READ,
-    payload,
-  }),
-  removeCommentLevel1Deleted: (payload: any) => ({
-    type: postTypes.REMOVE_COMMENT_DELETED,
-    payload,
-  }),
-  putMarkSeenPost: (payload: IPayloadPutMarkSeenPost) => ({
-    type: postTypes.PUT_MARK_SEEN_POST,
-    payload,
-  }),
-  deletePostLocal: (payload: string) => ({
-    type: postTypes.DELETE_POST_LOCAL,
     payload,
   }),
   removePostAudiences: (payload:IPayloadRemoveAudiencesOfPost) => ({

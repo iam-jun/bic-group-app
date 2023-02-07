@@ -9,7 +9,6 @@ const groupsKeySelector = {
   userAddedCount: 'groups.userAddedCount',
   joinedGroups: 'groups.joinedGroups',
   loadingJoinedGroups: 'groups.loadingJoinedGroups',
-  groupMemberRequests: 'groups.groupMemberRequests',
   joinedCommunities: 'groups.joinedCommunities',
   loadingCommunities: 'groups.communities.loading',
   communitySearch: 'groups.communitySearch',

@@ -8,7 +8,7 @@ import {
   validateImages,
   validateVideo,
 } from '~/screens/post/CreatePost/helper';
-import usePostsStore from '~/store/entities/posts';
+import usePostsStore, { IPostsState } from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import {
   IAudience,
@@ -36,6 +36,7 @@ import useLinkPreview from './useLinkPreview';
 import { IGetFile } from '~/store/uploader';
 import useModalStore from '~/store/modal';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import useCreatePostStore, { ICreatePostState } from '../store';
 
 interface IUseCreatePost {
   screenParams: ICreatePostParams;
@@ -87,6 +88,8 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     loadLinkPreview,
   } = useLinkPreview();
 
+  const { putEditPost } = usePostsStore((state: IPostsState) => state.actions);
+
   const { lstLinkPreview } = linkPreview;
   const currentLinkPreview = lstLinkPreview[lstLinkPreview.length - 1];
   const isLoadingLinkPreview
@@ -118,7 +121,6 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
 
   const createPostData = useKeySelector(postKeySelector.createPost.all);
   const {
-    loading,
     data,
     chosenAudiences = [],
     important,
@@ -126,6 +128,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     canReact,
     count,
   } = createPostData || {};
+  const { loading } = useCreatePostStore((state: ICreatePostState) => state);
   const { content } = data || {};
 
   const users: any[] = [];
@@ -591,7 +594,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
         replaceWithDetail,
         onRetry: () => handlePressPost(),
       };
-      dispatch(postActions.putEditPost(payload));
+      putEditPost(payload);
       result = 'editPost';
     } else {
       console.error(

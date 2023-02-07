@@ -473,10 +473,8 @@
       "from_to": "Từ ngày - Đến ngày",
       "text_banner_search": "Kết quả tìm kiếm được lược bỏ đi định dạng chữ để có nội dung chính xác"
     },
-    "notice_post_video_uploading": {
-      "title": "Bài viết có video đang xử lý (count)",
-      "description": "Bài viết có video của bạn đang được xử lý. Chúng tôi sẽ gửi cho bạn thông báo khi quá trình hoàn tất"
-    },
+    "notice_post_video_uploading": "Đang có video được xử lý. Chúng tôi sẽ gửi cho bạn thông báo khi quá trình hoàn tất",
+    "notice_posts_video_uploading": "Đang có {count} video được xử lý. Chúng tôi sẽ gửi cho bạn thông báo khi quá trình hoàn tất",
     "create_content_options": {
       "write_post": "Viết Bài Đăng",
       "write_article": "Viết Bài Viết",
@@ -506,7 +504,7 @@
     "title_draft": "Nháp",
     "title_schedule_article": "Bài báo đã lên lịch",
     "title_report_content": "Nội dung được báo cáo",
-    "text_empty": "Không có kết quả",
+    "text_empty": "Không có nội dung",
     "text_no_reported_content": "Không có nội dung!"
   },
   "article": {
@@ -657,7 +655,6 @@
     "select_audience": "Chọn đối tượng",
     "expiring_time": "Thời gian kết thúc",
     "expire_time_desc": "Bài viết này sẽ ở trên đầu bản tin cho đến khi hết thời hạn đã cài đặt.",
-    "delete_post_complete": "Bài viết đã được xoá.",
     "search_results": "Kết quả tìm kiếm",
     "search_audiences_placeholder": "Tìm kiếm đối tượng...",
     "text_chosen_audience": "Đối tượng đã chọn",

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import {
-  StyleSheet, TouchableOpacity, View, Linking,
+  StyleSheet, TouchableOpacity, View,
 } from 'react-native';
 import { ExtendedTheme, useTheme, useIsFocused } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
@@ -26,6 +26,7 @@ import MenuItem from '~/beinComponents/list/items/MenuItem';
 import spacing from '~/theme/spacing';
 import { accountSettingsMenu } from '~/screens/Menu/AccountSettings/constants';
 import getEnv from '~/utils/env';
+import { openInAppBrowser } from '~/utils/link';
 
 const POLICY_URL = `https://${getEnv('SELF_DOMAIN')}/policy`;
 
@@ -63,7 +64,7 @@ const GeneralSettings = () => {
         return;
 
       case 'privacy':
-        Linking.openURL(POLICY_URL);
+        openInAppBrowser(POLICY_URL);
         return;
 
       default:

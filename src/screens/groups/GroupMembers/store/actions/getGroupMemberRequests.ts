@@ -1,34 +1,26 @@
-import { call, put, select } from 'redux-saga/effects';
 import appConfig from '~/configs/appConfig';
 import memberRequestStatus from '~/constants/memberRequestStatus';
-import { IJoiningMember } from '~/interfaces/IGroup';
-import groupApi from '../../../api/GroupApi';
-import { mapItems } from '~/screens/groups/helper/mapper';
-import groupsActions from '../actions';
+import { IJoiningMember, IPayloadGetGroupMemberRequests } from '~/interfaces/IGroup';
 import showToastError from '~/store/helper/showToastError';
+import groupApi from '~/api/GroupApi';
+import { mapItems } from '~/screens/groups/helper/mapper';
+import { IGroupMemberState } from '../index';
 
-export default function* getGroupMemberRequests({
-  payload,
-}: {
-  type: string;
-  payload: {groupId: string; isRefreshing?: boolean; params?: any};
-}) {
+const getGroupMemberRequests = (get) => async (payload: IPayloadGetGroupMemberRequests) => {
+  const { groupMemberRequests, actions }: IGroupMemberState = get();
+  const { ids, canLoadMore, items } = groupMemberRequests || {};
+  const { groupId, isRefreshing, params } = payload;
+
   try {
-    const { groups } = yield select();
-
-    const { groupId, isRefreshing, params } = payload;
-    const { ids, canLoadMore, items } = groups.groupMemberRequests || {};
-
-    yield put(groupsActions.setGroupMemberRequests({
+    actions.setGroupMemberRequests({
       loading: isRefreshing ? true : ids.length === 0,
-    }));
+    });
 
     if (!isRefreshing && !canLoadMore) return;
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const response = yield call(
-      groupApi.getGroupMemberRequests,
+    const response = await groupApi.getGroupMemberRequests(
       groupId,
       {
         offset: isRefreshing ? 0 : ids.length,
@@ -42,17 +34,20 @@ export default function* getGroupMemberRequests({
     const requestIds = data.map((item: IJoiningMember) => item.id);
     const requestItems = mapItems(data);
 
-    yield put(groupsActions.setGroupMemberRequests({
+    actions.setGroupMemberRequests({
       total: response?.meta?.total,
       loading: false,
       canLoadMore: !!response?.meta?.hasNextPage,
       ids: isRefreshing ? [...requestIds] : [...ids, ...requestIds],
       items: isRefreshing ? { ...requestItems } : { ...items, ...requestItems },
-    }));
-  } catch (err) {
-    console.error(
-      'getGroupMemberRequests: ', err,
-    );
-    showToastError(err);
+    });
+  } catch (e) {
+    showToastError(e);
+    actions.setGroupMemberRequests({
+      loading: false,
+    });
+    console.error('\x1b[31m🐣️ action getGroupMemberRequests error: ', e, '\x1b[0m');
   }
-}
+};
+
+export default getGroupMemberRequests;
