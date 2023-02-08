@@ -51,6 +51,8 @@ interface DateInputProps extends Partial<DatePickerComponentProps> {
   maxDate?: Date;
   onConfirm: (date: Date) => void;
   disabled?: boolean;
+  // in case of the value is not empty
+  // but still want to show placeholder
   keepPlaceholder?: boolean;
 }
 

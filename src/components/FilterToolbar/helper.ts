@@ -46,7 +46,7 @@ export const endOfTime = (
     case TypeFilter.Yesterday:
       return moment().subtract(1, 'days').endOf('day');
     case TypeFilter.LastSevenDays:
-      return moment().startOf('day');
+      return moment().endOf('day');
     default:
       return undefined;
   }
@@ -61,7 +61,7 @@ export const startOfTime = (
     case TypeFilter.Yesterday:
       return moment().subtract(1, 'days').startOf('day');
     case TypeFilter.LastSevenDays:
-      return moment().subtract(7, 'day').startOf('day');
+      return moment().subtract(6, 'day').startOf('day');
     default:
       return undefined;
   }

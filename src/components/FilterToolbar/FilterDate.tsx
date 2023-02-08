@@ -37,8 +37,8 @@ type DatePickerContainerProps = {
 };
 
 const DatePickerContainer: FC<DatePickerContainerProps> = ({
-  selectedStartDate = startOfTime(TypeFilter.LastSevenDays).toDate(),
-  selectedEndDate = endOfTime(TypeFilter.LastSevenDays).toDate(),
+  selectedStartDate,
+  selectedEndDate,
   onDone,
 }) => {
   const { t } = useBaseHook();
@@ -49,12 +49,25 @@ const DatePickerContainer: FC<DatePickerContainerProps> = ({
   const [selectedEndDateState, setSelectedEndDateState]
     = useState(selectedEndDate);
 
+  const disabledBtn = !selectedStartDateState || !selectedEndDateState;
+
   const onPress = () => {
     onDone(
       selectedStartDateState.toISOString(),
       selectedEndDateState.toISOString(),
     );
   };
+
+  const onConfirmDatePickerFrom = (date) => setSelectedStartDateState(moment(date).startOf('day').toDate());
+
+  const valueDatePickerFrom = selectedStartDateState && moment(selectedStartDateState).toISOString();
+  const maxDatePickerFrom = selectedEndDateState ? moment(selectedEndDateState).toDate() : endOfToday();
+
+  const onConfirmDatePickerTo = (date) => setSelectedEndDateState(moment(date).endOf('day').toDate());
+
+  const valueDatePickerTo = selectedEndDateState && moment(selectedEndDateState).toISOString();
+  const maxDatePickerTo = endOfToday();
+  const minDatePickerTo = selectedStartDateState && moment(selectedStartDateState).toDate();
 
   return (
     <TouchableOpacity activeOpacity={1} style={styles.container}>
@@ -65,23 +78,23 @@ const DatePickerContainer: FC<DatePickerContainerProps> = ({
         <DateInput
           style={{ marginVertical: 0 }}
           mode="date"
-          value={moment(selectedStartDateState).toISOString()}
+          value={valueDatePickerFrom}
           label={t('home:newsfeed_search:from')}
-          maxDate={moment(selectedEndDateState).toDate()}
-          onConfirm={(date) => setSelectedStartDateState(moment(date).startOf('day').toDate())}
+          maxDate={maxDatePickerFrom}
+          onConfirm={onConfirmDatePickerFrom}
         />
         <ViewSpacing height={spacing.padding.large} />
         <DateInput
           style={{ marginVertical: 0 }}
           mode="date"
-          value={moment(selectedEndDateState).toISOString()}
+          value={valueDatePickerTo}
           label={t('home:newsfeed_search:to')}
-          minDate={moment(selectedStartDateState).toDate()}
-          maxDate={endOfToday()}
-          onConfirm={(date) => setSelectedEndDateState(moment(date).endOf('day').toDate())}
+          minDate={minDatePickerTo}
+          maxDate={maxDatePickerTo}
+          onConfirm={onConfirmDatePickerTo}
         />
       </View>
-      <Button.Secondary onPress={onPress} style={styles.buttonDoneDatePicker}>
+      <Button.Secondary disabled={disabledBtn} onPress={onPress} style={styles.buttonDoneDatePicker}>
         {t('home:newsfeed_search:apply')}
       </Button.Secondary>
     </TouchableOpacity>
