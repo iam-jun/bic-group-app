@@ -88,7 +88,7 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
         />
         <ViewSpacing width={spacing.padding.small} />
         <View style={{ flex: 1 }}>
-          <Text.BodyMMedium numberOfLines={1}>{`${getTextNameUserDisplay(item)}`}</Text.BodyMMedium>
+          <Text.BodyM numberOfLines={1} color={colors.neutral60}>{`${getTextNameUserDisplay(item)}`}</Text.BodyM>
         </View>
       </View>
       {
@@ -126,6 +126,9 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
 
   return (
     <TouchableOpacity activeOpacity={1} style={styles.container}>
+      <Text.H4 style={styles.textHeader}>
+        {t('home:newsfeed_search:filter_post_by')}
+      </Text.H4>
       <View style={styles.row}>
         <SearchInput
           style={styles.searchInput}
@@ -161,12 +164,16 @@ const createStyles = () => {
       paddingHorizontal: 0,
       paddingBottom: 0,
     },
+    textHeader: {
+      marginTop: spacing.margin.tiny,
+      marginBottom: spacing.margin.extraLarge,
+      marginHorizontal: spacing.margin.large,
+    },
     row: {
       flexDirection: 'row',
       alignItems: 'center',
       paddingHorizontal: spacing.padding.large,
       marginBottom: spacing.margin.extraLarge,
-      marginTop: spacing.margin.large,
     },
     searchInput: {
       // marginLeft: spacing.margin.large,
