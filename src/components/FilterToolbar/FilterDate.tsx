@@ -172,7 +172,7 @@ const FilterDate: FC<NFSFilterDateProps> = ({
           disabled={item.key === TypeFilter.FromTo}
         >
           <View style={styles.rowItemFilter}>
-            <Text.BodyMMedium useI18n>{item.text}</Text.BodyMMedium>
+            <Text.BodyM useI18n color={colors.neutral40}>{item.text}</Text.BodyM>
             {currentFilter === item.key && item.key !== TypeFilter.FromTo && (
               <Icon icon="CircleCheckSolid" tintColor={colors.blue50} />
             )}
@@ -193,11 +193,6 @@ const FilterDate: FC<NFSFilterDateProps> = ({
                       language,
                     )}
                     onActionPress={() => setStaged(1)}
-                    // icon="Xmark"
-                    // onPressIcon={() => {
-                    //   setSelectedStartDate(undefined);
-                    //   setSelectedEndDate(undefined);
-                    // }}
                   />
                 )}
               </View>
@@ -260,7 +255,8 @@ const createStyle = () => StyleSheet.create({
     alignSelf: 'baseline',
   },
   datePickerContainer: {
-    padding: spacing.padding.large,
+    paddingHorizontal: spacing.padding.large,
+    paddingBottom: spacing.padding.large,
   },
 });
 

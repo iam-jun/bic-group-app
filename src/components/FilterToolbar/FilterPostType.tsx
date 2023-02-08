@@ -36,7 +36,7 @@ const FilterPostType: FC<FilterPostTypeProps> = ({
       {postTypeFilter.map((item) => (
         <Button key={item.key} onPress={() => onSelectItemFilter(item)}>
           <View style={styles.rowItemFilter}>
-            <Text.BodyMMedium useI18n>{item.text}</Text.BodyMMedium>
+            <Text.BodyM useI18n color={colors.neutral40}>{item.text}</Text.BodyM>
             {selectedPostType === item.key && (
               <Icon icon="CircleCheckSolid" tintColor={colors.blue50} />
             )}
