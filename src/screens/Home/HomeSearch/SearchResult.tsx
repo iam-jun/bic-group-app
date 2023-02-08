@@ -35,12 +35,17 @@ const SearchResult = () => {
   } = useFeedSearchStore((state) => state.newsfeedSearch);
   const actions = useFeedSearchStore((state) => state.actions);
 
+  const filterPostType = useFilterToolbarStore((state) => state.postType);
   const filterCreatedBy = useFilterToolbarStore((state) => state.createdBy);
   const filterDate = useFilterToolbarStore((state) => state.datePosted);
 
   useEffect(() => {
+    actions.setNewsfeedSearch({
+      searchResults: [],
+      hasNextPage: true,
+    });
     getData();
-  }, [searchText, filterCreatedBy, filterDate?.startDate, filterDate?.endDate, groupId]);
+  }, [searchText, filterPostType, filterCreatedBy, filterDate?.startDate, filterDate?.endDate, groupId]);
 
   const getData = () => {
     if (searchText) {
@@ -50,6 +55,7 @@ const SearchResult = () => {
         startDate: filterDate?.startDate,
         endDate: filterDate?.endDate,
         groupId,
+        type: filterPostType,
       };
       actions.getSearchPosts(payload);
     }

@@ -25,6 +25,7 @@ const TagDetail: React.FC<any> = ({ route }) => {
   const theme = useTheme();
   const styles = createStyle(theme);
 
+  const filterPostType = useFilterToolbarStore((state) => state.postType);
   const filterCreatedBy = useFilterToolbarStore((state) => state.createdBy);
   const filterDate = useFilterToolbarStore((state) => state.datePosted);
   const resetFilter = useFilterToolbarStore((state) => state.reset);
@@ -38,19 +39,18 @@ const TagDetail: React.FC<any> = ({ route }) => {
   const community = useCommunitiesStore((state) => state.data[communityId]);
   const { groupId, name: communityName } = community || {};
 
-  const actionsFeedSearch = useFeedSearchStore((state) => state.actions);
   const resetFeedSearchStore = useFeedSearchStore((state) => state.reset);
 
   useEffect(() => {
+    resetTag();
     getData();
-    actionsFeedSearch.setNewsfeedSearch({
-      groupId,
-    });
-  }, [filterCreatedBy, filterDate?.startDate, filterDate?.endDate, groupId, tagId]);
+  }, [filterPostType, filterCreatedBy, filterDate?.startDate, filterDate?.endDate, groupId, tagId]);
 
   useEffect(() => () => {
     resetTag();
     resetFilter();
+    // in case of going to TagDetail from FeedSearch
+    // when navigate back need to reset
     resetFeedSearchStore();
   }, [tagId]);
 
@@ -62,6 +62,7 @@ const TagDetail: React.FC<any> = ({ route }) => {
       endDate: filterDate?.endDate,
       groupId,
       tagName,
+      type: filterPostType,
     };
     tagActions.getArticles(payload, isLoadMore);
   };
