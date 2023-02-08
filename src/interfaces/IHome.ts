@@ -54,6 +54,7 @@ export interface IParamGetSearchPost {
   idLt?: number;
   groupId?: string;
   tagName?: string;
+  type?: string;
 }
 
 export type IRecentSearchTarget = 'post' | 'user' | 'article' | 'all';
@@ -83,6 +84,7 @@ export interface IPayloadGetSearchPosts {
   endDate?: string;
   groupId?: string;
   tagName?: string;
+  type?: string;
 }
 
 export interface ISelectedFilterUser {

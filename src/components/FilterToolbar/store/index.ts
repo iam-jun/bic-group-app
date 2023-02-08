@@ -2,8 +2,10 @@ import { createStore, resetStore } from '~/store/utils';
 import IBaseState from '~/store/interfaces/IBaseState';
 import getPostUsers from './actions/getPostUsers';
 import searchPostUsers from './actions/searchPostUsers';
+import { PostType } from '~/interfaces/IPost';
 
 export interface IFilterToolbarState extends IBaseState {
+  postType: any,
   createdBy: any,
   datePosted: any,
   listUser: {
@@ -18,14 +20,16 @@ export interface IFilterToolbarState extends IBaseState {
     hasNextPage: boolean;
   },
   actions: {
-    setFilterCreateBy: (createdBy: 'me' | undefined | any)=> void;
+    setFilterPostType: (postType: PostType) => void;
+    setFilterCreateBy: (createdBy: 'me' | undefined | any) => void;
     setFilterDatePosted: (date: any) => void;
     getPostUsers: (isLoadMore?: boolean) => void;
-    searchPostUsers: (contentSearch: string, isLoadMore?: boolean) => void;
+    searchPostUsers: (contentSearch?: string, isLoadMore?: boolean) => void;
   }
 }
 
 const initialState = {
+  postType: undefined,
   createdBy: undefined,
   datePosted: undefined,
   listUser: {
@@ -45,6 +49,11 @@ const useFilterToolbar = (set, get) => ({
   ...initialState,
 
   actions: {
+    setFilterPostType: (postType: PostType) => {
+      set((state: IFilterToolbarState) => {
+        state.postType = postType;
+      }, 'setFilterPostType');
+    },
     setFilterCreateBy: (createdBy: 'me' | undefined | any) => {
       set((state: IFilterToolbarState) => {
         state.createdBy = createdBy;

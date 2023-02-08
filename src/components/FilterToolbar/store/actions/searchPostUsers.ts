@@ -4,7 +4,7 @@ import Store from '~/storeRedux';
 import { IFilterToolbarState } from '..';
 import appConfig from '~/configs/appConfig';
 
-const searchPostUsers = (set, get) => async (contentSearch: string, isLoadMore?: boolean) => {
+const searchPostUsers = (set, get) => async (contentSearch?: string, isLoadMore?: boolean) => {
   try {
     if (!contentSearch) {
       set((state: IFilterToolbarState) => {

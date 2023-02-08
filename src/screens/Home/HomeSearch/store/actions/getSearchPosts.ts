@@ -9,7 +9,7 @@ const getSearchPosts = (set, get) => async (payload: IPayloadGetSearchPosts) => 
   try {
     let data: IPost[] = [];
     const {
-      searchText, actors, startDate, endDate, groupId,
+      searchText, actors, startDate, endDate, groupId, type,
     } = payload || {};
     const { newsfeedSearch, actions }: IFeedSearchState = get();
     const { searchResults, hasNextPage, loadingResult } = newsfeedSearch || {};
@@ -39,6 +39,9 @@ const getSearchPosts = (set, get) => async (payload: IPayloadGetSearchPosts) => 
     }
     if (groupId) {
       params.groupId = groupId;
+    }
+    if (type) {
+      params.type = type;
     }
 
     set((state: IFeedSearchState) => {
