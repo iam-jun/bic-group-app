@@ -1,8 +1,9 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC, useEffect, useRef } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { useDispatch } from 'react-redux';
+import { ScrollView } from 'react-native-gesture-handler';
 import PillTabButton from '~/baseComponents/Tab/PillTabButton';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { ISelectedFilterUser } from '~/interfaces/IHome';
@@ -180,6 +181,7 @@ const FilterToolbar: FC<FilterToolbarProps> = ({ groupId = '' }) => {
         style={styles.scrollContainer}
         horizontal
         showsHorizontalScrollIndicator={false}
+        alwaysBounceHorizontal={false}
       >
         <View style={styles.container}>
           {renderFilterPostTypeOption()}
