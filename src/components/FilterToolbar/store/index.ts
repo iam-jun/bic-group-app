@@ -4,28 +4,32 @@ import getPostUsers from './actions/getPostUsers';
 import searchPostUsers from './actions/searchPostUsers';
 import { PostType } from '~/interfaces/IPost';
 
+export type SearchUser = {
+  groupId: string;
+  key: string;
+  loading: boolean;
+  items: any[];
+  hasNextPage: boolean;
+};
+
 export interface IFilterToolbarState extends IBaseState {
-  postType: any,
-  createdBy: any,
-  datePosted: any,
+  postType: any;
+  createdBy: any;
+  datePosted: any;
   listUser: {
     loading: boolean;
     items: any[];
     hasNextPage: boolean;
-  },
-  search: {
-    key: string;
-    loading: boolean;
-    items: any[];
-    hasNextPage: boolean;
-  },
+  };
+  search: SearchUser;
   actions: {
     setFilterPostType: (postType: PostType) => void;
     setFilterCreateBy: (createdBy: 'me' | undefined | any) => void;
     setFilterDatePosted: (date: any) => void;
+    setSearchUser: (search: Partial<SearchUser>) => void;
     getPostUsers: (isLoadMore?: boolean) => void;
     searchPostUsers: (contentSearch?: string, isLoadMore?: boolean) => void;
-  }
+  };
 }
 
 const initialState = {
@@ -38,6 +42,7 @@ const initialState = {
     hasNextPage: true,
   },
   search: {
+    groupId: '',
     key: '',
     loading: false,
     items: [],
@@ -64,6 +69,14 @@ const useFilterToolbar = (set, get) => ({
         state.datePosted = date;
       }, 'setDatePosted');
     },
+    setSearchUser: (search: Partial<SearchUser>) => {
+      set((state: IFilterToolbarState) => {
+        state.search = {
+          ...state.search,
+          ...search,
+        };
+      }, 'setSearchUser');
+    },
     getPostUsers: getPostUsers(set, get),
     searchPostUsers: searchPostUsers(set, get),
   },
@@ -71,6 +84,7 @@ const useFilterToolbar = (set, get) => ({
   reset: () => resetStore(initialState, set),
 });
 
-const useFilterToolbarStore = createStore<IFilterToolbarState>(useFilterToolbar);
+const useFilterToolbarStore
+  = createStore<IFilterToolbarState>(useFilterToolbar);
 
 export default useFilterToolbarStore;

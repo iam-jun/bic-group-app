@@ -29,7 +29,7 @@ export interface ArticleFormatToolBarProps {
   toggleQuote: () => void;
   insertLink: (url: string, text: string) => void;
   insertImage: (url: string) => void;
-  insertVideoEmbed: (url: string) => void;
+  insertEmbed: (url: string) => void;
   setAlign: (type: AlignType) => void;
   toggleMark: (type: MarkType) => void;
   toggleList: (type: ListType) => void;
@@ -41,7 +41,7 @@ const ArticleFormatToolBar: FC<ArticleFormatToolBarProps> = ({
   toggleQuote,
   insertLink,
   insertImage,
-  insertVideoEmbed,
+  insertEmbed,
   setAlign,
   toggleMark,
   toggleList,
@@ -99,19 +99,19 @@ const ArticleFormatToolBar: FC<ArticleFormatToolBarProps> = ({
     insertImage(gif.url);
   }, []);
 
-  const openModal = (type: 'link'|'video') => {
+  const openModal = (type: 'link'|'embed') => {
     dispatch(modalActions.showModal({
       isOpen: true,
       ContentComponent: <InputModalView
         type={type}
         insertLink={insertLink}
-        insertVideoEmbed={insertVideoEmbed}
+        insertEmbed={insertEmbed}
       />,
     }));
   };
 
   const openModalLink = () => openModal('link');
-  const openModalVideo = () => openModal('video');
+  const openModalEmbed = () => openModal('embed');
 
   const renderIconAlign = ([type, icon]) => <IconButton type={type} icon={icon} onPress={setAlign} />;
   const renderIconMark = ([type, icon]) => <IconButton type={type} icon={icon} onPress={toggleMark} />;
@@ -167,7 +167,7 @@ const ArticleFormatToolBar: FC<ArticleFormatToolBarProps> = ({
         </Button>
         <Divider horizontal style={styles.divider} />
         <IconButton icon="Image" onPress={openGallery} />
-        <IconButton icon="ClapperboardPlay" onPress={openModalVideo} />
+        <IconButton icon="CodeSimple" onPress={openModalEmbed} />
         <IconButton icon="iconAddGif" onPress={openGiphy} />
         <Divider horizontal style={styles.divider} />
         <IconButton icon="Link" onPress={openModalLink} />

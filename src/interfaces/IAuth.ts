@@ -156,3 +156,8 @@ export interface IFormCheckPw {
   isDigits: boolean;
   isSpecialCharacter: boolean;
 }
+
+export interface IVerifyEmail {
+  email: string;
+  redirectPage: 'login' | 'reset-password'
+}

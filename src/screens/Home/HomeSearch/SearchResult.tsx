@@ -117,7 +117,7 @@ const SearchResult = () => {
 
   return (
     <View style={styles.container}>
-      <FilterToolbar />
+      <FilterToolbar groupId={groupId} />
       <View style={styles.bannerView}>
         <Icon icon="CircleInfo" size={18} tintColor={colors.neutral20} />
         <Text.BodyS color={colors.neutral40} style={styles.bannerText} useI18n>

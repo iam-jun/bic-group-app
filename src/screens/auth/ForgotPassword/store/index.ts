@@ -16,7 +16,7 @@ export interface IForgotPasswordState extends IBaseState {
     setScreenCurrentStage: (stage: string) => void;
     setErrorRequest: (error?: string) => void;
     setErrorConfirm: (error?: string) => void;
-    requestResetPassword: (email: string) => void;
+    requestResetPassword: (email: string, callbackError?: (error: any)=> void) => void;
     confirmForgotPassword: (payload: IForgotPasswordConfirm) => void;
   }
 }

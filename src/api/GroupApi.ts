@@ -15,7 +15,7 @@ import {
 } from '~/interfaces/ICommunity';
 import { withHttpRequestPromise } from '~/api/apiRequest';
 import appConfig from '~/configs/appConfig';
-import { IUserEdit } from '~/interfaces/IAuth';
+import { IUserEdit, IVerifyEmail } from '~/interfaces/IAuth';
 import { IAddWorkExperienceReq } from '~/interfaces/IWorkExperienceRequest';
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 import { ISearchReq } from '~/interfaces/common';
@@ -523,6 +523,11 @@ export const groupsApiConfig = {
     method: 'post',
     data: { ...params },
   }),
+  resendVerificationEmail: (params: IVerifyEmail): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}auth/resend-confirmation-code?email=${params.email}&redirect_page=${params.redirectPage}`,
+    method: 'post',
+  }),
 };
 
 const groupApi = {
@@ -840,6 +845,9 @@ const groupApi = {
     groupsApiConfig.reportMember,
     communityId,
     params,
+  ),
+  resendVerificationEmail: (params: IVerifyEmail) => withHttpRequestPromise(
+    groupsApiConfig.resendVerificationEmail, params,
   ),
 };
 

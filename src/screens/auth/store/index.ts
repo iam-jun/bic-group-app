@@ -24,7 +24,7 @@ export interface IAuthState extends IBaseState{
     setSigningOut: (signingOut: boolean) => void;
     setRefreshedToken: (data: any) => void;
 
-    signIn: (payload: ISignIn) => void;
+    signIn: (payload: ISignIn, callbackError?: (error: any)=> void) => void;
     signOut: () => void;
     handleAuthEvent: (data: HubCapsule) => void;
     announceSessionExpire: () => void;

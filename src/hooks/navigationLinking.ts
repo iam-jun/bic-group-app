@@ -3,9 +3,16 @@ import { useRootNavigation } from '~/hooks/navigation';
 import {
   linkingConfig, PREFIX_DEEPLINK_GROUP, PREFIX_URL,
 } from '~/router/config';
+import authStacks from '~/router/navigator/AuthStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
+import useCommonController from '~/screens/store';
 import getEnv from '~/utils/env';
 import { DEEP_LINK_TYPES, matchDeepLink, openInAppBrowser } from '~/utils/link';
+
+const isHasCurrentUser = () => {
+  const userProfileData = useCommonController.getState().myProfile;
+  return !!userProfileData?.id;
+};
 
 export const onReceiveURL = ({ url, navigation, listener }: { url: string, navigation:any, listener?: any }) => {
   const match = matchDeepLink(url);
@@ -42,6 +49,14 @@ export const onReceiveURL = ({ url, navigation, listener }: { url: string, navig
         navigation?.navigate?.(mainStack.articleContentDetail, {
           articleId: match.articleId,
         });
+        break;
+      case DEEP_LINK_TYPES.LOGIN:
+        if (isHasCurrentUser()) return;
+        navigation?.navigate?.(authStacks.signIn);
+        break;
+      case DEEP_LINK_TYPES.FORGOT_PASSWORD:
+        if (isHasCurrentUser()) return;
+        navigation?.navigate?.(authStacks.forgotPassword);
         break;
       default:
         listener?.(url);

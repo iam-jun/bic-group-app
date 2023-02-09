@@ -28,6 +28,8 @@ export const DEEP_LINK_TYPES = {
   GROUP_DETAIL: 'group-detail',
   SERIES_DETAIL: 'series-detail',
   ARTICLE_DETAIL: 'article-detail',
+  LOGIN: 'login',
+  FORGOT_PASSWORD: 'forgot_password',
 };
 
 const formatParams = (params?: any):string => {
@@ -210,6 +212,16 @@ export const matchDeepLink = (url: string) => {
   ).exec(deepLinkUrl);
   if (match) {
     return { type: DEEP_LINK_TYPES.ARTICLE_DETAIL, articleId: match[1] };
+  }
+
+  match = new RegExp(
+    `^${PREFIX_DEEPLINK_GROUP}\\/confirm-user\\?(\\S+)$`,
+  ).exec(deepLinkUrl);
+  if (match) {
+    const urlParams = match[1];
+    const newParams = getURLParams(urlParams);
+    const { redirectTo = '' } = newParams || {} as any;
+    return { type: redirectTo === 'reset-password' ? DEEP_LINK_TYPES.FORGOT_PASSWORD : DEEP_LINK_TYPES.LOGIN };
   }
 
   return null;

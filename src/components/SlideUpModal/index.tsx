@@ -169,13 +169,13 @@ const SlideUpModal: React.FC<SheetProps> = ({
     <View style={styles.container}>
       <Animated.View style={[sheetHeightAnimatedStyle, styles.sheet]}>
         <PanGestureHandler
+          hitSlop={{
+            top: 20, bottom: 20, left: 20, right: 20,
+          }}
           onGestureEvent={onGestureEvent}
         >
           <Animated.View
             style={styles.handleContainer}
-            hitSlop={{
-              top: 10, left: 10, bottom: 10, right: 10,
-            }}
           >
             <View style={styles.handle} />
           </Animated.View>
