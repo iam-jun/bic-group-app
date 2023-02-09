@@ -95,7 +95,7 @@ const TagDetail: React.FC<any> = ({ route }) => {
         title={tagName}
         subTitle={communityName}
       />
-      <FilterToolbar />
+      <FilterToolbar groupId={groupId} />
       <FlatList
         data={articles}
         showsVerticalScrollIndicator={false}

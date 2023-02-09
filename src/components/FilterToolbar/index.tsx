@@ -1,5 +1,5 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React, { useRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { useDispatch } from 'react-redux';
@@ -19,7 +19,11 @@ import FilterCreateBySpecific from './FilterCreateBySpecific';
 import { PostType } from '~/interfaces/IPost';
 import FilterPostType from './FilterPostType';
 
-const FilterToolbar = () => {
+type FilterToolbarProps = {
+  groupId?: string
+}
+
+const FilterToolbar: FC<FilterToolbarProps> = ({ groupId = '' }) => {
   const scrollRef = useRef<any>();
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
@@ -30,6 +34,12 @@ const FilterToolbar = () => {
   const filterCreatedBy = useFilterToolbarStore((state) => state.createdBy);
   const filterDate = useFilterToolbarStore((state) => state.datePosted);
   const { startDate, endDate } = filterDate || {};
+
+  useEffect(() => {
+    actions.setSearchUser({
+      groupId,
+    });
+  }, [groupId]);
 
   const showModal = (ContentComponent: any, props: any = {}) => {
     dispatch(
