@@ -299,7 +299,17 @@
     "text_err_password_required_lower_case": "Please use at least one lowercase (a-z)!",
     "text_err_password_required_upper_case": "Please use at least one upper case letter (A-Z)",
     "text_err_password_required_number": "Please use at least one least digits (0-9)",
-    "text_err_password_required_symbols": "Please use at least one special character"
+    "text_err_password_required_symbols": "Please use at least one special character",
+    "request_verify_email": {
+      "title": "This email is not verified yet!",
+    "body": "You need to click the bellow button to receive the verification link then trying to sign in later",
+    "cta": "Send verification email"
+    },
+    "send_verify_email_success": {
+      "title": "The verification email was sent!",
+      "body": "Please check your email for a verification email"
+    },
+    "verify_email_limit_exceeded": "You exceeded over the limit of request. Please try again after 1 hour"
   },
   "tabs": {
     "home": "Home",

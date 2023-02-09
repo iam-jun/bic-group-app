@@ -268,7 +268,17 @@
     "text_err_password_required_lower_case": "Vui lòng sử dụng ít nhất một ký tự viết thường (a-z)!",
     "text_err_password_required_upper_case": "Vui lòng sử dụng ít nhất một ký tự viết hoa (A-Z)!",
     "text_err_password_required_number": "Vui lòng sử dụng ít nhất một ký tự là số!",
-    "text_err_password_required_symbols": "Vui lòng sử dụng ít nhất một ký tự đặc biệt bao gồm dấu câu và ký hiệu thông thường!"
+    "text_err_password_required_symbols": "Vui lòng sử dụng ít nhất một ký tự đặc biệt bao gồm dấu câu và ký hiệu thông thường!",
+    "request_verify_email": {
+      "title": "Email này chưa được xác minh!",
+    "body": "Bạn cần nhấp vào nút bên dưới để nhận liên kết xác minh, sau đó thử đăng nhập lại",
+    "cta": "Gửi email xác minh"
+    },
+    "send_verify_email_success": {
+      "title": "Email xác minh đã được gửi!",
+      "body": "Vui lòng kiểm tra email của bạn để nhận email xác minh"
+    },
+    "verify_email_limit_exceeded": "Số lần gửi yêu cầu vượt quá giới hạn. Vui lòng thử lại sau 1 giờ"
   },
   "tabs": {
     "home": "Trang chủ",
