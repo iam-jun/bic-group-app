@@ -110,9 +110,9 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
     });
   };
 
-  const insertVideoEmbed = (url: string) => {
+  const insertEmbed = (url: string) => {
     injectJavaScript({
-      type: 'insertVideoEmbed',
+      type: 'insertEmbed',
       payload: url,
     });
   };
@@ -227,7 +227,7 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
               toggleQuote={toggleQuote}
               insertImage={insertImage}
               toggleHeading={toggleHeading}
-              insertVideoEmbed={insertVideoEmbed}
+              insertEmbed={insertEmbed}
               onModalVisbleChanged={onModalVisbleChanged}
             />
           )}

@@ -558,8 +558,8 @@
       "text_placeholder": "Tiêu đề hiển thị",
       "link_placeholder": "Liên kết đến một trang web"
     },
-    "modal_add_video": {
-      "title": "Nhúng video",
+    "modal_add_embed": {
+      "title": "Nhúng",
       "link_placeholder": "Nhập URL của video:"
     },
     "modal_invalid_series_tags": {

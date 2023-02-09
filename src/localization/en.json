@@ -598,8 +598,8 @@
       "text_placeholder": "Text to display",
       "link_placeholder": "Link to a web page"
     },
-    "modal_add_video": {
-      "title": "Embed Video",
+    "modal_add_embed": {
+      "title": "Embed",
       "link_placeholder": "Enter the URL of the embed:"
     },
     "modal_invalid_series_tags": {
