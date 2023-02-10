@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
@@ -23,22 +23,24 @@ const RequestVerifyEmailModal = ({ email, isFromSignIn = true }: RequestVerifyEm
   const theme = useTheme();
   const { colors } = theme;
 
-  const [isSentVerifyEmail, setSentVerifyEmail] = useState(false);
-  const authActions = useVerifyEmailController((state: IVerifyEmailState) => state.actions);
+  const actions = useVerifyEmailController((state: IVerifyEmailState) => state.actions);
+  const sentVerifyEmail = useVerifyEmailController((state: IVerifyEmailState) => state.sentVerifyEmail);
+
+  useEffect(() => () => { actions.setSentVerifyEmail(false); }, []);
 
   const closeModal = () => {
     dispatch(modalActions.hideModal());
   };
 
   const onPress = () => {
-    setSentVerifyEmail(true);
-    authActions.resendVerifyEmail({ email, redirectPage: isFromSignIn ? 'login' : 'reset-password' });
+    actions.resendVerifyEmail({ email, redirectPage: isFromSignIn ? 'login' : 'reset-password' });
   };
 
   const renderContent = (icon: any, title:string, body: string, ButtonComponent?: any) => (
     <View testID="request_verify_email_modal" style={styles.container}>
       <View style={styles.headerContainer}>
         <Icon
+          testID="request_verify_email_modal.button_close"
           size={18}
           tintColor={colors.neutral40}
           icon="Xmark"
@@ -59,6 +61,7 @@ const RequestVerifyEmailModal = ({ email, isFromSignIn = true }: RequestVerifyEm
 
   const renderButton = () => (
     <Button.Primary
+      testID="request_verify_email_modal.button"
       useI18n
       onPress={onPress}
       style={styles.button}
@@ -70,7 +73,7 @@ const RequestVerifyEmailModal = ({ email, isFromSignIn = true }: RequestVerifyEm
   return (
     <View>
       {
-        !isSentVerifyEmail
+        !sentVerifyEmail
           ? renderContent(EmailWarning,
             'auth:request_verify_email:title',
             'auth:request_verify_email:body',
@@ -88,6 +91,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: spacing.padding.small,
     minHeight: 300,
+    paddingBottom: spacing.padding.extraLarge * 2,
   },
   title: {
     marginVertical: spacing.margin.extraLarge,

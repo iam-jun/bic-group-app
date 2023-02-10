@@ -4,19 +4,25 @@ import { IVerifyEmail } from '~/interfaces/IAuth';
 import resendVerifyEmail from './actions/resendVerifyEmail';
 
 export interface IVerifyEmailState extends IBaseState {
-
+  sentVerifyEmail: boolean;
   actions: {
-     resendVerifyEmail: (params: IVerifyEmail) => void;
+    setSentVerifyEmail: (sent: boolean) => void;
+    resendVerifyEmail: (params: IVerifyEmail,) => void;
   }
 }
 
-const useForgotPassword = (set, get) => ({
+const verifyEmailController = (set, get) => ({
+  sentVerifyEmail: false,
   actions: {
+    setSentVerifyEmail: (sent: boolean) => {
+      set((state: IVerifyEmailState) => {
+        state.sentVerifyEmail = sent;
+      }, 'setSentVerifyEmail');
+    },
     resendVerifyEmail: resendVerifyEmail(set, get),
-
   },
 });
 
-const useVerifyEmailController = createStore<IVerifyEmailState>(useForgotPassword);
+const useVerifyEmailController = createStore<IVerifyEmailState>(verifyEmailController);
 
 export default useVerifyEmailController;

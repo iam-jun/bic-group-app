@@ -25,6 +25,7 @@ exports[`SearchResult component should render empty search result 1`] = `
   >
     <RCTScrollView
       horizontal={true}
+      showsHorizontalScrollIndicator={false}
       style={
         Object {
           "backgroundColor": "#FFFFFF",
@@ -71,7 +72,7 @@ exports[`SearchResult component should render empty search result 1`] = `
                   "shadowOpacity": 0.08,
                   "shadowRadius": 1,
                 },
-                "justifyContent": "center",
+                "flexDirection": "row",
                 "opacity": 1,
                 "paddingHorizontal": 12,
                 "paddingVertical": 6,
@@ -97,7 +98,7 @@ exports[`SearchResult component should render empty search result 1`] = `
                 ]
               }
             >
-              Date posted
+              Content type
             </Text>
           </View>
           <View
@@ -136,7 +137,7 @@ exports[`SearchResult component should render empty search result 1`] = `
                   "shadowOpacity": 0.08,
                   "shadowRadius": 1,
                 },
-                "justifyContent": "center",
+                "flexDirection": "row",
                 "opacity": 1,
                 "paddingHorizontal": 12,
                 "paddingVertical": 6,
@@ -163,6 +164,71 @@ exports[`SearchResult component should render empty search result 1`] = `
               }
             >
               Created by
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "height": undefined,
+                "paddingHorizontal": undefined,
+                "paddingVertical": undefined,
+                "width": 8,
+              }
+            }
+          />
+          <View
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F1F2F8",
+                "borderRadius": 100,
+                "boxShadow": Object {
+                  "elevation": 1,
+                  "shadowColor": "rgba(0, 0, 0, 1)",
+                  "shadowOffset": Object {
+                    "height": 1,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.08,
+                  "shadowRadius": 1,
+                },
+                "flexDirection": "row",
+                "opacity": 1,
+                "paddingHorizontal": 12,
+                "paddingVertical": 6,
+              }
+            }
+            testID="undefined-selected"
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#353E6E",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 14,
+                  },
+                  Object {},
+                  Array [
+                    Object {},
+                    Object {
+                      "color": "#353E6E",
+                    },
+                  ],
+                ]
+              }
+            >
+              Day posted
             </Text>
           </View>
         </View>
@@ -1155,6 +1221,7 @@ exports[`SearchResult component should render list search result 1`] = `
   >
     <RCTScrollView
       horizontal={true}
+      showsHorizontalScrollIndicator={false}
       style={
         Object {
           "backgroundColor": "#FFFFFF",
@@ -1201,7 +1268,7 @@ exports[`SearchResult component should render list search result 1`] = `
                   "shadowOpacity": 0.08,
                   "shadowRadius": 1,
                 },
-                "justifyContent": "center",
+                "flexDirection": "row",
                 "opacity": 1,
                 "paddingHorizontal": 12,
                 "paddingVertical": 6,
@@ -1227,7 +1294,7 @@ exports[`SearchResult component should render list search result 1`] = `
                 ]
               }
             >
-              Date posted
+              Content type
             </Text>
           </View>
           <View
@@ -1266,7 +1333,7 @@ exports[`SearchResult component should render list search result 1`] = `
                   "shadowOpacity": 0.08,
                   "shadowRadius": 1,
                 },
-                "justifyContent": "center",
+                "flexDirection": "row",
                 "opacity": 1,
                 "paddingHorizontal": 12,
                 "paddingVertical": 6,
@@ -1293,6 +1360,71 @@ exports[`SearchResult component should render list search result 1`] = `
               }
             >
               Created by
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "height": undefined,
+                "paddingHorizontal": undefined,
+                "paddingVertical": undefined,
+                "width": 8,
+              }
+            }
+          />
+          <View
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F1F2F8",
+                "borderRadius": 100,
+                "boxShadow": Object {
+                  "elevation": 1,
+                  "shadowColor": "rgba(0, 0, 0, 1)",
+                  "shadowOffset": Object {
+                    "height": 1,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.08,
+                  "shadowRadius": 1,
+                },
+                "flexDirection": "row",
+                "opacity": 1,
+                "paddingHorizontal": 12,
+                "paddingVertical": 6,
+              }
+            }
+            testID="undefined-selected"
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#353E6E",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 14,
+                  },
+                  Object {},
+                  Array [
+                    Object {},
+                    Object {
+                      "color": "#353E6E",
+                    },
+                  ],
+                ]
+              }
+            >
+              Day posted
             </Text>
           </View>
         </View>

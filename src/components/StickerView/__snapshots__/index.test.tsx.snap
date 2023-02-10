@@ -56,14 +56,6 @@ exports[`StickerView component renders correctly 1`] = `
           }
           collapsable={false}
           forwardedRef={[Function]}
-          hitSlop={
-            Object {
-              "bottom": 10,
-              "left": 10,
-              "right": 10,
-              "top": 10,
-            }
-          }
           onGestureHandlerEvent={[Function]}
           style={
             Object {
