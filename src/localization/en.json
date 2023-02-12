@@ -634,7 +634,8 @@
     "text_schedule": "Schedule",
     "fail_schedule": "Fail Schedule",
     "successful_schedule": "Successful Schedule",
-    "text_delete_article_success": "Your article has been deleted"
+    "text_delete_article_success": "Your article has been deleted",
+    "paste_image_error": "Upload failed. Please upload images using the toolbar."
   },
   "post": {
     "news_feed": "News Feed",

@@ -26,6 +26,7 @@ import declineSingleGroupMemberRequest from './actions/declineSingleGroupMemberR
 export interface IGroupMemberState extends IBaseState {
   groupMembers: {
     loading: boolean;
+    refreshing: boolean;
     canLoadMore: boolean;
     offset: number; // current fetched data count
   };
@@ -81,7 +82,8 @@ export interface IGroupMemberState extends IBaseState {
 
 const initialState: InitStateType<IGroupMemberState> = {
   groupMembers: {
-    loading: true,
+    loading: false,
+    refreshing: false,
     canLoadMore: true,
     offset: 0,
   },

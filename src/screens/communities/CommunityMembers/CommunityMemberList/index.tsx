@@ -14,7 +14,6 @@ interface CommunityMemberListProps {
 const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProps) => {
   const { groupId } = community;
   const actions = useCommunityMemberStore((state) => state.actions);
-  const resetStore = useCommunityMemberStore((state) => state.reset);
   const canLoadMore = useCommunityMemberStore((state) => state.communityMembers.canLoadMore);
 
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
@@ -31,22 +30,19 @@ const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProp
       getCommunityMembers();
 
       return () => {
-        resetCommunityMembers();
+        actions.clearCommunityMembers();
       };
     }, [groupId],
   );
 
-  const getCommunityMembers = (isRefreshing?: boolean) => {
+  const getCommunityMembers = (isRefreshing = false) => {
     if (!groupId) return;
     actions.getCommunityMembers(groupId, isRefreshing);
   };
 
-  const resetCommunityMembers = () => {
-    resetStore();
-  };
-
   const onLoadMore = () => {
-    canLoadMore && getCommunityMembers();
+    if (!canLoadMore) return;
+    getCommunityMembers();
   };
 
   const onRefresh = () => {

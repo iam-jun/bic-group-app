@@ -10,11 +10,14 @@ import { CUSTOM_META, getInjectableJSMessage, USER_AGENT_DESKTOP } from '~/utils
 import { parseSafe } from '~/utils/common';
 import useMounted from '~/hooks/mounted';
 import getEnv from '~/utils/env';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import showToast from '~/store/helper/showToast';
 
 export enum EventType {
     ON_LOAD_END = 'onLoadEnd', // must post content to editor after editor is mounted
     ON_INITIALIZE_END='onInitializeEnd', // after editor initiated content
-    ON_SCROLL = 'onScroll'
+    ON_SCROLL = 'onScroll',
+    ON_IMAGE_ERROR = 'onImageError'
 }
 
 const ARTICLE_EDITOR_URL = `https://${getEnv('SELF_DOMAIN')}/article/webview/v1`;
@@ -80,6 +83,10 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
     onInitializeEnd?.();
   };
 
+  const handleImageError = () => {
+    showToast({ content: 'article:paste_image_error', type: ToastType.ERROR });
+  };
+
   const _onMessage = (event: any) => {
     const message = parseSafe(event?.nativeEvent?.data);
 
@@ -90,6 +97,8 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
         return _onInitializeEnd?.();
       case EventType.ON_SCROLL:
         return onScroll?.(message?.payload);
+      case EventType.ON_IMAGE_ERROR:
+        return handleImageError();
       default:
         return onMessage(message);
     }

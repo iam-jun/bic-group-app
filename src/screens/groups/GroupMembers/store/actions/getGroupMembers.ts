@@ -7,14 +7,17 @@ import { IGroupMemberState } from '..';
 const getGroupMembers = (set, get) => async (payload: IGroupGetMembers) => {
   try {
     const { groupId, params, isRefreshing } = payload;
-    const { groupMembers } = get() || {};
-    const { canLoadMore, offset } = groupMembers || {};
+    const { groupMembers }: IGroupMemberState = get() || {};
+    const { loading, canLoadMore, offset } = groupMembers || {};
+    if (loading || (!isRefreshing && !canLoadMore)) return;
 
     set((state: IGroupMemberState) => {
-      state.groupMembers.loading = isRefreshing ? true : offset === 0;
+      if (isRefreshing) {
+        state.groupMembers.refreshing = true;
+      } else {
+        state.groupMembers.loading = true;
+      }
     }, 'getGroupMembers');
-
-    if (!isRefreshing && !canLoadMore) return;
 
     const response = await groupApi.getGroupMembers(groupId, {
       limit: appConfig.recordsPerPage,
@@ -25,6 +28,7 @@ const getGroupMembers = (set, get) => async (payload: IGroupGetMembers) => {
     if (!response || !response.data) {
       set((state: IGroupMemberState) => {
         state.groupMembers.loading = false;
+        state.groupMembers.refreshing = false;
       }, 'getGroupMembersFailed');
       return;
     }
@@ -49,6 +53,7 @@ const getGroupMembers = (set, get) => async (payload: IGroupGetMembers) => {
 
     const newData = {
       loading: false,
+      refreshing: false,
       canLoadMore: !!response?.meta?.hasNextPage,
       offset: isRefreshing ? newDataCount : offset + newDataCount,
       ...newDataObj,
@@ -61,6 +66,7 @@ const getGroupMembers = (set, get) => async (payload: IGroupGetMembers) => {
     console.error('\x1b[31m🐣️ getGroupMembers error: ', e, '\x1b[0m');
     set((state: IGroupMemberState) => {
       state.groupMembers.loading = false;
+      state.groupMembers.refreshing = false;
     }, 'getGroupMembersFailed');
     showToastError(e);
   }

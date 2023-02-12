@@ -8,8 +8,8 @@ const appConfig = {
   defaultLanguage: 'en',
   recordsPerPage: 25,
   maxFileSize: {
-    video: 300 * 1024 * 1000, // kb => byte = 300Mb
-    image: 5 * 1024 * 1000, // kb => byte = 5Mb
+    video: 300 * 1024 * 1024, // kb => byte = 300Mb
+    image: 5 * 1024 * 1024, // kb => byte = 5Mb
 
   },
   searchTriggerTime: 200,
@@ -19,12 +19,13 @@ const appConfig = {
   postPhotoLimit: 10,
   limitReactionCount: 21,
   maxFiles: 25,
-  totalFileSize: 25 * 1024 * 1000, // kb => byte = 25Mb
+  totalFileSize: 25 * 1024 * 1024, // kb => byte = 25Mb
   fileUploadTimeout: 5 * 60 * 1000, // 5 minutes,
   commentLimit: 10,
   limitPostContentLength: 400,
   shortPostContentLength: 400,
   articlesInSeriesLimit: 20,
+  articlePhotoMaxSize: 25 * 1024 * 1024, // kb => byte = 25Mb
   superUsers: [
     'namanh@evolgroup.vn',
     'dieplamminhthu@evolgroup.vn',

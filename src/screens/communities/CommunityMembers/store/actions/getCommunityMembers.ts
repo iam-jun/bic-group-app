@@ -3,14 +3,18 @@ import appConfig from '~/configs/appConfig';
 import showToastError from '~/store/helper/showToastError';
 import { ICommunityMemberState } from '..';
 
-const getCommunityMembers = (set, get) => async (groupId: string, isRefreshing?: boolean) => {
+const getCommunityMembers = (set, get) => async (groupId: string, isRefreshing: boolean) => {
   try {
     const { communityMembers }: ICommunityMemberState = get();
-    const { canLoadMore, offset } = communityMembers || {};
-    if (!isRefreshing && !canLoadMore) return;
+    const { loading, canLoadMore, offset } = communityMembers || {};
+    if (loading || (!isRefreshing && !canLoadMore)) return;
 
     set((state: ICommunityMemberState) => {
-      state.communityMembers.loading = isRefreshing ? true : offset === 0;
+      if (isRefreshing) {
+        state.communityMembers.refreshing = true;
+      } else {
+        state.communityMembers.loading = true;
+      }
     }, 'getCommunityMembers');
 
     const params = {
@@ -22,7 +26,6 @@ const getCommunityMembers = (set, get) => async (groupId: string, isRefreshing?:
 
     let newDataCount = 0;
     let newDataObj = {};
-
     const members = response.data;
     Object.keys(members)?.forEach?.((role: string) => {
       const roles = members[role] || {};
@@ -42,6 +45,7 @@ const getCommunityMembers = (set, get) => async (groupId: string, isRefreshing?:
 
     const newData = {
       loading: false,
+      refreshing: false,
       canLoadMore: !!response?.meta?.hasNextPage,
       offset: isRefreshing ? newDataCount : offset + newDataCount,
       ...newDataObj,
@@ -51,11 +55,10 @@ const getCommunityMembers = (set, get) => async (groupId: string, isRefreshing?:
       state.communityMembers = newData;
     }, 'getCommunityMembersSuccess');
   } catch (error: any) {
-    console.error(
-      'getCommunityMembers error:', error,
-    );
+    console.error('getCommunityMembers error:', error);
     set((state: ICommunityMemberState) => {
       state.communityMembers.loading = false;
+      state.communityMembers.refreshing = false;
     }, 'getCommunityMembersFailed');
     showToastError(error);
   }

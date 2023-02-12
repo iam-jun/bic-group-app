@@ -594,7 +594,8 @@
     "text_schedule": "Đặt lịch",
     "fail_schedule": "Đặt lịch thất bại",
     "successful_schedule": "Đặt lịch thành công",
-    "text_delete_article_success": "Bài viết của bạn đã được xoá"
+    "text_delete_article_success": "Bài viết của bạn đã được xoá",
+    "paste_image_error": "Tải lên không thành công. Vui lòng tải lên hình ảnh bằng thanh công cụ."
   },
   "post": {
     "news_feed": "News Feed",
