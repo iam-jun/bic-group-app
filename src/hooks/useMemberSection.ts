@@ -28,6 +28,7 @@ const useMemberSection = (type: 'group' | 'community') => {
   return {
     sectionList,
     loading: members.loading,
+    refreshing: members.refreshing,
     canLoadMore: members.canLoadMore,
   };
 };

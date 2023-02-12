@@ -62,7 +62,7 @@ const _GroupMembers = ({ route }: any) => {
 
   const getMembers = () => {
     if (!groupId) return;
-    actions.getGroupMembers({ groupId });
+    actions.getGroupMembers({ groupId, isRefreshing: true });
   };
 
   useEffect(

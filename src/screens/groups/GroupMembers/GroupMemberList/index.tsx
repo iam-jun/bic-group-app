@@ -25,7 +25,7 @@ const GroupMemberList = ({ groupId, onPressMenu }: GroupMemberListProps) => {
   );
   const actions = useGroupMemberStore((state) => state.actions);
 
-  const getMembers = (isRefreshing?: boolean) => {
+  const getMembers = (isRefreshing = false) => {
     if (!groupId) return;
     actions.getGroupMembers({ groupId, isRefreshing });
   };
@@ -41,7 +41,8 @@ const GroupMemberList = ({ groupId, onPressMenu }: GroupMemberListProps) => {
   );
 
   const onLoadMore = () => {
-    canLoadMore && getMembers();
+    if (!canLoadMore) return;
+    getMembers();
   };
 
   const onRefresh = () => {
