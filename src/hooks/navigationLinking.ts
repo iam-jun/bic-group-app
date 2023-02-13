@@ -58,6 +58,11 @@ export const onReceiveURL = ({ url, navigation, listener }: { url: string, navig
         if (isHasCurrentUser()) return;
         navigation?.navigate?.(authStacks.forgotPassword);
         break;
+      case DEEP_LINK_TYPES.CONFIRM_USER:
+        navigation?.navigate?.(isHasCurrentUser()
+          ? mainStack.confirmUser
+          : authStacks.confirmUser, { params: match.params });
+        break;
       default:
         listener?.(url);
     }

@@ -302,14 +302,17 @@
     "text_err_password_required_symbols": "Please use at least one special character",
     "request_verify_email": {
       "title": "This email is not verified yet!",
-    "body": "You need to click the bellow button to receive the verification link then trying to sign in later",
-    "cta": "Send verification email"
+      "body": "You need to click the bellow button to receive the verification link then trying to sign in later",
+      "cta": "Send verification email"
     },
     "send_verify_email_success": {
       "title": "The verification email was sent!",
       "body": "Please check your email for a verification email"
     },
-    "verify_email_limit_exceeded": "You exceeded over the limit of request. Please try again after 1 hour"
+    "verify_email_limit_exceeded": "You exceeded over the limit of request. Please try again after 1 hour",
+    "verify_email_success": "Your email is verified successfully",
+    "verify_email_expired": "The verification link is expired",
+    "button_redirect_now": "Redirect now"
   },
   "tabs": {
     "home": "Home",
