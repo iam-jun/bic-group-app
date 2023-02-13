@@ -1,0 +1,733 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DraftArticle component render correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#FFFFFF",
+      "elevation": 2,
+      "flex": 1,
+      "shadowColor": "rgba(0, 0, 0, 1)",
+      "shadowOffset": Object {
+        "height": 2,
+        "width": 0,
+      },
+      "shadowOpacity": 0.12,
+      "shadowRadius": 1.5,
+    }
+  }
+>
+  <View
+    accessibilityState={
+      Object {
+        "disabled": true,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={false}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "flexDirection": "row",
+        "marginHorizontal": 16,
+        "opacity": 1,
+        "paddingTop": 8,
+      }
+    }
+    testID="content_header"
+  >
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "marginRight": 12,
+          "marginTop": 4,
+          "opacity": 1,
+        }
+      }
+      testID="button_wrapper"
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "borderRadius": 8,
+              "height": 48,
+              "width": 48,
+            },
+            undefined,
+          ]
+        }
+        testID="avatar"
+      >
+        <View
+          style={
+            Array [
+              Array [
+                Object {
+                  "borderRadius": 8,
+                  "height": 48,
+                  "width": 48,
+                },
+                Object {
+                  "borderRadius": 24,
+                },
+              ],
+              Object {},
+            ]
+          }
+          testID="avatar_container"
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                Array [
+                  Array [
+                    Object {
+                      "borderRadius": 8,
+                      "height": 48,
+                      "width": 48,
+                    },
+                    Object {
+                      "borderRadius": 24,
+                    },
+                  ],
+                  Object {
+                    "borderColor": "#F2F5F8",
+                    "borderWidth": 2,
+                  },
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                  },
+                ],
+              ]
+            }
+          >
+            <FastImageView
+              onFastImageError={[Function]}
+              resizeMode="cover"
+              source={
+                Object {
+                  "uri": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/c6b8b056-7d77-4382-b95c-010c2fda4809.jpg",
+                }
+              }
+              style={
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+              testID="avatar.image"
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignSelf": "flex-start",
+            "marginRight": 12,
+            "opacity": 1,
+          }
+        }
+        testID="button_wrapper"
+      >
+        <Text
+          numberOfLines={1}
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
+              },
+              Object {
+                "color": "#181C32",
+              },
+              undefined,
+            ]
+          }
+          testID="content_header.actor"
+        >
+          Nguyen Thi Thu Quyền
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "marginVertical": 4,
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
+              },
+              Object {
+                "color": "#353E6E",
+              },
+              Object {
+                "marginRight": 4,
+              },
+            ]
+          }
+        >
+          to
+        </Text>
+        <Text
+          onPress={[Function]}
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 13,
+              },
+              Object {
+                "color": "#181C32",
+              },
+              undefined,
+            ]
+          }
+          testID="content_header.audiences"
+        >
+          Community của Hoàng,... +1 others
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 11,
+              },
+              Object {
+                "color": "#353E6E",
+              },
+              undefined,
+            ]
+          }
+          testID="time_view"
+        >
+          Nov 14, 2022
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "overflow": "hidden",
+        },
+        Object {
+          "height": 321.42857142857144,
+          "marginTop": 12,
+          "width": "100%",
+        },
+      ]
+    }
+  >
+    <FastImageView
+      onFastImageError={[Function]}
+      resizeMode="cover"
+      source={
+        Object {
+          "uri": "https://bic-dev-user-upload-images-s3-bucket.s3.ap-southeast-1.amazonaws.com/post/original/fa2a7cde-eee0-4c09-9784-45e1c1ef7e6b.png",
+        }
+      }
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#F4EFFB",
+        "paddingHorizontal": 16,
+        "paddingVertical": 8,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 20,
+          },
+          Object {
+            "color": "#181C32",
+          },
+          undefined,
+        ]
+      }
+      testID="article_text.title"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#181C32",
+              "fontFamily": "BeVietnamPro-SemiBold",
+              "fontSize": 20,
+            },
+            Object {
+              "color": "#181C32",
+            },
+            false,
+          ]
+        }
+      >
+        Article thứ 4 edited 
+      </Text>
+    </Text>
+    <View
+      style={
+        Object {
+          "height": 8,
+          "paddingHorizontal": undefined,
+          "paddingVertical": undefined,
+          "width": undefined,
+        }
+      }
+    />
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {
+            "color": "#181C32",
+          },
+          undefined,
+        ]
+      }
+      testID="article_text.summary"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#181C32",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+            },
+            Object {
+              "color": "#181C32",
+            },
+            false,
+          ]
+        }
+      >
+        1234567890-= lalalalallalallalalala and I will be there at the
+      </Text>
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "paddingHorizontal": 16,
+        "paddingVertical": 12,
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignSelf": "stretch",
+            "backgroundColor": "#E3E6F2",
+            "height": 1,
+            "marginHorizontal": 0,
+            "width": undefined,
+          },
+          Object {},
+        ]
+      }
+      testID="divider"
+    />
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+        },
+        Object {
+          "justifyContent": "space-between",
+          "paddingHorizontal": 16,
+          "paddingVertical": 8,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+    >
+      <View
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Array [
+            Object {
+              "borderRadius": 8,
+            },
+            undefined,
+          ]
+        }
+        testID="draft_footer.delete"
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "borderRadius": 8,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "paddingVertical": 4,
+              },
+              undefined,
+              Object {
+                "backgroundColor": "#FEECED",
+                "height": 36,
+                "paddingHorizontal": 12,
+              },
+            ]
+          }
+          testID="button.content"
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": true,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={false}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  undefined,
+                  Object {
+                    "backgroundColor": undefined,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View
+                  testID="button.icon"
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "height": undefined,
+            "paddingHorizontal": undefined,
+            "paddingVertical": undefined,
+            "width": 16,
+          }
+        }
+      />
+      <View
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Array [
+            Object {
+              "borderRadius": 8,
+            },
+            undefined,
+          ]
+        }
+        testID="draft_footer.edit"
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "borderRadius": 8,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "paddingVertical": 4,
+              },
+              undefined,
+              Object {
+                "backgroundColor": "#EBF4FF",
+                "height": 36,
+                "paddingHorizontal": 12,
+              },
+            ]
+          }
+          testID="button.content"
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": true,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={false}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  undefined,
+                  Object {
+                    "backgroundColor": undefined,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View
+                  testID="button.icon"
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": false,
+        }
+      }
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Array [
+          Object {
+            "borderRadius": 8,
+          },
+          undefined,
+        ]
+      }
+      testID="draft_footer.publish"
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "borderRadius": 8,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "paddingVertical": 4,
+            },
+            undefined,
+            Object {
+              "backgroundColor": "#7335C0",
+              "height": 36,
+              "paddingHorizontal": 12,
+            },
+          ]
+        }
+        testID="button.content"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
+              },
+              Object {
+                "color": "#FFFFFF",
+              },
+              Array [
+                Object {
+                  "textAlign": "center",
+                },
+                undefined,
+              ],
+            ]
+          }
+          testID="button.text"
+        >
+          Publish
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "height": 8,
+        "paddingHorizontal": undefined,
+        "paddingVertical": undefined,
+        "width": undefined,
+      }
+    }
+  />
+</View>
+`;
