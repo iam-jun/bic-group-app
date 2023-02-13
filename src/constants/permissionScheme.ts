@@ -17,6 +17,8 @@ export enum CategoryKey {
 }
 
 export enum PermissionKey {
+  FULL_PERMISSION = 'manage',
+
   // Organization
   CRUD_CUSTOM_SCHEME = 'crud_custom_scheme',
   CREATE_INNER_GROUPS = 'create_inner_groups',

@@ -3,9 +3,9 @@ import showToastError from '~/store/helper/showToastError';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 import { IGroupMemberState } from '..';
 
-const assignGroupAdmin = (_set, get) => async (groupId: string, userIds: string[]) => {
+const assignGroupAdmin = (_set, get) => async (groupId: string, userId: string) => {
   try {
-    const response = await groupApi.setGroupAdmin(groupId, userIds);
+    const response = await groupApi.setGroupAdmin(groupId, userId);
 
     const { actions, search }: IGroupMemberState = get();
     actions.getGroupMembers({ groupId, isRefreshing: true });

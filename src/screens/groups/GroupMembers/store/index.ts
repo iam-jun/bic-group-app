@@ -73,7 +73,7 @@ export interface IGroupMemberState extends IBaseState {
     declineAllGroupMemberRequests: (payload: IPayloadDeclineAllGroupMemberRequests) => void;
     declineSingleGroupMemberRequest: (payload: IPayloadDeclineSingleGroupMemberRequest) => void;
 
-    assignGroupAdmin: (groupId: string, userIds: string[]) => void;
+    assignGroupAdmin: (groupId: string, userId: string) => void;
     revokeGroupAdmin: (groupId: string, userId: string) => void;
     getGroupSearchMembers: (payload: IGroupGetMembers) => void;
     clearGroupSearchMembers: () => void;

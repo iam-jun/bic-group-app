@@ -5,7 +5,7 @@ import { act, renderHook } from '~/test/testUtils';
 import useGroupMemberStore from '../index';
 
 describe('assignGroupAdmin', () => {
-  const userIds = ['fedf1226-edb2-4517-a156-c77879c8a1be'];
+  const userId = 'fedf1226-edb2-4517-a156-c77879c8a1be';
   const groupId = '65ef1299-f7f2-439d-82f6-a242168ef974';
 
   it('should set group admin success:', () => {
@@ -29,7 +29,7 @@ describe('assignGroupAdmin', () => {
     jest.useFakeTimers();
     const { result } = renderHook(() => useGroupMemberStore((state) => state));
     act(() => {
-      result.current.actions.assignGroupAdmin(groupId, userIds);
+      result.current.actions.assignGroupAdmin(groupId, userId);
     });
 
     expect(spy).toBeCalled();
@@ -59,7 +59,7 @@ describe('assignGroupAdmin', () => {
 
     act(() => {
       try {
-        result.current.actions.assignGroupAdmin(groupId, userIds);
+        result.current.actions.assignGroupAdmin(groupId, userId);
       } catch (e) {
         expect(e).toBeInstanceOf(TypeError);
         expect(e).toBe(error);

@@ -333,20 +333,21 @@ export const groupsApiConfig = {
   }),
   setGroupAdmin: (
     groupId: string,
-    userIds: string[],
+    userId: string,
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/assign-admin`,
-    method: 'post',
-    data: { userIds },
+    method: 'put',
+    data: { userId },
   }),
   removeGroupAdmin: (
     groupId: string,
     userId: string,
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}groups/${groupId}/revoke-admin/${userId}`,
+    url: `${provider.url}groups/${groupId}/revoke-admin`,
     method: 'put',
+    data: { userId },
   }),
   getGroupMemberRequests: (
     groupId: string,
@@ -757,8 +758,8 @@ const groupApi = {
   joinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.joinGroup, groupId),
   cancelJoinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.cancelJoinGroup, groupId),
   leaveGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.leaveGroup, groupId),
-  setGroupAdmin: (groupId: string, userIds: string[]) => withHttpRequestPromise(
-    groupsApiConfig.setGroupAdmin, groupId, userIds,
+  setGroupAdmin: (groupId: string, userId: string) => withHttpRequestPromise(
+    groupsApiConfig.setGroupAdmin, groupId, userId,
   ),
   removeGroupAdmin: (groupId: string, userId: string) => withHttpRequestPromise(
     groupsApiConfig.removeGroupAdmin, groupId, userId,
