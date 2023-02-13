@@ -50,7 +50,7 @@ const CommunityMemberOptionsMenu = ({
   const onPressSetAdminRole = () => {
     if (!selectedMember?.id) return;
 
-    actions.assignCommunityAdmin(groupId, [selectedMember.id]);
+    actions.assignCommunityAdmin(groupId, selectedMember.id);
   };
 
   const onConfirmRemoveAdminRole = () => {

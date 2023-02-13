@@ -20,7 +20,7 @@ interface ICommunityController {
     editCommunityDetail: (
       data: IGroupDetailEdit, editFieldName?: string, callback?: () => void
     ) => void;
-    assignCommunityAdmin: (id: string, userIds: string[]) => void;
+    assignCommunityAdmin: (id: string, userId: string) => void;
     revokeCommunityAdmin: (id: string, userId: string) => void;
   }
 }
