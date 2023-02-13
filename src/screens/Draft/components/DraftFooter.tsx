@@ -42,14 +42,16 @@ const DraftFooter = ({
     <View style={[styles.row, styles.footerButtonContainer]}>
       <View style={styles.row}>
         <Button.Danger
+          testID="draft_footer.delete"
           type="ghost"
           icon="TrashCanSolid"
           onPress={onPressDelete}
         />
         <ViewSpacing width={16} />
-        <Button.Secondary type="ghost" icon="PenToSquareSolid" onPress={onPressEdit} />
+        <Button.Secondary testID="draft_footer.edit" type="ghost" icon="PenToSquareSolid" onPress={onPressEdit} />
       </View>
       <Button.Primary
+        testID="draft_footer.publish"
         useI18n
         size="medium"
         loading={isPublishing}

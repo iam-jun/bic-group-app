@@ -1,6 +1,6 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC, useEffect, useRef } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 
 import { useDispatch } from 'react-redux';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -19,6 +19,7 @@ import {
 import FilterCreateBySpecific from './FilterCreateBySpecific';
 import { PostType } from '~/interfaces/IPost';
 import FilterPostType from './FilterPostType';
+import { dimension } from '~/theme';
 
 type FilterToolbarProps = {
   groupId?: string
@@ -174,22 +175,29 @@ const FilterToolbar: FC<FilterToolbarProps> = ({ groupId = '' }) => {
     );
   };
 
+  // this is the temporarily solution for fixing bug scrollview is disappeared
+  // after removing filter created by (in case of username is long)
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      scrollRef.current.scrollTo({ x: 0, y: 0, animated: true });
+    }
+  }, [filterCreatedBy]);
+
   return (
     <View style={{ ...theme.elevations.e2 }}>
       <ScrollView
         ref={scrollRef}
         style={styles.scrollContainer}
+        contentContainerStyle={styles.container}
         horizontal
         showsHorizontalScrollIndicator={false}
         alwaysBounceHorizontal={false}
       >
-        <View style={styles.container}>
-          {renderFilterPostTypeOption()}
-          <ViewSpacing width={spacing.margin.small} />
-          {renderFilterCreatedByOption()}
-          <ViewSpacing width={spacing.margin.small} />
-          {renderFilterDateOption()}
-        </View>
+        {renderFilterPostTypeOption()}
+        <ViewSpacing width={spacing.margin.small} />
+        {renderFilterCreatedByOption()}
+        <ViewSpacing width={spacing.margin.small} />
+        {renderFilterDateOption()}
       </ScrollView>
     </View>
   );
@@ -200,9 +208,9 @@ const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     scrollContainer: {
       backgroundColor: colors.white,
+      width: dimension.deviceWidth,
     },
     container: {
-      flexDirection: 'row',
       backgroundColor: colors.white,
       paddingTop: spacing.padding.small,
       paddingBottom: spacing.padding.base,
