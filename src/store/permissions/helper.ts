@@ -1,3 +1,5 @@
+import { PermissionKey } from '~/constants/permissionScheme';
+
 export const checkIfHasPermission = (
   requiredPermissions: string | string[],
   availablePermissions: string[],
@@ -7,5 +9,7 @@ export const checkIfHasPermission = (
     requiredPermissionsArray = [requiredPermissions];
   }
 
-  return [...requiredPermissionsArray].some((per: string) => (availablePermissions || []).includes(per));
+  return [PermissionKey.FULL_PERMISSION, ...requiredPermissionsArray].some(
+    (per: string) => (availablePermissions || []).includes(per),
+  );
 };
