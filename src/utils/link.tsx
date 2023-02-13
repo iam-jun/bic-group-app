@@ -30,6 +30,7 @@ export const DEEP_LINK_TYPES = {
   ARTICLE_DETAIL: 'article-detail',
   LOGIN: 'login',
   FORGOT_PASSWORD: 'forgot_password',
+  CONFIRM_USER: 'confirm_user',
 };
 
 const formatParams = (params?: any):string => {
@@ -220,8 +221,7 @@ export const matchDeepLink = (url: string) => {
   if (match) {
     const urlParams = match[1];
     const newParams = getURLParams(urlParams);
-    const { redirectTo = '' } = newParams || {} as any;
-    return { type: redirectTo === 'reset-password' ? DEEP_LINK_TYPES.FORGOT_PASSWORD : DEEP_LINK_TYPES.LOGIN };
+    return { type: DEEP_LINK_TYPES.CONFIRM_USER, params: newParams };
   }
 
   return null;

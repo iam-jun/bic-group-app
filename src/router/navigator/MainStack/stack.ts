@@ -18,6 +18,7 @@ const mainTabStack = {
   ...seriesStack,
   ...topicStack,
   ...tagsStack,
+  confirmUser: 'confirm-user',
 };
 
 export default mainTabStack;
