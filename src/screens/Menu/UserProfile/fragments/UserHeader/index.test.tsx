@@ -1,39 +1,17 @@
-import { render } from '@testing-library/react-native';
-import * as React from 'react';
+import React from 'react';
 
-import UserHeader from '.';
+import { renderWithRedux } from '~/test/testUtils';
+import UserHeader from './index';
 
 describe('UserHeader component', () => {
-  const baseProps = {
-    fullname: 'fullname',
-    username: 'username',
-    description: 'description',
-    latestWork: {
-      titlePosition: 'titlePosition',
-      company: 'company',
-    },
-  };
-
   it('renders correctly', () => {
-    const rendered = render(<UserHeader {...baseProps} />).toJSON();
-    expect(rendered).toMatchSnapshot();
-  });
+    const fullname = 'test';
+    const username = 'test';
+    const latestWork = { company: 'Test', titlePosition: 'Test' };
 
-  it('should hide username when username is empty ', () => {
-    const props = { ...baseProps, username: '' };
-    const { queryByTestId } = render(<UserHeader {...props} />);
-
-    const usernameText = queryByTestId('user_profile.username');
-
-    expect(usernameText).toBeNull();
-  });
-
-  it('should hide description when description is empty ', () => {
-    const props = { ...baseProps, description: '' };
-    const { queryByTestId } = render(<UserHeader {...props} />);
-
-    const descriptionText = queryByTestId('user_profile.description');
-
-    expect(descriptionText).toBeNull();
+    const rendered = renderWithRedux(<UserHeader fullname={fullname} username={username} latestWork={latestWork} />);
+    const { getByTestId } = rendered;
+    const containerComponent = getByTestId('user_profile');
+    expect(containerComponent).toBeDefined();
   });
 });

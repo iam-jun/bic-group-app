@@ -1,22 +1,22 @@
 import React from 'react';
 import { IconType } from '~/resources/icons';
 import { renderWithRedux } from '~/test/testUtils';
-import EditButton from './index';
+import DeleteButton from './index';
 
-describe('EditButton component', () => {
+describe('DeleteButton component', () => {
   const props = {
-    icon: 'PenToSquareSolid' as IconType,
+    icon: 'TrashCanSolid' as IconType,
     isCurrentUser: true,
     onPress: jest.fn(),
     style: undefined,
-    testID: 'test',
+    testID: 'item_experience.delete_btn',
   };
 
   it('should render props correctly', () => {
     const isCurrentUser = true;
 
     const rendered = renderWithRedux(
-      <EditButton
+      <DeleteButton
         style={props.style}
         testID={props.testID}
         isCurrentUser={isCurrentUser}
@@ -26,15 +26,15 @@ describe('EditButton component', () => {
     );
 
     const { getByTestId } = rendered;
-    const editBtn = getByTestId(props.testID);
-    expect(editBtn).toBeDefined();
+    const deleteBtn = getByTestId(props.testID);
+    expect(deleteBtn).toBeDefined();
   });
 
   it('should not render', () => {
     const isCurrentUser = false;
 
     const rendered = renderWithRedux(
-      <EditButton
+      <DeleteButton
         style={props.style}
         testID={props.testID}
         isCurrentUser={isCurrentUser}
@@ -44,7 +44,7 @@ describe('EditButton component', () => {
     );
 
     const { queryByTestId } = rendered;
-    const editBtn = queryByTestId(props.testID);
-    expect(editBtn).toBeNull();
+    const deleteBtn = queryByTestId(props.testID);
+    expect(deleteBtn).toBeNull();
   });
 });

@@ -1,50 +1,52 @@
 import React from 'react';
 import { IconType } from '~/resources/icons';
 import { renderWithRedux } from '~/test/testUtils';
-import EditButton from './index';
+import AddButton from './index';
 
-describe('EditButton component', () => {
+describe('AddButton component', () => {
   const props = {
-    icon: 'PenToSquareSolid' as IconType,
-    isCurrentUser: true,
+    icon: 'PlusSolid' as IconType,
     onPress: jest.fn(),
     style: undefined,
-    testID: 'test',
+    testID: 'experiences.add_btn',
+    title: 'common:text_add',
   };
 
   it('should render props correctly', () => {
     const isCurrentUser = true;
 
     const rendered = renderWithRedux(
-      <EditButton
+      <AddButton
         style={props.style}
         testID={props.testID}
         isCurrentUser={isCurrentUser}
         onPress={props.onPress}
         icon={props.icon}
+        title={props.title}
       />,
     );
 
     const { getByTestId } = rendered;
-    const editBtn = getByTestId(props.testID);
-    expect(editBtn).toBeDefined();
+    const addBtn = getByTestId(props.testID);
+    expect(addBtn).toBeDefined();
   });
 
   it('should not render', () => {
     const isCurrentUser = false;
 
     const rendered = renderWithRedux(
-      <EditButton
+      <AddButton
         style={props.style}
         testID={props.testID}
         isCurrentUser={isCurrentUser}
         onPress={props.onPress}
         icon={props.icon}
+        title={props.title}
       />,
     );
 
     const { queryByTestId } = rendered;
-    const editBtn = queryByTestId(props.testID);
-    expect(editBtn).toBeNull();
+    const addBtn = queryByTestId(props.testID);
+    expect(addBtn).toBeNull();
   });
 });

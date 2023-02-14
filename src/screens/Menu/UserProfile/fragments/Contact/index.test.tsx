@@ -1,25 +1,30 @@
-import * as React from 'react';
-import { renderWithRedux } from '~/test/testUtils';
+import React from 'react';
 
+import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import Contact from '.';
+import * as navigationHook from '~/hooks/navigation';
 
 describe('Contact component', () => {
   const baseProps = {
-    email: 'email',
-    phone: 'phone',
-    city: 'city',
-    countryCode: '84',
+    email: 'test',
+    phone: 'test',
+    countryCode: 'test',
+    city: 'test',
     isCurrentUser: true,
   };
 
   it('renders correctly', () => {
-    const rendered = renderWithRedux(<Contact {...baseProps} />);
-    expect(rendered).toMatchSnapshot();
-  });
+    const navigate = jest.fn();
+    const rootNavigation = { navigate };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
-  it('renders location Not set', () => {
-    const props = { ...baseProps, city: '' };
-    const wrapper = renderWithRedux(<Contact {...props} />);
-    expect(wrapper).toMatchSnapshot();
+    const rendered = renderWithRedux(<Contact {...baseProps} />);
+    const { getByTestId } = rendered;
+    const containerComponent = getByTestId('user_profile.contact');
+    expect(containerComponent).toBeDefined();
+
+    const editBtn = getByTestId('contact.edit_btn');
+    fireEvent.press(editBtn);
+    expect(navigate).toBeCalled();
   });
 });

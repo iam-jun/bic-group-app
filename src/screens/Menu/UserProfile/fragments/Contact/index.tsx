@@ -34,6 +34,7 @@ const Contact = ({
       isCurrentUser={isCurrentUser}
       onPress={editContact}
       icon="PenToSquareSolid"
+      testID="contact.edit_btn"
     />
   );
 
