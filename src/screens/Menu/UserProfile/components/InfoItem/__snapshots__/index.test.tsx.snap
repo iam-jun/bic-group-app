@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InfoItem component renders correctly 1`] = `
+exports[`InfoItem component should render props correctly 1`] = `
 <View
   style={
     Array [
@@ -28,7 +28,7 @@ exports[`InfoItem component renders correctly 1`] = `
     }
     testID="info_item.title"
   >
-    title
+    test
   </Text>
   <Text
     style={
@@ -46,7 +46,7 @@ exports[`InfoItem component renders correctly 1`] = `
     }
     testID="info_item.value"
   >
-    value
+    Not set
   </Text>
 </View>
 `;

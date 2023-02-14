@@ -1,26 +1,16 @@
-import * as React from 'react';
-import { render, cleanup } from '@testing-library/react-native';
-
-import InfoItem from '.';
+import React from 'react';
+import { renderWithRedux } from '~/test/testUtils';
+import InfoItem from './index';
 
 describe('InfoItem component', () => {
-  const baseProps = {
-    title: 'title',
-    value: 'value',
-  };
+  const props = { style: undefined, title: 'test', value: '' };
 
-  afterEach(cleanup);
+  it('should render props correctly', () => {
+    const rendered = renderWithRedux(<InfoItem {...props} />);
+    expect(rendered.toJSON()).toMatchSnapshot();
 
-  it('renders correctly', () => {
-    const rendered = render(<InfoItem {...baseProps} />).toJSON();
-    expect(rendered).toMatchSnapshot();
-  });
-
-  it('renders text_not_set', () => {
-    const props = { ...baseProps, value: null };
-    const { getByTestId } = render(<InfoItem {...props} />);
-
-    const textValue = getByTestId('info_item.value');
-    expect(textValue.props.children).toBe('Not set');
+    const { getByTestId } = rendered;
+    const containerComponent = getByTestId('info_item');
+    expect(containerComponent).toBeDefined();
   });
 });

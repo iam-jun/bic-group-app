@@ -67,12 +67,14 @@ const ItemExperience: FC<ItemExperienceProps> = ({
             isCurrentUser={isCurrentUser}
             onPress={deleteItemExperience}
             icon="TrashCanSolid"
+            testID="item_experience.delete_btn"
           />
           <ViewSpacing width={spacing.margin.small} />
           <EditButton
             isCurrentUser={isCurrentUser}
             onPress={editItemExperience}
             icon="PenToSquareSolid"
+            testID="item_experience.edit_btn"
           />
         </View>
       </View>
