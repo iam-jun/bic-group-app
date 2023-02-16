@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  act, render, cleanup, fireEvent,
+  act, render, cleanup, fireEvent, screen,
 } from '@testing-library/react-native';
 import { renderHook } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';
@@ -19,6 +19,7 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import initialState from '~/storeRedux/initialState';
 import { appReducer } from '~/storeRedux/reducers';
+import rootSaga from '~/storeRedux/sagas';
 
 const languages = require('~/localization/en.json');
 
@@ -28,7 +29,9 @@ const defaultStore = mockStore(initialState);
 function createTestStore(state = initialState) {
   const sagaMiddleware = createSagaMiddleware();
   const enhancer = compose(applyMiddleware(sagaMiddleware));
-  return createStore(appReducer, state, enhancer);
+  const store = createStore(appReducer, state, enhancer);
+  sagaMiddleware.run(rootSaga);
+  return store;
   // return Store.store;
 }
 
@@ -68,6 +71,7 @@ export {
   defaultStore as store,
   cleanup,
   fireEvent,
+  screen,
   configureStore,
   // withReanimatedTimer,
   // advanceAnimationByTime,

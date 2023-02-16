@@ -24,7 +24,11 @@ exports[`SearchResult component should render empty search result 1`] = `
     }
   >
     <RCTScrollView
+      alwaysBounceHorizontal={false}
+      collapsable={false}
       horizontal={true}
+      onGestureHandlerEvent={[Function]}
+      onGestureHandlerStateChange={[Function]}
       showsHorizontalScrollIndicator={false}
       style={
         Object {
@@ -1220,7 +1224,11 @@ exports[`SearchResult component should render list search result 1`] = `
     }
   >
     <RCTScrollView
+      alwaysBounceHorizontal={false}
+      collapsable={false}
       horizontal={true}
+      onGestureHandlerEvent={[Function]}
+      onGestureHandlerStateChange={[Function]}
       showsHorizontalScrollIndicator={false}
       style={
         Object {

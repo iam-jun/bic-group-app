@@ -34,7 +34,7 @@ const FilterPostType: FC<FilterPostTypeProps> = ({
   const renderFilter = () => (
     <>
       {postTypeFilter.map((item) => (
-        <Button key={item.key} onPress={() => onSelectItemFilter(item)}>
+        <Button testID={`btn_post_type_${item.key}`} key={item.key} onPress={() => onSelectItemFilter(item)}>
           <View style={styles.rowItemFilter}>
             <Text.BodyM useI18n color={colors.neutral40}>{item.text}</Text.BodyM>
             {selectedPostType === item.key && (
@@ -47,7 +47,7 @@ const FilterPostType: FC<FilterPostTypeProps> = ({
   );
 
   return (
-    <TouchableOpacity activeOpacity={1} style={styles.container}>
+    <TouchableOpacity testID="filter_post_type" activeOpacity={1} style={styles.container}>
       <Text.H4 style={styles.textHeader}>
         {t('home:newsfeed_search:filter_post_type')}
       </Text.H4>
