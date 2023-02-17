@@ -108,7 +108,12 @@ const CommentDetail: FC<IRouteParams> = (props) => {
     return (
       <Text.SubtitleXS>
         {`${t('common:in')} `}
-        <Text.SubtitleXS onPress={goToPostDetail} suppressHighlighting style={styles.highlightText}>
+        <Text.SubtitleXS
+          testID="comment_detail.text_header_title"
+          onPress={goToPostDetail}
+          suppressHighlighting
+          style={styles.highlightText}
+        >
           {headerTitle}
         </Text.SubtitleXS>
       </Text.SubtitleXS>
@@ -116,7 +121,7 @@ const CommentDetail: FC<IRouteParams> = (props) => {
   };
 
   return (
-    <ScreenWrapper isFullView backgroundColor={colors.neutral5}>
+    <ScreenWrapper isFullView backgroundColor={colors.neutral5} testID="comment_detail">
       <Header
         titleTextProps={{ useI18n: true }}
         title={renderTitle()}

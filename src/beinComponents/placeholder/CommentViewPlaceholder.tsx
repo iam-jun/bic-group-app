@@ -29,7 +29,7 @@ const CommentViewPlaceholder = () => {
   const renderSectionItem = () => <CommentPlaceholder />;
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1 }} testID="comment_view_placeholder">
       <SectionList
         sections={sectionData}
         renderItem={renderItem}
