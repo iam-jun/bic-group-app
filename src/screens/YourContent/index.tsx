@@ -10,10 +10,6 @@ import useReportContentStore from '~/components/Report/store';
 
 const HEADER_TAB = [
   {
-    id: 'your-content-tab-1',
-    text: 'your_content:title_draft',
-  },
-  {
     id: 'your-content-tab-2',
     text: 'your_content:title_schedule_article',
   },
@@ -27,7 +23,7 @@ const YourContent = () => {
   const theme = useTheme();
   const styles = createStyle(theme);
   // in this sprint default tab is Schedule Article
-  const [activeTab, setActiveTab] = useState<number>(1);
+  const [activeTab, setActiveTab] = useState<number>(0);
 
   const { clearReportedContents } = useReportContentStore((state) => state.actions);
 
@@ -41,14 +37,10 @@ const YourContent = () => {
 
   const renderContent = () => {
     if (activeTab === 0) {
-      // render Draft
-    }
-
-    if (activeTab === 1) {
       return (<ScheduledArticles />);
     }
 
-    if (activeTab === 2) {
+    if (activeTab === 1) {
       return <ReportedContents />;
     }
 

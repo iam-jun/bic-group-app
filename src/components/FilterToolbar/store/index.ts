@@ -1,6 +1,5 @@
 import { createStore, resetStore } from '~/store/utils';
 import IBaseState from '~/store/interfaces/IBaseState';
-import getPostUsers from './actions/getPostUsers';
 import searchPostUsers from './actions/searchPostUsers';
 import { PostType } from '~/interfaces/IPost';
 
@@ -16,18 +15,12 @@ export interface IFilterToolbarState extends IBaseState {
   postType: any;
   createdBy: any;
   datePosted: any;
-  listUser: {
-    loading: boolean;
-    items: any[];
-    hasNextPage: boolean;
-  };
   search: SearchUser;
   actions: {
     setFilterPostType: (postType: PostType) => void;
     setFilterCreateBy: (createdBy: 'me' | undefined | any) => void;
     setFilterDatePosted: (date: any) => void;
     setSearchUser: (search: Partial<SearchUser>) => void;
-    getPostUsers: (isLoadMore?: boolean) => void;
     searchPostUsers: (contentSearch?: string, isLoadMore?: boolean) => void;
   };
 }
@@ -36,11 +29,6 @@ const initialState = {
   postType: undefined,
   createdBy: undefined,
   datePosted: undefined,
-  listUser: {
-    loading: false,
-    items: [],
-    hasNextPage: true,
-  },
   search: {
     groupId: '',
     key: '',
@@ -77,7 +65,6 @@ const useFilterToolbar = (set, get) => ({
         };
       }, 'setSearchUser');
     },
-    getPostUsers: getPostUsers(set, get),
     searchPostUsers: searchPostUsers(set, get),
   },
 

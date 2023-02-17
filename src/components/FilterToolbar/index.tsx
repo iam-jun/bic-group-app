@@ -125,6 +125,7 @@ const FilterToolbar: FC<FilterToolbarProps> = ({ groupId = '' }) => {
     };
     return (
       <PillTabButton
+        testID="filter_tool_bar.btn_filter_post_type"
         onPress={onPressFilterPostType}
         type={typeBtn}
         {...resetFilterProps}
@@ -144,6 +145,7 @@ const FilterToolbar: FC<FilterToolbarProps> = ({ groupId = '' }) => {
     };
     return (
       <PillTabButton
+        testID="filter_tool_bar.filter_date_option"
         onPress={onPressFilterDate}
         type={typeBtn}
         {...resetFilterProps}
@@ -166,6 +168,7 @@ const FilterToolbar: FC<FilterToolbarProps> = ({ groupId = '' }) => {
     };
     return (
       <PillTabButton
+        testID="filter_tool_bar.filter_created_by"
         onPress={onPressFilterCreatedBy}
         type={typeBtn}
         {...resetFilterProps}

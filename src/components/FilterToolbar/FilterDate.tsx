@@ -70,7 +70,7 @@ const DatePickerContainer: FC<DatePickerContainerProps> = ({
   const minDatePickerTo = selectedStartDateState && moment(selectedStartDateState).toDate();
 
   return (
-    <TouchableOpacity activeOpacity={1} style={styles.container}>
+    <TouchableOpacity testID="filter_date" activeOpacity={1} style={styles.container}>
       <Text.H4 style={styles.textHeader}>
         {t('home:newsfeed_search:filter_date')}
       </Text.H4>
@@ -167,6 +167,7 @@ const FilterDate: FC<NFSFilterDateProps> = ({
     <>
       {itemFilter.map((item) => (
         <Button
+          testID={`btn_option_select_date_${item.key}`}
           key={item.key}
           onPress={() => onSelectItemFilter(item)}
           disabled={item.key === TypeFilter.FromTo}
@@ -174,12 +175,12 @@ const FilterDate: FC<NFSFilterDateProps> = ({
           <View style={styles.rowItemFilter}>
             <Text.BodyM useI18n color={colors.neutral40}>{item.text}</Text.BodyM>
             {currentFilter === item.key && item.key !== TypeFilter.FromTo && (
-              <Icon icon="CircleCheckSolid" tintColor={colors.blue50} />
+              <Icon testID={`filter_date.check_${item.key}`} icon="CircleCheckSolid" tintColor={colors.blue50} />
             )}
             {item.key === TypeFilter.FromTo && (
               <View>
                 {currentFilter !== item.key ? (
-                  <Button.Secondary type="ghost" onPress={() => setStaged(1)}>
+                  <Button.Secondary testID="btn_select_from_to_date" type="ghost" onPress={() => setStaged(1)}>
                     {t('common:text_select')}
                   </Button.Secondary>
                 ) : (
@@ -217,7 +218,7 @@ const FilterDate: FC<NFSFilterDateProps> = ({
   }
 
   return (
-    <TouchableOpacity activeOpacity={1} style={styles.container}>
+    <TouchableOpacity testID="filter_date_modal" activeOpacity={1} style={styles.container}>
       <Text.H4 style={styles.textHeader}>
         {t('home:newsfeed_search:filter_date')}
       </Text.H4>

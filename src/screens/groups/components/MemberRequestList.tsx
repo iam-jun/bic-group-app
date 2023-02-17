@@ -59,7 +59,7 @@ const MemberRequestList = ({
         size={120}
         icon="addUsers"
         title="groups:text_no_pending_members_notice"
-        description={`groups:text_pending_request_notice_${type}`}
+        description={canAddMember ? `groups:text_pending_request_notice_${type}` : ''}
         ButtonComponent={canAddMember && (
           <Button.Primary
             style={styles.buttonAddMembers}

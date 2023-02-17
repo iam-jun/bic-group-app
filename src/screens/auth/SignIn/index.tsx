@@ -210,11 +210,6 @@ const SignIn = () => {
     setDisableSignIn(result);
   };
 
-  // TODO: remove when function signup come back
-  const handleSignUpNotFunctioning = () => {
-    dispatch(modalActions.showAlertNewFeature());
-  };
-
   const hideKeyboard = () => {
     Keyboard.dismiss();
   };
@@ -302,23 +297,6 @@ const SignIn = () => {
     </Button.Primary>
   );
 
-  const renderSignUp = () => (
-    <View style={styles.signUpContainer}>
-      <Text.BodyS color={theme.colors.neutral40} useI18n>
-        auth:text_sign_up_desc
-      </Text.BodyS>
-      <TouchableOpacity
-        testID="btnSignInForgotPassword"
-        // onPress={() => navigation.navigate(authStack.signup)}
-        onPress={handleSignUpNotFunctioning}
-      >
-        <Text.BodySMedium color={colors.blue50} useI18n>
-          auth:btn_sign_up_now
-        </Text.BodySMedium>
-      </TouchableOpacity>
-    </View>
-  );
-
   const renderLoading = () => {
     if (!loading) return null;
     return (
@@ -350,7 +328,6 @@ const SignIn = () => {
             {renderInputPassword()}
             {renderForgotPassword()}
             {renderButtonSignIn()}
-            {renderSignUp()}
           </View>
         </TouchableWithoutFeedback>
       </ScrollView>

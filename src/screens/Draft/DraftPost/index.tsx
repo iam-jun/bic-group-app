@@ -1,9 +1,10 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import {
+  ActivityIndicator, FlatList, StyleSheet, View,
+} from 'react-native';
 
 import Image from '~/beinComponents/Image';
-import ListView from '~/beinComponents/list/ListView';
 import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
@@ -81,12 +82,12 @@ const DraftPost = () => {
   );
 
   return (
-    <ListView
-      isFullView
-      containerStyle={styles.listContainer}
+    <FlatList
+      testID="draft_post.list"
+      style={styles.listContainer}
       data={draftPosts}
       renderItem={renderItem}
-      renderItemSeparator={() => (
+      ItemSeparatorComponent={() => (
         <ViewSpacing height={spacing.margin.large} />
       )}
       ListHeaderComponent={() => <ViewSpacing height={spacing.margin.base} />}
@@ -94,7 +95,7 @@ const DraftPost = () => {
       ListEmptyComponent={renderEmpty}
       refreshing={refreshing}
       onRefresh={() => getData(true)}
-      onLoadMore={() => getData(false)}
+      onEndReached={() => getData(false)}
     />
   );
 };

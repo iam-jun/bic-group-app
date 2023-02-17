@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import { useDispatch } from 'react-redux';
 import spacing from '~/theme/spacing';
 import Icon from '~/baseComponents/Icon';
 import Button from '~/beinComponents/Button';
@@ -12,13 +11,10 @@ import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import modalActions from '~/storeRedux/modal/actions';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
-import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 
 const MenuShortcut = () => {
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const { t } = useBaseHook();
@@ -34,16 +30,12 @@ const MenuShortcut = () => {
     rootNavigation.navigate(articleStack.createArticle, { isFirstStep: true });
   };
 
-  const onPressWriteSeries = () => {
-    rootNavigation.navigate(seriesStack.seriesSelectAudience, { isFirstStep: true });
-  };
+  // const onPressWriteSeries = () => {
+  //   rootNavigation.navigate(seriesStack.seriesSelectAudience, { isFirstStep: true });
+  // };
 
   const onPressDraft = () => {
     rootNavigation.navigate(menuStack.draft);
-  };
-
-  const onPressSavedItems = () => {
-    dispatch(modalActions.showAlertNewFeature());
   };
 
   const onPressYourContent = () => {
@@ -66,12 +58,9 @@ const MenuShortcut = () => {
         {renderButton('FilePenSolid', t('menu:title_write_article'), onPressWriteArticle)}
       </View>
       <View style={styles.directionRow}>
-        {renderButton('AlbumCollectionSolid', t('menu:title_write_series'), onPressWriteSeries)}
-        {renderButton('BallotCheckSolid', t('menu:title_your_content'), onPressYourContent)}
-      </View>
-      <View style={styles.directionRow}>
-        {renderButton('BookmarkSolid', t('menu:title_saved_items'), onPressSavedItems)}
+        {/* {renderButton('AlbumCollectionSolid', t('menu:title_write_series'), onPressWriteSeries)} */}
         {renderButton('FloppyDiskPenSolid', t('menu:title_draft'), onPressDraft)}
+        {renderButton('BallotCheckSolid', t('menu:title_your_content'), onPressYourContent)}
       </View>
     </View>
   );

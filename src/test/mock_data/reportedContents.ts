@@ -455,3 +455,42 @@ export const reportedArticleDetail = {
     },
   ],
 };
+
+export const responseGetReportContent = {
+  code: 'api.ok',
+  data: {
+    list: [
+      {
+        edited: false,
+        totalReply: 1,
+        ownerReactions: [],
+        id: '2d451fc8-4cf2-494c-b450-1509a3673d14',
+        actor: {
+          id: '51cdc6ae-aa95-4228-b8c4-46a242781603',
+          username: 'anhquoc1',
+          fullname: 'lam anh quoc 1',
+          avatar:
+            'https://bic-stg-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/user/default-avatar.png',
+          email: 'anhquoc1@mailinator.com',
+        },
+        parentId: '00000000-0000-0000-0000-000000000000',
+        postId: 'd3f9917c-812a-4c30-82cd-e8ba3493bcfa',
+        content: '111111',
+        giphyId: '',
+        createdAt: '2023-01-10T10:37:54.089Z',
+        updatedAt: '2023-01-10T10:41:19.538Z',
+        createdBy: '51cdc6ae-aa95-4228-b8c4-46a242781603',
+        media: { videos: [], images: [], files: [] },
+        reactionsCount: { 0: { bic_clapping_hands: 1 } },
+        mentions: [],
+        reportDetails: [
+          { total: 1, reasonType: 'violent_or_porn', description: 'Violent, pornographic, or sexually explicit' },
+        ],
+      },
+    ],
+    meta: {
+      limit: 6, offset: 0, total: 1, hasNextPage: false,
+    },
+  },
+  meta: { message: 'OK' },
+};

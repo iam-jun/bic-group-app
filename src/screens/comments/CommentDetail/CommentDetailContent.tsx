@@ -200,10 +200,6 @@ const CommentDetailContent = (props: any) => {
     );
   };
 
-  const goToPostDetail = () => {
-    replacePostDetail(type, postId);
-  };
-
   const showNotice = (type = 'deleted_comment') => {
     showAlert({
       HeaderImageComponent: (
@@ -334,7 +330,7 @@ const CommentDetailContent = (props: any) => {
     return null;
   }
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1 }} testID="comment_detail_content">
       <BannerReport commentId={commentId} />
       <FlatList
         ref={listRef}
@@ -350,7 +346,6 @@ const CommentDetailContent = (props: any) => {
             audience={audience}
             id={id}
             isReported={isReported}
-            onPress={goToPostDetail}
             onPressMarkSeenPost={onPressMarkSeenPost}
           />
         )}

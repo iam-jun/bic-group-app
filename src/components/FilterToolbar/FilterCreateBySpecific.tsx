@@ -79,7 +79,7 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
   };
 
   const renderItem = ({ item }: any) => (
-    <Button style={styles.rowItem} onPress={() => onPressUser(item)}>
+    <Button testID={`user_${item?.id}`} style={styles.rowItem} onPress={() => onPressUser(item)}>
       <View style={styles.rowSubContainer}>
         <Avatar.Base
           source={item?.avatar}
@@ -92,7 +92,7 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
         </View>
       </View>
       {
-        item?.id === selectedCreatedBy?.id && <Icon style={styles.check} icon="CircleCheckSolid" tintColor={colors.blue50} />
+        item?.id === selectedCreatedBy?.id && <Icon testID={`filter_create_by_specific.check_${item?.id}`} style={styles.check} icon="CircleCheckSolid" tintColor={colors.blue50} />
       }
     </Button>
   );
@@ -125,7 +125,7 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
   };
 
   return (
-    <TouchableOpacity activeOpacity={1} style={styles.container}>
+    <TouchableOpacity testID="filter_created_by" activeOpacity={1} style={styles.container}>
       <Text.H4 style={styles.textHeader}>
         {t('home:newsfeed_search:filter_post_by')}
       </Text.H4>

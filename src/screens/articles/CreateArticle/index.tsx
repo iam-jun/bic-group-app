@@ -5,14 +5,12 @@ import React, {
 import {
   FlatList, ListRenderItem, StyleSheet, View,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import { useRootNavigation } from '~/hooks/navigation';
 import { CreateArticleProps } from '~/interfaces/IArticle';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
-import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import useArticlesStore, { IArticlesState } from '../ArticleDetail/store';
 import useCreateArticleStore from './store';
@@ -102,7 +100,6 @@ const CreateArticle: FC<CreateArticleProps> = ({
   const screenTitle
     = isCreateNewArticle || isFromDraftScreen ? 'create' : 'edit';
 
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
@@ -178,7 +175,6 @@ const CreateArticle: FC<CreateArticleProps> = ({
 
   const onPressItem = (item: OptionType) => () => {
     if (!item.screen) {
-      dispatch(modalActions.showAlertNewFeature());
       return;
     }
     rootNavigation.navigate(item.screen, { articleId });
