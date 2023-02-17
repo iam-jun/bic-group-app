@@ -13,7 +13,6 @@ import { getActions } from '~/store/selectors';
 import spacing from '~/theme/spacing';
 import Icon from '~/baseComponents/Icon';
 import Button from '~/beinComponents/Button';
-import modalActions from '~/storeRedux/modal/actions';
 import appActions from '~/storeRedux/app/actions';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -38,9 +37,11 @@ const MenuSettings = () => {
   const authActions = useAuthController(getActions) || {};
   const { showAlert } = useModalStore((state) => state.actions);
 
-  const isProduction = getEnv('APP_ENV') === APP_ENV.PRODUCTION;
+  const isStaging = getEnv('APP_ENV') === APP_ENV.STAGING;
   const debuggerVisible = useKeySelector('app.debuggerVisible');
   const myProfile = useCommonController((state) => state.myProfile);
+
+  const isShowDebug = __DEV__ || isStaging || AppConfig.superUsers.includes(myProfile?.email);
 
   const onLogout = () => {
     const alertPayload: IAlertModal = {
@@ -53,13 +54,8 @@ const MenuSettings = () => {
     showAlert(alertPayload);
   };
 
-  const onPressHelp = () => {
-    const isSuperUser = AppConfig.superUsers.includes(myProfile?.email);
-    if (isProduction && !isSuperUser) {
-      dispatch(modalActions.showAlertNewFeature());
-    } else {
-      dispatch(appActions.setDebuggerVisible(!debuggerVisible));
-    }
+  const onPressShowDebug = () => {
+    dispatch(appActions.setDebuggerVisible(!debuggerVisible));
   };
 
   const onPressReportProblem = () => {
@@ -68,24 +64,9 @@ const MenuSettings = () => {
 
   const settingItems = [
     {
-      icon: 'BrightnessSolid',
-      title: t('menu:title_display_accessibility'),
-      onPress: () => dispatch(modalActions.showAlertNewFeature()),
-    },
-    {
       icon: 'FolderGear',
       title: t('menu:title_settings_privacy'),
       onPress: () => rootNavigation.navigate(menuStack.accountSettings),
-    },
-    {
-      icon: 'CreditCardSolid',
-      title: t('menu:title_billing_payment'),
-      onPress: () => dispatch(modalActions.showAlertNewFeature()),
-    },
-    {
-      icon: 'MessagesQuestion',
-      title: t('menu:title_help_support'),
-      onPress: onPressHelp,
     },
     {
       icon: 'FlagSolid',
@@ -93,6 +74,14 @@ const MenuSettings = () => {
       onPress: onPressReportProblem,
     },
   ];
+
+  if (isShowDebug) {
+    settingItems.push({
+      icon: 'MessagesQuestion',
+      title: 'Toggle Debug',
+      onPress: onPressShowDebug,
+    });
+  }
 
   const renderItem = ({ icon, title, onPress }: any) => (
     <Button key={title + icon} style={styles.itemContainer} onPress={onPress}>

@@ -4,9 +4,8 @@ import React, {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { StyleSheet, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Header, { HeaderProps } from '~/beinComponents/Header';
+import Header from '~/beinComponents/Header';
 
 import SearchMemberView from './CommunityMemberList/components/SearchMemberView';
 import { ICommunity, ICommunityMembers } from '~/interfaces/ICommunity';
@@ -16,11 +15,9 @@ import Tab from '~/baseComponents/Tab';
 import { MEMBER_TAB_TYPES } from '../constants';
 import { spacing } from '~/theme';
 import CommunityMemberRequests from './CommunityMemberRequests';
-import modalActions from '~/storeRedux/modal/actions';
 import { IconType } from '~/resources/icons';
 import MemberOptionsMenu from './components/CommunityMemberOptionsMenu';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
-import useCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 
@@ -36,11 +33,9 @@ const CommunityMembers = ({ route }: any) => {
   const { colors } = theme;
   const styles = createStyles(theme);
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
 
   const [selectedIndex, setSelectedIndex] = useState<number>(targetIndex || 0);
   const [isOpen, setIsOpen] = useState(false);
-  const { ids } = useCommunityMemberStore((state) => state.communityMemberRequests);
   const [selectedMember, setSelectedMember] = useState<ICommunityMembers>();
   const baseSheetRef: any = useRef();
 
@@ -59,10 +54,10 @@ const CommunityMembers = ({ route }: any) => {
     groupId,
     PermissionKey.EDIT_JOIN_SETTING,
   );
-  const canAddMember = shouldHavePermission(
-    groupId,
-    PermissionKey.ADD_MEMBER,
-  );
+  // const canAddMember = shouldHavePermission(
+  //   groupId,
+  //   PermissionKey.ADD_MEMBER,
+  // );
 
   useEffect(() => {
     // In case there's no data available yet when navigating directly
@@ -79,10 +74,6 @@ const CommunityMembers = ({ route }: any) => {
 
     setSelectedMember(item);
     baseSheetRef.current?.open();
-  };
-
-  const onPressAdd = () => {
-    dispatch(modalActions.showAlertNewFeature());
   };
 
   const onPressTab = (item: any, index: number) => {
@@ -106,31 +97,14 @@ const CommunityMembers = ({ route }: any) => {
       return (
         <CommunityMemberRequests
           community={community}
-          canAddMember={canAddMember}
+          canAddMember={false}
           canApproveRejectJoiningRequests={canApproveRejectJoiningRequests}
           canEditJoinSetting={canEditJoinSetting}
-          onPressAdd={onPressAdd}
         />
       );
     }
 
     return null;
-  };
-
-  const showAddButton = () => {
-    if (canAddMember) {
-      // don't show button Add on header when there's button Add Members on Member request screen
-      if (selectedIndex === 1 && ids.length === 0) return false;
-      return true;
-    }
-
-    return false;
-  };
-
-  const headerProps: HeaderProps = showAddButton() && {
-    buttonText: 'common:text_add',
-    onPressButton: onPressAdd,
-    buttonProps: { icon: 'Plus', style: styles.addButton, useI18n: true },
   };
 
   const showSearchMember = isMember && {
@@ -144,7 +118,6 @@ const CommunityMembers = ({ route }: any) => {
         titleTextProps={{ useI18n: true }}
         title="groups:title_members_other"
         {...showSearchMember}
-        {...headerProps}
       />
 
       {(!!canApproveRejectJoiningRequests || !!canEditJoinSetting) && (

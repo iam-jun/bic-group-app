@@ -21,9 +21,7 @@ export interface CommentInputFooterProps {
   isDisplayNone?: boolean;
 
   onPressIcon?: () => void;
-  onPressFile?: (e: any) => void;
   onPressImage?: (e: any) => void;
-  onPressCamera?: (e: any) => void;
   onPressEmoji?: (e: any) => void;
   onPressSend?: (e: any) => void;
 }
@@ -91,17 +89,6 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
           icon="iconReact"
         />
       </Button>
-      {/* <Button
-          testID={useTestID ? 'comment_input.btn_file' : undefined}
-          disabled={!onPressFile}
-          onPress={onPressFile}
-        >
-          <Icon
-            style={styles.icon}
-            tintColor={colors.gray50}
-            icon="Paperclip"
-          />
-        </Button> */}
       <Button
         testID={useTestID ? 'comment_input.btn_image' : undefined}
         disabled={!onPressImage}
@@ -114,17 +101,6 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
           icon="Image"
         />
       </Button>
-      {/* <Button
-          testID={useTestID ? 'comment_input.btn_camera' : undefined}
-          disabled={!onPressCamera}
-          onPress={onPressCamera}
-        >
-          <Icon
-            style={styles.icon}
-            tintColor={colors.gray50}
-            icon="Camera"
-          />
-        </Button> */}
       <Button
         testID={useTestID ? 'comment_input.btn_emoji' : undefined}
         disabled={!onPressEmoji}

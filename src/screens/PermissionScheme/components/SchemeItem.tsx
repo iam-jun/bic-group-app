@@ -1,6 +1,5 @@
 import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/baseComponents/Text';
@@ -8,7 +7,6 @@ import Text from '~/baseComponents/Text';
 import TextBadge from '~/beinComponents/Badge/TextBadge';
 import Button from '~/beinComponents/Button';
 import Icon from '~/baseComponents/Icon';
-import modalActions from '~/storeRedux/modal/actions';
 import { IApplyingGroups, IGroupScheme } from '~/interfaces/IGroup';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
@@ -22,8 +20,6 @@ interface SchemeItemProps {
 const SchemeItem = ({ communityId, item }: SchemeItemProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
-  const { colors } = theme;
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
 
   const { name, description, applyingGroups } = item;
@@ -40,10 +36,6 @@ const SchemeItem = ({ communityId, item }: SchemeItemProps) => {
     );
   };
 
-  const onPressDelete = () => {
-    dispatch(modalActions.showAlertNewFeature());
-  };
-
   const renderButtons = () => (
     <View style={styles.row}>
       <Button
@@ -52,13 +44,6 @@ const SchemeItem = ({ communityId, item }: SchemeItemProps) => {
         testID="scheme_item.btn_edit"
       >
         <Icon size={16} icon="PenLine" />
-      </Button>
-      <Button
-        style={styles.buttonDelete}
-        onPress={onPressDelete}
-        testID="scheme_item.btn_delete"
-      >
-        <Icon size={16} tintColor={colors.red40} icon="TrashCan" />
       </Button>
     </View>
   );

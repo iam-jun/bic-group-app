@@ -20,7 +20,6 @@ import { useRootNavigation } from '~/hooks/navigation';
 
 import { ILanguage, ISetting } from '~/interfaces/common';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
-import * as modalActions from '~/storeRedux/modal/actions';
 import appActions from '~/storeRedux/app/actions';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import spacing from '~/theme/spacing';
@@ -65,10 +64,6 @@ const GeneralSettings = () => {
 
       case 'privacy':
         openInAppBrowser(POLICY_URL);
-        return;
-
-      default:
-        dispatch(modalActions.showAlertNewFeature());
     }
   };
 

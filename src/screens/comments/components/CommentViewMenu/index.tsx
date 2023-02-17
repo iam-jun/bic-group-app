@@ -85,11 +85,6 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
     }, 200);
   };
 
-  const _onPress = () => {
-    dispatch(modalActions.hideModal());
-    dispatch(modalActions.showAlertNewFeature());
-  };
-
   const _onPressDelete = () => {
     dispatch(modalActions.hideModal());
     onPressDelete?.();
@@ -197,12 +192,6 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
           onPress={_onPressEdit}
         />
       )}
-      <BottomListItem
-        testID="comment_view_menu.history"
-        leftIcon="RotateRight"
-        title={t('post:comment_menu_history')}
-        onPress={_onPress}
-      />
       {isActor && (
         <BottomListItem
           testID="comment_view_menu.delete"

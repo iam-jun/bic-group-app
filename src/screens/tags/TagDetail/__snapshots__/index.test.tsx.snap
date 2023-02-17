@@ -202,213 +202,214 @@ exports[`TagDetail component renders correctly 1`] = `
     }
   >
     <RCTScrollView
+      alwaysBounceHorizontal={false}
+      collapsable={false}
+      contentContainerStyle={
+        Object {
+          "backgroundColor": "#FFFFFF",
+          "borderBottomWidth": 1,
+          "borderColor": "#F8F9FF",
+          "paddingBottom": 12,
+          "paddingHorizontal": 16,
+          "paddingTop": 8,
+        }
+      }
       horizontal={true}
+      onGestureHandlerEvent={[Function]}
+      onGestureHandlerStateChange={[Function]}
       showsHorizontalScrollIndicator={false}
       style={
         Object {
           "backgroundColor": "#FFFFFF",
+          "width": 750,
         }
       }
     >
       <View>
         <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
             Object {
-              "backgroundColor": "#FFFFFF",
-              "borderBottomWidth": 1,
-              "borderColor": "#F8F9FF",
+              "alignItems": "center",
+              "backgroundColor": "#F1F2F8",
+              "borderRadius": 100,
+              "boxShadow": Object {
+                "elevation": 1,
+                "shadowColor": "rgba(0, 0, 0, 1)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.08,
+                "shadowRadius": 1,
+              },
               "flexDirection": "row",
-              "paddingBottom": 12,
-              "paddingHorizontal": 16,
-              "paddingTop": 8,
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 6,
             }
           }
+          testID="filter_tool_bar.btn_filter_post_type-selected"
         >
-          <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+          <Text
             style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#F1F2F8",
-                "borderRadius": 100,
-                "boxShadow": Object {
-                  "elevation": 1,
-                  "shadowColor": "rgba(0, 0, 0, 1)",
-                  "shadowOffset": Object {
-                    "height": 1,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.08,
-                  "shadowRadius": 1,
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 14,
                 },
-                "flexDirection": "row",
-                "opacity": 1,
-                "paddingHorizontal": 12,
-                "paddingVertical": 6,
-              }
-            }
-            testID="undefined-selected"
-          >
-            <Text
-              style={
+                Object {},
                 Array [
+                  Object {},
                   Object {
                     "color": "#353E6E",
-                    "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 14,
                   },
-                  Object {},
-                  Array [
-                    Object {},
-                    Object {
-                      "color": "#353E6E",
-                    },
-                  ],
-                ]
-              }
-            >
-              Content type
-            </Text>
-          </View>
-          <View
-            style={
-              Object {
-                "height": undefined,
-                "paddingHorizontal": undefined,
-                "paddingVertical": undefined,
-                "width": 8,
-              }
+                ],
+              ]
             }
-          />
-          <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#F1F2F8",
-                "borderRadius": 100,
-                "boxShadow": Object {
-                  "elevation": 1,
-                  "shadowColor": "rgba(0, 0, 0, 1)",
-                  "shadowOffset": Object {
-                    "height": 1,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.08,
-                  "shadowRadius": 1,
-                },
-                "flexDirection": "row",
-                "opacity": 1,
-                "paddingHorizontal": 12,
-                "paddingVertical": 6,
-              }
-            }
-            testID="undefined-selected"
           >
-            <Text
-              style={
+            Content type
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "height": undefined,
+              "paddingHorizontal": undefined,
+              "paddingVertical": undefined,
+              "width": 8,
+            }
+          }
+        />
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#F1F2F8",
+              "borderRadius": 100,
+              "boxShadow": Object {
+                "elevation": 1,
+                "shadowColor": "rgba(0, 0, 0, 1)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.08,
+                "shadowRadius": 1,
+              },
+              "flexDirection": "row",
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 6,
+            }
+          }
+          testID="filter_tool_bar.filter_created_by-selected"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 14,
+                },
+                Object {},
                 Array [
+                  Object {},
                   Object {
                     "color": "#353E6E",
-                    "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 14,
                   },
-                  Object {},
-                  Array [
-                    Object {},
-                    Object {
-                      "color": "#353E6E",
-                    },
-                  ],
-                ]
-              }
-            >
-              Created by
-            </Text>
-          </View>
-          <View
-            style={
-              Object {
-                "height": undefined,
-                "paddingHorizontal": undefined,
-                "paddingVertical": undefined,
-                "width": 8,
-              }
+                ],
+              ]
             }
-          />
-          <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#F1F2F8",
-                "borderRadius": 100,
-                "boxShadow": Object {
-                  "elevation": 1,
-                  "shadowColor": "rgba(0, 0, 0, 1)",
-                  "shadowOffset": Object {
-                    "height": 1,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.08,
-                  "shadowRadius": 1,
-                },
-                "flexDirection": "row",
-                "opacity": 1,
-                "paddingHorizontal": 12,
-                "paddingVertical": 6,
-              }
-            }
-            testID="undefined-selected"
           >
-            <Text
-              style={
+            Created by
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "height": undefined,
+              "paddingHorizontal": undefined,
+              "paddingVertical": undefined,
+              "width": 8,
+            }
+          }
+        />
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#F1F2F8",
+              "borderRadius": 100,
+              "boxShadow": Object {
+                "elevation": 1,
+                "shadowColor": "rgba(0, 0, 0, 1)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.08,
+                "shadowRadius": 1,
+              },
+              "flexDirection": "row",
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 6,
+            }
+          }
+          testID="filter_tool_bar.filter_date_option-selected"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 14,
+                },
+                Object {},
                 Array [
+                  Object {},
                   Object {
                     "color": "#353E6E",
-                    "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 14,
                   },
-                  Object {},
-                  Array [
-                    Object {},
-                    Object {
-                      "color": "#353E6E",
-                    },
-                  ],
-                ]
-              }
-            >
-              Day posted
-            </Text>
-          </View>
+                ],
+              ]
+            }
+          >
+            Day posted
+          </Text>
         </View>
       </View>
     </RCTScrollView>
@@ -673,213 +674,214 @@ exports[`TagDetail component renders list article success 1`] = `
     }
   >
     <RCTScrollView
+      alwaysBounceHorizontal={false}
+      collapsable={false}
+      contentContainerStyle={
+        Object {
+          "backgroundColor": "#FFFFFF",
+          "borderBottomWidth": 1,
+          "borderColor": "#F8F9FF",
+          "paddingBottom": 12,
+          "paddingHorizontal": 16,
+          "paddingTop": 8,
+        }
+      }
       horizontal={true}
+      onGestureHandlerEvent={[Function]}
+      onGestureHandlerStateChange={[Function]}
       showsHorizontalScrollIndicator={false}
       style={
         Object {
           "backgroundColor": "#FFFFFF",
+          "width": 750,
         }
       }
     >
       <View>
         <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
             Object {
-              "backgroundColor": "#FFFFFF",
-              "borderBottomWidth": 1,
-              "borderColor": "#F8F9FF",
+              "alignItems": "center",
+              "backgroundColor": "#F1F2F8",
+              "borderRadius": 100,
+              "boxShadow": Object {
+                "elevation": 1,
+                "shadowColor": "rgba(0, 0, 0, 1)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.08,
+                "shadowRadius": 1,
+              },
               "flexDirection": "row",
-              "paddingBottom": 12,
-              "paddingHorizontal": 16,
-              "paddingTop": 8,
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 6,
             }
           }
+          testID="filter_tool_bar.btn_filter_post_type-selected"
         >
-          <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+          <Text
             style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#F1F2F8",
-                "borderRadius": 100,
-                "boxShadow": Object {
-                  "elevation": 1,
-                  "shadowColor": "rgba(0, 0, 0, 1)",
-                  "shadowOffset": Object {
-                    "height": 1,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.08,
-                  "shadowRadius": 1,
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 14,
                 },
-                "flexDirection": "row",
-                "opacity": 1,
-                "paddingHorizontal": 12,
-                "paddingVertical": 6,
-              }
-            }
-            testID="undefined-selected"
-          >
-            <Text
-              style={
+                Object {},
                 Array [
+                  Object {},
                   Object {
                     "color": "#353E6E",
-                    "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 14,
                   },
-                  Object {},
-                  Array [
-                    Object {},
-                    Object {
-                      "color": "#353E6E",
-                    },
-                  ],
-                ]
-              }
-            >
-              Content type
-            </Text>
-          </View>
-          <View
-            style={
-              Object {
-                "height": undefined,
-                "paddingHorizontal": undefined,
-                "paddingVertical": undefined,
-                "width": 8,
-              }
+                ],
+              ]
             }
-          />
-          <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#F1F2F8",
-                "borderRadius": 100,
-                "boxShadow": Object {
-                  "elevation": 1,
-                  "shadowColor": "rgba(0, 0, 0, 1)",
-                  "shadowOffset": Object {
-                    "height": 1,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.08,
-                  "shadowRadius": 1,
-                },
-                "flexDirection": "row",
-                "opacity": 1,
-                "paddingHorizontal": 12,
-                "paddingVertical": 6,
-              }
-            }
-            testID="undefined-selected"
           >
-            <Text
-              style={
+            Content type
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "height": undefined,
+              "paddingHorizontal": undefined,
+              "paddingVertical": undefined,
+              "width": 8,
+            }
+          }
+        />
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#F1F2F8",
+              "borderRadius": 100,
+              "boxShadow": Object {
+                "elevation": 1,
+                "shadowColor": "rgba(0, 0, 0, 1)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.08,
+                "shadowRadius": 1,
+              },
+              "flexDirection": "row",
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 6,
+            }
+          }
+          testID="filter_tool_bar.filter_created_by-selected"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 14,
+                },
+                Object {},
                 Array [
+                  Object {},
                   Object {
                     "color": "#353E6E",
-                    "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 14,
                   },
-                  Object {},
-                  Array [
-                    Object {},
-                    Object {
-                      "color": "#353E6E",
-                    },
-                  ],
-                ]
-              }
-            >
-              Created by
-            </Text>
-          </View>
-          <View
-            style={
-              Object {
-                "height": undefined,
-                "paddingHorizontal": undefined,
-                "paddingVertical": undefined,
-                "width": 8,
-              }
+                ],
+              ]
             }
-          />
-          <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#F1F2F8",
-                "borderRadius": 100,
-                "boxShadow": Object {
-                  "elevation": 1,
-                  "shadowColor": "rgba(0, 0, 0, 1)",
-                  "shadowOffset": Object {
-                    "height": 1,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.08,
-                  "shadowRadius": 1,
-                },
-                "flexDirection": "row",
-                "opacity": 1,
-                "paddingHorizontal": 12,
-                "paddingVertical": 6,
-              }
-            }
-            testID="undefined-selected"
           >
-            <Text
-              style={
+            Created by
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "height": undefined,
+              "paddingHorizontal": undefined,
+              "paddingVertical": undefined,
+              "width": 8,
+            }
+          }
+        />
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#F1F2F8",
+              "borderRadius": 100,
+              "boxShadow": Object {
+                "elevation": 1,
+                "shadowColor": "rgba(0, 0, 0, 1)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.08,
+                "shadowRadius": 1,
+              },
+              "flexDirection": "row",
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 6,
+            }
+          }
+          testID="filter_tool_bar.filter_date_option-selected"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 14,
+                },
+                Object {},
                 Array [
+                  Object {},
                   Object {
                     "color": "#353E6E",
-                    "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 14,
                   },
-                  Object {},
-                  Array [
-                    Object {},
-                    Object {
-                      "color": "#353E6E",
-                    },
-                  ],
-                ]
-              }
-            >
-              Day posted
-            </Text>
-          </View>
+                ],
+              ]
+            }
+          >
+            Day posted
+          </Text>
         </View>
       </View>
     </RCTScrollView>
