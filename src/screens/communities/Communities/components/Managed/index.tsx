@@ -40,7 +40,7 @@ const GroupItem: FC<GroupItemProps> = ({ id, section }) => {
       ? `managed_owner_item_${id}`
       : `managed_manage_item_${id}`;
 
-  return <CommunityGroupCard item={item} testID={testID} isManagedGroups />;
+  return <CommunityGroupCard item={item} testID={testID} />;
 };
 
 const SectionTitle: FC<SectionTitleProps> = ({ title }) => {
