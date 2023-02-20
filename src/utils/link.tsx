@@ -139,18 +139,22 @@ export function openUrl(url: string, onError?: (e: any) => void, onSuccess?: (e:
   const selfDomain = getEnv('SELF_DOMAIN');
   const selfDomainPosition = url.indexOf(selfDomain);
   const deepLinkUrl = PREFIX_DEEPLINK_GROUP + url.substring(selfDomainPosition).replace(selfDomain, '');
-
-  Linking.canOpenURL(url)
-    .then((supported) => {
-      if (supported) {
-        Linking.openURL(deepLinkUrl).then(onSuccess).catch(onError);
-      } else {
-        Linking.openURL(url).then(onSuccess).catch(onError);
-      }
-    })
-    .catch((e) => {
-      console.error('error when open link:', e);
-    });
+  const isBICGroupDomain = validateBICGroupDomain(url);
+  if (isBICGroupDomain) {
+    Linking.canOpenURL(url)
+      .then((supported) => {
+        if (supported) {
+          Linking.openURL(deepLinkUrl).then(onSuccess).catch(onError);
+        } else {
+          Linking.openURL(url).then(onSuccess).catch(onError);
+        }
+      })
+      .catch((e) => {
+        console.error('error when open link:', e);
+      });
+    return;
+  }
+  Linking.openURL(url).then(onSuccess).catch(onError);
 }
 
 export const matchDeepLink = (url: string) => {
