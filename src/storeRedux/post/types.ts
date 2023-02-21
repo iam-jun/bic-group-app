@@ -35,8 +35,6 @@ const postTypes = {
 
   LOADING_GET_POST_DETAIL: 'post/LOADING_GET_POST_DETAIL',
   SET_COMMENT_ERROR_CODE: 'post/SET_COMMENT_ERROR_CODE',
-
-  UPDATE_LINK_PREVIEW: 'post/UPDATE_LINK_PREVIEW',
 };
 
 export default postTypes;

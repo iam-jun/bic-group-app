@@ -52,6 +52,7 @@ import useArticleScheduleContentStore from '~/screens/articles/ArticleScheduleCo
 import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
 import useButtonMarkAsReadStore from '~/components/posts/ButtonMarkAsRead/store';
 import useCreatePostStore from '~/screens/post/CreatePost/store';
+import useLinkPreviewStore from './linkPreview';
 
 export const excludedStore = [
   useAuthController,
@@ -121,6 +122,7 @@ const stores = [
   usePostsInProgressStore,
   useCommentInputStore,
   useFeedSearchStore,
+  useLinkPreviewStore,
 ];
 
 export const resetAllStores = () => {

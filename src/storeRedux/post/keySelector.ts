@@ -8,7 +8,6 @@ const postKeySelector = {
     initAudiences: 'post.createPost.initAudiences',
     chosenAudiences: 'post.createPost.chosenAudiences',
     content: 'post.createPost.data.content',
-    linkPreview: 'post.createPost.linkPreview',
   },
   reactionBottomSheet: 'post.reactionBottomSheet',
   replyingComment: 'post.replyingComment',

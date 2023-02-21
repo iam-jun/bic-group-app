@@ -36,6 +36,7 @@ describe('CommentDetailContent component', () => {
         parentId: 'test',
       },
     },
+    showPrivacy: jest.fn(),
   };
 
   it('should render correctly (isReported = true)', async () => {
@@ -72,7 +73,6 @@ describe('CommentDetailContent component', () => {
       refreshControl.props.onRefresh();
       onScrollToIndexFailed();
     });
-    expect(scrollView).toBeDefined();
   });
 
   it('should render correctly (isReported = false)', () => {
@@ -85,7 +85,10 @@ describe('CommentDetailContent component', () => {
     propsClone.route.params.postId = null;
 
     const store = mockStore(storeData);
-    renderWithRedux(<CommentDetailContent {...propsClone} />, store);
+    const rendered = renderWithRedux(<CommentDetailContent {...propsClone} />, store);
+    const { queryByTestId } = rendered;
+    const component = queryByTestId('comment_level_1');
+    expect(component).toBeNull();
   });
 
   it('should render with commentErrorCode = APIErrorCode.Post.POST_PRIVACY', () => {
@@ -93,6 +96,8 @@ describe('CommentDetailContent component', () => {
     const store = mockStore(storeData);
 
     renderWithRedux(<CommentDetailContent {...props} />, store);
+
+    expect(props.showPrivacy).toBeCalled();
   });
 
   it('should render with commentErrorCode = APIErrorCode.Post.COPIED_COMMENT_IS_DELETED', () => {

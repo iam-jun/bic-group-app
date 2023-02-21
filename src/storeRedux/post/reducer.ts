@@ -253,17 +253,6 @@ function postReducer(
         ...state,
         commentErrorCode: payload,
       };
-    case postTypes.UPDATE_LINK_PREVIEW:
-      return {
-        ...state,
-        createPost: {
-          ...state.createPost,
-          linkPreview: {
-            ...state.createPost.linkPreview,
-            ...payload,
-          },
-        },
-      };
 
     default:
       return state;
