@@ -13,7 +13,8 @@ import Avatar from '~/baseComponents/Avatar';
 import { AvatarProps } from '~/baseComponents/Avatar/AvatarComponent';
 import Icon, { IconProps } from '~/baseComponents/Icon';
 
-import { useKeySelector } from '~/hooks/selector';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import spacing from '~/theme/spacing';
 
 interface HeaderAvatarProps {
@@ -43,7 +44,7 @@ const HeaderAvatar = ({
   containerStyle,
   onPress,
 }: HeaderAvatarProps) => {
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;

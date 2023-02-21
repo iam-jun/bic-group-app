@@ -4,6 +4,7 @@ import i18next from 'i18next';
 
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import { StyleSheet } from 'react-native';
+import useNetworkStore, { INetworkState } from '~/store/network';
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/baseComponents/Icon';
@@ -82,6 +83,24 @@ describe('Button Wrapper component', () => {
     expect(btnComponent).toBeDefined();
     fireEvent.press(btnComponent);
     expect(onPress).toBeCalled();
+  });
+
+  it('should not call props onPress when cant connect to internet', () => {
+    useNetworkStore.setState((state:INetworkState) => {
+      state.isInternetReachable = false;
+      return state;
+    });
+
+    const onPress = jest.fn();
+
+    const rendered = renderWithRedux(
+      <ButtonWrapper testID="button_wrapper" onPress={onPress} />,
+    );
+
+    const btnComponent = rendered.getByTestId('button_wrapper');
+    expect(btnComponent).toBeDefined();
+    fireEvent.press(btnComponent);
+    expect(onPress).not.toBeCalled();
   });
 
   it('should call props onLongPress', async () => {

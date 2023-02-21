@@ -5,7 +5,8 @@ import {
   TouchableOpacityProps,
 } from 'react-native';
 
-import { useKeySelector } from '~/hooks/selector';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 
 export interface ButtonWrapperProps extends TouchableOpacityProps, TouchableHighlightProps {
   nativeID?: string;
@@ -19,7 +20,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   TouchableComponent = TouchableOpacity,
   ...props
 }: ButtonWrapperProps) => {
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   return (
     <TouchableComponent

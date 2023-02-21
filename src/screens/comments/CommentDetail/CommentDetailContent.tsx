@@ -382,7 +382,7 @@ const CommentLevel1 = ({
   }
 
   return (
-    <View>
+    <View testID="comment_level_1">
       <Divider
         size={spacing.padding.large}
         color={color}

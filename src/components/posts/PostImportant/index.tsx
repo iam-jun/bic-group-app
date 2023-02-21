@@ -6,7 +6,8 @@ import { useDispatch } from 'react-redux';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 
-import { useKeySelector } from '~/hooks/selector';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import modalActions from '~/storeRedux/modal/actions';
 
 import BannerImportant from '~/baseComponents/BannerImportant';
@@ -37,7 +38,7 @@ const PostImportant: FC<PostImportantProps> = ({
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);

@@ -6,38 +6,38 @@ import { renderHook, renderWithRedux } from '~/test/testUtils';
 import TagItem from './TagItem';
 
 describe('TagItem component', () => {
-  it('given isMember & tag has totalUsed = 0, should render menu', () => {
+  it('given canCUDTag & tag has totalUsed = 0, should render menu', () => {
     const { result: resultUseTagsStore } = renderHook(() => useTagsStore());
 
     act(() => {
       resultUseTagsStore.current.actions.addTags(mockTags);
     });
 
-    const wrapper = renderWithRedux(<TagItem isMember item={resultUseTagsStore.current.tags['2']} communityId="1" />);
+    const wrapper = renderWithRedux(<TagItem canCUDTag isMember item={resultUseTagsStore.current.tags['2']} communityId="1" />);
     const tagMenu = wrapper.queryByTestId('tag_menu');
-    expect(tagMenu).toBeDefined();
+    expect(tagMenu).not.toBeNull();
   });
 
-  it('given isMember & tag has totalUsed > 0, should not render menu', () => {
+  it('given canCUDTag & tag has totalUsed > 0, should not render menu', () => {
     const { result: resultUseTagsStore } = renderHook(() => useTagsStore());
 
     act(() => {
       resultUseTagsStore.current.actions.addTags(mockTags);
     });
 
-    const wrapper = renderWithRedux(<TagItem isMember item={resultUseTagsStore.current.tags['1']} communityId="1" />);
+    const wrapper = renderWithRedux(<TagItem canCUDTag isMember item={resultUseTagsStore.current.tags['1']} communityId="1" />);
     const tagMenu = wrapper.queryByTestId('tag_menu');
     expect(tagMenu).toBeNull();
   });
 
-  it('given isMember = false, should not render menu', () => {
+  it('given canCUDTag = false, should not render menu', () => {
     const { result: resultUseTagsStore } = renderHook(() => useTagsStore());
 
     act(() => {
       resultUseTagsStore.current.actions.addTags(mockTags);
     });
 
-    const wrapper = renderWithRedux(<TagItem isMember={false} item={resultUseTagsStore.current.tags['1']} communityId="1" />);
+    const wrapper = renderWithRedux(<TagItem canCUDTag={false} isMember={false} item={resultUseTagsStore.current.tags['1']} communityId="1" />);
     const tagMenu = wrapper.queryByTestId('tag_menu');
     expect(tagMenu).toBeNull();
   });

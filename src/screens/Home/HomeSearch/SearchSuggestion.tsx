@@ -7,10 +7,11 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/baseComponents/Text';
-import { useKeySelector } from '~/hooks/selector';
 import { useBaseHook } from '~/hooks';
 import NFSRecentSearchKeyword from '~/screens/Home/HomeSearch/RecentSearchKeyword';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import spacing from '~/theme/spacing';
 import useFeedSearchStore from './store';
 
@@ -27,7 +28,7 @@ const SearchSuggestion: ForwardRefRenderFunction<any, NFSSuggestionProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   const listRecentKeywords = useFeedSearchStore((state) => state.newsfeedSearchRecentKeyword.data);
   const searchText = useFeedSearchStore((state) => state.newsfeedSearch.searchText);

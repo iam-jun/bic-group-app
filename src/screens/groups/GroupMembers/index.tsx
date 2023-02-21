@@ -3,12 +3,13 @@ import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import i18next from 'i18next';
 
-import { useKeySelector } from '~/hooks/selector';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IGroupMembers } from '~/interfaces/IGroup';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header, { HeaderProps } from '~/beinComponents/Header';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import MemberOptionsMenu from './components/GroupMemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
 import spacing from '~/theme/spacing';
@@ -32,7 +33,7 @@ const _GroupMembers = ({ route }: any) => {
   const { ids } = useGroupMemberStore((state) => state.groupMemberRequests);
 
   const [needReloadWhenReconnected, setNeedReloadWhenReconnected] = useState(false);
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;

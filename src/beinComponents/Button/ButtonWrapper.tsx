@@ -12,7 +12,8 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text, { TextProps, TextVariant } from '~/baseComponents/Text';
 import Icon, { IconProps } from '~/baseComponents/Icon';
-import { useKeySelector } from '~/hooks/selector';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import spacing from '~/theme/spacing';
 import { lineHeights } from '~/theme/dimension';
 
@@ -67,7 +68,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   const { colors } = theme;
   const _textVariant = textVariant || 'buttonM';
 
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   const renderIcon = (
     iconSource: any, iconProps: Partial<IconProps> | undefined,

@@ -187,7 +187,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     || initPostData?.setting?.canReact !== canReact;
 
   // Disable button post if loading, empty content, empty audience or edit post but nothing changed
-  const disableButtonPost
+  const disableButtonPost: any
     = imageUploading
     || videoUploading
     || fileUploading

@@ -11,10 +11,11 @@ import Image from '~/beinComponents/Image';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { ArticleScheduleItem } from '~/components/articles';
-import { useKeySelector } from '~/hooks/selector';
 import { IPayloadGetArticleScheduleContent } from '~/interfaces/IArticle';
 import { IRouteParams } from '~/interfaces/IRouter';
 import images from '~/resources/images';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import { spacing } from '~/theme';
 import useArticleScheduleContentStore, { IArticleScheduleContentState } from './store';
 
@@ -24,7 +25,7 @@ const ArticleScheduleContent: FC<IRouteParams> = (props) => {
   const { colors } = theme;
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets);
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   const [lossInternet, setLossInternet] = useState(false);
 

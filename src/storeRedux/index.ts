@@ -14,7 +14,6 @@ const persistConfig = {
     'groups',
     'post',
     'home',
-    'noInternet',
     'chat',
     'giphy',
     'notifications',

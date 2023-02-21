@@ -30,6 +30,10 @@ const defaultConfig = {
 };
 
 export const groupsApiConfig = {
+  getCommunityCUDTagPermission: (communityId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/permissions/can-cud-tags/community/${communityId}`,
+  }),
   updateGroupJoinSetting: (groupId: string, isJoinApproval: boolean): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/settings`,
@@ -532,6 +536,9 @@ export const groupsApiConfig = {
 };
 
 const groupApi = {
+  getCommunityCUDTagPermission: (communityId: string) => withHttpRequestPromise(
+    groupsApiConfig.getCommunityCUDTagPermission, communityId,
+  ),
   updateGroupJoinSetting: (groupId: string, isJoinApproval: boolean) => withHttpRequestPromise(
     groupsApiConfig.updateGroupJoinSetting, groupId, isJoinApproval,
   ),

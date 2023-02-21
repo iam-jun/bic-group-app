@@ -14,10 +14,11 @@ type TagItemProps = {
     item: ITag;
     isMember: boolean;
     communityId: string;
+    canCUDTag: boolean;
 }
 
 const TagItem: FC<TagItemProps> = ({
-  item, isMember, communityId,
+  item, isMember, communityId, canCUDTag,
 }) => {
   const { name, totalUsed } = item;
 
@@ -35,8 +36,8 @@ const TagItem: FC<TagItemProps> = ({
   };
 
   const goToTagsDetail = () => {
-    isMember
-    && rootNavigation.navigate(tagsStack.tagDetail, { tagData: item, communityId });
+    if (!isMember) return;
+    rootNavigation.navigate(tagsStack.tagDetail, { tagData: item, communityId });
   };
 
   return (
@@ -44,20 +45,20 @@ const TagItem: FC<TagItemProps> = ({
       <View style={styles.flex}>
         <Text.BodyM numberOfLines={1}>{name.toLowerCase()}</Text.BodyM>
       </View>
-      {isMember && canAction && (
-      <Icon
-        testID="tag_menu"
-        icon="Ellipsis"
-        onPress={onPressMenu}
-        size={20}
-        tintColor={colors.neutral40}
-        hitSlop={{
-          top: 20,
-          bottom: 20,
-          left: 20,
-          right: 20,
-        }}
-      />
+      {canCUDTag && canAction && (
+        <Icon
+          testID="tag_menu"
+          icon="Ellipsis"
+          onPress={onPressMenu}
+          size={20}
+          tintColor={colors.neutral40}
+          hitSlop={{
+            top: 20,
+            bottom: 20,
+            left: 20,
+            right: 20,
+          }}
+        />
       )}
     </Button>
   );

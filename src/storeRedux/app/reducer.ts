@@ -1,7 +1,6 @@
 import types from './constants';
 
 export const appInitState = {
-  linkPreviews: {},
   rootScreenName: '',
   drawerVisible: false,
   debuggerVisible: false,
@@ -19,14 +18,6 @@ function reducer(
   const { type, payload } = action;
 
   switch (type) {
-    case types.SET_LINK_PREVIEW:
-      return {
-        ...state,
-        linkPreviews: {
-          ...state.linkPreviews,
-          [payload?.url]: payload,
-        },
-      };
     case types.SET_ROOT_SCREEN_NAME:
       return {
         ...state,
