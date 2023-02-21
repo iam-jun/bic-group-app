@@ -7,7 +7,8 @@ import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import { NotificationsBadgeComponentProps } from '~/beinComponents/Badge/NotificationsBadge/NotificationsBadgeComponent';
 import Icon, { IconProps } from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
-import { useKeySelector } from '~/hooks/selector';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 
 import spacing from '~/theme/spacing';
 import { IconType } from '~/resources/icons';
@@ -49,7 +50,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
   testID,
   iconProps,
 }: MenuItemProps) => {
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme || {};

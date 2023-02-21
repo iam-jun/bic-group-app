@@ -10,8 +10,9 @@ import Avatar from '~/baseComponents/Avatar';
 import { IPostAudience } from '~/interfaces/IPost';
 import { useBaseHook } from '~/hooks';
 import TimeView from '~/beinComponents/TimeView';
-import { useKeySelector } from '~/hooks/selector';
 import PostAudiencesModal from '~/components/posts/PostAudiencesModal';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -54,7 +55,7 @@ const ContentHeader: FC<ContentHeaderProps> = ({
   const { colors } = useTheme();
   const { rootNavigation } = useRootNavigation();
 
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
   const isHidden = usePostsStore(postsSelector.getIsHidden(postId));
 
   const textAudiences = getAudiencesText(audience, t);

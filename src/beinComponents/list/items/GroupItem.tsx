@@ -12,8 +12,9 @@ import Text from '~/baseComponents/Text';
 import Avatar from '~/baseComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Checkbox from '~/baseComponents/Checkbox';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import { generateUniqueId } from '~/utils/generator';
-import { useKeySelector } from '~/hooks/selector';
 import { GroupPrivacyDetail } from '~/constants/privacyTypes';
 import mainStack from '~/router/navigator/MainStack/stack';
 import { AvatarType } from '~/baseComponents/Avatar/AvatarComponent';
@@ -82,7 +83,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     renderExtraInfo,
   } = props;
 
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);

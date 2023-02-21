@@ -17,7 +17,8 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import loadings from '~/beinComponents/list/loadings';
 import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import { useKeySelector } from '~/hooks/selector';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 
 import spacing from '~/theme/spacing';
 
@@ -103,7 +104,7 @@ const ListView: React.FC<ListViewProps> = ({
   currentPath,
   ...props
 }: ListViewProps) => {
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   const { colors } = useTheme() as ExtendedTheme;
 

@@ -6,7 +6,6 @@ import groupsReducer from '~/storeRedux/groups/reducer';
 import menuReducer from '~/storeRedux/menu/reducer';
 import postReducer from '~/storeRedux/post/reducer';
 
-import noInternetReducer from './network/reducer';
 import app from './app/reducer';
 import modal from './modal/reducer';
 
@@ -24,7 +23,6 @@ export const appReducer = combineReducers({
   ),
   groups: groupsReducer,
   menu: menuReducer,
-  noInternet: noInternetReducer,
 });
 
 const rootReducers = (

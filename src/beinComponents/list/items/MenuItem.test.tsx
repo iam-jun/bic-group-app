@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { cleanup } from '@testing-library/react-native';
+import useNetworkStore, { INetworkState } from '~/store/network';
 
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import MenuItem from './MenuItem';
@@ -103,6 +104,24 @@ describe('Menu Item component', () => {
     expect(btnComponent).toBeDefined();
     fireEvent.press(btnComponent);
     expect(onPress).toBeCalled();
+  });
+
+  it('should not call props onPress when cant connect to the internet', () => {
+    useNetworkStore.setState((state:INetworkState) => {
+      state.isInternetReachable = false;
+      return state;
+    });
+
+    const onPress = jest.fn();
+
+    const rendered = renderWithRedux(
+      <MenuItem title={title} testID={testID} onPress={onPress} />,
+    );
+
+    const btnComponent = rendered.getByTestId(testID);
+    expect(btnComponent).toBeDefined();
+    fireEvent.press(btnComponent);
+    expect(onPress).not.toBeCalled();
   });
 
   it('renders correctly item disable', () => {

@@ -1,28 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useDispatch } from 'react-redux';
 
-import { useKeySelector } from '~/hooks/selector';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import dimension from '~/theme/dimension';
 import BaseToast, { BaseToastProps, ToastType } from '~/baseComponents/Toast/BaseToast';
 import { spacing } from '~/theme';
-import noInternetActions from '~/storeRedux/network/actions';
 
 const InternetConnectionStatus = () => {
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
+  const networkActions = useNetworkStore((state) => state.actions);
 
   const styles = createStyle();
   const firstRender = useRef(true);
-  const dispatch = useDispatch();
 
   const [showToast, setShowToast] = useState<boolean>(false);
   const timeoutRef = useRef<any>();
 
   const hideToast = () => setShowToast(false);
 
-  const checkInternetReacble = () => {
-    dispatch(noInternetActions.checkInternetReachable());
+  const checkInternetReachable = () => {
+    networkActions.checkIsInternetReachable();
   };
 
   const doShowToast = () => {
@@ -63,7 +62,7 @@ const InternetConnectionStatus = () => {
     content: 'internet_connection:offline',
     icon: 'WifiSlashSolid',
     buttonText: 'common:text_refresh',
-    onButtonPress: checkInternetReacble,
+    onButtonPress: checkInternetReachable,
   };
 
   return (

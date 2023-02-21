@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { cleanup } from '@testing-library/react-native';
+import useNetworkStore, { INetworkState } from '~/store/network';
 
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import GroupItem from './GroupItem';
@@ -61,6 +62,24 @@ describe('Group Item component', () => {
     expect(btnComponent).toBeDefined();
     fireEvent.press(btnComponent);
     expect(onPress).toBeCalled();
+  });
+
+  it('should not call props onPressItem when cant connect to the internet', () => {
+    useNetworkStore.setState((state:INetworkState) => {
+      state.isInternetReachable = false;
+      return state;
+    });
+
+    const onPress = jest.fn();
+
+    const rendered = renderWithRedux(
+      <GroupItem {...groupItemData} onPressItem={onPress} />,
+    );
+
+    const btnComponent = rendered.getByTestId('group_item.container');
+    expect(btnComponent).toBeDefined();
+    fireEvent.press(btnComponent);
+    expect(onPress).not.toBeCalled();
   });
 
   it('should render UI Level when uiLevel > 0', () => {

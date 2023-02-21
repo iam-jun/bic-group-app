@@ -3,8 +3,9 @@ import {
 } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useKeySelector } from '~/hooks/selector';
 import Text, { TextVariant } from '~/baseComponents/Text';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import { spacing } from '~/theme';
 
 export interface TabButtonProps {
@@ -37,7 +38,7 @@ const TabButton = ({
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyles(theme, isSelected);
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   return (
     <TouchableOpacity

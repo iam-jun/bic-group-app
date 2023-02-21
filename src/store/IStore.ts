@@ -1,6 +1,7 @@
 import { ISelectAudienceState } from '~/components/SelectAudience/store';
 import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
 import { ICodePushState } from '~/store/codePush';
+import { INetworkState } from '~/store/network';
 import { IPostsState } from './entities/posts';
 import ICommentsState from '~/store/entities/comments/Interface';
 import IHomeState from '~/screens/Home/store/Interface';
@@ -166,6 +167,7 @@ export interface BicStore {
   giphy: IGiphyState;
   codePush: ICodePushState;
   myPermissions: IMyPermissionsState;
+  network: INetworkState;
   tags: ITagsState;
   remoteConfig: IRemoteConfigState;
   modal: IModalState;

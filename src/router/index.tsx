@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import { Host } from 'react-native-portalize';
 
-import { useDispatch } from 'react-redux';
 import AlertModal from '~/beinComponents/modals/AlertModal';
 import AlertNewFeatureModal from '~/beinComponents/modals/AlertNewFeatureModal';
 import LoadingModal from '~/beinComponents/modals/LoadingModal';
@@ -15,7 +14,7 @@ import Toast from '~/baseComponents/Toast';
 import { AppConfig } from '~/configs';
 import InternetConnectionStatus from '~/components/network/InternetConnectionStatus';
 import SystemIssueModal from '~/components/network/SystemIssueModal';
-import noInternetActions from '~/storeRedux/network/actions';
+import useNetworkStore from '~/store/network';
 import { makeRemovePushTokenRequest } from '~/api/apiRequest';
 import { isNavigationRefReady, withNavigation } from './helper';
 
@@ -36,7 +35,8 @@ const rootNavigation = withNavigation(rootNavigationRef);
 
 const RootNavigator = (): React.ReactElement => {
   const theme = useTheme();
-  const dispatch = useDispatch();
+
+  const networkActions = useNetworkStore((state) => state.actions);
 
   useAuthValidateSession();
 
@@ -57,9 +57,11 @@ const RootNavigator = (): React.ReactElement => {
   useEffect(
     () => {
       isNavigationRefReady.current = false;
-      dispatch(noInternetActions.setSystemIssue(false));
+      networkActions.setIsShowSystemIssue(false);
 
-      const unsubscribeNetInfo = NetInfo.addEventListener(() => dispatch(noInternetActions.checkInternetReachable()));
+      const unsubscribeNetInfo = NetInfo.addEventListener(() => {
+        useNetworkStore.getState().actions.checkIsInternetReachable();
+      });
       if (!userId) {
         makeRemovePushTokenRequest();
       }
