@@ -195,7 +195,7 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
         case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_POST_AGGREGATED:
         case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST:
         case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST_AGGREGATED:
-          if (target === TargetType.COMMENT_ARTICLE) {
+          if (target === TargetType.COMMENT_ARTICLE || target === TargetType.ARTICLE) {
             return {
               screen: articleStack.articleDetail,
               params: { articleId: postId, focusComment: true },
