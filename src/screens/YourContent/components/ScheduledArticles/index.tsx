@@ -14,7 +14,7 @@ import { ArticleScheduleItem } from '~/components/articles';
 const ScheduledArticles = () => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = createStyle(theme);
+  const styles = createStyle();
 
   const { scheduleArticles, actions } = useScheduleArticlesStore();
   const {
@@ -49,7 +49,7 @@ const ScheduledArticles = () => {
       <View style={styles.boxEmpty} testID="schedule_article.empty_view">
         <Image
           resizeMode="contain"
-          source={images.img_empty_search_post}
+          source={images.img_empty_box}
           style={styles.imgEmpty}
         />
         <Text.BodyS color={colors.neutral40} useI18n>
@@ -102,26 +102,22 @@ const ScheduledArticles = () => {
   );
 };
 
-const createStyle = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-
-  return StyleSheet.create({
-    boxFooter: {
-      height: 100,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    boxEmpty: {
-      backgroundColor: colors.white,
-      alignItems: 'center',
-      paddingTop: 32,
-      paddingBottom: 48,
-    },
-    imgEmpty: {
-      width: 100,
-      aspectRatio: 1,
-    },
-  });
-};
+const createStyle = () => StyleSheet.create({
+  boxFooter: {
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxEmpty: {
+    alignItems: 'center',
+    paddingTop: 32,
+    paddingBottom: 48,
+  },
+  imgEmpty: {
+    width: 100,
+    aspectRatio: 1,
+    marginBottom: spacing.margin.base,
+  },
+});
 
 export default ScheduledArticles;

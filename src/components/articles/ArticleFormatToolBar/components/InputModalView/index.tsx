@@ -9,12 +9,12 @@ import Text from '~/baseComponents/Text';
 import modalActions from '~/storeRedux/modal/actions';
 
 interface Props {
-  type: 'link'|'video';
+  type: 'link'|'embed';
   insertLink: (url: string, text: string) => void;
-  insertVideoEmbed: (url: string) => void;
+  insertEmbed: (url: string) => void;
 }
 
-const InputModalView: FC<Props> = ({ type, insertLink, insertVideoEmbed }) => {
+const InputModalView: FC<Props> = ({ type, insertLink, insertEmbed }) => {
   const dispatch = useDispatch();
   const { t } = useBaseHook();
   const [text, setText] = useState('');
@@ -31,18 +31,18 @@ const InputModalView: FC<Props> = ({ type, insertLink, insertVideoEmbed }) => {
       return;
     }
 
-    insertVideoEmbed(url);
+    insertEmbed(url);
     dispatch(modalActions.hideModal());
   };
 
   const renderContent = () => {
-    if (type === 'video') {
+    if (type === 'embed') {
       return (
         <TextInput
           autoFocus
-          testID="input_modal_view.video_url"
+          testID="input_modal_view.embed_url"
           style={styles.input}
-          placeholder={t('article:modal_add_video:link_placeholder')}
+          placeholder={t('article:modal_add_embed:link_placeholder')}
           onChangeText={setUrl}
         />
       );

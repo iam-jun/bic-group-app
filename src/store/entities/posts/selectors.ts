@@ -1,4 +1,4 @@
-import IPostsState from './Interface';
+import { IPostsState } from './index';
 
 const postsSelector = {
   getPost: (id: string, defaultValue?: any) => (state: IPostsState) => state?.posts?.[id] || defaultValue,

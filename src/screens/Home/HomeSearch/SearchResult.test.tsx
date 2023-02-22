@@ -1,45 +1,50 @@
 import React from 'react';
-import { renderWithRedux, configureStore } from '../../../test/testUtils';
-import initialState from '../../../storeRedux/initialState';
+import { renderWithRedux, act } from '../../../test/testUtils';
 import SearchResult from './SearchResult';
-import { POST_DETAIL_2 } from '~/test/mock_data/post';
+import useFeedSearchStore from './store';
+import streamApi from '~/api/StreamApi';
+import { responseSearchPost } from '~/test/mock_data/home';
 
 describe('SearchResult component', () => {
-  it('should render loading search result', () => {
-    const storeData = { ...initialState };
-    storeData.home.newsfeedSearch.loadingResult = true;
-    storeData.home.newsfeedSearch.searchResults = [];
-    storeData.home.newsfeedSearch.searchText = 'hello';
-    const mockStore = configureStore([]);
-    const store = mockStore(storeData);
-
-    const rendered = renderWithRedux(<SearchResult />, store);
-    expect(rendered.toJSON()).toMatchSnapshot();
-  });
-
   it('should render empty search result', () => {
-    const storeData = { ...initialState };
-    storeData.home.newsfeedSearch.loadingResult = false;
-    storeData.home.newsfeedSearch.searchResults = [];
-    storeData.home.newsfeedSearch.searchText = 'hello';
-    const mockStore = configureStore([]);
-    const store = mockStore(storeData);
+    const responseEmpty = { ...responseSearchPost };
+    responseEmpty.list = [];
+    responseEmpty.meta.total = 0;
 
-    const rendered = renderWithRedux(<SearchResult />, store);
+    const spyApiGetSearchPost = jest
+      .spyOn(streamApi, 'getSearchPost')
+      .mockImplementation(() => Promise.resolve(responseSearchPost) as any);
+    act(() => {
+      useFeedSearchStore.getState().actions.setNewsfeedSearch({ searchText: 'abc' });
+    });
+    jest.useFakeTimers();
+
+    const rendered = renderWithRedux(<SearchResult />);
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(spyApiGetSearchPost).toBeCalled();
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
   it('should render list search result', () => {
-    const storeData = { ...initialState };
-    storeData.home.newsfeedSearch.loadingResult = false;
-    storeData.home.newsfeedSearch.searchResults = [
-      { ...POST_DETAIL_2, highlight: '==Important== post' },
-    ] as any;
-    storeData.home.newsfeedSearch.searchText = 'important';
-    const mockStore = configureStore([]);
-    const store = mockStore(storeData);
+    const spyApiGetSearchPost = jest
+      .spyOn(streamApi, 'getSearchPost')
+      .mockImplementation(() => Promise.resolve(responseSearchPost) as any);
+    act(() => {
+      useFeedSearchStore.getState().actions.setNewsfeedSearch({ searchText: 'abc' });
+    });
+    jest.useFakeTimers();
 
-    const rendered = renderWithRedux(<SearchResult />, store);
+    const rendered = renderWithRedux(<SearchResult />);
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(spyApiGetSearchPost).toBeCalled();
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 });

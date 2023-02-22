@@ -39,6 +39,7 @@ const BasicInfo = ({
       isCurrentUser={isCurrentUser}
       onPress={editInfo}
       icon="PenToSquareSolid"
+      testID="basic_info.edit_btn"
     />
   );
 

@@ -1,7 +1,7 @@
 import { ISelectAudienceState } from '~/components/SelectAudience/store';
 import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
 import { ICodePushState } from '~/store/codePush';
-import IPostsState from './entities/posts/Interface';
+import { IPostsState } from './entities/posts';
 import ICommentsState from '~/store/entities/comments/Interface';
 import IHomeState from '~/screens/Home/store/Interface';
 import IChatState from '~/store/chat/IChatState';
@@ -43,6 +43,9 @@ import { IModalState } from './modal';
 import { IScheduleArticlesState } from '~/screens/YourContent/components/ScheduledArticles/store';
 import { IPostsInProgressState } from '~/screens/Home/components/VideoProcessingNotice/store';
 import { IArticleScheduleContentState } from '~/screens/articles/ArticleScheduleContent/store';
+import { IFeedSearchState } from '~/screens/Home/HomeSearch/store';
+import { IButtonMarkAsReadState } from '~/components/posts/ButtonMarkAsRead/store';
+import { ICreatePostState } from '~/screens/post/CreatePost/store';
 
 export interface BicStore {
   entities: {
@@ -51,6 +54,7 @@ export interface BicStore {
     communities: ICommunitiesState;
     groups: IGroupsState;
   };
+
   // components
   SelectAudience: {
     selectAudienceStore: ISelectAudienceState;
@@ -58,11 +62,19 @@ export interface BicStore {
   Report: {
     reportContentStore: IReportContentState;
   };
+  posts: {
+    ButtonMarkAsRead: {
+      buttonMarkAsReadStore: IButtonMarkAsReadState;
+    }
+  }
 
   // screens
   post: {
     userInterestedPost: IUserInterestedPostState;
     ReactionDetail: IReactionDetailState;
+    CreatePost: {
+      createPostStore: ICreatePostState;
+    }
   };
   articles: {
     articleController: IArticleController,
@@ -119,6 +131,7 @@ export interface BicStore {
   }
   Home: {
     homeStore: IHomeState;
+    feedSearch: IFeedSearchState;
   };
   Menu: {
     joinedCommunitiesStore: IJoinedCommunitiesState;

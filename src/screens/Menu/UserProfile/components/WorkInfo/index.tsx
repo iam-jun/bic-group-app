@@ -16,7 +16,7 @@ const WorkInfo = ({ style, latestWork }: Props) => {
   if (!latestWork) return null;
 
   return (
-    <View style={[styles.container, style]}>
+    <View style={[styles.container, style]} testID="work_info">
       <Text.BodySMedium style={{ textAlign: 'center' }}>
         {`${latestWork?.titlePosition} `}
         <Text.BodySMedium>{` • ${latestWork?.company}`}</Text.BodySMedium>

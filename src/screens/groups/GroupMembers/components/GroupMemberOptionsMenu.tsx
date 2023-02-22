@@ -53,7 +53,7 @@ const GroupMemberOptionsMenu = ({
 
   const onPressSetAdminRole = () => {
     if (!selectedMember?.id) return;
-    actions.assignGroupAdmin(groupId, [selectedMember.id]);
+    actions.assignGroupAdmin(groupId, selectedMember.id);
   };
 
   const onConfirmRemoveAdminRole = () => {

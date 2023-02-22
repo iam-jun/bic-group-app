@@ -140,7 +140,11 @@ const PostDraftView: FC<PostDraftViewProps> = ({
   const renderFooter = () => {
     if (isProcessing) {
       return (
-        <Text.BodyS color={colors.gray50} style={styles.draftText}>
+        <Text.BodyS
+          testID="post_draft_view.post_processing_publish"
+          color={colors.gray50}
+          style={styles.draftText}
+        >
           {t('post:draft:text_processing_publish')}
         </Text.BodyS>
       );
@@ -149,14 +153,21 @@ const PostDraftView: FC<PostDraftViewProps> = ({
       <View style={[styles.row, styles.footerButtonContainer]}>
         <View style={styles.row}>
           <Button.Danger
+            testID="post_draft_view.button_delete"
             type="ghost"
             icon="TrashCan"
             onPress={onPressDelete}
           />
           <ViewSpacing width={16} />
-          <Button.Secondary type="ghost" icon="PenToSquare" onPress={onPressEdit} />
+          <Button.Secondary
+            testID="post_draft_view.button_edit"
+            type="ghost"
+            icon="PenToSquare"
+            onPress={onPressEdit}
+          />
         </View>
         <Button.Primary
+          testID="post_draft_view.button_publish"
           useI18n
           size="medium"
           loading={publishing}

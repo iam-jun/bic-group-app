@@ -27,11 +27,6 @@ const useArticleScheduleMenu = (
     rootNavigation.replace(articleStack.createArticle, { articleId, isFromReviewSchedule: true });
   };
 
-  const onPress = () => {
-    dispatch(modalActions.hideBottomList());
-    dispatch(modalActions.showAlertNewFeature());
-  };
-
   const onDelete = () => {
     dispatch(modalActions.hideBottomList());
     showAlert({
@@ -58,14 +53,14 @@ const useArticleScheduleMenu = (
       requireIsActor: true,
       onPress: onPressEdit,
     },
-    {
-      id: 2,
-      testID: 'article_view_menu.copy',
-      leftIcon: 'LinkHorizontal',
-      title: i18next.t('article:menu:copy_link'),
-      requireIsActor: false,
-      onPress,
-    },
+    // {
+    //   id: 2,
+    //   testID: 'article_view_menu.copy',
+    //   leftIcon: 'LinkHorizontal',
+    //   title: i18next.t('article:menu:copy_link'),
+    //   requireIsActor: false,
+    //   onPress,
+    // },
     {
       id: 3,
       testID: 'article_view_menu.delete',

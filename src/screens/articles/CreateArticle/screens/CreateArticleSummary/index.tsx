@@ -45,6 +45,7 @@ const CreateArticleSummary: FC<CreateArticleProps> = ({ route }: CreateArticlePr
         onPressBack={handleBack}
       />
       <TextArea
+        autoFocus
         testID="edit_summary"
         value={summary}
         placeholder={t('common:text_input_summary')}

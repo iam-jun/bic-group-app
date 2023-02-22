@@ -12,7 +12,6 @@ describe('SearchMemberView component', () => {
       <SearchMemberView
         groupId={groupId}
         isOpen={isOpen}
-        initSearch="test"
         onPressMenu={onPressMenu}
       />,
     );

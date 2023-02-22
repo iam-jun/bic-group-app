@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 import Text from '~/baseComponents/Text';
@@ -22,7 +23,7 @@ interface MemberListProps {
   canManageMember: boolean;
   onLoadMore: () => void;
   onPressMenu: (item: any) => void;
-  onRefresh?: () => void;
+  onRefresh: () => void;
 }
 
 const MemberList = ({
@@ -32,15 +33,21 @@ const MemberList = ({
   onPressMenu,
   onRefresh,
 }: MemberListProps) => {
+  const insets = useSafeAreaInsets();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyles(theme);
 
   const memberSectionData = useMemberSection(type);
 
-  const { loading, canLoadMore, sectionList } = memberSectionData;
+  const {
+    loading, refreshing, sectionList,
+  } = memberSectionData;
 
-  const renderEmpty = () => (!loading ? <NoSearchResultsFound /> : null);
+  const renderEmpty = () => {
+    if (loading) return null;
+    return <NoSearchResultsFound />;
+  };
 
   const renderSectionHeader = ({ section: { title, userCount } }: any) => (
     <View style={styles.sectionHeader}>
@@ -51,21 +58,16 @@ const MemberList = ({
   );
 
   const renderListFooter = () => {
-    if (
-      canLoadMore
-      && (sectionList[0]?.data?.length || 0) + (sectionList[1]?.data?.length || 0) > 0
-    ) {
-      return (
-        <View
-          testID="member_list.loading_more_indicator"
-          style={styles.listFooter}
-        >
-          <ActivityIndicator />
-        </View>
-      );
-    }
+    if (!loading) return <ViewSpacing height={insets.bottom || spacing.padding.large} />;
 
-    return null;
+    return (
+      <View
+        testID="member_list.loading_more_indicator"
+        style={styles.listFooter}
+      >
+        <ActivityIndicator />
+      </View>
+    );
   };
 
   const renderItem = ({ item }: {item: any}) => (
@@ -76,33 +78,33 @@ const MemberList = ({
     />
   );
 
+  const renderSeparatorComponent = () => <ViewSpacing height={spacing.margin.small} />;
+
+  const keyExtractor = (item, index) => `member_list_${item.id}_${index}`;
+
   return (
     <SectionList
       testID="member_list"
       style={styles.content}
       sections={sectionList}
-      keyExtractor={(
-        item, index,
-      ) => `member_list_${item.id}_${index}`}
+      keyExtractor={keyExtractor}
       onEndReached={onLoadMore}
-      onEndReachedThreshold={0.1}
+      onEndReachedThreshold={0.2}
       ListEmptyComponent={renderEmpty}
       initialNumToRender={appConfig.recordsPerPage}
       ListFooterComponent={renderListFooter}
       renderSectionHeader={renderSectionHeader}
       renderItem={renderItem}
-      ItemSeparatorComponent={() => <ViewSpacing height={8} />}
+      ItemSeparatorComponent={renderSeparatorComponent}
       stickySectionHeadersEnabled={false}
       showsVerticalScrollIndicator={false}
-      refreshControl={
-        onRefresh ? (
-          <RefreshControl
-            refreshing={loading}
-            onRefresh={onRefresh}
-            tintColor={colors.gray40}
-          />
-        ) : undefined
-      }
+      refreshControl={(
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          tintColor={colors.gray40}
+        />
+      )}
     />
   );
 };

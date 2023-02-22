@@ -564,7 +564,6 @@ exports[`ArticleScheduleItem component render correctly 1`] = `
                 "height": 24,
                 "justifyContent": "center",
                 "marginRight": 8,
-                "maxWidth": 255,
                 "opacity": 1,
                 "paddingLeft": 4,
                 "paddingRight": 8,
@@ -583,7 +582,7 @@ exports[`ArticleScheduleItem component render correctly 1`] = `
                   },
                   Object {},
                   Object {
-                    "color": "#2D3039",
+                    "maxWidth": 255,
                     "paddingLeft": 4,
                   },
                 ]
@@ -613,7 +612,6 @@ exports[`ArticleScheduleItem component render correctly 1`] = `
                 "height": 24,
                 "justifyContent": "center",
                 "marginRight": 8,
-                "maxWidth": 255,
                 "opacity": 1,
                 "paddingLeft": 4,
                 "paddingRight": 8,
@@ -632,7 +630,7 @@ exports[`ArticleScheduleItem component render correctly 1`] = `
                   },
                   Object {},
                   Object {
-                    "color": "#2D3039",
+                    "maxWidth": 255,
                     "paddingLeft": 4,
                   },
                 ]

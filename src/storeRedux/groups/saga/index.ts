@@ -15,12 +15,6 @@ import { IResponseData, IToastMessage } from '~/interfaces/common';
 import { mapData } from '~/screens/groups/helper/mapper';
 import appConfig from '~/configs/appConfig';
 
-import getGroupSearchMembers from './getGroupSearchMembers';
-import approveAllGroupMemberRequests from './approveAllGroupMemberRequests';
-import declineAllGroupMemberRequests from './declineAllGroupMemberRequests';
-import approveSingleGroupMemberRequest from './approveSingleGroupMemberRequest';
-import declineSingleGroupMemberRequest from './declineSingleGroupMemberRequest';
-import getGroupMemberRequests from './getGroupMemberRequests';
 import getGlobalSearch from './getGlobalSearch';
 import { IUser } from '~/interfaces/IAuth';
 import useCommunityController from '~/screens/communities/store';
@@ -36,9 +30,6 @@ import showToastError from '~/store/helper/showToastError';
 
 export default function* groupsSaga() {
   yield takeLatest(
-    groupsTypes.GET_GROUP_SEARCH_MEMBERS, getGroupSearchMembers,
-  );
-  yield takeLatest(
     groupsTypes.UPLOAD_IMAGE, uploadImage,
   );
   yield takeLatest(
@@ -52,26 +43,6 @@ export default function* groupsSaga() {
     groupsTypes.ADD_MEMBERS, addMembers,
   );
 
-  yield takeLatest(
-    groupsTypes.GET_GROUP_MEMBER_REQUESTS,
-    getGroupMemberRequests,
-  );
-  yield takeLatest(
-    groupsTypes.APPROVE_SINGLE_GROUP_MEMBER_REQUEST,
-    approveSingleGroupMemberRequest,
-  );
-  yield takeLatest(
-    groupsTypes.APPROVE_ALL_GROUP_MEMBER_REQUESTS,
-    approveAllGroupMemberRequests,
-  );
-  yield takeLatest(
-    groupsTypes.DECLINE_SINGLE_GROUP_MEMBER_REQUEST,
-    declineSingleGroupMemberRequest,
-  );
-  yield takeLatest(
-    groupsTypes.DECLINE_ALL_GROUP_MEMBER_REQUESTS,
-    declineAllGroupMemberRequests,
-  );
   yield takeLatest(
     groupsTypes.GET_GLOBAL_SEARCH, getGlobalSearch,
   );

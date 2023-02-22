@@ -60,4 +60,41 @@ describe('getDraftPosts', () => {
     expect(result.current.hasNextPage).toBe(true);
     expect(result.current.refreshing).toBe(false);
   });
+
+  it('should load more draft post success', () => {
+    const response = {
+      data: [POST_DETAIL],
+      canLoadMore: true,
+      total: 3,
+    };
+    const spy = jest.spyOn(streamApi, 'getDraftPosts').mockImplementation(
+      () => Promise.resolve(response) as any,
+    );
+    useDraftPostStore.setState((state:IDraftPostState) => {
+      state.posts = [{ a: 1 }] as any;
+      state.total = 1;
+      return state;
+    });
+
+    jest.useFakeTimers();
+    const { result } = renderHook(() => useDraftPostStore((state) => state));
+    act(() => {
+      result.current.actions.getDraftPosts({ isRefresh: false });
+    });
+    expect(result.current.loading).toBe(true);
+    expect(spy).toBeCalled();
+    act(() => {
+      jest.runAllTimers();
+    });
+    expect(result.current.posts.length).toEqual(2);
+    expect(result.current.loading).toBe(false);
+    expect(result.current.hasNextPage).toBe(true);
+    expect(result.current.refreshing).toBe(false);
+    expect(result.current.total).toBe(response.total);
+  });
+
+  afterEach(() => {
+    jest.runOnlyPendingTimers(); // you must add this
+    jest.useRealTimers(); // you must add this
+  });
 });

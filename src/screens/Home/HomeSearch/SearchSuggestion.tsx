@@ -1,39 +1,37 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, {
+  ForwardRefRenderFunction, useEffect, useState,
+} from 'react';
 import {
   View, StyleSheet, TouchableOpacity, ScrollView,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import { useDispatch } from 'react-redux';
 import Text from '~/baseComponents/Text';
 import { useKeySelector } from '~/hooks/selector';
-import homeKeySelector from '~/storeRedux/home/keySelector';
 import { useBaseHook } from '~/hooks';
-import homeActions from '~/storeRedux/home/actions';
 import NFSRecentSearchKeyword from '~/screens/Home/HomeSearch/RecentSearchKeyword';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import spacing from '~/theme/spacing';
+import useFeedSearchStore from './store';
 
 export interface NFSSuggestionProps {
   onSelectKeyword?: (keyword: string) => void;
 }
 
-const SearchSuggestion: FC<NFSSuggestionProps> = ({
+const SearchSuggestion: ForwardRefRenderFunction<any, NFSSuggestionProps> = ({
   onSelectKeyword,
-}: NFSSuggestionProps) => {
+}, ref: any) => {
   const [lossInternet, setLossInternet] = useState(false);
 
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const { data: listRecentKeywords } = useKeySelector(homeKeySelector.newsfeedSearchRecentKeyword) || {};
-
-  const searchText = useKeySelector(homeKeySelector.newsfeedSearch.searchText);
-  const searchViewRef = useKeySelector(homeKeySelector.newsfeedSearch.searchViewRef);
+  const listRecentKeywords = useFeedSearchStore((state) => state.newsfeedSearchRecentKeyword.data);
+  const searchText = useFeedSearchStore((state) => state.newsfeedSearch.searchText);
+  const actions = useFeedSearchStore((state) => state.actions);
 
   const ctaText = t('home:newsfeed_search:text_cta_see_result_for_search_text').replace(
     '%SEARCH_TEXT%', searchText,
@@ -47,12 +45,12 @@ const SearchSuggestion: FC<NFSSuggestionProps> = ({
         && (!listRecentKeywords || listRecentKeywords?.length === 0)
         ) {
           setLossInternet(false);
-          dispatch(homeActions.getRecentSearchKeywords({
+          actions.getRecentSearchKeywords({
             target: 'post',
             order: 'DESC',
             limit: 10,
             showLoading: true,
-          }));
+          });
         }
       } else {
         setLossInternet(true);
@@ -65,28 +63,28 @@ const SearchSuggestion: FC<NFSSuggestionProps> = ({
     // timeout wait animation of header finish to avoid lagging
       setTimeout(
         () => {
-          dispatch(homeActions.getRecentSearchKeywords({
+          actions.getRecentSearchKeywords({
             target: 'post',
             order: 'DESC',
             limit: 10,
-            showLoading: false,
-          }));
+            showLoading: true,
+          });
         }, 500,
       );
     }, [],
   );
 
-  const onPressCtaSearch = () => {
-    searchViewRef?.current?.blur?.();
-    dispatch(homeActions.setNewsfeedSearch({ isSuggestion: false }));
+  const onPressSearch = () => {
+    ref?.current?.blur?.();
+    actions.setNewsfeedSearch({ isSuggestion: false });
   };
 
   const onDeleteKeyword = (id: string) => {
-    dispatch(homeActions.deleteRecentSearchById(id));
+    actions.deleteRecentSearchById(id);
   };
 
   const onClearAllKeyword = () => {
-    dispatch(homeActions.deleteClearRecentSearch('post'));
+    actions.deleteRecentSearchAll('post');
   };
 
   return (
@@ -95,9 +93,9 @@ const SearchSuggestion: FC<NFSSuggestionProps> = ({
         {searchText ? (
           <TouchableOpacity
             style={styles.ctaContainer}
-            onPress={onPressCtaSearch}
+            onPress={onPressSearch}
           >
-            <Text.BodyMMedium style={styles.ctaText}>{ctaText}</Text.BodyMMedium>
+            <Text.BodyMMedium testID="text_search" style={styles.ctaText}>{ctaText}</Text.BodyMMedium>
           </TouchableOpacity>
         ) : (
           <NFSRecentSearchKeyword
@@ -131,4 +129,4 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
-export default SearchSuggestion;
+export default React.forwardRef(SearchSuggestion);

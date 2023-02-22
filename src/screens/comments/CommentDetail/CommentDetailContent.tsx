@@ -16,7 +16,7 @@ import { useKeySelector } from '~/hooks/selector';
 import { IAudienceGroup, ICommentData } from '~/interfaces/IPost';
 import useCommentsStore from '~/store/entities/comments';
 import commentsSelector from '~/store/entities/comments/selectors';
-import usePostsStore from '~/store/entities/posts';
+import usePostsStore, { IPostsState } from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 
 import CommentInputView from '~/screens/comments/components/CommentInputView';
@@ -59,7 +59,7 @@ const CommentDetailContent = (props: any) => {
   const {
     postId, replyItem, commentParent, commentId, parentId, notiId, isReported,
   }
-    = params || {};
+  = params || {};
   const id = postId;
 
   const actor = usePostsStore(postsSelector.getActor(id));
@@ -68,6 +68,7 @@ const CommentDetailContent = (props: any) => {
   const postDetailLoadingState = useKeySelector(
     postKeySelector.loadingGetPostDetail,
   );
+  const { deletePostLocal, putMarkSeenPost } = usePostsStore((state: IPostsState) => state.actions);
 
   let comments = null;
   if (isReported) {
@@ -117,7 +118,7 @@ const CommentDetailContent = (props: any) => {
       replacePostDetail(type, postId);
     }
     if (copyCommentError === APIErrorCode.Post.POST_DELETED && !!notiId) {
-      dispatch(postActions.deletePostLocal(id));
+      deletePostLocal(id);
       showToast({ content: 'post:error_post_detail_deleted' });
       rootNavigation.popToTop();
     }
@@ -199,10 +200,6 @@ const CommentDetailContent = (props: any) => {
     );
   };
 
-  const goToPostDetail = () => {
-    replacePostDetail(type, postId);
-  };
-
   const showNotice = (type = 'deleted_comment') => {
     showAlert({
       HeaderImageComponent: (
@@ -270,7 +267,7 @@ const CommentDetailContent = (props: any) => {
   };
 
   const onPressMarkSeenPost = useCallback(() => {
-    dispatch(postActions.putMarkSeenPost({ postId }));
+    putMarkSeenPost({ postId });
   }, [postId]);
 
   const renderCommentItem = (data: any) => {
@@ -333,7 +330,7 @@ const CommentDetailContent = (props: any) => {
     return null;
   }
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1 }} testID="comment_detail_content">
       <BannerReport commentId={commentId} />
       <FlatList
         ref={listRef}
@@ -349,7 +346,6 @@ const CommentDetailContent = (props: any) => {
             audience={audience}
             id={id}
             isReported={isReported}
-            onPress={goToPostDetail}
             onPressMarkSeenPost={onPressMarkSeenPost}
           />
         )}

@@ -10,7 +10,7 @@ const getArticlesByTag = (set, get) => async (
   payload: IPayloadGetSearchPosts, isLoadMore?: boolean,
 ) => {
   const {
-    actors, startDate, endDate, groupId, tagName,
+    actors, startDate, endDate, groupId, tagName, type,
   } = payload || {};
   try {
     const data: ITagDetailState = get();
@@ -39,6 +39,9 @@ const getArticlesByTag = (set, get) => async (
     }
     if (tagName) {
       params.tagName = tagName;
+    }
+    if (type) {
+      params.type = type;
     }
     const response = await streamApi.getSearchPost(params);
     const listResult = response?.list || [];

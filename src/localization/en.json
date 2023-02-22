@@ -266,6 +266,7 @@
     "text_err_confirm_password_not_matched": "Confirmed password doesn’t match.",
     "text_err_confirm_new_password_not_matched": "Your new password is not matched.",
     "text_err_limit_exceeded": "Your account is deactivated in 2 hours for requesting too many time. Please try again later.",
+    "text_change_password_err_limit_exceeded": "You exceeded over the limit of password change. Please try again after 1 hour",
     "text_err_wrong_code": "Invalid code",
     "text_err_expired_code": "Code is expired!",
     "text_err_missing_token": "Oops, something went wrong. ",
@@ -298,7 +299,20 @@
     "text_err_password_required_lower_case": "Please use at least one lowercase (a-z)!",
     "text_err_password_required_upper_case": "Please use at least one upper case letter (A-Z)",
     "text_err_password_required_number": "Please use at least one least digits (0-9)",
-    "text_err_password_required_symbols": "Please use at least one special character"
+    "text_err_password_required_symbols": "Please use at least one special character",
+    "request_verify_email": {
+      "title": "This email is not verified yet!",
+      "body": "You need to click the bellow button to receive the verification link then trying to sign in later",
+      "cta": "Send verification email"
+    },
+    "send_verify_email_success": {
+      "title": "The verification email was sent!",
+      "body": "Please check your email for a verification email"
+    },
+    "verify_email_limit_exceeded": "You exceeded over the limit of request. Please try again after 1 hour",
+    "verify_email_success": "Your email is verified successfully",
+    "verify_email_expired": "The verification link is expired",
+    "button_redirect_now": "Redirect now"
   },
   "tabs": {
     "home": "Home",
@@ -498,7 +512,7 @@
       "text_error_date": "Invalid Date",
       "btn_reset": "Reset",
       "btn_show_results": "Show Results",
-      "search_people": "Search people...",
+      "search_people": "Search person...",
       "no_recent_search": "No recent searches",
       "apply": "Apply",
       "filter": "Filter",
@@ -506,17 +520,19 @@
       "filter_created_by_all": "All",
       "filter_created_by_me": "Me",
       "filter_created_by_specific": "Specific person",
-      "filter_date": "Date posted",
-      "seven_days_ago": "7 days ago",
-      "thirty_days_ago": "30 days ago",
-      "three_months_ago": "3 months ago",
-      "from_to": "From - To",
-      "text_banner_search": "Searched results are removed all text formats to make sure looking the precise content"
+      "filter_date": "Day posted",
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "last_seven_days": "Last 7 days",
+      "specific_day": "Specific day",
+      "text_banner_search": "Searched results are removed all text formats to make sure looking the precise content",
+      "filter_post_type": "Content type",
+      "filter_post": "Post",
+      "filter_article": "Article",
+      "filter_series": "Series"
     },
-    "notice_post_video_uploading": {
-      "title": "Processing video (count)",
-      "description": "The video of your post is being processed. We'll send you a notification when it's completed"
-    },
+    "notice_post_video_uploading": "A video is being processed. We’ll notify you when it’s completed.",
+    "notice_posts_video_uploading": "{count} videos are being processed. We’ll notify you when it’s completed.",
     "create_content_options": {
       "write_post": "Write Post",
       "write_article": "Write Article",
@@ -546,8 +562,8 @@
     "title_draft": "Draft",
     "title_schedule_article": "Scheduled Articles",
     "title_report_content": "Reported Contents",
-    "text_empty": "No result",
-    "text_no_reported_content": "You have no reported content now!"
+    "text_empty": "There are no scheduled content yet!",
+    "text_no_reported_content": "There are no reported content now!"
   },
   "article": {
     "title": {
@@ -595,8 +611,8 @@
       "text_placeholder": "Text to display",
       "link_placeholder": "Link to a web page"
     },
-    "modal_add_video": {
-      "title": "Embed Video",
+    "modal_add_embed": {
+      "title": "Embed",
       "link_placeholder": "Enter the URL of the embed:"
     },
     "modal_invalid_series_tags": {
@@ -621,7 +637,8 @@
     "text_schedule": "Schedule",
     "fail_schedule": "Fail Schedule",
     "successful_schedule": "Successful Schedule",
-    "text_delete_article_success": "Your article has been deleted"
+    "text_delete_article_success": "Your article has been deleted",
+    "paste_image_error": "Upload failed. Please upload images using the toolbar."
   },
   "post": {
     "news_feed": "News Feed",
@@ -696,7 +713,6 @@
     "select_audience": "Select Audiences",
     "expiring_time": "Expiring Time",
     "expire_time_desc": "This post stay on top of feed until expire time.",
-    "delete_post_complete": "Your post has been deleted.",
     "search_results": "Search results",
     "search_audiences_placeholder": "Search Audience...",
     "text_chosen_audience": "Chosen audience",
@@ -1164,11 +1180,11 @@
       "title_member_requests": "Member Requests"
     },
     "join_request_setting": {
-      "title": "The join request setting",
-      "description_on_community": "Members must ask for approval to join community",
-      "description_on_group": "Members must ask for approval to join group",
-      "description_off_community": "Members can join community without asking for approval",
-      "description_off_group": "Members can join group without asking for approval",
+      "title": "Joining Approval Required",
+      "description_on_community": "Non-member must ask for approval to join this community",
+      "description_on_group": "Non-member must ask for approval to join this group",
+      "description_off_community": "Non-member can join this community without asking for approval",
+      "description_off_group": "Non-member can join this group without asking for approval",
       "description_disabled": "The setting is not available because of the Secret privacy",
       "pop_up_on": {
         "title": "You are turning on the join request setting",

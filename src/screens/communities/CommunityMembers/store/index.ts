@@ -24,6 +24,7 @@ import { IObject } from '~/interfaces/common';
 export interface ICommunityMemberState extends IBaseState {
   communityMembers: {
     loading: boolean;
+    refreshing: boolean;
     canLoadMore: boolean;
     offset: number;
   };
@@ -52,6 +53,7 @@ export interface ICommunityMemberState extends IBaseState {
 
   actions: {
     getCommunityMembers: (groupId: string, isRefreshing?: boolean) => void;
+    clearCommunityMembers: () => void;
     searchCommunityMembers: (params: ISearchCommunityMembers)=>void;
     removeCommunityMember: (params: IRemoveCommunityMember) => void;
 
@@ -73,7 +75,8 @@ export interface ICommunityMemberState extends IBaseState {
 
 const initialState: InitStateType<ICommunityMemberState> = {
   communityMembers: {
-    loading: true,
+    loading: false,
+    refreshing: false,
     canLoadMore: true,
     offset: 0,
   },
@@ -105,6 +108,11 @@ const communityMemberStore = (set, get) => ({
     getCommunityMembers: getCommunityMembers(set, get),
     searchCommunityMembers: searchCommunityMembers(set, get),
     removeCommunityMember: removeCommunityMember(set, get),
+    clearCommunityMembers: () => {
+      set((state: ICommunityMemberState) => {
+        state.communityMembers = initialState.communityMembers;
+      }, 'clearCommunityMembers');
+    },
 
     setCommunityMemberRequests: (payload: IPayloadSetCommunityMemberRequests) => {
       set((state: ICommunityMemberState) => {

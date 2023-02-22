@@ -69,12 +69,11 @@ const Audiences: React.FC<IAudiences> = ({ audience }) => {
     const firstItem = groups[0];
     return (
       <Tag
-        style={styles.tagContainer}
         type="neutral"
         size="small"
         label={firstItem.name}
         onActionPress={() => onPressAudience(firstItem)}
-        textProps={{ numberOfLines: 1 }}
+        textProps={{ numberOfLines: 1, style: styles.text }}
         testID="audiences.tag_item"
       />
     );
@@ -86,12 +85,11 @@ const Audiences: React.FC<IAudiences> = ({ audience }) => {
     }
     return (
       <Tag
-        style={styles.tagContainer}
         type="neutral"
         size="small"
         label={renderLabelMoreItem()}
         onActionPress={onPressMoreItem}
-        textProps={{ numberOfLines: 1 }}
+        textProps={{ numberOfLines: 1, style: styles.text }}
         testID="audiences.tag_more_item"
       />
     );
@@ -114,8 +112,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  tagContainer: {
+  text: {
     maxWidth: 255,
+    paddingLeft: spacing.padding.tiny,
   },
 });
 

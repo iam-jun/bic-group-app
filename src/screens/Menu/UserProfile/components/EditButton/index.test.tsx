@@ -1,72 +1,50 @@
-import { cleanup } from '@testing-library/react-native';
+import React from 'react';
+import { IconType } from '~/resources/icons';
+import { renderWithRedux } from '~/test/testUtils';
+import EditButton from './index';
 
-afterEach(cleanup);
+describe('EditButton component', () => {
+  const props = {
+    icon: 'PenToSquareSolid' as IconType,
+    isCurrentUser: true,
+    onPress: jest.fn(),
+    style: undefined,
+    testID: 'test',
+  };
 
-describe('EditButton screen', () => {
-  // const baseProps = {
-  //   userId: USER_PROFILE.id,
-  //   currentUsername: 'username',
-  //   onPress: jest.fn(),
-  // };
+  it('should render props correctly', () => {
+    const isCurrentUser = true;
 
-  // beforeEach(() => {
-  //   jest.clearAllMocks();
-  //   storeData = { ...initialState };
-  //   storeData.menu.myProfile = {} as any;
-  //   storeData.auth.user = {} as any;
-  //   storeData.menu.showUserNotFound = false;
-  //   storeData.menu.loadingUserProfile = false;
-  // });
+    const rendered = renderWithRedux(
+      <EditButton
+        style={props.style}
+        testID={props.testID}
+        isCurrentUser={isCurrentUser}
+        onPress={props.onPress}
+        icon={props.icon}
+      />,
+    );
 
-  // let storeData: any;
+    const { getByTestId } = rendered;
+    const editBtn = getByTestId(props.testID);
+    expect(editBtn).toBeDefined();
+  });
 
-  // it('renders correctly', () => {
-  //   const mockActionGetMyProfile = () => ({
-  //     type: menuTypes.SET_USER_PROFILE,
-  //     payload: USER_PROFILE,
-  //   });
+  it('should not render', () => {
+    const isCurrentUser = false;
 
-  //   jest
-  //     .spyOn(menuActions, 'getUserProfile')
-  //     .mockImplementation(mockActionGetMyProfile as any);
-  //   const user = {
-  //     signInUserSession: {
-  //       idToken: { payload: { 'custom:user_uuid': USER_PROFILE.id } },
-  //     },
-  //   };
+    const rendered = renderWithRedux(
+      <EditButton
+        style={props.style}
+        testID={props.testID}
+        isCurrentUser={isCurrentUser}
+        onPress={props.onPress}
+        icon={props.icon}
+      />,
+    );
 
-  //   storeData.menu.myProfile = USER_PROFILE as any;
-  //   storeData.auth.user = user as any;
-
-  //   const store = createTestStore(storeData);
-
-  //   const wrapper = renderWithRedux(<EditButton {...baseProps} />, store);
-  //   expect(wrapper).toMatchSnapshot();
-  // });
-
-  // it('renders null', () => {
-  //   const mockActionGetMyProfile = () => ({
-  //     type: menuTypes.SET_USER_PROFILE,
-  //     payload: USER_PROFILE,
-  //   });
-
-  //   jest
-  //     .spyOn(menuActions, 'getUserProfile')
-  //     .mockImplementation(mockActionGetMyProfile as any);
-  //   const user = {
-  //     signInUserSession: {
-  //       idToken: { payload: { 'custom:user_uuid': USER_PROFILE.id } },
-  //     },
-  //   };
-
-  //   storeData.menu.myProfile = USER_PROFILE as any;
-  //   storeData.auth.user = user as any;
-
-  //   const store = createTestStore(storeData);
-
-  //   const props = { ...baseProps, userId: '1' };
-
-  //   const wrapper = renderWithRedux(<EditButton {...props} />, store);
-  //   expect(wrapper).toMatchSnapshot();
-  // });
+    const { queryByTestId } = rendered;
+    const editBtn = queryByTestId(props.testID);
+    expect(editBtn).toBeNull();
+  });
 });

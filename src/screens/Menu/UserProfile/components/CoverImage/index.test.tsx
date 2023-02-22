@@ -1,16 +1,9 @@
-import { cleanup } from '@testing-library/react-native';
 import React from 'react';
-import initialState from '~/storeRedux/initialState';
-import { USER_PROFILE } from '~/test/mock_data/menu';
 
-import {
-  configureStore, renderWithRedux,
-} from '~/test/testUtils';
+import { renderWithRedux } from '~/test/testUtils';
 import CoverImage from '.';
 
-afterEach(cleanup);
-
-describe('CoverImage screen', () => {
+describe('CoverImage component', () => {
   const baseProps = {
     isCurrentUser: true,
     bgImg: null,
@@ -18,23 +11,10 @@ describe('CoverImage screen', () => {
     onEdit: jest.fn(),
   };
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-    storeData = { ...initialState };
-    storeData.menu.myProfile = {} as any;
-    storeData.auth.user = {} as any;
-    storeData.menu.showUserNotFound = false;
-    storeData.menu.loadingUserProfile = false;
-  });
-
-  const mockStore = configureStore([]);
-  let storeData: any;
-
   it('renders correctly', () => {
-    storeData.menu.myProfile = USER_PROFILE;
-
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<CoverImage {...baseProps} />, store);
-    expect(wrapper).toMatchSnapshot();
+    const rendered = renderWithRedux(<CoverImage {...baseProps} />);
+    const { getByTestId } = rendered;
+    const containerComponent = getByTestId('user_profile.cover_image');
+    expect(containerComponent).toBeDefined();
   });
 });

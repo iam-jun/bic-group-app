@@ -550,7 +550,6 @@ export interface IPayloadPutMarkAsRead {
 }
 export interface IPayloadPutMarkSeenPost {
   postId: string;
-  callback?: (isSuccess: boolean) => void;
 }
 export interface IRequestGetUsersInterestedPost {
   postId: string;
@@ -592,4 +591,16 @@ export interface IParamsGetPostByParams {
   status: string;
   offset?: number;
   limit?: number;
+}
+
+export interface IRemoveChildComment {
+  localId: string;
+  parentCommentId: string;
+  postId: string;
+}
+
+export interface IRemoveComment {
+  commentId?: string;
+  localId?: string;
+  postId: string;
 }

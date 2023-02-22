@@ -40,6 +40,9 @@ import LogoImage from './components/LogoImage';
 import getEnv from '~/utils/env';
 import { APP_ENV } from '~/configs/appConfig';
 import { AppConfig } from '~/configs';
+import RequestVerifyEmailModal from '../VerifyEmail/RequestVerifyEmailModal';
+import { authErrors } from '~/constants/authConstants';
+import { useBaseHook } from '~/hooks';
 
 const SignIn = () => {
   const { rootNavigation } = useRootNavigation();
@@ -57,6 +60,7 @@ const SignIn = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const { colors } = theme;
+  const { t } = useBaseHook();
 
   const useFormData = useForm();
   const {
@@ -155,6 +159,29 @@ const SignIn = () => {
     inputPasswordRef?.current?.focus();
   };
 
+  const handleError = (error: any) => {
+    let errorMessage;
+    switch (error?.code) {
+      case authErrors.NOT_AUTHORIZED_EXCEPTION:
+        errorMessage = t('auth:text_err_id_password_not_matched');
+        break;
+      case authErrors.USER_NOT_FOUND_EXCEPTION:
+        // eslint-disable-next-line no-case-declarations
+        const email = getValues('email');
+        dispatch(modalActions.showModal({
+          isOpen: true,
+          titleFullScreen: 'groups:group_content:btn_your_groups',
+          ContentComponent: <RequestVerifyEmailModal email={email} />,
+        }));
+        break;
+      default:
+        errorMessage = error?.message || t('auth:text_err_id_password_not_matched');
+    }
+    authActions.setSignInLoading(false);
+    dispatch(modalActions.hideLoading());
+    !!errorMessage && authActions.setSignInError(errorMessage);
+  };
+
   const onSignIn = async () => {
     if (disableSignIn) return; // Reject if pressing enter while having invalid inputs
     setDisableSignIn(true);
@@ -167,7 +194,7 @@ const SignIn = () => {
 
     const email = getValues('email');
     const password = getValues('password');
-    authActions.signIn({ email, password });
+    authActions.signIn({ email, password }, handleError);
   };
 
   const validateInputs = async () => {
@@ -181,11 +208,6 @@ const SignIn = () => {
     const password = getValues('password');
     const result = !isEmpty(errors) || !email || !password || loading;
     setDisableSignIn(result);
-  };
-
-  // TODO: remove when function signup come back
-  const handleSignUpNotFunctioning = () => {
-    dispatch(modalActions.showAlertNewFeature());
   };
 
   const hideKeyboard = () => {
@@ -275,23 +297,6 @@ const SignIn = () => {
     </Button.Primary>
   );
 
-  const renderSignUp = () => (
-    <View style={styles.signUpContainer}>
-      <Text.BodyS color={theme.colors.neutral40} useI18n>
-        auth:text_sign_up_desc
-      </Text.BodyS>
-      <TouchableOpacity
-        testID="btnSignInForgotPassword"
-        // onPress={() => navigation.navigate(authStack.signup)}
-        onPress={handleSignUpNotFunctioning}
-      >
-        <Text.BodySMedium color={colors.blue50} useI18n>
-          auth:btn_sign_up_now
-        </Text.BodySMedium>
-      </TouchableOpacity>
-    </View>
-  );
-
   const renderLoading = () => {
     if (!loading) return null;
     return (
@@ -323,7 +328,6 @@ const SignIn = () => {
             {renderInputPassword()}
             {renderForgotPassword()}
             {renderButtonSignIn()}
-            {renderSignUp()}
           </View>
         </TouchableWithoutFeedback>
       </ScrollView>

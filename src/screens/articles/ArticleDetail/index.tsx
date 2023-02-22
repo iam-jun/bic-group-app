@@ -7,7 +7,6 @@ import {
 
 import { ExtendedTheme, useTheme, useIsFocused } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
-import { useDispatch } from 'react-redux';
 import { IAudienceGroup } from '~/interfaces/IPost';
 
 import Header from '~/beinComponents/Header';
@@ -20,9 +19,8 @@ import { IRouteParams } from '~/interfaces/IRouter';
 import useArticlesStore, { IArticlesState } from './store';
 import useCommentsStore from '~/store/entities/comments';
 import commentsSelector from '~/store/entities/comments/selectors';
-import usePostsStore from '~/store/entities/posts';
+import usePostsStore, { IPostsState } from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import postActions from '~/storeRedux/post/actions';
 import spacing from '~/theme/spacing';
 import usePostDetailContentHandler from '~/screens/post/PostDetail/components/PostDetailContent/hooks/usePostDetailContentHandler';
 import { getSectionData } from '~/helpers/post';
@@ -40,7 +38,6 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = themeStyles(theme);
-  const dispatch = useDispatch();
 
   const listRef = useRef<any>();
   const commentInputRef = useRef<any>();
@@ -53,6 +50,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const sectionData = useMemo(() => getSectionData(comments), [comments]);
 
   const { actions, errors } = useArticlesStore((state: IArticlesState) => state);
+  const { putMarkSeenPost } = usePostsStore((state: IPostsState) => state.actions);
   const isFetchError = errors[id];
 
   const { audience, setting, reported } = data || {};
@@ -94,7 +92,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   };
 
   const onPressMarkSeenPost = useCallback(() => {
-    dispatch(postActions.putMarkSeenPost({ postId: id }));
+    putMarkSeenPost({ postId: id });
   }, [id]);
 
   const renderCommentItem = (data: any) => (

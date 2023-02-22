@@ -1,33 +1,46 @@
 import React from 'react';
-import { renderWithRedux, configureStore } from '../../../test/testUtils';
+import { renderWithRedux, act } from '../../../test/testUtils';
 import HomeSearch from './index';
-import initialState from '../../../storeRedux/initialState';
+import useFeedSearchStore from './store';
 
 describe('NewsfeedSearch component', () => {
-  const mockStore = configureStore([]);
-
   it('should render null', () => {
-    const storeData = { ...initialState };
-    storeData.home.newsfeedSearch.isShow = false;
-    const store = mockStore(storeData);
-    const rendered = renderWithRedux(<HomeSearch />, store);
+    act(() => {
+      useFeedSearchStore
+        .getState()
+        .actions.setNewsfeedSearch({
+          isShow: false,
+        });
+    });
+
+    const rendered = renderWithRedux(<HomeSearch />);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
   it('should render search', () => {
-    const storeData = { ...initialState };
-    storeData.home.newsfeedSearch.isShow = true;
-    const store = mockStore(storeData);
-    const rendered = renderWithRedux(<HomeSearch />, store);
+    act(() => {
+      useFeedSearchStore
+        .getState()
+        .actions.setNewsfeedSearch({
+          isShow: true,
+        });
+    });
+
+    const rendered = renderWithRedux(<HomeSearch />);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
   it('should render suggestion', () => {
-    const storeData = { ...initialState };
-    storeData.home.newsfeedSearch.isShow = true;
-    storeData.home.newsfeedSearch.isSuggestion = true;
-    const store = mockStore(storeData);
-    const rendered = renderWithRedux(<HomeSearch />, store);
+    act(() => {
+      useFeedSearchStore
+        .getState()
+        .actions.setNewsfeedSearch({
+          isShow: true,
+          isSuggestion: true,
+        });
+    });
+
+    const rendered = renderWithRedux(<HomeSearch />);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 });

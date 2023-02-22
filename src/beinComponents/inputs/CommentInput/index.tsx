@@ -33,7 +33,6 @@ import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import { useBaseHook } from '~/hooks';
 import { IFilePicked } from '~/interfaces/common';
 import { IActivityDataImage } from '~/interfaces/IPost';
-import modalActions from '~/storeRedux/modal/actions';
 import dimension from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
@@ -207,16 +206,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
         });
       }
     });
-  };
-
-  const _onPressFile = async () => {
-    // const file: any = await DocumentPicker.openPickerSingle();
-    // onPressFile?.(file);
-    dispatch(modalActions.showAlertNewFeature());
-  };
-
-  const onPressCamera = () => {
-    dispatch(modalActions.showAlertNewFeature());
   };
 
   const onPressEmoji = () => {
@@ -471,9 +460,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
             isHideBtnSend={isHideBtnSend}
             isDisplayNone={text.trim().length !== 0}
             onPressIcon={onPressIcon}
-            onPressFile={_onPressFile}
             onPressImage={_onPressSelectImage}
-            onPressCamera={onPressCamera}
             onPressEmoji={onPressEmoji}
             onPressSend={_onPressSend}
           />
@@ -486,9 +473,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           isDisplayNone={text.trim().length === 0}
           disabledBtnSend={disabledBtnSend}
           onPressIcon={onPressIcon}
-          onPressFile={_onPressFile}
           onPressImage={_onPressSelectImage}
-          onPressCamera={onPressCamera}
           onPressEmoji={onPressEmoji}
           onPressSend={_onPressSend}
         />

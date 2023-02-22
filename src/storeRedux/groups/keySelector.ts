@@ -1,7 +1,6 @@
 const groupsKeySelector = {
   yourGroupsTreeData: 'groups.yourGroupsTree',
   groupSearch: 'groups.groupSearch',
-  groupSearchMembers: 'groups.groupSearchMembers',
   selectedUsers: 'groups.selectedUsers',
   users: 'groups.users',
   posts: 'groups.posts',
@@ -9,7 +8,6 @@ const groupsKeySelector = {
   userAddedCount: 'groups.userAddedCount',
   joinedGroups: 'groups.joinedGroups',
   loadingJoinedGroups: 'groups.loadingJoinedGroups',
-  groupMemberRequests: 'groups.groupMemberRequests',
   joinedCommunities: 'groups.joinedCommunities',
   loadingCommunities: 'groups.communities.loading',
   communitySearch: 'groups.communitySearch',

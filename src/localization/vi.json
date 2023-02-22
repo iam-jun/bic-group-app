@@ -236,6 +236,7 @@
     "text_err_confirm_password_not_matched": "Mật khẩu không trùng khớp",
     "text_err_confirm_new_password_not_matched": "Mật khẩu mới không trùng khớp.",
     "text_err_limit_exceeded": "Tài khoản bị tạm khoá trong 2 giờ do gửi quá nhiều yêu cầu. Vui lòng thử lại sau.",
+    "text_change_password_err_limit_exceeded": "Số lần gửi yêu cầu đổi mật khẩu vượt quá giới hạn. Vui lòng thử lại sau 1 giờ",
     "text_err_wrong_code": "Điền sai mã xác thực? ",
     "text_err_expired_code": "Mã xác thực đã hết hạn!",
     "text_err_missing_token": "Có gì đó không đúng đã xảy ra.",
@@ -267,7 +268,20 @@
     "text_err_password_required_lower_case": "Vui lòng sử dụng ít nhất một ký tự viết thường (a-z)!",
     "text_err_password_required_upper_case": "Vui lòng sử dụng ít nhất một ký tự viết hoa (A-Z)!",
     "text_err_password_required_number": "Vui lòng sử dụng ít nhất một ký tự là số!",
-    "text_err_password_required_symbols": "Vui lòng sử dụng ít nhất một ký tự đặc biệt bao gồm dấu câu và ký hiệu thông thường!"
+    "text_err_password_required_symbols": "Vui lòng sử dụng ít nhất một ký tự đặc biệt bao gồm dấu câu và ký hiệu thông thường!",
+    "request_verify_email": {
+      "title": "Email này chưa được xác minh!",
+      "body": "Bạn cần nhấp vào nút bên dưới để nhận liên kết xác minh, sau đó thử đăng nhập lại",
+      "cta": "Gửi email xác minh"
+    },
+    "send_verify_email_success": {
+      "title": "Email xác minh đã được gửi!",
+      "body": "Vui lòng kiểm tra email của bạn để nhận email xác minh"
+    },
+    "verify_email_limit_exceeded": "Số lần gửi yêu cầu vượt quá giới hạn. Vui lòng thử lại sau 1 giờ",
+    "verify_email_success": "Email của bạn đã được xác thực thành công",
+    "verify_email_expired": "Link xác thực đã hết hạn",
+    "button_redirect_now": "Chuyển hướng ngay bây giờ"
   },
   "tabs": {
     "home": "Trang chủ",
@@ -467,16 +481,18 @@
       "filter_created_by_me": "Chính mình",
       "filter_created_by_specific": "Bài viết của",
       "filter_date": "Ngày đăng",
-      "seven_days_ago": "7 ngày trước",
-      "thirty_days_ago": "30 ngày trước",
-      "three_months_ago": "3 tháng trước",
-      "from_to": "Từ ngày - Đến ngày",
-      "text_banner_search": "Kết quả tìm kiếm được lược bỏ đi định dạng chữ để có nội dung chính xác"
+      "today": "Hôm nay",
+      "yesterday": "Hôm qua",
+      "last_seven_days": "7 ngày trước",
+      "specific_day": "Ngày cụ thể",
+      "text_banner_search": "Kết quả tìm kiếm được lược bỏ đi định dạng chữ để có nội dung chính xác",
+      "filter_post_type": "Loại nội dung",
+      "filter_post": "Bài đăng",
+      "filter_article": "Bài viết",
+      "filter_series": "Series"
     },
-    "notice_post_video_uploading": {
-      "title": "Bài viết có video đang xử lý (count)",
-      "description": "Bài viết có video của bạn đang được xử lý. Chúng tôi sẽ gửi cho bạn thông báo khi quá trình hoàn tất"
-    },
+    "notice_post_video_uploading": "Đang có video được xử lý. Chúng tôi sẽ gửi cho bạn thông báo khi quá trình hoàn tất",
+    "notice_posts_video_uploading": "Đang có {count} video được xử lý. Chúng tôi sẽ gửi cho bạn thông báo khi quá trình hoàn tất",
     "create_content_options": {
       "write_post": "Viết Bài Đăng",
       "write_article": "Viết Bài Viết",
@@ -506,7 +522,7 @@
     "title_draft": "Nháp",
     "title_schedule_article": "Bài báo đã lên lịch",
     "title_report_content": "Nội dung được báo cáo",
-    "text_empty": "Không có kết quả",
+    "text_empty": "Không có nội dung",
     "text_no_reported_content": "Không có nội dung!"
   },
   "article": {
@@ -555,8 +571,8 @@
       "text_placeholder": "Tiêu đề hiển thị",
       "link_placeholder": "Liên kết đến một trang web"
     },
-    "modal_add_video": {
-      "title": "Nhúng video",
+    "modal_add_embed": {
+      "title": "Nhúng",
       "link_placeholder": "Nhập URL của video:"
     },
     "modal_invalid_series_tags": {
@@ -581,7 +597,8 @@
     "text_schedule": "Đặt lịch",
     "fail_schedule": "Đặt lịch thất bại",
     "successful_schedule": "Đặt lịch thành công",
-    "text_delete_article_success": "Bài viết của bạn đã được xoá"
+    "text_delete_article_success": "Bài viết của bạn đã được xoá",
+    "paste_image_error": "Tải lên không thành công. Vui lòng tải lên hình ảnh bằng thanh công cụ."
   },
   "post": {
     "news_feed": "News Feed",
@@ -657,7 +674,6 @@
     "select_audience": "Chọn đối tượng",
     "expiring_time": "Thời gian kết thúc",
     "expire_time_desc": "Bài viết này sẽ ở trên đầu bản tin cho đến khi hết thời hạn đã cài đặt.",
-    "delete_post_complete": "Bài viết đã được xoá.",
     "search_results": "Kết quả tìm kiếm",
     "search_audiences_placeholder": "Tìm kiếm đối tượng...",
     "text_chosen_audience": "Đối tượng đã chọn",
@@ -1106,11 +1122,11 @@
       "title_member_requests": "Yêu cầu tham gia"
     },
     "join_request_setting": {
-      "title": "Thiết lập yêu cầu tham gia",
-      "description_on_community": "Người dùng phải được phê duyệt mới được tham gia",
-      "description_on_group": "Người dùng phải được phê duyệt mới được tham gia",
-      "description_off_community": "Người dùng được tùy ý tham gia mà không cần phê duyệt",
-      "description_off_group": "Người dùng được tùy ý tham gia mà không cần phê duyệt",
+      "title": "Yêu cầu phê duyệt để được tham gia",
+      "description_on_community": "Người dùng không phải thành viên phải yêu cầu phê duyệt mới được tham gia cộng đồng này",
+      "description_on_group": "Người dùng không phải thành viên phải yêu cầu phê duyệt mới được tham gia nhóm này",
+      "description_off_community": "Người dùng không phải thành viên có thể tham gia cộng đồng này mà không cần yêu cầu phê duyệt",
+      "description_off_group": "Người dùng không phải thành viên có thể tham gia nhóm này mà không cần yêu cầu phê duyệt",
       "description_disabled": "Thiết lập này không khả dụng do đang trong quyền riêng tư Bí mật",
       "pop_up_on": {
         "title": "Mở thiết lập phê duyệt yêu cầu tham gia",

@@ -30,7 +30,6 @@ const getDraftPosts = (set, get) => async (payload: IPayloadGetDraftPosts) => {
       const newPosts = isRefresh
         ? response?.data || []
         : draftPosts.concat(response?.data || []);
-
       set((state: IDraftPostState) => {
         state.posts = newPosts;
         state.hasNextPage = response?.canLoadMore;

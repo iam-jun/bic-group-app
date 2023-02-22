@@ -7,7 +7,6 @@ import {
   DeviceEventEmitter, StyleSheet,
   View,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 
 import { useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -21,8 +20,6 @@ import { useBackPressListener, useRootNavigation, useTabPressListener } from '~/
 import { useKeySelector } from '~/hooks/selector';
 import { ITabTypes } from '~/interfaces/IRouter';
 import NewsfeedSearch from '~/screens/Home/HomeSearch';
-import homeActions from '~/storeRedux/home/actions';
-import homeKeySelector from '~/storeRedux/home/keySelector';
 import spacing from '~/theme/spacing';
 import { openUrl } from '~/utils/link';
 import getEnv from '~/utils/env';
@@ -32,6 +29,7 @@ import useCommonController from '../store';
 import useFilterToolbarStore from '~/components/FilterToolbar/store';
 import useModalStore from '~/store/modal';
 import usePostsInProgressStore from './components/VideoProcessingNotice/store';
+import useFeedSearchStore from './HomeSearch/store';
 
 const Home = () => {
   const [lossInternet, setLossInternet] = useState(false);
@@ -43,12 +41,15 @@ const Home = () => {
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
-  const dispatch = useDispatch();
 
   const commonActions = useCommonController((state) => state.actions);
   const resetFilter = useFilterToolbarStore((state) => state.reset);
   const { showAlert } = useModalStore((state) => state.actions);
   const postContainingVideoInProgressActions = usePostsInProgressStore((state) => state.actions);
+
+  const actionsFeedSearch = useFeedSearchStore((state) => state.actions);
+  const isShowSearch = useFeedSearchStore((state) => state.newsfeedSearch.isShow);
+  const resetFeedSearchStore = useFeedSearchStore((state) => state.reset);
 
   const token = useAuthController(getAuthToken);
 
@@ -61,10 +62,6 @@ const Home = () => {
   const {
     data: homePosts, canLoadMore, refreshing,
   } = dataFiltered;
-
-  const isShowSearch = useKeySelector(homeKeySelector.newsfeedSearch.isShow);
-
-  const searchViewRef = useRef(null);
 
   const currentUserId = useUserIdAuth();
 
@@ -108,7 +105,7 @@ const Home = () => {
          * That's why we need to clear and close current search on newsfeed first before
          * moving to another screen.
          */
-        dispatch(homeActions.clearAllNewsfeedSearch());
+        resetFeedSearchStore();
         resetFilter();
       }
     },
@@ -151,7 +148,7 @@ const Home = () => {
 
   const handleBackPress = () => {
     if (isShowSearch) {
-      dispatch(homeActions.clearAllNewsfeedSearch());
+      resetFeedSearchStore();
       resetFilter();
     } else if (rootNavigation.canGoBack) {
       rootNavigation.goBack();
@@ -164,7 +161,7 @@ const Home = () => {
 
   const onPressSearch = () => {
     DeviceEventEmitter.emit('showHeader', true);
-    dispatch(homeActions.setNewsfeedSearch({ isShow: true, searchViewRef }));
+    actionsFeedSearch.setNewsfeedSearch({ isShow: true });
   };
 
   const navigateToChat = () => {
@@ -210,7 +207,7 @@ const Home = () => {
         onPressChat={navigateToChat}
       />
       <View style={styles.statusBar} />
-      <NewsfeedSearch searchViewRef={searchViewRef} style={styles.searchContainer} />
+      <NewsfeedSearch style={styles.searchContainer} />
     </View>
   );
 };

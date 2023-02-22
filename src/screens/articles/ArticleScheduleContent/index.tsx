@@ -88,9 +88,9 @@ const ArticleScheduleContent: FC<IRouteParams> = (props) => {
 
     return (
       <View testID="draft_article.empty_view" style={styles.emptyContainer}>
-        <Image style={styles.imgEmpty} source={images.img_empty_search_post} />
+        <Image style={styles.imgEmpty} source={images.img_empty_box} />
         <Text.BodyS useI18n color={colors.neutral40}>
-          common:text_no_data
+          your_content:text_empty
         </Text.BodyS>
       </View>
     );
@@ -134,7 +134,6 @@ const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
       alignItems: 'center',
     },
     emptyContainer: {
-      backgroundColor: colors.white,
       paddingVertical: spacing.padding.extraLarge * 2,
       justifyContent: 'center',
       alignItems: 'center',

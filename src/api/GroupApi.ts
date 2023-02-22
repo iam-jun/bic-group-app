@@ -15,7 +15,7 @@ import {
 } from '~/interfaces/ICommunity';
 import { withHttpRequestPromise } from '~/api/apiRequest';
 import appConfig from '~/configs/appConfig';
-import { IUserEdit } from '~/interfaces/IAuth';
+import { IUserEdit, IVerifyEmail } from '~/interfaces/IAuth';
 import { IAddWorkExperienceReq } from '~/interfaces/IWorkExperienceRequest';
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 import { ISearchReq } from '~/interfaces/common';
@@ -333,20 +333,21 @@ export const groupsApiConfig = {
   }),
   setGroupAdmin: (
     groupId: string,
-    userIds: string[],
+    userId: string,
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/assign-admin`,
-    method: 'post',
-    data: { userIds },
+    method: 'put',
+    data: { userId },
   }),
   removeGroupAdmin: (
     groupId: string,
     userId: string,
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}groups/${groupId}/revoke-admin/${userId}`,
+    url: `${provider.url}groups/${groupId}/revoke-admin`,
     method: 'put',
+    data: { userId },
   }),
   getGroupMemberRequests: (
     groupId: string,
@@ -522,6 +523,11 @@ export const groupsApiConfig = {
     url: `${provider.url}communities/${communityId}/member-reports`,
     method: 'post',
     data: { ...params },
+  }),
+  resendVerificationEmail: (params: IVerifyEmail): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}auth/resend-confirmation-code?email=${params.email}&redirect_page=${params.redirectPage}`,
+    method: 'post',
   }),
 };
 
@@ -752,8 +758,8 @@ const groupApi = {
   joinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.joinGroup, groupId),
   cancelJoinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.cancelJoinGroup, groupId),
   leaveGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.leaveGroup, groupId),
-  setGroupAdmin: (groupId: string, userIds: string[]) => withHttpRequestPromise(
-    groupsApiConfig.setGroupAdmin, groupId, userIds,
+  setGroupAdmin: (groupId: string, userId: string) => withHttpRequestPromise(
+    groupsApiConfig.setGroupAdmin, groupId, userId,
   ),
   removeGroupAdmin: (groupId: string, userId: string) => withHttpRequestPromise(
     groupsApiConfig.removeGroupAdmin, groupId, userId,
@@ -840,6 +846,9 @@ const groupApi = {
     groupsApiConfig.reportMember,
     communityId,
     params,
+  ),
+  resendVerificationEmail: (params: IVerifyEmail) => withHttpRequestPromise(
+    groupsApiConfig.resendVerificationEmail, params,
   ),
 };
 

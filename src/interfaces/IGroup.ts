@@ -2,6 +2,7 @@ import { GroupPrivacyType } from '~/constants/privacyTypes';
 import { IFilePicked } from './common';
 import { IUploadType } from '~/configs/resourceConfig';
 import { RoleType } from '~/constants/permissionScheme';
+import { IObject } from '~/interfaces/common';
 
 export interface IRole {
   id?: string;
@@ -155,6 +156,7 @@ export interface IGroupGetJoinableMembers {
 export interface IGroupGetMembers {
   groupId: string;
   isRefreshing?: boolean;
+  silentRefresh?: boolean;
   params?: IParamGetGroupMembers;
 }
 
@@ -257,4 +259,41 @@ export interface IPayloadPutGroupStructureMoveToTarget {
 export interface IPayloadPutGroupStructureReorder {
   communityId: string;
   newOrder: any[];
+}
+
+export interface IPayloadGetGroupMemberRequests {
+  groupId: string;
+  isRefreshing?: boolean;
+  params?: any;
+}
+
+export interface IPayloadSetGroupMemberRequests {
+  total?: number;
+  loading?: boolean;
+  canLoadMore?: boolean;
+  ids?: string[];
+  items?: IObject<IJoiningMember>;
+}
+
+export interface IPayloadApproveAllGroupMemberRequests {
+  groupId: string;
+  total: number;
+}
+
+export interface IPayloadApproveSingleGroupMemberRequest {
+  groupId: string;
+  requestId: string;
+  fullName: string;
+}
+
+export interface IPayloadDeclineAllGroupMemberRequests {
+  groupId: string;
+  total: number;
+  callback?: () => void;
+}
+
+export interface IPayloadDeclineSingleGroupMemberRequest {
+  groupId: string;
+  requestId: string;
+  fullName: string;
 }

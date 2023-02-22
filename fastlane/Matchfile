@@ -1,4 +1,4 @@
-git_url("git@bitbucket.org:beincomm/bic-mobile-app-secret.git")
+git_url("git@bitbucket.org:beincom-mobile/bic-mobile-ios-certificates.git")
 storage_mode("git")
 team_id("44S5N8GAPS")
 team_name("UFUTURE CORPORATION")

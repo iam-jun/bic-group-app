@@ -154,8 +154,8 @@ android {
         applicationId "com.beincom.group"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode project.hasProperty('versionCode') ? project.property('versionCode') as int : 1
-        versionName "0.2.8"
+        versionCode 3
+        versionName "0.2.9"
         testBuildType System.getProperty('testBuildType', 'debug')  // This will later be used to control the test apk build type
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         missingDimensionStrategy 'react-native-camera', 'general'
@@ -272,6 +272,7 @@ android {
             resValue "string", "app_name", "BIC Group Development"
             resValue "string", "facebook_app_id", "362084341568821"
             manifestPlaceholders.beinChatId = "com.beincom.chat"
+            manifestPlaceholders.selfHost = "www.beincom.io"
             resValue "string", "provider_authorities", "com.beincom.group.development.SharedProvider"
             resValue "string", "provider_read_permission", "com.beincom.group.development.READ_DATABASE"
             resValue "string", "provider_write_permission", "com.beincom.group.development.WRITE_DATABASE"
@@ -284,6 +285,7 @@ android {
             resValue "string", "app_name", "BIC Group Staging"
             resValue "string", "facebook_app_id", "362084341568821"
             manifestPlaceholders.beinChatId = "com.beincom.chat.staging"
+            manifestPlaceholders.selfHost = "www.beincom.app"
             resValue "string", "provider_authorities", "com.beincom.group.staging.SharedProvider"
             resValue "string", "provider_read_permission", "com.beincom.group.staging.READ_DATABASE"
             resValue "string", "provider_write_permission", "com.beincom.group.staging.WRITE_DATABASE"
@@ -294,6 +296,7 @@ android {
             resValue "string", "app_name", "BIC Group"
             resValue "string", "facebook_app_id", "362084341568821"
             manifestPlaceholders.beinChatId = "com.beincom.chat"
+            manifestPlaceholders.selfHost = "www.beincom.com"
             resValue "string", "provider_authorities", "com.beincom.group.SharedProvider"
             resValue "string", "provider_read_permission", "com.beincom.group.READ_DATABASE"
             resValue "string", "provider_write_permission", "com.beincom.group.WRITE_DATABASE"
