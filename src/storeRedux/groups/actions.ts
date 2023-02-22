@@ -101,26 +101,6 @@ const groupsActions = {
     type: groupsTypes.CANCEL_JOIN_COMMUNITY,
     payload,
   }),
-  editDiscoverCommunityItem: (payload: {id: string; data: any}) => ({
-    type: groupsTypes.EDIT_DISCOVER_COMMUNITY_ITEM,
-    payload,
-  }),
-  getGlobalSearch: (payload: string) => ({
-    type: groupsTypes.GET_GLOBAL_SEARCH,
-    payload,
-  }),
-  setGlobalSearch: (payload: {
-    loading?: boolean;
-    canLoadMore?: boolean;
-    ids?: string[];
-    items?: any;
-  }) => ({
-    type: groupsTypes.SET_GLOBAL_SEARCH,
-    payload,
-  }),
-  resetGlobalSearch: () => ({
-    type: groupsTypes.RESET_GLOBAL_SEARCH,
-  }),
 };
 
 export default groupsActions;

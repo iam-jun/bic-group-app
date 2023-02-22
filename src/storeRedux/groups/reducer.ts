@@ -76,12 +76,6 @@ export const groupInitState = {
   },
   isGettingInfoDetailError: false,
   isGettingInfoDetail: false,
-  globalSearch: {
-    loading: false,
-    canLoadMore: true,
-    ids: [] as string[],
-    items: {},
-  },
   communitySearch: {
     loading: false,
     canLoadMore: true,
@@ -94,7 +88,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
   const { type, payload } = action;
   const {
     selectedUsers,
-    globalSearch,
   } = state;
 
   switch (type) {
@@ -152,36 +145,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         joinedGroups: groupInitState.joinedGroups,
       };
 
-    case groupsTypes.EDIT_DISCOVER_COMMUNITY_ITEM:
-      return {
-        ...state,
-        globalSearch:
-          globalSearch?.items && globalSearch.items?.[payload.id]
-            ? {
-              ...globalSearch,
-              items: {
-                ...globalSearch.items,
-                [payload.id]: {
-                  ...globalSearch.items[payload.id],
-                  ...payload.data,
-                },
-              },
-            }
-            : globalSearch,
-      };
-    case groupsTypes.SET_GLOBAL_SEARCH:
-      return {
-        ...state,
-        globalSearch: {
-          ...state.globalSearch,
-          ...payload,
-        },
-      };
-    case groupsTypes.RESET_GLOBAL_SEARCH:
-      return {
-        ...state,
-        globalSearch: groupInitState.globalSearch,
-      };
     default:
       return state;
   }

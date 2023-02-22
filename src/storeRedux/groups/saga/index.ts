@@ -15,7 +15,6 @@ import { IResponseData, IToastMessage } from '~/interfaces/common';
 import { mapData } from '~/screens/groups/helper/mapper';
 import appConfig from '~/configs/appConfig';
 
-import getGlobalSearch from './getGlobalSearch';
 import { IUser } from '~/interfaces/IAuth';
 import useCommunityController from '~/screens/communities/store';
 import useGroupMemberStore from '~/screens/groups/GroupMembers/store';
@@ -41,10 +40,6 @@ export default function* groupsSaga() {
   );
   yield takeLatest(
     groupsTypes.ADD_MEMBERS, addMembers,
-  );
-
-  yield takeLatest(
-    groupsTypes.GET_GLOBAL_SEARCH, getGlobalSearch,
   );
 }
 
