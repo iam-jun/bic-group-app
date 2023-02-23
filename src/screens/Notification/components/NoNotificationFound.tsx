@@ -12,7 +12,7 @@ const NoNotificationFound = () => {
   const theme: ExtendedTheme = useTheme();
 
   return (
-    <View style={styles.root}>
+    <View style={styles.root} testID="notification_screen.empty">
       <SVGIcon
         source={NoNotificationFoundImg}
         width={145}

@@ -115,7 +115,7 @@ const FilterComponent: React.FC<FilterProps> = ({
         <TouchableOpacity
           activeOpacity={0.25}
           style={itemStyle}
-          testID={`${itemTestID || 'item_filter'}_${item.id}`}
+          testID={`${itemTestID || 'item_filter'}`}
           onPress={() => {
             _onPress(
               item, index,

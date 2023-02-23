@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import {
   ActivityIndicator,
   Dimensions,
+  FlatList,
   Platform,
   RefreshControl,
   StyleSheet,
@@ -11,7 +12,6 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Divider from '~/beinComponents/Divider';
 import NotificationItem from '~/beinComponents/list/items/NotificationItem';
-import ListView from '~/beinComponents/list/ListView';
 import Text from '~/baseComponents/Text';
 import { useTabPressListener } from '~/hooks/navigation';
 import { ITabTypes } from '~/interfaces/IRouter';
@@ -25,19 +25,19 @@ import notiSelector from '../store/selectors';
 
 const { width: screenWidth } = Dimensions.get('window');
 export interface Props {
-  onPressItemOption: (item: any) => void;
-  onItemPress: (item: any) => void;
   type: string;
   keyValue: string;
   activeIndex: boolean;
+  onPressItemOption: (item: any) => void;
+  onItemPress: (item: any) => void;
 }
 
 const NotificationList = ({
-  onItemPress,
   type,
   keyValue,
-  onPressItemOption,
   activeIndex,
+  onItemPress,
+  onPressItemOption,
 }: Props) => {
   const listRef = useRef<any>();
 
@@ -117,10 +117,10 @@ const NotificationList = ({
     return null;
   };
 
-  const renderItem = ({ item, index }: {item: any; index: number}) => (
+  const renderItem = ({ item }: {item: any;}) => (
     <NotificationItem
       id={item}
-      testID={`list_view.item_wrapper.${index}`}
+      testID="notification_screen.item_wrapper"
       onPress={_onItemPress}
       onPressOption={_onPressItemOption}
     />
@@ -131,16 +131,15 @@ const NotificationList = ({
   const keyExtractor = (item: any) => item?.id;
 
   return (
-    <View style={styles.container}>
+    <View testID="notification_screen.container" style={styles.container}>
       {!loadingNotifications ? (
-        <ListView
-          listRef={listRef}
+        <FlatList
+          ref={listRef}
           style={styles.list}
-          containerStyle={styles.listContainer}
-          isFullView
+          contentContainerStyle={styles.listContainer}
           keyExtractor={keyExtractor}
           renderItem={renderItem}
-          renderItemSeparator={() => (
+          ItemSeparatorComponent={() => (
             <Divider size={1} color={theme.colors.neutral5} />
           )}
           refreshControl={(
@@ -152,11 +151,11 @@ const NotificationList = ({
       )}
           data={notificationList}
           ListEmptyComponent={renderUnReadNotificationsEmpty}
-          onLoadMore={loadMoreNotifications}
+          onEndReached={loadMoreNotifications}
           ListFooterComponent={renderListFooter}
         />
       ) : (
-        <ActivityIndicator color={theme.colors.gray20} />
+        <ActivityIndicator testID="notification_screen.loading" color={theme.colors.gray20} />
       )}
     </View>
   );
