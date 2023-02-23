@@ -9,7 +9,12 @@ const JoinedCommunityPlaceholder = () => {
   const styles = createStyles();
 
   return (
-    <ScrollView style={styles.container} horizontal showsHorizontalScrollIndicator={false}>
+    <ScrollView
+      style={styles.container}
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      testID="joined_community_placeholder"
+    >
       {new Array(MAX_LENGTH).fill(0).map((item, index) => (
         <Image
           key={`joined-community-placeholder-${index}`}

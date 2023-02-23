@@ -32,10 +32,15 @@ const MenuHeader = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="menu_header">
       <View style={styles.statusBar} />
       <View style={styles.infoContainer}>
-        <TouchableOpacity activeOpacity={1} style={styles.nameContainer} onPress={goToProfile}>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={styles.nameContainer}
+          onPress={goToProfile}
+          testID="menu_header.fullname_btn"
+        >
           <Text.H5 color={colors.neutral}>{fullname}</Text.H5>
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={1} style={styles.usernameContainer} onPress={goToProfile}>

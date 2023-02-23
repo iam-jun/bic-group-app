@@ -36,7 +36,7 @@ const CheckUpdate = () => {
   };
 
   return (
-    <Button onPress={onPress}>
+    <Button onPress={onPress} testID="check_update">
       <View style={styles.itemContainer}>
         <Icon tintColor={theme.colors.neutral20} icon="GaugeHigh" />
         <Text.BodyMMedium style={styles.textTitle} numberOfLines={1}>
