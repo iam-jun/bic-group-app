@@ -5,8 +5,7 @@ import Animated, {
   FadeInUp, FadeOutDown,
 } from 'react-native-reanimated';
 import { Portal } from 'react-native-portalize';
-import useEmojiPickerStore from '../../store';
-import IEmojiPickerState from '../../store/Interface';
+import useEmojiPickerStore, { IEmojiPickerState } from '../../store';
 import Icon from '~/baseComponents/Icon';
 import { padding } from '~/theme/spacing';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
@@ -18,6 +17,10 @@ interface Props {
 }
 
 const CONTAINER_HEIGHT = 35;
+const EMOJI_SECTION_ICON_SIZE = 17;
+const HITSLOP = {
+  top: 20, bottom: 20, left: 20, right: 20,
+};
 
 const EmojiSectionIcons = ({ visible, onPress }: Props) => {
   const theme: ExtendedTheme = useTheme();
@@ -32,27 +35,27 @@ const EmojiSectionIcons = ({ visible, onPress }: Props) => {
     if (!visible) actions.resetData();
   }, [visible]);
 
-  if (!visible || filteredData.length > 0) return null;
+  if (!visible || filteredData?.length > 0) return null;
 
   return (
     <Portal>
-      <View style={styles.bottomContainer}>
+      <View testID="emoji_section_icons" style={styles.bottomContainer}>
         <Animated.View style={styles.bottomContentWrapper} entering={FadeInUp} exiting={FadeOutDown}>
           <View style={styles.bottomContent}>
             {emojis.map((section, index) => {
               const tintColor = index === currentSectionIndex
                 ? theme.colors.gray60
                 : theme.colors.gray40;
+
               return (
                 <Icon
                   key={`emoji-secion-icon-${index}`}
+                  testID={`emoji_section_icons.icon_${index}`}
                   style={styles.icon}
                   icon={section.icon}
                   tintColor={tintColor}
-                  size={17}
-                  hitSlop={{
-                    top: 20, bottom: 20, left: 20, right: 20,
-                  }}
+                  hitSlop={HITSLOP}
+                  size={EMOJI_SECTION_ICON_SIZE}
                   onPress={() => onPress(index)}
                 />
               );
@@ -60,7 +63,7 @@ const EmojiSectionIcons = ({ visible, onPress }: Props) => {
           </View>
         </Animated.View>
         <InsetBottomView />
-        {Platform.OS === 'ios' && <KeyboardSpacer />}
+        {Platform.OS === 'ios' && <KeyboardSpacer testID="emoji_section_icons.keyboard_spacer" />}
       </View>
     </Portal>
 

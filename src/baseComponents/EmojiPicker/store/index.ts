@@ -6,16 +6,33 @@ import {
 } from '~/store/utils';
 import {
   getNumberOfColumns,
-  getRenderableEmojis, searchEmojis, selectEmojisByName, selectEmojisBySection,
+  getRenderableEmojis, measureEmojiSections, searchEmojis, selectEmojisByName, selectEmojisBySection,
 } from './utils';
 import { dimension } from '~/theme';
-import IEmojiPickerState from './Interface';
+import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 
-const initialState = {
+export interface IEmojiPickerState extends IBaseState {
+  data: any[];
+  fuse: any;
+  filteredData: any[]|null;
+  recentlyData: any[];
+  emojiSectionIndexByOffset: any[];
+  currentSectionIndex: number;
+  actions: {
+    addToRecently: (emoji: string) => void;
+    buildEmojis: () => void;
+    search: (term: string) => void,
+    resetData: () => void;
+    setCurrentSectionIndex: (index: number) => void;
+  }
+}
+
+const initialState: InitStateType<IEmojiPickerState> = {
   data: [],
-  filteredData: [],
+  filteredData: null,
   recentlyData: [],
   fuse: null,
+  emojiSectionIndexByOffset: [],
   currentSectionIndex: 0,
 };
 
@@ -52,14 +69,16 @@ const emojiPickerStore = (set, get) => ({
         findAllMatches: true,
       };
 
-      const list = emojis.length ? emojis : [];
-      const fuse = new Fuse(list, options);
+      const fuse = new Fuse(emojis, options);
 
       const emojisBySection = selectEmojisBySection(recentlyData);
       const renderableEmojis = getRenderableEmojis(emojisBySection, dimension.deviceWidth);
       set((state) => {
         state.data = renderableEmojis;
         state.fuse = fuse;
+        if (state.emojiSectionIndexByOffset.length === 0) {
+          state.emojiSectionIndexByOffset = measureEmojiSections(renderableEmojis);
+        }
       }, 'buildEmojis');
     },
     search: (term: string) => {
@@ -71,7 +90,7 @@ const emojiPickerStore = (set, get) => ({
     },
     resetData: () => {
       set((state) => {
-        state.filteredData = [];
+        state.filteredData = null;
         state.currentSectionIndex = 0;
       });
     },

@@ -16,8 +16,7 @@ import Animated, {
 import { Portal } from 'react-native-portalize';
 import EmojiPicker from '~/baseComponents/EmojiPicker';
 import EmojiSectionIcons from '~/baseComponents/EmojiPicker/components/EmojiSectionIcons';
-import useEmojiPickerStore from '~/baseComponents/EmojiPicker/store';
-import IEmojiPickerState from '~/baseComponents/EmojiPicker/store/Interface';
+import useEmojiPickerStore, { IEmojiPickerState } from '~/baseComponents/EmojiPicker/store';
 import { SearchInput } from '~/baseComponents/Input';
 import { AppConfig } from '~/configs';
 import { useBaseHook } from '~/hooks';

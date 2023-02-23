@@ -21,7 +21,7 @@ export const getRenderableEmojis = (emojis: any[], deviceWidth: number) => {
       if (index % numberOfColumns === 0 && index !== 0) {
         data.push(row);
         row = {
-          key: `${section.key}-${index}`,
+          key: `${section.id}-${index}`,
           items: [],
         };
       }

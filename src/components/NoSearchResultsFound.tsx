@@ -1,5 +1,5 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React from 'react';
+import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import Image from '~/beinComponents/Image';
@@ -7,11 +7,15 @@ import Text from '~/baseComponents/Text';
 import images from '~/resources/images';
 import { spacing } from '~/theme';
 
-const NoSearchResultsFound = () => {
+interface Props {
+  testID?: string
+}
+
+const NoSearchResultsFound: FC<Props> = ({ testID }) => {
   const theme: ExtendedTheme = useTheme();
 
   return (
-    <View style={styles.textNoResults}>
+    <View testID={testID} style={styles.textNoResults}>
       <Image
         resizeMode="contain"
         style={styles.imgEmpty}
