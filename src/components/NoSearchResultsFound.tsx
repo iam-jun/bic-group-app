@@ -15,7 +15,7 @@ const NoSearchResultsFound: FC<Props> = ({ testID }) => {
   const theme: ExtendedTheme = useTheme();
 
   return (
-    <View testID={testID} style={styles.textNoResults}>
+    <View testID={testID || 'no_search_results'} style={styles.textNoResults}>
       <Image
         resizeMode="contain"
         style={styles.imgEmpty}

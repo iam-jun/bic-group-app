@@ -148,9 +148,17 @@ export interface IGroupImageUpload {
   rootGroupId: string;
 }
 
-export interface IGroupGetJoinableMembers {
+export interface IJoinableUsers {
+  id: string;
+  username: string;
+  fullname: string;
+  avatar: string;
+}
+
+export interface IParamsGetJoinableUsers {
   groupId: string;
-  params?: any;
+  key: string;
+  isLoadMore: boolean;
 }
 
 export interface IGroupGetMembers {

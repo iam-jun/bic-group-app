@@ -94,7 +94,7 @@ const MainTabs = () => {
   const checkAuthSessions = async () => {
     const isInstalled = await isAppInstalled();
     const user = await getUserFromSharedPreferences();
-    if (isInstalled && !user) {
+    if (isInstalled && !user && !__DEV__) {
       useAuthController.getState().actions.signOut();
     }
   };

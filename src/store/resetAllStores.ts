@@ -55,6 +55,7 @@ import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
 import useButtonMarkAsReadStore from '~/components/posts/ButtonMarkAsRead/store';
 import useCreatePostStore from '~/screens/post/CreatePost/store';
 import useLinkPreviewStore from './linkPreview';
+import useGroupJoinableUsersStore from '~/screens/groups/GroupMembers/AddMembersToGroup/store';
 
 export const excludedStore = [
   useAuthController,
@@ -93,6 +94,7 @@ const stores = [
   useScheduleArticlesStore,
   useArticleScheduleContentStore,
   useCreatePostStore,
+  useGroupJoinableUsersStore,
 
   // others
   useChatStore,
