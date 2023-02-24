@@ -3,7 +3,6 @@ import {
   FlatList, ScrollView, StyleSheet, View,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import { isEmpty } from 'lodash';
 
 import Header from '~/beinComponents/Header';
@@ -12,17 +11,11 @@ import Text from '~/baseComponents/Text';
 import Toggle from '~/baseComponents/Toggle';
 
 import { useRootNavigation } from '~/hooks/navigation';
-import usePostsStore from '~/store/entities/posts';
-import postsSelector from '~/store/entities/posts/selectors';
 
 import { useBaseHook } from '~/hooks';
 import { usePostSettings } from '~/screens/post/PostSettings/usePostSettings';
-import useCreatePost from '~/screens/post/CreatePost/hooks/useCreatePost';
 import { IPostSettingsParams } from '~/interfaces/IPost';
-import postActions from '~/storeRedux/post/actions';
 import spacing from '~/theme/spacing';
-import { useKeySelector } from '~/hooks/selector';
-import postKeySelector from '../../../storeRedux/post/keySelector';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import images from '~/resources/images';
@@ -33,9 +26,9 @@ import { timeSuggest } from '~/constants/importantTimeSuggest';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { DateInput } from '~/baseComponents/Input';
 import { Button } from '~/baseComponents';
-import { PermissionKey } from '~/constants/permissionScheme';
-import useMyPermissionsStore from '~/store/permissions';
 import useModalStore from '~/store/modal';
+import useCreatePost from '../CreatePost/hooks/useCreatePost';
+import useCreatePostStore from '../CreatePost/store';
 
 export interface PostSettingsProps {
   route?: {
@@ -44,7 +37,6 @@ export interface PostSettingsProps {
 }
 
 const PostSettings = ({ route }: PostSettingsProps) => {
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
@@ -55,27 +47,23 @@ const PostSettings = ({ route }: PostSettingsProps) => {
   const expireTimeSheetRef = useRef<any>();
   const { showAlert } = useModalStore((state) => state.actions);
 
-  let chosenAudiences: any[];
   const screenParams = route?.params || {};
   const { postId } = screenParams;
-  if (postId) {
-    useCreatePost({ screenParams });
-    chosenAudiences = usePostsStore(postsSelector.getAudience(postId))?.groups;
-  } else {
-    chosenAudiences = useKeySelector(postKeySelector.createPost.chosenAudiences);
-  }
 
-  const { getAudienceListWithNoPermission } = useMyPermissionsStore((state) => state.actions);
+  // in case of going directly to PostSetting from post's menu
+  // we have postId, and useCreatePost will init create post store
+  // if go to PostSetting from CreatePost, then we already have the data create post store,
+  // so you may or may not need to pass the postId in screenParams
+  const { audienceListWithNoPermission: listAudiencesWithoutPermission } = useCreatePost({ screenParams });
 
-  const listAudiencesWithoutPermission = getAudienceListWithNoPermission(
-    chosenAudiences,
-    PermissionKey.EDIT_POST_SETTING,
-  );
+  const resetCreatePostStore = useCreatePostStore((state) => state.reset);
 
   useEffect(
     () => () => {
+      // in case of going directly to PostSetting from post's menu
+      // when navigate back, need to clear create post store
       if (postId) {
-        dispatch(postActions.clearCreatPostData());
+        resetCreatePostStore();
       }
     }, [],
   );
