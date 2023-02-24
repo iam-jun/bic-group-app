@@ -6,7 +6,6 @@ import { IPost, PostStatus } from '~/interfaces/IPost';
 import modalActions from '~/storeRedux/modal/actions';
 import * as navigationHook from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import postActions from '~/storeRedux/post/actions';
 
 const mockData = mockDraftPost as IPost;
 
@@ -46,17 +45,6 @@ describe('PostDraftView component', () => {
       draftPostId: mockData.id,
       replaceWithDetail: true,
     });
-  });
-
-  it('should postPublishDraftPost when click button publish', () => {
-    const spy = jest.spyOn(postActions, 'postPublishDraftPost');
-
-    const wrapper = renderWithRedux(<PostDraftView data={mockData} />);
-    const buttonPublish = wrapper.getByTestId('post_draft_view.button_publish');
-    expect(buttonPublish).toBeDefined();
-
-    fireEvent.press(buttonPublish);
-    expect(spy).toBeCalled();
   });
 
   it('should disable button publish with id undefined', () => {

@@ -83,6 +83,12 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     audienceListWithNoPermission,
   } = useCreatePostData;
 
+  const [disableButtonPostState, setDisableButtonPostState] = useState(disableButtonPost);
+
+  useEffect(() => {
+    setDisableButtonPostState(disableButtonPost);
+  }, [disableButtonPost]);
+
   const {
     chosenAudiences, id, important, count,
   } = createPostData;
@@ -93,6 +99,14 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     = disableButtonsCreatePostFooter;
 
   const isCreatingNewPost = !screenParams?.postId || screenParams?.draftPostId;
+
+  const buttonPostProps = {
+    loading,
+    disabled: disableButtonPostState,
+    useI18n: true,
+    style: { borderWidth: 0 },
+    testID: 'create_post.btn_post',
+  };
 
   const userIds: string[] = [];
   const groupIds: string[] = [];
@@ -199,13 +213,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
           isCreatingNewPost ? 'post:title_create_post' : 'post:title_edit_post'
         }
         buttonText={isCreatingNewPost ? 'common:btn_publish' : 'post:save'}
-        buttonProps={{
-          loading,
-          disabled: disableButtonPost,
-          useI18n: true,
-          style: { borderWidth: 0 },
-          testID: 'create_post.btn_post',
-        }}
+        buttonProps={buttonPostProps}
         onPressBack={onPressBack}
         onPressButton={isCreatingNewPost ? publishPost : onSavePost}
         style={styles.headerStyle}

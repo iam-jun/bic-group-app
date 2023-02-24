@@ -15,7 +15,7 @@ const navigation = withNavigation(rootNavigationRef);
 
 const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
   const {
-    id, data, replaceWithDetail = true, onRetry, msgSuccess, msgError, disableNavigate,
+    id, data, replaceWithDetail = true, onRetry, msgSuccess, msgError, disableNavigate, isShowLoading = true,
   } = payload || {};
 
   if (!id || !data) {
@@ -26,7 +26,7 @@ const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
   try {
     const { actions }: IPostsState = get() || {};
 
-    useCreatePostStore.getState().actions.setLoadingCreatePost(true);
+    useCreatePostStore.getState().actions.setLoadingCreatePost(isShowLoading);
 
     const params: IParamPutEditPost = {
       postId: id,

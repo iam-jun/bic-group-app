@@ -289,6 +289,7 @@ export interface IPayloadPutEditPost {
   msgSuccess?: string;
   msgError?: string;
   disableNavigate?: boolean;
+  isShowLoading?: boolean;
 }
 
 export interface IPayloadPutEditComment {
