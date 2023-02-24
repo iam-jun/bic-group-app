@@ -55,6 +55,7 @@ import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
 import useButtonMarkAsReadStore from '~/components/posts/ButtonMarkAsRead/store';
 import useCreatePostStore from '~/screens/post/CreatePost/store';
 import useLinkPreviewStore from './linkPreview';
+import useAppStore from './app';
 import useGroupJoinableUsersStore from '~/screens/groups/GroupMembers/AddMembersToGroup/store';
 
 export const excludedStore = [
@@ -129,6 +130,7 @@ const stores = [
   useCommentInputStore,
   useFeedSearchStore,
   useLinkPreviewStore,
+  useAppStore,
 ];
 
 export const resetAllStores = () => {

@@ -41,8 +41,10 @@ describe('DraftArticle component', () => {
 
   it('should show alert when press button delete', () => {
     const showAlert = jest.fn();
-    const actions = { showAlert };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
+    useModalStore.setState((state) => {
+      state.actions = { showAlert } as any;
+      return state;
+    });
 
     const rendered = renderWithRedux(
       <DraftArticleView

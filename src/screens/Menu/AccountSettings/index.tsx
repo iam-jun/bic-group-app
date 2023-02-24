@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import {
   StyleSheet, TouchableOpacity, View,
 } from 'react-native';
-import { ExtendedTheme, useTheme, useIsFocused } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import BottomSheet from '~/baseComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
@@ -20,7 +19,6 @@ import { useRootNavigation } from '~/hooks/navigation';
 
 import { ILanguage, ISetting } from '~/interfaces/common';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
-import appActions from '~/storeRedux/app/actions';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import spacing from '~/theme/spacing';
 import { accountSettingsMenu } from '~/screens/Menu/AccountSettings/constants';
@@ -32,18 +30,9 @@ const POLICY_URL = `https://${getEnv('SELF_DOMAIN')}/policy`;
 const GeneralSettings = () => {
   const theme: ExtendedTheme = useTheme();
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const baseSheetRef: any = useRef();
   const { changeLanguage, language } = useContext(AppContext);
-
-  const isFocused = useIsFocused();
-
-  useEffect(
-    () => {
-      if (isFocused) dispatch(appActions.setRootScreenName('settings'));
-    }, [isFocused],
-  );
 
   const onLanguageMenuPress = (item: ILanguage) => {
     changeLanguage(item.code);

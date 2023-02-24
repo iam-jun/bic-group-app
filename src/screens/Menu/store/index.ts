@@ -1,8 +1,9 @@
-import groupApi from '~/api/GroupApi';
 import { createStore, resetStore } from '~/store/utils';
 import IMenuController from '~/screens/Menu/store/Interface';
 import { IUserWorkExperience } from '~/interfaces/IAuth';
 import editMyProfile from './actions/editMyProfile';
+import uploadImage from './actions/uploadImage';
+import getJoinedCommunities from './actions/getJoinedCommunities';
 
 const initState = {
   data: undefined,
@@ -10,37 +11,26 @@ const initState = {
   selectedWorkItem: {},
 };
 
-const menuController = (set) => ({
+const menuController = (set, get) => ({
   ...initState,
 
   actions: {
-    getJoinedCommunities: (params: {
-    previewMembers?: boolean;
-    managed?: boolean;
-  }) => {
-      set((state) => { state.loading = true; });
-      groupApi.getJoinedCommunities(params)
-        .then((response) => {
-          set((state) => {
-            state.loading = false;
-            state.data = response.data || [];
-          }, 'getJoinedCommunitiesSuccess');
-        })
-        .catch((error) => {
-          console.warn('\x1b[35m🐣️ joinedCommunities error ', error, '\x1b[0m');
-          set((state) => {
-            state.loading = false;
-          }, 'getJoinedCommunitiesError');
-        });
-    },
+    getJoinedCommunities: getJoinedCommunities(set, get),
 
-    editMyProfile: editMyProfile(set),
+    editMyProfile: editMyProfile(set, get),
+    uploadImage: uploadImage(set, get),
 
     setSelectedWorkItem: (payload: IUserWorkExperience) => {
       set((state: IMenuController) => {
         state.selectedWorkItem = payload;
       }, 'setSelectedWorkItem');
     },
+    setEditContactError: (errorText: string) => {
+      set((state: IMenuController) => {
+        state.editContactError = errorText;
+      }, 'setEditContactError');
+    },
+
   },
 
   reset: () => resetStore(initState, set),

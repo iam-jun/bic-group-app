@@ -36,21 +36,39 @@ const MenuHeader = () => {
       <View style={styles.statusBar} />
       <View style={styles.infoContainer}>
         <TouchableOpacity
+          testID="menu_header.full_name"
           activeOpacity={1}
           style={styles.nameContainer}
           onPress={goToProfile}
-          testID="menu_header.fullname_btn"
         >
-          <Text.H5 color={colors.neutral}>{fullname}</Text.H5>
+          <Text.H5
+            testID="menu_header.full_name.text"
+            color={colors.neutral}
+          >
+            {fullname}
+          </Text.H5>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={1} style={styles.usernameContainer} onPress={goToProfile}>
-          <Text.BodyS color={colors.neutral40}>
+        <TouchableOpacity
+          testID="menu_header.user_name"
+          activeOpacity={1}
+          style={styles.usernameContainer}
+          onPress={goToProfile}
+        >
+          <Text.BodyS
+            testID="menu_header.user_name.text"
+            color={colors.neutral40}
+          >
             @
             {username}
           </Text.BodyS>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity activeOpacity={1} style={styles.avatar} onPress={goToProfile}>
+      <TouchableOpacity
+        testID="menu_header.avatar"
+        activeOpacity={1}
+        style={styles.avatar}
+        onPress={goToProfile}
+      >
         <Avatar.Large source={avatar} isRounded showBorder borderWidth={2} />
       </TouchableOpacity>
     </View>

@@ -9,9 +9,9 @@ import Header from '~/beinComponents/Header';
 import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/baseComponents/Text';
+import { useRootNavigation } from '~/hooks/navigation';
 
 import spacing from '~/theme/spacing';
-import { useRootNavigation } from '~/hooks/navigation';
 
 const NoUserFound = () => {
   const theme: ExtendedTheme = useTheme();

@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import { useDispatch } from 'react-redux';
 import Text from '~/baseComponents/Text';
 import useAuthController from '~/screens/auth/store';
 import AppVersion from '~/screens/Menu/components/AppVersion';
@@ -13,24 +12,22 @@ import { getActions } from '~/store/selectors';
 import spacing from '~/theme/spacing';
 import Icon from '~/baseComponents/Icon';
 import Button from '~/beinComponents/Button';
-import appActions from '~/storeRedux/app/actions';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import getEnv from '~/utils/env';
 import { APP_ENV } from '~/configs/appConfig';
-import { useKeySelector } from '~/hooks/selector';
 import { AppConfig } from '~/configs';
 import useCommonController from '~/screens/store';
 import useModalStore from '~/store/modal';
 import { IAlertModal } from '~/interfaces/common';
+import useAppStore from '~/store/app';
 
 const REPORT_URL = 'https://report.beincom.com/';
 
 const MenuSettings = () => {
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
@@ -38,7 +35,9 @@ const MenuSettings = () => {
   const { showAlert } = useModalStore((state) => state.actions);
 
   const isStaging = getEnv('APP_ENV') === APP_ENV.STAGING;
-  const debuggerVisible = useKeySelector('app.debuggerVisible');
+  const debuggerVisible = useAppStore((state) => state.debuggerVisible);
+  const appActions = useAppStore((state) => state.actions);
+
   const myProfile = useCommonController((state) => state.myProfile);
 
   const isShowDebug = __DEV__ || isStaging || AppConfig.superUsers.includes(myProfile?.email);
@@ -55,7 +54,7 @@ const MenuSettings = () => {
   };
 
   const onPressShowDebug = () => {
-    dispatch(appActions.setDebuggerVisible(!debuggerVisible));
+    appActions.setDebuggerVisible(!debuggerVisible);
   };
 
   const onPressReportProblem = () => {
@@ -84,7 +83,12 @@ const MenuSettings = () => {
   }
 
   const renderItem = ({ icon, title, onPress }: any) => (
-    <Button key={title + icon} style={styles.itemContainer} onPress={onPress} testID={`menu_settings.item_${icon}`}>
+    <Button
+      testID="menu_setting.item"
+      key={title + icon}
+      style={styles.itemContainer}
+      onPress={onPress}
+    >
       <Icon tintColor={theme.colors.neutral20} icon={icon} />
       <Text.BodyMMedium style={styles.textTitle} numberOfLines={1}>{title}</Text.BodyMMedium>
     </Button>
@@ -98,7 +102,11 @@ const MenuSettings = () => {
       </View>
       <CheckUpdate />
       {settingItems.map(renderItem)}
-      <Button style={styles.itemContainer} onPress={onLogout}>
+      <Button
+        testID="menu_setting.logout"
+        style={styles.itemContainer}
+        onPress={onLogout}
+      >
         <Icon tintColor={theme.colors.purple20} icon="ArrowRightFromBracket" />
         <Text.BodyMMedium style={styles.textLogout} numberOfLines={1}>{t('menu:title_logout')}</Text.BodyMMedium>
       </Button>

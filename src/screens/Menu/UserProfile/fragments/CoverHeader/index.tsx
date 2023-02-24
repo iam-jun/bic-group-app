@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { uploadTypes } from '~/configs/resourceConfig';
-import { scaleCoverHeight } from '~/theme/dimension';
+import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
+import { scaleCoverHeight, userProfileImageCropRatio } from '~/theme/dimension';
 import AvatarImage from '../../components/AvatarImage';
 import CoverImage from '../../components/CoverImage';
-import { _openImagePicker } from '../../helper';
+import { checkPermission, permissionTypes } from '~/utils/permission';
+import ImagePicker from '~/beinComponents/ImagePicker';
+import useMenuController from '~/screens/Menu/store';
+import { IUserImageUpload } from '~/interfaces/IEditUser';
+import Store from '~/storeRedux';
 
 interface Props {
   id: string;
@@ -18,22 +21,45 @@ interface Props {
 const CoverHeader = ({
   id, bgImg, isCurrentUser, avatar, uploadCallback,
 }: Props) => {
-  const dispatch = useDispatch();
+  const actions = useMenuController((state) => state.actions);
+
   const [coverHeight, setCoverHeight] = useState<number>(210);
 
-  const onEditCover = () => _openImagePicker(
+  const openImagePicker = async (
+    id: string,
+    fieldName: 'avatar' | 'backgroundImgUrl',
+    uploadType: IUploadType,
+    callback?: (fieldName: string) => void,
+  ) => {
+    checkPermission(
+      permissionTypes.photo, Store.store.dispatch, (canOpenPicker) => {
+        if (canOpenPicker) {
+          ImagePicker.openPickerSingle({
+            ...userProfileImageCropRatio[fieldName],
+            cropping: true,
+            mediaType: 'photo',
+          }).then((file) => {
+            const payload:IUserImageUpload = {
+              id, file, fieldName, uploadType,
+            };
+            actions.uploadImage(payload, () => { callback(fieldName); });
+          });
+        }
+      },
+    );
+  };
+
+  const onEditCover = () => openImagePicker(
     id,
     'backgroundImgUrl',
     uploadTypes.userCover,
-    dispatch,
     uploadCallback,
   );
 
-  const onEditAvatar = () => _openImagePicker(
+  const onEditAvatar = () => openImagePicker(
     id,
     'avatar',
     uploadTypes.userAvatar,
-    dispatch,
     uploadCallback,
   );
 

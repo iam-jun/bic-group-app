@@ -42,7 +42,7 @@ const CheckUpdate = () => {
         <Text.BodyMMedium style={styles.textTitle} numberOfLines={1}>
           {'Update status: '}
         </Text.BodyMMedium>
-        <Text.BodyM style={styles.textStatus}>
+        <Text.BodyM testID="menu_screen.check_update.text" style={styles.textStatus}>
           {status || 'Check now 🚀'}
           {!!progressPercent && `${progressPercent}%`}
         </Text.BodyM>

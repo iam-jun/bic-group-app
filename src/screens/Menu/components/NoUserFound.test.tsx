@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { fireEvent, renderWithRedux } from '~/test/testUtils';
+import { fireEvent, render } from '~/test/testUtils';
 import NoUserFound from './NoUserFound';
 import * as navigationHook from '~/hooks/navigation';
 
@@ -10,7 +10,7 @@ describe('NoUserFound component', () => {
     const rootNavigation = { goBack };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
-    const rendered = renderWithRedux(<NoUserFound />);
+    const rendered = render(<NoUserFound />);
     const { getByTestId } = rendered;
     const component = getByTestId('no_user_found');
     expect(component).toBeDefined();
