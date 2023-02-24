@@ -1,8 +1,8 @@
 import React from 'react';
+import * as reactNativePermission from 'react-native-permissions';
 
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import CoverHeader from './index';
-import * as helper from '../../helper';
 
 describe('CoverHeader component', () => {
   const baseProps = {
@@ -14,7 +14,7 @@ describe('CoverHeader component', () => {
   };
 
   it('renders correctly with onLayout', () => {
-    const spyOpenImagePicker = jest.spyOn(helper, '_openImagePicker');
+    const spyCheckPermission = jest.spyOn(reactNativePermission, 'check');
     const rendered = renderWithRedux(<CoverHeader {...baseProps} />);
     const { getByTestId } = rendered;
     const containerComponent = getByTestId('user_profile.cover_header');
@@ -26,11 +26,11 @@ describe('CoverHeader component', () => {
 
     const editCover = getByTestId('user_profile.cover_image.edit_button');
     fireEvent.press(editCover);
-    expect(spyOpenImagePicker).toBeCalled();
+    expect(spyCheckPermission).toBeCalled();
 
     const editAvatar = getByTestId('user_profile.avatar_image.edit_button');
     fireEvent.press(editAvatar);
-    expect(spyOpenImagePicker).toBeCalled();
+    expect(spyCheckPermission).toBeCalled();
   });
 
   it('renders correctly Not onLayout', () => {

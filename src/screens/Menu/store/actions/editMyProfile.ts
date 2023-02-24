@@ -2,15 +2,14 @@ import i18next from 'i18next';
 import { IUserEdit } from '~/interfaces/IAuth';
 import groupApi from '~/api/GroupApi';
 import showToastError from '~/store/helper/showToastError';
-import Store from '~/storeRedux';
-import menuActions from '~/storeRedux/menu/actions';
 import { IToastMessage } from '~/interfaces/common';
 import useCommonController from '~/screens/store';
 import { mapProfile } from '~/storeRedux/menu/helper';
 import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import IMenuController from '../Interface';
 
-const editMyProfile = (_set) => async ({
+const editMyProfile = (_set, get) => async ({
   data,
   editFieldToastMessage,
   callback,
@@ -19,6 +18,7 @@ const editMyProfile = (_set) => async ({
   editFieldToastMessage?: string;
   callback?: () => void;
 }) => {
+  const { actions }: IMenuController = get();
   try {
     const response = await groupApi.editMyProfile(data);
 
@@ -51,12 +51,8 @@ const editMyProfile = (_set) => async ({
 
     const errorMessage: string = error?.meta?.message;
     switch (errorMessage) {
-      case 'This Email is used':
-        Store.store.dispatch(menuActions.setEmailEditError(i18next.t('settings:text_email_is_used')));
-        break;
-
       case 'This phone number is used':
-        Store.store.dispatch(menuActions.setPhoneNumberEditError(i18next.t('settings:text_phone_number_is_used')));
+        actions.setEditContactError(i18next.t('settings:text_phone_number_is_used'));
         break;
 
       default:

@@ -33,7 +33,10 @@ const MenuDiscoverCommunity = () => {
   };
 
   const renderItem = ({ item, index }) => (
-    <Button onPress={() => onPressCommunity(item)} testID={`menu_discover_community.item_btn_${index}`}>
+    <Button
+      testID="menu_discover_community.item"
+      onPress={() => onPressCommunity(item)}
+    >
       <Avatar.Large
         source={item.icon}
         style={{
@@ -47,7 +50,10 @@ const MenuDiscoverCommunity = () => {
   const renderContent = () => {
     if (loading && data.length === 0) {
       return (
-        <View style={styles.emptyContainer}>
+        <View
+          testID="menu_discover_community.loading"
+          style={styles.emptyContainer}
+        >
           <JoinedCommunityPlaceholder />
         </View>
       );
@@ -55,7 +61,10 @@ const MenuDiscoverCommunity = () => {
 
     if (data.length === 0) {
       return (
-        <View style={styles.emptyContainer}>
+        <View
+          testID="menu_discover_community.empty_list"
+          style={styles.emptyContainer}
+        >
           <Text.SubtitleS color={theme.colors.neutral20} useI18n>
             communities:empty_communities:title
           </Text.SubtitleS>

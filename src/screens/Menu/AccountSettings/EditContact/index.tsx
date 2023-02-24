@@ -3,21 +3,17 @@ import {
   StyleSheet, View, Keyboard, ScrollView,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 
 import { useBaseHook } from '~/hooks';
-import { useKeySelector } from '~/hooks/selector';
-import menuKeySelector from '../../../../storeRedux/menu/keySelector';
 import { useRootNavigation } from '~/hooks/navigation';
 import Button from '~/beinComponents/Button';
 import TitleComponent from '../fragments/TitleComponent';
 import EditPhoneNumber from './fragments/EditPhoneNumber';
 import EditLocation from './fragments/EditLocation';
-import menuActions from '../../../../storeRedux/menu/actions';
 import spacing from '~/theme/spacing';
 import { TextInput } from '~/baseComponents/Input';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
@@ -33,20 +29,16 @@ const EditContact = () => {
 
   const locationRef = useRef<any>();
 
-  const dispatch = useDispatch();
-
   const myProfile = useCommonController((state) => state.myProfile);
   const {
     email, phone, countryCode, city, id,
   } = myProfile || {};
+  const editContactError = useMenuController((state) => state.editContactError);
   const actions = useMenuController((state) => state.actions);
 
   const [countryCodeState, setCountryCountryCodeState]
     = useState<string>(countryCode || '+84');
   const [cityState, setCityState] = useState<string>(city);
-  const phoneNumberEditError = useKeySelector(
-    menuKeySelector.phoneNumberEditError,
-  );
 
   const {
     control,
@@ -71,11 +63,16 @@ const EditContact = () => {
   };
 
   useEffect(() => {
-    phoneNumberEditError && showErrors();
+    if (!!editContactError) {
+      setError('phoneNumber', {
+        type: 'validate',
+        message: editContactError,
+      });
+    }
     return () => {
-      dispatch(menuActions.setPhoneNumberEditError(''));
+      actions.setEditContactError('');
     };
-  }, [phoneNumberEditError]);
+  }, [editContactError]);
 
   const onSave = async () => {
     const validInputs = await validateInputs();
@@ -98,16 +95,9 @@ const EditContact = () => {
 
   const validateInputs = async () => trigger('phoneNumber');
 
-  const showErrors = () => {
-    setError('phoneNumber', {
-      type: 'validate',
-      message: phoneNumberEditError,
-    });
-  };
-
   const clearAllErrors = () => {
     clearErrors('phoneNumber');
-    dispatch(menuActions.setPhoneNumberEditError(''));
+    actions.setEditContactError('');
   };
 
   const onEditLocationOpen = (e: any) => {
