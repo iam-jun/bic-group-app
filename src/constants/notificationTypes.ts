@@ -259,4 +259,22 @@ export const NOTIFICATION_TYPE = {
    * Aggregate notifications when multiple users reported the same content
    */
   REPORT_USER_TO_USER_AGGREGATED: 'report.user.to_user.aggregated',
+
+  /**
+   * When community admin leave community.
+   * notify for community owner
+   */
+  LEAVE_COMMUNITY_TO_USER: 'leave.community.to_user',
+
+  /**
+   * When group admin leave group.
+   * notify for community owner
+   */
+  LEAVE_GROUP_TO_USER: 'leave.group.to_user',
+
+  /**
+   * When group admin leave multiple group
+   * notify for community owner
+   */
+  LEAVE_MULTIPLE_GROUP_TO_USER: 'leave.multiple_group.to_user',
 };

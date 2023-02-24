@@ -230,6 +230,7 @@ const Notification = () => {
             case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_APPROVED:
             case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_REJECTED:
             case NOTIFICATION_TYPE.GROUP_ADDED_TO_GROUP_TO_USER_IN_ONE_GROUP:
+            case NOTIFICATION_TYPE.LEAVE_COMMUNITY_TO_USER:
               if (act?.community?.id) {
                 rootNavigation.navigate(
                   groupStack.communityDetail, {
@@ -317,6 +318,16 @@ const Notification = () => {
               }
               break;
             }
+            case NOTIFICATION_TYPE.LEAVE_GROUP_TO_USER:
+              if (!!act?.group?.[0]?.id) {
+                rootNavigation.navigate(
+                  groupStack.groupDetail, {
+                    groupId: act.group[0].id,
+                    communityId: act?.group?.[0]?.communityId,
+                  },
+                );
+              }
+              break;
             default:
               console.warn(`Notification type ${type} have not implemented yet`);
               break;
