@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
+import { useRoute } from '@react-navigation/native';
 import { Button } from '~/baseComponents';
 
 import { ContentHeader, ContentHeaderProps } from '~/components/ContentView';
@@ -27,6 +28,7 @@ const PostHeader: FC<PostHeaderProps> = ({
   onPressHeader,
   ...props
 }) => {
+  const route = useRoute();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const dispatch = useDispatch();
@@ -38,6 +40,8 @@ const PostHeader: FC<PostHeaderProps> = ({
 
   const userId = useUserIdAuth();
   const isActor = actor?.id === userId;
+
+  const isPostDetailScreen = route.name === homeStack.postDetail;
 
   const { shouldHavePermissionOnSomeAudience } = useMyPermissionsStore((state) => state.actions);
   const canDeleteOwnPost = shouldHavePermissionOnSomeAudience(
@@ -100,7 +104,7 @@ const PostHeader: FC<PostHeaderProps> = ({
     }
   };
 
-  const { showMenu } = usePostMenu(data, isActor, true, handleDeletePostError);
+  const { showMenu } = usePostMenu(data, isActor, isPostDetailScreen, handleDeletePostError);
 
   const onPressMenu = useDefaultMenu ? showMenu : undefined;
 

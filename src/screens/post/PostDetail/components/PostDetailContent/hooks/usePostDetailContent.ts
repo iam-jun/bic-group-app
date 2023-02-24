@@ -107,7 +107,6 @@ const usePostDetailContent = ({
   useEffect(() => {
     onPressMarkSeenPost();
     return () => {
-      dispatch(postActions.setCreatePostInitAudiences());
       dispatch(postActions.setCommentErrorCode(false));
     };
   }, []);

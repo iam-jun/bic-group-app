@@ -7,9 +7,8 @@ import { useBaseHook } from '~/hooks';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { IAudience } from '~/interfaces/IPost';
 import { useRootNavigation } from '~/hooks/navigation';
-import { useKeySelector } from '~/hooks/selector';
-import postKeySelector from '~/storeRedux/post/keySelector';
 import spacing from '~/theme/spacing';
+import useCreatePostStore from '~/screens/post/CreatePost/store';
 
 export interface CreatePostChosenAudiencesProps {
   disabled?: boolean;
@@ -23,7 +22,7 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
 
   const theme: ExtendedTheme = useTheme();
 
-  const chosenAudiences = useKeySelector(postKeySelector.createPost.chosenAudiences);
+  const chosenAudiences = useCreatePostStore((state) => state.createPost.chosenAudiences);
 
   const names = getNames(
     chosenAudiences,

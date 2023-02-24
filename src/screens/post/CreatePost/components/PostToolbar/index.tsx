@@ -18,20 +18,16 @@ import ImagePicker from '~/beinComponents/ImagePicker';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import Text from '~/baseComponents/Text';
 import appConfig from '~/configs/appConfig';
-import { useKeySelector } from '~/hooks/selector';
-import { ICreatePostImage } from '~/interfaces/IPost';
-import postActions from '~/storeRedux/post/actions';
-import postKeySelector from '~/storeRedux/post/keySelector';
 
 import { Button } from '~/baseComponents';
 import ReviewMarkdown from '~/screens/post/CreatePost/components/ReviewMarkdown';
 import ToolbarButton from '~/components/posts/ToolbarButton';
-import { getTotalFileSize } from '~/storeRedux/post/selectors';
 import spacing from '~/theme/spacing';
 import { getChatDomain, openInAppBrowser } from '~/utils/link';
 import { checkPermission, permissionTypes } from '~/utils/permission';
-import { clearExistingFiles, validateFilesPicker } from '../../helper';
+import { clearExistingFiles, getTotalFileSize, validateFilesPicker } from '../../helper';
 import useUploadImage from '../../hooks/useUploadImage';
+import useCreatePostStore from '../../store';
 
 export interface PostToolbarProps {
   toolbarRef?: any;
@@ -67,10 +63,12 @@ const PostToolbar: FC<PostToolbarProps> = ({
   const styles = createStyle(theme);
   const modalizeRef = useRef<any>();
 
-  const selectedImagesDraft: ICreatePostImage[] = useKeySelector(postKeySelector.createPost.imagesDraft) || [];
-  const content = useKeySelector(postKeySelector.createPost.content);
-  const selectedFiles = useKeySelector(postKeySelector.createPost.files);
-  const { totalFiles, totalSize } = getTotalFileSize();
+  const createPostStoreActions = useCreatePostStore((state) => state.actions);
+  const selectedImages = useCreatePostStore((state) => state.createPost.images || []);
+  const content = useCreatePostStore((state) => state.createPost.content);
+  const selectedFiles = useCreatePostStore((state) => state.createPost.files);
+
+  const { totalFiles, totalSize } = getTotalFileSize(selectedFiles);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -140,7 +138,7 @@ const PostToolbar: FC<PostToolbarProps> = ({
     ImagePicker.openPickerSingle({ mediaType: 'video' })
       .then((selected) => {
         const data = selected;
-        dispatch(postActions.setCreatePostVideo(data));
+        createPostStoreActions.updateCreatePost({ video: data });
       })
       .catch((e) => {
         console.error(
@@ -173,7 +171,7 @@ const PostToolbar: FC<PostToolbarProps> = ({
       );
       if (isEmpty(newFiles)) return;
 
-      dispatch(postActions.addCreatePostFiles(newFiles));
+      createPostStoreActions.updateCreatePost({ files: [...selectedFiles, ...newFiles] });
     } catch (e) {
       console.error(
         '\x1b[36m🐣️ DocumentPicker.openPickerSingle error: \x1b[0m',
@@ -198,7 +196,7 @@ const PostToolbar: FC<PostToolbarProps> = ({
             icon="Image"
             testID="post_toolbar.add_photo"
             onPressIcon={!imageDisabled ? _onPressSelectImage : undefined}
-            shouldHighlight={selectedImagesDraft?.length > 0 && !imageDisabled}
+            shouldHighlight={selectedImages?.length > 0 && !imageDisabled}
           />
           <ToolbarButton
             icon="ClapperboardPlay"

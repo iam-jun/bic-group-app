@@ -14,7 +14,7 @@ import {
   TOAST_MIN_HEIGHT,
 } from './constanst';
 import useInputHeight from './hooks/useInputHeight';
-import useUploaderStore from '~/store/uploader';
+import useUploaderStore, { IGetFile } from '~/store/uploader';
 import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
@@ -275,4 +275,15 @@ export const removeLinkPreviewExistsInAdditionalLinkPreview = (
     (item) => !lstLinkInAdditionalLinkPreview.includes(item.url),
   );
   return lstLinkPreviewNotInAdditionalLinkPreview;
+};
+
+export const getTotalFileSize = (files: any) => {
+  let totalSize = 0;
+  files.forEach((file: IGetFile) => {
+    totalSize += file.size;
+  });
+  return {
+    totalFiles: files.length,
+    totalSize,
+  };
 };
