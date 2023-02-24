@@ -254,19 +254,22 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
         case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_APPROVED:
         case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_REJECTED:
         case NOTIFICATION_TYPE.GROUP_ADDED_TO_GROUP_TO_USER_IN_ONE_GROUP:
-          if (!!communityId) {
-            return {
-              screen: 'community-detail',
-              params: {
-                communityId,
-              },
-            };
-          }
+        case NOTIFICATION_TYPE.LEAVE_COMMUNITY_TO_USER:
+        case NOTIFICATION_TYPE.LEAVE_GROUP_TO_USER:
           if (!!groupId) {
             return {
               screen: 'group-detail',
               params: {
                 groupId,
+                communityId: communityId || '',
+              },
+            };
+          }
+          if (!!communityId) {
+            return {
+              screen: 'community-detail',
+              params: {
+                communityId,
               },
             };
           }
@@ -298,6 +301,8 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
               articleId: postId,
             },
           };
+        case NOTIFICATION_TYPE.LEAVE_MULTIPLE_GROUP_TO_USER:
+          return null;
         default:
           console.warn(`Notification type ${type} have not implemented yet`);
           return { screen: homeStack.postDetail, params: { post_id: postId } };
