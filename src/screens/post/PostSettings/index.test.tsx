@@ -74,7 +74,7 @@ describe('Post Setting Screen', () => {
   });
 
   it('renders correctly enable to disable important', async () => {
-    const storeData = { ...initialState };
+    const storeData: any = { ...initialState };
     storeData.post.createPost.currentSettings = {
       active: true,
       expiresTime: '2059368665000',
@@ -144,7 +144,7 @@ describe('Post Setting Screen', () => {
   });
 
   it('should dispatch setCreatePostSettings then go back when press back with changed', async () => {
-    const spy = jest.spyOn(postActions, 'setCreatePostSettings');
+    const spy = jest.spyOn(postActions as any, 'setCreatePostSettings');
 
     const goBack = jest.fn();
     const rootNavigation = { goBack };

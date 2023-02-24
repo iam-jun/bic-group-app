@@ -242,6 +242,7 @@ export const useSavePost = () => {
       replaceWithDetail = true,
       isToastAutoSave,
       isShowMessageSuccess = true,
+      isShowLoading = true,
     } = params;
     const data = prepareData();
     const newPayload: IPayloadPutEditPost = {
@@ -251,6 +252,7 @@ export const useSavePost = () => {
       replaceWithDetail,
       onRetry: () => savePost(params),
       msgSuccess: isShowMessageSuccess && 'post:text_edit_post_success',
+      isShowLoading,
     };
     try {
       if (isToastAutoSave) {
@@ -268,6 +270,7 @@ export const useSavePost = () => {
     const isSuccess = await savePost({
       disableNavigate: true,
       isShowMessageSuccess: false,
+      isShowLoading: false,
     });
     if (isSuccess) {
       const payload: IPayloadPublishDraftPost = {
@@ -287,6 +290,7 @@ export const useSavePost = () => {
         disableNavigate: true,
         isToastAutoSave: true,
         isShowMessageSuccess: false,
+        isShowLoading: false,
       });
     }
   }, [
@@ -314,6 +318,7 @@ export const useSavePost = () => {
         disableNavigate: true,
         isToastAutoSave: true,
         isShowMessageSuccess: false,
+        isShowLoading: false,
       });
     }, 500);
   };
@@ -325,6 +330,7 @@ export const useSavePost = () => {
           disableNavigate: true,
           isToastAutoSave: true,
           isShowMessageSuccess: false,
+          isShowLoading: false,
         });
         refTypingConstantly.current = null;
       }, 5000);
