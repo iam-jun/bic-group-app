@@ -84,14 +84,14 @@ const MenuSettings = () => {
   }
 
   const renderItem = ({ icon, title, onPress }: any) => (
-    <Button key={title + icon} style={styles.itemContainer} onPress={onPress}>
+    <Button key={title + icon} style={styles.itemContainer} onPress={onPress} testID={`menu_settings.item_${icon}`}>
       <Icon tintColor={theme.colors.neutral20} icon={icon} />
       <Text.BodyMMedium style={styles.textTitle} numberOfLines={1}>{title}</Text.BodyMMedium>
     </Button>
   );
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="menu_settings">
       <View style={styles.row}>
         <Text.SubtitleM style={styles.textHeader} useI18n>menu:title_settings</Text.SubtitleM>
         <AppVersion />

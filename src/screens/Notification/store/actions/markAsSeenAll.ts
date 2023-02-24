@@ -4,9 +4,9 @@ import showToastError from '~/store/helper/showToastError';
 
 import INotificationsState from '../Interface';
 
-const markAsSeenAll = (set, get) => () => {
+const markAsSeenAll = (set, get) => async () => {
   try {
-    notificationApi.markAsSeenAll();
+    await notificationApi.markAsSeenAll();
     const data: INotificationsState = get();
 
     const notifications: any = cloneDeep(data.notificationList) || {};

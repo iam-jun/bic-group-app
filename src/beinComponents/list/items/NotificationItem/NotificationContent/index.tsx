@@ -9,8 +9,8 @@ import spacing from '~/theme/spacing';
 
 interface Props {
   description: string;
-  content?: string;
-  updatedAt?: string;
+  content: string;
+  updatedAt: string;
 
 }
 
@@ -37,7 +37,7 @@ const NotificationContent = ({
         </Text.BodyM>
       )}
       <TimeView
-        testID="notification_item.time_view"
+        testID="notification_content.time_view"
         time={updatedAt}
         style={styles.timeCreated}
         type="short"

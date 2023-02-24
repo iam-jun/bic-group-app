@@ -4,8 +4,6 @@ import groupApi from '~/api/GroupApi';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { IToastMessage } from '~/interfaces/common';
 import useCommunitiesStore from '~/store/entities/communities';
-import Store from '~/storeRedux';
-import groupsActions from '~/storeRedux/groups/actions';
 import { ICommunity } from '~/interfaces/ICommunity';
 import showToastError from '~/store/helper/showToastError';
 import showToast from '~/store/helper/showToast';
@@ -17,14 +15,6 @@ const joinCommunity
       const joinStatus = response?.data?.joinStatus;
       const hasRequested = joinStatus === GroupJoinStatus.REQUESTED;
       const userCount = useCommunitiesStore.getState().data?.[communityId]?.userCount || 0;
-
-      // update button Join/Cancel/View status on Discover communities
-      Store.store.dispatch(
-        groupsActions.editDiscoverCommunityItem({
-          id: communityId,
-          data: { joinStatus },
-        }),
-      );
 
       useCommunitiesStore.getState().actions.updateCommunity(
         communityId,

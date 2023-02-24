@@ -305,7 +305,7 @@ export const groupsApiConfig = {
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
-  addUsers: (groupId: string, userIds: string[]): HttpApiRequestConfig => ({
+  addUsersToGroup: (userIds: string[], groupId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/users/add`,
     method: 'post',
@@ -758,7 +758,9 @@ const groupApi = {
   getJoinableUsers: (groupId: string, params: any) => withHttpRequestPromise(
     groupsApiConfig.getJoinableUsers, groupId, params,
   ),
-  addUsers: (groupId: string, userIds: string[]) => withHttpRequestPromise(groupsApiConfig.addUsers, groupId, userIds),
+  addUsersToGroup: (userIds: string[], groupId: string) => withHttpRequestPromise(
+    groupsApiConfig.addUsersToGroup, userIds, groupId,
+  ),
   removeGroupMembers: (groupId: string, userIds: string[]) => withHttpRequestPromise(
     groupsApiConfig.removeGroupMembers, groupId, userIds,
   ),

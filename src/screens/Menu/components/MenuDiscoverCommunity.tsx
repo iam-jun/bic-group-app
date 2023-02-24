@@ -33,7 +33,7 @@ const MenuDiscoverCommunity = () => {
   };
 
   const renderItem = ({ item, index }) => (
-    <Button onPress={() => onPressCommunity(item)}>
+    <Button onPress={() => onPressCommunity(item)} testID={`menu_discover_community.item_btn_${index}`}>
       <Avatar.Large
         source={item.icon}
         style={{
@@ -76,7 +76,7 @@ const MenuDiscoverCommunity = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="menu_discover_community">
       <Text.SubtitleS style={styles.textTitle} useI18n>menu:title_your_community</Text.SubtitleS>
       {renderContent()}
     </View>

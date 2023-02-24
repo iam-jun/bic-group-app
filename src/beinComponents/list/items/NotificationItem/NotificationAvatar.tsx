@@ -39,7 +39,6 @@ const NotificationAvatar = ({
         return (
           <View key={item?.id} style={styles.item}>
             <Avatar.Small
-              testI="notification_avatar.single"
               source={item?.avatar}
               isRounded
             />
@@ -49,7 +48,6 @@ const NotificationAvatar = ({
       return (
         <View key={item?.id} style={styles.item}>
           <Avatar.Small
-            testI="notification_avatar.single"
             source={item?.avatar}
             isRounded
             counter={rightActorCount - index}
@@ -59,7 +57,7 @@ const NotificationAvatar = ({
     }
     return null;
   });
-  return <View style={styles.container}>{listAvatar}</View>;
+  return <View testID="notification.avatars" style={styles.container}>{listAvatar}</View>;
 };
 
 const styles = StyleSheet.create({

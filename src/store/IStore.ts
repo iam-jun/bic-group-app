@@ -48,6 +48,7 @@ import { IFeedSearchState } from '~/screens/Home/HomeSearch/store';
 import { IButtonMarkAsReadState } from '~/components/posts/ButtonMarkAsRead/store';
 import { ICreatePostState } from '~/screens/post/CreatePost/store';
 import { ILinkPreviewState } from './linkPreview';
+import { IGroupJoinableUsersState } from '~/screens/groups/GroupMembers/AddMembersToGroup/store';
 
 export interface BicStore {
   entities: {
@@ -107,6 +108,7 @@ export interface BicStore {
     };
     GroupMembers: {
       groupMemberStore: IGroupMemberState;
+      addMembersToGroupStore: IGroupJoinableUsersState;
     };
     GroupDetail: {
       groupDetailStore: IGroupDetailState;

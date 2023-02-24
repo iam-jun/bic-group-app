@@ -20,7 +20,7 @@ const AppVersion = () => {
   };
 
   return (
-    <Button disabled={isProduction} onPress={onPressAppVersion}>
+    <Button disabled={isProduction} onPress={onPressAppVersion} testID="app_version">
       <Text.SubtitleXS>
         {getEnv('APP_VERSION')}
         {!!updateDescription && updateDescription !== '(0)' && ` ${updateDescription}`}

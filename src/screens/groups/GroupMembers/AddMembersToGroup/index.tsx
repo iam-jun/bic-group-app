@@ -1,12 +1,6 @@
 import { debounce } from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-
 import { StyleSheet } from 'react-native';
-import { IUser } from '~/interfaces/IAuth';
-import groupsActions from '~/storeRedux/groups/actions';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import appConfig from '~/configs/appConfig';
 
 import Header from '~/beinComponents/Header';
@@ -16,6 +10,7 @@ import { useBaseHook } from '~/hooks';
 import { SearchInput } from '~/baseComponents/Input';
 import SearchResults from './components/SearchResults';
 import ChosenPeople from './components/ChosenPeople';
+import useGroupJoinableUsersStore from './store';
 
 const AddMembersToGroup = (props: any) => {
   const { params } = props.route;
@@ -24,33 +19,36 @@ const AddMembersToGroup = (props: any) => {
   const { t } = useBaseHook();
   const styles = createStyles();
 
-  const dispatch = useDispatch();
-  const selectedUsers = useKeySelector(groupsKeySelector.selectedUsers);
-  const users = useKeySelector(groupsKeySelector.users);
-  const { loading, data } = users;
+  const {
+    data, selectedUsers, actions, reset,
+  } = useGroupJoinableUsersStore((state) => state);
 
   const [searchText, setSearchText] = useState<string>('');
+  const shouldDisableAddBtn = selectedUsers.length === 0;
 
   useEffect(
     () => () => {
-      dispatch(groupsActions.resetJoinableUsers());
-      dispatch(groupsActions.clearSelectedUsers());
+      reset();
     },
     [],
   );
 
-  const loadMoreData = () => {
-    dispatch(groupsActions.mergeExtraJoinableUsers());
+  const getData = (key: string, isLoadMore = false) => {
+    actions.getGroupJoinableUsers({ groupId, key, isLoadMore });
   };
 
-  const onSelectUser = (user: IUser) => {
-    dispatch(groupsActions.selectJoinableUsers(user));
+  const onLoadMore = () => {
+    getData(searchText, true);
+  };
+
+  const onSelectUser = (userId: string) => {
+    actions.setSelectedUsers(userId);
   };
 
   const searchUsers = (searchQuery: string) => {
     setSearchText(searchQuery);
-    dispatch(groupsActions.resetJoinableUsers());
-    dispatch(groupsActions.getJoinableUsers({ groupId, params: { key: searchQuery } }));
+    if (!searchQuery.trim()) return;
+    getData(searchQuery);
   };
 
   const searchHandler = useCallback(
@@ -63,7 +61,7 @@ const AddMembersToGroup = (props: any) => {
   };
 
   const onPressAdd = () => {
-    dispatch(groupsActions.addMembers({ groupId }));
+    actions.addUsersToGroup(groupId);
   };
 
   return (
@@ -72,7 +70,7 @@ const AddMembersToGroup = (props: any) => {
         title={t('groups:title_add_members')}
         buttonText={t('common:text_add')}
         buttonProps={{
-          disabled: selectedUsers.length === 0,
+          disabled: shouldDisableAddBtn,
         }}
         onPressButton={onPressAdd}
       />
@@ -85,14 +83,17 @@ const AddMembersToGroup = (props: any) => {
         placeholder={t('groups:text_search_member')}
       />
 
-      <ChosenPeople selectedUsers={selectedUsers} onSelectUser={onSelectUser} />
+      <ChosenPeople
+        data={data}
+        selectedUsers={selectedUsers}
+        onSelectUser={onSelectUser}
+      />
 
       {!!searchText.trim() && (
         <SearchResults
-          loading={loading}
           data={data}
           selectedUsers={selectedUsers}
-          onLoadMore={loadMoreData}
+          onLoadMore={onLoadMore}
           onSelectUser={onSelectUser}
         />
       )}

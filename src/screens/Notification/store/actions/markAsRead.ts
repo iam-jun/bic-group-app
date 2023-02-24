@@ -2,12 +2,12 @@ import { cloneDeep } from 'lodash';
 import notificationApi from '~/api/NotificationApi';
 import INotificationsState from '../Interface';
 
-const markAsRead = (set, get) => (notificationId: string) => {
+const markAsRead = (set, get) => async (notificationId: string) => {
   try {
     if (!notificationId) return;
     const storeData: INotificationsState = get();
 
-    notificationApi.markAsRead(notificationId);
+    await notificationApi.markAsRead(notificationId);
 
     const notifications: any = cloneDeep(storeData.notificationList) || {};
     notifications[notificationId].isRead = true;
@@ -22,7 +22,7 @@ const markAsRead = (set, get) => (notificationId: string) => {
       state.tabUnread.data = newData;
       state.unseenNumber = 0;
       state.notificationList = { ...state.notificationList, ...notifications };
-    }, 'loadMoreNotification');
+    }, 'markAsReadNotification');
   } catch (err) {
     console.error(
       '\x1b[33m', 'notification markAsRead error', err, '\x1b[0m',
