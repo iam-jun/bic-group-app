@@ -125,7 +125,11 @@ const CodeInputView: React.FC<Props> = ({ useFormData }) => {
 
   const validateConfirmPassword = async () => {
     await trigger('confirmPassword');
-    if (getValues('newPassword') !== getValues('confirmPassword')) {
+
+    const newPassword = getValues('newPassword');
+    const confirmPassword = getValues('confirmPassword');
+
+    if (confirmPassword && (newPassword !== confirmPassword)) {
       setError(
         'confirmPassword', {
           type: 'manual',
