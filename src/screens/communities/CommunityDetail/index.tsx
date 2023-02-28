@@ -293,7 +293,7 @@ const CommunityDetail = (props: any) => {
 
   const hasNoDataInStore = !groupId;
 
-  const shouldShowPlaceholder = !isMounted || hasNoDataInStore;
+  const shouldShowPlaceholder = (!isMounted || hasNoDataInStore) && !error;
 
   if (shouldShowPlaceholder) {
     return <PlaceholderView style={styles.contentContainer} headerStyle={styles.header} />;

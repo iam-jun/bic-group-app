@@ -1,7 +1,7 @@
 import { IGroupDetail } from '~/interfaces/IGroup';
 
 const addToGroups = (set, get) => (payload: IGroupDetail) => {
-  const { id } = payload.group;
+  const { id } = payload?.group || {};
   const { groups } = get();
   const newGroups = { ...groups };
 
