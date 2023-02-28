@@ -102,7 +102,7 @@ const GroupDetail = (props: any) => {
   // const hasNoDataInStore = !groupInfo;
   // const shouldShowPlaceholder = hasNoDataInStore && isLoadingGroup;
 
-  const shouldShowPlaceholder = currentGroupId !== groupId;
+  const shouldShowPlaceholder = currentGroupId !== groupId && !isLoadingGroupDetailError;
 
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
   const canSetting = shouldHavePermission(groupId, [

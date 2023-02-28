@@ -8,10 +8,14 @@ import { IFilePicked } from '~/interfaces/common';
 import { ICreatePostParams, PostStatus } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
+import useLinkPreviewStore from '~/store/linkPreview';
 import useMyPermissionsStore from '~/store/permissions';
 import { IGetFile } from '~/store/uploader';
 import {
-  getTotalFileSize, validateFiles, validateImages, validateVideo,
+  getTotalFileSize,
+  validateFiles,
+  validateImages,
+  validateVideo,
 } from '../helper';
 import useCreatePostStore, { CreatePost } from '../store';
 import useLinkPreview from './useLinkPreview';
@@ -43,7 +47,12 @@ export const useCreatePost = (params: UseCreatePostParams) => {
     loadLinkPreview,
   } = useLinkPreview();
   const {
-    isShowToastAutoSave, startAutoSave, disableButtonPost, isEditPostHasChange, savePost, publishPost,
+    isShowToastAutoSave,
+    startAutoSave,
+    disableButtonPost,
+    isEditPostHasChange,
+    savePost,
+    publishPost,
   } = useSavePost();
 
   const {
@@ -60,12 +69,15 @@ export const useCreatePost = (params: UseCreatePostParams) => {
 
   const { totalFiles, totalSize } = getTotalFileSize(files);
 
-  const { getAudienceListWithNoPermission } = useMyPermissionsStore((state) => state.actions);
+  const { getAudienceListWithNoPermission } = useMyPermissionsStore(
+    (state) => state.actions,
+  );
   const audienceListWithNoPermission = getAudienceListWithNoPermission(
     chosenAudiences,
     PermissionKey.EDIT_POST_SETTING,
   );
-  const shouldDisablePostSettings = audienceListWithNoPermission.length === chosenAudiences.length;
+  const shouldDisablePostSettings
+    = audienceListWithNoPermission.length === chosenAudiences.length;
 
   const shouldDisableButtonsCreatePostFooter = () => {
     const buttonsDisabled = {
@@ -89,7 +101,7 @@ export const useCreatePost = (params: UseCreatePostParams) => {
 
     if (
       totalFiles === appConfig.maxFiles
-    || totalSize >= appConfig.totalFileSize
+      || totalSize >= appConfig.totalFileSize
     ) {
       buttonsDisabled.fileDisabled = true;
     }
@@ -179,8 +191,21 @@ export const useCreatePost = (params: UseCreatePostParams) => {
       files: media?.files || [],
       isInitDone: true,
     };
-
     createPostStoreActions.updateCreatePost(init);
+
+    const currentLinkPreviewState = useLinkPreviewStore.getState();
+    const currentLinkPreview = {
+      lstLinkPreview: currentLinkPreviewState.lstLinkPreview,
+      lstRemovedLinkPreview: currentLinkPreviewState.lstRemovedLinkPreview,
+    };
+    createPostStoreActions.updatePrevUpdate({
+      images: init.images,
+      chosenAudiences: init.chosenAudiences,
+      important: init.important,
+      video: init.video,
+      files: init.files,
+      linkPreview: currentLinkPreview,
+    });
   };
 
   useEffect(() => {

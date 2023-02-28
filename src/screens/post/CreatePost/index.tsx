@@ -83,12 +83,6 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     audienceListWithNoPermission,
   } = useCreatePostData;
 
-  const [disableButtonPostState, setDisableButtonPostState] = useState(disableButtonPost);
-
-  useEffect(() => {
-    setDisableButtonPostState(disableButtonPost);
-  }, [disableButtonPost]);
-
   const {
     chosenAudiences, id, important, count,
   } = createPostData;
@@ -102,7 +96,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
 
   const buttonPostProps = {
     loading,
-    disabled: disableButtonPostState,
+    disabled: disableButtonPost,
     useI18n: true,
     style: { borderWidth: 0 },
     testID: 'create_post.btn_post',

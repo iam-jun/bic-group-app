@@ -1,4 +1,8 @@
-import { IPayloadPublishDraftPost, IPostCreatePost } from '~/interfaces/IPost';
+import {
+  ILinkPreviewCreatePost,
+  IPayloadPublishDraftPost,
+  IPostCreatePost,
+} from '~/interfaces/IPost';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
 import createNewPost from './actions/createNewPost';
@@ -20,12 +24,29 @@ export type CreatePost = {
   count: number;
   isInitDone: boolean;
 };
+
+export type PrevUpdate = {
+  images: any[];
+  chosenAudiences: any[];
+  important: {
+    active?: boolean;
+    expiresTime?: string | null;
+  };
+  linkPreview: {
+    lstLinkPreview: ILinkPreviewCreatePost[];
+    lstRemovedLinkPreview: string[];
+  };
+  video: any;
+  files: any[];
+};
 export interface ICreatePostState extends IBaseState {
   loading: boolean;
   createPost: CreatePost;
+  prevUpdate: PrevUpdate;
   actions: {
     createNewPost: (payload: IPostCreatePost) => void;
     updateCreatePost: (payload: Partial<CreatePost>) => void;
+    updatePrevUpdate: (payload: Partial<PrevUpdate>) => void;
     setLoadingCreatePost: (payload: boolean) => void;
     postPublishDraftPost: (payload: IPayloadPublishDraftPost) => void;
   };
@@ -48,9 +69,23 @@ const initialState: InitStateType<ICreatePostState> = {
     count: 0,
     isInitDone: false,
   },
+  prevUpdate: {
+    images: [],
+    video: undefined,
+    files: [],
+    important: {
+      active: false,
+      expiresTime: null,
+    },
+    chosenAudiences: [],
+    linkPreview: {
+      lstLinkPreview: [],
+      lstRemovedLinkPreview: [],
+    },
+  },
 };
 
-const createPostStore = (set, get) => ({
+const createPostStore = (set, get): ICreatePostState => ({
   ...initialState,
 
   actions: {
@@ -62,6 +97,14 @@ const createPostStore = (set, get) => ({
           ...payload,
         };
       }, 'updateCreatePost');
+    },
+    updatePrevUpdate: (payload: Partial<PrevUpdate>) => {
+      set((state: ICreatePostState) => {
+        state.prevUpdate = {
+          ...state.prevUpdate,
+          ...payload,
+        };
+      }, 'updatePrevUpdate');
     },
     setLoadingCreatePost: (payload: boolean) => {
       set((state: ICreatePostState) => {
