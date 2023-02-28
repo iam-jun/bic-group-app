@@ -1,5 +1,5 @@
 import {
-  useCallback, useEffect, useState,
+  useCallback, useEffect, useRef, useState,
 } from 'react';
 import { Keyboard } from 'react-native';
 import { isEmpty } from 'lodash';
@@ -57,6 +57,7 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
   const [selectedEmoji, setSelectedEmoji] = useState<string>();
 
   const [contentLoading, setContentLoading] = useState(true);
+  const cursorPosition = useRef(0);
 
   const { showToast, showAlert } = useModalStore((state) => state.actions);
 
@@ -154,7 +155,7 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
 
   useEffect(() => {
     if (!!selectedEmoji) {
-      const completeStr = formatTextWithEmoji(text, selectedEmoji);
+      const completeStr = formatTextWithEmoji(text, selectedEmoji, cursorPosition.current);
       setText(completeStr);
       setSelectedEmoji('');
     }
@@ -229,8 +230,9 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
     setSelectedGiphy(undefined);
   };
 
-  const handleSelectEmoij = useCallback((emoji: string) => {
+  const handleSelectEmoij = useCallback((emoji: string, position: any) => {
     setSelectedEmoji(emoji);
+    cursorPosition.current = position;
   }, []);
 
   const handleSave = () => {
