@@ -2,8 +2,18 @@ version: 2.1
 
 orbs:
   android: circleci/android@2.0.3
+  sonarcloud: sonarsource/sonarcloud@1.0.3
 
 jobs:
+  sonarcloud-scan:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - checkout
+      - run:
+          name: Install NPM
+          command: npm install --legacy-peer-deps
+      - sonarcloud/scan
   ios-stg-update:
     macos:
       xcode: 14.0.0
@@ -276,8 +286,20 @@ jobs:
 
 workflows:
   version: 2
-  Staging_iOS-Android:
+  Develop:
     jobs:
+      - sonarcloud-scan:
+          filters:
+            branches:
+              only: /^BEIN.*$/
+
+  Staging:
+    jobs:
+      - sonarcloud-scan:
+          filters:
+            branches:
+              only: /^staging.*$/
+
       - ios-stg-update-approval:
           filters:
             branches:
@@ -324,8 +346,13 @@ workflows:
           requires:
             - android-approval
 
-  Production_iOS-Android:
+  Production:
     jobs:
+      - sonarcloud-scan:
+          filters:
+            branches:
+              only: /^master.*$|^release.*$/
+
       - ios-pro-update-approval:
           filters:
             branches:
