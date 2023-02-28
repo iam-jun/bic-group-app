@@ -22,16 +22,33 @@ const FormCheckPw: React.FC<Props> = ({ useFormData, loadingConfirm }) => {
   const styles = themeStyles(theme);
   const [form, setForm] = useState<IFormCheckPw>();
 
-  const { trigger, getValues } = useFormData;
+  const {
+    trigger, getValues, clearErrors, setError,
+  } = useFormData;
 
   const validateNewPassword = async () => {
-    if (getValues('newPassword').length === 0) {
+    const newPassword = getValues('newPassword');
+    const confirmPassword = getValues('confirmPassword');
+
+    if (newPassword.length === 0) {
       setForm({
         isLimitCharacter: false,
         isUppercaseLetter: false,
         isDigits: false,
         isSpecialCharacter: false,
       });
+    }
+    if (confirmPassword) {
+      if (newPassword === confirmPassword) {
+        clearErrors('confirmPassword');
+      } else {
+        setError(
+          'confirmPassword', {
+            type: 'manual',
+            message: t('auth:text_err_confirm_password_not_matched'),
+          },
+        );
+      }
     }
     await trigger('newPassword');
   };
