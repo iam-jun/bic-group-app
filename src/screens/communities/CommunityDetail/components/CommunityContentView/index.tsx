@@ -17,6 +17,7 @@ import useTimelineStore, { ITimelineState } from '~/store/timeline';
 import ContentItem from '~/components/ContentItem';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 import { ContentFeed, AttributeFeed } from '~/interfaces/IFeed';
+import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 
 interface CommunityContentViewProps {
   community: ICommunity;
@@ -81,6 +82,10 @@ const _CommunityContentView = ({
   const onContentRefresh = () => onRefresh(true);
   const onPrivateRefresh = () => onRefresh(false);
 
+  const renderPlaceHolderLoading = () => (
+    <PostViewPlaceholder />
+  );
+
   const renderLoading = () => (
     <View style={styles.loading}>
       <LoadingIndicator />
@@ -136,7 +141,7 @@ const _CommunityContentView = ({
             onPressAttributeFilterTab={_onPressAttributeFilterTab}
           />
           <Divider color={colors.gray5} size={spacing.padding.tiny} />
-          {isLoadingPosts && renderLoading()}
+          {isLoadingPosts && renderPlaceHolderLoading()}
         </View>
       )}
       ListFooterComponent={renderFooter}
