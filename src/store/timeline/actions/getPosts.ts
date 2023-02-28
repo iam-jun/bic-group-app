@@ -9,7 +9,7 @@ import {
   getParamsImportantAttributeFeed,
 } from '~/screens/Home/store/helper';
 
-const getPosts = (set, get) => async (id: string, isRefresh?: boolean) => {
+const getPosts = (set, get) => async (id: string, isRefresh = false) => {
   const { timelines }: ITimelineState = get();
   const { contentFilter, attributeFilter, data } = timelines[id] || {};
   const currentPosts: IBaseListState<IPost> = data[contentFilter][attributeFilter];
