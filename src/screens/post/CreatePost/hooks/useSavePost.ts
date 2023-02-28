@@ -28,13 +28,13 @@ export const useSavePost = () => {
   const [isAutoSave, setIsAutoSave] = useState(false);
   const [isShowToastAutoSave, setShowToastAutoSave] = useState<boolean>(false);
 
-  const prevData = useRef<any>(null);
   const refStopTyping = useRef(null);
   const refTypingConstantly = useRef(null);
 
   const createPostStoreActions = useCreatePostStore((state) => state.actions);
   const postStoreActions = usePostsStore((state) => state.actions);
   const createPostData = useCreatePostStore((state) => state.createPost);
+  const prevUpdateData = useCreatePostStore((state) => state.prevUpdate);
   const loading = useCreatePostStore((state) => state.loading);
   const tempMentions = useMentionInputStore(
     (state: IMentionInputState) => state.tempSelected,
@@ -54,7 +54,6 @@ export const useSavePost = () => {
     canComment,
     canReact,
     chosenAudiences,
-    isInitDone,
   } = createPostData;
 
   const post = usePostsStore(postsSelector.getPost(id, {}));
@@ -87,25 +86,25 @@ export const useSavePost = () => {
     const dataChangeList = [
       isEqual(
         JSON.stringify(selectingImages),
-        JSON.stringify(prevData?.current?.selectingImages),
+        JSON.stringify(prevUpdateData?.images),
       ),
       isEmpty(
         differenceWith(
           chosenAudiences,
-          prevData?.current?.chosenAudiences,
+          prevUpdateData?.chosenAudiences,
           isEqual,
         ),
       ),
-      isEqual(important, prevData?.current?.important),
-      isEqual(selectingVideo, prevData?.current?.selectingVideo),
+      isEqual(important, prevUpdateData?.important),
+      isEqual(selectingVideo, prevUpdateData?.video),
       isEmpty(
         differenceWith(
           selectingFiles,
-          prevData?.current?.selectingFiles,
+          prevUpdateData?.files,
           isEqual,
         ),
       ),
-      isEqual(linkPreview, prevData?.current?.linkPreview),
+      isEqual(linkPreview, prevUpdateData?.linkPreview),
     ];
     const hasChange = dataChangeList.filter((i) => !i);
 
@@ -139,29 +138,15 @@ export const useSavePost = () => {
     setIsAutoSave(true);
   };
 
-  useEffect(() => {
-    if (isInitDone) {
-      prevData.current = {
-        selectingImages,
-        chosenAudiences,
-        important,
-        linkPreview,
-        selectingVideo,
-        selectingFiles,
-      };
-    }
-  }, [isInitDone]);
-
-  const updatePrevData = () => {
-    prevData.current = {
-      ...prevData.current,
-      selectingImages,
+  const updatePrevUpdate = () => {
+    createPostStoreActions.updatePrevUpdate({
+      images: selectingImages,
       chosenAudiences,
       important,
-      selectingVideo,
-      selectingFiles,
+      video: selectingVideo,
+      files: selectingFiles,
       linkPreview,
-    };
+    });
   };
 
   const prepareData = () => {
@@ -258,7 +243,7 @@ export const useSavePost = () => {
       if (isToastAutoSave) {
         showToastAutoSave();
       }
-      updatePrevData();
+      updatePrevUpdate();
       await postStoreActions.putEditPost(newPayload);
     } catch {
       return false;
