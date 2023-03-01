@@ -1,11 +1,13 @@
 import { Auth } from 'aws-amplify';
+import { Platform } from 'react-native';
 import { makeRemovePushTokenRequest } from '~/api/apiRequest';
+import { IObject } from '~/interfaces/common';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { rootSwitch } from '~/router/stack';
 import { IAuthState } from '~/screens/auth/store';
 import { deleteTokenMessage } from '~/services/firebase';
-import { clearAllSharedPreferences } from '~/services/sharePreferences';
+import { getUserFromSharedPreferences, isAppInstalled, saveUserToSharedPreferences } from '~/services/sharePreferences';
 import showToastError from '~/store/helper/showToastError';
 import resetAllStores from '~/store/resetAllStores';
 import useUploaderStore from '~/store/uploader';
@@ -13,6 +15,39 @@ import Store from '~/storeRedux';
 import modalActions from '~/storeRedux/modal/actions';
 
 const navigation = withNavigation(rootNavigationRef);
+
+const updateSharedPreferences = async () => {
+  /**
+  * For android, we stored authentication in separated DB.
+  * So only remove its own session
+  */
+  if (Platform.OS === 'android') {
+    await saveUserToSharedPreferences(null);
+    return;
+  }
+
+  const sessionData: IObject<any> = await getUserFromSharedPreferences();
+  const isInstalled = await isAppInstalled();
+  const activeSessions = sessionData?.activeSessions || {};
+
+  /**
+   * if BIC chat is installed and has active session
+   *  just only remove chat session
+   */
+  if (isInstalled && activeSessions.chat) {
+    delete activeSessions?.community;
+    const data = {
+      ...sessionData,
+      activeSessions,
+
+    };
+
+    await saveUserToSharedPreferences(data);
+  } else {
+    // clear all session
+    await saveUserToSharedPreferences(null);
+  }
+};
 
 const signOut = (set, get) => async () => {
   const authState: IAuthState = get() || {};
@@ -30,7 +65,7 @@ const signOut = (set, get) => async () => {
 
     await Auth.signOut();
 
-    await clearAllSharedPreferences();
+    await updateSharedPreferences();
 
     await removePushToken();
 
