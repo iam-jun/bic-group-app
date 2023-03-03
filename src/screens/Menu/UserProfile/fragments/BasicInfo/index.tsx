@@ -52,10 +52,12 @@ const BasicInfo = ({
     >
       <InfoItem title="settings:title_name" value={fullname} />
       <InfoItem title="settings:title_gender" value={genders[gender]} />
-      <InfoItem
-        title="settings:title_birthday"
-        value={formatDate(birthday, 'MMM D, YYYY')}
-      />
+      {isCurrentUser && (
+        <InfoItem
+          title="settings:title_birthday"
+          value={formatDate(birthday, 'MMM D, YYYY')}
+        />
+      )}
       <InfoItem title="settings:title_language" value={getLanguages(language)} />
       <InfoItem
         title="settings:title_relationship_status"
