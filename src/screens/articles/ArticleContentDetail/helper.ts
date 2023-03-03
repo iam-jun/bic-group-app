@@ -87,7 +87,7 @@ export const onPressImages = (data: { payload: any; listImage; setInitIndex; set
   if (!payload) return;
 
   const indexImage = listImage.findIndex((item: any) => item.uri === payload);
-  setInitIndex(indexImage);
+  setInitIndex(indexImage < 0 ? 0 : indexImage);
   setGalleryVisible(true);
 };
 
@@ -95,4 +95,24 @@ export const onPressMentionAudience = (payload: IMentionUser) => {
   if (!payload) return;
 
   rootNavigation.navigate(mainStack.userProfile, { userId: payload.id });
+};
+
+export const getListImage = (node: any) => {
+  // Return early if the node is undefined
+  if (!node) return [];
+  // Return immediately if the node is an image
+  if (node?.type === 'img') {
+    return [node];
+  }
+  // Or else,
+  // Recursively search for images in the children array
+  if (Array.isArray(node.children)) {
+    const result = [];
+    node.children.forEach((children: any) => {
+      if (children) result.push(...getListImage(children));
+    });
+    return result.flat();
+  }
+  // Node is text node, no children, or children is not an array
+  return [];
 };

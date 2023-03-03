@@ -18,7 +18,7 @@ import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import { parseSafe } from '~/utils/common';
 import useArticlesStore, { IArticlesState } from '../ArticleDetail/store';
-import { handleMessage } from './helper';
+import { getListImage, handleMessage } from './helper';
 
 const HEADER_HEIGHT = 244;
 
@@ -118,20 +118,19 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
     let listImage = [];
 
     if (contentParse.length > 0) {
-      const listImageContent = contentParse?.filter((item: any) => item.type === 'img');
+      const listImageContent = getListImage({
+        type: 'content',
+        children: contentParse,
+      });
       listImage = [{ ...coverMedia }].concat(listImageContent);
     } else {
       listImage = [{ ...coverMedia }];
     }
 
-    const result: any = [];
-    listImage.forEach((item) => {
-      result.push({
-        uri: item.url,
-        name: item?.name || `${item?.id}.png`,
-      });
-    });
-
+    const result = listImage.map((item) => ({
+      uri: item.url,
+      name: item?.name || `${item?.id}.png`,
+    }));
     setListImage(result);
   };
 
