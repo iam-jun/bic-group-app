@@ -144,7 +144,7 @@ export const validateFiles = (selectingFiles: IFilePicked[], t: any) => {
     } else {
       const isUploading = useUploaderStore.getState().uploadingFiles?.[item?.name] >= 0;
       const uploadedFile = useUploaderStore.getState().uploadedFiles?.[item?.name];
-      const { url, result } = uploadedFile || {};
+      const { url } = uploadedFile || {};
       if (isUploading) {
         fileUploading = true;
         fileError = t('post:error_wait_uploading');
@@ -152,8 +152,8 @@ export const validateFiles = (selectingFiles: IFilePicked[], t: any) => {
         fileError = t('post:error_upload_failed');
       }
       files.push({
-        ...result,
         ...item,
+        ...uploadedFile,
         origin_name: item.name,
       });
     }

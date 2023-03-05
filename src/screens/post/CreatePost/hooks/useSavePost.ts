@@ -1,4 +1,4 @@
-import { differenceWith, isEmpty, isEqual } from 'lodash';
+import { isEqual, orderBy } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
@@ -88,21 +88,15 @@ export const useSavePost = () => {
         JSON.stringify(selectingImages),
         JSON.stringify(prevUpdateData?.images),
       ),
-      isEmpty(
-        differenceWith(
-          chosenAudiences,
-          prevUpdateData?.chosenAudiences,
-          isEqual,
-        ),
+      isEqual(
+        orderBy(chosenAudiences, 'id'),
+        orderBy(prevUpdateData?.chosenAudiences, 'id'),
       ),
       isEqual(important, prevUpdateData?.important),
       isEqual(selectingVideo, prevUpdateData?.video),
-      isEmpty(
-        differenceWith(
-          selectingFiles,
-          prevUpdateData?.files,
-          isEqual,
-        ),
+      isEqual(
+        orderBy(selectingFiles, 'id'),
+        orderBy(prevUpdateData?.files, 'id'),
       ),
       isEqual(linkPreview, prevUpdateData?.linkPreview),
     ];
