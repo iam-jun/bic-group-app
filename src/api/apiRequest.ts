@@ -2,6 +2,7 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { isEmpty } from 'lodash';
 import DeviceInfo from 'react-native-device-info';
+import * as Sentry from '@sentry/react-native';
 
 import { DeviceEventEmitter } from 'react-native';
 import {
@@ -102,6 +103,12 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig): Promise<Axi
 
 const makePushTokenRequest = (deviceToken: string) => {
   const deviceId = DeviceInfo.getUniqueId();
+
+  Sentry.setTag('deviceId', deviceId);
+  Sentry.setTag('pushTokenHeader', deviceToken?.substring?.(0, 10));
+  Sentry.setTag('username', useAuthController?.getState?.()?.authUser?.username);
+  Sentry.captureMessage('Register push token');
+
   return makeHttpRequest(notificationApiConfig.pushToken(
     deviceToken, deviceId,
   ));
@@ -112,6 +119,11 @@ const makeRemovePushTokenRequest = async () => {
   const requestConfig = notificationApiConfig.removePushToken(deviceId);
   const axiosInstance = axios.create();
   axiosInstance.defaults.timeout = requestConfig.timeout;
+
+  Sentry.setTag('deviceId', deviceId);
+  Sentry.setTag('username', useAuthController?.getState?.()?.authUser?.username);
+  Sentry.captureMessage('Remove push token');
+
   return axiosInstance(requestConfig);
 };
 
