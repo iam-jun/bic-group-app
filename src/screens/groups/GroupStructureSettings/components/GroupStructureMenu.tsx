@@ -1,14 +1,13 @@
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import { useRootNavigation } from '~/hooks/navigation';
 
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import modalActions from '~/storeRedux/modal/actions';
 import { IGroup } from '~/interfaces/IGroup';
 import spacing from '~/theme/spacing';
+import useModalStore from '~/store/modal';
 
 export interface GroupStructureMenuProps {
   communityId: string
@@ -23,23 +22,23 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
   disableMove,
   disableReorder,
 }: GroupStructureMenuProps) => {
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme || {};
+  const modalActions = useModalStore((state) => state.actions);
 
   const onPressReorderGroup = () => {
     rootNavigation.navigate(
       groupStack.reorderGroup, { group, communityId },
     );
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
   };
 
   const onPressMoveGroup = () => {
     rootNavigation.navigate(
       groupStack.moveGroup, { group, communityId },
     );
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
   };
 
   return (

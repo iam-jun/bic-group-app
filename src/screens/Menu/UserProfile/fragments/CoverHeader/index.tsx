@@ -8,7 +8,6 @@ import { checkPermission, permissionTypes } from '~/utils/permission';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import useMenuController from '~/screens/Menu/store';
 import { IUserImageUpload } from '~/interfaces/IEditUser';
-import Store from '~/storeRedux';
 
 interface Props {
   id: string;
@@ -32,7 +31,7 @@ const CoverHeader = ({
     callback?: (fieldName: string) => void,
   ) => {
     checkPermission(
-      permissionTypes.photo, Store.store.dispatch, (canOpenPicker) => {
+      permissionTypes.photo, (canOpenPicker) => {
         if (canOpenPicker) {
           ImagePicker.openPickerSingle({
             ...userProfileImageCropRatio[fieldName],

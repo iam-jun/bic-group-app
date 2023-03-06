@@ -13,7 +13,6 @@ import {
   Alert,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import Animated, {
   useAnimatedStyle,
   withTiming,
@@ -25,7 +24,6 @@ import Text from '~/baseComponents/Text';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 
 import useAuthController, { IAuthState } from '~/screens/auth/store';
-import * as modalActions from '~/storeRedux/modal/actions';
 import {
   getUserFromSharedPreferences,
   isAppInstalled,
@@ -43,10 +41,10 @@ import { AppConfig } from '~/configs';
 import RequestVerifyEmailModal from '../VerifyEmail/RequestVerifyEmailModal';
 import { authErrors } from '~/constants/authConstants';
 import { useBaseHook } from '~/hooks';
+import useModalStore from '~/store/modal';
 
 const SignIn = () => {
   const { rootNavigation } = useRootNavigation();
-  const dispatch = useDispatch();
   const [disableSignIn, setDisableSignIn] = useState(true);
   const [authSessions, setAuthSessions] = useState<any>(null);
 
@@ -54,6 +52,8 @@ const SignIn = () => {
   const authActions = useAuthController((state: IAuthState) => state.actions);
   const loading = signInState?.loading;
   const signingInError = signInState?.error;
+
+  const modalActions = useModalStore((state) => state.actions);
 
   const inputPasswordRef = useRef<any>();
 
@@ -168,17 +168,17 @@ const SignIn = () => {
       case authErrors.USER_NOT_FOUND_EXCEPTION:
         // eslint-disable-next-line no-case-declarations
         const email = getValues('email');
-        dispatch(modalActions.showModal({
+        modalActions.showModal({
           isOpen: true,
           titleFullScreen: 'groups:group_content:btn_your_groups',
           ContentComponent: <RequestVerifyEmailModal email={email} />,
-        }));
+        });
         break;
       default:
         errorMessage = error?.message || t('auth:text_err_id_password_not_matched');
     }
     authActions.setSignInLoading(false);
-    dispatch(modalActions.hideLoading());
+    modalActions.setLoadingModal(false);
     !!errorMessage && authActions.setSignInError(errorMessage);
   };
 

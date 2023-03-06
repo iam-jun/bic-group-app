@@ -1,8 +1,6 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
 import { ICommunity, ICommunityMembers } from '~/interfaces/ICommunity';
-import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
 import useCommunityMemberStore from '../store';
 import useCommunityController from '../../store';
@@ -27,10 +25,9 @@ const CommunityMemberOptionsMenu = ({
   onOptionsClosed,
 }: CommunityMemberOptionsMenuProps) => {
   const { id: communityId, groupId } = community;
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
 
-  const { showAlert } = useModalStore((state) => state.actions);
+  const { showAlert, showModal } = useModalStore((state) => state.actions);
 
   const removeCommunityMember = useCommunityMemberStore(
     (state) => state.actions.removeCommunityMember,
@@ -91,14 +88,14 @@ const CommunityMemberOptionsMenu = ({
       communityId,
     };
 
-    dispatch(modalActions.showModal({
+    showModal({
       isOpen: true,
       ContentComponent: <ReportContent
         targetId={selectedMember?.id}
         targetType={TargetType.MEMBER}
         dataReportMember={dataReportMember}
       />,
-    }));
+    });
   };
 
   return (

@@ -1,7 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -10,13 +9,13 @@ import Divider from '~/beinComponents/Divider';
 import { useRootNavigation } from '~/hooks/navigation';
 import Text from '~/baseComponents/Text';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
-import modalActions from '~/storeRedux/modal/actions';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import useModalStore from '~/store/modal';
 
 const CommunityAdmin = (props: any) => {
   const { params } = props.route;
@@ -24,7 +23,6 @@ const CommunityAdmin = (props: any) => {
 
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles();
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const community = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
   const { name = '', groupId } = community || {};
@@ -37,8 +35,9 @@ const CommunityAdmin = (props: any) => {
       PermissionKey.EDIT_PRIVACY,
     ],
   );
+  const modalActions = useModalStore((state) => state.actions);
 
-  const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
+  const displayNewFeature = () => modalActions.showAlertNewFeature();
 
   const onPressGeneralInfo = () => {
     rootNavigation.navigate(

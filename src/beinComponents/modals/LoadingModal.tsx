@@ -9,17 +9,15 @@ import Animated, { FadeInUp, FadeOutDown } from 'react-native-reanimated';
 
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
-
 import { LottieFileLoading } from '~/resources/lottieJson';
-import { useKeySelector } from '~/hooks/selector';
+import useModalStore from '~/store/modal';
 
 const LoadingModal = () => {
   const styles = themeStyles();
 
-  const { loading } = useKeySelector('modal');
-  const { visible } = loading;
+  const loadingModal = useModalStore((state) => state.loadingModal);
 
-  if (!visible) return null;
+  if (!loadingModal) return null;
 
   return (
     <Animated.View style={styles.container} entering={FadeInUp} exiting={FadeOutDown}>

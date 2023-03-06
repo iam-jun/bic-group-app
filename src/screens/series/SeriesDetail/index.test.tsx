@@ -2,15 +2,13 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import * as React from 'react';
 import streamApi from '~/api/StreamApi';
 import usePostsStore from '~/store/entities/posts';
-import initialState from '~/storeRedux/initialState';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 import { mockSeries } from '~/test/mock_data/series';
-import { configureStore, fireEvent, renderWithRedux } from '~/test/testUtils';
+import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import SeriesDetail from '.';
 
 describe('SeriesDetail component', () => {
   const seriesId = '5264f1b3-c8b8-428a-9fb8-7f075f03d0c8';
-  const mockStore = configureStore([]);
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -40,9 +38,12 @@ describe('SeriesDetail component', () => {
     expect(deleteComponent).toBeDefined();
   });
 
-  it('should call action show bottom sheet menu when press menu icon', () => {
-    const store = mockStore(initialState);
-    const spyModalActions = jest.spyOn(modalActions, 'showBottomList');
+  it('should call action show bottom list menu when press menu icon', () => {
+    const showBottomList = jest.fn();
+    useModalStore.setState((state) => {
+      state.actions = { showBottomList } as any;
+      return state;
+    });
 
     const response = {
       code: 200,
@@ -61,7 +62,7 @@ describe('SeriesDetail component', () => {
       result.current.actions.addToPosts({ data: mockSeries });
     });
 
-    const wrapper = renderWithRedux(<SeriesDetail route={{ params: { seriesId } }} />, store);
+    const wrapper = renderWithRedux(<SeriesDetail route={{ params: { seriesId } }} />);
 
     act(() => {
       jest.runAllTimers();
@@ -71,6 +72,6 @@ describe('SeriesDetail component', () => {
     expect(iconMenu).toBeDefined();
     fireEvent.press(iconMenu);
 
-    expect(spyModalActions).toBeCalled();
+    expect(showBottomList).toBeCalled();
   });
 });

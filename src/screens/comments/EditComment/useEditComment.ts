@@ -15,7 +15,6 @@ import ICommentInputState from '../components/CommentInputView/store/Interface';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { useBaseHook } from '~/hooks';
-import Store from '~/storeRedux';
 import { checkPermission, permissionTypes } from '~/utils/permission';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import { IGiphy } from '~/interfaces/IGiphy';
@@ -168,7 +167,7 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
 
   const handelSelectImage = () => {
     checkPermission(
-      permissionTypes.photo, Store.store.dispatch, (canOpenPicker) => {
+      permissionTypes.photo, (canOpenPicker) => {
         if (canOpenPicker) {
           ImagePicker.openPickerSingle().then((file) => {
             if (!file) return;

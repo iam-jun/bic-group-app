@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
 import UploadingImage from '~/beinComponents/UploadingImage';
@@ -28,8 +27,6 @@ interface Props {
 const CoverImage = ({
   style, coverMedia, disabled, onUploadSuccess,
 }: Props) => {
-  const dispatch = useDispatch();
-
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
@@ -38,7 +35,7 @@ const CoverImage = ({
 
   const onPressSelect = () => {
     checkPermission(
-      permissionTypes.photo, dispatch, (canOpenPicker) => {
+      permissionTypes.photo, (canOpenPicker) => {
         if (canOpenPicker) {
           ImagePicker.openPickerSingle({
             mediaType: 'photo',

@@ -1,14 +1,12 @@
 import React, { FC, useContext, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import moment from 'moment';
 import Button from '~/baseComponents/Button';
 import Text from '~/baseComponents/Text';
 import { AppContext } from '~/contexts/AppContext';
 import { useBaseHook } from '~/hooks';
-import modalActions from '~/storeRedux/modal/actions';
 
 import spacing from '~/theme/spacing';
 import Icon from '~/baseComponents/Icon';
@@ -23,6 +21,7 @@ import {
   startOfTime,
 } from './helper';
 import { itemFilter, TypeFilter } from './constants';
+import useModalStore from '~/store/modal';
 
 export interface NFSFilterDateProps {
   startDate?: string;
@@ -108,7 +107,6 @@ const FilterDate: FC<NFSFilterDateProps> = ({
 }: NFSFilterDateProps) => {
   const [staged, setStaged] = useState(0);
 
-  const dispatch = useDispatch();
   const { language } = useContext(AppContext);
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
@@ -116,12 +114,13 @@ const FilterDate: FC<NFSFilterDateProps> = ({
   const styles = createStyle();
 
   const currentFilter = getCurrentFilterByTimeRange(startDate, endDate);
+  const modalActions = useModalStore((state) => state.actions);
 
   const onPressApply = (
     selectedStartDate?: string,
     selectedEndDate?: string,
   ) => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
     onSelect?.(selectedStartDate, selectedEndDate);
   };
 

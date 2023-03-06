@@ -3,9 +3,9 @@ import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import PostDraftView from './PostDraftView';
 import { mockDraftPost } from '~/test/mock_data/draftPosts';
 import { IPost, PostStatus } from '~/interfaces/IPost';
-import modalActions from '~/storeRedux/modal/actions';
 import * as navigationHook from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
+import useModalStore from '~/store/modal';
 
 const mockData = mockDraftPost as IPost;
 
@@ -20,15 +20,21 @@ describe('PostDraftView component', () => {
     expect(buttonPublish).toBeDefined();
   });
 
-  it('should hide modal when click button delete', () => {
-    const spyHideModal = jest.spyOn(modalActions, 'hideModal');
+  it('should hide modal and show alert when click button delete', () => {
+    const hideModal = jest.fn();
+    const showAlert = jest.fn();
+    useModalStore.setState((state) => {
+      state.actions = { hideModal, showAlert } as any;
+      return state;
+    });
 
     const wrapper = renderWithRedux(<PostDraftView data={mockData} />);
     const buttonDelete = wrapper.getByTestId('post_draft_view.button_delete');
     expect(buttonDelete).toBeDefined();
 
     fireEvent.press(buttonDelete);
-    expect(spyHideModal).toBeCalled();
+    expect(hideModal).toBeCalled();
+    expect(showAlert).toBeCalled();
   });
 
   it('should navigate to edit post screen when click button edit', () => {

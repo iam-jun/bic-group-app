@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import isEmpty from 'lodash/isEmpty';
-import { useDispatch } from 'react-redux';
 
 import Text from '~/baseComponents/Text';
 import { Button } from '~/baseComponents';
@@ -19,8 +18,8 @@ import CodeInput from './components/CodeInput';
 import * as validation from '~/constants/commonRegex';
 import RequestVerifyEmailModal from '~/screens/auth/VerifyEmail/RequestVerifyEmailModal';
 import { authErrors } from '~/constants/authConstants';
-import modalActions from '~/storeRedux/modal/actions';
 import showToastError from '~/store/helper/showToastError';
+import useModalStore from '~/store/modal';
 
 interface Props {
   useFormData: IObject<any>;
@@ -30,11 +29,11 @@ const CodeInputView: React.FC<Props> = ({ useFormData }) => {
   const theme: ExtendedTheme = useTheme();
   const { t } = useBaseHook();
   const styles = themeStyles(theme);
-  const dispatch = useDispatch();
 
   const actions = useForgotPasswordStore((state: IForgotPasswordState) => state.actions);
   const loadingConfirm = useForgotPasswordStore((state: IForgotPasswordState) => state.loadingConfirm);
   const loadingRequest = useForgotPasswordStore((state: IForgotPasswordState) => state.loadingRequest);
+  const modalActions = useModalStore((state) => state.actions);
 
   const {
     getValues,
@@ -96,11 +95,11 @@ const CodeInputView: React.FC<Props> = ({ useFormData }) => {
   const handleError = (error: any) => {
     if (error?.code === authErrors.USER_NOT_FOUND_EXCEPTION) {
       const email = getValues('email');
-      dispatch(modalActions.showModal({
+      modalActions.showModal({
         isOpen: true,
         titleFullScreen: 'groups:group_content:btn_your_groups',
         ContentComponent: <RequestVerifyEmailModal email={email} isFromSignIn={false} />,
-      }));
+      });
     } else {
       if (error?.code === authErrors.LIMIT_EXCEEDED_EXCEPTION) {
         showToastError({ meta: { message: t('auth:text_err_limit_exceeded') } });

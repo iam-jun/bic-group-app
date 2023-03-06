@@ -1,11 +1,9 @@
 import React from 'react';
 import i18next from 'i18next';
 import Clipboard from '@react-native-clipboard/clipboard';
-
-import { useDispatch } from 'react-redux';
 import { Keyboard } from 'react-native';
+
 import useArticleController from '~/screens/articles/store';
-import modalActions from '~/storeRedux/modal/actions';
 import { IPost } from '~/interfaces/IPost';
 import { useRootNavigation } from './navigation';
 import { BottomListProps } from '~/components/BottomList';
@@ -23,10 +21,9 @@ const useArticleMenu = (
   isActor: boolean,
 ) => {
   const { rootNavigation } = useRootNavigation();
-  const dispatch = useDispatch();
 
   const commonActions = useCommonController((state) => state.actions);
-  const { showToast, showAlert } = useModalStore((state) => state.actions);
+  const modalActions = useModalStore((state) => state.actions);
 
   if (!data) return null;
 
@@ -35,12 +32,12 @@ const useArticleMenu = (
   } = data;
 
   const onPressEdit = () => {
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     rootNavigation.navigate(articleStack.createArticle, { articleId });
   };
 
   const onPressSave = () => {
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     if (isSaved) {
       commonActions.unsavePost(articleId, type);
     } else {
@@ -51,10 +48,10 @@ const useArticleMenu = (
   const onPressReport = () => {
     const rootGroupIds = getRootGroupids(audience);
 
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
 
     // in this sprint default reportTo is COMMUNITY
-    dispatch(modalActions.showModal({
+    modalActions.showModal({
       isOpen: true,
       ContentComponent: <ReportContent
         targetId={articleId}
@@ -62,12 +59,12 @@ const useArticleMenu = (
         groupIds={rootGroupIds}
         reportTo={ReportTo.COMMUNITY}
       />,
-    }));
+    });
   };
 
   const onDelete = () => {
-    dispatch(modalActions.hideBottomList());
-    showAlert({
+    modalActions.hideBottomList();
+    modalActions.showAlert({
       title: i18next.t('article:menu:delete'),
       content: i18next.t('post:content_delete_article'),
       cancelBtn: true,
@@ -81,11 +78,11 @@ const useArticleMenu = (
   };
 
   const onPressCopyLink = () => {
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     Clipboard.setString(generateLink(
       LINK_ARTICLE, articleId,
     ));
-    showToast({ content: 'common:text_link_copied_to_clipboard' });
+    modalActions.showToast({ content: 'common:text_link_copied_to_clipboard' });
   };
 
   const defaultData = [
@@ -136,9 +133,7 @@ const useArticleMenu = (
 
   const showMenu = () => {
     Keyboard.dismiss();
-    dispatch(
-      modalActions.showBottomList({ isOpen: true, data: menus } as BottomListProps),
-    );
+    modalActions.showBottomList({ data: menus } as BottomListProps);
   };
 
   return {

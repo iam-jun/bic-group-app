@@ -3,15 +3,13 @@ import * as React from 'react';
 import { View } from 'react-native';
 import { cleanup } from '@testing-library/react-native';
 
-import { renderWithRedux, configureStore } from '../../test/testUtils';
+import { renderWithRedux } from '../../test/testUtils';
 import CommonModal from './index';
-import initialState from '../../storeRedux/initialState';
+import useModalStore from '~/store/modal';
 
 afterEach(cleanup);
 
 describe('CommonModal component', () => {
-  const mockStore = configureStore([]);
-
   const fake_data = {
     isOpen: true,
     ContentComponent: <View style={{ height: 100, backgroundColor: 'blue' }} />,
@@ -21,19 +19,20 @@ describe('CommonModal component', () => {
   };
 
   it('renders correctly', () => {
-    const storeData = { ...initialState };
-    storeData.modal.modal = fake_data;
-    const store = mockStore(storeData);
-    const rendered = renderWithRedux(<CommonModal />, store);
+    useModalStore.setState((state) => {
+      state.modal = fake_data;
+      return state;
+    });
+    const rendered = renderWithRedux(<CommonModal />);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
   it('renders correctly with useAppBottomSheet = false', () => {
-    const storeData = { ...initialState };
-    // @ts-ignore
-    storeData.modal.modal = { ...fake_data, useAppBottomSheet: false };
-    const store = mockStore(storeData);
-    const rendered = renderWithRedux(<CommonModal />, store);
+    useModalStore.setState((state) => {
+      state.modal = { ...fake_data, useAppBottomSheet: false };
+      return state;
+    });
+    const rendered = renderWithRedux(<CommonModal />);
 
     expect(rendered.toJSON()).toMatchSnapshot();
 

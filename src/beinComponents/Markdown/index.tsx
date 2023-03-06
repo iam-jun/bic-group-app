@@ -1,17 +1,13 @@
 import React, { memo, useMemo } from 'react';
-import { Dimensions, Platform, StyleSheet, TouchableOpacity } from 'react-native';
-import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-
+import { Dimensions, Platform, TouchableOpacity } from 'react-native';
 import Md from './Md';
 
 import Header from '~/beinComponents/Header';
-import modalActions from '~/storeRedux/modal/actions';
 import { fontFamilies } from '~/theme/fonts';
 import { sizes } from '~/theme/dimension';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { concatStyles } from './utils/utils';
 import { isEqual } from 'lodash';
+import useModalStore from '~/store/modal';
 
 const DeviceHeight = Dimensions.get('window').height;
 
@@ -22,37 +18,35 @@ interface Props {
 }
 
 const _Markdown = ({ value, limitMarkdownTypes, ...rest }: Props) => {
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = useMemo(()=> createStyles(theme), [theme]);
+  const modalActions = useModalStore((state) => state.actions);
 
-  const hideModal = () => dispatch(modalActions.hideModal());
+  const hideModal = () => modalActions.hideModal();
 
   const showModal = (Component, title = '') => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent: (
-          <TouchableOpacity
-            activeOpacity={1}
-            style={{
-              flex: 1,
-              backgroundColor: colors.white,
-              maxHeight: DeviceHeight,
-            }}
-          >
-            <Header
-              disableInsetTop={Platform.OS === 'android'}
-              onPressBack={hideModal}
-              title={title}
-            />
-            {Component}
-          </TouchableOpacity>
-        ),
-        useAppBottomSheet: false,
-      }),
-    );
+    modalActions.showModal({
+      isOpen: true,
+      ContentComponent: (
+        <TouchableOpacity
+          activeOpacity={1}
+          style={{
+            flex: 1,
+            backgroundColor: colors.white,
+            maxHeight: DeviceHeight,
+          }}
+        >
+          <Header
+            disableInsetTop={Platform.OS === 'android'}
+            onPressBack={hideModal}
+            title={title}
+          />
+          {Component}
+        </TouchableOpacity>
+      ),
+      useAppBottomSheet: false,
+    });
   };
 
   const _textStyles = limitMarkdownTypes ? styles.texts : {...styles.texts, ...styles.headings};

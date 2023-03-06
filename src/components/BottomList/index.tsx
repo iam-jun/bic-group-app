@@ -3,13 +3,10 @@ import {
   ScrollView,
 } from 'react-native';
 
-import { useDispatch } from 'react-redux';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import { BaseBottomSheetProps } from '~/baseComponents/BottomSheet/BaseBottomSheet';
-import { useKeySelector } from '~/hooks/selector';
 import BottomListItem, { BottomListItemProps } from './BottomListItem';
-import modalKeySelector from '~/storeRedux/modal/keySelector';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 
 export interface BottomListProps extends BaseBottomSheetProps {
   data: BottomListItemProps[];
@@ -19,17 +16,15 @@ export interface BottomListProps extends BaseBottomSheetProps {
 }
 
 const BottomList = () => {
-  const dispatch = useDispatch();
-
   const modalizeRef = useRef<any>();
-  const bottomList = useKeySelector(modalKeySelector.bottomList);
   const {
     data = [],
-    isOpen,
+    isOpen = false,
     ListHeaderComponent = undefined,
     showsVerticalScrollIndicator = false,
     closeOutSide = true,
-  } = bottomList;
+  } = useModalStore((state) => state.bottomList) || {};
+  const modalActions = useModalStore((state) => state.actions);
 
   useEffect(() => {
     if (!isOpen) {
@@ -38,7 +33,8 @@ const BottomList = () => {
   }, [isOpen]);
 
   const _onClose = () => {
-    closeOutSide && dispatch(modalActions.hideBottomList());
+    if (!closeOutSide) return;
+    modalActions.hideBottomList();
   };
 
   const renderListData = () => (

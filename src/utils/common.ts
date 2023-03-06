@@ -6,7 +6,6 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { PastedFile } from 'react-native-paste-image-input';
 import { linkRegex } from '~/constants/commonRegex';
 import { IToastMessage } from '~/interfaces/common';
-import Store from '~/storeRedux';
 import { checkPermission, permissionTypes } from './permission';
 import showToast from '~/store/helper/showToast';
 import showAlert from '~/store/helper/showAlert';
@@ -178,7 +177,7 @@ export const downloadImageiOS = (photo: any) => {
     }
   };
 
-  checkPermission(permissionTypes.AddPhoto, Store.store.dispatch, onCallback, false);
+  checkPermission(permissionTypes.AddPhoto, onCallback, false);
 };
 
 export const downloadImageAndroid = (photo: any) => {
@@ -215,7 +214,7 @@ export const downloadImageAndroid = (photo: any) => {
     }
   };
 
-  checkPermission(permissionTypes.AddPhoto, Store.store.dispatch, onCallback, false);
+  checkPermission(permissionTypes.AddPhoto, onCallback, false);
 };
 
 export const downloadImage = (photo: any) => {

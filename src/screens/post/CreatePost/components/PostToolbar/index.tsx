@@ -11,7 +11,6 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 import BottomSheet from '~/baseComponents/BottomSheet/index';
 import DocumentPicker from '~/beinComponents/DocumentPicker';
 import ImagePicker from '~/beinComponents/ImagePicker';
@@ -58,7 +57,6 @@ const PostToolbar: FC<PostToolbarProps> = ({
 }) => {
   const animated = useRef(new Animated.Value(0)).current;
 
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const modalizeRef = useRef<any>();
@@ -115,7 +113,7 @@ const PostToolbar: FC<PostToolbarProps> = ({
   const _onPressSelectImage = () => {
     modalizeRef?.current?.close?.();
     checkPermission(
-      permissionTypes.photo, dispatch, (canOpenPicker) => {
+      permissionTypes.photo, (canOpenPicker) => {
         if (canOpenPicker) {
           openGallery();
         }
@@ -126,7 +124,7 @@ const PostToolbar: FC<PostToolbarProps> = ({
   const _onPressSelectVideo = () => {
     modalizeRef?.current?.close?.();
     checkPermission(
-      permissionTypes.photo, dispatch, (canOpenPicker) => {
+      permissionTypes.photo, (canOpenPicker) => {
         if (canOpenPicker) {
           openSingleVideoPicker();
         }

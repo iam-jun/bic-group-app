@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { cleanup, waitFor } from '@testing-library/react-native';
 import * as React from 'react';
+import useModalStore from '~/store/modal';
 
 import initialState from '../../../storeRedux/initialState';
 import { configureStore, fireEvent, renderWithRedux } from '../../../test/testUtils';
@@ -90,17 +91,17 @@ describe('ReactionDetailBottomSheet component', () => {
       .fn()
       .mockImplementation((): Promise<any> => Promise.reject());
 
-    const storeData = { ...initialState };
+    useModalStore.setState((state) => {
+      state.reactionDetailBottomSheet = {
+        ...fake_data,
+        // @ts-ignore
+        getDataPromise: getDataPromiseFail,
+        isOpen: false,
+      };
+      return state;
+    });
 
-    storeData.modal.reactionDetailBottomSheet = {
-      ...fake_data,
-      // @ts-ignore
-      getDataPromise: getDataPromiseFail,
-      isOpen: false,
-    };
-    const store = mockStore(storeData);
-
-    const rendered = await waitFor(() => renderWithRedux(<ReactionDetailBottomSheet />, store));
+    const rendered = await waitFor(() => renderWithRedux(<ReactionDetailBottomSheet />));
     const listUserComponent = rendered.getByTestId(
       'reaction_detail_bottomSheet.list_user',
     );

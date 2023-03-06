@@ -1,23 +1,49 @@
-import IBaseState from '../interfaces/IBaseState';
+import IBaseState, { InitStateType } from '../interfaces/IBaseState';
 import {
   createStore, resetStore,
 } from '~/store/utils';
-import { IAlertModal, IToastMessage } from '~/interfaces/common';
+import {
+  IAlertModal, IReactionBottomSheet, IPayloadShowModal, IToastMessage,
+} from '~/interfaces/common';
+import { BottomListProps } from '~/components/BottomList';
+import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
 
 export interface IModalState extends IBaseState {
-  toast: IToastMessage;
+  toast: IToastMessage | null;
   alert: IAlertModal;
+  modal: IPayloadShowModal | null;
+  alertNewFeature: { visible: boolean } | null;
+  bottomList: BottomListProps | null;
+  reactionBottomSheet: IReactionBottomSheet | null;
+  reactionDetailBottomSheet: IPayloadReactionDetailBottomSheet | null;
+  loadingModal: boolean;
 
   actions: {
     showToast: (payload: IToastMessage) => void;
     clearToast: () => void;
     showAlert: (payload: IAlertModal) => void;
     hideAlert: () => void;
-  }
+    showModal: (payload: IPayloadShowModal) => void;
+    hideModal: () => void;
+    showAlertNewFeature: () => void;
+    hideAlertNewFeature: () => void;
+    showBottomList: (payload: BottomListProps) => void;
+    hideBottomList: () => void;
+    setShowReactionBottomSheet: (payload?: IReactionBottomSheet) => void;
+    setLoadingModal: (payload: boolean) => void;
+    showReactionDetailBottomSheet: (payload: IPayloadReactionDetailBottomSheet) => void;
+    clearReactionDetailBottomSheet: () => void;
+  };
 }
 
-const initialState = {
+const initialState: InitStateType<IModalState> = {
   toast: null,
+  modal: null,
+  alertNewFeature: null,
+  bottomList: null,
+  reactionBottomSheet: null,
+  reactionDetailBottomSheet: null,
+  loadingModal: false,
 
   alert: {
     visible: false,
@@ -81,6 +107,68 @@ const modalStore = (set, get) => ({
           visible: true,
         };
       }, 'setShowAlert');
+    },
+
+    hideModal: () => {
+      set((state: IModalState) => {
+        state.modal = initialState.modal;
+      }, 'setHideModal');
+    },
+    showModal: (payload: IPayloadShowModal) => {
+      set((state: IModalState) => {
+        state.modal = payload;
+      }, 'setShowModal');
+    },
+
+    hideAlertNewFeature: () => {
+      set((state: IModalState) => {
+        state.alertNewFeature = initialState.alertNewFeature;
+      }, 'setHideAlertNewFeature');
+    },
+    showAlertNewFeature: () => {
+      set((state: IModalState) => {
+        state.alertNewFeature = { visible: true };
+      }, 'setShowAlertNewFeature');
+    },
+
+    hideBottomList: () => {
+      set((state: IModalState) => {
+        state.bottomList = initialState.bottomList;
+      }, 'setHideBottomList');
+    },
+    showBottomList: (payload: BottomListProps) => {
+      set((state: IModalState) => {
+        state.bottomList = {
+          ...payload,
+          isOpen: true,
+        };
+      }, 'setShowBottomList');
+    },
+
+    setShowReactionBottomSheet: (payload?: IReactionBottomSheet) => {
+      set((state: IModalState) => {
+        state.reactionBottomSheet = payload || initialState.reactionBottomSheet;
+      }, 'setShowReactionBottomSheet');
+    },
+
+    setLoadingModal: (payload: boolean) => {
+      set((state: IModalState) => {
+        state.loadingModal = payload;
+      }, 'setLoadingModal');
+    },
+
+    showReactionDetailBottomSheet: (payload: IPayloadReactionDetailBottomSheet) => {
+      set((state: IModalState) => {
+        state.reactionDetailBottomSheet = {
+          ...payload,
+          isOpen: true,
+        };
+      }, 'setShowReactionDetailBottomSheet');
+    },
+    clearReactionDetailBottomSheet: () => {
+      set((state: IModalState) => {
+        state.reactionDetailBottomSheet = initialState.reactionDetailBottomSheet;
+      }, 'setClearReactionDetailBottomSheet');
     },
   },
 

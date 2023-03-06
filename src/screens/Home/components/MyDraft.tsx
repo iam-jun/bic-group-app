@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import { useRootNavigation } from '~/hooks/navigation';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
-import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import Text from '~/baseComponents/Text';
 import streamApi from '~/api/StreamApi';
+import useModalStore from '~/store/modal';
 
 const MyDraft = () => {
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
   const [loading, setLoading] = useState(true);
   const [badge, setBadge] = useState('');
+  const modalActions = useModalStore((state) => state.actions);
 
   useEffect(() => {
     const getTotalDraft = async () => {
@@ -36,7 +35,7 @@ const MyDraft = () => {
   }, []);
 
   const goToDraftPost = () => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
     rootNavigation.navigate(
       menuStack.draft,
     );

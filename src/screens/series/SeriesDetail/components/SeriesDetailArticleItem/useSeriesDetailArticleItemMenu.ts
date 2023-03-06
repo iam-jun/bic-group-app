@@ -1,9 +1,6 @@
 import i18next from 'i18next';
-import { useDispatch } from 'react-redux';
-import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
-import modalActions from '~/storeRedux/modal/actions';
-import Store from '~/storeRedux';
 
+import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import { Button } from '~/baseComponents';
 import useSeriesDetailArticleItemStore, { ISeriesDetailArticleItemState } from './store';
@@ -13,14 +10,13 @@ const useSeriesDetailArticleItemMenu = (
   seriesId: string, articleId: string,
 ) => {
   const { rootNavigation } = useRootNavigation();
-  const dispatch = useDispatch();
-  const { showAlert } = useModalStore((state) => state.actions);
+  const modalActions = useModalStore((state) => state.actions);
 
   const actions = useSeriesDetailArticleItemStore((state: ISeriesDetailArticleItemState) => state.actions);
 
   const onPress = () => {
-    Store.store.dispatch(modalActions.hideBottomList());
-    showAlert({
+    modalActions.hideBottomList();
+    modalActions.showAlert({
       title: i18next.t('post:series_detail_article_menu:delete'),
       content: i18next.t('series:text_remove_article'),
       cancelBtn: true,
@@ -34,7 +30,7 @@ const useSeriesDetailArticleItemMenu = (
   };
 
   const onPressReorder = () => {
-    Store.store.dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     rootNavigation.navigate(seriesStack.reorderArticles, { seriesId });
   };
 
@@ -54,9 +50,7 @@ const useSeriesDetailArticleItemMenu = (
   ];
 
   const showMenu = () => {
-    dispatch(
-      modalActions.showBottomList({ isOpen: true, data: defaultData } as any),
-    );
+    modalActions.showBottomList({ data: defaultData } as any);
   };
 
   return {

@@ -3,15 +3,12 @@ import React, {
 } from 'react';
 import { Dimensions } from 'react-native';
 
-import { useDispatch } from 'react-redux';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import ReactionDetailTab from '~/components/reaction/ReactionDetailBottomSheet/ReactionDetailTab';
 import ReactionTabBar from '~/components/reaction/ReactionDetailBottomSheet/ReactionTabBar';
 import { useRootNavigation } from '~/hooks/navigation';
-import { useKeySelector } from '~/hooks/selector';
 import mainStack from '~/router/navigator/MainStack/stack';
-import { clearReactionDetailBottomSheet } from '~/storeRedux/modal/actions';
-import modalKeySelector from '~/storeRedux/modal/keySelector';
+import useModalStore from '~/store/modal';
 
 const screenHeight = Dimensions.get('window').height;
 const modalHeight = 0.5 * screenHeight;
@@ -20,13 +17,12 @@ const ReactionDetailBottomSheet = () => {
   const reactionSheetRef: any = useRef();
   const [selectingReaction, setSelectingReaction] = useState<any>();
 
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
 
-  const data = useKeySelector(modalKeySelector.reactionDetailBottomSheet);
   const {
     isOpen, reactionsCount, initReaction, getDataParam,
-  } = data || {};
+  } = useModalStore((state) => state.reactionDetailBottomSheet) || {};
+  const modalActions = useModalStore((state) => state.actions);
 
   useEffect(
     () => {
@@ -38,7 +34,7 @@ const ReactionDetailBottomSheet = () => {
   );
 
   const _onClose = () => {
-    dispatch(clearReactionDetailBottomSheet());
+    modalActions.clearReactionDetailBottomSheet();
   };
 
   const onChangeTab = (item: any) => {

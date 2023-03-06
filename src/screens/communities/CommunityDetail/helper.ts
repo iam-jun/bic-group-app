@@ -4,7 +4,6 @@ interface IGetHeaderMenuParams {
   type: 'community' | 'group';
   isMember: boolean;
   canSetting: boolean;
-  dispatch: any;
   onPressAdminTools?: () => void;
   onPressCopyLink?: () => void;
   onPressShare?: () => void;

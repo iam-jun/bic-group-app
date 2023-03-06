@@ -9,7 +9,7 @@ import {
 import RequestVerifyEmailModal from './RequestVerifyEmailModal';
 import useVerifyEmailController from './store';
 import groupApi from '~/api/GroupApi';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 
 describe('RequestVerifyEmailModal Component', () => {
   const email = 'test@evol.vn';
@@ -66,7 +66,11 @@ describe('RequestVerifyEmailModal Component', () => {
   });
 
   it('should close modal when click close button', () => {
-    const spy = jest.spyOn(modalActions, 'hideModal');
+    const hideModal = jest.fn();
+    useModalStore.setState((state) => {
+      state.actions = { hideModal } as any;
+      return state;
+    });
 
     const rendered = renderWithRedux(
       <RequestVerifyEmailModal
@@ -79,6 +83,6 @@ describe('RequestVerifyEmailModal Component', () => {
 
     fireEvent.press(button);
 
-    expect(spy).toBeCalled();
+    expect(hideModal).toBeCalled();
   });
 });

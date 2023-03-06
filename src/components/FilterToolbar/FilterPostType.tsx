@@ -1,7 +1,6 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { TouchableOpacity, StyleSheet, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 import { useBaseHook } from '~/hooks';
 import { spacing } from '~/theme';
 import Text from '~/baseComponents/Text';
@@ -9,7 +8,7 @@ import { postTypeFilter } from './constants';
 import { PostType } from '~/interfaces/IPost';
 import { Button } from '~/baseComponents';
 import Icon from '~/baseComponents/Icon';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 
 type FilterPostTypeProps = {
   selectedPostType: PostType;
@@ -20,15 +19,15 @@ const FilterPostType: FC<FilterPostTypeProps> = ({
   selectedPostType,
   onSelect,
 }) => {
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyles();
+  const modalActions = useModalStore((state) => state.actions);
 
   const onSelectItemFilter = (item: any) => {
     onSelect?.(item.key);
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
   };
 
   const renderFilter = () => (

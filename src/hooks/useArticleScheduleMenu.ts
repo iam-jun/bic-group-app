@@ -1,7 +1,5 @@
 import i18next from 'i18next';
-import { useDispatch } from 'react-redux';
 import { Keyboard } from 'react-native';
-import modalActions from '~/storeRedux/modal/actions';
 import { IPost } from '~/interfaces/IPost';
 import { useRootNavigation } from './navigation';
 import { BottomListProps } from '~/components/BottomList';
@@ -10,25 +8,26 @@ import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack
 import useArticleController from '~/screens/articles/store';
 import showAlert from '~/store/helper/showAlert';
 import Button from '~/baseComponents/Button';
+import useModalStore from '~/store/modal';
 
 const useArticleScheduleMenu = (
   data: IPost,
   isActor: boolean,
 ) => {
   const { rootNavigation } = useRootNavigation();
-  const dispatch = useDispatch();
+  const modalActions = useModalStore((state) => state.actions);
 
   if (!data) return null;
 
   const { id: articleId, reactionsCount } = data;
 
   const onPressEdit = () => {
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     rootNavigation.replace(articleStack.createArticle, { articleId, isFromReviewSchedule: true });
   };
 
   const onDelete = () => {
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     showAlert({
       title: i18next.t('article:menu:delete'),
       content: i18next.t('post:content_delete_article'),
@@ -75,9 +74,7 @@ const useArticleScheduleMenu = (
 
   const showMenu = () => {
     Keyboard.dismiss();
-    dispatch(
-      modalActions.showBottomList({ isOpen: true, data: menus } as BottomListProps),
-    );
+    modalActions.showBottomList({ data: menus } as BottomListProps);
   };
 
   return {
