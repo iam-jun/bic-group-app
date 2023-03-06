@@ -11,6 +11,7 @@ export interface ICodePushState extends IBaseState{
     totalBytes: number;
   };
   currentUpdate: Package;
+  retryCount: number;
 
   actions: {
     sync: () => void;
@@ -22,6 +23,7 @@ const initialState: InitStateType<ICodePushState> = {
   status: '',
   progress: undefined,
   currentUpdate: undefined,
+  retryCount: 0,
 };
 
 const codePushStore = (set, get) => ({
