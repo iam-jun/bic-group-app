@@ -4,27 +4,31 @@ import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Avatar, Button } from '~/baseComponents';
 import { useRootNavigation } from '~/hooks/navigation';
-import { IArticleCover, IAudienceUser } from '~/interfaces/IPost';
+import { IPost, PostType } from '~/interfaces/IPost';
 import mainTabStack from '~/router/navigator/MainStack/stack';
 import { spacing } from '~/theme';
 import Text from '~/baseComponents/Text';
 import Image from '~/beinComponents/Image';
 import { borderRadius } from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import images from '~/resources/images';
 
-type ContentArticleItemProps = {
-  actor: IAudienceUser;
-  coverMedia?: IArticleCover;
-  summary: string;
+type ContentItemProps = {
+  item: IPost;
 };
 
-const ContentArticleItem: FC<ContentArticleItemProps> = ({
-  actor,
-  coverMedia,
-  summary,
+const ContentItem: FC<ContentItemProps> = ({
+  item,
 }) => {
+  const {
+    actor, coverMedia, summary, content, media,
+  } = item || {};
   const { avatar, fullname } = actor || {};
   const { url } = coverMedia || {};
+  const { images: imagesPost } = media || {};
+  const coverUrlItem = item?.type === PostType.ARTICLE ? url : imagesPost?.[0]?.url;
+  const summaryItem = item?.type === PostType.ARTICLE ? summary : content;
+
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
@@ -54,11 +58,14 @@ const ContentArticleItem: FC<ContentArticleItemProps> = ({
             </View>
           </Button>
         </View>
-        {!!url && <Image style={styles.img} source={url} />}
+        {!!coverUrlItem ? <Image style={styles.img} source={coverUrlItem} />
+          : <Image style={styles.img} source={images.no_image_avalable} />}
       </View>
-      {!!summary && (
+      {!!summaryItem && (
         <View style={styles.summaryView}>
-          <Text.ParagraphM color={colors.neutral40}>{summary}</Text.ParagraphM>
+          <Text.ParagraphM color={colors.neutral40} numberOfLines={4}>
+            { summaryItem }
+          </Text.ParagraphM>
         </View>
       )}
     </View>
@@ -95,4 +102,4 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
-export default ContentArticleItem;
+export default ContentItem;

@@ -8,6 +8,7 @@ import { IPost } from '~/interfaces/IPost';
 import { useRootNavigation } from './navigation';
 import { BottomListProps } from '~/components/BottomList';
 import ReportContent from '~/components/Report/ReportContent';
+import SeriesContentModal from '~/components/series/SeriesContentModal';
 import useCommonController from '~/screens/store';
 import { getPostMenus, getRootGroupids } from '~/helpers/post';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
@@ -62,6 +63,17 @@ const useArticleMenu = (
     });
   };
 
+  const onPressViewSeries = () => {
+    modalActions.hideBottomList();
+
+    modalActions.showModal({
+      isOpen: true,
+      isFullScreen: true,
+      titleFullScreen: i18next.t('common:btn_view_series'),
+      ContentComponent: <SeriesContentModal id={articleId} />,
+    });
+  };
+
   const onDelete = () => {
     modalActions.hideBottomList();
     modalActions.showAlert({
@@ -112,6 +124,14 @@ const useArticleMenu = (
     },
     {
       id: 4,
+      testID: 'post_view_menu.view_series',
+      leftIcon: 'RectangleHistory',
+      title: i18next.t('common:btn_view_series'),
+      requireIsActor: false,
+      onPress: onPressViewSeries,
+    },
+    {
+      id: 5,
       testID: 'article_view_menu.delete',
       leftIcon: 'TrashCan',
       title: i18next.t('article:menu:delete'),
@@ -119,7 +139,7 @@ const useArticleMenu = (
       onPress: onDelete,
     },
     {
-      id: 5,
+      id: 6,
       testID: 'article_view_menu.report',
       leftIcon: 'Flag',
       title: i18next.t('common:btn_report_content'),

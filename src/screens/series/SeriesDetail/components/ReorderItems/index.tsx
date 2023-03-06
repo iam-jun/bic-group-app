@@ -9,19 +9,19 @@ import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import ReorderArticlesInfo from './ReorderArticlesInfo';
+import ItemsReorderInfo from './ItemsReorderInfo';
 import { IPost } from '~/interfaces/IPost';
-import ArticleReorderItem, {
+import ItemReorder, {
   ITEM_HEIGHT,
   ITEM_WIDTH,
-} from './ArticleReorderItem';
+} from './ItemReorder';
 import ReorderList from '~/beinComponents/ReorderList';
 import { isIndexEqualValue } from './helper';
 import useSeriesStore from '~/screens/series/store';
 import { useRootNavigation } from '~/hooks/navigation';
 import useModalStore from '~/store/modal';
 
-const ReorderArticles = ({ route }: any) => {
+const ReorderItems = ({ route }: any) => {
   const { params } = route || {};
   const { seriesId } = params || {};
 
@@ -36,20 +36,20 @@ const ReorderArticles = ({ route }: any) => {
   const series = usePostsStore(
     useCallback(postsSelector.getPost(seriesId, {}), [seriesId]),
   );
-  const { id, articles } = series;
+  const { id, items } = series;
 
   const actions = useSeriesStore((state) => state.actions);
 
-  const [articlesIndexOrderState, setArticlesIndexOrderState] = useState<number[]>([]);
+  const [itemsIndexOrderState, setItemsIndexOrderState] = useState<number[]>([]);
 
-  const [articlesOrderState, setArticlesOrderState] = useState(articles.reduce((acc, cur, index) => ({
+  const [itemsOrderState, setItemsOrderState] = useState(items?.reduce((acc, cur, index) => ({
     ...acc,
-    [articles[index].id]: index,
+    [items[index].id]: index,
   }), {}));
 
   const { t } = useBaseHook();
 
-  const isChanged = !isIndexEqualValue(articlesIndexOrderState);
+  const isChanged = !isIndexEqualValue(itemsIndexOrderState);
 
   const onPressSave = () => {
     showAlert({
@@ -59,7 +59,7 @@ const ReorderArticles = ({ route }: any) => {
       cancelLabel: i18next.t('common:btn_cancel'),
       confirmLabel: i18next.t('common:btn_confirm'),
       onConfirm: () => {
-        actions.reorderArticles(id, articlesIndexOrderState);
+        actions.reorderItemsInSeries(id, itemsIndexOrderState);
       },
     });
   };
@@ -79,27 +79,27 @@ const ReorderArticles = ({ route }: any) => {
     rootNavigation.goBack();
   };
 
-  const renderItem = (article: IPost) => (
-    <ArticleReorderItem
+  const renderItem = (item: IPost) => (
+    <ItemReorder
       key={`${uuid.v4()}`}
-      index={articlesOrderState[article.id]}
-      article={article}
+      index={itemsOrderState[item.id]}
+      item={item}
     />
   );
 
   const onChange = (newIndex: number[]) => {
-    setArticlesIndexOrderState(newIndex);
-    const newArticlesOrderState = newIndex.reduce((acc, cur, index) => ({
+    setItemsIndexOrderState(newIndex);
+    const newItemsOrderState = newIndex.reduce((acc, cur, index) => ({
       ...acc,
-      [articles[cur].id]: index,
-    }), articlesOrderState);
-    setArticlesOrderState(newArticlesOrderState);
+      [items[cur].id]: index,
+    }), itemsOrderState);
+    setItemsOrderState(newItemsOrderState);
   };
 
   return (
     <View style={styles.container}>
       <Header
-        title={t('series:reorder_article')}
+        title={t('series:reorder')}
         onPressButton={onPressSave}
         buttonText="common:btn_save"
         buttonProps={{
@@ -110,9 +110,9 @@ const ReorderArticles = ({ route }: any) => {
         }}
         onPressBack={handleBack}
       />
-      <ReorderArticlesInfo />
+      <ItemsReorderInfo />
       <ReorderList
-        data={articles}
+        data={items}
         renderItem={renderItem}
         itemWidth={ITEM_WIDTH}
         itemHeight={ITEM_HEIGHT}
@@ -148,4 +148,4 @@ const createStyle = (theme: ExtendedTheme, insets: any) => {
   });
 };
 
-export default ReorderArticles;
+export default ReorderItems;

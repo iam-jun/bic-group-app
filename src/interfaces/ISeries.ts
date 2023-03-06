@@ -41,11 +41,12 @@ export interface IGetSeries {
   createdAtLte?: string;
   contentSearch?: string;
   groupIds?: string[];
+  itemIds?: string[];
 }
 
-export interface IReorderArticles {
-  articleIds: string[]
+export interface IReorderItems {
+  itemIds: string[]
 }
 
-export type IAddArticleInSeries = IReorderArticles;
-export type IRemoveArticleInSeries = IReorderArticles;
+export type IAddArticleInSeries = IReorderItems;
+export type IRemoveItemInSeries = IReorderItems;

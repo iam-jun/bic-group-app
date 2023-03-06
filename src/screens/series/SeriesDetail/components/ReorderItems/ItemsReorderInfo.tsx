@@ -5,7 +5,7 @@ import spacing from '~/theme/spacing';
 import Icon from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
 
-const ReorderArticlesInfo = () => {
+const ItemsReorderInfo = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
@@ -37,4 +37,4 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
-export default ReorderArticlesInfo;
+export default ItemsReorderInfo;

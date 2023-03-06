@@ -1,46 +1,56 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet } from 'react-native';
-import { IPost } from '~/interfaces/IPost';
+import { IPost, PostType } from '~/interfaces/IPost';
 import { spacing } from '~/theme';
-import TitleArticle from './TitleArticle';
+import TitleItem from './TitleItem';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import ContentArticleItem from './ContentArticleItem';
+import ContentItem from './ContentItem';
 import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { Button } from '~/baseComponents';
 
-type SeriesDetailArticleItemProps = {
-    article: IPost;
+type SeriesDetailItemProps = {
+    item: IPost;
     index: number;
     seriesId: string;
     isActor: boolean;
 }
 
-const SeriesDetailArticleItem: FC<SeriesDetailArticleItemProps> = ({
-  article, index, seriesId, isActor,
+const SeriesDetailItem: FC<SeriesDetailItemProps> = ({
+  item, index, seriesId, isActor,
 }) => {
-  const {
-    actor, coverMedia, summary,
-  } = article || {};
   const theme = useTheme();
   const styles = createStyle(theme);
 
   const { rootNavigation } = useRootNavigation();
 
-  const goToArticleDetail = () => {
-    rootNavigation.navigate(articleStack.articleContentDetail, { articleId: article?.id });
+  const goToArticleContentDetail = () => {
+    rootNavigation.navigate(articleStack.articleContentDetail, { articleId: item?.id });
+  };
+
+  const goToPostDetail = () => {
+    rootNavigation.navigate(homeStack.postDetail, { post_id: item?.id });
+  };
+
+  const onRedirect = () => {
+    if (item?.type === PostType.ARTICLE) {
+      goToArticleContentDetail();
+    } else {
+      goToPostDetail();
+    }
   };
 
   return (
     <Button
       style={styles.container}
-      onPress={goToArticleDetail}
-      testID="series_detail.list_article.article_item"
+      onPress={onRedirect}
+      testID="series_detail.list_item.item"
     >
-      <TitleArticle index={index} article={article} seriesId={seriesId} isActor={isActor} />
+      <TitleItem index={index} item={item} seriesId={seriesId} isActor={isActor} />
       <ViewSpacing height={spacing.margin.extraLarge} />
-      <ContentArticleItem actor={actor} coverMedia={coverMedia} summary={summary} />
+      <ContentItem item={item} />
     </Button>
   );
 };
@@ -58,4 +68,4 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
-export default SeriesDetailArticleItem;
+export default SeriesDetailItem;

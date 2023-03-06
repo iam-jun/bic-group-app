@@ -54,6 +54,7 @@ import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
 import useButtonMarkAsReadStore from '~/components/posts/ButtonMarkAsRead/store';
 import useCreatePostStore from '~/screens/post/CreatePost/store';
 import useLinkPreviewStore from './linkPreview';
+import useSeriesContentModalStore from '~/components/series/SeriesContentModal/store';
 import useAppStore from './app';
 import useGroupJoinableUsersStore from '~/screens/groups/GroupMembers/AddMembersToGroup/store';
 import useSelectSeriesStore from '~/components/SelectSeries/store';
@@ -130,6 +131,7 @@ const stores = [
   useCommentInputStore,
   useFeedSearchStore,
   useLinkPreviewStore,
+  useSeriesContentModalStore,
   useAppStore,
 ];
 

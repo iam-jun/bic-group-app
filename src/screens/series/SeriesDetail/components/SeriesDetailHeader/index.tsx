@@ -121,7 +121,7 @@ const InfoSection = () => {
 
 const SeriesDetailHeader: FC<SeriesDetailHeaderProps> = ({ series }) => {
   const {
-    id, audience, title, summary, coverMedia, articles, totalUsersSeen,
+    id, audience, title, summary, coverMedia, items, totalUsersSeen,
   } = series || {};
   const theme = useTheme();
   const { colors } = theme;
@@ -141,7 +141,7 @@ const SeriesDetailHeader: FC<SeriesDetailHeaderProps> = ({ series }) => {
             />
             <ViewSpacing width={spacing.margin.base} />
             <Text.BodyMMedium color={colors.white}>
-              { articles?.length }
+              { items?.length }
             </Text.BodyMMedium>
           </View>
           <ContentInterestedUserCount

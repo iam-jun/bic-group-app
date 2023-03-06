@@ -47,6 +47,7 @@ import { IFeedSearchState } from '~/screens/Home/HomeSearch/store';
 import { IButtonMarkAsReadState } from '~/components/posts/ButtonMarkAsRead/store';
 import { ICreatePostState } from '~/screens/post/CreatePost/store';
 import { ILinkPreviewState } from './linkPreview';
+import { ISeriesContentModalState } from '~/components/series/SeriesContentModal/store';
 import { IGroupJoinableUsersState } from '~/screens/groups/GroupMembers/AddMembersToGroup/store';
 import { ISelectSeriesState } from '~/components/SelectSeries/store';
 
@@ -94,6 +95,7 @@ export interface BicStore {
   };
   series: {
     seriesStore: ISeriesState,
+    seriesContentModal: ISeriesContentModalState;
   };
   groups: {
     GeneralInformation: {

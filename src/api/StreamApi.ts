@@ -40,7 +40,7 @@ import appConfig from '~/configs/appConfig';
 import { IGetGiphyTrendingParams, IGetSearchGiphyParams } from '~/interfaces/IGiphy';
 import {
   IAddArticleInSeries,
-  IGetSeries, IParamGetSeriesDetail, IPostCreateSeries, IReorderArticles, IRemoveArticleInSeries,
+  IGetSeries, IParamGetSeriesDetail, IPostCreateSeries, IReorderItems, IRemoveItemInSeries,
 } from '~/interfaces/ISeries';
 import { IParamGetReportContent, IParamsReportContent } from '~/interfaces/IReport';
 import { CreateTag, EditTag, IParamGetCommunityTags } from '~/interfaces/ITag';
@@ -362,7 +362,7 @@ export const streamApiConfig = {
     method: 'put',
     data,
   }),
-  reorderArticles: (id: string, data: IReorderArticles): HttpApiRequestConfig => ({
+  reorderItemsInSeries: (id: string, data: IReorderItems): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}series/${id}/reorder`,
     method: 'put',
@@ -437,13 +437,13 @@ export const streamApiConfig = {
   }),
   addArticleInSeries: (id: string, data: IAddArticleInSeries): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}series/${id}/add-articles`,
+    url: `${provider.url}series/${id}/add-items`,
     method: 'put',
     data,
   }),
-  removeArticleFromSeriesDetail: (id: string, params: IRemoveArticleInSeries): HttpApiRequestConfig => ({
+  removeItemFromSeriesDetail: (id: string, params: IRemoveItemInSeries): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}series/${id}/remove-articles`,
+    url: `${provider.url}series/${id}/remove-items`,
     method: 'delete',
     data: { ...params },
   }),
@@ -737,8 +737,8 @@ const streamApi = {
   searchSeries: (params?: IGetSeries) => withHttpRequestPromise(streamApiConfig.searchSeries, params),
   postSavePost: (id: string) => withHttpRequestPromise(streamApiConfig.postSavePost, id),
   postUnsavePost: (id: string) => withHttpRequestPromise(streamApiConfig.postUnsavePost, id),
-  reorderArticles: (id: string, data: IReorderArticles) => withHttpRequestPromise(
-    streamApiConfig.reorderArticles, id, data,
+  reorderItemsInSeries: (id: string, data: IReorderItems) => withHttpRequestPromise(
+    streamApiConfig.reorderItemsInSeries, id, data,
   ),
   getTopicDetail: (id: string) => withHttpRequestPromise(streamApiConfig.getTopicDetail, id),
   getArticleTopicDetail: async (params: any) => {
@@ -772,9 +772,9 @@ const streamApi = {
       return Promise.reject(e);
     }
   },
-  removeArticleFromSeriesDetail: async (id: string, params: IRemoveArticleInSeries) => {
+  removeItemFromSeriesDetail: async (id: string, params: IRemoveItemInSeries) => {
     try {
-      const response: any = await makeHttpRequest(streamApiConfig.removeArticleFromSeriesDetail(id, params));
+      const response: any = await makeHttpRequest(streamApiConfig.removeItemFromSeriesDetail(id, params));
       if (response && response?.data) {
         return Promise.resolve(true);
       }

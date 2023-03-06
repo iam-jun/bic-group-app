@@ -12,6 +12,7 @@ import { Button } from '~/baseComponents';
 import { useRootNavigation } from './navigation';
 import { BottomListProps } from '~/components/BottomList';
 import ReportContent from '~/components/Report/ReportContent';
+import SeriesContentModal from '~/components/series/SeriesContentModal';
 import useCommonController from '~/screens/store';
 import { getPostMenus, getRootGroupids } from '~/helpers/post';
 import { TargetType, ReportTo } from '~/interfaces/IReport';
@@ -94,6 +95,17 @@ const usePostMenu = (
     }
   };
 
+  const onPressViewSeries = () => {
+    modalActions.hideBottomList();
+
+    modalActions.showModal({
+      isOpen: true,
+      isFullScreen: true,
+      titleFullScreen: i18next.t('common:btn_view_series'),
+      ContentComponent: <SeriesContentModal id={postId} />,
+    });
+  };
+
   const onPressDelete = () => {
     modalActions.hideBottomList();
     modalActions.showAlert({
@@ -168,8 +180,17 @@ const usePostMenu = (
       requireIsActor: false,
       requireReactionCounts: true,
       onPress: onPressViewReactions,
-    }, {
+    },
+    {
       id: 6,
+      testID: 'post_view_menu.view_series',
+      leftIcon: 'RectangleHistory',
+      title: i18next.t('common:btn_view_series'),
+      requireIsActor: false,
+      onPress: onPressViewSeries,
+    },
+    {
+      id: 7,
       testID: 'post_view_menu.delete',
       leftIcon: 'TrashCan',
       title: i18next.t('post:post_menu_delete'),
@@ -177,7 +198,7 @@ const usePostMenu = (
       onPress: onPressDelete,
     },
     {
-      id: 7,
+      id: 8,
       testID: 'post_view_menu.report',
       leftIcon: 'Flag',
       title: i18next.t('common:btn_report_content'),

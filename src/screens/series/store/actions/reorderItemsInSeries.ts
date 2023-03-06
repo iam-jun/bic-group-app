@@ -1,5 +1,5 @@
 import streamApi from '~/api/StreamApi';
-import { IReorderArticles } from '~/interfaces/ISeries';
+import { IReorderItems } from '~/interfaces/ISeries';
 import usePostsStore from '~/store/entities/posts';
 import { ISeriesState } from '..';
 import { withNavigation } from '~/router/helper';
@@ -9,20 +9,20 @@ import showToastError from '~/store/helper/showToastError';
 
 const navigation = withNavigation(rootNavigationRef);
 
-export const reorderArticles = (set, _) => async (id: string, indexArticlesOrder: number[]) => {
+export const reorderItemsInSeries = (set, _) => async (id: string, indexItemsOrder: number[]) => {
   try {
     const series = usePostsStore.getState().posts[id];
-    const { articles } = series;
-    const lstIdArticlesReordered = indexArticlesOrder.map((index) => articles[index].id);
+    const { items } = series;
+    const lstIdItemsReordered = indexItemsOrder.map((index) => items[index].id);
 
     set((state: ISeriesState) => {
       state.loading = true;
-    }, 'reorderArticles loading');
+    }, 'reorderItemsInSeries loading');
 
-    const body: IReorderArticles = {
-      articleIds: lstIdArticlesReordered,
+    const body: IReorderItems = {
+      itemIds: lstIdItemsReordered,
     };
-    const response = await streamApi.reorderArticles(id, body);
+    const response = await streamApi.reorderItemsInSeries(id, body);
 
     if (!response.data) {
       throw new Error(
@@ -30,16 +30,16 @@ export const reorderArticles = (set, _) => async (id: string, indexArticlesOrder
       );
     }
 
-    const lstArticlesReordered = indexArticlesOrder.map((index) => articles[index]);
+    const lstItemsReordered = indexItemsOrder.map((index) => items[index]);
     const newSeries = {
       ...series,
-      articles: lstArticlesReordered,
+      items: lstItemsReordered,
     };
     usePostsStore.getState().actions.addToPosts({ data: newSeries });
 
     set((state: ISeriesState) => {
       state.loading = false;
-    }, 'reorderArticles success');
+    }, 'reorderItemsInSeries success');
 
     showToastSuccess(response, 'series:reorder_successful');
 
@@ -47,7 +47,7 @@ export const reorderArticles = (set, _) => async (id: string, indexArticlesOrder
   } catch (e) {
     set((state: ISeriesState) => {
       state.loading = false;
-    }, 'reorderArticles error');
+    }, 'reorderItemsInSeries error');
 
     showToastError(e);
   }

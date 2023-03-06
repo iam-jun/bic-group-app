@@ -7,58 +7,79 @@ import { spacing } from '~/theme';
 import { formatNumberWithZeroPrefix } from '~/utils/formatData';
 import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import { IPost, PostType } from '~/interfaces/IPost';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 
-type ListArticleProps = {
-  listArticle: any;
+type ListItemProps = {
+  listItem: IPost[];
 };
 
-type ArticleItemProps = {
+type ItemProps = {
   index: number;
-  article: any;
+  item: IPost;
 };
 
-const ArticleItem: FC<ArticleItemProps> = ({ index, article }) => {
+const Item: FC<ItemProps> = ({ index, item }) => {
   const theme = useTheme();
   const { rootNavigation } = useRootNavigation();
   const { colors } = theme;
   const styles = createStyle(theme);
-  const { title } = article;
+  const { title, content } = item || {};
+  const titleItem = item?.type === PostType.ARTICLE ? title : content;
 
-  const goToArticleDetail = () => {
-    rootNavigation.navigate(articleStack.articleContentDetail, { articleId: article?.id });
+  const goToArticleContentDetail = () => {
+    rootNavigation.navigate(articleStack.articleContentDetail, { articleId: item?.id });
+  };
+
+  const goToPostDetail = () => {
+    rootNavigation.navigate(homeStack.postDetail, { post_id: item?.id });
+  };
+
+  const onRedirect = () => {
+    if (item?.type === PostType.ARTICLE) {
+      goToArticleContentDetail();
+    } else {
+      goToPostDetail();
+    }
   };
 
   return (
     <Button
       style={styles.articleItemContainer}
-      onPress={goToArticleDetail}
+      onPress={onRedirect}
       testID={`list_article.article_item_${index}`}
     >
       <Text.H4 color={colors.neutral20}>{formatNumberWithZeroPrefix(index)}</Text.H4>
       <Text style={styles.slash}>/</Text>
       <View style={{ flex: 1 }}>
-        <Text.BadgeL color={colors.neutral80} numberOfLines={2}>
-          {title}
-        </Text.BadgeL>
+        {!!titleItem ? (
+          <Text.BadgeL color={colors.neutral80} numberOfLines={2}>
+            { titleItem }
+          </Text.BadgeL>
+        ) : (
+          <Text.BadgeL color={colors.neutral80} numberOfLines={1} useI18n>
+            series:text_no_content
+          </Text.BadgeL>
+        )}
       </View>
     </Button>
   );
 };
 
-const ListArticle: FC<ListArticleProps> = ({ listArticle }) => {
+const ListItem: FC<ListItemProps> = ({ listItem }) => {
   const theme = useTheme();
   const styles = createStyle(theme);
 
-  if (listArticle?.length === 0) return null;
+  if (listItem?.length === 0) return null;
 
   return (
     <View style={styles.container}>
-      {listArticle?.map((item, index) => (
+      {listItem?.map((item, index) => (
         <React.Fragment key={`artc_series_fragment_${item.id}`}>
-          <ArticleItem
+          <Item
             key={`artc_series_${item.id}`}
             index={index + 1}
-            article={item}
+            item={item}
           />
           <View style={styles.separator} />
         </React.Fragment>
@@ -92,4 +113,4 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
-export default ListArticle;
+export default ListItem;

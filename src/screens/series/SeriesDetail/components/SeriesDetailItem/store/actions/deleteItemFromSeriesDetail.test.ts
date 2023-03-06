@@ -4,19 +4,19 @@ import { listArticle, mockSeries } from '~/test/mock_data/series';
 import { act, renderHook } from '~/test/testUtils';
 import useSeriesDetailArticleItemStore from '../index';
 
-describe('deleteArticleInSeries', () => {
+describe('deleteItemFromSeriesDetail', () => {
   it('should do nothing if id undefined', () => {
     const response = {
       code: 200,
       data: {},
       meta: {},
     };
-    const spyApiDeleteArticle = jest.spyOn(streamApi, 'removeArticleFromSeriesDetail').mockImplementation(
+    const spyApiDeleteArticle = jest.spyOn(streamApi, 'removeItemFromSeriesDetail').mockImplementation(
       () => Promise.resolve(response) as any,
     );
     const { result } = renderHook(() => useSeriesDetailArticleItemStore((state) => state));
     act(() => {
-      result.current.actions.deleteArticle('', '');
+      result.current.actions.deleteItemFromSeriesDetail('', '');
     });
 
     expect(spyApiDeleteArticle).not.toBeCalled();
@@ -33,7 +33,7 @@ describe('deleteArticleInSeries', () => {
       data: mockSeries,
       meta: {},
     };
-    const spyApiDeleteArticle = jest.spyOn(streamApi, 'removeArticleFromSeriesDetail').mockImplementation(
+    const spyApiDeleteArticle = jest.spyOn(streamApi, 'removeItemFromSeriesDetail').mockImplementation(
       () => Promise.resolve(response) as any,
     );
 
@@ -48,7 +48,7 @@ describe('deleteArticleInSeries', () => {
     jest.useFakeTimers();
     const { result } = renderHook(() => useSeriesDetailArticleItemStore((state) => state));
     act(() => {
-      result.current.actions.deleteArticle(mockSeries.id, listArticle[0].id);
+      result.current.actions.deleteItemFromSeriesDetail(mockSeries.id, listArticle[0].id);
     });
 
     expect(spyApiDeleteArticle).toBeCalled();
@@ -63,7 +63,7 @@ describe('deleteArticleInSeries', () => {
 
   it('should delete aritcle throw error and should show toast', () => {
     const error = 'internal error';
-    const spy = jest.spyOn(streamApi, 'removeArticleFromSeriesDetail').mockImplementation(
+    const spy = jest.spyOn(streamApi, 'removeItemFromSeriesDetail').mockImplementation(
       () => Promise.reject(error) as any,
     );
 
@@ -76,7 +76,7 @@ describe('deleteArticleInSeries', () => {
 
     act(() => {
       try {
-        result.current.actions.deleteArticle(mockSeries.id, listArticle[0].id);
+        result.current.actions.deleteItemFromSeriesDetail(mockSeries.id, listArticle[0].id);
       } catch (e) {
         expect(e).toBeInstanceOf(TypeError);
         expect(e).toBe(error);

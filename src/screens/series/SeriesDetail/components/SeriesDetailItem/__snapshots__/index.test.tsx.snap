@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SeriesDetailArticleItem component render correctly 1`] = `
+exports[`SeriesDetailItem component render correctly 1`] = `
 <View
   accessible={true}
   collapsable={false}
@@ -21,7 +21,7 @@ exports[`SeriesDetailArticleItem component render correctly 1`] = `
       "padding": 16,
     }
   }
-  testID="series_detail.list_article.article_item"
+  testID="series_detail.list_item.item"
 >
   <View
     style={

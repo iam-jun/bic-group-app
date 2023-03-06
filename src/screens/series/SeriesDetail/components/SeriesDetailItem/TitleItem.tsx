@@ -1,29 +1,32 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text as RNText } from 'react-native';
 import Text from '~/baseComponents/Text';
-import { IPost } from '~/interfaces/IPost';
-import { spacing } from '~/theme';
+import { IPost, PostType } from '~/interfaces/IPost';
+import { spacing, dimension } from '~/theme';
 import { formatNumberWithZeroPrefix } from '~/utils/formatData';
 import { Button } from '~/baseComponents';
-import useSeriesDetailArticleItemMenu from './useSeriesDetailArticleItemMenu';
+import useSeriesDetailItemMenu from './useSeriesDetailItemMenu';
+import { useBaseHook } from '~/hooks';
 
-type TitleArticleProps = {
+type TitleItemProps = {
     index: number;
-    article: IPost;
+    item: IPost;
     seriesId: string;
     isActor: boolean;
 }
 
-const TitleArticle: FC<TitleArticleProps> = ({
-  index, article, seriesId, isActor,
+const TitleItem: FC<TitleItemProps> = ({
+  index, item, seriesId, isActor,
 }) => {
-  const { title, id } = article || {};
+  const { title, id, content } = item || {};
+  const { t } = useBaseHook();
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
+  const titleItem = item?.type === PostType.ARTICLE ? title : content;
 
-  const { showMenu } = useSeriesDetailArticleItemMenu(seriesId, id);
+  const { showMenu } = useSeriesDetailItemMenu(seriesId, id, item?.type);
 
   return (
     <View style={styles.container}>
@@ -31,7 +34,15 @@ const TitleArticle: FC<TitleArticleProps> = ({
         <Text.H1 color={colors.neutral20}>{formatNumberWithZeroPrefix(index)}</Text.H1>
         <View style={styles.slash} />
         <View style={{ flex: 1 }}>
-          <Text.H3 numberOfLines={1} color={colors.neutral80}>{title}</Text.H3>
+          {!!titleItem ? <Text.H3 numberOfLines={1} color={colors.neutral80}>{ titleItem }</Text.H3>
+            : (
+              <RNText
+                numberOfLines={1}
+                style={styles.noContent}
+              >
+                { t('series:text_no_content') }
+              </RNText>
+            )}
         </View>
       </View>
       {isActor
@@ -73,7 +84,13 @@ const createStyle = (theme: ExtendedTheme) => {
       flexDirection: 'row',
       alignItems: 'center',
     },
+    noContent: {
+      fontStyle: 'italic',
+      fontWeight: '600',
+      fontSize: dimension?.sizes.h3,
+      color: colors.neutral30,
+    },
   });
 };
 
-export default TitleArticle;
+export default TitleItem;

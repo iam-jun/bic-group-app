@@ -12,7 +12,7 @@ import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import DeletedItem from '../../../components/DeletedItem';
 import SeriesDetailHeader from './components/SeriesDetailHeader';
-import SeriesDetailArticleItem from './components/SeriesDetailArticleItem';
+import SeriesDetailItem from './components/SeriesDetailItem';
 import useSeriesStore, { ISeriesState } from '../store';
 import useSeriesMenu from '~/hooks/useSeriesMenu';
 import { spacing } from '~/theme';
@@ -37,7 +37,7 @@ const SeriesDetail = ({ route }: any) => {
   const series = usePostsStore(useCallback(postsSelector.getPost(seriesId, {}), [seriesId]));
 
   const {
-    actor, id, deleted, audience, articles = [],
+    actor, id, deleted, audience, items = [],
   } = series;
   const { actions, errors } = useSeriesStore((state: ISeriesState) => state);
   const isFetchError = errors[seriesId];
@@ -48,7 +48,7 @@ const SeriesDetail = ({ route }: any) => {
 
   useEffect(() => {
     if (isMounted) { actions.getSeriesDetail(seriesId); }
-  }, [isMounted]);
+  }, [isMounted, seriesId]);
 
   const onPressSearch = () => {
     setIsOpenSearch(true);
@@ -122,18 +122,18 @@ const SeriesDetail = ({ route }: any) => {
     );
   }
 
-  const _renderHeaderComponent = () => <SeriesDetailHeader series={series} />;
+  const renderHeaderComponent = () => <SeriesDetailHeader series={series} />;
 
-  const _renderSeriesDetailArticleItem = ({ item, index }) => (
-    <SeriesDetailArticleItem
+  const renderSeriesDetailItem = ({ item, index }) => (
+    <SeriesDetailItem
       index={index + 1}
-      article={item}
+      item={item}
       seriesId={id}
       isActor={isActor}
     />
   );
 
-  const _keyExtractor = (item) => `artc-series-detail-${item?.id}`;
+  const keyExtractor = (item) => `artc-series-detail-${item?.id}`;
 
   const renderLoading = () => <Header />;
 
@@ -151,10 +151,10 @@ const SeriesDetail = ({ route }: any) => {
         onPressIcon={onPressSearch}
       />
       <FlatList
-        data={articles}
-        keyExtractor={_keyExtractor}
-        renderItem={_renderSeriesDetailArticleItem}
-        ListHeaderComponent={_renderHeaderComponent}
+        data={items}
+        keyExtractor={keyExtractor}
+        renderItem={renderSeriesDetailItem}
+        ListHeaderComponent={renderHeaderComponent}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.container}
       />
@@ -163,7 +163,7 @@ const SeriesDetail = ({ route }: any) => {
         <AddArticles
           seriesId={id}
           audience={audience}
-          articles={articles}
+          articles={items}
           isOpen={isOpenSearch}
           onClose={onCloseSearch}
           placeholder={t('article:search_article_placeholder')}

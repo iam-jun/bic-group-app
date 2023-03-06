@@ -30,7 +30,7 @@ export enum PostStatus {
 export interface IPost {
   id?: string;
   audience?: IPostAudience;
-  articles?: IPostArticles[];
+  items?: IPostArticles[];
   communities?: IPostCommunities[];
   content?: string;
   highlight?: string;
