@@ -1,6 +1,6 @@
 import streamApi from '~/api/StreamApi';
 import showToastError from '~/store/helper/showToastError';
-import { ICreateArticleTagsState } from '..';
+import { ISelectTagsState } from '..';
 import { IGetSearchTags } from '~/interfaces/IArticle';
 
 const getTags = (set, get) => async (isLoadMore :boolean, params?: IGetSearchTags) => {
@@ -11,7 +11,7 @@ const getTags = (set, get) => async (isLoadMore :boolean, params?: IGetSearchTag
       return;
     }
 
-    set((state: ICreateArticleTagsState) => {
+    set((state: ISelectTagsState) => {
       state.listTag.loading = true;
     }, 'getTags');
 
@@ -26,13 +26,13 @@ const getTags = (set, get) => async (isLoadMore :boolean, params?: IGetSearchTag
     const tags = isLoadMore ? [...listTag.items, ...listResult] : listResult;
     const hasNextPage = tags.length < (response?.data?.meta?.total || 0);
 
-    set((state: ICreateArticleTagsState) => {
+    set((state: ISelectTagsState) => {
       state.listTag.loading = false;
       state.listTag.items = tags;
       state.listTag.hasNextPage = hasNextPage;
     }, 'getTagsSuccess');
   } catch (e) {
-    set((state: ICreateArticleTagsState) => {
+    set((state: ISelectTagsState) => {
       state.listTag.loading = false;
     }, 'getTagsFailed');
     console.error('\x1b[35m🐣️ getTags error: ', e, '\x1b[0m');

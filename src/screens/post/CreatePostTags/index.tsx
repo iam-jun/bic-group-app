@@ -1,64 +1,65 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { debounce, uniq } from 'lodash';
-import React, { FC, useEffect } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, FlatList, StyleSheet } from 'react-native';
+import appConfig from '~/configs/appConfig';
+import { useBaseHook } from '~/hooks';
+import { IAudience } from '~/interfaces/IPost';
+import { MAXIMUM_TAGS } from '../CreatePost/constanst';
+import useCreatePost from '../CreatePost/hooks/useCreatePost';
+import useCreatePostStore from '../CreatePost/store';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import NoSearchResultsFound from '~/components/NoSearchResultsFound';
+import Header from '~/beinComponents/Header';
 import { SearchInput } from '~/baseComponents/Input';
 import Divider from '~/beinComponents/Divider';
-import Header from '~/beinComponents/Header';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
-import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import ItemCheckbox from '~/components/ItemCheckbox';
-import NoSearchResultsFound from '~/components/NoSearchResultsFound';
-import SelectingListInfo from '~/components/SelectingListInfo';
-import useSelectTagsStore from '~/components/SelectTags/store';
-import appConfig from '~/configs/appConfig';
-
-import { useBaseHook } from '~/hooks';
-import { useBackPressListener } from '~/hooks/navigation';
-import { CreateArticleProps } from '~/interfaces/IArticle';
-import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
-import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
-import usePostsStore from '~/store/entities/posts';
-import postsSelector from '~/store/entities/posts/selectors';
 import spacing from '~/theme/spacing';
+import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
+import SelectingListInfo from '~/components/SelectingListInfo';
+import ItemCheckbox from '~/components/ItemCheckbox';
+import useSelectTagsStore from '~/components/SelectTags/store';
 
-const MAXIMUM_TAGS = 5;
-
-const CreateArticleTags: FC<CreateArticleProps> = ({ route }: CreateArticleProps) => {
-  const articleId = route?.params?.articleId;
-
+const CreatePostTags = () => {
   const { t } = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const article = usePostsStore(postsSelector.getPost(articleId));
+  const tempSelectedTags = useCreatePostStore((state) => state.tempData.tags);
+  const chosenAudiences = useCreatePostStore(
+    (state) => state.createPost.chosenAudiences,
+  );
+  const createPostStoreActions = useCreatePostStore((state) => state.actions);
+  const loading = useCreatePostStore((state) => state.loading);
 
-  const selectedTags = useCreateArticleStore((state) => state.data?.tags) || [];
-  const editArticleActions = useCreateArticleStore((state) => state.actions);
-
-  const communityIds = useSelectTagsStore((state) => state.communityIds) || [];
+  const communityIds
+    = useSelectTagsStore((state) => state.communityIds) || [];
   const tagsActions = useSelectTagsStore((state) => state.actions);
   const resetTags = useSelectTagsStore((state) => state.reset);
   const tagsData = useSelectTagsStore((state) => state.listTag);
   const { items: tagItems, loading: loadingTags } = tagsData || {};
 
   const searchData = useSelectTagsStore((state) => state.search);
-  const { key: searchKey, items: searchItems, loading: loadingSearchTags } = searchData || {};
+  const {
+    key: searchKey,
+    items: searchItems,
+    loading: loadingSearchTags,
+  } = searchData || {};
 
   const listData = searchKey ? searchItems : tagItems;
 
-  const {
-    handleBack, handleSave, enableButtonSave, loading,
-  } = useCreateArticle({ articleId });
+  const { saveSelectedTags, enableButtonSaveTags, handleBackWhenSelectingTags } = useCreatePost();
 
-  const isValidTags = enableButtonSave && selectedTags?.length <= MAXIMUM_TAGS;
-  const disabled = !isValidTags || loading;
+  const disabled = !enableButtonSaveTags || loading;
 
-  useBackPressListener(handleBack);
+  useBackPressListener(handleBackWhenSelectingTags);
 
   useEffect(() => {
-    if (article.audience?.groups?.length > 0) {
-      const { groups } = article.audience;
+    if (chosenAudiences?.length > 0) {
+      const groups = chosenAudiences.filter(
+        (item: IAudience) => item.type !== 'user',
+      );
       const ids = [];
       groups.forEach((group: any) => {
         if (group?.rootGroupId) {
@@ -71,10 +72,18 @@ const CreateArticleTags: FC<CreateArticleProps> = ({ route }: CreateArticleProps
     } else {
       tagsActions.setListTagLoading(false);
     }
-  }, [article.audience]);
+  }, [chosenAudiences]);
 
-  useEffect(() => () => {
-    resetTags();
+  useEffect(
+    () => () => {
+      resetTags();
+      createPostStoreActions.clearTagsTempData();
+    },
+    [],
+  );
+
+  useEffect(() => {
+    createPostStoreActions.initTagsTempData();
   }, []);
 
   const onChangeText = debounce((searchText: string) => {
@@ -86,16 +95,18 @@ const CreateArticleTags: FC<CreateArticleProps> = ({ route }: CreateArticleProps
   }, appConfig.searchTriggerTime);
 
   const onAddItem = (tag) => {
-    editArticleActions.addTag(tag);
+    createPostStoreActions.addTagToTempData(tag);
   };
 
   const onRemoveItem = (item: any) => {
-    editArticleActions.removeTag(item);
+    createPostStoreActions.removeTagTempData(item);
   };
 
   const renderItem = ({ item }) => {
-    const isChecked = selectedTags.findIndex((selected) => selected?.id === item.id) > -1;
-    const disabledCheckbox = (selectedTags?.length === MAXIMUM_TAGS) && !isChecked;
+    const isChecked
+      = tempSelectedTags.findIndex((selected) => selected?.id === item.id) > -1;
+    const disabledCheckbox
+      = tempSelectedTags?.length === MAXIMUM_TAGS && !isChecked;
 
     return (
       <ItemCheckbox
@@ -117,14 +128,19 @@ const CreateArticleTags: FC<CreateArticleProps> = ({ route }: CreateArticleProps
     return <NoSearchResultsFound />;
   };
 
+  const onPressButtonSave = () => {
+    saveSelectedTags();
+    rootNavigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
       <Header
         title={t('article:text_option_edit_tags')}
         buttonProps={{ disabled, loading, style: styles.btnSave }}
         buttonText={t('common:btn_save')}
-        onPressButton={handleSave}
-        onPressBack={handleBack}
+        onPressButton={onPressButtonSave}
+        onPressBack={handleBackWhenSelectingTags}
       />
       <SearchInput
         style={styles.searchInput}
@@ -132,8 +148,9 @@ const CreateArticleTags: FC<CreateArticleProps> = ({ route }: CreateArticleProps
         onChangeText={onChangeText}
       />
       <SelectingListInfo
-        data={selectedTags}
+        data={tempSelectedTags}
         type="tags"
+        title={t('post:text_selecting_will_be_added_to')}
         infoMessage={t('article:tags_maximum_message_info')}
         tagProps={{
           type: 'neutral',
@@ -190,4 +207,4 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
-export default CreateArticleTags;
+export default CreatePostTags;

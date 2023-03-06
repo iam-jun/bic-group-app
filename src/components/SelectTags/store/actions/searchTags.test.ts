@@ -2,7 +2,7 @@ import streamApi from '~/api/StreamApi';
 import useModalStore from '~/store/modal';
 import { mockGetTagsInArticle, searchTagsRequestParams } from '~/test/mock_data/tags';
 import { act, renderHook } from '~/test/testUtils';
-import useCreateArticleTagsStore from '../index';
+import useSelectTagsStore from '../index';
 
 describe('searchTags in article', () => {
   it('should search list tags success:', () => {
@@ -23,7 +23,7 @@ describe('searchTags in article', () => {
     );
 
     jest.useFakeTimers();
-    const { result } = renderHook(() => useCreateArticleTagsStore((state) => state));
+    const { result } = renderHook(() => useSelectTagsStore((state) => state));
     act(() => {
       result.current.actions.searchTags({ ...searchTagsRequestParams, name: 'test' });
     });
@@ -51,7 +51,7 @@ describe('searchTags in article', () => {
     jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
-    const { result } = renderHook(() => useCreateArticleTagsStore((state) => state));
+    const { result } = renderHook(() => useSelectTagsStore((state) => state));
 
     act(() => {
       try {

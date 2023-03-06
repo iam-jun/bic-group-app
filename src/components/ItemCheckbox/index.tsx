@@ -9,7 +9,7 @@ import Text from '~/baseComponents/Text';
 import { ICategory } from '~/interfaces/IArticle';
 import spacing from '~/theme/spacing';
 
-export interface ArticleSelectingInfoProps {
+export interface ItemCheckboxProps {
   data: any;
   isChecked?: boolean;
   disabled?: boolean;
@@ -17,9 +17,9 @@ export interface ArticleSelectingInfoProps {
   onAddItem?: (category: ICategory) => void;
 }
 
-const ArticleSelectingInfo: FC<ArticleSelectingInfoProps> = ({
+const ItemCheckbox: FC<ItemCheckboxProps> = ({
   data, isChecked, disabled = false, onRemoveItem, onAddItem,
-}: ArticleSelectingInfoProps) => {
+}) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
@@ -34,10 +34,10 @@ const ArticleSelectingInfo: FC<ArticleSelectingInfoProps> = ({
   };
 
   return (
-    <View testID="aritcles.slecting_info_item" style={styles.container}>
-      <Text testID="aritcles.slecting_info_item.text" style={styles.textName}>{name}</Text>
+    <View testID="item_checkbox.container" style={styles.container}>
+      <Text testID="item_checkbox.text" style={styles.textName}>{name}</Text>
       <Checkbox
-        testID="aritcles.slecting_info_item.checkbox"
+        testID="item_checkbox.checkbox"
         isChecked={isChecked}
         disabled={disabled ? 'disabled' : undefined}
         onPress={onChange}
@@ -57,4 +57,4 @@ const createStyle = (_theme: ExtendedTheme) => StyleSheet.create({
   },
 });
 
-export default ArticleSelectingInfo;
+export default ItemCheckbox;

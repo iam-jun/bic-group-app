@@ -4,7 +4,7 @@ import { createStore, resetStore } from '~/store/utils';
 import { IGetSeries } from '~/interfaces/ISeries';
 import IBaseState from '~/store/interfaces/IBaseState';
 
-export interface ICreateArticleSeriesState extends IBaseState {
+export interface ISelectSeriesState extends IBaseState {
   listSeries: {
     loading: boolean;
     items: any;
@@ -35,7 +35,7 @@ const initialState = {
   selecting: [],
 };
 
-const useCreateArticleSeries = (set, get) => ({
+const useSelectSeries = (set, get) => ({
   ...initialState,
 
   actions: {
@@ -46,6 +46,6 @@ const useCreateArticleSeries = (set, get) => ({
   reset: () => resetStore(initialState, set),
 });
 
-const useCreateArticleSeriesStore = createStore<ICreateArticleSeriesState>(useCreateArticleSeries);
+const useSelectSeriesStore = createStore<ISelectSeriesState>(useSelectSeries);
 
-export default useCreateArticleSeriesStore;
+export default useSelectSeriesStore;

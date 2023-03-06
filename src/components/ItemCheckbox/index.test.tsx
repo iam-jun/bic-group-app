@@ -1,13 +1,13 @@
 import React from 'react';
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
-import ArticleSelectingInfo from '.';
+import ItemCheckbox from '.';
 
 const mockData = { id: 1, name: 'Name' };
 
-describe('ArticleSelectingInfo Component', () => {
+describe('ItemCheckbox Component', () => {
   it('renders correctly', () => {
     const rendered = renderWithRedux(
-      <ArticleSelectingInfo
+      <ItemCheckbox
         data={mockData}
       />,
     );
@@ -15,7 +15,7 @@ describe('ArticleSelectingInfo Component', () => {
   });
   it('renders correctly with prop isChecked = true', () => {
     const rendered = renderWithRedux(
-      <ArticleSelectingInfo
+      <ItemCheckbox
         data={mockData}
         isChecked
       />,
@@ -24,7 +24,7 @@ describe('ArticleSelectingInfo Component', () => {
   });
   it('renders correctly with prop disabled = true', () => {
     const rendered = renderWithRedux(
-      <ArticleSelectingInfo
+      <ItemCheckbox
         data={mockData}
         disabled
       />,
@@ -34,13 +34,13 @@ describe('ArticleSelectingInfo Component', () => {
   it('should call prop onRemoveItem', () => {
     const onRemoveItem = jest.fn();
     const rendered = renderWithRedux(
-      <ArticleSelectingInfo
+      <ItemCheckbox
         data={mockData}
         isChecked
         onRemoveItem={onRemoveItem}
       />,
     );
-    const componentCheckbox = rendered.getByTestId('aritcles.slecting_info_item.checkbox');
+    const componentCheckbox = rendered.getByTestId('item_checkbox.checkbox');
     expect(componentCheckbox).toBeDefined();
 
     fireEvent.press(componentCheckbox);
@@ -49,12 +49,12 @@ describe('ArticleSelectingInfo Component', () => {
   it('should call prop onAddItem', () => {
     const onAddItem = jest.fn();
     const rendered = renderWithRedux(
-      <ArticleSelectingInfo
+      <ItemCheckbox
         data={mockData}
         onAddItem={onAddItem}
       />,
     );
-    const componentCheckbox = rendered.getByTestId('aritcles.slecting_info_item.checkbox');
+    const componentCheckbox = rendered.getByTestId('item_checkbox.checkbox');
     expect(componentCheckbox).toBeDefined();
 
     fireEvent.press(componentCheckbox);

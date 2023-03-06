@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ArticleSelectingInfo Component renders correctly 1`] = `
+exports[`ItemCheckbox Component renders correctly 1`] = `
 <View
   style={
     Object {
@@ -9,7 +9,7 @@ exports[`ArticleSelectingInfo Component renders correctly 1`] = `
       "paddingVertical": 12,
     }
   }
-  testID="aritcles.slecting_info_item"
+  testID="item_checkbox.container"
 >
   <Text
     style={
@@ -25,7 +25,7 @@ exports[`ArticleSelectingInfo Component renders correctly 1`] = `
         },
       ]
     }
-    testID="aritcles.slecting_info_item.text"
+    testID="item_checkbox.text"
   >
     Name
   </Text>
@@ -50,7 +50,7 @@ exports[`ArticleSelectingInfo Component renders correctly 1`] = `
         "opacity": 1,
       }
     }
-    testID="aritcles.slecting_info_item.checkbox"
+    testID="item_checkbox.checkbox"
   >
     <View
       style={
@@ -140,7 +140,7 @@ exports[`ArticleSelectingInfo Component renders correctly 1`] = `
 </View>
 `;
 
-exports[`ArticleSelectingInfo Component renders correctly with prop disabled = true 1`] = `
+exports[`ItemCheckbox Component renders correctly with prop disabled = true 1`] = `
 <View
   style={
     Object {
@@ -149,7 +149,7 @@ exports[`ArticleSelectingInfo Component renders correctly with prop disabled = t
       "paddingVertical": 12,
     }
   }
-  testID="aritcles.slecting_info_item"
+  testID="item_checkbox.container"
 >
   <Text
     style={
@@ -165,7 +165,7 @@ exports[`ArticleSelectingInfo Component renders correctly with prop disabled = t
         },
       ]
     }
-    testID="aritcles.slecting_info_item.text"
+    testID="item_checkbox.text"
   >
     Name
   </Text>
@@ -190,7 +190,7 @@ exports[`ArticleSelectingInfo Component renders correctly with prop disabled = t
         "opacity": 1,
       }
     }
-    testID="aritcles.slecting_info_item.checkbox"
+    testID="item_checkbox.checkbox"
   >
     <View
       style={
@@ -282,7 +282,7 @@ exports[`ArticleSelectingInfo Component renders correctly with prop disabled = t
 </View>
 `;
 
-exports[`ArticleSelectingInfo Component renders correctly with prop isChecked = true 1`] = `
+exports[`ItemCheckbox Component renders correctly with prop isChecked = true 1`] = `
 <View
   style={
     Object {
@@ -291,7 +291,7 @@ exports[`ArticleSelectingInfo Component renders correctly with prop isChecked = 
       "paddingVertical": 12,
     }
   }
-  testID="aritcles.slecting_info_item"
+  testID="item_checkbox.container"
 >
   <Text
     style={
@@ -307,7 +307,7 @@ exports[`ArticleSelectingInfo Component renders correctly with prop isChecked = 
         },
       ]
     }
-    testID="aritcles.slecting_info_item.text"
+    testID="item_checkbox.text"
   >
     Name
   </Text>
@@ -332,7 +332,7 @@ exports[`ArticleSelectingInfo Component renders correctly with prop isChecked = 
         "opacity": 1,
       }
     }
-    testID="aritcles.slecting_info_item.checkbox"
+    testID="item_checkbox.checkbox"
   >
     <View
       style={

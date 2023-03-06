@@ -2,7 +2,7 @@ import streamApi from '~/api/StreamApi';
 import useModalStore from '~/store/modal';
 import { mockGetTagsInArticle, searchTagsRequestParams } from '~/test/mock_data/tags';
 import { act, renderHook } from '~/test/testUtils';
-import useCreateArticleTagsStore, { ICreateArticleTagsState } from '../index';
+import useSelectTagsStore, { ISelectTagsState } from '../index';
 
 describe('getTags in article', () => {
   it('should get list tags success:', () => {
@@ -23,7 +23,7 @@ describe('getTags in article', () => {
     );
 
     jest.useFakeTimers();
-    const { result } = renderHook(() => useCreateArticleTagsStore((state) => state));
+    const { result } = renderHook(() => useSelectTagsStore((state) => state));
     act(() => {
       result.current.actions.getTags(false, searchTagsRequestParams);
     });
@@ -41,7 +41,7 @@ describe('getTags in article', () => {
   });
 
   it('should load more list tags success:', () => {
-    useCreateArticleTagsStore.setState((state: ICreateArticleTagsState) => {
+    useSelectTagsStore.setState((state: ISelectTagsState) => {
       state.listTag.hasNextPage = true;
       state.listTag.items = [1];
       return state;
@@ -66,7 +66,7 @@ describe('getTags in article', () => {
     );
 
     jest.useFakeTimers();
-    const { result } = renderHook(() => useCreateArticleTagsStore((state) => state));
+    const { result } = renderHook(() => useSelectTagsStore((state) => state));
     act(() => {
       result.current.actions.getTags(true, searchTagsRequestParams);
     });
@@ -94,7 +94,7 @@ describe('getTags in article', () => {
     jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
-    const { result } = renderHook(() => useCreateArticleTagsStore((state) => state));
+    const { result } = renderHook(() => useSelectTagsStore((state) => state));
 
     act(() => {
       try {
@@ -117,7 +117,7 @@ describe('getTags in article', () => {
   });
 
   it('should setListTagLoading action correctly', () => {
-    const { result } = renderHook(() => useCreateArticleTagsStore((state) => state));
+    const { result } = renderHook(() => useSelectTagsStore((state) => state));
 
     act(() => {
       result.current.actions.setListTagLoading(true);

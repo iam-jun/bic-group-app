@@ -2,7 +2,7 @@ import streamApi from '~/api/StreamApi';
 import useModalStore from '~/store/modal';
 import { mockListSeriesOfArticle, searchSeriesRequestParams } from '~/test/mock_data/series';
 import { act, renderHook } from '~/test/testUtils';
-import useCreateArticleSeriesStore from '../index';
+import useSelectSeriesStore from '../index';
 
 describe('searchSeries in article', () => {
   it('should search list series success:', () => {
@@ -23,7 +23,7 @@ describe('searchSeries in article', () => {
     );
 
     jest.useFakeTimers();
-    const { result } = renderHook(() => useCreateArticleSeriesStore((state) => state));
+    const { result } = renderHook(() => useSelectSeriesStore((state) => state));
     act(() => {
       result.current.actions.searchSeries({ ...searchSeriesRequestParams, contentSearch: 'test' });
     });
@@ -51,7 +51,7 @@ describe('searchSeries in article', () => {
     jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
-    const { result } = renderHook(() => useCreateArticleSeriesStore((state) => state));
+    const { result } = renderHook(() => useSelectSeriesStore((state) => state));
 
     act(() => {
       try {

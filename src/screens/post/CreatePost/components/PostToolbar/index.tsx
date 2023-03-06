@@ -40,6 +40,8 @@ export interface PostToolbarProps {
   settingDisabled?: boolean;
   onPressBack?: () => void;
   onPressSetting: ()=> void;
+  onPressTags: () => void;
+  onPressSeries: () => void;
 }
 
 const PostToolbar: FC<PostToolbarProps> = ({
@@ -53,6 +55,8 @@ const PostToolbar: FC<PostToolbarProps> = ({
   settingDisabled,
   onPressBack,
   onPressSetting,
+  onPressTags,
+  onPressSeries,
   ...props
 }) => {
   const animated = useRef(new Animated.Value(0)).current;
@@ -65,6 +69,8 @@ const PostToolbar: FC<PostToolbarProps> = ({
   const selectedImages = useCreatePostStore((state) => state.createPost.images || []);
   const content = useCreatePostStore((state) => state.createPost.content);
   const selectedFiles = useCreatePostStore((state) => state.createPost.files);
+  const selectedTags = useCreatePostStore((state) => state.createPost.tags);
+  const selectedSeries = useCreatePostStore((state) => state.createPost.series);
 
   const { totalFiles, totalSize } = getTotalFileSize(selectedFiles);
 
@@ -211,6 +217,18 @@ const PostToolbar: FC<PostToolbarProps> = ({
             icon="Markdown"
             testID="post_toolbar.markdown_preview"
             onPressIcon={content && onPressMarkdownPreview}
+          />
+          <ToolbarButton
+            icon="Tag"
+            testID="post_toolbar.tag"
+            onPressIcon={onPressTags}
+            shouldHighlight={selectedTags?.length > 0}
+          />
+          <ToolbarButton
+            icon="RectangleHistory"
+            testID="post_toolbar.series"
+            onPressIcon={onPressSeries}
+            shouldHighlight={selectedSeries?.length > 0}
           />
         </View>
         <Button.Raise

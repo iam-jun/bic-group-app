@@ -1,40 +1,46 @@
-import React, { FC, useEffect } from 'react';
-import {
-  View, StyleSheet,
-} from 'react-native';
+import React, { useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { debounce } from 'lodash';
-import { SearchInput } from '~/baseComponents/Input';
-import Header from '~/beinComponents/Header';
-
+import useCreatePostStore from '../CreatePost/store';
 import { useBaseHook } from '~/hooks';
-import { useBackPressListener } from '~/hooks/navigation';
-import { CreateArticleProps, IEditArticleSeries } from '~/interfaces/IArticle';
-import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
-import spacing from '~/theme/spacing';
-import Divider from '~/beinComponents/Divider';
-import useCreateArticleStore from '../../store';
-import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
+import { IAudience, ICreatePostSeries } from '~/interfaces/IPost';
+import useCreatePost from '../CreatePost/hooks/useCreatePost';
 import appConfig from '~/configs/appConfig';
+import Header from '~/beinComponents/Header';
+import { SearchInput } from '~/baseComponents/Input';
+import Divider from '~/beinComponents/Divider';
+import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
+import { spacing } from '~/theme';
+import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import { ListSeriesWithAudiences } from '~/components/SelectSeries';
 import useSelectSeriesStore from '~/components/SelectSeries/store';
 import SelectingListInfo from '~/components/SelectingListInfo';
 
-const CreateArticleSeries: FC<CreateArticleProps> = ({ route }: CreateArticleProps) => {
-  const articleId = route?.params?.articleId;
+const CreatePostSeries = () => {
+  const { rootNavigation } = useRootNavigation();
 
   const serieActions = useSelectSeriesStore((state) => state.actions);
   const resetSeries = useSelectSeriesStore((state) => state.reset);
+
+  const tempSelectedSeries = useCreatePostStore(
+    (state) => state.tempData.series,
+  );
+  const chosenAudiences = useCreatePostStore(
+    (state) => state.createPost.chosenAudiences,
+  );
+  const loading = useCreatePostStore((state) => state.loading);
+  const createPostStoreActions = useCreatePostStore((state) => state.actions);
+
   const seriesData = useSelectSeriesStore((state) => state.listSeries);
-
-  const selectedSeries = useCreateArticleStore((state) => state.data.series);
-  const editArticleActions = useCreateArticleStore((state) => state.actions);
-  const groupIds = useCreateArticleStore((state) => state.data.audience.groupIds);
-
   const { items: seriesItems, loading: loadingSeries } = seriesData || {};
 
   const searchData = useSelectSeriesStore((state) => state.search);
-  const { key: searchKey, items: searchItems, loading: loadingSearch } = searchData || {};
+  const {
+    key: searchKey,
+    items: searchItems,
+    loading: loadingSearch,
+  } = searchData || {};
 
   const listData = searchKey ? searchItems : seriesItems;
 
@@ -42,40 +48,58 @@ const CreateArticleSeries: FC<CreateArticleProps> = ({ route }: CreateArticlePro
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  useEffect(() => {
-    serieActions.getSeries(false, { groupIds });
-  }, [groupIds]);
+  const chosenGroups = chosenAudiences.filter(
+    (item: IAudience) => item.type !== 'user',
+  );
+  const chosenGroupIds = chosenGroups.map((group) => group.id);
 
-  useEffect(() => () => {
-    resetSeries();
+  useEffect(() => {
+    createPostStoreActions.initSeriesTempData();
   }, []);
 
-  const {
-    handleSave, handleBack, enableButtonSave, loading,
-  } = useCreateArticle({ articleId });
+  useEffect(() => {
+    if (chosenGroupIds?.length > 0) {
+      serieActions.getSeries(false, { groupIds: chosenGroupIds });
+    }
+  }, []);
 
-  const disabled = !enableButtonSave || loading;
-
-  useBackPressListener(handleBack);
-
-  const onSearch = debounce(
-    (searchText: string) => {
-      serieActions.searchSeries({ groupIds, contentSearch: searchText });
-    }, appConfig.searchTriggerTime,
+  useEffect(
+    () => () => {
+      resetSeries();
+      createPostStoreActions.clearSeriesTempData();
+    },
+    [],
   );
 
-  const onLoadMore = debounce(() => {
-    serieActions.getSeries(true, { groupIds });
+  const {
+    saveSelectedSeries,
+    enableButtonSaveSeries,
+    handleBackWhenSelectingSeries,
+  } = useCreatePost();
+
+  const disabled = !enableButtonSaveSeries || loading;
+
+  useBackPressListener(handleBackWhenSelectingSeries);
+
+  const onSearch = debounce((searchText: string) => {
+    serieActions.searchSeries({
+      groupIds: chosenGroupIds,
+      contentSearch: searchText,
+    });
   }, appConfig.searchTriggerTime);
 
-  const onRemoveSeries = (series: IEditArticleSeries) => {
-    editArticleActions.removeSeries(series);
+  const onLoadMore = debounce(() => {
+    serieActions.getSeries(true, { groupIds: chosenGroupIds });
+  }, appConfig.searchTriggerTime);
+
+  const onRemoveSeries = (series: ICreatePostSeries) => {
+    createPostStoreActions.removeSeriesTempData(series);
   };
 
   const handleCheckedItem = (isChecked: boolean, item: any) => {
     const newSeries = { id: item?.id, title: item?.title };
     if (isChecked) {
-      editArticleActions.addSeries(newSeries);
+      createPostStoreActions.addSeriesToTempData(newSeries);
     } else {
       onRemoveSeries(newSeries);
     }
@@ -85,14 +109,19 @@ const CreateArticleSeries: FC<CreateArticleProps> = ({ route }: CreateArticlePro
     onSearch(text);
   };
 
+  const onPressButtonSave = () => {
+    saveSelectedSeries();
+    rootNavigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
       <Header
         title={t('article:text_option_edit_series')}
         buttonProps={{ disabled, loading, style: styles.btnSave }}
         buttonText={t('common:btn_save')}
-        onPressButton={handleSave}
-        onPressBack={handleBack}
+        onPressButton={onPressButtonSave}
+        onPressBack={handleBackWhenSelectingSeries}
       />
       <SearchInput
         size="large"
@@ -102,8 +131,9 @@ const CreateArticleSeries: FC<CreateArticleProps> = ({ route }: CreateArticlePro
         placeholder={t('article:text_search_category_placeholder')}
       />
       <SelectingListInfo
-        data={selectedSeries}
+        data={tempSelectedSeries}
         type="series"
+        title={t('post:text_selecting_will_be_added_to')}
         tagProps={{
           type: 'neutral',
           textProps: {
@@ -116,7 +146,7 @@ const CreateArticleSeries: FC<CreateArticleProps> = ({ route }: CreateArticlePro
       <Divider style={styles.divider} />
       <ListSeriesWithAudiences
         data={listData}
-        selectedData={selectedSeries}
+        selectedData={tempSelectedSeries}
         loading={loadingSeries || loadingSearch}
         onCheckedItem={handleCheckedItem}
         onLoadMore={onLoadMore}
@@ -151,4 +181,4 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
-export default CreateArticleSeries;
+export default CreatePostSeries;

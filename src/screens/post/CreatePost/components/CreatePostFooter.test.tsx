@@ -9,6 +9,8 @@ import { MENTION_USER } from '~/test/mock_data/mention';
 describe('CreatePostFooter component', () => {
   const mockStore = configureStore([]);
   const onPressSetting = jest.fn();
+  const onPressTags = jest.fn();
+  const onPressSeries = jest.fn();
 
   it('renders correctly mention bar with items', async () => {
     useMentionInputStore.setState((state) => {
@@ -17,7 +19,12 @@ describe('CreatePostFooter component', () => {
     });
     const storeData = { ...initialState };
     const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<CreatePostFooter onPressSetting={onPressSetting} />, store);
+
+    const wrapper = renderWithRedux(<CreatePostFooter
+      onPressSetting={onPressSetting}
+      onPressTags={onPressTags}
+      onPressSeries={onPressSeries}
+    />, store);
     const items = wrapper.getAllByTestId('mention_bar.item');
     expect(items?.length).toBe(1);
   });

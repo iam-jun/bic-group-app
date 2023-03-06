@@ -1,14 +1,14 @@
 import React from 'react';
 import { mockGetTagsInArticle } from '~/test/mock_data/tags';
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
-import ArticleSelectingListInfo from '.';
+import SelectingListInfo from '.';
 import colors from '~/theme/theme';
 
-describe('ArticleSelectingListInfo Component', () => {
+describe('SelectingListInfo Component', () => {
   it('renders correctly', () => {
     const onRemoveItem = jest.fn();
     const rendered = renderWithRedux(
-      <ArticleSelectingListInfo
+      <SelectingListInfo
         data={mockGetTagsInArticle}
         onRemoveItem={onRemoveItem}
       />,
@@ -20,7 +20,7 @@ describe('ArticleSelectingListInfo Component', () => {
     const title = 'Title';
 
     const rendered = renderWithRedux(
-      <ArticleSelectingListInfo
+      <SelectingListInfo
         data={mockGetTagsInArticle}
         title={title}
         onRemoveItem={onRemoveItem}
@@ -34,7 +34,7 @@ describe('ArticleSelectingListInfo Component', () => {
     const onRemoveItem = jest.fn();
     const infoMessage = 'Info message';
     const rendered = renderWithRedux(
-      <ArticleSelectingListInfo
+      <SelectingListInfo
         data={mockGetTagsInArticle}
         type="test"
         infoMessage={infoMessage}
@@ -49,7 +49,7 @@ describe('ArticleSelectingListInfo Component', () => {
   it('renders correctly with prop tagProps', () => {
     const onRemoveItem = jest.fn();
     const rendered = renderWithRedux(
-      <ArticleSelectingListInfo
+      <SelectingListInfo
         data={mockGetTagsInArticle}
         onRemoveItem={onRemoveItem}
         tagProps={{
@@ -65,7 +65,7 @@ describe('ArticleSelectingListInfo Component', () => {
   it('should call prop onRemoveItem', () => {
     const onRemoveItem = jest.fn();
     const rendered = renderWithRedux(
-      <ArticleSelectingListInfo
+      <SelectingListInfo
         data={mockGetTagsInArticle}
         onRemoveItem={onRemoveItem}
       />,

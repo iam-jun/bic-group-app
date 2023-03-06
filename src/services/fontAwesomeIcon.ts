@@ -205,6 +205,8 @@ import { faAlignJustify } from '@fortawesome/pro-regular-svg-icons/faAlignJustif
 import { faAnglesLeft } from '@fortawesome/pro-regular-svg-icons/faAnglesLeft';
 import { faBallotCheck as faBallotCheckSolid } from '@fortawesome/pro-solid-svg-icons/faBallotCheck';
 import { faCodeSimple } from '@fortawesome/pro-regular-svg-icons/faCodeSimple';
+import { faTag } from '@fortawesome/pro-regular-svg-icons/faTag';
+import { faRectangleHistory } from '@fortawesome/pro-regular-svg-icons/faRectangleHistory';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -430,6 +432,8 @@ export const initFontAwesomeIcon = () => {
     faAnglesLeft,
     faBallotCheckSolid,
     faCodeSimple,
+    faTag,
+    faRectangleHistory,
   );
 };
 
@@ -640,6 +644,8 @@ export const fontAwesomeIcons = {
   AnglesLeft: 'fa-regular fa-angles-left',
   BallotCheckSolid: 'fa-solid fa-ballot-check',
   CodeSimple: 'fa-regular fa-code-simple',
+  Tag: 'fa-regular fa-tag',
+  RectangleHistory: 'fa-regular fa-rectangle-history',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

@@ -4,7 +4,7 @@ import { createStore, resetStore } from '~/store/utils';
 import IBaseState from '~/store/interfaces/IBaseState';
 import { IGetSearchTags } from '~/interfaces/IArticle';
 
-export interface ICreateArticleTagsState extends IBaseState {
+export interface ISelectTagsState extends IBaseState {
   communityIds: string[],
   listTag: {
     loading: boolean;
@@ -39,17 +39,17 @@ const initialState = {
   selecting: [],
 };
 
-const useCreateArticleTags = (set, get) => ({
+const useSelectTags = (set, get) => ({
   ...initialState,
 
   actions: {
     setListTagLoading: (loading: boolean) => {
-      set((state: ICreateArticleTagsState) => {
+      set((state: ISelectTagsState) => {
         state.listTag.loading = loading;
       }, 'setListTagLoading');
     },
     setCommunityIds: (communityIds: string[]) => {
-      set((state: ICreateArticleTagsState) => {
+      set((state: ISelectTagsState) => {
         state.communityIds = communityIds;
       }, 'setCommunityIds');
     },
@@ -60,6 +60,6 @@ const useCreateArticleTags = (set, get) => ({
   reset: () => resetStore(initialState, set),
 });
 
-const useCreateArticleTagsStore = createStore<ICreateArticleTagsState>(useCreateArticleTags);
+const useSelectTagsStore = createStore<ISelectTagsState>(useSelectTags);
 
-export default useCreateArticleTagsStore;
+export default useSelectTagsStore;

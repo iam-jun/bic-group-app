@@ -588,7 +588,6 @@
     "text_option_edit_content": "Content",
     "text_change_cover": "Change cover",
     "text_select_cover": "Select cover",
-    "text_selecting_categories": "Your article will be added to",
     "text_search_category_placeholder": "Select your options...",
     "text_edit_article_success": "Article updated successfully",
     "menu": {
@@ -638,7 +637,8 @@
     "fail_schedule": "Fail Schedule",
     "successful_schedule": "Successful Schedule",
     "text_delete_article_success": "Your article has been deleted",
-    "paste_image_error": "Upload failed. Please upload images using the toolbar."
+    "paste_image_error": "Upload failed. Please upload images using the toolbar.",
+    "text_selecting_will_be_added_to": "Your article will be added to"
   },
   "post": {
     "news_feed": "News Feed",
@@ -848,7 +848,8 @@
     "series_detail_article_menu": {
       "reorder": "Reorder",
       "delete": "Remove Article"
-    }
+    },
+    "text_selecting_will_be_added_to": "Your post will be added to"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

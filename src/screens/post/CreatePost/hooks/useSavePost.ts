@@ -1,5 +1,6 @@
 import { isEqual, orderBy } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
+import { Keyboard } from 'react-native';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
 import { getMentionsFromContent } from '~/helpers/post';
@@ -11,10 +12,16 @@ import {
   IPostCreatePost,
   PostStatus,
 } from '~/interfaces/IPost';
+import { withNavigation } from '~/router/helper';
+import { rootNavigationRef } from '~/router/refs';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
+import showAlert from '~/store/helper/showAlert';
 import showToast from '~/store/helper/showToast';
-import { validateFiles, validateImages, validateVideo } from '../helper';
+import { MAXIMUM_TAGS } from '../constanst';
+import {
+  isEqualById, validateFiles, validateImages, validateVideo,
+} from '../helper';
 import useCreatePostStore from '../store';
 import useLinkPreview from './useLinkPreview';
 
@@ -22,6 +29,8 @@ type SavePostParams = Partial<IPayloadPutEditPost> & {
   isToastAutoSave?: boolean;
   isShowMessageSuccess?: boolean;
 };
+
+const navigation = withNavigation(rootNavigationRef);
 
 export const useSavePost = () => {
   const { t } = useBaseHook();
@@ -34,6 +43,7 @@ export const useSavePost = () => {
   const createPostStoreActions = useCreatePostStore((state) => state.actions);
   const postStoreActions = usePostsStore((state) => state.actions);
   const createPostData = useCreatePostStore((state) => state.createPost);
+  const createPostTempData = useCreatePostStore((state) => state.tempData);
   const prevUpdateData = useCreatePostStore((state) => state.prevUpdate);
   const loading = useCreatePostStore((state) => state.loading);
   const tempMentions = useMentionInputStore(
@@ -54,7 +64,11 @@ export const useSavePost = () => {
     canComment,
     canReact,
     chosenAudiences,
+    tags,
+    series,
   } = createPostData;
+
+  const { tags: tempSelectedTags, series: tempSelectedSeries } = createPostTempData;
 
   const post = usePostsStore(postsSelector.getPost(id, {}));
 
@@ -99,6 +113,14 @@ export const useSavePost = () => {
         orderBy(prevUpdateData?.files, 'id'),
       ),
       isEqual(linkPreview, prevUpdateData?.linkPreview),
+      isEqualById(
+        tags,
+        prevUpdateData?.tags,
+      ),
+      isEqualById(
+        series,
+        prevUpdateData?.series,
+      ),
     ];
     const hasChange = dataChangeList.filter((i) => !i);
 
@@ -114,7 +136,19 @@ export const useSavePost = () => {
   const isEditPostHasChange
     = content !== post?.content || isChanged() || isSettingsHasChange;
 
+  const isSelectedTagsHasChange = !isEqualById(
+    tempSelectedTags,
+    tags,
+  );
+
   const isEmptyData = content?.trim?.()?.length === 0 && images.length === 0 && !video && files.length === 0;
+
+  const enableButtonSaveTags = tags?.length <= MAXIMUM_TAGS && isSelectedTagsHasChange;
+
+  const enableButtonSaveSeries = !isEqualById(
+    tempSelectedSeries,
+    series,
+  );
 
   // Disable button post if loading, empty content, empty audience or edit post but nothing changed
   const disableButtonPost
@@ -140,6 +174,8 @@ export const useSavePost = () => {
       video: selectingVideo,
       files: selectingFiles,
       linkPreview,
+      tags,
+      series,
     });
   };
 
@@ -175,6 +211,9 @@ export const useSavePost = () => {
       }
       : null;
 
+    const tagsIds = tags?.map?.((item) => item?.id);
+    const seriesIds = series?.map?.((item) => item?.id);
+
     const data: IPostCreatePost = {
       audience,
       content,
@@ -182,6 +221,8 @@ export const useSavePost = () => {
       setting,
       mentions: newMentions,
       linkPreview,
+      tags: tagsIds,
+      series: seriesIds,
     };
 
     return data;
@@ -279,6 +320,8 @@ export const useSavePost = () => {
     important,
     JSON.stringify(selectingFiles),
     JSON.stringify(linkPreview),
+    JSON.stringify(tags),
+    JSON.stringify(series),
   ]);
 
   const showToastAutoSave = () => {
@@ -323,13 +366,57 @@ export const useSavePost = () => {
     }
   }, [content]);
 
+  const saveSelectedTags = () => {
+    createPostStoreActions.updateCreatePost({
+      tags: tempSelectedTags,
+    });
+  };
+
+  const saveSelectedSeries = () => {
+    createPostStoreActions.updateCreatePost({
+      series: tempSelectedSeries,
+    });
+  };
+
+  const handleBackWhenSelecting = (isShowAlert: boolean) => {
+    if (isShowAlert) {
+      Keyboard.dismiss();
+      showAlert({
+        title: t('discard_alert:title'),
+        content: t('discard_alert:content'),
+        cancelBtn: true,
+        cancelLabel: t('common:btn_discard'),
+        confirmLabel: t('common:btn_stay_here'),
+        onCancel: () => {
+          navigation.goBack();
+        },
+      });
+      return;
+    }
+    navigation.goBack();
+  };
+
+  const handleBackWhenSelectingTags = () => {
+    handleBackWhenSelecting(enableButtonSaveTags);
+  };
+
+  const handleBackWhenSelectingSeries = () => {
+    handleBackWhenSelecting(enableButtonSaveSeries);
+  };
+
   return {
     isShowToastAutoSave,
     disableButtonPost,
+    enableButtonSaveTags,
+    enableButtonSaveSeries,
     isEditPostHasChange,
     startAutoSave,
     savePost,
     publishPost,
+    saveSelectedTags,
+    saveSelectedSeries,
+    handleBackWhenSelectingTags,
+    handleBackWhenSelectingSeries,
   };
 };
 

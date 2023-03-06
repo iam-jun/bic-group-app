@@ -1,9 +1,9 @@
 import {
   ICategory, IEditArticleAudience, IEditArticleData, IParamGetArticleDetail,
 } from './IArticle';
-import { IArticleCover, IPostCreatePost } from './IPost';
+import { IArticleCover } from './IPost';
 
-export interface IPostCreateSeries extends IPostCreatePost {
+export interface IPostCreateSeries {
   title?: string;
   summary?: string;
   categories?: ICategory[];

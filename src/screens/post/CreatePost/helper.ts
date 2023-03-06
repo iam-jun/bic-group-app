@@ -287,3 +287,21 @@ export const getTotalFileSize = (files: any) => {
     totalSize,
   };
 };
+
+export const isEqualById = (value: any, other: any) => {
+  if (Array.isArray(value) && Array.isArray(other)) {
+    if (value.length !== other.length) return false;
+
+    let isEqual = true;
+    value.forEach((item, index) => {
+      if (item?.id !== other[index]?.id) {
+        isEqual = false;
+      }
+    });
+    return isEqual;
+  }
+
+  if (value?.id === other?.id) return true;
+
+  return false;
+};

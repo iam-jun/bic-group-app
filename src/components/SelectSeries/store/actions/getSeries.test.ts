@@ -1,17 +1,17 @@
 import streamApi from '~/api/StreamApi';
 import { mockListSeriesOfArticle, searchSeriesRequestParams } from '~/test/mock_data/series';
 import { act, renderHook } from '~/test/testUtils';
-import useCreateArticleSeriesStore, { ICreateArticleSeriesState } from '../index';
+import useSelectSeriesStore, { ISelectSeriesState } from '../index';
 import useModalStore from '~/store/modal';
 
 describe('getSeries in article', () => {
   it('should do nothing if isLoadMore but hasNextPage = false', () => {
-    useCreateArticleSeriesStore.setState((state: ICreateArticleSeriesState) => {
+    useSelectSeriesStore.setState((state: ISelectSeriesState) => {
       state.listSeries.hasNextPage = false;
       return state;
     });
 
-    const { result } = renderHook(() => useCreateArticleSeriesStore((state) => state));
+    const { result } = renderHook(() => useSelectSeriesStore((state) => state));
     act(() => {
       result.current.actions.getSeries(true, {});
     });
@@ -37,7 +37,7 @@ describe('getSeries in article', () => {
     );
 
     jest.useFakeTimers();
-    const { result } = renderHook(() => useCreateArticleSeriesStore((state) => state));
+    const { result } = renderHook(() => useSelectSeriesStore((state) => state));
     act(() => {
       result.current.actions.getSeries(false, searchSeriesRequestParams);
     });
@@ -55,7 +55,7 @@ describe('getSeries in article', () => {
   });
 
   it('should load more list series success:', () => {
-    useCreateArticleSeriesStore.setState((state: ICreateArticleSeriesState) => {
+    useSelectSeriesStore.setState((state: ISelectSeriesState) => {
       state.listSeries.hasNextPage = true;
       state.listSeries.items = [1];
       return state;
@@ -80,7 +80,7 @@ describe('getSeries in article', () => {
     );
 
     jest.useFakeTimers();
-    const { result } = renderHook(() => useCreateArticleSeriesStore((state) => state));
+    const { result } = renderHook(() => useSelectSeriesStore((state) => state));
     act(() => {
       result.current.actions.getSeries(true, searchSeriesRequestParams);
     });
@@ -107,7 +107,7 @@ describe('getSeries in article', () => {
     jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
-    const { result } = renderHook(() => useCreateArticleSeriesStore((state) => state));
+    const { result } = renderHook(() => useSelectSeriesStore((state) => state));
 
     act(() => {
       try {

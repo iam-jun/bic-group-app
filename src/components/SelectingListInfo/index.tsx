@@ -11,7 +11,7 @@ import { useBaseHook } from '~/hooks';
 import Icon from '~/baseComponents/Icon';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
-interface ArticleSelectingListInfoProps {
+interface SelectingListInfoProps {
   data: any[];
   type?: string;
   title?: string;
@@ -20,19 +20,19 @@ interface ArticleSelectingListInfoProps {
   onRemoveItem: (item: any)=>void;
 }
 
-const ArticleSelectingListInfo: React.FC<ArticleSelectingListInfoProps> = ({
+const SelectingListInfo: React.FC<SelectingListInfoProps> = ({
   data = [],
   type = 'info',
   title = '',
   infoMessage = '',
   tagProps,
   onRemoveItem,
-}: ArticleSelectingListInfoProps) => {
+}) => {
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const infoTitle = title || t('article:text_selecting_categories');
+  const infoTitle = title || t('article:text_selecting_will_be_added_to');
 
   const renderItem = (item, index) => (
     <Tag
@@ -103,4 +103,4 @@ const createStyle = (_theme: ExtendedTheme) => StyleSheet.create({
   },
 });
 
-export default ArticleSelectingListInfo;
+export default SelectingListInfo;
