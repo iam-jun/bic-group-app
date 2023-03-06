@@ -2,22 +2,14 @@ import { PostStatus } from '~/interfaces/IPost';
 import { mockTagsInArticle } from './tags';
 
 export const mockArticle = {
-  owner_reactions: [
-
-  ],
+  ownerReactions: [],
   id: 'c46bb2fb-61d6-4981-bde0-d54d12ea7e13',
   content: '[{"type":"p","children":[{"text":"Hổng biết viết gì hết"}]}]',
   lang: 'vi',
   media: {
-    videos: [
-
-    ],
-    images: [
-
-    ],
-    files: [
-
-    ],
+    videos: [],
+    images: [],
+    files: [],
   },
   setting: {
     canReact: true,
@@ -32,12 +24,11 @@ export const mockArticle = {
     id: 'a0143446-0e51-4903-b280-8c794d470903',
     username: 'thuquyen',
     fullname: 'Nguyen Thi Thu Quyền',
-    avatar: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/c6b8b056-7d77-4382-b95c-010c2fda4809.jpg',
+    avatar:
+      'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/c6b8b056-7d77-4382-b95c-010c2fda4809.jpg',
     email: 'thuquyen@tgm.vn',
   },
-  mentions: {
-
-  },
+  mentions: {},
   commentsCount: 0,
   totalUsersSeen: 2,
   reactionsCount: {
@@ -71,9 +62,7 @@ export const mockArticle = {
     ],
   },
   comments: {
-    list: [
-
-    ],
+    list: [],
     meta: {
       limit: 10,
       offset: 0,
@@ -98,9 +87,7 @@ export const mockArticle = {
       title: 'Đây là series có 3 bài articles',
     },
   ],
-  hashtags: [
-
-  ],
+  hashtags: [],
   views: 0,
   coverMedia: {
     id: 'fdaa3c06-b1d2-4c88-9b09-ea0b38ce85ab',
@@ -108,16 +95,25 @@ export const mockArticle = {
     type: 'image',
     createdBy: 'a0143446-0e51-4903-b280-8c794d470903',
     name: 'fa2a7cde-eee0-4c09-9784-45e1c1ef7e6b.png',
-    origin_name: 'Screen Shot 2022-05-10 at 17.50.05.png',
+    originName: 'Screen Shot 2022-05-10 at 17.50.05.png',
     width: 1070,
     height: 1016,
     extension: 'png',
     status: 'completed',
     size: 1705350,
-    mime_type: 'image/png',
+    mimeType: 'image/png',
     thumbnails: null,
     createdAt: '2022-11-14T08:39:17.784Z',
   },
   tags: mockTagsInArticle,
   publishedAt: '',
+};
+
+export const responseGetScheduleArticles = {
+  code: 'api.ok',
+  data: {
+    list: [mockArticle],
+    meta: { limit: 10, offset: 0, hasNextPage: false },
+  },
+  meta: { message: 'OK' },
 };

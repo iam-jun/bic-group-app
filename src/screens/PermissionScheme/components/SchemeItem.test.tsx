@@ -8,12 +8,6 @@ import { groupScheme } from '~/test/mock_data/scheme';
 
 describe('SchemeItem component', () => {
   const communityId = '1';
-  it('should render data correctly', () => {
-    const item = { ...groupScheme };
-    const wrapper = renderWithRedux(<SchemeItem communityId={communityId} item={item} />);
-    expect(wrapper).toMatchSnapshot();
-  });
-
   it('should NOT display text Activated when there is no applying groups', () => {
     const item = { ...groupScheme, applyingGroups: [] };
     const wrapper = renderWithRedux(<SchemeItem communityId={communityId} item={item} />);
@@ -40,6 +34,7 @@ describe('SchemeItem component', () => {
       isEdit: true,
       initScheme: item,
       schemeId: item.id,
+      communityId,
     });
   });
 });

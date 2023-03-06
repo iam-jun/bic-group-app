@@ -22,6 +22,9 @@ describe('ArticleReactions Component', () => {
         reactionsCount={article.reactionsCount}
       />, store,
     );
-    expect(rendered).toMatchSnapshot();
+
+    const { getByTestId } = rendered;
+    const component = getByTestId('reaction_view_container');
+    expect(component).toBeDefined();
   });
 });

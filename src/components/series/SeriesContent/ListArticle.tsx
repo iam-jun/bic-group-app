@@ -32,7 +32,7 @@ const ArticleItem: FC<ArticleItemProps> = ({ index, article }) => {
     <Button
       style={styles.articleItemContainer}
       onPress={goToArticleDetail}
-      testID="list_article.article_item"
+      testID={`list_article.article_item_${index}`}
     >
       <Text.H4 color={colors.neutral20}>{formatNumberWithZeroPrefix(index)}</Text.H4>
       <Text style={styles.slash}>/</Text>

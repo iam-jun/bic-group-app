@@ -69,7 +69,7 @@ describe('putMarkAsRead', () => {
     const actions = { showToast };
     jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
-    const spy = jest.spyOn(streamApi, 'putEditPost').mockImplementation(() => Promise.reject(error) as any);
+    const spy = jest.spyOn(streamApi, 'putMarkAsRead').mockImplementation(() => Promise.reject(error) as any);
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useButtonMarkAsReadStore((state: IButtonMarkAsReadState) => state));

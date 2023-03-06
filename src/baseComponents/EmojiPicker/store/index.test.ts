@@ -82,7 +82,7 @@ describe('useEmojiPickerStore hook', () => {
 
     expect(result.current.data.length).toEqual(0);
     expect(result.current.emojiSectionIndexByOffset.length).toEqual(0);
-    expect(result.current.filteredData.length).toBeNull();
+    expect(result.current.filteredData).toBeNull();
     expect(result.current.recentlyData.length).toEqual(0);
     expect(result.current.currentSectionIndex).toEqual(0);
     expect(result.current.fuse).toBeNull();

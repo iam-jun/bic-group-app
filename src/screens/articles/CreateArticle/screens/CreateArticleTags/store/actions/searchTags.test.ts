@@ -55,7 +55,7 @@ describe('searchTags in article', () => {
 
     act(() => {
       try {
-        result.current.actions.searchTags({ ...searchTagsRequestParams, contentSearch: 'test' });
+        result.current.actions.searchTags({ name: 'test' });
       } catch (e) {
         expect(e).toBeInstanceOf(TypeError);
         expect(e).toBe(error);

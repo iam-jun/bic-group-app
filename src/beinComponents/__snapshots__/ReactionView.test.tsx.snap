@@ -2,7 +2,7 @@
 
 exports[`ReactionView component renders correctly 1`] = `
 <View
-  testID="reaction_view"
+  testID="reaction_view_container"
 >
   <View
     style={
@@ -70,14 +70,23 @@ exports[`ReactionView component renders correctly 1`] = `
           allowFontScaling={true}
           style={
             Array [
-              undefined,
               Object {
-                "color": "#000",
-                "fontSize": 13,
-                "fontWeight": "bold",
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 14,
               },
+              Object {},
+              Array [
+                undefined,
+                Object {
+                  "color": "#000",
+                  "fontSize": 13,
+                  "fontWeight": "bold",
+                },
+              ],
             ]
           }
+          testID="emoji.unicode"
         >
           😀
         </Text>
@@ -152,14 +161,23 @@ exports[`ReactionView component renders correctly 1`] = `
           allowFontScaling={true}
           style={
             Array [
-              undefined,
               Object {
-                "color": "#000",
-                "fontSize": 13,
-                "fontWeight": "bold",
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 14,
               },
+              Object {},
+              Array [
+                undefined,
+                Object {
+                  "color": "#000",
+                  "fontSize": 13,
+                  "fontWeight": "bold",
+                },
+              ],
             ]
           }
+          testID="emoji.unicode"
         >
           🤩
         </Text>
@@ -234,14 +252,23 @@ exports[`ReactionView component renders correctly 1`] = `
           allowFontScaling={true}
           style={
             Array [
-              undefined,
               Object {
-                "color": "#000",
-                "fontSize": 13,
-                "fontWeight": "bold",
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 14,
               },
+              Object {},
+              Array [
+                undefined,
+                Object {
+                  "color": "#000",
+                  "fontSize": 13,
+                  "fontWeight": "bold",
+                },
+              ],
             ]
           }
+          testID="emoji.unicode"
         >
           😙
         </Text>
@@ -316,14 +343,23 @@ exports[`ReactionView component renders correctly 1`] = `
           allowFontScaling={true}
           style={
             Array [
-              undefined,
               Object {
-                "color": "#000",
-                "fontSize": 13,
-                "fontWeight": "bold",
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 14,
               },
+              Object {},
+              Array [
+                undefined,
+                Object {
+                  "color": "#000",
+                  "fontSize": 13,
+                  "fontWeight": "bold",
+                },
+              ],
             ]
           }
+          testID="emoji.unicode"
         >
           😅
         </Text>
@@ -453,7 +489,7 @@ exports[`ReactionView component renders correctly 1`] = `
 
 exports[`ReactionView component renders correctly with props Reactions Order  1`] = `
 <View
-  testID="reaction_view"
+  testID="reaction_view_container"
 >
   <View
     style={
@@ -521,14 +557,23 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
           allowFontScaling={true}
           style={
             Array [
-              undefined,
               Object {
-                "color": "#000",
-                "fontSize": 13,
-                "fontWeight": "bold",
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 14,
               },
+              Object {},
+              Array [
+                undefined,
+                Object {
+                  "color": "#000",
+                  "fontSize": 13,
+                  "fontWeight": "bold",
+                },
+              ],
             ]
           }
+          testID="emoji.unicode"
         >
           😀
         </Text>
@@ -603,14 +648,23 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
           allowFontScaling={true}
           style={
             Array [
-              undefined,
               Object {
-                "color": "#000",
-                "fontSize": 13,
-                "fontWeight": "bold",
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 14,
               },
+              Object {},
+              Array [
+                undefined,
+                Object {
+                  "color": "#000",
+                  "fontSize": 13,
+                  "fontWeight": "bold",
+                },
+              ],
             ]
           }
+          testID="emoji.unicode"
         >
           🤩
         </Text>
@@ -685,14 +739,23 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
           allowFontScaling={true}
           style={
             Array [
-              undefined,
               Object {
-                "color": "#000",
-                "fontSize": 13,
-                "fontWeight": "bold",
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 14,
               },
+              Object {},
+              Array [
+                undefined,
+                Object {
+                  "color": "#000",
+                  "fontSize": 13,
+                  "fontWeight": "bold",
+                },
+              ],
             ]
           }
+          testID="emoji.unicode"
         >
           😙
         </Text>
@@ -767,14 +830,23 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
           allowFontScaling={true}
           style={
             Array [
-              undefined,
               Object {
-                "color": "#000",
-                "fontSize": 13,
-                "fontWeight": "bold",
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 14,
               },
+              Object {},
+              Array [
+                undefined,
+                Object {
+                  "color": "#000",
+                  "fontSize": 13,
+                  "fontWeight": "bold",
+                },
+              ],
             ]
           }
+          testID="emoji.unicode"
         >
           😅
         </Text>
@@ -904,7 +976,7 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
 
 exports[`ReactionView component renders correctly with props Reactions Order empty  1`] = `
 <View
-  testID="reaction_view"
+  testID="reaction_view_container"
 >
   <View
     style={
@@ -1024,7 +1096,7 @@ exports[`ReactionView component renders correctly with props Reactions Order emp
 
 exports[`ReactionView component renders correctly with props showSelectReactionWhenEmpty = false  1`] = `
 <View
-  testID="reaction_view"
+  testID="reaction_view_container"
 >
   <View
     style={
@@ -1045,7 +1117,7 @@ exports[`ReactionView component renders correctly with props showSelectReactionW
 
 exports[`ReactionView component renders correctly with props showSelectReactionWhenEmpty 1`] = `
 <View
-  testID="reaction_view"
+  testID="reaction_view_container"
 >
   <View
     style={

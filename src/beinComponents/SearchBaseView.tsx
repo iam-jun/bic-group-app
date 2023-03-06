@@ -81,7 +81,6 @@ const SearchBaseView: ForwardRefRenderFunction<any, SearchBaseViewProps> = ({
         <SearchInput
           autoFocus
           inputRef={textInputRef}
-          testID="search_base_view.text_input"
           style={styles.textInput}
           value={searchText}
           autoComplete="off"

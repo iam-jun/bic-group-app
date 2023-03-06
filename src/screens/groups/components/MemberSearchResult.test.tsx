@@ -47,7 +47,7 @@ describe('MemberSearchResult component', () => {
         onPressMenu={onPressMenu}
       />,
     );
-    const emptyText = wrapper.getByTestId('member_search_result.no_results');
+    const emptyText = wrapper.getByTestId('no_search_results');
     expect(emptyText).toBeDefined();
   });
 

@@ -29,7 +29,7 @@ describe('putMarkSeenPost', () => {
     };
     const response = responsePutMarkSeenPost;
 
-    const spy = jest.spyOn(streamApi, 'putMarkAsRead').mockImplementation(() => Promise.resolve(response) as any);
+    const spy = jest.spyOn(streamApi, 'putMarkSeenPost').mockImplementation(() => Promise.resolve(response) as any);
 
     jest.useFakeTimers();
     const { result } = renderHook(() => usePostsStore((state: IPostsState) => state));
@@ -52,7 +52,7 @@ describe('putMarkSeenPost', () => {
     const actions = { showToast };
     jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
-    const spy = jest.spyOn(streamApi, 'putEditPost').mockImplementation(() => Promise.reject(error) as any);
+    const spy = jest.spyOn(streamApi, 'putMarkSeenPost').mockImplementation(() => Promise.reject(error) as any);
 
     jest.useFakeTimers();
     const { result } = renderHook(() => usePostsStore((state: IPostsState) => state));

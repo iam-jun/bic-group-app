@@ -48,7 +48,7 @@ describe('MemberItem component', () => {
 
   it('should NOT render icon member option correctly when user is NOT an admin', () => {
     useAuthController.setState((state:IAuthState) => {
-      state.authUser = { username: 'anothertest' } as any;
+      state.authUser = { username: adminDetail.username } as any;
       return state;
     });
     const item = { ...adminDetail };

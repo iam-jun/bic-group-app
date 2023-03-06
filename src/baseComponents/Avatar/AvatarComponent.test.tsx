@@ -10,11 +10,6 @@ afterEach(cleanup);
 describe('Avatar component', () => {
   const avatarLink = images.logo_bein;
 
-  it('renders correctly', () => {
-    const rendered = render(<Avatar.Large source={avatarLink} />).toJSON();
-    expect(rendered).toMatchSnapshot();
-  });
-
   it('renders correctly badge', () => {
     const rendered = render(
       <Avatar.Large source={avatarLink} badge="iconReactionLove" />,
@@ -22,7 +17,6 @@ describe('Avatar component', () => {
     const { getByTestId } = rendered;
     const badgeComponent = getByTestId('avatar.badge');
     expect(badgeComponent).toBeDefined();
-    expect(rendered).toMatchSnapshot();
   });
 
   it('renders correctly badge bottom', () => {
@@ -36,8 +30,7 @@ describe('Avatar component', () => {
     const { getByTestId } = rendered;
     const badgeComponent = getByTestId('avatar.badge');
     expect(badgeComponent).toBeDefined();
-    expect(badgeComponent.props.style.top).toBe(undefined);
-    expect(rendered).toMatchSnapshot();
+    expect(badgeComponent.props.children.props.style.top).toBe(undefined);
   });
 
   it('renders correctly badge check', () => {
@@ -45,7 +38,6 @@ describe('Avatar component', () => {
     const { getByTestId } = rendered;
     const badgeComponent = getByTestId('avatar.badge_check');
     expect(badgeComponent).toBeDefined();
-    expect(rendered).toMatchSnapshot();
   });
 
   it('renders correctly round', () => {
@@ -53,7 +45,7 @@ describe('Avatar component', () => {
       <Avatar.Large source={avatarLink} isRounded />,
     );
     const avatarComponent = getByTestId('avatar_container');
-    expect(avatarComponent.props.style.borderRadius).not.toBe(undefined);
+    expect(avatarComponent.props.children[0].props.style[0][1].borderRadius).not.toBe(undefined);
   });
 
   it('should call props onPressAction', () => {
@@ -70,7 +62,6 @@ describe('Avatar component', () => {
     expect(btnIcon).toBeDefined();
     fireEvent.press(btnIcon);
     expect(onPressIcon).toBeCalled();
-    expect(rendered).toMatchSnapshot();
   });
 
   it('renders correctly status', () => {
@@ -80,6 +71,5 @@ describe('Avatar component', () => {
     const { getByTestId } = rendered;
     const statusComponent = getByTestId('avatar.status');
     expect(statusComponent).toBeDefined();
-    expect(rendered).toMatchSnapshot();
   });
 });

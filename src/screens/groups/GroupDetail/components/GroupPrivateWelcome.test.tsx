@@ -22,7 +22,7 @@ describe('GroupPrivateWelcome component', () => {
 
   it('renders GroupAboutContent component correctly', () => {
     const wrapper = renderWithRedux(<GroupPrivateWelcome {...baseProps} />);
-    const component = wrapper.getByTestId('group_about_content');
+    const component = wrapper.getByTestId('about_content');
     expect(component).toBeDefined();
   });
 });

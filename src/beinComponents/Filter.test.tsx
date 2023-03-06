@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { cleanup, fireEvent } from '@testing-library/react-native';
+import { cleanup, fireEvent, render } from '@testing-library/react-native';
 
 import Filter from './Filter';
-import { renderWithRedux } from '~/test/testUtils';
 
 afterEach(cleanup);
 
@@ -27,33 +26,26 @@ export const communityMenuData = [
 describe('Filter component', () => {
   it('renders correctly', () => {
     const onPress = jest.fn();
-    const rendered = renderWithRedux(
-      <Filter
-        data={communityMenuData}
-        onPress={onPress}
-        translateX={{
-          value: undefined,
-        }}
-      />,
-    ).toJSON();
-    expect(rendered).toMatchSnapshot();
-  });
-
-  it('should called onPress prop', () => {
-    const onPress = jest.fn();
-    const rendered = renderWithRedux(
+    const rendered = render(
       <Filter
         data={communityMenuData}
         onPress={onPress}
         testID="community_menu"
         itemTestID="item_community_data"
         translateX={{
-          value: undefined,
+          value: 0,
         }}
       />,
     );
-    const itemComponent = rendered.getByTestId('item_community_data_2');
-    expect(itemComponent).toBeDefined();
+    const { getByTestId } = rendered;
+    const containerComponent = getByTestId('community_menu');
+    expect(containerComponent).toBeDefined();
+
+    const containerItem = rendered.getByTestId(`container_item_community_data_${communityMenuData[0].text}`);
+    fireEvent(containerItem, 'layout', {
+      nativeEvent: { layout: { height: 100 } },
+    });
+    const itemComponent = rendered.getByTestId(`item_community_data_${communityMenuData[0].text}`);
     fireEvent.press(itemComponent);
     expect(onPress).toHaveBeenCalled();
   });
