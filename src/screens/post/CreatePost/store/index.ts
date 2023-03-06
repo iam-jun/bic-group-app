@@ -1,4 +1,6 @@
 import {
+  ICreatePostSeries,
+  ICreatePostTags,
   ILinkPreviewCreatePost,
   IPayloadPublishDraftPost,
   IPostCreatePost,
@@ -6,6 +8,7 @@ import {
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
 import createNewPost from './actions/createNewPost';
+import getPostDetail from './actions/getPostDetail';
 import postPublishDraftPost from './actions/postPublishDraftPost';
 
 export type CreatePost = {
@@ -22,6 +25,8 @@ export type CreatePost = {
   video: any;
   files: any[];
   count: number;
+  tags?: ICreatePostTags[];
+  series?: ICreatePostSeries[];
   isInitDone: boolean;
 };
 
@@ -38,22 +43,45 @@ export type PrevUpdate = {
   };
   video: any;
   files: any[];
+  tags: ICreatePostTags[];
+  series: ICreatePostSeries[];
+};
+
+export type TempData = {
+  tags: ICreatePostTags[];
+  series: ICreatePostSeries[];
 };
 export interface ICreatePostState extends IBaseState {
+  isLoadPostDetailDone: boolean;
   loading: boolean;
   createPost: CreatePost;
   prevUpdate: PrevUpdate;
+  tempData: TempData;
   actions: {
+    getPostDetail: (postId: string) => void;
     createNewPost: (payload: IPostCreatePost) => void;
     updateCreatePost: (payload: Partial<CreatePost>) => void;
     updatePrevUpdate: (payload: Partial<PrevUpdate>) => void;
+    setLoadPostDetailDone: (payload: boolean) => void;
     setLoadingCreatePost: (payload: boolean) => void;
+    initTagsTempData: () => void;
+    addTagToTempData: (tag: ICreatePostTags) => void;
+    removeTagTempData: (tag: ICreatePostTags) => void;
+    clearTagsTempData: () => void;
+    removeTag: (tag: ICreatePostTags) => void;
+    initSeriesTempData: () => void;
+    addSeriesToTempData: (series: ICreatePostSeries) => void;
+    removeSeriesTempData: (series: ICreatePostSeries) => void;
+    clearSeriesTempData: () => void;
+    removeSeries: (series: ICreatePostSeries) => void;
     postPublishDraftPost: (payload: IPayloadPublishDraftPost) => void;
   };
 }
 
 const initialState: InitStateType<ICreatePostState> = {
+  isLoadPostDetailDone: false,
   loading: false,
+  // for creating post
   createPost: {
     content: '',
     chosenAudiences: [],
@@ -67,8 +95,11 @@ const initialState: InitStateType<ICreatePostState> = {
     video: undefined,
     files: [],
     count: 0,
+    tags: [],
+    series: [],
     isInitDone: false,
   },
+  // for checking change between current createPost data & previous createPost data
   prevUpdate: {
     images: [],
     video: undefined,
@@ -82,13 +113,24 @@ const initialState: InitStateType<ICreatePostState> = {
       lstLinkPreview: [],
       lstRemovedLinkPreview: [],
     },
+    tags: [],
+    series: [],
+  },
+  // for selecting before saving to createPost data
+  tempData: {
+    tags: [],
+    series: [],
   },
 };
 
-const createPostStore = (set, get): ICreatePostState => ({
+const createPostStore = (
+  set,
+  get: () => ICreatePostState,
+): ICreatePostState => ({
   ...initialState,
 
   actions: {
+    getPostDetail: getPostDetail(set, get),
     createNewPost: createNewPost(set, get),
     updateCreatePost: (payload: Partial<CreatePost>) => {
       set((state: ICreatePostState) => {
@@ -110,6 +152,82 @@ const createPostStore = (set, get): ICreatePostState => ({
       set((state: ICreatePostState) => {
         state.loading = payload;
       }, 'setLoadingCreatePost');
+    },
+    setLoadPostDetailDone: (payload: boolean) => {
+      set((state: ICreatePostState) => {
+        state.isLoadPostDetailDone = payload;
+      }, 'setLoadPostDetailDone');
+    },
+    initTagsTempData: () => {
+      set((state: ICreatePostState) => {
+        state.tempData.tags = state.createPost.tags;
+      }, 'initTagTempData');
+    },
+    addTagToTempData: (tag: ICreatePostTags) => {
+      const selecting = get().tempData.tags || [];
+      const isAdded = selecting.findIndex((item) => item?.id === tag?.id) > -1;
+      if (!isAdded) {
+        const newSelecting = [...selecting];
+        newSelecting.push(tag);
+        set((state: ICreatePostState) => {
+          state.tempData.tags = newSelecting;
+        }, 'addTagToTempData');
+      }
+    },
+    removeTagTempData: (tag: ICreatePostTags) => {
+      const selecting = get().tempData.tags || [];
+      const newSelecting = selecting.filter((item) => item?.id !== tag?.id);
+      set((state) => {
+        state.tempData.tags = newSelecting;
+      }, 'removeTagTempData');
+    },
+    clearTagsTempData: () => {
+      set((state: ICreatePostState) => {
+        state.tempData.tags = [];
+      }, 'clearTagsTempData');
+    },
+    removeTag: (tag: ICreatePostTags) => {
+      const selecting = get().createPost.tags || [];
+      const newSelecting = selecting.filter((item) => item?.id !== tag?.id);
+      set((state) => {
+        state.createPost.tags = newSelecting;
+      }, 'removeTag');
+    },
+    initSeriesTempData: () => {
+      set((state: ICreatePostState) => {
+        state.tempData.series = state.createPost.series;
+      }, 'initSeriesTempData');
+    },
+    addSeriesToTempData: (series: ICreatePostSeries) => {
+      const selecting = get().tempData.series || [];
+      const isAdded
+        = selecting.findIndex((item) => item?.id === series?.id) > -1;
+      if (!isAdded) {
+        const newSelecting = [...selecting];
+        newSelecting.push(series);
+        set((state: ICreatePostState) => {
+          state.tempData.series = newSelecting;
+        }, 'addSeriesToTempData');
+      }
+    },
+    removeSeriesTempData: (series: ICreatePostSeries) => {
+      const selecting = get().tempData.series || [];
+      const newSelecting = selecting.filter((item) => item?.id !== series?.id);
+      set((state) => {
+        state.tempData.series = newSelecting;
+      }, 'removeSeriesTempData');
+    },
+    clearSeriesTempData: () => {
+      set((state: ICreatePostState) => {
+        state.tempData.series = [];
+      }, 'clearSeriesTempData');
+    },
+    removeSeries: (series: ICreatePostSeries) => {
+      const selecting = get().createPost.series || [];
+      const newSelecting = selecting.filter((item) => item?.id !== series?.id);
+      set((state) => {
+        state.createPost.series = newSelecting;
+      }, 'removeSeries');
     },
     postPublishDraftPost: postPublishDraftPost(set, get),
   },

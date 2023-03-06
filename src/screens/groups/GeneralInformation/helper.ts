@@ -38,7 +38,7 @@ export const _openImagePicker = async ({
   rootGroupId: string;
 }) => {
   await checkPermission(
-    permissionTypes.photo, dispatch, (canOpenPicker:boolean) => {
+    permissionTypes.photo, (canOpenPicker:boolean) => {
       if (canOpenPicker) {
         ImagePicker.openPickerSingle({
           ...groupProfileImageCropRatio[fieldName],

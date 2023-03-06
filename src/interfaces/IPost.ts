@@ -30,7 +30,7 @@ export enum PostStatus {
 export interface IPost {
   id?: string;
   audience?: IPostAudience;
-  articles?: IPostArticles[];
+  items?: IPostArticles[];
   communities?: IPostCommunities[];
   content?: string;
   highlight?: string;
@@ -267,6 +267,8 @@ export interface IPostCreatePost {
   status?: PostStatus;
   linkPreview?: ILinkPreview;
   createFromGroupId?: string;
+  tags?: string[];
+  series?: string[];
 }
 
 export interface IPayloadCreateComment {
@@ -604,4 +606,14 @@ export interface IRemoveComment {
   commentId?: string;
   localId?: string;
   postId: string;
+}
+export interface ICreatePostTags {
+  id?: string;
+  name?: string;
+  slug?: string;
+  total?: number;
+}
+export interface ICreatePostSeries {
+  id?: string;
+  title?: string;
 }

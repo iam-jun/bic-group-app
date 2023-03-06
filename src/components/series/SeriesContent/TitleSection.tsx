@@ -12,12 +12,12 @@ import { getTextHighlight } from '~/components/articles/ArticleText/helper';
 type TitleSectionProps = {
   title: string;
   time: string;
-  numberOfArticles: number;
+  numberOfItems: number;
   img: string;
 };
 
 type ThumbnailProps = {
-  numberOfArticles: number;
+  numberOfItems: number;
   img: string;
 };
 
@@ -26,7 +26,7 @@ type TitleProps = {
   time: string;
 };
 
-const Thumbnail: FC<ThumbnailProps> = ({ numberOfArticles, img }) => {
+const Thumbnail: FC<ThumbnailProps> = ({ numberOfItems, img }) => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
@@ -37,7 +37,7 @@ const Thumbnail: FC<ThumbnailProps> = ({ numberOfArticles, img }) => {
       <View style={styles.mask} />
       <View style={styles.centerView}>
         <Text.H1 style={styles.textThumbnail} color={colors.white}>
-          {numberOfArticles}
+          {numberOfItems}
         </Text.H1>
         <Text.H1 style={styles.textThumbnail} color={colors.white} useI18n>
           common:articles
@@ -79,7 +79,7 @@ const Title: FC<TitleProps> = ({ title, time }) => {
 const TitleSection: FC<TitleSectionProps> = ({
   title,
   time,
-  numberOfArticles,
+  numberOfItems,
   img,
 }) => {
   const theme = useTheme();
@@ -87,7 +87,7 @@ const TitleSection: FC<TitleSectionProps> = ({
 
   return (
     <View style={styles.container}>
-      <Thumbnail numberOfArticles={numberOfArticles} img={img} />
+      <Thumbnail numberOfItems={numberOfItems} img={img} />
       <Title title={title} time={time} />
     </View>
   );

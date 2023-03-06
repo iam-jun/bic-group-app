@@ -6,7 +6,6 @@ import Notification from './index';
 import { mockNoti, mockNotifications, mockNotificationsWithNotType } from '~/test/mock_data/notifications';
 import notificationApi from '~/api/NotificationApi';
 import i18n from '~/localization';
-import modalActions from '~/storeRedux/modal/actions';
 import * as navigationHook from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
@@ -14,6 +13,7 @@ import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import commonStack from '~/router/navigator/commonStack/stack';
+import useModalStore from '~/store/modal';
 
 describe('Notification Screen', () => {
   afterEach(() => {
@@ -58,7 +58,11 @@ describe('Notification Screen', () => {
       () => Promise.resolve(response) as any,
     );
 
-    const spyModalActions = jest.spyOn(modalActions, 'showBottomList');
+    const showBottomList = jest.fn();
+    useModalStore.setState((state) => {
+      state.actions = { showBottomList } as any;
+      return state;
+    });
 
     const wrapper = renderWithRedux(
       <MockedNavigator
@@ -73,7 +77,7 @@ describe('Notification Screen', () => {
     const headerMenu = wrapper.getByTestId('header.menuIcon.button');
     expect(headerMenu).toBeDefined();
     fireEvent.press(headerMenu);
-    expect(spyModalActions).toHaveBeenCalled();
+    expect(showBottomList).toHaveBeenCalled();
   });
 
   it('should show bottom list when click item menu options', () => {
@@ -87,7 +91,11 @@ describe('Notification Screen', () => {
     );
     jest.useFakeTimers();
 
-    const spyModalActions = jest.spyOn(modalActions, 'showBottomList');
+    const showBottomList = jest.fn();
+    useModalStore.setState((state) => {
+      state.actions = { showBottomList } as any;
+      return state;
+    });
 
     const wrapper = renderWithRedux(
       <MockedNavigator
@@ -108,7 +116,7 @@ describe('Notification Screen', () => {
     const notiMenuComponent = wrapper.queryAllByTestId('notification.menu_button');
     expect(notiMenuComponent).toBeDefined();
     fireEvent.press(notiMenuComponent[0]);
-    expect(spyModalActions).toHaveBeenCalled();
+    expect(showBottomList).toHaveBeenCalled();
   });
 
   it('should navigate to post detail if type is undefined', () => {

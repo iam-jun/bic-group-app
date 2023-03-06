@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import Icon from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
@@ -9,9 +8,9 @@ import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import EmailOpened from '../../../../assets/images/img_email_opened.svg';
 import EmailWarning from '../../../../assets/images/img_email_warning.svg';
 import spacing from '~/theme/spacing';
-import modalActions from '~/storeRedux/modal/actions';
 import Button from '~/baseComponents/Button';
 import useVerifyEmailController, { IVerifyEmailState } from './store';
+import useModalStore from '~/store/modal';
 
 type RequestVerifyEmailModalProps = {
   email: string;
@@ -19,17 +18,17 @@ type RequestVerifyEmailModalProps = {
 };
 
 const RequestVerifyEmailModal = ({ email, isFromSignIn = true }: RequestVerifyEmailModalProps) => {
-  const dispatch = useDispatch();
   const theme = useTheme();
   const { colors } = theme;
 
   const actions = useVerifyEmailController((state: IVerifyEmailState) => state.actions);
   const sentVerifyEmail = useVerifyEmailController((state: IVerifyEmailState) => state.sentVerifyEmail);
+  const modalActions = useModalStore((state) => state.actions);
 
   useEffect(() => () => { actions.setSentVerifyEmail(false); }, []);
 
   const closeModal = () => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
   };
 
   const onPress = () => {

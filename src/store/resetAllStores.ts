@@ -35,7 +35,6 @@ import useSeriesStore from '~/screens/series/store';
 import useTopicStore from '~/screens/topic/store';
 import useAddArticlesStore from '~/screens/series/SeriesDetail/components/AddArticles/store';
 import useCreateArticleCategoryStore from '~/screens/articles/CreateArticle/screens/CreateArticleCategory/store';
-import useCreateArticleSeriesStore from '~/screens/articles/CreateArticle/screens/CreateArticleSeries/store';
 import useForgotPasswordStore from '~/screens/auth/ForgotPassword/store';
 import useChangePasswordStore from '~/screens/Menu/AccountSettings/SecurityLogin/ChangePassword/store';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
@@ -55,8 +54,10 @@ import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
 import useButtonMarkAsReadStore from '~/components/posts/ButtonMarkAsRead/store';
 import useCreatePostStore from '~/screens/post/CreatePost/store';
 import useLinkPreviewStore from './linkPreview';
+import useSeriesContentModalStore from '~/components/series/SeriesContentModal/store';
 import useAppStore from './app';
 import useGroupJoinableUsersStore from '~/screens/groups/GroupMembers/AddMembersToGroup/store';
+import useSelectSeriesStore from '~/components/SelectSeries/store';
 
 export const excludedStore = [
   useAuthController,
@@ -104,7 +105,7 @@ const stores = [
   useGroupMemberStore,
   useCreateArticleStore,
   useCreateArticleCategoryStore,
-  useCreateArticleSeriesStore,
+  useSelectSeriesStore,
   useArticlesStore,
   useUserInterestedPostStore,
   useDiscoverCommunitiesStore,
@@ -130,6 +131,7 @@ const stores = [
   useCommentInputStore,
   useFeedSearchStore,
   useLinkPreviewStore,
+  useSeriesContentModalStore,
   useAppStore,
 ];
 

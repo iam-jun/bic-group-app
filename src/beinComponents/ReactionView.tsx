@@ -105,7 +105,7 @@ const ReactionView: FC<ReactionViewProps> = ({
   const renderedReactions = renderReactions();
 
   return (
-    <View testID="reaction_view">
+    <View testID="reaction_view_container">
       {!hasReactPermission && renderedReactions.length > 0 && <View style={styles.line} />}
       <View
         style={[

@@ -1,5 +1,4 @@
 import groupApi from '~/api/GroupApi';
-import modalActions from '~/storeRedux/modal/actions';
 import { act, renderHook } from '~/test/testUtils';
 import useVerifyEmailController from '../index';
 import { authErrors } from '~/constants/authConstants';
@@ -33,7 +32,6 @@ describe('resendVerifyEmail', () => {
   });
 
   it('should call call api resend verify email, throw error LimitExceededException', () => {
-    const spyHideModal = jest.spyOn(modalActions, 'hideModal');
     const response = {
       code: authErrors.LIMIT_EXCEEDED_EXCEPTION,
       data: {},
@@ -43,7 +41,8 @@ describe('resendVerifyEmail', () => {
     );
 
     const showToast = jest.fn();
-    const actions = { showToast };
+    const hideModal = jest.fn();
+    const actions = { showToast, hideModal };
     jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
@@ -57,7 +56,7 @@ describe('resendVerifyEmail', () => {
       jest.runAllTimers();
     });
     expect(spy).toBeCalled();
-    expect(spyHideModal).toBeCalled();
+    expect(hideModal).toBeCalled();
     expect(showToast).toBeCalled();
   });
 

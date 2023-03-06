@@ -18,17 +18,6 @@ describe('ArticleDetail screen', () => {
     jest.clearAllMocks();
   });
 
-  it('should render correctly', () => {
-    const store = createTestStore({ ...initialState });
-    const wrapper = renderWithRedux(
-      <MockedNavigator component={() => <ArticleDetail {...props} />} />,
-      store,
-    );
-
-    const view = wrapper.queryByTestId('article_detail');
-    expect(view).not.toBeNull();
-  });
-
   it('should render placeholder when not mounted', () => {
     jest.spyOn(useMounted, 'default').mockImplementation(() => (false));
 
@@ -57,5 +46,8 @@ describe('ArticleDetail screen', () => {
 
     const placeholder = wrapper.queryByTestId('article_detail.placeholder');
     expect(placeholder).toBeNull();
+
+    const view = wrapper.queryByTestId('article_detail');
+    expect(view).not.toBeNull();
   });
 });

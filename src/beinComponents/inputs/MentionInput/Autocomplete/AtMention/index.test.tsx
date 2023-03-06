@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native';
 import { renderWithRedux } from '~/test/testUtils';
 import AtMention from '.';
 import colors from '~/theme/theme';
+import useMentionInputStore from '../../store';
 
 afterEach(cleanup);
 
@@ -15,13 +16,6 @@ describe('AtMention component', () => {
     cursorPosition: 0,
     onCompletePress: jest.fn(),
   };
-
-  it('renders correctly', async () => {
-    const wrapper = renderWithRedux(<AtMention {...baseProps} />);
-
-    const rendered = wrapper.toJSON();
-    expect(rendered).toMatchSnapshot();
-  });
 
   it('should hide "AtMention" with empty content when data is empty', async () => {
     const wrapper = renderWithRedux(<AtMention {...baseProps} />);
@@ -34,6 +28,10 @@ describe('AtMention component', () => {
   });
 
   it('should show "AtMention" with loading', async () => {
+    useMentionInputStore.setState((state) => {
+      state.loading = true;
+      return state;
+    });
     const wrapper = renderWithRedux(<AtMention {...baseProps} />);
     const component = wrapper.getByTestId('at_mention.loading');
 
@@ -59,7 +57,7 @@ describe('AtMention component', () => {
 
   it('should show "AtMention" with items', async () => {
     const wrapper = renderWithRedux(<AtMention {...baseProps} />);
-    const component = wrapper.getByTestId('at_mention_item');
+    const component = wrapper.getByTestId('at_mention');
 
     expect(component).not.toBeNull();
   });

@@ -1,10 +1,12 @@
 import useAuthController, { IAuthState } from '~/screens/auth/store';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 import { act, renderHook } from '~/test/testUtils';
 
 describe('signOut', () => {
   it('should do nothing if signing out', () => {
-    const spyShowLoading = jest.spyOn(modalActions, 'showLoading');
+    const setLoadingModal = jest.fn();
+    const actions = { setLoadingModal };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
 
@@ -18,7 +20,7 @@ describe('signOut', () => {
       result.current.actions.signOut();
     });
 
-    expect(spyShowLoading).not.toBeCalled();
+    expect(setLoadingModal).not.toBeCalled();
   });
 
   // resetAllStore lead to timeout

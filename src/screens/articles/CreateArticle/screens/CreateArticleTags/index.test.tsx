@@ -9,7 +9,7 @@ import { IPost } from '~/interfaces/IPost';
 import { mockGetTagsInArticle } from '~/test/mock_data/tags';
 import streamApi from '~/api/StreamApi';
 import useCreateArticleStore from '../../store';
-import useCreateArticleTags from './store';
+import useSelectTagsStore from '~/components/SelectTags/store';
 
 describe('CreateArticleTags screen', () => {
   it('should not enable button Save if tags is empty', () => {
@@ -125,7 +125,7 @@ describe('CreateArticleTags screen', () => {
     );
 
     await waitFor(() => {
-      const loadingTags = useCreateArticleTags.getState().listTag.loading;
+      const loadingTags = useSelectTagsStore.getState().listTag.loading;
       expect(loadingTags).toBeFalsy();
     });
   });

@@ -2,27 +2,22 @@ import React, { useEffect, useRef } from 'react';
 import {
   Modal, Platform, StyleSheet, TouchableOpacity, View,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import BottomSheet from '~/baseComponents/BottomSheet';
-import { useKeySelector } from '~/hooks/selector';
-import modalActions from '~/storeRedux/modal/actions';
-import modalKeySelector from '~/storeRedux/modal/keySelector';
 import spacing from '~/theme/spacing';
 import Button from '~/beinComponents/Button';
 import Icon from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
 import ModalHeader from '~/components/CommonModal/components/ModalHeader';
+import useModalStore from '~/store/modal';
 
 const CommonModal = () => {
   const modalizeRef = useRef<any>();
-
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
-  const modal = useKeySelector(modalKeySelector.modal);
+  const actions = useModalStore((state) => state.actions);
   const {
     isOpen,
     isFullScreen,
@@ -32,7 +27,7 @@ const CommonModal = () => {
     props,
     useAppBottomSheet = true,
     closeOutSide = true,
-  } = modal || {};
+  } = useModalStore((state) => state.modal) || {};
 
   useEffect(
     () => {
@@ -43,7 +38,8 @@ const CommonModal = () => {
   );
 
   const _onClose = () => {
-    closeOutSide && dispatch(modalActions.hideModal());
+    if (!closeOutSide) return;
+    actions.hideModal();
   };
 
   if (isFullScreen) {
@@ -52,7 +48,7 @@ const CommonModal = () => {
         visible={isOpen}
         transparent
         animationType="slide"
-        onRequestClose={() => dispatch(modalActions.hideModal())}
+        onRequestClose={() => actions.hideModal()}
       >
         <View testID="common_modal.center" style={styles.fullScreenContainer}>
           {!!headerFullScreenProps ? <ModalHeader {...headerFullScreenProps} /> : (
@@ -65,7 +61,7 @@ const CommonModal = () => {
               </Button>
             </View>
           )}
-          <View style={{ flex: 1 }}>
+          <View style={styles.flex1}>
             {ContentComponent}
           </View>
         </View>
@@ -80,7 +76,7 @@ const CommonModal = () => {
         transparent
         animationType="slide"
         onRequestClose={() => {
-          dispatch(modalActions.hideModal());
+          actions.hideModal();
         }}
       >
         <TouchableOpacity
@@ -112,6 +108,7 @@ const themeStyles = (theme: ExtendedTheme) => {
   const insets = useSafeAreaInsets();
 
   return StyleSheet.create({
+    flex1: { flex: 1 },
     appModalContainer: {
       flex: 1,
       backgroundColor: 'rgba(12, 13, 14, 0.5)',

@@ -1,5 +1,6 @@
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import getEnv from '~/utils/env';
+import homeStack from './navigator/MainStack/stacks/homeStack/stack';
 
 export const PREFIX_DEEPLINK_GROUP = 'bic://';
 
@@ -21,6 +22,8 @@ export const customBackHandlerRoutes = [
   articleStack.createArticleSeries,
   articleStack.createArticleTags,
   articleStack.createArticleContent,
+  homeStack.createPostTags,
+  homeStack.createPostSeries,
 ];
 
 export const EVENT_NAVIGATION_BACK_PRESSED = 'navigation-back-pressed';

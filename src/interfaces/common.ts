@@ -7,6 +7,7 @@ import { IconType } from '~/resources/icons';
 import { BaseToastProps } from '~/baseComponents/Toast/BaseToast';
 import { BaseBottomSheetProps } from '~/baseComponents/BottomSheet/BaseBottomSheet';
 import { HeaderProps } from '~/beinComponents/Header';
+import { ReactionType } from '~/constants/reactions';
 
 export interface IObject<T> {
   [key: string | number]: T;
@@ -83,6 +84,12 @@ export interface IPayloadShowModal {
   props?: BaseBottomSheetProps | any;
   useAppBottomSheet?: boolean;
   closeOutSide?: boolean;
+}
+
+export interface IReactionBottomSheet {
+  visible?: boolean;
+  title?: string;
+  callback?: (reactionId: ReactionType) => void;
 }
 
 export interface ILinkPreview {

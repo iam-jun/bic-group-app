@@ -4,29 +4,25 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import Text from '~/baseComponents/Text';
-import * as actions from '~/storeRedux/modal/actions';
 import NewFeatureImg from '~/../assets/images/new_feeature_purple.svg';
 import SvgIcon from '~/baseComponents/Icon/SvgIcon';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
-import { useKeySelector } from '~/hooks/selector';
+import useModalStore from '~/store/modal';
 
 const AlertNewFeatureModal = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
-  const { alertNewFeature } = useKeySelector('modal');
-  const { visible } = alertNewFeature;
-
-  const dispatch = useDispatch();
+  const { visible } = useModalStore((state) => state.alertNewFeature) || {};
+  const modalActions = useModalStore((state) => state.actions);
 
   const onDismiss = () => {
-    dispatch(actions.hideAlertNewFeature());
+    modalActions.hideAlertNewFeature();
   };
   const optionsStyle = useAnimatedStyle(() => ({
     opacity: withTiming(
@@ -35,6 +31,7 @@ const AlertNewFeatureModal = () => {
   }));
 
   if (!visible) return null;
+
   return (
     <Animated.View style={[styles.root, optionsStyle]}>
       <TouchableOpacity
@@ -56,7 +53,9 @@ const AlertNewFeatureModal = () => {
             <Text.H6 useI18n>
               new_feature:text_we_are_developing_this_feature
             </Text.H6>
-            <Text.BodyM useI18n>new_feature:text_we_will_notify_you</Text.BodyM>
+            <Text.BodyM style={styles.notifyYou} useI18n>
+              new_feature:text_we_will_notify_you
+            </Text.BodyM>
 
             {/* Temporary button */}
             <Button.Secondary
@@ -117,6 +116,9 @@ const themeStyles = (theme: ExtendedTheme) => {
       justifyContent: 'center',
       marginBottom: spacing.margin.large,
       paddingHorizontal: spacing.padding.small,
+    },
+    notifyYou: {
+      textAlign: 'center',
     },
   });
 };

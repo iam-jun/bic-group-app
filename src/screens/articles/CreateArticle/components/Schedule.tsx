@@ -1,8 +1,7 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { useDispatch } from 'react-redux';
 import { Button } from '~/baseComponents';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 import { spacing } from '~/theme';
 import useCreateArticle from '../hooks/useCreateArticle';
 import useCreateArticleStore from '../store';
@@ -15,15 +14,14 @@ type ScheduleProps = {
 
 const Schedule: FC<ScheduleProps> = ({ articleId, isFromReviewSchedule }) => {
   const styles = createStyle();
-  const dispatch = useDispatch();
 
   const actions = useCreateArticleStore((state) => state.actions);
   const {
     isValidating, validButtonPublish, validateSeriesTags, handleSave, resetPublishedAt,
-  }
-    = useCreateArticle({ articleId });
+  } = useCreateArticle({ articleId });
 
   const disabled = !validButtonPublish || isValidating;
+  const modalActions = useModalStore((state) => state.actions);
 
   const validateData = () => {
     const doAfterResolveError = () => {
@@ -45,17 +43,15 @@ const Schedule: FC<ScheduleProps> = ({ articleId, isFromReviewSchedule }) => {
   };
 
   const showModal = (ContentComponent: any, props: any = {}) => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent,
-        props,
-      }),
-    );
+    modalActions.showModal({
+      isOpen: true,
+      ContentComponent,
+      props,
+    });
   };
 
   const onClose = () => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
     actions.setErrorScheduleSubmiting('');
     actions.setIsScheduleSubmitingSuccess(false);
     resetPublishedAt();

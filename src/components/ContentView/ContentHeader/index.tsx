@@ -3,7 +3,6 @@ import {
   View, StyleSheet, StyleProp, ViewStyle,
 } from 'react-native';
 import { useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import Text from '~/baseComponents/Text';
 import Avatar from '~/baseComponents/Avatar';
@@ -13,7 +12,6 @@ import TimeView from '~/beinComponents/TimeView';
 import PostAudiencesModal from '~/components/posts/PostAudiencesModal';
 import useNetworkStore from '~/store/network';
 import networkSelectors from '~/store/network/selectors';
-import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainTabStack from '~/router/navigator/MainStack/stack';
@@ -22,6 +20,7 @@ import { getAudiencesText } from '~/helpers/post';
 import Icon from '~/baseComponents/Icon';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
+import useModalStore from '~/store/modal';
 
 export interface ContentHeaderProps {
   style?: StyleProp<ViewStyle>;
@@ -50,13 +49,13 @@ const ContentHeader: FC<ContentHeaderProps> = ({
   onPressMenu,
   onPressShowAudiences,
 }: ContentHeaderProps) => {
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const { colors } = useTheme();
   const { rootNavigation } = useRootNavigation();
 
   const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
   const isHidden = usePostsStore(postsSelector.getIsHidden(postId));
+  const modalActions = useModalStore((state) => state.actions);
 
   const textAudiences = getAudiencesText(audience, t);
 
@@ -80,19 +79,17 @@ const ContentHeader: FC<ContentHeaderProps> = ({
     if (onPressShowAudiences) {
       onPressShowAudiences();
     } else {
-      dispatch(
-        modalActions.showModal({
-          isOpen: true,
-          isFullScreen: true,
-          titleFullScreen: t('post:title_post_to'),
-          ContentComponent: (
-            <PostAudiencesModal
-              data={audience?.groups || []}
-              showBlockedIcon={isHidden}
-            />
-          ),
-        }),
-      );
+      modalActions.showModal({
+        isOpen: true,
+        isFullScreen: true,
+        titleFullScreen: t('post:title_post_to'),
+        ContentComponent: (
+          <PostAudiencesModal
+            data={audience?.groups || []}
+            showBlockedIcon={isHidden}
+          />
+        ),
+      });
     }
   };
 

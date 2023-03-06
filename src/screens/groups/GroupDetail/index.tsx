@@ -10,7 +10,6 @@ import React, {
 import {
   DeviceEventEmitter, Share, StyleSheet, View,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 import Animated, {
@@ -33,7 +32,6 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { rootSwitch } from '~/router/stack';
 import useAuthController, { IAuthState } from '~/screens/auth/store';
 import GroupContent from '~/screens/groups/GroupDetail/components/GroupContent';
-import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import {
   formatChannelLink, getGroupLink, openUrl,
@@ -68,7 +66,6 @@ const GroupDetail = (props: any) => {
 
   const user = useAuthController(useCallback((state: IAuthState) => state.authUser, []));
   const userId = useUserIdAuth();
-  const dispatch = useDispatch();
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
   const {
     isLoadingGroupDetailError,
@@ -80,7 +77,7 @@ const GroupDetail = (props: any) => {
   const {
     name, privacy, teamName, slug,
   } = groupInfo || {};
-  const { showToast } = useModalStore((state) => state.actions);
+  const modalActions = useModalStore((state) => state.actions);
 
   const headerRef = useRef<any>();
   const [groupInfoHeight, setGroupInfoHeight] = useState(300);
@@ -185,18 +182,18 @@ const GroupDetail = (props: any) => {
   }, [groupId]);
 
   const onPressAdminTools = () => {
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     rootNavigation.navigate(groupStack.groupAdmin, { groupId });
   };
 
   const onPressCopyLink = () => {
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     Clipboard.setString(getGroupLink({ communityId: communityDetail?.id, groupId }));
-    showToast({ content: 'common:text_link_copied_to_clipboard' });
+    modalActions.showToast({ content: 'common:text_link_copied_to_clipboard' });
   };
 
   const onPressShare = () => {
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     const groupLink = getGroupLink({ communityId: communityDetail?.id, groupId });
     try {
       Share.share({ message: groupLink, url: groupLink });
@@ -212,7 +209,7 @@ const GroupDetail = (props: any) => {
   });
 
   const onPressLeave = () => {
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     alertLeaveGroup();
   };
 
@@ -265,16 +262,12 @@ const GroupDetail = (props: any) => {
       type: 'group',
       isMember,
       canSetting,
-      dispatch,
       onPressAdminTools,
       onPressCopyLink,
       onPressShare,
       onPressLeave,
     });
-    dispatch(modalActions.showBottomList({
-      isOpen: true,
-      data: headerMenuData,
-    } as BottomListProps));
+    modalActions.showBottomList({ data: headerMenuData } as BottomListProps);
   };
 
   const onPressChat = () => {

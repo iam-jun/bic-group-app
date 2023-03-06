@@ -3,12 +3,11 @@ import React, { FC, useEffect } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useDispatch } from 'react-redux';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 import spacing from '~/theme/spacing';
 import useUserInterestedPostStore from './store';
 
@@ -17,9 +16,9 @@ export interface UserInterestedPostProps {
 }
 
 const UserInterestedPost: FC<UserInterestedPostProps> = ({ postId }) => {
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const insets = useSafeAreaInsets();
+  const modalActions = useModalStore((state) => state.actions);
 
   const {
     data, loading, getUsersInterestedPost, reset,
@@ -38,7 +37,7 @@ const UserInterestedPost: FC<UserInterestedPostProps> = ({ postId }) => {
   );
 
   const onPressCloseBottomSheet = () => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
   };
 
   const onPressItem = (item: any) => {

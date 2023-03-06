@@ -1,14 +1,13 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 
 import GroupItem from '~/beinComponents/list/items/GroupItem';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IGroup } from '~/interfaces/IGroup';
 import mainStack from '~/router/navigator/MainStack/stack';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 import spacing from '~/theme/spacing';
 
 export interface PostAudiencesModalProps {
@@ -22,13 +21,13 @@ const PostAudiencesModal: FC<PostAudiencesModalProps> = ({
   showBlockedIcon,
   onPressItemAudience,
 }: PostAudiencesModalProps) => {
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
+  const modalActions = useModalStore((state) => state.actions);
 
   const onPressClose = () => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
   };
 
   const navigateToGroup = (groupId: any, communityId: any) => {

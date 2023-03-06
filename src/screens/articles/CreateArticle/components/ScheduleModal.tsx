@@ -3,7 +3,6 @@ import React, { FC, useEffect, useState } from 'react';
 import {
   View, StyleSheet, Modal, Platform,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
@@ -11,13 +10,13 @@ import { spacing } from '~/theme';
 import useCreateArticle from '../hooks/useCreateArticle';
 import useArticlesStore from '../../ArticleDetail/store';
 import Icon from '~/baseComponents/Icon';
-import modalActions from '~/storeRedux/modal/actions';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { DateInput } from '~/baseComponents/Input';
 import useCreateArticleStore from '../store';
 import { Button } from '~/baseComponents';
 import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import useModalStore from '~/store/modal';
 
 type ScheduleModalProps = {
   articleId: string;
@@ -28,7 +27,6 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
   articleId,
   isFromReviewSchedule = false,
 }) => {
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const theme = useTheme();
   const { colors } = theme;
@@ -44,6 +42,7 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
   const {
     publishedAt, isSubmiting, isSubmitingSuccess, errorSubmiting,
   } = useCreateArticleStore((state) => state.schedule);
+  const modalActions = useModalStore((state) => state.actions);
 
   const [isSetTime, setIsSetTime] = useState(!!publishedAt);
   const [isSetDate, setIsSetDate] = useState(!!publishedAt);
@@ -70,7 +69,7 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
   }, [isSubmitingSuccess]);
 
   const closeModal = () => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
   };
 
   const getMinDateTime = () => {

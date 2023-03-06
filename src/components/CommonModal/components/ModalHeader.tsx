@@ -1,14 +1,13 @@
 import React, { FC } from 'react';
 
-import { useDispatch } from 'react-redux';
 import Header, { HeaderProps } from '~/beinComponents/Header';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 
 const ModalHeader: FC<HeaderProps> = ({ ...props }: HeaderProps) => {
-  const dispatch = useDispatch();
+  const modalActions = useModalStore((state) => state.actions);
 
   const _onPressBack = () => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
   };
 
   return (

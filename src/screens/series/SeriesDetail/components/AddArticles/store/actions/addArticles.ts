@@ -9,7 +9,7 @@ const addArticles = (_set, get) => async (seriesId: string, article: IPostArticl
   if (!seriesId || !article) return;
   try {
     const { actions }: IAddArticlesState = get() || {};
-    await streamApi.addArticleInSeries(seriesId, { articleIds: [article.id] });
+    await streamApi.addArticleInSeries(seriesId, { itemIds: [article.id] });
     actions.setSelectingArticle(article);
     useSeriesStore.getState().actions.getSeriesDetail(seriesId);
     showToast({ content: 'series:text_add_articles_success' });

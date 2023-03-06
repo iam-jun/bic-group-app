@@ -9,10 +9,17 @@ import {
 } from '~/test/testUtils';
 import EditLocation from './EditLocation';
 import initialState from '~/storeRedux/initialState';
+import useUserProfileStore from '~/screens/Menu/UserProfile/store';
+import { responseGetCity } from '~/screens/Menu/UserProfile/store/__mocks__/data';
 
 afterEach(cleanup);
 
 describe('EditLocation conponent', () => {
+  afterEach(() => {
+    jest.runOnlyPendingTimers(); // you must add this
+    jest.useRealTimers(); // you must add this
+  });
+
   let Platform: any;
   beforeEach(() => {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -23,6 +30,10 @@ describe('EditLocation conponent', () => {
   const mockStore = configureStore([]);
 
   it('should call prop onItemPress', () => {
+    useUserProfileStore.setState((state) => {
+      state.city = responseGetCity.data as any;
+      return state;
+    });
     const store = mockStore(initialState);
     const onPress = jest.fn();
 
@@ -38,6 +49,10 @@ describe('EditLocation conponent', () => {
   });
 
   it('should renders correctly result when typing search', () => {
+    useUserProfileStore.setState((state) => {
+      state.city = responseGetCity.data as any;
+      return state;
+    });
     Platform.OS = 'android';
     jest.useFakeTimers();
     const store = createTestStore(initialState);

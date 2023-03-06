@@ -6,7 +6,6 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useDispatch } from 'react-redux';
 
 import Avatar from '~/baseComponents/Avatar';
 import Button from '~/beinComponents/Button';
@@ -38,8 +37,6 @@ import useCommentsStore from '~/store/entities/comments';
 import commentsSelector from '~/store/entities/comments/selectors';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import * as modalActions from '~/storeRedux/modal/actions';
-import { showReactionDetailBottomSheet } from '~/storeRedux/modal/actions';
 import dimension from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 import useCommentInputStore from '../CommentInputView/store';
@@ -70,7 +67,6 @@ const _CommentView: React.FC<CommentViewProps> = ({
 }: CommentViewProps) => {
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
   const commentInputStore = useCommentInputStore((state) => state.actions);
   const deleteCommentController = useDeleteCommentController((state) => state.actions);
 
@@ -87,7 +83,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
 
   const setting = usePostsStore(postsSelector.getSetting(postId));
   const cancelCommentFailed = useCommentsStore((state) => state.actions.cancelCommentFailed);
-  const { showAlert } = useModalStore((state) => state.actions);
+  const modalActions = useModalStore((state) => state.actions);
 
   const _commentData = comment || commentData || {};
   const {
@@ -189,16 +185,16 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const onEmojiSelected = (
     key: string,
   ) => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
     if (key) {
       onAddReaction?.(key);
     }
   };
 
   const onPressReact = () => {
-    dispatch(modalActions.setShowReactionBottomSheet(
+    modalActions.setShowReactionBottomSheet(
       { visible: true, callback: onEmojiSelected },
-    ));
+    );
   };
 
   const _onPressReply = () => {
@@ -227,43 +223,40 @@ const _CommentView: React.FC<CommentViewProps> = ({
       confirmLabel: t('common:btn_delete'),
       ConfirmBtnComponent: Button.Danger,
     };
-    showAlert(alertPayload);
+    modalActions.showAlert(alertPayload);
   };
 
   const onLongPress = () => {
     if (isReported) {
       return null;
     }
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent: (
-          <CommentViewMenu
-            commentId={id}
-            parentCommentId={parentCommentId}
-            content={content}
-            groupIds={groupIds}
-            postId={postId}
-            isActor={isActor}
-            audience={audience}
-            onPressMoreReaction={onPressReact}
-            onAddReaction={onAddReaction}
-            onPressReply={_onPressReply}
-            onPressDelete={_onPressDelete}
-          />
-        ),
-      }),
-    );
+    modalActions.showModal({
+      isOpen: true,
+      ContentComponent: (
+        <CommentViewMenu
+          commentId={id}
+          parentCommentId={parentCommentId}
+          content={content}
+          groupIds={groupIds}
+          postId={postId}
+          isActor={isActor}
+          audience={audience}
+          onPressMoreReaction={onPressReact}
+          onAddReaction={onAddReaction}
+          onPressReply={_onPressReply}
+          onPressDelete={_onPressDelete}
+        />
+      ),
+    });
   };
 
   const onLongPressReaction = (reactionType: ReactionType) => {
     const payload: IPayloadReactionDetailBottomSheet = {
-      isOpen: true,
       reactionsCount,
       initReaction: reactionType,
       getDataParam: { target: 'COMMENT', targetId: id },
     };
-    dispatch(showReactionDetailBottomSheet(payload));
+    modalActions.showReactionDetailBottomSheet(payload);
   };
 
   const onPressRetry = () => {

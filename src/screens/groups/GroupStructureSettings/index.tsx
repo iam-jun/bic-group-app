@@ -4,12 +4,10 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import { useDispatch } from 'react-redux';
 import { isEmpty } from 'lodash';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import { GroupItemProps } from '~/beinComponents/list/items/GroupItem';
-import modalActions from '~/storeRedux/modal/actions';
 import GroupStructureMenu from '~/screens/groups/GroupStructureSettings/components/GroupStructureMenu';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import { getGroupFromTreeById } from '~/screens/groups/helper';
@@ -19,6 +17,7 @@ import useGroupStructureStore from './store';
 import { isGroup } from '~/helpers/groups';
 import { GroupTreeItem } from '~/components/groups';
 import useGroupTreeStore from '~/components/groups/store';
+import useModalStore from '~/store/modal';
 
 export interface GroupStructureSettingsProps {
   style?: StyleProp<ViewStyle>;
@@ -28,7 +27,6 @@ export interface GroupStructureSettingsProps {
 const GroupStructureSettings: FC<GroupStructureSettingsProps> = (props) => {
   const { params } = props.route;
   const communityId = params?.communityId;
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
@@ -36,6 +34,7 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = (props) => {
   const { communityTree, actions } = useGroupStructureStore();
   const { data: dataTree, loading } = communityTree || {};
   const resetGroupTree = useGroupTreeStore((state) => state.reset);
+  const modalActions = useModalStore((state) => state.actions);
 
   useEffect(
     () => {
@@ -62,7 +61,7 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = (props) => {
       dataTree,
       group?.id,
     );
-    dispatch(modalActions.showModal({
+    modalActions.showModal({
       isOpen: true,
       ContentComponent: (
         <GroupStructureMenu
@@ -72,7 +71,7 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = (props) => {
           disableReorder={disableReorder}
         />
       ),
-    }));
+    });
   };
 
   return (

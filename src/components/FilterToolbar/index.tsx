@@ -2,13 +2,11 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC, useEffect, useRef } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 
-import { useDispatch } from 'react-redux';
 import { ScrollView } from 'react-native-gesture-handler';
 import PillTabButton from '~/baseComponents/Tab/PillTabButton';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { ISelectedFilterUser } from '~/interfaces/IHome';
 import FilterDate from './FilterDate';
-import * as modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import useFilterToolbarStore from './store';
 import {
@@ -20,6 +18,7 @@ import FilterCreateBySpecific from './FilterCreateBySpecific';
 import { PostType } from '~/interfaces/IPost';
 import FilterPostType from './FilterPostType';
 import { dimension } from '~/theme';
+import useModalStore from '~/store/modal';
 
 type FilterToolbarProps = {
   groupId?: string
@@ -27,7 +26,6 @@ type FilterToolbarProps = {
 
 const FilterToolbar: FC<FilterToolbarProps> = ({ groupId = '' }) => {
   const scrollRef = useRef<any>();
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
@@ -36,6 +34,7 @@ const FilterToolbar: FC<FilterToolbarProps> = ({ groupId = '' }) => {
   const filterCreatedBy = useFilterToolbarStore((state) => state.createdBy);
   const filterDate = useFilterToolbarStore((state) => state.datePosted);
   const { startDate, endDate } = filterDate || {};
+  const modalActions = useModalStore((state) => state.actions);
 
   useEffect(() => {
     actions.setSearchUser({
@@ -44,13 +43,11 @@ const FilterToolbar: FC<FilterToolbarProps> = ({ groupId = '' }) => {
   }, [groupId]);
 
   const showModal = (ContentComponent: any, props: any = {}) => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent,
-        props,
-      }),
-    );
+    modalActions.showModal({
+      isOpen: true,
+      ContentComponent,
+      props,
+    });
   };
 
   const onPressFilterCreatedBy = () => {

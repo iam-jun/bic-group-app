@@ -1,0 +1,147 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SeriesItemModal component should render correctly 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "flex": 1,
+      "flexDirection": "row",
+      "opacity": 1,
+      "paddingHorizontal": 16,
+      "paddingVertical": 8,
+    }
+  }
+  testID="series_item_modal.button"
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
+    }
+    testID="button_wrapper.content"
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "borderRadius": 6,
+            "height": 32,
+            "width": 32,
+          },
+          undefined,
+        ]
+      }
+      testID="avatar"
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "borderRadius": 6,
+              "height": 32,
+              "width": 32,
+            },
+            Object {
+              "backgroundColor": "#A4A9B7",
+            },
+          ]
+        }
+        testID="avatar_container"
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Array [
+                Object {
+                  "borderRadius": 6,
+                  "height": 32,
+                  "width": 32,
+                },
+                Object {
+                  "borderColor": "#F2F5F8",
+                  "borderWidth": 2,
+                },
+                Object {
+                  "backgroundColor": "#FFFFFF",
+                },
+              ],
+            ]
+          }
+        >
+          <FastImageView
+            onFastImageError={[Function]}
+            resizeMode="cover"
+            source={null}
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+            testID="avatar.image"
+          />
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "height": undefined,
+          "paddingHorizontal": undefined,
+          "paddingVertical": undefined,
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#282E53",
+            },
+            undefined,
+          ]
+        }
+      >
+        series 111
+      </Text>
+    </View>
+  </View>
+</View>
+`;

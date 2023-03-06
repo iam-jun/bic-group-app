@@ -4,8 +4,7 @@ import { IVerifyEmail } from '~/interfaces/IAuth';
 import i18n from '~/localization';
 import showToastError from '~/store/helper/showToastError';
 import { IVerifyEmailState } from '..';
-import modalActions from '~/storeRedux/modal/actions';
-import Store from '~/storeRedux';
+import useModalStore from '~/store/modal';
 
 const resendVerifyEmail = (_set, get) => async (
   params: IVerifyEmail,
@@ -19,7 +18,7 @@ const resendVerifyEmail = (_set, get) => async (
   } catch (error) {
     console.error('\x1b[35m🐣️ resendVerifyEmail  ', error, '\x1b[0m');
     if (error?.code === authErrors.LIMIT_EXCEEDED_EXCEPTION) {
-      Store.store.dispatch(modalActions.hideModal());
+      useModalStore.getState().actions.hideModal();
       showToastError({ meta: { message: i18n.t('auth:verify_email_limit_exceeded') } });
     } else {
       actions.setSentVerifyEmail(true);

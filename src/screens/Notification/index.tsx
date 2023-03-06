@@ -3,7 +3,6 @@ import { useIsFocused } from '@react-navigation/native';
 import i18next from 'i18next';
 import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { BottomListItemProps } from '~/components/BottomList/BottomListItem';
@@ -17,21 +16,21 @@ import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { notificationMenuData } from '~/screens/Notification/constants';
-import modalActions from '~/storeRedux/modal/actions';
 import { MEMBER_TABS } from '../communities/CommunityMembers';
 import { MEMBER_TAB_TYPES } from '../communities/constants';
 import ScrollableTabBar from './components/ScrollableTabBar';
 import useNotificationStore from './store';
 import INotificationsState from './store/Interface';
 import spacing from '~/theme/spacing';
+import useModalStore from '~/store/modal';
 
 const Notification = () => {
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const isFocused = useIsFocused();
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const modalActions = useModalStore((state) => state.actions);
 
   useEffect(
     () => {
@@ -51,7 +50,7 @@ const Notification = () => {
     } else {
       notiActions.markAsUnRead(data?.id);
     }
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
   };
 
   const onPressItemOption = ({ item }: {item: any}) => {
@@ -72,15 +71,13 @@ const Notification = () => {
       requireIsActor: true,
       upcoming: true,
     }];
-    dispatch(
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      modalActions.showBottomList({ isOpen: true, data: menuData } as BottomListItemProps),
-    );
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    modalActions.showBottomList({ data: menuData } as BottomListItemProps);
   };
 
   const handleMarkAllAsRead = () => {
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     notiActions.markAsReadAll('ALL');
   };
 
@@ -100,11 +97,9 @@ const Notification = () => {
       requireIsActor: true,
       upcoming: true,
     }];
-    dispatch(
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      modalActions.showBottomList({ isOpen: true, data: menuData } as BottomListItemProps),
-    );
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    modalActions.showBottomList({ data: menuData } as BottomListItemProps);
   };
 
   const onItemPress = useCallback(

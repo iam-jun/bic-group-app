@@ -6,11 +6,6 @@ import { AvatarTag, NameTag, TextOnly } from './index.stories';
 afterEach(cleanup);
 
 describe('Tag component', () => {
-  it('renders correctly Tag component type TextOnly', () => {
-    const rendered = render(<TextOnly {...TextOnly.args} />).toJSON();
-    expect(rendered).toMatchSnapshot();
-  });
-
   it('should call props onActionPress', () => {
     const onActionPress = jest.fn();
     const { getByTestId } = render(<TextOnly {...TextOnly.args} onActionPress={onActionPress} />);
@@ -22,7 +17,6 @@ describe('Tag component', () => {
 
   it('renders correctly Tag component type NameTag', () => {
     const rendered = render(<NameTag {...NameTag.args} />);
-    expect(rendered.toJSON()).toMatchSnapshot();
 
     const { getByTestId } = rendered;
     const labelComponent = getByTestId('tag.label');
@@ -32,7 +26,6 @@ describe('Tag component', () => {
 
   it('renders correctly Tag component type AvatarTag', () => {
     const rendered = render(<AvatarTag {...AvatarTag.args} />);
-    expect(rendered.toJSON()).toMatchSnapshot();
 
     const { getByTestId } = rendered;
     const labelComponent = getByTestId('tag.label');

@@ -6,6 +6,8 @@ import UserProfile from '~/screens/Menu/UserProfile';
 import PostSettings from '~/screens/post/PostSettings';
 import CommentDetail from '~/screens/comments/CommentDetail';
 import EditComment from '~/screens/comments/EditComment';
+import CreatePostTags from '~/screens/post/CreatePostTags';
+import CreatePostSeries from '~/screens/post/CreatePostSeries';
 
 const homeScreens = {
   'post-detail': PostDetail,
@@ -15,6 +17,8 @@ const homeScreens = {
   'draft-post': DraftPost,
   'user-profile': UserProfile,
   'post-settings': PostSettings,
+  'create-post-tags': CreatePostTags,
+  'create-post-series': CreatePostSeries,
   'comment-detail': CommentDetail,
 };
 

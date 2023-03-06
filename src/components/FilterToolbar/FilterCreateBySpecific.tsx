@@ -10,7 +10,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { debounce } from 'lodash';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useDispatch } from 'react-redux';
 import { useBaseHook } from '~/hooks';
 import { ISelectedFilterUser } from '~/interfaces/IHome';
 
@@ -25,9 +24,9 @@ import appConfig from '~/configs/appConfig';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import NoSearchResultsFound from '../NoSearchResultsFound';
 import { Icon } from '../articles/ArticleFormatToolBar/components/Icon';
-import modalActions from '~/storeRedux/modal/actions';
 import { getTextNameUserDisplay } from './helper';
 import useCommonController from '~/screens/store';
+import useModalStore from '~/store/modal';
 
 export interface NFSFilterCreateBySpecificProps {
   selectedCreatedBy?: any;
@@ -38,7 +37,6 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
   selectedCreatedBy,
   onSelect,
 }: NFSFilterCreateBySpecificProps) => {
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -53,6 +51,7 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
   const {
     key: searchKey, items: searchItems, hasNextPage: searchUserCanLoadMore, loading: searchUserLoading,
   } = searchData || {};
+  const modalActions = useModalStore((state) => state.actions);
 
   useEffect(
     () => {
@@ -75,7 +74,7 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
 
   const onPressUser = (user: any) => {
     onSelect?.({ id: `${user?.id}`, name: user?.fullname });
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
   };
 
   const renderItem = ({ item }: any) => (

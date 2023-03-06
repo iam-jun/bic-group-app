@@ -137,6 +137,8 @@
     "text_post_reported": "Bài viết đã được báo cáo",
     "text_article_reported": "Bài báo đã được báo cáo",
     "text_comment_reported": "Bình luận đã được báo cáo",
+    "btn_view_series": "Hiển thị Series",
+    "text_no_series_modal": "Không có series nào liên quan đến nội dung này.",
     "all": "Tất cả",
     "in": "trong",
     "text_refresh": "Tải lại",
@@ -548,7 +550,6 @@
     "text_option_edit_content": "Nội Dung",
     "text_change_cover": "Đổi ảnh bìa",
     "text_select_cover": "Chọn ảnh bìa",
-    "text_selecting_categories": "Bài viết của bạn sẽ được thêm vào",
     "text_search_category_placeholder": "Tìm lựa chọn của bạn...",
     "text_edit_article_success": "Cập nhật bài viết thành công",
     "menu": {
@@ -598,7 +599,8 @@
     "fail_schedule": "Đặt lịch thất bại",
     "successful_schedule": "Đặt lịch thành công",
     "text_delete_article_success": "Bài viết của bạn đã được xoá",
-    "paste_image_error": "Tải lên không thành công. Vui lòng tải lên hình ảnh bằng thanh công cụ."
+    "paste_image_error": "Tải lên không thành công. Vui lòng tải lên hình ảnh bằng thanh công cụ.",
+    "text_selecting_will_be_added_to": "Bài viết của bạn sẽ được thêm vào"
   },
   "post": {
     "news_feed": "News Feed",
@@ -807,10 +809,13 @@
       "copy_link": "Sao chép đường dẫn",
       "delete": "Xóa bài viết"
     },
-    "series_detail_article_menu": {
+    "series_detail_item_menu": {
       "reorder": "Sắp xếp lại",
-      "delete": "Xóa bài viết"
-    }
+      "delete_article": "Xóa bài báo",
+      "delete_post": "Xóa bài viết",
+      "view_series": "Hiển thị Series"
+    },
+    "text_selecting_will_be_added_to": "Bài đăng của bạn sẽ được thêm vào"
   },
   "comment": {
     "placeholder_comment": "Để lại bình luận ...",
@@ -1240,14 +1245,16 @@
     "content_edit_audience_failed": "Bạn không có quyền xóa bài đăng của chính mình trong các nhóm:",
     "text_saved": "Đã lưu series",
     "text_unsaved": "Đã bỏ lưu series",
-    "reorder_article": "Xắp Sếp Bài Báo",
-    "text_info_reorder": "Kéo và thả để sắp xếp bài báo",
+    "reorder": "Xắp Sếp",
+    "text_info_reorder": "Kéo và thả để sắp xếp các bài viết",
     "reorder_successful": "Sắp xếp thành công",
     "notice_changing_the_order": "Bạn đang thay đổi thứ tự bài báo",
     "notice_sure_to_do_this": "Bạn có muốn thực hiện sự thay đổi này không?",
     "text_add_articles_success": "Thêm thành công",
-    "text_remove_article": "Bạn muốnn xoá bài viết này?",
-    "text_article_removed": "Bài viết đã được xoá"
+    "text_remove_article": "Bạn muốn xoá bài báo này?",
+    "text_remove_post": "Bạn muốn xoá bài viết này?",
+    "text_article_removed": "Bài viết đã được xoá",
+    "text_no_content": "Không có nội dung"
   },
   "tags": {
     "create_tag": "Tạo thẻ",

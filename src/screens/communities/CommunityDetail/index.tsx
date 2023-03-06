@@ -2,7 +2,6 @@ import React, {
   useState, useEffect, useRef, useCallback,
 } from 'react';
 import { StyleSheet, DeviceEventEmitter, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -25,7 +24,6 @@ import {
   openUrl,
 } from '~/utils/link';
 import { chatSchemes } from '~/constants/chat';
-import modalActions from '~/storeRedux/modal/actions';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
@@ -53,7 +51,6 @@ import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
   const communityId = params?.communityId;
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
 
   const headerRef = useRef<any>();
@@ -65,7 +62,7 @@ const CommunityDetail = (props: any) => {
   const styles = themeStyles(theme, insets);
   const { t } = useBaseHook();
   const isMounted = useMounted();
-  const { showToast, showAlert } = useModalStore((state) => state.actions);
+  const modalActions = useModalStore((state) => state.actions);
 
   // community detail
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
@@ -179,14 +176,14 @@ const CommunityDetail = (props: any) => {
   }, [groupId, contentFilter, attributeFilter]);
 
   const onPressAdminTools = () => {
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     rootNavigation.navigate(groupStack.communityAdmin, { communityId });
   };
 
   const onPressCopyLink = () => {
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     Clipboard.setString(generateLink(LINK_COMMUNITY, communityId));
-    showToast({ content: 'common:text_copied' });
+    modalActions.showToast({ content: 'common:text_copied' });
   };
 
   const onConfirmLeaveCommunity = async () => {
@@ -194,8 +191,8 @@ const CommunityDetail = (props: any) => {
   };
 
   const onPressLeave = () => {
-    dispatch(modalActions.hideBottomList());
-    showAlert({
+    modalActions.hideBottomList();
+    modalActions.showAlert({
       title: t('communities:modal_confirm_leave_community:title'),
       confirmLabel: t(
         'communities:modal_confirm_leave_community:button_leave',
@@ -217,17 +214,13 @@ const CommunityDetail = (props: any) => {
       type: 'community',
       isMember,
       canSetting,
-      dispatch,
       onPressAdminTools,
       onPressCopyLink,
       onPressLeave,
     });
-    dispatch(
-      modalActions.showBottomList({
-        isOpen: true,
-        data: headerMenuData,
-      } as BottomListProps),
-    );
+    modalActions.showBottomList({
+      data: headerMenuData,
+    } as BottomListProps);
   };
 
   const onPressChat = () => {

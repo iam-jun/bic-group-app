@@ -6,8 +6,8 @@ import { SearchInput } from '~/baseComponents/Input';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
-import ArticleSelectingInfo from '~/components/articles/ArticleSelectingInfo';
-import ArticleSelectingListInfo from '~/components/articles/ArticleSelectingListInfo';
+import ItemCheckbox from '~/components/ItemCheckbox';
+import SelectingListInfo from '~/components/SelectingListInfo';
 
 import { useBaseHook } from '~/hooks';
 import { useBackPressListener } from '~/hooks/navigation';
@@ -70,7 +70,7 @@ const CreateArticleCategory: FC<CreateArticleProps> = ({ route }: CreateArticleP
   const renderItem = ({ item }) => {
     const isChecked = selectedCategories.findIndex((selected) => selected.id === item.id) > -1;
     return (
-      <ArticleSelectingInfo
+      <ItemCheckbox
         data={item}
         isChecked={isChecked}
         onAddItem={onAddCategory}
@@ -95,7 +95,7 @@ const CreateArticleCategory: FC<CreateArticleProps> = ({ route }: CreateArticleP
         placeholder={t('article:text_search_category_placeholder')}
         onChangeText={onChangeText}
       />
-      <ArticleSelectingListInfo
+      <SelectingListInfo
         type="category"
         data={selectedCategories}
         onRemoveItem={onRemoveCategory}

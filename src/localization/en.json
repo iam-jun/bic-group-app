@@ -137,6 +137,8 @@
     "text_post_reported": "Post reported",
     "text_article_reported": "Article reported",
     "text_comment_reported": "Comment reported",
+    "btn_view_series": "View Series",
+    "text_no_series_modal": "There is no series associated with this content.",
     "text_request_one": "Request",
     "text_request_other": "Requests",
     "text_admin": "Admin",
@@ -588,7 +590,6 @@
     "text_option_edit_content": "Content",
     "text_change_cover": "Change cover",
     "text_select_cover": "Select cover",
-    "text_selecting_categories": "Your article will be added to",
     "text_search_category_placeholder": "Select your options...",
     "text_edit_article_success": "Article updated successfully",
     "menu": {
@@ -638,7 +639,8 @@
     "fail_schedule": "Fail Schedule",
     "successful_schedule": "Successful Schedule",
     "text_delete_article_success": "Your article has been deleted",
-    "paste_image_error": "Upload failed. Please upload images using the toolbar."
+    "paste_image_error": "Upload failed. Please upload images using the toolbar.",
+    "text_selecting_will_be_added_to": "Your article will be added to"
   },
   "post": {
     "news_feed": "News Feed",
@@ -845,10 +847,13 @@
       "copy_link": "Copy Link",
       "delete": "Delete Article"
     },
-    "series_detail_article_menu": {
+    "series_detail_item_menu": {
       "reorder": "Reorder",
-      "delete": "Remove Article"
-    }
+      "delete_article": "Remove Article",
+      "delete_post": "Remove Post",
+      "view_series": "View Series"
+    },
+    "text_selecting_will_be_added_to": "Your post will be added to"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
@@ -1299,15 +1304,17 @@
     "content_edit_audience_failed": "You don't have delete own post permission at group:",
     "text_saved": "Series saved.",
     "text_unsaved": "Series unsaved.",
-    "reorder_article": "Reorder Article",
-    "text_info_reorder": "Drag and drop to reorder the article",
+    "reorder": "Reorder",
+    "text_info_reorder": "Drag and drop to reorder the items",
     "reorder_successful": "Reorder successful",
     "reorder_failed": "Reorder failed",
     "notice_changing_the_order": "You are changing the order",
     "notice_sure_to_do_this": "Are you sure to do this?",
     "text_add_articles_success": "Add successful",
     "text_remove_article": "Do you want to remove this article?",
-    "text_article_removed": "Article removed"
+    "text_remove_post": "Do you want to remove this post?",
+    "text_article_removed": "Remove successful",
+    "text_no_content": "No content"
   },
   "tags": {
     "create_tag": "Create Tag",

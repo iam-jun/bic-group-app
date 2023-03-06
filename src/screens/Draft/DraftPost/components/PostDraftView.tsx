@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import { useDispatch } from 'react-redux';
 import { useBaseHook } from '~/hooks';
 import streamApi from '~/api/StreamApi';
 import { useUserIdAuth } from '~/hooks/auth';
@@ -17,7 +16,6 @@ import {
   PostStatus,
 } from '~/interfaces/IPost';
 
-import modalActions from '~/storeRedux/modal/actions';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
@@ -45,7 +43,6 @@ const PostDraftView: FC<PostDraftViewProps> = ({
 }: PostDraftViewProps) => {
   const [publishing, setPublishing] = useState(false);
 
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
@@ -57,7 +54,7 @@ const PostDraftView: FC<PostDraftViewProps> = ({
   const createPostStoreActions = useCreatePostStore((state) => state.actions);
 
   const { actions } = useDraftPostStore();
-  const { showToast, showAlert } = useModalStore((state) => state.actions);
+  const modalActions = useModalStore((state) => state.actions);
 
   const {
     id,
@@ -88,7 +85,7 @@ const PostDraftView: FC<PostDraftViewProps> = ({
       const payload: IPayloadPublishDraftPost = {
         draftPostId: id,
         onSuccess: () => {
-          showToast({ content: 'post:draft:text_draft_post_published' });
+          modalActions.showToast({ content: 'post:draft:text_draft_post_published' });
         },
         onError: () => setPublishing(false),
       };
@@ -106,7 +103,7 @@ const PostDraftView: FC<PostDraftViewProps> = ({
   };
 
   const onDelete = () => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
     if (id) {
       streamApi
         .deletePost(
@@ -114,7 +111,7 @@ const PostDraftView: FC<PostDraftViewProps> = ({
         )
         .then((response) => {
           if (response?.data) {
-            showToast({ content: 'post:draft:text_draft_deleted' });
+            modalActions.showToast({ content: 'post:draft:text_draft_deleted' });
             refreshDraftPosts();
           }
         })
@@ -125,8 +122,8 @@ const PostDraftView: FC<PostDraftViewProps> = ({
   };
 
   const onPressDelete = () => {
-    dispatch(modalActions.hideModal());
-    showAlert({
+    modalActions.hideModal();
+    modalActions.showAlert({
       title: t('post:title_delete_post'),
       content: t('post:content_delete_post'),
       cancelBtn: true,

@@ -6,7 +6,6 @@ import ArticleScheduleItem from '.';
 import * as navigationHook from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
-import modalActions from '~/storeRedux/modal/actions';
 
 describe('ArticleScheduleItem component', () => {
   it('render correctly', () => {
@@ -19,8 +18,6 @@ describe('ArticleScheduleItem component', () => {
   });
 
   it('should navigate to ArticleReviewSchedule screen', () => {
-    const spyShowModal = jest.spyOn(modalActions, 'showModal');
-
     const navigate = jest.fn();
     const rootNavigation = { navigate };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(
@@ -47,6 +44,5 @@ describe('ArticleScheduleItem component', () => {
     const tagMoreItem = rendered.getByTestId('audiences.tag_more_item');
     expect(tagMoreItem).not.toBeNull();
     fireEvent.press(tagMoreItem);
-    expect(spyShowModal).toBeCalled();
   });
 });

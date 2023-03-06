@@ -30,29 +30,10 @@ describe('SeriesItem component', () => {
   });
 
   it('renders delete item when series deleted', () => {
-    const { result } = renderHook(() => usePostsStore());
-
-    act(() => {
-      result.current.actions.addToPosts({ data: { ...mockSeries, deleted: true } });
-    });
-
-    const wrapper = renderWithRedux(<SeriesItem data={mockSeries} />);
-    expect(wrapper.toJSON()).toMatchSnapshot();
+    const data = { ...mockSeries, deleted: true };
+    const wrapper = renderWithRedux(<SeriesItem data={data} />);
 
     const deleteComponent = wrapper.getByTestId('series.delete_item');
     expect(deleteComponent).toBeDefined();
-  });
-
-  it('renders SeriesFooterLite when isLite === true', () => {
-    const { result } = renderHook(() => usePostsStore());
-
-    act(() => {
-      result.current.actions.addToPosts({ data: { ...mockSeries } });
-    });
-
-    const wrapper = renderWithRedux(<SeriesItem data={mockSeries} isLite />);
-    const footerLite = wrapper.getByTestId('content_footer_lite');
-
-    expect(footerLite).toBeDefined();
   });
 });

@@ -4,10 +4,10 @@ import {
   check, request, PERMISSIONS, RESULTS,
 } from 'react-native-permissions';
 import i18next from 'i18next';
-import modalActions from '~/storeRedux/modal/actions';
 import { photo_permission_steps } from '~/constants/permissions';
 import PermissionsPopupContent from '~/beinComponents/PermissionsPopupContent';
 import { IPayloadShowModal } from '~/interfaces/common';
+import useModalStore from '~/store/modal';
 
 export enum permissionTypes {
   photo = 'photo',
@@ -46,7 +46,6 @@ const requestPermission = async (type: permissionTypes) => {
 
 export const checkPermission = async (
   type: permissionTypes,
-  dispatch: any,
   callback: (canOpenPicker: boolean) => void,
   isShowAlertFailed = true,
 ) : Promise<boolean> => {
@@ -79,12 +78,12 @@ export const checkPermission = async (
               description={i18next.t('common:permission_photo_description')}
               steps={photo_permission_steps}
               goToSetting={() => {
-                dispatch(modalActions.hideModal());
+                useModalStore.getState().actions.hideModal();
               }}
             />
           ),
         };
-        dispatch(modalActions.showModal(payload));
+        useModalStore.getState().actions.showModal(payload);
       }
 
       callback(false);

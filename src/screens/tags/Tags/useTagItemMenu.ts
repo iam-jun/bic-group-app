@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import i18next from 'i18next';
-import { useDispatch } from 'react-redux';
-import modalActions from '~/storeRedux/modal/actions';
-import Store from '~/storeRedux';
 
 import { useRootNavigation } from '~/hooks/navigation';
 import { Button } from '~/baseComponents';
@@ -14,13 +11,12 @@ import useModalStore from '~/store/modal';
 const useTagItemMenu = (communityId: string,
   tag: ITag) => {
   const { rootNavigation } = useRootNavigation();
-  const dispatch = useDispatch();
-  const { showAlert } = useModalStore((state) => state.actions);
+  const modalActions = useModalStore((state) => state.actions);
   const actions = useTagsControllerStore((state) => state.actions);
 
   const onPressDelete = () => {
-    Store.store.dispatch(modalActions.hideBottomList());
-    showAlert({
+    modalActions.hideBottomList();
+    modalActions.showAlert({
       title: i18next.t('tags:delete_tag_confirm'),
       content: i18next.t('tags:do_you_want_to_delete_this_tag'),
       cancelBtn: true,
@@ -34,7 +30,7 @@ const useTagItemMenu = (communityId: string,
   };
 
   const onPressEdit = () => {
-    Store.store.dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     rootNavigation.navigate(tagsStack.editTag, { tag });
   };
 
@@ -52,9 +48,7 @@ const useTagItemMenu = (communityId: string,
   ];
 
   const showMenu = () => {
-    dispatch(
-      modalActions.showBottomList({ isOpen: true, data: defaultData } as any),
-    );
+    modalActions.showBottomList({ data: defaultData } as any);
   };
 
   return {

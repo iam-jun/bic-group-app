@@ -31,7 +31,6 @@ import { IDraftArticleState } from '~/screens/Draft/DraftArticle/store';
 import { IArticleController } from '~/screens/articles/store';
 import { ISeriesState } from '~/screens/series/store';
 import { ITopicState } from '~/screens/topic/store';
-import { ICreateArticleSeriesState } from '~/screens/articles/CreateArticle/screens/CreateArticleSeries/store';
 import { ICreateArticleCategoryState } from '~/screens/articles/CreateArticle/screens/CreateArticleCategory/store';
 import { IGroupDetailState } from '~/screens/groups/GroupDetail/store';
 import { IMyPermissionsState } from './permissions';
@@ -48,7 +47,9 @@ import { IFeedSearchState } from '~/screens/Home/HomeSearch/store';
 import { IButtonMarkAsReadState } from '~/components/posts/ButtonMarkAsRead/store';
 import { ICreatePostState } from '~/screens/post/CreatePost/store';
 import { ILinkPreviewState } from './linkPreview';
+import { ISeriesContentModalState } from '~/components/series/SeriesContentModal/store';
 import { IGroupJoinableUsersState } from '~/screens/groups/GroupMembers/AddMembersToGroup/store';
+import { ISelectSeriesState } from '~/components/SelectSeries/store';
 
 export interface BicStore {
   entities: {
@@ -85,7 +86,7 @@ export interface BicStore {
       editArticleStore: ICreateArticleState,
       EditArticleCategory: {
         editArticleCategoryStore: ICreateArticleCategoryState,
-        editArticleSeriesStore: ICreateArticleSeriesState,
+        editArticleSeriesStore: ISelectSeriesState,
       }
     }
     ArticleScheduleContent: {
@@ -94,6 +95,7 @@ export interface BicStore {
   };
   series: {
     seriesStore: ISeriesState,
+    seriesContentModal: ISeriesContentModalState;
   };
   groups: {
     GeneralInformation: {

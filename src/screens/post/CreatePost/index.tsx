@@ -199,6 +199,14 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     rootNavigation.navigate(homeStack.postSettings);
   };
 
+  const onPressTags = () => {
+    rootNavigation.navigate(homeStack.createPostTags);
+  };
+
+  const onPressSeries = () => {
+    rootNavigation.navigate(homeStack.createPostSeries);
+  };
+
   return (
     <ScreenWrapper isFullView testID="CreatePostScreen">
       <Header
@@ -234,6 +242,8 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
           onPressSetting={onPressSettings}
           isSetting={count > 0}
           settingDisabled={settingDisabled}
+          onPressTags={onPressTags}
+          onPressSeries={onPressSeries}
         />
       </View>
     </ScreenWrapper>
