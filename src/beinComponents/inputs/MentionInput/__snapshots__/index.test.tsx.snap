@@ -1369,6 +1369,7 @@ Array [
                           "flex": 1,
                         }
                       }
+                      testID="emoji_picker"
                     >
                       <RCTScrollView
                         data={Array []}
@@ -1394,13 +1395,11 @@ Array [
                         showsVerticalScrollIndicator={false}
                         stickyHeaderIndices={Array []}
                         style={
-                          Array [
-                            Object {},
-                            Object {
-                              "width": 720,
-                            },
-                          ]
+                          Object {
+                            "width": 720,
+                          }
                         }
+                        testID="emoji_picker.section_list"
                       >
                         <View />
                       </RCTScrollView>
@@ -1649,6 +1648,7 @@ Array [
                           "flex": 1,
                         }
                       }
+                      testID="emoji_picker"
                     >
                       <RCTScrollView
                         data={Array []}
@@ -1674,13 +1674,11 @@ Array [
                         showsVerticalScrollIndicator={false}
                         stickyHeaderIndices={Array []}
                         style={
-                          Array [
-                            Object {},
-                            Object {
-                              "width": 720,
-                            },
-                          ]
+                          Object {
+                            "width": 720,
+                          }
                         }
+                        testID="emoji_picker.section_list"
                       >
                         <View />
                       </RCTScrollView>

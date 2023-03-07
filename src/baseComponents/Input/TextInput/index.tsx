@@ -198,9 +198,9 @@ const TextInput: React.FC<TextInputProps> = ({
                 {...props}
               />
               {!!RightComponent && (
-              <View style={styles.rightComponentStyle}>
-                {RightComponent}
-              </View>
+                <View style={styles.rightComponentStyle}>
+                  {RightComponent}
+                </View>
               )}
             </View>
           </View>
@@ -230,7 +230,7 @@ const TextInput: React.FC<TextInputProps> = ({
 };
 
 const themeStyles = (
-  theme: ExtendedTheme, horizontal:boolean, leftIcon: string,
+  theme: ExtendedTheme, horizontal: boolean, leftIcon: string,
 ) => {
   const { colors } = theme;
 
@@ -250,7 +250,6 @@ const themeStyles = (
       borderTopRightRadius: spacing.borderRadius.base,
       borderBottomRightRadius: spacing.borderRadius.base,
       borderWidth: 1,
-      backgroundColor: 'green',
       flex: 1,
     },
     inputContainer: {

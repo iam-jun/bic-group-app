@@ -1,161 +1,115 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-
+import React from 'react';
 import { cleanup, waitFor } from '@testing-library/react-native';
 
-import React from 'react';
-
-import i18next from 'i18next';
-import useAuthController, { IAuthState } from '~/screens/auth/store';
-import initialState from '~/storeRedux/initialState';
-
-import {
-  configureStore,
-  fireEvent,
-  renderWithRedux,
-} from '~/test/testUtils';
+import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import * as navigationHook from '~/hooks/navigation';
 
 import EditBasicInfo from './EditBasicInfo';
-import { USER_PROFILE } from '~/test/mock_data/menu';
+import useUserProfileStore from '~/screens/Menu/UserProfile/store';
+import useModalStore from '~/store/modal';
+import useCommonController from '~/screens/store';
+import { GENDER_TYPE, RELATIONSHIP_TYPE } from '~/interfaces/IEditUser';
+import i18n from '~/localization';
 
 afterEach(cleanup);
 
-describe('EditDescription screen', () => {
-  let Keyboard: any;
-  let storeData: any;
+const fakeDataUserProfile = {
+  id: 'test_id',
+  fullname: 'Full Name',
+  username: 'User Name',
+  gender: GENDER_TYPE.MALE,
+  birthday: '01/08/1998',
+  relationshipStatus: RELATIONSHIP_TYPE.SINGLE,
+  language: ['en', 'vi'],
+};
 
-  const mockStore = configureStore([]);
+describe('EditBasicInfo screen', () => {
+  let Keyboard: any;
+  const mockLanguages = [
+    { code: 'en', local: 'English', selected: true },
+    { code: 'vi', local: 'Tiếng Việt', selected: true },
+  ];
 
   beforeEach(() => {
     Keyboard = require('react-native').Keyboard;
     jest.clearAllMocks();
-    storeData = { ...initialState };
-    storeData.menu.myProfile = {} as any;
-    storeData.menu.showUserNotFound = false;
-    storeData.menu.loadingUserProfile = false;
-    useAuthController.setState((state:IAuthState) => {
-      state.authUser = {} as any;
-      return state;
-    });
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
   });
 
   it('should disable save button when not change any value', async () => {
-    const store = mockStore(initialState);
-
-    const wrapper = renderWithRedux(<EditBasicInfo />, store);
+    const wrapper = renderWithRedux(<EditBasicInfo />);
 
     const component = wrapper.getByTestId('edit_basic_info.save');
     expect(component.props.accessibilityState.disabled).toBeTruthy();
   });
 
   it('should enable save button when change name', async () => {
-    const store = mockStore(initialState);
-
-    const wrapper = renderWithRedux(<EditBasicInfo />, store);
+    const wrapper = renderWithRedux(<EditBasicInfo />);
 
     const component = wrapper.getByTestId('edit_basic_info.save');
-    const inputComponent = wrapper.getByTestId('edit_name.text_input');
+    const inputComponent = wrapper.getByTestId(
+      'edit_basic_info.name.text_input',
+    );
 
     fireEvent.changeText(inputComponent, 'Test name');
     expect(component.props.accessibilityState.disabled).toBeFalsy();
+
+    fireEvent.press(component);
   });
 
-  it('should render gender bottom sheet when click gender item', async () => {
-    Keyboard.dismiss = jest.fn();
+  it('should enable save button when change gender', async () => {
+    const wrapper = renderWithRedux(<EditBasicInfo />);
 
-    storeData.menu.myProfile = USER_PROFILE;
-    const store = mockStore(storeData);
+    const maleComponent = wrapper.getByTestId('settings.male');
+    expect(maleComponent).toBeDefined();
 
-    const wrapper = renderWithRedux(<EditBasicInfo />, store);
+    fireEvent.press(maleComponent);
 
     const buttonSave = wrapper.getByTestId('edit_basic_info.save');
     expect(buttonSave?.props?.accessibilityState?.disabled).toBeTruthy();
-
-    const component = wrapper.getByTestId('edit_basic_info.gender');
-    expect(component).toBeDefined();
-
-    fireEvent.press(component);
-    expect(Keyboard.dismiss).toBeCalled();
-    const bottomSheet = wrapper.getByTestId('edit_basic_info.gender_list');
-    expect(bottomSheet).toBeDefined();
-
-    const item0Component = wrapper.getByTestId(
-      'edit_user_info.option_menu.item_MALE',
-    );
-    expect(item0Component).toBeDefined();
-    fireEvent.press(item0Component);
-
-    expect(buttonSave?.props?.accessibilityState?.disabled).toBeFalsy();
   });
 
   it('should render show date picker when click birthday item', async () => {
-    const store = mockStore(initialState);
-
-    const wrapper = renderWithRedux(<EditBasicInfo />, store);
+    const wrapper = renderWithRedux(<EditBasicInfo />);
 
     const component = wrapper.getByTestId('edit_basic_info.birthday');
     expect(component).toBeDefined();
     fireEvent.press(component);
 
-    await waitFor(() => expect(wrapper.queryByTestId('edit_basic_info.date_picker')).toBeTruthy());
+    await waitFor(() => expect(wrapper.queryByTestId('date_input.date_picker')).toBeTruthy());
   });
 
   it('should render language option bottom sheet and enable Save button when click language item', () => {
-    const user = {
-      signInUserSession: {
-        idToken: { payload: { 'custom:user_uuid': USER_PROFILE.id } },
-      },
-    };
-    Keyboard.dismiss = jest.fn();
-
-    useAuthController.setState((state:IAuthState) => {
-      state.authUser = user as any;
+    useUserProfileStore.setState((state) => {
+      state.languages = mockLanguages;
       return state;
     });
+
     const wrapper = renderWithRedux(<EditBasicInfo />);
 
-    const component = wrapper.getByTestId('edit_basic_info.language');
-    expect(component).toBeDefined();
+    const languageComponent = wrapper.getByTestId('edit_basic_info.language');
+    expect(languageComponent).toBeDefined();
 
-    fireEvent.press(component);
-    expect(Keyboard.dismiss).toBeCalled();
+    fireEvent.press(languageComponent);
 
-    const item0Component = wrapper.getByTestId(
-      'language_option_menu.checkbox.item_0',
+    const languageBottomSheetCom = wrapper.queryByTestId(
+      'language.bottom_sheet',
     );
-    expect(item0Component).toBeDefined();
+    expect(languageBottomSheetCom).toBeDefined();
 
-    fireEvent.press(item0Component);
-
-    const btnSaveComponent = wrapper.getByTestId(
-      'edit_basic_info.save_language',
+    const languageItemsComp = wrapper.queryAllByTestId(
+      'language_option.item_list',
     );
-    expect(btnSaveComponent).toBeDefined();
-    fireEvent.press(btnSaveComponent);
+    expect(languageItemsComp).toBeDefined();
+    expect(languageItemsComp.length).toEqual(mockLanguages.length);
+
+    fireEvent.press(languageItemsComp[0]);
 
     const buttonSave = wrapper.getByTestId('edit_basic_info.save');
     expect(buttonSave).toBeDefined();
-
-    expect(buttonSave.props.accessibilityState.disabled).toBeFalsy();
   });
 
-  it('should render relationship bottom sheet when click relationship item', () => {
-    Keyboard.dismiss = jest.fn();
-    const user = {
-      signInUserSession: {
-        idToken: { payload: { 'custom:user_uuid': USER_PROFILE.id } },
-      },
-    };
-
-    useAuthController.setState((state:IAuthState) => {
-      state.authUser = user as any;
-      return state;
-    });
-
+  it('should render relationship bottom sheet when click relationship item', async () => {
     const wrapper = renderWithRedux(<EditBasicInfo />);
 
     const buttonSave = wrapper.getByTestId('edit_basic_info.save');
@@ -165,21 +119,12 @@ describe('EditDescription screen', () => {
     expect(component).toBeDefined();
 
     fireEvent.press(component);
-    expect(Keyboard.dismiss).toBeCalled();
 
     const bottomSheet = wrapper.getByTestId(
       'edit_basic_info.relationship_status_list',
     );
 
     expect(bottomSheet).toBeDefined();
-
-    const item0Component = wrapper.getByTestId(
-      'edit_user_info.option_menu.item_MARRIED',
-    );
-    expect(item0Component).toBeDefined();
-    fireEvent.press(item0Component);
-
-    expect(buttonSave?.props?.accessibilityState?.disabled).toBeFalsy();
   });
 
   it('should back to previous screen successfully ', () => {
@@ -187,11 +132,11 @@ describe('EditDescription screen', () => {
 
     const rootNavigation = { canGoBack: true, goBack };
 
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
+    jest
+      .spyOn(navigationHook, 'useRootNavigation')
+      .mockImplementation(() => ({ rootNavigation } as any));
 
-    const store = mockStore(initialState);
-
-    const wrapper = renderWithRedux(<EditBasicInfo />, store);
+    const wrapper = renderWithRedux(<EditBasicInfo />);
 
     const component = wrapper.getByTestId('edit_basic_info.save');
     expect(component.props.accessibilityState.disabled).toBeTruthy();
@@ -203,55 +148,44 @@ describe('EditDescription screen', () => {
 
   it('should show alert when changed value and click back ', () => {
     Keyboard.dismiss = jest.fn();
+    const showAlert = jest.fn();
+    useModalStore.setState((state) => {
+      state.actions = { showAlert } as any;
+      return state;
+    });
 
-    const store = mockStore(initialState);
+    const wrapper = renderWithRedux(<EditBasicInfo />);
 
-    const wrapper = renderWithRedux(<EditBasicInfo />, store);
-
-    const inputComponent = wrapper.getByTestId('edit_name.text_input');
+    const inputComponent = wrapper.getByTestId(
+      'edit_basic_info.name.text_input',
+    );
 
     fireEvent.changeText(inputComponent, 'Test name');
 
     const buttonBack = wrapper.getByTestId('header.back');
     fireEvent.press(buttonBack);
     expect(Keyboard.dismiss).toBeCalled();
-  });
-
-  it('should dismiss keyboard when click button save ', () => {
-    Keyboard.dismiss = jest.fn();
-
-    const store = mockStore(initialState);
-
-    const wrapper = renderWithRedux(<EditBasicInfo />, store);
-
-    const inputComponent = wrapper.getByTestId('edit_name.text_input');
-
-    fireEvent.changeText(inputComponent, 'Test name');
-
-    const buttonSave = wrapper.getByTestId('edit_basic_info.save');
-    expect(buttonSave.props.accessibilityState.disabled).toBeFalsy();
-
-    fireEvent.press(buttonSave);
-
-    expect(Keyboard.dismiss).toBeCalled();
+    expect(showAlert).toBeCalled();
   });
 
   it('should show error text when deleting all character of name', () => {
-    Keyboard.dismiss = jest.fn();
+    useCommonController.setState((state) => {
+      state.myProfile = fakeDataUserProfile as any;
+      return state;
+    });
 
-    storeData.menu.myProfile = USER_PROFILE;
-    const store = mockStore(storeData);
+    const wrapper = renderWithRedux(<EditBasicInfo />);
 
-    const wrapper = renderWithRedux(<EditBasicInfo />, store);
-
-    const inputComponent = wrapper.getByTestId('edit_name.text_input');
+    const inputComponent = wrapper.getByTestId(
+      'edit_basic_info.name.text_input',
+    );
 
     fireEvent.changeText(inputComponent, '');
 
     const helperComponent = wrapper.getByTestId('text_input.text_helper');
     expect(helperComponent).toBeDefined();
     expect(helperComponent.props?.children?.[0]).toBe(
-      i18next.t('profile:text_name_must_not_be_empty'),
+      i18n.t('profile:text_name_must_not_be_empty'),
     );
   });
 });

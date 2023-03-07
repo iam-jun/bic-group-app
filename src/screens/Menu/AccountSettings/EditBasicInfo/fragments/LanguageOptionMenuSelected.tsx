@@ -3,9 +3,10 @@ import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ILanguageItem } from '~/interfaces/IEditUser';
 import spacing from '~/theme/spacing';
-import Button from '~/beinComponents/Button';
 import Tag from '~/baseComponents/Tag';
 import { useBaseHook } from '~/hooks';
+import Button from '~/baseComponents/Button';
+import Icon from '~/baseComponents/Icon';
 
 type LanguageOptionMenuSelectedProps = {
   languages: ILanguageItem[];
@@ -23,36 +24,34 @@ const LanguageOptionMenuSelected: FC<LanguageOptionMenuSelectedProps> = ({
 
   return (
     <View style={styles.container}>
-      <Button
-        style={styles.inputContainer}
-      >
-        {
-            languages && languages.length !== 0
-              ? (
-                <>
-                  <View style={styles.tagContainer}>
-                    {languages.map((item) => (
-                      <View key={`sllg-${item.code}`}>
-                        <Tag
-                          type="neutral"
-                          size="medium"
-                          style={styles.tag}
-                          label={item.local}
-                          icon="Xmark"
-                          onPressIcon={() => onRemove(item)}
-                        />
-                      </View>
-                    ))}
-                  </View>
-                  <Button
-                    rightIcon="Xmark"
-                    rightIconProps={{ tintColor: colors.neutral40, size: 10 }}
-                    onPress={() => onRemove()}
+      <Button testID="button.selected_languages" style={styles.inputContainer}>
+        {languages && languages.length !== 0 ? (
+          <>
+            <View style={styles.tagContainer}>
+              {languages.map((item) => (
+                <View key={`sllg-${item.code}`}>
+                  <Tag
+                    type="neutral"
+                    size="medium"
+                    style={styles.tag}
+                    label={item.local}
+                    icon="Xmark"
+                    onPressIcon={() => onRemove(item)}
                   />
-                </>
-              )
-              : t('common:text_not_set')
-        }
+                </View>
+              ))}
+            </View>
+            <Button
+              testID="button.remove"
+              style={styles.buttonRemove}
+              onPress={() => onRemove()}
+            >
+              <Icon icon="Xmark" tintColor={colors.neutral40} size={10} />
+            </Button>
+          </>
+        ) : (
+          t('common:text_not_set')
+        )}
       </Button>
     </View>
   );
@@ -83,6 +82,9 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     tag: {
       marginVertical: 2,
+    },
+    buttonRemove: {
+      padding: spacing.padding.xSmall,
     },
   });
 };

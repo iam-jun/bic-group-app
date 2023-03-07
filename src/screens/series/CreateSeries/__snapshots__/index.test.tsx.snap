@@ -589,7 +589,6 @@ exports[`CreateSeries component renders correctly without data 1`] = `
                 style={
                   Array [
                     Object {
-                      "backgroundColor": "green",
                       "borderBottomLeftRadius": 6,
                       "borderBottomRightRadius": 6,
                       "borderTopLeftRadius": 6,

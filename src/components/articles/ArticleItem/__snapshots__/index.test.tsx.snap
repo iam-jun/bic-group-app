@@ -830,41 +830,24 @@ exports[`ArticleItem Component renders correctly 1`] = `
             }
             testID="reaction.children"
           >
-            <View
+            <Image
+              resizeMode="contain"
+              source={
+                Object {
+                  "testUri": "../../../assets/emoji/static/bic_heart_gift.png",
+                }
+              }
               style={
                 Array [
+                  undefined,
                   Object {
-                    "overflow": "hidden",
+                    "height": 15.6,
+                    "width": 15.6,
                   },
-                  Array [
-                    undefined,
-                    Object {
-                      "height": 15.6,
-                      "width": 15.6,
-                    },
-                  ],
                 ]
               }
-            >
-              <FastImageView
-                onFastImageError={[Function]}
-                resizeMode="contain"
-                source={
-                  Object {
-                    "testUri": "../../../assets/emoji/static/bic_heart_gift.png",
-                  }
-                }
-                style={
-                  Object {
-                    "bottom": 0,
-                    "left": 0,
-                    "position": "absolute",
-                    "right": 0,
-                    "top": 0,
-                  }
-                }
-              />
-            </View>
+              testID="emoji.image"
+            />
             <Text
               style={
                 Array [

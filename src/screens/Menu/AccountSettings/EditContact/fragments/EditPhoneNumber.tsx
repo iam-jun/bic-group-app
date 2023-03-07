@@ -1,6 +1,4 @@
-import i18next from 'i18next';
 import React, { useEffect, useRef } from 'react';
-import { Controller } from 'react-hook-form';
 import {
   Keyboard,
   ScrollView,
@@ -10,6 +8,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
+import { useController } from 'react-hook-form';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import Button from '~/beinComponents/Button';
 import TextInput from '~/beinComponents/inputs/TextInput';
@@ -23,23 +22,21 @@ import TitleComponent from '../../fragments/TitleComponent';
 import { useBaseHook } from '~/hooks';
 import useUserProfileStore from '~/screens/Menu/UserProfile/store';
 import { ICountryResponseItem } from '~/interfaces/IAuth';
+import { IObject } from '~/interfaces/common';
+import useMenuController from '~/screens/Menu/store';
 
 interface EditPhoneNumberProps {
   onChangeCountryCode: (value: string) => void;
   countryCode: string;
   phoneNumber: string;
-  control: any;
-  errorsState: any;
-  clearAllErrors: () => void;
+  useFormData: IObject<any>;
 }
 
 const EditPhoneNumber = ({
   onChangeCountryCode,
-  control,
-  errorsState,
-  clearAllErrors,
   countryCode,
   phoneNumber,
+  useFormData,
 }: EditPhoneNumberProps) => {
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
@@ -53,12 +50,54 @@ const EditPhoneNumber = ({
   const { t } = useBaseHook();
 
   const countryCodeSheetRef = useRef<any>();
+  const editContactError = useMenuController((state) => state.editContactError);
+  const actions = useMenuController((state) => state.actions);
 
-  useEffect(
-    () => {
-      clearAllErrors();
-    }, [],
-  );
+  const phoneRules = {
+    required: false,
+    maxLength: {
+      value: 12,
+      message: t('settings:text_invalid_phone_length'),
+    },
+    minLength: {
+      value: 7,
+      message: t('settings:text_invalid_phone_length'),
+    },
+    pattern: {
+      value: validation.phoneNumberRegex,
+      message: t('settings:text_wrong_phone_number_format'),
+    },
+  };
+
+  const {
+    control,
+    formState: { errors },
+    setError,
+    trigger,
+  } = useFormData;
+
+  const {
+    field: { onChange, value },
+  } = useController({
+    control,
+    name: 'phoneNumber',
+    rules: phoneRules,
+    defaultValue: phoneNumber,
+  });
+
+  const validateInputs = async () => trigger('phoneNumber');
+
+  useEffect(() => {
+    if (!!editContactError) {
+      setError('phoneNumber', {
+        type: 'validate',
+        message: editContactError,
+      });
+    }
+    return () => {
+      actions.setEditContactError('');
+    };
+  }, [editContactError]);
 
   const onSelectCountryCode = (item: ICountryResponseItem) => {
     countryCodeSheetRef.current?.close();
@@ -67,6 +106,7 @@ const EditPhoneNumber = ({
 
   const renderItem = ({ item }: {item: ICountryResponseItem}) => (
     <PrimaryItem
+      key={`edit_phone_number.country_code.${item.countryCode}`}
       testID="edit_phone_number.country_code.item"
       title={`${item.flag} ${item.name} (${item.countryCode})`}
       titleProps={{ variant: 'bodyM' }}
@@ -114,47 +154,25 @@ const EditPhoneNumber = ({
 
   const renderPhoneNumberInput = () => (
     <View style={styles.phoneNumberView}>
-      <Controller
-        name="phoneNumber"
-        defaultValue={phoneNumber}
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <TextInput
-            value={value}
-            testID="edit_phone_number.phone"
-            onChangeText={(text: string) => {
-              if (!!text && text?.trim?.()?.length > 0) {
-                onChange(formatTextRemoveSpace(text));
-                clearAllErrors();
-              }
-            }}
-            error={errorsState?.phoneNumber}
-            helperContent={errorsState?.phoneNumber?.message}
-            helperTextProps={{ style: styles.textErrorPhoneNumber }}
-            keyboardType="numeric"
-            autoCapitalize="none"
-            activeOutlineColor={theme.colors.purple50}
-            outlineColor={theme.colors.neutral5}
-            style={styles.inputContainer}
-            inputStyle={styles.inputStyle}
-            placeholder={t('settings:enter_phone')}
-          />
-        )}
-        rules={{
-          required: false,
-          maxLength: {
-            value: 12,
-            message: i18next.t('settings:text_invalid_phone_length'),
-          },
-          minLength: {
-            value: 7,
-            message: i18next.t('settings:text_invalid_phone_length'),
-          },
-          pattern: {
-            value: validation.phoneNumberRegex,
-            message: i18next.t('settings:text_wrong_phone_number_format'),
-          },
+      <TextInput
+        value={value}
+        testID="edit_phone_number.phone"
+        onChangeText={(text: string) => {
+          if (!!text && text?.trim?.()?.length > 0) {
+            onChange(formatTextRemoveSpace(text));
+            validateInputs();
+          }
         }}
+        error={errors?.phoneNumber}
+        helperContent={errors?.phoneNumber?.message}
+        helperTextProps={{ style: styles.textErrorPhoneNumber }}
+        keyboardType="numeric"
+        autoCapitalize="none"
+        activeOutlineColor={theme.colors.purple50}
+        outlineColor={theme.colors.neutral5}
+        style={styles.inputContainer}
+        inputStyle={styles.inputStyle}
+        placeholder={t('settings:enter_phone')}
       />
     </View>
   );

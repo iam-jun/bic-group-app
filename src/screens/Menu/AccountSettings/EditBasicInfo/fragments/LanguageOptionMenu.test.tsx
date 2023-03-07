@@ -3,38 +3,18 @@ import React from 'react';
 import { renderWithRedux, cleanup, fireEvent } from '~/test/testUtils';
 
 import LanguageOptionMenu from './LanguageOptionMenu';
+import i18n from '~/localization';
+import useUserProfileStore from '~/screens/Menu/UserProfile/store';
 
 afterEach(cleanup);
 
 describe('LanguageOptionMenu conponent', () => {
-  const languageState = ['vi', 'en'];
-
-  it('should call props onChangeLanguages', () => {
-    const onChagneLanguage = jest.fn();
-
-    const rendered = renderWithRedux(
-      <LanguageOptionMenu
-        onChangeLanguages={onChagneLanguage}
-        selectedLanguages={languageState}
-      />,
-    );
-
-    const btnOpenBottomSheetCom = rendered.getByTestId(
-      'edit_basic_info.language',
-    );
-    expect(btnOpenBottomSheetCom).toBeDefined();
-    fireEvent.press(btnOpenBottomSheetCom);
-
-    const btnSaveComponent = rendered.getByTestId(
-      'edit_basic_info.save_language',
-    );
-    expect(btnSaveComponent).toBeDefined();
-    fireEvent.press(btnSaveComponent);
-
-    expect(onChagneLanguage).toBeCalled();
-  });
-
-  it('should call props onChangeLanguages with list language', () => {
+  const languageState = ['en', 'vi'];
+  const mockLanguages = [
+    { code: 'en', local: 'English', selected: true },
+    { code: 'vi', local: 'Tiếng Việt', selected: true },
+  ];
+  it('should render correctly when language was not set', () => {
     const onChagneLanguage = jest.fn();
 
     const rendered = renderWithRedux(
@@ -44,25 +24,49 @@ describe('LanguageOptionMenu conponent', () => {
       />,
     );
 
-    const btnOpenBottomSheetCom = rendered.getByTestId(
-      'edit_basic_info.language',
+    const buttonComponent = rendered.getByTestId('edit_basic_info.language');
+    expect(buttonComponent).toBeDefined();
+
+    const buttonText = rendered.getByTestId('edit_basic_info.language.title');
+    expect(buttonText).toBeDefined();
+    expect(buttonText.children?.[0]).toEqual(
+      i18n.t('settings:select_language'),
     );
-    expect(btnOpenBottomSheetCom).toBeDefined();
-    fireEvent.press(btnOpenBottomSheetCom);
 
-    const item0Component = rendered.getByTestId(
-      'language_option_menu.checkbox.item_0',
+    fireEvent.press(buttonComponent);
+
+    const bottomSheet = rendered.queryByTestId('language.bottom_sheet');
+    expect(bottomSheet).toBeDefined();
+  });
+
+  it('should render correctly when language was set', () => {
+    useUserProfileStore.setState((state) => {
+      state.languages = mockLanguages;
+      return state;
+    });
+    const onChagneLanguage = jest.fn();
+
+    const rendered = renderWithRedux(
+      <LanguageOptionMenu
+        onChangeLanguages={onChagneLanguage}
+        selectedLanguages={languageState}
+      />,
     );
-    expect(item0Component).toBeDefined();
 
-    fireEvent.press(item0Component);
+    const buttonComponent = rendered.getByTestId('edit_basic_info.language');
+    expect(buttonComponent).toBeDefined();
 
-    const btnSaveComponent = rendered.getByTestId(
-      'edit_basic_info.save_language',
+    const selectedItemsCom = rendered.getAllByTestId(
+      'edit_basic_info.language.selected_item',
     );
-    expect(btnSaveComponent).toBeDefined();
-    fireEvent.press(btnSaveComponent);
+    expect(selectedItemsCom.length).toEqual(languageState.length);
+    const selectedTagRemoveItems = rendered.getAllByTestId('tag.icon');
+    fireEvent.press(selectedTagRemoveItems[0]);
+    expect(onChagneLanguage).toHaveBeenCalled();
 
-    expect(onChagneLanguage).toHaveBeenCalledWith(['vi']);
+    fireEvent.press(buttonComponent);
+
+    const bottomSheet = rendered.queryByTestId('language.bottom_sheet');
+    expect(bottomSheet).toBeDefined();
   });
 });

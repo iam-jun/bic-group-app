@@ -40,7 +40,9 @@ describe('PostDraftView component', () => {
   it('should navigate to edit post screen when click button edit', () => {
     const navigate = jest.fn();
     const rootNavigation = { canGoBack: false, navigate };
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
+    jest
+      .spyOn(navigationHook, 'useRootNavigation')
+      .mockImplementation(() => ({ rootNavigation } as any));
 
     const wrapper = renderWithRedux(<PostDraftView data={mockData} />);
     const buttonEdit = wrapper.getByTestId('post_draft_view.button_edit');
@@ -61,13 +63,17 @@ describe('PostDraftView component', () => {
   });
 
   it('should show text post is processing waiting for publish when post`s status = PROCESSING', () => {
-    const wrapper = renderWithRedux(<PostDraftView
-      data={{ ...mockData, status: PostStatus.PROCESSING } as IPost}
-    />);
+    const wrapper = renderWithRedux(
+      <PostDraftView
+        data={{ ...mockData, status: PostStatus.PROCESSING } as IPost}
+      />,
+    );
     const text = wrapper.getByTestId('post_draft_view.post_processing_publish');
     expect(text).toBeDefined();
 
-    const buttonPublish = wrapper.queryByTestId('post_draft_view.button_publish');
+    const buttonPublish = wrapper.queryByTestId(
+      'post_draft_view.button_publish',
+    );
     expect(buttonPublish).toBeNull();
   });
 
