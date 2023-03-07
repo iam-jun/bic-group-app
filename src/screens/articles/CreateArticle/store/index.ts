@@ -4,13 +4,10 @@ import {
   IEditArticleData,
   IEditArticleSeries,
   IEditArticleTags,
-  IParamsValidateSeriesTags,
   IPayloadPutEditArticle,
 } from '~/interfaces/IArticle';
 import { IArticleCover } from '~/interfaces/IPost';
-import handleSaveError from './actions/handleSaveError';
 import putEditArticle from './actions/putEditArticle';
-import validateSeriesTags from './actions/validateSeriesTags';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
 import createArticle from './actions/createArticle';
@@ -23,7 +20,6 @@ export interface ICreateArticleState extends IBaseState {
     isSubmitingSuccess: boolean;
     isSubmiting: boolean;
   };
-  isValidating: boolean;
   loading: boolean;
   data: IEditArticleData;
   isDraft: boolean;
@@ -48,19 +44,12 @@ export interface ICreateArticleState extends IBaseState {
     removeTag: (tag: IEditArticleTags) => void;
     setPublishedAt: (publishedAt: string) => void;
     setErrorScheduleSubmiting: (errorScheduleSubmiting: string) => void;
-    setIsValidating: (isValidating: boolean) => void;
     setIsScheduleSubmitingSuccess: (
       isScheduleSubmitingSuccess: boolean
     ) => void;
     scheduleArticle: () => void;
     putEditArticle: (params: IPayloadPutEditArticle) => void;
     createArticle: () => void;
-    validateSeriesTags: (
-      data: IParamsValidateSeriesTags,
-      onSuccess: (response) => void,
-      onError: (error) => void
-    ) => void;
-    handleSaveError: (error: any, onNext?: () => void, titleAlert?: string) => void;
   };
 }
 
@@ -71,7 +60,6 @@ const initialState: InitStateType<ICreateArticleState> = {
     isSubmitingSuccess: false,
     isSubmiting: false,
   },
-  isValidating: false,
   loading: false,
   data: {
     id: '',
@@ -238,11 +226,6 @@ const useCreateArticle = (set, get) => ({
         state.schedule.isSubmiting = isScheduleSubmiting;
       }, 'setIsScheduleSubmiting');
     },
-    setIsValidating: (isValidating: boolean) => {
-      set((state: ICreateArticleState) => {
-        state.isValidating = isValidating;
-      }, 'setIsValidating');
-    },
     setIsScheduleSubmitingSuccess: (isScheduleSubmitingSuccess: boolean) => {
       set((state: ICreateArticleState) => {
         state.schedule.isSubmitingSuccess = isScheduleSubmitingSuccess;
@@ -251,8 +234,6 @@ const useCreateArticle = (set, get) => ({
     scheduleArticle: scheduleArticle(set, get),
     putEditArticle: putEditArticle(set, get),
     createArticle: createArticle(set, get),
-    validateSeriesTags: validateSeriesTags(set, get),
-    handleSaveError: handleSaveError(set, get),
   },
   reset: () => resetStore(initialState, set),
 });

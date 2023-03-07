@@ -6,6 +6,8 @@ import { spacing } from '~/theme';
 import useCreateArticle from '../hooks/useCreateArticle';
 import useCreateArticleStore from '../store';
 import ScheduleModal from './ScheduleModal';
+import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
+import { PostType } from '~/interfaces/IPost';
 
 type ScheduleProps = {
   articleId: string;
@@ -15,9 +17,17 @@ type ScheduleProps = {
 const Schedule: FC<ScheduleProps> = ({ articleId, isFromReviewSchedule }) => {
   const styles = createStyle();
 
+  const validateSeriesTagsActions = useValidateSeriesTags(
+    (state) => state.actions,
+  );
+
   const actions = useCreateArticleStore((state) => state.actions);
   const {
-    isValidating, validButtonPublish, validateSeriesTags, handleSave, resetPublishedAt,
+    isValidating,
+    validButtonPublish,
+    validateSeriesTags,
+    handleSave,
+    resetPublishedAt,
   } = useCreateArticle({ articleId });
 
   const disabled = !validButtonPublish || isValidating;
@@ -33,7 +43,11 @@ const Schedule: FC<ScheduleProps> = ({ articleId, isFromReviewSchedule }) => {
       });
     };
     const onError = (error) => {
-      actions.handleSaveError(error, doAfterResolveError);
+      validateSeriesTagsActions.handleSeriesTagsError({
+        error,
+        onNext: doAfterResolveError,
+        postType: PostType.ARTICLE,
+      });
     };
     validateSeriesTags(onValidateSuccess, onError);
   };
@@ -67,10 +81,16 @@ const Schedule: FC<ScheduleProps> = ({ articleId, isFromReviewSchedule }) => {
   };
 
   const onValidateSuccess = () => {
-    showModal(<ScheduleModal articleId={articleId} isFromReviewSchedule={isFromReviewSchedule} />, {
-      onClose,
-      ...modalizeProps,
-    });
+    showModal(
+      <ScheduleModal
+        articleId={articleId}
+        isFromReviewSchedule={isFromReviewSchedule}
+      />,
+      {
+        onClose,
+        ...modalizeProps,
+      },
+    );
   };
 
   return (

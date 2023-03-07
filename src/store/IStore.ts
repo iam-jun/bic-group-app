@@ -50,6 +50,8 @@ import { ILinkPreviewState } from './linkPreview';
 import { ISeriesContentModalState } from '~/components/series/SeriesContentModal/store';
 import { IGroupJoinableUsersState } from '~/screens/groups/GroupMembers/AddMembersToGroup/store';
 import { ISelectSeriesState } from '~/components/SelectSeries/store';
+import { ISelectTagsState } from '~/components/SelectTags/store';
+import { IValidateSeriesTags } from '~/components/ValidateSeriesTags/store';
 
 export interface BicStore {
   entities: {
@@ -86,7 +88,6 @@ export interface BicStore {
       editArticleStore: ICreateArticleState,
       EditArticleCategory: {
         editArticleCategoryStore: ICreateArticleCategoryState,
-        editArticleSeriesStore: ISelectSeriesState,
       }
     }
     ArticleScheduleContent: {
@@ -176,5 +177,8 @@ export interface BicStore {
   remoteConfig: IRemoteConfigState;
   modal: IModalState;
   postsContainingVideoInProgress: IPostsInProgressState;
-  linkPreview: ILinkPreviewState
+  linkPreview: ILinkPreviewState;
+  selectTags: ISelectTagsState;
+  selectSeries: ISelectSeriesState;
+  validateSeriesTags: IValidateSeriesTags;
 }

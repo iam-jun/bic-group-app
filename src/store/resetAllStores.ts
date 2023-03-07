@@ -58,6 +58,8 @@ import useSeriesContentModalStore from '~/components/series/SeriesContentModal/s
 import useAppStore from './app';
 import useGroupJoinableUsersStore from '~/screens/groups/GroupMembers/AddMembersToGroup/store';
 import useSelectSeriesStore from '~/components/SelectSeries/store';
+import useSelectTagsStore from '~/components/SelectTags/store';
+import useValidateSeriesTagsStore from '~/components/ValidateSeriesTags/store';
 
 export const excludedStore = [
   useAuthController,
@@ -133,6 +135,8 @@ const stores = [
   useLinkPreviewStore,
   useSeriesContentModalStore,
   useAppStore,
+  useSelectTagsStore,
+  useValidateSeriesTagsStore,
 ];
 
 export const resetAllStores = () => {
