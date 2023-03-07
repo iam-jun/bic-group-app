@@ -15,7 +15,7 @@ import { updateUserFromSharedPreferences } from '~/services/sharePreferences';
 import useNetworkStore from '~/store/network';
 import useMyPermissionsStore from '~/store/permissions';
 import { timeOut } from '~/utils/common';
-import ConvertHelper from '~/utils/ConvertHelper';
+import ConvertHelper from '~/utils/convertHelper';
 
 interface UnauthorizedReq {
   (refreshTokenSuccess: boolean): Promise<void>;

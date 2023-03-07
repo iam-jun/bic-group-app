@@ -60,8 +60,6 @@ import useSelectSeriesStore from '~/components/SelectSeries/store';
 import useSelectTagsStore from '~/components/SelectTags/store';
 import useValidateSeriesTagsStore from '~/components/ValidateSeriesTags/store';
 import useCommonController from '~/screens/store';
-import useSelectSeriesStore from '~/components/SelectSeries/store';
-import useCommonController from '~/screens/store';
 
 export const excludedStore = [
   useAuthController,
@@ -148,19 +146,11 @@ export const resetAllStores = () => {
       if (functionReset) {
         functionReset();
       } else {
-        console.error(
-          '\x1b[35m🐣️ resetAllStores a store error ',
-          store?.name,
-          '\x1b[0m',
-        );
+        console.error('\x1b[35m🐣️ resetAllStores a store error ', store?.name, '\x1b[0m');
       }
     });
   } catch (e) {
-    console.error(
-      '\x1b[35m🐣️ resetAllStores resetAllStores Error',
-      e,
-      '\x1b[0m',
-    );
+    console.error('\x1b[35m🐣️ resetAllStores resetAllStores Error', e, '\x1b[0m');
   }
 };
 

@@ -8,10 +8,10 @@ import {
 import useAuthController from '~/screens/auth/store';
 import { getAuthToken } from '~/screens/auth/store/selectors';
 import { parseSafe } from '~/utils/common';
+import ConvertHelper from '~/utils/convertHelper';
 import getEnv from '~/utils/env';
 import { getMsgPackParser } from '~/utils/socket';
 import { useUserIdAuth } from './auth';
-import ConvertHelper from '~/utils/ConvertHelper';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import useCommonController from '~/screens/store';
 import INotificationsState from '~/screens/Notification/store/Interface';
