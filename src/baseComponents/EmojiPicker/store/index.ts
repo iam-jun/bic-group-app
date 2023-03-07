@@ -1,4 +1,5 @@
 import Fuse from 'fuse.js';
+import { createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   resetStore,
@@ -101,7 +102,7 @@ const emojiPickerStore = (set, get) => ({
 const useEmojiPickerStore = createStore<IEmojiPickerState>(emojiPickerStore, {
   persist: {
     name: 'EmojiStorage',
-    getStorage: () => AsyncStorage,
+    storage: createJSONStorage(() => AsyncStorage),
     partialize: (state) => ({ recentlyData: state.recentlyData }),
   },
 });

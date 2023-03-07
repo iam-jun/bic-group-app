@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import genders from '~/constants/genders';
 import RELATIONSHIP_STATUS from '~/constants/relationshipStatus';
 import { useRootNavigation } from '~/hooks/navigation';
-import { formatDate } from '~/utils/formatData';
+import { formatDate } from '~/utils/formatter';
 import { InfoItem } from '../../components';
 import EditButton from '../../components/EditButton';
 import InfoCard from '~/components/InfoCard';

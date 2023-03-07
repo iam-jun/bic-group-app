@@ -6,7 +6,7 @@ import Image from '~/beinComponents/Image';
 import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useBaseHook } from '~/hooks';
-import { formatDate } from '~/utils/formatData';
+import { formatDate } from '~/utils/formatter';
 import { getTextHighlight } from '~/components/articles/ArticleText/helper';
 
 type TitleSectionProps = {

@@ -9,7 +9,7 @@ import { IFilePicked } from '~/interfaces/common';
 import dimension, { scaleSize } from '~/theme/dimension';
 import Icon from '~/baseComponents/Icon';
 import { Button } from '~/baseComponents';
-import { checkPermission, permissionTypes } from '~/utils/permission';
+import { checkPermission, PermissionTypes } from '~/utils/permission';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import { IArticleCover } from '~/interfaces/IPost';
 import { IGetFile } from '~/store/uploader';
@@ -35,7 +35,7 @@ const CoverImage = ({
 
   const onPressSelect = () => {
     checkPermission(
-      permissionTypes.photo, (canOpenPicker) => {
+      PermissionTypes.photo, (canOpenPicker) => {
         if (canOpenPicker) {
           ImagePicker.openPickerSingle({
             mediaType: 'photo',

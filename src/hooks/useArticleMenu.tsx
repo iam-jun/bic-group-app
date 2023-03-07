@@ -13,7 +13,7 @@ import useCommonController from '~/screens/store';
 import { getPostMenus, getRootGroupids } from '~/helpers/post';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import { TargetType, ReportTo } from '~/interfaces/IReport';
-import { generateLink, LINK_ARTICLE } from '~/utils/link';
+import { generateLink, LinkGeneratorTypes } from '~/utils/link';
 import useModalStore from '~/store/modal';
 import { Button } from '~/baseComponents';
 
@@ -92,7 +92,7 @@ const useArticleMenu = (
   const onPressCopyLink = () => {
     modalActions.hideBottomList();
     Clipboard.setString(generateLink(
-      LINK_ARTICLE, articleId,
+      LinkGeneratorTypes.ARTICLE, articleId,
     ));
     modalActions.showToast({ content: 'common:text_link_copied_to_clipboard' });
   };

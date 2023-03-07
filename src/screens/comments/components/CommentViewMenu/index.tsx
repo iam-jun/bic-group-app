@@ -13,7 +13,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import Text from '~/baseComponents/Text';
 import { quickReactions } from '~/configs/reactionConfig';
-import { generateLink, LINK_COMMENT } from '~/utils/link';
+import { generateLink, LinkGeneratorTypes } from '~/utils/link';
 import spacing from '~/theme/spacing';
 import BottomListItem from '~/components/BottomList/BottomListItem';
 import ReportContent from '~/components/Report/ReportContent';
@@ -103,7 +103,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
   const _onPressCopyLink = () => {
     modalActions.hideModal();
     Clipboard.setString(generateLink(
-      LINK_COMMENT, postId, {
+      LinkGeneratorTypes.COMMENT, postId, {
         commentId,
         parentId: parentCommentId || '',
       },

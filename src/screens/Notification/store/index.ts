@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createJSONStorage } from 'zustand/middleware';
 import { createStore, resetStore } from '~/store/utils';
 import attach from './actions/attach';
 import detach from './actions/detach';
@@ -75,7 +76,7 @@ const useNotificationStore = createStore<INotificationsState>(notificationStore,
   {
     persist: {
       name: 'NotiStorage',
-      getStorage: () => AsyncStorage,
+      storage: createJSONStorage(() => AsyncStorage),
       partialize: (state) => ({ pushToken: state.pushToken }),
     },
   });

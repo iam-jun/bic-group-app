@@ -6,7 +6,7 @@ import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import ContentFooter, { ContentFooterProps } from '~/components/ContentView/ContentFooter';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import { formatLargeNumber } from '~/utils/formatData';
+import { formatLargeNumber } from '~/utils/formatter';
 import { useBaseHook } from '~/hooks';
 import { ContentFooterLite, ContentFooterLiteProps } from '~/components/ContentView';
 import { getTotalReactions } from '~/helpers/post';

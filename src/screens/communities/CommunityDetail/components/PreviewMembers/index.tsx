@@ -12,7 +12,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import mainTabStack from '~/router/navigator/MainStack/stack';
 import { Button } from '~/baseComponents';
 import { useBaseHook } from '~/hooks';
-import { formatLargeNumber } from '~/utils/formatData';
+import { formatLargeNumber } from '~/utils/formatter';
 import { dimension } from '~/theme';
 import { AvatarType } from '~/baseComponents/Avatar/AvatarComponent';
 import { CONTAINER_HORIZONTAL_PADDING } from '../AboutContent';

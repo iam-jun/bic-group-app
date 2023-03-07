@@ -7,7 +7,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useBaseHook } from '~/hooks';
 import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
-import { formatLargeNumber } from '~/utils/formatData';
+import { formatLargeNumber } from '~/utils/formatter';
 import { Button } from '~/baseComponents';
 import UserInterestedPost from '~/components/posts/UserInterestedPost';
 import useModalStore from '~/store/modal';

@@ -5,7 +5,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 
 import { Keyboard } from 'react-native';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import { generateLink, LINK_POST } from '~/utils/link';
+import { generateLink, LinkGeneratorTypes } from '~/utils/link';
 import { IPost, IReaction } from '~/interfaces/IPost';
 import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
 import { Button } from '~/baseComponents';
@@ -76,7 +76,7 @@ const usePostMenu = (
   const onPressCopyLink = () => {
     modalActions.hideBottomList();
     Clipboard.setString(generateLink(
-      LINK_POST, postId,
+      LinkGeneratorTypes.POST, postId,
     ));
     modalActions.showToast({ content: 'common:text_link_copied_to_clipboard' });
   };

@@ -6,34 +6,35 @@ import { chatSchemes } from '~/constants/chat';
 import { PREFIX_DEEPLINK_GROUP, PREFIX_URL } from '~/router/config';
 import useModalStore from '~/store/modal';
 import getEnv from '~/utils/env';
-import { getWebDomain } from './common';
-import ConvertHelper from './convertHelper';
-
-const LINK_POST = 'LINK_POST';
-const LINK_COMMENT = 'LINK_COMMENT';
-const LINK_COMMUNITY = 'LINK_COMMUNITY';
-const LINK_SERIRES = 'LINK_SERIRES';
-const LINK_ARTICLE = 'LINK_ARTICLE';
+import ConvertHelper from '../ConvertHelper';
 
 export const CUSTOM_META = 'const meta = document.createElement(\'meta\'); meta.setAttribute(\'content\', \'width=device-width, initial-scale=1, maximum-scale=0.99, user-scalable=0\'); meta.setAttribute(\'name\', \'viewport\'); document.getElementsByTagName(\'head\')[0].appendChild(meta); ';
 export const USER_AGENT_DESKTOP = 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0';
 
 const UUID_V4_PATTERN = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}';
 
-export const DEEP_LINK_TYPES = {
-  POST_DETAIL: 'post-detail',
-  COMMENT_DETAIL: 'comment-detail',
-  COMMUNTY_DETAIL: 'community-detail',
-  GROUP_DETAIL: 'group-detail',
-  SERIES_DETAIL: 'series-detail',
-  ARTICLE_DETAIL: 'article-detail',
-  LOGIN: 'login',
-  FORGOT_PASSWORD: 'forgot_password',
-  CONFIRM_USER: 'confirm_user',
-};
+export enum DeepLinkTypes {
+  POST_DETAIL = 'post-detail',
+  COMMENT_DETAIL = 'comment-detail',
+  COMMUNTY_DETAIL = 'community-detail',
+  GROUP_DETAIL = 'group-detail',
+  SERIES_DETAIL = 'series-detail',
+  ARTICLE_DETAIL = 'article-detail',
+  LOGIN = 'login',
+  FORGOT_PASSWORD = 'forgot_password',
+  CONFIRM_USER = 'confirm_user',
+}
+
+export enum LinkGeneratorTypes {
+  POST = 'LINK_POST',
+  COMMENT = 'LINK_COMMENT',
+  COMMUNITY = 'LINK_COMMUNITY',
+  SERIRES = 'LINK_SERIRES',
+  ARTICLE = 'LINK_ARTICLE',
+}
 
 const formatParams = (params?: any):string => {
-  if (typeof params !== 'object') {
+  if (!params || typeof params !== 'object') {
     return '';
   }
   const keys = Object.keys(params);
@@ -48,7 +49,7 @@ const formatParams = (params?: any):string => {
 };
 
 const formatParamsVer2 = (params?: any) : string => {
-  if (typeof params !== 'object') {
+  if (!params || typeof params !== 'object') {
     return '';
   }
 
@@ -67,42 +68,35 @@ const formatParamsVer2 = (params?: any) : string => {
   return result;
 };
 
-const generateLink = (
-  linkType: string, id?: string, params?: any,
+export const generateLink = (
+  linkType: LinkGeneratorTypes, id = '', params = null,
 ): string => {
   switch (linkType) {
-    case LINK_POST:
+    case LinkGeneratorTypes.POST:
       return `${PREFIX_URL}${getEnv('SELF_DOMAIN')}/posts/${id}${formatParams(params)}`;
-    case LINK_COMMENT:
+    case LinkGeneratorTypes.COMMENT:
       return `${PREFIX_URL}${getEnv('SELF_DOMAIN')}/posts/${id}${formatParamsVer2(params)}`;
-    case LINK_COMMUNITY:
+    case LinkGeneratorTypes.COMMUNITY:
       return `${PREFIX_URL}${getEnv('SELF_DOMAIN')}/communities/${id}${formatParams(params)}`;
-    case LINK_SERIRES:
+    case LinkGeneratorTypes.SERIRES:
       return `${PREFIX_URL}${getEnv('SELF_DOMAIN')}/series/${id}${formatParams(params)}`;
-    case LINK_ARTICLE:
+    case LinkGeneratorTypes.ARTICLE:
       return `${PREFIX_URL}${getEnv('SELF_DOMAIN')}/article/${id}${formatParams(params)}`;
     default:
       return '';
   }
 };
 
-const getGroupLink = ({
+export const getGroupLink = ({
   communityId, groupId, params,
 }: {
   communityId: string; groupId: string; params?: any
 }) => `${PREFIX_URL}${getEnv('SELF_DOMAIN')}/communities/${communityId}/groups/${groupId}${formatParams(params)}`;
 
-export {
-  LINK_POST, LINK_COMMENT, LINK_COMMUNITY, LINK_SERIRES, LINK_ARTICLE, generateLink, getGroupLink,
-};
-
 export const getChatDomain = () => (
   chatSchemes.PREFIX_HTTPS
-    + getWebDomain(
-      getEnv('BEIN_CHAT_DEEPLINK').replace(
-        chatSchemes.PREFIX_DEEPLINK,
-        chatSchemes.PREFIX_HTTPS,
-      ),
+    + getHostNameFromUri(
+      getEnv('BEIN_CHAT_DEEPLINK'),
       true,
     )
 );
@@ -115,13 +109,20 @@ export const formatDMLink = (
   teamId: string, username: string,
 ) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/messages/@${username}`;
 
-export const getHostNameFromUri = (url: string) => {
+export const getHostNameFromUri = (url: string, subDomain = false) => {
   if (!url) return '';
 
   const specialSeparator = '://';
   const newUrlWithoutScheme = url.substring(url.indexOf(specialSeparator) + specialSeparator.length)
     .replace('www.', '');
-  const hostName = newUrlWithoutScheme.substring(0, newUrlWithoutScheme.indexOf('/'));
+
+  let hostName = newUrlWithoutScheme;
+  if (hostName.indexOf('/') >= 0) { hostName = newUrlWithoutScheme.substring(0, newUrlWithoutScheme.indexOf('/')); }
+
+  if (!subDomain) {
+    const domainArrays = hostName.split('.');
+    hostName = domainArrays.slice(domainArrays.length - 2).join('.');
+  }
 
   return hostName;
 };
@@ -129,32 +130,49 @@ export const getHostNameFromUri = (url: string) => {
 const validateBICGroupDomain = (url: string) => {
   if (!url) return false;
 
-  const hostName = getHostNameFromUri(url);
+  const hostName = getHostNameFromUri(url, true);
 
   return hostName === getEnv('SELF_DOMAIN');
 };
 
-export function openUrl(url: string, onError?: (e: any) => void, onSuccess?: (e: any) => void) {
+export async function openUrl(url: string, onError?: (e: any) => void, onSuccess?: () => void) {
   const selfDomain = getEnv('SELF_DOMAIN');
   const selfDomainPosition = url.indexOf(selfDomain);
   const deepLinkUrl = PREFIX_DEEPLINK_GROUP + url.substring(selfDomainPosition).replace(selfDomain, '');
   const isBICGroupDomain = validateBICGroupDomain(url);
+  let urlToOpen = url;
   if (isBICGroupDomain) {
-    Linking.canOpenURL(url)
-      .then((supported) => {
-        if (supported) {
-          Linking.openURL(deepLinkUrl).then(onSuccess).catch(onError);
-        } else {
-          Linking.openURL(url).then(onSuccess).catch(onError);
-        }
-      })
-      .catch((e) => {
-        console.error('error when open link:', e);
-      });
-    return;
+    const supported = await Linking.canOpenURL(deepLinkUrl);
+    if (supported) {
+      urlToOpen = deepLinkUrl;
+    }
   }
-  Linking.openURL(url).then(onSuccess).catch(onError);
+
+  try {
+    await Linking.openURL(urlToOpen);
+    onSuccess?.();
+  } catch (error) {
+    console.error('Failed to open url:', url);
+    onError?.(error);
+  }
 }
+
+const getURLParams = (params: string) => {
+  const newParams = params.split('&')
+    ?.map((item) => item.split('='))
+    ?.reduce((p, c) => {
+      if (c.length > 1) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      // eslint-disable-next-line prefer-destructuring
+        p[c[0]] = c[1];
+      }
+      return p;
+    }, {});
+
+  // need to convert to camelCase since the input params are in snake_case
+  return ConvertHelper.camelizeKeys(newParams) as Object;
+};
 
 export const matchDeepLink = (url: string) => {
   if (!url) return null;
@@ -173,7 +191,7 @@ export const matchDeepLink = (url: string) => {
     `^${PREFIX_DEEPLINK_GROUP}\\/posts\\/(${UUID_V4_PATTERN})$`,
   ).exec(deepLinkUrl);
   if (match) {
-    return { type: DEEP_LINK_TYPES.POST_DETAIL, postId: match[1] };
+    return { type: DeepLinkTypes.POST_DETAIL, postId: match[1] };
   }
 
   // bic:///posts/99ca53ec-5195-4e28-9506-c0f602e1becb?commentId=690541f1-d7ae-4f73-8186-8194c5e2eb5f
@@ -183,7 +201,7 @@ export const matchDeepLink = (url: string) => {
   if (match) {
     const urlParams = match[2];
     const newParams = getURLParams(urlParams);
-    return { type: DEEP_LINK_TYPES.COMMENT_DETAIL, postId: match[1], params: newParams };
+    return { type: DeepLinkTypes.COMMENT_DETAIL, postId: match[1], params: newParams };
   }
 
   // bic:///communities/ba6016d4-168f-44de-aca9-4a51055e6201
@@ -191,7 +209,7 @@ export const matchDeepLink = (url: string) => {
     `^${PREFIX_DEEPLINK_GROUP}\\/communities\\/(${UUID_V4_PATTERN})$`,
   ).exec(deepLinkUrl);
   if (match) {
-    return { type: DEEP_LINK_TYPES.COMMUNTY_DETAIL, communityId: match[1] };
+    return { type: DeepLinkTypes.COMMUNTY_DETAIL, communityId: match[1] };
   }
 
   // bic:///communities/ba6016d4-168f-44de-aca9-4a51055e6201/groups/5578fb11-de70-49e3-9c01-27e26f5b42d8
@@ -199,7 +217,7 @@ export const matchDeepLink = (url: string) => {
     `^${PREFIX_DEEPLINK_GROUP}\\/communities\\/(${UUID_V4_PATTERN})\\/groups\\/(${UUID_V4_PATTERN})$`,
   ).exec(deepLinkUrl);
   if (match) {
-    return { type: DEEP_LINK_TYPES.GROUP_DETAIL, communityId: match[1], groupId: match[2] };
+    return { type: DeepLinkTypes.GROUP_DETAIL, communityId: match[1], groupId: match[2] };
   }
 
   // bic:///series/47e14e0b-ea99-4771-bf20-0f0893788a51
@@ -207,7 +225,7 @@ export const matchDeepLink = (url: string) => {
     `^${PREFIX_DEEPLINK_GROUP}\\/series\\/(${UUID_V4_PATTERN})$`,
   ).exec(deepLinkUrl);
   if (match) {
-    return { type: DEEP_LINK_TYPES.SERIES_DETAIL, seriesId: match[1] };
+    return { type: DeepLinkTypes.SERIES_DETAIL, seriesId: match[1] };
   }
 
   // bic:///article/8465397a-dfb3-4d7f-a21f-adec5a0508701
@@ -215,7 +233,7 @@ export const matchDeepLink = (url: string) => {
     `^${PREFIX_DEEPLINK_GROUP}\\/article\\/(${UUID_V4_PATTERN})$`,
   ).exec(deepLinkUrl);
   if (match) {
-    return { type: DEEP_LINK_TYPES.ARTICLE_DETAIL, articleId: match[1] };
+    return { type: DeepLinkTypes.ARTICLE_DETAIL, articleId: match[1] };
   }
 
   match = new RegExp(
@@ -224,33 +242,16 @@ export const matchDeepLink = (url: string) => {
   if (match) {
     const urlParams = match[1];
     const newParams = getURLParams(urlParams);
-    return { type: DEEP_LINK_TYPES.CONFIRM_USER, params: newParams };
+    return { type: DeepLinkTypes.CONFIRM_USER, params: newParams };
   }
 
   return null;
 };
 
-export const getURLParams = (params: string) => {
-  const newParams = params.split('&')
-    ?.map((item) => item.split('='))
-    ?.reduce((p, c) => {
-      if (c.length > 1) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      // eslint-disable-next-line prefer-destructuring
-        p[c[0]] = c[1];
-      }
-      return p;
-    }, {});
-
-  // need to convert to camelCase since the input params are in snake_case
-  return ConvertHelper.camelizeKeys(newParams) as Object;
-};
-
 /**
   *  This script dispatches new custom messaging event
   */
-export function getInjectableJSMessage(message) {
+export function getInjectableJSMessage(message: any) {
   return `
     (function() {
       document.dispatchEvent(new MessageEvent('message', {

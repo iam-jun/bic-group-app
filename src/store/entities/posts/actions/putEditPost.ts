@@ -1,5 +1,7 @@
 import i18n from 'i18next';
-import { IParamPutEditPost, IPayloadAddToAllPost, IPayloadPutEditPost } from '~/interfaces/IPost';
+import {
+  IParamPutEditPost, IPayloadAddToAllPost, IPayloadPutEditPost, PostType,
+} from '~/interfaces/IPost';
 import { IPostsState } from '../index';
 import streamApi from '~/api/StreamApi';
 import useCreatePostStore from '~/screens/post/CreatePost/store';
@@ -10,6 +12,8 @@ import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { IToastMessage } from '~/interfaces/common';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import showToast from '~/store/helper/showToast';
+import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
+import ApiErrorCode from '~/constants/apiErrorCode';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -48,13 +52,19 @@ const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
     }
   } catch (error) {
     useCreatePostStore.getState().actions.setLoadingCreatePost(false);
-    const toast: IToastMessage = {
-      content: error?.meta?.message || msgError || 'post:text_edit_post_failed',
-      type: ToastType.ERROR,
-      buttonText: i18n.t('common:text_retry'),
-      onButtonPress: onRetry,
-    };
-    showToast(toast);
+
+    const errorCode = error?.code;
+    if (errorCode === ApiErrorCode.Post.ARTICLE_INVALID_PARAM) {
+      useValidateSeriesTags.getState().actions.handleSeriesTagsError({ error, postType: PostType.POST });
+    } else {
+      const toast: IToastMessage = {
+        content: error?.meta?.message || msgError || 'post:text_edit_post_failed',
+        type: ToastType.ERROR,
+        buttonText: i18n.t('common:text_retry'),
+        onButtonPress: onRetry,
+      };
+      showToast(toast);
+    }
   }
 };
 

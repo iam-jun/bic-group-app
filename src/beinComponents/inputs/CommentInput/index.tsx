@@ -35,12 +35,12 @@ import { IActivityDataImage } from '~/interfaces/IPost';
 import dimension from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
-import { checkPermission, permissionTypes } from '~/utils/permission';
-import { formatTextWithEmoji } from '~/utils/emojiUtils';
+import { checkPermission, PermissionTypes } from '~/utils/permission';
+import { formatTextWithEmoji } from '~/utils/emojis';
 import { IGiphy } from '~/interfaces/IGiphy';
 import useUploaderStore from '~/store/uploader';
 import { getErrorMessageFromResponse } from '~/utils/link';
-import { getImagePastedFromClipboard } from '~/utils/common';
+import { getImagePastedFromClipboard } from '~/utils/images';
 
 export interface ICommentInputSendParam {
   content: string;
@@ -189,7 +189,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   }, [selectedEmoji]);
 
   const _onPressSelectImage = () => {
-    checkPermission(permissionTypes.photo, (canOpenPicker) => {
+    checkPermission(PermissionTypes.photo, (canOpenPicker) => {
       if (canOpenPicker) {
         ImagePicker.openPickerSingle({ mediaType: 'photo' }).then((file) => {
           if (!file) return;

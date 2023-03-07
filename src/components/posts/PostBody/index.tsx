@@ -18,7 +18,7 @@ import FilesView from '~/components/FilesView';
 import LinkPreview from '~/components/LinkPreview';
 import appConfig from '~/configs/appConfig';
 import spacing from '~/theme/spacing';
-import { escapeMarkDown } from '~/utils/formatData';
+import { escapeMarkDown } from '~/utils/formatter';
 import PostVideoPlayer from '../PostVideoPlayer';
 import { ITag } from '~/interfaces/ITag';
 import useCommunitiesStore from '~/store/entities/communities';

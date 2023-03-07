@@ -6,7 +6,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Icon from '~/baseComponents/Icon';
 import { spacing } from '~/theme';
 import Text from '~/baseComponents/Text';
-import { formatDate } from '~/utils/formatData';
+import { formatDate } from '~/utils/formatter';
 
 interface CreatePostBannerImportantProps {
   style?: StyleProp<ViewStyle>;

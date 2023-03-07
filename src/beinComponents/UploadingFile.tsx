@@ -12,7 +12,7 @@ import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import { IFilePicked } from '~/interfaces/common';
 import Icon from '~/baseComponents/Icon';
 import Button from '~/beinComponents/Button';
-import { formatBytes } from '~/utils/formatData';
+import { formatBytes } from '~/utils/formatter';
 import { useBaseHook } from '~/hooks';
 import { supportedTypes } from '~/beinComponents/DocumentPicker';
 import { openUrl } from '~/utils/link';

@@ -18,7 +18,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import * as validation from '~/constants/commonRegex';
 
 import spacing from '~/theme/spacing';
-import { formatTextRemoveSpace } from '~/utils/formatData';
+import { formatTextRemoveSpace } from '~/utils/formatter';
 import TitleComponent from '../../fragments/TitleComponent';
 import { useBaseHook } from '~/hooks';
 import useUserProfileStore from '~/screens/Menu/UserProfile/store';

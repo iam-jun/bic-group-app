@@ -21,7 +21,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import images from '~/resources/images';
 import { isPostExpired } from '~/helpers/post';
 import Icon from '~/baseComponents/Icon';
-import { formatDate } from '~/utils/formatData';
+import { formatDate } from '~/utils/formatter';
 import { timeSuggest } from '~/constants/importantTimeSuggest';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { DateInput } from '~/baseComponents/Input';

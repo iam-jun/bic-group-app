@@ -15,12 +15,12 @@ import ICommentInputState from '../components/CommentInputView/store/Interface';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { useBaseHook } from '~/hooks';
-import { checkPermission, permissionTypes } from '~/utils/permission';
+import { checkPermission, PermissionTypes } from '~/utils/permission';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import { IGiphy } from '~/interfaces/IGiphy';
 import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
-import { formatTextWithEmoji } from '~/utils/emojiUtils';
-import { getImagePastedFromClipboard } from '~/utils/common';
+import { formatTextWithEmoji } from '~/utils/emojis';
+import { getImagePastedFromClipboard } from '~/utils/images';
 import useModalStore from '~/store/modal';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import useUploaderStore, { IGetFile } from '~/store/uploader';
@@ -167,7 +167,7 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
 
   const handelSelectImage = () => {
     checkPermission(
-      permissionTypes.photo, (canOpenPicker) => {
+      PermissionTypes.photo, (canOpenPicker) => {
         if (canOpenPicker) {
           ImagePicker.openPickerSingle().then((file) => {
             if (!file) return;

@@ -21,7 +21,7 @@ import {
   Alignments, AlignType, Headings, HeadingType, Lists, ListType, MarkType, MarkUps,
 } from './constant';
 import { AppConfig } from '~/configs';
-import { formatBytes } from '~/utils/formatData';
+import { formatBytes } from '~/utils/formatter';
 import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import useModalStore from '~/store/modal';

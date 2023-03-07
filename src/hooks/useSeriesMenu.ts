@@ -8,7 +8,7 @@ import { BottomListProps } from '~/components/BottomList';
 import useCommonController from '~/screens/store';
 import { getPostMenus } from '~/helpers/post';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
-import { generateLink, LINK_SERIRES } from '~/utils/link';
+import { generateLink, LinkGeneratorTypes } from '~/utils/link';
 import { Button } from '~/baseComponents';
 import useModalStore from '~/store/modal';
 
@@ -44,7 +44,7 @@ const useSeriesMenu = (
   const onPressCopyLink = () => {
     hideBottomList();
     Clipboard.setString(generateLink(
-      LINK_SERIRES, seriesId,
+      LinkGeneratorTypes.SERIRES, seriesId,
     ));
     showToast({ content: 'common:text_link_copied_to_clipboard' });
   };

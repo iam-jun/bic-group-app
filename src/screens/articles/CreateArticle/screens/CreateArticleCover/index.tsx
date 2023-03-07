@@ -15,7 +15,7 @@ import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import { IGetFile } from '~/store/uploader';
 import dimension, { scaleSize } from '~/theme/dimension';
 import spacing from '~/theme/spacing';
-import { checkPermission, permissionTypes } from '~/utils/permission';
+import { checkPermission, PermissionTypes } from '~/utils/permission';
 import EditAction from '../../components/EditAction';
 
 const COVER_WIDTH = dimension.deviceWidth;
@@ -42,7 +42,7 @@ const CreateArticleCover: FC<CreateArticleCoverProps> = ({ articleId }) => {
 
   const onPressSelect = () => {
     checkPermission(
-      permissionTypes.photo, (canOpenPicker) => {
+      PermissionTypes.photo, (canOpenPicker) => {
         if (canOpenPicker) {
           ImagePicker.openPickerSingle({
             mediaType: 'photo',
