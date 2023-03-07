@@ -12,7 +12,6 @@ import useGroupStructureStore from '~/screens/groups/GroupStructureSettings/stor
 import useReactionDetailStore from '~/components/reaction/ReactionDetailBottomSheet/store';
 import useCommunitiesStore from './entities/communities';
 import useUserProfileStore from '~/screens/Menu/UserProfile/store';
-import useAccountSettingsStore from '~/screens/Menu/AccountSettings/store';
 import usePermissionSchemeStore from '~/screens/PermissionScheme/store';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 import useCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
@@ -60,6 +59,9 @@ import useGroupJoinableUsersStore from '~/screens/groups/GroupMembers/AddMembers
 import useSelectSeriesStore from '~/components/SelectSeries/store';
 import useSelectTagsStore from '~/components/SelectTags/store';
 import useValidateSeriesTagsStore from '~/components/ValidateSeriesTags/store';
+import useCommonController from '~/screens/store';
+import useSelectSeriesStore from '~/components/SelectSeries/store';
+import useCommonController from '~/screens/store';
 
 export const excludedStore = [
   useAuthController,
@@ -88,7 +90,6 @@ const stores = [
   useCommunityJoinedGroupTreeStore,
   useReactionDetailStore,
   useUserProfileStore,
-  useAccountSettingsStore,
   useGroupStructureStore,
   usePermissionSchemeStore,
   useNotificationStore,
@@ -137,6 +138,7 @@ const stores = [
   useAppStore,
   useSelectTagsStore,
   useValidateSeriesTagsStore,
+  useCommonController,
 ];
 
 export const resetAllStores = () => {
@@ -146,11 +148,19 @@ export const resetAllStores = () => {
       if (functionReset) {
         functionReset();
       } else {
-        console.error('\x1b[35m🐣️ resetAllStores a store error ', store?.name, '\x1b[0m');
+        console.error(
+          '\x1b[35m🐣️ resetAllStores a store error ',
+          store?.name,
+          '\x1b[0m',
+        );
       }
     });
   } catch (e) {
-    console.error('\x1b[35m🐣️ resetAllStores resetAllStores Error', e, '\x1b[0m');
+    console.error(
+      '\x1b[35m🐣️ resetAllStores resetAllStores Error',
+      e,
+      '\x1b[0m',
+    );
   }
 };
 

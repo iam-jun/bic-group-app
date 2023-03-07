@@ -43,9 +43,7 @@ describe('SettingItem conponent', () => {
   });
 
   it('should show SettingItem disabled', () => {
-    const rendered = render(
-      <SettingItem {...baseProps} isTouchDisabled />,
-    );
+    const rendered = render(<SettingItem {...baseProps} isTouchDisabled />);
 
     const component = rendered.getByTestId('edit_user_info.setting_item');
 
@@ -76,7 +74,9 @@ describe('SettingItem conponent', () => {
   });
 
   it('render without leftIcon', () => {
-    const rendered = render(<SettingItem {...baseProps} leftIcon={undefined} />);
+    const rendered = render(
+      <SettingItem {...baseProps} leftIcon={undefined} />,
+    );
 
     const leftComponent = rendered.queryByTestId(
       'edit_user_info.setting_item.left_component',

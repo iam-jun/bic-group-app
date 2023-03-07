@@ -305,10 +305,10 @@ jest.doMock('react-native', () => {
 
 jest.mock('react-hook-form', () => ({
   ...jest.requireActual('react-hook-form'),
-  useController: () => ({
+  useController: ({ defaultValue }) => ({
     field: {
       onChange: jest.fn(),
-      value: '',
+      value: defaultValue,
     },
   }),
   Controller: ({ children }) => [children],

@@ -1,9 +1,9 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   StyleSheet, View, Keyboard, ScrollView,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch, useFormState } from 'react-hook-form';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -21,6 +21,8 @@ import { ICityResponseItem } from '~/interfaces/IAuth';
 import useCommonController from '~/screens/store';
 import useMenuController from '../../store';
 
+const PHONE_INPUT_NAME = 'phoneNumber';
+
 const EditContact = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -33,27 +35,15 @@ const EditContact = () => {
   const {
     email, phone, countryCode, city, id,
   } = myProfile || {};
-  const editContactError = useMenuController((state) => state.editContactError);
   const actions = useMenuController((state) => state.actions);
 
   const [countryCodeState, setCountryCountryCodeState]
-    = useState<string>(countryCode || '+84');
+    = useState<string>(countryCode);
   const [cityState, setCityState] = useState<string>(city);
 
-  const {
-    control,
-    formState: { errors },
-    trigger,
-    getValues,
-    setError,
-    clearErrors,
-    setValue,
-    watch,
-  } = useForm();
-
-  useEffect(() => {
-    setValue('phoneNumber', phone);
-  }, []);
+  const useFormData = useForm();
+  const phoneNumber = useWatch({ control: useFormData.control, name: PHONE_INPUT_NAME }) || phone;
+  const { errors } = useFormState({ control: useFormData.control, name: PHONE_INPUT_NAME });
 
   const navigateBack = () => {
     Keyboard.dismiss();
@@ -62,24 +52,8 @@ const EditContact = () => {
     }
   };
 
-  useEffect(() => {
-    if (!!editContactError) {
-      setError('phoneNumber', {
-        type: 'validate',
-        message: editContactError,
-      });
-    }
-    return () => {
-      actions.setEditContactError('');
-    };
-  }, [editContactError]);
-
-  const onSave = async () => {
-    const validInputs = await validateInputs();
-    if (!validInputs) {
-      return;
-    }
-    const phoneNumber = getValues('phoneNumber');
+  const onSave = () => {
+    console.log('dooooooooooo');
 
     actions.editMyProfile({
       data: {
@@ -91,13 +65,6 @@ const EditContact = () => {
       editFieldToastMessage: t('settings:text_contact_info_update_success'),
       callback: navigateBack,
     });
-  };
-
-  const validateInputs = async () => trigger('phoneNumber');
-
-  const clearAllErrors = () => {
-    clearErrors('phoneNumber');
-    actions.setEditContactError('');
   };
 
   const onEditLocationOpen = (e: any) => {
@@ -121,12 +88,12 @@ const EditContact = () => {
     phoneNumber: string,
   ) => countryCode !== countryCodeState
     || city !== cityState
-    || phone !== phoneNumber;
+    || (phone !== phoneNumber && !errors?.phoneNumber?.message);
 
   const isValid = checkIsValid(
     countryCodeState,
     cityState,
-    watch('phoneNumber'),
+    phoneNumber,
   );
 
   return (
@@ -161,9 +128,7 @@ const EditContact = () => {
             countryCode={countryCodeState}
             phoneNumber={phone}
             onChangeCountryCode={onChangeCountryCode}
-            control={control}
-            errorsState={errors}
-            clearAllErrors={clearAllErrors}
+            useFormData={useFormData}
           />
           <ViewSpacing height={spacing.padding.large} />
           <TitleComponent title="settings:title_location" isOptional />

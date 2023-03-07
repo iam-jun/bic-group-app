@@ -1,93 +1,108 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import { cleanup } from '@testing-library/react-native';
-
 import React from 'react';
 
-import initialState from '~/storeRedux/initialState';
-
+import lodash from 'lodash';
 import {
-  configureStore,
-  createTestStore,
   fireEvent,
   renderWithRedux,
 } from '~/test/testUtils';
 import * as navigationHook from '~/hooks/navigation';
 
-import EditContact from '.';
-import { USER_PROFILE } from '~/test/mock_data/menu';
+import EditContact from './index';
+import useCommonController from '~/screens/store';
+import useUserProfileStore from '../../UserProfile/store';
+import { responseGetCity } from '../../UserProfile/store/__mocks__/data';
+import useMenuController from '../../store';
 
-afterEach(cleanup);
+const fakeProfile = {
+  id: 'test_id',
+  countryCode: '+84',
+  phone: '8987123465',
+  city: 'Bến Tre',
+  country: 'Việt Nam',
+  email: 'thuquyen@tgm.vn',
+};
+
+const fakeCountry = [{
+  countryCode: '+84',
+  flag: '🇻🇳',
+  isoCode: 'VN',
+  name: 'Việt Nam',
+}];
 
 describe('Edit Contact screen', () => {
   let Keyboard: any;
-  let storeData: any;
-
-  const mockStore = configureStore([]);
 
   beforeEach(() => {
     Keyboard = require('react-native').Keyboard;
     jest.clearAllMocks();
-    storeData = { ...initialState };
-    storeData.menu.myProfile = {} as any;
   });
 
   afterEach(() => {
     jest.clearAllMocks();
+    jest.runOnlyPendingTimers(); // you must add this
+    jest.useRealTimers(); // you must add this
   });
 
   it('should disable save button when not change contact info', () => {
-    storeData.menu.myProfile = USER_PROFILE;
+    useCommonController.setState((state) => {
+      state.myProfile = fakeProfile;
+      return state;
+    });
+    const wrapper = renderWithRedux(<EditContact />);
 
-    const store = mockStore(storeData);
-
-    const wrapper = renderWithRedux(<EditContact />, store);
-
-    const component = wrapper.getByTestId('edit_contact.save');
-    expect(component.props.accessibilityState.disabled).toBeTruthy();
+    const buttonSave = wrapper.getByTestId('edit_contact.save');
+    expect(buttonSave.props.accessibilityState.disabled).toBeTruthy();
   });
 
   it('should enable save button when change country code', () => {
-    jest.useFakeTimers();
+    useCommonController.setState((state) => {
+      state.myProfile = {
+        id: 'test_id',
+        country: 'Việt Nam',
+        email: 'thuquyen@tgm.vn',
+      };
+      return state;
+    });
 
-    const store = createTestStore(initialState);
+    useUserProfileStore.setState((state) => {
+      state.country = fakeCountry;
+      return state;
+    });
 
-    const wrapper = renderWithRedux(<EditContact />, store);
+    const wrapper = renderWithRedux(<EditContact />);
 
-    const component = wrapper.getByTestId('edit_contact.save');
-    expect(component.props.accessibilityState.disabled).toBeTruthy();
+    const buttonSave = wrapper.getByTestId('edit_contact.save');
+    expect(buttonSave.props.accessibilityState.disabled).toBeTruthy();
 
     const conutryCodeComponent = wrapper.getByTestId(
       'edit_phone_number.country_code',
     );
     fireEvent.press(conutryCodeComponent);
 
-    const searchInput = wrapper.getByTestId(
-      'edit_phone_number.country_code.search',
-    );
-    expect(searchInput).toBeDefined();
-    fireEvent.changeText(searchInput, '84');
+    const listCountryCodeComp = wrapper.queryAllByTestId('edit_phone_number.country_code.item');
+    expect(listCountryCodeComp.length).toEqual(fakeCountry.length);
+    fireEvent.press(listCountryCodeComp[0]);
 
-    jest.runAllTimers();
-
-    const countryList = wrapper.queryAllByTestId(
-      'edit_phone_number.country_code.item',
-    );
-    expect(countryList[0]).not.toBeNull();
-    fireEvent.press(countryList[0]);
-
-    expect(component.props.accessibilityState.disabled).toBeFalsy();
+    expect(buttonSave.props.accessibilityState.disabled).toBeFalsy();
   });
 
   it('should enable save button when change location ', () => {
+    useCommonController.setState((state) => {
+      state.myProfile = fakeProfile;
+      return state;
+    });
+    useUserProfileStore.setState((state) => {
+      state.city = responseGetCity.data as any;
+      return state;
+    });
+
+    const wrapper = renderWithRedux(<EditContact />);
     jest.useFakeTimers();
 
-    const store = createTestStore(initialState);
-
-    const wrapper = renderWithRedux(<EditContact />, store);
-
-    const component = wrapper.getByTestId('edit_contact.save');
-    expect(component.props.accessibilityState.disabled).toBeTruthy();
+    const buttonSave = wrapper.getByTestId('edit_contact.save');
+    expect(buttonSave.props.accessibilityState.disabled).toBeTruthy();
 
     const buttonLocationComponent = wrapper.getByTestId(
       'edit_contact.location',
@@ -97,30 +112,24 @@ describe('Edit Contact screen', () => {
     const searchInput = wrapper.getByTestId('edit_location.search');
     expect(searchInput).toBeDefined();
     fireEvent.changeText(searchInput, 'An ');
-
     jest.runAllTimers();
-
-    const listItems = wrapper.getAllByTestId('edit_location.item');
+    const listItems = wrapper.queryAllByTestId('edit_location.item');
     expect(listItems.length).toBeGreaterThanOrEqual(1);
     fireEvent.press(listItems[0]);
 
-    expect(component.props.accessibilityState.disabled).toBeFalsy();
+    expect(buttonSave.props.accessibilityState.disabled).toBeFalsy();
   });
 
   it('should back to previous screen successfully ', () => {
     Keyboard.dismiss = jest.fn();
     const goBack = jest.fn();
-
     const rootNavigation = { canGoBack: true, goBack };
-
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
-    const store = mockStore(initialState);
+    const wrapper = renderWithRedux(<EditContact />);
 
-    const wrapper = renderWithRedux(<EditContact />, store);
-
-    const component = wrapper.getByTestId('edit_contact.save');
-    expect(component.props.accessibilityState.disabled).toBeTruthy();
+    const buttonSave = wrapper.getByTestId('edit_contact.save');
+    expect(buttonSave.props.accessibilityState.disabled).toBeTruthy();
 
     const buttonBack = wrapper.getByTestId('header.back');
     fireEvent.press(buttonBack);
@@ -129,28 +138,39 @@ describe('Edit Contact screen', () => {
   });
 
   it('should disable email input', () => {
-    const store = mockStore(initialState);
+    useCommonController.setState((state) => {
+      state.myProfile = fakeProfile;
+      return state;
+    });
+    const wrapper = renderWithRedux(<EditContact />);
 
-    const wrapper = renderWithRedux(<EditContact />, store);
-
-    const component = wrapper.getByTestId('edit_contact.email');
-    expect(component.props.accessibilityState.disabled).toBeTruthy();
+    const emailInput = wrapper.getByTestId('edit_contact.email');
+    expect(emailInput.props?.editable).toBeFalsy();
   });
 
   it('should back to previous screen successfully when click save button', () => {
-    jest.useFakeTimers();
-    Keyboard.dismiss = jest.fn();
-    const goBack = jest.fn();
+    const spy = jest.spyOn(lodash, 'debounce');
 
+    useUserProfileStore.setState((state) => {
+      state.city = responseGetCity.data as any;
+      return state;
+    });
+    const goBack = jest.fn();
     const rootNavigation = { canGoBack: true, goBack };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
-    const store = createTestStore(initialState);
+    const editMyProfile = jest.fn();
+    useMenuController.setState((state) => {
+      state.actions.editMyProfile = editMyProfile;
+      return state;
+    });
 
-    const wrapper = renderWithRedux(<EditContact />, store);
+    const wrapper = renderWithRedux(<EditContact />);
 
-    const component = wrapper.getByTestId('edit_contact.save');
-    expect(component.props.accessibilityState.disabled).toBeTruthy();
+    jest.useFakeTimers();
+
+    const buttonSave = wrapper.getByTestId('edit_contact.save');
+    expect(buttonSave.props.accessibilityState.disabled).toBeTruthy();
 
     const buttonLocationComponent = wrapper.getByTestId(
       'edit_contact.location',
@@ -163,16 +183,18 @@ describe('Edit Contact screen', () => {
 
     jest.runAllTimers();
 
-    const listItems = wrapper.getAllByTestId('edit_location.item');
+    const listItems = wrapper.queryAllByTestId('edit_location.item');
     expect(listItems.length).toBeGreaterThanOrEqual(1);
     fireEvent.press(listItems[0]);
 
-    expect(component.props.accessibilityState.disabled).toBeFalsy();
+    expect(buttonSave.props.accessibilityState.disabled).toBeFalsy();
 
-    fireEvent.press(component);
+    jest.useFakeTimers();
 
-    expect(Keyboard.dismiss).toBeCalled();
-    // this test case can't be done bc can mock react-hook-form
-    // expect(goBack).toBeCalled();
+    fireEvent.press(buttonSave);
+
+    expect(spy).toBeCalled();
+    jest.runAllTimers();
+    expect(editMyProfile).toBeCalled();
   });
 });

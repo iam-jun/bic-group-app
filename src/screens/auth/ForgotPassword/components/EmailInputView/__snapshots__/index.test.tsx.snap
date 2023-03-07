@@ -78,7 +78,6 @@ exports[`EmailInputView component renders correctly 1`] = `
           style={
             Array [
               Object {
-                "backgroundColor": "green",
                 "borderBottomLeftRadius": 6,
                 "borderBottomRightRadius": 6,
                 "borderTopLeftRadius": 6,
