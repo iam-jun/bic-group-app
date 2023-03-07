@@ -23,7 +23,7 @@ import ReviewMarkdown from '~/screens/post/CreatePost/components/ReviewMarkdown'
 import ToolbarButton from '~/components/posts/ToolbarButton';
 import spacing from '~/theme/spacing';
 import { getChatDomain, openInAppBrowser } from '~/utils/link';
-import { checkPermission, permissionTypes } from '~/utils/permission';
+import { checkPermission, PermissionTypes } from '~/utils/permission';
 import { clearExistingFiles, getTotalFileSize, validateFilesPicker } from '../../helper';
 import useUploadImage from '../../hooks/useUploadImage';
 import useCreatePostStore from '../../store';
@@ -119,7 +119,7 @@ const PostToolbar: FC<PostToolbarProps> = ({
   const _onPressSelectImage = () => {
     modalizeRef?.current?.close?.();
     checkPermission(
-      permissionTypes.photo, (canOpenPicker) => {
+      PermissionTypes.photo, (canOpenPicker) => {
         if (canOpenPicker) {
           openGallery();
         }
@@ -130,7 +130,7 @@ const PostToolbar: FC<PostToolbarProps> = ({
   const _onPressSelectVideo = () => {
     modalizeRef?.current?.close?.();
     checkPermission(
-      permissionTypes.photo, (canOpenPicker) => {
+      PermissionTypes.photo, (canOpenPicker) => {
         if (canOpenPicker) {
           openSingleVideoPicker();
         }

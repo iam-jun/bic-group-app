@@ -15,7 +15,7 @@ import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 import Icon from '~/baseComponents/Icon';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
-import { formatDate } from '~/utils/formatData';
+import { formatDate } from '~/utils/formatter';
 import DatePickerComponentProps from '~/beinComponents/DateTimePicker/DatePickerComponentProps';
 
 const getTextDateDisplay = (

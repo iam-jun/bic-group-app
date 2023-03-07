@@ -4,7 +4,7 @@ import { View, StyleSheet, Text as RNText } from 'react-native';
 import Text from '~/baseComponents/Text';
 import { IPost, PostType } from '~/interfaces/IPost';
 import { spacing, dimension } from '~/theme';
-import { formatNumberWithZeroPrefix } from '~/utils/formatData';
+import { formatNumberWithZeroPrefix } from '~/utils/formatter';
 import { Button } from '~/baseComponents';
 import useSeriesDetailItemMenu from './useSeriesDetailItemMenu';
 import { useBaseHook } from '~/hooks';

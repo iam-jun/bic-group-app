@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { EmojiIndicesByAlias, Emojis } from './emojis';
 
-import { getCustomEmojisByName } from '~/utils/emojiUtils';
+import { getCustomEmojisByName } from '~/utils/emojis';
 import Text from '../Text';
 
 export type EmojiProps = {

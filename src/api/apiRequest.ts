@@ -16,7 +16,7 @@ import { uuidRegex } from '~/constants/commonRegex';
 import useAuthController from '~/screens/auth/store';
 import { EVENT_LOGGER_TAG } from '~/components/LoggerView';
 import { LogType } from '~/components/LoggerView/Interface';
-import ConvertHelper from '~/utils/convertHelper';
+import ConvertHelper from '~/utils/ConvertHelper';
 
 const defaultTimeout = 10000;
 const commonHeaders = {

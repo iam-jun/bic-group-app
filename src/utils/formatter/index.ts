@@ -1,17 +1,11 @@
 import moment from 'moment';
 import removeMd from 'remove-markdown';
 
-export const formatNumber = (n: number) => n.toFixed(0).replace(
-  /./g, (
-    c, i, a,
-  ) => (i > 0 && c !== ',' && (a.length - i) % 3 === 0 ? `,${c}` : c),
-);
-
 export const formatDate = (
   _value: string | number | Date | moment.Moment,
   format?: string,
   locale?: string,
-  maxFromDays?: number,
+  maxFromDays = 1,
   fromNow = true,
 ) => {
   let value = _value;
@@ -33,12 +27,12 @@ export const formatDate = (
       date, 'days',
     ); // today - future < 0
     if (fromNow) {
-      if (days < (maxFromDays || 1)) {
+      if (days < (maxFromDays)) {
         value = momentValue.fromNow(true);
       } else {
         value = momentValue.format('lll');
       }
-    } else if (days < (maxFromDays || 1)) {
+    } else if (days < (maxFromDays)) {
       value = momentValue.calendar();
     } else {
       value = momentValue.format('L');
@@ -85,34 +79,6 @@ export const formatLargeNumber = (value: number) => {
   return value;
 };
 
-export const timestampToISODate = (date: any): string => {
-  if (typeof date === 'object') return new Date(date?.$date).toISOString();
-  if (typeof date === 'number') return new Date(date).toISOString();
-  return date;
-};
-
-export const toNumber = (
-  _text: string, decimalFixed: number,
-) => {
-  let text = _text;
-  if (!text) return text;
-  const fixed = decimalFixed || 2;
-  let value: string | number = text;
-
-  text = text.replace(
-    /,/g, '.',
-  );
-  if (!text.endsWith('.')) {
-    if (text.includes('.')) {
-      const decimalPath = text.split('.')[1];
-      value = parseFloat(text).toFixed(decimalPath.length < fixed ? decimalPath.length : fixed);
-    } else {
-      value = Number(text);
-    }
-  }
-  return value;
-};
-
 export function formatBytes(
   bytes = 0, decimals = 1,
 ) {
@@ -126,6 +92,7 @@ export function formatBytes(
 
   return `${parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;
 }
+
 export const escapeMarkDown = (_text: string) => {
   const MENTION_USER_REG = /@\[u:(\d+):(\S.*?)\]/gm;
   let text = _text;

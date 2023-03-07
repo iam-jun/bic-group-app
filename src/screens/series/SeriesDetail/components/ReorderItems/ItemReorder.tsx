@@ -6,7 +6,7 @@ import spacing from '~/theme/spacing';
 import Icon from '~/baseComponents/Icon';
 import { IPost, PostType } from '~/interfaces/IPost';
 import Text from '~/baseComponents/Text';
-import { formatNumberWithZeroPrefix } from '~/utils/formatData';
+import { formatNumberWithZeroPrefix } from '~/utils/formatter';
 
 const MARGIN_HORIZONTAL = 30;
 const MARGIN_VERTICAL = 8;

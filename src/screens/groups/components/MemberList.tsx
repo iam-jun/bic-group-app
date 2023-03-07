@@ -15,7 +15,7 @@ import MemberItem from './MemberItem';
 import appConfig from '~/configs/appConfig';
 import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import { formatLargeNumber } from '~/utils/formatData';
+import { formatLargeNumber } from '~/utils/formatter';
 import useMemberSection from '~/hooks/useMemberSection';
 
 interface MemberListProps {

@@ -9,7 +9,7 @@ import dimension from '~/theme/dimension';
 import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { spacing } from '~/theme';
-import { formatLargeNumber } from '~/utils/formatData';
+import { formatLargeNumber } from '~/utils/formatter';
 import { getTotalReactions, validateReactionCount } from '~/helpers/post';
 import useModalStore from '~/store/modal';
 

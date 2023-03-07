@@ -9,30 +9,28 @@ import PermissionsPopupContent from '~/beinComponents/PermissionsPopupContent';
 import { IPayloadShowModal } from '~/interfaces/common';
 import useModalStore from '~/store/modal';
 
-export enum permissionTypes {
+export enum PermissionTypes {
   photo = 'photo',
   AddPhoto = 'AddPhoto',
 }
 
-const PLATFORM_STORAGE_PERMISSIONS = {
+const PlatformStoragePermissions = {
   ios: PERMISSIONS.IOS.PHOTO_LIBRARY,
   android: PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
 };
 
-const PLATFORM_ADD_PHOTO_PERMISSIONS = {
+const PlatformAddPhotoPermissions = {
   ios: PERMISSIONS.IOS.PHOTO_LIBRARY,
   android: PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
 };
 
-const REQUEST_PERMISSION_TYPE = {
-  photo: PLATFORM_STORAGE_PERMISSIONS,
-  AddPhoto: PLATFORM_ADD_PHOTO_PERMISSIONS,
+const RequestPermissionType = {
+  photo: PlatformStoragePermissions,
+  AddPhoto: PlatformAddPhotoPermissions,
 };
 
-const requestPermission = async (type: permissionTypes) => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const permissions = REQUEST_PERMISSION_TYPE[type][Platform.OS];
+const requestPermission = async (type: PermissionTypes) => {
+  const permissions = RequestPermissionType[type][Platform.OS];
   try {
     const result = await request(permissions);
     return result;
@@ -45,13 +43,11 @@ const requestPermission = async (type: permissionTypes) => {
 };
 
 export const checkPermission = async (
-  type: permissionTypes,
+  type: PermissionTypes,
   callback: (canOpenPicker: boolean) => void,
   isShowAlertFailed = true,
 ) : Promise<boolean> => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const permissions = REQUEST_PERMISSION_TYPE[type][Platform.OS];
+  const permissions = RequestPermissionType[type][Platform.OS];
 
   try {
     const result = await check(permissions);
@@ -77,9 +73,7 @@ export const checkPermission = async (
               title={i18next.t('common:permission_photo_title')}
               description={i18next.t('common:permission_photo_description')}
               steps={photo_permission_steps}
-              goToSetting={() => {
-                useModalStore.getState().actions.hideModal();
-              }}
+              goToSetting={() => useModalStore.getState().actions.hideModal()}
             />
           ),
         };

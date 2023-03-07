@@ -1,5 +1,6 @@
 import { HubCapsule } from '@aws-amplify/core/src/Hub';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createJSONStorage } from 'zustand/middleware';
 import { ISignIn, IUserResponse } from '~/interfaces/IAuth';
 import announceSessionExpire from '~/screens/auth/store/actions/announceSessionExpire';
 import signOut from '~/screens/auth/store/actions/signOut';
@@ -89,7 +90,7 @@ const authController = (set, get) => ({
 const useAuthController = createStore<IAuthState>(authController, {
   persist: {
     name: 'AuthStorage',
-    getStorage: () => AsyncStorage,
+    storage: createJSONStorage(() => AsyncStorage),
     partialize: (state) => ({ authUser: state.authUser }),
   },
 });

@@ -7,7 +7,7 @@ import authStacks from '~/router/navigator/AuthStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
 import useCommonController from '~/screens/store';
 import getEnv from '~/utils/env';
-import { DEEP_LINK_TYPES, matchDeepLink, openInAppBrowser } from '~/utils/link';
+import { DeepLinkTypes, matchDeepLink, openInAppBrowser } from '~/utils/link';
 
 const isHasCurrentUser = () => {
   const userProfileData = useCommonController.getState().myProfile;
@@ -19,46 +19,46 @@ export const onReceiveURL = ({ url, navigation, listener }: { url: string, navig
 
   if (match) {
     switch (match.type) {
-      case DEEP_LINK_TYPES.POST_DETAIL:
+      case DeepLinkTypes.POST_DETAIL:
         navigation?.navigate?.(mainStack.postDetail, { post_id: match.postId });
         break;
 
-      case DEEP_LINK_TYPES.COMMENT_DETAIL:
+      case DeepLinkTypes.COMMENT_DETAIL:
         navigation?.navigate?.(mainStack.commentDetail, {
           ...match.params,
           postId: match.postId,
         });
         break;
 
-      case DEEP_LINK_TYPES.COMMUNTY_DETAIL:
+      case DeepLinkTypes.COMMUNTY_DETAIL:
         navigation?.navigate?.(mainStack.communityDetail, { communityId: match.communityId });
         break;
 
-      case DEEP_LINK_TYPES.GROUP_DETAIL:
+      case DeepLinkTypes.GROUP_DETAIL:
         navigation?.navigate?.(mainStack.groupDetail, {
           communityId: match.communityId,
           groupId: match.groupId,
         });
         break;
-      case DEEP_LINK_TYPES.SERIES_DETAIL:
+      case DeepLinkTypes.SERIES_DETAIL:
         navigation?.navigate?.(mainStack.seriesDetail, {
           seriesId: match.seriesId,
         });
         break;
-      case DEEP_LINK_TYPES.ARTICLE_DETAIL:
+      case DeepLinkTypes.ARTICLE_DETAIL:
         navigation?.navigate?.(mainStack.articleContentDetail, {
           articleId: match.articleId,
         });
         break;
-      case DEEP_LINK_TYPES.LOGIN:
+      case DeepLinkTypes.LOGIN:
         if (isHasCurrentUser()) return;
         navigation?.navigate?.(authStacks.signIn);
         break;
-      case DEEP_LINK_TYPES.FORGOT_PASSWORD:
+      case DeepLinkTypes.FORGOT_PASSWORD:
         if (isHasCurrentUser()) return;
         navigation?.navigate?.(authStacks.forgotPassword);
         break;
-      case DEEP_LINK_TYPES.CONFIRM_USER:
+      case DeepLinkTypes.CONFIRM_USER:
         navigation?.navigate?.(isHasCurrentUser()
           ? mainStack.confirmUser
           : authStacks.confirmUser, { params: match.params });

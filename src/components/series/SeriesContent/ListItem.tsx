@@ -4,7 +4,7 @@ import { View, StyleSheet } from 'react-native';
 import Text from '~/baseComponents/Text';
 import { Button } from '~/baseComponents';
 import { spacing } from '~/theme';
-import { formatNumberWithZeroPrefix } from '~/utils/formatData';
+import { formatNumberWithZeroPrefix } from '~/utils/formatter';
 import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import { IPost, PostType } from '~/interfaces/IPost';

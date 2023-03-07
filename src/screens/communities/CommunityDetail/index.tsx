@@ -20,7 +20,7 @@ import CommunityJoinCancelButton from './components/CommunityJoinCancelButton';
 import {
   formatChannelLink,
   generateLink,
-  LINK_COMMUNITY,
+  LinkGeneratorTypes,
   openUrl,
 } from '~/utils/link';
 import { chatSchemes } from '~/constants/chat';
@@ -182,7 +182,7 @@ const CommunityDetail = (props: any) => {
 
   const onPressCopyLink = () => {
     modalActions.hideBottomList();
-    Clipboard.setString(generateLink(LINK_COMMUNITY, communityId));
+    Clipboard.setString(generateLink(LinkGeneratorTypes.COMMUNITY, communityId));
     modalActions.showToast({ content: 'common:text_copied' });
   };
 

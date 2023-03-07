@@ -66,6 +66,7 @@ export function compareEmojis(emojiA, emojiB, searchedName) {
   } else {
     aName = emojiA?.short_name ? emojiA.short_name : emojiA.name;
   }
+
   let bName;
   if (typeof emojiB === 'string') {
     bName = emojiB;

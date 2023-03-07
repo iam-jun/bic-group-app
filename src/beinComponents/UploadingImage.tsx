@@ -17,7 +17,7 @@ import { IFilePicked } from '~/interfaces/common';
 import spacing from '~/theme/spacing';
 import useUploaderStore, { IGetFile } from '~/store/uploader';
 import { AppConfig } from '~/configs';
-import { formatBytes } from '~/utils/formatData';
+import { formatBytes } from '~/utils/formatter';
 
 export interface UploadingImageProps {
   style?: StyleProp<ViewStyle>;

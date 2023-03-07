@@ -13,18 +13,35 @@ import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock.js
 import 'react-native-gesture-handler/jestSetup';
 import { initReactI18next } from 'react-i18next';
 
-import mock from 'react-native-permissions/mock';
+import mockPermissions from 'react-native-permissions/mock';
 import mockSafeAreaContext from '~/test/mockSafeAreaContext';
 import colors from '~/theme/theme';
 
 jest.mock('zustand');
 
-jest.mock('rn-fetch-blob', () => ({
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  DocumentDir: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  polyfill: () => {},
-}));
+jest.mock('rn-fetch-blob', () => {
+  const rnFetchBlobMock = {
+    DocumentDir: jest.fn(),
+    polyfill: jest.fn(),
+    fetch: jest.fn(),
+    fs: {
+      scanFile: jest.fn(),
+      unlink: jest.fn(),
+      mkdir: jest.fn(),
+      dirs: {
+        MainBundleDir: '',
+        CacheDir: '',
+        DocumentDir: '',
+        PictureDir: '',
+      },
+    },
+  };
+
+  return {
+    ...rnFetchBlobMock,
+    config: () => rnFetchBlobMock,
+  };
+});
 
 configure({ adapter: new Adapter() });
 
@@ -64,7 +81,7 @@ jest.mock('react-native-image-crop-picker', () => ({
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
 
-jest.mock('react-native-permissions', () => mock);
+jest.mock('react-native-permissions', () => mockPermissions);
 
 global.FormData = require('react-native/Libraries/Network/FormData');
 
@@ -247,6 +264,17 @@ jest.doMock('react-native', () => {
     RNFastStorage: {
       setupLibrary: jest.fn(),
       setStringAsync: jest.fn(),
+    },
+    RNCCameraRollPermissionModule: {
+      checkPermission: jest.fn(),
+      requestReadWritePermission: jest.fn(),
+      requestAddOnlyPermission: jest.fn(),
+      refreshPhotoSelection: jest.fn(),
+    },
+    RNCCameraRoll: {
+      deletePhotos: jest.fn(),
+      saveToCameraRoll: jest.fn(),
+      getPhotos: jest.fn(),
     },
   };
 
