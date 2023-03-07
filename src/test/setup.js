@@ -36,10 +36,17 @@ require('react-native-reanimated/lib/reanimated2/jestUtils').setUpTests();
 
 jest.mock('@react-native-clipboard/clipboard');
 
-jest.mock('@react-native-firebase/messaging', () => () => ({
-  ...jest.requireActual('@react-native-firebase/messaging'),
-  deleteToken: jest.fn(() => Promise.resolve(true)),
-}));
+/* eslint-disable no-undef */
+// jest.doMock('@react-native-firebase', () => ({
+//   ...jest.requireActual('@react-native-firebase'),
+//   messaging: jest.fn(() => ({
+//     hasPermission: jest.fn(() => Promise.resolve(true)),
+//     subscribeToTopic: jest.fn(),
+//     unsubscribeFromTopic: jest.fn(),
+//     requestPermission: jest.fn(() => Promise.resolve(true)),
+//     getToken: jest.fn(() => Promise.resolve('myMockToken')),
+//   })),
+// }));
 
 jest.mock('~/services/sharePreferences', () => ({
   getUserFromSharedPreferences: jest.fn(),

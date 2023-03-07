@@ -2,10 +2,11 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text, { TextVariant } from '~/baseComponents/Text';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import { spacing } from '~/theme';
 import { borderRadius } from '~/theme/spacing';
 import elevation from '~/theme/elevations';
-import { useKeySelector } from '~/hooks/selector';
 import { TabButtonProps } from './TabButton';
 import Icon from '../Icon';
 
@@ -36,7 +37,7 @@ const PillTabButton = ({
 }: PillTabButtonProps) => {
   const theme = useTheme();
   const styles = createStyles(theme);
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   return (
     <TouchableOpacity

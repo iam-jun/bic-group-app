@@ -62,7 +62,13 @@ const ConfirmUser : FC<IRouteParams> = (props) => {
         height={120}
         tintColor="none"
       />
-      <Text.H3 useI18n style={[styles.title, styles.textCenter]}>{title}</Text.H3>
+      <Text.H3
+        testID="confirm_user.text"
+        useI18n
+        style={[styles.title, styles.textCenter]}
+      >
+        {title}
+      </Text.H3>
       {ButtonComponent}
     </View>
   );

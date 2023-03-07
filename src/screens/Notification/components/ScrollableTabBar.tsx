@@ -26,19 +26,19 @@ const styles = StyleSheet.create({
 });
 
 export interface Props {
-  onPressItemOption: (item: any) => void;
-  onItemPress: (item: any) => void;
   data?: any[];
-  onChangeTab: (index: number) => void;
   activeIndex?: number;
+  onChangeTab: (index: number) => void;
+  onItemPress: (item: any) => void;
+  onPressItemOption: (item: any) => void;
 }
 
 const ScrollableTabBar = ({
-  onItemPress,
   data,
-  onPressItemOption,
-  onChangeTab,
   activeIndex = 0,
+  onChangeTab,
+  onItemPress,
+  onPressItemOption,
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
 
@@ -95,7 +95,7 @@ const ScrollableTabBar = ({
   });
 
   return (
-    <View style={styles.container}>
+    <View testID="notification.scrollbar" style={styles.container}>
       <Filter
         ref={filterRef}
         activeIndex={activeIndex}
@@ -117,6 +117,7 @@ const ScrollableTabBar = ({
       />
       <Animated.ScrollView
         ref={scrollViewRef}
+        testID="notification.list_container"
         style={{ flex: 1 }}
         horizontal
         pagingEnabled

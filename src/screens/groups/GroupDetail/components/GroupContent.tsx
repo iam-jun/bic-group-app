@@ -18,6 +18,7 @@ import ContentItem from '~/components/ContentItem';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 import Divider from '~/beinComponents/Divider';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
+import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 
 interface GroupContentProps {
   community: ICommunity;
@@ -107,8 +108,12 @@ const GroupContent = ({
         onPressAttributeFilterTab={_onPressAttributeFilterTab}
       />
       <Divider color={colors.neutral5} size={spacing.padding.tiny} />
-      {isLoadingPosts && renderLoading()}
+      {isLoadingPosts && renderPlaceHolderLoading()}
     </View>
+  );
+
+  const renderPlaceHolderLoading = () => (
+    <PostViewPlaceholder />
   );
 
   const renderLoading = () => (

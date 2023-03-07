@@ -48,13 +48,20 @@ import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNo
 import useCommentInputStore from '~/screens/comments/components/CommentInputView/store';
 import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import useReportContentStore from '~/components/Report/store';
+import useNetworkStore from '~/store/network';
+import useModalStore from '~/store/modal';
 import useArticleScheduleContentStore from '~/screens/articles/ArticleScheduleContent/store';
 import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
 import useButtonMarkAsReadStore from '~/components/posts/ButtonMarkAsRead/store';
 import useCreatePostStore from '~/screens/post/CreatePost/store';
+import useLinkPreviewStore from './linkPreview';
+import useAppStore from './app';
+import useGroupJoinableUsersStore from '~/screens/groups/GroupMembers/AddMembersToGroup/store';
 
 export const excludedStore = [
   useAuthController,
+  useModalStore,
+  useNetworkStore,
 
   // components
   useButtonMarkAsReadStore,
@@ -88,6 +95,7 @@ const stores = [
   useScheduleArticlesStore,
   useArticleScheduleContentStore,
   useCreatePostStore,
+  useGroupJoinableUsersStore,
 
   // others
   useChatStore,
@@ -121,6 +129,8 @@ const stores = [
   usePostsInProgressStore,
   useCommentInputStore,
   useFeedSearchStore,
+  useLinkPreviewStore,
+  useAppStore,
 ];
 
 export const resetAllStores = () => {

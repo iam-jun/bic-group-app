@@ -62,7 +62,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
   const errorUpload = useUploaderStore(useCallback((state) => state.errors[fileName], [fileName]));
   const uploadProgress = useUploaderStore(useCallback((state) => state.uploadingFiles[fileName], [fileName]));
   const uploadedFile = useUploaderStore(useCallback((state) => state.uploadedFiles[fileName], [fileName]));
-  const isUploading = uploadProgress && uploadProgress >= 0;
+  const isUploading = uploadProgress !== undefined;
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -73,12 +73,16 @@ const UploadingFile: FC<UploadingFileProps> = ({
   }, [errorUpload]);
 
   useEffect(() => {
-    if (uploadedFile) onSuccess?.(uploadedFile);
+    if (uploadedFile) {
+      onSuccess?.(uploadedFile);
+    }
   }, [uploadedFile]);
 
   useEffect(
     () => {
-      if (file && !isUploading) uploadFile();
+      if (file && !isUploading) {
+        uploadFile();
+      }
     }, [file],
   );
 

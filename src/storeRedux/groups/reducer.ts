@@ -1,5 +1,4 @@
 import groupsTypes from '~/storeRedux/groups/types';
-import { IUser } from '~/interfaces/IAuth';
 
 export const groupInitState = {
   permissionScheme: {
@@ -39,13 +38,6 @@ export const groupInitState = {
     loading: true,
     list: [],
   },
-  users: {
-    loading: false,
-    data: [],
-    extra: [],
-    canLoadMore: true,
-  },
-  selectedUsers: [] as IUser[],
 
   joinedCommunities: {
     loading: false,
@@ -76,12 +68,6 @@ export const groupInitState = {
   },
   isGettingInfoDetailError: false,
   isGettingInfoDetail: false,
-  globalSearch: {
-    loading: false,
-    canLoadMore: true,
-    ids: [] as string[],
-    items: {},
-  },
   communitySearch: {
     loading: false,
     canLoadMore: true,
@@ -91,60 +77,9 @@ export const groupInitState = {
 };
 
 function groupsReducer(state = groupInitState, action: any = {}) {
-  const { type, payload } = action;
-  const {
-    selectedUsers,
-    globalSearch,
-  } = state;
+  const { type } = action;
 
   switch (type) {
-    case groupsTypes.SET_JOINABLE_USERS:
-      return {
-        ...state,
-        users: {
-          ...state.users,
-          ...payload,
-        },
-      };
-    case groupsTypes.SET_EXTRA_JOINABLE_USERS:
-      return {
-        ...state,
-        users: {
-          ...state.users,
-          ...payload,
-        },
-      };
-    case groupsTypes.SET_MERGE_EXTRA_JOINABLE_USERS:
-      return {
-        ...state,
-        users: {
-          ...state.users,
-          ...payload,
-        },
-      };
-    case groupsTypes.SELECT_JOINABLE_USERS: {
-      const included = selectedUsers.find(
-        (item: IUser) => payload.id === item.id,
-      );
-      return {
-        ...state,
-        selectedUsers: included
-          ? selectedUsers.filter((user) => user.id !== payload.id)
-          : [...selectedUsers, payload],
-      };
-    }
-    case groupsTypes.CLEAR_SELECTED_USERS:
-      return {
-        ...state,
-        selectedUsers: [],
-      };
-
-    case groupsTypes.RESET_JOINABLE_USERS:
-      return {
-        ...state,
-        users: groupInitState.users,
-      };
-
     case groupsTypes.GET_COMMUNITY_GROUPS:
       return {
         ...state,
@@ -152,36 +87,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         joinedGroups: groupInitState.joinedGroups,
       };
 
-    case groupsTypes.EDIT_DISCOVER_COMMUNITY_ITEM:
-      return {
-        ...state,
-        globalSearch:
-          globalSearch?.items && globalSearch.items?.[payload.id]
-            ? {
-              ...globalSearch,
-              items: {
-                ...globalSearch.items,
-                [payload.id]: {
-                  ...globalSearch.items[payload.id],
-                  ...payload.data,
-                },
-              },
-            }
-            : globalSearch,
-      };
-    case groupsTypes.SET_GLOBAL_SEARCH:
-      return {
-        ...state,
-        globalSearch: {
-          ...state.globalSearch,
-          ...payload,
-        },
-      };
-    case groupsTypes.RESET_GLOBAL_SEARCH:
-      return {
-        ...state,
-        globalSearch: groupInitState.globalSearch,
-      };
     default:
       return state;
   }

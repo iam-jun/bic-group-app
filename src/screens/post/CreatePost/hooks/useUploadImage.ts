@@ -1,20 +1,24 @@
-import { useDispatch } from 'react-redux';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import appConfig from '~/configs/appConfig';
 import { useBaseHook } from '~/hooks';
-import { useKeySelector } from '~/hooks/selector';
 import { IFilePicked } from '~/interfaces/common';
 import { ICreatePostImage } from '~/interfaces/IPost';
 import showToast from '~/store/helper/showToast';
-import postActions from '~/storeRedux/post/actions';
-import postKeySelector from '~/storeRedux/post/keySelector';
+import useCreatePostStore from '../store';
 
 export const useUploadImage = () => {
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
-  const selectedImagesDraft: ICreatePostImage[] = useKeySelector(postKeySelector.createPost.imagesDraft) || [];
+  const selectedImages = useCreatePostStore((state) => state.createPost.images || []);
+  const createPostStoreActions = useCreatePostStore((state) => state.actions);
 
-  const checkCurrentImages = (currentImage: ICreatePostImage[]) => {
+  const sliceLstImagesToMaximumImagesAllowed = (lstImages: ICreatePostImage[]) => lstImages.slice(
+    0,
+    appConfig.postPhotoLimit,
+  );
+
+  const isOverMaximumImagesAllowed = (images: any[]) => images.length > appConfig.postPhotoLimit;
+
+  const showErrorOverMaximumImagesAllowed = () => {
     const errorContent = t('post:error_reach_upload_photo_limit').replace(
       '%LIMIT%', appConfig.postPhotoLimit,
     );
@@ -22,10 +26,6 @@ export const useUploadImage = () => {
       content: errorContent,
       type: ToastType.ERROR,
     });
-    return currentImage.slice(
-      0,
-      appConfig.postPhotoLimit,
-    );
   };
 
   const handleImage = (images: IFilePicked[]) => {
@@ -33,12 +33,14 @@ export const useUploadImage = () => {
     images.forEach((item) => {
       newImages.push({ fileName: item.filename, file: item });
     });
-    let newCurrentImages = [...selectedImagesDraft, ...newImages];
-    if (newCurrentImages.length > appConfig.postPhotoLimit) {
-      newCurrentImages = checkCurrentImages(newCurrentImages);
+    let newCurrentImages = [...selectedImages, ...newImages];
+
+    if (isOverMaximumImagesAllowed(newCurrentImages)) {
+      showErrorOverMaximumImagesAllowed();
+      newCurrentImages = sliceLstImagesToMaximumImagesAllowed(newCurrentImages);
     }
-    dispatch(postActions.setCreatePostImagesDraft(newCurrentImages));
-    dispatch(postActions.setCreatePostImages(newCurrentImages));
+
+    createPostStoreActions.updateCreatePost({ images: newCurrentImages });
   };
 
   return {

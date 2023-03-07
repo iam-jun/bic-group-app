@@ -43,16 +43,22 @@ const MenuShortcut = () => {
   };
 
   const renderButton = (icon, name, onPress) => (
-    <Button style={styles.button} onPress={onPress}>
+    <Button testID="menu_shortcut.item" style={styles.button} onPress={onPress}>
       <View>
         <Icon size={18} tintColor={theme.colors.neutral20} icon={icon} />
-        <Text.SubtitleM style={styles.buttonText}>{name}</Text.SubtitleM>
+        <Text.SubtitleM
+          testID="menu_shortcut.item.text"
+          style={styles.buttonText}
+        >
+          {name}
+
+        </Text.SubtitleM>
       </View>
     </Button>
   );
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="menu_shortcut">
       <View style={styles.directionRow}>
         {renderButton('PenLineSolid', t('menu:title_write_post'), onPressCreatePost)}
         {renderButton('FilePenSolid', t('menu:title_write_article'), onPressWriteArticle)}

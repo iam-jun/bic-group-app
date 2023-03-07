@@ -1,6 +1,7 @@
 import { ISelectAudienceState } from '~/components/SelectAudience/store';
 import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
 import { ICodePushState } from '~/store/codePush';
+import { INetworkState } from '~/store/network';
 import { IPostsState } from './entities/posts';
 import ICommentsState from '~/store/entities/comments/Interface';
 import IHomeState from '~/screens/Home/store/Interface';
@@ -46,6 +47,8 @@ import { IArticleScheduleContentState } from '~/screens/articles/ArticleSchedule
 import { IFeedSearchState } from '~/screens/Home/HomeSearch/store';
 import { IButtonMarkAsReadState } from '~/components/posts/ButtonMarkAsRead/store';
 import { ICreatePostState } from '~/screens/post/CreatePost/store';
+import { ILinkPreviewState } from './linkPreview';
+import { IGroupJoinableUsersState } from '~/screens/groups/GroupMembers/AddMembersToGroup/store';
 
 export interface BicStore {
   entities: {
@@ -105,6 +108,7 @@ export interface BicStore {
     };
     GroupMembers: {
       groupMemberStore: IGroupMemberState;
+      addMembersToGroupStore: IGroupJoinableUsersState;
     };
     GroupDetail: {
       groupDetailStore: IGroupDetailState;
@@ -165,8 +169,10 @@ export interface BicStore {
   giphy: IGiphyState;
   codePush: ICodePushState;
   myPermissions: IMyPermissionsState;
+  network: INetworkState;
   tags: ITagsState;
   remoteConfig: IRemoteConfigState;
   modal: IModalState;
   postsContainingVideoInProgress: IPostsInProgressState;
+  linkPreview: ILinkPreviewState
 }

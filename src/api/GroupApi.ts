@@ -30,6 +30,10 @@ const defaultConfig = {
 };
 
 export const groupsApiConfig = {
+  getCommunityCUDTagPermission: (communityId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/permissions/can-cud-tags/community/${communityId}`,
+  }),
   updateGroupJoinSetting: (groupId: string, isJoinApproval: boolean): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/settings`,
@@ -301,7 +305,7 @@ export const groupsApiConfig = {
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
-  addUsers: (groupId: string, userIds: string[]): HttpApiRequestConfig => ({
+  addUsersToGroup: (userIds: string[], groupId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/users/add`,
     method: 'post',
@@ -532,6 +536,9 @@ export const groupsApiConfig = {
 };
 
 const groupApi = {
+  getCommunityCUDTagPermission: (communityId: string) => withHttpRequestPromise(
+    groupsApiConfig.getCommunityCUDTagPermission, communityId,
+  ),
   updateGroupJoinSetting: (groupId: string, isJoinApproval: boolean) => withHttpRequestPromise(
     groupsApiConfig.updateGroupJoinSetting, groupId, isJoinApproval,
   ),
@@ -751,7 +758,9 @@ const groupApi = {
   getJoinableUsers: (groupId: string, params: any) => withHttpRequestPromise(
     groupsApiConfig.getJoinableUsers, groupId, params,
   ),
-  addUsers: (groupId: string, userIds: string[]) => withHttpRequestPromise(groupsApiConfig.addUsers, groupId, userIds),
+  addUsersToGroup: (userIds: string[], groupId: string) => withHttpRequestPromise(
+    groupsApiConfig.addUsersToGroup, userIds, groupId,
+  ),
   removeGroupMembers: (groupId: string, userIds: string[]) => withHttpRequestPromise(
     groupsApiConfig.removeGroupMembers, groupId, userIds,
   ),

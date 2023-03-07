@@ -9,7 +9,8 @@ import {
 
 import Text from '~/baseComponents/Text';
 import Avatar from '~/baseComponents/Avatar';
-import { useKeySelector } from '~/hooks/selector';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import spacing from '~/theme/spacing';
 
 interface HeaderAvatarViewProps {
@@ -27,7 +28,7 @@ const HeaderAvatarView = ({
   containerStyle,
   onPress,
 }: HeaderAvatarViewProps) => {
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   return (
     <TouchableOpacity

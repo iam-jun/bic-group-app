@@ -8,7 +8,7 @@ export const communities = [
     slug: 'string',
     privacy: CommunityPrivacyType.OPEN,
     description: 'string',
-    icon: 'string',
+    icon: 'https://evolgroup.vn/wp-content/uploads/sites/18/2020/04/Thumb-EVOL.jpg',
     backgroundImgUrl: 'string',
     teamId: 'string',
     members: [

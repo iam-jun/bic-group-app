@@ -1,5 +1,7 @@
 import React, { FC, useEffect } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  Dimensions, StyleSheet, TouchableOpacity, View,
+} from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/baseComponents/Text';
@@ -12,6 +14,8 @@ import Icon from '~/baseComponents/Icon';
 import { ILinkPreview, ILinkPreviewCreatePost } from '~/interfaces/IPost';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 
+const WIDTH_THUMBNAIL = (Dimensions.get('window').width - spacing.margin.large * 2) / 3.5;
+
 type LinkPreviewProps = {
   data: ILinkPreviewCreatePost | ILinkPreview;
   loadLinkPreview?: (url: string) => void;
@@ -20,13 +24,10 @@ type LinkPreviewProps = {
 };
 
 const LinkPreview: FC<LinkPreviewProps> = ({
-  data,
-  loadLinkPreview,
-  onClose,
-  showClose = false,
+  data, loadLinkPreview, onClose, showClose = false,
 }) => {
   const {
-    url, domain, title, image,
+    url, domain, title, image, description,
   } = data;
   const { isLoading } = data as ILinkPreviewCreatePost;
   const theme: ExtendedTheme = useTheme();
@@ -34,10 +35,10 @@ const LinkPreview: FC<LinkPreviewProps> = ({
   const styles = createStyle(theme);
 
   useEffect(() => {
-    if (url && !title && !domain && !isLoading) {
+    if (url && !title && !description && !domain && !isLoading) {
       loadLinkPreview?.(url);
     }
-  }, [url, title, domain, isLoading]);
+  }, [url, title, description, domain, isLoading]);
 
   const onPress = () => {
     openUrl(url);
@@ -47,40 +48,40 @@ const LinkPreview: FC<LinkPreviewProps> = ({
     onClose?.();
   };
 
-  if (!url || (!title && !domain && !isLoading)) return null;
+  if (!url || (!title && !description && !domain && !isLoading)) return null;
 
   if (isLoading) {
     return (
-      <View style={[styles.container, styles.loadingView]}>
+      <View style={[styles.container, styles.loadingView]} testID="link_preview.loading">
         <LoadingIndicator size="small" />
       </View>
     );
   }
 
   return (
-    <Button onPress={onPress}>
+    <Button onPress={onPress} testID="link_preview">
       <View style={styles.container}>
-        {!!image && (
-          <Image
-            style={styles.thumbnail}
-            source={image}
-            placeholderSource={images.img_thumbnail_default}
-          />
-        )}
+        {!!image && <Image style={styles.thumbnail} source={image} placeholderSource={images.img_thumbnail_default} />}
         <View style={styles.metadata}>
-          <Text.BodyS numberOfLines={1} color={colors.neutral80}>
+          <Text.BodyM numberOfLines={1} color={colors.neutral40}>
             {domain}
-          </Text.BodyS>
+          </Text.BodyM>
           {!!title && (
-            <Text.SubtitleM numberOfLines={2} style={styles.title} color={colors.neutral60}>
+            <Text.SubtitleM numberOfLines={1} style={styles.text} color={colors.neutral60}>
               {title}
             </Text.SubtitleM>
+          )}
+          {!!description && (
+            <Text.ParagraphS numberOfLines={2} style={styles.text} color={colors.neutral60}>
+              {description}
+            </Text.ParagraphS>
           )}
         </View>
         {!!showClose && (
           <TouchableOpacity
             onPress={onCloseLinkPreview}
             style={styles.buttonClose}
+            testID="link_preview.close_btn"
           >
             <Icon size={12} tintColor={colors.neutral40} icon="Xmark" />
           </TouchableOpacity>
@@ -113,13 +114,13 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingVertical: spacing.padding.small,
     },
     thumbnail: {
-      width: 92,
-      height: 82,
+      width: WIDTH_THUMBNAIL,
+      height: '100%',
       borderTopLeftRadius: spacing.borderRadius.large,
       borderBottomLeftRadius: spacing.borderRadius.large,
     },
-    title: {
-      marginTop: spacing.margin.small,
+    text: {
+      marginTop: spacing.margin.xTiny,
     },
     buttonClose: {
       position: 'absolute',

@@ -1,21 +1,12 @@
 import * as React from 'react';
 import { cleanup } from '@testing-library/react-native';
 import ReactionView from '~/beinComponents/ReactionView';
-import { fireEvent, renderWithRedux, configureStore } from '~/test/testUtils';
-import initialState from '~/storeRedux/initialState';
+import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import { IOwnReaction } from '~/interfaces/IPost';
 
 afterEach(cleanup);
 
 describe('ReactionView component', () => {
-  const mockStore = configureStore([]);
-
-  const storeData = { ...initialState };
-
-  storeData.noInternet.isInternetReachable = true;
-
-  const store = mockStore(storeData);
-
   it('renders correctly', () => {
     const onAddReaction = jest.fn();
     const onRemoveReaction = jest.fn();
@@ -32,7 +23,6 @@ describe('ReactionView component', () => {
         onPressSelectReaction={onPressSelectReaction}
         onLongPressReaction={onLongPressReaction}
       />,
-      store,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
   });
@@ -52,7 +42,6 @@ describe('ReactionView component', () => {
         onPressSelectReaction={onPressSelectReaction}
         onLongPressReaction={onLongPressReaction}
       />,
-      store,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
   });
@@ -73,7 +62,6 @@ describe('ReactionView component', () => {
         onPressSelectReaction={onPressSelectReaction}
         onLongPressReaction={onLongPressReaction}
       />,
-      store,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
   });
@@ -94,7 +82,6 @@ describe('ReactionView component', () => {
         onPressSelectReaction={onPressSelectReaction}
         onLongPressReaction={onLongPressReaction}
       />,
-      store,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
   });
@@ -115,7 +102,6 @@ describe('ReactionView component', () => {
         onPressSelectReaction={onPressSelectReaction}
         onLongPressReaction={onLongPressReaction}
       />,
-      store,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
   });
@@ -136,7 +122,6 @@ describe('ReactionView component', () => {
         onPressSelectReaction={onPressSelectReaction}
         onLongPressReaction={onLongPressReaction}
       />,
-      store,
     );
     const reactComponent = rendered.getByTestId('reaction_view.react');
     fireEvent.press(reactComponent);
@@ -159,7 +144,6 @@ describe('ReactionView component', () => {
         onPressSelectReaction={onPressSelectReaction}
         onLongPressReaction={onLongPressReaction}
       />,
-      store,
     );
     const reactComponent = rendered.getByTestId('reaction.button.grinning');
     fireEvent(reactComponent, 'onLongPress');
@@ -182,7 +166,6 @@ describe('ReactionView component', () => {
         onPressSelectReaction={onPressSelectReaction}
         onLongPressReaction={onLongPressReaction}
       />,
-      store,
     );
     const reactComponent = rendered.getByTestId(
       'reaction.button.grinning_face_with_star_eyes',
@@ -207,7 +190,6 @@ describe('ReactionView component', () => {
         onPressSelectReaction={onPressSelectReaction}
         onLongPressReaction={onLongPressReaction}
       />,
-      store,
     );
     const reactComponent = rendered.getByTestId('reaction.button.sweat_smile');
     expect(reactComponent).toBeDefined();

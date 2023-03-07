@@ -3,11 +3,8 @@ import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 
 import groupsReducer from '~/storeRedux/groups/reducer';
-import menuReducer from '~/storeRedux/menu/reducer';
 import postReducer from '~/storeRedux/post/reducer';
 
-import noInternetReducer from './network/reducer';
-import app from './app/reducer';
 import modal from './modal/reducer';
 
 const postPersistConfig = {
@@ -17,14 +14,11 @@ const postPersistConfig = {
 };
 
 export const appReducer = combineReducers({
-  app,
   modal,
   post: persistReducer(
     postPersistConfig, postReducer,
   ),
   groups: groupsReducer,
-  menu: menuReducer,
-  noInternet: noInternetReducer,
 });
 
 const rootReducers = (

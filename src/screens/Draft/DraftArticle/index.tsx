@@ -3,11 +3,12 @@ import {
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 
 import useDraftArticleStore from './store';
 import { useUserIdAuth } from '~/hooks/auth';
 import { IPayloadGetDraftPosts } from '~/interfaces/IPost';
-import { useKeySelector } from '~/hooks/selector';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { spacing } from '~/theme';
 import Image from '~/beinComponents/Image';
@@ -22,7 +23,7 @@ const DraftArticle = () => {
   const { colors } = theme;
   const styles = createStyle();
   const userId = useUserIdAuth();
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   const {
     articles: draftArticles, hasNextPage, refreshing, actions,

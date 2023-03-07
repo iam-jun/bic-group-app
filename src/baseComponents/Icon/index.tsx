@@ -9,8 +9,9 @@ import {
   View,
 } from 'react-native';
 
-import { useNetInfo } from '@react-native-community/netinfo';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import SvgIcon, { SVGIconProps } from './SvgIcon';
 
 import Text from '~/baseComponents/Text';
@@ -63,8 +64,7 @@ const Icon: React.FC<IconProps> = ({
   },
   onPress,
 }: IconProps) => {
-  const NetInfo = useNetInfo();
-  const noInternet = NetInfo.isInternetReachable === false;
+  const noInternet = !useNetworkStore(networkSelectors.getIsInternetReachable);
 
   const theme: ExtendedTheme = useTheme();
   if (isLoading) return <ActivityIndicator size="small" />;

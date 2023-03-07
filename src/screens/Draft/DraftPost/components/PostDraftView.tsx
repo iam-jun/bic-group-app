@@ -7,7 +7,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { useBaseHook } from '~/hooks';
 import streamApi from '~/api/StreamApi';
-import postActions from '~/storeRedux/post/actions';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 
@@ -29,6 +28,7 @@ import useDraftPostStore from '../store';
 import { PostBody, PostHeader, PostImportant } from '~/components/posts';
 import useModalStore from '~/store/modal';
 import showToastError from '~/store/helper/showToastError';
+import useCreatePostStore from '~/screens/post/CreatePost/store';
 
 export interface PostDraftViewProps {
   data: IPost;
@@ -53,6 +53,8 @@ const PostDraftView: FC<PostDraftViewProps> = ({
   const styles = createStyle(theme);
 
   const userId = useUserIdAuth();
+
+  const createPostStoreActions = useCreatePostStore((state) => state.actions);
 
   const { actions } = useDraftPostStore();
   const { showToast, showAlert } = useModalStore((state) => state.actions);
@@ -87,11 +89,10 @@ const PostDraftView: FC<PostDraftViewProps> = ({
         draftPostId: id,
         onSuccess: () => {
           showToast({ content: 'post:draft:text_draft_post_published' });
-          refreshDraftPosts();
         },
         onError: () => setPublishing(false),
       };
-      dispatch(postActions.postPublishDraftPost(payload));
+      createPostStoreActions.postPublishDraftPost(payload);
     }
   };
 

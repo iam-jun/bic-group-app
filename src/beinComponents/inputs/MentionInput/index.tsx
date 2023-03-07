@@ -6,10 +6,12 @@ import React, {
 import {
   DeviceEventEmitter,
   KeyboardTypeOptions,
+  NativeSyntheticEvent,
   Platform,
   StyleProp,
   StyleSheet,
   TextInput,
+  TextInputSelectionChangeEventData,
   TextStyle,
   View,
   ViewStyle,
@@ -39,6 +41,9 @@ interface Props {
   disableAutoComplete?: boolean;
 
   onKeyPress?: (e: any) => void;
+  onSelectionChange?:
+    | ((e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => void)
+    | undefined;
 }
 
 const _MentionInput = ({
@@ -54,6 +59,7 @@ const _MentionInput = ({
   disableAutoComplete,
 
   onKeyPress,
+  onSelectionChange,
 }: Props) => {
   const inputRef = textInputRef || useRef<TextInput>();
   const _mentionInputRef = mentionInputRef || useRef<any>();
@@ -97,7 +103,8 @@ const _MentionInput = ({
     }),
   );
 
-  const onSelectionChange = (event: any) => {
+  const _onSelectionChange = (event: any) => {
+    onSelectionChange?.(event);
     const position = event.nativeEvent.selection.end;
     const text = componentInputProps?.value;
 
@@ -186,7 +193,7 @@ const _MentionInput = ({
           editable={!disabled}
           style={[textInputStyle, disabled ? { color: colors.gray50 } : {}, styles.textInputDefault]}
           onContentSizeChange={_onContentSizeChange}
-          onSelectionChange={onSelectionChange}
+          onSelectionChange={_onSelectionChange}
           onKeyPress={_onKeyPress}
           onChangeText={onChangeText}
         />

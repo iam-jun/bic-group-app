@@ -8,8 +8,9 @@ import {
   getParamsContentFeed,
   getParamsImportantAttributeFeed,
 } from '~/screens/Home/store/helper';
+import { timeOut } from '~/utils/common';
 
-const getPosts = (set, get) => async (id: string, isRefresh?: boolean) => {
+const getPosts = (set, get) => async (id: string, isRefresh = false) => {
   const { timelines }: ITimelineState = get();
   const { contentFilter, attributeFilter, data } = timelines[id] || {};
   const currentPosts: IBaseListState<IPost> = data[contentFilter][attributeFilter];
@@ -34,6 +35,7 @@ const getPosts = (set, get) => async (id: string, isRefresh?: boolean) => {
       type: getParamsContentFeed(contentFilter),
     };
     const response = await groupApi.getGroupPosts(params);
+    await timeOut(200);
     const result = response.data?.list || [];
     usePostsStore.getState().actions.addToPosts({ data: result, handleComment: true });
 

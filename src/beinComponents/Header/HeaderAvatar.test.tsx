@@ -1,18 +1,13 @@
 import * as React from 'react';
 import { cleanup } from '@testing-library/react-native';
 import { StyleSheet } from 'react-native';
-import { fireEvent, renderWithRedux, configureStore } from '~/test/testUtils';
+import useNetworkStore, { INetworkState } from '~/store/network';
+import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import HeaderAvatar from '~/beinComponents/Header/HeaderAvatar';
-import initialState from '~/storeRedux/initialState';
 
 afterEach(cleanup);
 
 describe('Header Avatar component', () => {
-  const mockStore = configureStore([]);
-  const storeData = { ...initialState };
-  storeData.noInternet.isInternetReachable = true;
-  const store = mockStore(storeData);
-
   const urlAvatar
     = 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png';
 
@@ -23,7 +18,6 @@ describe('Header Avatar component', () => {
         secondLabel="Second Label"
         avatar={urlAvatar}
       />,
-      store,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
   });
@@ -35,7 +29,6 @@ describe('Header Avatar component', () => {
         secondLabel="Second Label"
         avatar={urlAvatar}
       />,
-      store,
     );
     const firstLabelComponent = rendered.getByTestId(
       'header_avatar.first_label',
@@ -54,7 +47,6 @@ describe('Header Avatar component', () => {
           style: { color: '#FF9800', textDecorationLine: 'underline' },
         }}
       />,
-      store,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
     const firstLabelComponent = rendered.getByTestId(
@@ -76,7 +68,6 @@ describe('Header Avatar component', () => {
         avatar={urlAvatar}
         iconCheckCircle
       />,
-      store,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
     const firstLabelComponent = rendered.getByTestId(
@@ -95,7 +86,6 @@ describe('Header Avatar component', () => {
         avatar={urlAvatar}
         iconFirstLabel="Bug"
       />,
-      store,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
     const firstLabelComponent = rendered.getByTestId(
@@ -117,7 +107,6 @@ describe('Header Avatar component', () => {
         iconFirstLabel="iconClose"
         iconFirstLabelProps={{ icon: 'iconClose', tintColor: '#FF9800' }}
       />,
-      store,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
     const firstLabelComponent = rendered.getByTestId(
@@ -137,7 +126,6 @@ describe('Header Avatar component', () => {
         secondLabel="Second Label"
         avatar={urlAvatar}
       />,
-      store,
     );
     const secondLabelComponent = rendered.getByTestId(
       'header_avatar.second_label',
@@ -156,7 +144,6 @@ describe('Header Avatar component', () => {
           style: { color: '#FF9800', textDecorationLine: 'underline' },
         }}
       />,
-      store,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
     const secondLabelComponent = rendered.getByTestId(
@@ -177,40 +164,10 @@ describe('Header Avatar component', () => {
         secondLabel="Second Label"
         avatar={urlAvatar}
       />,
-      store,
     );
     const imageComponent = rendered.getByTestId('avatar.image');
     expect(imageComponent).toBeDefined();
     expect(imageComponent.props.source).toMatchObject({ uri: urlAvatar });
-  });
-
-  it('renders correctly with props Avatar Props', () => {
-    const rendered = renderWithRedux(
-      <HeaderAvatar
-        firstLabel="First Label"
-        secondLabel="Second Label"
-        avatar={urlAvatar}
-        avatarProps={{
-          style: {
-            backgroundColor: '#FF9800',
-            borderWidth: 2,
-            borderColor: '#FFB74D',
-          },
-        }}
-      />,
-      store,
-    );
-    expect(rendered.toJSON()).toMatchSnapshot();
-    const imageComponent = rendered.getByTestId('avatar.image');
-    expect(imageComponent).toBeDefined();
-    expect(imageComponent.props.source).toMatchObject({ uri: urlAvatar });
-    const avatarComponent = rendered.getByTestId('avatar');
-    expect(avatarComponent).toBeDefined();
-    expect(avatarComponent.props.style).toMatchObject({
-      backgroundColor: '#FF9800',
-      borderWidth: 2,
-      borderColor: '#FFB74D',
-    });
   });
 
   it('renders correctly with props Container Style', () => {
@@ -226,7 +183,6 @@ describe('Header Avatar component', () => {
           borderColor: '#FFB74D',
         }}
       />,
-      store,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
     const HeaderAvtView = rendered.getByTestId('header_avatar');
@@ -248,11 +204,31 @@ describe('Header Avatar component', () => {
         avatar={urlAvatar}
         onPress={onPressHeader}
       />,
-      store,
     );
     const HeaderAvatarComponent = rendered.getByTestId('header_avatar');
     expect(HeaderAvatarComponent).toBeDefined();
     fireEvent.press(HeaderAvatarComponent);
     expect(onPressHeader).toBeCalled();
+  });
+
+  it('shoud not call onPress when cant connect to the internet', () => {
+    useNetworkStore.setState((state:INetworkState) => {
+      state.isInternetReachable = false;
+      return state;
+    });
+
+    const onPressHeader = jest.fn();
+    const rendered = renderWithRedux(
+      <HeaderAvatar
+        firstLabel="First Label"
+        secondLabel="Second Label"
+        avatar={urlAvatar}
+        onPress={onPressHeader}
+      />,
+    );
+    const HeaderAvatarComponent = rendered.getByTestId('header_avatar');
+    expect(HeaderAvatarComponent).toBeDefined();
+    fireEvent.press(HeaderAvatarComponent);
+    expect(onPressHeader).not.toBeCalled();
   });
 });

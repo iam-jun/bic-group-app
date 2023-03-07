@@ -11,14 +11,14 @@ export const handleBack = ({
   isEditPostHasChange,
   hasPostId,
   rootNavigation,
-  isNewsfeed,
+  isEditDraftPost,
   onPressDraftPost,
 }: {
   isEditPost: boolean | undefined;
   isEditPostHasChange: boolean | undefined;
   hasPostId: boolean | undefined;
   rootNavigation: any;
-  isNewsfeed: boolean | undefined;
+  isEditDraftPost: boolean | undefined;
   onPressDraftPost: () => void;
 }) => {
   Keyboard.dismiss();
@@ -54,7 +54,7 @@ export const handleBack = ({
     useDraftPostStore.getState().actions.getDraftPosts({ isRefresh: true });
     showToast({
       content: 'post:saved_to_draft',
-      buttonText: isNewsfeed ? i18next.t('home:draft_post') : '',
+      buttonText: isEditDraftPost ? i18next.t('home:draft_post') : '',
       onButtonPress: onPressDraftPost,
     });
   }

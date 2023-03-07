@@ -1,11 +1,8 @@
-import React, {
-  useEffect, useImperativeHandle, useRef, useState,
-} from 'react';
+import React, { useImperativeHandle, useRef, useState } from 'react';
 import {
   Platform,
   SectionList,
   StyleSheet,
-  TouchableOpacity,
   View,
 } from 'react-native';
 // eslint-disable-next-line import/no-named-default
@@ -15,17 +12,16 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Animated, { FadeInUp, FadeOutDown } from 'react-native-reanimated';
 import Emoji from '../Emoji';
 
-import EmojiPickerRow from './components/EmojiPickRow';
+import EmojiPickerRow from './components/EmojiPickerRow';
 import Text from '~/baseComponents/Text';
 import NoSearchResultsFound from '~/components/NoSearchResultsFound';
-import useEmojiPickerStore from './store';
-import IEmojiPickerState from './store/Interface';
-import { measureEmojiSections } from './store/utils';
+import useEmojiPickerStore, { IEmojiPickerState } from './store';
 import {
-  EMOJI_GUTTER, EMOJI_SIZE, SCROLLVIEW_NATIVE_ID, SECTION_HEADER_HEIGHT, SECTION_MARGIN,
+  EMOJI_GUTTER, EMOJI_SIZE, ON_END_REACHED_THRESHOLD, SCROLLVIEW_NATIVE_ID, SECTION_HEADER_HEIGHT, SECTION_MARGIN,
 } from './store/constant';
-import { dimension } from '~/theme';
 import { padding } from '~/theme/spacing';
+import { dimension } from '~/theme';
+import Button from '../Button';
 
 export interface EmojiPickerProps {
   emojiPickerRef?: any;
@@ -37,43 +33,30 @@ const _EmojiPicker = ({
 }: EmojiPickerProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = getStyleSheetFromTheme(theme);
-  const { deviceWidth } = dimension;
   const scrollToSectionTries = useRef(0);
-  const emojiSectionIndexByOffset = useRef([]);
-  const emojis = useEmojiPickerStore((state: IEmojiPickerState) => state.data);
-  const currentSectionIndex = useEmojiPickerStore((state: IEmojiPickerState) => state.currentSectionIndex);
-  const filteredEmojis = useEmojiPickerStore((state: IEmojiPickerState) => state.filteredData);
-  const actions = useEmojiPickerStore((state: IEmojiPickerState) => state.actions);
-  const [jumpToSection, setJumpToSection] = useState(false);
-  // const rebuildEmojis = false;
-
   const sectionListRef = useRef<SectionList>();
+  const [jumpToSection, setJumpToSection] = useState(false);
 
-  useEffect(() => {
-    emojiSectionIndexByOffset.current = measureEmojiSections(emojis);
-  }, []);
+  const emojis = useEmojiPickerStore((state: IEmojiPickerState) => state.data);
+  const filteredEmojis = useEmojiPickerStore((state: IEmojiPickerState) => state.filteredData);
+  const currentSectionIndex = useEmojiPickerStore((state: IEmojiPickerState) => state.currentSectionIndex);
+  const emojiSectionIndexByOffset = useEmojiPickerStore((state: IEmojiPickerState) => state.emojiSectionIndexByOffset);
+  const actions = useEmojiPickerStore((state: IEmojiPickerState) => state.actions);
 
   const sectionListGetItemLayout = RNSectionListGetItemLayout({
     getItemHeight: () => (EMOJI_SIZE + 7) + (EMOJI_GUTTER * 2),
     getSectionHeaderHeight: () => SECTION_HEADER_HEIGHT,
   });
 
-  useImperativeHandle(
-    emojiPickerRef, () => ({
-      scrollToSectionIndex,
-    }),
-  );
+  useImperativeHandle(emojiPickerRef, () => ({ scrollToSectionIndex }));
 
-  const scrollToSectionIndex = (
-    index,
-  ) => {
+  const scrollToSectionIndex = (index: number) => {
     scrollToSectionTries.current = 0;
     scrollToSection(index);
   };
 
   const _onEmojiPress = (emoji: string) => {
     onEmojiPress?.(emoji);
-
     actions.addToRecently(emoji);
   };
 
@@ -82,97 +65,14 @@ const _EmojiPicker = ({
     actions.resetData();
   };
 
-  const renderItem = ({ item, section }) => (
-    <View testID={section.defaultMessage}>
-      <EmojiPickerRow
-        key={item.key}
-        emojiGutter={EMOJI_GUTTER}
-        emojiSize={EMOJI_SIZE}
-        items={item.items}
-        onEmojiPress={_onEmojiPress}
-      />
-    </View>
-  );
-
-  const renderListComponent = (shorten = 2) => {
-    let listComponent;
-    if (filteredEmojis.length > 0) {
-      const contentContainerStyle = [styles.flex];
-
-      listComponent = (
-        <Animated.FlatList
-          entering={FadeInUp}
-          exiting={FadeOutDown}
-          contentContainerStyle={contentContainerStyle}
-          data={filteredEmojis}
-          keyboardShouldPersistTaps="always"
-          keyExtractor={flatListKeyExtractor}
-          initialNumToRender={10}
-          ListEmptyComponent={renderEmptyList}
-          nativeID={SCROLLVIEW_NATIVE_ID}
-          renderItem={flatListRenderItem}
-          removeClippedSubviews
-          style={styles.flatList}
-        />
-      );
-    } else {
-      listComponent = (
-        <SectionList
-          ref={sectionListRef}
-          nativeID={SCROLLVIEW_NATIVE_ID}
-          getItemLayout={sectionListGetItemLayout}
-          initialNumToRender={50}
-          keyboardShouldPersistTaps="always"
-          keyboardDismissMode="interactive"
-          onEndReachedThreshold={Platform.OS === 'ios' ? 0 : 1}
-          onMomentumScrollEnd={onMomentumScrollEnd}
-          onScroll={onScroll}
-          onScrollToIndexFailed={handleScrollToSectionFailed}
-          /**
-           * removeClippedSubviews = true cause can not scroll on first 2 sections on iOS
-           */
-          // removeClippedSubviews
-          renderItem={renderItem}
-          renderSectionHeader={renderSectionHeader}
-          sections={emojis}
-          showsVerticalScrollIndicator={false}
-          style={[styles.sectionList, { width: deviceWidth - (SECTION_MARGIN * shorten) }]}
-        />
-      );
-    }
-
-    return listComponent;
-  };
-
-  const flatListKeyExtractor = (item) => item;
-
-  const flatListRenderItem = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => onSearchEmojiPress(`${item}`)}
-      style={styles.flatListRow}
-    >
-      <View style={styles.flatListEmoji}>
-        <Emoji
-          size={20}
-          emojiName={item}
-        />
-      </View>
-      <Text.BodyM style={styles.flatListEmojiName}>
-        {`:${item}:`}
-      </Text.BodyM>
-    </TouchableOpacity>
-  );
-
   const onScroll = (e) => {
-    if (jumpToSection) {
-      return;
-    }
+    if (jumpToSection) return;
 
     const { contentOffset } = e.nativeEvent;
-    let nextIndex = emojiSectionIndexByOffset.current.findIndex((offset) => contentOffset.y <= offset);
+    let nextIndex = emojiSectionIndexByOffset.findIndex((offset) => contentOffset.y <= offset);
 
     if (nextIndex === -1) {
-      nextIndex = emojiSectionIndexByOffset.current.length - 1;
+      nextIndex = emojiSectionIndexByOffset.length - 1;
     } else if (nextIndex !== 0) {
       nextIndex -= 1;
     }
@@ -209,8 +109,8 @@ const _EmojiPicker = ({
 
   const renderSectionHeader = ({ section }) => (
     <View
-      style={styles.sectionTitleContainer}
       key={section.title}
+      style={styles.sectionTitleContainer}
     >
       <Text.SubtitleS
         useI18n
@@ -221,11 +121,86 @@ const _EmojiPicker = ({
     </View>
   );
 
-  const renderEmptyList = () => <NoSearchResultsFound />;
+  const renderEmptyList = () => <NoSearchResultsFound testID="emoji_picker.flat_list_empty" />;
+
+  const flatListKeyExtractor = (item: string) => item;
+
+  const flatListRenderItem = ({ item }) => (
+    <Button
+      testID={`emoji_picker.flat_list_item.${item}`}
+      style={styles.flatListRow}
+      onPress={() => onSearchEmojiPress(`${item}`)}
+    >
+      <View style={styles.flatListEmoji}>
+        <Emoji
+          size={20}
+          emojiName={item}
+        />
+      </View>
+      <Text.BodyM style={styles.flatListEmojiName}>
+        {`:${item}:`}
+      </Text.BodyM>
+    </Button>
+  );
+
+  const renderItem = ({ item }) => (
+    <View testID={`emoji_picker.section_list_item.${item.key}`}>
+      <EmojiPickerRow
+        key={item.key}
+        items={item.items}
+        emojiSize={EMOJI_SIZE}
+        emojiGutter={EMOJI_GUTTER}
+        onEmojiPress={_onEmojiPress}
+      />
+    </View>
+  );
+
+  const renderListComponent = () => {
+    if (filteredEmojis !== null) {
+      return (
+        <Animated.FlatList
+          testID="emoji_picker.flat_list"
+          style={styles.flatList}
+          removeClippedSubviews
+          entering={FadeInUp}
+          exiting={FadeOutDown}
+          data={filteredEmojis}
+          initialNumToRender={10}
+          nativeID={SCROLLVIEW_NATIVE_ID}
+          keyboardShouldPersistTaps="always"
+          contentContainerStyle={styles.flex}
+          renderItem={flatListRenderItem}
+          keyExtractor={flatListKeyExtractor}
+          ListEmptyComponent={renderEmptyList}
+        />
+      );
+    }
+
+    return (
+      <SectionList
+        testID="emoji_picker.section_list"
+        sections={emojis}
+        style={styles.sectionList}
+        ref={sectionListRef}
+        initialNumToRender={50}
+        nativeID={SCROLLVIEW_NATIVE_ID}
+        keyboardDismissMode="interactive"
+        keyboardShouldPersistTaps="always"
+        showsVerticalScrollIndicator={false}
+        onEndReachedThreshold={ON_END_REACHED_THRESHOLD}
+        onScroll={onScroll}
+        renderItem={renderItem}
+        getItemLayout={sectionListGetItemLayout}
+        renderSectionHeader={renderSectionHeader}
+        onMomentumScrollEnd={onMomentumScrollEnd}
+        onScrollToIndexFailed={handleScrollToSectionFailed}
+      />
+    );
+  };
 
   return (
-    <View style={styles.container}>
-      {renderListComponent(2)}
+    <View testID="emoji_picker" style={styles.container}>
+      {renderListComponent()}
     </View>
   );
 };
@@ -268,6 +243,7 @@ export const getStyleSheetFromTheme = ((theme) => {
           marginBottom: 35,
         },
       }),
+      width: dimension.deviceWidth - (SECTION_MARGIN * 2),
     },
     sectionIcon: {
       color: colors.neutral60,

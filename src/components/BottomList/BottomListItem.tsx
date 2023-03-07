@@ -5,9 +5,10 @@ import {
 } from 'react-native';
 import Icon, { IconProps } from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
-import { useKeySelector } from '~/hooks/selector';
 
 import { IconType } from '~/resources/icons';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import spacing from '~/theme/spacing';
 
 export interface BottomListItemProps {
@@ -39,7 +40,7 @@ const BottomListItem: React.FC<BottomListItemProps> = ({
   badge,
   onPress,
 }: BottomListItemProps) => {
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;

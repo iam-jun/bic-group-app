@@ -8,7 +8,6 @@ import {
   View,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import { isEmpty } from 'lodash';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import PostInput from '~/beinComponents/inputs/PostInput';
@@ -19,12 +18,10 @@ import { useKeyboardStatus } from '~/hooks/keyboard';
 import { IFilePicked } from '~/interfaces/common';
 import { fontFamilies } from '~/theme/fonts';
 
-import postActions from '~/storeRedux/post/actions';
 import { CONTENT_MIN_HEIGHT, MIN_INPUT_HEIGHT } from '../constanst';
-import { calculateInputHeight, isAndroidAnimated } from '../helper';
+import { calculateInputHeight, getTotalFileSize, isAndroidAnimated } from '../helper';
 import ToastAutoSave from './ToastAutoSave';
 import FilesView from '~/components/FilesView';
-import { getTotalFileSize } from '~/storeRedux/post/selectors';
 import appConfig from '~/configs/appConfig';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
@@ -37,24 +34,20 @@ import useUploadImage from '../hooks/useUploadImage';
 import { getImagePastedFromClipboard } from '~/utils/common';
 import useModalStore from '~/store/modal';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import useCreatePostStore from '../store';
 
 interface Props {
   groupIds: any[];
   useCreatePostData: any;
-  inputRef: any;
 }
 
-const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
-  const dispatch = useDispatch();
+const Content = ({ groupIds, useCreatePostData }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
-  const mentionInputRef = useRef<any>();
   const { t } = useBaseHook();
-  const refTextInput = inputRef;
   const { showToast } = useModalStore((state) => state.actions);
 
   const {
-    sPostData,
     isShowToastAutoSave,
     createPostData,
     video,
@@ -67,10 +60,11 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
     loadLinkPreview,
   } = useCreatePostData;
 
-  const { loading, data } = createPostData || {};
-  const { content } = data || {};
+  const { loading, content, id } = createPostData || {};
   const { lstLinkPreview } = linkPreview;
   const currentLinkPreview = lstLinkPreview[lstLinkPreview.length - 1];
+
+  const createPostStoreActions = useCreatePostStore((state) => state.actions);
 
   const [photosHeight, setPhotosHeight] = React.useState<number>(0);
   const [inputHeight, setInputHeight] = React.useState<number>(0);
@@ -87,7 +81,7 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
 
   const { isOpen: isKeyboardOpen } = useKeyboardStatus();
   const isAnimated = isAndroidAnimated();
-  const { totalSize } = getTotalFileSize();
+  const { totalSize } = getTotalFileSize(files);
 
   useEffect(() => {
     if (content !== contentInput && isAnimated) {
@@ -140,11 +134,13 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
   };
 
   const onRemoveVideo = () => {
-    dispatch(postActions.setCreatePostVideo());
+    createPostStoreActions.updateCreatePost({ video: undefined });
   };
 
   const onRemoveFile = (file: IGetFile) => {
-    dispatch(postActions.removeCreatePostFile(file));
+    const { name } = file;
+    const newFiles = files.filter((fileItem: any) => fileItem.name !== name);
+    createPostStoreActions.updateCreatePost({ files: newFiles });
   };
 
   const onUploadError = (type: string) => {
@@ -215,7 +211,6 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
             <MentionInput
               disableAutoComplete
               groupIds={strGroupIds}
-              mentionInputRef={mentionInputRef}
               style={styles.flex1}
               textInputStyle={styles.flex1}
               autocompleteProps={{
@@ -229,7 +224,6 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
               componentInputProps={{
                 value: content,
                 onChangeText,
-                inputRef: refTextInput,
                 scrollEnabled: false,
                 onPasteImage,
               }}
@@ -248,7 +242,7 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
               {video && video?.thumbnails?.length > 0 ? (
                 <PostVideoPlayer
                   data={video}
-                  postId={sPostData?.id || ''}
+                  postId={id || ''}
                   onPressClose={onRemoveVideo}
                 />
               ) : video ? (

@@ -17,6 +17,8 @@ import useCommentsStore from '~/store/entities/comments';
 import commentsSelector from '~/store/entities/comments/selectors';
 import usePostsStore, { IPostsState } from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import useModalStore from '~/store/modal';
@@ -28,7 +30,7 @@ const usePostDetailContent = ({
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
 
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   const isFocused = useIsFocused();
 
@@ -105,7 +107,6 @@ const usePostDetailContent = ({
   useEffect(() => {
     onPressMarkSeenPost();
     return () => {
-      dispatch(postActions.setCreatePostInitAudiences());
       dispatch(postActions.setCommentErrorCode(false));
     };
   }, []);

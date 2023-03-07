@@ -5,9 +5,9 @@ import INotificationsState from '../Interface';
 import showToastError from '~/store/helper/showToastError';
 import showToast from '~/store/helper/showToast';
 
-const markAsReadAll = (set, get) => (tabId: string) => {
+const markAsReadAll = (set, get) => async (tabId: string) => {
   try {
-    notificationApi.markAsReadAll(tabId);
+    await notificationApi.markAsReadAll(tabId);
     const data: INotificationsState = get();
 
     // get all notifications from store

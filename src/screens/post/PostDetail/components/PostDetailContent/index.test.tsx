@@ -20,7 +20,6 @@ describe('PostDetailContent component', () => {
       ...initialState,
       ...{
         post: { allPosts: { [POST_DETAIL.id]: POST_DETAIL } },
-        noInternet: { isInternetReachable: true },
         auth: {
           user: {
             signInUserSession: {
@@ -166,7 +165,6 @@ describe('PostDetailContent component', () => {
       ...initialState,
       ...{
         post: { allPosts: { [POST_DETAIL.id]: { ...POST_DETAIL, deleted: true } } },
-        noInternet: { isInternetReachable: true },
         auth: {
           user: {
             signInUserSession: {

@@ -1,0 +1,252 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContentHeader component render correctly 1`] = `
+<View
+  accessibilityState={
+    Object {
+      "disabled": true,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "flexDirection": "row",
+      "marginHorizontal": 16,
+      "opacity": 1,
+      "paddingTop": 8,
+    }
+  }
+  testID="content_header"
+>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "marginRight": 12,
+        "marginTop": 4,
+        "opacity": 1,
+      }
+    }
+    testID="button_wrapper"
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "borderRadius": 8,
+            "height": 48,
+            "width": 48,
+          },
+          undefined,
+        ]
+      }
+      testID="avatar"
+    >
+      <View
+        style={
+          Array [
+            Array [
+              Object {
+                "borderRadius": 8,
+                "height": 48,
+                "width": 48,
+              },
+              Object {
+                "borderRadius": 24,
+              },
+            ],
+            Object {
+              "backgroundColor": "#A4A9B7",
+            },
+          ]
+        }
+        testID="avatar_container"
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Array [
+                Array [
+                  Object {
+                    "borderRadius": 8,
+                    "height": 48,
+                    "width": 48,
+                  },
+                  Object {
+                    "borderRadius": 24,
+                  },
+                ],
+                Object {
+                  "borderColor": "#F2F5F8",
+                  "borderWidth": 2,
+                },
+                Object {
+                  "backgroundColor": "#FFFFFF",
+                },
+              ],
+            ]
+          }
+        >
+          <FastImageView
+            onFastImageError={[Function]}
+            resizeMode="cover"
+            source={null}
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+            testID="avatar.image"
+          />
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignSelf": "flex-start",
+          "marginRight": 12,
+          "opacity": 1,
+        }
+      }
+      testID="button_wrapper"
+    >
+      <Text
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 15,
+            },
+            Object {
+              "color": "#181C32",
+            },
+            undefined,
+          ]
+        }
+        testID="content_header.actor"
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "marginVertical": 4,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 13,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            Object {
+              "marginRight": 4,
+            },
+          ]
+        }
+      >
+        to
+      </Text>
+      <Text
+        onPress={[Function]}
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 13,
+            },
+            Object {
+              "color": "#181C32",
+            },
+            undefined,
+          ]
+        }
+        testID="content_header.audiences"
+      >
+        
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 11,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            undefined,
+          ]
+        }
+        testID="time_view"
+      >
+        
+      </Text>
+    </View>
+  </View>
+</View>
+`;

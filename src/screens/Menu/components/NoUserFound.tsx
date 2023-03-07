@@ -1,4 +1,4 @@
-import { useNavigation, ExtendedTheme, useTheme } from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import i18next from 'i18next';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -9,20 +9,21 @@ import Header from '~/beinComponents/Header';
 import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/baseComponents/Text';
+import { useRootNavigation } from '~/hooks/navigation';
 
 import spacing from '~/theme/spacing';
 
 const NoUserFound = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
-  const navigation = useNavigation();
+  const { rootNavigation } = useRootNavigation();
+
+  const goBack = () => {
+    rootNavigation.goBack();
+  };
 
   return (
-    <ScreenWrapper
-      testID="user_profile.not_found"
-      style={styles.root}
-      isFullView
-    >
+    <ScreenWrapper testID="no_user_found" style={styles.root} isFullView>
       <Header title={i18next.t('error:no_profile_found_title')} />
       <View style={styles.mainContainer}>
         <SVGIcon
@@ -35,7 +36,7 @@ const NoUserFound = () => {
           <Text.H6 useI18n>error:no_profile_found_desc</Text.H6>
           <Text.BodyM useI18n>error:no_profile_found_second_desc</Text.BodyM>
         </View>
-        <Button.Primary onPress={() => navigation.goBack()} useI18n>
+        <Button.Primary testID="no_user_found.go_back_btn" onPress={goBack} useI18n>
           error:button_back_to_safety
         </Button.Primary>
       </View>

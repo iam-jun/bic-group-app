@@ -20,9 +20,7 @@ const ChangePassword = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
-  const actions = useChangePasswordStore((state: IChangePasswordState) => state.actions);
-  const errorText = useChangePasswordStore((state: IChangePasswordState) => state.errorText);
-  const loading = useChangePasswordStore((state: IChangePasswordState) => state.loading);
+  const { actions, errorText, loading } = useChangePasswordStore((state: IChangePasswordState) => state);
 
   const [disableSaveButton, setDisableSaveButton] = useState(true);
 
@@ -122,8 +120,8 @@ const ChangePassword = () => {
     setDisableSaveButton(result);
   };
 
-  const handleOnSaveChangePassword = async () => {
-    await checkDisableSaveButton();
+  const handleOnSaveChangePassword = () => {
+    checkDisableSaveButton();
     if (disableSaveButton) {
       return;
     }
@@ -134,7 +132,7 @@ const ChangePassword = () => {
   };
 
   return (
-    <ScreenWrapper testID="SecurityLogin" isFullView>
+    <ScreenWrapper testID="change_password" isFullView>
       <Header title={t('settings:title_change_password')} />
       <View style={styles.container}>
         <PasswordInputController

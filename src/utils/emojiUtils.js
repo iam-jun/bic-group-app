@@ -128,9 +128,14 @@ export const getEmojiCode = (emojiName) => {
 };
 
 export const formatTextWithEmoji = (text, emoji, cursorPosition) => {
-  if (!cursorPosition) {
+  if (cursorPosition === 0) {
+    return `${getEmojiCode(emoji)} ${text}`;
+  }
+
+  if (typeof cursorPosition === 'undefined') {
     cursorPosition = text.length;
   }
+
   let firstStr = text.substring(0, cursorPosition);
   if (!firstStr.endsWith(' ')) {
     firstStr += ' ';

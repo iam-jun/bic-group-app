@@ -15,7 +15,7 @@ import modalActions from '~/storeRedux/modal/actions';
 import { IPost } from '~/interfaces/IPost';
 
 describe('PostView Component', () => {
-  const state = { ...initialState };
+  const state: any = { ...initialState };
   state.post.allPosts = { [POST_DETAIL.id]: POST_DETAIL } as any;
   const postData = POST_DETAIL as unknown as IPost;
 
@@ -30,7 +30,7 @@ describe('PostView Component', () => {
   // reaction.button.wink
 
   it('renders deleted post', async () => {
-    const stateData = { ...state };
+    const stateData: any = { ...state };
     stateData.post.allPosts = {
       [POST_DETAIL.id]: { ...POST_DETAIL, deleted: true },
     } as any;
@@ -45,7 +45,7 @@ describe('PostView Component', () => {
   });
 
   it('renders important', async () => {
-    const stateData = { ...state };
+    const stateData: any = { ...state };
     stateData.post.allPosts = {
       [POST_DETAIL.id]: {
         ...POST_DETAIL,

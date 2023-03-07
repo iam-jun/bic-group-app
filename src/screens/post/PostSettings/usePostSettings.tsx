@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import {
   IActivityImportant,
   IAudienceUser,
@@ -8,40 +7,34 @@ import {
   IPostCreatePost,
   IPostSetting,
 } from '~/interfaces/IPost';
-import { useKeySelector } from '~/hooks/selector';
 import usePostsStore, { IPostsState } from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import postKeySelector from '~/storeRedux/post/keySelector';
-import postActions from '~/storeRedux/post/actions';
 import { useRootNavigation } from '~/hooks/navigation';
 import { isPostExpired } from '~/helpers/post';
 import { EXPIRES_ON_TYPE, timeSuggest } from '~/constants/importantTimeSuggest';
+import useCreatePostStore from '../CreatePost/store';
 
 const MAX_DAYS = 7;
 const EXPIRES_ON_ENUM = { NEVER: -1, CUSTOM: 0 };
 
 export interface IUsePostSettings {
   postId?: string;
-  replaceWithDetail?: boolean;
   listAudiencesWithoutPermission?: any[];
 }
 
 export const usePostSettings = (params?: IUsePostSettings) => {
   const { postId, listAudiencesWithoutPermission } = params || {};
 
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
 
   const putUpdateSettings = !!postId;
 
-  let initPostData: IPost;
-  if (postId) {
-    initPostData = usePostsStore(postsSelector.getPost(postId));
-  }
+  const initPostData: IPost = usePostsStore(postsSelector.getPost(postId));
 
   const {
-    important, currentSettings, canReact, canComment,
-  } = useKeySelector(postKeySelector.createPost.all);
+    important, canReact, canComment,
+  } = useCreatePostStore((state) => state.createPost);
+  const createPostStoreActions = useCreatePostStore((state) => state.actions);
 
   const { putEditPost } = usePostsStore((state: IPostsState) => state.actions);
 
@@ -128,7 +121,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
         }
       }
       if (!newImportant.active) {
-        newImportant.expiresTime = currentSettings?.important?.expiresTime;
+        newImportant.expiresTime = null;
       }
       setImportant(newImportant);
     }
@@ -263,12 +256,12 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     ];
 
     const newCount = dataDefault.filter((i) => !!i);
-    dispatch(postActions.setCreatePostSettings({
-      important: sImportant,
+    createPostStoreActions.updateCreatePost({
+      important: { active: sImportant.active, expiresTime: sImportant.expiresTime },
       canComment: sCanComment,
       canReact: sCanReact,
       count: newCount?.length || 0,
-    }));
+    });
     rootNavigation.goBack();
     return 'setCreatePostSettings';
   };

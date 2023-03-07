@@ -17,9 +17,10 @@ import NewsfeedList from '~/screens/Home/components/NewsfeedList';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useBackPressListener, useRootNavigation, useTabPressListener } from '~/hooks/navigation';
-import { useKeySelector } from '~/hooks/selector';
 import { ITabTypes } from '~/interfaces/IRouter';
 import NewsfeedSearch from '~/screens/Home/HomeSearch';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import spacing from '~/theme/spacing';
 import { openUrl } from '~/utils/link';
 import getEnv from '~/utils/env';
@@ -53,7 +54,7 @@ const Home = () => {
 
   const token = useAuthController(getAuthToken);
 
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   const {
     contentFilter, attributeFilter, feed, actions,

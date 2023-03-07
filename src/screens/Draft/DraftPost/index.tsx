@@ -9,9 +9,10 @@ import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 import { useUserIdAuth } from '~/hooks/auth';
-import { useKeySelector } from '~/hooks/selector';
 import { IPayloadGetDraftPosts } from '~/interfaces/IPost';
 import images from '~/resources/images';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import dimension from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
@@ -24,7 +25,7 @@ const DraftPost = () => {
   const { colors } = theme;
   const styles = createStyle();
   const userId = useUserIdAuth();
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   const {
     posts: draftPosts = [], hasNextPage, refreshing, actions,

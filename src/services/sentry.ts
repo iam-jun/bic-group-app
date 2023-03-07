@@ -19,7 +19,7 @@ export const initSentry = () => {
   if (ignoreSentry) return;
   Sentry.init({
     dsn: PROJECT_DSN,
-    tracesSampleRate: CONFIG.TRACES_SAMPLE_RATE_TEST,
+    tracesSampleRate: appEnv === APP_ENV.STAGING ? CONFIG.TRACES_SAMPLE_RATE_TEST : CONFIG.TRACES_SAMPLE_RATE,
     integrations: [
       new Sentry.ReactNativeTracing({
         routingInstrumentation,

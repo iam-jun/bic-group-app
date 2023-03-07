@@ -21,6 +21,7 @@ const getNotifications = (set, _get) => async (payload?: IParamGetNotifications)
         newData.push(item?.id);
         newResponse[item.id] = { ...item };
       });
+
       set((state: INotificationsState) => {
         state[keyValue].loading = false;
         state[keyValue].data = [...newData];

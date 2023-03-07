@@ -256,10 +256,6 @@ const useCreateArticle = ({
     }
   }, [data.content]);
 
-  useEffect(() => () => {
-    actions.setIsDraft(false);
-  }, []);
-
   const validateSeriesTags = (onSuccess: (response) => void, onError: (error) => void) => {
     const dataUpdate = useCreateArticleStore.getState().data;
     const validateParams: IParamsValidateSeriesTags = {
