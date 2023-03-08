@@ -212,7 +212,8 @@
     },
     "text_date": "Date",
     "text_time": "Time",
-    "text_no_data": "No data"
+    "text_no_data": "No data",
+    "text_developing_version": "You’re currently using the developing version."
   },
   "auth": {
     "text_kickout_title": "Notice",

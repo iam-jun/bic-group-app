@@ -181,7 +181,8 @@
     },
     "text_date": "Ngày",
     "text_time": "Giờ",
-    "text_no_data": "Không có dữ liệu"
+    "text_no_data": "Không có dữ liệu",
+    "text_developing_version": "Bạn đang sử dụng phiên bản đang được phát triển."
   },
   "auth": {
     "text_kickout_title": "Notice",
