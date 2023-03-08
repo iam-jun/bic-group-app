@@ -224,7 +224,7 @@ export const useCreatePost = (params?: UseCreatePostParams) => {
     if (!isLoadPostDetailDone && postId) {
       createPostStoreActions.getPostDetail(postId);
     }
-  }, [isLoadPostDetailDone]);
+  }, [isLoadPostDetailDone, postId]);
 
   useEffect(() => {
     if (!isEmpty(post) && !isEmpty(post?.id) && isLoadPostDetailDone && !isInitDone) {
