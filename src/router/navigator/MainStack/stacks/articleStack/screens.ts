@@ -13,6 +13,7 @@ import {
   CreateArticleSeries,
   CreateArticleSummary,
   CreateArticleTitle,
+  CreateArticleSettings,
 } from '~/screens/articles/CreateArticle/screens';
 import CreateArticleTags from '~/screens/articles/CreateArticle/screens/CreateArticleTags';
 
@@ -30,6 +31,7 @@ const articleScreens = {
   'create-article-audience': CreateArticleAudience,
   'create-article-series': CreateArticleSeries,
   'create-article-tags': CreateArticleTags,
+  'create-article-settings': CreateArticleSettings,
 };
 
 export default articleScreens;

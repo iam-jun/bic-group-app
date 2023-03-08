@@ -7,6 +7,7 @@ import { isEmpty, isEqual } from 'lodash';
 import Header from '~/beinComponents/Header';
 import SelectAudience, { ContentType } from '~/components/SelectAudience';
 import useSelectAudienceStore from '~/components/SelectAudience/store';
+import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 
 import { useBaseHook } from '~/hooks';
 import { CreateArticleProps } from '~/interfaces/IArticle';
@@ -16,6 +17,7 @@ import postsSelector from '~/store/entities/posts/selectors';
 import { spacing } from '~/theme';
 import { getAudienceIdsFromAudienceObject } from '../../helper';
 import { useBackPressListener } from '~/hooks/navigation';
+import { getAllAudiences } from '~/helpers/common';
 
 export interface EditArticleAudienceProps {
   style?: StyleProp<ViewStyle>;
@@ -28,6 +30,7 @@ const CreateArticleAudience: FC<CreateArticleProps> = ({ route }: CreateArticleP
 
   const articleId = route?.params?.articleId;
   const article = usePostsStore(postsSelector.getPost(articleId));
+  const createArticleActions = useCreateArticleStore((state) => state.actions);
 
   const initAudienceIds = useMemo(
     () => getAudienceIdsFromAudienceObject(article.audience), [article.audience],
@@ -35,6 +38,8 @@ const CreateArticleAudience: FC<CreateArticleProps> = ({ route }: CreateArticleP
 
   const selectAudienceActions = useSelectAudienceStore((state) => state.actions);
   const selectedAudienceIds = useSelectAudienceStore((state) => state.selectedIds);
+  const allAudiences = useSelectAudienceStore((state) => state.selectedAudiences);
+  const selectedAudiences = useMemo(() => getAllAudiences(allAudiences), [allAudiences]);
 
   // self check instead of use enableButtonSave from hook to avoid delay
   const isAudienceValidForSave = !isEqual(initAudienceIds, selectedAudienceIds)
@@ -68,9 +73,13 @@ const CreateArticleAudience: FC<CreateArticleProps> = ({ route }: CreateArticleP
     handleBack(isChanged);
   };
 
-  const onPressSave = () => handleSave(
-    { shouldValidateSeriesTags: true, titleAlert: 'article:modal_invalid_series_tags:title_remove_audience' },
-  );
+  const onPressSave = () => {
+    // setChooseAudiences for handle article settings
+    createArticleActions.setChooseAudiences(selectedAudiences);
+    handleSave(
+      { shouldValidateSeriesTags: true, titleAlert: 'article:modal_invalid_series_tags:title_remove_audience' },
+    );
+  };
 
   return (
     <View style={styles.container}>

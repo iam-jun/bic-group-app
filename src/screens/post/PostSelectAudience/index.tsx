@@ -25,6 +25,7 @@ import useSelectAudienceStore from '~/components/SelectAudience/store';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import useModalStore from '~/store/modal';
 import useCreatePostStore from '../CreatePost/store';
+import { getAllAudiences } from '~/helpers/common';
 import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
 import { getParamsValidateSeriesTags } from '../CreatePost/helper';
 
@@ -201,14 +202,3 @@ const createStyle = (theme: ExtendedTheme) => {
 };
 
 export default PostSelectAudience;
-
-const getAllAudiences = (selectedAudiences) => {
-  const groupAudiences = Object.keys(selectedAudiences.groups).map(
-    (key: string) => selectedAudiences.groups[key],
-  );
-  const userAudiences = Object.keys(selectedAudiences.users).map(
-    (key: string) => selectedAudiences.users[key],
-  );
-
-  return groupAudiences.concat(userAudiences);
-};

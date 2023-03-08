@@ -8,12 +8,12 @@ import { spacing } from '~/theme';
 import Text from '~/baseComponents/Text';
 import { formatDate } from '~/utils/formatter';
 
-interface CreatePostBannerImportantProps {
+interface CreateBannerImportantProps {
   style?: StyleProp<ViewStyle>;
   expiresTime: any;
 }
 
-const CreatePostBannerImportant = ({ style, expiresTime }: CreatePostBannerImportantProps) => {
+const CreateBannerImportant = ({ style, expiresTime }: CreateBannerImportantProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
   const { colors } = theme;
@@ -52,7 +52,7 @@ const CreatePostBannerImportant = ({ style, expiresTime }: CreatePostBannerImpor
   );
 };
 
-export default CreatePostBannerImportant;
+export default CreateBannerImportant;
 
 const createStyles = (theme:ExtendedTheme) => StyleSheet.create({
   container: {

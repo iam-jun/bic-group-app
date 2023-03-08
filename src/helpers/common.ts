@@ -52,3 +52,14 @@ export const getReportContent = async ({ id, type }) => {
 
   return response;
 };
+
+export const getAllAudiences = (selectedAudiences) => {
+  const groupAudiences = Object.keys(selectedAudiences.groups).map(
+    (key: string) => selectedAudiences.groups[key],
+  );
+  const userAudiences = Object.keys(selectedAudiences.users).map(
+    (key: string) => selectedAudiences.users[key],
+  );
+
+  return groupAudiences.concat(userAudiences);
+};

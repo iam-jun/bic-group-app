@@ -25,12 +25,14 @@ import { getMentionsFromContent } from '~/helpers/post';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import { useBaseHook } from '~/hooks';
+import useMyPermissionsStore from '~/store/permissions';
 
 import { rootNavigationRef } from '~/router/refs';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
 import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import useModalStore from '~/store/modal';
+import { PermissionKey } from '~/constants/permissionScheme';
 import { PostStatus, PostType } from '~/interfaces/IPost';
 import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
 
@@ -66,6 +68,10 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
   const publishedAt = useCreateArticleStore(
     (state) => state.schedule.publishedAt,
   );
+  const chooseAudiences = useCreateArticleStore((state) => state.chooseAudiences);
+  const { getAudienceListWithNoPermission } = useMyPermissionsStore(
+    (state) => state.actions,
+  );
 
   const { showToast, showAlert } = useModalStore((state) => state.actions);
 
@@ -82,6 +88,9 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     () => data.audience?.groupIds?.join?.(','),
     [data.audience],
   );
+
+  const audiencesWithNoPermission = getAudienceListWithNoPermission(chooseAudiences, PermissionKey.EDIT_POST_SETTING);
+  const disableArticleSettings = audiencesWithNoPermission.length === chooseAudiences.length;
 
   const { t } = useBaseHook();
 
@@ -102,6 +111,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     const isCoverMediaUpdated = article.coverMedia?.id !== data.coverMedia?.id;
     const isSeriesUpdated = !isEqual(article?.series, data.series);
     const isTagsUpdated = !isEqual(article?.tags, data.tags);
+    const isSettingsUpdated = !isEqual(article?.setting, data.setting);
 
     return (
       isTitleUpdated
@@ -110,6 +120,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
       || isCoverMediaUpdated
       || isSeriesUpdated
       || isTagsUpdated
+      || isSettingsUpdated
     );
   };
 
@@ -130,6 +141,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
       && !isEmpty(data.coverMedia);
     const isSeriesUpdated = !isEqual(article?.series, data.series);
     const isTagsUpdated = !isEqual(article?.tags, data.tags);
+    const isSettingsUpdated = !isEqual(article?.setting, data.setting);
 
     return (
       isTitleUpdated
@@ -138,6 +150,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
       || isCoverMediaUpdated
       || isSeriesUpdated
       || isTagsUpdated
+      || isSettingsUpdated
     );
   };
 
@@ -159,6 +172,21 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     );
   };
 
+  const initSettings = (settings) => {
+    const notExpired = new Date().getTime() < new Date(settings?.importantExpiredAt).getTime();
+    const isNever = settings?.isImportant && !settings?.importantExpiredAt;
+
+    const initData = {
+      isImportant: (!!notExpired || isNever) && settings?.isImportant,
+      importantExpiredAt: !!notExpired ? settings?.importantExpiredAt : null,
+      canShare: settings?.canShare,
+      canReact: settings?.canReact,
+      canComment: settings?.canComment,
+    };
+
+    return initData;
+  };
+
   const initEditStoreData = () => {
     const {
       id,
@@ -173,9 +201,12 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
       tags,
       status,
       publishedAt,
+      setting,
     } = article;
+
     const audienceIds: IEditArticleAudience
       = getAudienceIdsFromAudienceObject(audienceObject);
+
     const data: IEditArticleData = {
       id,
       title,
@@ -187,6 +218,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
       coverMedia,
       series,
       tags,
+      setting: initSettings(setting),
     };
     actions.setData(data);
     const isDraft = [
@@ -198,6 +230,8 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     if (isDraft) {
       actions.setPublishedAt(publishedAt || '');
     }
+    // setChooseAudiences for handle article settings
+    actions.setChooseAudiences(audienceObject?.groups);
   };
 
   useEffect(() => {
@@ -400,6 +434,8 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     title: data.title,
     content: data.content,
     groupIds,
+    disableArticleSettings,
+    audiencesWithNoPermission,
     handleTitleChange,
     handleContentChange,
     handleSave,
