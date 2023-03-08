@@ -62,8 +62,9 @@ const CreatePostTags = () => {
       );
       const ids = [];
       groups.forEach((group: any) => {
-        if (group?.rootGroupId) {
-          ids.push(group.rootGroupId);
+        const id = group?.rootGroupId || group?.id;
+        if (id) {
+          ids.push(id);
         }
       });
       const newCommunityIds = uniq(ids);
