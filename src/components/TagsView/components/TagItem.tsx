@@ -6,14 +6,13 @@ import { spacing } from '~/theme';
 
 export type Props = {
   data: ITag;
-  maxWidthOfTag: number;
   onPressTag: (tagData: ITag) => void;
 };
 
 const SPACING_HITSLOP = spacing.margin.small / 2;
 
-const TagItem: FC<Props> = ({ data, maxWidthOfTag, onPressTag }) => {
-  const styles = createStyles(maxWidthOfTag);
+const TagItem: FC<Props> = ({ data, onPressTag }) => {
+  const styles = createStyles();
 
   const onActionPress = () => {
     onPressTag(data);
@@ -42,11 +41,10 @@ const TagItem: FC<Props> = ({ data, maxWidthOfTag, onPressTag }) => {
   );
 };
 
-const createStyles = (maxWidthOfTag: number) => StyleSheet.create({
+const createStyles = () => StyleSheet.create({
   container: {
     paddingRight: spacing.margin.small,
     marginTop: spacing.margin.small,
-    maxWidth: maxWidthOfTag,
   },
   tag: {
     marginRight: 0,
