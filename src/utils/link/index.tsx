@@ -5,8 +5,8 @@ import BrowserModal from '~/components/BrowserModal';
 import { chatSchemes } from '~/constants/chat';
 import { PREFIX_DEEPLINK_GROUP, PREFIX_URL } from '~/router/config';
 import useModalStore from '~/store/modal';
+import ConvertHelper from '~/utils/convertHelper';
 import getEnv from '~/utils/env';
-import ConvertHelper from '../ConvertHelper';
 
 export const CUSTOM_META = 'const meta = document.createElement(\'meta\'); meta.setAttribute(\'content\', \'width=device-width, initial-scale=1, maximum-scale=0.99, user-scalable=0\'); meta.setAttribute(\'name\', \'viewport\'); document.getElementsByTagName(\'head\')[0].appendChild(meta); ';
 export const USER_AGENT_DESKTOP = 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0';
