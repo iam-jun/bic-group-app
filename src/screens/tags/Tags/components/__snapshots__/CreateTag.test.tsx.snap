@@ -97,7 +97,7 @@ exports[`CreateTag component render correctly with default state 1`] = `
             }
           >
             <TextInput
-              autoCapitalize="none"
+              autoCapitalize="characters"
               autoComplete="off"
               autoCorrect={false}
               editable={true}

@@ -184,7 +184,7 @@ exports[`EditTag component render correctly with default state 1`] = `
         <View
           accessibilityState={
             Object {
-              "disabled": true,
+              "disabled": false,
             }
           }
           accessible={true}
@@ -220,7 +220,7 @@ exports[`EditTag component render correctly with default state 1`] = `
                 },
                 undefined,
                 Object {
-                  "backgroundColor": "#F4EFFB",
+                  "backgroundColor": "#7335C0",
                   "height": 36,
                   "paddingHorizontal": 12,
                 },
@@ -237,7 +237,7 @@ exports[`EditTag component render correctly with default state 1`] = `
                     "fontSize": 15,
                   },
                   Object {
-                    "color": "#BAC0DE",
+                    "color": "#FFFFFF",
                   },
                   Array [
                     Object {
@@ -334,7 +334,7 @@ exports[`EditTag component render correctly with default state 1`] = `
               }
             >
               <TextInput
-                autoCapitalize="none"
+                autoCapitalize="characters"
                 editable={true}
                 maxLength={32}
                 onBlur={[Function]}
@@ -358,7 +358,7 @@ exports[`EditTag component render correctly with default state 1`] = `
                   ]
                 }
                 testID="edit_tag"
-                value="tag 2"
+                value="TAG 2"
               />
             </View>
           </View>

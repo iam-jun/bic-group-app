@@ -25,6 +25,7 @@ const TagItem: FC<Props> = ({ data, maxWidthOfTag, onPressTag }) => {
         type="tags"
         style={styles.tag}
         textProps={{ numberOfLines: 1 }}
+        textStyle={styles.textTag}
         buttonProps={{
           hitSlop: {
             top: SPACING_HITSLOP,
@@ -33,7 +34,7 @@ const TagItem: FC<Props> = ({ data, maxWidthOfTag, onPressTag }) => {
             right: SPACING_HITSLOP,
           },
         }}
-        label={data.name}
+        label={data?.name?.toUpperCase()}
         onActionPress={onActionPress}
         testID={`tag_item_${data.id}.button_navigate`}
       />
@@ -49,6 +50,9 @@ const createStyles = (maxWidthOfTag: number) => StyleSheet.create({
   },
   tag: {
     marginRight: 0,
+  },
+  textTag: {
+    fontSize: 10,
   },
 });
 
