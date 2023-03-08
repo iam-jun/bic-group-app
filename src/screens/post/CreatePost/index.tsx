@@ -20,7 +20,7 @@ import spacing from '~/theme/spacing';
 import CreatePostChosenAudiences from '../../../components/posts/CreatePostChosenAudiences';
 import CreatePostContent from './components/CreatePostContent';
 import CreatePostFooter from './components/CreatePostFooter';
-import CreatePostBannerImportant from './components/CreatePostBannerImportant';
+import CreatePostBannerImportant from '~/components/ImportantSettings/CreateBannerImportant/CreateBannerImportant';
 import { handleBack } from './handler';
 import useDraftPostStore from '../../Draft/DraftPost/store';
 import useCommentInputStore from '../../comments/components/CommentInputView/store';

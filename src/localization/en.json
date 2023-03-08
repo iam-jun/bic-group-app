@@ -212,7 +212,8 @@
     },
     "text_date": "Date",
     "text_time": "Time",
-    "text_no_data": "No data"
+    "text_no_data": "No data",
+    "text_developing_version": "You’re currently using the developing version."
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -640,6 +641,7 @@
     "successful_schedule": "Successful Schedule",
     "text_delete_article_success": "Your article has been deleted",
     "paste_image_error": "Upload failed. Please upload images using the toolbar.",
+    "article_settings": "Article settings",
     "text_selecting_will_be_added_to": "Your article will be added to"
   },
   "post": {
@@ -1327,7 +1329,7 @@
     "empty_list_tags": "No result",
     "edit_tag": "Edit Tag",
     "do_you_want_to_change_this_tag": "Do you want to change this tag?",
-    "message_notice": "The tag will be automatically converted to lowercase after created or updated."
+    "message_notice": "The tag will be automatically converted to uppercase after created or updated."
   },
   "notice": {
     "force_update": {

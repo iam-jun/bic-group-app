@@ -5,6 +5,7 @@ import CreateArticleCover from './CreateArticleCover';
 import CreateArticleSeries from './CreateArticleSeries';
 import CreateArticleSummary from './CreateArticleSummary';
 import CreateArticleTitle from './CreateArticleTitle';
+import CreateArticleSettings from './CreateArticleSettings';
 
 export {
   CreateArticleAudience,
@@ -14,4 +15,5 @@ export {
   CreateArticleSeries,
   CreateArticleSummary,
   CreateArticleTitle,
+  CreateArticleSettings,
 };

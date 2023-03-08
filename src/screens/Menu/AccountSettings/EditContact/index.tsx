@@ -53,8 +53,6 @@ const EditContact = () => {
   };
 
   const onSave = () => {
-    console.log('dooooooooooo');
-
     actions.editMyProfile({
       data: {
         id,

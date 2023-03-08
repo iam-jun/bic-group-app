@@ -160,15 +160,20 @@ export const useCreatePost = (params?: UseCreatePostParams) => {
     const notExpired
       = new Date().getTime()
       < new Date(post?.setting?.importantExpiredAt).getTime();
+
+    const isNever = post?.setting?.isImportant && !post?.setting?.importantExpiredAt;
+
     const initImportant = {
-      active: !!notExpired && post?.setting?.isImportant,
+      active: (!!notExpired || isNever) && post?.setting?.isImportant,
       expiresTime: !!notExpired ? post?.setting?.importantExpiredAt : null,
     };
+
     const dataDefault = [
       !!notExpired || initImportant?.active,
       !post?.setting?.canComment,
       !post?.setting?.canReact,
     ];
+
     const newCount = dataDefault.filter((i) => !!i);
 
     return {

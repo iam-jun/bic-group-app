@@ -19,6 +19,7 @@ import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import SelectingListInfo from '~/components/SelectingListInfo';
 import ItemCheckbox from '~/components/ItemCheckbox';
 import useSelectTagsStore from '~/components/SelectTags/store';
+import { getRootGroupIdFromGroupItem } from '~/helpers/post';
 
 const CreatePostTags = () => {
   const { t } = useBaseHook();
@@ -62,9 +63,9 @@ const CreatePostTags = () => {
       );
       const ids = [];
       groups.forEach((group: any) => {
-        const id = group?.rootGroupId || group?.id;
-        if (id) {
-          ids.push(id);
+        const rootGroupId = getRootGroupIdFromGroupItem(group);
+        if (rootGroupId) {
+          ids.push(rootGroupId);
         }
       });
       const newCommunityIds = uniq(ids);

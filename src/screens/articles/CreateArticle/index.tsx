@@ -26,9 +26,11 @@ import ContentSection from './screens/CreateArticleContent/ContentSection';
 import { useBaseHook } from '~/hooks';
 import useCreateArticle from './hooks/useCreateArticle';
 import Schedule from './components/Schedule';
+import SettingsButton from './components/SettingsButton';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import { ArticleBoxScheduleTime } from '~/components/articles';
+import CreatePostBannerImportant from '~/components/ImportantSettings/CreateBannerImportant/CreateBannerImportant';
 
 enum SectionName {
   Title,
@@ -117,6 +119,7 @@ const CreateArticle: FC<CreateArticleProps> = ({
   const articleActions = useArticlesStore(
     (state: IArticlesState) => state.actions,
   );
+  const { setting } = articleData || {};
 
   const [articleId, setArticleId] = useState(articleIdParams);
 
@@ -168,8 +171,17 @@ const CreateArticle: FC<CreateArticleProps> = ({
     return null;
   };
 
+  const renderBtnSettings = () => (<SettingsButton articleId={articleId} />);
+
+  const renderCustomComponent = () => (
+    <>
+      {renderBtnSettings()}
+      {renderBtnSchedule()}
+    </>
+  );
+
   const headerButton = {
-    renderCustomComponent: renderBtnSchedule,
+    renderCustomComponent,
     ...btnPublish,
   };
 
@@ -207,6 +219,12 @@ const CreateArticle: FC<CreateArticleProps> = ({
 
   const renderHeaderComponent = () => (
     <>
+      {!!setting?.isImportant && (
+        <CreatePostBannerImportant
+          expiresTime={setting.importantExpiredAt}
+          style={styles.bannerImportantTime}
+        />
+      )}
       {isFromReviewSchedule && (
         <ArticleBoxScheduleTime
           publishedAt={publishedAt}
@@ -252,6 +270,10 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     btnPublish: {
       marginRight: spacing.margin.small,
+    },
+    bannerImportantTime: {
+      backgroundColor: colors.white,
+      paddingBottom: spacing.padding.large,
     },
   });
 };

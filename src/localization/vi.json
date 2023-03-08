@@ -181,7 +181,8 @@
     },
     "text_date": "Ngày",
     "text_time": "Giờ",
-    "text_no_data": "Không có dữ liệu"
+    "text_no_data": "Không có dữ liệu",
+    "text_developing_version": "Bạn đang sử dụng phiên bản đang được phát triển."
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -600,6 +601,7 @@
     "successful_schedule": "Đặt lịch thành công",
     "text_delete_article_success": "Bài viết của bạn đã được xoá",
     "paste_image_error": "Tải lên không thành công. Vui lòng tải lên hình ảnh bằng thanh công cụ.",
+    "article_settings": "Cài đặt bài viết",
     "text_selecting_will_be_added_to": "Bài viết của bạn sẽ được thêm vào"
   },
   "post": {
@@ -1267,7 +1269,7 @@
     "empty_list_tags": "Không có kết quả",
     "edit_tag": "Sửa thẻ",
     "do_you_want_to_change_this_tag": "Bạn có muốn thay đổi thẻ này không?",
-    "message_notice": "Thẻ sẽ được tự động chuyển thành chữ thường sau khi tạo hoặc chỉnh sửa"
+    "message_notice": "Thẻ sẽ được tự động chuyển thành chữ hoa sau khi tạo hoặc chỉnh sửa"
   },
   "notice": {
     "force_update": {

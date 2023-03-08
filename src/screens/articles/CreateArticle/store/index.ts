@@ -6,7 +6,7 @@ import {
   IEditArticleTags,
   IPayloadPutEditArticle,
 } from '~/interfaces/IArticle';
-import { IArticleCover } from '~/interfaces/IPost';
+import { IArticleCover, IAudience, IPostSetting } from '~/interfaces/IPost';
 import putEditArticle from './actions/putEditArticle';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
@@ -23,6 +23,7 @@ export interface ICreateArticleState extends IBaseState {
   loading: boolean;
   data: IEditArticleData;
   isDraft: boolean;
+  chooseAudiences: IAudience[];
   actions: {
     setLoading: (isLoading: boolean) => void;
     setData: (data: IEditArticleData) => void;
@@ -47,6 +48,8 @@ export interface ICreateArticleState extends IBaseState {
     setIsScheduleSubmitingSuccess: (
       isScheduleSubmitingSuccess: boolean
     ) => void;
+    setChooseAudiences: (audiences: IAudience[]) => void;
+    setSettings: (setting: IPostSetting) => void;
     scheduleArticle: () => void;
     putEditArticle: (params: IPayloadPutEditArticle) => void;
     createArticle: () => void;
@@ -85,6 +88,7 @@ const initialState: InitStateType<ICreateArticleState> = {
     mentions: {},
   },
   isDraft: false,
+  chooseAudiences: [],
 };
 
 const useCreateArticle = (set, get) => ({
@@ -230,6 +234,19 @@ const useCreateArticle = (set, get) => ({
       set((state: ICreateArticleState) => {
         state.schedule.isSubmitingSuccess = isScheduleSubmitingSuccess;
       }, 'setIsScheduleSubmitingSuccess');
+    },
+    setChooseAudiences: (audiences: IAudience[]) => {
+      set((state: ICreateArticleState) => {
+        state.chooseAudiences = audiences;
+      }, 'setChooseAudiences CreateArticle');
+    },
+    setSettings: (setting: IPostSetting) => {
+      set((state: ICreateArticleState) => {
+        state.data.setting = {
+          ...state.data.setting,
+          ...setting,
+        };
+      }, 'setSettings CreateArticle');
     },
     scheduleArticle: scheduleArticle(set, get),
     putEditArticle: putEditArticle(set, get),

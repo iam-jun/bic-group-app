@@ -43,7 +43,7 @@ const TagItem: FC<TagItemProps> = ({
   return (
     <Button style={styles.row} onPress={goToTagsDetail}>
       <View style={styles.flex}>
-        <Text.BodyM numberOfLines={1}>{name.toLowerCase()}</Text.BodyM>
+        <Text.BodyM numberOfLines={1}>{name.toUpperCase()}</Text.BodyM>
       </View>
       {canCUDTag && canAction && (
         <Icon
