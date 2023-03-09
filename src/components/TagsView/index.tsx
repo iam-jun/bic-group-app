@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    flex: 1,
   },
   iconTag: {
     marginRight: spacing.margin.small,

@@ -74,11 +74,10 @@ const Tag: React.FC<TagProps> = ({
       {...buttonProps}
     >
       {!!avatar && <Avatar.Tiny source={avatar} style={styles.avatar} />}
-      {!!label
-      && (
-      <Text variant={variant} testID="tag.label" style={[styles.labelText, textStyle]} {...textProps}>
-        {label}
-      </Text>
+      {!!label && (
+        <Text variant={variant} testID="tag.label" style={[styles.labelText, textStyle]} {...textProps}>
+          {label}
+        </Text>
       )}
       {!disabled && onPressIcon && !!icon && (
         <Icon
