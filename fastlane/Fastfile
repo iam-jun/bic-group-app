@@ -29,13 +29,6 @@ platform :android do
       )
 
       if (disable_notice != 'true')
-        notice_to_bic("🟡🤖 Alo alo có build **#{app_version} #{update_desc}** @ngoclinh @trankimmai @ngoccuong @triduc
-                \n **BIC Group Staging Android**
-                \n Tải tại: #{download_destination}
-                \n **Git Branch**: #{git_branch}
-                \n **Git Commit**: #{git_mess}",
-                ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
-                'bicbotnotice2')
         notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
       end
     rescue => error
@@ -72,13 +65,6 @@ platform :android do
       )
 
       if (disable_notice != 'true')
-        notice_to_bic("🟢🤖 Alo alo có build **#{app_version} #{update_desc}** @ngoclinh @trankimmai @ngoccuong @triduc
-                \n **BIC Group Production Android**
-                \n Tải tại: #{download_destination}
-                \n **Git Branch**: #{git_branch}
-                \n **Git Commit**: #{git_mess}",
-                ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
-                'bicbotnotice2')
         notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
       end
     rescue => error
@@ -208,13 +194,6 @@ platform :ios do
       )
 
       if (disable_notice != 'true')
-        notice_to_bic("🟡🍎 Alo alo có build **#{app_version} #{update_desc}** @ngoclinh @trankimmai @ngoccuong @triduc
-                \n **BIC Group Staging iOS**
-                \n Tải tại: #{download_destination}
-                \n **Git Branch**: #{git_branch}
-                \n **Git Commit**: #{git_mess}",
-                ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
-                'noticebot')
         notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
       end
     rescue => error
@@ -251,13 +230,6 @@ platform :ios do
       )
 
       if (disable_notice != 'true')
-        notice_to_bic("🟢🍎 Alo alo có build **#{app_version} #{update_desc}** @ngoclinh @trankimmai @ngoccuong @triduc
-                \n **BIC Group iOS**
-                \n Tải tại: #{download_destination}
-                \n **Git Branch**: #{git_branch}
-                \n **Git Commit**: #{git_mess}",
-                ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
-                'noticebot')
         notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
       end
     rescue => error

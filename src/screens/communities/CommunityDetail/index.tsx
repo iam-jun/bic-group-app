@@ -102,8 +102,9 @@ const CommunityDetail = (props: any) => {
   const canSetting = shouldHavePermission(
     groupId,
     [
-      PermissionKey.EDIT_INFO,
-      PermissionKey.EDIT_PRIVACY,
+      PermissionKey.ROLE_COMMUNITY_OWNER,
+      PermissionKey.ROLE_COMMUNITY_ADMIN,
+      PermissionKey.ROLE_GROUP_ADMIN,
     ],
   );
   const isPrivateCommunity = !isMember && privacy === CommunityPrivacyType.PRIVATE;
