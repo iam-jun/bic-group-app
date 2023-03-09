@@ -1,12 +1,16 @@
 import React from 'react';
 import { StyleSheet, FlatList, ListRenderItem } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { ICreatePostTags } from '~/interfaces/IPost';
 import useCreatePostStore from '../CreatePost/store';
 import Tag from '~/baseComponents/Tag';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { spacing } from '~/theme';
+import Icon from '~/baseComponents/Icon';
 
 const ListSelectedTags = () => {
+  const theme: ExtendedTheme = useTheme();
+  const { colors } = theme;
   const styles = createStyle();
 
   const selectedTags = useCreatePostStore((state) => state.createPost.tags);
@@ -29,6 +33,15 @@ const ListSelectedTags = () => {
 
   const renderSeparatorComponent = () => <ViewSpacing width={spacing.padding.small} />;
 
+  const renderHeaderComponent = () => (
+    <Icon
+      size={18}
+      tintColor={colors.neutral20}
+      icon="Tag"
+      style={styles.iconTag}
+    />
+  );
+
   if (!selectedTags || selectedTags.length === 0) {
     return null;
   }
@@ -39,6 +52,7 @@ const ListSelectedTags = () => {
       keyExtractor={keyExtractor}
       renderItem={renderItem}
       horizontal
+      ListHeaderComponent={renderHeaderComponent}
       ItemSeparatorComponent={renderSeparatorComponent}
       style={styles.container}
       showsHorizontalScrollIndicator={false}
@@ -50,6 +64,10 @@ const ListSelectedTags = () => {
 const createStyle = () => StyleSheet.create({
   container: {
     marginVertical: spacing.margin.small,
+  },
+  iconTag: {
+    marginHorizontal: spacing.margin.small,
+    marginTop: spacing.margin.tiny,
   },
 });
 
