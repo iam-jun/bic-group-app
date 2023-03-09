@@ -1,8 +1,3 @@
-export enum RoleScope {
-  COMMUNITY = 'COMMUNITY',
-  GROUP = 'GROUP',
-}
-
 export enum RoleType {
   COMMUNITY_ADMIN = 'COMMUNITY_ADMIN',
   GROUP_ADMIN = 'GROUP_ADMIN',
@@ -25,6 +20,7 @@ export enum PermissionKey {
   DELETE_INNER_GROUPS = 'delete_inner_groups',
   ARCHIVE_GROUPS = 'archive_groups',
   ORDER_MOVE_GROUP_STRUCTURE = 'order_move_group_structure',
+  CUD_TAGS = 'cud_tags',
 
   // Management
   INVITE_MEMBER = 'invite_member',
@@ -55,4 +51,9 @@ export enum PermissionKey {
   DELETE_OWN_MESSAGE = 'delete_own_message',
   CHANNEL_MENTIONS = 'channel_mentions',
   DELETE_OTHERS_MESSAGE = 'delete_others_message',
+
+  // Permission key by role
+  ROLE_COMMUNITY_OWNER = 'role_OWNER',
+  ROLE_COMMUNITY_ADMIN = 'role_COMMUNITY_ADMIN',
+  ROLE_GROUP_ADMIN = 'role_GROUP_ADMIN',
 }
