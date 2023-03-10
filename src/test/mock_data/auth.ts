@@ -127,3 +127,60 @@ export const authUser = {
   id: 'trannamanh',
   role: 'trannamanh',
 };
+
+export const responseSignUp = {
+  code: 'api.ok',
+  meta: {
+    message: 'Success',
+  },
+  data: {
+    community: {
+      id: '6841a820-80d6-4a17-a9ef-eb6e91a1f344',
+      name: 'Cộng đồng thích Màu Đỏ',
+      slug: '14fd4ef80c19',
+      icon: 'https://evolgroup.vn/wp-content/uploads/sites/18/2020/04/Thumb-EVOL.jpg',
+      group_id: 'c0994f1a-c36d-4e36-a17a-fd56cc5d0fb9',
+      privacy: 'OPEN',
+      settings: {
+        is_join_approval: false,
+      },
+      description: '123',
+      background_img_url:
+        'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/cover/default_group_cover.png',
+      created_at: '2022-05-09T06:53:03.197Z',
+      updated_at: '2022-05-09T06:53:03.753Z',
+      team_id: '7xagctrw9fgnxqn8dxg5e8dxxa',
+      owner_id: 'a5987435-8ffc-484c-a60c-c5aea87d1c59',
+      join_status: 1,
+      user_count: 501,
+    },
+    user: {
+      id: '8304243c-3a93-4b77-ad2c-105f468c7532',
+      username: 'khanhhuyen',
+      fullname: 'Khánh Huyền',
+      email: 'khanhhuyen@evol.vn',
+      avatar: 'https://cdn.dribbble.com/users/81809/screenshots/3460812/ultimategohan.jpg',
+      chat_id: 'q1dz1hekh7y6zxiiixpxa8ggnr',
+      bein_staff_role: 'SUPER_ADMIN',
+      country_code: null,
+      country: null,
+      city: null,
+      address: null,
+      background_img_url: 'https://evolgroup.vn/wp-content/uploads/sites/18/2020/04/sssEVOL.jpg',
+      birthday: null,
+      description: 'nullLLL',
+      gender: null,
+      language: [],
+      phone: null,
+      relationship_status: null,
+      created_at: '2022-01-10T03:03:38.250Z',
+      updated_at: '2023-02-13T01:47:48.673Z',
+    },
+  },
+};
+
+export const responseResendVerifyEmail = {
+  code: 'api.ok',
+  meta: { message: 'Success' },
+  data: { code_delivery_details: { attribute_name: 'email', delivery_medium: 'EMAIL', destination: 'a***@m***' } },
+};

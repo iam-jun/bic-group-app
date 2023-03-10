@@ -6,6 +6,9 @@ export const authErrors = {
   TOO_MANY_FAILED_ATTEMPTS_EXCEPTION: 'TooManyFailedAttemptsException',
   TOO_MANY_REQUESTS_EXCEPTION: 'TooManyRequestsException',
   USER_NOT_FOUND_EXCEPTION: 'UserNotFoundException',
+  USER_EMAIL_EXISTED: 'user.email.existed',
+  USER_USER_NAME_EXISTED: 'user.username.existed',
+  USER_EXISTED: 'user.existed',
 };
 
 export const forgotPasswordStages = {

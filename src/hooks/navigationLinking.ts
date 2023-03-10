@@ -1,21 +1,19 @@
 import { Linking } from 'react-native';
+import groupApi from '~/api/GroupApi';
+import APIErrorCode from '~/constants/apiErrorCode';
 import { useRootNavigation } from '~/hooks/navigation';
-import {
-  linkingConfig, PREFIX_DEEPLINK_GROUP, PREFIX_URL,
-} from '~/router/config';
+import { linkingConfig, PREFIX_DEEPLINK_GROUP, PREFIX_URL } from '~/router/config';
 import authStacks from '~/router/navigator/AuthStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
-import useCommonController from '~/screens/store';
+import useAuthController from '~/screens/auth/store';
+import showToastError from '~/store/helper/showToastError';
 import getEnv from '~/utils/env';
 import { DeepLinkTypes, matchDeepLink, openInAppBrowser } from '~/utils/link';
 
-const isHasCurrentUser = () => {
-  const userProfileData = useCommonController.getState().myProfile;
-  return !!userProfileData?.id;
-};
-
-export const onReceiveURL = ({ url, navigation, listener }: { url: string, navigation:any, listener?: any }) => {
+export const onReceiveURL = async ({ url, navigation, listener }: { url: string; navigation: any; listener?: any }) => {
   const match = matchDeepLink(url);
+
+  const userId = useAuthController?.getState?.().authUser?.userId;
 
   if (match) {
     switch (match.type) {
@@ -51,17 +49,18 @@ export const onReceiveURL = ({ url, navigation, listener }: { url: string, navig
         });
         break;
       case DeepLinkTypes.LOGIN:
-        if (isHasCurrentUser()) return;
+        if (userId) return;
         navigation?.navigate?.(authStacks.signIn);
         break;
       case DeepLinkTypes.FORGOT_PASSWORD:
-        if (isHasCurrentUser()) return;
+        if (userId) return;
         navigation?.navigate?.(authStacks.forgotPassword);
         break;
       case DeepLinkTypes.CONFIRM_USER:
-        navigation?.navigate?.(isHasCurrentUser()
-          ? mainStack.confirmUser
-          : authStacks.confirmUser, { params: match.params });
+        navigation?.navigate?.(userId ? mainStack.confirmUser : authStacks.confirmUser, { params: match.params });
+        break;
+      case DeepLinkTypes.SIGN_UP:
+        await navigateFromReferralLink({ match, navigation, userId });
         break;
       default:
         listener?.(url);
@@ -95,6 +94,71 @@ const useNavigationLinkingConfig = () => {
   const { rootNavigation } = useRootNavigation();
 
   return getLinkingCustomConfig(linkingConfig, rootNavigation);
+};
+
+const navigateFromReferralLink = async (payload: { match: any; navigation: any; userId: string }) => {
+  const { match, navigation, userId } = payload || {};
+  const { referralCode } = (match?.params as any) || {};
+  let responseValidate = null;
+
+  try {
+    responseValidate = await groupApi.validateReferralCode({ code: referralCode });
+  } catch (error) {
+    console.error('validateReferralCode error:', error);
+    showToastError(error);
+  }
+
+  if (responseValidate && responseValidate?.data) {
+    await navigateWithValidReferralCode({
+      userId,
+      responseValidate,
+      navigation,
+      referralCode,
+    });
+  } else {
+    navigateWithInvalidReferralCode({ userId, navigation });
+  }
+};
+
+const navigateWithValidReferralCode = async (payload: {
+  userId: string;
+  responseValidate: any;
+  navigation: any;
+  referralCode: string;
+}) => {
+  const {
+    userId, responseValidate, navigation, referralCode,
+  } = payload;
+  if (userId) {
+    const { id: communityId } = responseValidate?.data || {};
+    try {
+      const responseJoinCommunity = await groupApi.joinCommunity(communityId);
+      if (responseJoinCommunity && responseJoinCommunity?.data) {
+        navigation?.navigate?.(mainStack.communityDetail, { communityId });
+      }
+    } catch (error) {
+      console.error('joinCommunity error:', error);
+      if (
+        error?.code === APIErrorCode.Group.ALREADY_MEMBER
+        || error?.code === APIErrorCode.Group.JOIN_REQUEST_ALREADY_SENT
+      ) {
+        navigation?.navigate?.(mainStack.communityDetail, { communityId });
+      } else {
+        navigation?.navigate?.('home');
+        showToastError(error);
+      }
+    }
+  } else {
+    navigation?.navigate?.(authStacks.signUp, { isValidLink: true, referralCode });
+  }
+};
+const navigateWithInvalidReferralCode = (payload: { userId: string; navigation: any }) => {
+  const { userId, navigation } = payload;
+  if (userId) {
+    navigation?.navigate?.('home');
+  } else {
+    navigation?.navigate?.(authStacks.signUp, { isValidLink: false });
+  }
 };
 
 export default useNavigationLinkingConfig;

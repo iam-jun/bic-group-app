@@ -86,6 +86,7 @@ const LogoImage = () => {
 
   return (
     <Animated.Image
+      testID="logo_image"
       source={images.logo_beincomm}
       style={[styles.alignCenter, logoContainerStyle]}
     />

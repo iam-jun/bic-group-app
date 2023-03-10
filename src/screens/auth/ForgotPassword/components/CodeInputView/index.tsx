@@ -13,17 +13,22 @@ import { IObject } from '~/interfaces/common';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
 import spacing from '~/theme/spacing';
 import useForgotPasswordStore, { IForgotPasswordState } from '../../store';
-import FormCheckPw from './components/FormCheckPw';
+import FormCheckPassword from '../../../components/FormCheckPassword';
 import CodeInput from './components/CodeInput';
 import * as validation from '~/constants/commonRegex';
 import RequestVerifyEmailModal from '~/screens/auth/VerifyEmail/RequestVerifyEmailModal';
 import { authErrors } from '~/constants/authConstants';
 import showToastError from '~/store/helper/showToastError';
 import useModalStore from '~/store/modal';
+import { FieldNameType } from '~/interfaces/IAuth';
 
 interface Props {
   useFormData: IObject<any>;
 }
+
+const {
+  EMAIL, CODE, NEW_PASSWORD, CONFIRM_PASSWORD,
+} = FieldNameType;
 
 const CodeInputView: React.FC<Props> = ({ useFormData }) => {
   const theme: ExtendedTheme = useTheme();
@@ -45,10 +50,10 @@ const CodeInputView: React.FC<Props> = ({ useFormData }) => {
   } = useFormData;
 
   const checkDisableConfirm = () => {
-    const code = getValues('code');
-    const email = getValues('email');
-    const newPassword = getValues('newPassword');
-    const confirmPassword = getValues('confirmPassword');
+    const code = getValues(CODE);
+    const email = getValues(EMAIL);
+    const newPassword = getValues(NEW_PASSWORD);
+    const confirmPassword = getValues(CONFIRM_PASSWORD);
     const passwordCheck
       = validation.limitCharacterRegex.test(newPassword)
       && validation.uppercaseLetterRegex.test(newPassword)
@@ -70,16 +75,16 @@ const CodeInputView: React.FC<Props> = ({ useFormData }) => {
   const disableConfirm = checkDisableConfirm();
 
   const checkDisableRequest = () => {
-    const email = getValues('email');
+    const email = getValues(EMAIL);
     return loadingConfirm || !email || !isEmpty(errors.email);
   };
   const disableRequest = checkDisableRequest();
 
   const onConfirmForgotPassword = () => {
-    const email = getValues('email');
-    const code = getValues('code');
-    const newPassword = getValues('newPassword');
-    const confirmPassword = getValues('confirmPassword');
+    const email = getValues(EMAIL);
+    const code = getValues(CODE);
+    const newPassword = getValues(NEW_PASSWORD);
+    const confirmPassword = getValues(CONFIRM_PASSWORD);
     if (
       email
       && code
@@ -94,7 +99,7 @@ const CodeInputView: React.FC<Props> = ({ useFormData }) => {
 
   const handleError = (error: any) => {
     if (error?.code === authErrors.USER_NOT_FOUND_EXCEPTION) {
-      const email = getValues('email');
+      const email = getValues(EMAIL);
       modalActions.showModal({
         isOpen: true,
         titleFullScreen: 'groups:group_content:btn_your_groups',
@@ -111,26 +116,26 @@ const CodeInputView: React.FC<Props> = ({ useFormData }) => {
   };
 
   const onRequestForgotPassword = () => {
-    const email = getValues('email');
+    const email = getValues(EMAIL);
     if (email && !disableRequest) {
       setValue(
-        'code', '', { shouldValidate: false },
+        CODE, '', { shouldValidate: false },
       );
-      clearErrors('code');
+      clearErrors(CODE);
       actions.setErrorConfirm();
       actions.requestResetPassword(email, handleError);
     }
   };
 
   const validateConfirmPassword = async () => {
-    await trigger('confirmPassword');
+    await trigger(CONFIRM_PASSWORD);
 
-    const newPassword = getValues('newPassword');
-    const confirmPassword = getValues('confirmPassword');
+    const newPassword = getValues(NEW_PASSWORD);
+    const confirmPassword = getValues(CONFIRM_PASSWORD);
 
     if (confirmPassword && (newPassword !== confirmPassword)) {
       setError(
-        'confirmPassword', {
+        CONFIRM_PASSWORD, {
           type: 'manual',
           message: t('auth:text_err_confirm_password_not_matched'),
         },
@@ -138,7 +143,7 @@ const CodeInputView: React.FC<Props> = ({ useFormData }) => {
     }
   };
 
-  const _email = getValues('email');
+  const _email = getValues(EMAIL);
 
   return (
     <View testID="forgot_password.confirm_view" style={styles.container}>
@@ -177,20 +182,22 @@ const CodeInputView: React.FC<Props> = ({ useFormData }) => {
         </Text.BodyS>
       </View>
       <View style={styles.inputSectionContainer}>
-        <Text.H3 useI18n style={styles.newPasswordTitle}>
+        <Text.H3 useI18n>
           auth:text_forgot_password_input_pw_title
         </Text.H3>
-        <Text.LabelM useI18n style={styles.labelNewPw}>
-          auth:input_label_new_password
-        </Text.LabelM>
-        <FormCheckPw useFormData={useFormData} loadingConfirm={loadingConfirm} />
-
+        <FormCheckPassword
+          fieldName={NEW_PASSWORD}
+          useFormData={useFormData}
+          loading={loadingConfirm}
+          isConfirmPassword
+          styleLabel={styles.formCheckPassword}
+        />
         <Text.LabelM useI18n style={styles.labelConfirmNewPw}>
           auth:input_label_confirm_new_password
         </Text.LabelM>
         <PasswordInputController
           useFormData={useFormData}
-          name="confirmPassword"
+          name={CONFIRM_PASSWORD}
           rules={{
             required: t('auth:text_err_password_blank'),
           }}
@@ -230,33 +237,30 @@ const themeStyles = (theme: ExtendedTheme) => {
       marginBottom: spacing.margin.large,
       marginTop: spacing.margin.large,
     },
-    newPasswordTitle: {
-      marginBottom: spacing.margin.large,
-    },
     highlightText: {
       color: colors.blue50,
     },
     loading: {
       marginLeft: spacing.margin.small,
     },
-    labelNewPw: {
-      marginBottom: 4,
-    },
     labelConfirmNewPw: {
-      marginTop: 12,
-      marginBottom: 4,
+      marginTop: spacing.margin.base,
+      marginBottom: spacing.margin.tiny,
     },
     textExpiring: {
       textAlign: 'center',
-      marginTop: 8,
+      marginTop: spacing.margin.small,
     },
     textRequestNewCode: {
       color: colors.neutral30,
       textAlign: 'center',
-      marginTop: 8,
+      marginTop: spacing.margin.small,
     },
     emptySpace: {
       paddingBottom: spacing.padding.big,
+    },
+    formCheckPassword: {
+      marginTop: spacing.margin.large,
     },
   });
 };
