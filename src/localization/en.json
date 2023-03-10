@@ -59,6 +59,8 @@
     "text_error_message": "Something went wrong",
     "text_success_message": "Success",
     "text_important_post": "Important Post",
+    "text_important_article": "Important Article",
+    "text_important_series": "Important Series",
     "text_loading": "Loading...",
     "text_save": "Save",
     "text_select": "Select",
@@ -213,7 +215,10 @@
     "text_date": "Date",
     "text_time": "Time",
     "text_no_data": "No data",
-    "text_developing_version": "You’re currently using the developing version."
+    "text_developing_version": "You’re currently using the developing version.",
+    "mark_post_as_important": "Mark this post as Important",
+    "mark_article_as_important": "Mark this article as Important",
+    "mark_series_as_important": "Mark this series as Important"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -727,7 +732,6 @@
     "other_places": "others",
     "mark_as_read": "Mark as read",
     "marked_as_read": "Marked as read",
-    "mark_as_important": "Mark this post as Important",
     "expire_on": "Expire on:",
     "choose_group_people": "Choose group",
     "placeholder_audience_search": "Search for groups",

@@ -223,7 +223,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
       <View style={styles.flex1}>
         <View>
           {!!important?.active && (
-            <CreateBannerImportant expiresTime={important.expiresTime} />
+            <CreateBannerImportant type="post" expiresTime={important.expiresTime} />
           )}
           <CreatePostChosenAudiences disabled={loading} />
           <Divider color={theme.colors.neutral5} />

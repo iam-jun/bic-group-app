@@ -65,6 +65,8 @@
     "text_error_message": "Có gì đó sai sai",
     "text_success_message": "Thành công",
     "text_important_post": "Bài viết quan trọng",
+    "text_important_article": "Bài báo quan trọng",
+    "text_important_series": "Loạt bài quan trọng",
     "text_files": "Files",
     "text_search_no_results": "Xin lỗi, chúng tôi không tìm thấy bất cứ thứ gì liên quan đến tìm kiếm của bạn",
     "text_see_more": "Xem thêm",
@@ -182,7 +184,10 @@
     "text_date": "Ngày",
     "text_time": "Giờ",
     "text_no_data": "Không có dữ liệu",
-    "text_developing_version": "Bạn đang sử dụng phiên bản đang được phát triển."
+    "text_developing_version": "Bạn đang sử dụng phiên bản đang được phát triển.",
+    "mark_post_as_important": "Bài viết Quan trọng",
+    "mark_article_as_important": "Bài báo Quan trọng",
+    "mark_series_as_important": "Loạt bài Quan trọng"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -688,7 +693,6 @@
     "other_places": "khác",
     "mark_as_read": "Đánh dấu đã đọc",
     "marked_as_read": "Đã đọc",
-    "mark_as_important": "Bài viết Quan trọng",
     "expire_on": "Ngày hết hạn:",
     "choose_group_people": "Chọn nhóm",
     "placeholder_audience_search": "Tìm kiếm nhóm",
