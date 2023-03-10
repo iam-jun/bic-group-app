@@ -84,20 +84,15 @@ exports[`SeriesDetailItem component render correctly 1`] = `
         <Text
           numberOfLines={1}
           style={
-            Array [
-              Object {
-                "color": "#181C32",
-                "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 20,
-              },
-              Object {
-                "color": "#181C32",
-              },
-              undefined,
-            ]
+            Object {
+              "color": "#9FA6D1",
+              "fontSize": 20,
+              "fontStyle": "italic",
+              "fontWeight": "600",
+            }
           }
         >
-          Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.
+          No content
         </Text>
       </View>
     </View>
@@ -398,7 +393,7 @@ exports[`SeriesDetailItem component render correctly 1`] = `
           resizeMode="cover"
           source={
             Object {
-              "uri": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/91fae044-2182-47eb-97fb-c9e0bb6e5e6a.webp",
+              "testUri": "../../../assets/images/no_image_avalable.png",
             }
           }
           style={
@@ -412,31 +407,6 @@ exports[`SeriesDetailItem component render correctly 1`] = `
           }
         />
       </View>
-    </View>
-    <View
-      style={
-        Object {
-          "marginTop": 16,
-        }
-      }
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#181C32",
-              "fontFamily": "BeVietnamPro-Light",
-              "fontSize": 15,
-            },
-            Object {
-              "color": "#353E6E",
-            },
-            undefined,
-          ]
-        }
-      >
-        Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.
-      </Text>
     </View>
   </View>
 </View>

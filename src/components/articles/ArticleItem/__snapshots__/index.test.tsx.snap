@@ -765,7 +765,7 @@ exports[`ArticleItem Component renders correctly 1`] = `
     testID="article_footer"
   >
     <View
-      testID="reaction_view"
+      testID="reaction_view_container"
     >
       <View
         style={

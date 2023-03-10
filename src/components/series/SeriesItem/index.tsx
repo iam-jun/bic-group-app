@@ -5,7 +5,8 @@ import { IPost } from '~/interfaces/IPost';
 import DeletedItem from '../../DeletedItem';
 import SeriesContent from '../SeriesContent';
 import SeriesHeader from '../SeriesHeader';
-import { PostImportant } from '~/components/posts';
+import { ButtonMarkAsRead, PostImportant } from '~/components/posts';
+import { useUserIdAuth } from '~/hooks/auth';
 
 type SeriesItemProps = {
     data: IPost;
@@ -15,8 +16,11 @@ type SeriesItemProps = {
 const SeriesItem: FC<SeriesItemProps> = ({ data: series, isLite }) => {
   const theme = useTheme();
   const styles = createStyle(theme);
+  const userId = useUserIdAuth();
 
   const {
+    id,
+    actor,
     communities,
     setting,
     markedReadPost,
@@ -41,6 +45,16 @@ const SeriesItem: FC<SeriesItemProps> = ({ data: series, isLite }) => {
     />
   );
 
+  const renderMarkAsRead = () => (
+    <ButtonMarkAsRead
+      postId={id}
+      markedReadPost={markedReadPost}
+      isImportant={isImportant}
+      expireTime={importantExpiredAt}
+      isActor={actor?.id == userId}
+    />
+  );
+
   return (
     <View style={styles.container}>
       {renderImportant()}
@@ -49,6 +63,7 @@ const SeriesItem: FC<SeriesItemProps> = ({ data: series, isLite }) => {
         disabled={false}
       />
       <SeriesContent series={series} isLite={isLite} />
+      {!isLite && renderMarkAsRead()}
     </View>
   );
 };

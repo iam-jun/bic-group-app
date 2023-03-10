@@ -98,6 +98,7 @@ exports[`CreateArticleCover should render correctly if cover is empty 1`] = `
               },
             ]
           }
+          testID="upload_image"
         >
           <View
             style={
@@ -322,6 +323,7 @@ exports[`CreateArticleCover should render correctly if cover is not empty 1`] = 
               },
             ]
           }
+          testID="upload_image"
         >
           <View
             style={

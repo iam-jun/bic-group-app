@@ -58,9 +58,7 @@ exports[`SeriesItemModal component should render correctly 1`] = `
               "height": 32,
               "width": 32,
             },
-            Object {
-              "backgroundColor": "#A4A9B7",
-            },
+            Object {},
           ]
         }
         testID="avatar_container"
@@ -91,7 +89,11 @@ exports[`SeriesItemModal component should render correctly 1`] = `
           <FastImageView
             onFastImageError={[Function]}
             resizeMode="cover"
-            source={null}
+            source={
+              Object {
+                "uri": "https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/f6bd62ee-ccec-4526-9b99-376861ad9426.jpeg",
+              }
+            }
             style={
               Object {
                 "bottom": 0,

@@ -393,7 +393,7 @@ exports[`CreateArticleContent screen should render correctly 1`] = `
                 showsVerticalScrollIndicator={false}
                 source={
                   Object {
-                    "uri": "https://undefined/article/webview/v1",
+                    "uri": "https://beincom.io/article/webview/v1",
                   }
                 }
                 style={
@@ -872,7 +872,7 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                 showsVerticalScrollIndicator={false}
                 source={
                   Object {
-                    "uri": "https://undefined/article/webview/v1",
+                    "uri": "https://beincom.io/article/webview/v1",
                   }
                 }
                 style={
