@@ -14,6 +14,7 @@ export enum PostType {
 export enum TargetType {
   POST = 'POST',
   ARTICLE = 'ARTICLE',
+  SERIES = 'SERIES',
   COMMENT = 'COMMENT',
   COMMENT_ARTICLE = 'COMMENT.ARTICLE',
   COMMENT_POST = 'COMMENT.POST',
