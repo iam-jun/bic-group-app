@@ -1,7 +1,11 @@
-import { IFormCheckPw } from '~/interfaces/IAuth';
+import { IFormCheckPassword } from '~/interfaces/IAuth';
 import * as validation from '~/constants/commonRegex';
 
-export const validate = (value: string, state: IFormCheckPw, setState: (value: IFormCheckPw) => void) => {
+export const validateRules = (
+  value: string,
+  state: IFormCheckPassword,
+  setState: (value: IFormCheckPassword) => void,
+) => {
   const formClone = { ...state };
   if (validation.limitCharacterRegex.test(value)) {
     formClone.isLimitCharacter = true;
@@ -12,6 +16,11 @@ export const validate = (value: string, state: IFormCheckPw, setState: (value: I
     formClone.isUppercaseLetter = true;
   } else {
     formClone.isUppercaseLetter = false;
+  }
+  if (validation.lowercaseLetterRegex.test(value)) {
+    formClone.isLowercaseLetter = true;
+  } else {
+    formClone.isLowercaseLetter = false;
   }
   if (validation.digitsRegex.test(value)) {
     formClone.isDigits = true;

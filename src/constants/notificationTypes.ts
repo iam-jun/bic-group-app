@@ -299,5 +299,5 @@ export const NOTIFICATION_TYPE = {
   DELETE_SERIES_TO_USER: 'delete.series.to_user',
 
   REMOVE_POST_TO_CREATOR: 'remove.post.to_creator',
-  REMOVE_ARTICLE_TO_CREATOR: 'remove.article.to_creator',
+  REMOVE_ARTICLE_TO_CREATOR: 'remove.article.creator',
 };

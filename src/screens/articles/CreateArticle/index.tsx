@@ -222,6 +222,7 @@ const CreateArticle: FC<CreateArticleProps> = ({
     <>
       {!!setting?.isImportant && (
         <CreateBannerImportant
+          type="article"
           expiresTime={setting.importantExpiredAt}
           style={styles.bannerImportantTime}
         />

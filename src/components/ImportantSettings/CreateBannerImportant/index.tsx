@@ -11,9 +11,10 @@ import { formatDate } from '~/utils/formatter';
 interface CreateBannerImportantProps {
   style?: StyleProp<ViewStyle>;
   expiresTime: any;
+  type: 'post' | 'article' | 'series';
 }
 
-const CreateBannerImportant = ({ style, expiresTime }: CreateBannerImportantProps) => {
+const CreateBannerImportant = ({ style, expiresTime, type }: CreateBannerImportantProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
   const { colors } = theme;
@@ -29,7 +30,7 @@ const CreateBannerImportant = ({ style, expiresTime }: CreateBannerImportantProp
           tintColor={colors.purple50}
         />
         <View style={styles.textView}>
-          <Text.SubtitleM useI18n color={colors.neutral70}>common:text_important_post</Text.SubtitleM>
+          <Text.SubtitleM useI18n color={colors.neutral70}>{`common:text_important_${type}`}</Text.SubtitleM>
           {
             !!expiresTime && !!dateValue ? (
               <View style={styles.expiresOnTextContainer}>

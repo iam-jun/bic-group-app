@@ -13,6 +13,7 @@ import useButtonMarkAsReadStore, { IButtonMarkAsReadState } from './store';
 
 export interface ButtonMarkAsReadProps {
   style?: StyleProp<ViewStyle>;
+  styleBtn?: StyleProp<ViewStyle>;
   postId: string;
   isImportant?: boolean;
   expireTime?: string | null;
@@ -22,6 +23,7 @@ export interface ButtonMarkAsReadProps {
 
 const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
   style,
+  styleBtn,
   postId,
   isImportant,
   expireTime = '',
@@ -65,7 +67,7 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
       style={[styles.container, style]}
       testID="button_mark_as_read.container"
     >
-      <View style={styles.boxBtn}>
+      <View style={[styles.boxBtn, styleBtn]}>
         <Button.Primary
           testID="button_mark_as_read.button"
           loading={loading}

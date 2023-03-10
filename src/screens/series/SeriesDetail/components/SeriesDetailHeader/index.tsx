@@ -14,6 +14,8 @@ import { IPost, IPostAudience } from '~/interfaces/IPost';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import { ContentInterestedUserCount } from '~/components/ContentView';
+import { ButtonMarkAsRead, PostImportant } from '~/components/posts';
+import { useUserIdAuth } from '~/hooks/auth';
 
 type SeriesDetailHeaderProps = {
   series: IPost;
@@ -121,15 +123,50 @@ const InfoSection = () => {
 
 const SeriesDetailHeader: FC<SeriesDetailHeaderProps> = ({ series }) => {
   const {
-    id, audience, title, summary, coverMedia, items, totalUsersSeen,
+    id,
+    audience,
+    title,
+    summary,
+    coverMedia,
+    items,
+    totalUsersSeen,
+    setting,
+    communities,
+    markedReadPost,
+    actor,
   } = series || {};
+  const { isImportant, importantExpiredAt } = setting || {};
+  const userId = useUserIdAuth();
+  const isActor = actor?.id == userId;
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
 
+  const renderImportant = () => (
+    <PostImportant
+      isImportant={!!isImportant}
+      expireTime={importantExpiredAt}
+      markedReadPost={markedReadPost}
+      listCommunity={communities}
+    />
+  );
+
+  const renderMarkAsRead = () => (
+    <ButtonMarkAsRead
+      postId={id}
+      markedReadPost={markedReadPost}
+      isImportant={isImportant}
+      expireTime={importantExpiredAt}
+      isActor={isActor}
+      style={styles.markAsReadView}
+      styleBtn={styles.markAsReadBtn}
+    />
+  );
+
   return (
     <View style={styles.containerHeader}>
       <View>
+        {renderImportant()}
         <Image source={coverMedia?.url} style={styles.img} />
         <View style={styles.mask} />
         <View style={styles.insideView}>
@@ -157,6 +194,7 @@ const SeriesDetailHeader: FC<SeriesDetailHeaderProps> = ({ series }) => {
         <ViewSpacing height={spacing.margin.large} />
         <Text.H2>{title}</Text.H2>
         <DescriptionSection description={summary} style={styles.description} />
+        {renderMarkAsRead()}
         {/* for the next sprint */}
         {/* <ViewSpacing height={spacing.margin.large} />
         <InfoSection /> */}
@@ -218,6 +256,14 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingHorizontal: 0,
       margin: 0,
       alignItems: 'flex-end',
+    },
+    markAsReadView: {
+      paddingHorizontal: 0,
+      marginTop: spacing.margin.small,
+      marginBottom: -spacing.margin.small,
+    },
+    markAsReadBtn: {
+      borderTopWidth: 0,
     },
   });
 };

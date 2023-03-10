@@ -91,6 +91,7 @@ const CreateSeries = ({ route }: CreationSeriesProps) => {
 
     return (
       <CreateBannerImportant
+        type="series"
         expiresTime={setting.importantExpiredAt}
         style={styles.bannerImportantTime}
       />

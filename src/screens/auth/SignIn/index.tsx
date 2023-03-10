@@ -34,7 +34,7 @@ import authStacks from '~/router/navigator/AuthStack/stack';
 import { Button } from '~/baseComponents';
 import InputEmail from './components/InputEmail';
 import InputPassword from './components/InputPassword';
-import LogoImage from './components/LogoImage';
+import LogoImage from '../components/LogoImage';
 import getEnv from '~/utils/env';
 import { APP_ENV } from '~/configs/appConfig';
 import { AppConfig } from '~/configs';
@@ -42,6 +42,9 @@ import RequestVerifyEmailModal from '../VerifyEmail/RequestVerifyEmailModal';
 import { authErrors } from '~/constants/authConstants';
 import { useBaseHook } from '~/hooks';
 import useModalStore from '~/store/modal';
+import { FieldNameType } from '~/interfaces/IAuth';
+
+const { EMAIL, PASSWORD } = FieldNameType;
 
 const SignIn = () => {
   const { rootNavigation } = useRootNavigation();
@@ -105,13 +108,13 @@ const SignIn = () => {
     () => {
       if (signingInError) {
         setError(
-          'password', {
+          PASSWORD, {
             type: 'validate',
             message: signingInError,
           },
         );
         setError(
-          'email', {
+          EMAIL, {
             type: 'validate',
             message: signingInError,
           },
@@ -124,12 +127,12 @@ const SignIn = () => {
   );
 
   const checkAuthSessions = async () => {
-    const email = getValues('email');
+    const email = getValues(EMAIL);
     const isInstalled = await isAppInstalled();
     if (isInstalled) {
       const user = await getUserFromSharedPreferences();
       if (user?.email && user?.email !== email) {
-        setValue('email', user?.email);
+        setValue(EMAIL, user?.email);
       }
       setAuthSessions(user);
     } else {
@@ -138,11 +141,11 @@ const SignIn = () => {
   };
 
   const clearAllErrors = () => {
-    clearErrors('email');
-    clearErrors('password');
+    clearErrors(EMAIL);
+    clearErrors(PASSWORD);
   };
 
-  const clearFieldError = (name: 'email' | 'password') => {
+  const clearFieldError = (name: FieldNameType) => {
     const error = errors[name];
     if (!error) return;
 
@@ -151,7 +154,7 @@ const SignIn = () => {
   };
 
   const onSubmitEmail = () => {
-    if (getValues('password')) {
+    if (getValues(PASSWORD)) {
       onSignIn();
       return;
     }
@@ -167,7 +170,7 @@ const SignIn = () => {
         break;
       case authErrors.USER_NOT_FOUND_EXCEPTION:
         // eslint-disable-next-line no-case-declarations
-        const email = getValues('email');
+        const email = getValues(EMAIL);
         modalActions.showModal({
           isOpen: true,
           titleFullScreen: 'groups:group_content:btn_your_groups',
@@ -192,20 +195,20 @@ const SignIn = () => {
 
     Keyboard.dismiss();
 
-    const email = getValues('email');
-    const password = getValues('password');
+    const email = getValues(EMAIL);
+    const password = getValues(PASSWORD);
     authActions.signIn({ email, password }, handleError);
   };
 
   const validateInputs = async () => {
-    const validEmail = await trigger('email');
-    const validPassword = await trigger('password');
+    const validEmail = await trigger(EMAIL);
+    const validPassword = await trigger(PASSWORD);
     return validEmail && validPassword;
   };
 
   const checkDisableSignIn = () => {
-    const email = getValues('email');
-    const password = getValues('password');
+    const email = getValues(EMAIL);
+    const password = getValues(PASSWORD);
     const result = !isEmpty(errors) || !email || !password || loading;
     setDisableSignIn(result);
   };

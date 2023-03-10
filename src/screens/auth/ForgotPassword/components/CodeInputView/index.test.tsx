@@ -242,7 +242,7 @@ describe('CodeInputView component', () => {
       <CodeInputView useFormData={newUseForm} />,
     );
 
-    const newPasswordInput = wrapper.queryByTestId('forgot_password.input_new_password');
+    const newPasswordInput = wrapper.queryByTestId('form_check_password.input');
     expect(newPasswordInput).toBeDefined();
     fireEvent.changeText(newPasswordInput, newPassword);
 

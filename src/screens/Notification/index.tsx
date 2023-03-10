@@ -328,6 +328,7 @@ const Notification = () => {
               }
               break;
             case NOTIFICATION_TYPE.REMOVE_ARTICLE_TO_USER:
+            case NOTIFICATION_TYPE.REMOVE_ARTICLE_TO_CREATOR:
               if (act?.item?.id) {
                 rootNavigation.navigate(articleStack.articleDetail, { articleId: act.item.id });
               }

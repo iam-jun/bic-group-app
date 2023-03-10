@@ -124,6 +124,7 @@ const CreateArticleSettings = ({ route }: CreateArticleSettingsProps) => {
       <View style={styles.content}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <MarkImportant
+            type="article"
             dataImportant={sImportant}
             showWarning={showWarning}
             handleToggleImportant={handleToggleImportant}

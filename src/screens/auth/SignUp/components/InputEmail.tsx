@@ -4,29 +4,25 @@ import { StyleSheet } from 'react-native';
 import * as validation from '~/constants/commonRegex';
 import { useBaseHook } from '~/hooks';
 
-import { FieldNameType } from '~/interfaces/IAuth';
 import { spacing } from '~/theme';
+import { FieldNameType } from '~/interfaces/IAuth';
 import FormInput from '../../components/FormInput';
 
-interface InputEmailProps {
+interface Props {
   useFormData: any;
-  signingInError: any;
+  signUpError: any;
+  checkDisableSignUp: () => void;
+  onSubmit: () => void;
   loading: boolean;
-  authSessions: any;
-  clearFieldError: (name: FieldNameType) => void;
-  checkDisableSignIn: () => void;
-  onSubmitEmail: () => void;
 }
 
 const InputEmail = ({
   useFormData,
-  signingInError,
-  loading,
-  authSessions,
-  clearFieldError,
-  checkDisableSignIn,
-  onSubmitEmail,
-}: InputEmailProps) => {
+  signUpError,
+  checkDisableSignUp,
+  onSubmit,
+  loading = false,
+}: Props) => {
   const { t } = useBaseHook();
 
   const emailRules = {
@@ -37,36 +33,34 @@ const InputEmail = ({
     },
   };
 
-  const onValidateValue = () => {
-    clearFieldError(FieldNameType.EMAIL);
-    checkDisableSignIn();
+  const onValidateValue = async () => {
+    await useFormData.trigger(FieldNameType.EMAIL);
+    checkDisableSignUp();
   };
-
-  const isEditable = !authSessions?.email && !loading;
 
   return (
     <FormInput
       useFormData={useFormData}
       fieldName={FieldNameType.EMAIL}
-      errorText={signingInError}
+      errorText={signUpError}
       rules={emailRules}
       testID="input_email"
       label="auth:input_label_email"
       placeholder="auth:input_label_email_placeholder"
       isAutoFocus
-      isEditable={isEditable}
       keyboardType="email-address"
       autoCapitalize="none"
-      styleInput={styles.input}
-      onSubmit={onSubmitEmail}
+      styleLabel={styles.label}
+      onSubmit={onSubmit}
       validateValue={onValidateValue}
+      isEditable={!loading}
     />
   );
 };
 
 const styles = StyleSheet.create({
-  input: {
-    marginBottom: spacing.margin.small,
+  label: {
+    marginTop: spacing.margin.small,
   },
 });
 

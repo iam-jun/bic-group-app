@@ -133,6 +133,7 @@ const SeriesSettings = ({ route }: SeriesSettingsProps) => {
       <View style={styles.content}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <MarkImportant
+            type="series"
             dataImportant={sImportant}
             showWarning={showWarning}
             handleToggleImportant={handleToggleImportant}

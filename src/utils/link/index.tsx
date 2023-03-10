@@ -23,6 +23,7 @@ export enum DeepLinkTypes {
   LOGIN = 'login',
   FORGOT_PASSWORD = 'forgot_password',
   CONFIRM_USER = 'confirm_user',
+  SIGN_UP = 'sign_up',
 }
 
 export enum LinkGeneratorTypes {
@@ -243,6 +244,15 @@ export const matchDeepLink = (url: string) => {
     const urlParams = match[1];
     const newParams = getURLParams(urlParams);
     return { type: DeepLinkTypes.CONFIRM_USER, params: newParams };
+  }
+
+  match = new RegExp(
+    `^${PREFIX_DEEPLINK_GROUP}\\/sign-up\\?(\\S+)$`,
+  ).exec(deepLinkUrl);
+  if (match) {
+    const urlParams = match[1];
+    const newParams = getURLParams(urlParams);
+    return { type: DeepLinkTypes.SIGN_UP, params: newParams };
   }
 
   return null;

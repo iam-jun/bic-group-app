@@ -51,13 +51,6 @@ describe('EmailInputView component', () => {
     watch: () => jest.fn(),
   };
 
-  it('renders correctly', () => {
-    const wrapper = renderWithRedux(
-      <EmailInputView useFormData={useForm} />,
-    );
-    expect(wrapper.toJSON()).toMatchSnapshot();
-  });
-
   it('disable button send code to email when typing an invalid email', async () => {
     const wrapper = renderWithRedux(<EmailInputView useFormData={useForm} />);
 

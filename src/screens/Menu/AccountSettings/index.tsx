@@ -22,12 +22,10 @@ import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import spacing from '~/theme/spacing';
 import { accountSettingsMenu } from '~/screens/Menu/AccountSettings/constants';
-import getEnv from '~/utils/env';
 import { openInAppBrowser } from '~/utils/link';
+import { POLICY_URL } from '~/constants/url';
 import useNetworkStore from '~/store/network';
 import networkSelectors from '~/store/network/selectors';
-
-const POLICY_URL = `https://${getEnv('SELF_DOMAIN')}/policy`;
 
 const AccoutSettings = () => {
   const theme: ExtendedTheme = useTheme();

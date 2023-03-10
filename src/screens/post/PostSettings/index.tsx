@@ -206,6 +206,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <MarkImportant
+            type="post"
             dataImportant={sImportant}
             showWarning={showWarning}
             onPressAudiences={onPressAudiences}

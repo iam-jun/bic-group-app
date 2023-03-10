@@ -15,6 +15,7 @@ import { formatDate } from '~/utils/formatter';
 import { useBaseHook } from '~/hooks';
 
 interface MarkImportantProps {
+    type: 'post' | 'article' | 'series';
     dataImportant: IActivityImportant;
     showWarning: boolean;
     onPressAudiences?: () => void;
@@ -29,6 +30,7 @@ interface MarkImportantProps {
 }
 
 const MarkImportant: React.FC<MarkImportantProps> = ({
+  type,
   dataImportant,
   showWarning,
   onPressAudiences,
@@ -178,7 +180,7 @@ const MarkImportant: React.FC<MarkImportantProps> = ({
       >
         <View style={[styles.flex1]}>
           <Text.SubtitleM style={[styles.flex1]} useI18n>
-            post:mark_as_important
+            {`common:mark_${type}_as_important`}
           </Text.SubtitleM>
           {renderTextWarningListAudienceWithoutPermission()}
         </View>

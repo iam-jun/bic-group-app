@@ -20,6 +20,8 @@ const Group = {
   SCHEME_NOT_FOUND: 'scheme.not_found',
   REVOKE_ACCOUNT_OWNER: 'community.revoke_account_owner',
   LAST_ADMIN_LEAVE: 'group.member.is_last_admin',
+  ALREADY_MEMBER: 'group.already_member',
+  JOIN_REQUEST_ALREADY_SENT: 'group.joining_request.already_sent',
 };
 
 const APIErrorCode = {

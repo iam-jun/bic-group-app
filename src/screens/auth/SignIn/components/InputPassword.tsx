@@ -5,12 +5,13 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { spacing } from '~/theme';
 import { useBaseHook } from '~/hooks';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
+import { FieldNameType } from '~/interfaces/IAuth';
 
 interface InputPasswordProps {
   inputPasswordRef: any;
   useFormData: any;
   loading: boolean;
-  clearFieldError: (name: 'email' | 'password') => void;
+  clearFieldError: (name: FieldNameType) => void;
   checkDisableSignIn: () => void
   onSignIn: () => void
 }
@@ -35,7 +36,7 @@ const InputPassword = ({
   };
 
   const onValidateValue = () => {
-    clearFieldError('password');
+    clearFieldError(FieldNameType.PASSWORD);
     checkDisableSignIn();
   };
 
@@ -44,7 +45,7 @@ const InputPassword = ({
       ref={inputPasswordRef}
       useFormData={useFormData}
       testID="input_password"
-      name="password"
+      name={FieldNameType.PASSWORD}
       label={t('auth:input_label_password')}
       labelProps={{ color: colors.neutral40 }}
       rules={passwordRules}

@@ -14,6 +14,7 @@ import { spacing } from '~/theme';
 import { useKeyboardStatus } from '~/hooks/keyboard';
 import useIsFirstRender from '~/hooks/useIsFirstRender';
 import Icon from '~/baseComponents/Icon';
+import { FieldNameType } from '~/interfaces/IAuth';
 
 const MAX_LENGTH_INPUT = 6;
 
@@ -34,7 +35,7 @@ const CodeInput: React.FC<Props> = ({ useFormData }) => {
 
   const { getValues, trigger } = useFormData;
 
-  const code = getValues('code');
+  const code = getValues(FieldNameType.CODE);
 
   useEffect(() => {
     codeInputRef.current?.focus();
@@ -47,7 +48,7 @@ const CodeInput: React.FC<Props> = ({ useFormData }) => {
   }, [isOpenKeyBoard]);
 
   const validateCode = async () => {
-    await trigger('code');
+    await trigger(FieldNameType.CODE);
   };
 
   const onFocusCodeInput = () => {
@@ -76,7 +77,7 @@ const CodeInput: React.FC<Props> = ({ useFormData }) => {
       <TextInputController
         testID="forgot_password.input_code"
         useFormData={useFormData}
-        name="code"
+        name={FieldNameType.CODE}
         rules={{
           required: t('auth:text_err_code'),
           pattern: {
@@ -136,7 +137,7 @@ const themeStyles = (theme: ExtendedTheme) => {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      marginTop: 8,
+      marginTop: spacing.margin.small,
     },
     textError: {
       color: colors.red40,

@@ -7,8 +7,12 @@ export const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]
 export const codeRegex = /^[0-9]{1,6}$/;
 export const limitCharacterRegex = /^.{8,20}$/;
 export const uppercaseLetterRegex = /(?=.*?[A-Z])/;
+export const lowercaseLetterRegex = /(?=.*?[a-z])/;
 export const digitsRegex = /(?=.*?[0-9])/;
 export const specialCharacterRegex = /(?=.*?[^\w\s])/;
+// eslint-disable-next-line max-len
+export const fullNameRegex = /^[A-Za-z\u00C0-\u1EF9 ]+$/; // Contain only A-Z, a-z letters, white space and Vietnamese characters
+export const userNameRegex = /^[a-z][a-z0-9.]*$/; // Start with a-z, remaining characters only a-z, 0-9 and "."
 
 /**
  * mentionRegex

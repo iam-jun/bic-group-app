@@ -1,10 +1,11 @@
 import React from 'react';
-import { validate } from './helper';
+import { validateRules } from './helper';
 
-describe('CodeInputView helper', () => {
+describe('FormCheckPassword helper', () => {
   const formValidate = {
     isLimitCharacter: false,
     isUppercaseLetter: false,
+    isLowercaseLetter: false,
     isDigits: false,
     isSpecialCharacter: false,
   };
@@ -12,6 +13,7 @@ describe('CodeInputView helper', () => {
     const result = {
       isLimitCharacter: true,
       isUppercaseLetter: true,
+      isLowercaseLetter: true,
       isDigits: true,
       isSpecialCharacter: true,
     };
@@ -19,17 +21,17 @@ describe('CodeInputView helper', () => {
     const useStateMock: any = (useState: any) => [useState, setStateMock];
     jest.spyOn(React, 'useState').mockImplementation(useStateMock);
 
-    const fn = validate('12345678@A', formValidate, setStateMock);
+    const fn = validateRules('12345678@Aa', formValidate, setStateMock);
     expect(fn).toEqual(result);
   });
 
   it('should validate failed', () => {
-    const result = { ...formValidate };
+    const result = { ...formValidate, isLowercaseLetter: true };
     const setStateMock = jest.fn();
     const useStateMock: any = (useState: any) => [useState, setStateMock];
     jest.spyOn(React, 'useState').mockImplementation(useStateMock);
 
-    const fn = validate('a', formValidate, setStateMock);
+    const fn = validateRules('a', formValidate, setStateMock);
     expect(fn).toEqual(result);
   });
 });
