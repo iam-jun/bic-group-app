@@ -304,6 +304,7 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
             },
           };
         case NOTIFICATION_TYPE.REMOVE_ARTICLE_TO_USER:
+        case NOTIFICATION_TYPE.REMOVE_ARTICLE_TO_CREATOR:
           return {
             screen: articleStack.articleDetail,
             params: {
