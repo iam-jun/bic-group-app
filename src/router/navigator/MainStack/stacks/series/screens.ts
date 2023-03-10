@@ -1,5 +1,9 @@
 import {
-  ChooseSeriesAudience, CreateStories, SeriesDetail, ReorderItems,
+  ChooseSeriesAudience,
+  CreateStories,
+  SeriesDetail,
+  ReorderItems,
+  SeriesSettings,
 } from '~/screens/series';
 
 const seriesScreens = {
@@ -7,6 +11,7 @@ const seriesScreens = {
   'create-series': CreateStories,
   'series-select-audience': ChooseSeriesAudience,
   'reorder-items': ReorderItems,
+  'series-settings': SeriesSettings,
 };
 
 export default seriesScreens;

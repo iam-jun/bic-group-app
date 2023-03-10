@@ -3,25 +3,46 @@ import { View, StyleSheet } from 'react-native';
 import { useRootNavigation } from '~/hooks/navigation';
 import { Button } from '~/baseComponents';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { spacing } from '~/theme';
 import Text from '~/baseComponents/Text';
 import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
+import useSeriesCreation from '~/screens/series/hooks/useSeriesCreation';
 import useModalStore from '~/store/modal';
 import { useBaseHook } from '~/hooks';
+import { PostType } from '~/interfaces/IPost';
 
 interface SettingsButtonProps {
-    articleId: string;
+  type: PostType;
+  articleId?: string;
+  seriesId?: string;
 }
 
-const SettingsButton: React.FC<SettingsButtonProps> = ({ articleId }) => {
+const SettingsButton: React.FC<SettingsButtonProps> = ({
+  type,
+  articleId,
+  seriesId,
+}) => {
   const { rootNavigation } = useRootNavigation();
-  const { disableArticleSettings, audiencesWithNoPermission } = useCreateArticle({ articleId });
+  const {
+    disableArticleSettings,
+    audiencesWithNoPermission: audiencesWithNoPermissionArticle,
+  } = useCreateArticle({ articleId });
+  const {
+    disableSeriesSettings,
+    audiencesWithNoPermission: audiencesWithNoPermissionSeries,
+  } = useSeriesCreation({ seriesId });
   const { showAlert } = useModalStore((state) => state.actions);
   const { t } = useBaseHook();
 
+  const listAudienceWithNoPermission
+    = type === PostType.ARTICLE ? audiencesWithNoPermissionArticle : audiencesWithNoPermissionSeries;
+  const disabled
+    = type === PostType.ARTICLE ? disableArticleSettings : disableSeriesSettings;
+
   const onPressSettings = () => {
-    if (audiencesWithNoPermission?.length > 0) {
-      const audienceListNames = audiencesWithNoPermission
+    if (listAudienceWithNoPermission?.length > 0) {
+      const audienceListNames = listAudienceWithNoPermission
         .map((audience) => audience.name)
         .join(', ');
       const alertPayload = {
@@ -40,7 +61,14 @@ const SettingsButton: React.FC<SettingsButtonProps> = ({ articleId }) => {
       return;
     }
 
-    rootNavigation.navigate(articleStack.createArticleSettings, { articleId });
+    if (type === PostType.ARTICLE) {
+      rootNavigation.navigate(articleStack.createArticleSettings, { articleId });
+    } else {
+      rootNavigation.navigate(seriesStack.seriesSettings, {
+        seriesId,
+        listAudiencesWithoutPermission: audiencesWithNoPermissionSeries,
+      });
+    }
   };
 
   return (
@@ -49,7 +77,7 @@ const SettingsButton: React.FC<SettingsButtonProps> = ({ articleId }) => {
         type="ghost"
         icon="Sliders"
         iconSize={18}
-        disabled={disableArticleSettings}
+        disabled={disabled}
         onPress={onPressSettings}
       />
     </View>

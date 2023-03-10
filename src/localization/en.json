@@ -1316,7 +1316,8 @@
     "text_remove_article": "Do you want to remove this article?",
     "text_remove_post": "Do you want to remove this post?",
     "text_article_removed": "Remove successful",
-    "text_no_content": "No content"
+    "text_no_content": "No content",
+    "series_settings": "Series settings"
   },
   "tags": {
     "create_tag": "Create Tag",

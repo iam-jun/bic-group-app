@@ -14,6 +14,8 @@ import { getAudienceIdsFromAudienceObject } from '~/screens/articles/CreateArtic
 import { IEditArticleAudience } from '~/interfaces/IArticle';
 import { useRootNavigation } from '~/hooks/navigation';
 import useModalStore from '~/store/modal';
+import useMyPermissionsStore from '~/store/permissions';
+import { PermissionKey } from '~/constants/permissionScheme';
 
 export interface IUseSeriesCreation {
     seriesId?: string;
@@ -51,8 +53,27 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
 
   const audienceActions = useSelectAudienceStore((state: ISelectAudienceState) => state.actions);
   const { showAlert } = useModalStore((state) => state.actions);
+  const { getAudienceListWithNoPermission } = useMyPermissionsStore((state) => state.actions);
 
   const names = getNames(dataGroups);
+
+  const audiencesWithNoPermission = getAudienceListWithNoPermission(dataGroups, PermissionKey.EDIT_POST_SETTING);
+  const disableSeriesSettings = audiencesWithNoPermission.length === dataGroups.length;
+
+  const initSettings = (settings) => {
+    const notExpired = new Date().getTime() < new Date(settings?.importantExpiredAt).getTime();
+    const isNever = settings?.isImportant && !settings?.importantExpiredAt;
+
+    const initData = {
+      isImportant: (!!notExpired || isNever) && settings?.isImportant,
+      importantExpiredAt: !!notExpired ? settings?.importantExpiredAt : null,
+      canShare: settings?.canShare,
+      canReact: settings?.canReact,
+      canComment: settings?.canComment,
+    };
+
+    return initData;
+  };
 
   useEffect(() => {
     if (!isEmpty(series)) {
@@ -61,7 +82,11 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
         newSelectingGroups[group?.id] = group;
       });
       const audienceIds: IEditArticleAudience = getAudienceIdsFromAudienceObject(series.audience);
-      actions.setData({ ...series, audience: audienceIds });
+      actions.setData({
+        ...series,
+        audience: audienceIds,
+        setting: initSettings(series.setting),
+      });
       actions.setAudienceGroups(series.audience.groups);
       audienceActions.setSelectedAudiences(newSelectingGroups);
     }
@@ -101,7 +126,9 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
       const isCoverMediaUpdated = (series.coverMedia?.id !== data.coverMedia?.id) && !isEmpty(data.coverMedia);
       const isAudienceUpdated = !isEqual(getAudienceIdsFromAudienceObject(series.audience), data.audience)
       && !(isEmpty(data.audience?.groupIds) && isEmpty(data.audience?.userIds));
-      return isTitleUpdated || isCoverMediaUpdated || isAudienceUpdated || isSummaryUpdated;
+      const isSettingsUpdated = !isEqual(series.setting, data.setting);
+
+      return isTitleUpdated || isCoverMediaUpdated || isAudienceUpdated || isSummaryUpdated || isSettingsUpdated;
     }
     return isNonEmptyString(data.title) && !isEmpty(data.coverMedia);
   };
@@ -140,6 +167,8 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
       groups: dataGroups,
     },
     disableButtonSave: !enableButtonSave,
+    audiencesWithNoPermission,
+    disableSeriesSettings,
     handleTitleChange,
     handleSummaryChange,
     handleUploadCoverSuccess,

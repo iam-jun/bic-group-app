@@ -1,7 +1,7 @@
 import {
   ICategory, IEditArticleAudience, IEditArticleData, IParamGetArticleDetail,
 } from './IArticle';
-import { IArticleCover } from './IPost';
+import { IArticleCover, IAudience } from './IPost';
 
 export interface IPostCreateSeries {
   title?: string;
@@ -50,3 +50,8 @@ export interface IReorderItems {
 
 export type IAddArticleInSeries = IReorderItems;
 export type IRemoveItemInSeries = IReorderItems;
+
+export interface ISeriesSettingsParams {
+  seriesId?: string;
+  listAudiencesWithoutPermission?: IAudience[];
+}
