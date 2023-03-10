@@ -177,15 +177,19 @@ const EditComment: FC<EditCommentProps> = ({ route }: EditCommentProps) => {
   const renderGiphy = () => {
     if (!giphy) return null;
     return (
-      <View>
+      <View testID="edit_comment_screen.giphy">
         <Button
           style={styles.icRemove}
           onPress={handleRemoveGiphy}
           hitSlop={{
             top: 10, bottom: 10, right: 10, left: 10,
           }}
+          testID="edit_comment_screen.giphy.close_button"
         >
-          <Icon size={12} icon="iconCloseSmall" />
+          <Icon
+            size={12}
+            icon="iconCloseSmall"
+          />
         </Button>
         <GifView style={styles.gifView} giphy={giphy as any} />
       </View>
@@ -219,6 +223,7 @@ const EditComment: FC<EditCommentProps> = ({ route }: EditCommentProps) => {
           style={styles.flex1}
           activeOpacity={1}
           onPress={onPressInput}
+          testID="edit_comment_screen.input_view"
         >
           <Animated.ScrollView
             showsVerticalScrollIndicator={false}

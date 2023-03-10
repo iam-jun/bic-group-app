@@ -494,7 +494,9 @@ exports[`SeriesItem component renders correctly 1`] = `
                   },
                 ]
               }
-            />
+            >
+              0
+            </Text>
             <Text
               style={
                 Array [

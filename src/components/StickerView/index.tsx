@@ -168,7 +168,7 @@ const _StickerView = ({
     content = <GiphyView searchQuery={searchQuery} onSelected={onGiphyPress} />;
   } else if (type === 'emoji') {
     content = (
-      <View style={styles.emojiView}>
+      <View testID="sticker_view.emoij" style={styles.emojiView}>
         <EmojiPicker
           emojiPickerRef={emojiPickerRef}
           onEmojiPress={onEmojiPress}

@@ -57,7 +57,7 @@ exports[`ArticleWebview Component renders correctly 1`] = `
       showsVerticalScrollIndicator={false}
       source={
         Object {
-          "uri": "https://undefined/article/webview/v1",
+          "uri": "https://beincom.io/article/webview/v1",
         }
       }
       style={

@@ -412,6 +412,7 @@ exports[`CreateSeries component renders correctly without data 1`] = `
                 },
               ]
             }
+            testID="upload_image"
           >
             <View
               style={
