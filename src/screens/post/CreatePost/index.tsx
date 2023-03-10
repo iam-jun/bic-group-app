@@ -20,7 +20,7 @@ import spacing from '~/theme/spacing';
 import CreatePostChosenAudiences from '../../../components/posts/CreatePostChosenAudiences';
 import CreatePostContent from './components/CreatePostContent';
 import CreatePostFooter from './components/CreatePostFooter';
-import CreatePostBannerImportant from '~/components/ImportantSettings/CreateBannerImportant/CreateBannerImportant';
+import CreateBannerImportant from '~/components/ImportantSettings/CreateBannerImportant';
 import { handleBack } from './handler';
 import useDraftPostStore from '../../Draft/DraftPost/store';
 import useCommentInputStore from '../../comments/components/CommentInputView/store';
@@ -223,7 +223,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
       <View style={styles.flex1}>
         <View>
           {!!important?.active && (
-            <CreatePostBannerImportant expiresTime={important.expiresTime} />
+            <CreateBannerImportant expiresTime={important.expiresTime} />
           )}
           <CreatePostChosenAudiences disabled={loading} />
           <Divider color={theme.colors.neutral5} />

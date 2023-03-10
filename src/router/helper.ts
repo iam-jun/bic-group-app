@@ -159,6 +159,7 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
       childCommentId = null,
       communityId = null,
       groupId = null,
+      contentId = null,
     } = newData;
     if (type !== undefined) {
       switch (type) {
@@ -287,6 +288,7 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
         case NOTIFICATION_TYPE.POST_SERIES_TO_USER_IN_ONE_GROUP:
         case NOTIFICATION_TYPE.POST_SERIES_TO_USER_IN_MULTIPLE_GROUPS:
         case NOTIFICATION_TYPE.ADD_ARTICLE_TO_USER:
+        case NOTIFICATION_TYPE.ADD_POST_TO_USER:
           return {
             screen: seriesStack.seriesDetail,
             params: {
@@ -301,6 +303,20 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
               articleId: postId,
             },
           };
+        case NOTIFICATION_TYPE.REMOVE_ARTICLE_TO_USER:
+          return {
+            screen: articleStack.articleDetail,
+            params: {
+              articleId: contentId,
+            },
+          };
+        case NOTIFICATION_TYPE.REMOVE_POST_TO_USER:
+        case NOTIFICATION_TYPE.REMOVE_POST_TO_CREATOR:
+          return {
+            screen: homeStack.postDetail,
+            params: { post_id: contentId },
+          };
+
         case NOTIFICATION_TYPE.LEAVE_MULTIPLE_GROUP_TO_USER:
           return null;
         default:

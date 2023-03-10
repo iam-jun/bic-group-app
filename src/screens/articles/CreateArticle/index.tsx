@@ -26,11 +26,12 @@ import ContentSection from './screens/CreateArticleContent/ContentSection';
 import { useBaseHook } from '~/hooks';
 import useCreateArticle from './hooks/useCreateArticle';
 import Schedule from './components/Schedule';
-import SettingsButton from './components/SettingsButton';
+import SettingsButton from '~/components/ImportantSettings/SettingsButton';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import { ArticleBoxScheduleTime } from '~/components/articles';
-import CreatePostBannerImportant from '~/components/ImportantSettings/CreateBannerImportant/CreateBannerImportant';
+import CreateBannerImportant from '~/components/ImportantSettings/CreateBannerImportant';
+import { PostType } from '~/interfaces/IPost';
 
 enum SectionName {
   Title,
@@ -171,7 +172,7 @@ const CreateArticle: FC<CreateArticleProps> = ({
     return null;
   };
 
-  const renderBtnSettings = () => (<SettingsButton articleId={articleId} />);
+  const renderBtnSettings = () => (<SettingsButton type={PostType.ARTICLE} articleId={articleId} />);
 
   const renderCustomComponent = () => (
     <>
@@ -220,7 +221,7 @@ const CreateArticle: FC<CreateArticleProps> = ({
   const renderHeaderComponent = () => (
     <>
       {!!setting?.isImportant && (
-        <CreatePostBannerImportant
+        <CreateBannerImportant
           expiresTime={setting.importantExpiredAt}
           style={styles.bannerImportantTime}
         />

@@ -121,9 +121,13 @@ const Notification = () => {
             case NOTIFICATION_TYPE.POST_IMPORTANT_TO_MENTIONED_USER_IN_POST_IN_ONE_GROUP:
             case NOTIFICATION_TYPE.POST_IMPORTANT_TO_MENTIONED_USER_IN_POST_IN_MULTIPLE_GROUPS:
             case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR:
-            case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR_AGGREGATED: {
+            case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR_AGGREGATED:
+            case NOTIFICATION_TYPE.ADD_POST_TO_USER:
+            {
               if (target === TargetType.ARTICLE) {
                 rootNavigation.navigate(articleStack.articleDetail, { articleId: act.id });
+              } else if (target === TargetType.SERIES) {
+                rootNavigation.navigate(seriesStack.seriesDetail, { seriesId: act.id });
               } else {
                 rootNavigation.navigate(
                   homeStack.postDetail, {
@@ -322,6 +326,20 @@ const Notification = () => {
                   },
                 );
               }
+              break;
+            case NOTIFICATION_TYPE.REMOVE_ARTICLE_TO_USER:
+              if (act?.item?.id) {
+                rootNavigation.navigate(articleStack.articleDetail, { articleId: act.item.id });
+              }
+              break;
+            case NOTIFICATION_TYPE.REMOVE_POST_TO_USER:
+            case NOTIFICATION_TYPE.REMOVE_POST_TO_CREATOR:
+              rootNavigation.navigate(
+                homeStack.postDetail, {
+                  post_id: act?.item?.id,
+                  noti_id: item.id,
+                },
+              );
               break;
             default:
               console.warn(`Notification type ${type} have not implemented yet`);

@@ -1,6 +1,6 @@
 import { IObject } from '~/interfaces/common';
 import { IEditArticleAudience } from '~/interfaces/IArticle';
-import { IArticleCover } from '~/interfaces/IPost';
+import { IArticleCover, IPostSetting } from '~/interfaces/IPost';
 import { ISeriesData } from '~/interfaces/ISeries';
 import IBaseState from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
@@ -25,6 +25,7 @@ export interface ISeriesState extends IBaseState{
     setAudience: (audience: IEditArticleAudience) => void;
     setCover: (cover: IArticleCover) => void;
     setAudienceGroups: (groups: any) => void;
+    setSettings: (setting: IPostSetting) => void;
     postCreateNewSeries?: () => void;
     getSeriesDetail: (id: string) => void;
     deleteSeries: (id: string, callbackError: any) => void;
@@ -45,6 +46,13 @@ const initialState = {
     audience: {
       userIds: [],
       groupIds: [],
+    },
+    setting: {
+      canShare: true,
+      canReact: true,
+      canComment: true,
+      isImportant: false,
+      importantExpiredAt: null,
     },
   },
   requestings: {},
@@ -85,6 +93,14 @@ const useSeries = (set, get) => ({
       set((state: ISeriesState) => {
         state.groups = Object.values(groups) || [];
       }, 'setAudienceGroups');
+    },
+    setSettings: (setting: IPostSetting) => {
+      set((state: ISeriesState) => {
+        state.data.setting = {
+          ...state.data.setting,
+          ...setting,
+        };
+      }, 'setSettings Series');
     },
     postCreateNewSeries: postCreateNewSeries(set, get),
     getSeriesDetail: getSeriesDetail(set, get),
