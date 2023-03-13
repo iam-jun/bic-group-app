@@ -27,6 +27,7 @@ import Gender from './fragments/Gender';
 import useCommonController from '~/screens/store';
 import useMenuController from '../../store';
 import useModalStore from '~/store/modal';
+import { formatDate } from '~/utils/formatter';
 
 const EditBasicInfo = () => {
   const theme: ExtendedTheme = useTheme();
@@ -101,7 +102,8 @@ const EditBasicInfo = () => {
 
   const onSetBirthday = (date?: Date) => {
     if (date) {
-      setBirthdayState(date.toISOString());
+      const dateTime = `${formatDate(date, 'YYYY-MM-DD')}T00:00:00.000Z`;
+      setBirthdayState(dateTime);
     }
   };
 

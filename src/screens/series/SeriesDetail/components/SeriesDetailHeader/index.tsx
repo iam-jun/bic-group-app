@@ -165,8 +165,8 @@ const SeriesDetailHeader: FC<SeriesDetailHeaderProps> = ({ series }) => {
 
   return (
     <View style={styles.containerHeader}>
+      {renderImportant()}
       <View>
-        {renderImportant()}
         <Image source={coverMedia?.url} style={styles.img} />
         <View style={styles.mask} />
         <View style={styles.insideView}>
