@@ -17,6 +17,7 @@ import articleStack from './navigator/MainStack/stacks/articleStack/stack';
 import { TargetType } from '~/interfaces/IPost';
 import homeStack from './navigator/MainStack/stacks/homeStack/stack';
 import menuStack from './navigator/MainStack/stacks/menuStack/stack';
+import { ContentType } from '~/interfaces/INotification';
 
 export const isNavigationRefReady: any = React.createRef();
 
@@ -160,6 +161,7 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
       communityId = null,
       groupId = null,
       contentId = null,
+      contentType = '',
     } = newData;
     if (type !== undefined) {
       switch (type) {
@@ -317,7 +319,22 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
             screen: homeStack.postDetail,
             params: { post_id: contentId },
           };
-
+        case NOTIFICATION_TYPE.DELETE_SERIES_TO_USER:
+          if (contentType === ContentType.post) {
+            return {
+              screen: homeStack.postDetail,
+              params: { post_id: contentId },
+            };
+          }
+          if (contentType === ContentType.article) {
+            return {
+              screen: articleStack.articleDetail,
+              params: {
+                articleId: contentId,
+              },
+            };
+          }
+          return null;
         case NOTIFICATION_TYPE.LEAVE_MULTIPLE_GROUP_TO_USER:
           return null;
         default:
