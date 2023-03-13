@@ -102,6 +102,7 @@ const EditBasicInfo = () => {
 
   const onSetBirthday = (date?: Date) => {
     if (date) {
+      // BE requests to clear timezone effect
       const dateTime = `${formatDate(date, 'YYYY-MM-DD')}T00:00:00.000Z`;
       setBirthdayState(dateTime);
     }
