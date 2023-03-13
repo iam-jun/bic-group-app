@@ -98,6 +98,7 @@ const DateInput: React.FC<DateInputProps> = ({
   };
 
   const _onConfirm = (date: Date) => {
+    _onClosePopup();
     onConfirm(date);
     // if (mode === 'date') {
     //   const newDate = formatDate(date, 'DD/MM/YYYY');
@@ -106,7 +107,6 @@ const DateInput: React.FC<DateInputProps> = ({
     //   const newDate = formatDate(date, 'hh:mm A', undefined, 9999);
     //   setText(newDate);
     // }
-    _onClosePopup();
   };
 
   const _onClosePopup = () => {
