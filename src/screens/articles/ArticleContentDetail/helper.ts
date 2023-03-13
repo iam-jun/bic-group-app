@@ -92,7 +92,7 @@ export const onPressImages = (data: { payload: any; listImage; setInitIndex; set
 };
 
 export const onPressMentionAudience = (payload: IMentionUser) => {
-  if (!payload) return;
+  if (!payload || payload?.isDeactivated) return;
 
   rootNavigation.navigate(mainStack.userProfile, { userId: payload.id });
 };

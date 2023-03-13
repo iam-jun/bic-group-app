@@ -21,6 +21,7 @@ import Icon from '~/baseComponents/Icon';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import useModalStore from '~/store/modal';
+import DeactivatedView from '~/components/DeactivatedView';
 
 export interface ContentHeaderProps {
   style?: StyleProp<ViewStyle>;
@@ -59,11 +60,10 @@ const ContentHeader: FC<ContentHeaderProps> = ({
 
   const textAudiences = getAudiencesText(audience, t);
 
-  const avatar = actor?.avatar;
-  const actorName = actor?.fullname;
+  const { avatar, fullname: actorName, isDeactivated } = actor || {};
 
   const onPressActor = () => {
-    if (!actor.id) return;
+    if (!actor.id || isDeactivated) return;
 
     const payload = { userId: actor.id };
     rootNavigation.navigate(
@@ -105,6 +105,8 @@ const ContentHeader: FC<ContentHeaderProps> = ({
     return null;
   };
 
+  const colorActorName = isDeactivated ? colors.grey40 : colors.neutral80;
+
   return (
     <Button
       testID="content_header"
@@ -125,12 +127,14 @@ const ContentHeader: FC<ContentHeaderProps> = ({
           onPress={onPressActor}
         >
           <Text.SubtitleM
-            color={colors.neutral80}
+            style={styles.actorName}
+            color={colorActorName}
             numberOfLines={1}
             testID="content_header.actor"
           >
             {actorName}
           </Text.SubtitleM>
+          {isDeactivated && <DeactivatedView style={styles.deactivatedView} />}
         </Button>
         <View style={styles.textToAudience}>
           <Text.BodyS color={colors.neutral40} useI18n style={styles.textTo}>
@@ -153,7 +157,7 @@ const ContentHeader: FC<ContentHeaderProps> = ({
         </View>
       </View>
       {onPressMenu && (
-        <View style={styles.iconMenu}>
+        <View>
           <Button.Raise
             icon="menu"
             size="small"
@@ -187,10 +191,15 @@ const styles = StyleSheet.create({
     marginRight: spacing.margin.base,
   },
   btnActor: {
-    alignSelf: 'flex-start',
+    flexDirection: 'row',
+    alignItems: 'center',
     marginRight: spacing.margin.base,
   },
-  iconMenu: {
+  actorName: {
+    flexShrink: 1,
+  },
+  deactivatedView: {
+    marginLeft: spacing.margin.tiny,
   },
 });
 

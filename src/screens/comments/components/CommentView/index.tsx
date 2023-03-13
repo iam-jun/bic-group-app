@@ -108,7 +108,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
       }
       : null);
 
-  const { fullname, avatar } = actor || {};
+  const { fullname, avatar, isDeactivated } = actor || {};
 
   const isActor = currentUserId === actor?.id;
 
@@ -142,12 +142,12 @@ const _CommentView: React.FC<CommentViewProps> = ({
 
   const onPressUser = () => {
     const id = actor?.id;
-    if (!id) return;
+    if (!id || isDeactivated) return;
     navigateToUserProfile(id);
   };
 
   const onPressAudience = useCallback((audience: IMarkdownAudience) => {
-    if (!audience) return;
+    if (!audience || audience?.isDeactivated) return;
     navigateToUserProfile(audience.id);
   }, []);
 
@@ -336,6 +336,8 @@ const _CommentView: React.FC<CommentViewProps> = ({
     );
   }
 
+  const colorFullName = isDeactivated ? colors.grey40 : colors.neutral80;
+
   return (
     <View>
       <Animated.View style={[styles.container, animatedStyle]}>
@@ -361,6 +363,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
                   <View style={styles.userName}>
                     <ButtonWrapper onPress={onPressUser}>
                       <Text.H5
+                        color={colorFullName}
                         testID={`comment_view.level_${parentCommentId ? 2 : 1}.user_name`}
                         numberOfLines={1}
                       >

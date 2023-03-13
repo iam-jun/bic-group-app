@@ -11,6 +11,10 @@ export const authErrors = {
   USER_EXISTED: 'user.existed',
 };
 
+export const authErrorMessage = {
+  USER_IS_DISABLED: 'User is disabled.',
+};
+
 export const forgotPasswordStages = {
   INPUT_ID: 'INPUT_ID',
   INPUT_CODE_PW: 'INPUT_CODE_PW',

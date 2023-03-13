@@ -23,11 +23,14 @@ import useNotificationStore from './store';
 import INotificationsState from './store/Interface';
 import spacing from '~/theme/spacing';
 import useModalStore from '~/store/modal';
+import { ContentType } from '~/interfaces/INotification';
+import { useUserIdAuth } from '~/hooks/auth';
 
 const Notification = () => {
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
   const { rootNavigation } = useRootNavigation();
   const isFocused = useIsFocused();
+  const userId = useUserIdAuth();
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const modalActions = useModalStore((state) => state.actions);
@@ -341,6 +344,24 @@ const Notification = () => {
                   noti_id: item.id,
                 },
               );
+              break;
+            case NOTIFICATION_TYPE.DELETE_SERIES_TO_USER:
+              // eslint-disable-next-line no-case-declarations
+              const items = act?.items || [];
+              if (items?.length > 0) {
+                const content = items.find((item) => item?.actor?.id === userId);
+                if (content?.contentType === ContentType.post) {
+                  rootNavigation.navigate(
+                    homeStack.postDetail, {
+                      post_id: content.id,
+                      noti_id: item.id,
+                    },
+                  );
+                }
+                if (content?.contentType === ContentType.article) {
+                  rootNavigation.navigate(articleStack.articleDetail, { articleId: content.id });
+                }
+              }
               break;
             default:
               console.warn(`Notification type ${type} have not implemented yet`);

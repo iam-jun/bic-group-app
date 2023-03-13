@@ -11,7 +11,7 @@ import { IObject } from '~/interfaces/common';
 import spacing from '~/theme/spacing';
 import useForgotPasswordStore, { IForgotPasswordState } from '../../store';
 import RequestVerifyEmailModal from '~/screens/auth/VerifyEmail/RequestVerifyEmailModal';
-import { authErrors } from '~/constants/authConstants';
+import { authErrorMessage, authErrors } from '~/constants/authConstants';
 import showToastError from '~/store/helper/showToastError';
 import useModalStore from '~/store/modal';
 import { FieldNameType } from '~/interfaces/IAuth';
@@ -77,6 +77,14 @@ const EmailInputView: React.FC<Props> = ({ useFormData }) => {
         isOpen: true,
         titleFullScreen: 'groups:group_content:btn_your_groups',
         ContentComponent: <RequestVerifyEmailModal email={email} isFromSignIn={false} />,
+      });
+    } else if (
+      error?.code === authErrors.NOT_AUTHORIZED_EXCEPTION
+      && error?.message === authErrorMessage.USER_IS_DISABLED
+    ) {
+      setError(EMAIL, {
+        type: 'validate',
+        message: t('auth:text_err_user_deactivated'),
       });
     } else {
       if (error?.code === authErrors.LIMIT_EXCEEDED_EXCEPTION) {

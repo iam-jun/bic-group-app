@@ -95,6 +95,7 @@ export interface IAudienceUser {
   username?: string;
   fullname?: string;
   avatar?: string;
+  isDeactivated?: boolean;
 }
 
 export interface IAudienceGroup {
@@ -114,6 +115,7 @@ export interface IMarkdownAudience {
   };
   createdAt: string;
   updatedAt: string;
+  isDeactivated?: boolean;
 }
 
 export interface IAudience {
@@ -401,6 +403,7 @@ export interface IMentionUser {
   avatar: string;
   beinStaffRole?: string;
   chatUserId?: string;
+  isDeactivated?: boolean;
 }
 
 export interface IParamGetReactionDetail {

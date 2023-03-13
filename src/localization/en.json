@@ -218,7 +218,8 @@
     "text_developing_version": "You’re currently using the developing version.",
     "mark_post_as_important": "Mark this post as Important",
     "mark_article_as_important": "Mark this article as Important",
-    "mark_series_as_important": "Mark this series as Important"
+    "mark_series_as_important": "Mark this series as Important",
+    "text_deactivated": "Deactivated"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -267,7 +268,8 @@
     "text_change_password_success": "Changed password successfully!",
     "text_resend_otp_success": "Resent OTP successfully. Please check your email!",
     "text_resend_otp_fail": "Resend OTP fail. Please try again!",
-    "text_err_id_password_not_matched": "Email and password don't match.",
+    "text_err_id_password_not_matched": "Email and password don't match",
+    "text_err_user_deactivated": "This account has been deactivated",
     "text_err_password_blank": "Password is required!",
     "text_err_new_password_blank": "New password is required!",
     "text_err_password_format_todo_revert": "Password must be eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!",
