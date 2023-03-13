@@ -247,12 +247,10 @@ export const matchDeepLink = (url: string) => {
   }
 
   match = new RegExp(
-    `^${PREFIX_DEEPLINK_GROUP}\\/sign-up\\?(\\S+)$`,
+    `^${PREFIX_DEEPLINK_GROUP}\\/ref\\/(\\S+)$`,
   ).exec(deepLinkUrl);
   if (match) {
-    const urlParams = match[1];
-    const newParams = getURLParams(urlParams);
-    return { type: DeepLinkTypes.SIGN_UP, params: newParams };
+    return { type: DeepLinkTypes.SIGN_UP, referralCode: match[1] };
   }
 
   return null;

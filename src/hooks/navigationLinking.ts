@@ -98,7 +98,7 @@ const useNavigationLinkingConfig = () => {
 
 const navigateFromReferralLink = async (payload: { match: any; navigation: any; userId: string }) => {
   const { match, navigation, userId } = payload || {};
-  const { referralCode } = match?.params || {};
+  const { referralCode } = match || {};
   let responseValidate = null;
 
   try {
