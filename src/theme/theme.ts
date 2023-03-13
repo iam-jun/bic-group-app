@@ -37,6 +37,9 @@ export const light: ExtendedTheme = {
     gray80: '#2D3039',
     gray90: '#1B1D22',
 
+    grey10: '#E6E6E6',
+    grey40: '#868990',
+
     purple1: '#FBF8FF',
     purple2: '#F4EFFB',
     purple5: '#E9DFF6',
@@ -147,6 +150,9 @@ export const dark: ExtendedTheme = {
     gray70: '#3F4350',
     gray80: '#2D3039',
     gray90: '#1B1D22',
+
+    grey10: '#E6E6E6',
+    grey40: '#868990',
 
     purple1: '#FBF8FF',
     purple2: '#F4EFFB',

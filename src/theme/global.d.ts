@@ -40,6 +40,9 @@ declare module '@react-navigation/native' {
       gray80: string;
       gray90: string;
 
+      grey10: string;
+      grey40: string;
+
       purple1: string;
       purple2: string;
       purple5: string;

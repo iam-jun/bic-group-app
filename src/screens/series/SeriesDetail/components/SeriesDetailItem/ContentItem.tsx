@@ -12,6 +12,7 @@ import Image from '~/beinComponents/Image';
 import { borderRadius } from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import images from '~/resources/images';
+import DeactivatedView from '~/components/DeactivatedView';
 
 type ContentItemProps = {
   item: IPost;
@@ -23,7 +24,7 @@ const ContentItem: FC<ContentItemProps> = ({
   const {
     actor, coverMedia, summary, content, media,
   } = item || {};
-  const { avatar, fullname } = actor || {};
+  const { avatar, fullname, isDeactivated } = actor || {};
   const { url } = coverMedia || {};
   const { images: imagesPost } = media || {};
   const coverUrlItem = item?.type === PostType.ARTICLE ? url : imagesPost?.[0]?.url;
@@ -35,26 +36,29 @@ const ContentItem: FC<ContentItemProps> = ({
   const { rootNavigation } = useRootNavigation();
 
   const onPressActor = () => {
-    if (!actor?.id) return;
+    if (!actor?.id || isDeactivated) return;
 
     const payload = { userId: actor.id };
     rootNavigation.navigate(mainTabStack.userProfile, payload);
   };
+
+  const colorFullName = isDeactivated ? colors.grey40 : colors.neutral60;
 
   return (
     <View>
       <View style={styles.row}>
         <View style={styles.actor}>
           <Button
-            style={styles.avatar}
+            style={styles.avatarContainer}
             onPress={onPressActor}
           >
-            <Avatar.Small isRounded source={avatar} />
+            <Avatar.Small style={styles.avatar} isRounded source={avatar} />
             <ViewSpacing width={spacing.margin.small} />
-            <View style={{ flex: 1 }}>
-              <Text.BodyXSMedium color={colors.neutral60} numberOfLines={1}>
+            <View style={styles.fullnameContainer}>
+              <Text.BodyXSMedium color={colorFullName} numberOfLines={1}>
                 {fullname}
               </Text.BodyXSMedium>
+              {isDeactivated && <DeactivatedView style={styles.deactivatedView} />}
             </View>
           </Button>
         </View>
@@ -94,10 +98,19 @@ const createStyle = (theme: ExtendedTheme) => {
     summaryView: {
       marginTop: spacing.margin.large,
     },
-    avatar: {
+    avatarContainer: {
       flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
+    },
+    avatar: {
+      alignSelf: 'flex-start',
+    },
+    fullnameContainer: {
+      flex: 1,
+    },
+    deactivatedView: {
+      marginTop: spacing.margin.tiny,
     },
   });
 };

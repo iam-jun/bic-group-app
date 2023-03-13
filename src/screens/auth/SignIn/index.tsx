@@ -39,7 +39,7 @@ import getEnv from '~/utils/env';
 import { APP_ENV } from '~/configs/appConfig';
 import { AppConfig } from '~/configs';
 import RequestVerifyEmailModal from '../VerifyEmail/RequestVerifyEmailModal';
-import { authErrors } from '~/constants/authConstants';
+import { authErrorMessage, authErrors } from '~/constants/authConstants';
 import { useBaseHook } from '~/hooks';
 import useModalStore from '~/store/modal';
 import { FieldNameType } from '~/interfaces/IAuth';
@@ -166,7 +166,11 @@ const SignIn = () => {
     let errorMessage;
     switch (error?.code) {
       case authErrors.NOT_AUTHORIZED_EXCEPTION:
-        errorMessage = t('auth:text_err_id_password_not_matched');
+        if (error?.message === authErrorMessage.USER_IS_DISABLED) {
+          errorMessage = t('auth:text_err_user_deactivated');
+        } else {
+          errorMessage = t('auth:text_err_id_password_not_matched');
+        }
         break;
       case authErrors.USER_NOT_FOUND_EXCEPTION:
         // eslint-disable-next-line no-case-declarations
