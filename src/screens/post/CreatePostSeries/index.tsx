@@ -88,9 +88,9 @@ const CreatePostSeries = () => {
     });
   }, appConfig.searchTriggerTime);
 
-  const onLoadMore = debounce(() => {
+  const onLoadMore = () => {
     serieActions.getSeries(true, { groupIds: chosenGroupIds });
-  }, appConfig.searchTriggerTime);
+  };
 
   const onRemoveSeries = (series: ICreatePostSeries) => {
     createPostStoreActions.removeSeriesTempData(series);
@@ -126,7 +126,6 @@ const CreatePostSeries = () => {
       <SearchInput
         size="large"
         style={styles.searchInput}
-        testID="post_select_audience.search"
         onChangeText={onChangeTextSearch}
         placeholder={t('article:text_search_category_placeholder')}
       />
