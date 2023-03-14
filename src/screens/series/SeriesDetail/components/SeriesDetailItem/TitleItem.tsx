@@ -4,7 +4,7 @@ import { View, StyleSheet, Text as RNText } from 'react-native';
 import Text from '~/baseComponents/Text';
 import { IPost, PostType } from '~/interfaces/IPost';
 import { spacing, dimension } from '~/theme';
-import { formatNumberWithZeroPrefix } from '~/utils/formatter';
+import { formatNumberWithZeroPrefix, escapeMarkDown } from '~/utils/formatter';
 import { Button } from '~/baseComponents';
 import useSeriesDetailItemMenu from './useSeriesDetailItemMenu';
 import { useBaseHook } from '~/hooks';
@@ -24,7 +24,7 @@ const TitleItem: FC<TitleItemProps> = ({
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
-  const titleItem = item?.type === PostType.ARTICLE ? title : content;
+  const titleItem = item?.type === PostType.ARTICLE ? title : escapeMarkDown(content);
 
   const { showMenu } = useSeriesDetailItemMenu(seriesId, id, item?.type);
 
