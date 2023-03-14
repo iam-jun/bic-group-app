@@ -59,7 +59,7 @@ export const onReceiveURL = async ({ url, navigation, listener }: { url: string;
       case DeepLinkTypes.CONFIRM_USER:
         navigation?.navigate?.(userId ? mainStack.confirmUser : authStacks.confirmUser, { params: match.params });
         break;
-      case DeepLinkTypes.SIGN_UP:
+      case DeepLinkTypes.REFERRAL:
         await navigateFromReferralLink({ match, navigation, userId });
         break;
       default:
@@ -105,7 +105,6 @@ const navigateFromReferralLink = async (payload: { match: any; navigation: any; 
     responseValidate = await groupApi.validateReferralCode({ code: referralCode });
   } catch (error) {
     console.error('validateReferralCode error:', error);
-    showToastError(error);
   }
 
   if (responseValidate && responseValidate?.data) {
@@ -152,6 +151,7 @@ const navigateWithValidReferralCode = async (payload: {
     navigation?.navigate?.(authStacks.signUp, { isValidLink: true, referralCode });
   }
 };
+
 const navigateWithInvalidReferralCode = (payload: { userId: string; navigation: any }) => {
   const { userId, navigation } = payload;
   if (userId) {

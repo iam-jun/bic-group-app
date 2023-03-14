@@ -23,7 +23,7 @@ export enum DeepLinkTypes {
   LOGIN = 'login',
   FORGOT_PASSWORD = 'forgot_password',
   CONFIRM_USER = 'confirm_user',
-  SIGN_UP = 'sign_up',
+  REFERRAL = 'referral',
 }
 
 export enum LinkGeneratorTypes {
@@ -250,7 +250,7 @@ export const matchDeepLink = (url: string) => {
     `^${PREFIX_DEEPLINK_GROUP}\\/ref\\/(\\S+)$`,
   ).exec(deepLinkUrl);
   if (match) {
-    return { type: DeepLinkTypes.SIGN_UP, referralCode: match[1] };
+    return { type: DeepLinkTypes.REFERRAL, referralCode: match[1] };
   }
 
   return null;

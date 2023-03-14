@@ -275,7 +275,7 @@
     "text_err_password_format_todo_revert": "Password must be eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!",
     "text_err_password_format": "Password must be eight characters, at least one number!",
     "text_err_email_blank": "Email is required!",
-    "text_err_email_format": "Invalid email!",
+    "text_err_email_format": "Wrong Email format",
     "text_err_username_blank": "User name is required!",
     "text_err_code": "Code must have 6 numbers!",
     "text_err_new_password_must_differ_from_current": "New password must be different from the current password.",

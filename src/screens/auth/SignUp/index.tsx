@@ -7,8 +7,6 @@ import {
   TouchableWithoutFeedback,
   View,
   ScrollView,
-  KeyboardAvoidingView,
-  Platform,
 } from 'react-native';
 import { ExtendedTheme, useFocusEffect, useTheme } from '@react-navigation/native';
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
@@ -37,6 +35,7 @@ import useModalStore from '~/store/modal';
 import SignUpSuccessModal from './components/SignUpSuccessModal';
 import showToastError from '~/store/helper/showToastError';
 import { authErrors } from '~/constants/authConstants';
+import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 
 const {
   EMAIL, FULL_NAME, USER_NAME, PASSWORD,
@@ -247,12 +246,14 @@ const SignUp: FC<SignUpProps> = ({ route }: SignUpProps) => {
   const renderPrivacy = () => (
     <View style={styles.privacyContainer}>
       <CheckBox style={styles.checkBox} isChecked={isCheckbox} onPress={onCheckbox} />
-      <Text.BodyS color={colors.neutral40} useI18n>
-        auth:text_agree_to_our
-      </Text.BodyS>
-      <Text.BodySMedium onPress={onPrivacy} color={colors.blue50} useI18n>
-        auth:text_privacy_terms
-      </Text.BodySMedium>
+      <View style={styles.privacyText}>
+        <Text.BodyS color={colors.neutral40} useI18n>
+          auth:text_agree_to_our
+        </Text.BodyS>
+        <Text.BodySMedium onPress={onPrivacy} color={colors.blue50} useI18n>
+          auth:text_privacy_terms
+        </Text.BodySMedium>
+      </View>
     </View>
   );
 
@@ -292,36 +293,35 @@ const SignUp: FC<SignUpProps> = ({ route }: SignUpProps) => {
 
   return (
     <ScreenWrapper testID="sign_up" style={styles.root} isFullView>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.KeyboardAvoidingView}>
-        <ScrollView
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}
-          keyboardShouldPersistTaps="handled"
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+        keyboardShouldPersistTaps="handled"
+      >
+        <TouchableWithoutFeedback
+          testID="sign_up.button_hide_keyboard"
+          onPress={hideKeyboard}
+          accessible={false}
+          style={styles.flex1}
         >
-          <TouchableWithoutFeedback
-            testID="sign_up.button_hide_keyboard"
-            onPress={hideKeyboard}
-            accessible={false}
-            style={styles.flex1}
-          >
-            <View style={styles.paddingView}>
-              {renderLogoImage()}
-              {renderTitle()}
-              {!isValidLink && renderErrorLink()}
-              {renderInputEmail()}
-              {renderInputFullName()}
-              {renderInputUserName()}
-              {renderInputPassword()}
-              {renderPrivacy()}
-              {renderButtonSignUp()}
-              {renderSignIn()}
-            </View>
-          </TouchableWithoutFeedback>
-        </ScrollView>
-      </KeyboardAvoidingView>
+          <View style={styles.paddingView}>
+            {renderLogoImage()}
+            {renderTitle()}
+            {!isValidLink && renderErrorLink()}
+            {renderInputEmail()}
+            {renderInputFullName()}
+            {renderInputUserName()}
+            {renderInputPassword()}
+            {renderPrivacy()}
+            {renderButtonSignUp()}
+            {renderSignIn()}
+          </View>
+        </TouchableWithoutFeedback>
+      </ScrollView>
       {renderLoading()}
+      <KeyboardSpacer iosOnly />
     </ScreenWrapper>
   );
 };
@@ -332,9 +332,6 @@ const themeStyles = (theme: ExtendedTheme) => {
 
   return StyleSheet.create({
     root: {
-      flex: 1,
-    },
-    KeyboardAvoidingView: {
       flex: 1,
     },
     container: {
@@ -386,6 +383,9 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     checkBox: {
       marginRight: spacing.margin.small + spacing.margin.xTiny,
+    },
+    privacyText: {
+      flexWrap: 'wrap',
     },
     signInContainer: {
       flexDirection: 'row',
