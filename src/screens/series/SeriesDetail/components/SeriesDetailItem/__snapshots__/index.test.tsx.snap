@@ -263,7 +263,9 @@ exports[`SeriesDetailItem component render correctly 1`] = `
                   "height": 32,
                   "width": 32,
                 },
-                undefined,
+                Object {
+                  "alignSelf": "flex-start",
+                },
               ]
             }
             testID="avatar"

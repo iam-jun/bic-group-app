@@ -411,7 +411,7 @@ exports[`EditTag component render correctly with default state 1`] = `
           ]
         }
       >
-        The tag will be automatically converted to lowercase after created or updated.
+        The tag will be automatically converted to uppercase after created or updated.
       </Text>
     </View>
   </View>

@@ -23,9 +23,9 @@ describe('leaveGroup', () => {
       .spyOn(groupApi, 'leaveGroup')
       .mockImplementation(() => Promise.resolve(response) as any);
 
-    const doSetGroupStatus = jest.fn();
+    const setGroupStatus = jest.fn();
     jest.spyOn(useDiscoverGroupsStore, 'getState').mockImplementation(
-      () => ({ doSetGroupStatus } as any),
+      () => ({ actions: { setGroupStatus } } as any),
     );
 
     const spyApiGetGroupDetail = jest
@@ -54,7 +54,7 @@ describe('leaveGroup', () => {
       jest.runAllTimers();
     });
 
-    expect(doSetGroupStatus).toBeCalledWith(groupId, status);
+    expect(setGroupStatus).toBeCalledWith(groupId, status);
     expect(spyApiGetGroupDetail).toBeCalledWith(groupId);
     expect(spyApiGetJoinedAllGroups).toBeCalled();
     expect(spyApiGetManagedCommunityAndGroup).toBeCalled();

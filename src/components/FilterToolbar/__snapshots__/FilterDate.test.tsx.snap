@@ -287,10 +287,13 @@ exports[`FilterDate component should render with init data correctly 1`] = `
                   "fontSize": 11,
                 },
                 Object {},
-                Object {
-                  "color": "#007AFF",
-                  "paddingLeft": 4,
-                },
+                Array [
+                  Object {
+                    "color": "#007AFF",
+                    "paddingLeft": 4,
+                  },
+                  undefined,
+                ],
               ]
             }
             testID="tag.label"
