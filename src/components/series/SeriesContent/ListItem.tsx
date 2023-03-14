@@ -4,7 +4,7 @@ import { View, StyleSheet } from 'react-native';
 import Text from '~/baseComponents/Text';
 import { Button } from '~/baseComponents';
 import { spacing } from '~/theme';
-import { formatNumberWithZeroPrefix } from '~/utils/formatter';
+import { formatNumberWithZeroPrefix, escapeMarkDown } from '~/utils/formatter';
 import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import { IPost, PostType } from '~/interfaces/IPost';
@@ -25,7 +25,7 @@ const Item: FC<ItemProps> = ({ index, item }) => {
   const { colors } = theme;
   const styles = createStyle(theme);
   const { title, content } = item || {};
-  const titleItem = item?.type === PostType.ARTICLE ? title : content;
+  const titleItem = item?.type === PostType.ARTICLE ? title : escapeMarkDown(content);
 
   const goToArticleContentDetail = () => {
     rootNavigation.navigate(articleStack.articleContentDetail, { articleId: item?.id });
