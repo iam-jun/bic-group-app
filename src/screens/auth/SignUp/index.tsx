@@ -246,14 +246,14 @@ const SignUp: FC<SignUpProps> = ({ route }: SignUpProps) => {
   const renderPrivacy = () => (
     <View style={styles.privacyContainer}>
       <CheckBox style={styles.checkBox} isChecked={isCheckbox} onPress={onCheckbox} />
-      <View style={styles.privacyText}>
+      <Text style={styles.privacyText}>
         <Text.BodyS color={colors.neutral40} useI18n>
           auth:text_agree_to_our
         </Text.BodyS>
         <Text.BodySMedium onPress={onPrivacy} color={colors.blue50} useI18n>
           auth:text_privacy_terms
         </Text.BodySMedium>
-      </View>
+      </Text>
     </View>
   );
 
@@ -385,7 +385,7 @@ const themeStyles = (theme: ExtendedTheme) => {
       marginRight: spacing.margin.small + spacing.margin.xTiny,
     },
     privacyText: {
-      flexWrap: 'wrap',
+      flex: 1,
     },
     signInContainer: {
       flexDirection: 'row',
