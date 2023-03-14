@@ -15,10 +15,12 @@ export interface ItemCheckboxProps {
   disabled?: boolean;
   onRemoveItem?: (category: ICategory) => void;
   onAddItem?: (category: ICategory) => void;
+  testIDCheckbox?: string;
+  testIDItem?: string;
 }
 
 const ItemCheckbox: FC<ItemCheckboxProps> = ({
-  data, isChecked, disabled = false, onRemoveItem, onAddItem,
+  data, isChecked, disabled = false, onRemoveItem, onAddItem, testIDCheckbox, testIDItem,
 }) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
@@ -34,10 +36,10 @@ const ItemCheckbox: FC<ItemCheckboxProps> = ({
   };
 
   return (
-    <View testID="item_checkbox.container" style={styles.container}>
+    <View testID={testIDItem} style={styles.container}>
       <Text testID="item_checkbox.text" style={styles.textName}>{name}</Text>
       <Checkbox
-        testID="item_checkbox.checkbox"
+        testID={testIDCheckbox}
         isChecked={isChecked}
         disabled={disabled ? 'disabled' : undefined}
         onPress={onChange}

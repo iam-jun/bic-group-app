@@ -29,6 +29,7 @@ const BasicInfo = ({
   isCurrentUser,
 }: Props) => {
   const { rootNavigation } = useRootNavigation();
+  // BE requests to clear timezone effect
   const birthdayWithoutTime = birthday?.substring(0, birthday?.indexOf('T'));
   const formattedBirthday = formatDate(birthdayWithoutTime, 'MMM D, YYYY');
 

@@ -42,7 +42,7 @@ const ListSeriesWithAudiences = ({
   const renderItem = ({ item }: any) => {
     const isChecked = selectedData?.findIndex((selected) => selected?.id === item?.id) > -1;
     return (
-      <View style={styles.container}>
+      <View testID="series_item" style={styles.container}>
         <View style={styles.row}>
           <Text.BodyM
             numberOfLines={1}
@@ -80,6 +80,7 @@ const ListSeriesWithAudiences = ({
 
   return (
     <FlatList
+      testID="list_series_with_audiences.list_series"
       data={data}
       renderItem={renderItem}
       keyExtractor={keyExtractor}

@@ -112,6 +112,8 @@ const CreatePostTags = () => {
 
     return (
       <ItemCheckbox
+        testIDItem="item_checkbox.container"
+        testIDCheckbox={`item_checkbox.item_${item.id}`}
         data={item}
         isChecked={isChecked}
         disabled={disabledCheckbox}
@@ -165,6 +167,7 @@ const CreatePostTags = () => {
       />
       <Divider />
       <FlatList
+        testID="create_post_tags.list_tags"
         data={listData || []}
         renderItem={renderItem}
         keyExtractor={(item) => `tags_item_${item?.id || item?.name}`}

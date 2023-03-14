@@ -48,6 +48,7 @@ const ListSelectedTags = () => {
 
   return (
     <FlatList
+      testID="list_selected_tags.list_tags"
       data={selectedTags}
       keyExtractor={keyExtractor}
       renderItem={renderItem}

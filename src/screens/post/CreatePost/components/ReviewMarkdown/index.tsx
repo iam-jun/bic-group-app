@@ -16,10 +16,11 @@ import spacing from '~/theme/spacing';
 import useCreatePostStore from '../../store';
 
 export interface ReviewMarkdownProps {
+  testID?: string;
   onPressDone: () => void
 }
 
-const ReviewMarkdown: FC<ReviewMarkdownProps> = ({ onPressDone }) => {
+const ReviewMarkdown: FC<ReviewMarkdownProps> = ({ testID, onPressDone }) => {
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
 
@@ -74,7 +75,7 @@ const ReviewMarkdown: FC<ReviewMarkdownProps> = ({ onPressDone }) => {
   );
 
   return (
-    <View style={styles.container}>
+    <View testID={testID} style={styles.container}>
       {renderTitleHeader()}
       {renderPost()}
     </View>

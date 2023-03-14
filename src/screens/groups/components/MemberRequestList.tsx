@@ -91,7 +91,7 @@ const MemberRequestList = ({
 
   return (
     <FlatList
-      testID="flatlist"
+      testID="member_request_list"
       data={ids}
       renderItem={renderItem}
       keyExtractor={(

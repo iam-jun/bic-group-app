@@ -251,6 +251,7 @@ const PostToolbar: FC<PostToolbarProps> = ({
         **bold**, *italic*, ~~strike~~, # Heading 1, ## Heading 2,...
       </Text.BodyXS>
       <Text.BodyXSMedium
+        testID="post_toolbar.text_help"
         color={theme.colors.blue50}
         onPress={onPressHelp}
         useI18n
@@ -263,7 +264,7 @@ const PostToolbar: FC<PostToolbarProps> = ({
   return (
     <BottomSheet
       modalizeRef={modalizeRef}
-      ContentComponent={<ReviewMarkdown onPressDone={closeModal} />}
+      ContentComponent={<ReviewMarkdown testID={`review_markdown.${isOpen ? 'open' : 'close'}`} onPressDone={closeModal} />}
       panGestureAnimatedValue={animated}
       {...props}
     >
