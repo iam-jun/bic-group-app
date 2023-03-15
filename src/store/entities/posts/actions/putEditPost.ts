@@ -54,7 +54,7 @@ const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
     useCreatePostStore.getState().actions.setLoadingCreatePost(false);
 
     const errorCode = error?.code;
-    if (errorCode === ApiErrorCode.Post.ARTICLE_INVALID_PARAM) {
+    if (errorCode === ApiErrorCode.Post.POST_INVALID_PARAM) {
       useValidateSeriesTags.getState().actions.handleSeriesTagsError({ error, postType: PostType.POST });
     } else {
       const toast: IToastMessage = {
