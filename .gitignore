@@ -82,3 +82,4 @@ GoogleService-Info-Staging.plist
 coverage
 .tmp
 /ios/I/
+test-report.xml
