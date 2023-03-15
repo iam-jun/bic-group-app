@@ -171,10 +171,13 @@ exports[`CategorySection should render correctly 1`] = `
                           "fontSize": 13,
                         },
                         Object {},
-                        Object {
-                          "color": "#2D3039",
-                          "paddingLeft": 4,
-                        },
+                        Array [
+                          Object {
+                            "color": "#2D3039",
+                            "paddingLeft": 4,
+                          },
+                          undefined,
+                        ],
                       ]
                     }
                     testID="tag.label"

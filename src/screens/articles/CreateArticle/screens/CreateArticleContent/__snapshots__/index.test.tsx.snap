@@ -1762,6 +1762,7 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                                 "flex": 1,
                               }
                             }
+                            testID="sticker_view.emoij"
                           >
                             <View
                               style={

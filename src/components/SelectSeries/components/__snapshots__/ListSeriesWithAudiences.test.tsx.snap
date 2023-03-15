@@ -312,10 +312,13 @@ exports[`ListSeriesWithAudiences component render correctly 1`] = `
                     "fontSize": 14,
                   },
                   Object {},
-                  Object {
-                    "color": "#007AFF",
-                    "paddingLeft": 4,
-                  },
+                  Array [
+                    Object {
+                      "color": "#007AFF",
+                      "paddingLeft": 4,
+                    },
+                    undefined,
+                  ],
                 ]
               }
               testID="tag.label"
@@ -361,10 +364,13 @@ exports[`ListSeriesWithAudiences component render correctly 1`] = `
                     "fontSize": 14,
                   },
                   Object {},
-                  Object {
-                    "color": "#007AFF",
-                    "paddingLeft": 4,
-                  },
+                  Array [
+                    Object {
+                      "color": "#007AFF",
+                      "paddingLeft": 4,
+                    },
+                    undefined,
+                  ],
                 ]
               }
               testID="tag.label"
@@ -582,10 +588,13 @@ exports[`ListSeriesWithAudiences component render correctly 1`] = `
                     "fontSize": 14,
                   },
                   Object {},
-                  Object {
-                    "color": "#007AFF",
-                    "paddingLeft": 4,
-                  },
+                  Array [
+                    Object {
+                      "color": "#007AFF",
+                      "paddingLeft": 4,
+                    },
+                    undefined,
+                  ],
                 ]
               }
               testID="tag.label"
@@ -631,10 +640,13 @@ exports[`ListSeriesWithAudiences component render correctly 1`] = `
                     "fontSize": 14,
                   },
                   Object {},
-                  Object {
-                    "color": "#007AFF",
-                    "paddingLeft": 4,
-                  },
+                  Array [
+                    Object {
+                      "color": "#007AFF",
+                      "paddingLeft": 4,
+                    },
+                    undefined,
+                  ],
                 ]
               }
               testID="tag.label"
@@ -680,10 +692,13 @@ exports[`ListSeriesWithAudiences component render correctly 1`] = `
                     "fontSize": 14,
                   },
                   Object {},
-                  Object {
-                    "color": "#007AFF",
-                    "paddingLeft": 4,
-                  },
+                  Array [
+                    Object {
+                      "color": "#007AFF",
+                      "paddingLeft": 4,
+                    },
+                    undefined,
+                  ],
                 ]
               }
               testID="tag.label"
@@ -729,10 +744,13 @@ exports[`ListSeriesWithAudiences component render correctly 1`] = `
                     "fontSize": 14,
                   },
                   Object {},
-                  Object {
-                    "color": "#007AFF",
-                    "paddingLeft": 4,
-                  },
+                  Array [
+                    Object {
+                      "color": "#007AFF",
+                      "paddingLeft": 4,
+                    },
+                    undefined,
+                  ],
                 ]
               }
               testID="tag.label"

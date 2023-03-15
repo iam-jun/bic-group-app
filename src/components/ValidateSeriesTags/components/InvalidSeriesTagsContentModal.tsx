@@ -27,7 +27,7 @@ const InvalidSeriesTagsContentModal: FC<InvalidSeriesTagsContentModalProps> = (
   const textTagNames = tagNames?.join?.(', ');
 
   return (
-    <View style={{ maxHeight: maxContentHeight }}>
+    <View testID="invalid_series_tags_content_modal" style={{ maxHeight: maxContentHeight }}>
       <ScrollView>
         <TouchableOpacity activeOpacity={1} style={styles.container}>
           <Text useI18n>article:modal_invalid_series_tags:content_header</Text>

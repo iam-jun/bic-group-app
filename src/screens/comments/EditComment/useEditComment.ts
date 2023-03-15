@@ -68,20 +68,22 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
     (state) => state.errors[selectedImage?.file?.name], [selectedImage],
   ));
 
+  const disableImageOption = !!selectedImage;
+  const disableGifOption = !!selectedGiphy;
   const isUploading = useUploaderStore.getState().uploadingFiles?.[selectedImage?.file?.name] >= 0;
 
-  const isContentHasChange = text !== oldContent;
+  const isContentEmpty = !text?.trim?.()?.length;
+  const isContentHasChange = !isContentEmpty && text?.trim?.() !== oldContent;
   const isImageHasChange = oldImages?.[0]?.origin_name
     ? selectedImage?.fileName !== oldImages[0].origin_name
     : oldImages?.[0]?.name
-    && (selectedImage?.fileName !== oldImages[0].name);
+      ? (selectedImage?.fileName !== oldImages[0].name)
+      : disableImageOption;
   const isGifHasChange = oldGiphy?.id !== selectedGiphy?.id;
   const isEditHasChange = isImageHasChange || isGifHasChange || isContentHasChange;
-  const isContentEmpty = !text?.trim?.() && !selectedImage?.fileName;
 
-  const enableButtonSave = isEditHasChange && !isContentEmpty && (!loading || !isUploading);
-  const disableImageOption = !!selectedImage;
-  const disableGifOption = !!selectedGiphy;
+  const isHasCommentContent = !isContentEmpty || disableImageOption || disableGifOption;
+  const enableButtonSave = isHasCommentContent && isEditHasChange && (!loading || !isUploading);
 
   useEffect(
     () => {

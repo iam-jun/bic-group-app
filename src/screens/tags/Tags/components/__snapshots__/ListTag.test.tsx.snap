@@ -132,7 +132,7 @@ exports[`ListTag component render correctly with default state 1`] = `
                 ]
               }
             >
-              tag 1
+              TAG 1
             </Text>
           </View>
         </View>
@@ -185,7 +185,7 @@ exports[`ListTag component render correctly with default state 1`] = `
                 ]
               }
             >
-              tag 2
+              TAG 2
             </Text>
           </View>
         </View>
@@ -238,7 +238,7 @@ exports[`ListTag component render correctly with default state 1`] = `
                 ]
               }
             >
-              tag 3
+              TAG 3
             </Text>
           </View>
         </View>
@@ -291,7 +291,7 @@ exports[`ListTag component render correctly with default state 1`] = `
                 ]
               }
             >
-              tag 4
+              TAG 4
             </Text>
           </View>
         </View>
@@ -344,7 +344,7 @@ exports[`ListTag component render correctly with default state 1`] = `
                 ]
               }
             >
-              tag 5
+              TAG 5
             </Text>
           </View>
         </View>
@@ -397,7 +397,7 @@ exports[`ListTag component render correctly with default state 1`] = `
                 ]
               }
             >
-              tag 6
+              TAG 6
             </Text>
           </View>
         </View>
@@ -450,7 +450,7 @@ exports[`ListTag component render correctly with default state 1`] = `
                 ]
               }
             >
-              tag 7
+              TAG 7
             </Text>
           </View>
         </View>

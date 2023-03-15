@@ -26,6 +26,7 @@ const removeSeriesTagsPost = (seriesIds: string[], tagIds: string[]) => {
   const { series, tags } = createPost || {};
   const newSeries = series?.filter?.((item) => !seriesIds.includes(item.id));
   const newTags = tags?.filter?.((item) => !tagIds.includes(item.id));
+
   actions.updateCreatePost({
     series: newSeries,
     tags: newTags,
@@ -70,7 +71,12 @@ const handleSeriesTagsError
   = (_set, _get) => (params: HandleSeriesTagsErrorParams) => {
     const { error } = params || {};
     const errorCode = error?.code;
-    if (errorCode === ApiErrorCode.Post.ARTICLE_INVALID_PARAM) {
+    if (
+      [
+        ApiErrorCode.Post.ARTICLE_INVALID_PARAM,
+        ApiErrorCode.Post.POST_INVALID_PARAM,
+      ].includes(errorCode)
+    ) {
       handleValidateSeriesTagsError(params);
     } else {
       showToastError(error);

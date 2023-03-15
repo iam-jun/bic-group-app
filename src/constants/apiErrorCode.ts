@@ -14,6 +14,7 @@ const Post = {
   POST_DELETED: 'app.post.not_existing.app_error',
   VALIDATION_ERROR: 'api.validation_error', // invalid input send to backend
   ARTICLE_INVALID_PARAM: 'app.article.invalid_parameter', // invalid series or tags of article
+  POST_INVALID_PARAM: 'app.post.invalid_parameter', // invalid series or tags of posts
 };
 
 const Group = {

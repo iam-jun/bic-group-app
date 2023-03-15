@@ -27,8 +27,7 @@ const GroupJoinCancelButton = ({ style, community }: GroupJoinCancelButtonProps)
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
   const isMemberOfCommunity = joinStatusCommunity === GroupJoinStatus.MEMBER;
 
-  const joinNewGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doJoinNewGroup);
-  const cancelJoinGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doCancelJoinGroup);
+  const actions = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.actions);
   const { showAlert } = useModalStore((state) => state.actions);
 
   if (isMember) return null;
@@ -43,11 +42,11 @@ const GroupJoinCancelButton = ({ style, community }: GroupJoinCancelButtonProps)
       return;
     }
 
-    joinNewGroup(groupId);
+    actions.joinNewGroup(groupId);
   };
 
   const onPressCancelRequest = () => {
-    cancelJoinGroup(groupId);
+    actions.cancelJoinGroup(groupId);
   };
 
   return (
