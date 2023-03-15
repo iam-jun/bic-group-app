@@ -43,6 +43,7 @@ import useCommentInputStore from '../CommentInputView/store';
 import useDeleteCommentController from './store';
 import { PlaceHolderRemoveContent } from '~/baseComponents';
 import useModalStore from '~/store/modal';
+import DeactivatedView from '~/components/DeactivatedView';
 
 export interface CommentViewProps {
   postId: string;
@@ -361,14 +362,16 @@ const _CommentView: React.FC<CommentViewProps> = ({
               >
                 <View style={styles.header}>
                   <View style={styles.userName}>
-                    <ButtonWrapper onPress={onPressUser}>
+                    <ButtonWrapper style={styles.buttonWrapper} onPress={onPressUser}>
                       <Text.H5
                         color={colorFullName}
                         testID={`comment_view.level_${parentCommentId ? 2 : 1}.user_name`}
                         numberOfLines={1}
+                        style={styles.fullname}
                       >
                         {`${fullname}`}
                       </Text.H5>
+                      {isDeactivated && <DeactivatedView style={styles.deactivatedView} />}
                     </ButtonWrapper>
                   </View>
                 </View>
@@ -446,6 +449,16 @@ const createStyle = (theme: ExtendedTheme) => {
     reactionView: {
       paddingTop: 0,
       paddingBottom: 0,
+    },
+    buttonWrapper: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    deactivatedView: {
+      marginLeft: spacing.margin.tiny,
+    },
+    fullname: {
+      flexShrink: 1,
     },
   });
 };
