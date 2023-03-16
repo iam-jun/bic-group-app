@@ -1,7 +1,7 @@
 import React, {
   FC, useEffect, useRef, useState,
 } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Keyboard, StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Divider from '~/beinComponents/Divider';
@@ -169,10 +169,16 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   };
 
   const onSavePost = () => {
+    Keyboard.dismiss();
     savePost({
       disableNavigate: false,
       replaceWithDetail: screenParams.replaceWithDetail,
     });
+  };
+
+  const onPublishPost = () => {
+    Keyboard.dismiss();
+    publishPost();
   };
 
   const onPressSettings = () => {
@@ -217,7 +223,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
         buttonText={isCreatingNewPost ? 'common:btn_publish' : 'post:save'}
         buttonProps={buttonPostProps}
         onPressBack={onPressBack}
-        onPressButton={isCreatingNewPost ? publishPost : onSavePost}
+        onPressButton={isCreatingNewPost ? onPublishPost : onSavePost}
         style={styles.headerStyle}
       />
       <View style={styles.flex1}>

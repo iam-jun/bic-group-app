@@ -1,5 +1,6 @@
 import React, { FC, useMemo } from 'react';
 import {
+  Keyboard,
   StyleSheet,
   View,
 } from 'react-native';
@@ -125,6 +126,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   // change audiences of a published post or draft post
   // need to validate series and tags
   const onConfirmSaveAudienceEditingPost = () => {
+    Keyboard.dismiss();
     const onValidateSeriesTagsSuccess = () => {
       saveAudiences();
       rootNavigation.goBack();
