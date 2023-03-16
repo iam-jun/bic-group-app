@@ -1,6 +1,6 @@
 import streamApi from '~/api/StreamApi';
 import {
-  IPayloadGetDraftPosts, IPayloadPublishDraftPost, IPost, PostStatus,
+  IPayloadGetDraftPosts, IPayloadPublishDraftPost, IPost, PostStatus, PostType,
 } from '~/interfaces/IPost';
 import { withNavigation } from '~/router/helper';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
@@ -13,6 +13,8 @@ import showToast from '~/store/helper/showToast';
 import showToastError from '~/store/helper/showToastError';
 import useTimelineStore from '~/store/timeline';
 import { ICreatePostState } from '..';
+import ApiErrorCode from '~/constants/apiErrorCode';
+import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -24,6 +26,7 @@ export const postPublishDraftPost = (set, get) => async (payload: IPayloadPublis
     onError,
     replaceWithDetail,
     createFromGroupId,
+    isHandleSeriesTagsError = false,
   } = payload || {};
   try {
     actions.setLoadingCreatePost(true);
@@ -60,10 +63,16 @@ export const postPublishDraftPost = (set, get) => async (payload: IPayloadPublis
     };
     useDraftPostStore.getState().actions.getDraftPosts(payloadGetDraftPosts);
     useHomeStore.getState().actions.refreshHome();
-  } catch (e) {
+  } catch (error) {
     actions.setLoadingCreatePost(false);
-    onError?.();
-    showToastError(e);
+
+    const errorCode = error?.code;
+    if (errorCode === ApiErrorCode.Post.POST_INVALID_PARAM && isHandleSeriesTagsError) {
+      useValidateSeriesTags.getState().actions.handleSeriesTagsError({ error, postType: PostType.POST });
+    } else {
+      onError?.();
+      showToastError(error);
+    }
   }
 };
 

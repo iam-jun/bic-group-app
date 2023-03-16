@@ -510,6 +510,7 @@ export interface IPayloadPublishDraftPost {
   onError?: () => void;
   refreshDraftPosts?: boolean;
   createFromGroupId?: string;
+  isHandleSeriesTagsError?: boolean;
 }
 
 export interface IPayloadPutEditDraftPost {
