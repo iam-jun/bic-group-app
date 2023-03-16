@@ -299,6 +299,7 @@ export const useSavePost = () => {
         onSuccess: () => {
           showToast({ content: 'post:draft:text_draft_post_published' });
         },
+        isHandleSeriesTagsError: true,
       };
       createPostStoreActions.postPublishDraftPost(payload);
     }
