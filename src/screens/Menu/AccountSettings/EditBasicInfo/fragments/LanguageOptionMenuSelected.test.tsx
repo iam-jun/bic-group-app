@@ -20,7 +20,7 @@ describe('LanguageOptionMenuSelected conponent', () => {
       <LanguageOptionMenuSelected onRemove={onRemove} languages={[]} />,
     );
 
-    const component = rendered.getByTestId('button.selected_languages');
+    const component = rendered.getByTestId('button.text');
     expect(component).toBeDefined();
     expect(component.children?.[0]).toEqual(i18n.t('common:text_not_set'));
   });

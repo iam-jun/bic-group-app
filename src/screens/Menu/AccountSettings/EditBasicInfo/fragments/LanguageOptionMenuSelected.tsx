@@ -3,10 +3,10 @@ import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ILanguageItem } from '~/interfaces/IEditUser';
 import spacing from '~/theme/spacing';
-import Tag from '~/baseComponents/Tag';
-import { useBaseHook } from '~/hooks';
 import Button from '~/baseComponents/Button';
+import Tag from '~/baseComponents/Tag';
 import Icon from '~/baseComponents/Icon';
+import Text from '~/baseComponents/Text';
 
 type LanguageOptionMenuSelectedProps = {
   languages: ILanguageItem[];
@@ -17,7 +17,6 @@ const LanguageOptionMenuSelected: FC<LanguageOptionMenuSelectedProps> = ({
   languages,
   onRemove,
 }) => {
-  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = themeStyles(theme);
@@ -25,7 +24,7 @@ const LanguageOptionMenuSelected: FC<LanguageOptionMenuSelectedProps> = ({
   return (
     <View style={styles.container}>
       <Button testID="button.selected_languages" style={styles.inputContainer}>
-        {languages && languages.length !== 0 ? (
+        {!!languages && languages?.length !== 0 ? (
           <>
             <View style={styles.tagContainer}>
               {languages.map((item) => (
@@ -50,7 +49,14 @@ const LanguageOptionMenuSelected: FC<LanguageOptionMenuSelectedProps> = ({
             </Button>
           </>
         ) : (
-          t('common:text_not_set')
+          <Text.ParagraphM
+            testID="button.text"
+            style={styles.text}
+            color={colors.neutral70}
+            useI18n
+          >
+            common:text_not_set
+          </Text.ParagraphM>
         )}
       </Button>
     </View>
@@ -85,6 +91,9 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     buttonRemove: {
       padding: spacing.padding.xSmall,
+    },
+    text: {
+      textAlign: 'center',
     },
   });
 };
