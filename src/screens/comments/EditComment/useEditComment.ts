@@ -60,7 +60,6 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
 
   const { showToast, showAlert } = useModalStore((state) => state.actions);
 
-  const uploadActions = useUploaderStore((state) => state.actions);
   const uploadedFile = useUploaderStore(useCallback(
     (state) => state.uploadedFiles[selectedImage?.file?.name], [selectedImage],
   ));
@@ -136,12 +135,6 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
   );
 
   useEffect(() => {
-    if (selectedImage) {
-      uploadActions.upload({ type: 'image', file: selectedImage.file, uploadType: uploadTypes.commentImage });
-    }
-  }, [selectedImage]);
-
-  useEffect(() => {
     if (uploadError) {
       const content = typeof uploadError === 'string' ? uploadError : t('post:error_upload_photo_failed');
       showToastError(content);
@@ -186,6 +179,7 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
   };
 
   const handleUploadImageSuccess = (file: IGetFile) => {
+    console.log(`\x1b[36m🐣️ index handleUploadImageSuccess ${file?.name}: ${file?.url}\x1b[0m`);
     if (selectedImage?.fileName === file?.name) {
       setSelectedImage({ ...selectedImage, url: file?.url });
     }
