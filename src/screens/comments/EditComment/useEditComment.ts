@@ -179,7 +179,6 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
   };
 
   const handleUploadImageSuccess = (file: IGetFile) => {
-    console.log(`\x1b[36m🐣️ index handleUploadImageSuccess ${file?.name}: ${file?.url}\x1b[0m`);
     if (selectedImage?.fileName === file?.name) {
       setSelectedImage({ ...selectedImage, url: file?.url });
     }
