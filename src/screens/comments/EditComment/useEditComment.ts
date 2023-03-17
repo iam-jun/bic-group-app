@@ -60,7 +60,6 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
 
   const { showToast, showAlert } = useModalStore((state) => state.actions);
 
-  const uploadActions = useUploaderStore((state) => state.actions);
   const uploadedFile = useUploaderStore(useCallback(
     (state) => state.uploadedFiles[selectedImage?.file?.name], [selectedImage],
   ));
@@ -134,12 +133,6 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
       }
     }, [],
   );
-
-  useEffect(() => {
-    if (selectedImage) {
-      uploadActions.upload({ type: 'image', file: selectedImage.file, uploadType: uploadTypes.commentImage });
-    }
-  }, [selectedImage]);
 
   useEffect(() => {
     if (uploadError) {
