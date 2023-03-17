@@ -14,6 +14,7 @@ import { IconType } from '~/resources/icons';
 import Avatar from '~/baseComponents/Avatar';
 import { AvatarProps } from '~/baseComponents/Avatar/AvatarComponent';
 import spacing from '~/theme/spacing';
+import DeactivatedView from '~/components/DeactivatedView';
 
 type ItemIconProps = Omit<IconProps, 'icon'>
 export interface PrimaryItemProps {
@@ -29,6 +30,7 @@ export interface PrimaryItemProps {
   leftIcon?: IconType;
   leftIconProps?: ItemIconProps;
   isChecked?: boolean;
+  isDeactivated?: boolean;
   checkboxProps?: CheckboxProps;
   toggleChecked?: boolean;
   menuIconTestID?: string;
@@ -57,6 +59,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   leftIconProps,
   LeftComponent,
   isChecked,
+  isDeactivated = false,
   checkboxProps,
   onPress,
   toggleChecked,
@@ -106,9 +109,12 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
         )}
         <View style={styles.contentContainer}>
           {!!title && (
-            <Text variant="h6" numberOfLines={2} {...titleProps}>
-              {title}
-            </Text>
+            <View style={styles.titleContainer}>
+              <Text variant="h6" numberOfLines={2} {...titleProps} style={styles.title}>
+                {title}
+              </Text>
+              {isDeactivated && <DeactivatedView style={styles.deactivatedView} />}
+            </View>
           )}
           {!!subTitle && (
             <Text variant="bodyM" numberOfLines={2} {...subTitleProps}>
@@ -163,6 +169,17 @@ const styles = StyleSheet.create({
   },
   avatar: {
     marginRight: spacing?.margin.base,
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  deactivatedView: {
+    marginLeft: spacing.margin.tiny,
+    alignSelf: 'center',
+  },
+  title: {
+    flexShrink: 1,
   },
 });
 

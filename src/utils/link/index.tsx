@@ -24,6 +24,7 @@ export enum DeepLinkTypes {
   FORGOT_PASSWORD = 'forgot_password',
   CONFIRM_USER = 'confirm_user',
   REFERRAL = 'referral',
+  USER_PROFILE = 'user_profile',
 }
 
 export enum LinkGeneratorTypes {
@@ -251,6 +252,13 @@ export const matchDeepLink = (url: string) => {
   ).exec(deepLinkUrl);
   if (match) {
     return { type: DeepLinkTypes.REFERRAL, referralCode: match[1] };
+  }
+
+  match = new RegExp(
+    `^${PREFIX_DEEPLINK_GROUP}\\/users\\/(\\S+)$`,
+  ).exec(deepLinkUrl);
+  if (match) {
+    return { type: DeepLinkTypes.USER_PROFILE, userName: match[1] };
   }
 
   return null;

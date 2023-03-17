@@ -44,6 +44,9 @@ const ReactionDetailBottomSheet = () => {
   };
 
   const onPressItem = useCallback((item: any) => {
+    if (item?.item?.isDeactivated) {
+      return;
+    }
     const itemUserId = item?.item?.id;
     if (itemUserId) {
       rootNavigation.navigate(
