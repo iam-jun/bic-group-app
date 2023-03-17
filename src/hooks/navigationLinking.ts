@@ -62,6 +62,14 @@ export const onReceiveURL = async ({ url, navigation, listener }: { url: string;
       case DeepLinkTypes.REFERRAL:
         await navigateFromReferralLink({ match, navigation, userId });
         break;
+      case DeepLinkTypes.USER_PROFILE:
+        navigation?.navigate?.(mainStack.userProfile, {
+          userId: match.userName,
+          params: {
+            type: 'username',
+          },
+        });
+        break;
       default:
         listener?.(url);
     }
