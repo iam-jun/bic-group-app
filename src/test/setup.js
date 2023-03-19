@@ -189,6 +189,10 @@ jest.doMock('aws-amplify', () => {
   return MockedModule;
 });
 
+jest.mock('@react-native-camera-roll/camera-roll', () => ({
+  save: jest.fn(),
+}));
+
 jest.doMock('react-native', () => {
   const {
     Platform,
