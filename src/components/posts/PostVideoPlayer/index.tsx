@@ -1,4 +1,5 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { debounce } from 'lodash';
 import React, {
   FC, useEffect, useMemo,
 } from 'react';
@@ -61,20 +62,26 @@ const PostVideoPlayer: FC<PostVideoPlayerProps> = ({
     }, [],
   );
 
-  const handlePlaybackStatusUpdate = (status: any) => {
+  const onPlaybackStatusUpdate = async (status: any) => {
+    // eslint-disable-next-line no-unsafe-optional-chaining
+    if (status?.isLoaded && (status?.durationMillis - status?.positionMillis <= 100)) {
+      video.current.resetVideoPosition();
+    }
+
     if (status?.isPlaying) {
-      // setLoading(false);
       DeviceEventEmitter.emit(
         'playVideo', id,
       );
     }
 
     if (((status?.durationMillis > DURATION_CHECK_POINT && status?.positionMillis >= DURATION_CHECK_POINT)
-    || (status?.durationMillis <= DURATION_CHECK_POINT && status?.positionMillis === status?.durationMillis))
-    && !!postId) {
+  || (status?.durationMillis <= DURATION_CHECK_POINT && status?.positionMillis === status?.durationMillis))
+  && !!postId) {
       onWatchCheckPoint?.();
     }
   };
+
+  const handlePlaybackStatusUpdate = debounce(onPlaybackStatusUpdate, 100);
 
   if (!url && thumbnails?.length < 1) {
     return null;
