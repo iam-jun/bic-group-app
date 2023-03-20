@@ -49,7 +49,9 @@ const CommentDetailContent = (props: any) => {
   const dispatch = useDispatch();
   const { rootNavigation, goHome } = useRootNavigation();
 
-  const commentDetailController = useCommentDetailController((state) => state.actions);
+  const commentDetailController = useCommentDetailController(
+    (state) => state.actions,
+  );
   const { showToast, showAlert } = useModalStore((state) => state.actions);
 
   const listRef = useRef<any>();
@@ -57,18 +59,24 @@ const CommentDetailContent = (props: any) => {
 
   const params = props?.route?.params;
   const {
-    postId, replyItem, commentParent, commentId, parentId, notiId, isReported,
-  }
-  = params || {};
+    postId,
+    replyItem,
+    commentParent,
+    commentId,
+    parentId,
+    notiId,
+    isReported,
+  } = params || {};
   const id = postId;
 
   const actor = usePostsStore(postsSelector.getActor(id));
   const type = usePostsStore(postsSelector.getType(postId));
   const audience = usePostsStore(postsSelector.getAudience(id));
-  const postDetailLoadingState = useKeySelector(
-    postKeySelector.loadingGetPostDetail,
+  const postDetailLoadingState = usePostsStore(
+    (state) => state.isLoadingGetPostDetail,
   );
-  const { deletePostLocal, putMarkSeenPost } = usePostsStore((state: IPostsState) => state.actions);
+  const { deletePostLocal, putMarkSeenPost, setIsLoadingGetPostDetail }
+    = usePostsStore((state: IPostsState) => state.actions);
 
   let comments = null;
   if (isReported) {
@@ -205,7 +213,7 @@ const CommentDetailContent = (props: any) => {
       HeaderImageComponent: (
         <View style={{ alignItems: 'center' }}>
           <SVGIcon
-              // @ts-ignore
+            // @ts-ignore
             source={CommentNotFoundImg}
             width={120}
             height={120}
@@ -249,7 +257,7 @@ const CommentDetailContent = (props: any) => {
       return;
     }
     if (copyCommentError === APIErrorCode.Post.POST_DELETED) {
-      dispatch(postActions.setLoadingGetPostDetail(true));
+      setIsLoadingGetPostDetail(true);
       setIsEmpty(true);
       setRefreshing(true);
       showNotice('deleted_post');
@@ -383,10 +391,7 @@ const CommentLevel1 = ({
 
   return (
     <View testID="comment_level_1">
-      <Divider
-        size={spacing.padding.large}
-        color={color}
-      />
+      <Divider size={spacing.padding.large} color={color} />
       <CommentItem
         postId={id}
         commentData={commentData}

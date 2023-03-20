@@ -73,11 +73,6 @@ describe('PostDetailContent component', () => {
   //   expect(postView).toBeNull();
   // });
 
-  it('getPostDetail should be called', () => {
-    const spy = jest.spyOn(postActions, 'getPostDetail');
-    expect(spy).toBeCalled();
-  });
-
   it('should scroll to latest item', () => {
     const _storeData = {
       ...storeData,

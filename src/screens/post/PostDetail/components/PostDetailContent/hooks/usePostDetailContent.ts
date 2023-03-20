@@ -24,13 +24,18 @@ import postKeySelector from '~/storeRedux/post/keySelector';
 import useModalStore from '~/store/modal';
 
 const usePostDetailContent = ({
-  postId, notificationId, HeaderImageComponent, isReported,
+  postId,
+  notificationId,
+  HeaderImageComponent,
+  isReported,
 }) => {
   const dispatch = useDispatch();
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
 
-  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
+  const isInternetReachable = useNetworkStore(
+    networkSelectors.getIsInternetReachable,
+  );
 
   const isFocused = useIsFocused();
 
@@ -39,20 +44,44 @@ const usePostDetailContent = ({
   const userId = useUserIdAuth();
   const { showAlert } = useModalStore((state) => state.actions);
 
-  const actor = usePostsStore(useCallback(postsSelector.getActor(postId), [postId]));
-  const deleted = usePostsStore(useCallback(postsSelector.getDeleted(postId), [postId]));
-  const createdAt = usePostsStore(useCallback(postsSelector.getCreatedAt(postId), [postId]));
-  const audience = usePostsStore(useCallback(postsSelector.getAudience(postId), [postId]));
-  const commentLeft = usePostsStore(useCallback(postsSelector.getCommentOnlyCount(postId), [postId]));
-  const setting = usePostsStore(useCallback(postsSelector.getSetting(postId), [postId]));
-  const reported = usePostsStore(useCallback(postsSelector.getReported(postId), [postId]));
-  const { deletePostLocal, putMarkSeenPost } = usePostsStore((state: IPostsState) => state.actions);
+  const actor = usePostsStore(
+    useCallback(postsSelector.getActor(postId), [postId]),
+  );
+  const deleted = usePostsStore(
+    useCallback(postsSelector.getDeleted(postId), [postId]),
+  );
+  const createdAt = usePostsStore(
+    useCallback(postsSelector.getCreatedAt(postId), [postId]),
+  );
+  const audience = usePostsStore(
+    useCallback(postsSelector.getAudience(postId), [postId]),
+  );
+  const commentLeft = usePostsStore(
+    useCallback(postsSelector.getCommentOnlyCount(postId), [postId]),
+  );
+  const setting = usePostsStore(
+    useCallback(postsSelector.getSetting(postId), [postId]),
+  );
+  const reported = usePostsStore(
+    useCallback(postsSelector.getReported(postId), [postId]),
+  );
+  const {
+    deletePostLocal,
+    putMarkSeenPost,
+    getPostDetail: actionGetPostDetail,
+  } = usePostsStore((state: IPostsState) => state.actions);
 
-  const comments = useCommentsStore(useCallback(commentsSelector.getCommentsByParentId(postId), [postId]));
+  const comments = useCommentsStore(
+    useCallback(commentsSelector.getCommentsByParentId(postId), [postId]),
+  );
   const commentError = useKeySelector(postKeySelector.commentErrorCode);
 
-  const commentSectionData = useMemo(() => getSectionData(comments), [comments]);
-  const sectionData = deleted || !setting?.canComment ? defaultList : commentSectionData;
+  const commentSectionData = useMemo(
+    () => getSectionData(comments),
+    [comments],
+  );
+  const sectionData
+    = deleted || !setting?.canComment ? defaultList : commentSectionData;
 
   const [refreshing, setRefreshing] = useState(false);
   const [isEmptyContent, setIsEmptyContent] = useState(false);
@@ -166,7 +195,7 @@ const usePostDetailContent = ({
         showToast: !!notificationId,
         isReported,
       };
-      dispatch(postActions.getPostDetail(payload));
+      actionGetPostDetail(payload);
     }
   };
 
