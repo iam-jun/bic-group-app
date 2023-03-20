@@ -8,18 +8,14 @@ import {
   ActivityIndicator, ScrollView, StyleSheet, View,
 } from 'react-native';
 
-import { isEmpty } from 'lodash';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
 import Divider from '~/beinComponents/Divider';
 import { useUserIdAuth } from '~/hooks/auth';
-import { useKeySelector } from '~/hooks/selector';
 import useHomeStore from '~/screens/Home/store';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import NoUserFound from '~/screens/Menu/components/NoUserFound';
 import spacing from '~/theme/spacing';
-import { formatDMLink, openUrl } from '~/utils/link';
 import { BasicInfo, Contact, Experiences } from './fragments';
 import CoverHeader from './fragments/CoverHeader';
 import UserHeader from './fragments/UserHeader';
@@ -53,7 +49,6 @@ const UserProfile = (props: any) => {
 
   const myProfileData = useCommonController((state) => state.myProfile);
   const { username: currentUsername, id } = myProfileData || {};
-  const joinedCommunities = useKeySelector(groupsKeySelector.joinedCommunities);
 
   const [avatarState, setAvatarState] = useState<string>(avatar);
   const [bgImgState, setBgImgState] = useState<string>(backgroundImgUrl);
@@ -99,20 +94,6 @@ const UserProfile = (props: any) => {
     setIsChangeImg(fieldName);
   };
 
-  const onPressChat = isCurrentUser
-    ? undefined
-    : () => {
-      if (!isEmpty(joinedCommunities)) {
-        const link = formatDMLink(
-          joinedCommunities?.[0]?.slug,
-          userProfileData.username,
-        );
-        openUrl(link);
-      } else {
-        onPressChat();
-      }
-    };
-
   const renderLoading = () => (
     <View testID="user_profile.loading" style={styles.loadingProfile}>
       <ActivityIndicator size="large" />
@@ -124,7 +105,7 @@ const UserProfile = (props: any) => {
 
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
-      <Header onPressChat={onPressChat} />
+      <Header />
       {loading ? (
         renderLoading()
       ) : (

@@ -20,6 +20,7 @@ import useMemberSection from '~/hooks/useMemberSection';
 
 interface MemberListProps {
   type: 'group' | 'community';
+  isAdminRole: boolean;
   canManageMember: boolean;
   onLoadMore: () => void;
   onPressMenu: (item: any) => void;
@@ -28,6 +29,7 @@ interface MemberListProps {
 
 const MemberList = ({
   type,
+  isAdminRole,
   canManageMember,
   onLoadMore,
   onPressMenu,
@@ -73,6 +75,7 @@ const MemberList = ({
   const renderItem = ({ item }: {item: any}) => (
     <MemberItem
       item={item}
+      isAdminRole={isAdminRole}
       canManageMember={canManageMember}
       onPressMenu={onPressMenu}
     />

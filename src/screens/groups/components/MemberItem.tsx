@@ -18,12 +18,13 @@ import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communi
 
 interface MemberItemProps {
   item: any;
+  isAdminRole: boolean;
   canManageMember: boolean;
   onPressMenu: (item: any) => void;
 }
 
 const MemberItem = ({
-  item, canManageMember, onPressMenu,
+  item, isAdminRole, canManageMember, onPressMenu,
 }: MemberItemProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -39,6 +40,7 @@ const MemberItem = ({
 
   const isMe = user?.username === username;
   const memberName = isMe ? `${fullname} (${t('common:text_you')})` : fullname;
+  const canSendMessage = !isMe && isAdminRole;
 
   const goToUserProfile = () => {
     rootNavigation.navigate(
@@ -76,15 +78,26 @@ const MemberItem = ({
       onPress={goToUserProfile}
       ContentComponent={(
         <>
-          <Text.BodyMMedium ellipsizeMode="middle" color={colors.neutral60} numberOfLines={1}>
+          <Text.BodyMMedium
+            testID="member_item.name"
+            ellipsizeMode="middle"
+            color={colors.neutral60}
+            numberOfLines={1}
+          >
             {memberName}
           </Text.BodyMMedium>
-          <Text.BodyS color={colors.neutral30} numberOfLines={1}>{`@${username}`}</Text.BodyS>
+          <Text.BodyS
+            testID="member_item.username"
+            color={colors.neutral30}
+            numberOfLines={1}
+          >
+            {`@${username}`}
+          </Text.BodyS>
         </>
       )}
       RightComponent={(
         <>
-          {!isMe && (
+          {canSendMessage && (
             <Icon
               icon="CommentDotsSolid"
               size={15}
