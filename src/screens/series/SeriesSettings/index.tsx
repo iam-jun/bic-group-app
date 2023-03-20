@@ -122,7 +122,7 @@ const SeriesSettings = ({ route }: SeriesSettingsProps) => {
     <ScreenWrapper isFullView backgroundColor={colors.neutral1}>
       <Header
         useI18n
-        title="series:series_settings"
+        title="common:settings"
         buttonProps={{ disabled: disableButtonSave, style: styles.btnSave }}
         buttonText="common:btn_save"
         onPressButton={handleSaveSettings}

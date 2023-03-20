@@ -113,7 +113,7 @@ const CreateArticleSettings = ({ route }: CreateArticleSettingsProps) => {
     <ScreenWrapper isFullView backgroundColor={colors.neutral1}>
       <Header
         useI18n
-        title="article:article_settings"
+        title="common:settings"
         buttonProps={{ disabled, loading, style: styles.btnSave }}
         buttonText="common:btn_save"
         onPressButton={handleSave}
