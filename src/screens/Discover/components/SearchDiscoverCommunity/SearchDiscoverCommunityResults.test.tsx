@@ -1,35 +1,40 @@
 import React from 'react';
 import { fireEvent, languages, renderWithRedux } from '~/test/testUtils';
-import DiscoverCommunities from './index';
-import useDiscoverCommunitiesStore, { IDiscoverCommunitiesState } from './store';
-import * as navigationHook from '~/hooks/navigation';
+import SearchDiscoverCommunityResults from './SearchDiscoverCommunityResults';
+import { mockDiscoverCommunityResponse } from '~/test/mock_data/discoverCommunity';
+import useDiscoverCommunitiesSearchStore, { IDiscoverCommunitiesSearchState } from './store';
 import useCommunityController from '~/screens/communities/store';
 import useCommunitiesStore from '~/store/entities/communities';
-import { mockDiscoverCommunityResponse } from '~/test/mock_data/discoverCommunity';
+import * as navigationHook from '~/hooks/navigation';
 
-describe('DiscoverCommunities component', () => {
+describe('SearchDiscoverCommunityResults component', () => {
   const mockData = mockDiscoverCommunityResponse.data;
-  it('should render empty screen if loading = false and hasNextPage = []', () => {
-    useDiscoverCommunitiesStore.setState((state: IDiscoverCommunitiesState) => {
+  it('should render empty screen if loading = false and ids = []', () => {
+    useDiscoverCommunitiesSearchStore.setState((state: IDiscoverCommunitiesSearchState) => {
       state.loading = false;
       return state;
     });
 
+    const onLoadMore = jest.fn();
+
     const wrapper = renderWithRedux(
-      <DiscoverCommunities />,
+      <SearchDiscoverCommunityResults
+        onLoadMore={onLoadMore}
+      />,
     );
-    const emptyScreen = wrapper.queryByTestId('empty_screen');
-    expect(emptyScreen).toBeDefined();
+    const emptyText = wrapper.queryByTestId('community_search_results.no_results');
+    expect(emptyText.children[0]).toEqual(languages.common.text_search_no_results);
   });
 
   it('should render empty screen if loading = false and ids = []', () => {
+    const onLoadMore = jest.fn();
     const navigate = jest.fn();
     const rootNavigation = { navigate };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
     const ids = [mockData[0].id, mockData[1].id, mockData[2].id,
     ];
-    useDiscoverCommunitiesStore.setState((state: IDiscoverCommunitiesState) => {
+    useDiscoverCommunitiesSearchStore.setState((state: IDiscoverCommunitiesSearchState) => {
       state.ids = ids;
       state.loading = false;
       state.hasNextPage = true;
@@ -57,9 +62,11 @@ describe('DiscoverCommunities component', () => {
     });
 
     const wrapper = renderWithRedux(
-      <DiscoverCommunities />,
+      <SearchDiscoverCommunityResults
+        onLoadMore={onLoadMore}
+      />,
     );
-    const discoverItemComp = wrapper.queryAllByTestId('discover_communities_item');
+    const discoverItemComp = wrapper.queryAllByTestId('global_search_results.item');
     expect(discoverItemComp.length).toEqual(mockData.length);
 
     const btnJoin = wrapper.getByText(languages.common.btn_join);

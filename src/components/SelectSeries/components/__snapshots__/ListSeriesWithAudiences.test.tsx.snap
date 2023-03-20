@@ -64,16 +64,16 @@ exports[`ListSeriesWithAudiences component render correctly 1`] = `
             Object {
               "community_id": "e4b06eda-94d6-42d0-8829-d5380bc8f95b222",
               "icon": "https://bic-stg-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/c015b7d3-7bf1-4b0e-9ca4-b73d3a7ff82e.jpg",
-              "id": "e1cb33cf-ef6e-4d13-97d9-23ee95b7bf99",
+              "id": "e1cb33cf-ef6e-4d13-97d9-23ee95b7bf998",
               "is_community": true,
-              "name": "Community.của.Linh",
+              "name": "Community.của.Linh1",
               "privacy": "PUBLIC",
               "root_group_id": "e1cb33cf-ef6e-4d13-97d9-23ee95b7bf99",
             },
             Object {
               "community_id": "e4b8bf37-a218-4f73-bdfd-44444",
               "icon": "https://bic-stg-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/group/default-avatar.png",
-              "id": "8b103e63-0714-40bb-9f33-01a8a26fea77",
+              "id": "8b103e63-0714-40bb-9f33-01a8a26fea778",
               "is_community": true,
               "name": "The Rock Creweeeuhwfhwehghekghkehgrhekjrhgkerhkghekrglejlrghkeljrglherklgjlrglejlgjrlgjlrjkglrj",
               "privacy": "PUBLIC",
@@ -102,6 +102,7 @@ exports[`ListSeriesWithAudiences component render correctly 1`] = `
   renderItem={[Function]}
   scrollEventThrottle={50}
   stickyHeaderIndices={Array []}
+  testID="list_series_with_audiences.list_series"
   viewabilityConfigCallbackPairs={Array []}
 >
   <View>
@@ -115,6 +116,7 @@ exports[`ListSeriesWithAudiences component render correctly 1`] = `
             "paddingHorizontal": 16,
           }
         }
+        testID="series_item"
       >
         <View
           style={
@@ -391,6 +393,7 @@ exports[`ListSeriesWithAudiences component render correctly 1`] = `
             "paddingHorizontal": 16,
           }
         }
+        testID="series_item"
       >
         <View
           style={
@@ -703,7 +706,7 @@ exports[`ListSeriesWithAudiences component render correctly 1`] = `
               }
               testID="tag.label"
             >
-              Community.của.Linh
+              Community.của.Linh1
             </Text>
           </View>
           <View
@@ -805,6 +808,7 @@ exports[`ListSeriesWithAudiences component render correctly when data is empty 1
   renderItem={[Function]}
   scrollEventThrottle={50}
   stickyHeaderIndices={Array []}
+  testID="list_series_with_audiences.list_series"
   viewabilityConfigCallbackPairs={Array []}
 >
   <View>
@@ -914,6 +918,7 @@ exports[`ListSeriesWithAudiences component render correctly when loading = true 
   renderItem={[Function]}
   scrollEventThrottle={50}
   stickyHeaderIndices={Array []}
+  testID="list_series_with_audiences.list_series"
   viewabilityConfigCallbackPairs={Array []}
 >
   <View>

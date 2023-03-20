@@ -188,7 +188,8 @@
     "mark_post_as_important": "Bài viết Quan trọng",
     "mark_article_as_important": "Bài báo Quan trọng",
     "mark_series_as_important": "Loạt bài Quan trọng",
-    "text_deactivated": "Vô hiệu hoá"
+    "text_deactivated": "Vô hiệu hoá",
+    "settings": "Thiết lập bài viết"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -626,7 +627,6 @@
     "successful_schedule": "Đặt lịch thành công",
     "text_delete_article_success": "Bài viết của bạn đã được xoá",
     "paste_image_error": "Tải lên không thành công. Vui lòng tải lên hình ảnh bằng thanh công cụ.",
-    "article_settings": "Cài đặt bài viết",
     "text_selecting_will_be_added_to": "Bài viết của bạn sẽ được thêm vào"
   },
   "post": {
@@ -801,7 +801,6 @@
       "text_delete_comment_success": "Bình luận đã được xoá",
       "text_edited": "Đã sửa"
     },
-    "settings": "Thiết lập bài viết",
     "people_can_comment": "Mọi người có thể bình luận trên bài viết",
     "people_can_share": "Mọi người có thể chia sẻ trên bài viết",
     "people_can_react": "Mọi người có thể tương tác trên bài viết",
@@ -1280,8 +1279,7 @@
     "text_remove_article": "Bạn muốn xoá bài báo này?",
     "text_remove_post": "Bạn muốn xoá bài viết này?",
     "text_article_removed": "Bài viết đã được xoá",
-    "text_no_content": "Không có nội dung",
-    "series_settings": "Series settings"
+    "text_no_content": "Không có nội dung"
   },
   "tags": {
     "create_tag": "Tạo thẻ",

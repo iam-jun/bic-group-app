@@ -20,6 +20,15 @@ const GroupMemberList = ({ groupId, onPressMenu }: GroupMemberListProps) => {
       PermissionKey.ASSIGN_UNASSIGN_ROLE,
     ],
   );
+  const isAdminRole = shouldHavePermission(
+    groupId,
+    [
+      PermissionKey.ROLE_COMMUNITY_OWNER,
+      PermissionKey.ROLE_COMMUNITY_ADMIN,
+      PermissionKey.ROLE_GROUP_ADMIN,
+    ],
+  );
+
   const { canLoadMore } = useGroupMemberStore(
     (state: IGroupMemberState) => state.groupMembers,
   );
@@ -52,6 +61,7 @@ const GroupMemberList = ({ groupId, onPressMenu }: GroupMemberListProps) => {
   return (
     <MemberList
       type="group"
+      isAdminRole={isAdminRole}
       canManageMember={canManageMember}
       onLoadMore={onLoadMore}
       onPressMenu={onPressMenu}

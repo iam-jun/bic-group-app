@@ -18,14 +18,12 @@ import useCommunitiesStore from '~/store/entities/communities';
 
 type ItemDiscoverCommunitiesProps = {
   id: string;
-  index: number;
   handleJoin: (id: string, name: string) => void;
   handleCancel: (id: string, name: string) => void;
 };
 
 const ItemDiscoverCommunities: FC<ItemDiscoverCommunitiesProps> = ({
   id,
-  index,
   handleJoin,
   handleCancel,
 }) => {
@@ -33,7 +31,7 @@ const ItemDiscoverCommunities: FC<ItemDiscoverCommunitiesProps> = ({
   return (
     <CommunityGroupCard
       item={item}
-      testID={`discover_communities_item_${index}`}
+      testID="discover_communities_item"
       onJoin={handleJoin}
       onCancel={handleCancel}
     />
@@ -95,10 +93,9 @@ const DiscoverCommunities = () => {
     communityController.cancelJoinCommunity(id, name);
   };
 
-  const renderItem: ListRenderItem<string> = ({ item, index }) => (
+  const renderItem: ListRenderItem<string> = ({ item }) => (
     <ItemDiscoverCommunities
       id={item}
-      index={index}
       handleJoin={handleJoin}
       handleCancel={handleCancel}
     />
@@ -112,7 +109,7 @@ const DiscoverCommunities = () => {
 
   return (
     <FlatList
-      testID="flatlist"
+      testID="discover_communities.list"
       data={ids}
       renderItem={renderItem}
       keyExtractor={(item, index) => `community_${item}_${index}`}

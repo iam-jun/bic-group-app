@@ -17,6 +17,7 @@ import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 interface MemberSearchResultProps {
   canManageMember: boolean;
   memberSearchData: {loading: boolean; canLoadMore: boolean; data: any[]};
+  isAdminRole: boolean;
   onLoadMore?: () => void;
   onRefresh?: () => void;
   onPressMenu: (item: any) => void;
@@ -25,6 +26,7 @@ interface MemberSearchResultProps {
 const MemberSearchResult = ({
   canManageMember,
   memberSearchData,
+  isAdminRole,
   onLoadMore,
   onRefresh,
   onPressMenu,
@@ -36,6 +38,7 @@ const MemberSearchResult = ({
   const renderItem = ({ item }: {item: any}) => (
     <MemberItem
       item={item}
+      isAdminRole={isAdminRole}
       canManageMember={canManageMember}
       onPressMenu={onPressMenu}
     />

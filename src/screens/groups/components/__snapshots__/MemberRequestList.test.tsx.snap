@@ -34,7 +34,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
   scrollEventThrottle={50}
   showsVerticalScrollIndicator={false}
   stickyHeaderIndices={Array []}
-  testID="flatlist"
+  testID="member_request_list"
   viewabilityConfigCallbackPairs={Array []}
 >
   <RCTRefreshControl />

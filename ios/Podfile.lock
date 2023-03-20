@@ -487,6 +487,11 @@ PODS:
     - React-Core
   - react-native-flipper (0.157.0):
     - React-Core
+  - react-native-flipper-performance-plugin (0.4.0):
+    - React-Core
+    - react-native-flipper-performance-plugin/FBDefines (= 0.4.0)
+  - react-native-flipper-performance-plugin/FBDefines (0.4.0):
+    - React-Core
   - react-native-netinfo (6.0.4):
     - React-Core
   - react-native-pager-view (5.4.8):
@@ -774,6 +779,7 @@ DEPENDENCIES:
   - react-native-config (from `../node_modules/react-native-config`)
   - react-native-document-picker (from `../node_modules/react-native-document-picker`)
   - react-native-flipper (from `../node_modules/react-native-flipper`)
+  - react-native-flipper-performance-plugin (from `../node_modules/react-native-flipper-performance-plugin`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-paste-image-input (from `../node_modules/react-native-paste-image-input`)
@@ -941,6 +947,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-document-picker"
   react-native-flipper:
     :path: "../node_modules/react-native-flipper"
+  react-native-flipper-performance-plugin:
+    :path: "../node_modules/react-native-flipper-performance-plugin"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-pager-view:
@@ -1102,6 +1110,7 @@ SPEC CHECKSUMS:
   react-native-config: 6502b1879f97ed5ac570a029961fc35ea606cd14
   react-native-document-picker: 5663fe4bcdb646200683a41790464d2793307ac8
   react-native-flipper: cc9cdf47db2bbe0d9227eeec4f93e2290e55674b
+  react-native-flipper-performance-plugin: 42ec5017abd26e7c5a1f527f2db92c14a90cabdb
   react-native-netinfo: 1c7676413ab265759c7b3da205efab163f5366ef
   react-native-pager-view: c44c385eb20f0733c53685456fb9eb8d8469a1bb
   react-native-paste-image-input: e9ee848a663338b713d22bcdf9d6e53828fe57a4
@@ -1157,4 +1166,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 37e01bfe6326611abbecae4fe9f3e412a1dbec71
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0

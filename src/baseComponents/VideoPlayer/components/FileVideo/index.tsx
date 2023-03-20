@@ -20,6 +20,7 @@ import { VideoPlayerProps } from '../..';
 export interface FileVideoRef {
   play: () => void,
   pause: () => void,
+  resetVideoPosition: () => void,
 }
 
 const PLAYER_HEIGHT = scaleCoverHeight();
@@ -44,6 +45,7 @@ const FileVideo: FC<VideoPlayerProps> = ({
   useImperativeHandle(videoRef, () => ({
     play,
     pause,
+    resetVideoPosition,
   }));
 
   const play = async () => {
@@ -56,6 +58,7 @@ const FileVideo: FC<VideoPlayerProps> = ({
         });
         setPlaying(true);
         video.current?.playAsync();
+        setLoading(false);
       } catch (error) {
         setLoading(false);
         console.error(
@@ -71,13 +74,18 @@ const FileVideo: FC<VideoPlayerProps> = ({
     // @ts-ignore
     if (!currentStatus?.isPlaying) return;
 
-    setPlaying(false);
     try {
       video.current.pauseAsync();
     } catch (error) {
       console.error(
         'STOP VIDEO FAILED>>>>>>>>>>', error,
       );
+    }
+  };
+
+  const resetVideoPosition = async () => {
+    if (!!video.current) {
+      video.current.setStatusAsync({ positionMillis: 0, shouldPlay: false });
     }
   };
 

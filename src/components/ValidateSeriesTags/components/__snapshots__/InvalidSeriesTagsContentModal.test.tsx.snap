@@ -7,6 +7,7 @@ exports[`InvalidSeriesTagsContentModal component should renders correctly 1`] = 
       "maxHeight": 667,
     }
   }
+  testID="invalid_series_tags_content_modal"
 >
   <RCTScrollView>
     <View>

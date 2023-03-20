@@ -11,6 +11,7 @@ import FileVideo from './components/FileVideo';
 export interface VideoPlayerRef {
   play: () => void,
   pause: () => void,
+  resetVideoPosition: () => void,
 }
 
 const SUPPORTED_VIDEOS = ['mp4', 'mov', 'webm', 'wmv', 'avi', 'm3u8'];

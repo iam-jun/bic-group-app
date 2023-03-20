@@ -24,6 +24,14 @@ const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProp
       PermissionKey.ASSIGN_UNASSIGN_ROLE,
     ],
   );
+  const isAdminRole = shouldHavePermission(
+    groupId,
+    [
+      PermissionKey.ROLE_COMMUNITY_OWNER,
+      PermissionKey.ROLE_COMMUNITY_ADMIN,
+      PermissionKey.ROLE_GROUP_ADMIN,
+    ],
+  );
 
   useEffect(
     () => {
@@ -52,6 +60,7 @@ const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProp
   return (
     <MemberList
       type="community"
+      isAdminRole={isAdminRole}
       canManageMember={canManageMember}
       onLoadMore={onLoadMore}
       onPressMenu={onPressMenu}

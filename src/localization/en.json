@@ -219,7 +219,8 @@
     "mark_post_as_important": "Mark this post as Important",
     "mark_article_as_important": "Mark this article as Important",
     "mark_series_as_important": "Mark this series as Important",
-    "text_deactivated": "Deactivated"
+    "text_deactivated": "Deactivated",
+    "settings": "Settings"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -666,7 +667,6 @@
     "successful_schedule": "Successful Schedule",
     "text_delete_article_success": "Your article has been deleted",
     "paste_image_error": "Upload failed. Please upload images using the toolbar.",
-    "article_settings": "Article settings",
     "text_selecting_will_be_added_to": "Your article will be added to"
   },
   "post": {
@@ -839,7 +839,6 @@
       "text_delete_comment_success": "Comment deleted",
       "text_edited": "Edited"
     },
-    "settings": "Post Settings",
     "people_can_comment": "People can comment on this post",
     "people_can_share": "People can share on this post",
     "people_can_react": "People can react on this post",
@@ -1340,8 +1339,7 @@
     "text_remove_article": "Do you want to remove this article?",
     "text_remove_post": "Do you want to remove this post?",
     "text_article_removed": "Remove successful",
-    "text_no_content": "No content",
-    "series_settings": "Series settings"
+    "text_no_content": "No content"
   },
   "tags": {
     "create_tag": "Create Tag",
