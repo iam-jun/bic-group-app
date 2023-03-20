@@ -223,6 +223,7 @@
     "patch-package": "6.4.7",
     "process": "0.11.10",
     "react-dom": "17.0.2",
+    "react-native-flipper-performance-plugin": "^0.4.0",
     "react-native-flipper-zustand": "^2.0.1",
     "react-test-renderer": "17.0.2",
     "reactotron-react-js": "3.3.7",
