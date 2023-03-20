@@ -44,17 +44,17 @@ const ReportedContents = () => {
   };
 
   const renderItem = ({ item }: {item: string}) => (
-    <>
+    <View testID="reported_contents.item">
       <BannerReport postId={item} />
       <ContentItem id={item} shouldHideBannerImportant />
-    </>
+    </View>
   );
 
   const renderEmptyComponent = () => {
     if (refreshing) return null;
 
     return (
-      <View style={styles.boxEmpty}>
+      <View testID="reported_contents.empty" style={styles.boxEmpty}>
         <Image
           resizeMode="contain"
           source={images.img_empty_box}

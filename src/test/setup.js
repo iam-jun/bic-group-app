@@ -143,6 +143,9 @@ jest.doMock('@react-navigation/native', () => ({
     colors: colors.light.colors,
     elevations: colors.light.elevations,
   }),
+  useRoute: () => ({
+    route: { name: '' },
+  }),
 }));
 
 jest.doMock('react-native-modalize', () => {
