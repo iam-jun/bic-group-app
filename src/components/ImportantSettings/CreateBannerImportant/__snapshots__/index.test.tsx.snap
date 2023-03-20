@@ -1,0 +1,152 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateBannerImportant component should render correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "borderBottomColor": "#E3E6F2",
+        "borderBottomWidth": 1,
+        "paddingBottom": 8,
+        "paddingHorizontal": 16,
+        "paddingTop": 16,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      hitSlop={
+        Object {
+          "bottom": 10,
+          "left": 10,
+          "right": 10,
+          "top": 10,
+        }
+      }
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+            },
+            undefined,
+            Object {
+              "backgroundColor": undefined,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              undefined,
+              undefined,
+              undefined,
+            ]
+          }
+        >
+          <View />
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "marginLeft": 8,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 15,
+            },
+            Object {
+              "color": "#212745",
+            },
+            undefined,
+          ]
+        }
+      >
+        Important Article
+      </Text>
+      <View
+        style={
+          Object {
+            "alignItems": "baseline",
+            "flexDirection": "row",
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 14,
+              },
+              Object {
+                "color": "#353E6E",
+              },
+              undefined,
+            ]
+          }
+        >
+          Expires on 
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          March 14, 2023 17:40
+          .
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
