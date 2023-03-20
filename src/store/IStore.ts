@@ -17,9 +17,8 @@ import IDiscoverGroupsState from '~/screens/groups/DiscoverGroups/store/Interfac
 import { ICommunityMemberState } from '~/screens/communities/CommunityMembers/store';
 import { IGroupMemberState } from '~/screens/groups/GroupMembers/store';
 import IUserInterestedPostState from '~/components/posts/UserInterestedPost/store/Interface';
-import { IDiscoverCommunitiesState } from '~/screens/Discover/components/DiscoverCommunities/store/Interface';
 import { ICommunitiesState } from './entities/communities';
-import { IDiscoverCommunitiesSearchState } from '~/screens/Discover/components/SearchDiscoverCommunity/store/Interface';
+import { IDiscoverCommunitiesSearchState } from '~/screens/Discover/components/SearchDiscoverCommunity/store';
 import { IManagedState } from '~/screens/communities/Communities/components/Managed/store/Interface';
 import { IYourCommunitiesState } from '~/screens/communities/Communities/components/YourCommunities/store/Interface';
 import { IYourGroupsState } from '~/screens/communities/Communities/components/YourGroups/store/Interface';
@@ -51,6 +50,7 @@ import { IGroupJoinableUsersState } from '~/screens/groups/GroupMembers/AddMembe
 import { ISelectSeriesState } from '~/components/SelectSeries/store';
 import { ISelectTagsState } from '~/components/SelectTags/store';
 import { IValidateSeriesTags } from '~/components/ValidateSeriesTags/store';
+import { IDiscoverCommunitiesState } from '~/screens/Discover/components/DiscoverCommunities/store';
 
 export interface BicStore {
   entities: {

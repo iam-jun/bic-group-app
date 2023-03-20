@@ -37,7 +37,7 @@ const SearchDiscoverCommunityItemContainer: FC<
   const item = useCommunitiesStore((state) => state.data[id]);
   return (
     <SearchDiscoverCommunityItem
-      testID={`global_search_results.item_${id}`}
+      testID="global_search_results.item"
       item={item}
       onView={onView}
       onJoin={onJoin}
@@ -117,7 +117,7 @@ const SearchDiscoverCommunityResults = ({
 
   return (
     <FlatList
-      testID="flatlist"
+      testID="community_search_results.list"
       data={ids}
       keyboardShouldPersistTaps="handled"
       renderItem={renderItem}
