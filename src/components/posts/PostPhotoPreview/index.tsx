@@ -1,7 +1,7 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC, useState } from 'react';
 import {
-  Dimensions, StyleProp, StyleSheet, View, ViewStyle,
+  Dimensions, StyleProp, StyleSheet, View, ViewStyle, Image as RNImage,
 } from 'react-native';
 
 import Button from '~/beinComponents/Button';
@@ -14,6 +14,7 @@ import { IActivityDataImage } from '~/interfaces/IPost';
 import dimension from '~/theme/dimension';
 
 const DeviceWidth = Dimensions.get('window').width;
+const ASPECT_RATIO = 0.7;
 
 export interface PostPhotoPreviewProps {
   style?: StyleProp<ViewStyle>;
@@ -48,16 +49,22 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   if (!data || data?.length === 0) {
     return null;
   }
-  const imageRatio = (data?.[0]?.width || 1) / (data?.[0]?.height || 1);
-  const isVertical = imageRatio <= 0.5;
+
+  const imageRatioFirst = (data?.[0]?.width || 1) / (data?.[0]?.height || 1);
+  const imageRatioSecond = (data?.[1]?.width || 1) / (data?.[1]?.height || 1);
+  const isVerticalFirst = imageRatioFirst <= ASPECT_RATIO;
+  const isVerticalSecond = imageRatioSecond <= ASPECT_RATIO;
+  const isMessyOrientation = (isVerticalFirst !== isVerticalSecond) && data?.length === 2;
+  const isOnlyOneImageVerticle = isVerticalFirst && data?.length === 1;
+
   const dfSize = Math.min(
     width, dimension.maxNewsfeedWidth,
   );
   const _width = data?.length === 1 ? dfSize : dfSize;
-  const _height = data?.length === 1 ? dfSize / imageRatio : dfSize;
+  const _height = getHeighContainer(dfSize, data, imageRatioFirst, isVerticalFirst, isMessyOrientation);
 
   const containerStyle: any = {
-    flexDirection: isVertical ? 'row' : 'column',
+    flexDirection: (isVerticalFirst || isMessyOrientation) ? 'row' : 'column',
     width: _width,
     height: _height,
   };
@@ -148,6 +155,18 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
     );
   };
 
+  const renderBlurImageBackground = () => {
+    if (!isOnlyOneImageVerticle) return null;
+
+    return (
+      <RNImage 
+        source={{ uri: data[0]?.url }}
+        style={styles.blurImageBg}
+        blurRadius={22}
+      />
+    );
+  }
+
   return (
     <View
       testID="post_photo_preview"
@@ -161,10 +180,11 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
             onPress={(e) => _onPress(e, 0)}
             onLongPress={_onLongPress}
           >
+            {renderBlurImageBackground()}
             <UploadingImage
               style={styles.image}
               uploadType={uploadType}
-              width="100%"
+              width={isOnlyOneImageVerticle ? '78%' : '100%'}
               height="100%"
               fileName={data[0].origin_name}
               url={data[0].url || data[0].name}
@@ -175,7 +195,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
           <>
             <ViewSpacing width={4} height={4} />
             <View
-              style={{ flex: 1, flexDirection: isVertical ? 'column' : 'row' }}
+              style={{ flex: 1, flexDirection: isVerticalFirst ? 'column' : 'row' }}
             >
               {renderSmallImage(
                 1,
@@ -226,6 +246,32 @@ const createStyle = () => StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(130,128,133,0.64)',
   },
+  blurImageBg: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    height: '100%',
+  },
 });
 
 export default PostPhotoPreview;
+
+const getHeighContainer = (
+  dfSize,
+  data,
+  imageRatioFirst,
+  isVerticalFirst,
+  isMessyOrientation,
+) => {
+  if (data?.length === 1 && !isVerticalFirst) {
+    return dfSize / imageRatioFirst;
+  }
+  if (data?.length === 1 && isVerticalFirst) {
+    return dfSize * 1.3;
+  }
+  if (isMessyOrientation) {
+    return dfSize / 2;
+  }
+
+  return dfSize;
+}
