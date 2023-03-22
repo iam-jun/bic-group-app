@@ -1,23 +1,61 @@
 import { StyleSheet, View } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTheme } from '@react-navigation/native';
 import { spacing } from '~/theme';
 import Text from '~/baseComponents/Text';
 import WorkInfo from '../../components/WorkInfo';
+import { Button } from '~/baseComponents';
+import useModalStore from '~/store/modal';
+import BlockUserInfo from '~/components/BlockUserInfo';
+import { useBaseHook } from '~/hooks';
+import useUserProfileStore from '../../store';
 
 interface Props {
+  id: string;
   fullname: string;
   username: string;
   latestWork?: {
     titlePosition: string;
     company: string;
   };
+  isCurrentUser: boolean;
 }
 
 const UserHeader = ({
-  fullname, username, latestWork,
+  id, fullname, username, latestWork, isCurrentUser,
 }:Props) => {
+  const { t } = useBaseHook();
   const { colors } = useTheme();
+  const { showAlert } = useModalStore((state) => state.actions);
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const actions = useUserProfileStore((state) => state.actions);
+
+  const ButtonBlockedComponent = isDisabled ? Button.Neutral : Button.Danger;
+
+  const disableButtonBlockUser = () => {
+    setIsDisabled(true);
+  };
+
+  const onConfirmBlock = () => {
+    actions.blockUser(id, disableButtonBlockUser);
+  };
+
+  const onPressBlock = () => {
+    showAlert(
+      {
+        title: t('block_user:title_block_name').replace('{0}', fullname),
+        children: (
+          <BlockUserInfo fullname={fullname} style={styles.userBlock} />
+        ),
+        cancelBtn: true,
+        confirmLabel: t('common:btn_confirm'),
+        ConfirmBtnComponent: Button.Danger,
+        onConfirm: onConfirmBlock,
+        confirmBtnProps: { type: 'ghost' },
+      },
+    );
+  };
 
   return (
     <View testID="user_profile" style={styles.headerName}>
@@ -32,6 +70,17 @@ const UserHeader = ({
         </Text.BodyS>
       )}
       <WorkInfo style={styles.subtitle} latestWork={latestWork} />
+      {!isCurrentUser && (
+        <ButtonBlockedComponent
+          icon="UserXmark"
+          style={styles.buttonBlock}
+          onPress={onPressBlock}
+          disabled={isDisabled}
+          useI18n
+        >
+          block_user:text_block_user
+        </ButtonBlockedComponent>
+      )}
     </View>
   );
 };
@@ -45,6 +94,13 @@ const styles = StyleSheet.create({
   subtitle: {
     marginTop: spacing.margin.small,
     textAlign: 'center',
+  },
+  buttonBlock: {
+    marginTop: spacing.margin.small,
+  },
+  userBlock: {
+    paddingHorizontal: spacing.padding.large,
+    paddingVertical: spacing.padding.small,
   },
 });
 

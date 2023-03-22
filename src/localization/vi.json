@@ -1309,5 +1309,22 @@
   "report": {
     "title": "Báo cáo nội dung",
     "banner_report_content": "Nội dung của bạn đã được báo cáo vì "
+  },
+  "block_user": {
+    "title_block_name": "Chặn {0}?",
+    "text_block_user": "Chặn người này",
+    "general_description": "Tính năng chặn này chỉ áp dụng cho mục đích cá nhân. Tính năng chặn này sẽ không ảnh hưởng tới việc tương tác của cả hai trong các cộng đồng hoặc nhóm đã tham gia.",
+    "cannot": {
+      "title": "sẽ không thể:",
+      "search_profile": "Tìm thấy và xem được trang cá nhân của bạn",
+      "mention": "Nhắc đến bạn",
+      "send_message": "Gửi tin nhắn tới bạn"
+    },
+    "can": {
+      "title": "vẫn có thể:",
+      "see_profile": "Cả hai vẫn thấy được nhau trong các cộng đồng hoặc nhóm",
+      "see_content": "Cả hai vẫn thấy được nội dung của nhau trong các cộng đồng hoặc nhóm"
+    },
+    "text_block_user_also": "Chặn người này"
   }
 }

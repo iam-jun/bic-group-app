@@ -32,6 +32,11 @@ const defaultConfig = {
 };
 
 export const groupsApiConfig = {
+  blockUser: (blockedUserId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}users/${blockedUserId}/block`,
+    method: 'post',
+  }),
   getCommunityCUDTagPermission: (communityId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}me/permissions/can-cud-tags/community/${communityId}`,
@@ -549,6 +554,7 @@ export const groupsApiConfig = {
 };
 
 const groupApi = {
+  blockUser: (blockedUserId: string) => withHttpRequestPromise(groupsApiConfig.blockUser, blockedUserId),
   getCommunityCUDTagPermission: (communityId: string) => withHttpRequestPromise(
     groupsApiConfig.getCommunityCUDTagPermission, communityId,
   ),

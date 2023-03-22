@@ -121,9 +121,11 @@ const UserProfile = (props: any) => {
             uploadCallback={uploadCallback}
           />
           <UserHeader
+            id={userId}
             fullname={fullname}
             username={username}
             latestWork={latestWork}
+            isCurrentUser={isCurrentUser}
           />
           <Divider color={colors.gray5} size={spacing.padding.large} />
           <BasicInfo
