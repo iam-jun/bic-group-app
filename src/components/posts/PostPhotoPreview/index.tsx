@@ -176,13 +176,13 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
     if (!isOnlyOneImageVerticle) return null;
 
     return (
-      <RNImage 
+      <RNImage
         source={{ uri: data[0]?.url }}
         style={styles.blurImageBg}
         blurRadius={22}
       />
     );
-  }
+  };
 
   return (
     <View
@@ -292,4 +292,4 @@ const getHeighContainer = (
   }
 
   return dfSize;
-}
+};
