@@ -1,4 +1,5 @@
 import { EventType, handleMessage, onPressImages } from './helper';
+import * as link from '~/utils/link';
 
 describe('ArticleContentDetail helper', () => {
   const message = {
@@ -122,5 +123,20 @@ describe('ArticleContentDetail helper', () => {
       setGalleryVisible,
     });
     expect(fn).toBeUndefined();
+  });
+
+  it('should openUrl when onPressLink', () => {
+    const spyOpenUrl = jest.spyOn(link, 'openUrl');
+    const messageClone = { ...message };
+    messageClone.type = EventType.ON_PRESS_LINK;
+
+    const fn = handleMessage({
+      message: messageClone,
+      listImage,
+      setInitIndex,
+      setGalleryVisible,
+    });
+    expect(fn).toBeUndefined();
+    expect(spyOpenUrl).toBeCalled();
   });
 });

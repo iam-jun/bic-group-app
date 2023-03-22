@@ -206,6 +206,15 @@ export const matchDeepLink = (url: string) => {
     return { type: DeepLinkTypes.COMMENT_DETAIL, postId: match[1], params: newParams };
   }
 
+  match = new RegExp(
+    `^${PREFIX_DEEPLINK_GROUP}\\/article\\/(${UUID_V4_PATTERN})\\?(\\S+)$`,
+  ).exec(deepLinkUrl);
+  if (match) {
+    const urlParams = match[2];
+    const newParams = getURLParams(urlParams);
+    return { type: DeepLinkTypes.COMMENT_DETAIL, postId: match[1], params: newParams };
+  }
+
   // bic:///communities/ba6016d4-168f-44de-aca9-4a51055e6201
   match = new RegExp(
     `^${PREFIX_DEEPLINK_GROUP}\\/communities\\/(${UUID_V4_PATTERN})$`,
