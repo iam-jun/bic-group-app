@@ -18,6 +18,7 @@ import {
   IUserAddWorkExperience,
 } from '~/interfaces/IAuth';
 import IBaseState from '~/store/interfaces/IBaseState';
+import blockUser from './actions/blockUser';
 
 export interface IUserProfileState extends IBaseState {
   loading: boolean;
@@ -36,6 +37,7 @@ export interface IUserProfileState extends IBaseState {
     addWorkExperience: (payload: IUserAddWorkExperience, callback?: () => void) => void;
     deleteWorkExperience: (id: string, callback?: () => void) => void;
     editWorkExperience: (id: string, payload: IUserAddWorkExperience, callback?: () => void) => void;
+    blockUser: (blockedUserId: string, callback?: () => void) => void;
   };
 }
 
@@ -60,6 +62,7 @@ const userProfileStore = (set, _get) => ({
     addWorkExperience: addWorkExperience(),
     deleteWorkExperience: deleteWorkExperience(set, _get),
     editWorkExperience: editWorkExperience(),
+    blockUser: blockUser(),
   },
   reset: () => resetStore(initState, set),
 });

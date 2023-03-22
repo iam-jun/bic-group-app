@@ -14,7 +14,9 @@ import { IActivityDataImage } from '~/interfaces/IPost';
 import dimension from '~/theme/dimension';
 
 const DeviceWidth = Dimensions.get('window').width;
+const DeviceHeight = Dimensions.get('window').height;
 const ASPECT_RATIO = 0.7;
+const SQUARE_RATIO = 1;
 
 export interface PostPhotoPreviewProps {
   style?: StyleProp<ViewStyle>;
@@ -54,17 +56,32 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   const imageRatioSecond = (data?.[1]?.width || 1) / (data?.[1]?.height || 1);
   const isVerticalFirst = imageRatioFirst <= ASPECT_RATIO;
   const isVerticalSecond = imageRatioSecond <= ASPECT_RATIO;
-  const isMessyOrientation = (isVerticalFirst !== isVerticalSecond) && data?.length === 2;
+  const isSquareFirst = imageRatioFirst === SQUARE_RATIO;
+  const isSquareSecond = imageRatioSecond === SQUARE_RATIO;
+
+  const isMessyOrientation = (
+    isVerticalFirst !== isVerticalSecond ||
+    !isVerticalFirst && isSquareSecond ||
+    isSquareFirst && !isVerticalSecond
+  ) && data?.length === 2;
   const isOnlyOneImageVerticle = isVerticalFirst && data?.length === 1;
+  const isBothSquare = (isSquareFirst && isSquareSecond) && data?.length === 2;
 
   const dfSize = Math.min(
     width, dimension.maxNewsfeedWidth,
   );
   const _width = data?.length === 1 ? dfSize : dfSize;
-  const _height = getHeighContainer(dfSize, data, imageRatioFirst, isVerticalFirst, isMessyOrientation);
+  const _height = getHeighContainer(
+    dfSize,
+    data,
+    imageRatioFirst,
+    isVerticalFirst,
+    isMessyOrientation,
+    isBothSquare,
+  );
 
   const containerStyle: any = {
-    flexDirection: (isVerticalFirst || isMessyOrientation) ? 'row' : 'column',
+    flexDirection: (isVerticalFirst || isMessyOrientation || isBothSquare) ? 'row' : 'column',
     width: _width,
     height: _height,
   };
@@ -159,13 +176,13 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
     if (!isOnlyOneImageVerticle) return null;
 
     return (
-      <RNImage 
+      <RNImage
         source={{ uri: data[0]?.url }}
         style={styles.blurImageBg}
         blurRadius={22}
       />
     );
-  }
+  };
 
   return (
     <View
@@ -262,16 +279,17 @@ const getHeighContainer = (
   imageRatioFirst,
   isVerticalFirst,
   isMessyOrientation,
+  isBothSquare,
 ) => {
   if (data?.length === 1 && !isVerticalFirst) {
     return dfSize / imageRatioFirst;
   }
   if (data?.length === 1 && isVerticalFirst) {
-    return dfSize * 1.3;
+    return DeviceHeight * 0.7;
   }
-  if (isMessyOrientation) {
+  if (isMessyOrientation || isBothSquare) {
     return dfSize / 2;
   }
 
   return dfSize;
-}
+};

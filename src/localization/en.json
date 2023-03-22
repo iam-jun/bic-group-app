@@ -1369,5 +1369,22 @@
   "report": {
     "title": "Report Content",
     "banner_report_content": "Your content was reported because of "
+  },
+  "block_user": {
+    "title_block_name": "Block {0}?",
+    "text_block_user": "Block this user",
+    "general_description": "This blocking is applied to individual purposes. This blocking won't affect your and the blocked person's interactions in a community or group that has joined.",
+    "cannot": {
+      "title": "will no longer be able to:",
+      "search_profile": "Search and see your individual user profile",
+      "mention": "Mention you",
+      "send_message": "Send a direct message to you"
+    },
+    "can": {
+      "title": "will be able to:",
+      "see_profile": "Both of you still see the other in a community or group",
+      "see_content": "Both of you still see the other's content in a community or group"
+    },
+    "text_block_user_also": "Block this user also"
   }
 }

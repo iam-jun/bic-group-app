@@ -15,9 +15,11 @@ import spacing, { borderRadius } from '~/theme/spacing';
 import { Button } from '~/baseComponents';
 import { useBaseHook } from '~/hooks';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
+import { IGroupMembers } from '~/interfaces/IGroup';
+import { ICommunityMembers } from '~/interfaces/ICommunity';
 
 interface MemberItemProps {
-  item: any;
+  item: ICommunityMembers | IGroupMembers;
   isAdminRole: boolean;
   canManageMember: boolean;
   onPressMenu: (item: any) => void;
@@ -40,7 +42,12 @@ const MemberItem = ({
 
   const isMe = user?.username === username;
   const memberName = isMe ? `${fullname} (${t('common:text_you')})` : fullname;
-  const canSendMessage = !isMe && isAdminRole;
+
+  /**
+   * Community owner/admins or Group admins can send message to all members
+   * Members cannot send message to other members, except group admins.
+   */
+  const canSendMessage = !isMe && (isAdminRole || !!item?.isAdmin);
 
   const goToUserProfile = () => {
     rootNavigation.navigate(

@@ -86,6 +86,7 @@ const CommunityMemberOptionsMenu = ({
 
     const dataReportMember = {
       communityId,
+      reportedMember: selectedMember,
     };
 
     showModal({
