@@ -5,6 +5,7 @@ import topicStack from '~/router/navigator/MainStack/stacks/topic/stack';
 import useCommunitiesStore from '~/store/entities/communities';
 import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import { IMentionUser } from '~/interfaces/IPost';
+import { openUrl } from '~/utils/link';
 
 export enum EventType {
   ON_PRESS_ACTOR = 'onPressActor',
@@ -14,6 +15,7 @@ export enum EventType {
   ON_PRESS_TOPIC = 'onPressTopic',
   ON_PRESS_TAG = 'onPressTag',
   ON_PRESS_IMAGE = 'onPressImage',
+  ON_PRESS_LINK = 'onPressLink',
 }
 
 const rootNavigation = withNavigation(rootNavigationRef);
@@ -45,6 +47,8 @@ export const handleMessage = (data: {
       return onPressImages({
         payload, listImage, setInitIndex, setGalleryVisible,
       });
+    case EventType.ON_PRESS_LINK:
+      return onPressLink(payload);
     default:
       return console.warn('Article webview onMessage unhandled', message);
   }
@@ -78,6 +82,12 @@ export const onPressTags = (payload: any) => {
 
   const communityId = useCommunitiesStore.getState().currentCommunityId;
   rootNavigation.navigate(tagsStack.tagDetail, { tagData: payload, communityId });
+};
+
+export const onPressLink = (payload: any) => {
+  if (!payload) return;
+
+  openUrl(payload.url);
 };
 
 export const onPressImages = (data: { payload: any; listImage; setInitIndex; setGalleryVisible }) => {
