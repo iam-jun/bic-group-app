@@ -14,6 +14,7 @@ import { IActivityDataImage } from '~/interfaces/IPost';
 import dimension from '~/theme/dimension';
 
 const DeviceWidth = Dimensions.get('window').width;
+const DeviceHeight = Dimensions.get('window').height;
 const ASPECT_RATIO = 0.7;
 
 export interface PostPhotoPreviewProps {
@@ -267,7 +268,7 @@ const getHeighContainer = (
     return dfSize / imageRatioFirst;
   }
   if (data?.length === 1 && isVerticalFirst) {
-    return dfSize * 1.3;
+    return DeviceHeight * 0.7;
   }
   if (isMessyOrientation) {
     return dfSize / 2;
