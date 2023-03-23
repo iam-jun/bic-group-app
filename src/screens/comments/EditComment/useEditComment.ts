@@ -15,13 +15,12 @@ import ICommentInputState from '../components/CommentInputView/store/Interface';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { useBaseHook } from '~/hooks';
-import Store from '~/storeRedux';
-import { checkPermission, permissionTypes } from '~/utils/permission';
+import { checkPermission, PermissionTypes } from '~/utils/permission';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import { IGiphy } from '~/interfaces/IGiphy';
 import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
-import { formatTextWithEmoji } from '~/utils/emojiUtils';
-import { getImagePastedFromClipboard } from '~/utils/common';
+import { formatTextWithEmoji } from '~/utils/emojis';
+import { getImagePastedFromClipboard } from '~/utils/images';
 import useModalStore from '~/store/modal';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import useUploaderStore, { IGetFile } from '~/store/uploader';
@@ -61,7 +60,6 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
 
   const { showToast, showAlert } = useModalStore((state) => state.actions);
 
-  const uploadActions = useUploaderStore((state) => state.actions);
   const uploadedFile = useUploaderStore(useCallback(
     (state) => state.uploadedFiles[selectedImage?.file?.name], [selectedImage],
   ));
@@ -69,20 +67,22 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
     (state) => state.errors[selectedImage?.file?.name], [selectedImage],
   ));
 
+  const disableImageOption = !!selectedImage;
+  const disableGifOption = !!selectedGiphy;
   const isUploading = useUploaderStore.getState().uploadingFiles?.[selectedImage?.file?.name] >= 0;
 
-  const isContentHasChange = text !== oldContent;
+  const isContentEmpty = !text?.trim?.()?.length;
+  const isContentHasChange = !isContentEmpty && text?.trim?.() !== oldContent;
   const isImageHasChange = oldImages?.[0]?.origin_name
     ? selectedImage?.fileName !== oldImages[0].origin_name
     : oldImages?.[0]?.name
-    && (selectedImage?.fileName !== oldImages[0].name);
+      ? (selectedImage?.fileName !== oldImages[0].name)
+      : disableImageOption;
   const isGifHasChange = oldGiphy?.id !== selectedGiphy?.id;
   const isEditHasChange = isImageHasChange || isGifHasChange || isContentHasChange;
-  const isContentEmpty = !text?.trim?.() && !selectedImage?.fileName;
 
-  const enableButtonSave = isEditHasChange && !isContentEmpty && (!loading || !isUploading);
-  const disableImageOption = !!selectedImage;
-  const disableGifOption = !!selectedGiphy;
+  const isHasCommentContent = !isContentEmpty || disableImageOption || disableGifOption;
+  const enableButtonSave = isHasCommentContent && isEditHasChange && (!loading || !isUploading);
 
   useEffect(
     () => {
@@ -135,12 +135,6 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
   );
 
   useEffect(() => {
-    if (selectedImage) {
-      uploadActions.upload({ type: 'image', file: selectedImage.file, uploadType: uploadTypes.commentImage });
-    }
-  }, [selectedImage]);
-
-  useEffect(() => {
     if (uploadError) {
       const content = typeof uploadError === 'string' ? uploadError : t('post:error_upload_photo_failed');
       showToastError(content);
@@ -168,7 +162,7 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
 
   const handelSelectImage = () => {
     checkPermission(
-      permissionTypes.photo, Store.store.dispatch, (canOpenPicker) => {
+      PermissionTypes.photo, (canOpenPicker) => {
         if (canOpenPicker) {
           ImagePicker.openPickerSingle().then((file) => {
             if (!file) return;

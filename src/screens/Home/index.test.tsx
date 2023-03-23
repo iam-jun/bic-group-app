@@ -19,8 +19,7 @@ describe('Home screen', () => {
     });
     jest.useFakeTimers();
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const spy = jest.spyOn(linkUtil, 'openUrl').mockImplementation(() => {});
+    const spy = jest.spyOn(linkUtil, 'openUrl').mockImplementation(jest.fn());
     const storeData = { ...baseStore } as any;
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(

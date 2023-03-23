@@ -18,7 +18,6 @@ import {
   ViewStyle,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useDispatch } from 'react-redux';
 import PasteInput from 'react-native-paste-image-input';
 import Button from '~/beinComponents/Button';
 import Icon from '~/baseComponents/Icon';
@@ -36,12 +35,12 @@ import { IActivityDataImage } from '~/interfaces/IPost';
 import dimension from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
-import { checkPermission, permissionTypes } from '~/utils/permission';
-import { formatTextWithEmoji } from '~/utils/emojiUtils';
+import { checkPermission, PermissionTypes } from '~/utils/permission';
+import { formatTextWithEmoji } from '~/utils/emojis';
 import { IGiphy } from '~/interfaces/IGiphy';
 import useUploaderStore from '~/store/uploader';
 import { getErrorMessageFromResponse } from '~/utils/link';
-import { getImagePastedFromClipboard } from '~/utils/common';
+import { getImagePastedFromClipboard } from '~/utils/images';
 
 export interface ICommentInputSendParam {
   content: string;
@@ -141,7 +140,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const _loading = loading || uploading;
 
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -191,7 +189,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   }, [selectedEmoji]);
 
   const _onPressSelectImage = () => {
-    checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
+    checkPermission(PermissionTypes.photo, (canOpenPicker) => {
       if (canOpenPicker) {
         ImagePicker.openPickerSingle({ mediaType: 'photo' }).then((file) => {
           if (!file) return;
@@ -225,9 +223,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
   }, []);
 
   const onPressIcon = () => {
-    // dispatch(modalActions.setShowReactionBottomSheet(
-    //   { visible: true, callback: onEmojiSelected },
-    // ));
     giphyViewRef?.current?.hide?.();
     emojiViewRef?.current?.show?.('emoji');
   };

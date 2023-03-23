@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
 import UploadingImage from '~/beinComponents/UploadingImage';
@@ -10,7 +9,7 @@ import { IFilePicked } from '~/interfaces/common';
 import dimension, { scaleSize } from '~/theme/dimension';
 import Icon from '~/baseComponents/Icon';
 import { Button } from '~/baseComponents';
-import { checkPermission, permissionTypes } from '~/utils/permission';
+import { checkPermission, PermissionTypes } from '~/utils/permission';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import { IArticleCover } from '~/interfaces/IPost';
 import { IGetFile } from '~/store/uploader';
@@ -28,8 +27,6 @@ interface Props {
 const CoverImage = ({
   style, coverMedia, disabled, onUploadSuccess,
 }: Props) => {
-  const dispatch = useDispatch();
-
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
@@ -38,7 +35,7 @@ const CoverImage = ({
 
   const onPressSelect = () => {
     checkPermission(
-      permissionTypes.photo, dispatch, (canOpenPicker) => {
+      PermissionTypes.photo, (canOpenPicker) => {
         if (canOpenPicker) {
           ImagePicker.openPickerSingle({
             mediaType: 'photo',

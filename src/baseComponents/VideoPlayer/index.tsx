@@ -1,8 +1,8 @@
 import React, {
-  FC,
+  FC, useEffect,
 } from 'react';
 
-import { VideoProps } from 'expo-av';
+import { VideoProps, Audio } from 'expo-av';
 
 import { getVideoExtention } from './helper';
 import EmbedVideo from './components/EmbedVideo';
@@ -25,6 +25,10 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   src,
   ...props
 }: VideoPlayerProps) => {
+  useEffect(() => {
+    Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
+  }, []);
+
   const urlExtension = getVideoExtention(src);
 
   if (!SUPPORTED_VIDEOS.includes(urlExtension.toLowerCase())) {

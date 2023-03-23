@@ -29,7 +29,10 @@ interface LanguageOptionMenuProps {
 const initLstLanguageState = (
   languages: ILanguageResponseItem[],
   selectedLanguages: string[] = [],
-): ILanguageItem[] => languages.map((item) => ({ ...item, selected: selectedLanguages?.includes(item.code) }));
+): ILanguageItem[] => languages.map((item) => ({
+  ...item,
+  selected: selectedLanguages?.includes(item.code),
+}));
 
 const getSelectedLanguages = (languages: ILanguageItem[]) => languages.filter((item) => item.selected);
 
@@ -46,16 +49,17 @@ const LanguageOptionMenu = ({
   const styles = themeStyles(theme, screenHeight);
 
   const languagesResponse = useUserProfileStore((state) => state.languages);
-  const [languages, setLanguages] = useState(initLstLanguageState(languagesResponse, selectedLanguages));
+
+  const [languages, setLanguages] = useState(
+    initLstLanguageState(languagesResponse, selectedLanguages),
+  );
 
   const languageSheetRef = useRef<any>();
 
   const updateSelectedLanguages = (lstCurrentLanguage: ILanguageItem[]) => {
     const newSelectedItems = lstCurrentLanguage.reduce(
       (acc: string[], cur: ILanguageItem) => {
-        if (
-          cur.selected
-        ) {
+        if (cur.selected) {
           acc.push(cur.code);
         }
         return acc;
@@ -79,7 +83,10 @@ const LanguageOptionMenu = ({
     );
   };
 
-  const onRemoveItem = (language?: ILanguageItem, isUpdateSelectedLanguages?: boolean) => {
+  const onRemoveItem = (
+    language?: ILanguageItem,
+    isUpdateSelectedLanguages?: boolean,
+  ) => {
     // remove all
     if (!language) {
       setLanguages(
@@ -101,9 +108,7 @@ const LanguageOptionMenu = ({
       }
       return lang;
     });
-    setLanguages(
-      newLanguagesState,
-    );
+    setLanguages(newLanguagesState);
     if (isUpdateSelectedLanguages) {
       updateSelectedLanguages(newLanguagesState);
     }
@@ -137,6 +142,7 @@ const LanguageOptionMenu = ({
           variant: 'bodyM',
           numberOfLines: 1,
           style: { flex: 1 },
+          testID: 'edit_basic_info.language.title',
         }}
         style={styles.buttonDropDown}
         contentStyle={styles.buttonDropDownContent}
@@ -147,7 +153,10 @@ const LanguageOptionMenu = ({
         {selectedLanguageItems && selectedLanguageItems.length !== 0 ? (
           <View style={styles.tagContainer}>
             {selectedLanguageItems.map((item) => (
-              <View key={`sllg-${item.code}`}>
+              <View
+                key={`sllg-${item.code}`}
+                testID="edit_basic_info.language.selected_item"
+              >
                 <Tag
                   type="neutral"
                   size="medium"
@@ -167,7 +176,7 @@ const LanguageOptionMenu = ({
       <BottomSheet
         modalizeRef={languageSheetRef}
         ContentComponent={(
-          <View style={styles.contentComponent}>
+          <View style={styles.contentComponent} testID="language.bottom_sheet">
             <ScrollView
               keyboardShouldPersistTaps="always"
               showsVerticalScrollIndicator={false}

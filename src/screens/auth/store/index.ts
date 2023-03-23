@@ -1,39 +1,60 @@
 import { HubCapsule } from '@aws-amplify/core/src/Hub';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ISignIn, IUserResponse } from '~/interfaces/IAuth';
+import { createJSONStorage } from 'zustand/middleware';
+import {
+  ISignIn, IPayloadSignUp, IUserResponse, IVerifyEmail,
+} from '~/interfaces/IAuth';
 import announceSessionExpire from '~/screens/auth/store/actions/announceSessionExpire';
 import signOut from '~/screens/auth/store/actions/signOut';
 import signIn from './actions/signIn';
 import handleAuthEvent from './actions/handleAuthEvent';
 import { InitStateType, IBaseState } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
+import signUp from './actions/signUp';
+import resendVerifyEmail from './actions/resendVerifyEmail';
 
-export interface IAuthState extends IBaseState{
+export interface IAuthState extends IBaseState {
   authUser?: any;
   signIn: {
-    loading: boolean,
-    error: string,
-  },
+    loading: boolean;
+    error: string;
+  };
+  signUp: {
+    loading: boolean;
+    error: string;
+  };
   signingOut: boolean;
   showingNoticeSession: boolean;
 
   actions: {
     setAuthUser: (user: IUserResponse) => void;
     setSignInError: (error: string) => void;
+    setSignUpError: (error: string) => void;
     setSignInLoading: (loading: boolean) => void;
+    setSignUpLoading: (loading: boolean) => void;
     setSigningOut: (signingOut: boolean) => void;
     setRefreshedToken: (data: any) => void;
 
-    signIn: (payload: ISignIn, callbackError?: (error: any)=> void) => void;
+    signIn: (payload: ISignIn, callbackError?: (error: any) => void) => void;
+    signUp: (payload: IPayloadSignUp, callbackError: (error: any) => void, callbackSuccess: () => void) => void;
     signOut: () => void;
+    resendVerifyEmail: (
+      payload: IVerifyEmail,
+      callbackError: (error: any) => void,
+      callbackSuccess: () => void,
+    ) => void;
     handleAuthEvent: (data: HubCapsule) => void;
     announceSessionExpire: () => void;
-  }
+  };
 }
 
 const initialState: InitStateType<IAuthState> = {
   authUser: undefined,
   signIn: {
+    loading: false,
+    error: '',
+  },
+  signUp: {
     loading: false,
     error: '',
   },
@@ -55,10 +76,20 @@ const authController = (set, get) => ({
         state.signIn.error = error || '';
       }, 'setSignInError');
     },
+    setSignUpError: (error) => {
+      set((state: IAuthState) => {
+        state.signUp.error = error || '';
+      }, 'setSignUpError');
+    },
     setSignInLoading: (loading) => {
       set((state: IAuthState) => {
         state.signIn.loading = loading;
       }, 'setSignInLoading');
+    },
+    setSignUpLoading: (loading) => {
+      set((state: IAuthState) => {
+        state.signUp.loading = loading;
+      }, 'setSignUpLoading');
     },
     setSigningOut: (signingOut) => {
       set((state: IAuthState) => {
@@ -78,8 +109,10 @@ const authController = (set, get) => ({
     },
 
     signIn: signIn(set, get),
+    signUp: signUp(set, get),
     signOut: signOut(set, get),
     handleAuthEvent: handleAuthEvent(set, get),
+    resendVerifyEmail: resendVerifyEmail(),
     announceSessionExpire: announceSessionExpire(set, get),
   },
 
@@ -89,7 +122,7 @@ const authController = (set, get) => ({
 const useAuthController = createStore<IAuthState>(authController, {
   persist: {
     name: 'AuthStorage',
-    getStorage: () => AsyncStorage,
+    storage: createJSONStorage(() => AsyncStorage),
     partialize: (state) => ({ authUser: state.authUser }),
   },
 });

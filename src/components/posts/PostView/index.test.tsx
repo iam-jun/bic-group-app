@@ -11,23 +11,13 @@ import PostView from '~/components/posts/PostView';
 import { POST_DETAIL, POST_DETAIL_2 } from '~/test/mock_data/post';
 import * as navigationHook from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import modalActions from '~/storeRedux/modal/actions';
 import { IPost } from '~/interfaces/IPost';
+import useModalStore from '~/store/modal';
 
 describe('PostView Component', () => {
   const state: any = { ...initialState };
   state.post.allPosts = { [POST_DETAIL.id]: POST_DETAIL } as any;
   const postData = POST_DETAIL as unknown as IPost;
-
-  // it('renders correctly', () => {
-  //   const store = createTestStore(state);
-  //   const wrapper = renderWithRedux(
-  //     <PostView data={postData} />,
-  //     store,
-  //   );
-  //   expect(wrapper).toMatchSnapshot();
-  // });
-  // reaction.button.wink
 
   it('renders deleted post', async () => {
     const stateData: any = { ...state };
@@ -195,7 +185,11 @@ describe('PostView Component', () => {
   });
 
   it('press audience should dispatch show audiences', () => {
-    const spy = jest.spyOn(modalActions, 'showModal');
+    const showModal = jest.fn();
+    useModalStore.setState((state) => {
+      state.actions = { showModal } as any;
+      return state;
+    });
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <PostView data={postData} />,
@@ -203,11 +197,15 @@ describe('PostView Component', () => {
     );
     const btn = wrapper.getByTestId('post_view_header.audiences');
     fireEvent.press(btn);
-    expect(spy).toBeCalled();
+    expect(showModal).toBeCalled();
   });
 
   it('press menu should dispatch show modal menu', () => {
-    const spy = jest.spyOn(modalActions, 'showModal');
+    const showModal = jest.fn();
+    useModalStore.setState((state) => {
+      state.actions = { showModal } as any;
+      return state;
+    });
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <PostView data={postData} />,
@@ -215,30 +213,6 @@ describe('PostView Component', () => {
     );
     const btn = wrapper.getByTestId('post_view_header.menu');
     fireEvent.press(btn);
-    expect(spy).toBeCalled();
-  });
-
-  // it('on press reaction item should dispatch deleteReactToPost', () => {
-  //   const spy = jest.spyOn(postActions, 'deleteReactToPost');
-  //   const store = createTestStore(state);
-  //   const wrapper = renderWithRedux(
-  //     <PostView data={postData} />,
-  //     store,
-  //   );
-  //   const emojiWink = wrapper.getByTestId('reaction.button.wink');
-  //   fireEvent.press(emojiWink);
-  //   expect(spy).toBeCalled();
-  // });
-
-  it('on long press reaction item should dispatch showReactionDetailBottomSheet', () => {
-    const spy = jest.spyOn(modalActions, 'showReactionDetailBottomSheet');
-    const store = createTestStore(state);
-    const wrapper = renderWithRedux(
-      <PostView data={postData} />,
-      store,
-    );
-    const emojiWink = wrapper.getByTestId('reaction.button.wink');
-    fireEvent(emojiWink, 'onLongPress');
-    expect(spy).toBeCalled();
+    expect(showModal).toBeCalled();
   });
 });

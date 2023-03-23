@@ -1,12 +1,14 @@
 import { Auth } from 'aws-amplify';
 import useAuthController from '~/screens/auth/store';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 import { act, renderHook } from '~/test/testUtils';
 
 describe('signIn', () => {
   it('should call auth amplify sign in success, keep loading', () => {
     Auth.signIn = jest.fn();
-    const spyHideLoading = jest.spyOn(modalActions, 'hideLoading');
+    const setLoadingModal = jest.fn();
+    const actions = { setLoadingModal };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
 
@@ -19,7 +21,7 @@ describe('signIn', () => {
       jest.runAllTimers();
     });
     expect(Auth.signIn).toBeCalled();
-    expect(spyHideLoading).not.toBeCalled();
+    expect(setLoadingModal).not.toBeCalled();
   });
 
   it('should call auth amplify error, call prop callbackError', () => {

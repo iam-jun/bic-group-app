@@ -25,6 +25,10 @@ import useArticleController from '~/screens/articles/store';
 import { ArticleSummary, ArticleTitle } from '~/components/articles';
 import { PostImportant } from '~/components/posts';
 import useModalStore from '~/store/modal';
+import TagsView from '~/components/TagsView';
+import { ITag } from '~/interfaces/ITag';
+import useCommunitiesStore from '~/store/entities/communities';
+import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 
 interface DraftViewProps {
   data: IPost;
@@ -56,6 +60,7 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
     isProcessing,
     setting,
     communities,
+    tags,
   } = data || {};
 
   const { isImportant, importantExpiredAt } = setting || {};
@@ -110,6 +115,11 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
     rootNavigation?.navigate(articleStack.createArticle, { articleId: id, isFromDraftScreen: true });
   };
 
+  const goToTagDetail = (tagData: ITag) => {
+    const communityId = useCommunitiesStore.getState().currentCommunityId;
+    rootNavigation.navigate(tagsStack.tagDetail, { tagData, communityId });
+  };
+
   const renderImportant = () => (
     <PostImportant
       isImportant={!!isImportant}
@@ -144,6 +154,9 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
           <ViewSpacing height={spacing.margin.small} />
           <ArticleSummary text={summary} />
         </>
+      )}
+      {tags?.length > 0 && (
+      <TagsView data={tags} onPressTag={goToTagDetail} />
       )}
     </View>
   );

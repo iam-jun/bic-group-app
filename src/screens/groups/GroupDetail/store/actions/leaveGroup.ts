@@ -20,8 +20,7 @@ const leaveGroup = () => async (groupId: string, privacy: GroupPrivacyType) => {
 
     // update button Join/Cancel/View status on Discover groups
     useDiscoverGroupsStore
-      .getState()
-      .doSetGroupStatus(groupId, GroupJoinStatus.VISITOR);
+      .getState().actions.setGroupStatus(groupId, GroupJoinStatus.VISITOR);
 
     if (privacy === GroupPrivacyType.SECRET) {
       navigationPopToTop();

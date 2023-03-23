@@ -298,10 +298,13 @@ exports[`Group Item component renders correctly 1`] = `
                   "fontSize": 11,
                 },
                 Object {},
-                Object {
-                  "color": "#007AFF",
-                  "paddingLeft": 4,
-                },
+                Array [
+                  Object {
+                    "color": "#007AFF",
+                    "paddingLeft": 4,
+                  },
+                  undefined,
+                ],
               ]
             }
             testID="tag.label"
@@ -626,10 +629,13 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
                   "fontSize": 11,
                 },
                 Object {},
-                Object {
-                  "color": "#007AFF",
-                  "paddingLeft": 4,
-                },
+                Array [
+                  Object {
+                    "color": "#007AFF",
+                    "paddingLeft": 4,
+                  },
+                  undefined,
+                ],
               ]
             }
             testID="tag.label"
@@ -870,10 +876,13 @@ exports[`Group Item component should render default prop 1`] = `
                   "fontSize": 11,
                 },
                 Object {},
-                Object {
-                  "color": "#007AFF",
-                  "paddingLeft": 4,
-                },
+                Array [
+                  Object {
+                    "color": "#007AFF",
+                    "paddingLeft": 4,
+                  },
+                  undefined,
+                ],
               ]
             }
             testID="tag.label"
@@ -1185,10 +1194,13 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
                   "fontSize": 11,
                 },
                 Object {},
-                Object {
-                  "color": "#007AFF",
-                  "paddingLeft": 4,
-                },
+                Array [
+                  Object {
+                    "color": "#007AFF",
+                    "paddingLeft": 4,
+                  },
+                  undefined,
+                ],
               ]
             }
             testID="tag.label"

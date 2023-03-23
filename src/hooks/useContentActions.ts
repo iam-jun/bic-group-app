@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import { ReactionType } from '~/constants/reactions';
 import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
 import {
@@ -7,7 +6,7 @@ import {
 } from '~/interfaces/IPost';
 import useCommonController from '~/screens/store';
 import usePostsStore, { IPostsState } from '~/store/entities/posts';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 
 export interface Props {
   postId: string;
@@ -20,10 +19,10 @@ const useContentActions = (props: Props) => {
   const {
     postId, ownerReactions, reactionsCount, targetType,
   } = props;
-  const dispatch = useDispatch();
 
   const commonController = useCommonController((state) => state.actions);
   const { putMarkSeenPost } = usePostsStore((state: IPostsState) => state.actions);
+  const modalActions = useModalStore((state) => state.actions);
 
   const onPressMarkSeenPost = useCallback(() => {
     putMarkSeenPost({ postId });
@@ -52,12 +51,11 @@ const useContentActions = (props: Props) => {
 
   const onLongPressReaction = (reactionType: ReactionType) => {
     const payload: IPayloadReactionDetailBottomSheet = {
-      isOpen: true,
       reactionsCount,
       initReaction: reactionType,
       getDataParam: { target: 'POST', targetId: postId },
     };
-    dispatch(modalActions.showReactionDetailBottomSheet(payload));
+    modalActions.showReactionDetailBottomSheet(payload);
   };
 
   return {

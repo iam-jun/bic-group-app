@@ -1,8 +1,10 @@
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
+import Icon from '~/baseComponents/Icon';
 import { ITag } from '~/interfaces/ITag';
+import { spacing } from '~/theme';
 import TagItem from './components/TagItem';
-import { calculateMaxWidthOfTag } from './helper';
 
 export type Props = {
   data: ITag[];
@@ -10,19 +12,38 @@ export type Props = {
 };
 
 const TagsView: FC<Props> = ({ data, onPressTag }) => {
-  const maxWidthOfTag = calculateMaxWidthOfTag(data.length);
+  const theme: ExtendedTheme = useTheme();
+  const { colors } = theme;
 
   const renderItem = (item: ITag) => (
-    <TagItem key={`tag_${item.id}`} data={item} maxWidthOfTag={maxWidthOfTag} onPressTag={onPressTag} />
+    <TagItem key={`tag_${item.id}`} data={item} onPressTag={onPressTag} />
   );
 
-  return <View style={styles.container}>{data.map(renderItem)}</View>;
+  return (
+    <View style={styles.row}>
+      <Icon
+        size={18}
+        tintColor={colors.neutral20}
+        icon="Tag"
+        style={styles.iconTag}
+      />
+      <View style={styles.container}>{data.map(renderItem)}</View>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    flex: 1,
+  },
   container: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+  },
+  iconTag: {
+    marginRight: spacing.margin.small,
+    marginTop: spacing.margin.base,
   },
 });
 

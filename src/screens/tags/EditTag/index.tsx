@@ -30,7 +30,7 @@ const EditTag: FC<EditTagProps> = (props) => {
   const { colors } = theme;
   const styles = createStyle(theme);
 
-  const [nameTagState, setNameTagState] = useState(name?.toLowerCase() || '');
+  const [nameTagState, setNameTagState] = useState(name?.toUpperCase() || '');
 
   const loading = useTagsControllerStore((state) => state.loading);
   const actions = useTagsControllerStore((state) => state.actions);
@@ -39,7 +39,7 @@ const EditTag: FC<EditTagProps> = (props) => {
   const handleSave = () => {
     const tagUpdate: EditTagType = {
       id,
-      name: nameTagState.trim().toLowerCase(),
+      name: nameTagState.trim().toUpperCase(),
     };
     actions.editTag(tagUpdate);
     Keyboard.dismiss();
@@ -105,7 +105,7 @@ const EditTag: FC<EditTagProps> = (props) => {
           placeholder={t('tags:input_tag')}
           onChangeText={onChangeText}
           maxLength={32}
-          autoCapitalize="none"
+          autoCapitalize="characters"
         />
         <Text.BodyS color={colors.neutral40} useI18n>tags:input_tag_require_max_length</Text.BodyS>
         {messageNotice()}

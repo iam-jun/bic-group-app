@@ -3,12 +3,11 @@ import React, { FC, useEffect } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useDispatch } from 'react-redux';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 import spacing from '~/theme/spacing';
 import useUserInterestedPostStore from './store';
 
@@ -17,9 +16,9 @@ export interface UserInterestedPostProps {
 }
 
 const UserInterestedPost: FC<UserInterestedPostProps> = ({ postId }) => {
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const insets = useSafeAreaInsets();
+  const modalActions = useModalStore((state) => state.actions);
 
   const {
     data, loading, getUsersInterestedPost, reset,
@@ -29,6 +28,7 @@ const UserInterestedPost: FC<UserInterestedPostProps> = ({ postId }) => {
   const styles = createStyle(
     theme, insets,
   );
+  const { colors } = theme;
 
   useEffect(
     () => {
@@ -38,10 +38,14 @@ const UserInterestedPost: FC<UserInterestedPostProps> = ({ postId }) => {
   );
 
   const onPressCloseBottomSheet = () => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
   };
 
   const onPressItem = (item: any) => {
+    if (item?.item?.isDeactivated) {
+      return;
+    }
+
     onPressCloseBottomSheet();
 
     const itemUserId = item?.item?.id;
@@ -67,20 +71,24 @@ const UserInterestedPost: FC<UserInterestedPostProps> = ({ postId }) => {
     getUsersInterestedPost(postId);
   };
 
-  const renderItem = (item: any) => (
-    <PrimaryItem
-      testID={`users_seen_post_bottom_sheet.item_username.${item?.item?.username}`}
-      showAvatar
-      avatarProps={{ isRounded: true, variant: 'small' }}
-      style={{ marginVertical: spacing.padding.tiny }}
-      onPress={() => onPressItem(item)}
-      avatar={item?.item?.avatar}
-      title={item?.item?.fullname}
-      titleProps={{ variant: 'bodyMMedium' }}
-      subTitle={`@${item?.item?.username}`}
-      subTitleProps={{ variant: 'bodyS' }}
-    />
-  );
+  const renderItem = (item: any) => {
+    const colorTitle = item?.item?.isDeactivated ? colors.grey40 : colors.neutral80;
+    return (
+      <PrimaryItem
+        testID={`users_seen_post_bottom_sheet.item_username.${item?.item?.username}`}
+        showAvatar
+        avatarProps={{ isRounded: true, variant: 'small' }}
+        style={{ marginVertical: spacing.padding.tiny }}
+        onPress={() => onPressItem(item)}
+        avatar={item?.item?.avatar}
+        title={item?.item?.fullname}
+        isDeactivated={item?.item?.isDeactivated}
+        titleProps={{ color: colorTitle, variant: 'bodyMMedium' }}
+        subTitle={`@${item?.item?.username}`}
+        subTitleProps={{ variant: 'bodyS' }}
+      />
+    );
+  };
 
   return (
     <View style={styles.container}>

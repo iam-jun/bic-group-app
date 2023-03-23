@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import Button, { ButtonProps } from '~/beinComponents/Button';
 import { IReactionCounts } from '~/interfaces/IPost';
@@ -10,9 +9,9 @@ import dimension from '~/theme/dimension';
 import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { spacing } from '~/theme';
-import { formatLargeNumber } from '~/utils/formatData';
-import modalActions from '~/storeRedux/modal/actions';
+import { formatLargeNumber } from '~/utils/formatter';
 import { getTotalReactions, validateReactionCount } from '~/helpers/post';
+import useModalStore from '~/store/modal';
 
 export interface ContentFooterProps {
   btnReactTestID?: string;
@@ -44,7 +43,7 @@ const ContentFooter: FC<ContentFooterProps> = ({
   const { colors } = theme;
   const styles = createStyle();
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
+  const modalActions = useModalStore((state) => state.actions);
 
   const validReactionCount = validateReactionCount(reactionsCount);
   const numberOfReactions = formatLargeNumber(getTotalReactions(reactionsCount, 'user'));
@@ -61,9 +60,9 @@ const ContentFooter: FC<ContentFooterProps> = ({
   const onPressReact = () => {
     if (onPressReaction) return onPressReaction();
 
-    dispatch(modalActions.setShowReactionBottomSheet(
+    modalActions.setShowReactionBottomSheet(
       { visible: true, callback: onEmojiSelected },
-    ));
+    );
   };
 
   const renderButtonItem = (

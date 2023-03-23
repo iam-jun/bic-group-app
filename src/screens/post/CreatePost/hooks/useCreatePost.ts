@@ -22,10 +22,10 @@ import useLinkPreview from './useLinkPreview';
 import useSavePost from './useSavePost';
 
 type UseCreatePostParams = {
-  screenParams: ICreatePostParams;
+  screenParams?: ICreatePostParams;
 };
 
-export const useCreatePost = (params: UseCreatePostParams) => {
+export const useCreatePost = (params?: UseCreatePostParams) => {
   const { screenParams } = params || {};
   const { postId } = screenParams || {};
 
@@ -37,6 +37,7 @@ export const useCreatePost = (params: UseCreatePostParams) => {
   const isEditDraftPost = post?.status === PostStatus.DRAFT;
 
   const createPostData = useCreatePostStore((state) => state.createPost);
+  const isLoadPostDetailDone = useCreatePostStore((state) => state.isLoadPostDetailDone);
   const createPostStoreActions = useCreatePostStore((state) => state.actions);
 
   const {
@@ -50,9 +51,15 @@ export const useCreatePost = (params: UseCreatePostParams) => {
     isShowToastAutoSave,
     startAutoSave,
     disableButtonPost,
+    enableButtonSaveTags,
+    enableButtonSaveSeries,
     isEditPostHasChange,
     savePost,
     publishPost,
+    saveSelectedTags,
+    saveSelectedSeries,
+    handleBackWhenSelectingTags,
+    handleBackWhenSelectingSeries,
   } = useSavePost();
 
   const {
@@ -153,15 +160,20 @@ export const useCreatePost = (params: UseCreatePostParams) => {
     const notExpired
       = new Date().getTime()
       < new Date(post?.setting?.importantExpiredAt).getTime();
+
+    const isNever = post?.setting?.isImportant && !post?.setting?.importantExpiredAt;
+
     const initImportant = {
-      active: !!notExpired && post?.setting?.isImportant,
+      active: (!!notExpired || isNever) && post?.setting?.isImportant,
       expiresTime: !!notExpired ? post?.setting?.importantExpiredAt : null,
     };
+
     const dataDefault = [
       !!notExpired || initImportant?.active,
       !post?.setting?.canComment,
       !post?.setting?.canReact,
     ];
+
     const newCount = dataDefault.filter((i) => !!i);
 
     return {
@@ -174,7 +186,7 @@ export const useCreatePost = (params: UseCreatePostParams) => {
 
   const initDataStore = () => {
     const {
-      id, content, media, linkPreview,
+      id, content, media, linkPreview, tags, series,
     } = post;
 
     const linkPreviewPost = linkPreview;
@@ -189,6 +201,8 @@ export const useCreatePost = (params: UseCreatePostParams) => {
       ...initSettings(),
       video: media?.videos?.[0],
       files: media?.files || [],
+      tags: tags || [],
+      series: series || [],
       isInitDone: true,
     };
     createPostStoreActions.updateCreatePost(init);
@@ -205,14 +219,23 @@ export const useCreatePost = (params: UseCreatePostParams) => {
       video: init.video,
       files: init.files,
       linkPreview: currentLinkPreview,
+      tags: tags || [],
+      series: series || [],
     });
   };
 
   useEffect(() => {
-    if (!isEmpty(post) && !isEmpty(post?.id) && !isInitDone) {
+    // need to get detail of the post for full data before editing
+    if (!isLoadPostDetailDone && postId) {
+      createPostStoreActions.getPostDetail(postId);
+    }
+  }, [isLoadPostDetailDone, postId]);
+
+  useEffect(() => {
+    if (!isEmpty(post) && !isEmpty(post?.id) && isLoadPostDetailDone && !isInitDone) {
       initDataStore();
     }
-  }, [post]);
+  }, [post, isLoadPostDetailDone, isInitDone]);
 
   useEffect(() => {
     if (isInitDone && isEditDraftPost) {
@@ -256,11 +279,17 @@ export const useCreatePost = (params: UseCreatePostParams) => {
     handleUploadFileSuccess,
     isShowToastAutoSave,
     disableButtonPost,
+    enableButtonSaveTags,
+    enableButtonSaveSeries,
     isEditPostHasChange,
     savePost,
     publishPost,
     disableButtonsCreatePostFooter,
     audienceListWithNoPermission,
+    saveSelectedTags,
+    saveSelectedSeries,
+    handleBackWhenSelectingTags,
+    handleBackWhenSelectingSeries,
   };
 };
 

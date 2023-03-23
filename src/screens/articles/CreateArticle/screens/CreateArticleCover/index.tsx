@@ -1,7 +1,6 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 import { Button } from '~/baseComponents';
 import Icon from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
@@ -16,7 +15,7 @@ import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import { IGetFile } from '~/store/uploader';
 import dimension, { scaleSize } from '~/theme/dimension';
 import spacing from '~/theme/spacing';
-import { checkPermission, permissionTypes } from '~/utils/permission';
+import { checkPermission, PermissionTypes } from '~/utils/permission';
 import EditAction from '../../components/EditAction';
 
 const COVER_WIDTH = dimension.deviceWidth;
@@ -34,7 +33,6 @@ const CreateArticleCover: FC<CreateArticleCoverProps> = ({ articleId }) => {
   const actions = useCreateArticleStore((state) => state.actions);
   const coverMedia: IArticleCover = useCreateArticleStore((state) => state.data.coverMedia) || {};
 
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
@@ -44,7 +42,7 @@ const CreateArticleCover: FC<CreateArticleCoverProps> = ({ articleId }) => {
 
   const onPressSelect = () => {
     checkPermission(
-      permissionTypes.photo, dispatch, (canOpenPicker) => {
+      PermissionTypes.photo, (canOpenPicker) => {
         if (canOpenPicker) {
           ImagePicker.openPickerSingle({
             mediaType: 'photo',

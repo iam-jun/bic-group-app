@@ -10,7 +10,7 @@ import {
 import Text from '~/baseComponents/Text';
 import commonActions, { IAction } from '~/constants/commonActions';
 import spacing, { margin, padding } from '~/theme/spacing';
-import { formatLargeNumber } from '~/utils/formatData';
+import { formatLargeNumber } from '~/utils/formatter';
 import Button from '../Button';
 import Emoji from '../Emoji';
 import { sizes } from '~/theme/dimension';

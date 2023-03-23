@@ -7,9 +7,10 @@ import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import ArticleSelectingInfo from '~/components/articles/ArticleSelectingInfo';
-import ArticleSelectingListInfo from '~/components/articles/ArticleSelectingListInfo';
+import ItemCheckbox from '~/components/ItemCheckbox';
 import NoSearchResultsFound from '~/components/NoSearchResultsFound';
+import SelectingListInfo from '~/components/SelectingListInfo';
+import useSelectTagsStore from '~/components/SelectTags/store';
 import appConfig from '~/configs/appConfig';
 
 import { useBaseHook } from '~/hooks';
@@ -20,7 +21,6 @@ import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import spacing from '~/theme/spacing';
-import useCreateArticleTagsStore from './store';
 
 const MAXIMUM_TAGS = 5;
 
@@ -36,13 +36,13 @@ const CreateArticleTags: FC<CreateArticleProps> = ({ route }: CreateArticleProps
   const selectedTags = useCreateArticleStore((state) => state.data?.tags) || [];
   const editArticleActions = useCreateArticleStore((state) => state.actions);
 
-  const communityIds = useCreateArticleTagsStore((state) => state.communityIds) || [];
-  const tagsActions = useCreateArticleTagsStore((state) => state.actions);
-  const resetTags = useCreateArticleTagsStore((state) => state.reset);
-  const tagsData = useCreateArticleTagsStore((state) => state.listTag);
+  const communityIds = useSelectTagsStore((state) => state.communityIds) || [];
+  const tagsActions = useSelectTagsStore((state) => state.actions);
+  const resetTags = useSelectTagsStore((state) => state.reset);
+  const tagsData = useSelectTagsStore((state) => state.listTag);
   const { items: tagItems, loading: loadingTags } = tagsData || {};
 
-  const searchData = useCreateArticleTagsStore((state) => state.search);
+  const searchData = useSelectTagsStore((state) => state.search);
   const { key: searchKey, items: searchItems, loading: loadingSearchTags } = searchData || {};
 
   const listData = searchKey ? searchItems : tagItems;
@@ -98,7 +98,7 @@ const CreateArticleTags: FC<CreateArticleProps> = ({ route }: CreateArticleProps
     const disabledCheckbox = (selectedTags?.length === MAXIMUM_TAGS) && !isChecked;
 
     return (
-      <ArticleSelectingInfo
+      <ItemCheckbox
         data={item}
         isChecked={isChecked}
         disabled={disabledCheckbox}
@@ -131,7 +131,7 @@ const CreateArticleTags: FC<CreateArticleProps> = ({ route }: CreateArticleProps
         placeholder={t('article:text_search_category_placeholder')}
         onChangeText={onChangeText}
       />
-      <ArticleSelectingListInfo
+      <SelectingListInfo
         data={selectedTags}
         type="tags"
         infoMessage={t('article:tags_maximum_message_info')}

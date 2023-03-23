@@ -17,7 +17,7 @@ import { IFilePicked } from '~/interfaces/common';
 import spacing from '~/theme/spacing';
 import useUploaderStore, { IGetFile } from '~/store/uploader';
 import { AppConfig } from '~/configs';
-import { formatBytes } from '~/utils/formatData';
+import { formatBytes } from '~/utils/formatter';
 
 export interface UploadingImageProps {
   style?: StyleProp<ViewStyle>;
@@ -115,7 +115,11 @@ const UploadingImage: FC<UploadingImageProps> = ({
       return null;
     }
     return (
-      <Button style={styles.icRemove} onPress={onPressRemove}>
+      <Button
+        testID="upload_image.button_close"
+        style={styles.icRemove}
+        onPress={onPressRemove}
+      >
         <Icon size={12} icon="iconCloseSmall" />
       </Button>
     );
@@ -142,6 +146,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
   return (
     <View
       style={[styles.container, { width, height }, style]}
+      testID="upload_image"
     >
       {!!imageUrl ? (
         <Image source={imageUrl} style={styles.image} />

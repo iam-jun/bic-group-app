@@ -18,8 +18,13 @@ import FilesView from '~/components/FilesView';
 import LinkPreview from '~/components/LinkPreview';
 import appConfig from '~/configs/appConfig';
 import spacing from '~/theme/spacing';
-import { escapeMarkDown } from '~/utils/formatData';
+import { escapeMarkDown } from '~/utils/formatter';
 import PostVideoPlayer from '../PostVideoPlayer';
+import { ITag } from '~/interfaces/ITag';
+import useCommunitiesStore from '~/store/entities/communities';
+import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
+import TagsView from '~/components/TagsView';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 export interface PostBodyProps {
   data: IPost;
@@ -39,7 +44,7 @@ const _PostBody: FC<PostBodyProps> = ({
   const { rootNavigation } = useRootNavigation();
 
   const {
-    id: postId, mentions, status, media, content: postContent, highlight, linkPreview, totalUsersSeen,
+    id: postId, mentions, status, media, content: postContent, highlight, linkPreview, totalUsersSeen, tags,
   } = data;
 
   const { images, videos, files } = media || {};
@@ -65,6 +70,11 @@ const _PostBody: FC<PostBodyProps> = ({
       />
     );
   }, [status, postId, totalUsersSeen]);
+
+  const goToTagDetail = (tagData: ITag) => {
+    const communityId = useCommunitiesStore.getState().currentCommunityId;
+    rootNavigation.navigate(tagsStack.tagDetail, { tagData, communityId });
+  };
 
   const renderContent = () => {
     if (isLite) {
@@ -123,7 +133,15 @@ const _PostBody: FC<PostBodyProps> = ({
 
   return (
     <View>
-      <View style={styles.contentContainer}>{renderContent()}</View>
+      <View style={styles.contentContainer}>
+        {renderContent()}
+        {tags?.length > 0 && (
+          <>
+            <TagsView data={tags} onPressTag={goToTagDetail} />
+            <ViewSpacing height={8} />
+          </>
+        )}
+      </View>
       <>
         <PostPhotoPreview
           data={images}

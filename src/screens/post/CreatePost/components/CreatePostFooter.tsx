@@ -9,6 +9,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import PostToolbar from '~/screens/post/CreatePost/components/PostToolbar';
 import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
+import ListSelectedTags from '../../CreatePostTags/ListSelectedTags';
 
 export interface CreatePostFooterProps {
   toolbarRef?: any;
@@ -20,6 +21,8 @@ export interface CreatePostFooterProps {
   settingDisabled?: boolean;
   onPressBack?: () => void;
   onPressSetting: () => void;
+  onPressTags: () => void;
+  onPressSeries: () => void;
 }
 
 const CreatePostFooter: FC<CreatePostFooterProps> = ({
@@ -32,6 +35,8 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
   settingDisabled,
   onPressBack,
   onPressSetting,
+  onPressTags,
+  onPressSeries,
 }: CreatePostFooterProps) => {
   const showMentionValue = useSharedValue(0);
 
@@ -55,6 +60,7 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
 
   return (
     <View>
+      <ListSelectedTags />
       <PostToolbar
         toolbarRef={toolbarRef}
         disabled={loading}
@@ -65,6 +71,8 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
         onPressSetting={onPressSetting}
         isSetting={isSetting}
         settingDisabled={settingDisabled}
+        onPressTags={onPressTags}
+        onPressSeries={onPressSeries}
       />
       <Animated.View
         testID="create_post_footer.mention_bar_container"

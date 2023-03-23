@@ -14,6 +14,7 @@ export enum PostType {
 export enum TargetType {
   POST = 'POST',
   ARTICLE = 'ARTICLE',
+  SERIES = 'SERIES',
   COMMENT = 'COMMENT',
   COMMENT_ARTICLE = 'COMMENT.ARTICLE',
   COMMENT_POST = 'COMMENT.POST',
@@ -30,7 +31,7 @@ export enum PostStatus {
 export interface IPost {
   id?: string;
   audience?: IPostAudience;
-  articles?: IPostArticles[];
+  items?: IPostArticles[];
   communities?: IPostCommunities[];
   content?: string;
   highlight?: string;
@@ -94,6 +95,7 @@ export interface IAudienceUser {
   username?: string;
   fullname?: string;
   avatar?: string;
+  isDeactivated?: boolean;
 }
 
 export interface IAudienceGroup {
@@ -113,6 +115,7 @@ export interface IMarkdownAudience {
   };
   createdAt: string;
   updatedAt: string;
+  isDeactivated?: boolean;
 }
 
 export interface IAudience {
@@ -267,6 +270,8 @@ export interface IPostCreatePost {
   status?: PostStatus;
   linkPreview?: ILinkPreview;
   createFromGroupId?: string;
+  tags?: string[];
+  series?: string[];
 }
 
 export interface IPayloadCreateComment {
@@ -398,6 +403,7 @@ export interface IMentionUser {
   avatar: string;
   beinStaffRole?: string;
   chatUserId?: string;
+  isDeactivated?: boolean;
 }
 
 export interface IParamGetReactionDetail {
@@ -504,6 +510,7 @@ export interface IPayloadPublishDraftPost {
   onError?: () => void;
   refreshDraftPosts?: boolean;
   createFromGroupId?: string;
+  isHandleSeriesTagsError?: boolean;
 }
 
 export interface IPayloadPutEditDraftPost {
@@ -604,4 +611,14 @@ export interface IRemoveComment {
   commentId?: string;
   localId?: string;
   postId: string;
+}
+export interface ICreatePostTags {
+  id?: string;
+  name?: string;
+  slug?: string;
+  total?: number;
+}
+export interface ICreatePostSeries {
+  id?: string;
+  title?: string;
 }

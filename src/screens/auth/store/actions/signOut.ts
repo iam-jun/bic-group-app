@@ -9,10 +9,9 @@ import { IAuthState } from '~/screens/auth/store';
 import { deleteTokenMessage } from '~/services/firebase';
 import { getUserFromSharedPreferences, isAppInstalled, saveUserToSharedPreferences } from '~/services/sharePreferences';
 import showToastError from '~/store/helper/showToastError';
+import useModalStore from '~/store/modal';
 import resetAllStores from '~/store/resetAllStores';
 import useUploaderStore from '~/store/uploader';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -61,7 +60,7 @@ const signOut = (set, get) => async () => {
     }
 
     authActions.setSigningOut(true);
-    Store.store.dispatch(modalActions.showLoading());
+    useModalStore.getState().actions.setLoadingModal(true);
 
     await Auth.signOut();
 
@@ -75,7 +74,7 @@ const signOut = (set, get) => async () => {
     resetAllStores();
     resetAuthStore();
 
-    Store.store.dispatch(modalActions.hideLoading());
+    useModalStore.getState().actions.setLoadingModal(false);
 
     navigation.replace(rootSwitch.authStack);
   } catch (err) {

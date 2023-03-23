@@ -3,7 +3,6 @@ import { useIsFocused } from '@react-navigation/native';
 import i18next from 'i18next';
 import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { BottomListItemProps } from '~/components/BottomList/BottomListItem';
@@ -17,21 +16,24 @@ import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { notificationMenuData } from '~/screens/Notification/constants';
-import modalActions from '~/storeRedux/modal/actions';
 import { MEMBER_TABS } from '../communities/CommunityMembers';
 import { MEMBER_TAB_TYPES } from '../communities/constants';
 import ScrollableTabBar from './components/ScrollableTabBar';
 import useNotificationStore from './store';
 import INotificationsState from './store/Interface';
 import spacing from '~/theme/spacing';
+import useModalStore from '~/store/modal';
+import { ContentType } from '~/interfaces/INotification';
+import { useUserIdAuth } from '~/hooks/auth';
 
 const Notification = () => {
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const isFocused = useIsFocused();
+  const userId = useUserIdAuth();
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const modalActions = useModalStore((state) => state.actions);
 
   useEffect(
     () => {
@@ -51,7 +53,7 @@ const Notification = () => {
     } else {
       notiActions.markAsUnRead(data?.id);
     }
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
   };
 
   const onPressItemOption = ({ item }: {item: any}) => {
@@ -72,15 +74,13 @@ const Notification = () => {
       requireIsActor: true,
       upcoming: true,
     }];
-    dispatch(
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      modalActions.showBottomList({ isOpen: true, data: menuData } as BottomListItemProps),
-    );
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    modalActions.showBottomList({ data: menuData } as BottomListItemProps);
   };
 
   const handleMarkAllAsRead = () => {
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     notiActions.markAsReadAll('ALL');
   };
 
@@ -100,11 +100,9 @@ const Notification = () => {
       requireIsActor: true,
       upcoming: true,
     }];
-    dispatch(
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      modalActions.showBottomList({ isOpen: true, data: menuData } as BottomListItemProps),
-    );
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    modalActions.showBottomList({ data: menuData } as BottomListItemProps);
   };
 
   const onItemPress = useCallback(
@@ -126,9 +124,13 @@ const Notification = () => {
             case NOTIFICATION_TYPE.POST_IMPORTANT_TO_MENTIONED_USER_IN_POST_IN_ONE_GROUP:
             case NOTIFICATION_TYPE.POST_IMPORTANT_TO_MENTIONED_USER_IN_POST_IN_MULTIPLE_GROUPS:
             case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR:
-            case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR_AGGREGATED: {
+            case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR_AGGREGATED:
+            case NOTIFICATION_TYPE.ADD_POST_TO_USER:
+            {
               if (target === TargetType.ARTICLE) {
                 rootNavigation.navigate(articleStack.articleDetail, { articleId: act.id });
+              } else if (target === TargetType.SERIES) {
+                rootNavigation.navigate(seriesStack.seriesDetail, { seriesId: act.id });
               } else {
                 rootNavigation.navigate(
                   homeStack.postDetail, {
@@ -326,6 +328,39 @@ const Notification = () => {
                     communityId: act?.group?.[0]?.communityId,
                   },
                 );
+              }
+              break;
+            case NOTIFICATION_TYPE.REMOVE_ARTICLE_TO_USER:
+            case NOTIFICATION_TYPE.REMOVE_ARTICLE_TO_CREATOR:
+              if (act?.item?.id) {
+                rootNavigation.navigate(articleStack.articleDetail, { articleId: act.item.id });
+              }
+              break;
+            case NOTIFICATION_TYPE.REMOVE_POST_TO_USER:
+            case NOTIFICATION_TYPE.REMOVE_POST_TO_CREATOR:
+              rootNavigation.navigate(
+                homeStack.postDetail, {
+                  post_id: act?.item?.id,
+                  noti_id: item.id,
+                },
+              );
+              break;
+            case NOTIFICATION_TYPE.DELETE_SERIES_TO_USER:
+              // eslint-disable-next-line no-case-declarations
+              const items = act?.items || [];
+              if (items?.length > 0) {
+                const content = items.find((item) => item?.actor?.id === userId);
+                if (content?.contentType === ContentType.post) {
+                  rootNavigation.navigate(
+                    homeStack.postDetail, {
+                      post_id: content.id,
+                      noti_id: item.id,
+                    },
+                  );
+                }
+                if (content?.contentType === ContentType.article) {
+                  rootNavigation.navigate(articleStack.articleDetail, { articleId: content.id });
+                }
               }
               break;
             default:

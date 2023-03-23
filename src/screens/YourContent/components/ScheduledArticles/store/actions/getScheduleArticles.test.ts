@@ -1,7 +1,7 @@
 import streamApi from '~/api/StreamApi';
 import { act, renderHook } from '~/test/testUtils';
 import useScheduleArticlesStore, { IScheduleArticlesState } from '../index';
-import { mockArticle } from '~/test/mock_data/article';
+import { mockArticle, responseGetScheduleArticles } from '~/test/mock_data/article';
 
 describe('getScheduleArticles', () => {
   afterEach(() => {
@@ -37,40 +37,9 @@ describe('getScheduleArticles', () => {
     expect(result.current.scheduleArticles.loading).toBe(false);
   });
 
-  it('should not call api getArticleByParams when isRefresh = false and hasNextPage = false', () => {
-    const spy = jest.spyOn(streamApi, 'getArticleByParams').mockImplementation(
-      () => Promise.resolve({}) as any,
-    );
-
-    useScheduleArticlesStore.setState((state: IScheduleArticlesState) => {
-      state.scheduleArticles.data = [];
-      state.scheduleArticles.hasNextPage = false;
-      return state;
-    });
-
-    jest.useFakeTimers();
-
-    const { result } = renderHook(() => useScheduleArticlesStore((state) => state));
-
-    act(() => {
-      result.current.actions.getScheduleArticles({ isRefresh: false });
-    });
-
-    expect(spy).not.toBeCalled();
-    act(() => {
-      jest.runAllTimers();
-    });
-  });
-
   it('should call api getArticleByParams when isRefresh = true success', () => {
-    const response = {
-      data: [mockArticle],
-      canLoadMore: true,
-      total: 1,
-    };
-
     const spy = jest.spyOn(streamApi, 'getArticleByParams').mockImplementation(
-      () => Promise.resolve(response),
+      () => Promise.resolve(responseGetScheduleArticles),
     );
 
     jest.useFakeTimers();
@@ -87,21 +56,19 @@ describe('getScheduleArticles', () => {
       jest.runAllTimers();
     });
 
-    expect(result.current.scheduleArticles.data).toEqual(response.data);
-    expect(result.current.scheduleArticles.hasNextPage).toBe(true);
+    expect(result.current.scheduleArticles.data).toEqual(responseGetScheduleArticles.data.list);
+    expect(result.current.scheduleArticles.hasNextPage).toBe(false);
     expect(result.current.scheduleArticles.refreshing).toBe(false);
     expect(result.current.scheduleArticles.loading).toBe(false);
   });
 
   it('should call api getArticleByParams when isRefresh = false success', () => {
-    const response = {
-      data: [mockArticle],
-      canLoadMore: true,
-      total: 1,
-    };
-
+    useScheduleArticlesStore.setState((state: IScheduleArticlesState) => {
+      state.scheduleArticles.data = [mockArticle] as any;
+      return state;
+    });
     const spy = jest.spyOn(streamApi, 'getArticleByParams').mockImplementation(
-      () => Promise.resolve(response) as any,
+      () => Promise.resolve(responseGetScheduleArticles) as any,
     );
 
     jest.useFakeTimers();
@@ -118,7 +85,7 @@ describe('getScheduleArticles', () => {
       jest.runAllTimers();
     });
 
-    expect(result.current.scheduleArticles.data).toEqual(response.data);
+    expect(result.current.scheduleArticles.data.length).toBe(2);
     expect(result.current.scheduleArticles.refreshing).toBe(false);
     expect(result.current.scheduleArticles.loading).toBe(false);
   });

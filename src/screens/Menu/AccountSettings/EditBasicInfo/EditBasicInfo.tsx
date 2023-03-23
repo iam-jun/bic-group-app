@@ -4,10 +4,8 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { isEqual } from 'lodash';
 
 import { useBaseHook } from '~/hooks';
-import genders from '~/constants/genders';
 import {
   GENDER_TYPE,
-  IGenderItem,
   IRelationshipItem,
   RELATIONSHIP_TYPE,
 } from '~/interfaces/IEditUser';
@@ -29,6 +27,7 @@ import Gender from './fragments/Gender';
 import useCommonController from '~/screens/store';
 import useMenuController from '../../store';
 import useModalStore from '~/store/modal';
+import { formatDate } from '~/utils/formatter';
 
 const EditBasicInfo = () => {
   const theme: ExtendedTheme = useTheme();
@@ -45,7 +44,6 @@ const EditBasicInfo = () => {
   }
     = myProfileData;
 
-  const genderSheetRef = useRef<any>();
   const relationshipSheetRef = useRef<any>();
 
   const [nameState, setNameState] = useState<string>(fullname);
@@ -59,7 +57,6 @@ const EditBasicInfo = () => {
   const actions = useMenuController((state) => state.actions);
 
   const relationshipStatusList = dataMapping(RELATIONSHIP_STATUS);
-  const gendersList = dataMapping(genders);
 
   const checkIsValid = (
     nameState: string,
@@ -68,10 +65,10 @@ const EditBasicInfo = () => {
     languageState: string[],
     relationshipState: string,
   ) => (fullname !== nameState
-      || gender !== genderState
-      || birthday !== birthdayState
-      || !isEqual(language, languageState)
-      || relationshipStatus !== relationshipState)
+    || gender !== genderState
+    || birthday !== birthdayState
+    || !isEqual(language, languageState)
+    || relationshipStatus !== relationshipState)
     && nameState?.trim?.()?.length > 0;
 
   const isValid = checkIsValid(
@@ -98,11 +95,6 @@ const EditBasicInfo = () => {
     });
   };
 
-  const onGenderItemPress = (item: IGenderItem) => {
-    setGenderState(item.type);
-    genderSheetRef.current?.close();
-  };
-
   const onRelationshipItemPress = (item: IRelationshipItem) => {
     setRelationshipState(item.type);
     relationshipSheetRef.current?.close();
@@ -110,7 +102,9 @@ const EditBasicInfo = () => {
 
   const onSetBirthday = (date?: Date) => {
     if (date) {
-      setBirthdayState(date.toISOString());
+      // BE requests to clear timezone effect
+      const dateTime = `${formatDate(date, 'YYYY-MM-DD')}T00:00:00.000Z`;
+      setBirthdayState(dateTime);
     }
   };
 
@@ -172,7 +166,7 @@ const EditBasicInfo = () => {
         contentContainerStyle={styles.content}
       >
         <TextInput
-          testID="edit_name.text_input"
+          testID="edit_basic_info.name.text_input"
           value={fullname}
           label={t('settings:title_name')}
           onChangeText={onChangeName}
@@ -223,13 +217,6 @@ const EditBasicInfo = () => {
             || t('settings:select_relationship')}
         </Button>
       </ScrollView>
-      <OptionMenu
-        testID="edit_basic_info.gender_list"
-        data={gendersList}
-        value={genderState}
-        menuRef={genderSheetRef}
-        onItemPress={onGenderItemPress}
-      />
       <OptionMenu
         testID="edit_basic_info.relationship_status_list"
         data={relationshipStatusList}

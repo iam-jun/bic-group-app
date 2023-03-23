@@ -3,17 +3,13 @@ import {
   Platform, StyleSheet, TextInput, View,
 } from 'react-native';
 
-import { useDispatch } from 'react-redux';
-
 import BottomSheet from '~/baseComponents/BottomSheet';
 import EmojiPicker from '~/baseComponents/EmojiPicker';
 import EmojiSectionIcons from '~/baseComponents/EmojiPicker/components/EmojiSectionIcons';
 import useEmojiPickerStore, { IEmojiPickerState } from '~/baseComponents/EmojiPicker/store';
 import { SearchInput } from '~/baseComponents/Input';
 import { useBaseHook } from '~/hooks';
-import { useKeySelector } from '~/hooks/selector';
-import * as modalActions from '~/storeRedux/modal/actions';
-import commonKeySelector from '~/storeRedux/modal/keySelector';
+import useModalStore from '~/store/modal';
 import { dimension } from '~/theme';
 import { margin } from '~/theme/spacing';
 
@@ -25,11 +21,10 @@ const ReactionBottomSheet = () => {
 
   const [sectionIconsVisible, setSectionIconsVisible] = useState(false);
 
-  const dispatch = useDispatch();
   const actions = useEmojiPickerStore((state: IEmojiPickerState) => state.actions);
 
-  const data = useKeySelector(commonKeySelector.reactionBottomSheet);
-  const { visible, callback } = data || {};
+  const { visible, callback } = useModalStore((state) => state.reactionBottomSheet) || {};
+  const modalActions = useModalStore((state) => state.actions);
   const isIOS = Platform.OS === 'ios';
   const SNAP_HEIGHT = isIOS ? 400 : dimension.deviceHeight / 2;
 
@@ -40,7 +35,7 @@ const ReactionBottomSheet = () => {
 
   const _onClose = () => {
     setSectionIconsVisible(false);
-    dispatch(modalActions.setShowReactionBottomSheet());
+    modalActions.setShowReactionBottomSheet();
   };
 
   const onOpen = () => {

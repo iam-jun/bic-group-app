@@ -12,7 +12,7 @@ import spacing from '~/theme/spacing';
 import { useBaseHook } from '~/hooks';
 import { ICommunity } from '~/interfaces/ICommunity';
 import { IGroup } from '~/interfaces/IGroup';
-import { formatLargeNumber } from '~/utils/formatData';
+import { formatLargeNumber } from '~/utils/formatter';
 import Image from '~/beinComponents/Image';
 
 interface InfoHeaderProps {

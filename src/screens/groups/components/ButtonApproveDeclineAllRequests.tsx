@@ -24,7 +24,7 @@ const ButtonApproveDeclineAllRequests = ({
   const styles = createStyles(theme);
 
   return (
-    <View style={[styles.container, style]}>
+    <View style={[styles.container, style]} testID="button_approve_decline_all_requests">
       <Divider />
       <View style={styles.buttons}>
         <Button.Neutral

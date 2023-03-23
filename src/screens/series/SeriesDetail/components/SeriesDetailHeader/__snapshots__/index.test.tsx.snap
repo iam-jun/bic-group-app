@@ -360,10 +360,13 @@ exports[`SeriesDetailHeader component render with description view 1`] = `
                       "fontSize": 11,
                     },
                     Object {},
-                    Object {
-                      "color": "#007AFF",
-                      "paddingLeft": 4,
-                    },
+                    Array [
+                      Object {
+                        "color": "#007AFF",
+                        "paddingLeft": 4,
+                      },
+                      undefined,
+                    ],
                   ]
                 }
                 testID="tag.label"
@@ -823,10 +826,13 @@ exports[`SeriesDetailHeader component render without description view 1`] = `
                       "fontSize": 11,
                     },
                     Object {},
-                    Object {
-                      "color": "#007AFF",
-                      "paddingLeft": 4,
-                    },
+                    Array [
+                      Object {
+                        "color": "#007AFF",
+                        "paddingLeft": 4,
+                      },
+                      undefined,
+                    ],
                   ]
                 }
                 testID="tag.label"
@@ -883,10 +889,13 @@ exports[`SeriesDetailHeader component render without description view 1`] = `
                       "fontSize": 11,
                     },
                     Object {},
-                    Object {
-                      "color": "#007AFF",
-                      "paddingLeft": 4,
-                    },
+                    Array [
+                      Object {
+                        "color": "#007AFF",
+                        "paddingLeft": 4,
+                      },
+                      undefined,
+                    ],
                   ]
                 }
                 testID="tag.label"

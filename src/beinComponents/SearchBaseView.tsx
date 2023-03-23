@@ -81,7 +81,6 @@ const SearchBaseView: ForwardRefRenderFunction<any, SearchBaseViewProps> = ({
         <SearchInput
           autoFocus
           inputRef={textInputRef}
-          testID="search_base_view.text_input"
           style={styles.textInput}
           value={searchText}
           autoComplete="off"
@@ -99,7 +98,12 @@ const SearchBaseView: ForwardRefRenderFunction<any, SearchBaseViewProps> = ({
   if (!isOpen) return null;
 
   return (
-    <Animated.View style={[styles.container, style]} entering={FadeInUp} exiting={FadeOutDown}>
+    <Animated.View
+      testID="search_base_view"
+      style={[styles.container, style]}
+      entering={FadeInUp}
+      exiting={FadeOutDown}
+    >
       {renderHeader()}
       {children}
     </Animated.View>

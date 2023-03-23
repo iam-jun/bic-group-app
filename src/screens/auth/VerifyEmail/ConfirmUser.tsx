@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -23,6 +23,7 @@ const ConfirmUser : FC<IRouteParams> = (props) => {
   const { confirmationCode, redirectTo, userName } = params?.params || {};
 
   const { rootNavigation } = useRootNavigation();
+  const [isRedirected, setRedirected] = useState<boolean>(false);
 
   const actions = useVerifyEmailController((state: IVerifyEmailState) => state.actions);
   const linkExpired = useVerifyEmailController((state: IVerifyEmailState) => state.linkIsExpired);
@@ -34,12 +35,15 @@ const ConfirmUser : FC<IRouteParams> = (props) => {
   }, [confirmationCode, userName]);
 
   useEffect(() => {
-    if (!loading && !linkExpired) {
-      setTimeout(() => {
+    const timerId = setTimeout(() => {
+      if (!loading && !linkExpired && !isRedirected) {
         onPress();
-      }, TIME_TO_REDIRECT_SCREEN);
-    }
-  }, [loading, linkExpired]);
+      }
+    }, TIME_TO_REDIRECT_SCREEN);
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [loading, linkExpired, isRedirected]);
 
   const onPress = () => {
     if (!!userProfileData?.id && rootNavigation?.canGoBack) {
@@ -47,7 +51,9 @@ const ConfirmUser : FC<IRouteParams> = (props) => {
       return;
     }
     if (redirectTo === 'login') {
+      setRedirected(true);
       rootNavigation.replace(authStacks.signIn);
+      return;
     }
     if (redirectTo === 'reset-password') {
       rootNavigation.replace(authStacks.forgotPassword);

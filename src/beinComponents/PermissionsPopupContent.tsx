@@ -3,7 +3,6 @@ import {
   View, StyleSheet, StyleProp, ViewStyle,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import { openSettings } from 'react-native-permissions';
 import { useBaseHook } from '~/hooks';
@@ -14,8 +13,8 @@ import PrimaryItem, {
   PrimaryItemProps,
 } from '~/beinComponents/list/items/PrimaryItem';
 import ViewSpacing from './ViewSpacing';
-import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
+import useModalStore from '~/store/modal';
 
 export interface PermissionsPopupContentProps {
   style?: StyleProp<ViewStyle>;
@@ -42,8 +41,7 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
-
-  const dispatch = useDispatch();
+  const modalActions = useModalStore((state) => state.actions);
 
   const onClickRightButton = () => {
     openSettings();
@@ -51,7 +49,7 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
   };
 
   const _onClose = () => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
     onClose && onClose();
   };
 

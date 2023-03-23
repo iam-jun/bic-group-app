@@ -5,6 +5,7 @@ import { IFilePicked } from '~/interfaces/common';
 import {
   IActivityDataFile,
   IActivityDataImage,
+  IAudience,
   ILinkPreviewCreatePost,
 } from '~/interfaces/IPost';
 import i18n from '~/localization';
@@ -17,6 +18,8 @@ import useInputHeight from './hooks/useInputHeight';
 import useUploaderStore, { IGetFile } from '~/store/uploader';
 import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import { IParamsValidateSeriesTags } from '~/interfaces/IArticle';
+import useCreatePostStore from './store';
 
 export const validateImages = (
   selectingImages: IFilePicked[] | IActivityDataImage[],
@@ -285,5 +288,42 @@ export const getTotalFileSize = (files: any) => {
   return {
     totalFiles: files.length,
     totalSize,
+  };
+};
+
+export const isEqualById = (value: any, other: any) => {
+  if (Array.isArray(value) && Array.isArray(other)) {
+    if (value.length !== other.length) return false;
+
+    let isEqual = true;
+    value.forEach((item, index) => {
+      if (item?.id !== other[index]?.id) {
+        isEqual = false;
+      }
+    });
+    return isEqual;
+  }
+
+  if (value?.id === other?.id) return true;
+
+  return false;
+};
+
+export const getParamsValidateSeriesTags = (selectedAudiences: any[]): IParamsValidateSeriesTags => {
+  const createPostData = useCreatePostStore.getState().createPost;
+  const { series, tags } = createPostData;
+
+  const chosenGroups = selectedAudiences?.filter(
+    (item: IAudience) => item.type !== 'user',
+  );
+  const chosenGroupIds = chosenGroups?.map((group) => group.id) || [];
+
+  const chosenSeriesIds = series?.map?.((item) => item.id) || [];
+  const chosenTagIds = tags?.map?.((item) => item.id) || [];
+
+  return {
+    groups: chosenGroupIds,
+    series: chosenSeriesIds,
+    tags: chosenTagIds,
   };
 };

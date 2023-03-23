@@ -59,6 +59,8 @@
     "text_error_message": "Something went wrong",
     "text_success_message": "Success",
     "text_important_post": "Important Post",
+    "text_important_article": "Important Article",
+    "text_important_series": "Important Series",
     "text_loading": "Loading...",
     "text_save": "Save",
     "text_select": "Select",
@@ -137,6 +139,8 @@
     "text_post_reported": "Post reported",
     "text_article_reported": "Article reported",
     "text_comment_reported": "Comment reported",
+    "btn_view_series": "View Series",
+    "text_no_series_modal": "There is no series associated with this content.",
     "text_request_one": "Request",
     "text_request_other": "Requests",
     "text_admin": "Admin",
@@ -210,7 +214,12 @@
     },
     "text_date": "Date",
     "text_time": "Time",
-    "text_no_data": "No data"
+    "text_no_data": "No data",
+    "text_developing_version": "You’re currently using the developing version.",
+    "mark_post_as_important": "Mark this post as Important",
+    "mark_article_as_important": "Mark this article as Important",
+    "mark_series_as_important": "Mark this series as Important",
+    "text_deactivated": "Deactivated"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -221,12 +230,18 @@
     "text_change_password_success_confirm_button": "Got it",
     "text_sign_in": "Sign In",
     "text_sign_in_welcome_back": "Welcome back!",
+    "text_sign_up_welcome": "Welcome!",
+    "text_sign_up_error_link": "The referral link is invalid",
     "text_sign_up": "Sign Up",
     "text_sign_out": "Log Out",
     "text_sign_out_content": "Do you want to Log Out?",
     "input_label_first_name": "First Name",
     "input_label_last_name": "Last Name",
-    "input_label_username": "User Name",
+    "input_label_username": "User name",
+    "input_label_username_placeholder": "Your user name",
+    "text_warning_username": "You can not change your username after success creating account.",
+    "input_label_full_name": "Full name",
+    "input_label_full_name_placeholder": "Your full name",
     "input_label_email": "Email",
     "input_label_email_placeholder": "Your email",
     "input_label_password": "Password",
@@ -253,13 +268,14 @@
     "text_change_password_success": "Changed password successfully!",
     "text_resend_otp_success": "Resent OTP successfully. Please check your email!",
     "text_resend_otp_fail": "Resend OTP fail. Please try again!",
-    "text_err_id_password_not_matched": "Email and password don't match.",
+    "text_err_id_password_not_matched": "Email and password don't match",
+    "text_err_user_deactivated": "This account has been deactivated",
     "text_err_password_blank": "Password is required!",
     "text_err_new_password_blank": "New password is required!",
     "text_err_password_format_todo_revert": "Password must be eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!",
     "text_err_password_format": "Password must be eight characters, at least one number!",
     "text_err_email_blank": "Email is required!",
-    "text_err_email_format": "Invalid email!",
+    "text_err_email_format": "Wrong Email format",
     "text_err_username_blank": "User name is required!",
     "text_err_code": "Code must have 6 numbers!",
     "text_err_new_password_must_differ_from_current": "New password must be different from the current password.",
@@ -295,11 +311,23 @@
     "btn_resend_code": "Resend",
     "btn_submit": "Change Password",
     "text_err_password_characters": "Passwords must be at least 8-20 characters",
-    "text_err_password_required": "Password required!",
-    "text_err_password_required_lower_case": "Please use at least one lowercase (a-z)!",
+    "text_err_password_required": "Password is required!",
+    "text_err_password_required_lower_case": "Please use at least one lower case letter (a-z)",
     "text_err_password_required_upper_case": "Please use at least one upper case letter (A-Z)",
     "text_err_password_required_number": "Please use at least one least digits (0-9)",
     "text_err_password_required_symbols": "Please use at least one special character",
+    "text_err_full_name_required": "Full name is required!",
+    "text_err_full_name": "Full name must be between 3 and 64 characters long and contain only letters.",
+    "text_err_user_name_required": "Username is required!",
+    "text_err_user_name": "Username must be between 5 and 50 characters and starts with an alphabet.",
+    "text_err_user_name_exist": "This username already exists. Please try another.",
+    "text_err_email_exist": "This email already exists. Please try another.",
+    "text_agree_to_our": "Agree to our ",
+    "text_privacy_terms": "Privacy & Terms",
+    "text_you_have_an_account": "You have an account? ",
+    "text_sign_in_now": "Sign In now",
+    "title_sign_up_success_modal": "Your account has been created successfully",
+    "content_sign_up_success_modal": "We have sent you a verification email. Please verify your email account to complete the registration",
     "request_verify_email": {
       "title": "This email is not verified yet!",
       "body": "You need to click the bellow button to receive the verification link then trying to sign in later",
@@ -588,7 +616,6 @@
     "text_option_edit_content": "Content",
     "text_change_cover": "Change cover",
     "text_select_cover": "Select cover",
-    "text_selecting_categories": "Your article will be added to",
     "text_search_category_placeholder": "Select your options...",
     "text_edit_article_success": "Article updated successfully",
     "menu": {
@@ -638,7 +665,9 @@
     "fail_schedule": "Fail Schedule",
     "successful_schedule": "Successful Schedule",
     "text_delete_article_success": "Your article has been deleted",
-    "paste_image_error": "Upload failed. Please upload images using the toolbar."
+    "paste_image_error": "Upload failed. Please upload images using the toolbar.",
+    "article_settings": "Article settings",
+    "text_selecting_will_be_added_to": "Your article will be added to"
   },
   "post": {
     "news_feed": "News Feed",
@@ -705,7 +734,6 @@
     "other_places": "others",
     "mark_as_read": "Mark as read",
     "marked_as_read": "Marked as read",
-    "mark_as_important": "Mark this post as Important",
     "expire_on": "Expire on:",
     "choose_group_people": "Choose group",
     "placeholder_audience_search": "Search for groups",
@@ -845,10 +873,13 @@
       "copy_link": "Copy Link",
       "delete": "Delete Article"
     },
-    "series_detail_article_menu": {
+    "series_detail_item_menu": {
       "reorder": "Reorder",
-      "delete": "Remove Article"
-    }
+      "delete_article": "Remove Article",
+      "delete_post": "Remove Post",
+      "view_series": "View Series"
+    },
+    "text_selecting_will_be_added_to": "Your post will be added to"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
@@ -1299,15 +1330,18 @@
     "content_edit_audience_failed": "You don't have delete own post permission at group:",
     "text_saved": "Series saved.",
     "text_unsaved": "Series unsaved.",
-    "reorder_article": "Reorder Article",
-    "text_info_reorder": "Drag and drop to reorder the article",
+    "reorder": "Reorder",
+    "text_info_reorder": "Drag and drop to reorder the items",
     "reorder_successful": "Reorder successful",
     "reorder_failed": "Reorder failed",
     "notice_changing_the_order": "You are changing the order",
     "notice_sure_to_do_this": "Are you sure to do this?",
     "text_add_articles_success": "Add successful",
     "text_remove_article": "Do you want to remove this article?",
-    "text_article_removed": "Article removed"
+    "text_remove_post": "Do you want to remove this post?",
+    "text_article_removed": "Remove successful",
+    "text_no_content": "No content",
+    "series_settings": "Series settings"
   },
   "tags": {
     "create_tag": "Create Tag",
@@ -1320,7 +1354,7 @@
     "empty_list_tags": "No result",
     "edit_tag": "Edit Tag",
     "do_you_want_to_change_this_tag": "Do you want to change this tag?",
-    "message_notice": "The tag will be automatically converted to lowercase after created or updated."
+    "message_notice": "The tag will be automatically converted to uppercase after created or updated."
   },
   "notice": {
     "force_update": {

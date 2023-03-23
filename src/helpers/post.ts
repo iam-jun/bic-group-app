@@ -182,3 +182,13 @@ export const getRootGroupids = (audience: IPostAudience) => {
   });
   return result;
 };
+
+export const getRootGroupIdFromGroupItem = (group: any) => {
+  const {
+    id, rootGroupId, level, parents,
+  } = group;
+
+  if (rootGroupId) return rootGroupId;
+
+  return level === 0 ? id : parents?.[0] || '';
+};

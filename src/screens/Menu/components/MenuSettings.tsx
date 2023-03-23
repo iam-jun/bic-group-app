@@ -110,6 +110,7 @@ const MenuSettings = () => {
         <Icon tintColor={theme.colors.purple20} icon="ArrowRightFromBracket" />
         <Text.BodyMMedium style={styles.textLogout} numberOfLines={1}>{t('menu:title_logout')}</Text.BodyMMedium>
       </Button>
+      <Text style={styles.testingLabel} useI18n>common:text_developing_version</Text>
     </View>
   );
 };
@@ -141,6 +142,12 @@ const createStyle = (theme: ExtendedTheme) => {
     itemContainer: {
       flexDirection: 'row',
       paddingVertical: spacing.padding.base,
+    },
+    testingLabel: {
+      fontStyle: 'italic',
+      fontSize: 13,
+      color: colors.neutral30,
+      marginTop: spacing.padding.small,
     },
   });
 };

@@ -1,7 +1,7 @@
 import React, {
   FC, useEffect, useRef, useState,
 } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Keyboard, StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Divider from '~/beinComponents/Divider';
@@ -20,7 +20,7 @@ import spacing from '~/theme/spacing';
 import CreatePostChosenAudiences from '../../../components/posts/CreatePostChosenAudiences';
 import CreatePostContent from './components/CreatePostContent';
 import CreatePostFooter from './components/CreatePostFooter';
-import CreatePostBannerImportant from './components/CreatePostBannerImportant';
+import CreateBannerImportant from '~/components/ImportantSettings/CreateBannerImportant';
 import { handleBack } from './handler';
 import useDraftPostStore from '../../Draft/DraftPost/store';
 import useCommentInputStore from '../../comments/components/CommentInputView/store';
@@ -169,10 +169,16 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   };
 
   const onSavePost = () => {
+    Keyboard.dismiss();
     savePost({
       disableNavigate: false,
       replaceWithDetail: screenParams.replaceWithDetail,
     });
+  };
+
+  const onPublishPost = () => {
+    Keyboard.dismiss();
+    publishPost();
   };
 
   const onPressSettings = () => {
@@ -199,6 +205,14 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     rootNavigation.navigate(homeStack.postSettings);
   };
 
+  const onPressTags = () => {
+    rootNavigation.navigate(homeStack.createPostTags);
+  };
+
+  const onPressSeries = () => {
+    rootNavigation.navigate(homeStack.createPostSeries);
+  };
+
   return (
     <ScreenWrapper isFullView testID="CreatePostScreen">
       <Header
@@ -209,13 +223,13 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
         buttonText={isCreatingNewPost ? 'common:btn_publish' : 'post:save'}
         buttonProps={buttonPostProps}
         onPressBack={onPressBack}
-        onPressButton={isCreatingNewPost ? publishPost : onSavePost}
+        onPressButton={isCreatingNewPost ? onPublishPost : onSavePost}
         style={styles.headerStyle}
       />
       <View style={styles.flex1}>
         <View>
           {!!important?.active && (
-            <CreatePostBannerImportant expiresTime={important.expiresTime} />
+            <CreateBannerImportant type="post" expiresTime={important.expiresTime} />
           )}
           <CreatePostChosenAudiences disabled={loading} />
           <Divider color={theme.colors.neutral5} />
@@ -234,6 +248,8 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
           onPressSetting={onPressSettings}
           isSetting={count > 0}
           settingDisabled={settingDisabled}
+          onPressTags={onPressTags}
+          onPressSeries={onPressSeries}
         />
       </View>
     </ScreenWrapper>

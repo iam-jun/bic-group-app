@@ -13,7 +13,7 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { isGroup } from '~/helpers/groups';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import { spacing } from '~/theme';
-import { formatLargeNumber } from '~/utils/formatData';
+import { formatLargeNumber } from '~/utils/formatter';
 import ButtonCommunityGroupCard from './ButtonCommunityGroupCard';
 import useModalStore from '~/store/modal';
 

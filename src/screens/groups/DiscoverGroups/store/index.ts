@@ -1,11 +1,11 @@
 import { createStore, resetStore } from '~/store/utils';
 import IDiscoverGroupsState from './Interface';
 import getDiscoverGroups from './actions/getDiscoverGroups';
-import getCommunityGroups from './actions/getCommunityGroups';
 import joinNewGroup from './actions/joinNewGroup';
 import cancelJoinGroup from './actions/cancelJoinGroup';
+import { InitStateType } from '~/store/interfaces/IBaseState';
 
-const initState: IDiscoverGroupsState = {
+const initState: InitStateType<IDiscoverGroupsState> = {
   loading: true,
   ids: [],
   items: {},
@@ -15,19 +15,19 @@ const initState: IDiscoverGroupsState = {
 
 const discoverGroupsStore = (set, get) => ({
   ...initState,
+  actions: {
+    setGroupStatus: (groupId: string, status: number) => {
+      if (!groupId) return;
+      const currentState: IDiscoverGroupsState = get();
+      set((state:IDiscoverGroupsState) => {
+        state.items[groupId] = { ...currentState.items[groupId], joinStatus: status };
+      }, 'setGroupStatus');
+    },
 
-  doSetGroupStatus: (groupId: string, status: number) => {
-    if (!groupId) return;
-    const currentState: IDiscoverGroupsState = get();
-    set((state:IDiscoverGroupsState) => {
-      state.items[groupId] = { ...currentState.items[groupId], joinStatus: status };
-    }, 'setGroupStatus');
+    joinNewGroup: joinNewGroup(set, get),
+    cancelJoinGroup: cancelJoinGroup(set, get),
+    getDiscoverGroups: getDiscoverGroups(set, get),
   },
-
-  doJoinNewGroup: joinNewGroup(set, get),
-  doCancelJoinGroup: cancelJoinGroup(set, get),
-  doGetDiscoverGroups: getDiscoverGroups(set, get),
-  doGetCommunityGroups: getCommunityGroups(set, get),
 
   reset: () => resetStore(initState, set),
 });

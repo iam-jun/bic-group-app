@@ -1,56 +1,36 @@
 import * as React from 'react';
-import { fireEvent, renderWithRedux } from '~/test/testUtils';
+import { fireEvent, render } from '~/test/testUtils';
 import BaseToast, { ToastType } from '.';
 
 describe('BaseToast component', () => {
-  const content = 'Internet connection was restored';
   const onButtonPress = jest.fn();
   const onClose = jest.fn();
+  const props = {
+    content: 'This is toast message',
+    buttonText: 'Dismiss',
+    onButtonPress,
+    onClose,
+  };
 
-  it('renders success toast correctly', () => {
-    const rendered = renderWithRedux(<BaseToast type={ToastType.SUCCESS} content={content} />).toJSON();
-    expect(rendered).toMatchSnapshot();
-  });
-
-  it('renders error toast correctly', () => {
-    const rendered = renderWithRedux(<BaseToast type={ToastType.ERROR} content={content} />).toJSON();
-    expect(rendered).toMatchSnapshot();
-  });
-
-  it('renders full toast with button correctly', () => {
-    const rendered = renderWithRedux(<BaseToast
-      type={ToastType.SUCCESS}
-      content={content}
-      buttonText="Undo"
-      onButtonPress={onButtonPress}
-    />).toJSON();
-    expect(rendered).toMatchSnapshot();
+  it('renders toast correctly', () => {
+    const { getByTestId } = render(<BaseToast {...props} />);
+    expect(getByTestId('base_toast.button_text').props.children).toEqual('Dismiss');
+    expect(getByTestId('base_toast.content').props.children).toEqual('This is toast message');
   });
 
   it('should call prop onButtonPress', () => {
-    const rendered = renderWithRedux(<BaseToast
-      type={ToastType.SUCCESS}
-      content={content}
-      buttonText="Undo"
-      onButtonPress={onButtonPress}
-    />);
+    const { getByTestId } = render(<BaseToast {...props} type={ToastType.ERROR} />);
 
-    const button = rendered.getByTestId('toast_button_action');
-    expect(button).toBeDefined();
+    const button = getByTestId('base_toast.button_text');
     fireEvent.press(button);
-    expect(onButtonPress).toBeCalled();
+    expect(onButtonPress).toHaveBeenCalled();
   });
 
   it('should call prop onPressClose', () => {
-    const rendered = renderWithRedux(<BaseToast
-      type={ToastType.SUCCESS}
-      content={content}
-      onClose={onClose}
-    />);
+    const { getByTestId } = render(<BaseToast {...props} />);
 
-    const button = rendered.getByTestId('toast_button_close');
-    expect(button).toBeDefined();
-    fireEvent.press(button);
-    expect(onClose).toBeCalled();
+    const closeButton = getByTestId('base_toast.close');
+    fireEvent.press(closeButton);
+    expect(onClose).toHaveBeenCalled();
   });
 });

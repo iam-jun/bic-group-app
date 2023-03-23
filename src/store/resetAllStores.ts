@@ -12,7 +12,6 @@ import useGroupStructureStore from '~/screens/groups/GroupStructureSettings/stor
 import useReactionDetailStore from '~/components/reaction/ReactionDetailBottomSheet/store';
 import useCommunitiesStore from './entities/communities';
 import useUserProfileStore from '~/screens/Menu/UserProfile/store';
-import useAccountSettingsStore from '~/screens/Menu/AccountSettings/store';
 import usePermissionSchemeStore from '~/screens/PermissionScheme/store';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 import useCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
@@ -35,7 +34,6 @@ import useSeriesStore from '~/screens/series/store';
 import useTopicStore from '~/screens/topic/store';
 import useAddArticlesStore from '~/screens/series/SeriesDetail/components/AddArticles/store';
 import useCreateArticleCategoryStore from '~/screens/articles/CreateArticle/screens/CreateArticleCategory/store';
-import useCreateArticleSeriesStore from '~/screens/articles/CreateArticle/screens/CreateArticleSeries/store';
 import useForgotPasswordStore from '~/screens/auth/ForgotPassword/store';
 import useChangePasswordStore from '~/screens/Menu/AccountSettings/SecurityLogin/ChangePassword/store';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
@@ -55,8 +53,13 @@ import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
 import useButtonMarkAsReadStore from '~/components/posts/ButtonMarkAsRead/store';
 import useCreatePostStore from '~/screens/post/CreatePost/store';
 import useLinkPreviewStore from './linkPreview';
+import useSeriesContentModalStore from '~/components/series/SeriesContentModal/store';
 import useAppStore from './app';
 import useGroupJoinableUsersStore from '~/screens/groups/GroupMembers/AddMembersToGroup/store';
+import useSelectSeriesStore from '~/components/SelectSeries/store';
+import useSelectTagsStore from '~/components/SelectTags/store';
+import useValidateSeriesTagsStore from '~/components/ValidateSeriesTags/store';
+import useCommonController from '~/screens/store';
 
 export const excludedStore = [
   useAuthController,
@@ -85,7 +88,6 @@ const stores = [
   useCommunityJoinedGroupTreeStore,
   useReactionDetailStore,
   useUserProfileStore,
-  useAccountSettingsStore,
   useGroupStructureStore,
   usePermissionSchemeStore,
   useNotificationStore,
@@ -104,7 +106,7 @@ const stores = [
   useGroupMemberStore,
   useCreateArticleStore,
   useCreateArticleCategoryStore,
-  useCreateArticleSeriesStore,
+  useSelectSeriesStore,
   useArticlesStore,
   useUserInterestedPostStore,
   useDiscoverCommunitiesStore,
@@ -130,7 +132,11 @@ const stores = [
   useCommentInputStore,
   useFeedSearchStore,
   useLinkPreviewStore,
+  useSeriesContentModalStore,
   useAppStore,
+  useSelectTagsStore,
+  useValidateSeriesTagsStore,
+  useCommonController,
 ];
 
 export const resetAllStores = () => {

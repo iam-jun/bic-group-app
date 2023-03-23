@@ -1,9 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
-import * as modalActions from '~/storeRedux/modal/actions';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IconType } from '~/resources/icons';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
@@ -18,6 +16,7 @@ import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import useModalStore from '~/store/modal';
 
 const GroupAdministration = (props: any) => {
   const { params } = props.route;
@@ -25,7 +24,6 @@ const GroupAdministration = (props: any) => {
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles();
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
   const { group } = groups[currentGroupId] || {};
@@ -39,8 +37,9 @@ const GroupAdministration = (props: any) => {
       PermissionKey.EDIT_PRIVACY,
     ],
   );
+  const modalActions = useModalStore((state) => state.actions);
 
-  const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
+  const displayNewFeature = () => modalActions.showAlertNewFeature();
 
   const goToGeneralInfo = () => {
     rootNavigation.navigate(

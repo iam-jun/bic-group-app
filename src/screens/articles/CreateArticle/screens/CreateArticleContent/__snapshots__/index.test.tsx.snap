@@ -393,7 +393,7 @@ exports[`CreateArticleContent screen should render correctly 1`] = `
                 showsVerticalScrollIndicator={false}
                 source={
                   Object {
-                    "uri": "https://undefined/article/webview/v1",
+                    "uri": "https://beincom.io/article/webview/v1",
                   }
                 }
                 style={
@@ -872,7 +872,7 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                 showsVerticalScrollIndicator={false}
                 source={
                   Object {
-                    "uri": "https://undefined/article/webview/v1",
+                    "uri": "https://beincom.io/article/webview/v1",
                   }
                 }
                 style={
@@ -1762,6 +1762,7 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                                 "flex": 1,
                               }
                             }
+                            testID="sticker_view.emoij"
                           >
                             <View
                               style={
@@ -1770,6 +1771,7 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                                   "flex": 1,
                                 }
                               }
+                              testID="emoji_picker"
                             >
                               <RCTScrollView
                                 data={Array []}
@@ -1795,13 +1797,11 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                                 showsVerticalScrollIndicator={false}
                                 stickyHeaderIndices={Array []}
                                 style={
-                                  Array [
-                                    Object {},
-                                    Object {
-                                      "width": 720,
-                                    },
-                                  ]
+                                  Object {
+                                    "width": 720,
+                                  }
                                 }
+                                testID="emoji_picker.section_list"
                               >
                                 <View />
                               </RCTScrollView>

@@ -18,7 +18,6 @@ import Text from '~/baseComponents/Text';
 
 import { useRootNavigation } from '~/hooks/navigation';
 import { ILocation } from '~/interfaces/common';
-import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
 import { DateInput, TextInput } from '~/baseComponents/Input';
 import { useBaseHook } from '~/hooks';
@@ -29,6 +28,7 @@ import { fontFamilies } from '~/theme/fonts';
 import dimension from '~/theme/dimension';
 import useMenuController from '~/screens/Menu/store';
 import useUserProfileStore from '../../UserProfile/store';
+import Button from '~/beinComponents/Button';
 
 const AddWork = () => {
   const theme: ExtendedTheme = useTheme();
@@ -268,6 +268,8 @@ const AddWork = () => {
   const renderEndDate = () => (
     <View style={styles.containerItem}>
       <DateInput
+        testID="add_work.end_date"
+        testIDValue="add_work.end_date.value"
         style={{ marginVertical: 0, marginBottom: spacing.margin.tiny }}
         mode="date"
         value={endDateValue}
@@ -310,6 +312,7 @@ const AddWork = () => {
   const renderCurrentlyWorkHere = () => (
     <View style={[styles.selectionLineView, styles.containerItem]}>
       <Checkbox
+        testID="add_work.currently_work_here"
         isChecked={isWorkHere}
         label="settings:text_currently_work_here"
         useI18n

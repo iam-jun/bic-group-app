@@ -1,13 +1,12 @@
 import { ScrollView, StyleSheet } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import PillTabButton from '~/baseComponents/Tab/PillTabButton';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { spacing } from '~/theme';
-import modalActions from '~/storeRedux/modal/actions';
 import CommunityJoinedGroupTree from './CommunityJoinedGroupTree';
+import useModalStore from '~/store/modal';
 
 interface TabButtonHeaderProps {
   isMember: boolean;
@@ -28,24 +27,22 @@ const TabButtonHeader = ({
   onPressMembers,
   onPressTags,
 }: TabButtonHeaderProps) => {
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
+  const actions = useModalStore((state) => state.actions);
 
   const onPressYourGroups = () => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        isFullScreen: true,
-        titleFullScreen: 'groups:group_content:btn_your_groups',
-        ContentComponent: (
-          <CommunityJoinedGroupTree
-            communityId={communityId}
-            teamName={teamName}
-          />
-        ),
-      }),
-    );
+    actions.showModal({
+      isOpen: true,
+      isFullScreen: true,
+      titleFullScreen: 'groups:group_content:btn_your_groups',
+      ContentComponent: (
+        <CommunityJoinedGroupTree
+          communityId={communityId}
+          teamName={teamName}
+        />
+      ),
+    });
   };
 
   return (

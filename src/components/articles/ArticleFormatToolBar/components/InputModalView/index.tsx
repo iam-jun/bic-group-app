@@ -1,12 +1,11 @@
 import { StyleSheet, View } from 'react-native';
 import React, { FC, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { TextInput } from '~/baseComponents/Input';
 import { useBaseHook } from '~/hooks';
 import { margin, padding } from '~/theme/spacing';
 import { Button } from '~/baseComponents';
 import Text from '~/baseComponents/Text';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 
 interface Props {
   type: 'link'|'embed';
@@ -15,24 +14,24 @@ interface Props {
 }
 
 const InputModalView: FC<Props> = ({ type, insertLink, insertEmbed }) => {
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const [text, setText] = useState('');
   const [url, setUrl] = useState('');
+  const modalActions = useModalStore((state) => state.actions);
 
   const onCancel = () => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
   };
 
   const onSave = () => {
     if (type === 'link') {
       insertLink(url, text);
-      dispatch(modalActions.hideModal());
+      modalActions.hideModal();
       return;
     }
 
     insertEmbed(url);
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
   };
 
   const renderContent = () => {

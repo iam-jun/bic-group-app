@@ -3,7 +3,6 @@ import {
   View, StyleSheet, StyleProp, ViewStyle,
 } from 'react-native';
 import { useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import Text from '~/baseComponents/Text';
 import Avatar from '~/baseComponents/Avatar';
@@ -13,7 +12,6 @@ import TimeView from '~/beinComponents/TimeView';
 import PostAudiencesModal from '~/components/posts/PostAudiencesModal';
 import useNetworkStore from '~/store/network';
 import networkSelectors from '~/store/network/selectors';
-import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainTabStack from '~/router/navigator/MainStack/stack';
@@ -22,6 +20,8 @@ import { getAudiencesText } from '~/helpers/post';
 import Icon from '~/baseComponents/Icon';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
+import useModalStore from '~/store/modal';
+import DeactivatedView from '~/components/DeactivatedView';
 
 export interface ContentHeaderProps {
   style?: StyleProp<ViewStyle>;
@@ -50,21 +50,20 @@ const ContentHeader: FC<ContentHeaderProps> = ({
   onPressMenu,
   onPressShowAudiences,
 }: ContentHeaderProps) => {
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const { colors } = useTheme();
   const { rootNavigation } = useRootNavigation();
 
   const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
   const isHidden = usePostsStore(postsSelector.getIsHidden(postId));
+  const modalActions = useModalStore((state) => state.actions);
 
   const textAudiences = getAudiencesText(audience, t);
 
-  const avatar = actor?.avatar;
-  const actorName = actor?.fullname;
+  const { avatar, fullname: actorName, isDeactivated } = actor || {};
 
   const onPressActor = () => {
-    if (!actor.id) return;
+    if (!actor.id || isDeactivated) return;
 
     const payload = { userId: actor.id };
     rootNavigation.navigate(
@@ -80,19 +79,17 @@ const ContentHeader: FC<ContentHeaderProps> = ({
     if (onPressShowAudiences) {
       onPressShowAudiences();
     } else {
-      dispatch(
-        modalActions.showModal({
-          isOpen: true,
-          isFullScreen: true,
-          titleFullScreen: t('post:title_post_to'),
-          ContentComponent: (
-            <PostAudiencesModal
-              data={audience?.groups || []}
-              showBlockedIcon={isHidden}
-            />
-          ),
-        }),
-      );
+      modalActions.showModal({
+        isOpen: true,
+        isFullScreen: true,
+        titleFullScreen: t('post:title_post_to'),
+        ContentComponent: (
+          <PostAudiencesModal
+            data={audience?.groups || []}
+            showBlockedIcon={isHidden}
+          />
+        ),
+      });
     }
   };
 
@@ -107,6 +104,8 @@ const ContentHeader: FC<ContentHeaderProps> = ({
     }
     return null;
   };
+
+  const colorActorName = isDeactivated ? colors.grey40 : colors.neutral80;
 
   return (
     <Button
@@ -128,12 +127,14 @@ const ContentHeader: FC<ContentHeaderProps> = ({
           onPress={onPressActor}
         >
           <Text.SubtitleM
-            color={colors.neutral80}
+            style={styles.actorName}
+            color={colorActorName}
             numberOfLines={1}
             testID="content_header.actor"
           >
             {actorName}
           </Text.SubtitleM>
+          {isDeactivated && <DeactivatedView style={styles.deactivatedView} />}
         </Button>
         <View style={styles.textToAudience}>
           <Text.BodyS color={colors.neutral40} useI18n style={styles.textTo}>
@@ -156,7 +157,7 @@ const ContentHeader: FC<ContentHeaderProps> = ({
         </View>
       </View>
       {onPressMenu && (
-        <View style={styles.iconMenu}>
+        <View>
           <Button.Raise
             icon="menu"
             size="small"
@@ -190,10 +191,15 @@ const styles = StyleSheet.create({
     marginRight: spacing.margin.base,
   },
   btnActor: {
-    alignSelf: 'flex-start',
+    flexDirection: 'row',
+    alignItems: 'center',
     marginRight: spacing.margin.base,
   },
-  iconMenu: {
+  actorName: {
+    flexShrink: 1,
+  },
+  deactivatedView: {
+    marginLeft: spacing.margin.tiny,
   },
 });
 

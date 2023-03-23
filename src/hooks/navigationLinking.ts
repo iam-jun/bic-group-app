@@ -1,67 +1,74 @@
 import { Linking } from 'react-native';
+import groupApi from '~/api/GroupApi';
+import APIErrorCode from '~/constants/apiErrorCode';
 import { useRootNavigation } from '~/hooks/navigation';
-import {
-  linkingConfig, PREFIX_DEEPLINK_GROUP, PREFIX_URL,
-} from '~/router/config';
+import { linkingConfig, PREFIX_DEEPLINK_GROUP, PREFIX_URL } from '~/router/config';
 import authStacks from '~/router/navigator/AuthStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
-import useCommonController from '~/screens/store';
+import useAuthController from '~/screens/auth/store';
+import showToastError from '~/store/helper/showToastError';
 import getEnv from '~/utils/env';
-import { DEEP_LINK_TYPES, matchDeepLink, openInAppBrowser } from '~/utils/link';
+import { DeepLinkTypes, matchDeepLink, openInAppBrowser } from '~/utils/link';
 
-const isHasCurrentUser = () => {
-  const userProfileData = useCommonController.getState().myProfile;
-  return !!userProfileData?.id;
-};
-
-export const onReceiveURL = ({ url, navigation, listener }: { url: string, navigation:any, listener?: any }) => {
+export const onReceiveURL = async ({ url, navigation, listener }: { url: string; navigation: any; listener?: any }) => {
   const match = matchDeepLink(url);
+
+  const userId = useAuthController?.getState?.().authUser?.userId;
 
   if (match) {
     switch (match.type) {
-      case DEEP_LINK_TYPES.POST_DETAIL:
+      case DeepLinkTypes.POST_DETAIL:
         navigation?.navigate?.(mainStack.postDetail, { post_id: match.postId });
         break;
 
-      case DEEP_LINK_TYPES.COMMENT_DETAIL:
+      case DeepLinkTypes.COMMENT_DETAIL:
         navigation?.navigate?.(mainStack.commentDetail, {
           ...match.params,
           postId: match.postId,
         });
         break;
 
-      case DEEP_LINK_TYPES.COMMUNTY_DETAIL:
+      case DeepLinkTypes.COMMUNTY_DETAIL:
         navigation?.navigate?.(mainStack.communityDetail, { communityId: match.communityId });
         break;
 
-      case DEEP_LINK_TYPES.GROUP_DETAIL:
+      case DeepLinkTypes.GROUP_DETAIL:
         navigation?.navigate?.(mainStack.groupDetail, {
           communityId: match.communityId,
           groupId: match.groupId,
         });
         break;
-      case DEEP_LINK_TYPES.SERIES_DETAIL:
+      case DeepLinkTypes.SERIES_DETAIL:
         navigation?.navigate?.(mainStack.seriesDetail, {
           seriesId: match.seriesId,
         });
         break;
-      case DEEP_LINK_TYPES.ARTICLE_DETAIL:
+      case DeepLinkTypes.ARTICLE_DETAIL:
         navigation?.navigate?.(mainStack.articleContentDetail, {
           articleId: match.articleId,
         });
         break;
-      case DEEP_LINK_TYPES.LOGIN:
-        if (isHasCurrentUser()) return;
+      case DeepLinkTypes.LOGIN:
+        if (userId) return;
         navigation?.navigate?.(authStacks.signIn);
         break;
-      case DEEP_LINK_TYPES.FORGOT_PASSWORD:
-        if (isHasCurrentUser()) return;
+      case DeepLinkTypes.FORGOT_PASSWORD:
+        if (userId) return;
         navigation?.navigate?.(authStacks.forgotPassword);
         break;
-      case DEEP_LINK_TYPES.CONFIRM_USER:
-        navigation?.navigate?.(isHasCurrentUser()
-          ? mainStack.confirmUser
-          : authStacks.confirmUser, { params: match.params });
+      case DeepLinkTypes.CONFIRM_USER:
+        navigation?.navigate?.(userId ? mainStack.confirmUser : authStacks.confirmUser, { params: match.params });
+        break;
+      case DeepLinkTypes.REFERRAL:
+        await navigateFromReferralLink({ match, navigation, userId });
+        break;
+      case DeepLinkTypes.USER_PROFILE:
+        navigation?.navigate?.(mainStack.userProfile, {
+          userId: match.userName,
+          params: {
+            type: 'username',
+          },
+        });
         break;
       default:
         listener?.(url);
@@ -95,6 +102,71 @@ const useNavigationLinkingConfig = () => {
   const { rootNavigation } = useRootNavigation();
 
   return getLinkingCustomConfig(linkingConfig, rootNavigation);
+};
+
+const navigateFromReferralLink = async (payload: { match: any; navigation: any; userId: string }) => {
+  const { match, navigation, userId } = payload || {};
+  const { referralCode } = match || {};
+  let responseValidate = null;
+
+  try {
+    responseValidate = await groupApi.validateReferralCode({ code: referralCode });
+  } catch (error) {
+    console.error('validateReferralCode error:', error);
+  }
+
+  if (responseValidate && responseValidate?.data) {
+    await navigateWithValidReferralCode({
+      userId,
+      responseValidate,
+      navigation,
+      referralCode,
+    });
+  } else {
+    navigateWithInvalidReferralCode({ userId, navigation });
+  }
+};
+
+const navigateWithValidReferralCode = async (payload: {
+  userId: string;
+  responseValidate: any;
+  navigation: any;
+  referralCode: string;
+}) => {
+  const {
+    userId, responseValidate, navigation, referralCode,
+  } = payload;
+  if (userId) {
+    const { id: communityId } = responseValidate?.data || {};
+    try {
+      const responseJoinCommunity = await groupApi.joinCommunity(communityId);
+      if (responseJoinCommunity && responseJoinCommunity?.data) {
+        navigation?.navigate?.(mainStack.communityDetail, { communityId });
+      }
+    } catch (error) {
+      console.error('joinCommunity error:', error);
+      if (
+        error?.code === APIErrorCode.Group.ALREADY_MEMBER
+        || error?.code === APIErrorCode.Group.JOIN_REQUEST_ALREADY_SENT
+      ) {
+        navigation?.navigate?.(mainStack.communityDetail, { communityId });
+      } else {
+        navigation?.navigate?.('home');
+        showToastError(error);
+      }
+    }
+  } else {
+    navigation?.navigate?.(authStacks.signUp, { isValidLink: true, referralCode });
+  }
+};
+
+const navigateWithInvalidReferralCode = (payload: { userId: string; navigation: any }) => {
+  const { userId, navigation } = payload;
+  if (userId) {
+    navigation?.navigate?.('home');
+  } else {
+    navigation?.navigate?.(authStacks.signUp, { isValidLink: false });
+  }
 };
 
 export default useNavigationLinkingConfig;

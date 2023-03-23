@@ -111,7 +111,9 @@ exports[`SeriesContent component given summaryHighlight and isLite === false sho
                 },
               ]
             }
-          />
+          >
+            0
+          </Text>
           <Text
             style={
               Array [
@@ -473,7 +475,9 @@ exports[`SeriesContent component given summaryHighlight and isLite === true shou
                 },
               ]
             }
-          />
+          >
+            0
+          </Text>
           <Text
             style={
               Array [
@@ -875,7 +879,9 @@ exports[`SeriesContent component given titleHighlight and isLite === false shoul
                 },
               ]
             }
-          />
+          >
+            0
+          </Text>
           <Text
             style={
               Array [
@@ -1196,7 +1202,9 @@ exports[`SeriesContent component given titleHighlight and isLite === true should
                 },
               ]
             }
-          />
+          >
+            0
+          </Text>
           <Text
             style={
               Array [
@@ -1549,7 +1557,9 @@ exports[`SeriesContent component render with description view 1`] = `
                 },
               ]
             }
-          />
+          >
+            0
+          </Text>
           <Text
             style={
               Array [
@@ -1915,7 +1925,9 @@ exports[`SeriesContent component render without description view 1`] = `
                 },
               ]
             }
-          />
+          >
+            0
+          </Text>
           <Text
             style={
               Array [

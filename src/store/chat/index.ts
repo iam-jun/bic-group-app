@@ -6,7 +6,7 @@ import {
 import { handleChannelViewedEvent, handlePostedEvent, handlePostUnreadEvent } from './utils';
 import chatApi from '~/api/ChatApi';
 import IChatState from '~/store/chat/IChatState';
-import { convertArrayToObject } from '~/utils/formatData';
+import { convertArrayToObject } from '~/utils/formatter';
 
 const initialState = {
   unreadChannels: {},

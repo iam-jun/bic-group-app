@@ -30,9 +30,7 @@ const DiscoverGroups = ({ route }: any) => {
 
   const [searchText, setSearchText] = useState('');
 
-  const doGetDiscoverGroups = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doGetDiscoverGroups);
-  const joinNewGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doJoinNewGroup);
-  const cancelJoinGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doCancelJoinGroup);
+  const actions = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.actions);
   const {
     ids, items, loading, canLoadMore, noGroupInCommuntity,
   } = useDiscoverGroupsStore();
@@ -40,7 +38,7 @@ const DiscoverGroups = ({ route }: any) => {
   const communityDetail = useCommunitiesStore((state) => state.data[communityId]);
 
   const getDiscoverGroups = (isRefreshing?: boolean) => {
-    doGetDiscoverGroups({ communityId, isRefreshing });
+    actions.getDiscoverGroups({ communityId, isRefreshing });
   };
 
   useEffect(
@@ -50,11 +48,11 @@ const DiscoverGroups = ({ route }: any) => {
   );
 
   const handleJoinGroup = (groupId: string) => {
-    joinNewGroup(groupId);
+    actions.joinNewGroup(groupId);
   };
 
   const handleCancelJoinGroup = (groupId: string) => {
-    cancelJoinGroup(groupId);
+    actions.cancelJoinGroup(groupId);
   };
 
   const onLoadMore = () => {
@@ -71,11 +69,11 @@ const DiscoverGroups = ({ route }: any) => {
   const onSearchText = debounce(
     (text: string) => {
       setSearchText(text);
-      doGetDiscoverGroups({ isRefreshing: true, communityId, params: { key: text } });
+      actions.getDiscoverGroups({ isRefreshing: true, communityId, params: { key: text } });
     }, 500,
   );
 
-  const renderItem = ({ item, index }: {item: number; index: number}) => {
+  const renderItem = ({ item }: {item: number;}) => {
     const currentItem = {
       ...items[item],
       community: { ...communityDetail },
@@ -83,7 +81,7 @@ const DiscoverGroups = ({ route }: any) => {
     return (
       <CommunityGroupCard
         item={currentItem}
-        testID={`browse_groups_item_${index}`}
+        testID="discover_groups.items"
         shouldShowAlertJoinTheCommunityFirst
         onJoin={handleJoinGroup}
         onCancel={handleCancelJoinGroup}
@@ -92,7 +90,7 @@ const DiscoverGroups = ({ route }: any) => {
   };
 
   const renderEmptyComponent = () => {
-    if (loading) return <ActivityIndicator />;
+    if (loading) return <ActivityIndicator testID="discover_groups.loading" />;
     return (
       <EmptyScreen
         source={images.img_empty_search_post}
@@ -127,7 +125,7 @@ const DiscoverGroups = ({ route }: any) => {
       {ids?.length > 0
         ? (
           <FlatList
-            testID="flatlist"
+            testID="discover_groups.list_group"
             data={ids}
             renderItem={renderItem}
             style={{ flex: 1 }}

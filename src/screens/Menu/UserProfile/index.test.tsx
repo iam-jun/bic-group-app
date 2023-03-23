@@ -22,7 +22,7 @@ describe('UserProfile screen', () => {
     const rendered = renderWithRedux(<UserProfile />);
 
     const { getByTestId } = rendered;
-    const containerComponent = getByTestId('user_profile.not_found');
+    const containerComponent = getByTestId('no_user_found');
     expect(containerComponent).toBeDefined();
   });
 });

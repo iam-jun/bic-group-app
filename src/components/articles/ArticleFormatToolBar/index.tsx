@@ -6,7 +6,6 @@ import { StyleSheet, View } from 'react-native';
 import Animated, {
   FadeInUp, SlideInLeft, SlideOutRight,
 } from 'react-native-reanimated';
-import { useDispatch } from 'react-redux';
 import { Button } from '~/baseComponents';
 import Divider from '~/beinComponents/Divider';
 import ImagePicker from '~/beinComponents/ImagePicker';
@@ -15,7 +14,6 @@ import { useBaseHook } from '~/hooks';
 import { IFilePicked } from '~/interfaces/common';
 import { IGiphy } from '~/interfaces/IGiphy';
 import useUploaderStore from '~/store/uploader';
-import modalActions from '~/storeRedux/modal/actions';
 import { borderRadius, margin, padding } from '~/theme/spacing';
 import { Icon, IconBack, IconButton } from './components/Icon';
 import InputModalView from './components/InputModalView';
@@ -23,9 +21,10 @@ import {
   Alignments, AlignType, Headings, HeadingType, Lists, ListType, MarkType, MarkUps,
 } from './constant';
 import { AppConfig } from '~/configs';
-import { formatBytes } from '~/utils/formatData';
+import { formatBytes } from '~/utils/formatter';
 import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import useModalStore from '~/store/modal';
 
 export interface ArticleFormatToolBarProps {
   onModalVisbleChanged: (visible: boolean) => void;
@@ -54,7 +53,6 @@ const ArticleFormatToolBar: FC<ArticleFormatToolBarProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const stickerViewRef = useRef<any>();
-  const dispatch = useDispatch();
 
   const [selectedImage, setSelectedImage] = useState<IFilePicked>();
   const actions = useUploaderStore((state) => state.actions);
@@ -62,6 +60,7 @@ const ArticleFormatToolBar: FC<ArticleFormatToolBarProps> = ({
     (state) => state.uploadedFiles[selectedImage?.name], [selectedImage],
   ));
   const uploadError = useUploaderStore(useCallback((state) => state.errors[selectedImage?.name], [selectedImage]));
+  const modalActions = useModalStore((state) => state.actions);
 
   const [ovelayType, setOverlayType] = useState<''|'text'|'paragraph'>('');
 
@@ -109,14 +108,14 @@ const ArticleFormatToolBar: FC<ArticleFormatToolBarProps> = ({
   }, []);
 
   const openModal = (type: 'link'|'embed') => {
-    dispatch(modalActions.showModal({
+    modalActions.showModal({
       isOpen: true,
       ContentComponent: <InputModalView
         type={type}
         insertLink={insertLink}
         insertEmbed={insertEmbed}
       />,
-    }));
+    });
   };
 
   const openModalLink = () => openModal('link');

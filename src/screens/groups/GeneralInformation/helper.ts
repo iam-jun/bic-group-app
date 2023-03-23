@@ -4,7 +4,7 @@ import { IFilePicked } from '~/interfaces/common';
 import groupsActions from '~/storeRedux/groups/actions';
 import { groupProfileImageCropRatio } from '~/theme/dimension';
 
-import { checkPermission, permissionTypes } from '~/utils/permission';
+import { checkPermission, PermissionTypes } from '~/utils/permission';
 
 export const uploadFile = ({
   dispatch,
@@ -38,7 +38,7 @@ export const _openImagePicker = async ({
   rootGroupId: string;
 }) => {
   await checkPermission(
-    permissionTypes.photo, dispatch, (canOpenPicker:boolean) => {
+    PermissionTypes.photo, (canOpenPicker:boolean) => {
       if (canOpenPicker) {
         ImagePicker.openPickerSingle({
           ...groupProfileImageCropRatio[fieldName],

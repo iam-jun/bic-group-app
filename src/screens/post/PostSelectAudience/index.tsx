@@ -1,5 +1,6 @@
 import React, { FC, useMemo } from 'react';
 import {
+  Keyboard,
   StyleSheet,
   View,
 } from 'react-native';
@@ -16,7 +17,7 @@ import {
   checkChangeAudiences,
   ISelectAudienceParams,
 } from './SelectAudienceHelper';
-import { ICreatePostParams } from '~/interfaces/IPost';
+import { ICreatePostParams, PostType } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import spacing from '~/theme/spacing';
 import useMounted from '~/hooks/mounted';
@@ -25,6 +26,9 @@ import useSelectAudienceStore from '~/components/SelectAudience/store';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import useModalStore from '~/store/modal';
 import useCreatePostStore from '../CreatePost/store';
+import { getAllAudiences } from '~/helpers/common';
+import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
+import { getParamsValidateSeriesTags } from '../CreatePost/helper';
 
 export interface PostSelectAudienceProps {
   route?: {
@@ -41,6 +45,11 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
+
+  const isValidating = useValidateSeriesTags((state) => state.isValidating);
+  const validateSeriesTagsActions = useValidateSeriesTags(
+    (state) => state.actions,
+  );
 
   const allAudiences = useSelectAudienceStore((state) => state.selectedAudiences);
   const chosenAudiences = useCreatePostStore((state) => state.createPost.chosenAudiences || []);
@@ -60,7 +69,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     [selectedAudiences],
   );
 
-  const buttonSaveDisabled = isEmpty(selectedAudiences) || !isAudiencesHasChanged;
+  const buttonSaveDisabled = isValidating || isEmpty(selectedAudiences) || !isAudiencesHasChanged;
 
   useMounted(() => {
     const audiences = {};
@@ -94,9 +103,38 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     }
   };
 
-  const onPressSave = () => {
-    // [TO-DO] refactor useCreatePost later
+  const validateSeriesTags = (
+    onSuccess: (response) => void,
+    onError: (error) => void,
+  ) => {
+    const validateParams = getParamsValidateSeriesTags(selectedAudiences);
+    validateSeriesTagsActions.validateSeriesTags(validateParams, onSuccess, onError);
+  };
 
+  const saveSelectedAudienceWithValidate = (onValidateSeriesTagsSuccess: () => void) => {
+    const onSuccess = onValidateSeriesTagsSuccess;
+    const onError = (error) => {
+      validateSeriesTagsActions.handleSeriesTagsError({
+        error,
+        onNext: () => saveSelectedAudienceWithValidate(onValidateSeriesTagsSuccess),
+        postType: PostType.POST,
+      });
+    };
+    validateSeriesTags(onSuccess, onError);
+  };
+
+  // change audiences of a published post or draft post
+  // need to validate series and tags
+  const onConfirmSaveAudienceEditingPost = () => {
+    Keyboard.dismiss();
+    const onValidateSeriesTagsSuccess = () => {
+      saveAudiences();
+      rootNavigation.goBack();
+    };
+    saveSelectedAudienceWithValidate(onValidateSeriesTagsSuccess);
+  };
+
+  const onPressSave = () => {
     // first step in flow select audience before create post
     if (isFirstStep) {
       saveAudiences();
@@ -113,10 +151,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
         cancelBtn: true,
         cancelLabel: t('common:btn_discard'),
         confirmLabel: t('post:create_post:btn_save_change'),
-        onConfirm: () => {
-          saveAudiences();
-          rootNavigation.goBack();
-        },
+        onConfirm: onConfirmSaveAudienceEditingPost,
       });
     } else {
       rootNavigation.goBack();
@@ -133,6 +168,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
           buttonProps={{
             useI18n: true,
             disabled: buttonSaveDisabled,
+            loading: isValidating,
             testID: 'select_audience.btn_done',
           }}
           onPressButton={onPressSave}
@@ -168,14 +204,3 @@ const createStyle = (theme: ExtendedTheme) => {
 };
 
 export default PostSelectAudience;
-
-const getAllAudiences = (selectedAudiences) => {
-  const groupAudiences = Object.keys(selectedAudiences.groups).map(
-    (key: string) => selectedAudiences.groups[key],
-  );
-  const userAudiences = Object.keys(selectedAudiences.users).map(
-    (key: string) => selectedAudiences.users[key],
-  );
-
-  return groupAudiences.concat(userAudiences);
-};

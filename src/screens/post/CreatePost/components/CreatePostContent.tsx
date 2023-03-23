@@ -31,7 +31,7 @@ import PostVideoPlayer from '~/components/posts/PostVideoPlayer';
 import LinkPreview from '~/components/LinkPreview';
 import { IGetFile } from '~/store/uploader';
 import useUploadImage from '../hooks/useUploadImage';
-import { getImagePastedFromClipboard } from '~/utils/common';
+import { getImagePastedFromClipboard } from '~/utils/images';
 import useModalStore from '~/store/modal';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import useCreatePostStore from '../store';

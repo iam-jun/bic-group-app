@@ -4,11 +4,10 @@ import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import { scaleCoverHeight, userProfileImageCropRatio } from '~/theme/dimension';
 import AvatarImage from '../../components/AvatarImage';
 import CoverImage from '../../components/CoverImage';
-import { checkPermission, permissionTypes } from '~/utils/permission';
+import { checkPermission, PermissionTypes } from '~/utils/permission';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import useMenuController from '~/screens/Menu/store';
 import { IUserImageUpload } from '~/interfaces/IEditUser';
-import Store from '~/storeRedux';
 
 interface Props {
   id: string;
@@ -32,7 +31,7 @@ const CoverHeader = ({
     callback?: (fieldName: string) => void,
   ) => {
     checkPermission(
-      permissionTypes.photo, Store.store.dispatch, (canOpenPicker) => {
+      PermissionTypes.photo, (canOpenPicker) => {
         if (canOpenPicker) {
           ImagePicker.openPickerSingle({
             ...userProfileImageCropRatio[fieldName],

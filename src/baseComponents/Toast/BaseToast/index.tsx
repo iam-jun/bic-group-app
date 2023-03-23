@@ -59,7 +59,7 @@ const BaseToast = ({
             tintColor={iconColor[type]}
           />
         )}
-        <Text.BodyM style={styles.flex1} color={colors.white} useI18n>
+        <Text.BodyM testID="base_toast.content" style={styles.flex1} color={colors.white} useI18n>
           {content}
         </Text.BodyM>
       </View>
@@ -67,7 +67,7 @@ const BaseToast = ({
       <View style={styles.rightContainer}>
         {!!buttonText && (
           <TouchableOpacity style={styles.actionButton} onPress={onButtonPress} testID="toast_button_action">
-            <Text.ButtonS useI18n>{buttonText}</Text.ButtonS>
+            <Text.ButtonS testID="base_toast.button_text" useI18n>{buttonText}</Text.ButtonS>
           </TouchableOpacity>
         )}
         <Icon
@@ -76,7 +76,7 @@ const BaseToast = ({
           ignoreInternet
           tintColor={colors.neutral20}
           onPress={onClose}
-          buttonTestID="toast_button_close"
+          buttonTestID="base_toast.close"
         />
       </View>
     </View>

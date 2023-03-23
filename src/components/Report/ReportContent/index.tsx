@@ -3,8 +3,6 @@ import {
   View, StyleSheet, ActivityIndicator, Dimensions,
 } from 'react-native';
 import { useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
-import * as modalActions from '~/storeRedux/modal/actions';
 
 import { spacing } from '~/theme';
 import Text from '~/baseComponents/Text';
@@ -15,6 +13,7 @@ import {
   TargetType, ReportTo, IPayloadReportContent, IPayloadReportMember,
 } from '~/interfaces/IReport';
 import useReportContentStore from '../store';
+import useModalStore from '~/store/modal';
 
 const screenHeight = Dimensions.get('window').height;
 const modalHeight = 0.35 * screenHeight;
@@ -34,7 +33,6 @@ interface IReportContentProps {
 }
 
 const ReportContent: React.FC<IReportContentProps> = (props) => {
-  const dispatch = useDispatch();
   const theme = useTheme();
   const { colors } = theme;
   const { targetId, targetType, dataReportMember } = props || {};
@@ -44,6 +42,7 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
   const { reportReasons, memberReportReasons } = useReportContentStore((state) => state);
   const headerTitle = targetType === TargetType.MEMBER
     ? 'groups:member_menu:label_report_member' : 'common:text_report_content';
+  const modalActions = useModalStore((state) => state.actions);
 
   useEffect(() => {
     if (!reportReasons.data || reportReasons.data?.length === 0) {
@@ -55,7 +54,7 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
   }, []);
 
   const onClose = () => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
     setReasonState(null);
   };
 

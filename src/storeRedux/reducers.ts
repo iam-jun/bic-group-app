@@ -5,8 +5,6 @@ import { persistReducer } from 'redux-persist';
 import groupsReducer from '~/storeRedux/groups/reducer';
 import postReducer from '~/storeRedux/post/reducer';
 
-import modal from './modal/reducer';
-
 const postPersistConfig = {
   key: 'post',
   storage: AsyncStorage,
@@ -14,7 +12,6 @@ const postPersistConfig = {
 };
 
 export const appReducer = combineReducers({
-  modal,
   post: persistReducer(
     postPersistConfig, postReducer,
   ),

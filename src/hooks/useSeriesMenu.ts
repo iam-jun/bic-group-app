@@ -1,16 +1,14 @@
 import i18next from 'i18next';
 import Clipboard from '@react-native-clipboard/clipboard';
-
-import { useDispatch } from 'react-redux';
 import { Keyboard } from 'react-native';
-import modalActions from '~/storeRedux/modal/actions';
+
 import { IPost } from '~/interfaces/IPost';
 import { useRootNavigation } from './navigation';
 import { BottomListProps } from '~/components/BottomList';
 import useCommonController from '~/screens/store';
 import { getPostMenus } from '~/helpers/post';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
-import { generateLink, LINK_SERIRES } from '~/utils/link';
+import { generateLink, LinkGeneratorTypes } from '~/utils/link';
 import { Button } from '~/baseComponents';
 import useModalStore from '~/store/modal';
 
@@ -21,10 +19,11 @@ const useSeriesMenu = (
   handleConfirmDelete: ()=> void,
 ) => {
   const { rootNavigation } = useRootNavigation();
-  const dispatch = useDispatch();
 
   const commonActions = useCommonController((state) => state.actions);
-  const { showToast, showAlert } = useModalStore((state) => state.actions);
+  const {
+    showToast, showAlert, hideBottomList, showBottomList,
+  } = useModalStore((state) => state.actions);
 
   if (!data) return null;
 
@@ -33,7 +32,7 @@ const useSeriesMenu = (
   } = data;
 
   const onPressEdit = () => {
-    dispatch(modalActions.hideBottomList());
+    hideBottomList();
     rootNavigation?.navigate?.(
       seriesStack.createSeries, {
         seriesId,
@@ -43,15 +42,15 @@ const useSeriesMenu = (
   };
 
   const onPressCopyLink = () => {
-    dispatch(modalActions.hideBottomList());
+    hideBottomList();
     Clipboard.setString(generateLink(
-      LINK_SERIRES, seriesId,
+      LinkGeneratorTypes.SERIRES, seriesId,
     ));
     showToast({ content: 'common:text_link_copied_to_clipboard' });
   };
 
   const onPressDelete = () => {
-    dispatch(modalActions.hideBottomList());
+    hideBottomList();
     showAlert({
       title: i18next.t('series:menu_text_delete_series'),
       content: i18next.t('series:content_delete_series'),
@@ -64,7 +63,7 @@ const useSeriesMenu = (
   };
 
   const onPressSave = () => {
-    dispatch(modalActions.hideBottomList());
+    hideBottomList();
     if (isSaved) {
       commonActions.unsavePost(seriesId, type);
     } else {
@@ -111,9 +110,7 @@ const useSeriesMenu = (
 
   const showMenu = () => {
     Keyboard.dismiss();
-    dispatch(
-      modalActions.showBottomList({ isOpen: true, data: menus } as BottomListProps),
-    );
+    showBottomList({ data: menus } as BottomListProps);
   };
 
   return {

@@ -11,7 +11,6 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 import BottomSheet from '~/baseComponents/BottomSheet/index';
 import DocumentPicker from '~/beinComponents/DocumentPicker';
 import ImagePicker from '~/beinComponents/ImagePicker';
@@ -24,7 +23,7 @@ import ReviewMarkdown from '~/screens/post/CreatePost/components/ReviewMarkdown'
 import ToolbarButton from '~/components/posts/ToolbarButton';
 import spacing from '~/theme/spacing';
 import { getChatDomain, openInAppBrowser } from '~/utils/link';
-import { checkPermission, permissionTypes } from '~/utils/permission';
+import { checkPermission, PermissionTypes } from '~/utils/permission';
 import { clearExistingFiles, getTotalFileSize, validateFilesPicker } from '../../helper';
 import useUploadImage from '../../hooks/useUploadImage';
 import useCreatePostStore from '../../store';
@@ -41,6 +40,8 @@ export interface PostToolbarProps {
   settingDisabled?: boolean;
   onPressBack?: () => void;
   onPressSetting: ()=> void;
+  onPressTags: () => void;
+  onPressSeries: () => void;
 }
 
 const PostToolbar: FC<PostToolbarProps> = ({
@@ -54,11 +55,12 @@ const PostToolbar: FC<PostToolbarProps> = ({
   settingDisabled,
   onPressBack,
   onPressSetting,
+  onPressTags,
+  onPressSeries,
   ...props
 }) => {
   const animated = useRef(new Animated.Value(0)).current;
 
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const modalizeRef = useRef<any>();
@@ -67,6 +69,8 @@ const PostToolbar: FC<PostToolbarProps> = ({
   const selectedImages = useCreatePostStore((state) => state.createPost.images || []);
   const content = useCreatePostStore((state) => state.createPost.content);
   const selectedFiles = useCreatePostStore((state) => state.createPost.files);
+  const selectedTags = useCreatePostStore((state) => state.createPost.tags);
+  const selectedSeries = useCreatePostStore((state) => state.createPost.series);
 
   const { totalFiles, totalSize } = getTotalFileSize(selectedFiles);
 
@@ -115,7 +119,7 @@ const PostToolbar: FC<PostToolbarProps> = ({
   const _onPressSelectImage = () => {
     modalizeRef?.current?.close?.();
     checkPermission(
-      permissionTypes.photo, dispatch, (canOpenPicker) => {
+      PermissionTypes.photo, (canOpenPicker) => {
         if (canOpenPicker) {
           openGallery();
         }
@@ -126,7 +130,7 @@ const PostToolbar: FC<PostToolbarProps> = ({
   const _onPressSelectVideo = () => {
     modalizeRef?.current?.close?.();
     checkPermission(
-      permissionTypes.photo, dispatch, (canOpenPicker) => {
+      PermissionTypes.photo, (canOpenPicker) => {
         if (canOpenPicker) {
           openSingleVideoPicker();
         }
@@ -214,6 +218,18 @@ const PostToolbar: FC<PostToolbarProps> = ({
             testID="post_toolbar.markdown_preview"
             onPressIcon={content && onPressMarkdownPreview}
           />
+          <ToolbarButton
+            icon="Tag"
+            testID="post_toolbar.tag"
+            onPressIcon={onPressTags}
+            shouldHighlight={selectedTags?.length > 0}
+          />
+          <ToolbarButton
+            icon="RectangleHistory"
+            testID="post_toolbar.series"
+            onPressIcon={onPressSeries}
+            shouldHighlight={selectedSeries?.length > 0}
+          />
         </View>
         <Button.Raise
           size="medium"
@@ -235,6 +251,7 @@ const PostToolbar: FC<PostToolbarProps> = ({
         **bold**, *italic*, ~~strike~~, # Heading 1, ## Heading 2,...
       </Text.BodyXS>
       <Text.BodyXSMedium
+        testID="post_toolbar.text_help"
         color={theme.colors.blue50}
         onPress={onPressHelp}
         useI18n
@@ -247,7 +264,7 @@ const PostToolbar: FC<PostToolbarProps> = ({
   return (
     <BottomSheet
       modalizeRef={modalizeRef}
-      ContentComponent={<ReviewMarkdown onPressDone={closeModal} />}
+      ContentComponent={<ReviewMarkdown testID={`review_markdown.${isOpen ? 'open' : 'close'}`} onPressDone={closeModal} />}
       panGestureAnimatedValue={animated}
       {...props}
     >

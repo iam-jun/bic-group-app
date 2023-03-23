@@ -1,9 +1,9 @@
 import {
   ICategory, IEditArticleAudience, IEditArticleData, IParamGetArticleDetail,
 } from './IArticle';
-import { IArticleCover, IPostCreatePost } from './IPost';
+import { IArticleCover, IAudience } from './IPost';
 
-export interface IPostCreateSeries extends IPostCreatePost {
+export interface IPostCreateSeries {
   title?: string;
   summary?: string;
   categories?: ICategory[];
@@ -41,11 +41,17 @@ export interface IGetSeries {
   createdAtLte?: string;
   contentSearch?: string;
   groupIds?: string[];
+  itemIds?: string[];
 }
 
-export interface IReorderArticles {
-  articleIds: string[]
+export interface IReorderItems {
+  itemIds: string[]
 }
 
-export type IAddArticleInSeries = IReorderArticles;
-export type IRemoveArticleInSeries = IReorderArticles;
+export type IAddArticleInSeries = IReorderItems;
+export type IRemoveItemInSeries = IReorderItems;
+
+export interface ISeriesSettingsParams {
+  seriesId?: string;
+  listAudiencesWithoutPermission?: IAudience[];
+}

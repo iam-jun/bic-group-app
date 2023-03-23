@@ -277,4 +277,27 @@ export const NOTIFICATION_TYPE = {
    * notify for community owner
    */
   LEAVE_MULTIPLE_GROUP_TO_USER: 'leave.multiple_group.to_user',
+
+  /**
+   * When new post was added to series
+   */
+  ADD_POST_TO_USER: 'add.post.to_user',
+
+  /**
+   * When post was removed from series
+   */
+  REMOVE_POST_TO_USER: 'remove.post.to_user',
+
+  /**
+   * When article was removed from series
+   */
+  REMOVE_ARTICLE_TO_USER: 'remove.article.to_user',
+
+  /**
+   * When series contain your content was deleted
+   */
+  DELETE_SERIES_TO_USER: 'delete.series.to_user',
+
+  REMOVE_POST_TO_CREATOR: 'remove.post.to_creator',
+  REMOVE_ARTICLE_TO_CREATOR: 'remove.article.creator',
 };

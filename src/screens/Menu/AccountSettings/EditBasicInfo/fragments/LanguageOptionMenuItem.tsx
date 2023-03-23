@@ -21,11 +21,14 @@ const LanguageOptionMenuItem: FC<LanguageOptionMenuItemProps> = ({
 
   return (
     <Button
+      testID="language_option.item_list"
       style={[styles.container, selected && styles.selected]}
       contentStyle={styles.contentContainer}
       onPress={() => onChoose(language)}
     >
-      <Text.BodyMMedium>{local}</Text.BodyMMedium>
+      <Text.BodyMMedium testID="language_option.item_list.text">
+        {local}
+      </Text.BodyMMedium>
     </Button>
   );
 };

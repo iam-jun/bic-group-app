@@ -13,7 +13,6 @@ import {
   Alert,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import Animated, {
   useAnimatedStyle,
   withTiming,
@@ -25,7 +24,6 @@ import Text from '~/baseComponents/Text';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 
 import useAuthController, { IAuthState } from '~/screens/auth/store';
-import * as modalActions from '~/storeRedux/modal/actions';
 import {
   getUserFromSharedPreferences,
   isAppInstalled,
@@ -36,17 +34,20 @@ import authStacks from '~/router/navigator/AuthStack/stack';
 import { Button } from '~/baseComponents';
 import InputEmail from './components/InputEmail';
 import InputPassword from './components/InputPassword';
-import LogoImage from './components/LogoImage';
+import LogoImage from '../components/LogoImage';
 import getEnv from '~/utils/env';
 import { APP_ENV } from '~/configs/appConfig';
 import { AppConfig } from '~/configs';
 import RequestVerifyEmailModal from '../VerifyEmail/RequestVerifyEmailModal';
-import { authErrors } from '~/constants/authConstants';
+import { authErrorMessage, authErrors } from '~/constants/authConstants';
 import { useBaseHook } from '~/hooks';
+import useModalStore from '~/store/modal';
+import { FieldNameType } from '~/interfaces/IAuth';
+
+const { EMAIL, PASSWORD } = FieldNameType;
 
 const SignIn = () => {
   const { rootNavigation } = useRootNavigation();
-  const dispatch = useDispatch();
   const [disableSignIn, setDisableSignIn] = useState(true);
   const [authSessions, setAuthSessions] = useState<any>(null);
 
@@ -54,6 +55,8 @@ const SignIn = () => {
   const authActions = useAuthController((state: IAuthState) => state.actions);
   const loading = signInState?.loading;
   const signingInError = signInState?.error;
+
+  const modalActions = useModalStore((state) => state.actions);
 
   const inputPasswordRef = useRef<any>();
 
@@ -105,13 +108,13 @@ const SignIn = () => {
     () => {
       if (signingInError) {
         setError(
-          'password', {
+          PASSWORD, {
             type: 'validate',
             message: signingInError,
           },
         );
         setError(
-          'email', {
+          EMAIL, {
             type: 'validate',
             message: signingInError,
           },
@@ -124,12 +127,12 @@ const SignIn = () => {
   );
 
   const checkAuthSessions = async () => {
-    const email = getValues('email');
+    const email = getValues(EMAIL);
     const isInstalled = await isAppInstalled();
     if (isInstalled) {
       const user = await getUserFromSharedPreferences();
       if (user?.email && user?.email !== email) {
-        setValue('email', user?.email);
+        setValue(EMAIL, user?.email);
       }
       setAuthSessions(user);
     } else {
@@ -138,11 +141,11 @@ const SignIn = () => {
   };
 
   const clearAllErrors = () => {
-    clearErrors('email');
-    clearErrors('password');
+    clearErrors(EMAIL);
+    clearErrors(PASSWORD);
   };
 
-  const clearFieldError = (name: 'email' | 'password') => {
+  const clearFieldError = (name: FieldNameType) => {
     const error = errors[name];
     if (!error) return;
 
@@ -151,7 +154,7 @@ const SignIn = () => {
   };
 
   const onSubmitEmail = () => {
-    if (getValues('password')) {
+    if (getValues(PASSWORD)) {
       onSignIn();
       return;
     }
@@ -163,22 +166,26 @@ const SignIn = () => {
     let errorMessage;
     switch (error?.code) {
       case authErrors.NOT_AUTHORIZED_EXCEPTION:
-        errorMessage = t('auth:text_err_id_password_not_matched');
+        if (error?.message === authErrorMessage.USER_IS_DISABLED) {
+          errorMessage = t('auth:text_err_user_deactivated');
+        } else {
+          errorMessage = t('auth:text_err_id_password_not_matched');
+        }
         break;
       case authErrors.USER_NOT_FOUND_EXCEPTION:
         // eslint-disable-next-line no-case-declarations
-        const email = getValues('email');
-        dispatch(modalActions.showModal({
+        const email = getValues(EMAIL);
+        modalActions.showModal({
           isOpen: true,
           titleFullScreen: 'groups:group_content:btn_your_groups',
           ContentComponent: <RequestVerifyEmailModal email={email} />,
-        }));
+        });
         break;
       default:
         errorMessage = error?.message || t('auth:text_err_id_password_not_matched');
     }
     authActions.setSignInLoading(false);
-    dispatch(modalActions.hideLoading());
+    modalActions.setLoadingModal(false);
     !!errorMessage && authActions.setSignInError(errorMessage);
   };
 
@@ -192,20 +199,20 @@ const SignIn = () => {
 
     Keyboard.dismiss();
 
-    const email = getValues('email');
-    const password = getValues('password');
+    const email = getValues(EMAIL);
+    const password = getValues(PASSWORD);
     authActions.signIn({ email, password }, handleError);
   };
 
   const validateInputs = async () => {
-    const validEmail = await trigger('email');
-    const validPassword = await trigger('password');
+    const validEmail = await trigger(EMAIL);
+    const validPassword = await trigger(PASSWORD);
     return validEmail && validPassword;
   };
 
   const checkDisableSignIn = () => {
-    const email = getValues('email');
-    const password = getValues('password');
+    const email = getValues(EMAIL);
+    const password = getValues(PASSWORD);
     const result = !isEmpty(errors) || !email || !password || loading;
     setDisableSignIn(result);
   };

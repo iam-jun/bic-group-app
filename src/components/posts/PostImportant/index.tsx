@@ -2,13 +2,11 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { useDispatch } from 'react-redux';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 
 import useNetworkStore from '~/store/network';
 import networkSelectors from '~/store/network/selectors';
-import modalActions from '~/storeRedux/modal/actions';
 
 import BannerImportant from '~/baseComponents/BannerImportant';
 import PostAudiencesModal from '~/components/posts/PostAudiencesModal';
@@ -17,6 +15,7 @@ import { isPostExpired } from '~/helpers/post';
 import spacing from '~/theme/spacing';
 import { IPostCommunities } from '~/interfaces/IPost';
 import { useBaseHook } from '~/hooks';
+import useModalStore from '~/store/modal';
 
 export interface PostImportantProps {
   isImportant: boolean;
@@ -35,7 +34,6 @@ const PostImportant: FC<PostImportantProps> = ({
   listCommunity,
   shouldBeHidden,
 }: PostImportantProps) => {
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
@@ -44,6 +42,7 @@ const PostImportant: FC<PostImportantProps> = ({
   const styles = createStyle(theme);
   const { colors } = theme || {};
   const isExpired = isPostExpired(expireTime);
+  const modalActions = useModalStore((state) => state.actions);
 
   if (isLite && isImportant) {
     return (
@@ -70,7 +69,7 @@ const PostImportant: FC<PostImportantProps> = ({
       return;
     }
 
-    dispatch(modalActions.showModal({
+    modalActions.showModal({
       isOpen: true,
       isFullScreen: true,
       titleFullScreen: t('post:title_post_to'),
@@ -78,7 +77,7 @@ const PostImportant: FC<PostImportantProps> = ({
         data={listCommunity || []}
         onPressItemAudience={goToCommunity}
       />,
-    }));
+    });
   };
 
   return (

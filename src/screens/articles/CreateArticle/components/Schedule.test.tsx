@@ -9,7 +9,7 @@ import usePostsStore from '~/store/entities/posts';
 import { IPost, PostStatus } from '~/interfaces/IPost';
 import Schedule from './Schedule';
 import streamApi from '~/api/StreamApi';
-import useCreateArticleStore from '../store';
+import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
 
 describe('Schedule', () => {
   it('should render correctly', () => {
@@ -61,7 +61,7 @@ describe('Schedule', () => {
       fireEvent.press(btn);
     });
 
-    expect(useCreateArticleStore.getState().isValidating).toBe(true);
+    expect(useValidateSeriesTags.getState().isValidating).toBe(true);
     expect(spyApiValidateSeriesTagsOfArticle).toBeCalled();
   });
 

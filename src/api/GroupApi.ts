@@ -15,7 +15,9 @@ import {
 } from '~/interfaces/ICommunity';
 import { withHttpRequestPromise } from '~/api/apiRequest';
 import appConfig from '~/configs/appConfig';
-import { IUserEdit, IVerifyEmail } from '~/interfaces/IAuth';
+import {
+  IParamsSignUp, IParamValidateReferralCode, IUserEdit, IVerifyEmail,
+} from '~/interfaces/IAuth';
 import { IAddWorkExperienceReq } from '~/interfaces/IWorkExperienceRequest';
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 import { ISearchReq } from '~/interfaces/common';
@@ -533,6 +535,17 @@ export const groupsApiConfig = {
     url: `${provider.url}auth/resend-confirmation-code?email=${params.email}&redirect_page=${params.redirectPage}`,
     method: 'post',
   }),
+  validateReferralCode: (param: IParamValidateReferralCode): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}public/referral/verify`,
+    params: { ...param },
+  }),
+  signUp: (params: IParamsSignUp): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}auth/signup/referral`,
+    method: 'post',
+    data: { ...params },
+  }),
 };
 
 const groupApi = {
@@ -859,6 +872,9 @@ const groupApi = {
   resendVerificationEmail: (params: IVerifyEmail) => withHttpRequestPromise(
     groupsApiConfig.resendVerificationEmail, params,
   ),
+  // eslint-disable-next-line max-len
+  validateReferralCode: (param: IParamValidateReferralCode) => withHttpRequestPromise(groupsApiConfig.validateReferralCode, param),
+  signUp: (params: IParamsSignUp) => withHttpRequestPromise(groupsApiConfig.signUp, params),
 };
 
 export default groupApi;

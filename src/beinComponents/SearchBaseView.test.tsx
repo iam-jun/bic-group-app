@@ -30,7 +30,7 @@ describe('SearchBaseView component', () => {
 
   it('should render search text input correctly', () => {
     const wrapper = renderWithRedux(<SearchBaseView isOpen={isOpen} />);
-    const textInput = wrapper.getByTestId('search_base_view.text_input');
+    const textInput = wrapper.getByTestId('search_input');
     expect(textInput).toBeDefined();
   });
 
@@ -43,7 +43,7 @@ describe('SearchBaseView component', () => {
         onChangeText={onChangeText}
       />,
     );
-    const iconReset = wrapper.getByTestId('search_base_view.reset_button');
+    const iconReset = wrapper.getByTestId('search_input.icon_clear');
     expect(iconReset).toBeDefined();
   });
 
@@ -56,7 +56,7 @@ describe('SearchBaseView component', () => {
         onChangeText={onChangeText}
       />,
     );
-    const iconReset = wrapper.getByTestId('search_base_view.reset_button');
+    const iconReset = wrapper.getByTestId('search_input.icon_clear');
     fireEvent.press(iconReset);
     expect(onChangeText).toBeCalled();
   });

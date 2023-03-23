@@ -21,6 +21,7 @@ const useReactionDetail = (set, get) => ({
           avatar: item?.actor?.avatar,
           fullname: item?.actor?.fullname,
           username: item?.actor?.username,
+          isDeactivated: item?.actor?.isDeactivated,
           reactionId: item?.id,
         }));
         set((state) => {
@@ -46,6 +47,7 @@ const useReactionDetail = (set, get) => ({
           avatar: item?.actor?.avatar,
           fullname: item?.actor?.fullname,
           username: item?.actor?.username,
+          isDeactivated: item?.actor?.isDeactivated,
           reactionId: item?.id,
         }));
         const oldData = get()?.data || [];

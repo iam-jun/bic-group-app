@@ -1,5 +1,5 @@
 import { isEmpty } from 'lodash';
-import { formatDate } from '~/utils/formatData';
+import { formatDate } from '~/utils/formatter';
 import useUserProfileStore from './store';
 
 export const getLanguages = (language: string[]) => {
