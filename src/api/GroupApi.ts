@@ -415,6 +415,15 @@ export const groupsApiConfig = {
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
+  getListBlockingUsers: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/blockings`,
+  }),
+  unblockUser: (userId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}users/${userId}/unblock`,
+    method: 'post',
+  }),
   searchJoinedCommunities: (
     params: IParamGetCommunities,
   ): HttpApiRequestConfig => ({
@@ -823,6 +832,8 @@ const groupApi = {
   getDiscoverCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(
     groupsApiConfig.getDiscoverCommunities, params,
   ),
+  getListBlockingUsers: () => withHttpRequestPromise(groupsApiConfig.getListBlockingUsers),
+  unblockUser: (userId: string) => withHttpRequestPromise(groupsApiConfig.unblockUser, userId),
   searchJoinedCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(
     groupsApiConfig.searchJoinedCommunities, params,
   ),

@@ -10,6 +10,7 @@ const menuStack = {
   discover: 'discover',
   draft: 'draft',
   yourContent: 'your-content',
+  blocking: 'blocking',
 };
 
 export default menuStack;

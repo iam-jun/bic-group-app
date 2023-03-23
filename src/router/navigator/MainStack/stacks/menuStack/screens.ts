@@ -9,6 +9,7 @@ import AddWork from '~/screens/Menu/AccountSettings/WorkExperience/AddWork';
 import Discover from '~/screens/Discover';
 import Draft from '~/screens/Draft';
 import YourContent from '~/screens/YourContent';
+import Blocking from '~/screens/Menu/AccountSettings/Blocking';
 
 const menuScreens = {
   menu: Menu,
@@ -22,6 +23,7 @@ const menuScreens = {
   discover: Discover,
   draft: Draft,
   'your-content': YourContent,
+  blocking: Blocking,
 };
 
 export default menuScreens;

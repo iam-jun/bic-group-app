@@ -466,7 +466,19 @@
     "enter_phone": "Nhập số điện thoại",
     "select_location": "Chọn vị trí",
     "enter_description": "Nhập mô tả",
-    "optional": "tuỳ chọn"
+    "optional": "tuỳ chọn",
+    "title_blocking": "Chặn",
+    "text_blocked_users_list": "Danh sách người dùng bị chặn",
+    "text_content_blocked_users_list": "Việc chặn này được áp dụng cho các mục đích cá nhân. Việc chặn này sẽ không ảnh hưởng đến tương tác của bạn và người bị chặn trong cộng đồng hoặc nhóm đã tham gia",
+    "btn_unblock": "Mở khoá",
+    "title_unblock_user_name": "Bỏ chặn {{name}}?",
+    "text_unblock_user_name_result": "Bỏ chặn người dùng này sẽ cho phép họ tương tác lại với bạn như sau:",
+    "text_unblock_user_name_result_a": "Tìm kiếm và xem hồ sơ cá nhân của bạn",
+    "text_unblock_user_name_result_b": "Nhắc đến bạn",
+    "text_unblock_user_name_result_c": "Gửi tin nhắn cho bạn",
+    "title_blocked_users_list_empty": "Danh sách người dùng bị chặn trống",
+    "text_blocked_users_list_empty": "Không tìm thấy người dùng",
+    "text_blocked_at": "Đã chặn"
   },
   "languages": {
     "title_en": "English",

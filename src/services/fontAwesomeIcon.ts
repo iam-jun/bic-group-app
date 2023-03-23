@@ -40,6 +40,7 @@ import { faGlobe as faGlobeSolid } from '@fortawesome/pro-solid-svg-icons/faGlob
 import { faCalendar } from '@fortawesome/pro-regular-svg-icons/faCalendar';
 import { faCalendarDays as faCalendarDaysSolid } from '@fortawesome/pro-solid-svg-icons/faCalendarDays';
 import { faUserXmark } from '@fortawesome/pro-regular-svg-icons/faUserXmark';
+import { faUserSlash as faUserSlashSolid } from '@fortawesome/pro-solid-svg-icons/faUserSlash';
 import { faSquareUser } from '@fortawesome/pro-regular-svg-icons/faSquareUser';
 import { faUserCheck } from '@fortawesome/pro-regular-svg-icons/faUserCheck';
 import { faText } from '@fortawesome/pro-regular-svg-icons/faText';
@@ -207,6 +208,7 @@ import { faBallotCheck as faBallotCheckSolid } from '@fortawesome/pro-solid-svg-
 import { faCodeSimple } from '@fortawesome/pro-regular-svg-icons/faCodeSimple';
 import { faTag } from '@fortawesome/pro-regular-svg-icons/faTag';
 import { faRectangleHistory } from '@fortawesome/pro-regular-svg-icons/faRectangleHistory';
+import { faUserLargeSlash as faUserLargeSlashSolid } from '@fortawesome/pro-solid-svg-icons/faUserLargeSlash';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -268,6 +270,7 @@ export const initFontAwesomeIcon = () => {
     faCalendar,
     faCalendarDaysSolid,
     faUserXmark,
+    faUserSlashSolid,
     faSquareUser,
     faUserCheck,
     faText,
@@ -434,6 +437,7 @@ export const initFontAwesomeIcon = () => {
     faCodeSimple,
     faTag,
     faRectangleHistory,
+    faUserLargeSlashSolid,
   );
 };
 
@@ -479,6 +483,7 @@ export const fontAwesomeIcons = {
   Calendar: 'fa-regular fa-calendar',
   CalendarDaysSolid: 'fa-solid fa-calendar-days',
   UserXmark: 'fa-regular fa-user-xmark',
+  UserSlashSolid: 'fa-solid fa-user-slash',
   SquareUser: 'fa-regular fa-square-user',
   UserCheck: 'fa-regular fa-user-check',
   Text: 'fa-regular fa-text',
@@ -646,6 +651,7 @@ export const fontAwesomeIcons = {
   CodeSimple: 'fa-regular fa-code-simple',
   Tag: 'fa-regular fa-tag',
   RectangleHistory: 'fa-regular fa-rectangle-history',
+  UserLargeSlash: 'fa-solid fa-user-large-slash',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(
