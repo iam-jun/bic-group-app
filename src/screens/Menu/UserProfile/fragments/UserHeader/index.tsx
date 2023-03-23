@@ -31,8 +31,6 @@ const UserHeader = ({
 
   const actions = useUserProfileStore((state) => state.actions);
 
-  const ButtonBlockedComponent = isDisabled ? Button.Neutral : Button.Danger;
-
   const disableButtonBlockUser = () => {
     setIsDisabled(true);
   };
@@ -71,15 +69,15 @@ const UserHeader = ({
       )}
       <WorkInfo style={styles.subtitle} latestWork={latestWork} />
       {!isCurrentUser && (
-        <ButtonBlockedComponent
-          icon="UserXmark"
+        <Button.Neutral
+          icon="UserSlashSolid"
           style={styles.buttonBlock}
           onPress={onPressBlock}
           disabled={isDisabled}
           useI18n
         >
           block_user:text_block_user
-        </ButtonBlockedComponent>
+        </Button.Neutral>
       )}
     </View>
   );
