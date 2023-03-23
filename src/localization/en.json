@@ -506,7 +506,19 @@
     "enter_phone": "Enter phone",
     "select_location": "Select location",
     "enter_description": "Enter description",
-    "optional": "optional"
+    "optional": "optional",
+    "title_blocking": "Blocking",
+    "text_blocked_users_list": "Blocked users list",
+    "text_content_blocked_users_list": "This blocking is applied to individual purposes. This blocking won't affect your and the blocked person's interactions in a community or group that has joined",
+    "btn_unblock": "Unblock",
+    "title_unblock_user_name": "Unblock {{name}}?",
+    "text_unblock_user_name_result": "Unblocking this user will allow them to interact with you again below:",
+    "text_unblock_user_name_result_a": "Search and see your individual user profile",
+    "text_unblock_user_name_result_b": "Mention you",
+    "text_unblock_user_name_result_c": "Send a direct message to you",
+    "title_blocked_users_list_empty": "Blocked users list is empty",
+    "text_blocked_users_list_empty": "User not found",
+    "text_blocked_at": "Blocked at"
   },
   "languages": {
     "title_en": "English",

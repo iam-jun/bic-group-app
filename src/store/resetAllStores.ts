@@ -60,6 +60,7 @@ import useSelectSeriesStore from '~/components/SelectSeries/store';
 import useSelectTagsStore from '~/components/SelectTags/store';
 import useValidateSeriesTagsStore from '~/components/ValidateSeriesTags/store';
 import useCommonController from '~/screens/store';
+import useBlockingStore from '~/screens/Menu/AccountSettings/Blocking/store';
 
 export const excludedStore = [
   useAuthController,
@@ -98,6 +99,7 @@ const stores = [
   useArticleScheduleContentStore,
   useCreatePostStore,
   useGroupJoinableUsersStore,
+  useBlockingStore,
 
   // others
   useChatStore,

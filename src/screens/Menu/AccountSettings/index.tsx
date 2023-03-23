@@ -44,14 +44,19 @@ const AccoutSettings = () => {
   const onAccountSettingsPress = (item: ISetting, e: any) => {
     switch (item.type) {
       case 'securityLogin':
-        return rootNavigation.navigate(menuStack.securityLogin);
-
+        rootNavigation.navigate(menuStack.securityLogin);
+        break;
       case 'language':
         baseSheetRef?.current?.open?.(e?.pageX, e?.pageY);
-        return;
-
+        break;
       case 'privacy':
         openInAppBrowser(POLICY_URL);
+        break;
+      case 'blocking':
+        rootNavigation.navigate(menuStack.blocking);
+        break;
+      default:
+        break;
     }
   };
 

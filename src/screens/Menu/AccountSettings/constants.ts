@@ -16,4 +16,9 @@ export const accountSettingsMenu = [
     rightSubTitle: 'settings:app_language',
     rightSubIcon: 'AngleRightSolid',
   },
+  {
+    type: 'blocking',
+    title: 'settings:title_blocking',
+    icon: 'UserLargeSlash',
+  },
 ];

@@ -208,6 +208,7 @@ import { faBallotCheck as faBallotCheckSolid } from '@fortawesome/pro-solid-svg-
 import { faCodeSimple } from '@fortawesome/pro-regular-svg-icons/faCodeSimple';
 import { faTag } from '@fortawesome/pro-regular-svg-icons/faTag';
 import { faRectangleHistory } from '@fortawesome/pro-regular-svg-icons/faRectangleHistory';
+import { faUserLargeSlash as faUserLargeSlashSolid } from '@fortawesome/pro-solid-svg-icons/faUserLargeSlash';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -436,6 +437,7 @@ export const initFontAwesomeIcon = () => {
     faCodeSimple,
     faTag,
     faRectangleHistory,
+    faUserLargeSlashSolid,
   );
 };
 
@@ -649,6 +651,7 @@ export const fontAwesomeIcons = {
   CodeSimple: 'fa-regular fa-code-simple',
   Tag: 'fa-regular fa-tag',
   RectangleHistory: 'fa-regular fa-rectangle-history',
+  UserLargeSlash: 'fa-solid fa-user-large-slash',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(
