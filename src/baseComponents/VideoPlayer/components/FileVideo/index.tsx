@@ -1,5 +1,5 @@
 import React, {
-  FC, useImperativeHandle, useRef, useState,
+  FC, useEffect, useImperativeHandle, useRef, useState,
 } from 'react';
 import {
   View,
@@ -7,15 +7,17 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import { Video, ResizeMode } from 'expo-av';
+import {
+  Video, ResizeMode, Audio, InterruptionModeIOS,
+} from 'expo-av';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import { scaleCoverHeight } from '~/theme/dimension';
 import Icon from '../../../Icon';
 import { getVideoExtention } from '../../helper';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Button from '../../../Button';
 import { VideoPlayerProps } from '../..';
+import { scaleCoverHeight } from '~/theme/dimension';
 
 export interface FileVideoRef {
   play: () => void,
@@ -27,7 +29,7 @@ const PLAYER_HEIGHT = scaleCoverHeight();
 
 const FileVideo: FC<VideoPlayerProps> = ({
   src,
-  thumbnail,
+  posterInfo,
   videoRef,
   isLooping = false,
   resizeMode = ResizeMode.CONTAIN,
@@ -41,6 +43,16 @@ const FileVideo: FC<VideoPlayerProps> = ({
   const [isPlaying, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
   const urlExtension = getVideoExtention(src);
+
+  useEffect(() => {
+    const setAudioMode = async () => {
+      await Audio.setAudioModeAsync({
+        playsInSilentModeIOS: true,
+        interruptionModeIOS: InterruptionModeIOS.DoNotMix,
+      });
+    };
+    setAudioMode();
+  }, []);
 
   useImperativeHandle(videoRef, () => ({
     play,
@@ -85,22 +97,34 @@ const FileVideo: FC<VideoPlayerProps> = ({
 
   const resetVideoPosition = async () => {
     if (!!video.current) {
-      video.current.setStatusAsync({ positionMillis: 0, shouldPlay: false });
+      await video.current.setStatusAsync({
+        positionMillis: 0, shouldPlay: false, isLooping: false,
+      });
     }
   };
 
-  if (!src && !thumbnail) return null;
+  if (!src && !posterInfo?.url) return null;
+
+  const videoStyle = { width: posterInfo?.videoWidth || '100%', height: posterInfo?.videoHeight || PLAYER_HEIGHT };
 
   const renderThumbnail = () => {
     if (isPlaying) return null;
 
-    return <Image style={styles.thumbnail} source={{ uri: thumbnail }} />;
+    return <Image style={[styles.thumbnail, videoStyle]} source={{ uri: posterInfo?.url }} />;
   };
+
+  const renderBlurImageBackground = () => (
+    <Image
+      style={styles.blurImageBg}
+      source={{ uri: posterInfo?.url }}
+      blurRadius={22}
+    />
+  );
 
   const renderLoading = () => {
     if (!loading || isPlaying) return null;
 
-    return <LoadingIndicator size={60} color={colors.gray20} />;
+    return <LoadingIndicator size={60} color={colors.gray20} style={styles.buttonPlay} />;
   };
 
   const renderPlayButton = () => {
@@ -119,11 +143,15 @@ const FileVideo: FC<VideoPlayerProps> = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {
+      width: '100%', height: posterInfo?.videoHeight || PLAYER_HEIGHT,
+    }]}
+    >
+      {renderBlurImageBackground()}
       <Video
         {...props}
         ref={video}
-        style={styles.player}
+        style={[styles.player, videoStyle]}
         useNativeControls
         resizeMode={resizeMode}
         isLooping={isLooping}
@@ -145,23 +173,22 @@ const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      height: PLAYER_HEIGHT,
       justifyContent: 'center',
       backgroundColor: colors.black,
     },
     player: {
+      alignSelf: 'center',
+    },
+    blurImageBg: {
       position: 'absolute',
+      top: 0,
       width: '100%',
-      height: PLAYER_HEIGHT,
+      height: '100%',
     },
     thumbnail: {
-      left: 0,
-      top: 0,
-      right: 0,
-      bottom: 0,
       position: 'absolute',
+      alignSelf: 'center',
       resizeMode: 'contain',
-      backgroundColor: colors.black,
     },
     buttonPlay: {
       zIndex: 2,

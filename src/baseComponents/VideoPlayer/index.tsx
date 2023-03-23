@@ -1,8 +1,8 @@
 import React, {
-  FC, useEffect,
+  FC,
 } from 'react';
 
-import { VideoProps, Audio } from 'expo-av';
+import { VideoProps } from 'expo-av';
 
 import { getVideoExtention } from './helper';
 import EmbedVideo from './components/EmbedVideo';
@@ -16,9 +16,15 @@ export interface VideoPlayerRef {
 
 const SUPPORTED_VIDEOS = ['mp4', 'mov', 'webm', 'wmv', 'avi', 'm3u8'];
 
+export interface PosterInfo {
+  url: string,
+  videoHeight: number,
+  videoWidth: number,
+}
+
 export interface VideoPlayerProps extends VideoProps {
   src: string;
-  thumbnail: string,
+  posterInfo: PosterInfo,
   videoRef?: React.MutableRefObject<VideoPlayerRef>;
 }
 
@@ -26,10 +32,6 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   src,
   ...props
 }: VideoPlayerProps) => {
-  useEffect(() => {
-    Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
-  }, []);
-
   const urlExtension = getVideoExtention(src);
 
   if (!SUPPORTED_VIDEOS.includes(urlExtension.toLowerCase())) {

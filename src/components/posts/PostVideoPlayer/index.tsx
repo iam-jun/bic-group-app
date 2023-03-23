@@ -11,7 +11,6 @@ import Icon from '~/baseComponents/Icon';
 import VideoPlayer, { VideoPlayerRef } from '~/baseComponents/VideoPlayer';
 import { getThumbnailImageLink } from '~/helpers/post';
 import { spacing } from '~/theme';
-import { scaleCoverHeight } from '~/theme/dimension';
 
 const DURATION_CHECK_POINT = 5 * 1000;
 
@@ -21,8 +20,6 @@ export interface PostVideoPlayerProps {
   onWatchCheckPoint?: () => void;
   onPressClose?: () => void;
 }
-
-const PLAYER_HEIGHT = scaleCoverHeight();
 
 const PostVideoPlayer: FC<PostVideoPlayerProps> = ({
   data,
@@ -82,12 +79,11 @@ const PostVideoPlayer: FC<PostVideoPlayerProps> = ({
   };
 
   const handlePlaybackStatusUpdate = debounce(onPlaybackStatusUpdate, 100);
+  const posterInfo = useMemo(() => getThumbnailImageLink(thumbnails), [thumbnails]);
 
   if (!url && thumbnails?.length < 1) {
     return null;
   }
-
-  const posterUrl = useMemo(() => getThumbnailImageLink(thumbnails), [thumbnails]);
 
   return (
     <View style={[styles.container]}>
@@ -96,7 +92,7 @@ const PostVideoPlayer: FC<PostVideoPlayerProps> = ({
         key={`video_item_${postId}`}
         style={styles.player}
         src={url}
-        thumbnail={posterUrl}
+        posterInfo={posterInfo}
         onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
       />
       {!!onPressClose
@@ -118,29 +114,14 @@ const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       // width: '100%',
-      height: PLAYER_HEIGHT,
+      // height: '100%',
       flex: 1,
       justifyContent: 'center',
-      backgroundColor: colors.black,
     },
     player: {
       position: 'absolute',
-      width: '100%',
-      height: PLAYER_HEIGHT,
-    },
-    thumbnail: {
-      position: 'absolute',
-      left: 0,
-      top: 0,
-      right: 0,
-      bottom: 0,
-      resizeMode: 'contain',
-      backgroundColor: colors.black,
-    },
-    buttonPlay: {
-      position: 'absolute',
-      zIndex: 2,
-      alignSelf: 'center',
+      // width: '100%',
+      // height: '100%',
     },
     buttonClose: {
       position: 'absolute',
