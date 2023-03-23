@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  Platform,
 } from 'react-native';
 import {
   Video, ResizeMode, Audio, InterruptionModeIOS,
@@ -155,13 +156,16 @@ const FileVideo: FC<VideoPlayerProps> = ({
         useNativeControls
         resizeMode={resizeMode}
         isLooping={isLooping}
+        usePoster={Platform.OS === 'ios'}
+        posterSource={{ uri: posterInfo?.url }}
+        posterStyle={[styles.thumbnail, videoStyle]}
         onError={(error: string) => {
           console.warn(
             'video failed', error,
           );
         }}
       />
-      {renderThumbnail()}
+      {Platform.OS === 'android' && renderThumbnail()}
       {renderLoading()}
       {renderPlayButton()}
     </View>
