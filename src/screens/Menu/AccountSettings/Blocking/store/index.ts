@@ -11,7 +11,7 @@ export interface IBlockingState extends IBaseState, IFetchingState {
   list: IBlockingUser[];
   actions: {
     getListBlockingUsers: (isRefreshing?: boolean) => void;
-    unblockUser: (userId: string) => void;
+    unblockUser: (userId: string) => Promise<void>;
   };
 }
 
