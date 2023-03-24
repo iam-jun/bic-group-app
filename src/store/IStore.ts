@@ -51,7 +51,7 @@ import { ISelectSeriesState } from '~/components/SelectSeries/store';
 import { ISelectTagsState } from '~/components/SelectTags/store';
 import { IValidateSeriesTags } from '~/components/ValidateSeriesTags/store';
 import { IDiscoverCommunitiesState } from '~/screens/Discover/components/DiscoverCommunities/store';
-import { IBlockingState } from '~/screens/Menu/AccountSettings/Blocking/store';
+import { IBlockingState } from './blocking';
 
 export interface BicStore {
   entities: {
@@ -143,11 +143,6 @@ export interface BicStore {
   Menu: {
     joinedCommunitiesStore: IJoinedCommunitiesState;
     userProfileStore: IUserProfileState;
-    AccountSettings: {
-      Blocking: {
-        blockingStore: IBlockingState;
-      }
-    }
   };
   PermissionScheme: {
     permissionSchemeStore: IPermissionSchemeState;
@@ -185,4 +180,5 @@ export interface BicStore {
   selectTags: ISelectTagsState;
   selectSeries: ISelectSeriesState;
   validateSeriesTags: IValidateSeriesTags;
+  blockingStore: IBlockingState;
 }

@@ -11,10 +11,10 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import spacing from '~/theme/spacing';
 import Text from '~/baseComponents/Text';
 import Divider from '~/beinComponents/Divider';
-import useBlockingStore from './store';
 import EmptyScreen from '~/components/EmptyScreen';
 import BlockedUserItem from './components/BlockedUserItem';
 import { IBlockingUser } from '~/interfaces/IBlocking';
+import useBlockingStore from '~/store/blocking';
 
 const Blocking = () => {
   const theme: ExtendedTheme = useTheme();

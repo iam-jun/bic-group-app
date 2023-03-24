@@ -1,9 +1,9 @@
 import React from 'react';
+import useBlockingStore from '~/store/blocking';
 import { responseGetListBlockingUsers } from '~/test/mock_data/blocking';
 
 import { renderWithRedux } from '~/test/testUtils';
 import Blocking from './index';
-import useBlockingStore from './store';
 
 describe('Blocking component', () => {
   it('renders correctly - have data', () => {

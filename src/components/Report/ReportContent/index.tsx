@@ -21,6 +21,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Checkbox from '~/baseComponents/Checkbox';
 import Divider from '~/beinComponents/Divider';
 import useUserProfileStore from '~/screens/Menu/UserProfile/store';
+import useBlockingStore from '~/store/blocking';
 
 const screenHeight = Dimensions.get('window').height;
 const modalHeight = 0.35 * screenHeight;
@@ -54,6 +55,9 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
     ? 'groups:member_menu:label_report_member' : 'common:text_report_content';
   const modalActions = useModalStore((state) => state.actions);
   const { blockUser } = useUserProfileStore((state) => state.actions);
+
+  const { list: listBlocking } = useBlockingStore();
+  const isBlockedUser = listBlocking.some((item) => item.id === targetId);
 
   useEffect(() => {
     if (!reportReasons.data || reportReasons.data?.length === 0) {
@@ -119,7 +123,7 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
   };
 
   const renderBlockUser = () => (
-    shouldReportMember && (
+    shouldReportMember && !isBlockedUser && (
       <>
         <Divider />
         <ViewSpacing height={spacing.margin.base} />

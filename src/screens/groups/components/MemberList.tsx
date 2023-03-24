@@ -5,7 +5,7 @@ import {
   RefreshControl,
   ActivityIndicator,
 } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -17,6 +17,7 @@ import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { formatLargeNumber } from '~/utils/formatter';
 import useMemberSection from '~/hooks/useMemberSection';
+import useBlockingStore from '~/store/blocking';
 
 interface MemberListProps {
   type: 'group' | 'community';
@@ -46,8 +47,21 @@ const MemberList = ({
     loading, refreshing, sectionList,
   } = memberSectionData;
 
+  const {
+    actions: actionsBlocking,
+    reset: resetBlocking,
+    loading: loadingBlocking,
+  } = useBlockingStore();
+
+  useEffect(() => {
+    actionsBlocking.getListBlockingUsers();
+    return () => {
+      resetBlocking();
+    };
+  }, []);
+
   const renderEmpty = () => {
-    if (loading) return null;
+    if (loading || loadingBlocking) return null;
     return <NoSearchResultsFound />;
   };
 
@@ -60,7 +74,7 @@ const MemberList = ({
   );
 
   const renderListFooter = () => {
-    if (!loading) return <ViewSpacing height={insets.bottom || spacing.padding.large} />;
+    if (!loading && !loadingBlocking) return <ViewSpacing height={insets.bottom || spacing.padding.large} />;
 
     return (
       <View
@@ -85,11 +99,14 @@ const MemberList = ({
 
   const keyExtractor = (item, index) => `member_list_${item.id}_${index}`;
 
+  // The purpose of waiting for 2 api (getListMembers && getListBlockingUsers) to finish running at the same time
+  const sections = loadingBlocking ? [] : sectionList;
+
   return (
     <SectionList
       testID="member_list"
       style={styles.content}
-      sections={sectionList}
+      sections={sections}
       keyExtractor={keyExtractor}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.2}
