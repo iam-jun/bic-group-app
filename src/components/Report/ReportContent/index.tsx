@@ -56,7 +56,7 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
   const modalActions = useModalStore((state) => state.actions);
   const { blockUser } = useUserProfileStore((state) => state.actions);
 
-  const { list: listBlocking } = useBlockingStore();
+  const { list: listBlocking, actions: { getListBlockingUsers } } = useBlockingStore();
   const isBlockedUser = listBlocking.some((item) => item.id === targetId);
 
   useEffect(() => {
@@ -73,7 +73,7 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
     setReasonState(null);
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (shouldReportMember) {
       const payload = {
         targetId,
@@ -84,7 +84,8 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
       reportContentActions.reportMember(payload);
 
       if (shouldBlockUserInfo) {
-        blockUser(targetId);
+        await blockUser(targetId);
+        getListBlockingUsers(true);
       }
     } else {
       const payload = {
