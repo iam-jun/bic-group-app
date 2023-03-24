@@ -6,6 +6,7 @@ import { IPost, PostType } from '~/interfaces/IPost';
 import { spacing, dimension } from '~/theme';
 import { formatNumberWithZeroPrefix, escapeMarkDown } from '~/utils/formatter';
 import { Button } from '~/baseComponents';
+import { getTitlePostItemInSeries } from '~/helpers/common';
 import useSeriesDetailItemMenu from './useSeriesDetailItemMenu';
 import { useBaseHook } from '~/hooks';
 
@@ -24,7 +25,10 @@ const TitleItem: FC<TitleItemProps> = ({
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
-  const titleItem = item?.type === PostType.ARTICLE ? title : escapeMarkDown(content);
+
+  const escapeMarkDownContent = escapeMarkDown(content);
+  const titlePost = getTitlePostItemInSeries(escapeMarkDownContent);
+  const titleItem = item?.type === PostType.ARTICLE ? title : titlePost;
 
   const { showMenu } = useSeriesDetailItemMenu(seriesId, id, item?.type);
 

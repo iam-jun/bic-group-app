@@ -9,6 +9,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import { IPost, PostType } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
+import { getTitlePostItemInSeries } from '~/helpers/common';
 
 type ListItemProps = {
   listItem: IPost[];
@@ -25,7 +26,9 @@ const Item: FC<ItemProps> = ({ index, item }) => {
   const { colors } = theme;
   const styles = createStyle(theme);
   const { title, content } = item || {};
-  const titleItem = item?.type === PostType.ARTICLE ? title : escapeMarkDown(content);
+  const escapeMarkDownContent = escapeMarkDown(content);
+  const titlePost = getTitlePostItemInSeries(escapeMarkDownContent);
+  const titleItem = item?.type === PostType.ARTICLE ? title : titlePost;
 
   const goToArticleContentDetail = () => {
     rootNavigation.navigate(articleStack.articleContentDetail, { articleId: item?.id });
