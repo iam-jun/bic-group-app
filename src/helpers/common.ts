@@ -63,3 +63,26 @@ export const getAllAudiences = (selectedAudiences) => {
 
   return groupAudiences.concat(userAudiences);
 };
+
+export const getTitlePostItemInSeries = (content: string) => {
+  if (!content) return '';
+
+  const firstParagraphRegex = /^.*?(?=\n)/s;
+  const firstSentenceRegex = /^[^.!?]*[.!?]/s;
+
+  const firstParagraph = content.match(firstParagraphRegex)?.[0];
+  const firstSentence = (firstParagraph || content).match(firstSentenceRegex)?.[0];
+
+  if (firstSentence) return firstSentence;
+  if (firstParagraph) return firstParagraph;
+
+  return content;
+};
+
+export const getSummaryPostItemInSeires = (content: string, titlePost: string) => {
+  if (!content && !titlePost) return '';
+
+  const updatedParagraph = content.replace(titlePost, '');
+
+  return updatedParagraph?.trim() || '';
+};

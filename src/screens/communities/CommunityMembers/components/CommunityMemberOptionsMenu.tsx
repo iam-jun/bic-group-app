@@ -96,6 +96,9 @@ const CommunityMemberOptionsMenu = ({
         targetType={TargetType.MEMBER}
         dataReportMember={dataReportMember}
       />,
+      props: {
+        disableScrollIfPossible: false,
+      },
     });
   };
 

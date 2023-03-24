@@ -15,7 +15,7 @@ import dimension from '~/theme/dimension';
 
 const DeviceWidth = Dimensions.get('window').width;
 const DeviceHeight = Dimensions.get('window').height;
-const ASPECT_RATIO = 0.7;
+const ASPECT_RATIO = 0.9;
 const SQUARE_RATIO = 1;
 
 export interface PostPhotoPreviewProps {
@@ -60,9 +60,9 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   const isSquareSecond = imageRatioSecond === SQUARE_RATIO;
 
   const isMessyOrientation = (
-    isVerticalFirst !== isVerticalSecond ||
-    !isVerticalFirst && isSquareSecond ||
-    isSquareFirst && !isVerticalSecond
+    (isVerticalFirst !== isVerticalSecond)
+    || (!isVerticalFirst && isSquareSecond)
+    || (isSquareFirst && !isVerticalSecond)
   ) && data?.length === 2;
   const isOnlyOneImageVerticle = isVerticalFirst && data?.length === 1;
   const isBothSquare = (isSquareFirst && isSquareSecond) && data?.length === 2;

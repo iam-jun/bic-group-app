@@ -14,6 +14,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import images from '~/resources/images';
 import DeactivatedView from '~/components/DeactivatedView';
 import { escapeMarkDown } from '~/utils/formatter';
+import { getSummaryPostItemInSeires, getTitlePostItemInSeries } from '~/helpers/common';
 
 type ContentItemProps = {
   item: IPost;
@@ -29,7 +30,11 @@ const ContentItem: FC<ContentItemProps> = ({
   const { url } = coverMedia || {};
   const { images: imagesPost } = media || {};
   const coverUrlItem = item?.type === PostType.ARTICLE ? url : imagesPost?.[0]?.url;
-  const summaryItem = item?.type === PostType.ARTICLE ? summary : escapeMarkDown(content);
+  const escapeMarkDownContent = escapeMarkDown(content);
+  const titlePost = getTitlePostItemInSeries(escapeMarkDownContent);
+  const summaryPost = getSummaryPostItemInSeires(escapeMarkDownContent, titlePost);
+
+  const summaryItem = item?.type === PostType.ARTICLE ? summary : summaryPost;
 
   const theme = useTheme();
   const { colors } = theme;
