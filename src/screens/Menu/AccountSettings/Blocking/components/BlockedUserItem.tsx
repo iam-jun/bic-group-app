@@ -11,9 +11,9 @@ import spacing from '~/theme/spacing';
 import { Button } from '~/baseComponents';
 import AlertUnblockUser from './AlertUnblockUser';
 import useModalStore from '~/store/modal';
-import useBlockingStore from '../store';
 import { IBlockingUser } from '~/interfaces/IBlocking';
 import { formatDate } from '~/utils/formatter';
+import useBlockingStore from '~/store/blocking';
 
 interface Props {
   item: IBlockingUser;
