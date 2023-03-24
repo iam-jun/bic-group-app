@@ -99,6 +99,9 @@ const GroupMemberOptionsMenu = ({
         targetType={TargetType.MEMBER}
         dataReportMember={dataReportMember}
       />,
+      props: {
+        disableScrollIfPossible: false,
+      },
     });
   };
 
