@@ -30,7 +30,7 @@ export interface ITimelineState extends IBaseState {
     }
 }
 
-const initData = Object.values(ContentFeed).reduce((acc, valueContentFeed) => {
+export const initData = Object.values(ContentFeed).reduce((acc, valueContentFeed) => {
   const data: any = { [valueContentFeed]: {} };
   Object.values(AttributeFeed).forEach((valueAttributeFeed) => {
     data[valueContentFeed][valueAttributeFeed] = DEFAULT_DATA;
