@@ -37,7 +37,7 @@ export interface IUserProfileState extends IBaseState {
     addWorkExperience: (payload: IUserAddWorkExperience, callback?: () => void) => void;
     deleteWorkExperience: (id: string, callback?: () => void) => void;
     editWorkExperience: (id: string, payload: IUserAddWorkExperience, callback?: () => void) => void;
-    blockUser: (blockedUserId: string, callback?: () => void) => void;
+    blockUser: (blockedUserId: string, callback?: () => void) => Promise<void>;
   };
 }
 

@@ -5,6 +5,7 @@ import MemberList from '../../components/MemberList';
 import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useGroupMemberStore, { IGroupMemberState } from '../store';
+import useBlockingStore from '~/store/blocking';
 
 interface GroupMemberListProps {
   groupId: string;
@@ -39,12 +40,18 @@ const GroupMemberList = ({ groupId, onPressMenu }: GroupMemberListProps) => {
     actions.getGroupMembers({ groupId, isRefreshing });
   };
 
+  const {
+    actions: { getListBlockingUsers },
+    reset: resetBlocking,
+  } = useBlockingStore();
+
   useEffect(
     () => {
       getMembers();
-
+      getListBlockingUsers();
       return () => {
         actions.clearGroupMembers();
+        resetBlocking();
       };
     }, [groupId],
   );
@@ -56,6 +63,7 @@ const GroupMemberList = ({ groupId, onPressMenu }: GroupMemberListProps) => {
 
   const onRefresh = () => {
     getMembers(true);
+    getListBlockingUsers(true);
   };
 
   return (

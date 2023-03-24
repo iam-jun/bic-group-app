@@ -5,6 +5,7 @@ import MemberList from '~/screens/groups/components/MemberList';
 import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useCommunityMemberStore from '../store';
+import useBlockingStore from '~/store/blocking';
 
 interface CommunityMemberListProps {
   community: ICommunity;
@@ -33,12 +34,18 @@ const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProp
     ],
   );
 
+  const {
+    actions: { getListBlockingUsers },
+    reset: resetBlocking,
+  } = useBlockingStore();
+
   useEffect(
     () => {
       getCommunityMembers();
-
+      getListBlockingUsers();
       return () => {
         actions.clearCommunityMembers();
+        resetBlocking();
       };
     }, [groupId],
   );
@@ -55,6 +62,7 @@ const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProp
 
   const onRefresh = () => {
     getCommunityMembers(true);
+    getListBlockingUsers(true);
   };
 
   return (

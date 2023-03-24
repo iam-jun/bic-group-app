@@ -5,7 +5,7 @@ import {
   RefreshControl,
   ActivityIndicator,
 } from 'react-native';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -48,17 +48,8 @@ const MemberList = ({
   } = memberSectionData;
 
   const {
-    actions: actionsBlocking,
-    reset: resetBlocking,
     loading: loadingBlocking,
   } = useBlockingStore();
-
-  useEffect(() => {
-    actionsBlocking.getListBlockingUsers();
-    return () => {
-      resetBlocking();
-    };
-  }, []);
 
   const renderEmpty = () => {
     if (loading || loadingBlocking) return null;
