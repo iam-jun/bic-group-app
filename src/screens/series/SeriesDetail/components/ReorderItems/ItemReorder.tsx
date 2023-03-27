@@ -7,6 +7,7 @@ import Icon from '~/baseComponents/Icon';
 import { IPost, PostType } from '~/interfaces/IPost';
 import Text from '~/baseComponents/Text';
 import { formatNumberWithZeroPrefix, escapeMarkDown } from '~/utils/formatter';
+import { getTitlePostItemInSeries } from '~/helpers/common';
 
 const MARGIN_HORIZONTAL = 30;
 const MARGIN_VERTICAL = 8;
@@ -24,7 +25,9 @@ const ItemReorder: FC<ItemReorderProps> = ({ index, item }) => {
   const { colors } = theme;
   const styles = createStyle(theme);
   const { title, content } = item || {};
-  const titleItem = item?.type === PostType.ARTICLE ? title : escapeMarkDown(content);
+  const escapeMarkDownContent = escapeMarkDown(content);
+  const titlePost = getTitlePostItemInSeries(escapeMarkDownContent);
+  const titleItem = item?.type === PostType.ARTICLE ? title : titlePost;
 
   return (
     <View style={styles.container}>
