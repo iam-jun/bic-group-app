@@ -8,7 +8,7 @@ import { Button } from '~/baseComponents';
 import useModalStore from '~/store/modal';
 import BlockUserInfo from '~/components/BlockUserInfo';
 import { useBaseHook } from '~/hooks';
-import useUserProfileStore from '../../store';
+import useBlockingStore from '~/store/blocking';
 
 interface Props {
   id: string;
@@ -29,7 +29,7 @@ const UserHeader = ({
   const { showAlert } = useModalStore((state) => state.actions);
   const [isDisabled, setIsDisabled] = useState(false);
 
-  const actions = useUserProfileStore((state) => state.actions);
+  const actions = useBlockingStore((state) => state.actions);
 
   const disableButtonBlockUser = () => {
     setIsDisabled(true);

@@ -90,7 +90,7 @@ const MemberList = ({
 
   const keyExtractor = (item, index) => `member_list_${item.id}_${index}`;
 
-  // The purpose of waiting for 2 api (getListMembers && getListBlockingUsers) to finish running at the same time
+  // The purpose of waiting for 2 api (getListMembers && getListRelationship) to finish running at the same time
   const sections = loadingBlocking ? [] : sectionList;
 
   return (

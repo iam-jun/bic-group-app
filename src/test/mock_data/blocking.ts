@@ -13,3 +13,11 @@ export const responseGetListBlockingUsers = {
 };
 
 export const responseUnblockUser = { code: 'api.ok', meta: { message: 'Unblocked user successfully' }, data: true };
+
+export const responseBlockUser = { code: 'api.ok', meta: { message: 'Blocked user successfully' }, data: true };
+
+export const responseGetListRelationship = {
+  code: 'api.ok',
+  meta: { message: 'Success' },
+  data: ['f20e1357-42bc-4d4a-89a6-898b7f6ba97e', 'c2402a2b-38d5-4828-a4a8-d10cf9ecf76a'],
+};

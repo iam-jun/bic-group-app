@@ -35,14 +35,14 @@ const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProp
   );
 
   const {
-    actions: { getListBlockingUsers },
+    actions: { getListRelationship },
     reset: resetBlocking,
   } = useBlockingStore();
 
   useEffect(
     () => {
       getCommunityMembers();
-      getListBlockingUsers();
+      getListRelationship();
       return () => {
         actions.clearCommunityMembers();
         resetBlocking();
@@ -62,7 +62,7 @@ const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProp
 
   const onRefresh = () => {
     getCommunityMembers(true);
-    getListBlockingUsers(true);
+    getListRelationship(true);
   };
 
   return (

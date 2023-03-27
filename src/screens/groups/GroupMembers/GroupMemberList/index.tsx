@@ -41,14 +41,14 @@ const GroupMemberList = ({ groupId, onPressMenu }: GroupMemberListProps) => {
   };
 
   const {
-    actions: { getListBlockingUsers },
+    actions: { getListRelationship },
     reset: resetBlocking,
   } = useBlockingStore();
 
   useEffect(
     () => {
       getMembers();
-      getListBlockingUsers();
+      getListRelationship();
       return () => {
         actions.clearGroupMembers();
         resetBlocking();
@@ -63,7 +63,7 @@ const GroupMemberList = ({ groupId, onPressMenu }: GroupMemberListProps) => {
 
   const onRefresh = () => {
     getMembers(true);
-    getListBlockingUsers(true);
+    getListRelationship(true);
   };
 
   return (
