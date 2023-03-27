@@ -1,9 +1,7 @@
 import groupApi from '~/api/GroupApi';
 import showToastError from '~/store/helper/showToastError';
 
-// This sprint 36: not have paging, only get list only 1 time
-// Pre-declare pagination variables for later reuse
-const getListBlockingUsers
+const getListRelationship
   = (set, get) => async (isRefreshing = false) => {
     try {
       const { hasNextPage } = get();
@@ -15,35 +13,35 @@ const getListBlockingUsers
           loading: !isRefreshing,
           refreshing: isRefreshing,
         },
-        'getListBlockingUsersFetching',
+        'getListRelationshipFetching',
       );
 
-      const response = await groupApi.getListBlockingUsers();
+      const response = await groupApi.getListRelationship();
 
       if (response && response?.data) {
         const { data } = response;
         set(
           {
-            list: data,
+            listRelationship: data,
             loading: false,
             refreshing: false,
             hasNextPage: false,
           },
-          'getListBlockingUsersSuccess',
+          'getListRelationshipSuccess',
         );
       }
     } catch (e) {
-      console.error('\x1b[31m🐣️ getListBlockingUsers error: ', e, '\x1b[0m');
+      console.error('\x1b[31m🐣️ getListRelationship error: ', e, '\x1b[0m');
       set(
         {
-          loading: false,
+          loadingRelationship: false,
           refreshing: false,
           hasNextPage: false,
         },
-        'getListBlockingUsersFailed',
+        'getListRelationshipFailed',
       );
       showToastError(e);
     }
   };
 
-export default getListBlockingUsers;
+export default getListRelationship;

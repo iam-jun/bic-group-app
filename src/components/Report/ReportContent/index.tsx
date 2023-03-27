@@ -20,7 +20,6 @@ import { IGroupMembers } from '~/interfaces/IGroup';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Checkbox from '~/baseComponents/Checkbox';
 import Divider from '~/beinComponents/Divider';
-import useUserProfileStore from '~/screens/Menu/UserProfile/store';
 import useBlockingStore from '~/store/blocking';
 
 const screenHeight = Dimensions.get('window').height;
@@ -54,10 +53,13 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
   const headerTitle = shouldReportMember
     ? 'groups:member_menu:label_report_member' : 'common:text_report_content';
   const modalActions = useModalStore((state) => state.actions);
-  const { blockUser } = useUserProfileStore((state) => state.actions);
 
-  const { list: listBlocking, actions: { getListBlockingUsers } } = useBlockingStore();
-  const isBlockedUser = listBlocking.some((item) => item.id === targetId);
+  const {
+    listRelationship,
+    refreshing: refreshingBlocking,
+    actions: { getListRelationship, blockUser },
+  } = useBlockingStore();
+  const isBlockedUser = listRelationship.some((userId) => userId === targetId);
 
   useEffect(() => {
     if (!reportReasons.data || reportReasons.data?.length === 0) {
@@ -85,7 +87,7 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
 
       if (shouldBlockUserInfo) {
         await blockUser(targetId);
-        getListBlockingUsers(true);
+        await getListRelationship(true);
       }
     } else {
       const payload = {
@@ -103,6 +105,7 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
   const renderHeaderComponent = () => (
     <View style={styles.header}>
       <Icon
+        testID="report_content.btn_back"
         icon="iconBack"
         size={18}
         onPress={onClose}
@@ -148,6 +151,9 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
       );
     }
 
+    const isLoading = !!(shouldBlockUserInfo && refreshingBlocking);
+    const isDisabled = !reasonState || !targetId || isLoading;
+
     return (
       <ScrollView>
         <ReportReasons
@@ -161,7 +167,8 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
           testID="report_content_bottom_sheet.btn_submit"
           onPress={onSubmit}
           style={styles.btnSubmit}
-          disabled={!reasonState || !targetId}
+          disabled={isDisabled}
+          loading={isLoading}
           borderRadius={spacing.borderRadius.base}
           textProps={{ variant: 'buttonM' }}
         >
@@ -172,7 +179,7 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="report_content">
       {renderHeaderComponent()}
       {renderContentComponent()}
     </View>
