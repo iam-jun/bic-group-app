@@ -136,7 +136,7 @@ export const useCreatePost = (params?: UseCreatePostParams) => {
           : getResourceUrl(uploadTypes.postImage, item?.name),
       });
     });
-    return initImgs.reverse();
+    return initImgs;
   };
 
   const initChosenAudience = () => {
