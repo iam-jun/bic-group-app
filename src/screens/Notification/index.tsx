@@ -142,7 +142,7 @@ const Notification = () => {
               break;
             }
             case NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL: {
-              rootNavigation.navigate(menuStack.yourContent);
+              rootNavigation.navigate(menuStack.yourContent, { initTab: 0 });
               break;
             }
             case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR:

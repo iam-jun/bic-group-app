@@ -35,8 +35,9 @@ const MenuShortcut = () => {
     rootNavigation.navigate(seriesStack.seriesSelectAudience, { isFirstStep: true });
   };
 
+  // in this sprint: auto focus Scheduled tab
   const onPressYourContent = () => {
-    rootNavigation.navigate(menuStack.yourContent);
+    rootNavigation.navigate(menuStack.yourContent, { initTab: 1 });
   };
 
   const renderButton = (icon, name, onPress) => (
