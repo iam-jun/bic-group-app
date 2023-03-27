@@ -164,7 +164,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   const onPressDraftPost = () => {
     if (isEditDraftPost) {
       draftPostActions.getDraftPosts({ isRefresh: true });
-      rootNavigation.navigate(menuStack.yourContent);
+      rootNavigation.navigate(menuStack.yourContent, { initTab: 0 });
     }
   };
 

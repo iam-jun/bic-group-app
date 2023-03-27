@@ -89,6 +89,6 @@ describe('MenuShortcut component', () => {
     const itemText = rendered.getAllByTestId('menu_shortcut.item.text')?.[3];
     expect(itemText.props?.children).toEqual(i18n.t('menu:title_your_content'));
 
-    expect(navigate).toHaveBeenCalledWith(menuStack.yourContent);
+    expect(navigate).toHaveBeenCalledWith(menuStack.yourContent, { initTab: 1 });
   });
 });

@@ -47,10 +47,19 @@ const HEADER_DRAFT_TAB = [
 
 const DeviceHeight = Dimensions.get('window').height;
 
-const YourContent = () => {
+interface YourContentProps {
+  route?: {
+    params?: {
+      initTab?: number;
+    };
+  };
+}
+
+const YourContent: React.FC<YourContentProps> = ({ route }) => {
   const theme = useTheme();
   const styles = createStyle(theme);
-  const [activeTab, setActiveTab] = useState<number>(0);
+  const { initTab = 1 } = route?.params || {};
+  const [activeTab, setActiveTab] = useState<number>(initTab);
   const showShared = useSharedValue(1);
   const prevOffsetYShared = useSharedValue(0);
 

@@ -38,6 +38,7 @@ const MyDraft = () => {
     modalActions.hideModal();
     rootNavigation.navigate(
       menuStack.yourContent,
+      { initTab: 0 },
     );
   };
 
