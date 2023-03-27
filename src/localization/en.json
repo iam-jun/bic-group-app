@@ -602,8 +602,8 @@
   },
   "your_content": {
     "title_draft": "Draft",
-    "title_schedule_article": "Scheduled Articles",
-    "title_report_content": "Reported Contents",
+    "title_schedule_article": "Scheduled",
+    "title_report_content": "Reported",
     "text_empty": "There are no scheduled content yet!",
     "text_no_reported_content": "There are no reported content now!"
   },

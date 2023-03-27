@@ -13,6 +13,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 
 const MenuShortcut = () => {
   const theme: ExtendedTheme = useTheme();
@@ -30,12 +31,8 @@ const MenuShortcut = () => {
     rootNavigation.navigate(articleStack.createArticle, { isFirstStep: true });
   };
 
-  // const onPressWriteSeries = () => {
-  //   rootNavigation.navigate(seriesStack.seriesSelectAudience, { isFirstStep: true });
-  // };
-
-  const onPressDraft = () => {
-    rootNavigation.navigate(menuStack.draft);
+  const onPressWriteSeries = () => {
+    rootNavigation.navigate(seriesStack.seriesSelectAudience, { isFirstStep: true });
   };
 
   const onPressYourContent = () => {
@@ -64,8 +61,7 @@ const MenuShortcut = () => {
         {renderButton('FilePenSolid', t('menu:title_write_article'), onPressWriteArticle)}
       </View>
       <View style={styles.directionRow}>
-        {/* {renderButton('AlbumCollectionSolid', t('menu:title_write_series'), onPressWriteSeries)} */}
-        {renderButton('FloppyDiskPenSolid', t('menu:title_draft'), onPressDraft)}
+        {renderButton('AlbumCollectionSolid', t('menu:title_write_series'), onPressWriteSeries)}
         {renderButton('BallotCheckSolid', t('menu:title_your_content'), onPressYourContent)}
       </View>
     </View>

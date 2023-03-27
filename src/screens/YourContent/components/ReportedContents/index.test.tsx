@@ -13,8 +13,13 @@ describe('ReportedContents component', () => {
       state.reportedContents.refreshing = false;
       return state;
     });
+
+    const onScroll = jest.fn();
+
     const wrapper = renderWithRedux(
-      <ReportedContents />,
+      <ReportedContents
+        onScroll={onScroll}
+      />,
     );
     const emptyScreen = wrapper.queryByTestId('empty_screen');
     expect(emptyScreen).toBeDefined();
@@ -31,8 +36,12 @@ describe('ReportedContents component', () => {
     const { actions } = usePostsStore.getState();
     actions.addToPosts({ data: [reportedPostDetail, reportedArticleDetail] as any, handleComment: true });
 
+    const onScroll = jest.fn();
+
     const wrapper = renderWithRedux(
-      <ReportedContents />,
+      <ReportedContents
+        onScroll={onScroll}
+      />,
     );
     const reportedItemsComp = wrapper.queryAllByTestId('reported_contents.item');
     expect(reportedItemsComp).toBeDefined();

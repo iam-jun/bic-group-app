@@ -263,7 +263,7 @@ describe('Notification Screen', () => {
     expect(notiComponent).toBeDefined();
     fireEvent.press(notiComponent[1]);
 
-    expect(navigate).toHaveBeenCalledWith(menuStack.draft);
+    expect(navigate).toHaveBeenCalledWith(menuStack.yourContent);
   });
 
   it('should navigate to postDetail if type is comment.to_post_creator and target is POST', () => {

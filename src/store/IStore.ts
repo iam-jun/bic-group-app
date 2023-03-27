@@ -8,7 +8,7 @@ import IHomeState from '~/screens/Home/store/Interface';
 import IChatState from '~/store/chat/IChatState';
 import IJoinedCommunitiesState from '~/screens/Menu/store/Interface';
 import ICommunityJoinedGroupTreeState from '~/screens/groups/components/CommunityJoinedGroupTree/store/Interface';
-import IDraftPostState from '~/screens/Draft/DraftPost/store/Interface';
+import IDraftPostState from '~/screens/YourContent/components/Draft/DraftPost/store/Interface';
 import IReactionDetailState from '~/components/reaction/ReactionDetailBottomSheet/store/Interface';
 import { IUserProfileState } from '~/screens/Menu/UserProfile/store';
 import IGroupStructureState from '~/screens/groups/GroupStructureSettings/store/Interface';
@@ -25,7 +25,7 @@ import { IYourGroupsState } from '~/screens/communities/Communities/components/Y
 import { ISearchJoinedCommunitiesState } from '~/screens/communities/Communities/components/SearchCommunity/store/Interface';
 import INotificationsState from '~/screens/Notification/store/Interface';
 import { IGiphyState } from './giphy';
-import { IDraftArticleState } from '~/screens/Draft/DraftArticle/store';
+import { IDraftArticleState } from '~/screens/YourContent/components/Draft/DraftArticle/store';
 import { IArticleController } from '~/screens/articles/store';
 import { ISeriesState } from '~/screens/series/store';
 import { ITopicState } from '~/screens/topic/store';
@@ -52,6 +52,7 @@ import { ISelectTagsState } from '~/components/SelectTags/store';
 import { IValidateSeriesTags } from '~/components/ValidateSeriesTags/store';
 import { IDiscoverCommunitiesState } from '~/screens/Discover/components/DiscoverCommunities/store';
 import { IBlockingState } from './blocking';
+import { IYourContentState } from '~/screens/YourContent/store';
 
 export interface BicStore {
   entities: {
@@ -163,6 +164,7 @@ export interface BicStore {
     topicStore: ITopicState;
   };
   YourContent: {
+    yourContentStore: IYourContentState;
     scheduleArticleStore: IScheduleArticlesState;
   },
 

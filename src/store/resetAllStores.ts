@@ -7,7 +7,7 @@ import usePostsStore from './entities/posts';
 import useHomeStore from '~/screens/Home/store';
 import useMenuController from '~/screens/Menu/store';
 import useChatStore from '~/store/chat';
-import useDraftPostStore from '../screens/Draft/DraftPost/store';
+import useDraftPostStore from '../screens/YourContent/components/Draft/DraftPost/store';
 import useGroupStructureStore from '~/screens/groups/GroupStructureSettings/store';
 import useReactionDetailStore from '~/components/reaction/ReactionDetailBottomSheet/store';
 import useCommunitiesStore from './entities/communities';
@@ -28,7 +28,7 @@ import useYourGroupsStore from '~/screens/communities/Communities/components/You
 import useSearchJoinedCommunitiesStore from '~/screens/communities/Communities/components/SearchCommunity/store';
 import useNotificationStore from '~/screens/Notification/store';
 import useGiphyStore from './giphy';
-import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
+import useDraftArticleStore from '~/screens/YourContent/components/Draft/DraftArticle/store';
 import useArticleController from '~/screens/articles/store';
 import useSeriesStore from '~/screens/series/store';
 import useTopicStore from '~/screens/topic/store';
@@ -61,6 +61,7 @@ import useSelectTagsStore from '~/components/SelectTags/store';
 import useValidateSeriesTagsStore from '~/components/ValidateSeriesTags/store';
 import useCommonController from '~/screens/store';
 import useBlockingStore from './blocking';
+import useYourContentStore from '~/screens/YourContent/store';
 
 export const excludedStore = [
   useAuthController,
@@ -96,6 +97,7 @@ const stores = [
   useArticleController,
   useTopicStore,
   useScheduleArticlesStore,
+  useYourContentStore,
   useArticleScheduleContentStore,
   useCreatePostStore,
   useGroupJoinableUsersStore,
