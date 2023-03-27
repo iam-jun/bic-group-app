@@ -22,7 +22,11 @@ describe('UserEditProfile screen', () => {
       return state;
     });
 
-    const wrapper = renderWithRedux(<DraftPost />);
+    const onScroll = jest.fn();
+
+    const wrapper = renderWithRedux(<DraftPost
+      onScroll={onScroll}
+    />);
 
     const emptyView = wrapper.getByTestId('draft_post.empty_view');
     expect(emptyView).toBeDefined();
@@ -36,7 +40,11 @@ describe('UserEditProfile screen', () => {
       return state;
     });
 
-    const rendered = renderWithRedux(<DraftPost />);
+    const onScroll = jest.fn();
+
+    const rendered = renderWithRedux(<DraftPost
+      onScroll={onScroll}
+    />);
 
     const emptyView = rendered.queryByTestId('draft_article.empty_view');
     expect(emptyView).toBeNull();
@@ -50,7 +58,12 @@ describe('UserEditProfile screen', () => {
       state.posts = [mockData] as IPost[];
       return state;
     });
-    const rendered = renderWithRedux(<DraftPost />);
+
+    const onScroll = jest.fn();
+
+    const rendered = renderWithRedux(<DraftPost
+      onScroll={onScroll}
+    />);
     const contentView = rendered.getByTestId('draft_post.list');
 
     expect(rendered).toBeDefined();

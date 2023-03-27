@@ -5,7 +5,7 @@ import {
 import { withNavigation } from '~/router/helper';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { rootNavigationRef } from '~/router/refs';
-import useDraftPostStore from '~/screens/Draft/DraftPost/store';
+import useDraftPostStore from '~/screens/YourContent/components/Draft/DraftPost/store';
 import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
 import useHomeStore from '~/screens/Home/store';
 import usePostsStore from '~/store/entities/posts';

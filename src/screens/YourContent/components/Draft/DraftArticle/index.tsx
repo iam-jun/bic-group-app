@@ -1,8 +1,10 @@
 import {
-  ActivityIndicator, FlatList, RefreshControl, StyleSheet, View,
+  ActivityIndicator, RefreshControl, StyleSheet, View,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import Animated from 'react-native-reanimated';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+
 import useNetworkStore from '~/store/network';
 import networkSelectors from '~/store/network/selectors';
 
@@ -14,10 +16,16 @@ import { spacing } from '~/theme';
 import Image from '~/beinComponents/Image';
 import Text from '~/baseComponents/Text';
 import images from '~/resources/images';
-import dimension from '~/theme/dimension';
+import dimension, { homeHeaderTabHeight, homeHeaderAttributeContainerHeight } from '~/theme/dimension';
 import DraftArticleView from './components/DraftArticleView';
 
-const DraftArticle = () => {
+const HeaderFilterHeight = homeHeaderTabHeight + homeHeaderAttributeContainerHeight;
+
+interface DraftArticleProps {
+  onScroll: (e: any) => void;
+}
+
+const DraftArticle: React.FC<DraftArticleProps> = ({ onScroll }) => {
   const [lossInternet, setLossInternet] = useState(false);
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -63,6 +71,12 @@ const DraftArticle = () => {
 
   const renderItem = ({ item }: any) => <DraftArticleView data={item} />;
 
+  const renderHeader = () => (
+    <View style={styles.header}>
+      <ViewSpacing height={spacing.margin.large} />
+    </View>
+  );
+
   const renderFooter = () => (
     <View>
       {hasNextPage && !refreshing && (
@@ -94,18 +108,20 @@ const DraftArticle = () => {
     );
   };
 
+  const renderSeparatorComponent = () => (
+    <ViewSpacing height={spacing.margin.large} />
+  );
+
   return (
-    <FlatList
+    <Animated.FlatList
       testID="draft_article.list"
       style={styles.listContainer}
       data={draftArticles}
       renderItem={renderItem}
-      ListHeaderComponent={() => <ViewSpacing height={spacing.margin.base} />}
+      ListHeaderComponent={renderHeader}
       ListFooterComponent={renderFooter}
       ListEmptyComponent={renderEmpty}
-      ItemSeparatorComponent={() => (
-        <ViewSpacing height={spacing.margin.large} />
-      )}
+      ItemSeparatorComponent={renderSeparatorComponent}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.2}
       refreshControl={(
@@ -113,9 +129,11 @@ const DraftArticle = () => {
           refreshing={refreshing}
           onRefresh={onRefresh}
           tintColor={colors.gray40}
+          progressViewOffset={HeaderFilterHeight}
         />
       )}
       keyExtractor={(item, index) => `list-draft-articles-${item.id}-${index}`}
+      onScroll={onScroll}
     />
   );
 };
@@ -137,6 +155,9 @@ const createStyle = () => StyleSheet.create({
   imgEmpty: {
     width: 250,
     height: 200,
+  },
+  header: {
+    paddingTop: HeaderFilterHeight,
   },
 });
 

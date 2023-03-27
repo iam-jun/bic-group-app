@@ -1,8 +1,9 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
-  ActivityIndicator, FlatList, StyleSheet, View,
+  ActivityIndicator, RefreshControl, StyleSheet, View,
 } from 'react-native';
+import Animated from 'react-native-reanimated';
 
 import Image from '~/beinComponents/Image';
 import Text from '~/baseComponents/Text';
@@ -13,13 +14,19 @@ import { IPayloadGetDraftPosts } from '~/interfaces/IPost';
 import images from '~/resources/images';
 import useNetworkStore from '~/store/network';
 import networkSelectors from '~/store/network/selectors';
-import dimension from '~/theme/dimension';
+import dimension, { homeHeaderTabHeight, homeHeaderAttributeContainerHeight } from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
 import PostDraftView from './components/PostDraftView';
 import useDraftPostStore from './store';
 
-const DraftPost = () => {
+const HeaderFilterHeight = homeHeaderTabHeight + homeHeaderAttributeContainerHeight;
+
+interface DraftPostProps {
+  onScroll: (e: any) => void;
+}
+
+const DraftPost: React.FC<DraftPostProps> = ({ onScroll }) => {
   const [lossInternet, setLossInternet] = useState(false);
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -55,7 +62,21 @@ const DraftPost = () => {
     }
   };
 
+  const onRefresh = () => {
+    getData(true);
+  };
+
+  const onLoadMore = () => {
+    getData(false);
+  };
+
   const renderItem = ({ item }: any) => <PostDraftView data={item} />;
+
+  const renderHeader = () => (
+    <View style={styles.header}>
+      <ViewSpacing height={spacing.margin.large} />
+    </View>
+  );
 
   const renderFooter = () => (
     <View>
@@ -82,21 +103,31 @@ const DraftPost = () => {
     </View>
   );
 
+  const renderSeparatorComponent = () => (
+    <ViewSpacing height={spacing.margin.large} />
+  );
+
   return (
-    <FlatList
+    <Animated.FlatList
       testID="draft_post.list"
       style={styles.listContainer}
       data={draftPosts}
       renderItem={renderItem}
-      ItemSeparatorComponent={() => (
-        <ViewSpacing height={spacing.margin.large} />
-      )}
-      ListHeaderComponent={() => <ViewSpacing height={spacing.margin.base} />}
+      ItemSeparatorComponent={renderSeparatorComponent}
+      ListHeaderComponent={renderHeader}
       ListFooterComponent={renderFooter}
       ListEmptyComponent={renderEmpty}
-      refreshing={refreshing}
-      onRefresh={() => getData(true)}
-      onEndReached={() => getData(false)}
+      refreshControl={(
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          tintColor={colors.gray40}
+          progressViewOffset={HeaderFilterHeight}
+        />
+      )}
+      onEndReached={onLoadMore}
+      onEndReachedThreshold={0.2}
+      onScroll={onScroll}
     />
   );
 };
@@ -118,6 +149,9 @@ const createStyle = () => StyleSheet.create({
   imgEmpty: {
     width: 250,
     height: 200,
+  },
+  header: {
+    paddingTop: HeaderFilterHeight,
   },
 });
 

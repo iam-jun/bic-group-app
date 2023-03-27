@@ -7,7 +7,12 @@ describe('Your Content screen', () => {
     const wrapper = renderWithRedux(
       <YourContent />,
     );
-    const tabScheduleArticle = wrapper.queryByTestId('tab-button-your_content:title_schedule_article-selected');
+
+    const tabDraft = wrapper.queryByTestId('tab-button-your_content:title_draft-selected');
+    expect(tabDraft).toBeDefined();
+    fireEvent.press(tabDraft);
+
+    const tabScheduleArticle = wrapper.queryByTestId('tab-button-your_content:title_schedule_article-notselected');
     expect(tabScheduleArticle).toBeDefined();
     fireEvent.press(tabScheduleArticle);
 

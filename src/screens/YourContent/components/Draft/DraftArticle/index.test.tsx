@@ -16,7 +16,12 @@ describe('DraftArticle component', () => {
       state.articles = [mockArticle] as IPost[];
       return state;
     });
-    const rendered = renderWithRedux(<DraftArticle />);
+
+    const onScroll = jest.fn();
+
+    const rendered = renderWithRedux(<DraftArticle
+      onScroll={onScroll}
+    />);
     const contentView = rendered.getByTestId('draft_article.list');
 
     expect(rendered.toJSON()).toMatchSnapshot();
@@ -30,7 +35,11 @@ describe('DraftArticle component', () => {
       return state;
     });
 
-    const rendered = renderWithRedux(<DraftArticle />);
+    const onScroll = jest.fn();
+
+    const rendered = renderWithRedux(<DraftArticle
+      onScroll={onScroll}
+    />);
 
     const emptyView = rendered.getByTestId('draft_article.empty_view');
     expect(emptyView).toBeDefined();
@@ -43,7 +52,11 @@ describe('DraftArticle component', () => {
       return state;
     });
 
-    const rendered = renderWithRedux(<DraftArticle />);
+    const onScroll = jest.fn();
+
+    const rendered = renderWithRedux(<DraftArticle
+      onScroll={onScroll}
+    />);
 
     const emptyView = rendered.queryByTestId('draft_article.empty_view');
     expect(emptyView).toBeNull();
@@ -54,7 +67,12 @@ describe('DraftArticle component', () => {
       state.articles = [mockArticle] as IPost[];
       return state;
     });
-    const rendered = renderWithRedux(<DraftArticle />);
+
+    const onScroll = jest.fn();
+
+    const rendered = renderWithRedux(<DraftArticle
+      onScroll={onScroll}
+    />);
     const contentView = rendered.getByTestId('draft_article.list');
 
     expect(rendered).toBeDefined();

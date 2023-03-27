@@ -10,7 +10,7 @@ import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import { useRootNavigation } from '~/hooks/navigation';
 import { CreateArticleProps } from '~/interfaces/IArticle';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
-import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
+import useDraftArticleStore from '~/screens/YourContent/components/Draft/DraftArticle/store';
 import spacing from '~/theme/spacing';
 import useArticlesStore, { IArticlesState } from '../ArticleDetail/store';
 import useCreateArticleStore from './store';
