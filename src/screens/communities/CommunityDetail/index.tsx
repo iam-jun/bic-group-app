@@ -48,6 +48,7 @@ import useMyPermissionsStore from '~/store/permissions';
 import useModalStore from '~/store/modal';
 import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
 import usePinContentStore from '~/components/PinContent/store';
+import TermsView from '~/components/TermsModal';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -381,6 +382,7 @@ const CommunityDetail = (props: any) => {
         />
       </Animated.View>
       <ContentSearch groupId={groupId} />
+      <TermsView />
     </View>
   );
 };

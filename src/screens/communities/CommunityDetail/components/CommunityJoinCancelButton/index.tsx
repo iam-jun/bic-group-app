@@ -4,6 +4,7 @@ import { StyleProp, ViewStyle } from 'react-native';
 import { ICommunity } from '~/interfaces/ICommunity';
 import useCommunityController from '~/screens/communities/store';
 import JoinCancelButton from '../../../../groups/components/JoinCancelButton';
+import useTermStore from '~/components/TermsModal/store';
 
 interface CommunityJoinCancelButtonProps {
   style?: StyleProp<ViewStyle>;
@@ -11,18 +12,30 @@ interface CommunityJoinCancelButtonProps {
   community: ICommunity;
 }
 
-const CommunityJoinCancelButton = ({ style, isMember, community }: CommunityJoinCancelButtonProps) => {
+const CommunityJoinCancelButton = ({
+  style, isMember, community,
+}: CommunityJoinCancelButtonProps) => {
   const {
     privacy,
     joinStatus,
     id,
+    groupId,
     name,
+    settings,
   } = community;
   const actions = useCommunityController((state) => state.actions);
+  const termsActions = useTermStore((state) => state.actions);
 
   if (isMember) return null;
 
   const onPressJoin = () => {
+    if (!!settings.isActiveGroupTerms) {
+      const payload = {
+        groupId: id, rootGroupId: groupId, name, type: 'community', isActive: true,
+      } as any;
+      termsActions.setTermInfo(payload);
+      return;
+    }
     actions.joinCommunity(id, name);
   };
 

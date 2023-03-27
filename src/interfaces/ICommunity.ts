@@ -17,7 +17,10 @@ export interface ICommunity {
   joinStatus?: number;
   members?: IPreviewMember[];
   teamName?: string;
-  settings?: { isJoinApproval: boolean; }
+  settings?: {
+    isJoinApproval: boolean;
+    isActiveGroupTerms: boolean;
+  }
 }
 
 export interface IParamGetCommunities {

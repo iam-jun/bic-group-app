@@ -20,6 +20,8 @@ import useDiscoverGroupsStore from './store';
 import IDiscoverGroupsState from './store/Interface';
 import { useBaseHook } from '~/hooks';
 import useCommunitiesStore from '~/store/entities/communities';
+import useTermStore from '~/components/TermsModal/store';
+import TermsView from '~/components/TermsModal';
 
 const DiscoverGroups = ({ route }: any) => {
   const { communityId } = route.params;
@@ -36,6 +38,7 @@ const DiscoverGroups = ({ route }: any) => {
   } = useDiscoverGroupsStore();
 
   const communityDetail = useCommunitiesStore((state) => state.data[communityId]);
+  const termsActions = useTermStore((state) => state.actions);
 
   const getDiscoverGroups = (isRefreshing?: boolean) => {
     actions.getDiscoverGroups({ communityId, isRefreshing });
@@ -47,7 +50,14 @@ const DiscoverGroups = ({ route }: any) => {
     }, [communityId],
   );
 
-  const handleJoinGroup = (groupId: string) => {
+  const handleJoinGroup = ({ isActiveGroupTerms, groupId } : {isActiveGroupTerms: boolean; groupId: string}) => {
+    if (!!isActiveGroupTerms) {
+      const payload = {
+        groupId, rootGroupId: groupId, name: '', type: 'group', isActive: true,
+      } as any;
+      termsActions.setTermInfo(payload);
+      return;
+    }
     actions.joinNewGroup(groupId);
   };
 
@@ -78,12 +88,16 @@ const DiscoverGroups = ({ route }: any) => {
       ...items[item],
       community: { ...communityDetail },
     };
+
+    const isActiveGroupTerms = currentItem?.settings?.isActiveGroupTerms || false;
+    const data = { isActiveGroupTerms, groupId: item } as any;
+
     return (
       <CommunityGroupCard
         item={currentItem}
         testID="discover_groups.items"
         shouldShowAlertJoinTheCommunityFirst
-        onJoin={handleJoinGroup}
+        onJoin={() => { handleJoinGroup(data); }}
         onCancel={handleCancelJoinGroup}
       />
     );
@@ -145,6 +159,7 @@ const DiscoverGroups = ({ route }: any) => {
         )}
           />
         ) : renderEmptyComponent()}
+      <TermsView />
     </ScreenWrapper>
   );
 };

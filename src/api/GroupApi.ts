@@ -516,6 +516,10 @@ export const groupsApiConfig = {
     method: 'post',
     data: { ...params },
   }),
+  getGroupTerms: (groupId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/terms`,
+  }),
 };
 
 const groupApi = {
@@ -810,6 +814,7 @@ const groupApi = {
   // eslint-disable-next-line max-len
   validateReferralCode: (param: IParamValidateReferralCode) => withHttpRequestPromise(groupsApiConfig.validateReferralCode, param),
   signUp: (params: IParamsSignUp) => withHttpRequestPromise(groupsApiConfig.signUp, params),
+  getGroupTerms: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getGroupTerms, groupId),
 };
 
 export default groupApi;

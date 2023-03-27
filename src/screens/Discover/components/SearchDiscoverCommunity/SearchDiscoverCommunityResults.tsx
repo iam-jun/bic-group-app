@@ -17,6 +17,7 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import useDiscoverCommunitiesSearchStore from './store';
 import useCommunityController from '~/screens/communities/store';
 import useCommunitiesStore from '~/store/entities/communities';
+import useTermStore from '~/components/TermsModal/store';
 
 interface SearchDiscoverCommunityResultsProps {
   onLoadMore?: () => void;
@@ -55,6 +56,7 @@ const SearchDiscoverCommunityResults = ({
   const { hasNextPage, loading, ids } = useDiscoverCommunitiesSearchStore();
 
   const communityController = useCommunityController((state) => state.actions);
+  const termsActions = useTermStore((state) => state.actions);
 
   const onView = (item: any) => {
     rootNavigation.navigate(groupStack.communityDetail, {
@@ -63,7 +65,20 @@ const SearchDiscoverCommunityResults = ({
   };
 
   const onJoin = (item: any) => {
-    const { id, name } = item;
+    const {
+      id, name, settings, groupId,
+    } = item;
+    if (!!settings?.isActiveGroupTerms) {
+      const payload = {
+        groupId: id,
+        rootGroupId: groupId,
+        name,
+        type: 'community',
+        isActive: true,
+      } as any;
+      termsActions.setTermInfo(payload);
+      return;
+    }
     communityController.joinCommunity(id, name);
   };
 
