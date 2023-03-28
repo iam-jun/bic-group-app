@@ -247,28 +247,6 @@ export interface IParamsGetManagedCommunityAndGroup {
   offset?: number;
 }
 
-export interface IPayloadGetGroupStructureCommunityTree {
-  communityId: string;
-  showLoading?: boolean;
-}
-
-export interface IPayloadGetGroupStructureMoveTargets {
-    communityId: string;
-    groupId: string;
-    key?: string;
-  }
-
-export interface IPayloadPutGroupStructureMoveToTarget {
-    communityId: string;
-    moveId: string;
-    targetId: string
-  }
-
-export interface IPayloadPutGroupStructureReorder {
-  communityId: string;
-  newOrder: any[];
-}
-
 export interface IPayloadGetGroupMemberRequests {
   groupId: string;
   isRefreshing?: boolean;

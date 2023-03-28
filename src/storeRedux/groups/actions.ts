@@ -13,15 +13,6 @@ const groupsActions = {
   }),
 
   // community
-  getMyCommunities: (payload: {
-    isRefreshing?: boolean;
-    refreshNoLoading?: boolean;
-    params?: {managed: boolean; previewMembers: boolean};
-    callback?: () => void;
-  }) => ({
-    type: groupsTypes.GET_JOINED_COMMUNITIES,
-    payload,
-  }),
   getDiscoverGroups: (payload: {
     communityId: string;
     isRefreshing?: boolean;
@@ -37,10 +28,6 @@ const groupsActions = {
     items?: IObject<IGroup>;
   }) => ({
     type: groupsTypes.SET_DISCOVER_GROUPS,
-    payload,
-  }),
-  editDiscoverGroupItem: (payload: {id: string; data: any}) => ({
-    type: groupsTypes.EDIT_DISCOVER_GROUP_ITEM,
     payload,
   }),
   joinCommunity: (payload: {communityId: string; communityName: string}) => ({

@@ -1,37 +1,6 @@
 import groupsTypes from '~/storeRedux/groups/types';
 
 export const groupInitState = {
-  permissionScheme: {
-    assignGroupScheme: {
-      assignments: {
-        loading: false,
-        data: undefined,
-      },
-      assigning: {
-        loading: false,
-        data: [],
-        currentAssignments: undefined,
-      },
-    },
-  },
-  groupStructure: {
-    communityTree: {
-      loading: false,
-      data: undefined,
-    },
-    reorder: {
-      newOrder: undefined,
-      loading: false,
-    },
-    move: {
-      loading: false,
-      searchKey: '',
-      targetGroups: undefined,
-      movingGroup: undefined,
-      selecting: undefined,
-    },
-  },
-  isPrivacyModalOpen: false,
   loadingJoinedGroups: false,
   joinedGroups: [],
   yourGroupsTree: {

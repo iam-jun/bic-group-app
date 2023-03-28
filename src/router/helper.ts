@@ -190,7 +190,7 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
         case NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL:
           return {
             screen: menuStack.yourContent,
-            params: {},
+            params: { initTab: 0 },
           };
         case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR:
         case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR_AGGREGATED:

@@ -6,6 +6,11 @@ import { act, renderHook } from '~/test/testUtils';
 import useGroupDetailStore from '../index';
 
 describe('getGroupDetail', () => {
+  afterEach(() => {
+    jest.runOnlyPendingTimers(); // you must add this
+    jest.useRealTimers(); // you must add this
+  });
+
   it('should get group detail success:', () => {
     const response = {
       code: 'api.ok',

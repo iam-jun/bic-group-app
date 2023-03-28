@@ -221,7 +221,7 @@ const _PostDetailContent = (props) => {
   };
 
   return (
-    <View style={styles.flex1}>
+    <View style={styles.flex1} testID="post_detail_content">
       <Header title={headerTitle} onPressBack={onPressBack} />
       {renderContent()}
     </View>

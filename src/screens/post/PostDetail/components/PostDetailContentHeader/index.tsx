@@ -26,6 +26,7 @@ const PostDetailContentHeader = ({
     <>
       <ViewSpacing height={padding.large} />
       <PostView
+        testID="post_view"
         isPostDetail
         data={postData}
         hasReactPermission={!isHidden}

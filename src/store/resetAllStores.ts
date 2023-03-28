@@ -8,11 +8,9 @@ import useHomeStore from '~/screens/Home/store';
 import useMenuController from '~/screens/Menu/store';
 import useChatStore from '~/store/chat';
 import useDraftPostStore from '../screens/YourContent/components/Draft/DraftPost/store';
-import useGroupStructureStore from '~/screens/groups/GroupStructureSettings/store';
 import useReactionDetailStore from '~/components/reaction/ReactionDetailBottomSheet/store';
 import useCommunitiesStore from './entities/communities';
 import useUserProfileStore from '~/screens/Menu/UserProfile/store';
-import usePermissionSchemeStore from '~/screens/PermissionScheme/store';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 import useCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
 import useGroupMemberStore from '~/screens/groups/GroupMembers/store';
@@ -90,8 +88,6 @@ const stores = [
   useCommunityJoinedGroupTreeStore,
   useReactionDetailStore,
   useUserProfileStore,
-  useGroupStructureStore,
-  usePermissionSchemeStore,
   useNotificationStore,
   useDraftArticleStore,
   useArticleController,

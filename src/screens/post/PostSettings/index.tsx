@@ -189,7 +189,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
   );
 
   return (
-    <ScreenWrapper isFullView backgroundColor={colors.neutral1}>
+    <ScreenWrapper testID="post_settings" isFullView backgroundColor={colors.neutral1}>
       <Header
         titleTextProps={{ useI18n: true }}
         title={!!postId ? 'post:post_menu_edit_settings' : 'common:settings'}
