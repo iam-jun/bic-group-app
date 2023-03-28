@@ -22,9 +22,6 @@ export interface ITermState extends IBaseState {
 
   actions: {
     setIsOpen: (isOpen: boolean) => void;
-    setType: (type: string) => void;
-    setGroupId: (groupId: string) => void;
-    setIsActiveGroupTerms: (isActive: boolean) => void;
     setTermInfo: (payload: TermsInfo) => void;
     getTerms: (groupId: string) => void;
   };
@@ -50,27 +47,13 @@ const termStore = (set, get) => ({
         state.isOpen = isOpen;
       }, 'setIsOpen');
     },
-    setType: (type: string) => {
-      set((state: ITermState) => {
-        state.type = type;
-      }, 'setType');
-    },
-    setGroupId: (groupId: string) => {
-      set((state: ITermState) => {
-        state.groupId = groupId;
-      }, 'setGroupId');
-    },
-    setIsActiveGroupTerms: (isActive: boolean) => {
-      set((state: ITermState) => {
-        state.isActiveGroupTerms = isActive;
-      }, 'setIsActiveGroupTerms');
-    },
     setTermInfo: (payload: TermsInfo) => {
       set((state: ITermState) => {
         state.isActiveGroupTerms = payload.isActive;
         state.groupId = payload.groupId;
         state.type = payload.type;
         state.rootGroupId = payload.rootGroupId;
+        state.name = payload?.name || '';
       }, 'setTermInfo');
     },
     getTerms: getTerms(set, get),

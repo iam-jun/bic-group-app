@@ -94,7 +94,11 @@ const TermsView = () => {
       exiting={FadeOutUp}
     >
       <View style={styles.screenContainer}>
-        <Header title={`common:text_${type}_terms`} titleTextProps={{ useI18n: true }} onPressBack={onClose} />
+        <Header
+          title={`common:text_${type}_terms`}
+          titleTextProps={{ useI18n: true }}
+          onPressBack={onClose}
+        />
         <View style={styles.body}>
           <ScrollView
             showsVerticalScrollIndicator={false}
@@ -111,7 +115,7 @@ const TermsView = () => {
               )
               : <LoadingIndicator />}
             <Checkbox
-              testID="group_item.check_box"
+              testID="terms_view.check_box"
               label="common:text_i_agree"
               useI18n
               style={styles.checkbox}
@@ -121,7 +125,7 @@ const TermsView = () => {
           </ScrollView>
           <View style={styles.buttonView} testID="join_cancel_button">
             <Button.Secondary
-              testID="test_id"
+              testID="terms_view.sumbit"
               useI18n
               disabled={!isAgree}
               onPress={onSubmit}
