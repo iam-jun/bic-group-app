@@ -1,10 +1,10 @@
 import React from 'react';
+import { Dimensions } from 'react-native';
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import YourContent from './index';
-import { Dimensions } from 'react-native';
 
-const height = Dimensions.get('window').height;
-const width = Dimensions.get('window').width;
+const { height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 describe('Your Content screen', () => {
   it('should render correctly', () => {
@@ -32,14 +32,14 @@ describe('Your Content screen', () => {
 
     const flatList = wrapper.getByTestId('draft_post.list');
     const headerFilter = wrapper.getByTestId('your_content.header_filter');
-    
+
     expect(flatList).toBeDefined();
     fireEvent.scroll(flatList, {
       nativeEvent: {
         contentSize: { height: 600, width: 400 },
         contentOffset: { y: 150, x: 0 },
         layoutMeasurement: { height, width },
-      }
+      },
     });
 
     expect(headerFilter.props.style.transform[0].translateY).toEqual(0);
