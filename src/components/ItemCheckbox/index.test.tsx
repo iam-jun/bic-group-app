@@ -37,6 +37,7 @@ describe('ItemCheckbox Component', () => {
       <ItemCheckbox
         data={mockData}
         isChecked
+        testIDCheckbox="item_checkbox.checkbox"
         onRemoveItem={onRemoveItem}
       />,
     );
@@ -51,6 +52,7 @@ describe('ItemCheckbox Component', () => {
     const rendered = renderWithRedux(
       <ItemCheckbox
         data={mockData}
+        testIDCheckbox="item_checkbox.checkbox"
         onAddItem={onAddItem}
       />,
     );

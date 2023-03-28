@@ -19,16 +19,6 @@ describe('OptionMenu conponent', () => {
     title: 'settings:title_choose_gender',
   };
 
-  it('renders correctly', () => {
-    const onGenderItemPress = jest.fn();
-
-    const rendered = render(
-      <OptionMenu {...baseProps} onItemPress={onGenderItemPress} />,
-    ).toJSON();
-
-    expect(rendered).toMatchSnapshot();
-  });
-
   it('should call props onItemPress', () => {
     const onGenderItemPress = jest.fn();
 

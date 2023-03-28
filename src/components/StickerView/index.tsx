@@ -235,12 +235,6 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingVertical: spacing.margin.base,
       marginHorizontal: spacing.margin.base,
     },
-    gridView: {
-      height: '100%',
-    },
-    loading: {
-      marginTop: spacing.margin.base,
-    },
   });
 };
 

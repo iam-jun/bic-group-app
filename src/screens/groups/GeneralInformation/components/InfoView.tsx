@@ -80,17 +80,27 @@ const InfoView = ({
     <>
       <View style={styles.privacyHeader}>
         <Icon icon={icon} tintColor={colors.neutral20} />
-        <Text.BodyM color={colors.neutral60} style={styles.privacyText} useI18n>
+        <Text.BodyM
+          testID="info_view.privacy_type"
+          color={colors.neutral60}
+          style={styles.privacyText}
+          useI18n
+        >
           {title}
         </Text.BodyM>
       </View>
 
-      <Text.BodyM style={styles.descriptionPrivacyText} color={colors.neutral60} useI18n>
+      <Text.BodyM
+        testID="info_view.privacy_description"
+        style={styles.descriptionPrivacyText}
+        color={colors.neutral60}
+        useI18n
+      >
         {subtitle}
       </Text.BodyM>
 
       {isSecretPrivacy && (
-        <View style={styles.privacyBannerView}>
+        <View style={styles.privacyBannerView} testID="info_view.secret_banner_view">
           <Icon icon="CircleInfo" tintColor={colors.neutral20} size={18} />
           <Text.BodyS style={styles.bannerText} color={colors.neutral40} useI18n>
             {`settings:text_secret_${type}_banner_message`}
@@ -99,7 +109,7 @@ const InfoView = ({
       )}
 
       {isPrivatePrivacy && (
-        <View style={styles.privacyBannerView}>
+        <View style={styles.privacyBannerView} testID="info_view.private_banner_view">
           <CheckBox size="small" disabled={privateCheckboxType} />
           <Text.BodyS style={styles.bannerText} color={colors.neutral40} useI18n>
             {`settings:text_private_${type}_banner_message`}
@@ -116,7 +126,12 @@ const InfoView = ({
         onEdit={canEditInfo ? onPressEditName : undefined}
         style={styles.infoCard}
       >
-        <Text.BodyM color={colors.neutral60}>{name}</Text.BodyM>
+        <Text.BodyM
+          testID="info_view.name"
+          color={colors.neutral60}
+        >
+          {name}
+        </Text.BodyM>
       </InfoCard>
       <Divider color={colors.gray5} size={spacing.padding.large} />
 
@@ -125,7 +140,12 @@ const InfoView = ({
         onEdit={canEditInfo ? onPressEditDescription : undefined}
         style={styles.infoCard}
       >
-        <Text.BodyM color={colors.neutral60}>{description}</Text.BodyM>
+        <Text.BodyM
+          testID="info_view.description"
+          color={colors.neutral60}
+        >
+          {description}
+        </Text.BodyM>
       </InfoCard>
       <Divider color={colors.gray5} size={spacing.padding.large} />
 

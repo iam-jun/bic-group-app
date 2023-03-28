@@ -3,6 +3,11 @@ import groupApi from '~/api/GroupApi';
 import useMyPermissionsStore, { IMyPermissionsState } from '../index';
 
 describe('getMyPermissions', () => {
+  afterEach(() => {
+    jest.runOnlyPendingTimers(); // you must add this
+    jest.useRealTimers(); // you must add this
+  });
+
   it('should call api and get data successfully', () => {
     const response = {
       code: 'api.ok',

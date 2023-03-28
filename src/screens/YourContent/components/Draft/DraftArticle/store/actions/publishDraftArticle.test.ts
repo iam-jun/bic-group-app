@@ -3,6 +3,7 @@ import streamApi from '~/api/StreamApi';
 import useDraftArticleStore from '../index';
 import { POST_DETAIL } from '~/test/mock_data/post';
 import useModalStore from '~/store/modal';
+import { PostStatus } from '~/interfaces/IPost';
 
 describe('publishDraftArticle', () => {
   const draftArticleId = '1';
@@ -70,11 +71,11 @@ describe('publishDraftArticle', () => {
     expect(spyGetDraftArticles).toBeCalled();
   });
 
-  it('should call API success and isProcessing = true', () => {
+  it('should call API success and status = \'PROCESSING\'', () => {
     const response = {
       data: {
         ...POST_DETAIL,
-        isProcessing: true,
+        status: PostStatus.PROCESSING,
       },
     };
     const spyPublishDraftArticle = jest.spyOn(streamApi, 'publishDraftArticle').mockImplementation(

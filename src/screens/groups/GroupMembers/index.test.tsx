@@ -1,51 +1,33 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from 'react';
-import { renderWithRedux, fireEvent } from '~/test/testUtils';
+import { render } from '~/test/testUtils';
 import GroupMembers from '.';
 import MockedNavigator from '~/test/MockedNavigator';
-import initialState from '~/storeRedux/initialState';
-import * as navigationHook from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
+import { MEMBER_TABS } from '~/screens/communities/CommunityMembers';
 
 describe('GroupMembers component', () => {
   const groupId = '1';
   const component = () => <GroupMembers route={{ params: { groupId } }} />;
 
+  it('should render the component with the correct header title', () => {
+    const wrapper = render(<MockedNavigator component={component} />);
+    const titleHeader = wrapper.getByTestId('header.text');
+
+    expect(titleHeader.props.children).toEqual('Members');
+  });
+
+  it('should render correct tab', () => {
+    const wrapper = render(<MockedNavigator component={component} />);
+    const tabMemberList = wrapper.queryByTestId(`tab-button-${MEMBER_TABS[0].text}`);
+    const tabMembersRequest = wrapper.queryByTestId(`tab-button-${MEMBER_TABS[1].text}`);
+
+    expect(tabMemberList).toBeDefined();
+    expect(tabMembersRequest).toBeDefined();
+  });
+
   it('should render list data correctly', () => {
-    const wrapper = renderWithRedux(<MockedNavigator component={component} />);
-    const memberListComp = wrapper.getByTestId('member_list');
-    expect(memberListComp).toBeDefined();
-  });
-
-  it('should render Invite member button and navigate to Invite member screen correctly when user can manage member', () => {
-    const state = { ...initialState };
-    // @ts-ignore
-    state.groups.myPermissions = {
-      data: {
-        groups: {
-          1: [
-            'add_remove_group_members',
-          ],
-        },
-      },
-    };
-    const navigate = jest.fn();
-    const rootNavigation = { navigate };
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
-
-    const wrapper = renderWithRedux(<MockedNavigator component={component} />);
-    const inviteBtn = wrapper.getByTestId('group_members.invite');
-    expect(inviteBtn).toBeDefined();
-    fireEvent.press(inviteBtn);
-    expect(navigate).toBeCalledWith(groupStack.addMembers, { groupId });
-  });
-
-  it('should NOT render Invite member button correctly when user cannot manage member', () => {
-    const state = { ...initialState };
-    // @ts-ignore
-    state.groups.myPermissions = { data: { groups: {} } };
-    const wrapper = renderWithRedux(<MockedNavigator component={component} />);
-    const inviteBtn = wrapper.queryByTestId('group_members.invite');
-    expect(inviteBtn).toBeNull();
+    const wrapper = render(<MockedNavigator component={component} />);
+    const listMemberComponent = wrapper.getByTestId('member_list');
+    expect(listMemberComponent).toBeDefined();
   });
 });

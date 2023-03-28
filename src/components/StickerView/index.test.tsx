@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import * as RNCommunityHooks from '@react-native-community/hooks';
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
 import { render, setHookTestState } from '~/test/testUtils';
 import StickerView from '.';
 
@@ -49,23 +48,5 @@ describe('StickerView component', () => {
     const rendered = render(<StickerView {...baseProps} />);
 
     expect(rendered).toMatchSnapshot();
-  });
-
-  it('renders loading', async () => {
-    reactMock.useState = setHookTestState({
-      keyboardHeight: 336,
-      searchQuery: '',
-      loading: true,
-      modalTopOffset: 0,
-    });
-
-    const rendered = render(<StickerView {...baseProps} />);
-
-    const loading_indicator = rendered.getByTestId('loading_indicator');
-    expect(loading_indicator).toBeDefined();
-
-    const grid_view = rendered.getByTestId('sticker_view.grid_view');
-    const flattenedStyle = StyleSheet.flatten(grid_view.props.style);
-    expect(flattenedStyle.height).toBe(0);
   });
 });
