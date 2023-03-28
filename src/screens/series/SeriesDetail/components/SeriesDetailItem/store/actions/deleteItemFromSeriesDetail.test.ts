@@ -5,6 +5,11 @@ import { act, renderHook } from '~/test/testUtils';
 import useSeriesDetailArticleItemStore from '../index';
 
 describe('deleteItemFromSeriesDetail', () => {
+  afterEach(() => {
+    jest.runOnlyPendingTimers(); // you must add this
+    jest.useRealTimers(); // you must add this
+  });
+
   it('should do nothing if id undefined', () => {
     const response = {
       code: 200,

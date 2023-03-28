@@ -11,8 +11,6 @@ import ICommunityJoinedGroupTreeState from '~/screens/groups/components/Communit
 import IDraftPostState from '~/screens/YourContent/components/Draft/DraftPost/store/Interface';
 import IReactionDetailState from '~/components/reaction/ReactionDetailBottomSheet/store/Interface';
 import { IUserProfileState } from '~/screens/Menu/UserProfile/store';
-import IGroupStructureState from '~/screens/groups/GroupStructureSettings/store/Interface';
-import IPermissionSchemeState from '~/screens/PermissionScheme/store/Interface';
 import IDiscoverGroupsState from '~/screens/groups/DiscoverGroups/store/Interface';
 import { ICommunityMemberState } from '~/screens/communities/CommunityMembers/store';
 import { IGroupMemberState } from '~/screens/groups/GroupMembers/store';
@@ -107,7 +105,6 @@ export interface BicStore {
       CommunityJoinedGroupTree: {
         communityJoinedGroupTreeStore: ICommunityJoinedGroupTreeState;
       };
-      groupStructure: IGroupStructureState;
       discoverGroups: IDiscoverGroupsState;
     };
     GroupMembers: {
@@ -145,9 +142,6 @@ export interface BicStore {
     joinedCommunitiesStore: IJoinedCommunitiesState;
     userProfileStore: IUserProfileState;
   };
-  PermissionScheme: {
-    permissionSchemeStore: IPermissionSchemeState;
-  },
 
   Notifications: {
     notificationStore: INotificationsState,

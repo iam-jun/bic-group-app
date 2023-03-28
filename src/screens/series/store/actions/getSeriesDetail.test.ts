@@ -5,6 +5,11 @@ import { act, renderHook } from '~/test/testUtils';
 import useSeriesStore, { ISeriesState } from '../index';
 
 describe('getSeriesDetail', () => {
+  afterEach(() => {
+    jest.runOnlyPendingTimers(); // you must add this
+    jest.useRealTimers(); // you must add this
+  });
+
   const seriesId = mockSeries.id;
 
   it('should do nothing if id undefined', () => {

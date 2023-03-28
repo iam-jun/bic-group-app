@@ -1,11 +1,4 @@
 const groupStack = {
-  // permission scheme
-  permissionScheme: 'permission-scheme',
-  schemeDetail: 'scheme-detail',
-  groupSchemeAssignment: 'group-scheme-assignment',
-  groupSchemeAssignSelection: 'group-scheme-assign-selection',
-  createPermissionScheme: 'create-permission-scheme',
-
   // community
   communities: 'communities',
   communityDetail: 'community-detail',
@@ -26,10 +19,8 @@ const groupStack = {
   editPrivacy: 'edit-privacy',
   addMembers: 'add-members',
 
-  // group structure
-  groupStructureSettings: 'group-structure-settings',
-  moveGroup: 'move-group',
-  reorderGroup: 'reorder-group',
+  // group structure removed
+  // permission scheme removed
 };
 
 export default groupStack;

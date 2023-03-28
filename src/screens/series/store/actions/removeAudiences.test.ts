@@ -6,6 +6,10 @@ import { act, renderHook } from '~/test/testUtils';
 import useSeriesStore, { ISeriesState } from '../index';
 
 describe('removeAudiences', () => {
+  afterEach(() => {
+    jest.runOnlyPendingTimers(); // you must add this
+    jest.useRealTimers(); // you must add this
+  });
   const seriesId = mockSeries.id;
   const listAudiences = ['eba85417-ec3e-49b4-89b4-c5393baecaaf'];
 
