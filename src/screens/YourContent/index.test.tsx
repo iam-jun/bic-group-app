@@ -12,17 +12,38 @@ describe('Your Content screen', () => {
       <YourContent />,
     );
 
-    const tabDraft = wrapper.queryByTestId('tab-button-your_content:title_draft-selected');
+    const tabDraft = wrapper.queryByTestId('tab-button-your_content:title_draft-notselected');
     expect(tabDraft).toBeDefined();
     fireEvent.press(tabDraft);
 
-    const tabScheduleArticle = wrapper.queryByTestId('tab-button-your_content:title_schedule_article-notselected');
+    const tabScheduleArticle = wrapper.queryByTestId('tab-button-your_content:title_schedule_article-selected');
     expect(tabScheduleArticle).toBeDefined();
-    fireEvent.press(tabScheduleArticle);
 
     const tabReportedContent = wrapper.queryByTestId('tab-button-your_content:title_report_content-notselected');
     expect(tabReportedContent).toBeDefined();
     fireEvent.press(tabReportedContent);
+  });
+
+  it('should render Draft tab', () => {
+    const props = {
+      route: {
+        params: {
+          initTab: 0,
+        },
+      },
+    };
+
+    const wrapper = renderWithRedux(
+      <YourContent {...props} />,
+    );
+
+    const tabDraftPost = wrapper.queryByTestId('tab-button-post:draft:text_posts-selected');
+    expect(tabDraftPost).toBeDefined();
+    fireEvent.press(tabDraftPost);
+
+    const tabDraftArticle = wrapper.queryByTestId('tab-button-post:draft:text_articles-notselected');
+    expect(tabDraftArticle).toBeDefined();
+    fireEvent.press(tabDraftArticle);
   });
 
   it('should show header filter', () => {
@@ -30,7 +51,7 @@ describe('Your Content screen', () => {
       <YourContent />,
     );
 
-    const flatList = wrapper.getByTestId('draft_post.list');
+    const flatList = wrapper.getByTestId('schedule_article.content');
     const headerFilter = wrapper.getByTestId('your_content.header_filter');
 
     expect(flatList).toBeDefined();
