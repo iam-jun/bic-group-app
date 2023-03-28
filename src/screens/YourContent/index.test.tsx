@@ -25,16 +25,15 @@ describe('Your Content screen', () => {
     fireEvent.press(tabReportedContent);
   });
 
-  it('should call hide() when scroll down', () => {
+  it('should show header filter', () => {
     const wrapper = renderWithRedux(
       <YourContent />,
     );
 
-    
-
     const flatList = wrapper.getByTestId('draft_post.list');
+    const headerFilter = wrapper.getByTestId('your_content.header_filter');
+    
     expect(flatList).toBeDefined();
-
     fireEvent.scroll(flatList, {
       nativeEvent: {
         contentSize: { height: 600, width: 400 },
@@ -43,5 +42,6 @@ describe('Your Content screen', () => {
       }
     });
 
+    expect(headerFilter.props.style.transform[0].translateY).toEqual(0);
   });
 });

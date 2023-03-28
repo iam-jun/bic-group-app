@@ -148,6 +148,7 @@ const YourContent = () => {
   const HeaderFilter = (
     <Animated.View
       style={[styles.headerFilter, headerFilterAnimatedStyle]}
+      testID="your_content.header_filter"
     >
       <View style={[styles.boxTab]}>
         <Tab
