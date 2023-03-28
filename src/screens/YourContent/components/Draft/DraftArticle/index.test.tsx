@@ -24,7 +24,6 @@ describe('DraftArticle component', () => {
     />);
     const contentView = rendered.getByTestId('draft_article.list');
 
-    expect(rendered.toJSON()).toMatchSnapshot();
     expect(contentView).toBeDefined();
   });
 

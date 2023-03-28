@@ -4,7 +4,7 @@ import { cleanup, fireEvent } from '@testing-library/react-native';
 import { mockTagsInArticle } from '~/test/mock_data/tags';
 import * as navigationHook from '~/hooks/navigation';
 import TagView from './TagItem';
-import { renderWithRedux } from '~/test/testUtils';
+import { render } from '~/test/testUtils';
 
 afterEach(cleanup);
 
@@ -21,9 +21,9 @@ describe('TagView component', () => {
     const rootNavigation = { navigate };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
-    const wrapper = renderWithRedux(<TagView data={item} onPressTag={onPressTag} />);
+    const wrapper = render(<TagView data={item} onPressTag={onPressTag} />);
 
-    const buttonNavigate = wrapper.queryByTestId('tag_item.button_navigate');
+    const buttonNavigate = wrapper.queryByTestId(`tag_item_${item.id}.button_navigate`);
     expect(buttonNavigate).toBeDefined();
     fireEvent.press(buttonNavigate);
   });

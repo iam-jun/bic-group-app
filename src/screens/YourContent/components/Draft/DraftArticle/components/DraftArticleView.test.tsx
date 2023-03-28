@@ -64,8 +64,10 @@ describe('DraftArticle component', () => {
 
   it('should call publishDraftArticle when press button publish', () => {
     const publishDraftArticle = jest.fn();
-    const actions = { publishDraftArticle };
-    jest.spyOn(useDraftArticleStore, 'getState').mockImplementation(() => ({ actions } as any));
+    useDraftArticleStore.setState((state) => {
+      state.actions.publishDraftArticle = publishDraftArticle;
+      return state;
+    });
 
     const rendered = renderWithRedux(
       <DraftArticleView
@@ -76,6 +78,7 @@ describe('DraftArticle component', () => {
     const publishBtn = rendered.getByTestId('draft_footer.publish');
 
     expect(publishBtn).toBeDefined();
+    expect(publishBtn.props.accessibilityState.disabled).toBe(false);
     fireEvent.press(publishBtn);
     expect(publishDraftArticle).toBeCalled();
   });
