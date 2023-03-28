@@ -6,7 +6,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Animated, {
   FadeInDown, FadeOutUp,
 } from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Header from '~/beinComponents/Header';
 import { spacing } from '~/theme';
 import useTermStore from './store';
@@ -22,7 +22,8 @@ const GAP = 100;
 
 const TermsView = () => {
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyles(theme);
+  const insets = useSafeAreaInsets();
+  const styles = createStyles(theme, insets);
 
   const actions = useTermStore((state) => state.actions);
   const content = useTermStore((state) => state.termContent);
@@ -139,9 +140,8 @@ const TermsView = () => {
   );
 };
 
-const createStyles = (theme: ExtendedTheme) => {
+const createStyles = (theme: ExtendedTheme, insets: EdgeInsets) => {
   const { colors } = theme;
-  const insets = useSafeAreaInsets();
 
   return StyleSheet.create({
     screenContainer: {
