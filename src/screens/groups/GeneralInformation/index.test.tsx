@@ -44,7 +44,7 @@ describe('GeneralInformation component', () => {
       fieldName: 'icon',
       uploadType: 'group_avatar',
       destination: 'group',
-      rootGroupId: groupDetailData.group.id, 
+      rootGroupId: groupDetailData.group.id,
     });
   });
 
@@ -66,7 +66,7 @@ describe('GeneralInformation component', () => {
       fieldName: 'backgroundImgUrl',
       uploadType: 'group_cover',
       destination: 'group',
-      rootGroupId: groupDetailData.group.id, 
+      rootGroupId: groupDetailData.group.id,
     });
   });
 });
