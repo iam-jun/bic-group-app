@@ -44,7 +44,7 @@ const GroupJoinCancelButton = ({ style, community }: GroupJoinCancelButtonProps)
       });
       return;
     }
-    if (!!settings.isActiveGroupTerms) {
+    if (settings.isActiveGroupTerms) {
       const payload = {
         groupId, rootGroupId: groupId, name: '', type: 'group', isActive: true,
       } as any;
