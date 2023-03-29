@@ -5,7 +5,8 @@ import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { rootNavigationRef } from '~/router/refs';
 
 export const getTitle = (type: PostType) => {
-  if (type === PostType.ARTICLE) {
+  const newType = type?.toUpperCase();
+  if (newType === PostType.ARTICLE) {
     return 'post:title_comment_detail_of_article';
   }
   return 'post:title_comment_detail_of_post';

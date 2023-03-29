@@ -218,7 +218,11 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
         case NOTIFICATION_TYPE.REACTION_TO_COMMENT_CREATOR_AGGREGATED:
           return {
             screen: 'comment-detail',
-            params: { postId, commentId },
+            params: {
+              postId,
+              commentId,
+              target: target === TargetType.COMMENT_ARTICLE ? TargetType.ARTICLE : TargetType.POST,
+            },
           };
 
         case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT:
@@ -230,6 +234,7 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
               postId,
               commentId: childCommentId,
               parentId: commentId,
+              target: target === TargetType.COMMENT_ARTICLE ? TargetType.ARTICLE : TargetType.POST,
             },
           };
         case NOTIFICATION_TYPE.GROUP_ASSIGNED_ROLE_TO_USER:
