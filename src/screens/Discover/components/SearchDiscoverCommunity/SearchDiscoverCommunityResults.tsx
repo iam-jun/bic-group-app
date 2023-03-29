@@ -68,7 +68,7 @@ const SearchDiscoverCommunityResults = ({
     const {
       id, name, settings, groupId,
     } = item;
-    if (!!settings?.isActiveGroupTerms) {
+    if (settings?.isActiveGroupTerms) {
       const payload = {
         groupId: id,
         rootGroupId: groupId,

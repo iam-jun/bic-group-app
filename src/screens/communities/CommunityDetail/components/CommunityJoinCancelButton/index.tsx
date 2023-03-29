@@ -29,7 +29,7 @@ const CommunityJoinCancelButton = ({
   if (isMember) return null;
 
   const onPressJoin = () => {
-    if (!!settings?.isActiveGroupTerms) {
+    if (settings?.isActiveGroupTerms) {
       const payload = {
         groupId: id, rootGroupId: groupId, name, type: 'community', isActive: true,
       } as any;

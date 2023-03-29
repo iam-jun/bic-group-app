@@ -51,7 +51,7 @@ const DiscoverGroups = ({ route }: any) => {
   );
 
   const handleJoinGroup = ({ isActiveGroupTerms, groupId } : {isActiveGroupTerms: boolean; groupId: string}) => {
-    if (!!isActiveGroupTerms) {
+    if (isActiveGroupTerms) {
       const payload = {
         groupId, rootGroupId: groupId, name: '', type: 'group', isActive: true,
       } as any;

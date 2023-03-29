@@ -106,7 +106,7 @@ const DiscoverCommunities = () => {
   };
 
   const handleJoin = (data: HandleJoinCommunityData) => {
-    if (!!data?.isActiveGroupTerms) {
+    if (data?.isActiveGroupTerms) {
       const payload = {
         groupId: data.id,
         rootGroupId: data.rootGroupId,

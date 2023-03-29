@@ -43,7 +43,7 @@ const TermsView = () => {
   const [contentHeight, setContentHeight] = useState(0);
 
   useEffect(() => {
-    if (!!isActiveGroupTerms && !!rootGroupId) {
+    if (isActiveGroupTerms && rootGroupId) {
       actions.getTerms(rootGroupId);
     }
   }, [isActiveGroupTerms, rootGroupId]);
