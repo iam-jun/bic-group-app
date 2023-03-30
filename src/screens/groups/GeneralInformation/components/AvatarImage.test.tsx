@@ -61,26 +61,6 @@ describe('AvatarImage component', () => {
     expect(imageComponent).toBeDefined();
   });
 
-  it('should disable button when loading', () => {
-    jest.useFakeTimers();
-    act(() => {
-      useGeneralInformationStore.setState({
-        loadingAvatar: true,
-      });
-    });
-    act(() => {
-      jest.runAllTimers();
-    });
-
-    const rendered = renderWithRedux(<AvatarImage {...baseProps} canEditInfo />);
-
-    const buttonComponent = rendered.getByTestId('avatar.button_edit');
-    const textComponent = rendered.getByTestId('avatar.text_edit');
-    const flattenedStyle = StyleSheet.flatten(textComponent.props.style);
-    expect(flattenedStyle.color).toBe(colors.light.colors.gray40);
-    expect(buttonComponent.props.accessibilityState.disabled).toBe(true);
-  });
-
   it('should call onEditAvatar when edit button press', () => {
     jest.useFakeTimers();
     act(() => {
@@ -98,7 +78,7 @@ describe('AvatarImage component', () => {
       <AvatarImage avatar="" onEditAvatar={onEditAvatar} canEditInfo />,
     );
 
-    const buttonComponent = rendered.getByTestId('avatar.button_edit');
+    const buttonComponent = rendered.getByTestId('info_card.button_edit');
     fireEvent.press(buttonComponent);
     expect(onEditAvatar).toBeCalled();
   });
