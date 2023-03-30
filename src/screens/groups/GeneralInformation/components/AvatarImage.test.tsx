@@ -1,8 +1,6 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import { act } from 'react-test-renderer';
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
-import colors from '~/theme/theme';
 import useGeneralInformationStore from '../store';
 import AvatarImage from './AvatarImage';
 
