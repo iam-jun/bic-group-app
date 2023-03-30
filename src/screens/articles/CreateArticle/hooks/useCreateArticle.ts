@@ -90,7 +90,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
   );
 
   const audiencesWithNoPermission = getAudienceListWithNoPermission(chooseAudiences, PermissionKey.EDIT_POST_SETTING);
-  const disableArticleSettings = audiencesWithNoPermission.length === chooseAudiences.length;
+  const disableArticleSettings = audiencesWithNoPermission.length === chooseAudiences?.length;
 
   const { t } = useBaseHook();
 
