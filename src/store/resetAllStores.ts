@@ -60,6 +60,7 @@ import useValidateSeriesTagsStore from '~/components/ValidateSeriesTags/store';
 import useCommonController from '~/screens/store';
 import useBlockingStore from './blocking';
 import useYourContentStore from '~/screens/YourContent/store';
+import usePinContentStore from '~/components/PinContent/store';
 
 export const excludedStore = [
   useAuthController,
@@ -137,6 +138,7 @@ const stores = [
   useValidateSeriesTagsStore,
   useCommonController,
   useBlockingStore,
+  usePinContentStore,
 ];
 
 export const resetAllStores = () => {
