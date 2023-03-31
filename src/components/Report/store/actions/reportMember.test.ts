@@ -20,7 +20,9 @@ describe('reportMember', () => {
     const response = {
       code: 201,
       data: true,
-      meta: {},
+      meta: {
+        message: 'Your report was sent',
+      },
     };
 
     const spy = jest.spyOn(GroupApi, 'reportMember').mockImplementation(
@@ -42,7 +44,8 @@ describe('reportMember', () => {
     });
 
     expect(showToast).toBeCalledWith({
-      content: 'common:text_report_sent',
+      content: response.meta.message,
+      type: 'success',
     });
   });
 

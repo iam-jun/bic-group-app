@@ -11,7 +11,12 @@ describe('ScheduledArticles component', () => {
       state.scheduleArticles.data = [mockArticle] as IPost[];
       return state;
     });
-    const rendered = renderWithRedux(<ScheduledArticles />);
+
+    const onScroll = jest.fn();
+
+    const rendered = renderWithRedux(<ScheduledArticles
+      onScroll={onScroll}
+    />);
     const contentView = rendered.getByTestId('schedule_article.content');
 
     expect(rendered.toJSON()).toMatchSnapshot();
@@ -25,7 +30,11 @@ describe('ScheduledArticles component', () => {
       return state;
     });
 
-    const rendered = renderWithRedux(<ScheduledArticles />);
+    const onScroll = jest.fn();
+
+    const rendered = renderWithRedux(<ScheduledArticles
+      onScroll={onScroll}
+    />);
 
     const emptyView = rendered.getByTestId('schedule_article.empty_view');
     expect(emptyView).toBeDefined();

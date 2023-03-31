@@ -6,8 +6,6 @@ import useHomeStore from '~/screens/Home/store';
 import { AttributeFeed, ContentFeed } from '~/interfaces/IFeed';
 import { IPostsInProgressState } from '..';
 import { ISocketNotification } from '~/interfaces/INotification';
-import postActions from '~/storeRedux/post/actions';
-import Store from '~/storeRedux';
 
 const updatePostsInProgress = (set, get) => async (
   payload: ISocketNotification,
@@ -22,7 +20,7 @@ const updatePostsInProgress = (set, get) => async (
     } else {
       const { type, postId } = payload || {};
       if (!!postId) {
-        Store.store.dispatch(postActions.getPostDetail({ postId }));
+        usePostsStore.getState().actions.getPostDetail({ postId });
         updateData(set, get)(type, postId);
       }
     }

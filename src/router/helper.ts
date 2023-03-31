@@ -189,8 +189,8 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
 
         case NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL:
           return {
-            screen: menuStack.draft,
-            params: {},
+            screen: menuStack.yourContent,
+            params: { initTab: 0 },
           };
         case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR:
         case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR_AGGREGATED:
@@ -218,7 +218,11 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
         case NOTIFICATION_TYPE.REACTION_TO_COMMENT_CREATOR_AGGREGATED:
           return {
             screen: 'comment-detail',
-            params: { postId, commentId },
+            params: {
+              postId,
+              commentId,
+              target: target === TargetType.COMMENT_ARTICLE ? TargetType.ARTICLE : TargetType.POST,
+            },
           };
 
         case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT:
@@ -230,6 +234,7 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
               postId,
               commentId: childCommentId,
               parentId: commentId,
+              target: target === TargetType.COMMENT_ARTICLE ? TargetType.ARTICLE : TargetType.POST,
             },
           };
         case NOTIFICATION_TYPE.GROUP_ASSIGNED_ROLE_TO_USER:

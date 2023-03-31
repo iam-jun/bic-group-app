@@ -13,25 +13,10 @@ import CommunityAbout from '~/screens/communities/CommunityAbout';
 import DiscoverGroups from '~/screens/groups/DiscoverGroups';
 import CommunityMembers from '~/screens/communities/CommunityMembers';
 import CommunityAdmin from '~/screens/communities/CommunityAdmin';
-import PermissionScheme from '~/screens/PermissionScheme';
-import CreatePermissionScheme from '~/screens/PermissionScheme/CreatePermissionScheme';
-import SchemeDetail from '~/screens/PermissionScheme/SchemeDetail';
-import GroupStructureSettings from '~/screens/groups/GroupStructureSettings';
-import MoveGroup from '~/screens/groups/GroupStructureSettings/MoveGroup';
-import ReorderGroup from '~/screens/groups/GroupStructureSettings/ReorderGroup';
 import EditName from '~/screens/groups/GeneralInformation/EditName';
-import GroupSchemeAssignment from '~/screens/PermissionScheme/GroupSchemeAssignment';
-import GroupSchemeAssignSelection from '~/screens/PermissionScheme/GroupSchemeAssignSelection';
 import EditPrivacy from '~/screens/groups/GeneralInformation/EditPrivacy';
 
 const groupScreens = {
-  // permission scheme
-  'permission-scheme': PermissionScheme,
-  'scheme-detail': SchemeDetail,
-  'group-scheme-assignment': GroupSchemeAssignment,
-  'group-scheme-assign-selection': GroupSchemeAssignSelection,
-  'create-permission-scheme': CreatePermissionScheme,
-
   // community
   communities: Communities,
   'community-detail': CommunityDetail,
@@ -52,10 +37,8 @@ const groupScreens = {
   'edit-privacy': EditPrivacy,
   'add-members': AddMembersToGroup,
 
-  // group structure
-  'group-structure-settings': GroupStructureSettings,
-  'move-group': MoveGroup,
-  'reorder-group': ReorderGroup,
+  // group structure removed
+  // permission scheme removed
 };
 
 export default groupScreens;

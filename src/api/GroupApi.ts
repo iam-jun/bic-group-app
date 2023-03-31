@@ -20,7 +20,6 @@ import {
 } from '~/interfaces/IAuth';
 import { IAddWorkExperienceReq } from '~/interfaces/IWorkExperienceRequest';
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
-import { ISearchReq } from '~/interfaces/common';
 import { IParamsReportMember } from '~/interfaces/IReport';
 import { ContentType } from '~/components/SelectAudience';
 
@@ -32,6 +31,11 @@ const defaultConfig = {
 };
 
 export const groupsApiConfig = {
+  blockUser: (blockedUserId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}users/${blockedUserId}/block`,
+    method: 'post',
+  }),
   getCommunityCUDTagPermission: (communityId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}me/permissions/can-cud-tags/community/${communityId}`,
@@ -120,15 +124,6 @@ export const groupsApiConfig = {
     ...defaultConfig,
     url: `${provider.url}communities/${id}/group-structure`,
   }),
-  putGroupStructureReorder: (
-    communityId: string,
-    data: number[],
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/group-structure/order`,
-    method: 'put',
-    data,
-  }),
   getCommunityStructureMoveTargets: (
     communityId: string,
     groupId: string,
@@ -137,19 +132,6 @@ export const groupsApiConfig = {
     ...defaultConfig,
     url: `${provider.url}communities/${communityId}/group-structure/move-targets/${groupId}`,
     ...(key ? { params: { key } } : {}),
-  }),
-  putGroupStructureMoveToTarget: (
-    communityId: string,
-    moveId: string,
-    targetId: string,
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/group-structure/move`,
-    method: 'put',
-    data: {
-      group_id: moveId,
-      target_outer_group_id: targetId,
-    },
   }),
   putGroupStructureCollapseStatus: (
     communityId: string,
@@ -393,13 +375,6 @@ export const groupsApiConfig = {
     url: `${provider.url}groups/${groupId}/joining-requests/decline`,
     method: 'put',
   }),
-  getInnerGroupsLastAdmin: (
-    groupId: string,
-    userId: string,
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}groups/${groupId}/inner-groups-have-last-admin/${userId}`,
-  }),
   getDiscoverCommunities: (
     params: IParamGetCommunities,
   ): HttpApiRequestConfig => ({
@@ -409,6 +384,19 @@ export const groupsApiConfig = {
       ...params,
       key: params?.key?.trim?.() ? params.key : undefined,
     },
+  }),
+  getListBlockingUsers: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/blockings`,
+  }),
+  getListRelationship: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/blocking-relationships`,
+  }),
+  unblockUser: (userId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}users/${userId}/unblock`,
+    method: 'post',
   }),
   searchJoinedCommunities: (
     params: IParamGetCommunities,
@@ -477,24 +465,6 @@ export const groupsApiConfig = {
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
-  searchGlobal: (params?: ISearchReq): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}groups/search/global`,
-    params: {
-      ...params,
-      keyword: params?.key?.trim?.() ? params.key : undefined,
-    },
-  }),
-  checkMembersCommunityStructureMovePreview: (
-    communityId: string,
-    params: any,
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/group-structure/move-preview/`,
-    params: {
-      ...params,
-    },
-  }),
   getJoinedAllGroups: (
     params: IParamsGetJoinedAllGroups,
   ): HttpApiRequestConfig => ({
@@ -549,6 +519,7 @@ export const groupsApiConfig = {
 };
 
 const groupApi = {
+  blockUser: (blockedUserId: string) => withHttpRequestPromise(groupsApiConfig.blockUser, blockedUserId),
   getCommunityCUDTagPermission: (communityId: string) => withHttpRequestPromise(
     groupsApiConfig.getCommunityCUDTagPermission, communityId,
   ),
@@ -591,14 +562,6 @@ const groupApi = {
     groupsApiConfig.getWorkExperience, id,
   ),
   getMyPermissions: () => withHttpRequestPromise(groupsApiConfig.getMyPermissions),
-  getCommunityGroupTree: (id: string) => withHttpRequestPromise(
-    groupsApiConfig.getCommunityGroupsTree, id,
-  ),
-  putGroupStructureReorder: (communityId: string, data: string[]) => withHttpRequestPromise(
-    groupsApiConfig.putGroupStructureReorder,
-    communityId,
-    data,
-  ),
   getCommunityStructureMoveTargets: (
     communityId: string,
     groupId: string,
@@ -614,23 +577,6 @@ const groupApi = {
       communityId,
       groupId,
       key,
-    );
-  },
-  putGroupStructureMoveToTarget: (
-    communityId: string,
-    moveId: string,
-    targetId: string,
-  ) => {
-    if (!communityId || !moveId || !targetId) {
-      return Promise.reject(
-        new Error('putGroupStructureMoveToTarget invalid params'),
-      );
-    }
-    return withHttpRequestPromise(
-      groupsApiConfig.putGroupStructureMoveToTarget,
-      communityId,
-      moveId,
-      targetId,
     );
   },
   putGroupStructureCollapseStatus: (
@@ -809,14 +755,12 @@ const groupApi = {
     groupsApiConfig.declineAllGroupMemberRequests,
     groupId,
   ),
-  getInnerGroupsLastAdmin: (groupId: string, userId: string) => withHttpRequestPromise(
-    groupsApiConfig.getInnerGroupsLastAdmin,
-    groupId,
-    userId,
-  ),
   getDiscoverCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(
     groupsApiConfig.getDiscoverCommunities, params,
   ),
+  getListBlockingUsers: () => withHttpRequestPromise(groupsApiConfig.getListBlockingUsers),
+  getListRelationship: () => withHttpRequestPromise(groupsApiConfig.getListRelationship),
+  unblockUser: (userId: string) => withHttpRequestPromise(groupsApiConfig.unblockUser, userId),
   searchJoinedCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(
     groupsApiConfig.searchJoinedCommunities, params,
   ),
@@ -841,15 +785,6 @@ const groupApi = {
   ),
   leaveCommunity: (communityId: string) => withHttpRequestPromise(groupsApiConfig.leaveCommunity, communityId),
   getCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getCommunities, params),
-  searchGlobal: (params?: ISearchReq) => withHttpRequestPromise(groupsApiConfig.searchGlobal, params),
-  checkMembersCommunityStructureMovePreview: (
-    communityId: string,
-    params: any,
-  ) => withHttpRequestPromise(
-    groupsApiConfig.checkMembersCommunityStructureMovePreview,
-    communityId,
-    params,
-  ),
   getJoinedAllGroups: (params: IParamsGetJoinedAllGroups) => withHttpRequestPromise(
     groupsApiConfig.getJoinedAllGroups, params,
   ),

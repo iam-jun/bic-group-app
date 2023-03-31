@@ -15,7 +15,6 @@ import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communi
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
-import useModalStore from '~/store/modal';
 
 const CommunityAdmin = (props: any) => {
   const { params } = props.route;
@@ -35,9 +34,6 @@ const CommunityAdmin = (props: any) => {
       PermissionKey.EDIT_PRIVACY,
     ],
   );
-  const modalActions = useModalStore((state) => state.actions);
-
-  const displayNewFeature = () => modalActions.showAlertNewFeature();
 
   const onPressGeneralInfo = () => {
     rootNavigation.navigate(
@@ -54,31 +50,32 @@ const CommunityAdmin = (props: any) => {
     );
   };
 
-  const renderModerating = () => (
-    <>
-      <Text.BodyM
-        style={styles.headerTitle}
-        color={theme.colors.neutral80}
-        variant="bodyM"
-        useI18n
-      >
-        settings:title_community_moderating
-      </Text.BodyM>
-      <MenuItem
-        testID="community_admin.pending_posts"
-        title="settings:title_pending_posts"
-        icon="FileExclamation"
-        iconProps={{
-          icon: 'FileExclamation',
-          tintColor: theme.colors.purple50,
-        }}
-        notificationsBadgeNumber={999}
-        notificationsBadgeProps={{ maxNumber: 99, variant: 'alert' }}
-        rightSubIcon="AngleRightSolid"
-        onPress={displayNewFeature}
-      />
-    </>
-  );
+  const renderModerating = () => null;
+  // return (
+  //   <>
+  //     <Text.BodyM
+  //       style={styles.headerTitle}
+  //       color={theme.colors.neutral80}
+  //       variant="bodyM"
+  //       useI18n
+  //     >
+  //       settings:title_community_moderating
+  //     </Text.BodyM>
+  //     <MenuItem
+  //       testID="community_admin.pending_posts"
+  //       title="settings:title_pending_posts"
+  //       icon="FileExclamation"
+  //       iconProps={{
+  //         icon: 'FileExclamation',
+  //         tintColor: theme.colors.purple50,
+  //       }}
+  //       notificationsBadgeNumber={999}
+  //       notificationsBadgeProps={{ maxNumber: 99, variant: 'alert' }}
+  //       rightSubIcon="AngleRightSolid"
+  //       onPress={displayNewFeature}
+  //     />
+  //   </>
+  // );
 
   const renderSettings = () => (
     <>
@@ -100,14 +97,6 @@ const CommunityAdmin = (props: any) => {
           onPress={onPressGeneralInfo}
         />
       )}
-      <MenuItem
-        testID="community_admin.post_settings"
-        title="settings:title_post_settings"
-        icon="Copy"
-        iconProps={{ icon: 'Copy', tintColor: theme.colors.purple50 }}
-        rightSubIcon="AngleRightSolid"
-        onPress={displayNewFeature}
-      />
       <MenuItem
         testID="community_admin.schedule_content"
         title="settings:title_schedule_content"

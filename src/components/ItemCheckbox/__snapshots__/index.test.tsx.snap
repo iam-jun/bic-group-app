@@ -9,7 +9,6 @@ exports[`ItemCheckbox Component renders correctly 1`] = `
       "paddingVertical": 12,
     }
   }
-  testID="item_checkbox.container"
 >
   <Text
     style={
@@ -50,7 +49,7 @@ exports[`ItemCheckbox Component renders correctly 1`] = `
         "opacity": 1,
       }
     }
-    testID="item_checkbox.checkbox"
+    testID="button_wrapper"
   >
     <View
       style={
@@ -149,7 +148,6 @@ exports[`ItemCheckbox Component renders correctly with prop disabled = true 1`] 
       "paddingVertical": 12,
     }
   }
-  testID="item_checkbox.container"
 >
   <Text
     style={
@@ -190,7 +188,7 @@ exports[`ItemCheckbox Component renders correctly with prop disabled = true 1`] 
         "opacity": 1,
       }
     }
-    testID="item_checkbox.checkbox"
+    testID="button_wrapper"
   >
     <View
       style={
@@ -291,7 +289,6 @@ exports[`ItemCheckbox Component renders correctly with prop isChecked = true 1`]
       "paddingVertical": 12,
     }
   }
-  testID="item_checkbox.container"
 >
   <Text
     style={
@@ -332,7 +329,7 @@ exports[`ItemCheckbox Component renders correctly with prop isChecked = true 1`]
         "opacity": 1,
       }
     }
-    testID="item_checkbox.checkbox"
+    testID="button_wrapper"
   >
     <View
       style={

@@ -5,6 +5,7 @@ import MemberList from '~/screens/groups/components/MemberList';
 import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useCommunityMemberStore from '../store';
+import useBlockingStore from '~/store/blocking';
 
 interface CommunityMemberListProps {
   community: ICommunity;
@@ -24,13 +25,27 @@ const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProp
       PermissionKey.ASSIGN_UNASSIGN_ROLE,
     ],
   );
+  const isAdminRole = shouldHavePermission(
+    groupId,
+    [
+      PermissionKey.ROLE_COMMUNITY_OWNER,
+      PermissionKey.ROLE_COMMUNITY_ADMIN,
+      PermissionKey.ROLE_GROUP_ADMIN,
+    ],
+  );
+
+  const {
+    actions: { getListRelationship },
+    reset: resetBlocking,
+  } = useBlockingStore();
 
   useEffect(
     () => {
       getCommunityMembers();
-
+      getListRelationship();
       return () => {
         actions.clearCommunityMembers();
+        resetBlocking();
       };
     }, [groupId],
   );
@@ -47,11 +62,13 @@ const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProp
 
   const onRefresh = () => {
     getCommunityMembers(true);
+    getListRelationship(true);
   };
 
   return (
     <MemberList
       type="community"
+      isAdminRole={isAdminRole}
       canManageMember={canManageMember}
       onLoadMore={onLoadMore}
       onPressMenu={onPressMenu}

@@ -188,7 +188,8 @@
     "mark_post_as_important": "Bài viết Quan trọng",
     "mark_article_as_important": "Bài báo Quan trọng",
     "mark_series_as_important": "Loạt bài Quan trọng",
-    "text_deactivated": "Vô hiệu hoá"
+    "text_deactivated": "Vô hiệu hoá",
+    "settings": "Thiết lập bài viết"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -465,7 +466,19 @@
     "enter_phone": "Nhập số điện thoại",
     "select_location": "Chọn vị trí",
     "enter_description": "Nhập mô tả",
-    "optional": "tuỳ chọn"
+    "optional": "tuỳ chọn",
+    "title_blocking": "Chặn",
+    "text_blocked_users_list": "Danh sách người dùng bị chặn",
+    "text_content_blocked_users_list": "Việc chặn này được áp dụng cho các mục đích cá nhân. Việc chặn này sẽ không ảnh hưởng đến tương tác của bạn và người bị chặn trong cộng đồng hoặc nhóm đã tham gia",
+    "btn_unblock": "Mở khoá",
+    "title_unblock_user_name": "Bỏ chặn {{name}}?",
+    "text_unblock_user_name_result": "Bỏ chặn người dùng này sẽ cho phép họ tương tác lại với bạn như sau:",
+    "text_unblock_user_name_result_a": "Tìm kiếm và xem hồ sơ cá nhân của bạn",
+    "text_unblock_user_name_result_b": "Nhắc đến bạn",
+    "text_unblock_user_name_result_c": "Gửi tin nhắn cho bạn",
+    "title_blocked_users_list_empty": "Danh sách người dùng bị chặn trống",
+    "text_blocked_users_list_empty": "Không tìm thấy người dùng",
+    "text_blocked_at": "Đã chặn"
   },
   "languages": {
     "title_en": "English",
@@ -478,6 +491,7 @@
     "title_feed_attritube_all": "Tất cả",
     "title_feed_attritube_important": "Quan trọng",
     "title_feed_attritube_saved": "Đã lưu",
+    "title_feed_attritube_mine": "Của tôi",
     "title_feed_content_all": "Tất cả",
     "title_feed_content_posts": "Bài viết",
     "title_feed_content_articles": "Bài báo",
@@ -626,7 +640,6 @@
     "successful_schedule": "Đặt lịch thành công",
     "text_delete_article_success": "Bài viết của bạn đã được xoá",
     "paste_image_error": "Tải lên không thành công. Vui lòng tải lên hình ảnh bằng thanh công cụ.",
-    "article_settings": "Cài đặt bài viết",
     "text_selecting_will_be_added_to": "Bài viết của bạn sẽ được thêm vào"
   },
   "post": {
@@ -801,7 +814,6 @@
       "text_delete_comment_success": "Bình luận đã được xoá",
       "text_edited": "Đã sửa"
     },
-    "settings": "Thiết lập bài viết",
     "people_can_comment": "Mọi người có thể bình luận trên bài viết",
     "people_can_share": "Mọi người có thể chia sẻ trên bài viết",
     "people_can_react": "Mọi người có thể tương tác trên bài viết",
@@ -1280,8 +1292,7 @@
     "text_remove_article": "Bạn muốn xoá bài báo này?",
     "text_remove_post": "Bạn muốn xoá bài viết này?",
     "text_article_removed": "Bài viết đã được xoá",
-    "text_no_content": "Không có nội dung",
-    "series_settings": "Series settings"
+    "text_no_content": "Không có nội dung"
   },
   "tags": {
     "create_tag": "Tạo thẻ",
@@ -1311,5 +1322,22 @@
   "report": {
     "title": "Báo cáo nội dung",
     "banner_report_content": "Nội dung của bạn đã được báo cáo vì "
+  },
+  "block_user": {
+    "title_block_name": "Chặn {0}?",
+    "text_block_user": "Chặn người này",
+    "general_description": "Tính năng chặn này chỉ áp dụng cho mục đích cá nhân. Tính năng chặn này sẽ không ảnh hưởng tới việc tương tác của cả hai trong các cộng đồng hoặc nhóm đã tham gia.",
+    "cannot": {
+      "title": "sẽ không thể:",
+      "search_profile": "Tìm thấy và xem được trang cá nhân của bạn",
+      "mention": "Nhắc đến bạn",
+      "send_message": "Gửi tin nhắn tới bạn"
+    },
+    "can": {
+      "title": "vẫn có thể:",
+      "see_profile": "Cả hai vẫn thấy được nhau trong các cộng đồng hoặc nhóm",
+      "see_content": "Cả hai vẫn thấy được nội dung của nhau trong các cộng đồng hoặc nhóm"
+    },
+    "text_block_user_also": "Chặn người này"
   }
 }

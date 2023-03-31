@@ -92,14 +92,6 @@ export interface IReactionBottomSheet {
   callback?: (reactionId: ReactionType) => void;
 }
 
-export interface ILinkPreview {
-  url: string;
-  thumbnail?: string;
-  title?: string;
-  description?: string;
-  domain?: string;
-}
-
 export interface ICountryCodeList {
   code: string;
   name: string;
@@ -111,12 +103,6 @@ export interface ILocation {
   type: string;
   name_with_type: string;
   country: string;
-}
-
-export interface ISearchReq {
-  limit: number,
-  offset: number,
-  key?: string,
 }
 
 export enum SortOder {

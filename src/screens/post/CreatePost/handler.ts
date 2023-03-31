@@ -4,7 +4,7 @@ import useUploaderStore from '~/store/uploader';
 import showAlert from '~/store/helper/showAlert';
 import showToast from '~/store/helper/showToast';
 
-import useDraftPostStore from '../../Draft/DraftPost/store';
+import useDraftPostStore from '../../YourContent/components/Draft/DraftPost/store';
 
 export const handleBack = ({
   isEditPost,

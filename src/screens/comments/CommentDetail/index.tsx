@@ -28,7 +28,9 @@ import { getTitle, replacePostDetail } from './helper';
 
 const CommentDetail: FC<IRouteParams> = (props) => {
   const params = props?.route?.params;
-  const { postId, commentId, isReported } = params || {};
+  const {
+    postId, commentId, isReported, target = '',
+  } = params || {};
 
   const { rootNavigation, goHome } = useRootNavigation();
   const isFocused = useIsFocused();
@@ -40,7 +42,8 @@ const CommentDetail: FC<IRouteParams> = (props) => {
   const styles = createStyle(theme);
 
   const actor = usePostsStore(postsSelector.getActor(postId));
-  const type = usePostsStore(postsSelector.getType(postId));
+  const type = usePostsStore(postsSelector.getType(postId)) || target || '';
+  const actionsPostsStore = usePostsStore((state) => state.actions);
   const copyCommentError = useKeySelector(postKeySelector.commentErrorCode);
   const [showPrivacyPost, setShowPrivacyPost] = useState(false);
   const comment = useCommentsStore(useCallback(commentsSelector.getComment(commentId), [commentId]));
@@ -70,7 +73,7 @@ const CommentDetail: FC<IRouteParams> = (props) => {
   useEffect(
     () => () => {
       dispatch(postActions.setCommentErrorCode(false));
-      dispatch(postActions.setLoadingGetPostDetail(false));
+      actionsPostsStore.setIsLoadingGetPostDetail(false);
     },
     [],
   );

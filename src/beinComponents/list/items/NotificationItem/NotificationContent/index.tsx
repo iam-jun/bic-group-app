@@ -30,7 +30,6 @@ const NotificationContent = ({
       {!!content && (
         <Text.BodyM
           testID="notification_content.content"
-          numberOfLines={2}
           color={colors.neutral60}
         >
           {content}

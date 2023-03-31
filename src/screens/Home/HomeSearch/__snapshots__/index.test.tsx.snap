@@ -21,6 +21,7 @@ exports[`NewsfeedSearch component should render search 1`] = `
       "zIndex": 99,
     }
   }
+  testID="search_base_view"
 >
   <View
     style={
@@ -338,6 +339,7 @@ exports[`NewsfeedSearch component should render suggestion 1`] = `
       "zIndex": 99,
     }
   }
+  testID="search_base_view"
 >
   <View
     style={

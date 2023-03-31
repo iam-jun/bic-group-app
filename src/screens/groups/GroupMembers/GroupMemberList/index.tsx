@@ -5,6 +5,7 @@ import MemberList from '../../components/MemberList';
 import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useGroupMemberStore, { IGroupMemberState } from '../store';
+import useBlockingStore from '~/store/blocking';
 
 interface GroupMemberListProps {
   groupId: string;
@@ -20,6 +21,15 @@ const GroupMemberList = ({ groupId, onPressMenu }: GroupMemberListProps) => {
       PermissionKey.ASSIGN_UNASSIGN_ROLE,
     ],
   );
+  const isAdminRole = shouldHavePermission(
+    groupId,
+    [
+      PermissionKey.ROLE_COMMUNITY_OWNER,
+      PermissionKey.ROLE_COMMUNITY_ADMIN,
+      PermissionKey.ROLE_GROUP_ADMIN,
+    ],
+  );
+
   const { canLoadMore } = useGroupMemberStore(
     (state: IGroupMemberState) => state.groupMembers,
   );
@@ -30,12 +40,18 @@ const GroupMemberList = ({ groupId, onPressMenu }: GroupMemberListProps) => {
     actions.getGroupMembers({ groupId, isRefreshing });
   };
 
+  const {
+    actions: { getListRelationship },
+    reset: resetBlocking,
+  } = useBlockingStore();
+
   useEffect(
     () => {
       getMembers();
-
+      getListRelationship();
       return () => {
         actions.clearGroupMembers();
+        resetBlocking();
       };
     }, [groupId],
   );
@@ -47,11 +63,13 @@ const GroupMemberList = ({ groupId, onPressMenu }: GroupMemberListProps) => {
 
   const onRefresh = () => {
     getMembers(true);
+    getListRelationship(true);
   };
 
   return (
     <MemberList
       type="group"
+      isAdminRole={isAdminRole}
       canManageMember={canManageMember}
       onLoadMore={onLoadMore}
       onPressMenu={onPressMenu}

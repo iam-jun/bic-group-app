@@ -110,7 +110,6 @@ describe('MentionInput component', () => {
     const onChangeText = jest.fn();
     const props = {
       ...baseProps,
-      disabled: true,
       componentInputProps: {
         onChangeText,
       },

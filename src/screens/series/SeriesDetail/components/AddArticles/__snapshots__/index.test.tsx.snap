@@ -19,6 +19,7 @@ exports[`AddArticles component renders correctly 1`] = `
       "zIndex": 99,
     }
   }
+  testID="search_base_view"
 >
   <View
     style={
@@ -783,6 +784,7 @@ exports[`AddArticles component renders correctly with empty data 1`] = `
       "zIndex": 99,
     }
   }
+  testID="search_base_view"
 >
   <View
     style={

@@ -1,48 +1,77 @@
-import { act, renderHook } from '@testing-library/react-hooks';
-import groupApi from '~/api/GroupApi';
-import useDiscoverCommunitiesStore from './store';
-import { responseDiscoverCommunity } from './store/__mocks__/data';
+import React from 'react';
+import { fireEvent, languages, renderWithRedux } from '~/test/testUtils';
+import DiscoverCommunities from './index';
+import useDiscoverCommunitiesStore, { IDiscoverCommunitiesState } from './store';
+import * as navigationHook from '~/hooks/navigation';
+import useCommunityController from '~/screens/communities/store';
+import useCommunitiesStore from '~/store/entities/communities';
+import { mockDiscoverCommunityResponse } from '~/test/mock_data/discoverCommunity';
 
-describe('DiscoverCommunities Screen', () => {
-  it('given no params, should call api getDiscoverCommunities with the next page', async () => {
-    const spy = jest.spyOn(groupApi, 'getDiscoverCommunities').mockImplementation(
-      () => Promise.resolve(responseDiscoverCommunity) as any,
-    );
-
-    const { result, waitForNextUpdate } = renderHook(() => useDiscoverCommunitiesStore());
-    act(() => {
-      result.current.actions.getDiscoverCommunities();
+describe('DiscoverCommunities component', () => {
+  const mockData = mockDiscoverCommunityResponse.data;
+  it('should render empty screen if loading = false and hasNextPage = []', () => {
+    useDiscoverCommunitiesStore.setState((state: IDiscoverCommunitiesState) => {
+      state.loading = false;
+      return state;
     });
-    expect(result.current.loading).toBe(true);
-    await waitForNextUpdate();
-    expect(spy).toBeCalled();
-    expect(result.current.hasNextPage).toBe(true);
-    expect(result.current.loading).toBe(false);
-    expect(result.current.ids.length).toBe(responseDiscoverCommunity.data.length);
+
+    const wrapper = renderWithRedux(
+      <DiscoverCommunities />,
+    );
+    const emptyScreen = wrapper.queryByTestId('empty_screen');
+    expect(emptyScreen).toBeDefined();
   });
 
-  it('given param isRefreshing, should refresh data', async () => {
-    const fakeIds = responseDiscoverCommunity.data.map((item) => item.id);
-    const spy = jest.spyOn(groupApi, 'getDiscoverCommunities').mockImplementation(
-      () => Promise.resolve(responseDiscoverCommunity) as any,
-    );
+  it('should render empty screen if loading = false and ids = []', () => {
+    const navigate = jest.fn();
+    const rootNavigation = { navigate };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
-    const { result, waitForNextUpdate } = renderHook(() => useDiscoverCommunitiesStore());
-    act(() => {
-      useDiscoverCommunitiesStore.setState({
-        ids: [...fakeIds, ...fakeIds],
-      }, false);
+    const ids = [mockData[0].id, mockData[1].id, mockData[2].id,
+    ];
+    useDiscoverCommunitiesStore.setState((state: IDiscoverCommunitiesState) => {
+      state.ids = ids;
+      state.loading = false;
+      state.hasNextPage = true;
+      return state;
     });
-    act(() => {
-      result.current.actions.getDiscoverCommunities(true);
+
+    const joinCommunity = jest.fn();
+    const cancelJoinCommunity = jest.fn();
+    useCommunityController.setState((state) => {
+      state.actions.joinCommunity = joinCommunity;
+      state.actions.cancelJoinCommunity = cancelJoinCommunity;
+      return state;
     });
-    expect(result.current.loading).toBe(false);
-    expect(result.current.refreshing).toBe(true);
-    await waitForNextUpdate();
-    expect(spy).toBeCalled();
-    expect(result.current.hasNextPage).toBe(true);
-    expect(result.current.loading).toBe(false);
-    expect(result.current.refreshing).toBe(false);
-    expect(result.current.ids.length).toBe(fakeIds.length);
+
+    const newItems = mockData.reduce(
+      (accumulator, currentItem) => ({
+        ...accumulator,
+        [currentItem.id]: currentItem,
+      }),
+      {},
+    );
+    useCommunitiesStore.setState((state) => {
+      state.data = newItems;
+      return state;
+    });
+
+    const wrapper = renderWithRedux(
+      <DiscoverCommunities />,
+    );
+    const discoverItemComp = wrapper.queryAllByTestId('discover_communities_item');
+    expect(discoverItemComp.length).toEqual(mockData.length);
+
+    const btnJoin = wrapper.getByText(languages.common.btn_join);
+    fireEvent.press(btnJoin);
+    expect(joinCommunity).toBeCalled();
+
+    const btnView = wrapper.getByText(languages.common.btn_view);
+    fireEvent.press(btnView);
+    expect(navigate).toBeCalled();
+
+    const btnCancelRequest = wrapper.getByText(languages.common.btn_cancel_request);
+    fireEvent.press(btnCancelRequest);
+    expect(cancelJoinCommunity).toBeCalled();
   });
 });

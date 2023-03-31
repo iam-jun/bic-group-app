@@ -1,6 +1,14 @@
 import { createStore, resetStore } from '~/store/utils';
 import getDiscoverCommunities from './actions/getDiscoverCommunities';
-import { IDiscoverCommunitiesState } from './Interface';
+import IBaseState from '~/store/interfaces/IBaseState';
+import IFetchingState from '~/store/interfaces/IFetchingState';
+
+export interface IDiscoverCommunitiesState extends IBaseState, IFetchingState {
+  ids: string[];
+  actions?: {
+    getDiscoverCommunities?: (isRefreshing?: boolean) => void;
+  };
+}
 
 const initDiscoverCommunitiesState: IDiscoverCommunitiesState = {
   ids: [],

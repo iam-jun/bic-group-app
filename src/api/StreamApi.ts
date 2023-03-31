@@ -73,6 +73,7 @@ export const streamApiConfig = {
       idLt: param?.idLt,
       isImportant: param?.isImportant,
       isSaved: param?.isSaved,
+      isMine: param?.isMine,
       type: param?.type,
     },
   }),

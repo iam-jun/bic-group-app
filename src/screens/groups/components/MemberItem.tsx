@@ -15,15 +15,19 @@ import spacing, { borderRadius } from '~/theme/spacing';
 import { Button } from '~/baseComponents';
 import { useBaseHook } from '~/hooks';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
+import { IGroupMembers } from '~/interfaces/IGroup';
+import { ICommunityMembers } from '~/interfaces/ICommunity';
+import useBlockingStore from '~/store/blocking';
 
 interface MemberItemProps {
-  item: any;
+  item: ICommunityMembers | IGroupMembers;
+  isAdminRole: boolean;
   canManageMember: boolean;
   onPressMenu: (item: any) => void;
 }
 
 const MemberItem = ({
-  item, canManageMember, onPressMenu,
+  item, isAdminRole, canManageMember, onPressMenu,
 }: MemberItemProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -33,12 +37,21 @@ const MemberItem = ({
   const currentCommunityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
   const community = useCommunitiesStore((state: ICommunitiesState) => state.data[currentCommunityId]);
 
+  const { listRelationship } = useBlockingStore();
+  const isBlockedUser = listRelationship.some((userId) => userId === item.id);
+
   const {
     id, fullname, avatar, username,
   } = item || {};
 
   const isMe = user?.username === username;
   const memberName = isMe ? `${fullname} (${t('common:text_you')})` : fullname;
+
+  /**
+   * Community owner/admins or Group admins can send message to all members
+   * Members cannot send message to other members, except group admins.
+   */
+  const canSendMessage = !isMe && (isAdminRole || !!item?.isAdmin) && !isBlockedUser;
 
   const goToUserProfile = () => {
     rootNavigation.navigate(
@@ -76,15 +89,26 @@ const MemberItem = ({
       onPress={goToUserProfile}
       ContentComponent={(
         <>
-          <Text.BodyMMedium ellipsizeMode="middle" color={colors.neutral60} numberOfLines={1}>
+          <Text.BodyMMedium
+            testID="member_item.name"
+            ellipsizeMode="middle"
+            color={colors.neutral60}
+            numberOfLines={1}
+          >
             {memberName}
           </Text.BodyMMedium>
-          <Text.BodyS color={colors.neutral30} numberOfLines={1}>{`@${username}`}</Text.BodyS>
+          <Text.BodyS
+            testID="member_item.username"
+            color={colors.neutral30}
+            numberOfLines={1}
+          >
+            {`@${username}`}
+          </Text.BodyS>
         </>
       )}
       RightComponent={(
         <>
-          {!isMe && (
+          {canSendMessage && (
             <Icon
               icon="CommentDotsSolid"
               size={15}

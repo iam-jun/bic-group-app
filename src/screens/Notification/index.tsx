@@ -142,7 +142,7 @@ const Notification = () => {
               break;
             }
             case NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL: {
-              rootNavigation.navigate(menuStack.draft);
+              rootNavigation.navigate(menuStack.yourContent, { initTab: 0 });
               break;
             }
             case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR:
@@ -176,6 +176,7 @@ const Notification = () => {
                   postId: act?.id,
                   commentId: act?.comment?.id,
                   notiId: item.id,
+                  target: act?.contentType || '',
                 },
               );
               break;
@@ -189,6 +190,7 @@ const Notification = () => {
                   commentId: act?.comment?.child?.id,
                   parentId: act?.comment?.id,
                   notiId: item.id,
+                  target: act?.contentType || '',
                 },
               );
               break;
@@ -315,6 +317,7 @@ const Notification = () => {
                     commentId: targetId,
                     notiId: item.id,
                     isReported: true,
+                    target: act?.contentType || '',
                   },
                 );
               }

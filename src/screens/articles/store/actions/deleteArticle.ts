@@ -1,6 +1,6 @@
 import streamApi from '~/api/StreamApi';
 import { IPayloadAddToAllPost } from '~/interfaces/IPost';
-import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
+import useDraftArticleStore from '~/screens/YourContent/components/Draft/DraftArticle/store';
 import usePostsStore from '~/store/entities/posts';
 import showToast from '~/store/helper/showToast';
 import showToastError from '~/store/helper/showToastError';

@@ -5,7 +5,6 @@ export const postInitState = {
   replyingComment: {},
   scrollToLatestItem: null,
   scrollToCommentsPosition: null,
-  loadingGetPostDetail: false,
   commentErrorCode: '',
 };
 
@@ -29,11 +28,6 @@ function postReducer(
       return {
         ...state,
         scrollToCommentsPosition: payload,
-      };
-    case postTypes.LOADING_GET_POST_DETAIL:
-      return {
-        ...state,
-        loadingGetPostDetail: payload,
       };
     case postTypes.SET_COMMENT_ERROR_CODE:
       return {

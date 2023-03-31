@@ -9,7 +9,13 @@ describe('UserHeader component', () => {
     const username = 'test';
     const latestWork = { company: 'Test', titlePosition: 'Test' };
 
-    const rendered = renderWithRedux(<UserHeader fullname={fullname} username={username} latestWork={latestWork} />);
+    const rendered = renderWithRedux(<UserHeader
+      id="123"
+      fullname={fullname}
+      username={username}
+      latestWork={latestWork}
+      isCurrentUser
+    />);
     const { getByTestId } = rendered;
     const containerComponent = getByTestId('user_profile');
     expect(containerComponent).toBeDefined();

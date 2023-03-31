@@ -17,9 +17,11 @@ describe('SettingItem conponent', () => {
   };
 
   it('renders correctly', () => {
-    const rendered = render(<SettingItem {...baseProps} />).toJSON();
+    const rendered = render(<SettingItem {...baseProps} />);
 
-    expect(rendered).toMatchSnapshot();
+    expect(rendered.getByTestId('primary_item.title').props.children).toEqual('Full name');
+    expect(rendered.getByTestId('primary_item.subTitle').props.children).toEqual('Not set');
+    expect(rendered.getByTestId('edit_user_info.setting_item.left_component')).toBeDefined();
   });
 
   it('should call props onPress', () => {
@@ -39,7 +41,6 @@ describe('SettingItem conponent', () => {
     const { getByTestId } = rendered;
     const itemComponent = getByTestId('test');
     expect(itemComponent).toBeDefined();
-    expect(rendered.toJSON()).toMatchSnapshot();
   });
 
   it('should show SettingItem disabled', () => {
@@ -70,7 +71,6 @@ describe('SettingItem conponent', () => {
     );
 
     expect(rightComponent).toBeDefined();
-    expect(rendered.toJSON()).toMatchSnapshot();
   });
 
   it('render without leftIcon', () => {

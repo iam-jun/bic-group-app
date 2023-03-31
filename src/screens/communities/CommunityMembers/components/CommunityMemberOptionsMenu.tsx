@@ -86,6 +86,7 @@ const CommunityMemberOptionsMenu = ({
 
     const dataReportMember = {
       communityId,
+      reportedMember: selectedMember,
     };
 
     showModal({
@@ -95,6 +96,9 @@ const CommunityMemberOptionsMenu = ({
         targetType={TargetType.MEMBER}
         dataReportMember={dataReportMember}
       />,
+      props: {
+        disableScrollIfPossible: false,
+      },
     });
   };
 

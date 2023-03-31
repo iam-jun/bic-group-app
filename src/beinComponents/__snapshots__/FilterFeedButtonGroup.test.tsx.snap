@@ -421,6 +421,50 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
             Saved
           </Text>
         </View>
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "borderBottomColor": "#353E6E",
+              "borderBottomWidth": 0,
+              "justifyContent": "center",
+              "marginLeft": 8,
+              "opacity": 1,
+              "padding": 12,
+              "paddingHorizontal": 8,
+              "paddingVertical": 0,
+            }
+          }
+          testID="tab-button-home:title_feed_attritube_mine-notselected"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 13,
+                },
+                Object {
+                  "color": "#353E6E",
+                },
+                undefined,
+              ]
+            }
+          >
+            Mine
+          </Text>
+        </View>
       </View>
     </RCTScrollView>
   </View>

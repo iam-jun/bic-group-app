@@ -8,25 +8,22 @@ import IHomeState from '~/screens/Home/store/Interface';
 import IChatState from '~/store/chat/IChatState';
 import IJoinedCommunitiesState from '~/screens/Menu/store/Interface';
 import ICommunityJoinedGroupTreeState from '~/screens/groups/components/CommunityJoinedGroupTree/store/Interface';
-import IDraftPostState from '~/screens/Draft/DraftPost/store/Interface';
+import IDraftPostState from '~/screens/YourContent/components/Draft/DraftPost/store/Interface';
 import IReactionDetailState from '~/components/reaction/ReactionDetailBottomSheet/store/Interface';
 import { IUserProfileState } from '~/screens/Menu/UserProfile/store';
-import IGroupStructureState from '~/screens/groups/GroupStructureSettings/store/Interface';
-import IPermissionSchemeState from '~/screens/PermissionScheme/store/Interface';
 import IDiscoverGroupsState from '~/screens/groups/DiscoverGroups/store/Interface';
 import { ICommunityMemberState } from '~/screens/communities/CommunityMembers/store';
 import { IGroupMemberState } from '~/screens/groups/GroupMembers/store';
 import IUserInterestedPostState from '~/components/posts/UserInterestedPost/store/Interface';
-import { IDiscoverCommunitiesState } from '~/screens/Discover/components/DiscoverCommunities/store/Interface';
 import { ICommunitiesState } from './entities/communities';
-import { IDiscoverCommunitiesSearchState } from '~/screens/Discover/components/SearchDiscoverCommunity/store/Interface';
+import { IDiscoverCommunitiesSearchState } from '~/screens/Discover/components/SearchDiscoverCommunity/store';
 import { IManagedState } from '~/screens/communities/Communities/components/Managed/store/Interface';
 import { IYourCommunitiesState } from '~/screens/communities/Communities/components/YourCommunities/store/Interface';
 import { IYourGroupsState } from '~/screens/communities/Communities/components/YourGroups/store/Interface';
 import { ISearchJoinedCommunitiesState } from '~/screens/communities/Communities/components/SearchCommunity/store/Interface';
 import INotificationsState from '~/screens/Notification/store/Interface';
 import { IGiphyState } from './giphy';
-import { IDraftArticleState } from '~/screens/Draft/DraftArticle/store';
+import { IDraftArticleState } from '~/screens/YourContent/components/Draft/DraftArticle/store';
 import { IArticleController } from '~/screens/articles/store';
 import { ISeriesState } from '~/screens/series/store';
 import { ITopicState } from '~/screens/topic/store';
@@ -51,6 +48,9 @@ import { IGroupJoinableUsersState } from '~/screens/groups/GroupMembers/AddMembe
 import { ISelectSeriesState } from '~/components/SelectSeries/store';
 import { ISelectTagsState } from '~/components/SelectTags/store';
 import { IValidateSeriesTags } from '~/components/ValidateSeriesTags/store';
+import { IDiscoverCommunitiesState } from '~/screens/Discover/components/DiscoverCommunities/store';
+import { IBlockingState } from './blocking';
+import { IYourContentState } from '~/screens/YourContent/store';
 
 export interface BicStore {
   entities: {
@@ -105,7 +105,6 @@ export interface BicStore {
       CommunityJoinedGroupTree: {
         communityJoinedGroupTreeStore: ICommunityJoinedGroupTreeState;
       };
-      groupStructure: IGroupStructureState;
       discoverGroups: IDiscoverGroupsState;
     };
     GroupMembers: {
@@ -143,9 +142,6 @@ export interface BicStore {
     joinedCommunitiesStore: IJoinedCommunitiesState;
     userProfileStore: IUserProfileState;
   };
-  PermissionScheme: {
-    permissionSchemeStore: IPermissionSchemeState;
-  },
 
   Notifications: {
     notificationStore: INotificationsState,
@@ -162,6 +158,7 @@ export interface BicStore {
     topicStore: ITopicState;
   };
   YourContent: {
+    yourContentStore: IYourContentState;
     scheduleArticleStore: IScheduleArticlesState;
   },
 
@@ -179,4 +176,5 @@ export interface BicStore {
   selectTags: ISelectTagsState;
   selectSeries: ISelectSeriesState;
   validateSeriesTags: IValidateSeriesTags;
+  blockingStore: IBlockingState;
 }

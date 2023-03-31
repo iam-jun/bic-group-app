@@ -110,14 +110,14 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
         <View style={styles.contentContainer}>
           {!!title && (
             <View style={styles.titleContainer}>
-              <Text variant="h6" numberOfLines={2} {...titleProps} style={styles.title}>
+              <Text testID="primary_item.title" variant="h6" numberOfLines={2} {...titleProps} style={styles.title}>
                 {title}
               </Text>
               {isDeactivated && <DeactivatedView style={styles.deactivatedView} />}
             </View>
           )}
           {!!subTitle && (
-            <Text variant="bodyM" numberOfLines={2} {...subTitleProps}>
+            <Text testID="primary_item.subTitle" variant="bodyM" numberOfLines={2} {...subTitleProps}>
               {subTitle}
             </Text>
           )}

@@ -17,9 +17,11 @@ import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { formatLargeNumber } from '~/utils/formatter';
 import useMemberSection from '~/hooks/useMemberSection';
+import useBlockingStore from '~/store/blocking';
 
 interface MemberListProps {
   type: 'group' | 'community';
+  isAdminRole: boolean;
   canManageMember: boolean;
   onLoadMore: () => void;
   onPressMenu: (item: any) => void;
@@ -28,6 +30,7 @@ interface MemberListProps {
 
 const MemberList = ({
   type,
+  isAdminRole,
   canManageMember,
   onLoadMore,
   onPressMenu,
@@ -44,8 +47,12 @@ const MemberList = ({
     loading, refreshing, sectionList,
   } = memberSectionData;
 
+  const {
+    loading: loadingBlocking,
+  } = useBlockingStore();
+
   const renderEmpty = () => {
-    if (loading) return null;
+    if (loading || loadingBlocking) return null;
     return <NoSearchResultsFound />;
   };
 
@@ -58,7 +65,7 @@ const MemberList = ({
   );
 
   const renderListFooter = () => {
-    if (!loading) return <ViewSpacing height={insets.bottom || spacing.padding.large} />;
+    if (!loading && !loadingBlocking) return <ViewSpacing height={insets.bottom || spacing.padding.large} />;
 
     return (
       <View
@@ -73,6 +80,7 @@ const MemberList = ({
   const renderItem = ({ item }: {item: any}) => (
     <MemberItem
       item={item}
+      isAdminRole={isAdminRole}
       canManageMember={canManageMember}
       onPressMenu={onPressMenu}
     />
@@ -82,11 +90,14 @@ const MemberList = ({
 
   const keyExtractor = (item, index) => `member_list_${item.id}_${index}`;
 
+  // The purpose of waiting for 2 api (getListMembers && getListRelationship) to finish running at the same time
+  const sections = loadingBlocking ? [] : sectionList;
+
   return (
     <SectionList
       testID="member_list"
       style={styles.content}
-      sections={sectionList}
+      sections={sections}
       keyExtractor={keyExtractor}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.2}

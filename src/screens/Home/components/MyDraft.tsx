@@ -37,7 +37,8 @@ const MyDraft = () => {
   const goToDraftPost = () => {
     modalActions.hideModal();
     rootNavigation.navigate(
-      menuStack.draft,
+      menuStack.yourContent,
+      { initTab: 0 },
     );
   };
 

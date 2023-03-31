@@ -36,6 +36,7 @@ export interface IParamGetFeed {
   idLt?: number;
   isImportant?: boolean;
   isSaved?: boolean;
+  isMine?: boolean;
   type?: PostType | undefined;
 }
 

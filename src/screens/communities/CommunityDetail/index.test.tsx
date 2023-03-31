@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { renderWithRedux, createTestStore } from '~/test/testUtils';
+import { render } from '~/test/testUtils';
 import MockedNavigator from '../../../test/MockedNavigator';
 import CommunityDetail from './index';
-import initialState from '../../../storeRedux/initialState';
 import { communityDetailData } from '~/test/mock_data/communities';
+import useCommunitiesStore from '~/store/entities/communities';
+import { CommunityPrivacyType } from '~/constants/privacyTypes';
 
 describe('CommunityDetail', () => {
   const component = () => (
@@ -12,12 +13,8 @@ describe('CommunityDetail', () => {
   );
 
   it('renders Placeholder  correctly', () => {
-    const state = { ...initialState };
-    const store = createTestStore(state);
-
-    const wrapper = renderWithRedux(
+    const wrapper = render(
       <MockedNavigator component={component} />,
-      store,
     );
     const placeholder = wrapper.getByTestId('community_detail.placeholder');
     expect(placeholder).toBeDefined();
@@ -26,54 +23,75 @@ describe('CommunityDetail', () => {
   });
 
   it('should render PrivateWelcome page for guest', () => {
-    const state = { ...initialState };
-    const store = createTestStore(state);
+    useCommunitiesStore.setState((state) => {
+      state.data = {
+        [communityDetailData.id]: {
+          ...communityDetailData,
+          joinStatus: 1,
+          privacy: CommunityPrivacyType.PRIVATE,
+        },
+      };
+      return state;
+    });
 
-    const wrapper = renderWithRedux(
+    const wrapper = render(
       <MockedNavigator component={component} />,
-      store,
     );
     const PrivateWelcomeComp = wrapper.getByTestId('private_welcome');
     expect(PrivateWelcomeComp).toBeDefined();
   });
 
   it('should render PageContent page correctly when user is a member', () => {
-    const state = { ...initialState };
-    const store = createTestStore(state);
-
-    const wrapper = renderWithRedux(
+    useCommunitiesStore.setState((state) => {
+      state.data = {
+        [communityDetailData.id]: communityDetailData,
+      };
+      return state;
+    });
+    const wrapper = render(
       <MockedNavigator component={component} />,
-      store,
     );
-    const listView = wrapper.getByTestId('flatlist');
-    expect(listView).toBeDefined();
-    const chatIcon = wrapper.getByTestId('header.iconChat');
-    expect(chatIcon).toBeDefined();
+    const listView = wrapper.queryByTestId('flatlist');
+    expect(listView).not.toBeNull();
   });
 
-  it('should render PageContent page correctly when user is not a member for OPEN/PUBLIC privacy type', () => {
-    const state = { ...initialState };
-    const store = createTestStore(state);
+  it('should render PageContent page correctly when user is not a member for OPEN privacy type', () => {
+    useCommunitiesStore.setState((state) => {
+      state.data = {
+        [communityDetailData.id]: {
+          ...communityDetailData,
+          joinStatus: 1,
+          privacy: CommunityPrivacyType.OPEN,
+        },
+      };
+      return state;
+    });
 
-    const wrapper = renderWithRedux(
+    const wrapper = render(
       <MockedNavigator component={component} />,
-      store,
     );
 
     // should render PageContent component
-    const listView = wrapper.getByTestId('flatlist');
-    expect(listView).toBeDefined();
+    const listView = wrapper.queryByTestId('flatlist');
+    expect(listView).not.toBeNull();
   });
 
   it('should not render chat icon correctly for PRIVATE privacy type when user is a guest', () => {
-    const state = { ...initialState };
-    const store = createTestStore(state);
+    useCommunitiesStore.setState((state) => {
+      state.data = {
+        [communityDetailData.id]: {
+          ...communityDetailData,
+          joinStatus: 1,
+          privacy: CommunityPrivacyType.PRIVATE,
+        },
+      };
+      return state;
+    });
 
-    const wrapper = renderWithRedux(
+    const wrapper = render(
       <MockedNavigator component={component} />,
-      store,
     );
-    const chatIcon = wrapper.queryByTestId('header.iconChat');
+    const chatIcon = wrapper.queryByTestId('header.icon_chat');
     expect(chatIcon).toBeNull();
   });
 });

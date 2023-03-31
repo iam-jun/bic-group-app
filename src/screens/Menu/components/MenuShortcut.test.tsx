@@ -6,6 +6,7 @@ import * as navigationHook from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import i18n from '~/localization';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 
 describe('MenuShortcut component', () => {
@@ -54,7 +55,7 @@ describe('MenuShortcut component', () => {
     expect(navigate).toHaveBeenCalledWith(articleStack.createArticle, { isFirstStep: true });
   });
 
-  it('should navigate to draft screen when click item your draft', () => {
+  it('should navigate to create series screen when click item write series', () => {
     const navigate = jest.fn();
     const rootNavigation = { navigate };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
@@ -68,9 +69,9 @@ describe('MenuShortcut component', () => {
     fireEvent.press(itemsComponent[2]);
 
     const itemText = rendered.getAllByTestId('menu_shortcut.item.text')?.[2];
-    expect(itemText.props?.children).toEqual(i18n.t('menu:title_draft'));
+    expect(itemText.props?.children).toEqual(i18n.t('menu:title_write_series'));
 
-    expect(navigate).toHaveBeenCalledWith(menuStack.draft);
+    expect(navigate).toHaveBeenCalledWith(seriesStack.seriesSelectAudience, { isFirstStep: true });
   });
   it('should navigate to your content screen when click item your content', () => {
     const navigate = jest.fn();
@@ -88,6 +89,6 @@ describe('MenuShortcut component', () => {
     const itemText = rendered.getAllByTestId('menu_shortcut.item.text')?.[3];
     expect(itemText.props?.children).toEqual(i18n.t('menu:title_your_content'));
 
-    expect(navigate).toHaveBeenCalledWith(menuStack.yourContent);
+    expect(navigate).toHaveBeenCalledWith(menuStack.yourContent, { initTab: 1 });
   });
 });

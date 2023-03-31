@@ -9,7 +9,7 @@ afterEach(cleanup);
 describe('VideoPlayer component', () => {
   it('renders correctly', () => {
     const rendered = renderWithRedux(
-      <FileVideo src="" thumbnail="" />,
+      <FileVideo src="" posterInfo={{ videoHeight: 0, url: '', videoWidth: 0 }} />,
     ).toJSON();
     expect(rendered).toMatchSnapshot();
   });

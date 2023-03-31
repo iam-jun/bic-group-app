@@ -22,7 +22,7 @@ import CreatePostContent from './components/CreatePostContent';
 import CreatePostFooter from './components/CreatePostFooter';
 import CreateBannerImportant from '~/components/ImportantSettings/CreateBannerImportant';
 import { handleBack } from './handler';
-import useDraftPostStore from '../../Draft/DraftPost/store';
+import useDraftPostStore from '../../YourContent/components/Draft/DraftPost/store';
 import useCommentInputStore from '../../comments/components/CommentInputView/store';
 import ICommentInputState from '../../comments/components/CommentInputView/store/Interface';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
@@ -164,7 +164,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   const onPressDraftPost = () => {
     if (isEditDraftPost) {
       draftPostActions.getDraftPosts({ isRefresh: true });
-      rootNavigation.navigate(menuStack.draft);
+      rootNavigation.navigate(menuStack.yourContent, { initTab: 0 });
     }
   };
 

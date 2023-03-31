@@ -219,7 +219,8 @@
     "mark_post_as_important": "Mark this post as Important",
     "mark_article_as_important": "Mark this article as Important",
     "mark_series_as_important": "Mark this series as Important",
-    "text_deactivated": "Deactivated"
+    "text_deactivated": "Deactivated",
+    "settings": "Settings"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -505,7 +506,19 @@
     "enter_phone": "Enter phone",
     "select_location": "Select location",
     "enter_description": "Enter description",
-    "optional": "optional"
+    "optional": "optional",
+    "title_blocking": "Blocking",
+    "text_blocked_users_list": "Blocked users list",
+    "text_content_blocked_users_list": "This blocking is applied to individual purposes. This blocking won't affect your and the blocked person's interactions in a community or group that has joined",
+    "btn_unblock": "Unblock",
+    "title_unblock_user_name": "Unblock {{name}}?",
+    "text_unblock_user_name_result": "Unblocking this user will allow them to interact with you again below:",
+    "text_unblock_user_name_result_a": "Search and see your individual user profile",
+    "text_unblock_user_name_result_b": "Mention you",
+    "text_unblock_user_name_result_c": "Send a direct message to you",
+    "title_blocked_users_list_empty": "Blocked users list is empty",
+    "text_blocked_users_list_empty": "User not found",
+    "text_blocked_at": "Blocked at"
   },
   "languages": {
     "title_en": "English",
@@ -518,6 +531,7 @@
     "title_feed_attritube_all": "All",
     "title_feed_attritube_important": "Important",
     "title_feed_attritube_saved": "Saved",
+    "title_feed_attritube_mine": "Mine",
     "title_feed_content_all": "All",
     "title_feed_content_posts": "Posts",
     "title_feed_content_articles": "Articles",
@@ -588,8 +602,8 @@
   },
   "your_content": {
     "title_draft": "Draft",
-    "title_schedule_article": "Scheduled Articles",
-    "title_report_content": "Reported Contents",
+    "title_schedule_article": "Scheduled",
+    "title_report_content": "Reported",
     "text_empty": "There are no scheduled content yet!",
     "text_no_reported_content": "There are no reported content now!"
   },
@@ -666,7 +680,6 @@
     "successful_schedule": "Successful Schedule",
     "text_delete_article_success": "Your article has been deleted",
     "paste_image_error": "Upload failed. Please upload images using the toolbar.",
-    "article_settings": "Article settings",
     "text_selecting_will_be_added_to": "Your article will be added to"
   },
   "post": {
@@ -839,7 +852,6 @@
       "text_delete_comment_success": "Comment deleted",
       "text_edited": "Edited"
     },
-    "settings": "Post Settings",
     "people_can_comment": "People can comment on this post",
     "people_can_share": "People can share on this post",
     "people_can_react": "People can react on this post",
@@ -1340,8 +1352,7 @@
     "text_remove_article": "Do you want to remove this article?",
     "text_remove_post": "Do you want to remove this post?",
     "text_article_removed": "Remove successful",
-    "text_no_content": "No content",
-    "series_settings": "Series settings"
+    "text_no_content": "No content"
   },
   "tags": {
     "create_tag": "Create Tag",
@@ -1371,5 +1382,22 @@
   "report": {
     "title": "Report Content",
     "banner_report_content": "Your content was reported because of "
+  },
+  "block_user": {
+    "title_block_name": "Block {0}?",
+    "text_block_user": "Block this user",
+    "general_description": "This blocking is applied to individual purposes. This blocking won't affect your and the blocked person's interactions in a community or group that has joined.",
+    "cannot": {
+      "title": "will no longer be able to:",
+      "search_profile": "Search and see your individual user profile",
+      "mention": "Mention you",
+      "send_message": "Send a direct message to you"
+    },
+    "can": {
+      "title": "will be able to:",
+      "see_profile": "Both of you still see the other in a community or group",
+      "see_content": "Both of you still see the other's content in a community or group"
+    },
+    "text_block_user_also": "Block this user also"
   }
 }

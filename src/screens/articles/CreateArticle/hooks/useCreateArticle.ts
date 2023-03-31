@@ -29,7 +29,7 @@ import useMyPermissionsStore from '~/store/permissions';
 
 import { rootNavigationRef } from '~/router/refs';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
-import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
+import useDraftArticleStore from '~/screens/YourContent/components/Draft/DraftArticle/store';
 import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import useModalStore from '~/store/modal';
 import { PermissionKey } from '~/constants/permissionScheme';

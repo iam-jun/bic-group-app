@@ -12,8 +12,8 @@ import networkSelectors from '~/store/network/selectors';
 
 import spacing from '~/theme/spacing';
 import { IconType } from '~/resources/icons';
-import useDraftPostStore from '~/screens/Draft/DraftPost/store';
-import IDraftPostState from '~/screens/Draft/DraftPost/store/Interface';
+import useDraftPostStore from '~/screens/YourContent/components/Draft/DraftPost/store';
+import IDraftPostState from '~/screens/YourContent/components/Draft/DraftPost/store/Interface';
 
 interface MenuItemProps {
   RightComponent?: React.ReactNode | React.ReactElement;

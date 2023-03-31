@@ -19,7 +19,7 @@ import useCreateArticle from '../CreateArticle/hooks/useCreateArticle';
 import { useUserIdAuth } from '~/hooks/auth';
 import Schedule from '../CreateArticle/components/Schedule';
 import { useBaseHook } from '~/hooks';
-import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
+import useDraftArticleStore from '~/screens/YourContent/components/Draft/DraftArticle/store';
 import spacing from '~/theme/spacing';
 import useCreateArticleStore from '../CreateArticle/store';
 import PlaceHolderRemoveContent from '~/baseComponents/PlaceHolderRemoveContent';
