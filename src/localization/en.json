@@ -1385,7 +1385,8 @@
   },
   "block_user": {
     "title_block_name": "Block {0}?",
-    "text_block_user": "Block this user",
+    "text_block_user": "Block",
+    "text_blocked_user": "Blocked",
     "general_description": "This blocking is applied to individual purposes. This blocking won't affect your and the blocked person's interactions in a community or group that has joined.",
     "cannot": {
       "title": "will no longer be able to:",

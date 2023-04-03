@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -29,7 +29,7 @@ const BlockedUserItem = ({ item }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const {
-    fullname, avatar, id, createdAt,
+    fullname, avatar, id, createdAt, username,
   } = item || {};
 
   const onConfirm = async () => {
@@ -55,10 +55,9 @@ const BlockedUserItem = ({ item }: Props) => {
       <Text.BodyMMedium color={colors.neutral60} numberOfLines={1}>
         {fullname}
       </Text.BodyMMedium>
-      <Text.BodyS color={colors.neutral60} numberOfLines={1}>
-        {t('settings:text_blocked_at')}
-        {' '}
-        {formatDate(createdAt, 'MMMM DD YYYY')}
+      <Text.BodyS color={colors.neutral30} numberOfLines={1}>
+        @
+        {username}
       </Text.BodyS>
     </>
   );
@@ -68,33 +67,51 @@ const BlockedUserItem = ({ item }: Props) => {
       testID={`blocked_user_item_${id}.btn_unblock`}
       style={styles.btnUnblock}
       useI18n
-      size="small"
+      size="medium"
+      type="ghost"
       onPress={onUnlock}
       loading={isLoading}
+      icon="UserXmarkSolid"
+      iconSize={14}
     >
       settings:btn_unblock
     </Button.Neutral>
   );
 
   return (
-    <PrimaryItem
-      testID={`blocked_user_item_${id}`}
-      showAvatar
-      style={styles.itemContainer}
-      avatar={avatar || images.img_user_avatar_default}
-      avatarProps={{ isRounded: true, variant: 'small' }}
-      ContentComponent={renderUser()}
-      RightComponent={renderButtonUnblock()}
-    />
+    <View style={styles.container}>
+      <PrimaryItem
+        testID={`blocked_user_item_${id}`}
+        showAvatar
+        style={styles.itemContainer}
+        avatar={avatar || images.img_user_avatar_default}
+        avatarProps={{ isRounded: true, variant: 'small' }}
+        ContentComponent={renderUser()}
+      />
+      <Text.BodyXS color={colors.neutral40} style={styles.time}>
+        {t('settings:text_blocked_at')}
+        {' '}
+        {formatDate(createdAt, 'MMMM DD, YYYY')}
+      </Text.BodyXS>
+      {renderButtonUnblock()}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  itemContainer: {
+  container: {
     paddingHorizontal: spacing.padding.large,
   },
+  itemContainer: {
+    paddingBottom: 0,
+    paddingHorizontal: 0,
+  },
+  time: {
+    marginTop: spacing.margin.base,
+  },
   btnUnblock: {
-    marginLeft: spacing.margin.small,
+    marginTop: spacing.margin.base,
+    alignSelf: 'flex-start',
   },
 });
 

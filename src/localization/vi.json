@@ -1325,7 +1325,8 @@
   },
   "block_user": {
     "title_block_name": "Chặn {0}?",
-    "text_block_user": "Chặn người này",
+    "text_block_user": "Chặn",
+    "text_blocked_user": "Đã chặn",
     "general_description": "Tính năng chặn này chỉ áp dụng cho mục đích cá nhân. Tính năng chặn này sẽ không ảnh hưởng tới việc tương tác của cả hai trong các cộng đồng hoặc nhóm đã tham gia.",
     "cannot": {
       "title": "sẽ không thể:",
