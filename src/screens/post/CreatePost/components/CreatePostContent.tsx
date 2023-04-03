@@ -19,7 +19,7 @@ import { IFilePicked } from '~/interfaces/common';
 import { fontFamilies } from '~/theme/fonts';
 
 import { CONTENT_MIN_HEIGHT, MIN_INPUT_HEIGHT } from '../constanst';
-import { calculateInputHeight, getTotalFileSize, isAndroidAnimated } from '../helper';
+import { getTotalFileSize, isAndroidAnimated, useCalculateInputHeight } from '../helper';
 import ToastAutoSave from './ToastAutoSave';
 import FilesView from '~/components/FilesView';
 import appConfig from '~/configs/appConfig';
@@ -83,6 +83,13 @@ const Content = ({ groupIds, useCreatePostData }: Props) => {
   const isAnimated = isAndroidAnimated();
   const { totalSize } = getTotalFileSize(files);
 
+  const newHeight = useCalculateInputHeight(
+    inputHeight,
+    photosHeight,
+    isShowToastAutoSave,
+    isKeyboardOpen,
+  );
+
   useEffect(() => {
     if (content !== contentInput && isAnimated) {
       setContentInput(content);
@@ -114,13 +121,6 @@ const Content = ({ groupIds, useCreatePostData }: Props) => {
   };
 
   const onLayoutAnimated = () => {
-    const newHeight = calculateInputHeight(
-      inputHeight,
-      photosHeight,
-      isShowToastAutoSave,
-      isKeyboardOpen,
-    );
-
     if (currentInputHeight.current === newHeight) {
       return;
     }

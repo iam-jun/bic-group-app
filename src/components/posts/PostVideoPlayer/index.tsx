@@ -88,6 +88,7 @@ const PostVideoPlayer: FC<PostVideoPlayerProps> = ({
   return (
     <View style={[styles.container]}>
       <VideoPlayer
+        testID="video_player"
         ref={video}
         key={`video_item_${postId}`}
         style={styles.player}
@@ -98,6 +99,7 @@ const PostVideoPlayer: FC<PostVideoPlayerProps> = ({
       {!!onPressClose
           && (
           <TouchableOpacity
+            testID="post_video_player.close"
             activeOpacity={url ? 0.85 : 1}
             onPress={onPressClose}
             style={styles.buttonClose}
