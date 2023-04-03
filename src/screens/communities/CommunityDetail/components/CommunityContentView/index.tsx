@@ -18,6 +18,7 @@ import ContentItem from '~/components/ContentItem';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 import { ContentFeed, AttributeFeed } from '~/interfaces/IFeed';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import { BoxListPinContent } from '~/components/PinContent/components';
 
 interface CommunityContentViewProps {
   community: ICommunity;
@@ -133,6 +134,8 @@ const _CommunityContentView = ({
           <InfoHeader infoDetail={community} />
           <CommunityTabHeader communityId={id} isMember={isMember} teamName={teamName} />
           <CommunityJoinCancelButton community={community} isMember={isMember} />
+          <Divider color={colors.gray5} size={spacing.padding.large} />
+          <BoxListPinContent id={id} />
           <Divider color={colors.gray5} size={spacing.padding.large} />
           <FilterFeedButtonGroup
             contentFilter={contentFilter}

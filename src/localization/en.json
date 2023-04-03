@@ -1399,5 +1399,8 @@
       "see_content": "Both of you still see the other's content in a community or group"
     },
     "text_block_user_also": "Block this user also"
+  },
+  "pin": {
+    "list_pin_content_title": "Pinned"
   }
 }

@@ -1339,5 +1339,8 @@
       "see_content": "Cả hai vẫn thấy được nội dung của nhau trong các cộng đồng hoặc nhóm"
     },
     "text_block_user_also": "Chặn người này"
+  },
+  "pin": {
+    "list_pin_content_title": "Danh sách ghim"
   }
 }
