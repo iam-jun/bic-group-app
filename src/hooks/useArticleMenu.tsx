@@ -171,7 +171,7 @@ const useArticleMenu = (
     {
       id: 7,
       testID: 'article_view_menu.report_this_member',
-      leftIcon: 'Flag',
+      leftIcon: 'UserXmark',
       title: i18next.t('groups:member_menu:label_report_member'),
       requireIsActor: false,
       notShowForActor: isActor,
