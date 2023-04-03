@@ -20,6 +20,7 @@ import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useModalStore from '~/store/modal';
 import usePostsStore, { IPostsState } from '~/store/entities/posts';
+import { onPressReportThisMember } from '~/helpers/blocking';
 
 const usePostMenu = (
   data: IPost,
@@ -139,25 +140,8 @@ const usePostMenu = (
     });
   };
 
-  const onPressReportThisMember = () => {
-    modalActions.hideBottomList();
-
-    const dataReportMember = {
-      userId: actor?.id,
-      reportedMember: actor,
-    };
-
-    modalActions.showModal({
-      isOpen: true,
-      ContentComponent: <ReportContent
-        targetId={actor?.id}
-        targetType={TargetType.MEMBER}
-        dataReportMember={dataReportMember}
-      />,
-      props: {
-        disableScrollIfPossible: false,
-      },
-    });
+  const _onPressReportThisMember = () => {
+    onPressReportThisMember({ modalActions, actor });
   };
 
   const defaultData = [
@@ -234,7 +218,7 @@ const usePostMenu = (
       title: i18next.t('groups:member_menu:label_report_member'),
       requireIsActor: false,
       notShowForActor: isActor,
-      onPress: onPressReportThisMember,
+      onPress: _onPressReportThisMember,
     },
   ];
 

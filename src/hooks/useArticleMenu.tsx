@@ -16,6 +16,7 @@ import { TargetType, ReportTo } from '~/interfaces/IReport';
 import { generateLink, LinkGeneratorTypes } from '~/utils/link';
 import useModalStore from '~/store/modal';
 import { Button } from '~/baseComponents';
+import { onPressReportThisMember } from '~/helpers/blocking';
 
 const useArticleMenu = (
   data: IPost,
@@ -97,25 +98,8 @@ const useArticleMenu = (
     modalActions.showToast({ content: 'common:text_link_copied_to_clipboard' });
   };
 
-  const onPressReportThisMember = () => {
-    modalActions.hideBottomList();
-
-    const dataReportMember = {
-      userId: actor?.id,
-      reportedMember: actor,
-    };
-
-    modalActions.showModal({
-      isOpen: true,
-      ContentComponent: <ReportContent
-        targetId={actor?.id}
-        targetType={TargetType.MEMBER}
-        dataReportMember={dataReportMember}
-      />,
-      props: {
-        disableScrollIfPossible: false,
-      },
-    });
+  const _onPressReportThisMember = () => {
+    onPressReportThisMember({ modalActions, actor });
   };
 
   const defaultData = [
@@ -175,7 +159,7 @@ const useArticleMenu = (
       title: i18next.t('groups:member_menu:label_report_member'),
       requireIsActor: false,
       notShowForActor: isActor,
-      onPress: onPressReportThisMember,
+      onPress: _onPressReportThisMember,
     },
   ];
 
