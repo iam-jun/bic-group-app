@@ -36,7 +36,7 @@ const usePostMenu = (
   if (!data) return null;
 
   const {
-    id: postId, reactionsCount, isSaved, type, audience,
+    id: postId, reactionsCount, isSaved, type, audience, actor,
   } = data;
 
   const groupAudience = audience?.groups || [];
@@ -139,6 +139,27 @@ const usePostMenu = (
     });
   };
 
+  const onPressReportThisMember = () => {
+    modalActions.hideBottomList();
+
+    const dataReportMember = {
+      userId: actor?.id,
+      reportedMember: actor,
+    };
+
+    modalActions.showModal({
+      isOpen: true,
+      ContentComponent: <ReportContent
+        targetId={actor?.id}
+        targetType={TargetType.MEMBER}
+        dataReportMember={dataReportMember}
+      />,
+      props: {
+        disableScrollIfPossible: false,
+      },
+    });
+  };
+
   const defaultData = [
     {
       id: 1,
@@ -205,6 +226,15 @@ const usePostMenu = (
       requireIsActor: false,
       notShowForActor: isActor,
       onPress: onPressReport,
+    },
+    {
+      id: 9,
+      testID: 'post_view_menu.report_this_member',
+      leftIcon: 'Flag',
+      title: i18next.t('groups:member_menu:label_report_member'),
+      requireIsActor: false,
+      notShowForActor: isActor,
+      onPress: onPressReportThisMember,
     },
   ];
 

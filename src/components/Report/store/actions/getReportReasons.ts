@@ -6,7 +6,7 @@ const getReportReasons = (set) => async () => {
   try {
     set((state: IReportContentState) => {
       state.reportReasons.loading = true;
-    }, 'getReportReasons');
+    }, 'getReportReasons Fetching');
 
     const response = await GroupApi.getReportReasons();
     await timeOut(300);

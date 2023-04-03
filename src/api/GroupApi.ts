@@ -500,6 +500,15 @@ export const groupsApiConfig = {
     method: 'post',
     data: { ...params },
   }),
+  reportMemberByUserId: (
+    userId: string,
+    params: IParamsReportMember,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}users/${userId}/member-reports`,
+    method: 'post',
+    data: { ...params },
+  }),
   resendVerificationEmail: (params: IVerifyEmail): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}auth/resend-confirmation-code?email=${params.email}&redirect_page=${params.redirectPage}`,
@@ -802,6 +811,14 @@ const groupApi = {
   ) => withHttpRequestPromise(
     groupsApiConfig.reportMember,
     communityId,
+    params,
+  ),
+  reportMemberByUserId: (
+    userId: string,
+    params: IParamsReportMember,
+  ) => withHttpRequestPromise(
+    groupsApiConfig.reportMemberByUserId,
+    userId,
     params,
   ),
   resendVerificationEmail: (params: IVerifyEmail) => withHttpRequestPromise(

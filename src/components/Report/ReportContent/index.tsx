@@ -36,6 +36,7 @@ interface IReportContentProps {
   };
   dataReportMember?: {
     communityId?: string;
+    userId?: string;
     reportedMember: ICommunityMembers | IGroupMembers;
   };
 }
@@ -56,8 +57,10 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
 
   const {
     listRelationship,
+    loading: loadingBlocking,
     refreshing: refreshingBlocking,
     actions: { getListRelationship, blockUser },
+    reset: resetBlocking,
   } = useBlockingStore();
   const isBlockedUser = listRelationship.some((userId) => userId === targetId);
 
@@ -68,6 +71,12 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
     if (!memberReportReasons.data || memberReportReasons.data?.length === 0) {
       reportContentActions.getMemberReportReasons();
     }
+    if (dataReportMember?.userId) {
+      getListRelationship();
+      return () => {
+        resetBlocking();
+      };
+    }
   }, []);
 
   const onClose = () => {
@@ -75,8 +84,15 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
     setReasonState(null);
   };
 
-  const onSubmit = async () => {
-    if (shouldReportMember) {
+  const reportMember = async () => {
+    if (dataReportMember?.userId) {
+      const payload = {
+        targetId,
+        reason: reasonState?.id,
+      } as IPayloadReportMember;
+
+      reportContentActions.reportMemberByUserId(payload);
+    } else {
       const payload = {
         targetId,
         communityId: dataReportMember?.communityId,
@@ -84,10 +100,16 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
       } as IPayloadReportMember;
 
       reportContentActions.reportMember(payload);
+    }
+  };
+
+  const onSubmit = async () => {
+    if (shouldReportMember) {
+      reportMember();
 
       if (shouldBlockUserInfo) {
         await blockUser(targetId);
-        await getListRelationship(true);
+        dataReportMember?.communityId && await getListRelationship(true);
       }
     } else {
       const payload = {
@@ -143,7 +165,7 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
   );
 
   const renderContentComponent = () => {
-    if (reportReasons.loading) {
+    if (reportReasons.loading || loadingBlocking) {
       return (
         <View style={styles.boxLoading}>
           <ActivityIndicator size="small" color={colors.gray30} />

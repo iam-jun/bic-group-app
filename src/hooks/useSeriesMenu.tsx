@@ -2,6 +2,7 @@ import i18next from 'i18next';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { Keyboard } from 'react-native';
 
+import React from 'react';
 import { IPost } from '~/interfaces/IPost';
 import { useRootNavigation } from './navigation';
 import { BottomListProps } from '~/components/BottomList';
@@ -11,6 +12,8 @@ import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { generateLink, LinkGeneratorTypes } from '~/utils/link';
 import { Button } from '~/baseComponents';
 import useModalStore from '~/store/modal';
+import ReportContent from '~/components/Report/ReportContent';
+import { TargetType } from '~/interfaces/IReport';
 
 const useSeriesMenu = (
   data: IPost,
@@ -22,13 +25,13 @@ const useSeriesMenu = (
 
   const commonActions = useCommonController((state) => state.actions);
   const {
-    showToast, showAlert, hideBottomList, showBottomList,
+    showToast, showAlert, hideBottomList, showBottomList, showModal,
   } = useModalStore((state) => state.actions);
 
   if (!data) return null;
 
   const {
-    id: seriesId, reactionsCount, isSaved, type,
+    id: seriesId, reactionsCount, isSaved, type, actor,
   } = data;
 
   const onPressEdit = () => {
@@ -71,6 +74,27 @@ const useSeriesMenu = (
     }
   };
 
+  const onPressReportThisMember = () => {
+    hideBottomList();
+
+    const dataReportMember = {
+      userId: actor?.id,
+      reportedMember: actor,
+    };
+
+    showModal({
+      isOpen: true,
+      ContentComponent: <ReportContent
+        targetId={actor?.id}
+        targetType={TargetType.MEMBER}
+        dataReportMember={dataReportMember}
+      />,
+      props: {
+        disableScrollIfPossible: false,
+      },
+    });
+  };
+
   const defaultData = [
     {
       id: 1,
@@ -103,6 +127,15 @@ const useSeriesMenu = (
       title: i18next.t('series:menu_text_delete_series'),
       requireIsActor: true,
       onPress: onPressDelete,
+    },
+    {
+      id: 5,
+      testID: 'series_menu.report_this_member',
+      leftIcon: 'Flag',
+      title: i18next.t('groups:member_menu:label_report_member'),
+      requireIsActor: false,
+      notShowForActor: isActor,
+      onPress: onPressReportThisMember,
     },
   ];
 
