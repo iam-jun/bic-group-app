@@ -293,7 +293,7 @@
 			buildPhases = (
 				D4F5186404D15FBE2AD834CF /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
-				1B98C1D626DB4B020013DEA6 /* Run Script */,
+				1B98C1D626DB4B020013DEA6 /* Run copy GoogleService file by configuration */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
@@ -387,7 +387,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export SENTRY_PROPERTIES=sentry.properties\nexport EXTRA_PACKAGER_ARGS=\"--sourcemap-output $DERIVED_FILE_DIR/main.jsbundle.map\"\nset -e\n\nexport NODE_BINARY=node\n../node_modules/@sentry/cli/bin/sentry-cli react-native xcode ../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		1B98C1D626DB4B020013DEA6 /* Run Script */ = {
+		1B98C1D626DB4B020013DEA6 /* Run copy GoogleService file by configuration */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 12;
@@ -397,7 +397,7 @@
 			);
 			inputPaths = (
 			);
-			name = "Run Script";
+			name = "Run copy GoogleService file by configuration";
 			outputFileListPaths = (
 			);
 			outputPaths = (
