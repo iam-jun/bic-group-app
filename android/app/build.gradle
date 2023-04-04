@@ -308,7 +308,7 @@ android {
              resValue "string", "provider_authorities", "com.beincom.group.prerelease.SharedProvider"
              resValue "string", "provider_read_permission", "com.beincom.group.prerelease.READ_DATABASE"
              resValue "string", "provider_write_permission", "com.beincom.group.prerelease.WRITE_DATABASE"
-             resValue "string", "CodePushDeploymentKey", "" //update later
+             resValue "string", "CodePushDeploymentKey", "GNX4ZW1YN1C8S1lfDQUjjjsmHsgMee96U-2Kc"
         }
         production {
             dimension "version"

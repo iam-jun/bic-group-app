@@ -404,7 +404,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PATH_TO_GOOGLE_PLISTS=\"${PROJECT_DIR}/Firebase\"\n\ncase \"${CONFIGURATION}\" in\n\n   \"Debug\" | \"ReleaseDevelopment\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-Development.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n   \"DebugStaging\" | \"ReleaseStaging\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-Staging.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n  \"DebugPrerelease\" | \"ReleasePrerelease\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-Prerelease.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n             \n   \"Release\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-Production.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n    *)\n        ;;\nesac\n";
+			shellScript = "PATH_TO_GOOGLE_PLISTS=\"${PROJECT_DIR}/Firebase\"\n\ncase \"${CONFIGURATION}\" in\n\n   \"Debug\" | \"ReleaseDevelopment\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-Development.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n   \"DebugStaging\" | \"ReleaseStaging\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-Staging.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n  \"DebugPrerelease\" | \"ReleasePrerelease\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-Prerelease.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n   \"Release\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-Production.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n    *)\n        ;;\nesac\n";
 		};
 		2CEB1C36EC24644620021457 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1299,7 +1299,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				BEIN_APP_NAME = "BIC Group Release";
 				CLANG_ENABLE_MODULES = YES;
-				CODEPUSH_KEY = 7dyJcdB8mq1olhp57D2oUN77kIVW7btaRsqbO;
+				CODEPUSH_KEY = "z6Wwzfb-KHWrnHMFRlTTuYKCreJvkCMAQbXkF";
 				CODE_SIGN_ENTITLEMENTS = bic_group/bic_groupReleasePrerelease.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
@@ -1429,7 +1429,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				BEIN_APP_NAME = "BIC Group Release";
 				CLANG_ENABLE_MODULES = YES;
-				CODEPUSH_KEY = 7dyJcdB8mq1olhp57D2oUN77kIVW7btaRsqbO;
+				CODEPUSH_KEY = "z6Wwzfb-KHWrnHMFRlTTuYKCreJvkCMAQbXkF";
 				CODE_SIGN_ENTITLEMENTS = bic_group/bic_groupDebugPrerelease.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
