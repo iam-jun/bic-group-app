@@ -108,6 +108,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### ios update_prerelease
+
+```sh
+[bundle exec] fastlane ios update_prerelease
+```
+
+
+
 ### ios update_production
 
 ```sh
@@ -124,6 +132,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### ios deploy_prerelease
+
+```sh
+[bundle exec] fastlane ios deploy_prerelease
+```
+
+
+
 ### ios deploy_production
 
 ```sh
@@ -136,6 +152,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ```sh
 [bundle exec] fastlane ios deploy_staging_ci
+```
+
+
+
+### ios deploy_prerelease_ci
+
+```sh
+[bundle exec] fastlane ios deploy_prerelease_ci
 ```
 
 
