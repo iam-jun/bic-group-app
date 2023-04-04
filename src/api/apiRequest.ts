@@ -17,12 +17,18 @@ import useAuthController from '~/screens/auth/store';
 import { EVENT_LOGGER_TAG } from '~/components/LoggerView';
 import { LogType } from '~/components/LoggerView/Interface';
 import ConvertHelper from '~/utils/convertHelper';
+import { withNavigation } from '~/router/helper';
+import { rootNavigationRef } from '~/router/refs';
+import commonStack from '~/router/navigator/commonStack/stack';
+import useMaintenanceStore from '~/store/maintenance';
 
 const defaultTimeout = 10000;
 const commonHeaders = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
 };
+
+const navigation = withNavigation(rootNavigationRef);
 
 const getBeinIdToken = (): string => {
   let token;
@@ -130,6 +136,16 @@ const makeRemovePushTokenRequest = async () => {
 const withHttpRequestPromise = async (fn: Function, ...args: any[]) => {
   try {
     const response: any = await makeHttpRequest(isEmpty(args) ? fn() : fn(...args));
+
+    const isMaintenance = response?.code === APIErrorCode.Common.MAINTENANCE;
+    if (isMaintenance) {
+      useMaintenanceStore.setState((state) => {
+        state.data = response?.data;
+        return state;
+      });
+      navigation.navigate(commonStack.maintenance);
+    }
+
     const isSuccess = response?.data?.data || response?.data?.code === APIErrorCode.Common.SUCCESS;
     if (isSuccess) {
       return Promise.resolve(response?.data);

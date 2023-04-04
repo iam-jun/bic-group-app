@@ -1,6 +1,7 @@
 const Common = {
   SUCCESS: 'api.ok',
   SYSTEM_ISSUE: 0,
+  MAINTENANCE: 'api.is_under_maintenance',
 };
 
 const Auth = {
