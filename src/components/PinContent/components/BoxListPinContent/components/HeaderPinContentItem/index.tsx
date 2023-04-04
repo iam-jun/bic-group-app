@@ -3,10 +3,12 @@ import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/baseComponents/Text';
 import TimeView from '~/beinComponents/TimeView';
+import SvgIcon from '~/baseComponents/Icon/SvgIcon';
 import { IPost } from '~/interfaces/IPost';
-import { Avatar } from '~/baseComponents';
+import { Avatar, Button } from '~/baseComponents';
 import { spacing } from '~/theme';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import UnPin from '../../../../../../../assets/icons/un_pin.svg';
 
 interface HeaderPinContentItemProps {
     data: IPost;
@@ -15,7 +17,7 @@ interface HeaderPinContentItemProps {
 
 const HeaderPinContentItem: React.FC<HeaderPinContentItemProps> = ({
   data,
-//   isAdmin,
+  isAdmin,
 }) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -23,13 +25,17 @@ const HeaderPinContentItem: React.FC<HeaderPinContentItemProps> = ({
   const { createdAt, actor } = data || {};
   const { avatar, fullname } = actor || {};
 
+  const onPressUnpin = () => {
+
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.row}>
         <Avatar.Small isRounded source={avatar} />
         <View style={styles.boxName}>
           <ViewSpacing height={spacing.margin.xTiny} />
-          <Text.SubtitleM color={colors.neutral60}>
+          <Text.SubtitleM color={colors.neutral60} numberOfLines={1}>
             { fullname }
           </Text.SubtitleM>
           <ViewSpacing height={spacing.margin.xSmall} />
@@ -40,7 +46,16 @@ const HeaderPinContentItem: React.FC<HeaderPinContentItemProps> = ({
           <ViewSpacing height={spacing.margin.xTiny} />
         </View>
       </View>
-
+      <Button
+        onPress={onPressUnpin}
+        style={styles.btnUnpin}
+      >
+        <SvgIcon
+          source={UnPin}
+          width={18}
+          height={16}
+        />
+      </Button>
     </View>
   );
 };
@@ -49,15 +64,21 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: spacing.padding.large,
+    paddingLeft: spacing.padding.large,
+    paddingRight: spacing.padding.base,
     paddingTop: spacing.padding.large,
     marginBottom: spacing.margin.small,
   },
   row: {
+    flex: 1,
     flexDirection: 'row',
   },
   boxName: {
+    flex: 1,
     marginLeft: spacing.margin.small,
+  },
+  btnUnpin: {
+    padding: spacing.padding.tiny,
   },
 });
 

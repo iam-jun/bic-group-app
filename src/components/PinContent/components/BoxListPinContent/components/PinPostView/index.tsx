@@ -1,12 +1,13 @@
 import React from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useRootNavigation } from '~/hooks/navigation';
 import { Button } from '~/baseComponents';
 import HeaderPinContentItem from '../HeaderPinContentItem';
-import { borderRadius } from '~/theme/spacing';
+import spacing, { borderRadius } from '~/theme/spacing';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { IPost } from '~/interfaces/IPost';
+import PinPostBody from './PinPostBody';
 
 const WidthDevice = Dimensions.get('window').width;
 const MaxWidthItem = WidthDevice * 0.8;
@@ -26,9 +27,11 @@ const PinPostView: React.FC<PinPostViewProps> = ({
     rootNavigation.navigate(homeStack.postDetail, { post_id: data?.id });
   };
 
-  const renderContent = () => {
-    // do somethings
-  };
+  const renderContent = () => (
+    <View style={styles.content}>
+      <PinPostBody data={data} />
+    </View>
+  );
 
   return (
     <Button
@@ -51,6 +54,11 @@ const createStyles = (theme: ExtendedTheme) => {
       borderRadius: borderRadius.large,
       borderColor: colors.purple5,
       width: MaxWidthItem,
+    },
+    content: {
+      flex: 1,
+      paddingHorizontal: spacing.padding.large,
+      paddingBottom: spacing.padding.large,
     },
   });
 };
