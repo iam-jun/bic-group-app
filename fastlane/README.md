@@ -23,6 +23,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### android update_prerelease
+
+```sh
+[bundle exec] fastlane android update_prerelease
+```
+
+
+
 ### android update_production
 
 ```sh
@@ -39,6 +47,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### android build_prerelease
+
+```sh
+[bundle exec] fastlane android build_prerelease
+```
+
+
+
 ### android build_production
 
 ```sh
@@ -51,6 +67,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ```sh
 [bundle exec] fastlane android deploy_staging
+```
+
+
+
+### android deploy_prerelease
+
+```sh
+[bundle exec] fastlane android deploy_prerelease
 ```
 
 

@@ -37,6 +37,42 @@ platform :android do
 
   end
 
+  lane :update_prerelease do |options|
+      Dotenv.overload('../.env.base', '../.env.prerelease')
+      disable_notice = options[:disable_notice]
+
+      app_version = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+      update_desc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
+
+      webhook = ENV['NOTICE_WEBHOOK'].length > 0 ? ENV['NOTICE_WEBHOOK'] : ""
+      title = "🔵🤖 BIC Group Release Android"
+      version_text = "**#{app_version} #{update_desc}**"
+      download_destination = options[:download_destination] || 'In-app Update'
+      git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+      message = "Build successful"
+      color = "#9E6FD8"
+      code = ""
+
+      begin
+        appcenter_codepush_release_react(
+          api_token: ENV["CODE_PUSH_ACCESS_KEY_ANDROID"],
+          app_name: ENV["APPCENTER_APP_NAME_ANDROID"],
+          deployment: "PreRelease",
+          target_version: ENV['VERSION_NAME'],
+          description: ENV['UPDATE_DESC'],
+          mandatory: false,
+          dry_run: false,
+        )
+
+        if (disable_notice != 'true')
+          notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
+        end
+      rescue => error
+        notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, error, "#F64E60")
+      end
+
+    end
+
   lane :update_production do |options|
     Dotenv.overload('../.env.base', '../.env.production')
     disable_notice = options[:disable_notice]
@@ -84,6 +120,21 @@ platform :android do
     )
   end
 
+  lane :build_prerelease do
+    Dotenv.overload('../.env.base', '../.env.prerelease')
+
+    app_env =  ENV['APP_ENV'] || 'Beincomm Dev'
+    UI.message("Build app env: #{app_env}")
+
+    gradle(task: "clean", project_dir: 'android/')
+    gradle(
+      task: "assemble",
+      build_type: "Release",
+      flavor: "Prerelease",
+      project_dir: 'android/',
+    )
+  end
+
   lane :build_production do
     gradle(task: "clean", project_dir: 'android/')
     gradle(
@@ -123,6 +174,36 @@ platform :android do
     update_staging({:download_destination => 'Firebase App Tester'})
 
   end
+
+  lane :deploy_prerelease do
+      Dotenv.overload('../.env.base', '../.env.prerelease')
+
+      appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+      updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
+
+      commit = last_git_commit
+      git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+
+      gradle(task: "clean", project_dir: 'android/')
+      gradle(
+        task: "assemble",
+        build_type: "Release",
+        flavor: "Prerelease",
+        project_dir: 'android/',
+      )
+
+      file_apk = lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0]
+
+      firebase_app_distribution(
+          app: "1:720928498310:android:16596a00d97490b19da707",
+          android_artifact_path: file_apk,
+          release_notes: "BIC Group Release: #{appVersionText}",
+          groups: "bicteam",
+      )
+
+      update_prerelease({:download_destination => 'Firebase App Tester'})
+
+    end
 
   lane :deploy_production do
     Dotenv.overload('../.env.base', '../.env.production')
