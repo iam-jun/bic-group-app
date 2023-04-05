@@ -76,7 +76,7 @@ const PendingUserItem = ({
               </Text.BodyMMedium>
               )}
             </Text.BodyMMedium>
-            {!!answer
+            {typeof answer === 'string'
               ? (
                 <Text.BodyM>
                   {answer}
