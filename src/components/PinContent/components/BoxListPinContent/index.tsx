@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, ActivityIndicator, FlatList, Dimensions } from 'react-native';
+import {
+  View, StyleSheet, ActivityIndicator, FlatList, Dimensions,
+} from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import usePinContentStore from '../../store';
 import Text from '~/baseComponents/Text';
@@ -56,7 +58,7 @@ const BoxListPinContent: React.FC<BoxListPinContentProps> = ({
 
   const renderSeparatorComponent = () => <ViewSpacing width={spacing.margin.large} />;
 
-  const keyExtractor = (item) => `pin-content-item-${item?.id}`; 
+  const keyExtractor = (item) => `pin-content-item-${item?.id}`;
 
   if (!isLoading && (!data || data?.length === 0)) return <ViewSpacing height={spacing.margin.large} />;
 
@@ -68,7 +70,7 @@ const BoxListPinContent: React.FC<BoxListPinContentProps> = ({
         </Text.SubtitleM>
       </View>
       <FlatList
-        testID='box_list_pin_content.flatlist'
+        testID="box_list_pin_content.flatlist"
         horizontal
         data={data}
         keyExtractor={keyExtractor}

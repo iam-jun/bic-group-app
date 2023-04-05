@@ -21,7 +21,7 @@ export interface PosterInfo {
   videoHeight: number,
   videoWidth: number,
   height?: number,
-  width?: number, 
+  width?: number,
 }
 
 export interface VideoPlayerProps extends VideoProps {

@@ -1,7 +1,7 @@
-import streamApi from "~/api/StreamApi";
-import { IPinContentState } from '../index';
-import showToastError from "~/store/helper/showToastError";
 import { isEmpty } from 'lodash';
+import streamApi from '~/api/StreamApi';
+import { IPinContentState } from '../index';
+import showToastError from '~/store/helper/showToastError';
 
 const getPinContentsGroup = (set, get) => async (id: string) => {
   const { actions, groupPinContent }: IPinContentState = get();
