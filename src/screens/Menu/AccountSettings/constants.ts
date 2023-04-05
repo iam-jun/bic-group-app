@@ -19,6 +19,6 @@ export const accountSettingsMenu = [
   {
     type: 'blocking',
     title: 'settings:title_blocking',
-    icon: 'UserXmark',
+    icon: 'UserSlash',
   },
 ];

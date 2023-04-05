@@ -79,7 +79,7 @@ const UserHeader = ({
       {!isCurrentUser && (
         <Button.Neutral
           testID="user_header.btn_block"
-          icon="UserXmarkSolid"
+          icon="UserSlashSolid"
           type="ghost"
           style={styles.buttonBlock}
           onPress={onPressBlock}

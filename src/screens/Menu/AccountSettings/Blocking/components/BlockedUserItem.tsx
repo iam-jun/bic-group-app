@@ -71,7 +71,7 @@ const BlockedUserItem = ({ item }: Props) => {
       type="ghost"
       onPress={onUnlock}
       loading={isLoading}
-      icon="UserXmarkSolid"
+      icon="UserSlashSolid"
       iconSize={14}
     >
       settings:btn_unblock
