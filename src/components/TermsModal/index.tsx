@@ -39,6 +39,8 @@ const TermsView = () => {
   const name = useTermStore((state) => state.name);
   const isActiveGroupTerms = useTermStore((state) => state.isActiveGroupTerms);
   const isOpen = useTermStore((state) => state.isOpen);
+  const answers = useTermStore((state) => state.answers);
+
   const resetTerms = useTermStore((state) => state.reset);
 
   const modalActions = useModalStore((state) => state.actions);
@@ -87,9 +89,13 @@ const TermsView = () => {
 
   const onSubmit = () => {
     if (type === 'community') {
-      comActions.joinCommunity(groupId, name);
+      comActions.joinCommunity({
+        communityId: groupId,
+        communityName: name,
+        membershipAnswers: answers,
+      });
     } else {
-      groupActions.joinNewGroup(groupId);
+      groupActions.joinNewGroup(groupId, answers);
     }
     actions.setIsOpen(false);
   };

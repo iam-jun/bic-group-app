@@ -4,14 +4,15 @@ import groupApi from '~/api/GroupApi';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { IToastMessage } from '~/interfaces/common';
 import useCommunitiesStore from '~/store/entities/communities';
-import { ICommunity } from '~/interfaces/ICommunity';
+import { ICommunity, IRequestJoinCommunity } from '~/interfaces/ICommunity';
 import showToastError from '~/store/helper/showToastError';
 import showToast from '~/store/helper/showToast';
 
 const joinCommunity
-  = (_set, _get) => async (communityId: string, communityName: string) => {
+  = (_set, _get) => async (payload: IRequestJoinCommunity) => {
+    const { communityId, communityName, membershipAnswers = [] } = payload;
     try {
-      const response = await groupApi.joinCommunity(communityId, { membershipAnswers: [] });
+      const response = await groupApi.joinCommunity(communityId, { membershipAnswers });
       const joinStatus = response?.data?.joinStatus;
       const hasRequested = joinStatus === GroupJoinStatus.REQUESTED;
       const userCount = useCommunitiesStore.getState().data?.[communityId]?.userCount || 0;

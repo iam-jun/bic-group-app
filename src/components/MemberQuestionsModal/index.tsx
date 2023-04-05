@@ -62,6 +62,8 @@ const MemberQuestionsModal = () => {
   };
 
   const onSubmit = () => {
+    const newAnswers = Object.values(answers);
+
     if (isActiveGroupTerms) {
       const payload: TermsInfo = {
         groupId,
@@ -69,6 +71,7 @@ const MemberQuestionsModal = () => {
         name,
         type,
         isActive: true,
+        answers: newAnswers,
       };
       termsActions.setTermInfo(payload);
       actions.setIsOpen(false);
@@ -76,7 +79,11 @@ const MemberQuestionsModal = () => {
     }
 
     if (type === 'community') {
-      comActions.joinCommunity(groupId, name);
+      comActions.joinCommunity({
+        communityId: groupId,
+        communityName: name,
+        membershipAnswers: newAnswers,
+      });
     } else {
       groupActions.joinNewGroup(groupId);
     }

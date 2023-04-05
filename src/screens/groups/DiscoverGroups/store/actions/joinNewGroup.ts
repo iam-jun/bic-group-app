@@ -5,14 +5,18 @@ import { IToastMessage } from '~/interfaces/common';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import showToast from '~/store/helper/showToast';
 import showToastError from '~/store/helper/showToastError';
+import { MembershipAnswerRequest } from '~/interfaces/ICommunity';
 
-const joinNewGroup = (set, get) => async (groupId: string) => {
+const joinNewGroup = (set, get) => async (groupId: string, answers?: MembershipAnswerRequest[]) => {
   try {
     const currentState: IDiscoverGroupsState = get();
     const currentRequestState = currentState.items[groupId]?.joinStatus || 0;
     if (currentRequestState === GroupJoinStatus.MEMBER) return;
 
-    const response = await groupApi.joinGroup(groupId, { membershipAnswers: [] });
+    const response = await groupApi.joinGroup(
+      groupId,
+      { membershipAnswers: answers?.length > 0 ? answers : [] },
+    );
     const joinStatus = response?.data?.joinStatus;
 
     const currentItem = {

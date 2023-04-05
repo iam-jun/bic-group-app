@@ -144,3 +144,9 @@ export interface MembershipAnswerRequest{
 export interface MembershipAnswerRequestParam {
   membershipAnswers: MembershipAnswerRequest[],
 }
+
+export interface IRequestJoinCommunity {
+  communityId: string,
+  communityName: string,
+  membershipAnswers?: MembershipAnswerRequest[],
+}

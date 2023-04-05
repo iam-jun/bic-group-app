@@ -135,7 +135,10 @@ const DiscoverCommunities = () => {
       termsActions.setTermInfo(payload);
       return;
     }
-    communityController.joinCommunity(data.id, data.name);
+    communityController.joinCommunity({
+      communityId: data.id,
+      communityName: data.name,
+    });
   };
 
   const handleCancel = (id: string, name: string) => {

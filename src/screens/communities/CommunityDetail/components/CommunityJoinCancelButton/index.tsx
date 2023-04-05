@@ -51,7 +51,7 @@ const CommunityJoinCancelButton = ({
       termsActions.setTermInfo(payload);
       return;
     }
-    actions.joinCommunity(id, name);
+    actions.joinCommunity({ communityId: id, communityName: name });
   };
 
   const onPressCancelRequest = () => {

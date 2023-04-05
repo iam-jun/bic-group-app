@@ -94,7 +94,10 @@ const SearchDiscoverCommunityResults = ({
       termsActions.setTermInfo(payload);
       return;
     }
-    communityController.joinCommunity(id, name);
+    communityController.joinCommunity({
+      communityId: id,
+      communityName: name,
+    });
   };
 
   const onCancel = (item: any) => {
