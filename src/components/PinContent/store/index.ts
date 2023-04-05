@@ -1,4 +1,4 @@
-import { IAudienceGroup, IPost } from '~/interfaces/IPost';
+import { IAudienceGroup } from '~/interfaces/IPost';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
 import getPinnableAudiences from './actions/getPinnableAudiences';

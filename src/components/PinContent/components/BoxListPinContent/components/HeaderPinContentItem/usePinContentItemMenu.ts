@@ -1,16 +1,20 @@
 import i18next from 'i18next';
-// import usePinContentStore from '~/components/PinContent/store';
+import usePinContentStore, { UpdatePinContentParams } from '~/components/PinContent/store';
 // import { useRootNavigation } from "~/hooks/navigation";
 import useModalStore from '~/store/modal';
 
-const usePinContentItemMenu = (_pinContentId: string, _id) => {
+const usePinContentItemMenu = (pinContentId: string, id) => {
   // const { rootNavigation } = useRootNavigation();
   const { hideBottomList, showBottomList } = useModalStore((state) => state.actions);
-  // const actions = usePinContentStore((state) => state.actions);
+  const actions = usePinContentStore((state) => state.actions);
 
   const onPressUnpin = () => {
     hideBottomList();
-    // actions.updatePinContent(pinContentId);
+    const params: UpdatePinContentParams = {
+      postId: pinContentId,
+      unpinGroupIds: [id],
+    };
+    actions.updatePinContent(params);
   };
 
   const onPressReorder = () => {

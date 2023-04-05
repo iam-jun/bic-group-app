@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { IPost, PostType } from '~/interfaces/IPost';
+import { PostType } from '~/interfaces/IPost';
 import PinArticleView from '../PinArticleView';
 import PinSeriesView from '../PinSeriesView';
 import PinPostView from '../PinPostView';
