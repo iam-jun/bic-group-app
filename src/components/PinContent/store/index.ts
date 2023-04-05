@@ -6,7 +6,7 @@ import { IPost } from '~/interfaces/IPost';
 
 export interface PinContent {
   isLoading: boolean;
-  data: IPost[];
+  data: string[];
 }
 
 export interface IPinContentState extends IBaseState {

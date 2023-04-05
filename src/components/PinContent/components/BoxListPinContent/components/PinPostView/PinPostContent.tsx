@@ -22,6 +22,7 @@ const PinPostContent: React.FC<PinPostContentProps> = ({
       <Markdown
         value={_content}
         mentions={mentions}
+        limitMarkdownTypes
       />
       <View style={styles.mask} />
     </View>
