@@ -117,3 +117,9 @@ export interface ISearchCommunityMembers {
   groupId: string,
   isLoadMore?: boolean,
 }
+
+export interface MembershipAnswer {
+  question: string,
+  answer: string,
+  isRequired: boolean,
+}

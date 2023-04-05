@@ -342,7 +342,7 @@ export const groupsApiConfig = {
     params: any,
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}groups/${groupId}/joining-requests`,
+    url: `${provider.url}groups/${groupId}/join-requests`,
     params: {
       ...params,
       sort: 'updated_at:desc',

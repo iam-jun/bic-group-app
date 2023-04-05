@@ -206,7 +206,24 @@ export const memberRequestDetail = {
     countryCode: null,
     latestWork: null,
   },
+  membershipAnswers: [],
 };
+
+export const mockAnswers = [
+  {
+    question: '1. What is the cross with the loop at the top?',
+    answer: 'This is answer.....',
+    isRequired: true,
+  },
+  {
+    question: '2. What is the best courses to do after MBA marketing? What is the best courses to do after MBA marketing? What is the best courses to do after MBA marketing? What is the best courses to do after MBA marketing?',
+    answer: '',
+  },
+  {
+    question: '1. What is the cross with the loop at the top?',
+    answer: 'This is answer.....',
+  },
+];
 
 export const listDiscoverCommunities = [
   {

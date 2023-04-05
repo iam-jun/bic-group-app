@@ -985,7 +985,8 @@
     "text_no_pending_members_notice": "Không có yêu cầu đăng ký thành viên",
     "text_pending_request_notice_group": "Bạn có thể thêm thành viên",
     "text_pending_request_notice_community": "Bạn có thể thêm thành viên",
-    "title_add_members": "Thêm thành viên"
+    "title_add_members": "Thêm thành viên",
+    "text_no_answer": "Không có câu trả lời"
   },
   "profile": {
     "title_edit_profile": "Chỉnh sửa thông tin",

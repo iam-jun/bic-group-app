@@ -13,6 +13,7 @@ import { IJoiningMember } from '~/interfaces/IGroup';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 import { Button } from '~/baseComponents';
+import { MembershipAnswer } from '~/interfaces/ICommunity';
 
 interface PendingUserItemProps {
   requestItem: IJoiningMember;
@@ -31,9 +32,11 @@ const PendingUserItem = ({
   const { t } = useBaseHook();
   const { language } = useContext(AppContext);
 
-  const { user, updatedAt, noticeMessage } = requestItem || {};
   const {
-    avatar, fullname, email, countryCode, phone, latestWork, city,
+    user, updatedAt, noticeMessage, membershipAnswers = [],
+  } = requestItem || {};
+  const {
+    avatar, fullname, latestWork, city,
   } = user || {};
   const { titlePosition, company } = latestWork || {};
 
@@ -54,6 +57,42 @@ const PendingUserItem = ({
       </View>
     )
   );
+
+  const renderAnswers = () => {
+    if (membershipAnswers.length > 0) {
+      return membershipAnswers.map((item: MembershipAnswer, index: number) => {
+        const { question, answer, isRequired } = item;
+        return (
+          <View
+            key={`membership_answer_${question}_${index}`}
+            style={styles.answerItemContainer}
+          >
+            <Text.BodyMMedium>
+              {question}
+              {!!isRequired
+              && (
+              <Text.BodyMMedium style={styles.questionRequired}>
+                {' *'}
+              </Text.BodyMMedium>
+              )}
+            </Text.BodyMMedium>
+            {!!answer
+              ? (
+                <Text.BodyM>
+                  {answer}
+                </Text.BodyM>
+              )
+              : (
+                <Text.BodyM useI18n style={styles.noAnswer}>
+                  groups:text_no_answer
+                </Text.BodyM>
+              )}
+          </View>
+        );
+      });
+    }
+    return null;
+  };
 
   const renderFooter = () => {
     if (!noticeMessage) {
@@ -124,15 +163,9 @@ const PendingUserItem = ({
             icon: 'LocationDot',
             title: city,
           })}
-          {renderItem({
-            icon: 'MobileScreen',
-            title:
-              countryCode && phone ? `+${countryCode} ${phone}` : undefined,
-          })}
-          {renderItem({ icon: 'Envelope', title: email })}
         </View>
       </View>
-
+      {renderAnswers()}
       {renderFooter()}
     </View>
   );
@@ -184,6 +217,9 @@ const createStyles = (theme: ExtendedTheme) => {
     marginRight: {
       marginRight: spacing.margin.tiny,
     },
+    answerItemContainer: { marginTop: spacing.margin.small },
+    questionRequired: { color: colors.red40 },
+    noAnswer: { fontStyle: 'italic', color: colors.neutral20 },
   });
 };
 
