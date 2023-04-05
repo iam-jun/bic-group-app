@@ -40,28 +40,34 @@ const usePostMenu = (
   } = data;
 
   const groupAudience = audience?.groups || [];
-  const { getAudienceListWithNoPermission } = useMyPermissionsStore((state) => state.actions);
+
+  const { getAudienceListWithNoPermission } = useMyPermissionsStore(
+    (state) => state.actions,
+  );
 
   const audienceListWithNoPermission = getAudienceListWithNoPermission(
     groupAudience,
     PermissionKey.EDIT_POST_SETTING,
   );
 
+  const audienceListCannotPinContent = getAudienceListWithNoPermission(
+    groupAudience,
+    [
+      PermissionKey.PIN_CONTENT,
+    ],
+  );
+
   const onPressEdit = () => {
     modalActions.hideBottomList();
-    rootNavigation?.navigate?.(
-      homeStack.createPost, {
-        postId,
-        replaceWithDetail: !isPostDetail,
-      },
-    );
+    rootNavigation?.navigate?.(homeStack.createPost, {
+      postId,
+      replaceWithDetail: !isPostDetail,
+    });
   };
 
   const onPressEditSettings = () => {
     modalActions.hideBottomList();
-    rootNavigation?.navigate?.(
-      homeStack.postSettings, { postId },
-    );
+    rootNavigation?.navigate?.(homeStack.postSettings, { postId });
   };
 
   const onPressSave = () => {
@@ -75,9 +81,7 @@ const usePostMenu = (
 
   const onPressCopyLink = () => {
     modalActions.hideBottomList();
-    Clipboard.setString(generateLink(
-      LinkGeneratorTypes.POST, postId,
-    ));
+    Clipboard.setString(generateLink(LinkGeneratorTypes.POST, postId));
     modalActions.showToast({ content: 'common:text_link_copied_to_clipboard' });
   };
 
@@ -130,13 +134,20 @@ const usePostMenu = (
     // in this sprint default reportTo is COMMUNITY
     modalActions.showModal({
       isOpen: true,
-      ContentComponent: <ReportContent
-        targetId={postId}
-        targetType={TargetType.POST}
-        groupIds={rootGroupIds}
-        reportTo={ReportTo.COMMUNITY}
-      />,
+      ContentComponent: (
+        <ReportContent
+          targetId={postId}
+          targetType={TargetType.POST}
+          groupIds={rootGroupIds}
+          reportTo={ReportTo.COMMUNITY}
+        />
+      ),
     });
+  };
+
+  const onPressPin = () => {
+    modalActions.hideBottomList();
+    rootNavigation?.navigate?.(homeStack.pinContent, { postId });
   };
 
   const defaultData = [
@@ -147,7 +158,8 @@ const usePostMenu = (
       title: i18next.t('post:post_menu_edit'),
       requireIsActor: true,
       onPress: onPressEdit,
-    }, {
+    },
+    {
       id: 2,
       testID: 'post_view_menu.edit_settings',
       leftIcon: 'Sliders',
@@ -191,6 +203,16 @@ const usePostMenu = (
     },
     {
       id: 7,
+      testID: 'post_view_menu.pin',
+      leftIcon: 'Thumbtack',
+      title: i18next.t('common:pin'),
+      requireIsActor: false,
+      shouldBeHidden:
+        audienceListCannotPinContent.length === groupAudience.length,
+      onPress: onPressPin,
+    },
+    {
+      id: 8,
       testID: 'post_view_menu.delete',
       leftIcon: 'TrashCan',
       title: i18next.t('post:post_menu_delete'),
@@ -198,7 +220,7 @@ const usePostMenu = (
       onPress: onPressDelete,
     },
     {
-      id: 8,
+      id: 9,
       testID: 'post_view_menu.report',
       leftIcon: 'Flag',
       title: i18next.t('common:btn_report_content'),

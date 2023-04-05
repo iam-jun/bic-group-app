@@ -24,6 +24,7 @@ export const customBackHandlerRoutes = [
   articleStack.createArticleContent,
   homeStack.createPostTags,
   homeStack.createPostSeries,
+  homeStack.pinContent,
 ];
 
 export const EVENT_NAVIGATION_BACK_PRESSED = 'navigation-back-pressed';

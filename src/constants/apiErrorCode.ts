@@ -15,6 +15,8 @@ const Post = {
   VALIDATION_ERROR: 'api.validation_error', // invalid input send to backend
   ARTICLE_INVALID_PARAM: 'app.article.invalid_parameter', // invalid series or tags of article
   POST_INVALID_PARAM: 'app.post.invalid_parameter', // invalid series or tags of posts
+  CONTENT_NO_PIN_PERMISSION: 'content.no_pin_permission',
+  CONTENT_AUDIENCE_NO_BELONG: 'content.audience_no_belong',
 };
 
 const Group = {

@@ -104,6 +104,7 @@ export interface IAudienceGroup {
   icon?: string;
   child?: number[];
   rootGroupId?: string;
+  isPinned?: boolean;
 }
 
 export interface IMarkdownAudience {

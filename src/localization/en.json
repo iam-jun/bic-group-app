@@ -220,7 +220,8 @@
     "mark_article_as_important": "Mark this article as Important",
     "mark_series_as_important": "Mark this series as Important",
     "text_deactivated": "Deactivated",
-    "settings": "Settings"
+    "settings": "Settings",
+    "pin": "Pin"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -1399,5 +1400,9 @@
       "see_content": "Both of you still see the other's content in a community or group"
     },
     "text_block_user_also": "Block this user also"
+  },
+  "pin": {
+    "pin_unpin_content": "Pin/Unpin content",
+    "pick_group_want_to_pin": "Pick the group where you want to pin this content:"
   }
 }

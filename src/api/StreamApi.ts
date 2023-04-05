@@ -219,7 +219,7 @@ export const streamApiConfig = {
   }),
   putMarkSeenPost: (postId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}feeds/seen/${postId}`,
+    url: `${provider.url}content/seen/${postId}`,
     method: 'put',
   }),
 
@@ -408,11 +408,11 @@ export const streamApiConfig = {
   postSavePost: (id: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     method: 'post',
-    url: `${provider.url}posts/${id}/save`,
+    url: `${provider.url}content/${id}/save`,
   }),
   postUnsavePost: (id: string): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}posts/${id}/unsave`,
+    url: `${provider.url}content/${id}/unsave`,
     method: 'delete',
   }),
   getTopicDetail: (id: string): HttpApiRequestConfig => ({
@@ -520,6 +520,19 @@ export const streamApiConfig = {
       order: 'ASC',
       limit: params?.limit || DEFAULT_LIMIT,
       ...params,
+    },
+  }),
+  updatePinContent: (postId: string, pinGroupIds: string[], unpinGroupIds: string[]): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}content/${postId}/pin`,
+    method: 'put',
+    data: { pinGroupIds, unpinGroupIds },
+  }),
+  getPinnableAudiences: (postId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}content/${postId}/audience`,
+    params: {
+      pinnable: true,
     },
   }),
 };
@@ -827,6 +840,12 @@ const streamApi = {
   ),
   getArticleScheduleContent: async (params: IParamsGetArticleScheduleContent) => withHttpRequestPromise(
     streamApiConfig.getArticleScheduleContent, params,
+  ),
+  updatePinContent: (postId: string, pinGroupIds: string[], unpinGroupIds: string[]) => withHttpRequestPromise(
+    streamApiConfig.updatePinContent, postId, pinGroupIds, unpinGroupIds,
+  ),
+  getPinnableAudiences: (postId: string) => withHttpRequestPromise(
+    streamApiConfig.getPinnableAudiences, postId,
   ),
 };
 

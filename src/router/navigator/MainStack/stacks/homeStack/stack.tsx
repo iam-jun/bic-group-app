@@ -9,6 +9,7 @@ const homeStack = {
   createPostTags: 'create-post-tags',
   createPostSeries: 'create-post-series',
   commentDetail: 'comment-detail',
+  pinContent: 'pin-content',
 };
 
 export default homeStack;
