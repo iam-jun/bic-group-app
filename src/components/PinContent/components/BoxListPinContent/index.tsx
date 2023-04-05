@@ -36,7 +36,7 @@ const BoxListPinContent: React.FC<BoxListPinContentProps> = ({
   const { colors } = theme;
   const styles = createStyles(theme);
 
-  const renderItem = ({ item }) => <PinContentItem data={item} isAdmin={isAdmin} id={id} />;
+  const renderItem = ({ item }) => <PinContentItem contentId={item} isAdmin={isAdmin} id={id} />;
 
   const renderHeaderComponent = () => {
     if (isLoading && data?.length === 0) return null;

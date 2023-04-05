@@ -1,20 +1,24 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { IPost, PostType } from '~/interfaces/IPost';
 import PinArticleView from '../PinArticleView';
 import PinSeriesView from '../PinSeriesView';
 import PinPostView from '../PinPostView';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 
 interface PinContentItemProps {
-  data: IPost;
+  contentId: string;
   isAdmin: boolean;
   id: string;
 }
 
 const PinContentItem: React.FC<PinContentItemProps> = ({
-  data,
+  contentId,
   isAdmin,
   id,
 }) => {
+  const data = usePostsStore(useCallback(postsSelector.getPost(contentId, {}), [contentId]));
+
   if (data?.type === PostType.ARTICLE) {
     return <PinArticleView data={data} isAdmin={isAdmin} id={id} />;
   }

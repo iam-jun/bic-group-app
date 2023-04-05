@@ -22,7 +22,7 @@ export interface UpdatePinContentParams {
 
 export interface PinContent {
   isLoading: boolean;
-  data: IPost[];
+  data: string[];
 }
 
 export interface AudiencePermitPin {
