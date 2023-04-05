@@ -7,6 +7,7 @@ const apiUrls = {
   FEED: `${getEnv('BEIN_API')}/v1/feed/`,
   NOTIFICATION: `${getEnv('BEIN_API')}/v1/notification/`,
   UPLOAD: `${getEnv('BEIN_API')}/v1/upload/`,
+  MAINTENANCE: `${getEnv('BEIN_API')}/v1/maintenance-info`,
 };
 
 export const apiProviders = {
@@ -25,6 +26,10 @@ export const apiProviders = {
   beinUpload: {
     url: apiUrls.UPLOAD,
     name: 'BeinUpload',
+  },
+  beinMaintenance: {
+    url: apiUrls.MAINTENANCE,
+    name: 'BeinMaintenance',
   },
 };
 

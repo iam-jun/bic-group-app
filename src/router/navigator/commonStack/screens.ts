@@ -1,4 +1,3 @@
-import Maintenance from '~/screens/Maintenance';
 import NotFound from '~/screens/NotFound';
 import UnsupportFeature from '~/screens/UnsupportFeature';
 
@@ -10,7 +9,6 @@ import UnsupportFeature from '~/screens/UnsupportFeature';
 const commonScreens = {
   'not-found': NotFound,
   'unsupport-feature': UnsupportFeature,
-  maintenance: Maintenance,
 };
 
 export default commonScreens;

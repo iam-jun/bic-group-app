@@ -2,11 +2,17 @@ import * as React from 'react';
 import { act } from '@testing-library/react-hooks';
 import { render } from '~/test/testUtils';
 import Maintenance from './index';
-import streamApi from '~/api/StreamApi';
+import maintenanceApi from '~/api/MaintenanceApi';
+import useMaintenanceStore from '~/store/maintenance';
+import { IMaintenanceData } from '~/interfaces/IMaintenance';
 
 describe('Maintenance component', () => {
   it('render correctly', async () => {
-    const spy = jest.spyOn(streamApi, 'getNewsfeed').mockImplementation(() => Promise.resolve() as any);
+    useMaintenanceStore.setState((state) => {
+      state.data = { enableMaintenance: true } as IMaintenanceData;
+      return state;
+    });
+    const spy = jest.spyOn(maintenanceApi, 'checkMaintenance').mockImplementation(() => Promise.resolve() as any);
 
     const wrapper = render(<Maintenance />);
     const { getByTestId } = wrapper;

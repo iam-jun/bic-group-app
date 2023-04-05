@@ -17,9 +17,6 @@ import useAuthController from '~/screens/auth/store';
 import { EVENT_LOGGER_TAG } from '~/components/LoggerView';
 import { LogType } from '~/components/LoggerView/Interface';
 import ConvertHelper from '~/utils/convertHelper';
-import { withNavigation } from '~/router/helper';
-import { rootNavigationRef } from '~/router/refs';
-import commonStack from '~/router/navigator/commonStack/stack';
 import useMaintenanceStore from '~/store/maintenance';
 
 const defaultTimeout = 10000;
@@ -27,8 +24,6 @@ const commonHeaders = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
 };
-
-const navigation = withNavigation(rootNavigationRef);
 
 const getBeinIdToken = (): string => {
   let token;
@@ -92,6 +87,7 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig): Promise<Axi
     case apiProviders.beinFeed.name:
     case apiProviders.beinNotification.name:
     case apiProviders.beinUpload.name:
+    case apiProviders.beinMaintenance.name:
       requestConfig.headers = beinHeaders;
       break;
     default:
@@ -139,11 +135,7 @@ const withHttpRequestPromise = async (fn: Function, ...args: any[]) => {
 
     const isMaintenance = response?.code === APIErrorCode.Common.MAINTENANCE;
     if (isMaintenance) {
-      useMaintenanceStore.setState((state) => {
-        state.data = response?.data;
-        return state;
-      });
-      navigation.navigate(commonStack.maintenance);
+      useMaintenanceStore.getState().actions.setData(response?.data);
     }
 
     const isSuccess = response?.data?.data || response?.data?.code === APIErrorCode.Common.SUCCESS;
