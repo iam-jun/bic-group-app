@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  View, StyleSheet, ScrollView, LayoutChangeEvent,
+  View, StyleSheet, ScrollView, Keyboard, NativeScrollEvent, LayoutChangeEvent,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Animated, {
@@ -8,11 +8,10 @@ import Animated, {
 } from 'react-native-reanimated';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Header from '~/beinComponents/Header';
-import { spacing } from '~/theme';
+import { dimension, spacing } from '~/theme';
 import useTermStore from './store';
 import { Button } from '~/baseComponents';
 import MarkdownView from '~/beinComponents/MarkdownView';
-import Checkbox from '~/baseComponents/Checkbox';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import useCommunityController from '~/screens/communities/store';
 import IDiscoverGroupsState from '~/screens/groups/DiscoverGroups/store/Interface';
@@ -40,7 +39,6 @@ const TermsView = () => {
   const groupActions = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.actions);
 
   const [isAgree, setIsAgree] = useState(false);
-  const [contentHeight, setContentHeight] = useState(0);
 
   useEffect(() => {
     if (isActiveGroupTerms && rootGroupId) {
@@ -52,7 +50,8 @@ const TermsView = () => {
     if (!isOpen) {
       resetTerms();
       setIsAgree(false);
-      setContentHeight(0);
+    } else {
+      Keyboard.dismiss();
     }
   }, [isOpen]);
 
@@ -69,18 +68,17 @@ const TermsView = () => {
     actions.setIsOpen(false);
   };
 
-  const onChecked = (isChecked?: boolean) => {
-    setIsAgree(isChecked);
-  };
-
   const onLayout = (e:LayoutChangeEvent) => {
-    if (e?.nativeEvent?.layout?.height > contentHeight) {
-      setContentHeight(e.nativeEvent.layout.height);
+    const contentHeight = e?.nativeEvent?.layout?.height || 0;
+    if (contentHeight > 0 && contentHeight <= dimension.deviceHeight - GAP && !isAgree) {
+      setIsAgree(true);
     }
   };
 
-  const onScroll = (e: any) => {
-    if (e?.nativeEvent?.contentOffset?.y >= contentHeight - GAP) {
+  const onScroll = (event: {nativeEvent: NativeScrollEvent}) => {
+    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
+    const isScrollEnd = (layoutMeasurement.height + contentOffset.y) >= contentSize.height;
+    if (isScrollEnd && !isAgree) {
       setIsAgree(true);
     }
   };
@@ -115,14 +113,6 @@ const TermsView = () => {
                 </MarkdownView>
               )
               : <LoadingIndicator />}
-            <Checkbox
-              testID="terms_view.check_box"
-              label="common:text_i_agree"
-              useI18n
-              style={styles.checkbox}
-              isChecked={isAgree}
-              onPress={onChecked}
-            />
           </ScrollView>
           <View style={styles.buttonView} testID="join_cancel_button">
             <Button.Secondary
@@ -131,7 +121,7 @@ const TermsView = () => {
               disabled={!isAgree}
               onPress={onSubmit}
             >
-              common:btn_submit
+              common:text_i_agree
             </Button.Secondary>
           </View>
         </View>
