@@ -19,6 +19,8 @@ import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 import Divider from '~/beinComponents/Divider';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import { BoxListPinContent } from '~/components/PinContent/components';
+import usePinContentStore from '~/components/PinContent/store';
 
 interface GroupContentProps {
   community: ICommunity;
@@ -57,6 +59,7 @@ const GroupContent = ({
   );
   const { ids: posts, loading, refreshing: isRefreshingPost } = groupPost || {};
   const isLoadingPosts = (!isMounted || loading) && !isRefreshingPost;
+  const actionPinContent = usePinContentStore((state) => state.actions);
 
   const isLoadingMore = !isEmpty(posts) && loading;
 
@@ -84,6 +87,7 @@ const GroupContent = ({
 
   const _onRefresh = () => {
     timelineActions.getPosts(groupId, true);
+    actionPinContent.getPinContentsGroup(groupId);
   };
 
   const renderHeader = () => (
@@ -100,7 +104,7 @@ const GroupContent = ({
         teamName={teamName}
       />
       <GroupJoinCancelButton community={community} />
-      <Divider color={colors.gray5} size={spacing.padding.large} />
+      <BoxListPinContent id={groupId} />
       <FilterFeedButtonGroup
         contentFilter={contentFilter}
         attributeFilter={attributeFilter}

@@ -535,6 +535,10 @@ export const streamApiConfig = {
       pinnable: true,
     },
   }),
+  getPinContentsGroup: (id: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}feeds/group/${id}/pinned`,
+  }),
 };
 
 const streamApi = {
@@ -847,6 +851,7 @@ const streamApi = {
   getPinnableAudiences: (postId: string) => withHttpRequestPromise(
     streamApiConfig.getPinnableAudiences, postId,
   ),
+  getPinContentsGroup: (id: string) => withHttpRequestPromise(streamApiConfig.getPinContentsGroup, id),
 };
 
 export default streamApi;

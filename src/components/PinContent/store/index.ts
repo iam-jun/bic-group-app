@@ -1,4 +1,4 @@
-import { IAudienceGroup } from '~/interfaces/IPost';
+import { IAudienceGroup, IPost } from '~/interfaces/IPost';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
 import getPinnableAudiences from './actions/getPinnableAudiences';
@@ -22,7 +22,7 @@ export interface UpdatePinContentParams {
 
 export interface PinContent {
   isLoading: boolean;
-  data: string[];
+  data: IPost[];
 }
 
 export interface AudiencePermitPin {
@@ -46,10 +46,12 @@ export interface IPinContentState extends IBaseState {
     updatePinAudiences: (pinAudiences: PinAudiences) => void;
     updateGroupPinContent: (params: UpdateGroupPinContentParams) => void;
     updatePinContent: (params: UpdatePinContentParams) => void;
-    getPinContentsGroup: () => void;
     getPinnableAudiences: (postId: string) => void;
     togglePinAudience: (audienceId: string) => void;
     resetPinAudiences: () => void;
+    getPinContentsGroup: (id: string) => void;
+    initDataPinContentsGroup: (id: string) => void;
+    resetDataPinContentsGroup: (id: string) => void;
   };
 }
 
@@ -87,6 +89,19 @@ const usePinContent = (set, get): IPinContentState => ({
         state.isLoadingPinnableAudiences = false;
         state.prevAudiences = initialState.prevAudiences;
       }, 'resetPinAudiences');
+    },
+    initDataPinContentsGroup: (id: string) => {
+      set((state: IPinContentState) => {
+        state.groupPinContent[id] = {
+          isLoading: false,
+          data: [],
+        };
+      }, 'initDataPinContentsGroup');
+    },
+    resetDataPinContentsGroup: (id: string) => {
+      set((state) => {
+        state.groupPinContent[id] = {};
+      }, 'resetDataPinContentsGroup');
     },
   },
   reset: () => resetStore(initialState, set),

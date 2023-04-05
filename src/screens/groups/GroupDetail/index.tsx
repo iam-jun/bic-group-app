@@ -54,6 +54,7 @@ import useGroupDetailStore from './store';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 import useModalStore from '~/store/modal';
 import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
+import usePinContentStore from '~/components/PinContent/store';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -125,6 +126,7 @@ const GroupDetail = (props: any) => {
   );
 
   const actionsFeedSearch = useFeedSearchStore((state) => state.actions);
+  const actionPinContent = usePinContentStore((state) => state.actions);
 
   const buttonShow = useSharedValue(0);
   const containerPaddingBottom = useSharedValue(0);
@@ -180,6 +182,14 @@ const GroupDetail = (props: any) => {
 
   useEffect(() => () => {
     if (groupId) timelineActions.resetTimeline(groupId);
+  }, [groupId]);
+
+  useEffect(() => {
+    if (groupId) actionPinContent.getPinContentsGroup(groupId);
+  }, [groupId]);
+
+  useEffect(() => () => {
+    if (groupId) actionPinContent.resetDataPinContentsGroup(groupId);
   }, [groupId]);
 
   const onPressAdminTools = () => {

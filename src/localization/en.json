@@ -1403,6 +1403,9 @@
   },
   "pin": {
     "pin_unpin_content": "Pin/Unpin content",
-    "pick_group_want_to_pin": "Pick the group where you want to pin this content:"
+    "pick_group_want_to_pin": "Pick the group where you want to pin this content:",
+    "list_pin_content_title": "Pinned",
+    "unpin": "Unpin",
+    "reorder": "Reorder"
   }
 }
