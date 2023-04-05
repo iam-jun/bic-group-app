@@ -57,7 +57,7 @@ platform :android do
         appcenter_codepush_release_react(
           api_token: ENV["CODE_PUSH_ACCESS_KEY_ANDROID"],
           app_name: ENV["APPCENTER_APP_NAME_ANDROID"],
-          deployment: "PreRelease",
+          deployment: "Release",
           target_version: ENV['VERSION_NAME'],
           description: ENV['UPDATE_DESC'],
           mandatory: false,
@@ -303,7 +303,7 @@ platform :ios do
         appcenter_codepush_release_react(
           api_token: ENV["CODE_PUSH_ACCESS_KEY_IOS"],
           app_name: ENV["APPCENTER_APP_NAME_IOS"],
-          deployment: "PreRelease",
+          deployment: "Release",
           target_version: ENV['VERSION_NAME'],
           description: ENV['UPDATE_DESC'],
           mandatory: false,
