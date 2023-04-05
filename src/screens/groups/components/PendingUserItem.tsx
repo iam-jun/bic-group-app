@@ -60,11 +60,11 @@ const PendingUserItem = ({
 
   const renderAnswers = () => {
     if (membershipAnswers.length > 0) {
-      return membershipAnswers.map((item: MembershipAnswer, index: number) => {
+      return membershipAnswers.map((item: MembershipAnswer) => {
         const { question, answer, isRequired } = item;
         return (
           <View
-            key={`membership_answer_${question}_${index}`}
+            key={`membership_answer_${question}`}
             style={styles.answerItemContainer}
           >
             <Text.BodyMMedium>
