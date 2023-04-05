@@ -134,9 +134,7 @@ const _CommunityContentView = ({
           <InfoHeader infoDetail={community} />
           <CommunityTabHeader communityId={id} isMember={isMember} teamName={teamName} />
           <CommunityJoinCancelButton community={community} isMember={isMember} />
-          <Divider color={colors.gray5} size={spacing.padding.large} />
-          <BoxListPinContent id={id} />
-          <Divider color={colors.gray5} size={spacing.padding.large} />
+          <BoxListPinContent id={groupId} />
           <FilterFeedButtonGroup
             contentFilter={contentFilter}
             attributeFilter={attributeFilter}

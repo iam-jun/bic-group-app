@@ -14,11 +14,15 @@ const WidthDevice = Dimensions.get('window').width;
 const MaxWidthItem = WidthDevice * 0.8;
 
 interface PinArticleViewProps {
-    data: IPost;
+  data: IPost;
+  isAdmin: boolean;
+  id: string;
 }
 
 const PinArticleView: React.FC<PinArticleViewProps> = ({
   data,
+  isAdmin,
+  id,
 }) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
@@ -50,7 +54,7 @@ const PinArticleView: React.FC<PinArticleViewProps> = ({
       style={styles.container}
       onPress={goToDetail}
     >
-      <HeaderPinContentItem data={data} />
+      <HeaderPinContentItem data={data} isAdmin={isAdmin} id={id} />
       {renderContent()}
     </Button>
   );

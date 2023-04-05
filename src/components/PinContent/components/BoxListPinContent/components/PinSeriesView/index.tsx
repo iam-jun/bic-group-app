@@ -17,11 +17,15 @@ const MaxWidthItem = WidthDevice * 0.8;
 const IMG_SIZE = 80;
 
 interface PinSeriesViewProps {
-    data: IPost;
+  data: IPost;
+  isAdmin: boolean;
+  id: string;
 }
 
 const PinSeriesView: React.FC<PinSeriesViewProps> = ({
   data,
+  isAdmin,
+  id,
 }) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -55,7 +59,7 @@ const PinSeriesView: React.FC<PinSeriesViewProps> = ({
       style={styles.container}
       onPress={goToDetail}
     >
-      <HeaderPinContentItem data={data} />
+      <HeaderPinContentItem data={data} isAdmin={isAdmin} id={id} />
       {renderContent()}
     </Button>
   );

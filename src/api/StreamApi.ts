@@ -522,6 +522,10 @@ export const streamApiConfig = {
       ...params,
     },
   }),
+  getPinContentsGroup: (id: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}feeds/group/${id}/pinned`,
+  }),
 };
 
 const streamApi = {
@@ -828,6 +832,7 @@ const streamApi = {
   getArticleScheduleContent: async (params: IParamsGetArticleScheduleContent) => withHttpRequestPromise(
     streamApiConfig.getArticleScheduleContent, params,
   ),
+  getPinContentsGroup: (id: string) => withHttpRequestPromise(streamApiConfig.getPinContentsGroup, id),
 };
 
 export default streamApi;

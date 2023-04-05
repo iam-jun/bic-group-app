@@ -9,15 +9,18 @@ import { Avatar, Button } from '~/baseComponents';
 import { spacing } from '~/theme';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import UnPin from '../../../../../../../assets/icons/un_pin.svg';
+import usePinContentItemMenu from './usePinContentItemMenu';
 
 interface HeaderPinContentItemProps {
-    data: IPost;
-    isAdmin?: boolean;
+  data: IPost;
+  isAdmin: boolean;
+  id: string;
 }
 
 const HeaderPinContentItem: React.FC<HeaderPinContentItemProps> = ({
   data,
   isAdmin,
+  id,
 }) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -25,9 +28,7 @@ const HeaderPinContentItem: React.FC<HeaderPinContentItemProps> = ({
   const { createdAt, actor } = data || {};
   const { avatar, fullname } = actor || {};
 
-  const onPressUnpin = () => {
-
-  }
+  const { showMenu } = usePinContentItemMenu(data?.id, id);
 
   return (
     <View style={styles.container}>
@@ -46,16 +47,18 @@ const HeaderPinContentItem: React.FC<HeaderPinContentItemProps> = ({
           <ViewSpacing height={spacing.margin.xTiny} />
         </View>
       </View>
-      <Button
-        onPress={onPressUnpin}
-        style={styles.btnUnpin}
-      >
-        <SvgIcon
-          source={UnPin}
-          width={18}
-          height={16}
-        />
-      </Button>
+      {isAdmin && (
+        <Button
+          onPress={showMenu}
+          style={styles.btnUnpin}
+        >
+          <SvgIcon
+            source={UnPin}
+            width={18}
+            height={16}
+          />
+        </Button>
+      )}
     </View>
   );
 };

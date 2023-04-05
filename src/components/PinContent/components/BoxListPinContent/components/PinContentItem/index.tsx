@@ -5,21 +5,25 @@ import PinSeriesView from '../PinSeriesView';
 import PinPostView from '../PinPostView';
 
 interface PinContentItemProps {
-    data: IPost;
+  data: IPost;
+  isAdmin: boolean;
+  id: string;
 }
 
 const PinContentItem: React.FC<PinContentItemProps> = ({
   data,
+  isAdmin,
+  id,
 }) => {
   if (data?.type === PostType.ARTICLE) {
-    return <PinArticleView data={data} />;
+    return <PinArticleView data={data} isAdmin={isAdmin} id={id} />;
   }
 
   if (data?.type === PostType.SERIES) {
-    return <PinSeriesView data={data} />;
+    return <PinSeriesView data={data} isAdmin={isAdmin} id={id} />;
   }
 
-  return <PinPostView data={data} />;
+  return <PinPostView data={data} isAdmin={isAdmin} id={id} />;
 };
 
 export default PinContentItem;

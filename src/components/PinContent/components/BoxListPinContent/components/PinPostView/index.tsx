@@ -4,7 +4,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useRootNavigation } from '~/hooks/navigation';
 import { Button } from '~/baseComponents';
 import HeaderPinContentItem from '../HeaderPinContentItem';
-import spacing, { borderRadius } from '~/theme/spacing';
+import { borderRadius } from '~/theme/spacing';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { IPost } from '~/interfaces/IPost';
 import PinPostBody from './PinPostBody';
@@ -13,11 +13,15 @@ const WidthDevice = Dimensions.get('window').width;
 const MaxWidthItem = WidthDevice * 0.8;
 
 interface PinPostViewProps {
-    data: IPost;
+  data: IPost;
+  isAdmin: boolean;
+  id: string;
 }
 
 const PinPostView: React.FC<PinPostViewProps> = ({
   data,
+  isAdmin,
+  id,
 }) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
@@ -38,7 +42,7 @@ const PinPostView: React.FC<PinPostViewProps> = ({
       style={styles.container}
       onPress={goToDetail}
     >
-      <HeaderPinContentItem data={data} />
+      <HeaderPinContentItem data={data} isAdmin={isAdmin} id={id} />
       {renderContent()}
     </Button>
   );
@@ -57,8 +61,6 @@ const createStyles = (theme: ExtendedTheme) => {
     },
     content: {
       flex: 1,
-      paddingHorizontal: spacing.padding.large,
-      paddingBottom: spacing.padding.large,
     },
   });
 };
