@@ -39,10 +39,6 @@ describe('TermsView component', () => {
     expect(headerComp).toBeDefined();
     expect(headerComp.children[0]).toEqual(languages.common.text_community_terms);
 
-    const checkBoxComp = wrapper.queryByTestId('terms_view.check_box');
-    expect(checkBoxComp).toBeDefined();
-    fireEvent.press(checkBoxComp);
-
     const buttonSubmit = wrapper.queryByTestId('terms_view.sumbit');
     expect(buttonSubmit).toBeDefined();
     fireEvent.press(buttonSubmit);
@@ -76,10 +72,6 @@ describe('TermsView component', () => {
     const headerComp = wrapper.queryByTestId('header.text');
     expect(headerComp).toBeDefined();
     expect(headerComp.children[0]).toEqual(languages.common.text_group_terms);
-
-    const checkBoxComp = wrapper.queryByTestId('terms_view.check_box');
-    expect(checkBoxComp).toBeDefined();
-    fireEvent.press(checkBoxComp);
 
     const buttonSubmit = wrapper.queryByTestId('terms_view.sumbit');
     expect(buttonSubmit).toBeDefined();
