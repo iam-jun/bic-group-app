@@ -12,7 +12,7 @@ const joinNewGroup = (set, get) => async (groupId: string) => {
     const currentRequestState = currentState.items[groupId]?.joinStatus || 0;
     if (currentRequestState === GroupJoinStatus.MEMBER) return;
 
-    const response = await groupApi.joinGroup(groupId);
+    const response = await groupApi.joinGroup(groupId, { membershipAnswers: [] });
     const joinStatus = response?.data?.joinStatus;
 
     const currentItem = {

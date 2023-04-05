@@ -11,7 +11,7 @@ import showToast from '~/store/helper/showToast';
 const joinCommunity
   = (_set, _get) => async (communityId: string, communityName: string) => {
     try {
-      const response = await groupApi.joinCommunity(communityId);
+      const response = await groupApi.joinCommunity(communityId, { membershipAnswers: [] });
       const joinStatus = response?.data?.joinStatus;
       const hasRequested = joinStatus === GroupJoinStatus.REQUESTED;
       const userCount = useCommunitiesStore.getState().data?.[communityId]?.userCount || 0;
