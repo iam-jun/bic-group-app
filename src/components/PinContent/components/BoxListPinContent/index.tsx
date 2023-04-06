@@ -25,11 +25,7 @@ const BoxListPinContent: React.FC<BoxListPinContentProps> = ({
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
   const isAdmin = shouldHavePermission(
     id,
-    [
-      PermissionKey.ROLE_COMMUNITY_OWNER,
-      PermissionKey.ROLE_COMMUNITY_ADMIN,
-      PermissionKey.ROLE_GROUP_ADMIN,
-    ],
+    [PermissionKey.PIN_CONTENT],
   );
 
   const theme: ExtendedTheme = useTheme();
