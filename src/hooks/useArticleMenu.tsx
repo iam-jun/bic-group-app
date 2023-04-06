@@ -26,6 +26,10 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
   const commonActions = useCommonController((state) => state.actions);
   const modalActions = useModalStore((state) => state.actions);
 
+  const { getAudienceListWithNoPermission } = useMyPermissionsStore(
+    (state) => state.actions,
+  );
+
   if (!data) return null;
 
   const {
@@ -33,10 +37,6 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
   } = data;
 
   const groupAudience = audience?.groups || [];
-
-  const { getAudienceListWithNoPermission } = useMyPermissionsStore(
-    (state) => state.actions,
-  );
 
   const audienceListCannotPinContent = getAudienceListWithNoPermission(
     groupAudience,

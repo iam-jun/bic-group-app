@@ -217,9 +217,9 @@ export const streamApiConfig = {
     url: `${provider.url}posts/${postId}/mark-as-read`,
     method: 'put',
   }),
-  putMarkSeenPost: (postId: string): HttpApiRequestConfig => ({
+  putMarkSeenContent: (id: string): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}content/seen/${postId}`,
+    url: `${provider.url}content/seen/${id}`,
     method: 'put',
   }),
 
@@ -405,12 +405,12 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}posts/total-draft`,
   }),
-  postSavePost: (id: string): HttpApiRequestConfig => ({
+  postSaveContent: (id: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     method: 'post',
     url: `${provider.url}content/${id}/save`,
   }),
-  postUnsavePost: (id: string): HttpApiRequestConfig => ({
+  postUnsaveContent: (id: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}content/${id}/unsave`,
     method: 'delete',
@@ -630,7 +630,7 @@ const streamApi = {
   postNewComment: (params: IRequestPostComment) => withHttpRequestPromise(streamApiConfig.postNewComment, params),
   postReplyComment: (params: IRequestReplyComment) => withHttpRequestPromise(streamApiConfig.postReplyComment, params),
   putMarkAsRead: (postId: string) => withHttpRequestPromise(streamApiConfig.putMarkAsRead, postId),
-  putMarkSeenPost: (postId: string) => withHttpRequestPromise(streamApiConfig.putMarkSeenPost, postId),
+  putMarkSeenContent: (id: string) => withHttpRequestPromise(streamApiConfig.putMarkSeenContent, id),
   getSearchMentionAudiences: (params: IParamSearchMentionAudiences) => withHttpRequestPromise(
     streamApiConfig.getSearchMentionAudiences, params,
   ),
@@ -753,8 +753,8 @@ const streamApi = {
   ),
   getTotalDraft: () => withHttpRequestPromise(streamApiConfig.getTotalDraft),
   searchSeries: (params?: IGetSeries) => withHttpRequestPromise(streamApiConfig.searchSeries, params),
-  postSavePost: (id: string) => withHttpRequestPromise(streamApiConfig.postSavePost, id),
-  postUnsavePost: (id: string) => withHttpRequestPromise(streamApiConfig.postUnsavePost, id),
+  postSaveContent: (id: string) => withHttpRequestPromise(streamApiConfig.postSaveContent, id),
+  postUnsaveContent: (id: string) => withHttpRequestPromise(streamApiConfig.postUnsaveContent, id),
   reorderItemsInSeries: (id: string, data: IReorderItems) => withHttpRequestPromise(
     streamApiConfig.reorderItemsInSeries, id, data,
   ),

@@ -29,6 +29,10 @@ const useSeriesMenu = (
   }
     = useModalStore((state) => state.actions);
 
+  const { getAudienceListWithNoPermission } = useMyPermissionsStore(
+    (state) => state.actions,
+  );
+
   if (!data) return null;
 
   const {
@@ -36,10 +40,6 @@ const useSeriesMenu = (
   } = data;
 
   const groupAudience = audience?.groups || [];
-
-  const { getAudienceListWithNoPermission } = useMyPermissionsStore(
-    (state) => state.actions,
-  );
 
   const audienceListCannotPinContent = getAudienceListWithNoPermission(
     groupAudience,

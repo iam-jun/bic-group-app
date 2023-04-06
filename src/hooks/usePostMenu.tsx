@@ -33,6 +33,10 @@ const usePostMenu = (
   const modalActions = useModalStore((state) => state.actions);
   const { deletePost } = usePostsStore((state: IPostsState) => state.actions);
 
+  const { getAudienceListWithNoPermission } = useMyPermissionsStore(
+    (state) => state.actions,
+  );
+
   if (!data) return null;
 
   const {
@@ -40,10 +44,6 @@ const usePostMenu = (
   } = data;
 
   const groupAudience = audience?.groups || [];
-
-  const { getAudienceListWithNoPermission } = useMyPermissionsStore(
-    (state) => state.actions,
-  );
 
   const audienceListWithNoPermission = getAudienceListWithNoPermission(
     groupAudience,

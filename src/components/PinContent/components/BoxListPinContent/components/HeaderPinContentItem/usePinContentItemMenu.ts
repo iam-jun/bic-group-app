@@ -4,11 +4,9 @@ import usePinContentStore, { UpdatePinContentParams } from '~/components/PinCont
 import { useBaseHook } from '~/hooks';
 import { IToastMessage } from '~/interfaces/common';
 import showToast from '~/store/helper/showToast';
-// import { useRootNavigation } from "~/hooks/navigation";
 import useModalStore from '~/store/modal';
 
 const usePinContentItemMenu = (pinContentId: string, id) => {
-  // const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const { hideBottomList, showBottomList } = useModalStore((state) => state.actions);
   const actions = usePinContentStore((state) => state.actions);
@@ -34,7 +32,6 @@ const usePinContentItemMenu = (pinContentId: string, id) => {
 
   const onPressReorder = () => {
     hideBottomList();
-    // rootNavigation.navigate(pinStacks.reorderItems, { groupId: id });
   };
 
   const defaultData = [
