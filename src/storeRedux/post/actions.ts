@@ -1,8 +1,5 @@
 import postTypes from './types';
-import {
-  IPayloadReplying,
-  IPayloadRemoveAudiencesOfPost,
-} from '~/interfaces/IPost';
+import { IPayloadReplying } from '~/interfaces/IPost';
 
 const postActions = {
   // post detail
@@ -21,10 +18,6 @@ const postActions = {
   }),
   setCommentErrorCode: (payload: boolean | string) => ({
     type: postTypes.SET_COMMENT_ERROR_CODE,
-    payload,
-  }),
-  removePostAudiences: (payload:IPayloadRemoveAudiencesOfPost) => ({
-    type: postTypes.REMOVE_POST_AUDIENCES,
     payload,
   }),
 };

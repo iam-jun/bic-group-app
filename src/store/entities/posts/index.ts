@@ -6,6 +6,7 @@ import {
   IPayloadPutEditPost,
   IPayloadPutMarkSeenPost,
   IPost,
+  IPayloadRemoveAudiencesOfPost,
 } from '~/interfaces/IPost';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
@@ -15,6 +16,7 @@ import deletePostLocal from './actions/deletePostLocal';
 import getPostDetail from './actions/getPostDetail';
 import putEditPost from './actions/putEditPost';
 import putMarkSeenPost from './actions/putMarkSeenPost';
+import removeAudiencesFromPost from './actions/removeAudiencesFromPost';
 
 export interface IPostsState extends IBaseState {
   isLoadingGetPostDetail: boolean;
@@ -29,6 +31,7 @@ export interface IPostsState extends IBaseState {
     deletePostLocal: (id: string) => void;
     putEditPost: (payload: IPayloadPutEditPost) => void;
     putMarkSeenPost: (payload: IPayloadPutMarkSeenPost) => void;
+    removeAudiencesFromPost: (payload: IPayloadRemoveAudiencesOfPost) => void;
   };
 }
 
@@ -57,6 +60,7 @@ const postsStore = (set, get) => ({
     deletePostLocal: deletePostLocal(set, get),
     putEditPost: putEditPost(set, get),
     putMarkSeenPost: putMarkSeenPost(),
+    removeAudiencesFromPost: removeAudiencesFromPost(),
   },
 
   reset: () => resetStore(initState, set),
