@@ -17,6 +17,7 @@ import { spacing } from '~/theme';
 import Checkbox from '~/baseComponents/Checkbox';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { isChangedPinAudiences, getGroupIdsBySelectedOrUnselected } from '~/components/PinContent/store/helper';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 type PinContentProps = {
   route: {
@@ -47,7 +48,8 @@ const PinContent: FC<PinContentProps> = (props) => {
   const isChanged = isChangedPinAudiences(pinAudiences, prevAudiences);
   const isDisabledBtnSave = !isChanged;
 
-  const onPinUnpinSuccess = () => {
+  const onPinUnpinSuccess = (res) => {
+    showToastSuccess(res);
     rootNavigation.goBack();
   };
 

@@ -15,7 +15,7 @@ export interface UpdatePinContentParams {
   postId: string
   pinGroupIds?: string[]
   unpinGroupIds?: string[]
-  onSuccess?: () => void
+  onSuccess?: (res) => void
   onError?: (error) => void
 }
 

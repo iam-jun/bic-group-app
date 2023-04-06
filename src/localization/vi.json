@@ -1346,6 +1346,7 @@
     "pick_group_want_to_pin": "Chọn nhóm bạn muốn ghim nội dung này:",
     "list_pin_content_title": "Danh sách ghim",
     "unpin": "Gỡ ghim",
-    "reorder": "Xắp Sếp"
+    "reorder": "Xắp Sếp",
+    "unpinned_successfully": "Gỡ pin thành công"
   }
 }

@@ -2,7 +2,6 @@ import { isEmpty } from 'lodash';
 import streamApi from '~/api/StreamApi';
 import APIErrorCode from '~/constants/apiErrorCode';
 import showToastError from '~/store/helper/showToastError';
-import showToastSuccess from '~/store/helper/showToastSuccess';
 import {
   IPinContentState,
   UpdatePinContentParams,
@@ -40,8 +39,7 @@ const updatePinContent
         unpinGroupIds,
       };
       actions.updateGroupPinContent(updateGroupPinContentParams);
-      showToastSuccess(res);
-      onSuccess?.();
+      onSuccess?.(res);
     } catch (e) {
       console.error('\x1b[35m🐣️ updatePinContent error: ', e, '\x1b[0m');
       set((state: IPinContentState) => {
