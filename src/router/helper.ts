@@ -341,6 +341,7 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
           }
           return null;
         case NOTIFICATION_TYPE.LEAVE_MULTIPLE_GROUP_TO_USER:
+        case NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME:
           return null;
         default:
           console.warn(`Notification type ${type} have not implemented yet`);
