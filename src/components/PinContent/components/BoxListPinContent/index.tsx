@@ -1,6 +1,10 @@
 import React from 'react';
 import {
-  View, StyleSheet, ActivityIndicator, FlatList, Dimensions,
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  FlatList,
+  Dimensions,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import usePinContentStore from '../../store';
@@ -17,22 +21,24 @@ interface BoxListPinContentProps {
   id: string;
 }
 
-const BoxListPinContent: React.FC<BoxListPinContentProps> = ({
-  id,
-}) => {
+const BoxListPinContent: React.FC<BoxListPinContentProps> = ({ id }) => {
   const { groupPinContent } = usePinContentStore((state) => state);
   const { data, isLoading } = groupPinContent?.[id] || {};
-  const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
-  const isAdmin = shouldHavePermission(
-    id,
-    [PermissionKey.PIN_CONTENT],
+  const { shouldHavePermission } = useMyPermissionsStore(
+    (state) => state.actions,
   );
+  const isAdmin = shouldHavePermission(id, [
+    PermissionKey.FULL_PERMISSION,
+    PermissionKey.PIN_CONTENT,
+  ]);
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyles(theme);
 
-  const renderItem = ({ item }) => <PinContentItem contentId={item} isAdmin={isAdmin} id={id} />;
+  const renderItem = ({ item }) => (
+    <PinContentItem contentId={item} isAdmin={isAdmin} id={id} />
+  );
 
   const renderHeaderComponent = () => {
     if (isLoading && data?.length === 0) return null;
@@ -42,7 +48,7 @@ const BoxListPinContent: React.FC<BoxListPinContentProps> = ({
 
   const renderFooterComponent = () => {
     if (!isLoading && data?.length !== 0) {
-      return (<ViewSpacing width={spacing.padding.large} />);
+      return <ViewSpacing width={spacing.padding.large} />;
     }
 
     return (
@@ -52,11 +58,13 @@ const BoxListPinContent: React.FC<BoxListPinContentProps> = ({
     );
   };
 
-  const renderSeparatorComponent = () => <ViewSpacing width={spacing.margin.large} />;
+  const renderSeparatorComponent = () => (
+    <ViewSpacing width={spacing.margin.large} />
+  );
 
   const keyExtractor = (item) => `pin-content-item-${item}`;
 
-  if (!isLoading && (!data || data?.length === 0)) return <ViewSpacing height={spacing.margin.large} />;
+  if (!isLoading && (!data || data?.length === 0)) { return <ViewSpacing height={spacing.margin.large} />; }
 
   return (
     <View style={styles.container}>
