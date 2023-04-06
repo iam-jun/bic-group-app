@@ -10,7 +10,7 @@ const updateGroupPinContent = (set, get) => async (params: UpdateGroupPinContent
       const newData = data ? [...data] : [];
 
       if (newData && !newData.includes(postId)) {
-        newData.unshift(postId);
+        newData.push(postId);
       }
 
       const newGroupPinContent: PinContent = {
