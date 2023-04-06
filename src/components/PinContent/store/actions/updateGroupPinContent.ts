@@ -6,19 +6,16 @@ const updateGroupPinContent = (set, get) => async (params: UpdateGroupPinContent
 
     pinGroupIds.forEach((groupId) => {
       const groupPinContent = (get() as IPinContentState).groupPinContent[groupId];
-      let { data } = groupPinContent || {};
+      const { data } = groupPinContent || {};
+      const newData = data ? [...data] : [];
 
-      if (data && !data.includes(postId)) {
-        data.unshift(postId);
-      }
-
-      if (!data) {
-        data = [postId];
+      if (newData && !newData.includes(postId)) {
+        newData.unshift(postId);
       }
 
       const newGroupPinContent: PinContent = {
         isLoading: false,
-        data,
+        data: newData,
       };
 
       set((state: IPinContentState) => {
@@ -31,15 +28,14 @@ const updateGroupPinContent = (set, get) => async (params: UpdateGroupPinContent
 
       if (!groupPinContent) return;
 
-      let { data } = groupPinContent || {};
+      const { data } = groupPinContent;
+      let newData = data ? [...data] : [];
 
-      if (data) {
-        data = data.filter((pinnedPostId) => pinnedPostId !== postId);
-      }
+      newData = newData.filter((pinnedPostId) => pinnedPostId !== postId);
 
       const newGroupPinContent: PinContent = {
         isLoading: false,
-        data,
+        data: newData,
       };
 
       set((state: IPinContentState) => {
@@ -47,7 +43,7 @@ const updateGroupPinContent = (set, get) => async (params: UpdateGroupPinContent
       }, 'updateGroupPinContent unpinGroupIds');
     });
   } catch (e) {
-    console.error('\x1b[35m🐣️ updatePinContent error: ', e, '\x1b[0m');
+    console.error('\x1b[35m🐣️ updateGroupPinContent error: ', e, '\x1b[0m');
   }
 };
 

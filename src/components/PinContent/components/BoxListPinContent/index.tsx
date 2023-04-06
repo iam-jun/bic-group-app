@@ -58,7 +58,7 @@ const BoxListPinContent: React.FC<BoxListPinContentProps> = ({
 
   const renderSeparatorComponent = () => <ViewSpacing width={spacing.margin.large} />;
 
-  const keyExtractor = (item) => `pin-content-item-${item?.id}`;
+  const keyExtractor = (item) => `pin-content-item-${item}`;
 
   if (!isLoading && (!data || data?.length === 0)) return <ViewSpacing height={spacing.margin.large} />;
 
