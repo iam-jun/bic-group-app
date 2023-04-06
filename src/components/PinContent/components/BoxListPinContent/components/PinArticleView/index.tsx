@@ -42,7 +42,7 @@ const PinArticleView: React.FC<PinArticleViewProps> = ({
       </Text.SubtitleM>
       <ViewSpacing height={spacing.margin.small} />
       <View style={styles.boxSummary}>
-        <Text.ParagraphM color={colors.neutral60} numberOfLines={5}>
+        <Text.ParagraphM color={colors.neutral60} numberOfLines={4}>
           { summary }
         </Text.ParagraphM>
       </View>
@@ -76,6 +76,8 @@ const createStyles = (theme: ExtendedTheme) => {
       backgroundColor: colors.purple2,
       paddingHorizontal: spacing.padding.large,
       paddingVertical: spacing.padding.base,
+      borderBottomLeftRadius: borderRadius.large,
+      borderBottomRightRadius: borderRadius.large,
     },
     boxSummary: {
       flex: 1,

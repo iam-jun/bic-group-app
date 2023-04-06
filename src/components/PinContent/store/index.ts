@@ -2,7 +2,6 @@ import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
 import getPinContentsGroup from './actions/getPinContentsGroup';
 import updatePinContent from './actions/updatePinContent';
-import { IPost } from '~/interfaces/IPost';
 
 export interface PinContent {
   isLoading: boolean;

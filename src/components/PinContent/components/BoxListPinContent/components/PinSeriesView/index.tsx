@@ -42,11 +42,12 @@ const PinSeriesView: React.FC<PinSeriesViewProps> = ({
   const renderContent = () => (
     <View style={styles.content}>
       <Image resizeMode="cover" source={coverMedia?.url} style={styles.img} />
+      <View style={styles.mask} />
       <View style={styles.boxTitle}>
         <Text.SubtitleM numberOfLines={2} color={colors.neutral60}>
           { title }
         </Text.SubtitleM>
-        <Text.BodyS color={colors.neutral40}>
+        <Text.BodyS color={colors.neutral40} numberOfLines={1}>
           {`${t('common:last_updated')}: `}
           <Text.BodySMedium>{formatDate(updatedAt, 'DD/MM/YYYY')}</Text.BodySMedium>
         </Text.BodyS>
@@ -82,6 +83,11 @@ const createStyles = (theme: ExtendedTheme) => {
     img: {
       width: IMG_SIZE,
       height: IMG_SIZE,
+    },
+    mask: {
+      opacity: 0.45,
+      backgroundColor: colors.black,
+      ...StyleSheet.absoluteFillObject,
     },
     boxTitle: {
       flex: 1,
