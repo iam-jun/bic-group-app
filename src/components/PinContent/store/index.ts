@@ -11,7 +11,6 @@ export interface UpdateGroupPinContentParams {
   pinGroupIds?: string[]
   unpinGroupIds?: string[]
 }
-
 export interface UpdatePinContentParams {
   postId: string
   pinGroupIds?: string[]

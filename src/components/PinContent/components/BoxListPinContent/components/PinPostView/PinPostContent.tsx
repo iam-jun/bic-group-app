@@ -2,8 +2,8 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Markdown from '~/beinComponents/Markdown';
 
-const limitLength = 272;
-const shortLength = 272;
+const limitLength = 212;
+const shortLength = 212;
 
 interface PinPostContentProps {
     data: string;
@@ -16,6 +16,7 @@ const PinPostContent: React.FC<PinPostContentProps> = ({
 }) => {
   const shortContent = getShortContent(data, limitLength, shortLength);
   const _content = data?.length < limitLength ? data : shortContent;
+  const styles = createStyles();
 
   return (
     <View style={styles.container}>
@@ -29,8 +30,10 @@ const PinPostContent: React.FC<PinPostContentProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {},
+const createStyles = () => StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   mask: {
     position: 'absolute',
     width: '100%',
