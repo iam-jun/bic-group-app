@@ -256,6 +256,12 @@ android {
             keyAlias 'bic-staging'
             keyPassword 'Ts3N3G6nEPs$'
         }
+        pre {
+            storeFile file('prerelease.keystore')
+            storePassword '8jn@go@BfaKz'
+            keyAlias 'bic-prerelease'
+            keyPassword '8jn@go@BfaKz'
+        }
         pro {
             storeFile file('production.keystore')
             storePassword 'DtNX#a7gLLB4'
@@ -291,6 +297,19 @@ android {
             resValue "string", "provider_write_permission", "com.beincom.group.staging.WRITE_DATABASE"
             resValue "string", "CodePushDeploymentKey", "n47pDS6lrKq_xZaIXdD8fRWeIEBJelpxBS_4u"
         }
+        prerelease {
+             dimension "version"
+             applicationIdSuffix ".prerelease"
+             versionNameSuffix ""
+             resValue "string", "app_name", "BIC Group Release"
+             resValue "string", "facebook_app_id", "362084341568821"
+             manifestPlaceholders.beinChatId = "com.beincom.chat.prerelease"
+             manifestPlaceholders.selfHost = "www.beincom.biz"
+             resValue "string", "provider_authorities", "com.beincom.group.prerelease.SharedProvider"
+             resValue "string", "provider_read_permission", "com.beincom.group.prerelease.READ_DATABASE"
+             resValue "string", "provider_write_permission", "com.beincom.group.prerelease.WRITE_DATABASE"
+             resValue "string", "CodePushDeploymentKey", "GNX4ZW1YN1C8S1lfDQUjjjsmHsgMee96U-2Kc"
+        }
         production {
             dimension "version"
             resValue "string", "app_name", "BIC Group"
@@ -308,11 +327,13 @@ android {
             signingConfig null
             productFlavors.development.signingConfig signingConfigs.dev
             productFlavors.staging.signingConfig signingConfigs.stg
+            productFlavors.prerelease.signingConfig signingConfigs.pre
             productFlavors.production.signingConfig signingConfigs.pro
         }
         release {
             productFlavors.development.signingConfig signingConfigs.dev
             productFlavors.staging.signingConfig signingConfigs.stg
+            productFlavors.prerelease.signingConfig signingConfigs.pre
             productFlavors.production.signingConfig signingConfigs.pro
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
@@ -379,6 +400,8 @@ project.ext.envConfigFiles = [
         developmentrelease: ".env",
         stagingdebug: ".env.staging",
         stagingrelease: ".env.staging",
+        prereleasedebug: ".env.prerelease",
+        prereleaserelease: ".env.prerelease",
         productiondebug: ".env.production",
         productionrelease: ".env.production",
 ]
