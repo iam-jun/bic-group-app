@@ -29,7 +29,7 @@ const PinArticleView: React.FC<PinArticleViewProps> = ({
   const { colors } = theme;
   const { rootNavigation } = useRootNavigation();
 
-  const { title, summary } = data;
+  const { title, summary } = data || {};
 
   const goToDetail = () => {
     rootNavigation.navigate(articleStack.articleDetail, { articleId: data?.id });
