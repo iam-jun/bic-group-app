@@ -19,6 +19,10 @@ const PinContentItem: React.FC<PinContentItemProps> = ({
 }) => {
   const data = usePostsStore(useCallback(postsSelector.getPost(contentId, {}), [contentId]));
 
+  if (data?.deleted || data?.reported) {
+    return null;
+  }
+
   if (data?.type === PostType.ARTICLE) {
     return <PinArticleView data={data} isAdmin={isAdmin} id={id} />;
   }
