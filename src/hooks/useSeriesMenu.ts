@@ -44,6 +44,7 @@ const useSeriesMenu = (
   const audienceListCannotPinContent = getAudienceListWithNoPermission(
     groupAudience,
     [
+      PermissionKey.FULL_PERMISSION,
       PermissionKey.PIN_CONTENT,
     ],
   );

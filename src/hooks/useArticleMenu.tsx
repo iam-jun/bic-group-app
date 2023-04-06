@@ -41,6 +41,7 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
   const audienceListCannotPinContent = getAudienceListWithNoPermission(
     groupAudience,
     [
+      PermissionKey.FULL_PERMISSION,
       PermissionKey.PIN_CONTENT,
     ],
   );
