@@ -17,19 +17,24 @@ const getTerms = (set, _get) => async (groupId: string, callBackError: ()=> void
     }, 'getTerms Success');
   } catch (error) {
     console.error('\x1b[31m🐣️ action getTerms error: ', error, '\x1b[0m');
-    setTimeout(
-      () => {
-        set((state: ITermState) => {
-          state.loading = false;
-          state.termContent = '';
-          state.isOpen = false;
-        }, 'getTerms Error');
-      }, 500,
-    );
     if (error?.code === APIErrorCode.Group.TERMS_NOT_FOUND) {
-      callBackError();
+      setTimeout(
+        () => {
+          set((state: ITermState) => {
+            state.loading = false;
+            state.termContent = '';
+            state.isOpen = false;
+          }, 'getTerms Error');
+          callBackError();
+        }, 1000,
+      );
       return;
     }
+    set((state: ITermState) => {
+      state.loading = false;
+      state.termContent = '';
+      state.isOpen = false;
+    }, 'getTerms Error');
     showToastError(error);
   }
 };

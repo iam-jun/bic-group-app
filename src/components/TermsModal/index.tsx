@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  View, StyleSheet, ScrollView, Keyboard, NativeScrollEvent, LayoutChangeEvent,
+  View, StyleSheet, ScrollView, Keyboard, NativeScrollEvent, LayoutChangeEvent, Platform,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Animated, {
@@ -55,7 +55,7 @@ const TermsView = () => {
 
   const handleError = () => {
     modalActions.showAlert({
-      cancelBtn: true,
+      cancelBtn: false,
       confirmLabel: t('common:text_got_it'),
       title: t('common:text_sorry_something_went_wrong'),
       content: t('common:text_pull_to_refresh'),
@@ -101,7 +101,8 @@ const TermsView = () => {
 
   const onScroll = (event: {nativeEvent: NativeScrollEvent}) => {
     const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
-    const isScrollEnd = (layoutMeasurement.height + contentOffset.y) >= contentSize.height;
+    const paddingBottom = Platform.OS === 'ios' ? 0 : spacing.padding.large * 2;
+    const isScrollEnd = (layoutMeasurement.height + contentOffset.y + paddingBottom) >= contentSize.height;
     if (isScrollEnd && !isAgree && !loading && !errorText) {
       setIsAgree(true);
     }
