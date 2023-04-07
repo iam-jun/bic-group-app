@@ -20,7 +20,7 @@ type TitleItemProps = {
 const TitleItem: FC<TitleItemProps> = ({
   index, item, seriesId, isActor,
 }) => {
-  const { title, id, content } = item || {};
+  const { title, content } = item || {};
   const { t } = useBaseHook();
   const theme = useTheme();
   const { colors } = theme;
@@ -30,7 +30,7 @@ const TitleItem: FC<TitleItemProps> = ({
   const titlePost = getTitlePostItemInSeries(escapeMarkDownContent);
   const titleItem = item?.type === PostType.ARTICLE ? title : titlePost;
 
-  const { showMenu } = useSeriesDetailItemMenu(seriesId, id, item?.type);
+  const { showMenu } = useSeriesDetailItemMenu(seriesId, item);
 
   return (
     <View style={styles.container}>
