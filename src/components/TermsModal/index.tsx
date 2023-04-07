@@ -56,7 +56,7 @@ const TermsView = () => {
   const handleError = () => {
     modalActions.showAlert({
       cancelBtn: false,
-      confirmLabel: t('common:text_got_it'),
+      confirmLabel: t('common:text_ok'),
       title: t('common:text_sorry_something_went_wrong'),
       content: t('common:text_pull_to_refresh'),
     });
