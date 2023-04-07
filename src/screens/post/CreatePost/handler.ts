@@ -30,7 +30,7 @@ export const handleBack = ({
         cancelBtn: true,
         cancelLabel: i18next.t('common:btn_discard'),
         confirmLabel: i18next.t('common:btn_stay_here'),
-        onCancel: () => rootNavigation.goBack(),
+        onCancel: () => rootNavigation?.goBack(),
       });
       return;
     }
@@ -46,7 +46,7 @@ export const handleBack = ({
         confirmLabel: i18next.t('common:btn_stay_on_this_page'),
         onCancel: () => {
           useUploaderStore.getState().actions.cancelAllFiles();
-          rootNavigation.goBack();
+          rootNavigation?.goBack();
         },
       });
       return;
@@ -58,5 +58,5 @@ export const handleBack = ({
       onButtonPress: onPressDraftPost,
     });
   }
-  rootNavigation.goBack();
+  rootNavigation?.goBack();
 };

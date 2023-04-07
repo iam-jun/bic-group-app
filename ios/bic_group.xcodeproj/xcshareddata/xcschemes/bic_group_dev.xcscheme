@@ -9,7 +9,7 @@
          <ExecutionAction
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
-               title = "Run Script"
+               title = "Run copy env by configuration"
                scriptText = "cp &quot;${PROJECT_DIR}/../.env&quot; &quot;${PROJECT_DIR}/../.env&quot;&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
@@ -17,22 +17,6 @@
                      BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
                      BuildableName = "bic_group.app"
                      BlueprintName = "bic_group"
-                     ReferencedContainer = "container:bic_group.xcodeproj">
-                  </BuildableReference>
-               </EnvironmentBuildable>
-            </ActionContent>
-         </ExecutionAction>
-         <ExecutionAction
-            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
-            <ActionContent
-               title = "Run Script"
-               scriptText = "cp &quot;${PROJECT_DIR}/../.env&quot; &quot;${PROJECT_DIR}/../.env&quot;&#10;">
-               <EnvironmentBuildable>
-                  <BuildableReference
-                     BuildableIdentifier = "primary"
-                     BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-                     BuildableName = "bic_groupTests.xctest"
-                     BlueprintName = "bic_groupTests"
                      ReferencedContainer = "container:bic_group.xcodeproj">
                   </BuildableReference>
                </EnvironmentBuildable>

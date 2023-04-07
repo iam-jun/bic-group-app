@@ -1,0 +1,122 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreatePostContent component should render correctly 1`] = `
+<RCTScrollView
+  bounces={false}
+  keyboardShouldPersistTaps="always"
+>
+  <View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        collapsable={false}
+        style={
+          Object {
+            "flex": 1,
+          }
+        }
+      >
+        <View
+          onLayout={[Function]}
+          style={
+            Array [
+              Object {
+                "zIndex": 1,
+              },
+              Object {
+                "flex": 1,
+              },
+            ]
+          }
+          testID="_mention_input"
+        >
+          <TextInput
+            editable={true}
+            keyboardType="default"
+            multiline={true}
+            onChangeText={[Function]}
+            onContentSizeChange={[Function]}
+            onKeyPress={[Function]}
+            onPaste={[Function]}
+            onSelectionChange={[Function]}
+            onSubmitEditing={[Function]}
+            placeholder="Write your post here..."
+            placeholderTextColor="#767D93"
+            scrollEnabled={false}
+            selectionColor="#767D93"
+            style={
+              Object {
+                "color": "#181C32",
+                "flex": 1,
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 14,
+                "margin": 12,
+                "padding": 0,
+              }
+            }
+            testID="_mention_input.input"
+            textAlignVertical="top"
+            textInputRef={
+              Object {
+                "current": undefined,
+              }
+            }
+            value=""
+          />
+        </View>
+        <View
+          onLayout={[Function]}
+        >
+          <View
+            style={
+              Object {
+                "backgroundColor": "#FFFFFF",
+              }
+            }
+          />
+        </View>
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                },
+                undefined,
+              ]
+            }
+            testID="button_wrapper.content"
+          />
+        </View>
+        <View
+          collapsable={false}
+          style={Object {}}
+        />
+      </View>
+    </View>
+  </View>
+</RCTScrollView>
+`;

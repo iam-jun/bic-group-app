@@ -1,0 +1,316 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReviewMarkdown component should render correctly 1`] = `
+<View
+  style={
+    Object {
+      "height": 1067.2,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "marginHorizontal": 16,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 15,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+    >
+      Review Markdown
+    </Text>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Array [
+          Object {
+            "borderRadius": 8,
+          },
+          Object {
+            "marginRight": 4,
+          },
+        ]
+      }
+      testID="header.button"
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "borderRadius": 8,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "paddingVertical": 4,
+            },
+            undefined,
+            Object {
+              "backgroundColor": "#7335C0",
+              "height": 36,
+              "paddingHorizontal": 12,
+            },
+          ]
+        }
+        testID="button.content"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
+              },
+              Object {
+                "color": "#FFFFFF",
+              },
+              Array [
+                Object {
+                  "textAlign": "center",
+                },
+                undefined,
+              ],
+            ]
+          }
+          testID="button.text"
+        >
+          Done
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#F8F9FF",
+        "flex": 1,
+        "marginHorizontal": 12,
+        "marginTop": 16,
+        "paddingHorizontal": 8,
+        "paddingVertical": 12,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "borderRadius": 8,
+              "height": 48,
+              "width": 48,
+            },
+            Object {
+              "marginRight": 8,
+            },
+          ]
+        }
+        testID="avatar"
+      >
+        <View
+          style={
+            Array [
+              Array [
+                Object {
+                  "borderRadius": 8,
+                  "height": 48,
+                  "width": 48,
+                },
+                Object {
+                  "borderRadius": 24,
+                },
+              ],
+              Object {},
+            ]
+          }
+          testID="avatar_container"
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                Array [
+                  Array [
+                    Object {
+                      "borderRadius": 8,
+                      "height": 48,
+                      "width": 48,
+                    },
+                    Object {
+                      "borderRadius": 24,
+                    },
+                  ],
+                  Object {
+                    "borderColor": "#F2F5F8",
+                    "borderWidth": 2,
+                  },
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                  },
+                ],
+              ]
+            }
+          >
+            <FastImageView
+              onFastImageError={[Function]}
+              resizeMode="cover"
+              source={
+                Object {
+                  "uri": "https://avatar.com/img",
+                }
+              }
+              style={
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+              testID="avatar.image"
+            />
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "flex": 1,
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 13,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          sonls
+        </Text>
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 13,
+                },
+                Object {
+                  "color": "#767D93",
+                },
+                Object {
+                  "marginRight": 4,
+                },
+              ]
+            }
+          >
+            to
+          </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 13,
+                },
+                Object {},
+                undefined,
+              ]
+            }
+          >
+            aaa, ... +1 others
+          </Text>
+        </View>
+      </View>
+    </View>
+    <RCTScrollView
+      style={
+        Object {
+          "marginTop": 24,
+        }
+      }
+    >
+      <View>
+        <View
+          style={
+            Array [
+              Array [
+                Object {
+                  "alignItems": "flex-start",
+                  "flexDirection": "row",
+                  "flexWrap": "wrap",
+                },
+              ],
+              Object {
+                "marginBottom": 12,
+              },
+            ]
+          }
+        >
+          <Text>
+            <Text
+              style={
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 14,
+                }
+              }
+              testID="markdown_text"
+            >
+              abc
+            </Text>
+          </Text>
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+</View>
+`;
