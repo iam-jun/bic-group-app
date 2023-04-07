@@ -37,6 +37,7 @@ describe('CommunitItem component', () => {
     const mockData = {
       ...communityDetailData,
       settings: {
+        isJoinApproval: true,
         isActiveGroupTerms: true,
       },
     };

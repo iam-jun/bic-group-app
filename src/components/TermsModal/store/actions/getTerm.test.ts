@@ -10,6 +10,7 @@ describe('get terms actions', () => {
 
   it('should get term successfully', () => {
     const response = { data: { content: 'TEST TERMS' } };
+    const callBackError = jest.fn();
     const groupId = 'testGroupId';
     const spyCallApi = jest
       .spyOn(groupApi, 'getGroupTerms')
@@ -22,7 +23,7 @@ describe('get terms actions', () => {
     expect(result.current.loading).toBeTruthy();
 
     act(() => {
-      result.current.actions.getTerms(groupId);
+      result.current.actions.getTerms(groupId, callBackError);
     });
 
     expect(result.current.loading).toBeTruthy();
@@ -39,6 +40,8 @@ describe('get terms actions', () => {
   it('should get term throw error:', () => {
     const error = 'error';
     const groupId = 'testGroupId';
+    const callBackError = jest.fn();
+
     const spyCallApi = jest
       .spyOn(groupApi, 'getGroupTerms')
       .mockImplementation(() => Promise.reject(error) as any);
@@ -51,7 +54,7 @@ describe('get terms actions', () => {
 
     act(() => {
       try {
-        result.current.actions.getTerms(groupId);
+        result.current.actions.getTerms(groupId, callBackError);
       } catch (e) {
         expect(e).toBeInstanceOf(TypeError);
         expect(e).toBe(error);

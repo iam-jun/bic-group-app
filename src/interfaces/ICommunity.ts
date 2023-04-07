@@ -19,7 +19,7 @@ export interface ICommunity {
   teamName?: string;
   settings?: {
     isJoinApproval: boolean;
-    isActiveGroupTerms: boolean;
+    isActiveGroupTerms?: boolean;
   }
 }
 

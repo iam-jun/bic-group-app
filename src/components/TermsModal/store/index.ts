@@ -19,11 +19,12 @@ export interface ITermState extends IBaseState {
   isActiveGroupTerms: boolean;
   loading: boolean;
   termContent: string;
+  errorText: string;
 
   actions: {
     setIsOpen: (isOpen: boolean) => void;
     setTermInfo: (payload: TermsInfo) => void;
-    getTerms: (groupId: string) => void;
+    getTerms: (groupId: string, callBackError: ()=> void) => void;
   };
 }
 
@@ -36,6 +37,7 @@ const initState: InitStateType<ITermState> = {
   rootGroupId: '',
   name: '',
   termContent: '',
+  errorText: '',
 };
 
 const termStore = (set, get) => ({

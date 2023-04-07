@@ -193,7 +193,10 @@
     "pin_unpin": "Ghim/Bỏ ghim",
     "text_i_agree": "Tôi đồng ý",
     "text_group_terms": "Điều khoản nhóm",
-    "text_community_terms": "Điều khoản cộng đồng"
+    "text_community_terms": "Điều khoản cộng đồng",
+    "text_got_it": "Đã biết",
+    "text_sorry_something_went_wrong": "Đã có lỗi xảy ra",
+    "text_pull_to_refresh": "Vui lòng kéo xuống để làm mới trang hoặc thử lại sau"
   },
   "auth": {
     "text_kickout_title": "Notice",
