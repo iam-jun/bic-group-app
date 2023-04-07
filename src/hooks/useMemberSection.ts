@@ -17,7 +17,7 @@ const useMemberSection = (type: 'group' | 'community') => {
     const section: any = {};
     const { name, data, userCount } = roleData || {};
 
-    if (name && data && userCount) {
+    if (name && data) {
       section.title = `${name}s`;
       section.data = data;
       section.userCount = userCount;
