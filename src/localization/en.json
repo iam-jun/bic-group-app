@@ -1407,6 +1407,7 @@
     "list_pin_content_title": "Pinned",
     "unpin": "Unpin",
     "reorder": "Reorder",
-    "unpinned_successfully": "Unpinned successfully"
+    "unpinned_successfully": "Unpinned successfully",
+    "there_is_no_groups": "There is no groups"
   }
 }

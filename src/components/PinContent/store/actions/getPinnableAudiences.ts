@@ -29,6 +29,7 @@ const getPinnableAudiences = (set, _get) => async (postId: string) => {
 
     set((state: IPinContentState) => {
       state.isLoadingPinnableAudiences = false;
+      state.canLoadMorePinnableAudiences = false;
       state.pinAudiences = pinAudiences;
       state.prevAudiences = groups;
     }, 'getPinnableAudiences success');
