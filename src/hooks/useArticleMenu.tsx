@@ -156,7 +156,7 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       id: 5,
       testID: 'article_view_menu.pin',
       leftIcon: 'Thumbtack',
-      title: i18next.t('common:pin'),
+      title: i18next.t('common:pin_unpin'),
       requireIsActor: false,
       shouldBeHidden:
         audienceListCannotPinContent.length === groupAudience.length,

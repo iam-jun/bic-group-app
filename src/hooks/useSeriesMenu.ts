@@ -121,7 +121,7 @@ const useSeriesMenu = (
       id: 4,
       testID: 'series_menu.pin',
       leftIcon: 'Thumbtack',
-      title: i18next.t('common:pin'),
+      title: i18next.t('common:pin_unpin'),
       requireIsActor: false,
       shouldBeHidden:
         audienceListCannotPinContent.length === groupAudience.length,

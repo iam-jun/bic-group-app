@@ -206,7 +206,7 @@ const usePostMenu = (
       id: 7,
       testID: 'post_view_menu.pin',
       leftIcon: 'Thumbtack',
-      title: i18next.t('common:pin'),
+      title: i18next.t('common:pin_unpin'),
       requireIsActor: false,
       shouldBeHidden:
         audienceListCannotPinContent.length === groupAudience.length,

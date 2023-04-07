@@ -190,7 +190,7 @@
     "mark_series_as_important": "Loạt bài Quan trọng",
     "text_deactivated": "Vô hiệu hoá",
     "settings": "Thiết lập bài viết",
-    "pin": "Ghim"
+    "pin_unpin": "Ghim/Bỏ ghim"
   },
   "auth": {
     "text_kickout_title": "Notice",
