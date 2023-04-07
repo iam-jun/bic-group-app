@@ -40,23 +40,13 @@ const BoxListPinContent: React.FC<BoxListPinContentProps> = ({ id }) => {
     <PinContentItem contentId={item} isAdmin={isAdmin} id={id} />
   );
 
-  const renderHeaderComponent = () => {
-    if (isLoading && data?.length === 0) return null;
+  const renderHeaderComponent = () => (
+    <ViewSpacing width={spacing.margin.large} />
+  );
 
-    return <ViewSpacing width={spacing.margin.large} />;
-  };
-
-  const renderFooterComponent = () => {
-    if (!isLoading && data?.length !== 0) {
-      return <ViewSpacing width={spacing.padding.large} />;
-    }
-
-    return (
-      <View style={styles.footer}>
-        <ActivityIndicator size="small" color={colors.gray30} />
-      </View>
-    );
-  };
+  const renderFooterComponent = () => (
+    <ViewSpacing width={spacing.padding.large} />
+  );
 
   const renderSeparatorComponent = () => (
     <ViewSpacing width={spacing.margin.large} />
@@ -64,9 +54,13 @@ const BoxListPinContent: React.FC<BoxListPinContentProps> = ({ id }) => {
 
   const keyExtractor = (item) => `pin-content-item-${item}`;
 
-  if (!isLoading && (!data || data?.length === 0)) { return <ViewSpacing height={spacing.margin.large} />; }
+  const renderLoadingView = () => (
+    <View style={styles.loadingView}>
+      <ActivityIndicator size="small" color={colors.gray30} />
+    </View>
+  );
 
-  return (
+  const renderBoxListPin = () => (
     <View style={styles.container}>
       <View style={styles.boxTitle}>
         <Text.SubtitleM useI18n color={colors.neutral40}>
@@ -88,6 +82,14 @@ const BoxListPinContent: React.FC<BoxListPinContentProps> = ({ id }) => {
       />
     </View>
   );
+
+  if (!isLoading && (!data || data?.length === 0)) { return <ViewSpacing height={spacing.margin.large} />; }
+
+  return (
+    <View>
+      {(isLoading && data?.length === 0) ? renderLoadingView() : renderBoxListPin()}
+    </View>
+  );
 };
 
 const createStyles = (theme: ExtendedTheme) => {
@@ -104,10 +106,9 @@ const createStyles = (theme: ExtendedTheme) => {
       paddingVertical: spacing.padding.base,
       paddingLeft: spacing.padding.extraLarge,
     },
-    footer: {
-      flex: 1,
+    loadingView: {
       width: DeviceWidth,
-      height: 280,
+      height: 60,
       alignContent: 'center',
       justifyContent: 'center',
     },
