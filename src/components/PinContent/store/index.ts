@@ -41,6 +41,7 @@ export interface IPinContentState extends IBaseState {
   prevAudiences: IAudienceGroup[];
   isLoading: boolean;
   isLoadingPinnableAudiences: boolean;
+  canLoadMorePinnableAudiences: boolean;
   actions: {
     updatePinAudiences: (pinAudiences: PinAudiences) => void;
     updateGroupPinContent: (params: UpdateGroupPinContentParams) => void;
@@ -60,6 +61,7 @@ const initialState: InitStateType<IPinContentState> = {
   prevAudiences: [],
   isLoading: false,
   isLoadingPinnableAudiences: false,
+  canLoadMorePinnableAudiences: true,
 };
 
 const usePinContent = (set, get): IPinContentState => ({
@@ -84,9 +86,10 @@ const usePinContent = (set, get): IPinContentState => ({
     resetPinAudiences: () => {
       set((state: IPinContentState) => {
         state.pinAudiences = initialState.pinAudiences;
-        state.isLoading = false;
-        state.isLoadingPinnableAudiences = false;
+        state.isLoading = initialState.isLoading;
+        state.isLoadingPinnableAudiences = initialState.isLoadingPinnableAudiences;
         state.prevAudiences = initialState.prevAudiences;
+        state.canLoadMorePinnableAudiences = initialState.canLoadMorePinnableAudiences;
       }, 'resetPinAudiences');
     },
     initDataPinContentsGroup: (id: string) => {

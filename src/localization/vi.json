@@ -1347,6 +1347,7 @@
     "list_pin_content_title": "Danh sách ghim",
     "unpin": "Gỡ ghim",
     "reorder": "Xắp Sếp",
-    "unpinned_successfully": "Gỡ pin thành công"
+    "unpinned_successfully": "Gỡ pin thành công",
+    "there_is_no_groups": "Không có nhóm"
   }
 }

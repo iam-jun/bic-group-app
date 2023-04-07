@@ -4,6 +4,7 @@ import {
   View, StyleSheet, ScrollView, ActivityIndicator,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { isEmpty } from 'lodash';
 import Text from '~/baseComponents/Text';
 import Header from '~/beinComponents/Header';
 import usePinContentStore, {
@@ -16,8 +17,13 @@ import showAlert from '~/store/helper/showAlert';
 import { spacing } from '~/theme';
 import Checkbox from '~/baseComponents/Checkbox';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import { isChangedPinAudiences, getGroupIdsBySelectedOrUnselected } from '~/components/PinContent/store/helper';
+import {
+  isChangedPinAudiences,
+  getGroupIdsBySelectedOrUnselected,
+} from '~/components/PinContent/store/helper';
 import showToastSuccess from '~/store/helper/showToastSuccess';
+import Image from '~/beinComponents/Image';
+import images from '~/resources/images';
 
 type PinContentProps = {
   route: {
@@ -39,7 +45,12 @@ const PinContent: FC<PinContentProps> = (props) => {
   const styles = createStyle(theme);
 
   const isLoading = usePinContentStore((state) => state.isLoading);
-  const isLoadingPinnableAudiences = usePinContentStore((state) => state.isLoadingPinnableAudiences);
+  const isLoadingPinnableAudiences = usePinContentStore(
+    (state) => state.isLoadingPinnableAudiences,
+  );
+  const canLoadMorePinnableAudiences = usePinContentStore(
+    (state) => state.canLoadMorePinnableAudiences,
+  );
   const pinAudiences = usePinContentStore((state) => state.pinAudiences);
   const prevAudiences = usePinContentStore((state) => state.prevAudiences);
 
@@ -47,6 +58,13 @@ const PinContent: FC<PinContentProps> = (props) => {
 
   const isChanged = isChangedPinAudiences(pinAudiences, prevAudiences);
   const isDisabledBtnSave = !isChanged;
+
+  const isEmptyPinnableAudiences
+    = !isLoadingPinnableAudiences
+    && !canLoadMorePinnableAudiences
+    && isEmpty(pinAudiences);
+
+  const canPin = !isLoadingPinnableAudiences && !isEmpty(pinAudiences);
 
   const onPinUnpinSuccess = (res) => {
     showToastSuccess(res);
@@ -130,6 +148,19 @@ const PinContent: FC<PinContentProps> = (props) => {
     </View>
   );
 
+  const renderEmptyPinnableAudiences = () => (
+    <View style={styles.boxEmpty}>
+      <Image
+        resizeMode="contain"
+        source={images.img_empty_box}
+        style={styles.imgEmpty}
+      />
+      <Text.BodyS color={colors.neutral40} useI18n>
+        pin:there_is_no_groups
+      </Text.BodyS>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <Header
@@ -141,15 +172,18 @@ const PinContent: FC<PinContentProps> = (props) => {
           style: styles.btnSave,
         }}
         buttonText="common:btn_save"
-        onPressButton={onSave}
+        onPressButton={canPin && onSave}
         onPressBack={handleBack}
       />
       <View style={styles.contentContainer}>
+        {canPin && (
         <Text.BodyM useI18n color={colors.neutral80}>
           pin:pick_group_want_to_pin
         </Text.BodyM>
+        )}
         <ScrollView style={styles.scrollView} alwaysBounceVertical={false}>
           {isLoadingPinnableAudiences && renderLoadingPinnableAudiences()}
+          {isEmptyPinnableAudiences && renderEmptyPinnableAudiences()}
           {Object.entries(pinAudiences).map((value) => renderItem(value))}
           <ViewSpacing height={spacing.padding.large + insets.bottom} />
         </ScrollView>
@@ -193,6 +227,16 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     textError: {
       marginTop: spacing.margin.tiny,
+    },
+    boxEmpty: {
+      alignItems: 'center',
+      marginTop: spacing.margin.base,
+      paddingVertical: 32,
+    },
+    imgEmpty: {
+      width: 100,
+      aspectRatio: 1,
+      marginBottom: spacing.margin.large,
     },
   });
 };
