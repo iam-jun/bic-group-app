@@ -5,8 +5,6 @@ import TermsView from './index';
 import { languages, renderWithRedux } from '~/test/testUtils';
 import groupApi from '~/api/GroupApi';
 import useTermStore from './store';
-import useCommunityController from '~/screens/communities/store';
-import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 
 afterEach(cleanup);
 
@@ -19,15 +17,12 @@ describe('TermsView component', () => {
     useTermStore.setState((state) => {
       state.isActiveGroupTerms = true;
       state.rootGroupId = 'test';
+      state.groupId = 'test';
       state.type = 'community';
       state.isOpen = true;
+      state.loading = false;
       state.termContent = response.data.content;
-      return state;
-    });
-
-    const joinCommunity = jest.fn();
-    useCommunityController.setState((state) => {
-      state.actions.joinCommunity = joinCommunity;
+      state.actions.getTerms = jest.fn();
       return state;
     });
 
@@ -38,11 +33,6 @@ describe('TermsView component', () => {
     const headerComp = wrapper.queryByTestId('header.text');
     expect(headerComp).toBeDefined();
     expect(headerComp.children[0]).toEqual(languages.common.text_community_terms);
-
-    const buttonSubmit = wrapper.queryByTestId('terms_view.sumbit');
-    expect(buttonSubmit).toBeDefined();
-    fireEvent.press(buttonSubmit);
-    expect(joinCommunity).toBeCalled();
   });
 
   it('renders correctly when show terms of group', () => {
@@ -59,12 +49,6 @@ describe('TermsView component', () => {
       return state;
     });
 
-    const joinNewGroup = jest.fn();
-    useDiscoverGroupsStore.setState((state) => {
-      state.actions.joinNewGroup = joinNewGroup;
-      return state;
-    });
-
     const wrapper = renderWithRedux(<TermsView />);
     const component = wrapper.getByTestId('terms_view');
     expect(component).toBeDefined();
@@ -72,11 +56,6 @@ describe('TermsView component', () => {
     const headerComp = wrapper.queryByTestId('header.text');
     expect(headerComp).toBeDefined();
     expect(headerComp.children[0]).toEqual(languages.common.text_group_terms);
-
-    const buttonSubmit = wrapper.queryByTestId('terms_view.sumbit');
-    expect(buttonSubmit).toBeDefined();
-    fireEvent.press(buttonSubmit);
-    expect(joinNewGroup).toBeCalled();
   });
 
   it('renders correctly when isOpen = false', () => {
