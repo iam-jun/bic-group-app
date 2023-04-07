@@ -19,8 +19,5 @@ export const onPressReportThisMember = ({ modalActions, actor }) => {
         dataReportMember={dataReportMember}
       />
     ),
-    props: {
-      disableScrollIfPossible: false,
-    },
   });
 };
