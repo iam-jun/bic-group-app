@@ -8,7 +8,9 @@ import usePostsStore from '~/store/entities/posts';
 const getPinContentsGroup = (set, get) => async (id: string) => {
   const { actions, groupPinContent }: IPinContentState = get();
 
-  if (id && isEmpty(groupPinContent[id])) {
+  if (!id) return;
+
+  if (isEmpty(groupPinContent[id])) {
     actions.initDataPinContentsGroup(id);
   }
 

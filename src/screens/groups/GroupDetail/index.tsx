@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
 import React, {
-  useCallback, useEffect, useRef, useState,
+  useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
 import {
   DeviceEventEmitter, Share, StyleSheet, View,
@@ -182,6 +182,13 @@ const GroupDetail = (props: any) => {
 
   useEffect(() => () => {
     if (groupId) timelineActions.resetTimeline(groupId);
+  }, [groupId]);
+
+  useMemo(() => {
+    // prevent showing the old data before being refreshed
+    if (groupId) {
+      actionPinContent.resetDataPinContentsGroup(groupId);
+    }
   }, [groupId]);
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import React, {
-  useState, useEffect, useRef, useCallback,
+  useState, useEffect, useRef, useCallback, useMemo,
 } from 'react';
 import { StyleSheet, DeviceEventEmitter, View } from 'react-native';
 import Animated, {
@@ -165,6 +165,13 @@ const CommunityDetail = (props: any) => {
 
   useEffect(() => () => {
     if (groupId) timelineActions.resetTimeline(groupId);
+  }, [groupId]);
+
+  useMemo(() => {
+    // prevent showing the old data before being refreshed
+    if (groupId) {
+      actionPinContent.resetDataPinContentsGroup(groupId);
+    }
   }, [groupId]);
 
   useEffect(() => {
