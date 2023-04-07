@@ -1,5 +1,5 @@
 import {
-  ScrollView, StyleProp, StyleSheet, View, ViewStyle,
+  Dimensions, ScrollView, StyleProp, StyleSheet, View, ViewStyle,
 } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -35,11 +35,8 @@ const BlockUserInfo = ({
     </View>
   );
 
-  if (!fullname) return null;
-
-  return (
-    <ScrollView style={style} testID="block_user_info">
-      {onConfirmBlock && <Text.H4>{t('block_user:title_block_name').replace('{0}', fullname)}</Text.H4>}
+  const renderText = () => (
+    <>
       <Text.BodyM style={onConfirmBlock && styles.textDescription} color={colors.neutral80} useI18n>
         block_user:general_description
       </Text.BodyM>
@@ -52,17 +49,39 @@ const BlockUserInfo = ({
       <Text.LabelM color={colors.neutral80}>{`${fullname} ${t('block_user:can:title')}`}</Text.LabelM>
       {renderLine('block_user:can:see_profile')}
       {renderLine('block_user:can:see_content')}
-      {onConfirmBlock && (
-        <View>
-          <Button.Primary testID="block_user_info.btn_confirm" style={styles.btnConfirm} onPress={onConfirmBlock}>
-            {t('common:btn_confirm')}
-          </Button.Primary>
-          <Button.Neutral testID="block_user_info.btn_cancel" style={styles.btnCancel} type="ghost" onPress={onCancelBlock}>
-            {t('common:btn_cancel')}
-          </Button.Neutral>
-        </View>
-      )}
-    </ScrollView>
+    </>
+  );
+
+  const renderBtn = () => (
+    <View>
+      <Button.Primary testID="block_user_info.btn_confirm" style={styles.btnConfirm} onPress={onConfirmBlock}>
+        {t('common:btn_confirm')}
+      </Button.Primary>
+      <Button.Neutral testID="block_user_info.btn_cancel" style={styles.btnCancel} type="ghost" onPress={onCancelBlock}>
+        {t('common:btn_cancel')}
+      </Button.Neutral>
+    </View>
+  );
+
+  const renderContent = () => {
+    if (onConfirmBlock) {
+      return (
+        <>
+          <Text.H4>{t('block_user:title_block_name').replace('{0}', fullname)}</Text.H4>
+          <ScrollView style={styles.scrollView}>{renderText()}</ScrollView>
+          {renderBtn()}
+        </>
+      );
+    }
+    return renderText();
+  };
+
+  if (!fullname) return null;
+
+  return (
+    <View style={style} testID="block_user_info">
+      {renderContent()}
+    </View>
   );
 };
 
@@ -78,6 +97,9 @@ const styles = StyleSheet.create({
   },
   btnCancel: {
     marginTop: spacing.margin.small + spacing.margin.xTiny,
+  },
+  scrollView: {
+    maxHeight: (Dimensions.get('window').height * 2) / 3,
   },
 });
 

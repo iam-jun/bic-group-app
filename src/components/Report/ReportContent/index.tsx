@@ -156,13 +156,11 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
     const isDisabled = !reasonState || !targetId || isLoading;
 
     return (
-      <ScrollView>
-        <ReportReasons
-          reasonState={reasonState}
-          targetType={targetType}
-          setReasonState={setReasonState}
-        />
-        {renderBlockUser()}
+      <View>
+        <ScrollView style={styles.containerScroll}>
+          <ReportReasons reasonState={reasonState} targetType={targetType} setReasonState={setReasonState} />
+          {renderBlockUser()}
+        </ScrollView>
         <Button.Primary
           useI18n
           testID="report_content_bottom_sheet.btn_submit"
@@ -176,7 +174,7 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
         <Button.Neutral style={styles.btnCancel} type="ghost" onPress={onClose}>
           {t('common:btn_cancel')}
         </Button.Neutral>
-      </ScrollView>
+      </View>
     );
   };
 
@@ -213,6 +211,9 @@ const styles = StyleSheet.create({
   },
   btnCancel: {
     marginTop: spacing.margin.small + spacing.margin.xTiny,
+  },
+  containerScroll: {
+    maxHeight: (Dimensions.get('window').height * 2) / 3,
   },
 });
 
