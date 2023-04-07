@@ -6,6 +6,7 @@ import { linkingConfig, PREFIX_DEEPLINK_GROUP, PREFIX_URL } from '~/router/confi
 import authStacks from '~/router/navigator/AuthStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
 import useAuthController from '~/screens/auth/store';
+import useAppStore from '~/store/app';
 import showToastError from '~/store/helper/showToastError';
 import getEnv from '~/utils/env';
 import { DeepLinkTypes, matchDeepLink, openInAppBrowser } from '~/utils/link';
@@ -63,12 +64,18 @@ export const onReceiveURL = async ({ url, navigation, listener }: { url: string;
         await navigateFromReferralLink({ match, navigation, userId });
         break;
       case DeepLinkTypes.USER_PROFILE:
-        navigation?.navigate?.(mainStack.userProfile, {
-          userId: match.userName,
-          params: {
-            type: 'username',
-          },
-        });
+        if (userId) {
+          navigation?.navigate?.(mainStack.userProfile, {
+            userId: match.userName,
+            params: {
+              type: 'username',
+            },
+          });
+          break;
+        }
+
+        navigation?.navigate?.(authStacks.signIn);
+        useAppStore.getState().actions.setRedirectUrl(url);
         break;
       default:
         listener?.(url);

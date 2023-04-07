@@ -814,3 +814,133 @@ export const SEEN_POST = {
     },
   ],
 };
+
+export const mockEditPost = {
+  actor: {
+    avatar:
+      'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/c6b8b056-7d77-4382-b95c-010c2fda4809.jpg',
+    email: 'thuquyen@tgm.vn',
+    fullname: 'Nguyen Thi Thu Quyền',
+    id: 'a0143446-0e51-4903-b280-8c794d470903',
+    username: 'thuquyen',
+  },
+  articles: [],
+  audience: {
+    groups: [
+      {
+        communityId: '15337361-1577-4b7b-a31d-990df06aa446',
+        icon: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/26a806d3-3557-4f7a-b96a-132a9befccff',
+        id: '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
+        isCommunity: true,
+        name: 'EVOL Community',
+        privacy: 'OPEN',
+        rootGroupId: '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
+      },
+    ],
+  },
+  commentsCount: 0,
+  communities: [
+    {
+      communityId: '15337361-1577-4b7b-a31d-990df06aa446',
+      icon: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/26a806d3-3557-4f7a-b96a-132a9befccff',
+      id: '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
+      name: 'EVOL Community',
+      privacy: 'OPEN',
+    },
+  ],
+  content: 'Test video',
+  createdAt: '2023-02-03T07:48:11.646Z',
+  createdBy: 'a0143446-0e51-4903-b280-8c794d470903',
+  id: '026e1977-96d1-4f02-a06d-695c3f900b42',
+  isHidden: false,
+  isReported: false,
+  lang: null,
+  media: {
+    files: [],
+    images: [],
+    videos: [],
+  },
+  mentions: {},
+  privacy: 'OPEN',
+  reactionsCount: null,
+  setting: {
+    canComment: true,
+    canReact: true,
+    canShare: true,
+    importantExpiredAt: null,
+    isImportant: false,
+  },
+  status: PostStatus.PUBLISHED,
+  tags: [],
+  totalUsersSeen: 0,
+  type: 'POST',
+  updatedAt: '2023-02-14T04:11:41.368Z',
+};
+
+export const mockMediaVideos = [
+  {
+    extension: null,
+    size: 1423668,
+    name: 'Cute Cat - 3092.mp4',
+    width: 640,
+    id: 'fbd12f73-8d64-4d8b-ac7a-dbe0a3018a90',
+    mime_type: 'video/mp4',
+    type: 'video',
+    thumbnails: [
+      {
+        width: 427,
+        url: 'https://bic-dev-user-upload-videos-s3-bucket.s3.ap-southeast-1.amazonaws.com/post/thumbnails/fbd12f73-8d64-4d8b-ac7a-dbe0a3018a90_427x240.jpg',
+        height: 240,
+      },
+      {
+        width: 640,
+        url: 'https://bic-dev-user-upload-videos-s3-bucket.s3.ap-southeast-1.amazonaws.com/post/thumbnails/fbd12f73-8d64-4d8b-ac7a-dbe0a3018a90_640x360.jpg',
+        height: 360,
+      },
+      {
+        width: 853,
+        url: 'https://bic-dev-user-upload-videos-s3-bucket.s3.ap-southeast-1.amazonaws.com/post/thumbnails/fbd12f73-8d64-4d8b-ac7a-dbe0a3018a90_853x480.jpg',
+        height: 480,
+      },
+      {
+        width: 1280,
+        url: 'https://bic-dev-user-upload-videos-s3-bucket.s3.ap-southeast-1.amazonaws.com/post/thumbnails/fbd12f73-8d64-4d8b-ac7a-dbe0a3018a90_1280x720.jpg',
+        height: 720,
+      },
+    ],
+    url: 'https://cdn.beincom.io/media/hls/fbd12f73-8d64-4d8b-ac7a-dbe0a3018a90.m3u8',
+    status: 'completed',
+    height: 360,
+    origin_name: 'Cute Cat - 3092.mp4',
+  },
+];
+
+export const mockMediaFiles = [
+  {
+    id: '5ea75100-be59-49b4-b314-e103355540e9',
+    name: 'DOC.doc',
+    size: 1146880,
+    status: 'completed',
+    url: 'https://bic-dev-user-upload-files-s3-bucket.s3.ap-southeast-1.amazonaws.com/post/original/5ea75100-be59-49b4-b314-e103355540e9',
+    origin_name: 'DOC.doc',
+    extension: null,
+    mime_type: 'application/msword',
+    type: 'file',
+  },
+];
+
+export const mockMediaImages = [
+  {
+    id: 'e26e13cf-76b9-4a0a-a5ef-de9689808366',
+    name: '821164a7-f817-435a-b6fd-ad4f90adf5ce.jpg',
+    status: 'completed',
+    url: 'https://bic-dev-user-upload-images-s3-bucket.s3.ap-southeast-1.amazonaws.com/post/original/821164a7-f817-435a-b6fd-ad4f90adf5ce.jpg',
+    size: 324722,
+    origin_name: '7B8F1D15-B8F2-48B1-99F2-80C3356EB6D0.jpg',
+    width: 800,
+    height: 533,
+    extension: 'jpeg',
+    mime_type: 'image/jpeg',
+    type: 'image',
+  },
+];

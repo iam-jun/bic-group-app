@@ -158,7 +158,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
   const icon = getFileIcons(fileExt) as IconType;
 
   return (
-    <View style={[styles.container, style]}>
+    <View testID="uploading_file" style={[styles.container, style]}>
       <Icon size={22} icon={icon} style={styles.iconFile} />
       <View style={styles.contentContainer}>
         <Text.SubtitleXS
@@ -195,6 +195,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
       )}
       {!disableClose && (
         <Button
+          testID="uploading_file.btn_close"
           hitSlop={HIT_SLOP}
           onPress={onPressClose}
         >

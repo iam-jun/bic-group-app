@@ -3,13 +3,16 @@ import { createStore, resetStore } from '../utils';
 
 export interface IAppState extends IBaseState{
   debuggerVisible: boolean;
+  redirectUrl: string;
   actions: {
-setDebuggerVisible: (visible: boolean)=>void;
+    setDebuggerVisible: (visible: boolean)=>void;
+    setRedirectUrl: (url: string) => void;
   }
 }
 
 const initialState = {
   debuggerVisible: false,
+  redirectUrl: '',
 };
 
 const appStore = (set, _get) => ({
@@ -19,6 +22,11 @@ const appStore = (set, _get) => ({
       set((state) => {
         state.debuggerVisible = visible;
       }, 'setDebuggerVisible');
+    },
+    setRedirectUrl: (url: string) => {
+      set((state) => {
+        state.redirectUrl = url;
+      }, 'setRedirectUrl');
     },
   },
   reset: () => resetStore(initialState, set),
