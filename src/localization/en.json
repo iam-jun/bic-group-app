@@ -221,7 +221,7 @@
     "mark_series_as_important": "Mark this series as Important",
     "text_deactivated": "Deactivated",
     "settings": "Settings",
-    "pin": "Pin"
+    "pin_unpin": "Pin/Unpin"
   },
   "auth": {
     "text_kickout_title": "Notice",
