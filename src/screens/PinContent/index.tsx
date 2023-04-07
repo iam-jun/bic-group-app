@@ -186,6 +186,7 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     row: {
       flexDirection: 'row',
+      alignItems: 'center',
     },
     textGroupName: {
       marginTop: spacing.margin.xTiny,
