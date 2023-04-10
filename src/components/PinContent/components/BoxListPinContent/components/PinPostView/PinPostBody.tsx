@@ -56,7 +56,7 @@ const PinPostBody: React.FC<PinPostBodyProps> = ({ data }) => {
           mentions={mentions}
         />
       </View>
-      <View style={styles.boxPadding}/>
+      <View style={styles.boxPadding} />
     </View>
   );
 };
