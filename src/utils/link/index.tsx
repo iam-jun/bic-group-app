@@ -190,7 +190,7 @@ export const matchDeepLink = (url: string) => {
   }
   // bic:///posts/99ca53ec-5195-4e28-9506-c0f602e1becb
   let match = new RegExp(
-    `^${PREFIX_DEEPLINK_GROUP}\\/posts\\/(${UUID_V4_PATTERN})$`,
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?posts\\/(${UUID_V4_PATTERN})$`,
   ).exec(deepLinkUrl);
   if (match) {
     return { type: DeepLinkTypes.POST_DETAIL, postId: match[1] };
@@ -198,16 +198,17 @@ export const matchDeepLink = (url: string) => {
 
   // bic:///posts/99ca53ec-5195-4e28-9506-c0f602e1becb?commentId=690541f1-d7ae-4f73-8186-8194c5e2eb5f
   match = new RegExp(
-    `^${PREFIX_DEEPLINK_GROUP}\\/posts\\/(${UUID_V4_PATTERN})\\?(\\S+)$`,
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?posts\\/(${UUID_V4_PATTERN})\\?(\\S+)$`,
   ).exec(deepLinkUrl);
   if (match) {
     const urlParams = match[2];
     const newParams = getURLParams(urlParams);
+
     return { type: DeepLinkTypes.COMMENT_DETAIL, postId: match[1], params: newParams };
   }
 
   match = new RegExp(
-    `^${PREFIX_DEEPLINK_GROUP}\\/article\\/(${UUID_V4_PATTERN})\\?(\\S+)$`,
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?article\\/(${UUID_V4_PATTERN})\\?(\\S+)$`,
   ).exec(deepLinkUrl);
   if (match) {
     const urlParams = match[2];
@@ -217,7 +218,7 @@ export const matchDeepLink = (url: string) => {
 
   // bic:///communities/ba6016d4-168f-44de-aca9-4a51055e6201
   match = new RegExp(
-    `^${PREFIX_DEEPLINK_GROUP}\\/communities\\/(${UUID_V4_PATTERN})$`,
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?communities\\/(${UUID_V4_PATTERN})$`,
   ).exec(deepLinkUrl);
   if (match) {
     return { type: DeepLinkTypes.COMMUNTY_DETAIL, communityId: match[1] };
@@ -225,7 +226,7 @@ export const matchDeepLink = (url: string) => {
 
   // bic:///communities/ba6016d4-168f-44de-aca9-4a51055e6201/groups/5578fb11-de70-49e3-9c01-27e26f5b42d8
   match = new RegExp(
-    `^${PREFIX_DEEPLINK_GROUP}\\/communities\\/(${UUID_V4_PATTERN})\\/groups\\/(${UUID_V4_PATTERN})$`,
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?communities\\/(${UUID_V4_PATTERN})\\/groups\\/(${UUID_V4_PATTERN})$`,
   ).exec(deepLinkUrl);
   if (match) {
     return { type: DeepLinkTypes.GROUP_DETAIL, communityId: match[1], groupId: match[2] };
@@ -233,7 +234,7 @@ export const matchDeepLink = (url: string) => {
 
   // bic:///series/47e14e0b-ea99-4771-bf20-0f0893788a51
   match = new RegExp(
-    `^${PREFIX_DEEPLINK_GROUP}\\/series\\/(${UUID_V4_PATTERN})$`,
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?series\\/(${UUID_V4_PATTERN})$`,
   ).exec(deepLinkUrl);
   if (match) {
     return { type: DeepLinkTypes.SERIES_DETAIL, seriesId: match[1] };
@@ -241,14 +242,14 @@ export const matchDeepLink = (url: string) => {
 
   // bic:///article/8465397a-dfb3-4d7f-a21f-adec5a0508701
   match = new RegExp(
-    `^${PREFIX_DEEPLINK_GROUP}\\/article\\/(${UUID_V4_PATTERN})$`,
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?article\\/(${UUID_V4_PATTERN})$`,
   ).exec(deepLinkUrl);
   if (match) {
     return { type: DeepLinkTypes.ARTICLE_DETAIL, articleId: match[1] };
   }
 
   match = new RegExp(
-    `^${PREFIX_DEEPLINK_GROUP}\\/confirm-user\\?(\\S+)$`,
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?confirm-user\\?(\\S+)$`,
   ).exec(deepLinkUrl);
   if (match) {
     const urlParams = match[1];
@@ -257,14 +258,14 @@ export const matchDeepLink = (url: string) => {
   }
 
   match = new RegExp(
-    `^${PREFIX_DEEPLINK_GROUP}\\/ref\\/(\\S+)$`,
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?ref\\/(\\S+)$`,
   ).exec(deepLinkUrl);
   if (match) {
     return { type: DeepLinkTypes.REFERRAL, referralCode: match[1] };
   }
 
   match = new RegExp(
-    `^${PREFIX_DEEPLINK_GROUP}\\/users\\/(\\S+)$`,
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?users\\/(\\S+)$`,
   ).exec(deepLinkUrl);
   if (match) {
     return { type: DeepLinkTypes.USER_PROFILE, userName: match[1] };
