@@ -11,7 +11,7 @@ import Header from '~/beinComponents/Header';
 import { spacing } from '~/theme';
 import useTermStore from './store';
 import { Button } from '~/baseComponents';
-import MarkdownView from '~/beinComponents/MarkdownView';
+import Markdown from '~/beinComponents/Markdown';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import useCommunityController from '~/screens/communities/store';
 import IDiscoverGroupsState from '~/screens/groups/DiscoverGroups/store/Interface';
@@ -136,10 +136,9 @@ const TermsView = () => {
                   onScroll={onScroll}
                   onLayout={handleLayout}
                 >
-                  <MarkdownView testID="notification_content.description">
-                    {content}
-                  </MarkdownView>
-
+                  <Markdown
+                    value={content}
+                  />
                 </ScrollView>
                 <View
                   style={[styles.buttonView, styles.shadow]}
