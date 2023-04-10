@@ -8,9 +8,10 @@ import useSeriesDetailItemStore, { ISeriesDetailItemState } from './store';
 import useModalStore from '~/store/modal';
 import { IPost, PostType } from '~/interfaces/IPost';
 import SeriesContentModal from '~/components/series/SeriesContentModal';
-import getAudienceListWithNoPermission from '~/store/permissions/actions/getAudienceListWithNoPermission';
 import { PermissionKey } from '~/constants/permissionScheme';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
+import useMyPermissionsStore from '~/store/permissions';
+import { getPostMenus } from '~/helpers/post';
 
 const useSeriesDetailItemMenu = (
   seriesId: string, item: IPost,
@@ -24,6 +25,10 @@ const useSeriesDetailItemMenu = (
   const actions = useSeriesDetailItemStore((state: ISeriesDetailItemState) => state.actions);
   const typeRemove = type === PostType.ARTICLE ? 'article' : 'post';
 
+  const { getAudienceListWithNoPermission } = useMyPermissionsStore(
+    (state) => state.actions,
+  );
+
   const groupAudience = audience?.groups || [];
   const audienceListCannotPinContent = getAudienceListWithNoPermission(
     groupAudience,
@@ -32,6 +37,7 @@ const useSeriesDetailItemMenu = (
       PermissionKey.PIN_CONTENT,
     ],
   );
+  const canPinUnpin = audienceListCannotPinContent.length !== groupAudience.length;
 
   const onPress = () => {
     hideBottomList();
@@ -92,14 +98,15 @@ const useSeriesDetailItemMenu = (
       id: 4,
       testID: 'series_detail_item_menu.pin',
       title: i18next.t('common:pin_unpin'),
-      shouldBeHidden:
-        audienceListCannotPinContent.length === groupAudience.length,
+      shouldBeHidden: !canPinUnpin,
       onPress: onPressPin,
     },
   ];
 
+  const menus = getPostMenus(defaultData);
+
   const showMenu = () => {
-    showBottomList({ isOpen: true, data: defaultData } as any);
+    showBottomList({ isOpen: true, data: menus } as any);
   };
 
   return {
