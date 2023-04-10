@@ -1,9 +1,8 @@
 import ImagePicker from '~/beinComponents/ImagePicker';
 import { IUploadType } from '~/configs/resourceConfig';
 import { IFilePicked } from '~/interfaces/common';
-import groupsActions from '~/storeRedux/groups/actions';
 import { groupProfileImageCropRatio } from '~/theme/dimension';
-
+import useGroupsStore from '~/store/entities/groups';
 import { checkPermission, PermissionTypes } from '~/utils/permission';
 
 export const uploadFile = ({
@@ -18,7 +17,7 @@ export const uploadFile = ({
   destination: 'group' | 'community';
   rootGroupId: string;
 }) => {
-  dispatch(groupsActions.uploadImage({ ...props }));
+  useGroupsStore.getState().actions.uploadImage({ ...props });
 };
 
 // 'icon' for avatar and 'backgroundImgUrl' for cover

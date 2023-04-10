@@ -1,14 +1,13 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 
 import { useBaseHook } from '~/hooks';
 import { ICommentData, IPostAudience } from '~/interfaces/IPost';
 import CommentView from '~/screens/comments/components/CommentView';
 import LoadMoreComment from '~/components/LoadMoreComment';
-import postActions from '~/storeRedux/post/actions';
 import spacing from '~/theme/spacing';
+import usePostsStore from '~/store/entities/posts';
 
 export interface CommentItemProps {
   postId: string;
@@ -39,8 +38,8 @@ const CommentItem: React.FC<CommentItemProps> = ({
   onPressLoadMore,
   onPressMarkSeenPost,
 }: CommentItemProps) => {
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
+  const postActions = usePostsStore((state) => state.actions);
   const theme: ExtendedTheme = useTheme();
   const styles = React.useMemo(
     () => createStyle(theme), [theme],
@@ -49,10 +48,10 @@ const CommentItem: React.FC<CommentItemProps> = ({
   const _onPressReply = useCallback(
     () => {
       if (isReplyingComment) {
-        dispatch(postActions.setPostDetailReplyingComment({
+        postActions.setPostDetailReplyingComment({
           comment: commentData,
           parentComment: commentParent,
-        }));
+        });
       }
       onPressReply?.(
         commentData, section, index,

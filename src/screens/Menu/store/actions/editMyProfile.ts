@@ -4,7 +4,7 @@ import groupApi from '~/api/GroupApi';
 import showToastError from '~/store/helper/showToastError';
 import { IToastMessage } from '~/interfaces/common';
 import useCommonController from '~/screens/store';
-import { mapProfile } from '~/storeRedux/menu/helper';
+import { mapProfile } from '~/helpers/common';
 import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import IMenuController from '../Interface';
