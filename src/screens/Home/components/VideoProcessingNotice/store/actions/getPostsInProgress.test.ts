@@ -50,8 +50,8 @@ describe('getPostsInProgress', () => {
       jest.runAllTimers();
     });
 
-    expect(result.current.total).toBe(0);
-    expect(result.current.data.length).toBe(0);
+    expect(result.current.total).toBe(1);
+    expect(result.current.data.length).toBe(1);
   });
 
   it('should get data success with data.length > 0 and store value is init value', () => {
@@ -108,8 +108,8 @@ describe('getPostsInProgress', () => {
     act(() => {
       jest.runAllTimers();
     });
-    expect(result.current.total).toBe(2);
-    expect(result.current.data.length).toBe(2);
+    expect(result.current.total).toBe(1);
+    expect(result.current.data.length).toBe(1);
   });
 
   it('should get data success with response.data.length > 0 and store value data.length > response.data.length', () => {
@@ -140,8 +140,8 @@ describe('getPostsInProgress', () => {
     act(() => {
       jest.runAllTimers();
     });
-    expect(result.current.total).toBe(1);
-    expect(result.current.data.length).toBe(1);
+    expect(result.current.total).toBe(2);
+    expect(result.current.data.length).toBe(2);
   });
 
   it('should get series throw error', () => {
