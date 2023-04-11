@@ -30,6 +30,7 @@ const PinPostVideo: React.FC<PinPostVideoProps> = ({
 
     return (
       <Image
+        testID="pin_post_video.blur_video"
         source={{ uri: posterInfo?.url }}
         style={styles.blurImageBg}
         blurRadius={22}
@@ -44,7 +45,7 @@ const PinPostVideo: React.FC<PinPostVideoProps> = ({
   );
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="pin_post_video.content">
       {renderBlurImageBackground()}
       <Image
         source={{ uri: posterInfo?.url }}

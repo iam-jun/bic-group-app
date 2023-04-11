@@ -31,7 +31,7 @@ const HeaderPinContentItem: React.FC<HeaderPinContentItemProps> = ({
   const { showMenu } = usePinContentItemMenu(data?.id, id);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="header_pin_content_item">
       <View style={styles.row}>
         <Avatar.Small isRounded source={avatar} />
         <View style={styles.boxName}>
@@ -49,6 +49,7 @@ const HeaderPinContentItem: React.FC<HeaderPinContentItemProps> = ({
       </View>
       {isAdmin && (
         <Button
+          testID="header_pin_content_item.unpin_button"
           onPress={showMenu}
           style={styles.btnUnpin}
         >
