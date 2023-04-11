@@ -125,9 +125,17 @@ const PinContent: FC<PinContentProps> = (props) => {
     const { isPinned, name } = group;
 
     return (
-      <View key={`pin-audience-item-${id}`} style={styles.itemContainer}>
+      <View
+        testID="pin_content.pin_audience_item"
+        key={`pin-audience-item-${id}`}
+        style={styles.itemContainer}
+      >
         <View style={styles.row}>
-          <Checkbox isChecked={isPinned} onPress={onChangePin(audience)} />
+          <Checkbox
+            testID={`pin_content.pin_audience_item_${id}`}
+            isChecked={isPinned}
+            onPress={onChangePin(audience)}
+          />
           <ViewSpacing width={spacing.margin.small} />
           <Text.LabelM style={styles.textGroupName} color={colors.neutral60}>
             {name}
@@ -143,13 +151,13 @@ const PinContent: FC<PinContentProps> = (props) => {
   };
 
   const renderLoadingPinnableAudiences = () => (
-    <View style={styles.loading}>
+    <View testID="pin_content.loading" style={styles.loading}>
       <ActivityIndicator size="small" />
     </View>
   );
 
   const renderEmptyPinnableAudiences = () => (
-    <View style={styles.boxEmpty}>
+    <View testID="pin_content.empty" style={styles.boxEmpty}>
       <Image
         resizeMode="contain"
         source={images.img_empty_box}
@@ -177,9 +185,9 @@ const PinContent: FC<PinContentProps> = (props) => {
       />
       <View style={styles.contentContainer}>
         {canPin && (
-        <Text.BodyM useI18n color={colors.neutral80}>
-          pin:pick_group_want_to_pin
-        </Text.BodyM>
+          <Text.BodyM useI18n color={colors.neutral80}>
+            pin:pick_group_want_to_pin
+          </Text.BodyM>
         )}
         <ScrollView style={styles.scrollView} alwaysBounceVertical={false}>
           {isLoadingPinnableAudiences && renderLoadingPinnableAudiences()}
