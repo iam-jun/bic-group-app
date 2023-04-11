@@ -37,12 +37,12 @@ const TextQuestion = ({ questionId }:Props) => {
 
   return (
     <>
-      <Text.LabelM>
+      <Text.LabelM testID="member_questions.question">
         {question}
         {isRequired && <Text.LabelM style={styles.questionRequired}>{' *'}</Text.LabelM>}
       </Text.LabelM>
       <TextInput
-        testID="member_questions.question"
+        testID="member_questions.answer"
         onChangeText={onChangeText}
         maxLength={700}
         placeholder={t('common:text_answer_input_placeholder')}

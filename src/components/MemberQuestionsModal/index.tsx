@@ -18,6 +18,8 @@ import TextQuestion from './TextQuestion';
 import useTermStore, { TermsInfo } from '../TermsModal/store';
 import useBaseHook from '~/hooks/baseHook';
 import { IMembershipQuestion, MembershipAnswerRequest } from '~/interfaces/ICommunity';
+import useModalStore from '~/store/modal';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 
 const MemberQuestionsModal = () => {
   const theme: ExtendedTheme = useTheme();
@@ -37,6 +39,9 @@ const MemberQuestionsModal = () => {
   const resetTerms = useMemberQuestionsStore((state) => state.reset);
   const answers = useMemberQuestionsStore((state) => state.answers);
   const questions = useMemberQuestionsStore((state) => state.questions);
+  const loading = useMemberQuestionsStore((state) => state.loading);
+
+  const modalActions = useModalStore((state) => state.actions);
 
   const comActions = useCommunityController((state) => state.actions);
   const groupActions = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.actions);
@@ -45,9 +50,18 @@ const MemberQuestionsModal = () => {
 
   useEffect(() => {
     if (isActive && rootGroupId) {
-      actions.getQuestions(rootGroupId);
+      actions.getQuestions(rootGroupId, handleError);
     }
   }, [isActive, rootGroupId]);
+
+  const handleError = () => {
+    modalActions.showAlert({
+      cancelBtn: false,
+      confirmLabel: t('common:text_ok'),
+      title: t('common:text_sorry_something_went_wrong'),
+      content: t('common:text_pull_to_refresh'),
+    });
+  };
 
   useEffect(() => {
     if (!isOpen) {
@@ -92,7 +106,7 @@ const MemberQuestionsModal = () => {
 
   if (!isOpen) return null;
 
-  const buttonText = isActiveGroupTerms ? t('common:btn_submit') : t('common:btn_next');
+  const buttonText = isActiveGroupTerms ? t('common:btn_next') : t('common:btn_submit');
   const enableButton = checkAnsweredRequiredQuestion(questions, answers);
 
   return (
@@ -108,34 +122,44 @@ const MemberQuestionsModal = () => {
           titleTextProps={{ useI18n: true }}
           onPressBack={onClose}
         />
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          enabled
-          style={{ flex: 1 }}
-        >
-          <ScrollView
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.contentContainerStyle}
-            scrollEventThrottle={16}
-          >
-            {questionsIds?.map((item: string) => (
-              <TextQuestion
-                key={`membership_question_${item}`}
-                questionId={item}
-              />
-            ))}
-          </ScrollView>
-        </KeyboardAvoidingView>
-        <View style={styles.buttonView} testID="join_cancel_button">
-          <Button.Secondary
-            testID="terms_view.sumbit"
-            disabled={!enableButton}
-            onPress={onSubmit}
-          >
-            {buttonText}
-          </Button.Secondary>
-        </View>
+        {!!loading && questionsIds?.length > 0
+          ? (
+            <View>
+              <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+                enabled
+                style={{ flex: 1 }}
+              >
+                <ScrollView
+                  keyboardShouldPersistTaps="handled"
+                  showsVerticalScrollIndicator={false}
+                  contentContainerStyle={styles.contentContainerStyle}
+                  scrollEventThrottle={16}
+                >
+                  {questionsIds?.map((item: string) => (
+                    <TextQuestion
+                      key={`membership_question_${item}`}
+                      questionId={item}
+                    />
+                  ))}
+                </ScrollView>
+              </KeyboardAvoidingView>
+              <View style={styles.buttonView}>
+                <Button.Primary
+                  testID="member_questions.sumbit"
+                  disabled={!enableButton}
+                  onPress={onSubmit}
+                >
+                  {buttonText}
+                </Button.Primary>
+              </View>
+            </View>
+          )
+          : (
+            <View style={styles.loading}>
+              <LoadingIndicator />
+            </View>
+          )}
       </View>
     </Animated.View>
   );
@@ -144,14 +168,17 @@ const MemberQuestionsModal = () => {
 const checkAnsweredRequiredQuestion = (questions: {[id: string]: IMembershipQuestion},
   answers: {[id: string]: MembershipAnswerRequest}) => {
   const questionArray = Object.values(questions);
+  let result = true;
+
   for (let index = 0; index < questionArray.length; index++) {
     const question = questionArray[index];
-    const text = answers?.[question.id]?.answer;
-    if (question.isRequired && !!text) {
-      return false;
+    const text = answers?.[question.id]?.answer || '';
+    if (question.isRequired && !text) {
+      result = false;
+      break;
     }
   }
-  return true;
+  return result;
 };
 
 const createStyles = (theme: ExtendedTheme, insets: EdgeInsets) => {
@@ -193,6 +220,11 @@ const createStyles = (theme: ExtendedTheme, insets: EdgeInsets) => {
     contentContainerStyle: {
       backgroundColor: colors.white,
       padding: spacing.padding.large,
+    },
+    loading: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      flex: 1,
     },
   });
 };

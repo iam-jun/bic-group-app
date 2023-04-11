@@ -27,7 +27,7 @@ export interface IMemberQuestionsState extends IBaseState {
   actions: {
     setIsOpen: (isOpen: boolean) => void;
     setMembershipQuestionsInfo: (payload: MembershipQuestionsInfo) => void;
-    getQuestions: (groupId: string) => void;
+    getQuestions: (groupId: string, callBackError: ()=> void) => void;
     setAnswer: (questionId: string, answer: string) => void;
   };
 }
