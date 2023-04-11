@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Keyboard } from 'react-native';
 import React, { useCallback } from 'react';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -54,15 +54,22 @@ const MemberItem = ({
   const canSendMessage = !isMe && (isAdminRole || !!item?.isAdmin) && !isBlockedUser;
 
   const goToUserProfile = () => {
+    Keyboard.dismiss();
     rootNavigation.navigate(
       mainStack.userProfile, { userId: id },
     );
   };
 
   const onPressChat = () => {
+    Keyboard.dismiss();
     if (!username) return;
     const link = formatDMLink(community?.slug, username);
     openUrl(link);
+  };
+
+  const _onPressMenu = () => {
+    Keyboard.dismiss();
+    onPressMenu(item);
   };
 
   const renderButtonMenu = () => {
@@ -74,7 +81,7 @@ const MemberItem = ({
         icon="menu"
         size="small"
         testID="member_item.icon_option.button"
-        onPress={() => onPressMenu(item)}
+        onPress={_onPressMenu}
       />
     );
   };
