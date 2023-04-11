@@ -21,7 +21,6 @@ import { getScreenAndParams, isNavigationRefReady } from '~/router/helper';
 import { initFontAwesomeIcon } from '~/services/fontAwesomeIcon';
 import localStorage from '~/services/localStorage';
 import { parseSafe } from './utils/common';
-import { NOTIFICATION_TYPE } from './constants/notificationTypes';
 import useMaintenanceStore from './store/maintenance';
 
 moment.updateLocale(
@@ -114,7 +113,7 @@ const Root = (): React.ReactElement => {
     const data = remoteMessage?.data?.extraData;
     const newData = typeof data === 'string' ? parseSafe(data) : {};
 
-    if (newData.type === NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME) {
+    if (newData?.startAt && newData?.duration) {
       useMaintenanceStore.getState().actions.checkMaintenance();
     }
 
