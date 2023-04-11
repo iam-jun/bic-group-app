@@ -25,6 +25,7 @@ const Group = {
   LAST_ADMIN_LEAVE: 'group.member.is_last_admin',
   ALREADY_MEMBER: 'group.already_member',
   JOIN_REQUEST_ALREADY_SENT: 'group.joining_request.already_sent',
+  TERMS_NOT_FOUND: 'group_terms.get.not_found',
 };
 
 const APIErrorCode = {

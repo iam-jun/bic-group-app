@@ -92,6 +92,7 @@ export interface IGroup {
   treeData?: IGroup;
   settings?: {
     isJoinApproval?: boolean;
+    isActiveGroupTerms?: boolean;
   };
 }
 
