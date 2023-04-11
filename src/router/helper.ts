@@ -11,7 +11,6 @@ import {
 import { isEmpty, isNumber } from 'lodash';
 import { IObject } from '~/interfaces/common';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
-import { parseSafe } from '~/utils/common';
 import seriesStack from './navigator/MainStack/stacks/series/stack';
 import articleStack from './navigator/MainStack/stacks/articleStack/stack';
 import { TargetType } from '~/interfaces/IPost';
@@ -149,9 +148,18 @@ export const getActiveRouteState = (route?: NavigationState | PartialState<Navig
   return getActiveRouteState(childActiveRoute);
 };
 
-export const getScreenAndParams = (data: string|undefined):{screen: string; params: any} | null => {
-  const newData = typeof data === 'string' ? parseSafe(data) : {};
-  if (!isEmpty(newData)) {
+export const getScreenAndParams = (data: {
+  type: string;
+  target: string;
+  postId: string;
+  commentId: string;
+  childCommentId: string;
+  communityId: string;
+  groupId: string;
+  contentId: string;
+  contentType: string;
+}) => {
+  if (!isEmpty(data)) {
     const {
       type,
       target,
@@ -162,7 +170,7 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
       groupId = null,
       contentId = null,
       contentType = '',
-    } = newData;
+    } = data || {};
     if (type !== undefined) {
       switch (type) {
         case NOTIFICATION_TYPE.POST_TO_USER_IN_ONE_GROUP:
@@ -341,6 +349,7 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
           }
           return null;
         case NOTIFICATION_TYPE.LEAVE_MULTIPLE_GROUP_TO_USER:
+        case NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME:
           return null;
         default:
           console.warn(`Notification type ${type} have not implemented yet`);

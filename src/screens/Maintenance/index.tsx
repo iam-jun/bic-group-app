@@ -71,7 +71,7 @@ const Maintenance = () => {
 
 const createStyles = (theme: ExtendedTheme, insets: EdgeInsets) => {
   const { colors } = theme;
-  
+
   return StyleSheet.create({
     container: {
       width: '100%',
