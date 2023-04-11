@@ -593,12 +593,12 @@
     "title_media": "Media",
     "title_settings": "Settings",
     "title_display_accessibility": "Display & Accessibility",
-    "title_settings_privacy": "Settings & privacy",
+    "title_settings_privacy": "Settings & Privacy",
     "title_billing_payment": "Billing and payment",
     "title_help_support": "Help & Support",
     "title_report_problem": "Report a problem",
     "title_privacy": "Privacy & Terms",
-    "title_logout": "Log Out",
+    "title_logout": "Log out",
     "title_your_content": "Your Content"
   },
   "your_content": {

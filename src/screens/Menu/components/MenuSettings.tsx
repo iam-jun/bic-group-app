@@ -161,8 +161,8 @@ const MenuSettings = () => {
       <CheckUpdate />
       {settingItems.map(renderItem)}
       <Button testID="menu_setting.logout" style={[styles.itemContainer, styles.itemLogout]} onPress={onLogout}>
-        <Icon tintColor={theme.colors.purple20} icon="ArrowRightFromBracket" />
-        <Text.BodyMMedium style={styles.textLogout} numberOfLines={1}>
+        <Icon tintColor={theme.colors.neutral20} size={22} icon="ArrowRightFromBracket" />
+        <Text.BodyMMedium style={styles.textTitle} numberOfLines={1}>
           {t('menu:title_logout')}
         </Text.BodyMMedium>
       </Button>
@@ -185,10 +185,6 @@ const createStyle = (theme: ExtendedTheme) => {
     textTitle: {
       marginLeft: spacing.margin.large,
       color: colors.neutral40,
-    },
-    textLogout: {
-      marginLeft: spacing.margin.large,
-      color: colors.purple50,
     },
     itemContainer: {
       flexDirection: 'row',
