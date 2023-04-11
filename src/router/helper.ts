@@ -159,6 +159,10 @@ export const getScreenAndParams = (data: {
   contentId: string;
   contentType: string;
 }) => {
+  if (isEmpty(data)) {
+    return null;
+  }
+
   const {
     type,
     target,
@@ -171,7 +175,7 @@ export const getScreenAndParams = (data: {
     contentType = '',
   } = data || {};
 
-  if (isEmpty(data) || type === undefined) {
+  if (type === undefined) {
     return null;
   }
 
