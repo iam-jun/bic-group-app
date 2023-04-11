@@ -169,7 +169,7 @@ export const getScreenAndParams = (data: {
     groupId = null,
     contentId = null,
     contentType = '',
-  } = data || {};
+  } = data;
   if (type !== undefined) {
     switch (type) {
       case NOTIFICATION_TYPE.POST_TO_USER_IN_ONE_GROUP:
