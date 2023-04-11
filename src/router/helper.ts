@@ -251,9 +251,9 @@ export const getScreenAndParams = (data: {
     case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN:
     case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN_AGGREGATED:
       return {
-        screen: !!communityId ? 'community-pending-members' : 'group-pending-members',
+        screen: communityId ? 'community-pending-members' : 'group-pending-members',
         params: {
-          id: !!communityId ? communityId : groupId || '',
+          id: communityId || groupId || '',
         },
       };
     case NOTIFICATION_TYPE.POST_SERIES_TO_USER_IN_ONE_GROUP:
@@ -332,20 +332,19 @@ const navigatePostDetailWithFocusComment = ({ postId, target }) => {
 };
 
 const navigateGroupMembers = ({ groupId, communityId }) => {
-  if (!!groupId) {
+  if (!!communityId) {
     return {
-      screen: 'group-detail',
+      screen: 'community-members',
       params: {
-        groupId,
-        communityId: communityId || '',
+        communityId,
       },
     };
   }
-  if (!!communityId) {
+  if (!!groupId) {
     return {
-      screen: 'community-detail',
+      screen: 'group-members',
       params: {
-        communityId,
+        groupId,
       },
     };
   }
