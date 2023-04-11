@@ -28,6 +28,7 @@ const PinPostImage: React.FC<PinPostImageProps> = ({
 
     return (
       <RNImage
+        testID="pin_post_image.blur_image"
         source={{ uri: data[0]?.url }}
         style={styles.blurImageBg}
         blurRadius={22}

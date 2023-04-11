@@ -55,7 +55,7 @@ const BoxListPinContent: React.FC<BoxListPinContentProps> = ({ id }) => {
   const keyExtractor = (item) => `pin-content-item-${item}`;
 
   const renderLoadingView = () => (
-    <View style={styles.loadingView}>
+    <View style={styles.loadingView} testID="box_list_pin_content.loading_view">
       <ActivityIndicator size="small" color={colors.gray30} />
     </View>
   );

@@ -29,7 +29,7 @@ const PinPostFile: React.FC<PinPostFileProps> = ({
   const icon = getFileIcons(fileExt) as IconType;
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="pin_post_file.content">
       <View style={styles.boxFile}>
         <Icon
           size={22}
