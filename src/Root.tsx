@@ -7,6 +7,7 @@ import React, { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LogBox, NativeModules, Platform } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { isEmpty } from 'lodash';
 import useAuthController from '~/screens/auth/store';
 
 /* State Redux */
@@ -118,7 +119,10 @@ const Root = (): React.ReactElement => {
       useMaintenanceStore.getState().actions.checkMaintenance();
     }
 
-    return getScreenAndParams(newData);
+    if (!isEmpty(newData)) {
+      return getScreenAndParams(newData);
+    }
+    return null;
   };
 
   /* Change language */
