@@ -16,9 +16,7 @@ export enum PermissionKey {
 
   // Organization
   CRUD_CUSTOM_SCHEME = 'crud_custom_scheme',
-  CREATE_INNER_GROUPS = 'create_inner_groups',
-  DELETE_INNER_GROUPS = 'delete_inner_groups',
-  ARCHIVE_GROUPS = 'archive_groups',
+  CREATE_DELETE_ARCHIVE_GROUPS = 'create_delete_archive_groups',
   ORDER_MOVE_GROUP_STRUCTURE = 'order_move_group_structure',
   CUD_TAGS = 'cud_tags',
 
@@ -41,7 +39,7 @@ export enum PermissionKey {
   CRUD_SERIES = 'crud_series',
   ASSIGN_CONTENT_OWNER = 'assign_content_owner',
   EDIT_POST_OF_INACTIVE_USER = 'edit_post_of_inactive_user',
-  EDIT_POST_SETTING = 'edit_post_setting',
+  EDIT_OWN_CONTENT_SETTING= 'edit_own_content_setting',
   PUBLISH_UNPUBLISH_POST = 'publish_unpublish_post',
 
   // CHAT Channel

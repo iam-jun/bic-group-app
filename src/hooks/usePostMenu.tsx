@@ -47,7 +47,7 @@ const usePostMenu = (
 
   const audienceListWithNoPermission = getAudienceListWithNoPermission(
     groupAudience,
-    PermissionKey.EDIT_POST_SETTING,
+    PermissionKey.EDIT_OWN_CONTENT_SETTING,
   );
 
   const audienceListCannotPinContent = getAudienceListWithNoPermission(
