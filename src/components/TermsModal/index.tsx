@@ -27,6 +27,7 @@ const TermsView = () => {
   const { t } = useBaseHook();
 
   const [containerHeight, setContainerHeight] = useState<number>(0);
+  const [layoutHeight, setLayoutHeight] = useState<number>(0);
 
   const actions = useTermStore((state) => state.actions);
   const content = useTermStore((state) => state.termContent);
@@ -67,10 +68,18 @@ const TermsView = () => {
       resetTerms();
       setIsAgree(false);
       setContainerHeight(0);
+      setLayoutHeight(0);
     } else {
       Keyboard.dismiss();
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    if (containerHeight > 0 && layoutHeight > containerHeight
+      && !isAgree && !loading && !errorText) {
+      setIsAgree(true);
+    }
+  }, [containerHeight, layoutHeight, isAgree, loading, errorText]);
 
   const onClose = () => {
     actions.setIsOpen(false);
@@ -87,9 +96,8 @@ const TermsView = () => {
 
   const handleLayout = (e:LayoutChangeEvent) => {
     const height = e?.nativeEvent?.layout?.height || 0;
-    if (containerHeight > 0 && height > containerHeight
-       && !isAgree && !loading && !errorText) {
-      setIsAgree(true);
+    if (layoutHeight < height) {
+      setLayoutHeight(height);
     }
   };
 
