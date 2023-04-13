@@ -81,7 +81,7 @@ export const useCreatePost = (params?: UseCreatePostParams) => {
   );
   const audienceListWithNoPermission = getAudienceListWithNoPermission(
     chosenAudiences,
-    PermissionKey.EDIT_POST_SETTING,
+    PermissionKey.EDIT_OWN_CONTENT_SETTING,
   );
   const shouldDisablePostSettings
     = audienceListWithNoPermission.length === chosenAudiences.length;

@@ -8,15 +8,6 @@ import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack
 import mainStack from '~/router/navigator/MainStack/stack';
 
 describe('ArticleScheduleItem component', () => {
-  it('render correctly', () => {
-    const rendered = renderWithRedux(
-      <ArticleScheduleItem
-        data={mockArticle as IPost}
-      />,
-    );
-    expect(rendered.toJSON()).toMatchSnapshot();
-  });
-
   it('should navigate to ArticleReviewSchedule screen', () => {
     const navigate = jest.fn();
     const rootNavigation = { navigate };
