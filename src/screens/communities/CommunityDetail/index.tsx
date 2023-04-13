@@ -1,5 +1,5 @@
 import React, {
-  useState, useEffect, useRef, useCallback,
+  useState, useEffect, useRef, useCallback, useMemo,
 } from 'react';
 import { StyleSheet, DeviceEventEmitter, View } from 'react-native';
 import Animated, {
@@ -47,6 +47,8 @@ import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 import useModalStore from '~/store/modal';
 import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
+import usePinContentStore from '~/components/PinContent/store';
+import TermsView from '~/components/TermsModal';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -95,6 +97,7 @@ const CommunityDetail = (props: any) => {
   );
 
   const actionsFeedSearch = useFeedSearchStore((state) => state.actions);
+  const actionPinContent = usePinContentStore((state) => state.actions);
 
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
 
@@ -165,6 +168,21 @@ const CommunityDetail = (props: any) => {
     if (groupId) timelineActions.resetTimeline(groupId);
   }, [groupId]);
 
+  useMemo(() => {
+    // prevent showing the old data before being refreshed
+    if (groupId) {
+      actionPinContent.resetDataPinContentsGroup(groupId);
+    }
+  }, [groupId]);
+
+  useEffect(() => {
+    if (groupId) actionPinContent.getPinContentsGroup(groupId);
+  }, [groupId]);
+
+  useEffect(() => () => {
+    if (groupId) actionPinContent.resetDataPinContentsGroup(groupId);
+  }, [groupId]);
+
   const onRefresh = useCallback((isGetPost: boolean) => {
     /**
      * must getPosts before getCommunityDetail
@@ -173,6 +191,7 @@ const CommunityDetail = (props: any) => {
     if (isGetPost) {
       timelineActions.getPosts(groupId, true);
     }
+    actionPinContent.getPinContentsGroup(groupId);
     getCommunityDetail();
   }, [groupId, contentFilter, attributeFilter]);
 
@@ -363,6 +382,7 @@ const CommunityDetail = (props: any) => {
         />
       </Animated.View>
       <ContentSearch groupId={groupId} />
+      <TermsView />
     </View>
   );
 };

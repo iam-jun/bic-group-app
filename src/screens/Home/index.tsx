@@ -31,6 +31,7 @@ import useFilterToolbarStore from '~/components/FilterToolbar/store';
 import useModalStore from '~/store/modal';
 import usePostsInProgressStore from './components/VideoProcessingNotice/store';
 import useFeedSearchStore from './HomeSearch/store';
+import useAppStore from '~/store/app';
 
 const Home = () => {
   const [lossInternet, setLossInternet] = useState(false);
@@ -67,6 +68,8 @@ const Home = () => {
   const currentUserId = useUserIdAuth();
 
   const isFocused = useIsFocused();
+  const redirectUrl = useAppStore((state) => state.redirectUrl);
+  const appActions = useAppStore((state) => state.actions);
 
   useEffect(
     () => {
@@ -144,6 +147,10 @@ const Home = () => {
   useEffect(
     () => {
       if (currentUserId) commonActions.getMyProfile({ userId: currentUserId });
+      if (redirectUrl) {
+        openUrl(redirectUrl);
+        appActions.setRedirectUrl('');
+      }
     }, [],
   );
 

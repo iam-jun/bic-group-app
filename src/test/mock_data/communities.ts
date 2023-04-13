@@ -35,6 +35,9 @@ export const communities = [
     updatedAt: '2022-04-26T08:29:58.579Z',
     userCount: 0,
     joinStatus: 0,
+    settings: {
+      isActiveGroupTerms: false,
+    },
   },
 ];
 

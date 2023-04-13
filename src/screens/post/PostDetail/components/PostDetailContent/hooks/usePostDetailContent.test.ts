@@ -24,7 +24,7 @@ describe('usePostDetailContent', () => {
     });
 
     const spyPutMarkSeenPost = jest
-      .spyOn(streamApi, 'putMarkSeenPost')
+      .spyOn(streamApi, 'putMarkSeenContent')
       .mockImplementation(() => Promise.resolve(responsePutMarkSeenPost) as any);
 
     const spyGetPostDetail = jest
@@ -46,7 +46,7 @@ describe('usePostDetailContent', () => {
 
   it('render correctly no userId', () => {
     const spyPutMarkSeenPost = jest
-      .spyOn(streamApi, 'putMarkSeenPost')
+      .spyOn(streamApi, 'putMarkSeenContent')
       .mockImplementation(() => Promise.resolve(responsePutMarkSeenPost) as any);
 
     const stateData = { ...initialState };
@@ -66,7 +66,7 @@ describe('usePostDetailContent', () => {
     });
 
     const spyPutMarkSeenPost = jest
-      .spyOn(streamApi, 'putMarkSeenPost')
+      .spyOn(streamApi, 'putMarkSeenContent')
       .mockImplementation(() => Promise.resolve(responsePutMarkSeenPost) as any);
 
     const spyGetPostDetail = jest

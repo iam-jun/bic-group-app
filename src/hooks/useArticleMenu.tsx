@@ -16,21 +16,35 @@ import { TargetType, ReportTo } from '~/interfaces/IReport';
 import { generateLink, LinkGeneratorTypes } from '~/utils/link';
 import useModalStore from '~/store/modal';
 import { Button } from '~/baseComponents';
+import useMyPermissionsStore from '~/store/permissions';
+import { PermissionKey } from '~/constants/permissionScheme';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 
-const useArticleMenu = (
-  data: IPost,
-  isActor: boolean,
-) => {
+const useArticleMenu = (data: IPost, isActor: boolean) => {
   const { rootNavigation } = useRootNavigation();
 
   const commonActions = useCommonController((state) => state.actions);
   const modalActions = useModalStore((state) => state.actions);
+
+  const { getAudienceListWithNoPermission } = useMyPermissionsStore(
+    (state) => state.actions,
+  );
 
   if (!data) return null;
 
   const {
     id: articleId, reactionsCount, isSaved, type, audience,
   } = data;
+
+  const groupAudience = audience?.groups || [];
+
+  const audienceListCannotPinContent = getAudienceListWithNoPermission(
+    groupAudience,
+    [
+      PermissionKey.FULL_PERMISSION,
+      PermissionKey.PIN_CONTENT,
+    ],
+  );
 
   const onPressEdit = () => {
     modalActions.hideBottomList();
@@ -54,12 +68,14 @@ const useArticleMenu = (
     // in this sprint default reportTo is COMMUNITY
     modalActions.showModal({
       isOpen: true,
-      ContentComponent: <ReportContent
-        targetId={articleId}
-        targetType={TargetType.ARTICLE}
-        groupIds={rootGroupIds}
-        reportTo={ReportTo.COMMUNITY}
-      />,
+      ContentComponent: (
+        <ReportContent
+          targetId={articleId}
+          targetType={TargetType.ARTICLE}
+          groupIds={rootGroupIds}
+          reportTo={ReportTo.COMMUNITY}
+        />
+      ),
     });
   };
 
@@ -83,18 +99,24 @@ const useArticleMenu = (
       confirmLabel: i18next.t('common:btn_delete'),
       ConfirmBtnComponent: Button.Danger,
       confirmBtnProps: { type: 'ghost' },
-      onConfirm: () => useArticleController.getState().actions.deleteArticle(
-        articleId, 'article:text_delete_article_success',
-      ),
+      onConfirm: () => useArticleController
+        .getState()
+        .actions.deleteArticle(
+          articleId,
+          'article:text_delete_article_success',
+        ),
     });
   };
 
   const onPressCopyLink = () => {
     modalActions.hideBottomList();
-    Clipboard.setString(generateLink(
-      LinkGeneratorTypes.ARTICLE, articleId,
-    ));
+    Clipboard.setString(generateLink(LinkGeneratorTypes.ARTICLE, articleId));
     modalActions.showToast({ content: 'common:text_link_copied_to_clipboard' });
+  };
+
+  const onPressPin = () => {
+    modalActions.hideBottomList();
+    rootNavigation?.navigate?.(homeStack.pinContent, { postId: articleId });
   };
 
   const defaultData = [
@@ -132,6 +154,16 @@ const useArticleMenu = (
     },
     {
       id: 5,
+      testID: 'article_view_menu.pin',
+      leftIcon: 'Thumbtack',
+      title: i18next.t('common:pin_unpin'),
+      requireIsActor: false,
+      shouldBeHidden:
+        audienceListCannotPinContent.length === groupAudience.length,
+      onPress: onPressPin,
+    },
+    {
+      id: 6,
       testID: 'article_view_menu.delete',
       leftIcon: 'TrashCan',
       title: i18next.t('article:menu:delete'),
@@ -139,7 +171,7 @@ const useArticleMenu = (
       onPress: onDelete,
     },
     {
-      id: 6,
+      id: 7,
       testID: 'article_view_menu.report',
       leftIcon: 'Flag',
       title: i18next.t('common:btn_report_content'),

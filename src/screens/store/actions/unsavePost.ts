@@ -7,7 +7,7 @@ import showToast from '~/store/helper/showToast';
 
 const unsavePost = (_set, _get) => async (id: string, type: PostType) => {
   try {
-    await streamApi.postUnsavePost(id);
+    await streamApi.postUnsaveContent(id);
     const post = usePostsStore.getState()?.posts?.[id] || {};
     const newPost = {
       ...post,

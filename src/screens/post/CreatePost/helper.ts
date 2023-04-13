@@ -82,9 +82,9 @@ export const validateVideo = (
     const uploadedFile = useUploaderStore.getState().uploadedFiles?.[filename];
     if (isUploading) {
       videoUploading = true;
-      videoError = t('post:error_wait_uploading');
+      videoError = t?.('post:error_wait_uploading');
     } else if (!uploadedFile?.id) {
-      videoError = t('post:error_upload_failed');
+      videoError = t?.('post:error_upload_failed');
     } else {
       video = uploadedFile;
     }
@@ -93,7 +93,7 @@ export const validateVideo = (
   return { video, videoError, videoUploading };
 };
 
-export const calculateInputHeight = (
+export const useCalculateInputHeight = (
   inputHeight: number,
   photosHeight: number,
   isShowToastAutoSave: boolean,

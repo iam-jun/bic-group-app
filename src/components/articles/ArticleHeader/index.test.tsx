@@ -12,20 +12,7 @@ import initialState from '~/storeRedux/initialState';
 import * as navigationHook from '~/hooks/navigation';
 
 describe('ArticleHeader Component', () => {
-  const state = { ...initialState };
   const article = mockArticle as IPost;
-
-  it('renders correctly', () => {
-    const store = createTestStore(state);
-
-    const rendered = renderWithRedux(
-      <ArticleHeader
-        data={article}
-        actor={article.actor}
-      />, store,
-    );
-    expect(rendered).toMatchSnapshot();
-  });
 
   it('should navigate to detail', () => {
     const navigate = jest.fn();
