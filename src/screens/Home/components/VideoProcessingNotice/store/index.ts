@@ -7,16 +7,14 @@ import updatePostsInProgress from './actions/updatePostsInProgress';
 import { ISocketNotification } from '~/interfaces/INotification';
 
 export interface IPostsInProgressState extends IBaseState{
-    total: number,
-    data: any[],
+  total: number,
+  data: any[],
 
   actions: {
     setTotal: (newTotal: number) => void;
     getPosts: () => void;
     updatePosts: (payload: ISocketNotification) => void;
   }
-
-  reset?: () => void;
 }
 
 const initialState: InitStateType<IPostsInProgressState> = {
