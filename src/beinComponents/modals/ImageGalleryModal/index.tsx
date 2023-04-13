@@ -229,7 +229,6 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
       >
         <Image
           resizeMode="contain"
-          
           style={{
             width: dimension.deviceWidth,
             height: dimension.deviceHeight,
