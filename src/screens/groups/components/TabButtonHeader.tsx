@@ -79,7 +79,7 @@ const TabButtonHeader = ({
           <ViewSpacing width={spacing.margin.small} />
         </>
       )}
-      {onPressDiscover && (
+      {isMember && onPressDiscover && (
         <>
           <PillTabButton
             useI18n

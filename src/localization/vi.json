@@ -191,7 +191,14 @@
     "mark_article_as_important": "Bài báo Quan trọng",
     "mark_series_as_important": "Loạt bài Quan trọng",
     "text_deactivated": "Vô hiệu hoá",
-    "settings": "Thiết lập bài viết"
+    "settings": "Thiết lập bài viết",
+    "pin_unpin": "Ghim/Bỏ ghim",
+    "text_i_agree": "Tôi đồng ý",
+    "text_group_terms": "Điều khoản nhóm",
+    "text_community_terms": "Điều khoản cộng đồng",
+    "text_got_it": "Đã biết",
+    "text_sorry_something_went_wrong": "Đã có lỗi xảy ra",
+    "text_pull_to_refresh": "Vui lòng kéo xuống để làm mới trang hoặc thử lại sau"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -1341,5 +1348,14 @@
       "see_content": "Cả hai vẫn thấy được nội dung của nhau trong các cộng đồng hoặc nhóm"
     },
     "text_block_user_also": "Chặn người này"
+  },
+  "pin": {
+    "pin_unpin_content": "Ghim/Bỏ ghim nội dung",
+    "pick_group_want_to_pin": "Chọn nhóm bạn muốn ghim nội dung này:",
+    "list_pin_content_title": "Danh sách ghim",
+    "unpin": "Gỡ ghim",
+    "reorder": "Xắp Sếp",
+    "unpinned_successfully": "Gỡ pin thành công",
+    "there_is_no_groups": "Không có nhóm"
   }
 }

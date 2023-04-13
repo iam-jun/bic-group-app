@@ -9,6 +9,7 @@ import IDiscoverGroupsState from '../../DiscoverGroups/store/Interface';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 import useModalStore from '~/store/modal';
 import { ICommunity } from '~/interfaces/ICommunity';
+import useTermStore from '~/components/TermsModal/store';
 
 interface GroupJoinCancelButtonProps {
   style?: StyleProp<ViewStyle>;
@@ -22,6 +23,7 @@ const GroupJoinCancelButton = ({ style, community }: GroupJoinCancelButtonProps)
   const {
     privacy,
     id: groupId,
+    settings,
   } = infoDetail || {};
   const joinStatusCommunity = community?.joinStatus;
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
@@ -29,6 +31,7 @@ const GroupJoinCancelButton = ({ style, community }: GroupJoinCancelButtonProps)
 
   const actions = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.actions);
   const { showAlert } = useModalStore((state) => state.actions);
+  const termsActions = useTermStore((state) => state.actions);
 
   if (isMember) return null;
 
@@ -39,6 +42,13 @@ const GroupJoinCancelButton = ({ style, community }: GroupJoinCancelButtonProps)
         content: t('communities:text_must_be_member_first'),
         confirmLabel: t('common:text_ok'),
       });
+      return;
+    }
+    if (settings.isActiveGroupTerms) {
+      const payload = {
+        groupId, rootGroupId: groupId, name: '', type: 'group', isActive: true,
+      } as any;
+      termsActions.setTermInfo(payload);
       return;
     }
 

@@ -52,6 +52,8 @@ import { IDiscoverCommunitiesState } from '~/screens/Discover/components/Discove
 import { IBlockingState } from './blocking';
 import { IYourContentState } from '~/screens/YourContent/store';
 import { IMaintenanceState } from './maintenance';
+import { IPinContentState } from '~/components/PinContent/store';
+import { ITermState } from '~/components/TermsModal/store';
 
 export interface BicStore {
   entities: {
@@ -71,8 +73,8 @@ export interface BicStore {
   posts: {
     ButtonMarkAsRead: {
       buttonMarkAsReadStore: IButtonMarkAsReadState;
-    }
-  }
+    };
+  };
 
   // screens
   post: {
@@ -80,22 +82,22 @@ export interface BicStore {
     ReactionDetail: IReactionDetailState;
     CreatePost: {
       createPostStore: ICreatePostState;
-    }
+    };
   };
   articles: {
-    articleController: IArticleController,
+    articleController: IArticleController;
     EditArticle: {
-      editArticleStore: ICreateArticleState,
+      editArticleStore: ICreateArticleState;
       EditArticleCategory: {
-        editArticleCategoryStore: ICreateArticleCategoryState,
-      }
-    }
+        editArticleCategoryStore: ICreateArticleCategoryState;
+      };
+    };
     ArticleScheduleContent: {
       articleScheduleContentStore: IArticleScheduleContentState;
-    }
+    };
   };
   series: {
-    seriesStore: ISeriesState,
+    seriesStore: ISeriesState;
     seriesContentModal: ISeriesContentModalState;
   };
   groups: {
@@ -123,18 +125,19 @@ export interface BicStore {
   Discover: {
     components: {
       DiscoverCommunities: {
-        discoverCommunitiesStore: IDiscoverCommunitiesState
-      }
+        discoverCommunitiesStore: IDiscoverCommunitiesState;
+      };
       SearchDiscoverCommunity: {
         discoverCommunitiesSearchStore: IDiscoverCommunitiesSearchState;
-      }
-    }
+      };
+    };
   };
   communities: {
     communityMember: {
-      communityMemberStore: ICommunityMemberState,
-    },
-  }
+      communityMemberStore: ICommunityMemberState;
+    };
+  };
+  terms: ITermState;
   Home: {
     homeStore: IHomeState;
     feedSearch: IFeedSearchState;
@@ -142,26 +145,31 @@ export interface BicStore {
   Menu: {
     joinedCommunitiesStore: IJoinedCommunitiesState;
     userProfileStore: IUserProfileState;
+    AccountSettings: {
+      Blocking: {
+        blockingStore: IBlockingState;
+      };
+    };
   };
 
   Notifications: {
-    notificationStore: INotificationsState,
-  },
+    notificationStore: INotificationsState;
+  };
   Draft: {
     DraftArticle: {
       draftArticleStore: IDraftArticleState;
-    },
+    };
     DraftPost: {
       draftPostStore: IDraftPostState;
     };
-  }
+  };
   topic: {
     topicStore: ITopicState;
   };
   YourContent: {
     yourContentStore: IYourContentState;
     scheduleArticleStore: IScheduleArticlesState;
-  },
+  };
 
   // others
   chat: IChatState;
@@ -179,4 +187,5 @@ export interface BicStore {
   validateSeriesTags: IValidateSeriesTags;
   blockingStore: IBlockingState;
   maintenanceStore: IMaintenanceState;
+  pinContent: IPinContentState;
 }

@@ -15,10 +15,18 @@ import CommunityGroupCard from '~/components/CommunityGroupCard';
 import useDiscoverCommunitiesStore from './store';
 import useCommunityController from '~/screens/communities/store';
 import useCommunitiesStore from '~/store/entities/communities';
+import useTermStore from '~/components/TermsModal/store';
+
+type HandleJoinCommunityData = {
+  id: string;
+  name: string;
+  isActiveGroupTerms: boolean;
+  rootGroupId: string;
+};
 
 type ItemDiscoverCommunitiesProps = {
   id: string;
-  handleJoin: (id: string, name: string) => void;
+  handleJoin: (data: HandleJoinCommunityData) => void;
   handleCancel: (id: string, name: string) => void;
 };
 
@@ -28,11 +36,22 @@ const ItemDiscoverCommunities: FC<ItemDiscoverCommunitiesProps> = ({
   handleCancel,
 }) => {
   const item = useCommunitiesStore((state) => state.data[id]);
+  const isActiveGroupTerms = item?.settings?.isActiveGroupTerms || false;
+  const rootGroupId = item?.groupId || '';
+
   return (
     <CommunityGroupCard
       item={item}
       testID="discover_communities_item"
-      onJoin={handleJoin}
+      onJoin={(id: string, name: string) => {
+        const data = {
+          id,
+          name,
+          isActiveGroupTerms,
+          rootGroupId,
+        } as any;
+        handleJoin(data);
+      }}
       onCancel={handleCancel}
     />
   );
@@ -47,6 +66,7 @@ const DiscoverCommunities = () => {
     = useDiscoverCommunitiesStore();
 
   const communityController = useCommunityController((state) => state.actions);
+  const termsActions = useTermStore((state) => state.actions);
 
   const renderEmptyComponent = () => {
     if (hasNextPage) {
@@ -85,8 +105,19 @@ const DiscoverCommunities = () => {
     actions.getDiscoverCommunities(true);
   };
 
-  const handleJoin = (id: string, name: string) => {
-    communityController.joinCommunity(id, name);
+  const handleJoin = (data: HandleJoinCommunityData) => {
+    if (data?.isActiveGroupTerms) {
+      const payload = {
+        groupId: data.id,
+        rootGroupId: data.rootGroupId,
+        name: data.name,
+        type: 'community',
+        isActive: true,
+      } as any;
+      termsActions.setTermInfo(payload);
+      return;
+    }
+    communityController.joinCommunity(data.id, data.name);
   };
 
   const handleCancel = (id: string, name: string) => {

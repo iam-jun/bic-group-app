@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
 import React, {
-  useCallback, useEffect, useRef, useState,
+  useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
 import {
   DeviceEventEmitter, Share, StyleSheet, View,
@@ -54,6 +54,8 @@ import useGroupDetailStore from './store';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 import useModalStore from '~/store/modal';
 import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
+import usePinContentStore from '~/components/PinContent/store';
+import TermsView from '~/components/TermsModal';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -125,6 +127,7 @@ const GroupDetail = (props: any) => {
   );
 
   const actionsFeedSearch = useFeedSearchStore((state) => state.actions);
+  const actionPinContent = usePinContentStore((state) => state.actions);
 
   const buttonShow = useSharedValue(0);
   const containerPaddingBottom = useSharedValue(0);
@@ -180,6 +183,21 @@ const GroupDetail = (props: any) => {
 
   useEffect(() => () => {
     if (groupId) timelineActions.resetTimeline(groupId);
+  }, [groupId]);
+
+  useMemo(() => {
+    // prevent showing the old data before being refreshed
+    if (groupId) {
+      actionPinContent.resetDataPinContentsGroup(groupId);
+    }
+  }, [groupId]);
+
+  useEffect(() => {
+    if (groupId) actionPinContent.getPinContentsGroup(groupId);
+  }, [groupId]);
+
+  useEffect(() => () => {
+    if (groupId) actionPinContent.resetDataPinContentsGroup(groupId);
   }, [groupId]);
 
   const onPressAdminTools = () => {
@@ -372,6 +390,7 @@ const GroupDetail = (props: any) => {
           <GroupJoinCancelButton style={styles.joinBtn} community={communityDetail} />
         </Animated.View>
         <ContentSearch groupId={groupId} />
+        <TermsView />
       </>
     );
   };

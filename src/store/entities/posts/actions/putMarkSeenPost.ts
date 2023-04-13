@@ -14,7 +14,7 @@ const putMarkSeenPost = () => async (payload: IPayloadPutMarkSeenPost) => {
   }
 
   try {
-    await streamApi.putMarkSeenPost(postId);
+    await streamApi.putMarkSeenContent(postId);
   } catch (error) {
     showToastError(error);
   }

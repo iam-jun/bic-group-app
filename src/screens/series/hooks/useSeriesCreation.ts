@@ -57,7 +57,7 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
 
   const names = getNames(dataGroups);
 
-  const audiencesWithNoPermission = getAudienceListWithNoPermission(dataGroups, PermissionKey.EDIT_POST_SETTING);
+  const audiencesWithNoPermission = getAudienceListWithNoPermission(dataGroups, PermissionKey.EDIT_OWN_CONTENT_SETTING);
   const disableSeriesSettings = audiencesWithNoPermission.length === dataGroups.length;
 
   const initSettings = (settings) => {
