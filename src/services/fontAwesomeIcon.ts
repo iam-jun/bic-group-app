@@ -40,6 +40,8 @@ import { faGlobe as faGlobeSolid } from '@fortawesome/pro-solid-svg-icons/faGlob
 import { faCalendar } from '@fortawesome/pro-regular-svg-icons/faCalendar';
 import { faCalendarDays as faCalendarDaysSolid } from '@fortawesome/pro-solid-svg-icons/faCalendarDays';
 import { faUserXmark } from '@fortawesome/pro-regular-svg-icons/faUserXmark';
+import { faUserXmark as faUserXmarkSolid } from '@fortawesome/pro-solid-svg-icons/faUserXmark';
+import { faUserSlash } from '@fortawesome/pro-regular-svg-icons/faUserSlash';
 import { faUserSlash as faUserSlashSolid } from '@fortawesome/pro-solid-svg-icons/faUserSlash';
 import { faSquareUser } from '@fortawesome/pro-regular-svg-icons/faSquareUser';
 import { faUserCheck } from '@fortawesome/pro-regular-svg-icons/faUserCheck';
@@ -274,6 +276,8 @@ export const initFontAwesomeIcon = () => {
     faCalendar,
     faCalendarDaysSolid,
     faUserXmark,
+    faUserXmarkSolid,
+    faUserSlash,
     faUserSlashSolid,
     faSquareUser,
     faUserCheck,
@@ -491,6 +495,8 @@ export const fontAwesomeIcons = {
   Calendar: 'fa-regular fa-calendar',
   CalendarDaysSolid: 'fa-solid fa-calendar-days',
   UserXmark: 'fa-regular fa-user-xmark',
+  UserXmarkSolid: 'fa-solid fa-user-xmark',
+  UserSlash: 'fa-regular fa-user-slash',
   UserSlashSolid: 'fa-solid fa-user-slash',
   SquareUser: 'fa-regular fa-square-user',
   UserCheck: 'fa-regular fa-user-check',

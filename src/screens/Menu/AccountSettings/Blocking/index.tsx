@@ -49,7 +49,13 @@ const Blocking = () => {
     }
     return (
       <View style={styles.headerContainer}>
-        <Text.H3 useI18n>settings:text_blocked_users_list</Text.H3>
+        <Text.SubtitleL>
+          {t('settings:text_blocked_users_list')}
+          {' '}
+          ·
+          {' '}
+          {list?.length}
+        </Text.SubtitleL>
         <Text.BodyM style={styles.headerContent} useI18n>
           settings:text_content_blocked_users_list
         </Text.BodyM>

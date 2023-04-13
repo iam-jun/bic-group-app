@@ -521,9 +521,6 @@
     "btn_unblock": "Unblock",
     "title_unblock_user_name": "Unblock {{name}}?",
     "text_unblock_user_name_result": "Unblocking this user will allow them to interact with you again below:",
-    "text_unblock_user_name_result_a": "Search and see your individual user profile",
-    "text_unblock_user_name_result_b": "Mention you",
-    "text_unblock_user_name_result_c": "Send a direct message to you",
     "title_blocked_users_list_empty": "Blocked users list is empty",
     "text_blocked_users_list_empty": "User not found",
     "text_blocked_at": "Blocked at"
@@ -1394,7 +1391,8 @@
   },
   "block_user": {
     "title_block_name": "Block {0}?",
-    "text_block_user": "Block this user",
+    "text_block_user": "Block",
+    "text_blocked_user": "Blocked",
     "general_description": "This blocking is applied to individual purposes. This blocking won't affect your and the blocked person's interactions in a community or group that has joined.",
     "cannot": {
       "title": "will no longer be able to:",
