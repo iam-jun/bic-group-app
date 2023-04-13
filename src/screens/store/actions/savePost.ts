@@ -5,7 +5,7 @@ import showToast from '~/store/helper/showToast';
 
 const savePost = (_set, _get) => async (id: string, type: PostType) => {
   try {
-    await streamApi.postSavePost(id);
+    await streamApi.postSaveContent(id);
     const post = usePostsStore.getState()?.posts?.[id] || {};
     const newPost = {
       ...post,

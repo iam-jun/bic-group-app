@@ -8,6 +8,7 @@ import CommentDetail from '~/screens/comments/CommentDetail';
 import EditComment from '~/screens/comments/EditComment';
 import CreatePostTags from '~/screens/post/CreatePostTags';
 import CreatePostSeries from '~/screens/post/CreatePostSeries';
+import PinContent from '~/screens/PinContent';
 
 const homeScreens = {
   'post-detail': PostDetail,
@@ -20,6 +21,7 @@ const homeScreens = {
   'create-post-tags': CreatePostTags,
   'create-post-series': CreatePostSeries,
   'comment-detail': CommentDetail,
+  'pin-content': PinContent,
 };
 
 export default homeScreens;

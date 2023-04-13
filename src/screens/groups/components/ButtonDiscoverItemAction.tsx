@@ -22,8 +22,7 @@ const ButtonDiscoverItemAction: FC<ButtonDiscoverItemActionProps> = ({
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
 
-  let icon; let
-    text;
+  let icon; let text;
 
   switch (joinStatus) {
     case GroupJoinStatus.UNABLE_TO_JOIN:

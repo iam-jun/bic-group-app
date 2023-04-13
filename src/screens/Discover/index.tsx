@@ -5,6 +5,7 @@ import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import DiscoverCommunities from '~/screens/Discover/components/DiscoverCommunities';
 import SearchDiscoverCommunity from './components/SearchDiscoverCommunity';
+import TermsView from '~/components/TermsModal';
 
 const Index = () => {
   const theme = useTheme();
@@ -38,6 +39,7 @@ const Index = () => {
         onClose={onCloseSearch}
         placeholder={t('communities:text_search_communities')}
       />
+      <TermsView />
     </View>
   );
 };

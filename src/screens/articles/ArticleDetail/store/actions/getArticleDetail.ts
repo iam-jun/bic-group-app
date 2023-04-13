@@ -3,7 +3,6 @@ import { getReportContent } from '~/helpers/common';
 import { IParamGetArticleDetail, IPayloadGetArticleDetail } from '~/interfaces/IArticle';
 import { TargetType } from '~/interfaces/IReport';
 import usePostsStore from '~/store/entities/posts';
-import showToastError from '~/store/helper/showToastError';
 import { IArticlesState } from '..';
 
 const getArticleDetail = (set, get) => async (payload: IPayloadGetArticleDetail) => {
@@ -48,7 +47,6 @@ const getArticleDetail = (set, get) => async (payload: IPayloadGetArticleDetail)
       state.errors[id] = true;
     }, 'getArticlesError');
     console.error('getArticleDetail', error);
-    showToastError(error);
   }
 };
 
