@@ -17,6 +17,14 @@ messaging().setBackgroundMessageHandler(async (remoteMessage) => {
   useNotificationStore.getState().actions.handleNotiBackground(remoteMessage);
 });
 
+messaging().subscribeToTopic('maintenance_channel')
+  .then(() => console.log('Subscribed to topic maintenance_channel'))
+  .catch((error) => {
+    console.warn(
+      'Subscribed topic error: ', error,
+    );
+  });
+
 AppRegistry.registerComponent(
   appName, () => gestureHandlerRootHOC(App),
 );
