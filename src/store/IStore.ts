@@ -51,6 +51,7 @@ import { IValidateSeriesTags } from '~/components/ValidateSeriesTags/store';
 import { IDiscoverCommunitiesState } from '~/screens/Discover/components/DiscoverCommunities/store';
 import { IBlockingState } from './blocking';
 import { IYourContentState } from '~/screens/YourContent/store';
+import { IMaintenanceState } from './maintenance';
 import { IPinContentState } from '~/components/PinContent/store';
 import { ITermState } from '~/components/TermsModal/store';
 
@@ -185,5 +186,6 @@ export interface BicStore {
   selectSeries: ISelectSeriesState;
   validateSeriesTags: IValidateSeriesTags;
   blockingStore: IBlockingState;
+  maintenanceStore: IMaintenanceState;
   pinContent: IPinContentState;
 }
