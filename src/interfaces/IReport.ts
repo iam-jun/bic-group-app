@@ -48,12 +48,12 @@ export interface IParamsReportContent {
 
 export interface IPayloadReportMember {
   targetId: string;
-  communityId: string;
+  communityId?: string;
   reason: string;
 }
 
 export interface IParamsReportMember {
-  userId: string;
+  userId?: string;
   reason: string;
 }
 

@@ -24,3 +24,5 @@ export const mockReportReason = [
     value: 'Others',
   },
 ];
+
+export const responseReportMemberByUserId = { code: 'api.ok', meta: { message: 'Your report was sent' } };
