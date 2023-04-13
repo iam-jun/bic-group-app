@@ -185,7 +185,7 @@ export const isEmptyPost = (post: IPost) => {
     && isEmpty(files);
 };
 
-export const getPostMenus = (data: any[], isActor: boolean, reactionsCount: any) => {
+export const getPostMenus = (data: any[], isActor?: boolean, reactionsCount?: any) => {
   const result = [];
   data.forEach((item: any) => {
     const requireNothing = !item.requireIsActor && !item?.requireReactionCounts;

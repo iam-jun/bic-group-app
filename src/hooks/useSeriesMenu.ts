@@ -12,23 +12,40 @@ import { generateLink, LinkGeneratorTypes } from '~/utils/link';
 import { Button } from '~/baseComponents';
 import useModalStore from '~/store/modal';
 import { onPressReportThisMember } from '~/helpers/blocking';
+import useMyPermissionsStore from '~/store/permissions';
+import { PermissionKey } from '~/constants/permissionScheme';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 
 const useSeriesMenu = (
   data: IPost,
   isActor: boolean,
   isFromDetail: boolean,
-  handleConfirmDelete: ()=> void,
+  handleConfirmDelete: () => void,
 ) => {
   const { rootNavigation } = useRootNavigation();
 
   const commonActions = useCommonController((state) => state.actions);
   const modalActions = useModalStore((state) => state.actions);
 
+  const { getAudienceListWithNoPermission } = useMyPermissionsStore(
+    (state) => state.actions,
+  );
+
   if (!data) return null;
 
   const {
-    id: seriesId, reactionsCount, isSaved, type, actor,
+    id: seriesId, reactionsCount, isSaved, type, actor, audience,
   } = data;
+
+  const groupAudience = audience?.groups || [];
+
+  const audienceListCannotPinContent = getAudienceListWithNoPermission(
+    groupAudience,
+    [
+      PermissionKey.FULL_PERMISSION,
+      PermissionKey.PIN_CONTENT,
+    ],
+  );
 
   const onPressEdit = () => {
     modalActions.hideBottomList();
@@ -74,6 +91,11 @@ const useSeriesMenu = (
     onPressReportThisMember({ modalActions, actor });
   };
 
+  const onPressPin = () => {
+    modalActions.hideBottomList();
+    rootNavigation?.navigate?.(homeStack.pinContent, { postId: seriesId });
+  };
+
   const defaultData = [
     {
       id: 1,
@@ -95,12 +117,24 @@ const useSeriesMenu = (
       id: 3,
       testID: 'series_menu.save',
       leftIcon: isSaved ? 'BookmarkSlash' : 'Bookmark',
-      title: i18next.t(`series:menu_text_${isSaved ? 'unsave' : 'save'}_series`),
+      title: i18next.t(
+        `series:menu_text_${isSaved ? 'unsave' : 'save'}_series`,
+      ),
       requireIsActor: false,
       onPress: onPressSave,
     },
     {
       id: 4,
+      testID: 'series_menu.pin',
+      leftIcon: 'Thumbtack',
+      title: i18next.t('common:pin_unpin'),
+      requireIsActor: false,
+      shouldBeHidden:
+        audienceListCannotPinContent.length === groupAudience.length,
+      onPress: onPressPin,
+    },
+    {
+      id: 5,
       testID: 'series_menu.delete',
       leftIcon: 'TrashCan',
       title: i18next.t('series:menu_text_delete_series'),

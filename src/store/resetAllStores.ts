@@ -60,6 +60,8 @@ import useValidateSeriesTagsStore from '~/components/ValidateSeriesTags/store';
 import useCommonController from '~/screens/store';
 import useBlockingStore from './blocking';
 import useYourContentStore from '~/screens/YourContent/store';
+import usePinContentStore from '~/components/PinContent/store';
+import useTermStore from '~/components/TermsModal/store';
 
 export const excludedStore = [
   useAuthController,
@@ -137,6 +139,8 @@ const stores = [
   useValidateSeriesTagsStore,
   useCommonController,
   useBlockingStore,
+  usePinContentStore,
+  useTermStore,
 ];
 
 export const resetAllStores = () => {
@@ -146,11 +150,19 @@ export const resetAllStores = () => {
       if (functionReset) {
         functionReset();
       } else {
-        console.error('\x1b[35m🐣️ resetAllStores a store error ', store?.name, '\x1b[0m');
+        console.error(
+          '\x1b[35m🐣️ resetAllStores a store error ',
+          store?.name,
+          '\x1b[0m',
+        );
       }
     });
   } catch (e) {
-    console.error('\x1b[35m🐣️ resetAllStores resetAllStores Error', e, '\x1b[0m');
+    console.error(
+      '\x1b[35m🐣️ resetAllStores resetAllStores Error',
+      e,
+      '\x1b[0m',
+    );
   }
 };
 

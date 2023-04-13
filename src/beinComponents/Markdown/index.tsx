@@ -1,5 +1,5 @@
 import React, { memo, useMemo } from 'react';
-import { Dimensions, Platform, TouchableOpacity } from 'react-native';
+import { Dimensions, Platform, StyleProp, TouchableOpacity, ViewStyle } from 'react-native';
 import Md from './Md';
 
 import Header from '~/beinComponents/Header';
@@ -15,6 +15,7 @@ interface Props {
   value?: string;
   limitMarkdownTypes?: boolean;
   [x: string]: any;
+  paragraphStyles?: StyleProp<ViewStyle>;
 }
 
 const _Markdown = ({ value, limitMarkdownTypes, ...rest }: Props) => {

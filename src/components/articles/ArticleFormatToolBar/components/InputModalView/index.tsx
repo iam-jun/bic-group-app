@@ -71,14 +71,14 @@ const InputModalView: FC<Props> = ({ type, insertLink, insertEmbed }) => {
   const disabled = type === 'link' ? linkSaveDisabled : videoSaveDisabled;
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="input_modal_view">
       <Text.H4 useI18n>
         {`article:modal_add_${type}:title`}
       </Text.H4>
       {renderContent()}
       <View style={styles.buttonContainer}>
-        <Button.Neutral useI18n style={styles.btnCancel} onPress={onCancel}>common:btn_cancel</Button.Neutral>
-        <Button.Primary useI18n disabled={disabled} onPress={onSave}>common:text_add</Button.Primary>
+        <Button.Neutral testID="input_modal_view.btn_cancel" useI18n style={styles.btnCancel} onPress={onCancel}>common:btn_cancel</Button.Neutral>
+        <Button.Primary testID="input_modal_view.btn_save" useI18n disabled={disabled} onPress={onSave}>common:text_add</Button.Primary>
       </View>
     </View>
   );

@@ -220,7 +220,13 @@
     "mark_article_as_important": "Mark this article as Important",
     "mark_series_as_important": "Mark this series as Important",
     "text_deactivated": "Deactivated",
-    "settings": "Settings"
+    "settings": "Settings",
+    "pin_unpin": "Pin/Unpin",
+    "text_i_agree": "I agree",
+    "text_group_terms": "Group terms",
+    "text_community_terms": "Community terms",
+    "text_sorry_something_went_wrong": "Sorry, something went wrong",
+    "text_pull_to_refresh": "Please pull down to refresh the page or try again later"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -1399,5 +1405,14 @@
       "see_content": "Both of you still see the other's content in a community or group"
     },
     "text_block_user_also": "Block this user also"
+  },
+  "pin": {
+    "pin_unpin_content": "Pin/Unpin content",
+    "pick_group_want_to_pin": "Pick the group where you want to pin this content:",
+    "list_pin_content_title": "Pinned",
+    "unpin": "Unpin",
+    "reorder": "Reorder",
+    "unpinned_successfully": "Unpinned successfully",
+    "there_is_no_groups": "There is no groups"
   }
 }
