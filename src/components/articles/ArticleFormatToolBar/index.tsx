@@ -132,6 +132,7 @@ const ArticleFormatToolBar: FC<ArticleFormatToolBarProps> = ({
     if (ovelayType === 'text') {
       return (
         <Animated.View
+          testID="article_format_toolbar.format_heading_text"
           style={[styles.container, styles.overlay]}
           entering={SlideInLeft}
           exiting={SlideOutRight}
@@ -148,6 +149,7 @@ const ArticleFormatToolBar: FC<ArticleFormatToolBarProps> = ({
     if (ovelayType === 'paragraph') {
       return (
         <Animated.View
+          testID="article_format_toolbar.format_heading_paragraph"
           style={[styles.container, styles.overlay]}
           entering={SlideInLeft}
           exiting={SlideOutRight}
@@ -162,23 +164,23 @@ const ArticleFormatToolBar: FC<ArticleFormatToolBarProps> = ({
   };
 
   return (
-    <Animated.View entering={FadeInUp}>
+    <Animated.View entering={FadeInUp} testID="article_format_toolbar">
       <View style={styles.container}>
-        <Button style={styles.iconButton} onPress={onTextIconPress}>
+        <Button testID="article_format_toolbar.btn_icon" style={styles.iconButton} onPress={onTextIconPress}>
           <Icon icon="Text" />
         </Button>
         <Divider horizontal style={styles.divider} />
-        <Button style={styles.iconButton} onPress={onParagraphIconPress}>
+        <Button testID="article_format_toolbar.btn_paragraph" style={styles.iconButton} onPress={onParagraphIconPress}>
           <Icon icon="Bold" />
           <Icon icon="Italic" />
           <Icon icon="Underline" />
         </Button>
         <Divider horizontal style={styles.divider} />
-        <IconButton icon="Image" onPress={openGallery} />
-        <IconButton icon="CodeSimple" onPress={openModalEmbed} />
+        <IconButton testID="article_format_toolbar.btn_image" icon="Image" onPress={openGallery} />
+        <IconButton testID="article_format_toolbar.btn_embed" icon="CodeSimple" onPress={openModalEmbed} />
         <IconButton icon="iconAddGif" onPress={openGiphy} />
         <Divider horizontal style={styles.divider} />
-        <IconButton icon="Link" onPress={openModalLink} />
+        <IconButton testID="article_format_toolbar.btn_link" icon="Link" onPress={openModalLink} />
       </View>
       {renderFormatHeading()}
       <StickerView

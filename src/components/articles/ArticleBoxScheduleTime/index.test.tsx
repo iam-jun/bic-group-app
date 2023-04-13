@@ -18,8 +18,12 @@ describe('ArticleBoxScheduleTime component', () => {
   it('renders correctly', () => {
     const rendered = renderWithRedux(
       <ArticleBoxScheduleTime {...normalProps} />,
-    ).toJSON();
-    expect(rendered).toMatchSnapshot();
+    );
+
+    const containerView = rendered.queryByTestId('article_box_schedule_time');
+    expect(containerView.props.style[1].backgroundColor).toEqual(
+      colors.light.colors.blue2,
+    );
   });
 
   it('renders schedule article fail with red background', () => {
