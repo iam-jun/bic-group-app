@@ -20,6 +20,8 @@ import RootNavigator from '~/router';
 import { getScreenAndParams, isNavigationRefReady } from '~/router/helper';
 import { initFontAwesomeIcon } from '~/services/fontAwesomeIcon';
 import localStorage from '~/services/localStorage';
+import { parseSafe } from './utils/common';
+import useMaintenanceStore from './store/maintenance';
 
 moment.updateLocale(
   'en', moments.en,
@@ -103,11 +105,19 @@ const Root = (): React.ReactElement => {
     }
   };
 
-  const handleMessageData = (remoteMessage: FirebaseMessagingTypes.RemoteMessage | null)
-  : {screen: string; params: any} | null => {
+  const handleMessageData = (
+    remoteMessage: FirebaseMessagingTypes.RemoteMessage | null,
+  ): { screen: string; params: any } | null => {
     if (!remoteMessage) return null;
 
-    return getScreenAndParams(remoteMessage?.data?.extraData);
+    const data = remoteMessage?.data?.extraData;
+    const newData = typeof data === 'string' ? parseSafe(data) : {};
+
+    if (newData?.startAt && newData?.duration) {
+      useMaintenanceStore.getState().actions.checkMaintenance();
+    }
+
+    return getScreenAndParams(newData);
   };
 
   /* Change language */

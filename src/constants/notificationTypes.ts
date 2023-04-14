@@ -300,4 +300,7 @@ export const NOTIFICATION_TYPE = {
 
   REMOVE_POST_TO_CREATOR: 'remove.post.to_creator',
   REMOVE_ARTICLE_TO_CREATOR: 'remove.article.creator',
+
+  // maintenance notification
+  SCHEDULED_MAINTENANCE_DOWNTIME: 'scheduled_maintenance_downtime',
 };

@@ -60,6 +60,7 @@ import useValidateSeriesTagsStore from '~/components/ValidateSeriesTags/store';
 import useCommonController from '~/screens/store';
 import useBlockingStore from './blocking';
 import useYourContentStore from '~/screens/YourContent/store';
+import useMaintenanceStore from './maintenance';
 import usePinContentStore from '~/components/PinContent/store';
 import useTermStore from '~/components/TermsModal/store';
 
@@ -139,6 +140,7 @@ const stores = [
   useValidateSeriesTagsStore,
   useCommonController,
   useBlockingStore,
+  useMaintenanceStore,
   usePinContentStore,
   useTermStore,
 ];
