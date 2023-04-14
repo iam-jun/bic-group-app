@@ -25,7 +25,7 @@ export enum DeepLinkTypes {
   CONFIRM_USER = 'confirm_user',
   REFERRAL = 'referral',
   USER_PROFILE = 'user_profile',
-  APP= 'APP',
+  APP = 'APP',
 }
 
 export enum LinkGeneratorTypes {
