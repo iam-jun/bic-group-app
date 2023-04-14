@@ -42,6 +42,34 @@ jobs:
           name: CodePush update iOS Staging
           command: bundle exec fastlane ios update_staging
 
+  ios-pre-update:
+    macos:
+      xcode: 14.0.0
+    resource_class: medium #medium|large
+    steps:
+      - checkout
+      - run:
+          name: Import environment variables from Doppler
+          command: |
+            echo -e $REL_ENV > .env.prerelease
+            echo APP_VERSION=${REL_APP_VERSION} >> .env.prerelease
+            echo UPDATE_DESC=${REL_UPDATE_DESC} >> .env.prerelease
+            echo REMOTE_CONFIG_CACHE_TIME=${REL_REMOTE_CONFIG_CACHE_TIME} >> .env.prerelease
+            echo NOTICE_WEBHOOK=${NOTICE_WEBHOOK} >> .env.prerelease
+            echo -e $REL_FASTLANE_ENV > fastlane/.env
+      - run:
+          name: Install NPM
+          command: npm install --legacy-peer-deps
+      - run:
+          name: Install AppCenter CLI
+          command: npm install -g appcenter-cli
+      - run:
+          name: Install Bundle
+          command: bundle install
+      - run:
+          name: CodePush update iOS PreRelease
+          command: bundle exec fastlane ios update_prerelease
+
   ios-pro-update:
     macos:
       xcode: 14.0.0
@@ -105,6 +133,43 @@ jobs:
       - run:
           name: Fastlane Build, Deploy to TestFlight and Update CodePush
           command: bundle exec fastlane ios $STG_FASTLANE_LANE_IOS
+
+  ios-pre:
+    macos:
+      xcode: 14.0.0
+    resource_class: medium #medium|large
+    steps:
+      - checkout
+      - run:
+          name: Import environment variables from Doppler
+          command: |
+            echo -e $REL_ENV > .env.prerelease
+            echo APP_VERSION=${REL_APP_VERSION} >> .env.prerelease
+            echo UPDATE_DESC=${REL_UPDATE_DESC} >> .env.prerelease
+            echo REMOTE_CONFIG_CACHE_TIME=${REL_REMOTE_CONFIG_CACHE_TIME} >> .env.prerelease
+            echo NOTICE_WEBHOOK=${NOTICE_WEBHOOK} >> .env.prerelease
+            echo -e $REL_FASTLANE_ENV > fastlane/.env
+            echo $API_KEY | base64 --decode >  fastlane/api_key_info.json
+            echo $REL_GOOGLE_SERVICES_PLIST_IOS | base64 --decode > ios/Firebase/GoogleService-Info-Prerelease.plist
+      - run:
+          name: Install NPM
+          command: npm install --legacy-peer-deps
+      - run:
+          name: Install AppCenter CLI
+          command: npm install -g appcenter-cli
+      - run:
+          name: Install Bundle
+          command: bundle install
+      - run:
+          name: Install Cocoapods
+          command: cd ios && sudo gem install cocoapods
+      - run:
+          name: Install Pod
+          command: cd ios && pod install
+      - run:
+          name: Fastlane Build, Deploy to TestFlight and Update CodePush
+          command: bundle exec fastlane ios $REL_FASTLANE_LANE_IOS
+
 
   ios-pro:
     macos:
@@ -171,6 +236,34 @@ jobs:
       - run:
           name: CodePush update Android Staging
           command: bundle exec fastlane android update_staging
+
+  android-pre-update:
+    executor:
+      name: android/android-machine
+      tag: 2022.03.1
+    steps:
+      - checkout
+      - run:
+          name: Import environment variables from Doppler
+          command: |
+            echo -e $REL_ENV > .env.prerelease
+            echo APP_VERSION=${REL_APP_VERSION} >> .env.prerelease
+            echo UPDATE_DESC=${REL_UPDATE_DESC} >> .env.prerelease
+            echo REMOTE_CONFIG_CACHE_TIME=${REL_REMOTE_CONFIG_CACHE_TIME} >> .env.prerelease
+            echo NOTICE_WEBHOOK=${NOTICE_WEBHOOK} >> .env.prerelease
+            echo -e $REL_FASTLANE_ENV > fastlane/.env
+      - run:
+          name: Install NPM
+          command: npm install
+      - run:
+          name: Install AppCenter CLI
+          command: npm install -g appcenter-cli
+      - run:
+          name: Install Bundle
+          command: bundle install
+      - run:
+          name: CodePush update Android PreRelease
+          command: bundle exec fastlane android update_prerelease
 
   android-pro-update:
     executor:
@@ -241,6 +334,46 @@ jobs:
           command: bundle exec fastlane android $STG_FASTLANE_LANE_ANDROID
       - store_artifacts:
           path: app/build/outputs/apk/release/app-release-unsigned.apk
+
+  android-pre:
+    executor:
+      name: android/android-machine
+      tag: 2022.03.1
+    steps:
+      - checkout
+      - run:
+          name: Import environment variables from Doppler
+          command: |
+            echo -e $REL_ENV > .env.prerelease
+            echo APP_VERSION=${REL_APP_VERSION} >> .env.prerelease
+            echo UPDATE_DESC=${REL_UPDATE_DESC} >> .env.prerelease
+            echo REMOTE_CONFIG_CACHE_TIME=${REL_REMOTE_CONFIG_CACHE_TIME} >> .env.prerelease
+            echo NOTICE_WEBHOOK=${NOTICE_WEBHOOK} >> .env.prerelease
+            echo -e $REL_FASTLANE_ENV > fastlane/.env
+            mkdir -p android/app/src/prerelease
+            echo $REL_GOOGLE_SERVICES_JSON_ANDROID | base64 --decode > android/app/src/prerelease/google-services.json
+      - run:
+          name: Pull Keystore from AWS S3 bucket
+          command: |
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            sudo unzip awscliv2.zip
+            sudo ./aws/install
+            aws --version
+            export AWS_ACCESS_KEY_ID=$REL_AWS_ACCESS_KEY_ID
+            export AWS_SECRET_ACCESS_KEY=$REL_AWS_SECRET_ACCESS_KEY
+            aws s3 cp s3://$REL_S3_BUCKET/group-app/prerelease.keystore android/app/
+      - run:
+          name: Install NPM
+          command: npm install
+      - run:
+          name: Install AppCenter CLI
+          command: npm install -g appcenter-cli
+      - run:
+          name: Install Bundle
+          command: bundle install
+      - run:
+          name: Fastlane Build, Deploy to App Distribution and Update CodePush
+          command: bundle exec fastlane android $REL_FASTLANE_LANE_ANDROID
 
   android-pro:
     executor:
@@ -345,6 +478,59 @@ workflows:
               only: /^staging.*$/
           requires:
             - android-approval
+
+  PreRelease:
+    jobs:
+      - sonarcloud-scan:
+          filters:
+            branches:
+              only: /^release.*$/
+
+      - ios-pre-update-approval:
+          filters:
+            branches:
+              only: /^release.*$/
+          type: approval
+      - android-pre-update-approval:
+          filters:
+            branches:
+              only: /^release.*$/
+          type: approval
+      - ios-pre-update:
+          filters:
+            branches:
+              only: /^release.*$/
+          requires:
+            - ios-pre-update-approval
+      - android-pre-update:
+          filters:
+            branches:
+              only: /^release.*$/
+          requires:
+            - android-pre-update-approval
+
+      - ios-pre-approval:
+          filters:
+            branches:
+              only: /^release.*$/
+          type: approval
+      - android-pre-approval:
+          filters:
+            branches:
+              only: /^release.*$/
+          type: approval
+      - ios-pre:
+          filters:
+            branches:
+              only: /^release.*$/
+          requires:
+            - ios-pre-approval
+      - android-pre:
+          filters:
+            branches:
+              only: /^release.*$/
+          requires:
+            - android-pre-approval
 
   Production:
     jobs:
