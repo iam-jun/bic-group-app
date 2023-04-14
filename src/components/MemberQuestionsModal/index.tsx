@@ -20,6 +20,7 @@ import useBaseHook from '~/hooks/baseHook';
 import { IMembershipQuestion, MembershipAnswerRequest } from '~/interfaces/ICommunity';
 import useModalStore from '~/store/modal';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import Divider from '~/beinComponents/Divider';
 
 const MemberQuestionsModal = () => {
   const theme: ExtendedTheme = useTheme();
@@ -88,7 +89,6 @@ const MemberQuestionsModal = () => {
         answers: newAnswers,
       };
       termsActions.setTermInfo(payload);
-      actions.setIsOpen(false);
       return;
     }
 
@@ -122,6 +122,7 @@ const MemberQuestionsModal = () => {
           titleTextProps={{ useI18n: true }}
           onPressBack={onClose}
         />
+        <Divider size={spacing.margin.small} />
         {!loading && questionsIds?.length > 0
           ? (
             <>
@@ -129,6 +130,7 @@ const MemberQuestionsModal = () => {
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}
                 enabled
                 style={{ flex: 1 }}
+                keyboardVerticalOffset={Platform.OS === 'ios' ? 30 : 0}
               >
                 <ScrollView
                   keyboardShouldPersistTaps="handled"
@@ -136,10 +138,11 @@ const MemberQuestionsModal = () => {
                   contentContainerStyle={styles.contentContainerStyle}
                   scrollEventThrottle={16}
                 >
-                  {questionsIds?.map((item: string) => (
+                  {questionsIds?.map((item: string, index: number) => (
                     <TextQuestion
                       key={`membership_question_${item}`}
                       questionId={item}
+                      index={index}
                     />
                   ))}
                 </ScrollView>

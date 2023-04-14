@@ -31,6 +31,7 @@ describe('NotificationAvatar component', () => {
     const wrapper = renderWithRedux(
       <TextQuestion
         questionId={MEMBERSHIP_QUESITONS[0].id}
+        index={0}
       />,
     );
 
@@ -40,6 +41,6 @@ describe('NotificationAvatar component', () => {
 
     const label = wrapper.queryByTestId('member_questions.question');
     expect(label).toBeDefined();
-    expect(label.children?.[0]).toEqual(MEMBERSHIP_QUESITONS[0].question);
+    expect(label.children?.[0]).toEqual(`1. ${MEMBERSHIP_QUESITONS[0].question}`);
   });
 });

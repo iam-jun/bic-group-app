@@ -10,9 +10,10 @@ import useMemberQuestionsStore from './store';
 
 export interface Props {
   questionId: string;
+  index: number;
 }
 
-const TextQuestion = ({ questionId }:Props) => {
+const TextQuestion = ({ questionId, index }:Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
@@ -38,7 +39,7 @@ const TextQuestion = ({ questionId }:Props) => {
   return (
     <>
       <Text.LabelM testID="member_questions.question">
-        {question}
+        {`${index + 1}. ${question}`}
         {isRequired && <Text.LabelM style={styles.questionRequired}>{' *'}</Text.LabelM>}
       </Text.LabelM>
       <TextInput

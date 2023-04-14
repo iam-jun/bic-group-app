@@ -19,6 +19,7 @@ import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 import Divider from '~/beinComponents/Divider';
 import useModalStore from '~/store/modal';
 import useBaseHook from '~/hooks/baseHook';
+import useMemberQuestionsStore from '../MemberQuestionsModal/store';
 
 const TermsView = () => {
   const theme: ExtendedTheme = useTheme();
@@ -47,6 +48,8 @@ const TermsView = () => {
 
   const comActions = useCommunityController((state) => state.actions);
   const groupActions = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.actions);
+
+  const memberQuestionsActions = useMemberQuestionsStore((state) => state.actions);
 
   const [isAgree, setIsAgree] = useState(false);
 
@@ -98,6 +101,7 @@ const TermsView = () => {
       groupActions.joinNewGroup(groupId, answers);
     }
     actions.setIsOpen(false);
+    memberQuestionsActions.setIsOpen(false);
   };
 
   const handleLayout = (e:LayoutChangeEvent) => {
