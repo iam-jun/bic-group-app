@@ -177,7 +177,7 @@ describe('CreatePost screen', () => {
       data: {
         ...state.data,
         groups: {
-          '35b5fb8f-6f7a-4ac2-90bb-18199096c429': [PermissionKey.EDIT_JOIN_SETTING],
+          '35b5fb8f-6f7a-4ac2-90bb-18199096c429': [PermissionKey.EDIT_OWN_CONTENT_SETTING],
         },
       },
     }));
