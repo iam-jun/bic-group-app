@@ -122,9 +122,9 @@ const MemberQuestionsModal = () => {
           titleTextProps={{ useI18n: true }}
           onPressBack={onClose}
         />
-        {!!loading && questionsIds?.length > 0
+        {!loading && questionsIds?.length > 0
           ? (
-            <View>
+            <>
               <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}
                 enabled
@@ -144,7 +144,7 @@ const MemberQuestionsModal = () => {
                   ))}
                 </ScrollView>
               </KeyboardAvoidingView>
-              <View style={styles.buttonView}>
+              <View style={[styles.buttonView, styles.shadow]}>
                 <Button.Primary
                   testID="member_questions.sumbit"
                   disabled={!enableButton}
@@ -153,7 +153,7 @@ const MemberQuestionsModal = () => {
                   {buttonText}
                 </Button.Primary>
               </View>
-            </View>
+            </>
           )
           : (
             <View style={styles.loading}>
@@ -214,12 +214,20 @@ const createStyles = (theme: ExtendedTheme, insets: EdgeInsets) => {
       left: 0,
       right: 0,
     },
-    checkbox: {
-      marginTop: spacing.margin.large,
+    shadow: {
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 1,
+        height: 12,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 10.32,
+      elevation: 12,
     },
     contentContainerStyle: {
       backgroundColor: colors.white,
       padding: spacing.padding.large,
+      paddingBottom: 100,
     },
     loading: {
       alignItems: 'center',
