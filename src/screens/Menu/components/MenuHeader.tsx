@@ -12,6 +12,8 @@ import Avatar from '~/baseComponents/Avatar';
 import mainStack from '~/router/navigator/MainStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import useCommonController from '~/screens/store';
+import Icon from '~/baseComponents/Icon';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 const PADDING_INFO = spacing.padding.large * 2 + dimension.avatarSizes.large;
 
@@ -47,6 +49,14 @@ const MenuHeader = () => {
           >
             {fullname}
           </Text.H5>
+          <ViewSpacing width={spacing.margin.xSmall} />
+          <Icon
+            testID="avatar.badge"
+            // style={[styles.badge, styles.iconBadge]}
+            size={14}
+            tintColor={colors.green50}
+            icon="BadgeCheck"
+          />
         </TouchableOpacity>
         <TouchableOpacity
           testID="menu_header.user_name"
@@ -95,6 +105,8 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingBottom: 2,
       paddingLeft: PADDING_INFO,
       backgroundColor: colors.purple40,
+      flexDirection: 'row',
+      alignItems: 'center',
     },
     usernameContainer: {
       paddingTop: 2,

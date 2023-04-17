@@ -117,6 +117,7 @@ export interface IUserProfile {
     titlePosition: string;
   };
   chatUserId?: string;
+  isVerified?: boolean;
 }
 
 export interface IGetUserProfile {
