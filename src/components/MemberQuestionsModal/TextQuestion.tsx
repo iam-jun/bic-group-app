@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
@@ -19,21 +19,17 @@ const TextQuestion = ({ questionId, index }:Props) => {
 
   const { t } = useBaseHook();
 
-  const [answer, setAnswer] = useState('');
-
   const data = useMemberQuestionsStore(
     useCallback((state) => state.questions?.[questionId], [questionId]),
   );
+
+  const answer = useMemberQuestionsStore((state) => state.answers?.[questionId]?.answer) || '';
   const actions = useMemberQuestionsStore((state) => state.actions);
 
   const { question, isRequired, id } = data || {};
 
   const onChangeText = (text: string) => {
-    setAnswer(text);
-  };
-
-  const onBlur = () => {
-    actions.setAnswer(id, answer);
+    actions.setAnswer(id, text);
   };
 
   return (
@@ -47,7 +43,6 @@ const TextQuestion = ({ questionId, index }:Props) => {
         onChangeText={onChangeText}
         maxLength={700}
         placeholder={t('common:text_answer_input_placeholder')}
-        onBlur={onBlur}
       />
       <View style={styles.count}>
         <Text.BodyXS>{`${answer.length}/700`}</Text.BodyXS>
