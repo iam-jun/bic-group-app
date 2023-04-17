@@ -60,7 +60,7 @@ const PendingUserItem = ({
 
   const renderAnswers = () => {
     if (membershipAnswers.length > 0) {
-      return membershipAnswers.map((item: MembershipAnswer) => {
+      return membershipAnswers.map((item: MembershipAnswer, index: number) => {
         const { question, answer, isRequired } = item;
         return (
           <View
@@ -68,7 +68,7 @@ const PendingUserItem = ({
             style={styles.answerItemContainer}
           >
             <Text.BodyMMedium>
-              {question}
+              {`${index + 1}. ${question}`}
               {!!isRequired
               && (
               <Text.BodyMMedium style={styles.questionRequired}>
