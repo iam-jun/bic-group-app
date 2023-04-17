@@ -491,7 +491,8 @@
     "title_blocked_users_list_empty": "Danh sách người dùng bị chặn trống",
     "text_blocked_users_list_empty": "Không tìm thấy người dùng",
     "text_blocked_at": "Đã chặn",
-    "toast_profile_is_verified": "Hồ sơ này đã được xác minh"
+    "toast_profile_is_verified": "Hồ sơ này đã được xác minh",
+    "text_profile_is_verified": "Thông tin của bạn đã được xác minh và không thể chỉnh sửa"
   },
   "languages": {
     "title_en": "English",
