@@ -99,7 +99,7 @@ const MemberQuestionsModal = () => {
         membershipAnswers: newAnswers,
       });
     } else {
-      groupActions.joinNewGroup(groupId);
+      groupActions.joinNewGroup(groupId, newAnswers);
     }
     actions.setIsOpen(false);
   };
