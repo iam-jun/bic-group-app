@@ -433,6 +433,7 @@ jobs:
             echo NOTICE_WEBHOOK=${NOTICE_WEBHOOK} >> .env.production
             echo -e $PRO_FASTLANE_ENV > fastlane/.env
             mkdir -p a android/app/src/production
+            echo $GOOGLE_DRIVE_JSON | base64 --decode > fastlane/google-drive.json
             echo $PRO_GOOGLE_SERVICES_JSON_ANDROID | base64 --decode > android/app/src/production/google-services.json
       - run:
           name: Pull Keystore from AWS S3 bucket
@@ -454,7 +455,7 @@ jobs:
           name: Install Bundle
           command: bundle install
       - run:
-          name: Fastlane Build, Deploy to App Distribution and Update CodePush
+          name: Fastlane bundle production release then upload file .aab to google drive
           command: bundle exec fastlane android bundle_aab_production
 
 workflows:
