@@ -5,7 +5,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import SeriesItemModal from './SeriesItemModal';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import images from '~/resources/images';
 import Text from '~/baseComponents/Text';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';

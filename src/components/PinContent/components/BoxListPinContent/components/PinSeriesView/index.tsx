@@ -7,7 +7,7 @@ import HeaderPinContentItem from '../HeaderPinContentItem';
 import spacing, { borderRadius } from '~/theme/spacing';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { IPost } from '~/interfaces/IPost';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import Text from '~/baseComponents/Text';
 import { formatDate } from '~/utils/formatter';
 import { useBaseHook } from '~/hooks';

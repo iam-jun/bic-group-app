@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import spacing, { margin } from '~/theme/spacing';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import images from '~/resources/images';
 import dimension, { scaleCoverHeight } from '~/theme/dimension';
 import ViewSpacing from '~/beinComponents/ViewSpacing';

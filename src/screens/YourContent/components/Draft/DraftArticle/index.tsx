@@ -13,7 +13,7 @@ import { useUserIdAuth } from '~/hooks/auth';
 import { IPayloadGetDraftPosts } from '~/interfaces/IPost';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { spacing } from '~/theme';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import Text from '~/baseComponents/Text';
 import images from '~/resources/images';
 import dimension, { homeHeaderTabHeight, homeHeaderAttributeContainerHeight } from '~/theme/dimension';

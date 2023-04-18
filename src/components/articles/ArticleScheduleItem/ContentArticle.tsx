@@ -5,7 +5,7 @@ import { IArticleCover, IAudienceUser, IPostAudience } from '~/interfaces/IPost'
 import { useRootNavigation } from '~/hooks/navigation';
 import { Avatar, Button } from '~/baseComponents';
 import Text from '~/baseComponents/Text';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import mainTabStack from '~/router/navigator/MainStack/stack';
 import { borderRadius } from '~/theme/spacing';
 import { spacing } from '~/theme';

@@ -7,7 +7,7 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Button from '~/beinComponents/Button';
 import Icon from '~/baseComponents/Icon';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Text from '~/baseComponents/Text';
 import { getResourceUrl, IUploadType } from '~/configs/resourceConfig';

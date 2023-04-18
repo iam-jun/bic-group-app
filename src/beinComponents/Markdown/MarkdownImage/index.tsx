@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { Button, VideoPlayer } from '~/baseComponents';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import MarkdownLink from '../MarkdownLink';
 import { margin } from '~/theme/spacing';
 import Icon from '~/baseComponents/Icon';

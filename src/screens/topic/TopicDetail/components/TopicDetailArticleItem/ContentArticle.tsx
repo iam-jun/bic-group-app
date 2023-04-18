@@ -8,7 +8,7 @@ import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack
 
 import { Avatar, Button } from '~/baseComponents';
 import Text from '~/baseComponents/Text';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { borderRadius } from '~/theme/spacing';
 import { spacing } from '~/theme';

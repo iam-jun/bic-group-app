@@ -8,7 +8,7 @@ import { IPost, PostType } from '~/interfaces/IPost';
 import mainTabStack from '~/router/navigator/MainStack/stack';
 import { spacing } from '~/theme';
 import Text from '~/baseComponents/Text';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import { borderRadius } from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import images from '~/resources/images';
