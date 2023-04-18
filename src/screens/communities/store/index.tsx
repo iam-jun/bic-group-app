@@ -1,4 +1,3 @@
-import { CommunityPrivacyType } from '~/constants/privacyTypes';
 import { IGroupDetailEdit } from '~/interfaces/IGroup';
 import {
   createStore,
@@ -13,7 +12,7 @@ import updateCommunityJoinSetting from './actions/updateCommunityJoinSetting';
 
 interface ICommunityController {
   actions: {
-    leaveCommunity?: (id: string, privacy: CommunityPrivacyType) => void;
+    leaveCommunity: (id: string) => void;
     joinCommunity: (id: string, name: string) => void;
     cancelJoinCommunity: (id: string, name: string) => void;
     updateCommunityJoinSetting: (communityId: string, groupId: string, isJoinApproval: boolean) => void;

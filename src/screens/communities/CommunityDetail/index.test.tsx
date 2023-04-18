@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { act } from 'react-test-renderer';
 import { render } from '~/test/testUtils';
 import MockedNavigator from '../../../test/MockedNavigator';
 import CommunityDetail from './index';
@@ -41,8 +42,10 @@ describe('CommunityDetail', () => {
     expect(PrivateWelcomeComp).toBeDefined();
   });
 
-  it('should render PageContent page correctly when user is a member', () => {
+  it('should render PageContent page correctly when user is a member', async () => {
+    const getCommunity = jest.fn();
     useCommunitiesStore.setState((state) => {
+      state.actions.getCommunity = getCommunity;
       state.data = {
         [communityDetailData.id]: communityDetailData,
       };
@@ -53,6 +56,12 @@ describe('CommunityDetail', () => {
     );
     const listView = wrapper.queryByTestId('flatlist');
     expect(listView).not.toBeNull();
+
+    const { refreshControl } = listView.props;
+    await act(async () => {
+      refreshControl.props.onRefresh();
+    });
+    expect(getCommunity).toBeCalled();
   });
 
   it('should render PageContent page correctly when user is not a member for OPEN privacy type', () => {

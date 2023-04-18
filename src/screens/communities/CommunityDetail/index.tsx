@@ -207,7 +207,7 @@ const CommunityDetail = (props: any) => {
   };
 
   const onConfirmLeaveCommunity = async () => {
-    controller.leaveCommunity(communityId, privacy);
+    controller.leaveCommunity(communityId);
   };
 
   const onPressLeave = () => {

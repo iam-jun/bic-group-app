@@ -109,26 +109,4 @@ describe('InfoView component', () => {
     const secretBannerView = queryByTestId('info_view.secret_banner_view');
     expect(secretBannerView).toBeNull();
   });
-
-  it('should render privacy type SECRET and description correctly', () => {
-    const props = {
-      ...baseProps,
-      privacy: GroupPrivacyType.SECRET,
-      canEditPrivacy: false,
-      canEditInfo: false,
-      isJoinApproval: true,
-    };
-
-    const { getByTestId, queryByTestId } = render(
-      <InfoView {...props} type="community" />,
-    );
-    const privacyType = getByTestId('info_view.privacy_type');
-    expect(privacyType.props.children).toEqual('Secret');
-    const privacyDescription = getByTestId('info_view.privacy_description');
-    expect(privacyDescription.props.children).toEqual('All registered users cannot discover and search to find this community. The content & activities inside are not visible to all users.');
-    const privateBannerView = queryByTestId('info_view.private_banner_view');
-    expect(privateBannerView).toBeNull();
-    const secretBannerView = queryByTestId('info_view.secret_banner_view');
-    expect(secretBannerView).not.toBeNull();
-  });
 });

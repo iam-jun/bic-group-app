@@ -389,7 +389,6 @@
     "title_private_subtitle_community": "Những người dùng đã đăng nhập có thể khám phá và tìm kiếm cộng đồng này trong ứng dụng. Nội dung và hoạt động sẽ không được hiển thị cho tất cả người dùng.",
     "title_private_subtitle_group": "Những người dùng đã đăng nhập có thể khám phá và tìm kiếm nhóm này trong ứng dụng. Nội dung và hoạt động sẽ không được hiển thị cho tất cả người dùng.",
     "title_secret": "Bí mật",
-    "title_secret_subtitle_community": "Những người dùng đã đăng nhập không thể khám phá và tìm kiếm cộng đồng này trong ứng dụng. Nội dung và hoạt động sẽ không được hiển thị cho tất cả người dùng.",
     "title_secret_subtitle_group": "Những người dùng đã đăng nhập không thể khám phá và tìm kiếm nhóm này trong ứng dụng. Nội dung và hoạt động sẽ không được hiển thị cho tất cả người dùng.",
     "title_closed": "Đóng",
     "title_closed_subtitle_group": "Tất cả các thành viên trong cùng một cộng đồng có thể khám phá và tìm kiếm nhóm này trong ứng dụng. Nội dung và hoạt động đều được hiển thị cho tất cả các thành viên. Đối với tất cả người dùng đã đăng ký không thuộc cộng đồng, nội dung và hoạt động bên trong sẽ không hiển thị với họ.",
@@ -484,7 +483,8 @@
     "text_unblock_user_name_result": "Bỏ chặn người dùng này sẽ cho phép họ tương tác lại với bạn như sau:",
     "title_blocked_users_list_empty": "Danh sách người dùng bị chặn trống",
     "text_blocked_users_list_empty": "Không tìm thấy người dùng",
-    "text_blocked_at": "Đã chặn"
+    "text_blocked_at": "Đã chặn",
+    "title_privacy": "Bảo mật"
   },
   "languages": {
     "title_en": "English",

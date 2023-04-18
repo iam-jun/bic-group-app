@@ -427,7 +427,6 @@
     "title_private_subtitle_group": "All registered users can discover and search in-app to find this group. The content & activities inside are not visible to all users.",
     "text_learn_more": "Learn more",
     "title_secret": "Secret",
-    "title_secret_subtitle_community": "All registered users cannot discover and search to find this community. The content & activities inside are not visible to all users.",
     "title_secret_subtitle_group": "All registered users cannot discover and search to find this group. The content & activities inside are not visible to all users.",
     "title_closed": "Closed",
     "title_closed_subtitle_group": "All members in the same community can discover and search in-app to find this group. The content & activities inside are visible to all members. For all registered users who are not in the community, the content & activities inside are not visible to them.",
@@ -523,7 +522,8 @@
     "text_unblock_user_name_result": "Unblocking this user will allow them to interact with you again below:",
     "title_blocked_users_list_empty": "Blocked users list is empty",
     "text_blocked_users_list_empty": "User not found",
-    "text_blocked_at": "Blocked at"
+    "text_blocked_at": "Blocked at",
+    "title_privacy": "Privacy"
   },
   "languages": {
     "title_en": "English",
