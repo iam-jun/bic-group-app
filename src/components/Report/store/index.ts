@@ -11,6 +11,7 @@ import reportMember from './actions/reportMember';
 import { IObject } from '~/interfaces/common';
 import { IPost } from '~/interfaces/IPost';
 import getReportedContents from './actions/getReportedContents';
+import reportMemberByUserId from './actions/reportMemberByUserId';
 
 export interface IReportContentState extends IBaseState {
   reportedContents: IReportedContents;
@@ -27,6 +28,7 @@ export interface IReportContentState extends IBaseState {
     getMemberReportReasons: () => void;
     reportContent: (payload: IPayloadReportContent) => void;
     reportMember: (payload: IPayloadReportMember) => void;
+    reportMemberByUserId: (payload: IPayloadReportMember) => void;
     addToReportDetailsPost: (payload: IPost | IPost[]) => void;
   };
 }
@@ -63,6 +65,7 @@ const reportContentStore = (set, get) => ({
     getMemberReportReasons: getMemberReportReasons(set),
     reportContent: reportContent(),
     reportMember: reportMember(),
+    reportMemberByUserId: reportMemberByUserId(),
     addToReportDetailsPost: (payload: IPost | IPost[]) => {
       const { reportDetailsPost } = get();
       const newReportDetailsPost = { ...reportDetailsPost };

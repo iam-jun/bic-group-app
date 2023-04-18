@@ -3,4 +3,5 @@ export interface IBlockingUser {
   createdAt: string;
   fullname: string;
   id: string;
+  username: string;
 }

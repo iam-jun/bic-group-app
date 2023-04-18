@@ -20,6 +20,7 @@ import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useModalStore from '~/store/modal';
 import usePostsStore, { IPostsState } from '~/store/entities/posts';
+import { onPressReportThisMember } from '~/helpers/blocking';
 
 const usePostMenu = (
   data: IPost,
@@ -40,7 +41,7 @@ const usePostMenu = (
   if (!data) return null;
 
   const {
-    id: postId, reactionsCount, isSaved, type, audience,
+    id: postId, reactionsCount, isSaved, type, audience, actor,
   } = data;
 
   const groupAudience = audience?.groups || [];
@@ -146,6 +147,10 @@ const usePostMenu = (
     });
   };
 
+  const _onPressReportThisMember = () => {
+    onPressReportThisMember({ modalActions, actor });
+  };
+
   const onPressPin = () => {
     modalActions.hideBottomList();
     rootNavigation?.navigate?.(homeStack.pinContent, { postId });
@@ -228,6 +233,15 @@ const usePostMenu = (
       requireIsActor: false,
       notShowForActor: isActor,
       onPress: onPressReport,
+    },
+    {
+      id: 9,
+      testID: 'post_view_menu.report_this_member',
+      leftIcon: 'UserXmark',
+      title: i18next.t('groups:member_menu:label_report_member'),
+      requireIsActor: false,
+      notShowForActor: isActor,
+      onPress: _onPressReportThisMember,
     },
   ];
 

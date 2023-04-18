@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { Radio } from '~/baseComponents';
 import { spacing } from '~/theme';
@@ -34,9 +34,9 @@ const ReportReasons: React.FC<ReportReasonsProps> = ({
   );
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       {renderReasons()}
-    </ScrollView>
+    </View>
   );
 };
 

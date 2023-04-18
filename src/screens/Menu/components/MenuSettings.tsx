@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  View, StyleSheet, Linking,
-} from 'react-native';
+import { View, StyleSheet, Linking } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/baseComponents/Text';
@@ -14,7 +12,6 @@ import Icon from '~/baseComponents/Icon';
 import Button from '~/beinComponents/Button';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
-import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import getEnv from '~/utils/env';
 import { APP_ENV } from '~/configs/appConfig';
 import { AppConfig } from '~/configs';
@@ -22,6 +19,11 @@ import useCommonController from '~/screens/store';
 import useModalStore from '~/store/modal';
 import { IAlertModal } from '~/interfaces/common';
 import useAppStore from '~/store/app';
+import { openInAppBrowser } from '~/utils/link';
+import { POLICY_URL } from '~/constants/url';
+import AccordionMenu from './AccordionMenu';
+import { ISettings, SettingsAndPrivacyType } from '~/interfaces/IMenu';
+import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 
 const REPORT_URL = 'https://report.beincom.com/';
 
@@ -29,6 +31,7 @@ const MenuSettings = () => {
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const authActions = useAuthController(getActions) || {};
@@ -61,18 +64,65 @@ const MenuSettings = () => {
     Linking.openURL(REPORT_URL);
   };
 
+  const onPressPrivacy = () => {
+    openInAppBrowser(POLICY_URL);
+  };
+
+  const onPressSettingsAndPrivacy = (type: string) => {
+    switch (type) {
+      case SettingsAndPrivacyType.SECURITY:
+        rootNavigation.navigate(menuStack.securityLogin);
+        break;
+      case SettingsAndPrivacyType.BLOCKING:
+        rootNavigation.navigate(menuStack.blocking);
+        break;
+      default:
+        break;
+    }
+  };
+
   const settingItems = [
     {
-      icon: 'FolderGear',
+      icon: 'GearSolid',
       title: t('menu:title_settings_privacy'),
-      onPress: () => rootNavigation.navigate(menuStack.accountSettings),
+      isAccordion: true,
+      listAccordion: [
+        {
+          type: SettingsAndPrivacyType.SECURITY,
+          title: 'settings:title_security',
+          icon: 'ShieldCheckSolid',
+          onPress: () => onPressSettingsAndPrivacy(SettingsAndPrivacyType.SECURITY),
+        },
+        {
+          type: SettingsAndPrivacyType.BLOCKING,
+          title: 'settings:title_blocking',
+          icon: 'UserSlashSolid',
+          onPress: () => onPressSettingsAndPrivacy(SettingsAndPrivacyType.BLOCKING),
+        },
+        /**
+         * Temporarily hidden language in task BEIN-13338
+         */
+        // {
+        //   type: SettingsAndPrivacyType.LANGUAGE,
+        //   title: 'settings:title_language',
+        //   icon: 'GlobeSolid',
+        //   rightSubTitle: 'settings:app_language',
+        //   rightSubIcon: 'AngleRightSolid',
+        //   onPress: () => onPressSettingsAndPrivacy(SettingsAndPrivacyType.LANGUAGE),
+        // },
+      ],
+    },
+    {
+      icon: 'FileLockSolid',
+      title: t('menu:title_privacy'),
+      onPress: onPressPrivacy,
     },
     {
       icon: 'FlagSolid',
       title: t('menu:title_report_problem'),
       onPress: onPressReportProblem,
     },
-  ];
+  ] as ISettings[];
 
   if (isShowDebug) {
     settingItems.push({
@@ -82,35 +132,44 @@ const MenuSettings = () => {
     });
   }
 
-  const renderItem = ({ icon, title, onPress }: any) => (
-    <Button
-      testID="menu_setting.item"
-      key={title + icon}
-      style={styles.itemContainer}
-      onPress={onPress}
-    >
-      <Icon tintColor={theme.colors.neutral20} icon={icon} />
-      <Text.BodyMMedium style={styles.textTitle} numberOfLines={1}>{title}</Text.BodyMMedium>
-    </Button>
-  );
+  const renderItem = ({
+    icon, title, onPress, isAccordion = false, listAccordion = [],
+  }: any) => {
+    if (isAccordion) {
+      return (
+        <AccordionMenu
+          testID="menu_setting.item"
+          key={title + icon}
+          icon={icon}
+          title={title}
+          listAccordion={listAccordion}
+        />
+      );
+    }
+    return (
+      <Button testID="menu_setting.item" key={title + icon} style={styles.itemContainer} onPress={onPress}>
+        <Icon tintColor={theme.colors.neutral20} size={22} icon={icon} />
+        <Text.BodyMMedium style={styles.textTitle} numberOfLines={1}>
+          {title}
+        </Text.BodyMMedium>
+      </Button>
+    );
+  };
 
   return (
     <View style={styles.container} testID="menu_settings">
-      <View style={styles.row}>
-        <Text.SubtitleM style={styles.textHeader} useI18n>menu:title_settings</Text.SubtitleM>
-        <AppVersion />
-      </View>
       <CheckUpdate />
       {settingItems.map(renderItem)}
-      <Button
-        testID="menu_setting.logout"
-        style={styles.itemContainer}
-        onPress={onLogout}
-      >
-        <Icon tintColor={theme.colors.purple20} icon="ArrowRightFromBracket" />
-        <Text.BodyMMedium style={styles.textLogout} numberOfLines={1}>{t('menu:title_logout')}</Text.BodyMMedium>
+      <Button testID="menu_setting.logout" style={[styles.itemContainer, styles.itemLogout]} onPress={onLogout}>
+        <Icon tintColor={theme.colors.neutral20} size={22} icon="ArrowRightFromBracket" />
+        <Text.BodyMMedium style={styles.textTitle} numberOfLines={1}>
+          {t('menu:title_logout')}
+        </Text.BodyMMedium>
       </Button>
-      <Text style={styles.testingLabel} useI18n>common:text_developing_version</Text>
+      <AppVersion />
+      <Text.BodyS style={styles.testingLabel} color={colors.neutral30} useI18n>
+        common:text_developing_version
+      </Text.BodyS>
     </View>
   );
 };
@@ -123,31 +182,20 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingVertical: spacing.padding.small,
       paddingHorizontal: spacing.padding.large,
     },
-    row: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    textHeader: {
-      flex: 1,
-      marginBottom: spacing.margin.small,
-    },
     textTitle: {
       marginLeft: spacing.margin.large,
       color: colors.neutral40,
-    },
-    textLogout: {
-      marginLeft: spacing.margin.large,
-      color: colors.purple50,
     },
     itemContainer: {
       flexDirection: 'row',
       paddingVertical: spacing.padding.base,
     },
+    itemLogout: {
+      marginBottom: spacing.margin.small,
+    },
     testingLabel: {
-      fontStyle: 'italic',
-      fontSize: 13,
-      color: colors.neutral30,
-      marginTop: spacing.padding.small,
+      marginTop: spacing.margin.tiny,
+      marginBottom: spacing.margin.large,
     },
   });
 };
