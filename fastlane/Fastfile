@@ -234,6 +234,54 @@ platform :android do
     update_production({:download_destination => 'Firebase App Tester'})
 
   end
+
+  lane :bundle_aab_production do
+    Dotenv.overload('../.env.base', '../.env.production')
+    gradle(task: "clean", project_dir: 'android/')
+    gradle(
+        task: 'app:bundle',
+        build_type: "Release",
+        flavor: "Production",
+        project_dir: 'android/',
+    )
+
+    app_name =  'bic-group'
+    version_number = android_get_version_name(gradle_file: './android/app/build.gradle')
+    timestamp = Time.now.strftime("%Y%m%d%H%M")
+    file_name = "#{app_name}-#{version_number}-#{timestamp}.aab"
+    UI.message("Generated file name: #{file_name}")
+
+    aab_path = lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]
+    new_aab_path = "./#{file_name}"
+    sh("mv #{aab_path} #{new_aab_path}")
+
+    UI.message("Start upload #{file_name} to Google Drive")
+    # Upload to folder: https://drive.google.com/drive/folders/1UJz1cv0CoyRcbl6xYrqPRzmPFfJJHTMR
+
+    upload_path = "./fastlane/#{new_aab_path}"
+    upload_to_google_drive(
+        drive_keyfile: "fastlane/google-drive.json",
+        service_account: true,
+        folder_id: "1UJz1cv0CoyRcbl6xYrqPRzmPFfJJHTMR",
+        upload_files: [''+upload_path+'']
+      )
+    file_upload_path=lane_context[SharedValues::GDRIVE_UPLOADED_FILE_URLS][0]
+    UI.message("File uploaded to google drive: #{file_upload_path}")
+    UI.message("Upload done!")
+
+    version_number = android_get_version_name(gradle_file: './android/app/build.gradle')
+    build_number = android_get_version_code(gradle_file: './android/app/build.gradle')
+    commit = last_git_commit
+    git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- %s")
+
+    webhook = "https://chat.beincom.com/hooks/oiswgg13ntnr3yw5698k7hunxh"
+    git_branch = ENV['BRANCH_TO_BUILD'] || ENV['GIT_BRANCH']
+    message = "Uploaded to [Google Drive](https://drive.google.com/drive/folders/1UJz1cv0CoyRcbl6xYrqPRzmPFfJJHTMR)"
+    color = "#9E6FD8"
+    title = "🟢🤖 BIC Group Production - Bundle Aab"
+    download_destination = "Google Drive"
+    notice_bic_chat(webhook, title, version_number, download_destination, git_branch, git_mess, message, color)
+    end
 end
 
 ########################################################################################################################
