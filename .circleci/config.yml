@@ -16,7 +16,7 @@ jobs:
       - sonarcloud/scan
   ios-stg-update:
     macos:
-      xcode: 14.0.0
+      xcode: 14.2.0
     resource_class: medium #medium|large
     steps:
       - checkout
@@ -44,7 +44,7 @@ jobs:
 
   ios-pre-update:
     macos:
-      xcode: 14.0.0
+      xcode: 14.2.0
     resource_class: medium #medium|large
     steps:
       - checkout
@@ -72,7 +72,7 @@ jobs:
 
   ios-pro-update:
     macos:
-      xcode: 14.0.0
+      xcode: 14.2.0
     resource_class: medium #medium|large
     steps:
       - checkout
@@ -100,7 +100,7 @@ jobs:
 
   ios-stg:
     macos:
-      xcode: 14.0.0
+      xcode: 14.2.0
     resource_class: medium #medium|large
     steps:
       - checkout
@@ -136,7 +136,7 @@ jobs:
 
   ios-pre:
     macos:
-      xcode: 14.0.0
+      xcode: 14.2.0
     resource_class: medium #medium|large
     steps:
       - checkout
@@ -173,7 +173,7 @@ jobs:
 
   ios-pro:
     macos:
-      xcode: 14.0.0
+      xcode: 14.2.0
     resource_class: medium #medium|large
     steps:
       - checkout
@@ -537,50 +537,50 @@ workflows:
       - sonarcloud-scan:
           filters:
             branches:
-              only: /^master.*$|^release.*$/
+              only: ^master.*$/
 
       - ios-pro-update-approval:
           filters:
             branches:
-              only: /^master.*$|^release.*$/
+              only: /^master.*$/
           type: approval
       - android-pro-update-approval:
           filters:
             branches:
-              only: /^master.*$|^release.*$/
+              only: ^master.*$/
           type: approval
       - ios-pro-update:
           filters:
             branches:
-              only: /^master.*$|^release.*$/
+              only: ^master.*$/
           requires:
             - ios-pro-update-approval
       - android-pro-update:
           filters:
             branches:
-              only: /^master.*$|^release.*$/
+              only: ^master.*$/
           requires:
             - android-pro-update-approval
 
       - ios-approval:
           filters:
             branches:
-              only: /^master.*$|^release.*$/
+              only: ^master.*$/
           type: approval
       - android-approval:
           filters:
             branches:
-              only: /^master.*$|^release.*$/
+              only: ^master.*$/
           type: approval
       - ios-pro:
           filters:
             branches:
-              only: /^master.*$|^release.*$/
+              only: ^master.*$/
           requires:
             - ios-approval
       - android-pro:
           filters:
             branches:
-              only: /^master.*$|^release.*$/
+              only: ^master.*$/
           requires:
             - android-approval
