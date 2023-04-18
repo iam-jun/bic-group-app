@@ -50,6 +50,7 @@ buck-out/
 # https://docs.fastlane.tools/best-practices/source-control/
 
 fastlane/api_key_info.json
+fastlane/google-drive.json
 */fastlane/report.xml
 */fastlane/Preview.html
 */fastlane/screenshots
