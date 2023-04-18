@@ -577,7 +577,7 @@ workflows:
       - sonarcloud-scan:
           filters:
             branches:
-              only: ^master.*$/
+              only: /^master.*$/
 
       - ios-pro-update-approval:
           filters:
@@ -587,52 +587,52 @@ workflows:
       - android-pro-update-approval:
           filters:
             branches:
-              only: ^master.*$/
+              only: /^master.*$/
           type: approval
       - ios-pro-update:
           filters:
             branches:
-              only: ^master.*$/
+              only: /^master.*$/
           requires:
             - ios-pro-update-approval
       - android-pro-update:
           filters:
             branches:
-              only: ^master.*$/
+              only: /^master.*$/
           requires:
             - android-pro-update-approval
 
       - ios-approval:
           filters:
             branches:
-              only: ^master.*$/
+              only: /^master.*$/
           type: approval
       - android-approval:
           filters:
             branches:
-              only: ^master.*$/
+              only: /^master.*$/
           type: approval
       - ios-pro:
           filters:
             branches:
-              only: ^master.*$/
+              only: /^master.*$/
           requires:
             - ios-approval
       - android-pro:
           filters:
             branches:
-              only: ^master.*$/
+              only: /^master.*$/
           requires:
             - android-approval
 
       - bundle-android-pro-approval:
           filters:
             branches:
-              only: ^master.*$/
+              only: /^master.*$/
           type: approval
       - bundle-android-pro:
           filters:
             branches:
-              only: ^master.*$/
+              only: /^master.*$/
           requires:
             - bundle-android-pro-approval
