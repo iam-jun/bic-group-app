@@ -19,9 +19,21 @@ const getQuestions = (set, _get) => async (groupId: string, callBackError: ()=> 
         {},
       );
 
+      const defaultAnswers = response.data.reduce(
+        (accumulator, currentItem) => ({
+          ...accumulator,
+          [currentItem.id]: {
+            questionId: currentItem.id,
+            answer: null,
+          },
+        }),
+        {},
+      );
+
       set((state: IMemberQuestionsState) => {
         state.loading = false;
         state.questions = newItems;
+        state.answers = defaultAnswers;
         state.ids = newIds;
       }, 'getQuestionsSuccess');
       return;
