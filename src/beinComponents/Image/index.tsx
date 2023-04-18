@@ -1,29 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  useEffect, useState,
+} from 'react';
 
-import FastImage from 'react-native-fast-image';
+import FastImage, { FastImageProps } from 'react-native-fast-image';
+import { formatSource, getWidthStyle } from './helper';
 
-export interface ImageProps {
+export interface ImageProps extends Omit<FastImageProps, 'source'> {
   source?: any;
-  cache?: boolean;
   placeholderSource?: any;
+  width?: number;
   [x: string]: any;
 }
 
+// NOTE: For optimizing, you must provide width prop or width in style prop
+//       width must be a number
+
 const Image: React.FC<ImageProps> = ({
   source,
-  cache = true,
   placeholderSource,
+  width,
   ...props
-}: ImageProps) => {
-  const formattedSource = formatSource(source || placeholderSource, cache);
+}) => {
+  const { style = {} } = props;
+  const widthStyle = getWidthStyle(style);
+  const widthImg = width || widthStyle;
+  const formattedSource = formatSource(source || placeholderSource, widthImg);
   const [_source, setSource] = useState(formattedSource);
 
   useEffect(() => {
-    setSource(formatSource(source || placeholderSource, cache));
+    setSource(formatSource(source || placeholderSource, widthImg));
   }, [source]);
 
   const _onError = () => {
-    placeholderSource && setSource(placeholderSource);
+    setSource(formatSource(placeholderSource, widthImg));
   };
 
   return (
@@ -31,19 +40,9 @@ const Image: React.FC<ImageProps> = ({
       {...props}
       source={_source}
       onError={_onError}
+      style={[style, !!width && { width }]}
     />
   );
 };
 
 export default Image;
-
-const formatSource = (source: any, cache?: boolean) => {
-  if (
-    typeof source === 'string'
-      && (source.toLowerCase?.().startsWith?.('http') || source.toLowerCase?.().startsWith?.('data:'))
-  ) {
-    const char = source.includes('?') ? '&' : '?';
-    return { uri: cache ? source : source + char + Date.now() };
-  }
-  return source;
-};

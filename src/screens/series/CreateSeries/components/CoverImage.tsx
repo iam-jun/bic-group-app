@@ -103,7 +103,6 @@ const CoverImage = ({
     <View style={style}>
       <UploadingImage
         uploadType={uploadTypes.postImage}
-        style={styles.cover}
         file={selectingCover}
         fileName={selectingCover?.filename}
         url={!selectingCover && coverMedia.url}

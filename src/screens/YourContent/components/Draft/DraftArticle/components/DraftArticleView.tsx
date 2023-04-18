@@ -10,7 +10,7 @@ import {
   IPayloadGetDraftPosts,
   IPost,
 } from '~/interfaces/IPost';
-import { scaleCoverHeight } from '~/theme/dimension';
+import dimension, { scaleCoverHeight } from '~/theme/dimension';
 import Divider from '~/beinComponents/Divider';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -198,7 +198,7 @@ const createStyles = (theme: ExtendedTheme) => {
       ...elevations.e2,
     },
     cover: {
-      width: '100%',
+      width: dimension.deviceWidth,
       height: scaleCoverHeight(),
       marginTop: spacing.margin.base,
     },

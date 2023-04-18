@@ -1,7 +1,12 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC, useState } from 'react';
 import {
-  Dimensions, StyleProp, StyleSheet, View, ViewStyle, Image as RNImage,
+  Dimensions,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+  Image as RNImage,
 } from 'react-native';
 
 import Button from '~/beinComponents/Button';
@@ -59,17 +64,15 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   const isSquareFirst = imageRatioFirst === SQUARE_RATIO;
   const isSquareSecond = imageRatioSecond === SQUARE_RATIO;
 
-  const isMessyOrientation = (
-    (isVerticalFirst !== isVerticalSecond)
-    || (!isVerticalFirst && isSquareSecond)
-    || (isSquareFirst && !isVerticalSecond)
-  ) && data?.length === 2;
+  const isMessyOrientation
+    = (isVerticalFirst !== isVerticalSecond
+      || (!isVerticalFirst && isSquareSecond)
+      || (isSquareFirst && !isVerticalSecond))
+    && data?.length === 2;
   const isOnlyOneImageVerticle = isVerticalFirst && data?.length === 1;
-  const isBothSquare = (isSquareFirst && isSquareSecond) && data?.length === 2;
+  const isBothSquare = isSquareFirst && isSquareSecond && data?.length === 2;
 
-  const dfSize = Math.min(
-    width, dimension.maxNewsfeedWidth,
-  );
+  const dfSize = Math.min(width, dimension.maxNewsfeedWidth);
   const _width = data?.length === 1 ? dfSize : dfSize;
   const _height = getHeighContainer(
     dfSize,
@@ -80,8 +83,13 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
     isBothSquare,
   );
 
+  const containerImagesDirection
+    = isVerticalFirst || isMessyOrientation || isBothSquare ? 'row' : 'column';
+
+  const containerSmallImagesDirection = isVerticalFirst ? 'column' : 'row';
+
   const containerStyle: any = {
-    flexDirection: (isVerticalFirst || isMessyOrientation || isBothSquare) ? 'row' : 'column',
+    flexDirection: containerImagesDirection,
     width: _width,
     height: _height,
   };
@@ -119,9 +127,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
           name: item.origin_name || item.name,
           uri: item.name.includes('http')
             ? item.name
-            : getResourceUrl(
-              uploadType, item.name,
-            ),
+            : getResourceUrl(uploadType, item.name),
         });
       }
     });
@@ -140,17 +146,18 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
 
   const renderSmallImage = (
     indexImg: number,
-    fileName?: string,
+    width: number,
     url?: string,
     separate?: boolean,
     isRenderMore?: boolean,
   ) => {
-    if (!fileName) {
-      return null;
-    }
+    if (!url) return null;
+
     return (
       <>
-        {separate && <ViewSpacing width={4} height={4} />}
+        {separate && (
+        <ViewSpacing width={SPACING_IMAGE} height={SPACING_IMAGE} />
+        )}
         <Button
           style={styles.flex1}
           disabled={disabled}
@@ -161,9 +168,8 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
           <UploadingImage
             style={styles.image}
             uploadType={uploadType}
-            width="100%"
+            width={width}
             height="100%"
-            fileName={fileName}
             url={url}
           />
           {isRenderMore && renderMore()}
@@ -185,10 +191,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   };
 
   return (
-    <View
-      testID="post_photo_preview"
-      style={[wrapperStyle, style]}
-    >
+    <View testID="post_photo_preview" style={[wrapperStyle, style]}>
       <View style={[styles.container, containerStyle]}>
         <View style={{ flex: data?.length === 2 ? 1 : 2 }}>
           <Button
@@ -201,33 +204,39 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
             <UploadingImage
               style={styles.image}
               uploadType={uploadType}
-              width={isOnlyOneImageVerticle ? '78%' : '100%'}
+              width={
+                isOnlyOneImageVerticle
+                  ? 0.78 * _width
+                  : getWidthLargeImage(_width, data?.length, containerImagesDirection)
+              }
               height="100%"
-              fileName={data[0].origin_name}
               url={data[0].url || data[0].name}
             />
           </Button>
         </View>
         {data?.length > 1 && (
           <>
-            <ViewSpacing width={4} height={4} />
+            <ViewSpacing width={SPACING_IMAGE} height={SPACING_IMAGE} />
             <View
-              style={{ flex: 1, flexDirection: isVerticalFirst ? 'column' : 'row' }}
+              style={{
+                flex: 1,
+                flexDirection: containerSmallImagesDirection,
+              }}
             >
               {renderSmallImage(
                 1,
-                data?.[1]?.origin_name || data?.[1]?.name,
+                getWidthSmallImage(_width, data?.length, containerSmallImagesDirection),
                 data?.[1]?.url || data?.[1]?.name,
               )}
               {renderSmallImage(
                 2,
-                data?.[2]?.origin_name || data?.[2]?.name,
+                getWidthSmallImage(_width, data?.length, containerSmallImagesDirection),
                 data?.[2]?.url || data?.[2]?.name,
                 true,
               )}
               {renderSmallImage(
                 3,
-                data?.[3]?.origin_name || data?.[3]?.name,
+                getWidthSmallImage(_width, data?.length, containerSmallImagesDirection),
                 data?.[3]?.url || data?.[3]?.name,
                 true,
                 data?.length > 4,
@@ -250,6 +259,8 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
     </View>
   );
 };
+
+const SPACING_IMAGE = 4;
 
 const createStyle = () => StyleSheet.create({
   container: {},
@@ -292,4 +303,36 @@ const getHeighContainer = (
   }
 
   return dfSize;
+};
+
+const getWidthSmallImage = (
+  widthContainer: number,
+  numberOfImages: number,
+  flexDirection: 'row' | 'column',
+) => {
+  if (flexDirection === 'column') {
+    if (numberOfImages === 2) {
+      return (widthContainer - SPACING_IMAGE) / 2;
+    }
+    return (widthContainer - SPACING_IMAGE) / 3;
+  }
+  if (numberOfImages === 2) {
+    return widthContainer;
+  }
+  const numberOfHorizontalImages = numberOfImages === 3 ? 2 : 3;
+  return (widthContainer - SPACING_IMAGE * (numberOfHorizontalImages - 1)) / numberOfHorizontalImages;
+};
+
+const getWidthLargeImage = (
+  widthContainer: number,
+  numberOfImages: number,
+  flexDirection: 'row' | 'column',
+) => {
+  if (flexDirection === 'column' || (flexDirection === 'row' && numberOfImages === 1)) {
+    return widthContainer;
+  }
+  if (numberOfImages === 2) {
+    return (widthContainer - SPACING_IMAGE) / 2;
+  }
+  return (widthContainer - SPACING_IMAGE) * (2 / 3);
 };

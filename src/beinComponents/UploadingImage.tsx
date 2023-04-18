@@ -57,6 +57,8 @@ const UploadingImage: FC<UploadingImageProps> = ({
   const [imageUrl, setImageUrl] = useState<string>(url);
   const [error, setError] = useState('');
 
+  const imgWidthStyle = typeof width === 'number' ? width : '100%';
+
   useEffect(() => {
     if (uploadError) {
       const errorMessage = typeof uploadError === 'string' ? uploadError : t('post:error_upload_photo_failed');
@@ -149,7 +151,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
       testID="upload_image"
     >
       {!!imageUrl ? (
-        <Image source={imageUrl} style={styles.image} />
+        <Image source={imageUrl} style={{ height: '100%', width: imgWidthStyle }} />
       ) : (
         <View style={styles.contentContainer}>
           <LoadingIndicator size="large" />

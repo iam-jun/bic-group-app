@@ -192,6 +192,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
       onLongPress={onPressMenu}
     >
       <Image
+        width={dimension.deviceWidth}
         style={styles.screenImage}
         source={{ uri: item?.url }}
         resizeMode="contain"
@@ -308,7 +309,6 @@ const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
       margin: spacing.margin.base,
     },
     screenImage: {
-      width: '100%',
       height: '100%',
       resizeMode: 'contain',
     },
