@@ -114,7 +114,7 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
       }
       if (oldImages?.[0]) {
         const {
-          name, origin_name, width, height, url
+          name, origin_name, width, height, url,
         } = oldImages[0];
         const file: any = { width: width || 1, height: height || 1 };
         setSelectedImage({

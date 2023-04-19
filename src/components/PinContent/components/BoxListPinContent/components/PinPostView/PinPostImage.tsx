@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image as RNImage, View, StyleSheet } from 'react-native';
 import UploadingImage from '~/beinComponents/UploadingImage';
-import { ResourceUploadType } from '~/interfaces/IUpload'; 
+import { ResourceUploadType } from '~/interfaces/IUpload';
 import { IActivityDataImage } from '~/interfaces/IPost';
 import { borderRadius } from '~/theme/spacing';
 

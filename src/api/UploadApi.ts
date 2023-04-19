@@ -47,30 +47,28 @@ export const uploadApiConfig = {
       onUploadProgress,
     };
   },
-  createImageId: (params?: ICreateImageIdData): HttpApiRequestConfig => {
-    return {
-      ...defaultConfig,
-      url: `${provider.url}images`,
-      method: 'post',
-      data: params,
-    };
-  },
+  createImageId: (params?: ICreateImageIdData): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}images`,
+    method: 'post',
+    data: params,
+  }),
   uploadImagetToS3: (
     params: IUploadImageS3Params,
     onUploadProgress: (progressEvent: any) => void,
   ): HttpApiRequestConfig => {
     const data: any = new FormData();
 
-    data.append("key", params.presignedPostFields?.key);
-    data.append("bucket", params.presignedPostFields?.bucket);
-    data.append("X-Amz-Algorithm", params.presignedPostFields?.xAmzAlgorithm);
-    data.append("X-Amz-Credential", params.presignedPostFields?.xAmzCredential);
-    data.append("X-Amz-Date", params.presignedPostFields?.xAmzDate);
-    data.append("X-Amz-Security-Token", params.presignedPostFields?.xAmzSecurityToken);
-    data.append("Policy", params.presignedPostFields?.policy);
-    data.append("X-Amz-Signature", params.presignedPostFields?.xAmzSignature);
-    data.append("file", params.file, params.file.name);
-    
+    data.append('key', params.presignedPostFields?.key);
+    data.append('bucket', params.presignedPostFields?.bucket);
+    data.append('X-Amz-Algorithm', params.presignedPostFields?.xAmzAlgorithm);
+    data.append('X-Amz-Credential', params.presignedPostFields?.xAmzCredential);
+    data.append('X-Amz-Date', params.presignedPostFields?.xAmzDate);
+    data.append('X-Amz-Security-Token', params.presignedPostFields?.xAmzSecurityToken);
+    data.append('Policy', params.presignedPostFields?.policy);
+    data.append('X-Amz-Signature', params.presignedPostFields?.xAmzSignature);
+    data.append('file', params.file, params.file.name);
+
     return {
       url: params.urlUpload,
       method: 'post',
@@ -86,14 +84,12 @@ export const uploadApiConfig = {
       onUploadProgress,
     };
   },
-  getImageStatus: (id: string): HttpApiRequestConfig => {
-    return {
-      ...defaultConfig,
-      url: `${provider.url}images/${id}?wait=true`,
-      method: 'get',
-      timeout: appConfig.getStatusImageTimeout,
-    };
-  },
+  getImageStatus: (id: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}images/${id}?wait=true`,
+    method: 'get',
+    timeout: appConfig.getStatusImageTimeout,
+  }),
 };
 
 const uploadApi = {

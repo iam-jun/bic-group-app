@@ -1,5 +1,5 @@
 import ImagePicker from '~/beinComponents/ImagePicker';
-import { ResourceUploadType } from '~/interfaces/IUpload'; 
+import { ResourceUploadType } from '~/interfaces/IUpload';
 import { IFilePicked } from '~/interfaces/common';
 import groupsActions from '~/storeRedux/groups/actions';
 import { groupProfileImageCropRatio } from '~/theme/dimension';
