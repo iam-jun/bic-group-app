@@ -27,6 +27,10 @@ export const apiProviders = {
     url: apiUrls.UPLOAD,
     name: 'BeinUpload',
   },
+  beinUploadS3: {
+    // url: '',
+    name: 's3',
+  },
   beinMaintenance: {
     url: apiUrls.MAINTENANCE,
     name: 'BeinMaintenance',

@@ -1,5 +1,5 @@
 const getFileIcons = (extension: string) => {
-  const ext = extension.toLowerCase();
+  const ext = extension?.toLowerCase();
   switch (ext) {
     case 'html':
     case 'htm':

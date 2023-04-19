@@ -90,6 +90,12 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig): Promise<Axi
     case apiProviders.beinMaintenance.name:
       requestConfig.headers = beinHeaders;
       break;
+    case apiProviders.beinUploadS3.name:
+      requestConfig.headers = {
+        ...commonHeaders,
+        ...requestConfig.headers,
+      };
+      break;
     default:
       return Promise.resolve(null);
   }

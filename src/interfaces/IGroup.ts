@@ -1,6 +1,6 @@
 import { GroupPrivacyType } from '~/constants/privacyTypes';
 import { IFilePicked } from './common';
-import { IUploadType } from '~/configs/resourceConfig';
+import { ResourceUploadType } from './IUpload';
 import { RoleType } from '~/constants/permissionScheme';
 import { IObject } from '~/interfaces/common';
 
@@ -144,7 +144,7 @@ export interface IGroupImageUpload {
   id: string;
   fieldName: 'icon' | 'backgroundImgUrl';
   file: IFilePicked;
-  uploadType: IUploadType;
+  uploadType: ResourceUploadType;
   destination: 'group' | 'community';
   rootGroupId: string;
 }

@@ -8,6 +8,7 @@ import PinPostVideo from './PinPostVideo';
 import PinPostContent from './PinPostContent';
 import { spacing } from '~/theme';
 import { borderRadius } from '~/theme/spacing';
+import { ResourceUploadType } from '~/interfaces/IUpload';
 
 const WidthDevice = Dimensions.get('window').width;
 const WidthBoxBottomPadding = WidthDevice * 0.8;
@@ -27,7 +28,7 @@ const PinPostBody: React.FC<PinPostBodyProps> = ({ data }) => {
     return (
       <PinPostImage
         data={images}
-        uploadType="postImage"
+        uploadType={ResourceUploadType.postContent}
       />
     );
   }

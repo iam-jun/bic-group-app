@@ -25,6 +25,7 @@ import { formatBytes } from '~/utils/formatter';
 import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import useModalStore from '~/store/modal';
+import { ResourceUploadType } from '~/interfaces/IUpload';
 
 export interface ArticleFormatToolBarProps {
   onModalVisbleChanged: (visible: boolean) => void;
@@ -95,7 +96,7 @@ const ArticleFormatToolBar: FC<ArticleFormatToolBarProps> = ({
       return;
     }
     setSelectedImage(image);
-    actions.upload({ type: 'image', file: image, uploadType: 'post_image' });
+    actions.uploadImage({ file: image, uploadType: ResourceUploadType.articleContent });
   };
 
   const openGiphy = () => {
