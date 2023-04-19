@@ -4,7 +4,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
 import UploadingImage from '~/beinComponents/UploadingImage';
-import { ResourceUploadType } from '~/interfaces/IUpload'; 
+import { ResourceUploadType } from '~/interfaces/IUpload';
 import { IFilePicked } from '~/interfaces/common';
 import dimension, { scaleSize } from '~/theme/dimension';
 import Icon from '~/baseComponents/Icon';

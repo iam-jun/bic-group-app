@@ -51,10 +51,10 @@ const uploadImage = (set, _get) => async (data: IUploadParam) => {
       if (responseUploadImg.status === 204) {
         // step 3: get image status
         const responseGetStatus = await uploadApi.getImageStatus(createIdResponse?.data?.data?.id);
-        
+
         // cancel request
         if (!responseGetStatus?.data?.data && responseGetStatus.status !== 600) {
-            throw new Error(getErrorMessageFromResponse(responseGetStatus));
+          throw new Error(getErrorMessageFromResponse(responseGetStatus));
         }
 
         if (responseGetStatus?.data?.data?.url) {
@@ -65,14 +65,14 @@ const uploadImage = (set, _get) => async (data: IUploadParam) => {
             uploading: false,
             name: file.name,
             size: file?.size,
-            result: responseGetStatus?.data?.data,              
+            result: responseGetStatus?.data?.data,
           };
 
           set((state: IUploaderState) => {
             state.uploadedFiles[file.name] = result;
             state.uploadingFiles?.[file.name] && delete state.uploadingFiles?.[file.name];
           }, 'action uploadImage success');
-        } 
+        }
       }
     }
   } catch (error) {
