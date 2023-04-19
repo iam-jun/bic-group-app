@@ -47,10 +47,36 @@ export const mockComment = {
   id: 'b2e43944-a8fb-4743-bd5d-c820864e1add',
   media: { files: [], images: [], videos: [] },
   mentions: [],
-  ownerReactions: [],
+  ownerReactions: [
+    {
+      id: 'd1255c98-1941-4139-8dc3-5fa9a3a92adb',
+      reactionName: 'bic_direct_hit',
+      created_at: '2023-04-11T07:21:43.686Z',
+    },
+    {
+      id: 'd6760356-47d1-4720-a053-b4455137f81b',
+      reactionName: 'bic_flying_rocket',
+      created_at: '2023-04-11T07:21:40.366Z',
+    },
+    {
+      id: 'c77317f9-4d91-4ea1-b6a3-cc5ed9ff2d37',
+      reactionName: 'stuck_out_tongue_winking_eye',
+      created_at: '2023-04-11T07:21:47.002Z',
+    },
+  ],
   parentId: '00000000-0000-0000-0000-000000000000',
   postId: 'fc99d017-ed67-49bc-8a01-c98d8c80900a',
-  reactionsCount: {},
+  reactionsCount: {
+    0: {
+      bic_flying_rocket: 1,
+    },
+    1: {
+      bic_direct_hit: 1,
+    },
+    2: {
+      stuck_out_tongue_winking_eye: 1,
+    },
+  },
   totalReply: 0,
   updatedAt: '2023-03-09T02:54:48.011Z',
 };

@@ -4,10 +4,10 @@ import {
 } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
+import { t } from 'i18next';
 import { spacing } from '~/theme';
 import Text from '~/baseComponents/Text';
 import Icon from '~/baseComponents/Icon';
-import Button from '~/beinComponents/Button';
 import ReportReasons from './ReportReasons';
 import {
   TargetType, ReportTo, IPayloadReportContent, IPayloadReportMember,
@@ -21,6 +21,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Checkbox from '~/baseComponents/Checkbox';
 import Divider from '~/beinComponents/Divider';
 import useBlockingStore from '~/store/blocking';
+import { Button } from '~/baseComponents';
 
 const screenHeight = Dimensions.get('window').height;
 const modalHeight = 0.35 * screenHeight;
@@ -36,6 +37,7 @@ interface IReportContentProps {
   };
   dataReportMember?: {
     communityId?: string;
+    userId?: string;
     reportedMember: ICommunityMembers | IGroupMembers;
   };
 }
@@ -56,8 +58,10 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
 
   const {
     listRelationship,
+    loading: loadingBlocking,
     refreshing: refreshingBlocking,
     actions: { getListRelationship, blockUser },
+    reset: resetBlocking,
   } = useBlockingStore();
   const isBlockedUser = listRelationship.some((userId) => userId === targetId);
 
@@ -68,6 +72,12 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
     if (!memberReportReasons.data || memberReportReasons.data?.length === 0) {
       reportContentActions.getMemberReportReasons();
     }
+    if (dataReportMember?.userId) {
+      getListRelationship();
+      return () => {
+        resetBlocking();
+      };
+    }
   }, []);
 
   const onClose = () => {
@@ -75,8 +85,15 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
     setReasonState(null);
   };
 
-  const onSubmit = async () => {
-    if (shouldReportMember) {
+  const reportMember = async () => {
+    if (dataReportMember?.userId) {
+      const payload = {
+        targetId,
+        reason: reasonState?.id,
+      } as IPayloadReportMember;
+
+      reportContentActions.reportMemberByUserId(payload);
+    } else {
       const payload = {
         targetId,
         communityId: dataReportMember?.communityId,
@@ -84,10 +101,16 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
       } as IPayloadReportMember;
 
       reportContentActions.reportMember(payload);
+    }
+  };
+
+  const onSubmit = async () => {
+    if (shouldReportMember) {
+      reportMember();
 
       if (shouldBlockUserInfo) {
         await blockUser(targetId);
-        await getListRelationship(true);
+        dataReportMember?.communityId && await getListRelationship(true);
       }
     } else {
       const payload = {
@@ -143,7 +166,7 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
   );
 
   const renderContentComponent = () => {
-    if (reportReasons.loading) {
+    if (reportReasons.loading || loadingBlocking) {
       return (
         <View style={styles.boxLoading}>
           <ActivityIndicator size="small" color={colors.gray30} />
@@ -155,13 +178,11 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
     const isDisabled = !reasonState || !targetId || isLoading;
 
     return (
-      <ScrollView>
-        <ReportReasons
-          reasonState={reasonState}
-          targetType={targetType}
-          setReasonState={setReasonState}
-        />
-        {renderBlockUser()}
+      <View>
+        <ScrollView style={styles.containerScroll}>
+          <ReportReasons reasonState={reasonState} targetType={targetType} setReasonState={setReasonState} />
+          {renderBlockUser()}
+        </ScrollView>
         <Button.Primary
           useI18n
           testID="report_content_bottom_sheet.btn_submit"
@@ -169,12 +190,13 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
           style={styles.btnSubmit}
           disabled={isDisabled}
           loading={isLoading}
-          borderRadius={spacing.borderRadius.base}
-          textProps={{ variant: 'buttonM' }}
         >
           common:btn_submit
         </Button.Primary>
-      </ScrollView>
+        <Button.Neutral style={styles.btnCancel} type="ghost" onPress={onClose}>
+          {t('common:btn_cancel')}
+        </Button.Neutral>
+      </View>
     );
   };
 
@@ -207,7 +229,13 @@ const styles = StyleSheet.create({
     marginRight: spacing.margin.small,
   },
   btnSubmit: {
-    marginTop: 43,
+    marginTop: spacing.margin.large + spacing.margin.tiny,
+  },
+  btnCancel: {
+    marginTop: spacing.margin.small + spacing.margin.xTiny,
+  },
+  containerScroll: {
+    maxHeight: (Dimensions.get('window').height * 2) / 3,
   },
 });
 

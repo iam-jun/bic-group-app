@@ -8,6 +8,7 @@ export const responseGetListBlockingUsers = {
       avatar:
         'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/user/default-avatar.png',
       createdAt: '2023-03-23T01:55:29.917Z',
+      username: 'test',
     },
   ],
 };

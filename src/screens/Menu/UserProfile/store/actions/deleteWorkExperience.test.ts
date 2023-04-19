@@ -1,7 +1,7 @@
 import groupApi from '~/api/GroupApi';
 import { mapWorkExperience } from '~/screens/Menu/store/helpler';
 import useModalStore from '~/store/modal';
-import { mapProfile } from '~/storeRedux/menu/helper';
+import { mapProfile } from '~/helpers/common';
 import { act, renderHook } from '~/test/testUtils';
 import useUserProfileStore from '../index';
 import { responseDeleteWorkExperience, responseGetUserProfile } from '../__mocks__/data';

@@ -1,22 +1,6 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { combineReducers } from 'redux';
-import { persistReducer } from 'redux-persist';
 
-import groupsReducer from '~/storeRedux/groups/reducer';
-import postReducer from '~/storeRedux/post/reducer';
-
-const postPersistConfig = {
-  key: 'post',
-  storage: AsyncStorage,
-  whitelist: [],
-};
-
-export const appReducer = combineReducers({
-  post: persistReducer(
-    postPersistConfig, postReducer,
-  ),
-  groups: groupsReducer,
-});
+export const appReducer = combineReducers({});
 
 const rootReducers = (
   state:any, action:{type:string, payload?:any},

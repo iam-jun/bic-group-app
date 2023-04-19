@@ -7,3 +7,5 @@ gem 'fastlane-plugin-diawi', git: 'https://github.com/thienna/fastlane-plugin-di
 gem 'fastlane-plugin-mattermost', git: 'https://github.com/thienna/fastlane-plugin-mattermost'
 gem 'fastlane-plugin-firebase_app_distribution'
 gem 'fastlane-plugin-appcenter'
+gem 'fastlane-plugin-google_drive'
+gem 'fastlane-plugin-versioning_android'

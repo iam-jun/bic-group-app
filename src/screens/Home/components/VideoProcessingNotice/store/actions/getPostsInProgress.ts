@@ -44,7 +44,7 @@ const getPostsInProgress = (set, get) => async () => {
     }
   } catch (e: any) {
     console.error(
-      '\x1b[31m🐣️ saga getPostsInProgress error: ',
+      '\x1b[31m🐣️ getPostsInProgress error: ',
       e,
       '\x1b[0m',
     );

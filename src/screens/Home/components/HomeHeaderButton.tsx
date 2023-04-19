@@ -20,7 +20,7 @@ const HomeHeaderButton: FC<HomeHeaderButtonProps> = ({ style, onPressSearch, onP
   return (
     <View style={[styles.container, style]}>
       <View style={styles.row}>
-        <Button onPress={onPressSearch} style={{ marginRight: spacing.margin.tiny }}>
+        <Button testID="home_header_button.btn_search" onPress={onPressSearch} style={{ marginRight: spacing.margin.tiny }}>
           <Icon size={18} icon="search" />
         </Button>
         {onPressChat && <IconChat onPress={onPressChat} />}

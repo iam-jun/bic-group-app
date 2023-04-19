@@ -41,7 +41,7 @@ describe('usePostDetailContentHandler', () => {
     jest.spyOn(React, 'useRef').mockImplementation(() => ({ current } as any));
 
     const stateData = { ...initialState };
-    stateData.post.scrollToLatestItem = { parentCommentId: 'test' };
+    // stateData.post.scrollToLatestItem = { parentCommentId: 'test' };
     const store = createTestStore(stateData);
     const wrapper = getHookReduxWrapper(store);
     const { result } = renderHook(() => usePostDetailContentHandler(props), { wrapper });

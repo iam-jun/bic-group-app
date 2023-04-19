@@ -1,8 +1,9 @@
 import { IObject } from '~/interfaces/common';
-import { IGroupDetail } from '~/interfaces/IGroup';
+import { IGroupDetail, IGroupImageUpload } from '~/interfaces/IGroup';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore } from '~/store/utils';
 import addToGroups from './actions/addToGroups';
+import uploadImage from './actions/uploadImage';
 
 export interface IGroupsState extends IBaseState {
   groups: IObject<IGroupDetail>;
@@ -10,6 +11,7 @@ export interface IGroupsState extends IBaseState {
 
   actions: {
     addToGroups: (payload: IGroupDetail) => void;
+    uploadImage: (payload: IGroupImageUpload) => void;
   };
 }
 
@@ -23,6 +25,7 @@ const groupsStore = (set, get) => ({
 
   actions: {
     addToGroups: addToGroups(set, get),
+    uploadImage: uploadImage(),
   },
 });
 

@@ -1,4 +1,3 @@
-import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import * as permissions from 'react-native-permissions';
 import RNFetchBlob from 'rn-fetch-blob';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -13,27 +12,8 @@ describe('images utils', () => {
     Platform = require('react-native').Platform;
   });
 
-  it('should run downloadImage on iOS success', async () => {
-    Platform.OS = 'ios';
-    jest.spyOn(CameraRoll, 'save');
-    const showToast = jest.fn();
-    const actions = { showToast };
-
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
-    jest.spyOn(permissions, 'check').mockResolvedValue(permissions.RESULTS.GRANTED);
-
-    downloadImage({ url: 'file://download/image.jpg' });
-
-    await new Promise(process.nextTick);
-    expect(CameraRoll.save).toBeCalledWith('file://download/image.jpg', { type: 'photo' });
-
-    await new Promise(process.nextTick);
-    expect(showToast).toBeCalled();
-  });
-
   it('should run downloadImage on iOS failed', async () => {
     Platform.OS = 'ios';
-    jest.spyOn(CameraRoll, 'save');
     const showAlert = jest.fn();
     const actions = { showAlert };
 

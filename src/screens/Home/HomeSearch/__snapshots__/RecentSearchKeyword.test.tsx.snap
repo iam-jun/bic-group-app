@@ -213,6 +213,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
               undefined,
             ]
           }
+          testID="primary_item.subTitle"
         >
           hu
         </Text>
@@ -402,6 +403,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
               undefined,
             ]
           }
+          testID="primary_item.subTitle"
         >
           k
         </Text>
@@ -591,6 +593,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
               undefined,
             ]
           }
+          testID="primary_item.subTitle"
         >
           testasd
         </Text>
@@ -780,6 +783,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
               undefined,
             ]
           }
+          testID="primary_item.subTitle"
         >
           hihi
         </Text>
@@ -969,6 +973,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
               undefined,
             ]
           }
+          testID="primary_item.subTitle"
         >
           sssssss
         </Text>
@@ -1158,6 +1163,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
               undefined,
             ]
           }
+          testID="primary_item.subTitle"
         >
           tétasd
         </Text>
@@ -1347,6 +1353,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
               undefined,
             ]
           }
+          testID="primary_item.subTitle"
         >
           tests add
         </Text>
@@ -1536,6 +1543,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
               undefined,
             ]
           }
+          testID="primary_item.subTitle"
         >
           serries cua tui
         </Text>
@@ -1725,6 +1733,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
               undefined,
             ]
           }
+          testID="primary_item.subTitle"
         >
           serries
         </Text>
@@ -1914,6 +1923,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
               undefined,
             ]
           }
+          testID="primary_item.subTitle"
         >
           serried
         </Text>

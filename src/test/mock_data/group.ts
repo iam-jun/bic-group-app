@@ -4,7 +4,7 @@ import { POST_DETAIL } from './post';
 
 export const groupDetailData: IGroupDetail = {
   group: {
-    id: '1',
+    id: '0f5c4bb8-323b-41ee-8aed-b064fecf492b',
     parentId: undefined,
     name: 'EVOL Community',
     slug: 'evol-community-1641809088',

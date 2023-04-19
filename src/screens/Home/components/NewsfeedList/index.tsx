@@ -252,14 +252,14 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
       return null;
     }
     return (
-      <View style={styles.emptyContainer}>
+      <View style={styles.emptyContainer} testID="newsfeed_list.empty">
         <Text.SubtitleM useI18n>
           post:newsfeed:title_empty_no_post
         </Text.SubtitleM>
         <Text.BodyXS style={styles.textEmpty} useI18n>
           post:newsfeed:text_empty_no_post
         </Text.BodyXS>
-        <Button.Primary onPress={onPressDiscover}>
+        <Button.Primary testID="newsfeed_list.btn_discover" onPress={onPressDiscover}>
           {t('menu:title_discover')}
         </Button.Primary>
       </View>
@@ -333,7 +333,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   );
 };
 
-const NewsfeedListHeader = ({
+export const NewsfeedListHeader = ({
   HeaderComponent,
   attributeFilter,
 }: any) => {
@@ -344,7 +344,7 @@ const NewsfeedListHeader = ({
   const isNewsfeed = attributeFilter === AttributeFeed.ALL;
 
   return (
-    <View style={styles.headerContainer}>
+    <View style={styles.headerContainer} testID="newsfeed_list_header">
       {!!HeaderComponent && HeaderComponent}
       <NewUpdateNotice />
       {isNewsfeed ? <VideoProcessingNotice /> : null}

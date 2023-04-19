@@ -1,35 +1,24 @@
 import i18next from 'i18next';
-import { takeLatest } from 'redux-saga/effects';
-
+import { uploadApiConfig } from '~/api/UploadApi';
+import { makeHttpRequest } from '~/api/apiRequest';
 import {
   IGroupImageUpload,
 } from '~/interfaces/IGroup';
-import groupsTypes from '~/storeRedux/groups/types';
 import useCommunityController from '~/screens/communities/store';
-import { makeHttpRequest } from '~/api/apiRequest';
-import { uploadApiConfig } from '~/api/UploadApi';
 import useGeneralInformationStore from '~/screens/groups/GeneralInformation/store';
 import showToastError from '~/store/helper/showToastError';
 
-export default function* groupsSaga() {
-  yield takeLatest(
-    groupsTypes.UPLOAD_IMAGE, uploadImage,
-  );
-}
-
-function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
+const uploadImage = () => async (payload: IGroupImageUpload) => {
   try {
     const {
       file, id, fieldName, uploadType, destination, rootGroupId,
-    } = payload;
+    } = payload || {};
 
     const { actions } = useCommunityController.getState();
 
-    yield updateLoadingImageState(
-      fieldName, true,
-    );
+    updateLoadingImageState(fieldName, true);
 
-    const uploadResponse = yield makeHttpRequest(uploadApiConfig.uploadImage(
+    const uploadResponse = await makeHttpRequest(uploadApiConfig.uploadImage(
       uploadType, file,
     ));
 
@@ -45,19 +34,15 @@ function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
     } else {
       actions.editCommunityDetail(editData, editFieldName);
     }
-    yield updateLoadingImageState(
-      payload.fieldName, false,
-    );
+    updateLoadingImageState(payload.fieldName, false);
   } catch (err) {
     console.error(
       '\x1b[33m', 'uploadImage : error', err, '\x1b[0m',
     );
-    yield updateLoadingImageState(
-      payload.fieldName, false,
-    );
+    updateLoadingImageState(payload.fieldName, false);
     showToastError(err);
   }
-}
+};
 
 function updateLoadingImageState(
   fieldName: 'icon' | 'backgroundImgUrl',
@@ -70,3 +55,5 @@ function updateLoadingImageState(
     setLoadingCover(value);
   }
 }
+
+export default uploadImage;

@@ -97,7 +97,7 @@ const HomeHeader: FC<HomeHeaderProps> = ({
   };
 
   return (
-    <View style={style}>
+    <View style={style} testID="home_header">
       <View style={styles.statusBar} />
       <Animated.View style={[styles.container, containerAnimatedStyle]}>
         <Animated.View style={[styles.logoContainer, logoAnimatedStyle]}>

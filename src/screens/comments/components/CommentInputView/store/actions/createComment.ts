@@ -8,8 +8,6 @@ import { getMentionsFromContent } from '~/helpers/post';
 import useCommentsStore from '~/store/entities/comments';
 import usePostsStore from '~/store/entities/posts';
 import showToastError from '~/store/helper/showToastError';
-import Store from '~/storeRedux';
-import postActions from '~/storeRedux/post/actions';
 import ICommentInputState from '../Interface';
 import showToast from '~/store/helper/showToast';
 
@@ -68,12 +66,12 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
       }
     }
     if (!isCommentLevel1Screen) {
-      Store.store.dispatch(postActions.setScrollToLatestItem({ parentCommentId }));
+      usePostsStore.getState().actions.setScrollToLatestItem({ parentCommentId });
     } else {
-      Store.store.dispatch(postActions.setScrollCommentsPosition({ position: 'bottom' }));
+      usePostsStore.getState().actions.setScrollCommentsPosition({ position: 'bottom' });
     }
 
-    Store.store.dispatch(postActions.setPostDetailReplyingComment());
+    usePostsStore.getState().actions.setPostDetailReplyingComment();
 
     // get mentions from temp selected in mention input
     const tempMentions = useMentionInputStore.getState().tempSelected;
@@ -149,7 +147,7 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
     }
     actions.setCreateComment({ loading: false });
     if (!!parentCommentId && e?.code === APIErrorCode.Post.COMMENT_DELETED) {
-      Store.store.dispatch(postActions.setCommentErrorCode(APIErrorCode.Post.COMMENT_DELETED));
+      usePostsStore.getState().actions.setCommentErrorCode(APIErrorCode.Post.COMMENT_DELETED);
       useCommentsStore.getState().actions.removeChildComment({
         localId: preComment?.localId?.toString(),
         postId,
@@ -160,7 +158,7 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
     } else if (e?.code === APIErrorCode.Post.POST_DELETED
       || e?.code === APIErrorCode.Post.VALIDATION_ERROR) {
       if (e?.code === APIErrorCode.Post.POST_DELETED) {
-        Store.store.dispatch(postActions.setCommentErrorCode(APIErrorCode.Post.POST_DELETED));
+        usePostsStore.getState().actions.setCommentErrorCode(APIErrorCode.Post.POST_DELETED);
       }
       if (parentCommentId) {
         useCommentsStore.getState().actions.removeChildComment({
