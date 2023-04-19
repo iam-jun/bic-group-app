@@ -27,12 +27,17 @@ describe('PrivateWelcome component', () => {
   });
 
   it('renders JoinCancelButton component correctly', () => {
+    const newCommunityDetailData = {
+      ...communityDetailData,
+      joinStatus: 3,
+    };
+
     const wrapper = renderWithRedux(
       <PrivateWelcome
         onScroll={onScroll}
         onButtonLayout={onButtonLayout}
         isFetching={false}
-        community={communityDetailData}
+        community={newCommunityDetailData}
       />,
       store,
     );
