@@ -1,20 +1,13 @@
-import { call } from 'redux-saga/effects';
-
 import { IPayloadAddToAllPost, IPayloadRemoveAudiencesOfPost } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
-import streamApi from '../../../api/StreamApi';
+import streamApi from '~/api/StreamApi';
 import showToast from '~/store/helper/showToast';
 import showToastError from '~/store/helper/showToastError';
 
-export default function* removeAudiencesFromPost({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadRemoveAudiencesOfPost;
-}): any {
-  const { id, listAudiences } = payload;
+const removeAudiencesFromPost = () => async (payload: IPayloadRemoveAudiencesOfPost) => {
+  const { id, listAudiences } = payload || {};
   if (!id || !listAudiences?.length) {
-    console.warn('\x1b[31m🐣️ saga removeAudiencesFromPost: id not found or listAudiences is not an array\x1b[0m');
+    console.warn('\x1b[31m🐣️ action removeAudiencesFromPost: id not found or listAudiences is not an array\x1b[0m');
     return;
   }
   try {
@@ -24,7 +17,7 @@ export default function* removeAudiencesFromPost({
         groupIds: listAudiences,
       },
     };
-    const response = yield call(streamApi.putEditPost, {
+    const response = await streamApi.putEditPost({
       postId: id,
       data,
     });
@@ -33,8 +26,10 @@ export default function* removeAudiencesFromPost({
       usePostsStore.getState().actions.addToPosts({ data: post } as IPayloadAddToAllPost);
       showToast({ content: 'post:text_deleted_audiences' });
     }
-  } catch (e: any) {
-    console.error('\x1b[31m🐣️ saga removeAudiencesFromPost error: ', e, '\x1b[0m');
+  } catch (e) {
+    console.error('\x1b[31m🐣️ action removeAudiencesFromPost error: ', e, '\x1b[0m');
     showToastError(e);
   }
-}
+};
+
+export default removeAudiencesFromPost;
