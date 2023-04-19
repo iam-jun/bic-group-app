@@ -9,7 +9,7 @@ import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
 import Text from '~/baseComponents/Text';
 import UploadingImage from '~/beinComponents/UploadingImage';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import { getResourceUrl, IUploadType } from '~/configs/resourceConfig';
+import { ResourceUploadType } from '~/interfaces/IUpload';
 import { IActivityDataImage } from '~/interfaces/IPost';
 import dimension from '~/theme/dimension';
 
@@ -24,7 +24,7 @@ export interface PostPhotoPreviewProps {
   width?: number;
   disabled?: boolean;
   enableGalleryModal?: boolean;
-  uploadType: IUploadType | string;
+  uploadType: ResourceUploadType;
   onPress?: (e?: any) => void;
   onLongPress?: (e?: any) => void;
   onPressMarkSeenPost?: () => void;
@@ -109,21 +109,10 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   const getImageUrls = () => {
     const result: any = [];
     data.forEach((item) => {
-      if (item.url) {
-        result.push({
-          name: item.origin_name || item.name,
-          uri: item.url,
-        });
-      } else if (item.name) {
-        result.push({
-          name: item.origin_name || item.name,
-          uri: item.name.includes('http')
-            ? item.name
-            : getResourceUrl(
-              uploadType, item.name,
-            ),
-        });
-      }
+      result.push({
+        name: item.origin_name || item.name,
+        uri: item.url,
+      });
     });
     return result;
   };

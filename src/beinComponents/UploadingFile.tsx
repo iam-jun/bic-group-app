@@ -8,7 +8,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { isEmpty } from 'lodash';
 import Text from '~/baseComponents/Text';
-import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
+import { ResourceUploadType } from '~/interfaces/IUpload';
 import { IFilePicked } from '~/interfaces/common';
 import Icon from '~/baseComponents/Icon';
 import Button from '~/beinComponents/Button';
@@ -29,7 +29,7 @@ const HIT_SLOP = {
 export interface UploadingFileProps {
   style?: StyleProp<ViewStyle>;
   url?: string;
-  uploadType?: IUploadType;
+  uploadType?: ResourceUploadType;
   file?: IFilePicked;
   disableClose?: boolean;
   showDownload?: boolean;
@@ -95,8 +95,8 @@ const UploadingFile: FC<UploadingFileProps> = ({
 
     // temp skip check extention for video
     if (
-      uploadType !== uploadTypes.postVideo
-      && uploadType !== uploadTypes.commentVideo
+      uploadType !== ResourceUploadType.postVideo
+      && uploadType !== ResourceUploadType.commentVideo
       && !supportedTypes.includes(ext)
     ) {
       setError(t('upload:text_file_extension_not_supported'));
@@ -109,7 +109,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
     }
 
     setError('');
-    actions.upload({ file, uploadType });
+    actions.uploadFile({ file, uploadType });
   };
 
   const onPressClose = () => {

@@ -6,7 +6,7 @@ import Icon from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import UploadingImage from '~/beinComponents/UploadingImage';
-import { uploadTypes } from '~/configs/resourceConfig';
+import { ResourceUploadType } from '~/interfaces/IUpload';
 
 import { IFilePicked } from '~/interfaces/common';
 import { IArticleCover } from '~/interfaces/IPost';
@@ -98,7 +98,7 @@ const CreateArticleCover: FC<CreateArticleCoverProps> = ({ articleId }) => {
   return (
     <View style={{ ...theme.elevations.e2 }}>
       <UploadingImage
-        uploadType={uploadTypes.postImage}
+        uploadType={ResourceUploadType.articleCover}
         style={styles.cover}
         file={selectingCover}
         fileName={selectingCover?.filename}

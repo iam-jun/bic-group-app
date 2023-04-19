@@ -5,7 +5,7 @@ import {
   StyleProp, StyleSheet, View, ViewStyle,
 } from 'react-native';
 import { PostPhotoPreview } from '~/components/posts';
-import { uploadTypes } from '~/configs/resourceConfig';
+import { ResourceUploadType } from '~/interfaces/IUpload';
 import { IPostMedia } from '~/interfaces/IPost';
 import spacing from '~/theme/spacing';
 import GifView from '~/components/GiphyView';
@@ -43,7 +43,7 @@ const CommentMediaView: FC<CommentMediaViewProps> = ({
       return (
         <PostPhotoPreview
           data={images}
-          uploadType={uploadTypes.commentImage}
+          uploadType={ResourceUploadType.commentContent}
           width={width}
           onLongPress={onLongPress}
           enableGalleryModal

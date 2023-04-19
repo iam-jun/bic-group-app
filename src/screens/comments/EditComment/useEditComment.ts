@@ -18,7 +18,6 @@ import { useBaseHook } from '~/hooks';
 import { checkPermission, PermissionTypes } from '~/utils/permission';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import { IGiphy } from '~/interfaces/IGiphy';
-import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
 import { formatTextWithEmoji } from '~/utils/emojis';
 import { getImagePastedFromClipboard } from '~/utils/images';
 import useModalStore from '~/store/modal';
@@ -115,15 +114,11 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
       }
       if (oldImages?.[0]) {
         const {
-          name, origin_name, width, height,
+          name, origin_name, width, height, url
         } = oldImages[0];
         const file: any = { width: width || 1, height: height || 1 };
         setSelectedImage({
-          url: name?.includes('http')
-            ? name
-            : getResourceUrl(
-              uploadTypes.commentImage, name,
-            ),
+          url,
           fileName: origin_name || name,
           file,
         });

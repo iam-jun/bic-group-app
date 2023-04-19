@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
+import { ResourceUploadType } from '~/interfaces/IUpload';
 import { scaleCoverHeight, userProfileImageCropRatio } from '~/theme/dimension';
 import AvatarImage from '../../components/AvatarImage';
 import CoverImage from '../../components/CoverImage';
@@ -27,7 +27,7 @@ const CoverHeader = ({
   const openImagePicker = async (
     id: string,
     fieldName: 'avatar' | 'backgroundImgUrl',
-    uploadType: IUploadType,
+    uploadType: ResourceUploadType,
     callback?: (fieldName: string) => void,
   ) => {
     checkPermission(
@@ -51,14 +51,14 @@ const CoverHeader = ({
   const onEditCover = () => openImagePicker(
     id,
     'backgroundImgUrl',
-    uploadTypes.userCover,
+    ResourceUploadType.userCover,
     uploadCallback,
   );
 
   const onEditAvatar = () => openImagePicker(
     id,
     'avatar',
-    uploadTypes.userAvatar,
+    ResourceUploadType.userAvatar,
     uploadCallback,
   );
 

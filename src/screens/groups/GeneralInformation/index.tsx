@@ -5,7 +5,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import { uploadTypes } from '~/configs/resourceConfig';
+import { ResourceUploadType } from '~/interfaces/IUpload';
 
 import AvatarImage from './components/AvatarImage';
 import CoverImage from './components/CoverImage';
@@ -83,7 +83,7 @@ const GeneralInformation = (props: any) => {
     dispatch,
     id,
     fieldName: 'icon',
-    uploadType: uploadTypes.groupAvatar,
+    uploadType: ResourceUploadType.groupAvatar,
     destination: type,
     rootGroupId,
   });
@@ -92,7 +92,7 @@ const GeneralInformation = (props: any) => {
     dispatch,
     id,
     fieldName: 'backgroundImgUrl',
-    uploadType: uploadTypes.groupCover,
+    uploadType: ResourceUploadType.groupCover,
     destination: type,
     rootGroupId,
   });
