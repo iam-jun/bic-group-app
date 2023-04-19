@@ -28,7 +28,7 @@ const Gender: FC<GenderProps> = ({ genderState, disabled, setGenderState }) => (
       testID="settings.female"
       label="settings:text_female"
       isChecked={genderState === GENDER_TYPE.FEMALE}
-      disabled={disabled ? genderState === GENDER_TYPE.FEMALE ? 'disabled-auto-selected' : undefined : 'disabled'}
+      disabled={disabled ? genderState === GENDER_TYPE.FEMALE ? 'disabled-auto-selected' : 'disabled' : undefined}
       onPress={() => setGenderState(GENDER_TYPE.FEMALE)}
     />
     <ViewSpacing width={SPACING} />
