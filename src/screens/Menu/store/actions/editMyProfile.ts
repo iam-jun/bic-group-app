@@ -21,17 +21,16 @@ const editMyProfile = (_set, get) => async ({
   const { actions }: IMenuController = get();
   try {
     const response = await groupApi.editMyProfile(data);
-
     useCommonController.getState().actions.setMyProfile(mapProfile(response.data));
 
     // checking if uploading avatar/cover image
     // to use different toast message content
-    const { avatar, backgroundImgUrl } = data;
+    const { avatarId, backgroundImgId } = data;
     let toastContent: string;
 
-    if (avatar) {
+    if (avatarId) {
       toastContent = 'common:avatar_changed';
-    } else if (backgroundImgUrl) {
+    } else if (backgroundImgId) {
       toastContent = 'common:cover_changed';
     } else {
       // this field is used to indicate which parts of
