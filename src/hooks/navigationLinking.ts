@@ -170,7 +170,6 @@ const navigateWithValidReferralCode = async (payload: {
       }
     }
   } else {
-    // navigation?.replace?.(authStacks.signUp, { isValidLink: true, referralCode });
     navigation?.replaceListScreenByNewScreen?.(getListScreenToReplace(), {
       name: authStacks.signUp,
       params: { isValidLink: true, referralCode },
