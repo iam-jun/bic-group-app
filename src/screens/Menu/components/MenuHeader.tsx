@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View, StyleSheet, TouchableOpacity,
 } from 'react-native';
@@ -12,20 +12,27 @@ import Avatar from '~/baseComponents/Avatar';
 import mainStack from '~/router/navigator/MainStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import useCommonController from '~/screens/store';
-import Icon from '~/baseComponents/Icon';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
+import InlineText from './InlineText';
+import useTooltip from '../../../components/Tooltip.tsx/stores';
 
 const PADDING_INFO = spacing.padding.large * 2 + dimension.avatarSizes.large;
+const ICON_SIZE = 14;
 
-const MenuHeader = () => {
+const MenuHeader = ({ screenId }:{screenId: string}) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
   const { rootNavigation } = useRootNavigation();
 
+  const tooltipActions = useTooltip((state) => state.actions);
+
   const {
-    id, fullname, avatar, username,
+    id, fullname, avatar, username, isVerified = true,
   } = useCommonController((state) => state.myProfile) || {};
+
+  useEffect(() => {
+    tooltipActions.setUpScreenTooltip(screenId);
+  }, [screenId]);
 
   const goToProfile = () => {
     rootNavigation.navigate(
@@ -33,29 +40,29 @@ const MenuHeader = () => {
     );
   };
 
+  const handleLayout = (e: any) => {
+    tooltipActions.setViewPosition(screenId, {
+      y: e.nativeEvent.layout.y + ICON_SIZE || 0,
+    });
+  };
+
   return (
     <View style={styles.container} testID="menu_header">
       <View style={styles.statusBar} />
-      <View style={styles.infoContainer}>
+      <View
+        style={styles.infoContainer}
+      >
         <TouchableOpacity
           testID="menu_header.full_name"
           activeOpacity={1}
           style={styles.nameContainer}
           onPress={goToProfile}
         >
-          <Text.H5
+          <InlineText
             testID="menu_header.full_name.text"
-            color={colors.neutral}
-          >
-            {fullname}
-          </Text.H5>
-          <ViewSpacing width={spacing.margin.xSmall} />
-          <Icon
-            testID="avatar.badge"
-            // style={[styles.badge, styles.iconBadge]}
-            size={14}
-            tintColor={colors.green50}
-            icon="BadgeCheck"
+            screenId={screenId}
+            text={fullname}
+            isVerified={isVerified}
           />
         </TouchableOpacity>
         <TouchableOpacity
@@ -63,6 +70,7 @@ const MenuHeader = () => {
           activeOpacity={1}
           style={styles.usernameContainer}
           onPress={goToProfile}
+          onLayout={handleLayout}
         >
           <Text.BodyS
             testID="menu_header.user_name.text"

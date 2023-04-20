@@ -487,7 +487,8 @@
     "text_unblock_user_name_result": "Bỏ chặn người dùng này sẽ cho phép họ tương tác lại với bạn như sau:",
     "title_blocked_users_list_empty": "Danh sách người dùng bị chặn trống",
     "text_blocked_users_list_empty": "Không tìm thấy người dùng",
-    "text_blocked_at": "Đã chặn"
+    "text_blocked_at": "Đã chặn",
+    "toast_profile_is_verified": "Hồ sơ này đã được xác minh"
   },
   "languages": {
     "title_en": "English",

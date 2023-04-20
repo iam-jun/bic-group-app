@@ -194,6 +194,7 @@ export interface IGroupMembers {
   isAdmin?: boolean;
   customRoleIds?: any[];
   roles?: any[];
+  isVerified?: boolean;
 }
 
 export interface IJoiningMember {
@@ -226,6 +227,7 @@ export interface IJoiningUserInfo {
     company: string | null;
     titlePosition: string | null;
   } | null;
+  isVerified?: boolean;
 }
 
 export interface IGetCommunityGroup {

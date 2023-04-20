@@ -22,6 +22,7 @@ import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import useModalStore from '~/store/modal';
 import DeactivatedView from '~/components/DeactivatedView';
+import VerifiedView from '~/components/VerifiedView';
 
 export interface ContentHeaderProps {
   style?: StyleProp<ViewStyle>;
@@ -60,7 +61,9 @@ const ContentHeader: FC<ContentHeaderProps> = ({
 
   const textAudiences = getAudiencesText(audience, t);
 
-  const { avatar, fullname: actorName, isDeactivated } = actor || {};
+  const {
+    avatar, fullname: actorName, isDeactivated, isVerified,
+  } = actor || {};
 
   const onPressActor = () => {
     if (!actor.id || isDeactivated) return;
@@ -134,6 +137,11 @@ const ContentHeader: FC<ContentHeaderProps> = ({
           >
             {actorName}
           </Text.SubtitleM>
+          {
+            isVerified && (
+              <VerifiedView size={12} />
+            )
+          }
           {isDeactivated && <DeactivatedView style={styles.deactivatedView} />}
         </Button>
         <View style={styles.textToAudience}>

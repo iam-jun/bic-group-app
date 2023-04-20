@@ -10,6 +10,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import usePinContentItemMenu from './usePinContentItemMenu';
 import Icon from '~/baseComponents/Icon';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
+import VerifiedView from '~/components/VerifiedView';
 
 interface HeaderPinContentItemProps {
   data: IPost;
@@ -29,7 +30,7 @@ const HeaderPinContentItem: React.FC<HeaderPinContentItemProps> = ({
   const isReorderScreen = name === homeStack.reorderedPinContent;
 
   const { createdAt, actor } = data || {};
-  const { avatar, fullname } = actor || {};
+  const { avatar, fullname, isVerified } = actor || {};
 
   const { showMenu } = usePinContentItemMenu(data?.id, id);
 
@@ -39,9 +40,12 @@ const HeaderPinContentItem: React.FC<HeaderPinContentItemProps> = ({
         <Avatar.Small isRounded source={avatar} />
         <View style={styles.boxName}>
           <ViewSpacing height={spacing.margin.xTiny} />
-          <Text.SubtitleM color={colors.neutral60} numberOfLines={1}>
-            { fullname }
-          </Text.SubtitleM>
+          <View style={styles.fullNameContainer}>
+            <Text.SubtitleM color={colors.neutral60} numberOfLines={1}>
+              { fullname }
+            </Text.SubtitleM>
+            {isVerified && (<VerifiedView size={12} />)}
+          </View>
           <ViewSpacing height={spacing.margin.xSmall} />
           <TimeView
             time={createdAt}
@@ -85,6 +89,13 @@ const styles = StyleSheet.create({
   boxName: {
     flex: 1,
     marginLeft: spacing.margin.small,
+  },
+  btnUnpin: {
+    padding: spacing.padding.tiny,
+  },
+  fullNameContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 

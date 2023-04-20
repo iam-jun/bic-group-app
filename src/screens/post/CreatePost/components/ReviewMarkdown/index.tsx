@@ -14,6 +14,7 @@ import { IAudience } from '~/interfaces/IPost';
 import useCommonController from '~/screens/store';
 import spacing from '~/theme/spacing';
 import useCreatePostStore from '../../store';
+import VerifiedView from '~/components/VerifiedView';
 
 export interface ReviewMarkdownProps {
   testID?: string;
@@ -30,7 +31,7 @@ const ReviewMarkdown: FC<ReviewMarkdownProps> = ({ testID, onPressDone }) => {
   );
   const content = useCreatePostStore((state) => state.createPost.content);
   const chosenAudiences = useCreatePostStore((state) => state.createPost.chosenAudiences || []);
-  const { fullname, avatar } = useCommonController((state) => state.myProfile) || {};
+  const { fullname, avatar, isVerified } = useCommonController((state) => state.myProfile) || {};
 
   const renderTitleHeader = () => (
     <View style={styles.header}>
@@ -53,7 +54,10 @@ const ReviewMarkdown: FC<ReviewMarkdownProps> = ({ testID, onPressDone }) => {
       <View style={styles.postHeader}>
         <Avatar.Medium isRounded source={avatar} style={styles.avatar} />
         <View style={styles.flex1}>
-          <Text.H6>{fullname}</Text.H6>
+          <View style={styles.fullnameContainer}>
+            <Text.H6>{fullname}</Text.H6>
+            {isVerified && (<VerifiedView size={12} />)}
+          </View>
           <View style={styles.audienceLine}>
             <Text.BodySMedium
               useI18n
@@ -147,6 +151,10 @@ const createStyles = (
     },
     flex1: {
       flex: 1,
+    },
+    fullnameContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
     },
   });
 };
