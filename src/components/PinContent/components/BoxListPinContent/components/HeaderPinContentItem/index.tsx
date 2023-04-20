@@ -44,7 +44,7 @@ const HeaderPinContentItem: React.FC<HeaderPinContentItemProps> = ({
             <Text.SubtitleM color={colors.neutral60} numberOfLines={1}>
               { fullname }
             </Text.SubtitleM>
-            {isVerified && (<VerifiedView size={12} />)}
+            <VerifiedView size={12} isVerified={isVerified} />
           </View>
           <ViewSpacing height={spacing.margin.xSmall} />
           <TimeView

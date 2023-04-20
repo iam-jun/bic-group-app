@@ -374,7 +374,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
                       >
                         {`${fullname}`}
                       </Text.H5>
-                      {isVerified && (<VerifiedView />)}
+                      <VerifiedView isVerified={isVerified} />
                       {isDeactivated && <DeactivatedView style={styles.deactivatedView} />}
                     </ButtonWrapper>
                   </View>

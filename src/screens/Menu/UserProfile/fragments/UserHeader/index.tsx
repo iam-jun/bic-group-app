@@ -99,7 +99,7 @@ const UserHeader = ({
         <Text.H4 testID="user_profile.fullname" numberOfLines={1}>
           {fullname}
         </Text.H4>
-        {isVerified && (<VerifiedView screenId={screenId} onPress={onShowTooltip} />) }
+        <VerifiedView isVerified={isVerified} screenId={screenId} onPress={onShowTooltip} />
       </View>
       {!!username && (
         <Text.BodyS

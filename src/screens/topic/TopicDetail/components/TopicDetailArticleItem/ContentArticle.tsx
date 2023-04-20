@@ -67,7 +67,7 @@ const ContentArticle: React.FC<ContentArticleProps> = ({
             <Text.BodyS color={colors.neutral60} numberOfLines={1}>
               {fullname}
             </Text.BodyS>
-            {isVerified && (<VerifiedView size={12} />)}
+            <VerifiedView size={12} isVerified={isVerified} />
           </View>
         </Button>
       </View>

@@ -68,7 +68,7 @@ const ContentItem: FC<ContentItemProps> = ({
                 <Text.BodyXSMedium color={colorFullName} numberOfLines={1}>
                   {fullname}
                 </Text.BodyXSMedium>
-                {isVerified && (<VerifiedView size={12} />)}
+                <VerifiedView size={12} isVerified={isVerified} />
               </View>
               {isDeactivated && <DeactivatedView style={styles.deactivatedView} />}
             </View>

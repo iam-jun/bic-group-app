@@ -139,7 +139,7 @@ const PendingUserItem = ({
         <View style={styles.textHeader}>
           <View style={styles.row}>
             <Text.H5>{fullname}</Text.H5>
-            {isVerified && (<VerifiedView size={12} />)}
+            <VerifiedView size={12} isVerified={isVerified} />
           </View>
           <View style={{ marginVertical: 2 }} />
           <Text.BodyS color={colors.neutral40}>

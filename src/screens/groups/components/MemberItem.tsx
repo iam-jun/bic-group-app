@@ -106,7 +106,7 @@ const MemberItem = ({
             >
               {memberName}
             </Text.BodyMMedium>
-            {isVerified && (<VerifiedView size={12} />)}
+            <VerifiedView size={12} isVerified={isVerified} />
           </View>
           <Text.BodyS
             testID="member_item.username"

@@ -57,7 +57,7 @@ const BlockedUserItem = ({ item }: Props) => {
         <Text.BodyMMedium color={colors.neutral60} numberOfLines={1}>
           {fullname}
         </Text.BodyMMedium>
-        {isVerified && (<VerifiedView size={12} />)}
+        <VerifiedView size={12} isVerified={isVerified} />
       </View>
       <Text.BodyS color={colors.neutral30} numberOfLines={1}>
         @

@@ -56,7 +56,7 @@ const ReviewMarkdown: FC<ReviewMarkdownProps> = ({ testID, onPressDone }) => {
         <View style={styles.flex1}>
           <View style={styles.fullnameContainer}>
             <Text.H6>{fullname}</Text.H6>
-            {isVerified && (<VerifiedView size={12} />)}
+            <VerifiedView size={12} isVerified={isVerified} />
           </View>
           <View style={styles.audienceLine}>
             <Text.BodySMedium

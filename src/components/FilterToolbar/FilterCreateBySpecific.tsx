@@ -90,7 +90,7 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
         <View style={{ flex: 1 }}>
           <Text.BodyM numberOfLines={1} color={colors.neutral60}>{`${getTextNameUserDisplay(item)}`}</Text.BodyM>
         </View>
-        {item?.isVerified && (<VerifiedView size={12} />)}
+        <VerifiedView size={12} isVerified={item?.isVerified} />
       </View>
       {
         item?.id === selectedCreatedBy?.id && (

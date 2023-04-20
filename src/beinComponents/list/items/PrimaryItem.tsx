@@ -116,7 +116,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
               <Text testID="primary_item.title" variant="h6" numberOfLines={2} {...titleProps} style={styles.title}>
                 {title}
               </Text>
-              {isVerified && (<VerifiedView size={12} />)}
+              <VerifiedView size={12} isVerified={isVerified} />
               {isDeactivated && <DeactivatedView style={styles.deactivatedView} />}
             </View>
           )}

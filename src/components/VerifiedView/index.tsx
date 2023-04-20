@@ -8,6 +8,7 @@ import Icon from '~/baseComponents/Icon';
 import useTooltip from '~/components/Tooltip.tsx/stores';
 
 interface Props {
+  isVerified: boolean;
   screenId?: string;
   size?: number;
   style?: StyleProp<ViewStyle>;
@@ -16,13 +17,18 @@ interface Props {
 }
 
 const VerifiedView = ({
+  isVerified,
   screenId,
-  size = 14, style = {}, onPress, onLayout,
+  size = 14,
+  style = {},
+  onPress, onLayout,
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const { colors } = theme;
   const tooltipActions = useTooltip((state) => state.actions);
+
+  if (!isVerified) return null;
 
   const _onLayout = (event: any) => {
     if (onPress && !onLayout) {

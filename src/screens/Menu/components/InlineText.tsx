@@ -55,16 +55,12 @@ const InlineText = ({
     >
       <Text.H5 testID={testID} color={colors.neutral}>
         {`${text} `}
-        {
-            isVerified
-              && (
-              <VerifiedView
-                screenId={screenId}
-                onPress={showTooltip}
-                onLayout={handleVerifiedViewLayout}
-              />
-              )
-          }
+        <VerifiedView
+          isVerified={isVerified}
+          screenId={screenId}
+          onPress={showTooltip}
+          onLayout={handleVerifiedViewLayout}
+        />
       </Text.H5>
     </View>
   );

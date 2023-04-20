@@ -137,11 +137,7 @@ const ContentHeader: FC<ContentHeaderProps> = ({
           >
             {actorName}
           </Text.SubtitleM>
-          {
-            isVerified && (
-              <VerifiedView size={12} />
-            )
-          }
+          <VerifiedView size={12} isVerified={isVerified} />
           {isDeactivated && <DeactivatedView style={styles.deactivatedView} />}
         </Button>
         <View style={styles.textToAudience}>
