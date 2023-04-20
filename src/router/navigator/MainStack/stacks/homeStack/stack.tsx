@@ -10,6 +10,7 @@ const homeStack = {
   createPostSeries: 'create-post-series',
   commentDetail: 'comment-detail',
   pinContent: 'pin-content',
+  reorderedPinContent: 'reordered-pin-content',
 };
 
 export default homeStack;
