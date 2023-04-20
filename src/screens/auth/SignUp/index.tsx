@@ -36,12 +36,13 @@ import SignUpSuccessModal from './components/SignUpSuccessModal';
 import showToastError from '~/store/helper/showToastError';
 import { authErrors } from '~/constants/authConstants';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
+import { hideSplashScreen } from '~/router/helper';
 
 const {
   EMAIL, FULL_NAME, USER_NAME, PASSWORD,
 } = FieldNameType;
 
-const SignUp: FC<SignUpProps> = ({ route }: SignUpProps) => {
+const SignUp: FC<SignUpProps> = ({ route, navigation }: SignUpProps) => {
   const { isValidLink, referralCode } = route?.params || {};
 
   const { rootNavigation } = useRootNavigation();
@@ -65,10 +66,17 @@ const SignUp: FC<SignUpProps> = ({ route }: SignUpProps) => {
     reset,
   } = useFormData;
 
+  useEffect(() => {
+    const unsubscribe = navigation?.addListener('transitionEnd', async () => {
+      await hideSplashScreen();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
   useFocusEffect(
     React.useCallback(
       () => () => {
-        // use for case: change other screen
+        // Use for case: When click other deeplink to change other screen
         modalActions.hideModal();
       },
       [],
@@ -195,7 +203,7 @@ const SignUp: FC<SignUpProps> = ({ route }: SignUpProps) => {
   );
 
   const renderErrorLink = () => (
-    <Text.BodyS color={colors.red40} useI18n>
+    <Text.BodyS testID="sign_up.error_link" color={colors.red40} useI18n>
       auth:text_sign_up_error_link
     </Text.BodyS>
   );
@@ -245,7 +253,7 @@ const SignUp: FC<SignUpProps> = ({ route }: SignUpProps) => {
 
   const renderPrivacy = () => (
     <View style={styles.privacyContainer}>
-      <CheckBox style={styles.checkBox} isChecked={isCheckbox} onPress={onCheckbox} />
+      <CheckBox testID="sign_up.checkbox" style={styles.checkBox} isChecked={isCheckbox} onPress={onCheckbox} />
       <Text style={styles.privacyText}>
         <Text.BodyS color={colors.neutral40} useI18n>
           auth:text_agree_to_our
@@ -259,7 +267,7 @@ const SignUp: FC<SignUpProps> = ({ route }: SignUpProps) => {
 
   const renderButtonSignUp = () => (
     <Button.Primary
-      testID="sign_in.btn_sign_up"
+      testID="sign_up.btn_sign_up"
       style={styles.btnSignUp}
       size="large"
       type="solid"
