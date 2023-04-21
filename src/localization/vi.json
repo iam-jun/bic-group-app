@@ -498,7 +498,7 @@
     "title_feed_attritube_important": "Quan trọng",
     "title_feed_attritube_saved": "Đã lưu",
     "title_feed_attritube_mine": "Của tôi",
-    "title_feed_content_all": "Tất cả",
+    "title_feed_content_all": "Nội dung",
     "title_feed_content_posts": "Bài viết",
     "title_feed_content_articles": "Bài báo",
     "title_feed_content_series": "Series",
@@ -812,7 +812,9 @@
       "text_processing_publish": "Bài viết của bạn đang được biên tập",
       "title_no_draft_articles": "Không có bài nháp",
       "text_no_draft_articles": "Bạn không còn bài nháp nào",
-      "text_draft_article_published": "Bài viết của bạn đã được đăng"
+      "text_draft_article_published": "Bài viết của bạn đã được đăng",
+      "title_no_draft_contents": "Không có bài nháp",
+      "text_no_draft_contents": "Bạn không còn bài nháp nào"
     },
     "comment": {
       "title_delete_comment": "Xoá bình luận",

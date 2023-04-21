@@ -4,7 +4,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Tab from '~/baseComponents/Tab';
 import spacing from '~/theme/spacing';
-import { homeHeaderTabHeight, homeHeaderAttributeContainerHeight } from '~/theme/dimension';
+import { homeHeaderTabHeight, homeHeaderContentContainerHeight } from '~/theme/dimension';
 import { HEADER_CONTENT_FEED_FILTER, HEADER_ATTRIBUTE_FEED_FILTER } from '~/constants/feed';
 import { AttributeFeed, ContentFeed } from '~/interfaces/IFeed';
 
@@ -32,27 +32,29 @@ const FilterFeedButtonGroup: React.FC<FilterFeedButtonGroupProps> = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.tabContainer}>
-        <Tab
-          style={styles.tabs}
-          buttonProps={{
-            size: 'small', type: 'primary', useI18n: true, style: styles.contentFilterTab,
-          }}
-          data={HEADER_CONTENT_FEED_FILTER}
-          type="pill"
-          onPressTab={onPressContentFilterTab}
-          activeIndex={activeContentFilter}
-        />
-      </View>
       <View style={styles.attributeContainer}>
         <Tab
-          style={styles.tabs}
+          style={[styles.tabs, { marginBottom: -spacing.padding.tiny }]}
           buttonProps={{
             size: 'small', type: 'primary', useI18n: true, style: styles.attributeTab,
           }}
           data={HEADER_ATTRIBUTE_FEED_FILTER}
           onPressTab={onPressAttributeFilterTab}
           activeIndex={activeAttributeFilter}
+        />
+      </View>
+      <View style={styles.contentContainer}>
+        <Tab
+          style={styles.tabs}
+          buttonProps={{
+            size: 'medium', useI18n: true, style: styles.contentFilterTab,
+          }}
+          data={HEADER_CONTENT_FEED_FILTER}
+          type="pill"
+          onPressTab={onPressContentFilterTab}
+          activeIndex={activeContentFilter}
+          selectedTypePillTab="primary"
+          unselectedTypePillTab="neutral"
         />
       </View>
     </View>
@@ -66,7 +68,7 @@ const createStyle = (theme: ExtendedTheme) => {
     container: {
       backgroundColor: colors.white,
     },
-    tabContainer: {
+    attributeContainer: {
       height: homeHeaderTabHeight,
       flexDirection: 'row',
       borderBottomWidth: 1,
@@ -82,17 +84,15 @@ const createStyle = (theme: ExtendedTheme) => {
       flexDirection: 'row',
       marginLeft: -spacing.margin.small,
     },
-    attributeContainer: {
-      height: homeHeaderAttributeContainerHeight,
+    contentContainer: {
+      height: homeHeaderContentContainerHeight,
       paddingHorizontal: spacing.padding.large,
     },
     attributeTab: {
       marginLeft: spacing.margin.small,
       paddingHorizontal: spacing.padding.small,
-      paddingVertical: 0,
       alignItems: 'center',
       justifyContent: 'center',
-      borderBottomWidth: 0,
     },
   });
 };

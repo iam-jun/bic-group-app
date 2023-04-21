@@ -10,7 +10,7 @@ import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 
 import {
-  IPayloadGetDraftPosts,
+  IPayloadGetDraftContents,
   IPayloadPublishDraftPost,
   IPost,
   PostStatus,
@@ -27,6 +27,7 @@ import { PostBody, PostHeader, PostImportant } from '~/components/posts';
 import useModalStore from '~/store/modal';
 import showToastError from '~/store/helper/showToastError';
 import useCreatePostStore from '~/screens/post/CreatePost/store';
+import useDraftContentsStore from '../../DraftContents/store';
 
 export interface PostDraftViewProps {
   data: IPost;
@@ -54,6 +55,7 @@ const PostDraftView: FC<PostDraftViewProps> = ({
   const createPostStoreActions = useCreatePostStore((state) => state.actions);
 
   const { actions } = useDraftPostStore();
+  const actionsDraftContentsStore = useDraftContentsStore((state) => state.actions);
   const modalActions = useModalStore((state) => state.actions);
 
   const {
@@ -74,8 +76,9 @@ const PostDraftView: FC<PostDraftViewProps> = ({
 
   const refreshDraftPosts = () => {
     if (userId) {
-      const payload: IPayloadGetDraftPosts = { isRefresh: true };
+      const payload: IPayloadGetDraftContents = { isRefresh: true };
       actions.getDraftPosts(payload);
+      actionsDraftContentsStore.getDraftContents(payload);
     }
   };
 

@@ -536,8 +536,8 @@
     "title_feed_attritube_all": "All",
     "title_feed_attritube_important": "Important",
     "title_feed_attritube_saved": "Saved",
-    "title_feed_attritube_mine": "Mine",
-    "title_feed_content_all": "All",
+    "title_feed_attritube_mine": "My",
+    "title_feed_content_all": "Contents",
     "title_feed_content_posts": "Posts",
     "title_feed_content_articles": "Articles",
     "title_feed_content_series": "Series",
@@ -604,10 +604,10 @@
     "title_report_problem": "Report a problem",
     "title_privacy": "Privacy & Terms",
     "title_logout": "Log out",
-    "title_your_content": "Your Content"
+    "title_your_content": "Your Contents"
   },
   "your_content": {
-    "title_draft": "Draft",
+    "title_draft": "Drafted",
     "title_schedule_article": "Scheduled",
     "title_report_content": "Reported",
     "text_empty": "There are no scheduled content yet!",
@@ -849,7 +849,9 @@
       "text_processing_publish": "Your video post will be ready soon",
       "title_no_draft_articles": "No Draft Articles",
       "text_no_draft_articles": "You have no draft articles left",
-      "text_draft_article_published": "Your article has been published"
+      "text_draft_article_published": "Your article has been published",
+      "title_no_draft_contents": "No Draft Contents",
+      "text_no_draft_contents": "You have no draft contents left"
     },
     "comment": {
       "title_delete_comment": "Delete this comment",

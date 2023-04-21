@@ -16,7 +16,7 @@ describe('getDraftArticles', () => {
       total: 1,
     };
 
-    const spy = jest.spyOn(streamApi, 'getDraftArticles').mockImplementation(
+    const spy = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(
       () => Promise.resolve(response),
     );
 
@@ -49,7 +49,7 @@ describe('getDraftArticles', () => {
       total: 1,
     };
 
-    const spy = jest.spyOn(streamApi, 'getDraftArticles').mockImplementation(
+    const spy = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(
       () => Promise.resolve(response) as any,
     );
 
@@ -80,7 +80,7 @@ describe('getDraftArticles', () => {
   });
 
   it('should not call API when isRefresh = false and cannot load more', () => {
-    const spy = jest.spyOn(streamApi, 'getDraftArticles').mockImplementation(
+    const spy = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(
       () => Promise.resolve({}) as any,
     );
 
@@ -106,7 +106,7 @@ describe('getDraftArticles', () => {
 
   it('should call api get draft articles when isRefresh = true and throws error', () => {
     const error = 'internal error';
-    const spy = jest.spyOn(streamApi, 'getDraftArticles').mockImplementation(
+    const spy = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(
       () => Promise.reject(error) as any,
     );
 

@@ -54,6 +54,7 @@ import { IYourContentState } from '~/screens/YourContent/store';
 import { IMaintenanceState } from './maintenance';
 import { IPinContentState } from '~/components/PinContent/store';
 import { ITermState } from '~/components/TermsModal/store';
+import { IDraftContentsState } from '~/screens/YourContent/components/Draft/DraftContents/store';
 
 export interface BicStore {
   entities: {
@@ -161,6 +162,9 @@ export interface BicStore {
     };
     DraftPost: {
       draftPostStore: IDraftPostState;
+    };
+     DraftContents: {
+      draftContentsStore: IDraftContentsState;
     };
   };
   topic: {

@@ -482,7 +482,7 @@ export interface IPayloadReplying {
   parentComment?: ICommentData;
 }
 
-export interface IParamGetDraftPosts {
+export interface IParamGetDraftContents {
   order?: 'ASC';
   offset?: number;
   limit?: number;
@@ -496,9 +496,10 @@ export interface IParamGetDraftPosts {
   createdAtLte?: string;
   isFailed?: boolean;
   isProcessing?: boolean;
+  type?: PostType;
 }
 
-export interface IPayloadGetDraftPosts {
+export interface IPayloadGetDraftContents {
   isRefresh?: boolean;
   offset?: number;
   isProcessing?: boolean;

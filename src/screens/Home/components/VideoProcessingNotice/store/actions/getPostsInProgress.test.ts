@@ -16,7 +16,7 @@ describe('getPostsInProgress', () => {
     });
 
     jest.useFakeTimers();
-    const spy = jest.spyOn(streamApi, 'getDraftPosts').mockImplementation(() => Promise.resolve(response) as any);
+    const spy = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(() => Promise.resolve(response) as any);
     const { result } = renderHook(() => usePostsInProgressStore((state) => state));
     act(() => {
       result.current.actions.getPosts();
@@ -43,7 +43,7 @@ describe('getPostsInProgress', () => {
     });
 
     jest.useFakeTimers();
-    const spy = jest.spyOn(streamApi, 'getDraftPosts').mockImplementation(() => Promise.resolve(response) as any);
+    const spy = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(() => Promise.resolve(response) as any);
     const { result } = renderHook(() => usePostsInProgressStore((state) => state));
     act(() => {
       result.current.actions.getPosts();
@@ -70,7 +70,7 @@ describe('getPostsInProgress', () => {
     });
 
     jest.useFakeTimers();
-    const spy = jest.spyOn(streamApi, 'getDraftPosts').mockImplementation(() => Promise.resolve(response) as any);
+    const spy = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(() => Promise.resolve(response) as any);
     const { result } = renderHook(() => usePostsInProgressStore((state) => state));
     act(() => {
       result.current.actions.getPosts();
@@ -91,7 +91,7 @@ describe('getPostsInProgress', () => {
     };
 
     jest.useFakeTimers();
-    const spy = jest.spyOn(streamApi, 'getDraftPosts').mockImplementation(() => Promise.resolve(response) as any);
+    const spy = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(() => Promise.resolve(response) as any);
     const { result } = renderHook(() => usePostsInProgressStore((state) => state));
     act(() => {
       result.current.actions.getPosts();
@@ -107,7 +107,7 @@ describe('getPostsInProgress', () => {
 
   it('should get series throw error', () => {
     const error = 'internal error';
-    const spy = jest.spyOn(streamApi, 'getDraftPosts').mockImplementation(() => Promise.reject(error) as any);
+    const spy = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(() => Promise.reject(error) as any);
 
     const errorLog = jest.spyOn(console, 'error').mockImplementation(() => undefined);
 
