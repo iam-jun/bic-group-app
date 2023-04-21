@@ -10,17 +10,27 @@ import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import IMenuController from '../Interface';
 
 const editMyProfile = (_set, get) => async ({
+  isVerified,
   data,
   editFieldToastMessage,
   callback,
 }: {
+  isVerified
   data: IUserEdit;
   editFieldToastMessage?: string;
   callback?: () => void;
 }) => {
   const { actions }: IMenuController = get();
   try {
-    const response = await groupApi.editMyProfile(data);
+    const payload = data;
+    if (!!isVerified) {
+      delete payload?.fullname;
+      delete payload?.gender;
+      delete payload?.birthday;
+    }
+
+    const response = await groupApi.editMyProfile(payload);
+
     useCommonController.getState().actions.setMyProfile(mapProfile(response.data));
 
     // checking if uploading avatar/cover image

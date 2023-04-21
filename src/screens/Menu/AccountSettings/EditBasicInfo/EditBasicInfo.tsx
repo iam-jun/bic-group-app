@@ -82,6 +82,7 @@ const EditBasicInfo = () => {
   const onSave = () => {
     Keyboard.dismiss();
     actions.editMyProfile({
+      isVerified,
       data: {
         id,
         fullname: nameState,
