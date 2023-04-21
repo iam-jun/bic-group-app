@@ -12,6 +12,7 @@ import {
 import {
   IParamGetCommunities,
   IParamGetDiscoverGroups,
+  MembershipAnswerRequestParam,
 } from '~/interfaces/ICommunity';
 import { withHttpRequestPromise } from '~/api/apiRequest';
 import appConfig from '~/configs/appConfig';
@@ -304,10 +305,11 @@ export const groupsApiConfig = {
     method: 'put',
     data: { userIds },
   }),
-  joinGroup: (groupId: string): HttpApiRequestConfig => ({
+  joinGroup: (groupId: string, params?: MembershipAnswerRequestParam): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/join`,
     method: 'post',
+    data: { ...params },
   }),
   cancelJoinGroup: (groupId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -442,10 +444,11 @@ export const groupsApiConfig = {
     url: `${provider.url}communities/${communityId}/groups/discover`,
     params,
   }),
-  joinCommunity: (communityId: string): HttpApiRequestConfig => ({
+  joinCommunity: (communityId: string, params?: MembershipAnswerRequestParam): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}communities/${communityId}/join`,
     method: 'post',
+    data: { ...params },
   }),
   cancelJoinCommunity: (communityId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -528,6 +531,10 @@ export const groupsApiConfig = {
   getGroupTerms: (groupId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/terms`,
+  }),
+  getMembershipQuestions: (groupId: string) : HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/membership-questions`,
   }),
 };
 
@@ -736,7 +743,9 @@ const groupApi = {
   removeGroupMembers: (groupId: string, userIds: string[]) => withHttpRequestPromise(
     groupsApiConfig.removeGroupMembers, groupId, userIds,
   ),
-  joinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.joinGroup, groupId),
+  joinGroup: (groupId: string, params?: MembershipAnswerRequestParam) => withHttpRequestPromise(
+    groupsApiConfig.joinGroup, groupId, params,
+  ),
   cancelJoinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.cancelJoinGroup, groupId),
   leaveGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.leaveGroup, groupId),
   setGroupAdmin: (groupId: string, userId: string) => withHttpRequestPromise(
@@ -792,7 +801,9 @@ const groupApi = {
     communityId,
     params,
   ),
-  joinCommunity: (communityId: string) => withHttpRequestPromise(groupsApiConfig.joinCommunity, communityId),
+  joinCommunity: (communityId: string, params?: MembershipAnswerRequestParam) => withHttpRequestPromise(
+    groupsApiConfig.joinCommunity, communityId, params,
+  ),
   cancelJoinCommunity: (communityId: string) => withHttpRequestPromise(
     groupsApiConfig.cancelJoinCommunity, communityId,
   ),
@@ -832,6 +843,7 @@ const groupApi = {
   validateReferralCode: (param: IParamValidateReferralCode) => withHttpRequestPromise(groupsApiConfig.validateReferralCode, param),
   signUp: (params: IParamsSignUp) => withHttpRequestPromise(groupsApiConfig.signUp, params),
   getGroupTerms: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getGroupTerms, groupId),
+  getMembershipQuestions: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getMembershipQuestions, groupId),
 };
 
 export default groupApi;

@@ -94,6 +94,7 @@ export interface IGroup {
   settings?: {
     isJoinApproval?: boolean;
     isActiveGroupTerms?: boolean;
+    isActiveMembershipQuestions?: boolean;
   };
 }
 
