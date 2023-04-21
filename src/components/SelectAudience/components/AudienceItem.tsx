@@ -12,45 +12,43 @@ interface AudienceItemProps {
 }
 
 const AudienceItem: React.FC<AudienceItemProps> = ({
-    item,
-    shouldCheckboxDisabled,
-    shouldBeChecked,
-    onCheckboxPress,
+  item,
+  shouldCheckboxDisabled,
+  shouldBeChecked,
+  onCheckboxPress,
 }) => {
-    const styles = createStyle();
-    const children = item?.children || [];
+  const styles = createStyle();
+  const children = item?.children || [];
 
-    return (
-        <View style={styles.container}>
-            <AudienceContent
-                shouldCheckboxDisabled={shouldCheckboxDisabled}
-                shouldBeChecked={shouldBeChecked}
-                onPress={onCheckboxPress}
-                style={styles.itemContainer}
-                item={item}
-            />
-            {children.map((child: IGroup) => (
-                <AudienceItem
-                    item={child}
-                    shouldCheckboxDisabled={shouldCheckboxDisabled}
-                    shouldBeChecked={shouldBeChecked}
-                    onCheckboxPress={onCheckboxPress}
-                    key={`audience-item-${child.id}`}
-                />
-            ))}
-        </View>
-    );
+  return (
+    <View style={styles.container}>
+      <AudienceContent
+        shouldCheckboxDisabled={shouldCheckboxDisabled}
+        shouldBeChecked={shouldBeChecked}
+        onPress={onCheckboxPress}
+        style={styles.itemContainer}
+        item={item}
+      />
+      {children.map((child: IGroup) => (
+        <AudienceItem
+          item={child}
+          shouldCheckboxDisabled={shouldCheckboxDisabled}
+          shouldBeChecked={shouldBeChecked}
+          onCheckboxPress={onCheckboxPress}
+          key={`audience-item-${child.id}`}
+        />
+      ))}
+    </View>
+  );
 };
 
-const createStyle = () => {
-    return StyleSheet.create({
-        container: {},
-        itemContainer: {
-            flex: 1,
-            flexDirection: 'row',
-            paddingVertical: spacing.padding.small,
-        },
-    });
-};
+const createStyle = () => StyleSheet.create({
+  container: {},
+  itemContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    paddingVertical: spacing.padding.small,
+  },
+});
 
 export default AudienceItem;

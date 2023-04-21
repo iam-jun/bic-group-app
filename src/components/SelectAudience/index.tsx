@@ -98,7 +98,7 @@ const SelectAudience = ({ contentType }: SelectAudienceProps) => {
   }, [searchKey, contentType]);
 
   const renderItem = ({ item }) => (
-    <AudienceItem 
+    <AudienceItem
       item={item}
       shouldCheckboxDisabled={shouldCheckboxDisabled}
       shouldBeChecked={shouldBeChecked}

@@ -99,31 +99,29 @@ const AudienceContent: FC<GroupItemProps> = ({
   );
 };
 
-const themeStyles = () => {
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    textContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      paddingHorizontal: spacing.padding.base,
-    },
-    row: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    textName: {
-      width: '100%',
-      justifyContent: 'center',
-    },
-    tagContainer: {
-      alignSelf: 'baseline',
-      marginTop: spacing.margin.xTiny,
-    },
-  });
-};
+const themeStyles = () => StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: spacing.padding.base,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  textName: {
+    width: '100%',
+    justifyContent: 'center',
+  },
+  tagContainer: {
+    alignSelf: 'baseline',
+    marginTop: spacing.margin.xTiny,
+  },
+});
 
 export default AudienceContent;
