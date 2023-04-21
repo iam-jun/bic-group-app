@@ -161,6 +161,7 @@ export const getScreenAndParams = (data: {
   contentId: string;
   contentType: string;
   userId: string;
+  seriesId: string;
 }) => {
   if (isEmpty(data)) {
     return null;
@@ -177,6 +178,7 @@ export const getScreenAndParams = (data: {
     contentId = null,
     contentType = '',
     userId = '',
+    seriesId = '',
   } = data || {};
 
   if (type === undefined) {
@@ -305,6 +307,14 @@ export const getScreenAndParams = (data: {
       return null;
     case NOTIFICATION_TYPE.APPROVED_KYC:
       return { screen: mainStack.userProfile, params: { userId } };
+    case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER:
+    case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER_IN_MULTIPLE_GROUPS:
+      return {
+        screen: seriesStack.seriesDetail,
+        params: {
+          seriesId,
+        },
+      };
     default:
       console.warn(`Notification type ${type} have not implemented yet`);
       return { screen: homeStack.postDetail, params: { post_id: postId } };
