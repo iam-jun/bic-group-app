@@ -1,6 +1,7 @@
-import ImagePicker from '~/beinComponents/ImagePicker';
 import { ResourceUploadType } from '~/interfaces/IUpload';
 import { _openImagePicker } from './helper';
+import { FieldNameImageUpload } from '~/interfaces/IGroup';
+import * as permission from '~/utils/permission';
 
 describe('GeneralInformation helper', () => {
   let Platform: any;
@@ -11,13 +12,12 @@ describe('GeneralInformation helper', () => {
 
   it('should _openImagePicker success', () => {
     Platform.OS = 'web';
-    const spy = jest.spyOn(ImagePicker, 'openPickerSingle');
+    const spy = jest.spyOn(permission, 'checkPermission');
 
     const result = _openImagePicker({
-      dispatch: jest.fn(),
       id: '1',
-      fieldName: 'icon',
-      uploadType: ResourceUploadType.userAvatar,
+      fieldName: FieldNameImageUpload.AVATAR,
+      uploadType: ResourceUploadType.groupAvatar,
       destination: 'group',
       rootGroupId: '1',
     });

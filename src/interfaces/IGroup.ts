@@ -112,7 +112,9 @@ export interface IGroupDetailEdit {
   name?: string;
   description?: string | null;
   icon?: string;
+  iconId?: string;
   backgroundImgUrl?: string;
+  backgroundImgUrlId?: string;
   privacy?: GroupPrivacyType;
 }
 
@@ -140,9 +142,14 @@ export interface IParamGetGroupMembers {
   sort?: string;
 }
 
+export enum FieldNameImageUpload {
+  AVATAR = 'iconId',
+  BACKGROUND = 'backgroundImgId',
+}
+
 export interface IGroupImageUpload {
   id: string;
-  fieldName: 'icon' | 'backgroundImgUrl';
+  fieldName: FieldNameImageUpload;
   file: IFilePicked;
   uploadType: ResourceUploadType;
   destination: 'group' | 'community';

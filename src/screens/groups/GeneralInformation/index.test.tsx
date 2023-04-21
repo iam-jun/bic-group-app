@@ -1,5 +1,4 @@
 import React from 'react';
-import * as redux from 'react-redux';
 import MockedNavigator from '~/test/MockedNavigator';
 import { groupDetailData } from '~/test/mock_data/group';
 import { myPermissionsData } from '~/test/mock_data/myPermissions';
@@ -7,17 +6,11 @@ import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import GeneralInformation from '.';
 import * as helper from './helper';
 import useMyPermissionsStore from '~/store/permissions';
+import { FieldNameImageUpload } from '~/interfaces/IGroup';
+import { ResourceUploadType } from '~/interfaces/IUpload';
 
 describe('GeneralInformation component', () => {
-  const component = () => (
-    <GeneralInformation route={{ params: { id: groupDetailData.group.id, type: 'group' } }} />
-  );
-  const useDispatchSpy = jest.spyOn(redux, 'useDispatch');
-  const mockDispatchFn = jest.fn();
-
-  beforeEach(() => {
-    useDispatchSpy.mockReturnValue(mockDispatchFn);
-  });
+  const component = () => <GeneralInformation route={{ params: { id: groupDetailData.group.id, type: 'group' } }} />;
 
   it('renders correctly', () => {
     const rendered = renderWithRedux(<MockedNavigator component={component} />);
@@ -39,10 +32,9 @@ describe('GeneralInformation component', () => {
     fireEvent.press(button);
 
     expect(_openImagePicker).toBeCalledWith({
-      dispatch: mockDispatchFn,
       id: groupDetailData.group.id,
-      fieldName: 'icon',
-      uploadType: 'group_avatar',
+      fieldName: FieldNameImageUpload.AVATAR,
+      uploadType: ResourceUploadType.groupAvatar,
       destination: 'group',
       rootGroupId: groupDetailData.group.id,
     });
@@ -61,12 +53,21 @@ describe('GeneralInformation component', () => {
     fireEvent.press(button);
 
     expect(_openImagePicker).toBeCalledWith({
-      dispatch: mockDispatchFn,
       id: groupDetailData.group.id,
-      fieldName: 'backgroundImgUrl',
-      uploadType: 'group_cover',
+      fieldName: FieldNameImageUpload.BACKGROUND,
+      uploadType: ResourceUploadType.groupCover,
       destination: 'group',
       rootGroupId: groupDetailData.group.id,
     });
+  });
+
+  it('renders case community correctly', () => {
+    const component = () => (
+      <GeneralInformation route={{ params: { id: groupDetailData.group.id, type: 'community' } }} />
+    );
+    const rendered = renderWithRedux(<MockedNavigator component={component} />);
+    const screenComponent = rendered.queryByTestId('general_information');
+
+    expect(screenComponent).not.toBeNull();
   });
 });

@@ -2,7 +2,6 @@ import i18next from 'i18next';
 import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { ResourceUploadType } from '~/interfaces/IUpload';
@@ -19,6 +18,7 @@ import { PermissionKey } from '~/constants/permissionScheme';
 import useGroupDetailStore from '../GroupDetail/store';
 import useGroupsStore from '~/store/entities/groups';
 import groupsSelector from '~/store/entities/groups/selectors';
+import { FieldNameImageUpload } from '~/interfaces/IGroup';
 
 const GeneralInformation = (props: any) => {
   const { params } = props.route;
@@ -28,7 +28,6 @@ const GeneralInformation = (props: any) => {
   const { colors } = theme;
   const styles = createStyles(theme);
 
-  const dispatch = useDispatch();
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
   const { getGroupDetail } = useGroupDetailStore((state) => state.actions);
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
@@ -80,18 +79,16 @@ const GeneralInformation = (props: any) => {
   const getCommunityDetail = () => actions.getCommunity(id);
 
   const onEditAvatar = () => _openImagePicker({
-    dispatch,
     id,
-    fieldName: 'icon',
+    fieldName: FieldNameImageUpload.AVATAR,
     uploadType: ResourceUploadType.groupAvatar,
     destination: type,
     rootGroupId,
   });
 
   const onEditCover = () => _openImagePicker({
-    dispatch,
     id,
-    fieldName: 'backgroundImgUrl',
+    fieldName: FieldNameImageUpload.BACKGROUND,
     uploadType: ResourceUploadType.groupCover,
     destination: type,
     rootGroupId,
