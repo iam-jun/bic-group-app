@@ -5,16 +5,15 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import SelectedAudiences from './SelectedAudiences';
+import SelectedAudiences from './components/SelectedAudiences';
+import AudienceItem from './components/AudienceItem';
 import { useBaseHook } from '~/hooks';
 import { IGroup } from '~/interfaces/IGroup';
 import spacing, { padding } from '~/theme/spacing';
 import SearchInput from '../../baseComponents/Input/SearchInput';
 import useSelectAudienceStore from './store/index';
 import NoSearchResultsFound from '../NoSearchResultsFound';
-import GroupTreeItem from '../groups/GroupTreeItem';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import GroupItem from '../groups/GroupItem';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import useMounted from '~/hooks/mounted';
 import useGroupTreeStore from '../groups/store';
@@ -72,6 +71,8 @@ const SelectAudience = ({ contentType }: SelectAudienceProps) => {
 
   const ListEmptyComponent = loading ? null : <NoSearchResultsFound />;
 
+  const ListHeaderComponent = (<ViewSpacing height={padding.small} />);
+
   const ListFooterComponent = (
     <View style={styles.footer}>
       {loading && (
@@ -96,18 +97,14 @@ const SelectAudience = ({ contentType }: SelectAudienceProps) => {
     return !searchKey && !item.canCreateSeries;
   }, [searchKey, contentType]);
 
-  const renderItem = ({ item }) => {
-    const ItemComponent = !!searchKey ? GroupItem : GroupTreeItem;
-
-    return (
-      <ItemComponent
-        item={item}
-        shouldCheckboxDisabled={shouldCheckboxDisabled}
-        shouldBeChecked={shouldBeChecked}
-        onCheckboxPress={onCheckboxPress}
-      />
-    );
-  };
+  const renderItem = ({ item }) => (
+    <AudienceItem 
+      item={item}
+      shouldCheckboxDisabled={shouldCheckboxDisabled}
+      shouldBeChecked={shouldBeChecked}
+      onCheckboxPress={onCheckboxPress}
+    />
+  );
 
   const keyExtractor = (item: IGroup, index: number) => `audience_list_${item?.id}_${index}`;
 
@@ -127,6 +124,7 @@ const SelectAudience = ({ contentType }: SelectAudienceProps) => {
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         ListEmptyComponent={ListEmptyComponent}
+        ListHeaderComponent={ListHeaderComponent}
         ListFooterComponent={ListFooterComponent}
         ItemSeparatorComponent={renderItemSeperator}
       />
@@ -148,6 +146,7 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingHorizontal: padding.large,
     },
     footer: {
+      marginTop: spacing.margin.large,
       marginBottom: spacing.margin.large,
     },
   });
