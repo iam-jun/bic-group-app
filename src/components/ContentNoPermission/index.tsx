@@ -16,7 +16,7 @@ interface ContentNoPermissionProps {
 }
 
 const ContentNoPermission:React.FC<ContentNoPermissionProps> = ({
-  onContentLayout = () => {},
+  onContentLayout,
   data,
 }) => {
   const theme: ExtendedTheme = useTheme();
@@ -67,7 +67,7 @@ const ContentNoPermission:React.FC<ContentNoPermissionProps> = ({
         </Text.H3>
         <Text.BodyS style={styles.message}>
           { message }
-          { requireGroups?.length > 0 && ': ' }
+          { (requireGroups?.length || 0) > 0 && ': ' }
         </Text.BodyS>
         <Text.H6 style={styles.textGroups}>
           {renderRequiredGroups()}
