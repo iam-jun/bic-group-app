@@ -80,7 +80,7 @@ const GeneralInformation = (props: any) => {
 
   const onEditAvatar = () => _openImagePicker({
     id,
-    fieldName: FieldNameImageUpload.AVATAR,
+    fieldName: FieldNameImageUpload.ICON,
     uploadType: ResourceUploadType.groupAvatar,
     destination: type,
     rootGroupId,
@@ -88,7 +88,7 @@ const GeneralInformation = (props: any) => {
 
   const onEditCover = () => _openImagePicker({
     id,
-    fieldName: FieldNameImageUpload.BACKGROUND,
+    fieldName: FieldNameImageUpload.BACKGROUND_IMG,
     uploadType: ResourceUploadType.groupCover,
     destination: type,
     rootGroupId,

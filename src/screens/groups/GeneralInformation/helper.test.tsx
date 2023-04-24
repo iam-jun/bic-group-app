@@ -16,7 +16,7 @@ describe('GeneralInformation helper', () => {
 
     const result = _openImagePicker({
       id: '1',
-      fieldName: FieldNameImageUpload.AVATAR,
+      fieldName: FieldNameImageUpload.ICON,
       uploadType: ResourceUploadType.groupAvatar,
       destination: 'group',
       rootGroupId: '1',

@@ -29,7 +29,7 @@ const uploadImage = (_set, get) => async (payload: IGroupImageUpload) => {
 
     const editData = { id, rootGroupId, [fieldName]: idFile };
     const editFieldName
-      = fieldName === FieldNameImageUpload.AVATAR ? i18next.t('common:text_avatar') : i18next.t('common:text_cover');
+      = fieldName === FieldNameImageUpload.ICON ? i18next.t('common:text_avatar') : i18next.t('common:text_cover');
 
     if (destination === 'group') {
       await editGroupDetail(editData, editFieldName);
@@ -64,7 +64,7 @@ function updateLoadingImageState(payload: {
   const {
     fieldName, value, setLoadingAvatar, setLoadingCover,
   } = payload;
-  if (fieldName === FieldNameImageUpload.AVATAR) {
+  if (fieldName === FieldNameImageUpload.ICON) {
     setLoadingAvatar(value);
   } else {
     setLoadingCover(value);

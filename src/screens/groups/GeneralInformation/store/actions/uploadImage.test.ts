@@ -9,7 +9,7 @@ import groupApi from '~/api/GroupApi';
 describe('uploadImage', () => {
   const payload = {
     destination: 'group' as const,
-    fieldName: FieldNameImageUpload.AVATAR,
+    fieldName: FieldNameImageUpload.ICON,
     file: {
       filename: '6E914741-2429-4D3C-97D1-28B7CED0B04E.jpg',
       height: 200,
@@ -87,7 +87,7 @@ describe('uploadImage', () => {
   });
 
   it('should uploadImage community success:', () => {
-    const payloadClone = { ...payload, destination: 'community' as const, fieldName: FieldNameImageUpload.BACKGROUND };
+    const payloadClone = { ...payload, destination: 'community' as const, fieldName: FieldNameImageUpload.BACKGROUND_IMG };
     useUploaderStore.setState((state) => {
       state.uploadedFiles = { [item.name]: item };
       return state;

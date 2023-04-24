@@ -33,7 +33,7 @@ describe('GeneralInformation component', () => {
 
     expect(_openImagePicker).toBeCalledWith({
       id: groupDetailData.group.id,
-      fieldName: FieldNameImageUpload.AVATAR,
+      fieldName: FieldNameImageUpload.ICON,
       uploadType: ResourceUploadType.groupAvatar,
       destination: 'group',
       rootGroupId: groupDetailData.group.id,
@@ -54,7 +54,7 @@ describe('GeneralInformation component', () => {
 
     expect(_openImagePicker).toBeCalledWith({
       id: groupDetailData.group.id,
-      fieldName: FieldNameImageUpload.BACKGROUND,
+      fieldName: FieldNameImageUpload.BACKGROUND_IMG,
       uploadType: ResourceUploadType.groupCover,
       destination: 'group',
       rootGroupId: groupDetailData.group.id,
