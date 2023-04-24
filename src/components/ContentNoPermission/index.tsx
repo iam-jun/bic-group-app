@@ -48,7 +48,7 @@ const ContentNoPermission:React.FC<ContentNoPermissionProps> = ({
     return (requireGroups?.map((item, index) => (
       <Text.H6 key={`required_groups_${item?.id}`} onPress={() => goToAudienceDetail(item)}>
         { item?.name }
-        {index === (requireGroups?.length - 1) ? '.' : ', ' }
+        {index === (Number(requireGroups?.length) - 1) ? '.' : ', ' }
       </Text.H6>
     )));
   };
@@ -67,7 +67,7 @@ const ContentNoPermission:React.FC<ContentNoPermissionProps> = ({
         </Text.H3>
         <Text.BodyS style={styles.message}>
           { message }
-          { (requireGroups?.length || 0) > 0 && ': ' }
+          { requireGroups?.length > 0 && ': ' }
         </Text.BodyS>
         <Text.H6 style={styles.textGroups}>
           {renderRequiredGroups()}
