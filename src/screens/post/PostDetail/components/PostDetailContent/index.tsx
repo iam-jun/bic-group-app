@@ -181,7 +181,7 @@ const _PostDetailContent = (props) => {
         data={errorContent}
         onContentLayout={props?.onContentLayout}
       />
-    )
+    );
   }
 
   const renderContent = () => {

@@ -194,7 +194,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     code === APIErrorCode.Post.CONTENT_GROUP_REQUIRED
     || code === APIErrorCode.Post.ARTICLE_NO_READ_PERMISSION
   )) {
-    return <ContentNoPermission data={errorContent} />
+    return <ContentNoPermission data={errorContent} />;
   }
 
   if (isError && (

@@ -87,8 +87,7 @@ const getPostDetail = (_set, get) => async (payload: IPayloadGetPostDetail) => {
         message: e?.meta?.message || '',
         requireGroups: e?.meta?.errors?.requireGroups || [],
       });
-    } 
-    else {
+    } else {
       callbackLoading?.(false, false);
       showToastError(e);
     }
