@@ -214,6 +214,9 @@
       "title": "This content isn’t available right now",
       "content": "When this happens, it’s usually because the owner only shared it with a small group of people, changed who can see it or it’s been deleted."
     },
+    "content_no_permission": {
+      "title": "Restricted permission!"
+    },
     "text_date": "Date",
     "text_time": "Time",
     "text_no_data": "No data",

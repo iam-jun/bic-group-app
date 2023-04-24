@@ -61,12 +61,11 @@ const getPostDetail = (_set, get) => async (payload: IPayloadGetPostDetail) => {
       data: response || {},
       handleComment: true,
     } as IPayloadAddToAllPost);
+    actions.addToErrorContents(postId, { isError: false });
     callbackLoading?.(false, true);
     actions.setIsLoadingGetPostDetail(false);
   } catch (e: any) {
     actions.setIsLoadingGetPostDetail(false);
-    callbackLoading?.(false, false);
-
     if (
       e?.code === APIErrorCode.Post.POST_DELETED
       || e?.code === APIErrorCode.Post.POST_PRIVACY
@@ -78,7 +77,19 @@ const getPostDetail = (_set, get) => async (payload: IPayloadGetPostDetail) => {
           content: 'post:error_post_detail_deleted',
         });
       }
-    } else {
+    } else if (
+      e?.code === APIErrorCode.Post.CONTENT_GROUP_REQUIRED
+      || e?.code === APIErrorCode.Post.POST_NO_READ_PERMISSION
+    ) {
+      actions.addToErrorContents(postId, {
+        isError: true,
+        code: e?.code,
+        message: e?.meta?.message || '',
+        requireGroups: e?.meta?.errors?.requireGroups || [],
+      });
+    } 
+    else {
+      callbackLoading?.(false, false);
       showToastError(e);
     }
   }
