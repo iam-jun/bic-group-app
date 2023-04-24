@@ -104,9 +104,9 @@ const MemberItem = ({
               color={colors.neutral60}
               numberOfLines={1}
             >
-              {memberName}
+              {`${memberName} `}
+              <VerifiedView size={12} isVerified={isVerified} />
             </Text.BodyMMedium>
-            <VerifiedView size={12} isVerified={isVerified} />
           </View>
           <Text.BodyS
             testID="member_item.username"

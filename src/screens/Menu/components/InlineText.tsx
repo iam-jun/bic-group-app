@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import VerifiedView from '~/components/VerifiedView';
 import Text from '~/baseComponents/Text';
 import useTooltip from '../../../components/Tooltip.tsx/stores';
-import spacing from '~/theme/spacing';
+import { spacing } from '~/theme';
 
 interface Props {
     text: string,
@@ -21,22 +21,26 @@ const InlineText = ({
   const { colors } = theme;
   const tooltipActions = useTooltip((state) => state.actions);
 
-  const [containerX, setContainerX] = useState(0);
+  const [containerPosition, setContainerPosition] = useState(null);
   const [verifiedViewPosition, setVerifiedViewPosition] = useState(null);
 
   useEffect(() => {
-    if (verifiedViewPosition?.width > 0 && containerX > 0) {
+    if (verifiedViewPosition?.width > 0 && containerPosition?.width > 0) {
+      const newX = Platform.OS === 'ios' ? ((containerPosition?.x || 0) + (verifiedViewPosition?.x || 0)) + spacing.margin.large
+        : ((containerPosition?.x || 0)
+        + (containerPosition?.width || 0)
+        - (verifiedViewPosition?.x || 0) + spacing.margin.xSmall);
       tooltipActions.setViewPosition(screenId, {
         width: verifiedViewPosition?.width,
-        x: containerX + (verifiedViewPosition?.x || 0) + spacing.margin.large,
+        x: newX,
       });
     }
-  }, [verifiedViewPosition, containerX]);
+  }, [verifiedViewPosition, containerPosition]);
 
   const key = useMemo(() => new Date().getTime(), [text]);
 
   const handleLayout = (e: any) => {
-    setContainerX(e.nativeEvent.layout.x);
+    setContainerPosition(e.nativeEvent.layout);
   };
 
   const handleVerifiedViewLayout = (e: any) => {

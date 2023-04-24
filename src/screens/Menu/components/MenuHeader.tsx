@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {
-  View, StyleSheet, TouchableOpacity,
+  View, StyleSheet, TouchableOpacity, Platform,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
@@ -20,6 +20,8 @@ const ICON_SIZE = 14;
 
 const MenuHeader = ({ screenId }:{screenId: string}) => {
   const theme: ExtendedTheme = useTheme();
+  const insets = useSafeAreaInsets();
+
   const { colors } = theme;
   const styles = createStyle(theme);
   const { rootNavigation } = useRootNavigation();
@@ -41,8 +43,12 @@ const MenuHeader = ({ screenId }:{screenId: string}) => {
   };
 
   const handleLayout = (e: any) => {
+    const newY = Platform.OS === 'ios'
+      ? (insets.bottom > 0 ? e.nativeEvent.layout.y + ICON_SIZE
+        : e.nativeEvent.layout.y - e.nativeEvent.layout.height + spacing.margin.xSmall)
+      : e.nativeEvent.layout.y - spacing.margin.xSmall;
     tooltipActions.setViewPosition(screenId, {
-      y: e.nativeEvent.layout.y + ICON_SIZE || 0,
+      y: newY || 0,
     });
   };
 
