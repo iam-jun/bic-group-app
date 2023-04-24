@@ -41,8 +41,8 @@ const HeaderPinContentItem: React.FC<HeaderPinContentItemProps> = ({
         <View style={styles.boxName}>
           <ViewSpacing height={spacing.margin.xTiny} />
           <View style={styles.fullNameContainer}>
-            <Text.SubtitleM color={colors.neutral60} numberOfLines={1}>
-              { fullname }
+            <Text.SubtitleM color={colors.neutral60} numberOfLines={1} style={styles.flex1}>
+              {fullname}
             </Text.SubtitleM>
             <VerifiedView size={12} isVerified={isVerified} />
           </View>
@@ -96,6 +96,9 @@ const styles = StyleSheet.create({
   fullNameContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  flex1: {
+    flex: 1,
   },
 });
 
