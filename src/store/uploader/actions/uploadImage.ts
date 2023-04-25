@@ -57,7 +57,7 @@ const uploadImage = (set, _get) => async (data: IUploadParam) => {
           throw new Error(getErrorMessageFromResponse(responseGetStatus));
         }
 
-        if (responseGetStatus?.data?.data?.url) {
+        if (responseGetStatus?.data?.data?.status === 'DONE' && responseGetStatus?.data?.data?.url) {
           const result: IGetFile = {
             id: responseGetStatus?.data?.data?.id,
             url: responseGetStatus?.data?.data?.url,
@@ -72,6 +72,10 @@ const uploadImage = (set, _get) => async (data: IUploadParam) => {
             state.uploadedFiles[file.name] = result;
             state.uploadingFiles?.[file.name] && delete state.uploadingFiles?.[file.name];
           }, 'action uploadImage success');
+        } else {
+          set((state: IUploaderState) => {
+            state.errors[file.name] = i18next.t('upload:text_upload_request_failed');
+          }, 'action uploadImage error');
         }
       }
     }
