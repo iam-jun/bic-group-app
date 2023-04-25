@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react';
-import { StyleSheet, Keyboard, View } from 'react-native';
+import {
+  StyleSheet, Keyboard, View,
+} from 'react-native';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/baseComponents/Text';
@@ -103,10 +105,11 @@ const MemberItem = ({
               ellipsizeMode="middle"
               color={colors.neutral60}
               numberOfLines={1}
+              style={{ flexShrink: 1 }}
             >
-              {`${memberName} `}
-              <VerifiedView size={12} isVerified={isVerified} />
+              {memberName}
             </Text.BodyMMedium>
+            <VerifiedView size={12} isVerified={isVerified} />
           </View>
           <Text.BodyS
             testID="member_item.username"
@@ -118,7 +121,7 @@ const MemberItem = ({
         </>
       )}
       RightComponent={(
-        <>
+        <View style={styles.row}>
           {canSendMessage && (
             <Icon
               icon="CommentDotsSolid"
@@ -131,7 +134,7 @@ const MemberItem = ({
             />
           )}
           {renderButtonMenu()}
-        </>
+        </View>
       )}
     />
   );
@@ -157,6 +160,9 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  flex1: {
+    flex: 1,
   },
 });
 
