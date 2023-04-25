@@ -10,23 +10,23 @@ import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 import { useUserIdAuth } from '~/hooks/auth';
-import { IPayloadGetDraftContents } from '~/interfaces/IPost';
+import { IPayloadGetDraftContents, PostType } from '~/interfaces/IPost';
 import images from '~/resources/images';
 import useNetworkStore from '~/store/network';
 import networkSelectors from '~/store/network/selectors';
 import dimension, { homeHeaderTabHeight, homeHeaderContentContainerHeight } from '~/theme/dimension';
-
 import spacing from '~/theme/spacing';
-import PostDraftView from './components/PostDraftView';
-import useDraftPostStore from './store';
+import useDraftContentsStore from './store';
+import DraftArticleView from '../DraftArticle/components/DraftArticleView';
+import PostDraftView from '../DraftPost/components/PostDraftView';
 
 const HeaderFilterHeight = homeHeaderTabHeight + homeHeaderContentContainerHeight;
 
-interface DraftPostProps {
+interface DraftContentsProps {
   onScroll: (e: any) => void;
 }
 
-const DraftPost: React.FC<DraftPostProps> = ({ onScroll }) => {
+const DraftContents: React.FC<DraftContentsProps> = ({ onScroll }) => {
   const [lossInternet, setLossInternet] = useState(false);
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -35,8 +35,8 @@ const DraftPost: React.FC<DraftPostProps> = ({ onScroll }) => {
   const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   const {
-    posts: draftPosts = [], hasNextPage, refreshing, actions,
-  } = useDraftPostStore();
+    posts: draftContents = [], hasNextPage, refreshing, actions,
+  } = useDraftContentsStore();
 
   useEffect(() => {
     getData(true);
@@ -58,7 +58,7 @@ const DraftPost: React.FC<DraftPostProps> = ({ onScroll }) => {
       const payload: IPayloadGetDraftContents = {
         isRefresh: isRefreshing,
       };
-      actions.getDraftPosts(payload);
+      actions.getDraftContents(payload);
     }
   };
 
@@ -70,7 +70,19 @@ const DraftPost: React.FC<DraftPostProps> = ({ onScroll }) => {
     getData(false);
   };
 
-  const renderItem = ({ item }: any) => <PostDraftView data={item} />;
+  const renderItem = ({ item }: any) => {
+    const { type } = item;
+
+    if (type === PostType.POST) {
+      return <PostDraftView data={item} />;
+    }
+
+    if (type === PostType.ARTICLE) {
+      return <DraftArticleView data={item} />;
+    }
+
+    return null;
+  };
 
   const renderHeader = () => (
     <View style={styles.header}>
@@ -81,7 +93,7 @@ const DraftPost: React.FC<DraftPostProps> = ({ onScroll }) => {
   const renderFooter = () => (
     <View>
       {hasNextPage && !refreshing && (
-        <View testID="draft_post.load_more_view" style={styles.listFooter}>
+        <View style={styles.listFooter}>
           <ActivityIndicator color={colors.gray20} />
         </View>
       )}
@@ -95,13 +107,13 @@ const DraftPost: React.FC<DraftPostProps> = ({ onScroll }) => {
     if (hasNextPage) return null;
 
     return (
-      <View testID="draft_post.empty_view" style={styles.emptyContainer}>
+      <View style={styles.emptyContainer}>
         <Image source={images.img_empty_draft} style={styles.imgEmpty} />
         <Text.H6 useI18n color={colors.gray50}>
-          post:draft:title_no_draft_posts
+          post:draft:title_no_draft_contents
         </Text.H6>
         <Text useI18n color={colors.gray50}>
-          post:draft:text_no_draft_posts
+          post:draft:text_no_draft_contents
         </Text>
       </View>
     );
@@ -113,9 +125,9 @@ const DraftPost: React.FC<DraftPostProps> = ({ onScroll }) => {
 
   return (
     <Animated.FlatList
-      testID="draft_post.list"
+      testID="draft_contents.list"
       style={styles.listContainer}
-      data={draftPosts}
+      data={draftContents}
       renderItem={renderItem}
       ItemSeparatorComponent={renderSeparatorComponent}
       ListHeaderComponent={renderHeader}
@@ -159,4 +171,4 @@ const createStyle = () => StyleSheet.create({
   },
 });
 
-export default DraftPost;
+export default DraftContents;

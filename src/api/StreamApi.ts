@@ -4,7 +4,7 @@ import { makeHttpRequest, withHttpRequestPromise } from '~/api/apiRequest';
 import {
   IParamDeleteReaction,
   ICommentData,
-  IParamGetDraftPosts,
+  IParamGetDraftContents,
   IParamGetPostAudiences,
   IParamGetPostDetail,
   IParamGetReactionDetail,
@@ -31,7 +31,6 @@ import {
   IParamGetArticleDetail,
   IParamGetArticles,
   IParamGetCategories,
-  IParamGetDraftArticles,
   IParamPutEditArticle,
   IParamsGetArticleScheduleContent,
   IParamsValidateSeriesTags,
@@ -111,13 +110,14 @@ export const streamApiConfig = {
       params: restParams,
     };
   },
-  getDraftPosts: (params: IParamGetDraftPosts): HttpApiRequestConfig => ({
+  getDraftContents: (params: IParamGetDraftContents): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}posts/draft`,
+    url: `${provider.url}content/draft`,
     params: {
       offset: params?.offset || 0,
       limit: params?.limit || 10,
       isProcessing: params?.isProcessing || false,
+      type: params?.type,
     },
   }),
   postCreateNewPost: (data: IPostCreatePost): HttpApiRequestConfig => ({
@@ -373,15 +373,6 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}series`,
     params,
-  }),
-  getDraftArticles: (params: IParamGetDraftArticles): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}articles/draft`,
-    params: {
-      offset: params?.offset || 0,
-      limit: params?.limit || 10,
-      isProcessing: params?.isProcessing || false,
-    },
   }),
   publishDraftArticle: (draftArticleId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -670,10 +661,10 @@ const streamApi = {
     };
     return withHttpRequestPromise(streamApiConfig.getPostDetail, requestParams);
   },
-  getDraftPosts: async (param: IParamGetDraftPosts) => {
+  getDraftContents: async (param: IParamGetDraftContents) => {
     try {
       const response: any = await makeHttpRequest(
-        streamApiConfig.getDraftPosts(param),
+        streamApiConfig.getDraftContents(param),
       );
       if (response && response?.data?.data) {
         return Promise.resolve({
@@ -710,25 +701,6 @@ const streamApi = {
   getArticleDetailByAdmin: (id: string, params?: IParamGetArticleDetail) => withHttpRequestPromise(
     streamApiConfig.getArticleDetailByAdmin, id, params,
   ),
-  getDraftArticles: async (param: IParamGetDraftArticles) => {
-    try {
-      const response: any = await makeHttpRequest(
-        streamApiConfig.getDraftArticles(param),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve({
-          data: response?.data?.data?.list || [],
-          canLoadMore:
-            (param?.offset || 0) + (param?.limit || DEFAULT_LIMIT)
-            <= response?.data?.data?.meta?.total,
-          total: response?.data?.data?.meta?.total,
-        });
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
   publishDraftArticle: (draftArticleId: string) => withHttpRequestPromise(
     streamApiConfig.publishDraftArticle, draftArticleId,
   ),

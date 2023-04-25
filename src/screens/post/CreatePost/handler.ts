@@ -5,6 +5,7 @@ import showAlert from '~/store/helper/showAlert';
 import showToast from '~/store/helper/showToast';
 
 import useDraftPostStore from '../../YourContent/components/Draft/DraftPost/store';
+import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftContents/store';
 
 export const handleBack = ({
   isEditPost,
@@ -52,6 +53,7 @@ export const handleBack = ({
       return;
     }
     useDraftPostStore.getState().actions.getDraftPosts({ isRefresh: true });
+    useDraftContentsStore.getState().actions.getDraftContents({ isRefresh: true });
     showToast({
       content: 'post:saved_to_draft',
       buttonText: isEditDraftPost ? i18next.t('home:draft_post') : '',
