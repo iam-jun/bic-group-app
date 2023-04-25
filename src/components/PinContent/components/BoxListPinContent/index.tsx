@@ -9,7 +9,7 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import usePinContentStore from '../../store';
 import Text from '~/baseComponents/Text';
-import { spacing } from '~/theme';
+import { dimension, spacing } from '~/theme';
 import PinContentItem from './components/PinContentItem';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import useMyPermissionsStore from '~/store/permissions';
@@ -37,7 +37,10 @@ const BoxListPinContent: React.FC<BoxListPinContentProps> = ({ id }) => {
   const styles = createStyles(theme);
 
   const renderItem = ({ item }) => (
-    <PinContentItem contentId={item} isAdmin={isAdmin} id={id} />
+    <View style={styles.containerItem}>
+      <PinContentItem contentId={item} isAdmin={isAdmin} id={id} />
+    </View>
+
   );
 
   const renderHeaderComponent = () => (
@@ -92,14 +95,14 @@ const BoxListPinContent: React.FC<BoxListPinContentProps> = ({ id }) => {
   );
 };
 
+const MaxWidthItem = dimension.deviceWidth * 0.8;
+
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
 
   return StyleSheet.create({
     container: {
       backgroundColor: colors.purple1,
-      paddingBottom: spacing.padding.large,
-      height: 280,
       marginVertical: spacing.margin.large,
     },
     boxTitle: {
@@ -111,6 +114,11 @@ const createStyles = (theme: ExtendedTheme) => {
       height: 60,
       alignContent: 'center',
       justifyContent: 'center',
+    },
+    containerItem: {
+      marginBottom: spacing.padding.large,
+      height: 280,
+      width: MaxWidthItem,
     },
   });
 };

@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { ExtendedTheme, useRoute, useTheme } from '@react-navigation/native';
 import Text from '~/baseComponents/Text';
 import TimeView from '~/beinComponents/TimeView';
-import SvgIcon from '~/baseComponents/Icon/SvgIcon';
 import { IPost } from '~/interfaces/IPost';
-import { Avatar, Button } from '~/baseComponents';
+import { Avatar } from '~/baseComponents';
 import { spacing } from '~/theme';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import UnPin from '../../../../../../../assets/icons/un_pin.svg';
 import usePinContentItemMenu from './usePinContentItemMenu';
+import Icon from '~/baseComponents/Icon';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 
 interface HeaderPinContentItemProps {
   data: IPost;
@@ -24,6 +24,9 @@ const HeaderPinContentItem: React.FC<HeaderPinContentItemProps> = ({
 }) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
+
+  const { name } = useRoute();
+  const isReorderScreen = name === homeStack.reorderedPinContent;
 
   const { createdAt, actor } = data || {};
   const { avatar, fullname } = actor || {};
@@ -47,18 +50,20 @@ const HeaderPinContentItem: React.FC<HeaderPinContentItemProps> = ({
           <ViewSpacing height={spacing.margin.xTiny} />
         </View>
       </View>
-      {isAdmin && (
-        <Button
-          testID="header_pin_content_item.unpin_button"
-          onPress={showMenu}
-          style={styles.btnUnpin}
-        >
-          <SvgIcon
-            source={UnPin}
-            width={18}
-            height={16}
-          />
-        </Button>
+      {isAdmin && !isReorderScreen && (
+      <Icon
+        testID="header_pin_content_item.menu_button"
+        icon="Ellipsis"
+        onPress={showMenu}
+        size={18}
+        tintColor={colors.neutral40}
+        hitSlop={{
+          top: 20,
+          bottom: 20,
+          left: 20,
+          right: 20,
+        }}
+      />
       )}
     </View>
   );
@@ -80,9 +85,6 @@ const styles = StyleSheet.create({
   boxName: {
     flex: 1,
     marginLeft: spacing.margin.small,
-  },
-  btnUnpin: {
-    padding: spacing.padding.tiny,
   },
 });
 

@@ -539,6 +539,12 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}feeds/group/${id}/pinned`,
   }),
+  reorderPinContentGroup: (reorderedPinContent: string[], groupId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}content/group/${groupId}/reorder`,
+    method: 'post',
+    data: reorderedPinContent,
+  }),
 };
 
 const streamApi = {
@@ -852,6 +858,9 @@ const streamApi = {
     streamApiConfig.getPinnableAudiences, postId,
   ),
   getPinContentsGroup: (id: string) => withHttpRequestPromise(streamApiConfig.getPinContentsGroup, id),
+  reorderPinContentGroup: (reorderedPinContent: string[], groupId: string) => withHttpRequestPromise(
+    streamApiConfig.reorderPinContentGroup, reorderedPinContent, groupId,
+  ),
 };
 
 export default streamApi;
