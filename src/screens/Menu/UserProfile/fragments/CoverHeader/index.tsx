@@ -83,6 +83,7 @@ const CoverHeader = ({
 
   const onEditCover = async () => {
     const image = await ImagePicker.openPickerSingle({
+      cropping: true,
       mediaType: 'photo',
     });
     if (image?.size > AppConfig.userCoverImageMaxSize) {
@@ -97,6 +98,7 @@ const CoverHeader = ({
 
   const onEditAvatar = async () => {
     const image = await ImagePicker.openPickerSingle({
+      cropping: true,
       mediaType: 'photo',
     });
     if (image?.size > AppConfig.userAvatarImageMaxSize) {
