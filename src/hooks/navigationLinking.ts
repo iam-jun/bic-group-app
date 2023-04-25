@@ -77,6 +77,8 @@ export const onReceiveURL = async ({ url, navigation, listener }: { url: string;
         navigation?.navigate?.(authStacks.signIn);
         useAppStore.getState().actions.setRedirectUrl(url);
         break;
+      case DeepLinkTypes.APP:
+        break;
       default:
         listener?.(url);
     }

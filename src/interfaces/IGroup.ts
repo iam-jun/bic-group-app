@@ -3,6 +3,7 @@ import { IFilePicked } from './common';
 import { IUploadType } from '~/configs/resourceConfig';
 import { RoleType } from '~/constants/permissionScheme';
 import { IObject } from '~/interfaces/common';
+import { MembershipAnswer } from './ICommunity';
 
 export interface IRole {
   id?: string;
@@ -93,6 +94,7 @@ export interface IGroup {
   settings?: {
     isJoinApproval?: boolean;
     isActiveGroupTerms?: boolean;
+    isActiveMembershipQuestions?: boolean;
   };
 }
 
@@ -197,11 +199,13 @@ export interface IGroupMembers {
 export interface IJoiningMember {
   id: string;
   userId: string;
+  status: string;
   groupId: string;
   createdAt: string;
   updatedAt: string;
   user: IJoiningUserInfo;
   noticeMessage?: string;
+  membershipAnswers: MembershipAnswer[],
 }
 
 export interface IJoiningUserInfo {

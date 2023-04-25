@@ -2,7 +2,7 @@ import React from 'react';
 
 import PendingUserItem from './PendingUserItem';
 import { renderWithRedux, fireEvent } from '~/test/testUtils';
-import { memberRequestDetail } from '~/test/mock_data/communities';
+import { memberRequestDetail, mockAnswers } from '~/test/mock_data/communities';
 
 describe('PendingUserItem component', () => {
   const requestItem = { ...memberRequestDetail };
@@ -21,9 +21,10 @@ describe('PendingUserItem component', () => {
   });
 
   it('should call prop onPressDecline correctly', () => {
+    const newRequestItem = { ...memberRequestDetail, memberRequestDetail: mockAnswers };
     const wrapper = renderWithRedux(
       <PendingUserItem
-        requestItem={requestItem}
+        requestItem={newRequestItem}
         onPressApprove={onPressApprove}
         onPressDecline={onPressDecline}
       />,

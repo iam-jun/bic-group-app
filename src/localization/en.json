@@ -229,7 +229,10 @@
     "text_group_terms": "Group terms",
     "text_community_terms": "Community terms",
     "text_sorry_something_went_wrong": "Sorry, something went wrong",
-    "text_pull_to_refresh": "Please pull down to refresh the page or try again later"
+    "text_pull_to_refresh": "Please pull down to refresh the page or try again later",
+    "text_answer_title": "Membership questions",
+    "text_answer_input_placeholder": "Write your answer",
+    "text_send_request_join_successfully": "Sent request successfully"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -1049,7 +1052,8 @@
       }
     },
     "text_in": "in",
-    "title_add_members": "Add Members"
+    "title_add_members": "Add Members",
+    "text_no_answer": "No answer"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",
