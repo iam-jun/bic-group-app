@@ -414,6 +414,7 @@ describe('Notification Screen', () => {
       postId: mockNoti.activities[0].id,
       commentId: mockNoti.activities[0].comment.id,
       notiId: mockNoti.id,
+      target: mockNoti.activities[0].contentType,
     });
   });
 
@@ -433,6 +434,7 @@ describe('Notification Screen', () => {
               id: 'test',
             },
           },
+          contentType: 'post',
         },
       ],
       extra: { ...mockNoti.extra, type: 'comment.to_replied_user.in_the_same_parent_comment' },
@@ -469,6 +471,7 @@ describe('Notification Screen', () => {
       commentId: newMockNoti.activities[0].comment.id,
       parentId: newMockNoti.activities[0].comment.id,
       notiId: newMockNoti.id,
+      target: mockNoti.activities[0].contentType,
     });
   });
 

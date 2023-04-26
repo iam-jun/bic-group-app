@@ -2,10 +2,17 @@
 
 exports[`ScheduledArticles component render correctly 1`] = `
 <RCTScrollView
+  CellRendererComponent={[Function]}
   ItemSeparatorComponent={[Function]}
   ListEmptyComponent={[Function]}
   ListFooterComponent={[Function]}
   ListHeaderComponent={[Function]}
+  animatedStyle={
+    Object {
+      "value": Object {},
+    }
+  }
+  collapsable={false}
   data={
     Array [
       Object {
@@ -150,6 +157,7 @@ exports[`ScheduledArticles component render correctly 1`] = `
   refreshControl={
     <RefreshControlMock
       onRefresh={[Function]}
+      progressViewOffset={48}
       refreshing={true}
       tintColor="#A4A9B7"
     />
@@ -169,17 +177,30 @@ exports[`ScheduledArticles component render correctly 1`] = `
       <View
         style={
           Object {
-            "height": 16,
-            "paddingHorizontal": undefined,
-            "paddingVertical": undefined,
-            "width": undefined,
+            "paddingTop": 48,
           }
         }
-      />
+      >
+        <View
+          style={
+            Object {
+              "height": 16,
+              "paddingHorizontal": undefined,
+              "paddingVertical": undefined,
+              "width": undefined,
+            }
+          }
+        />
+      </View>
     </View>
     <View
+      animatedStyle={
+        Object {
+          "value": Object {},
+        }
+      }
+      collapsable={false}
       onLayout={[Function]}
-      style={null}
     >
       <View
         accessible={true}

@@ -2,12 +2,13 @@ import { cleanup } from '@testing-library/react-native';
 import * as React from 'react';
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import { Default } from '~/baseComponents/Button/ButtonRaise/index.stories';
+import ButtonRaise from './index';
 
 afterEach(cleanup);
 
 describe('Button component', () => {
   it('renders correctly', () => {
-    const rendered = renderWithRedux(<Default {...Default.args} />).toJSON();
+    const rendered = renderWithRedux(<ButtonRaise {...Default.args} />).toJSON();
     expect(rendered).toMatchSnapshot();
   });
   it('renders correctly default props', () => {

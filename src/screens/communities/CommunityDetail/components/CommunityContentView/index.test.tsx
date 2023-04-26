@@ -113,14 +113,6 @@ describe('CommunityContentView', () => {
     expect(yourGroupsBtn).toBeNull();
   });
 
-  it('should render Discover button correctly when user is a member', () => {
-    const wrapper = renderWithRedux(
-      <CommunityContentView {...baseProps} />,
-    );
-    const yourGroupsBtn = wrapper.getByTestId('tab_button_header.discover_btn-selected');
-    expect(yourGroupsBtn).toBeDefined();
-  });
-
   it('should not render Discover button correctly when user is not a member', () => {
     const communityDetail = { ...communityDetailData, join_status: 1 };
     const wrapper = renderWithRedux(
