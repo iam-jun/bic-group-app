@@ -29,7 +29,7 @@ export interface ISelectAudienceState extends IBaseState {
   };
   actions?: {
     getAudienceTree?: () => void;
-    getAudienceSearch?: (isRefresh: boolean, key: string, contentType: ContentType) => void;
+    getAudienceSearch?: (key: string, contentType: ContentType, isRefresh: boolean) => void;
     setSelectedAudiences: (selectedAudiences) => void;
     updateItemSelection: (group: IGroup | IUser, isSelected: boolean) => void;
   };

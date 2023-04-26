@@ -46,11 +46,11 @@ const SelectAudience = ({ contentType }: SelectAudienceProps) => {
   const selectedAudiences = useSelectAudienceStore((state) => state.selectedAudiences.groups) || {};
 
   useMounted(() => {
-    getData(true, searchKey, contentType);
+    getData(searchKey, contentType, true);
   });
 
-  const getData = (isRefresh: boolean, key: string, type: ContentType) => {
-    actions.getAudienceSearch(isRefresh, key, type);
+  const getData = (key: string, type: ContentType, isRefresh: boolean) => {
+    actions.getAudienceSearch(key, type, isRefresh);
   };
 
   useEffect(
@@ -61,7 +61,7 @@ const SelectAudience = ({ contentType }: SelectAudienceProps) => {
 
   const onSearch = debounce(
     (searchText: string) => {
-      getData(true, searchText, contentType);
+      getData(searchText, contentType, true);
     }, 250,
   );
 
@@ -71,7 +71,7 @@ const SelectAudience = ({ contentType }: SelectAudienceProps) => {
 
   const onLoadMore = () => {
     if (hasNextPage) {
-      getData(false, searchKey, contentType);
+      getData(searchKey, contentType, false);
     }
   };
 

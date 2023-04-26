@@ -4,9 +4,9 @@ import { ISelectAudienceState } from '..';
 import showToastError from '~/store/helper/showToastError';
 
 const getAudienceSearch = (set, get) => async (
-  isRefresh = true,
   key: string,
-  contentType: ContentType
+  contentType: ContentType,
+  isRefresh = true,
 ) => {
   const { search }: ISelectAudienceState = get();
   const { data = [], loading } = search || {};
@@ -28,7 +28,7 @@ const getAudienceSearch = (set, get) => async (
     };
     const response = await groupApi.getSearchAudiences(params);
 
-    const newData = isRefresh ? response?.data : data?.concat(response?.data || [])
+    const newData = isRefresh ? response?.data : data?.concat(response?.data || []);
 
     set((state: ISelectAudienceState) => {
       state.search = {

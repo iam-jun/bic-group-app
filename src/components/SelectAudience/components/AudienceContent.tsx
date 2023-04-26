@@ -34,7 +34,9 @@ const AudienceContent: FC<GroupItemProps> = ({
   const { colors } = theme;
   const [checked, setChecked] = useState(shouldBeChecked(item));
 
-  const { icon, name, privacy, community } = item || {};
+  const {
+    icon, name, privacy, community,
+  } = item || {};
   const { name: communityName } = community || {};
   const privacyIcon = GroupPrivacyDetail[privacy]?.icon as IconType;
 
