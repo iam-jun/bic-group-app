@@ -10,7 +10,6 @@ import { IconType } from '~/resources/icons';
 import Text from '~/baseComponents/Text';
 import { spacing } from '~/theme';
 import Tag from '~/baseComponents/Tag';
-import { useBaseHook } from '~/hooks';
 import Icon from '~/baseComponents/Icon';
 
 export interface GroupItemProps {
@@ -20,7 +19,6 @@ export interface GroupItemProps {
 
   onPress: (item: IGroup, isChecked: boolean) => void
   shouldBeChecked: (item: IGroup) => boolean;
-  shouldCheckboxDisabled: (item: IGroup) => boolean;
 }
 
 const AudienceContent: FC<GroupItemProps> = ({
@@ -30,17 +28,17 @@ const AudienceContent: FC<GroupItemProps> = ({
 
   onPress,
   shouldBeChecked,
-  shouldCheckboxDisabled,
 }) => {
-  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles();
   const { colors } = theme;
   const [checked, setChecked] = useState(shouldBeChecked(item));
 
-  const { icon, name, privacy } = item;
+  const {
+    icon, name, privacy, community,
+  } = item || {};
+  const { name: communityName } = community || {};
   const privacyIcon = GroupPrivacyDetail[privacy]?.icon as IconType;
-  const hideAudienceNoPermission = shouldCheckboxDisabled(item);
 
   useEffect(() => {
     setChecked(shouldBeChecked(item));
@@ -65,8 +63,6 @@ const AudienceContent: FC<GroupItemProps> = ({
 
   const { iconName, iconColor } = checked ? checkBoxStyles.selected : checkBoxStyles.unselect;
 
-  if (hideAudienceNoPermission) return null;
-
   return (
     <Button
       testID="group_item.container"
@@ -86,9 +82,10 @@ const AudienceContent: FC<GroupItemProps> = ({
           {name}
         </Text.BodyM>
         <Tag
+          textProps={{ numberOfLines: 1 }}
           style={styles.tagContainer}
           type="secondary"
-          label={`${t('common:text_community')} / ${t('common:text_group')}`}
+          label={communityName}
           disabled
         />
       </View>

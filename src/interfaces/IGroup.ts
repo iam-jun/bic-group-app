@@ -3,6 +3,7 @@ import { IFilePicked } from './common';
 import { IUploadType } from '~/configs/resourceConfig';
 import { RoleType } from '~/constants/permissionScheme';
 import { IObject } from '~/interfaces/common';
+import { ICommunity } from './ICommunity';
 
 export interface IRole {
   id?: string;
@@ -69,6 +70,7 @@ export interface IGroup {
   description?: string;
   level?: number;
   parent?: any;
+  community?: ICommunity;
   createdBy?: string;
   icon?: string;
   backgroundImgUrl?: string | null;
