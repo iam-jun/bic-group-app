@@ -41,6 +41,7 @@ jobs:
       - run:
           name: CodePush update iOS Staging
           command: bundle exec fastlane ios update_staging
+          no_output_timeout: 60m
 
   ios-pre-update:
     macos:
@@ -69,6 +70,7 @@ jobs:
       - run:
           name: CodePush update iOS PreRelease
           command: bundle exec fastlane ios update_prerelease
+          no_output_timeout: 60m
 
   ios-pro-update:
     macos:
@@ -97,6 +99,7 @@ jobs:
       - run:
           name: CodePush update iOS Production
           command: bundle exec fastlane ios update_production
+          no_output_timeout: 60m
 
   ios-stg:
     macos:
@@ -133,6 +136,7 @@ jobs:
       - run:
           name: Fastlane Build, Deploy to TestFlight and Update CodePush
           command: bundle exec fastlane ios $STG_FASTLANE_LANE_IOS
+          no_output_timeout: 60m
 
   ios-pre:
     macos:
@@ -169,6 +173,7 @@ jobs:
       - run:
           name: Fastlane Build, Deploy to TestFlight and Update CodePush
           command: bundle exec fastlane ios $REL_FASTLANE_LANE_IOS
+          no_output_timeout: 60m
 
 
   ios-pro:
@@ -206,6 +211,7 @@ jobs:
       - run:
           name: Fastlane Build, Deploy to TestFlight and Update CodePush
           command: bundle exec fastlane ios $PRO_FASTLANE_LANE_IOS
+          no_output_timeout: 60m
       - store_artifacts:
           path: output
 
@@ -236,6 +242,7 @@ jobs:
       - run:
           name: CodePush update Android Staging
           command: bundle exec fastlane android update_staging
+          no_output_timeout: 60m
 
   android-pre-update:
     executor:
@@ -264,6 +271,7 @@ jobs:
       - run:
           name: CodePush update Android PreRelease
           command: bundle exec fastlane android update_prerelease
+          no_output_timeout: 60m
 
   android-pro-update:
     executor:
@@ -292,6 +300,7 @@ jobs:
       - run:
           name: CodePush update Android Production
           command: bundle exec fastlane android update_production
+          no_output_timeout: 60m
 
   android-stg:
     executor:
@@ -332,6 +341,7 @@ jobs:
       - run:
           name: Fastlane Build, Deploy to App Distribution and Update CodePush
           command: bundle exec fastlane android $STG_FASTLANE_LANE_ANDROID
+          no_output_timeout: 60m
       - store_artifacts:
           path: app/build/outputs/apk/release/app-release-unsigned.apk
 
@@ -374,6 +384,7 @@ jobs:
       - run:
           name: Fastlane Build, Deploy to App Distribution and Update CodePush
           command: bundle exec fastlane android $REL_FASTLANE_LANE_ANDROID
+          no_output_timeout: 60m
 
   android-pro:
     executor:
@@ -414,6 +425,7 @@ jobs:
       - run:
           name: Fastlane Build, Deploy to App Distribution and Update CodePush
           command: bundle exec fastlane android $PRO_FASTLANE_LANE_ANDROID
+          no_output_timeout: 60m
       - store_artifacts:
           path: app/build/outputs/apk/release/app-release-unsigned.apk
 
@@ -457,6 +469,7 @@ jobs:
       - run:
           name: Fastlane bundle production release then upload file .aab to google drive
           command: bundle exec fastlane android bundle_aab_production
+          no_output_timeout: 60m
 
 workflows:
   version: 2

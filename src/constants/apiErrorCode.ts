@@ -27,6 +27,7 @@ const Group = {
   ALREADY_MEMBER: 'group.already_member',
   JOIN_REQUEST_ALREADY_SENT: 'group.joining_request.already_sent',
   TERMS_NOT_FOUND: 'group_terms.get.not_found',
+  MISSIING_MEMBERSHIP_ANSWERS: 'joining_request.missing.membership_answers',
 };
 
 const APIErrorCode = {

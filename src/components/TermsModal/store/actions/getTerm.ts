@@ -13,6 +13,7 @@ const getTerms = (set, _get) => async (groupId: string, callBackError: ()=> void
     const response = await groupApi.getGroupTerms(groupId);
     set((state: ITermState) => {
       state.loading = false;
+      state.isOpen = true;
       state.termContent = response?.data?.content || '';
     }, 'getTerms Success');
   } catch (error) {
