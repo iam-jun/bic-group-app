@@ -24,11 +24,12 @@ export interface ISelectAudienceState extends IBaseState {
     key: string,
     data: undefined,
     loading: boolean,
+    hasNextPage: boolean,
     contentType: ContentType,
   };
   actions?: {
     getAudienceTree?: () => void;
-    getAudienceSearch?: (key: string, contentType: ContentType) => void;
+    getAudienceSearch?: (isRefresh: boolean, key: string, contentType: ContentType) => void;
     setSelectedAudiences: (selectedAudiences) => void;
     updateItemSelection: (group: IGroup | IUser, isSelected: boolean) => void;
   };
@@ -50,7 +51,8 @@ const initState: ISelectAudienceState = {
   search: {
     key: '',
     data: undefined,
-    loading: true,
+    loading: false,
+    hasNextPage: true,
     contentType: undefined,
   },
 };
