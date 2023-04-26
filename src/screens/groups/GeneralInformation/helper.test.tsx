@@ -1,17 +1,10 @@
-import ImagePicker from '~/beinComponents/ImagePicker';
+import ImagePicker from 'react-native-image-crop-picker';
 
 import { _openImagePicker } from './helper';
 
 describe('GeneralInformation helper', () => {
-  let Platform: any;
-  beforeEach(() => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    Platform = require('react-native').Platform;
-  });
-
   it('should _openImagePicker success', () => {
-    Platform.OS = 'web';
-    const spy = jest.spyOn(ImagePicker, 'openPickerSingle');
+    const spy = jest.spyOn(ImagePicker, 'openPicker');
 
     const result = _openImagePicker({
       dispatch: jest.fn(),

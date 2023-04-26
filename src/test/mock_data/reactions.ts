@@ -25,7 +25,6 @@ export const listUserReact = [
     isDeactivated: false,
     reactionId: '1453827a-d3e7-4821-8560-cc266245a087b',
     username: 'thuquyen',
-
     id: '58',
   },
 ];

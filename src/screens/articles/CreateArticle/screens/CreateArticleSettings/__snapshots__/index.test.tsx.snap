@@ -460,7 +460,28 @@ exports[`CreateArticleSettings screen render correctly 1`] = `
           </RCTScrollView>
         </View>
         <View>
-          <View>
+          <View
+            adjustToContentHeight={true}
+            childrenStyle={
+              Array [
+                Object {
+                  "paddingBottom": 16,
+                },
+                undefined,
+              ]
+            }
+            handlePosition="inside"
+            modalStyle={
+              Array [
+                Object {
+                  "borderTopLeftRadius": 16,
+                  "borderTopRightRadius": 16,
+                  "paddingTop": 24,
+                },
+                undefined,
+              ]
+            }
+          >
             <RCTScrollView
               data={Array []}
               getItem={[Function]}
@@ -495,7 +516,28 @@ exports[`CreateArticleSettings screen render correctly 1`] = `
           </View>
         </View>
         <View>
-          <View>
+          <View
+            adjustToContentHeight={true}
+            childrenStyle={
+              Array [
+                Object {
+                  "paddingBottom": 16,
+                },
+                undefined,
+              ]
+            }
+            handlePosition="inside"
+            modalStyle={
+              Array [
+                Object {
+                  "borderTopLeftRadius": 16,
+                  "borderTopRightRadius": 16,
+                  "paddingTop": 24,
+                },
+                undefined,
+              ]
+            }
+          >
             <RCTScrollView
               data={
                 Array [

@@ -10,6 +10,10 @@ import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 import useTermStore from '../TermsModal/store';
 
 describe('MemberQuestionsModal component', () => {
+  afterEach(() => {
+    jest.runOnlyPendingTimers(); // you must add this
+    jest.useRealTimers(); // you must add this
+  });
   it('renders correctly when show questions', () => {
     const newIds = MEMBERSHIP_QUESITONS.map((item) => item.id);
     const newItems = MEMBERSHIP_QUESITONS.reduce(
@@ -48,8 +52,11 @@ describe('MemberQuestionsModal component', () => {
     const component = wrapper.queryByTestId('member_questions.view');
     expect(component).toBeDefined();
 
+    expect(wrapper.toJSON()).toMatchSnapshot();
+
     const inputComp = wrapper.queryAllByTestId('member_questions.answer');
     expect(inputComp).toBeDefined();
+    console.log('>>>>>>>>>>>>>>>>>>', inputComp);
     expect(inputComp.length).toEqual(MEMBERSHIP_QUESITONS.length);
     fireEvent.changeText(inputComp[0], 'test');
 
@@ -65,6 +72,7 @@ describe('MemberQuestionsModal component', () => {
 
     const buttonSubmit = wrapper.getByTestId('member_questions.sumbit');
     expect(buttonSubmit).toBeDefined();
+
     fireEvent.press(buttonSubmit);
     expect(joinCommunity).toBeCalled();
   });
