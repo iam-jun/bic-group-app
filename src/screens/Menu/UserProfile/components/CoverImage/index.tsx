@@ -19,6 +19,7 @@ const CoverImage = ({
     <Image
       style={[styles.cover, { height: (coverHeight * 2) / 3 }]}
       source={bgImg || images.img_cover_default}
+      usePixelWidth
     />
     <EditButton
       testID="user_profile.cover_image.edit_button"

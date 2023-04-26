@@ -40,6 +40,7 @@ const CoverImage = ({
             testID="cover.image"
             style={styles.cover}
             source={backgroundUrl || images.img_cover_default}
+            usePixelWidth
           />
         ) : (
           <View

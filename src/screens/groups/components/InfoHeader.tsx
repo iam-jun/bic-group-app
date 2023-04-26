@@ -40,6 +40,7 @@ const _InfoHeader = ({
         resizeMode="cover"
         source={{ uri: backgroundImgUrl }}
         defaultSource={images.img_cover_default}
+        usePixelWidth
       />
       <Avatar.Large
         showBorder

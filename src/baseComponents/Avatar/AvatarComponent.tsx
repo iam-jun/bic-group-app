@@ -198,6 +198,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
           testID="avatar.image"
           style={[avatarStyle, borderStyle, { backgroundColor: _backgroundColor }]}
           source={source}
+          usePixelWidth
           {...props}
         />
         {renderCounter()}
