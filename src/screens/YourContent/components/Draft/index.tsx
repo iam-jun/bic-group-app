@@ -4,6 +4,7 @@ import React from 'react';
 import DraftPost from '~/screens/YourContent/components/Draft/DraftPost';
 import DraftArticle from '~/screens/YourContent/components/Draft/DraftArticle';
 import useYourContentStore from '../../store';
+import DraftContents from './DraftContents';
 
 interface DraftProps {
   onScroll: (e: any) => void;
@@ -16,11 +17,14 @@ const Draft: React.FC<DraftProps> = ({ onScroll }) => {
 
   const renderContent = () => {
     if (activeDraftTab === 0) {
+      return <DraftContents onScroll={onScroll} />;
+    }
+    if (activeDraftTab === 1) {
       return <DraftPost onScroll={onScroll} />;
     }
 
-    if (activeDraftTab === 1) {
-      return (<DraftArticle onScroll={onScroll} />);
+    if (activeDraftTab === 2) {
+      return <DraftArticle onScroll={onScroll} />;
     }
 
     return null;

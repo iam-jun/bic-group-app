@@ -4,6 +4,7 @@ import { listArticle } from '../../../test/mock_data/series';
 import ListItem from './ListItem';
 import * as navigationHook from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 
 describe('ListItem component', () => {
   it('should go to article detail when press article item', () => {
@@ -12,10 +13,16 @@ describe('ListItem component', () => {
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
     const wrapper = renderWithRedux(<ListItem listItem={listArticle} />);
-    const contentComponent = wrapper.getByTestId('list_article.article_item_1');
+    const itemCompArticle = wrapper.getByTestId('list_article.article_item_1');
 
-    expect(contentComponent).toBeDefined();
-    fireEvent.press(contentComponent);
+    expect(itemCompArticle).toBeDefined();
+    fireEvent.press(itemCompArticle);
     expect(navigate).toBeCalledWith(articleStack.articleContentDetail, { articleId: listArticle[0].id });
+
+    const itemCompPost = wrapper.getByTestId('list_article.article_item_2');
+
+    expect(itemCompPost).toBeDefined();
+    fireEvent.press(itemCompPost);
+    expect(navigate).toBeCalledWith(homeStack.postDetail, { post_id: listArticle[1].id });
   });
 });

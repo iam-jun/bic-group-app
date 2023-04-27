@@ -190,8 +190,8 @@ export const permissionRoleSectionHeaderHeight = 56;
 
 export const homeHeaderLogoHeight = 44;
 export const homeHeaderTabHeight = 48;
-export const homeHeaderAttributeContainerHeight = 36;
-export const homeHeaderHeight = homeHeaderLogoHeight + homeHeaderTabHeight + homeHeaderAttributeContainerHeight;
+export const homeHeaderContentContainerHeight = 48;
+export const homeHeaderHeight = homeHeaderLogoHeight + homeHeaderTabHeight + homeHeaderContentContainerHeight;
 const isPhoneWithInsets = Platform.OS === 'ios' && deviceInfoModule.hasNotch();
 
 export const scaleSize = (size: number): number => (DeviceWidth / guidelineBaseWidth) * size;

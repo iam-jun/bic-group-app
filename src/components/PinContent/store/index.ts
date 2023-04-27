@@ -5,6 +5,7 @@ import getPinnableAudiences from './actions/getPinnableAudiences';
 import getPinContentsGroup from './actions/getPinContentsGroup';
 import updateGroupPinContent from './actions/updateGroupPinContent';
 import updatePinContent from './actions/updatePinContent';
+import reorderPinContentGroup from './actions/reorderPinContentGroup';
 
 export interface UpdateGroupPinContentParams {
   postId: string
@@ -52,6 +53,7 @@ export interface IPinContentState extends IBaseState {
     getPinContentsGroup: (id: string) => void;
     initDataPinContentsGroup: (id: string) => void;
     resetDataPinContentsGroup: (id: string) => void;
+    reorderPinContentGroup: (reorderedPinContent: string[], groupId: string) => void;
   };
 }
 
@@ -105,6 +107,7 @@ const usePinContent = (set, get): IPinContentState => ({
         state.groupPinContent[id] = {};
       }, 'resetDataPinContentsGroup');
     },
+    reorderPinContentGroup: reorderPinContentGroup(set, get),
   },
   reset: () => resetStore(initialState, set),
 });

@@ -22,6 +22,14 @@ import { useBaseHook } from '~/hooks';
 import useCommunitiesStore from '~/store/entities/communities';
 import useTermStore from '~/components/TermsModal/store';
 import TermsView from '~/components/TermsModal';
+import MemberQuestionsModal from '~/components/MemberQuestionsModal';
+import useMemberQuestionsStore, { MembershipQuestionsInfo } from '~/components/MemberQuestionsModal/store';
+
+type HandleJoinGroupData = {
+  isActiveGroupTerms: boolean;
+  isActiveMembershipQuestions: boolean;
+  groupId: string;
+};
 
 const DiscoverGroups = ({ route }: any) => {
   const { communityId } = route.params;
@@ -38,6 +46,8 @@ const DiscoverGroups = ({ route }: any) => {
   } = useDiscoverGroupsStore();
 
   const communityDetail = useCommunitiesStore((state) => state.data[communityId]);
+
+  const membershipQuestionActions = useMemberQuestionsStore((state) => state.actions);
   const termsActions = useTermStore((state) => state.actions);
 
   const getDiscoverGroups = (isRefreshing?: boolean) => {
@@ -50,7 +60,20 @@ const DiscoverGroups = ({ route }: any) => {
     }, [communityId],
   );
 
-  const handleJoinGroup = ({ isActiveGroupTerms, groupId } : {isActiveGroupTerms: boolean; groupId: string}) => {
+  const handleJoinGroup = ({ isActiveGroupTerms, groupId, isActiveMembershipQuestions } : HandleJoinGroupData) => {
+    if (isActiveMembershipQuestions) {
+      const payload: MembershipQuestionsInfo = {
+        groupId,
+        name: '',
+        rootGroupId: groupId,
+        type: 'group',
+        isActive: true,
+        isActiveGroupTerms,
+      };
+      membershipQuestionActions.setMembershipQuestionsInfo(payload);
+      return;
+    }
+
     if (isActiveGroupTerms) {
       const payload = {
         groupId, rootGroupId: groupId, name: '', type: 'group', isActive: true,
@@ -83,14 +106,16 @@ const DiscoverGroups = ({ route }: any) => {
     }, 500,
   );
 
-  const renderItem = ({ item }: {item: number;}) => {
+  const renderItem = ({ item }: {item: string;}) => {
     const currentItem = {
       ...items[item],
       community: { ...communityDetail },
     };
 
     const isActiveGroupTerms = currentItem?.settings?.isActiveGroupTerms || false;
-    const data = { isActiveGroupTerms, groupId: item } as any;
+    const isActiveMembershipQuestions = currentItem?.settings?.isActiveMembershipQuestions || false;
+
+    const data: HandleJoinGroupData = { isActiveGroupTerms, groupId: item, isActiveMembershipQuestions };
 
     return (
       <CommunityGroupCard
@@ -159,6 +184,7 @@ const DiscoverGroups = ({ route }: any) => {
         )}
           />
         ) : renderEmptyComponent()}
+      <MemberQuestionsModal />
       <TermsView />
     </ScreenWrapper>
   );

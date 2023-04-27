@@ -28,6 +28,8 @@ exports[`FilterToolbar component should render correctly 1`] = `
         "paddingTop": 8,
       }
     }
+    handlerTag={1}
+    handlerType="NativeViewGestureHandler"
     horizontal={true}
     onGestureHandlerEvent={[Function]}
     onGestureHandlerStateChange={[Function]}
@@ -37,6 +39,13 @@ exports[`FilterToolbar component should render correctly 1`] = `
         "backgroundColor": "#FFFFFF",
         "width": 750,
       }
+    }
+    waitFor={
+      Array [
+        Object {
+          "current": null,
+        },
+      ]
     }
   >
     <View>

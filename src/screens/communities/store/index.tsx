@@ -10,11 +10,12 @@ import joinCommunity from './actions/joinCommunity';
 import leaveCommunity from './actions/leaveCommunity';
 import revokeCommunityAdmin from './actions/revokeCommunityAdmin';
 import updateCommunityJoinSetting from './actions/updateCommunityJoinSetting';
+import { IRequestJoinCommunity } from '~/interfaces/ICommunity';
 
 interface ICommunityController {
   actions: {
     leaveCommunity?: (id: string, privacy: CommunityPrivacyType) => void;
-    joinCommunity: (id: string, name: string) => void;
+    joinCommunity: (payload: IRequestJoinCommunity) => void;
     cancelJoinCommunity: (id: string, name: string) => void;
     updateCommunityJoinSetting: (communityId: string, groupId: string, isJoinApproval: boolean) => void;
     editCommunityDetail: (

@@ -1,17 +1,13 @@
-import ImagePicker from '~/beinComponents/ImagePicker';
 import { ResourceUploadType } from '~/interfaces/IUpload';
+import RNPermissions from 'react-native-permissions';
+
 import { _openImagePicker } from './helper';
 
 describe('GeneralInformation helper', () => {
-  let Platform: any;
-  beforeEach(() => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    Platform = require('react-native').Platform;
-  });
-
   it('should _openImagePicker success', () => {
-    Platform.OS = 'web';
-    const spy = jest.spyOn(ImagePicker, 'openPickerSingle');
+    const checkPermission = jest.spyOn(RNPermissions, 'check').mockImplementation(
+      () => Promise.resolve(RNPermissions.RESULTS.GRANTED) as any,
+    );
 
     const result = _openImagePicker({
       dispatch: jest.fn(),
@@ -22,6 +18,6 @@ describe('GeneralInformation helper', () => {
       rootGroupId: '1',
     });
     expect(result).toBeTruthy();
-    expect(spy).toBeCalled();
+    expect(checkPermission).toBeCalled();
   });
 });

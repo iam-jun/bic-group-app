@@ -9,6 +9,7 @@ import EditComment from '~/screens/comments/EditComment';
 import CreatePostTags from '~/screens/post/CreatePostTags';
 import CreatePostSeries from '~/screens/post/CreatePostSeries';
 import PinContent from '~/screens/PinContent';
+import ReorderedPinContent from '~/screens/PinContent/Reordered';
 
 const homeScreens = {
   'post-detail': PostDetail,
@@ -22,6 +23,7 @@ const homeScreens = {
   'create-post-series': CreatePostSeries,
   'comment-detail': CommentDetail,
   'pin-content': PinContent,
+  'reordered-pin-content': ReorderedPinContent,
 };
 
 export default homeScreens;

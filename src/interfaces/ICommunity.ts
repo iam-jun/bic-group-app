@@ -18,8 +18,9 @@ export interface ICommunity {
   members?: IPreviewMember[];
   teamName?: string;
   settings?: {
-    isJoinApproval: boolean;
+    isJoinApproval?: boolean;
     isActiveGroupTerms?: boolean;
+    isActiveMembershipQuestions?: boolean;
   }
 }
 
@@ -119,4 +120,33 @@ export interface ISearchCommunityMembers {
   key: string,
   groupId: string,
   isLoadMore?: boolean,
+}
+
+export interface MembershipAnswer {
+  question: string,
+  answer: string,
+  isRequired: boolean,
+}
+export interface IMembershipQuestion {
+  id: string,
+  groupId: string,
+  question: string,
+  isRequired: boolean,
+  createdAt: string,
+  updatedAt: string,
+}
+
+export interface MembershipAnswerRequest{
+  questionId: string,
+  answer: string
+}
+
+export interface MembershipAnswerRequestParam {
+  membershipAnswers: MembershipAnswerRequest[],
+}
+
+export interface IRequestJoinCommunity {
+  communityId: string,
+  communityName: string,
+  membershipAnswers?: MembershipAnswerRequest[],
 }
