@@ -36,6 +36,8 @@ exports[`SearchResult component should render empty search result 1`] = `
           "paddingTop": 8,
         }
       }
+      handlerTag={1}
+      handlerType="NativeViewGestureHandler"
       horizontal={true}
       onGestureHandlerEvent={[Function]}
       onGestureHandlerStateChange={[Function]}
@@ -45,6 +47,13 @@ exports[`SearchResult component should render empty search result 1`] = `
           "backgroundColor": "#FFFFFF",
           "width": 750,
         }
+      }
+      waitFor={
+        Array [
+          Object {
+            "current": null,
+          },
+        ]
       }
     >
       <View>
@@ -1234,6 +1243,8 @@ exports[`SearchResult component should render list search result 1`] = `
           "paddingTop": 8,
         }
       }
+      handlerTag={2}
+      handlerType="NativeViewGestureHandler"
       horizontal={true}
       onGestureHandlerEvent={[Function]}
       onGestureHandlerStateChange={[Function]}
@@ -1243,6 +1254,13 @@ exports[`SearchResult component should render list search result 1`] = `
           "backgroundColor": "#FFFFFF",
           "width": 750,
         }
+      }
+      waitFor={
+        Array [
+          Object {
+            "current": null,
+          },
+        ]
       }
     >
       <View>
