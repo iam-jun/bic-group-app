@@ -2,26 +2,20 @@ import React from 'react';
 import { act } from 'react-test-renderer';
 import { cloneDeep } from 'lodash';
 import { cleanup } from '@testing-library/react-native';
-import APIErrorCode from '~/constants/apiErrorCode';
 import useCommentsStore from '~/store/entities/comments';
 import usePostsStore from '~/store/entities/posts';
-import initialState from '~/storeRedux/initialState';
-import { configureStore, renderWithRedux } from '~/test/testUtils';
+import { renderWithRedux } from '~/test/testUtils';
 import CommentDetailContent from './CommentDetailContent';
 import * as helper from './helper';
 import { timeOut } from '~/utils/common';
+import APIErrorCode from '~/constants/apiErrorCode';
+import useModalStore from '~/store/modal';
 
 afterEach(cleanup);
 
 describe('CommentDetailContent component', () => {
-  const mockStore = configureStore([]);
-  let storeData: any;
-
   beforeEach(() => {
     jest.clearAllMocks();
-    storeData = { ...initialState };
-    storeData.post.commentErrorCode = '';
-    storeData.post.scrollToCommentsPosition = null;
   });
 
   const props = {
@@ -50,13 +44,11 @@ describe('CommentDetailContent component', () => {
     });
     usePostsStore.setState((state) => {
       state.posts[postId] = { audience: { groups: [{ id: 'test' }] } };
+      state.scrollToCommentsPosition = 'bottom';
       return state;
     });
 
-    storeData.post.scrollToCommentsPosition = { position: 'bottom' };
-    const store = mockStore(storeData);
-
-    const rendered = renderWithRedux(<CommentDetailContent {...propsClone} />, store);
+    const rendered = renderWithRedux(<CommentDetailContent {...propsClone} />);
 
     const { getByTestId } = rendered;
     const placeholderComponent = getByTestId('comment_view_placeholder');
@@ -76,45 +68,56 @@ describe('CommentDetailContent component', () => {
   });
 
   it('should render correctly (isReported = false)', () => {
-    const store = mockStore(storeData);
-    renderWithRedux(<CommentDetailContent {...props} />, store);
+    renderWithRedux(<CommentDetailContent {...props} />);
   });
 
   it('should render CommentLevel1 is null', () => {
     const propsClone = cloneDeep(props);
     propsClone.route.params.postId = null;
 
-    const store = mockStore(storeData);
-    const rendered = renderWithRedux(<CommentDetailContent {...propsClone} />, store);
+    const rendered = renderWithRedux(<CommentDetailContent {...propsClone} />);
     const { queryByTestId } = rendered;
     const component = queryByTestId('comment_level_1');
     expect(component).toBeNull();
   });
 
   it('should render with commentErrorCode = APIErrorCode.Post.POST_PRIVACY', () => {
-    storeData.post.commentErrorCode = APIErrorCode.Post.POST_PRIVACY;
-    const store = mockStore(storeData);
+    usePostsStore.setState((state) => {
+      state.commentErrorCode = APIErrorCode.Post.POST_PRIVACY;
+      return state;
+    });
 
-    renderWithRedux(<CommentDetailContent {...props} />, store);
+    renderWithRedux(<CommentDetailContent {...props} />);
 
     expect(props.showPrivacy).toBeCalled();
   });
 
   it('should render with commentErrorCode = APIErrorCode.Post.COPIED_COMMENT_IS_DELETED', () => {
-    storeData.post.commentErrorCode = APIErrorCode.Post.COPIED_COMMENT_IS_DELETED;
-    const store = mockStore(storeData);
-
+    usePostsStore.setState((state) => {
+      state.commentErrorCode = APIErrorCode.Post.COPIED_COMMENT_IS_DELETED;
+      return state;
+    });
     const spyReplacePostDetail = jest.spyOn(helper, 'replacePostDetail');
 
-    renderWithRedux(<CommentDetailContent {...props} />, store);
+    renderWithRedux(<CommentDetailContent {...props} />);
 
     expect(spyReplacePostDetail).toBeCalled();
   });
 
   it('should render with commentErrorCode = APIErrorCode.Post.POST_DELETED', async () => {
-    storeData.post.commentErrorCode = APIErrorCode.Post.POST_DELETED;
-    const store = mockStore(storeData);
+    usePostsStore.setState((state) => {
+      state.commentErrorCode = APIErrorCode.Post.POST_DELETED;
+      return state;
+    });
 
-    renderWithRedux(<CommentDetailContent {...props} />, store);
+    const showToast = jest.fn();
+    useModalStore.setState((state) => {
+      state.actions.showToast = showToast;
+      return state;
+    });
+
+    renderWithRedux(<CommentDetailContent {...props} />);
+
+    expect(showToast).toBeCalled();
   });
 });

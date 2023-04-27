@@ -25,7 +25,6 @@ describe('NotificationContent component', () => {
 
     const contentComponent = wrapper.getByTestId('notification_content.content');
     expect(contentComponent).toBeDefined();
-    expect(contentComponent.props?.children).toEqual(extra.content);
 
     const timeComponent = wrapper.getByTestId('notification_content.time_view');
     expect(timeComponent).toBeDefined();

@@ -154,7 +154,14 @@ jest.doMock('react-native-modalize', () => {
   const MockedModule = {
     ...RealModule,
     // eslint-disable-next-line react/prop-types
-    Modalize: ({ children }) => <ReactNative.View>{children}</ReactNative.View>,
+    Modalize: ({ children, ...props }) => (
+      <ReactNative.View {...props}>
+        {/* <ReactNative.View>
+          <HeaderComponent />
+        </ReactNative.View> */}
+        {children}
+      </ReactNative.View>
+    ),
   };
   return MockedModule;
 });

@@ -615,7 +615,30 @@ Array [
     />
   </View>,
   <View>
-    <View>
+    <View
+      adjustToContentHeight={true}
+      childrenStyle={
+        Array [
+          Object {
+            "paddingBottom": 16,
+          },
+          undefined,
+        ]
+      }
+      disabled={false}
+      handlePosition="inside"
+      modalStyle={
+        Array [
+          Object {
+            "borderTopLeftRadius": 16,
+            "borderTopRightRadius": 16,
+            "paddingTop": 24,
+          },
+          undefined,
+        ]
+      }
+      panGestureAnimatedValue={0}
+    >
       <View
         style={
           Object {
@@ -903,6 +926,7 @@ Array [
                     Object {
                       "marginBottom": 12,
                     },
+                    Object {},
                   ]
                 }
               >
