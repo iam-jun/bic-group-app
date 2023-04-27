@@ -1202,6 +1202,8 @@ Array [
                 }
                 collapsable={false}
                 forwardedRef={[Function]}
+                handlerTag={1}
+                handlerType="PanGestureHandler"
                 onGestureHandlerEvent={[Function]}
                 style={
                   Object {
@@ -1482,6 +1484,8 @@ Array [
                 }
                 collapsable={false}
                 forwardedRef={[Function]}
+                handlerTag={2}
+                handlerType="PanGestureHandler"
                 onGestureHandlerEvent={[Function]}
                 style={
                   Object {

@@ -214,6 +214,8 @@ exports[`TagDetail component renders correctly 1`] = `
           "paddingTop": 8,
         }
       }
+      handlerTag={1}
+      handlerType="NativeViewGestureHandler"
       horizontal={true}
       onGestureHandlerEvent={[Function]}
       onGestureHandlerStateChange={[Function]}
@@ -223,6 +225,13 @@ exports[`TagDetail component renders correctly 1`] = `
           "backgroundColor": "#FFFFFF",
           "width": 750,
         }
+      }
+      waitFor={
+        Array [
+          Object {
+            "current": null,
+          },
+        ]
       }
     >
       <View>
@@ -686,6 +695,8 @@ exports[`TagDetail component renders list article success 1`] = `
           "paddingTop": 8,
         }
       }
+      handlerTag={2}
+      handlerType="NativeViewGestureHandler"
       horizontal={true}
       onGestureHandlerEvent={[Function]}
       onGestureHandlerStateChange={[Function]}
@@ -695,6 +706,13 @@ exports[`TagDetail component renders list article success 1`] = `
           "backgroundColor": "#FFFFFF",
           "width": 750,
         }
+      }
+      waitFor={
+        Array [
+          Object {
+            "current": null,
+          },
+        ]
       }
     >
       <View>

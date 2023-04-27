@@ -1610,6 +1610,8 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                         }
                         collapsable={false}
                         forwardedRef={[Function]}
+                        handlerTag={1}
+                        handlerType="PanGestureHandler"
                         onGestureHandlerEvent={[Function]}
                         style={
                           Object {
