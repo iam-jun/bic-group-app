@@ -23,7 +23,7 @@ import ReportedContents from './components/ReportedContents';
 import Draft from './components/Draft';
 import useReportContentStore from '~/components/Report/store';
 import useYourContentStore from './store';
-import { homeHeaderTabHeight, homeHeaderAttributeContainerHeight } from '~/theme/dimension';
+import { homeHeaderTabHeight, homeHeaderContentContainerHeight } from '~/theme/dimension';
 
 const HEADER_TAB = [
   {
@@ -41,8 +41,9 @@ const HEADER_TAB = [
 ];
 
 const HEADER_DRAFT_TAB = [
-  { id: 'draft-tab-1', text: 'post:draft:text_posts' },
-  { id: 'draft-tab-2', text: 'post:draft:text_articles' },
+  { id: 'draft-tab-1', text: 'home:title_feed_content_all' },
+  { id: 'draft-tab-2', text: 'post:draft:text_posts' },
+  { id: 'draft-tab-3', text: 'post:draft:text_articles' },
 ];
 
 const DeviceHeight = Dimensions.get('window').height;
@@ -161,10 +162,9 @@ const YourContent: React.FC<YourContentProps> = ({ route }) => {
     >
       <View style={[styles.boxTab]}>
         <Tab
-          style={styles.tabs}
+          style={[styles.tabs, { marginBottom: -spacing.padding.tiny }]}
           buttonProps={{ type: 'primary', useI18n: true }}
           data={HEADER_TAB}
-          type="pill"
           onPressTab={onPressTab}
           activeIndex={activeTab}
         />
@@ -172,13 +172,16 @@ const YourContent: React.FC<YourContentProps> = ({ route }) => {
       {activeTab === 0 && (
         <View style={styles.boxDraftTab}>
           <Tab
-            style={styles.tabs}
+            style={[styles.tabs, { marginLeft: -spacing.margin.small }]}
             buttonProps={{
-              size: 'medium', type: 'primary', useI18n: true, style: styles.attributeTab,
+              size: 'medium', useI18n: true, style: styles.contentTab,
             }}
             data={HEADER_DRAFT_TAB}
             onPressTab={onPressDraftTab}
             activeIndex={activeDraftTab}
+            type="pill"
+            selectedTypePillTab="primary"
+            unselectedTypePillTab="neutral"
           />
         </View>
       )}
@@ -235,17 +238,19 @@ const createStyle = (theme: ExtendedTheme) => {
       marginHorizontal: spacing.margin.large,
     },
     tabs: {
+      flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
     },
     boxDraftTab: {
-      height: homeHeaderAttributeContainerHeight,
-      marginLeft: spacing.margin.large,
+      height: homeHeaderContentContainerHeight,
+      marginHorizontal: spacing.margin.large,
+      borderTopColor: colors.neutral2,
+      borderTopWidth: 1,
     },
-    attributeTab: {
-      paddingVertical: 0,
-      borderBottomWidth: 0,
-      alignItems: 'center',
+    contentTab: {
+      // alignItems: 'center',
+      marginLeft: spacing.margin.small,
     },
   });
 };

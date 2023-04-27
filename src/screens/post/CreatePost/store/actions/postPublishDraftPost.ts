@@ -1,6 +1,6 @@
 import streamApi from '~/api/StreamApi';
 import {
-  IPayloadGetDraftPosts, IPayloadPublishDraftPost, IPost, PostStatus, PostType,
+  IPayloadGetDraftContents, IPayloadPublishDraftPost, IPost, PostStatus, PostType,
 } from '~/interfaces/IPost';
 import { withNavigation } from '~/router/helper';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
@@ -15,6 +15,7 @@ import useTimelineStore from '~/store/timeline';
 import { ICreatePostState } from '..';
 import ApiErrorCode from '~/constants/apiErrorCode';
 import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
+import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftContents/store';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -58,10 +59,11 @@ export const postPublishDraftPost = (set, get) => async (payload: IPayloadPublis
     if (createFromGroupId) {
       useTimelineStore.getState().actions.getPosts(createFromGroupId);
     }
-    const payloadGetDraftPosts: IPayloadGetDraftPosts = {
+    const payloadGetDraftPosts: IPayloadGetDraftContents = {
       isRefresh: true,
     };
     useDraftPostStore.getState().actions.getDraftPosts(payloadGetDraftPosts);
+    useDraftContentsStore.getState().actions.getDraftContents({ isRefresh: true });
     useHomeStore.getState().actions.refreshHome();
   } catch (error) {
     actions.setLoadingCreatePost(false);

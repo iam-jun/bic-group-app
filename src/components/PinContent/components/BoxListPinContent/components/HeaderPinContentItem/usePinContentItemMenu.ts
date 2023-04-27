@@ -2,11 +2,14 @@ import i18next from 'i18next';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import usePinContentStore, { UpdatePinContentParams } from '~/components/PinContent/store';
 import { useBaseHook } from '~/hooks';
+import { useRootNavigation } from '~/hooks/navigation';
 import { IToastMessage } from '~/interfaces/common';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import showToast from '~/store/helper/showToast';
 import useModalStore from '~/store/modal';
 
 const usePinContentItemMenu = (pinContentId: string, id) => {
+  const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const { hideBottomList, showBottomList } = useModalStore((state) => state.actions);
   const actions = usePinContentStore((state) => state.actions);
@@ -32,6 +35,7 @@ const usePinContentItemMenu = (pinContentId: string, id) => {
 
   const onPressReorder = () => {
     hideBottomList();
+    rootNavigation.navigate(homeStack.reorderedPinContent, { groupId: id });
   };
 
   const defaultData = [

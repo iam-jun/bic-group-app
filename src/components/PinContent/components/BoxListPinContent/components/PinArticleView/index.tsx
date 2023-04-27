@@ -1,6 +1,6 @@
 import React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useRoute, useTheme } from '@react-navigation/native';
 import { useRootNavigation } from '~/hooks/navigation';
 import { Button } from '~/baseComponents';
 import HeaderPinContentItem from '../HeaderPinContentItem';
@@ -9,30 +9,34 @@ import spacing, { borderRadius } from '~/theme/spacing';
 import { IPost } from '~/interfaces/IPost';
 import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-
-const WidthDevice = Dimensions.get('window').width;
-const MaxWidthItem = WidthDevice * 0.8;
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
+import Draggable from '~/screens/PinContent/Reordered/components/Draggable';
 
 interface PinArticleViewProps {
   data: IPost;
   isAdmin: boolean;
   id: string;
+  isActiveAnimation?: boolean;
 }
 
 const PinArticleView: React.FC<PinArticleViewProps> = ({
   data,
   isAdmin,
   id,
+  isActiveAnimation,
 }) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
-  const { colors } = theme;
+  const { colors, elevations } = theme;
   const { rootNavigation } = useRootNavigation();
+
+  const { name } = useRoute();
+  const isReorderScreen = name === homeStack.reorderedPinContent;
 
   const { title, summary } = data || {};
 
   const goToDetail = () => {
-    rootNavigation.navigate(articleStack.articleDetail, { articleId: data?.id });
+    rootNavigation.navigate(articleStack.articleContentDetail, { articleId: data?.id });
   };
 
   const renderContent = () => (
@@ -51,11 +55,13 @@ const PinArticleView: React.FC<PinArticleViewProps> = ({
 
   return (
     <Button
-      style={styles.container}
+      style={[styles.container, isActiveAnimation && elevations.e2]}
       onPress={goToDetail}
+      disabled={isReorderScreen}
     >
       <HeaderPinContentItem data={data} isAdmin={isAdmin} id={id} />
       {renderContent()}
+      {isReorderScreen && <Draggable />}
     </Button>
   );
 };
@@ -69,7 +75,7 @@ const createStyles = (theme: ExtendedTheme) => {
       borderWidth: 1,
       borderRadius: borderRadius.large,
       borderColor: colors.purple5,
-      width: MaxWidthItem,
+      flex: 1,
     },
     content: {
       flex: 1,

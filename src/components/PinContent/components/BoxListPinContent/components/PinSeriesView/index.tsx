@@ -1,6 +1,6 @@
 import React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useRoute, useTheme } from '@react-navigation/native';
 import { useRootNavigation } from '~/hooks/navigation';
 import { Button } from '~/baseComponents';
 import HeaderPinContentItem from '../HeaderPinContentItem';
@@ -11,29 +11,33 @@ import Image from '~/beinComponents/Image';
 import Text from '~/baseComponents/Text';
 import { formatDate } from '~/utils/formatter';
 import { useBaseHook } from '~/hooks';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
+import Draggable from '~/screens/PinContent/Reordered/components/Draggable';
 
-const WidthDevice = Dimensions.get('window').width;
-const MaxWidthItem = WidthDevice * 0.8;
 const IMG_SIZE = 80;
-
 interface PinSeriesViewProps {
   data: IPost;
   isAdmin: boolean;
   id: string;
+  isActiveAnimation?: boolean;
 }
 
 const PinSeriesView: React.FC<PinSeriesViewProps> = ({
   data,
   isAdmin,
   id,
+  isActiveAnimation,
 }) => {
   const theme: ExtendedTheme = useTheme();
-  const { colors } = theme;
+  const { colors, elevations } = theme;
   const styles = createStyles(theme);
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
 
   const { coverMedia, updatedAt, title } = data || {};
+
+  const { name } = useRoute();
+  const isReorderScreen = name === homeStack.reorderedPinContent;
 
   const goToDetail = () => {
     rootNavigation.navigate(seriesStack.seriesDetail, { seriesId: data?.id });
@@ -57,11 +61,13 @@ const PinSeriesView: React.FC<PinSeriesViewProps> = ({
 
   return (
     <Button
-      style={styles.container}
+      style={[styles.container, isActiveAnimation && elevations.e2]}
       onPress={goToDetail}
+      disabled={isReorderScreen}
     >
       <HeaderPinContentItem data={data} isAdmin={isAdmin} id={id} />
       {renderContent()}
+      {isReorderScreen && <Draggable />}
     </Button>
   );
 };
@@ -75,7 +81,7 @@ const createStyles = (theme: ExtendedTheme) => {
       borderWidth: 1,
       borderRadius: borderRadius.large,
       borderColor: colors.purple5,
-      width: MaxWidthItem,
+      flex: 1,
     },
     content: {
       flexDirection: 'row',

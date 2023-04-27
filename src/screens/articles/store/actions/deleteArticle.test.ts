@@ -24,7 +24,7 @@ describe('deleteArticle', () => {
       () => Promise.resolve(response) as any,
     );
 
-    const spyGetDraftArticles = jest.spyOn(streamApi, 'getDraftArticles').mockImplementation(
+    const spyGetDraftArticles = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(
       () => Promise.resolve({}) as any,
     );
 
@@ -110,7 +110,7 @@ describe('deleteArticle', () => {
       () => Promise.resolve({}) as any,
     );
 
-    const spyGetDraftArticles = jest.spyOn(streamApi, 'getDraftArticles').mockImplementation(
+    const spyGetDraftArticles = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(
       () => Promise.resolve({}) as any,
     );
 
