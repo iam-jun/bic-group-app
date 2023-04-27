@@ -10,16 +10,16 @@ import networkSelectors from '~/store/network/selectors';
 
 import useDraftArticleStore from './store';
 import { useUserIdAuth } from '~/hooks/auth';
-import { IPayloadGetDraftPosts } from '~/interfaces/IPost';
+import { IPayloadGetDraftContents } from '~/interfaces/IPost';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { spacing } from '~/theme';
 import Image from '~/beinComponents/Image';
 import Text from '~/baseComponents/Text';
 import images from '~/resources/images';
-import dimension, { homeHeaderTabHeight, homeHeaderAttributeContainerHeight } from '~/theme/dimension';
+import dimension, { homeHeaderTabHeight, homeHeaderContentContainerHeight } from '~/theme/dimension';
 import DraftArticleView from './components/DraftArticleView';
 
-const HeaderFilterHeight = homeHeaderTabHeight + homeHeaderAttributeContainerHeight;
+const HeaderFilterHeight = homeHeaderTabHeight + homeHeaderContentContainerHeight;
 
 interface DraftArticleProps {
   onScroll: (e: any) => void;
@@ -55,7 +55,7 @@ const DraftArticle: React.FC<DraftArticleProps> = ({ onScroll }) => {
   const getData = (isRefreshing?: boolean) => {
     if (!userId) return;
 
-    const payload: IPayloadGetDraftPosts = {
+    const payload: IPayloadGetDraftContents = {
       isRefresh: isRefreshing,
     };
     actions.getDraftArticles(payload);

@@ -6,6 +6,7 @@ import { useBaseHook } from '~/hooks';
 import DiscoverCommunities from '~/screens/Discover/components/DiscoverCommunities';
 import SearchDiscoverCommunity from './components/SearchDiscoverCommunity';
 import TermsView from '~/components/TermsModal';
+import MemberQuestionsModal from '~/components/MemberQuestionsModal';
 
 const Index = () => {
   const theme = useTheme();
@@ -39,6 +40,7 @@ const Index = () => {
         onClose={onCloseSearch}
         placeholder={t('communities:text_search_communities')}
       />
+      <MemberQuestionsModal />
       <TermsView />
     </View>
   );

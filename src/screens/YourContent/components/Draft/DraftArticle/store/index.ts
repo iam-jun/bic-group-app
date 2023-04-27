@@ -2,7 +2,7 @@ import { createStore, resetStore } from '~/store/utils';
 import getDraftArticles from './actions/getDraftArticles';
 import publishDraftArticle from './actions/publishDraftArticle';
 import { IPayloadPublishDraftArticle } from '~/interfaces/IArticle';
-import { IPayloadGetDraftPosts, IPost } from '~/interfaces/IPost';
+import { IPayloadGetDraftContents, IPost } from '~/interfaces/IPost';
 import IBaseState from '~/store/interfaces/IBaseState';
 import IFetchingState from '~/store/interfaces/IFetchingState';
 
@@ -15,7 +15,7 @@ export interface IDraftArticleState extends IBaseState, IFetchingState {
   isPublishing: boolean;
 
   actions?:{
-    getDraftArticles?: (payload: IPayloadGetDraftPosts) => void;
+    getDraftArticles?: (payload: IPayloadGetDraftContents) => void;
     publishDraftArticle?: (payload: IPayloadPublishDraftArticle) => void;
   }
 }

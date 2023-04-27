@@ -7,11 +7,15 @@ export default [
   },
   {
     url: 'https://www.beincom.io/',
-    result: null,
+    result: {
+      type: DeepLinkTypes.APP,
+    },
   },
   {
     url: 'bic:///test/123',
-    result: null,
+    result: {
+      type: DeepLinkTypes.APP,
+    },
   },
   {
     url: 'bic:///posts/99ca53ec-5195-4e28-9506-c0f602e1becb',

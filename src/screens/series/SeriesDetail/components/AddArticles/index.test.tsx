@@ -208,7 +208,7 @@ describe('AddArticles component', () => {
     });
 
     expect(result.current.loading).toBe(false);
-    expect(spyApiAddArticles).toHaveBeenLastCalledWith(seriesId, { articleIds: [listArticle[0].id] });
+    expect(spyApiAddArticles).toHaveBeenLastCalledWith(seriesId, { itemIds: [listArticle[0].id] });
     expect(showToast).toHaveBeenCalled();
   });
   it('should do nothing when click add but item is added: ', () => {

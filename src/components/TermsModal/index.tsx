@@ -19,6 +19,7 @@ import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 import Divider from '~/beinComponents/Divider';
 import useModalStore from '~/store/modal';
 import useBaseHook from '~/hooks/baseHook';
+import useMemberQuestionsStore from '../MemberQuestionsModal/store';
 
 const TermsView = () => {
   const theme: ExtendedTheme = useTheme();
@@ -39,12 +40,16 @@ const TermsView = () => {
   const name = useTermStore((state) => state.name);
   const isActiveGroupTerms = useTermStore((state) => state.isActiveGroupTerms);
   const isOpen = useTermStore((state) => state.isOpen);
+  const answers = useTermStore((state) => state.answers);
+
   const resetTerms = useTermStore((state) => state.reset);
 
   const modalActions = useModalStore((state) => state.actions);
 
   const comActions = useCommunityController((state) => state.actions);
   const groupActions = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.actions);
+
+  const memberQuestionsActions = useMemberQuestionsStore((state) => state.actions);
 
   const [isAgree, setIsAgree] = useState(false);
 
@@ -87,11 +92,16 @@ const TermsView = () => {
 
   const onSubmit = () => {
     if (type === 'community') {
-      comActions.joinCommunity(groupId, name);
+      comActions.joinCommunity({
+        communityId: groupId,
+        communityName: name,
+        membershipAnswers: answers,
+      });
     } else {
-      groupActions.joinNewGroup(groupId);
+      groupActions.joinNewGroup(groupId, answers);
     }
     actions.setIsOpen(false);
+    memberQuestionsActions.setIsOpen(false);
   };
 
   const handleLayout = (e:LayoutChangeEvent) => {

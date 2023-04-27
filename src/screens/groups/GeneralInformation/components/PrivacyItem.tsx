@@ -30,19 +30,35 @@ const PrivacyItem = ({
   };
 
   return (
-    <Button style={styles.container} onPress={_onPress}>
+    <Button testID="privacty_item.view" style={styles.container} onPress={_onPress}>
       <View style={styles.privacyHeader}>
         <View style={styles.privacy}>
           <Icon icon={icon} tintColor={colors.neutral20} />
-          <Text.BodyM color={colors.neutral60} style={styles.privacyText} useI18n>
+          <Text.BodyM
+            testID="privacty_item.title"
+            color={colors.neutral60}
+            style={styles.privacyText}
+            useI18n
+          >
             {title}
           </Text.BodyM>
         </View>
 
-        {isSelected && <Icon icon="Check" tintColor={colors.blue50} />}
+        {isSelected && (
+        <Icon
+          testID="privacty_item.checked"
+          icon="Check"
+          tintColor={colors.blue50}
+        />
+        )}
       </View>
 
-      <Text.BodyM style={styles.descriptionPrivacyText} color={colors.neutral60} useI18n>
+      <Text.BodyM
+        testID="privacty_item.subtitle"
+        style={styles.descriptionPrivacyText}
+        color={colors.neutral60}
+        useI18n
+      >
         {subtitle}
       </Text.BodyM>
     </Button>

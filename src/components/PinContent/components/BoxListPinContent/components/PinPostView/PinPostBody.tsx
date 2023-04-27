@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { ExtendedTheme, useRoute, useTheme } from '@react-navigation/native';
 import { IPost } from '~/interfaces/IPost';
 import PinPostImage from './PinPostImage';
 import PinPostFile from './PinPostFile';
@@ -9,6 +9,7 @@ import PinPostContent from './PinPostContent';
 import { spacing } from '~/theme';
 import { borderRadius } from '~/theme/spacing';
 import { ResourceUploadType } from '~/interfaces/IUpload';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 
 const WidthDevice = Dimensions.get('window').width;
 const WidthBoxBottomPadding = WidthDevice * 0.8;
@@ -23,6 +24,9 @@ const PinPostBody: React.FC<PinPostBodyProps> = ({ data }) => {
 
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
+
+  const { name } = useRoute();
+  const isReorderScreen = name === homeStack.reorderedPinContent;
 
   if (!content && images?.length !== 0) {
     return (
@@ -57,7 +61,10 @@ const PinPostBody: React.FC<PinPostBodyProps> = ({ data }) => {
           mentions={mentions}
         />
       </View>
-      <View style={styles.boxPadding} />
+      <View style={[styles.boxPadding,
+        { width: isReorderScreen ? '100.5%' : WidthBoxBottomPadding },
+      ]}
+      />
     </View>
   );
 };
@@ -76,7 +83,6 @@ const createStyles = (theme: ExtendedTheme) => {
     boxPadding: {
       height: spacing.padding.large,
       backgroundColor: colors.white,
-      width: WidthBoxBottomPadding,
       borderBottomWidth: 1,
       borderLeftWidth: 1,
       borderRightWidth: 1,

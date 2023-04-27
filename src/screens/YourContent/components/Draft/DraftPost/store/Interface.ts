@@ -1,4 +1,4 @@
-import { IPayloadGetDraftPosts, IPost } from '~/interfaces/IPost';
+import { IPayloadGetDraftContents, IPost } from '~/interfaces/IPost';
 import IBaseState from '~/store/interfaces/IBaseState';
 import IFetchingState from '~/store/interfaces/IFetchingState';
 
@@ -10,7 +10,7 @@ interface IDraftPostState extends IBaseState, IFetchingState{
   total: number,
 
   actions?:{
-    getDraftPosts?: (payload: IPayloadGetDraftPosts) => void;
+    getDraftPosts?: (payload: IPayloadGetDraftContents) => void;
   }
 }
 

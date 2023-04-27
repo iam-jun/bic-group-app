@@ -41,7 +41,7 @@ describe('Your Content screen', () => {
     expect(tabDraftPost).toBeDefined();
     fireEvent.press(tabDraftPost);
 
-    const tabDraftArticle = wrapper.queryByTestId('tab-button-post:draft:text_articles-notselected');
+    const tabDraftArticle = wrapper.queryByTestId('tab-button-your_content:title_schedule_article-notselected');
     expect(tabDraftArticle).toBeDefined();
     fireEvent.press(tabDraftArticle);
   });

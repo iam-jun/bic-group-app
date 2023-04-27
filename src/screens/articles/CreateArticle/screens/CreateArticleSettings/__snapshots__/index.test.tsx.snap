@@ -240,7 +240,7 @@ exports[`CreateArticleSettings screen render correctly 1`] = `
                     }
                     testID="header.text"
                   >
-                    Article settings
+                    Settings
                   </Text>
                 </View>
               </View>
@@ -460,7 +460,28 @@ exports[`CreateArticleSettings screen render correctly 1`] = `
           </RCTScrollView>
         </View>
         <View>
-          <View>
+          <View
+            adjustToContentHeight={true}
+            childrenStyle={
+              Array [
+                Object {
+                  "paddingBottom": 16,
+                },
+                undefined,
+              ]
+            }
+            handlePosition="inside"
+            modalStyle={
+              Array [
+                Object {
+                  "borderTopLeftRadius": 16,
+                  "borderTopRightRadius": 16,
+                  "paddingTop": 24,
+                },
+                undefined,
+              ]
+            }
+          >
             <RCTScrollView
               data={Array []}
               getItem={[Function]}
@@ -495,7 +516,28 @@ exports[`CreateArticleSettings screen render correctly 1`] = `
           </View>
         </View>
         <View>
-          <View>
+          <View
+            adjustToContentHeight={true}
+            childrenStyle={
+              Array [
+                Object {
+                  "paddingBottom": 16,
+                },
+                undefined,
+              ]
+            }
+            handlePosition="inside"
+            modalStyle={
+              Array [
+                Object {
+                  "borderTopLeftRadius": 16,
+                  "borderTopRightRadius": 16,
+                  "paddingTop": 24,
+                },
+                undefined,
+              ]
+            }
+          >
             <RCTScrollView
               data={
                 Array [
@@ -620,24 +662,36 @@ exports[`CreateArticleSettings screen render correctly 1`] = `
                           }
                         }
                       >
-                        <Text
-                          numberOfLines={2}
+                        <View
                           style={
-                            Array [
-                              Object {
-                                "color": "#212745",
-                                "fontFamily": "BeVietnamPro-Light",
-                                "fontSize": 14,
-                              },
-                              Object {
-                                "color": "#282E53",
-                              },
-                              undefined,
-                            ]
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                            }
                           }
                         >
-                          {{number}} day
-                        </Text>
+                          <Text
+                            numberOfLines={2}
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#212745",
+                                  "fontFamily": "BeVietnamPro-Light",
+                                  "fontSize": 14,
+                                },
+                                Object {
+                                  "color": "#282E53",
+                                },
+                                Object {
+                                  "flexShrink": 1,
+                                },
+                              ]
+                            }
+                            testID="primary_item.title"
+                          >
+                            {{number}} day
+                          </Text>
+                        </View>
                       </View>
                     </View>
                   </View>
@@ -680,24 +734,36 @@ exports[`CreateArticleSettings screen render correctly 1`] = `
                           }
                         }
                       >
-                        <Text
-                          numberOfLines={2}
+                        <View
                           style={
-                            Array [
-                              Object {
-                                "color": "#212745",
-                                "fontFamily": "BeVietnamPro-Light",
-                                "fontSize": 14,
-                              },
-                              Object {
-                                "color": "#282E53",
-                              },
-                              undefined,
-                            ]
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                            }
                           }
                         >
-                          {{number}} days
-                        </Text>
+                          <Text
+                            numberOfLines={2}
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#212745",
+                                  "fontFamily": "BeVietnamPro-Light",
+                                  "fontSize": 14,
+                                },
+                                Object {
+                                  "color": "#282E53",
+                                },
+                                Object {
+                                  "flexShrink": 1,
+                                },
+                              ]
+                            }
+                            testID="primary_item.title"
+                          >
+                            {{number}} days
+                          </Text>
+                        </View>
                       </View>
                     </View>
                   </View>
@@ -740,24 +806,36 @@ exports[`CreateArticleSettings screen render correctly 1`] = `
                           }
                         }
                       >
-                        <Text
-                          numberOfLines={2}
+                        <View
                           style={
-                            Array [
-                              Object {
-                                "color": "#212745",
-                                "fontFamily": "BeVietnamPro-Light",
-                                "fontSize": 14,
-                              },
-                              Object {
-                                "color": "#282E53",
-                              },
-                              undefined,
-                            ]
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                            }
                           }
                         >
-                          {{number}} week
-                        </Text>
+                          <Text
+                            numberOfLines={2}
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#212745",
+                                  "fontFamily": "BeVietnamPro-Light",
+                                  "fontSize": 14,
+                                },
+                                Object {
+                                  "color": "#282E53",
+                                },
+                                Object {
+                                  "flexShrink": 1,
+                                },
+                              ]
+                            }
+                            testID="primary_item.title"
+                          >
+                            {{number}} week
+                          </Text>
+                        </View>
                       </View>
                     </View>
                   </View>
@@ -800,24 +878,36 @@ exports[`CreateArticleSettings screen render correctly 1`] = `
                           }
                         }
                       >
-                        <Text
-                          numberOfLines={2}
+                        <View
                           style={
-                            Array [
-                              Object {
-                                "color": "#212745",
-                                "fontFamily": "BeVietnamPro-Light",
-                                "fontSize": 14,
-                              },
-                              Object {
-                                "color": "#282E53",
-                              },
-                              undefined,
-                            ]
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                            }
                           }
                         >
-                          {{number}} weeks
-                        </Text>
+                          <Text
+                            numberOfLines={2}
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#212745",
+                                  "fontFamily": "BeVietnamPro-Light",
+                                  "fontSize": 14,
+                                },
+                                Object {
+                                  "color": "#282E53",
+                                },
+                                Object {
+                                  "flexShrink": 1,
+                                },
+                              ]
+                            }
+                            testID="primary_item.title"
+                          >
+                            {{number}} weeks
+                          </Text>
+                        </View>
                       </View>
                     </View>
                   </View>
@@ -860,24 +950,36 @@ exports[`CreateArticleSettings screen render correctly 1`] = `
                           }
                         }
                       >
-                        <Text
-                          numberOfLines={2}
+                        <View
                           style={
-                            Array [
-                              Object {
-                                "color": "#212745",
-                                "fontFamily": "BeVietnamPro-Light",
-                                "fontSize": 14,
-                              },
-                              Object {
-                                "color": "#282E53",
-                              },
-                              undefined,
-                            ]
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                            }
                           }
                         >
-                          {{number}} month
-                        </Text>
+                          <Text
+                            numberOfLines={2}
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#212745",
+                                  "fontFamily": "BeVietnamPro-Light",
+                                  "fontSize": 14,
+                                },
+                                Object {
+                                  "color": "#282E53",
+                                },
+                                Object {
+                                  "flexShrink": 1,
+                                },
+                              ]
+                            }
+                            testID="primary_item.title"
+                          >
+                            {{number}} month
+                          </Text>
+                        </View>
                       </View>
                     </View>
                   </View>
@@ -920,24 +1022,36 @@ exports[`CreateArticleSettings screen render correctly 1`] = `
                           }
                         }
                       >
-                        <Text
-                          numberOfLines={2}
+                        <View
                           style={
-                            Array [
-                              Object {
-                                "color": "#212745",
-                                "fontFamily": "BeVietnamPro-Light",
-                                "fontSize": 14,
-                              },
-                              Object {
-                                "color": "#282E53",
-                              },
-                              undefined,
-                            ]
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                            }
                           }
                         >
-                          {{number}} months
-                        </Text>
+                          <Text
+                            numberOfLines={2}
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#212745",
+                                  "fontFamily": "BeVietnamPro-Light",
+                                  "fontSize": 14,
+                                },
+                                Object {
+                                  "color": "#282E53",
+                                },
+                                Object {
+                                  "flexShrink": 1,
+                                },
+                              ]
+                            }
+                            testID="primary_item.title"
+                          >
+                            {{number}} months
+                          </Text>
+                        </View>
                       </View>
                     </View>
                   </View>
@@ -980,24 +1094,36 @@ exports[`CreateArticleSettings screen render correctly 1`] = `
                           }
                         }
                       >
-                        <Text
-                          numberOfLines={2}
+                        <View
                           style={
-                            Array [
-                              Object {
-                                "color": "#212745",
-                                "fontFamily": "BeVietnamPro-Light",
-                                "fontSize": 14,
-                              },
-                              Object {
-                                "color": "#282E53",
-                              },
-                              undefined,
-                            ]
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                            }
                           }
                         >
-                          {{number}} months
-                        </Text>
+                          <Text
+                            numberOfLines={2}
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#212745",
+                                  "fontFamily": "BeVietnamPro-Light",
+                                  "fontSize": 14,
+                                },
+                                Object {
+                                  "color": "#282E53",
+                                },
+                                Object {
+                                  "flexShrink": 1,
+                                },
+                              ]
+                            }
+                            testID="primary_item.title"
+                          >
+                            {{number}} months
+                          </Text>
+                        </View>
                       </View>
                     </View>
                   </View>
@@ -1040,24 +1166,36 @@ exports[`CreateArticleSettings screen render correctly 1`] = `
                           }
                         }
                       >
-                        <Text
-                          numberOfLines={2}
+                        <View
                           style={
-                            Array [
-                              Object {
-                                "color": "#212745",
-                                "fontFamily": "BeVietnamPro-Light",
-                                "fontSize": 14,
-                              },
-                              Object {
-                                "color": "#282E53",
-                              },
-                              undefined,
-                            ]
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                            }
                           }
                         >
-                          {{number}} year
-                        </Text>
+                          <Text
+                            numberOfLines={2}
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#212745",
+                                  "fontFamily": "BeVietnamPro-Light",
+                                  "fontSize": 14,
+                                },
+                                Object {
+                                  "color": "#282E53",
+                                },
+                                Object {
+                                  "flexShrink": 1,
+                                },
+                              ]
+                            }
+                            testID="primary_item.title"
+                          >
+                            {{number}} year
+                          </Text>
+                        </View>
                       </View>
                     </View>
                   </View>
@@ -1100,24 +1238,36 @@ exports[`CreateArticleSettings screen render correctly 1`] = `
                           }
                         }
                       >
-                        <Text
-                          numberOfLines={2}
+                        <View
                           style={
-                            Array [
-                              Object {
-                                "color": "#212745",
-                                "fontFamily": "BeVietnamPro-Light",
-                                "fontSize": 14,
-                              },
-                              Object {
-                                "color": "#282E53",
-                              },
-                              undefined,
-                            ]
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                            }
                           }
                         >
-                          Never
-                        </Text>
+                          <Text
+                            numberOfLines={2}
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#212745",
+                                  "fontFamily": "BeVietnamPro-Light",
+                                  "fontSize": 14,
+                                },
+                                Object {
+                                  "color": "#282E53",
+                                },
+                                Object {
+                                  "flexShrink": 1,
+                                },
+                              ]
+                            }
+                            testID="primary_item.title"
+                          >
+                            Never
+                          </Text>
+                        </View>
                       </View>
                     </View>
                   </View>
@@ -1160,24 +1310,36 @@ exports[`CreateArticleSettings screen render correctly 1`] = `
                           }
                         }
                       >
-                        <Text
-                          numberOfLines={2}
+                        <View
                           style={
-                            Array [
-                              Object {
-                                "color": "#212745",
-                                "fontFamily": "BeVietnamPro-Light",
-                                "fontSize": 14,
-                              },
-                              Object {
-                                "color": "#282E53",
-                              },
-                              undefined,
-                            ]
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                            }
                           }
                         >
-                          Custom
-                        </Text>
+                          <Text
+                            numberOfLines={2}
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#212745",
+                                  "fontFamily": "BeVietnamPro-Light",
+                                  "fontSize": 14,
+                                },
+                                Object {
+                                  "color": "#282E53",
+                                },
+                                Object {
+                                  "flexShrink": 1,
+                                },
+                              ]
+                            }
+                            testID="primary_item.title"
+                          >
+                            Custom
+                          </Text>
+                        </View>
                       </View>
                     </View>
                   </View>
