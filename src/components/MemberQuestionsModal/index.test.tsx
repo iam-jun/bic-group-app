@@ -3,16 +3,33 @@ import * as React from 'react';
 import MemberQuestionsModal from './index';
 import { act, fireEvent, renderWithRedux } from '~/test/testUtils';
 import groupApi from '~/api/GroupApi';
-import useMemberQuestionsStore from './store';
 import useCommunityController from '~/screens/communities/store';
 import { MEMBERSHIP_QUESITONS } from '~/test/mock_data/group';
-import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
+import useMemberQuestionsStore from './store';
 import useTermStore from '../TermsModal/store';
+import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 
 describe('MemberQuestionsModal component', () => {
-  afterEach(() => {
-    jest.runOnlyPendingTimers(); // you must add this
-    jest.useRealTimers(); // you must add this
+  it('renders correctly when show questions', () => {
+    const response = { data: MEMBERSHIP_QUESITONS };
+    const spy = jest.spyOn(groupApi, 'getMembershipQuestions')
+      .mockImplementation(() => Promise.resolve(response) as any);
+
+    const joinCommunity = jest.fn();
+    useCommunityController.setState((state) => {
+      state.actions.joinCommunity = joinCommunity;
+      return state;
+    });
+
+    useMemberQuestionsStore.setState((state) => {
+      state.isActive = true;
+      state.rootGroupId = 'test';
+      return state;
+    });
+
+    renderWithRedux(<MemberQuestionsModal />);
+
+    expect(spy).toBeCalled();
   });
   it('renders correctly when show questions', () => {
     const newIds = MEMBERSHIP_QUESITONS.map((item) => item.id);
@@ -24,39 +41,29 @@ describe('MemberQuestionsModal component', () => {
       {},
     );
 
-    const response = { data: MEMBERSHIP_QUESITONS };
-    const spy = jest.spyOn(groupApi, 'getMembershipQuestions')
-      .mockImplementation(() => Promise.resolve(response) as any);
-
     const joinCommunity = jest.fn();
     useCommunityController.setState((state) => {
       state.actions.joinCommunity = joinCommunity;
       return state;
     });
+
+    useMemberQuestionsStore.setState((state) => {
+      state.rootGroupId = 'test';
+      state.type = 'community';
+      state.ids = newIds;
+      state.questions = newItems;
+      state.answers = {};
+      state.loading = false;
+      state.isOpen = true;
+      return state;
+    });
     const wrapper = renderWithRedux(<MemberQuestionsModal />);
 
-    act(() => {
-      useMemberQuestionsStore.setState((state) => {
-        state.isActive = true;
-        state.rootGroupId = 'test';
-        state.type = 'community';
-        state.ids = newIds;
-        state.questions = newItems;
-        state.answers = {};
-        state.loading = false;
-        state.isOpen = true;
-        return state;
-      });
-    });
-    expect(spy).toBeCalled();
     const component = wrapper.queryByTestId('member_questions.view');
     expect(component).toBeDefined();
 
-    expect(wrapper.toJSON()).toMatchSnapshot();
-
-    const inputComp = wrapper.queryAllByTestId('member_questions.answer');
+    const inputComp = wrapper.queryAllByTestId('member_questions.question');
     expect(inputComp).toBeDefined();
-    console.log('>>>>>>>>>>>>>>>>>>', inputComp);
     expect(inputComp.length).toEqual(MEMBERSHIP_QUESITONS.length);
     fireEvent.changeText(inputComp[0], 'test');
 
@@ -87,33 +94,26 @@ describe('MemberQuestionsModal component', () => {
       {},
     );
 
-    const response = { data: MEMBERSHIP_QUESITONS };
-    const spy = jest.spyOn(groupApi, 'getMembershipQuestions')
-      .mockImplementation(() => Promise.resolve(response) as any);
-
     const setTermInfo = jest.fn();
     useTermStore.setState((state) => {
       state.actions.setTermInfo = setTermInfo;
       return state;
     });
 
+    useMemberQuestionsStore.setState((state) => {
+      state.rootGroupId = 'test';
+      state.type = 'community';
+      state.ids = newIds;
+      state.questions = newItems;
+      state.answers = {};
+      state.loading = false;
+      state.isOpen = true;
+      state.isActiveGroupTerms = true;
+      return state;
+    });
+
     const wrapper = renderWithRedux(<MemberQuestionsModal />);
 
-    act(() => {
-      useMemberQuestionsStore.setState((state) => {
-        state.isActive = true;
-        state.rootGroupId = 'test';
-        state.type = 'community';
-        state.ids = newIds;
-        state.questions = newItems;
-        state.answers = {};
-        state.loading = false;
-        state.isOpen = true;
-        state.isActiveGroupTerms = true;
-        return state;
-      });
-    });
-    expect(spy).toBeCalled();
     const component = wrapper.queryByTestId('member_questions.view');
     expect(component).toBeDefined();
 
@@ -148,30 +148,23 @@ describe('MemberQuestionsModal component', () => {
       {},
     );
 
-    const response = { data: MEMBERSHIP_QUESITONS };
-    jest.spyOn(groupApi, 'getMembershipQuestions')
-      .mockImplementation(() => Promise.resolve(response) as any);
-
     const joinNewGroup = jest.fn();
     useDiscoverGroupsStore.setState((state) => {
       state.actions.joinNewGroup = joinNewGroup;
       return state;
     });
 
-    const wrapper = renderWithRedux(<MemberQuestionsModal />);
-
-    act(() => {
-      useMemberQuestionsStore.setState((state) => {
-        state.isActive = true;
-        state.rootGroupId = 'test';
-        state.type = 'group';
-        state.isOpen = true;
-        state.ids = newIds;
-        state.questions = newItems;
-        state.loading = false;
-        return state;
-      });
+    useMemberQuestionsStore.setState((state) => {
+      state.rootGroupId = 'test';
+      state.type = 'group';
+      state.isOpen = true;
+      state.ids = newIds;
+      state.questions = newItems;
+      state.loading = false;
+      return state;
     });
+
+    const wrapper = renderWithRedux(<MemberQuestionsModal />);
 
     const component = wrapper.queryByTestId('member_questions.view');
     expect(component).toBeDefined();

@@ -1,10 +1,12 @@
-import ImagePicker from 'react-native-image-crop-picker';
+import RNPermissions from 'react-native-permissions';
 
 import { _openImagePicker } from './helper';
 
 describe('GeneralInformation helper', () => {
   it('should _openImagePicker success', () => {
-    const spy = jest.spyOn(ImagePicker, 'openPicker');
+    const checkPermission = jest.spyOn(RNPermissions, 'check').mockImplementation(
+      () => Promise.resolve(RNPermissions.RESULTS.GRANTED) as any,
+    );
 
     const result = _openImagePicker({
       dispatch: jest.fn(),
@@ -15,6 +17,6 @@ describe('GeneralInformation helper', () => {
       rootGroupId: '1',
     });
     expect(result).toBeTruthy();
-    expect(spy).toBeCalled();
+    expect(checkPermission).toBeCalled();
   });
 });
