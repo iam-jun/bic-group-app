@@ -26,6 +26,7 @@ const appConfig = {
   shortPostContentLength: 400,
   articlesInSeriesLimit: 20,
   articlePhotoMaxSize: 25 * 1024 * 1024, // kb => byte = 25Mb
+  groupImageMaxSize: 25 * 1024 * 1024,
   superUsers: [
     'namanh@evolgroup.vn',
     'dieplamminhthu@evolgroup.vn',

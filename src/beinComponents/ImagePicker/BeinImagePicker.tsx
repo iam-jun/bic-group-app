@@ -14,6 +14,7 @@ const formatImage = (image: any) => {
     uri: image?.path,
     width: image?.width,
     height: image?.height,
+    sourceURL: image?.sourceURL,
   };
 };
 
@@ -31,7 +32,7 @@ const openPickerSingle = async (option = {}) => {
       const result: IFilePicked = formatImage(image);
       return Promise.resolve(result);
     }
-    return Promise.reject(new Error('image not found'));
+    return Promise.reject(new Error('Image not found'));
   } catch (e) {
     return Promise.reject(e);
   }

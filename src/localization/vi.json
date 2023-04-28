@@ -79,7 +79,9 @@
     "text_chosen": "Đang Chọn",
     "error": {
       "file": {
-        "over_file_size": "Dung lượng file tối đa {n}"
+        "over_file_size": "Dung lượng file tối đa {n}",
+        "file_exceed_limit": "Tệp vượt quá giới hạn {n}",
+        "file_type_not_support": "Định dạng tệp không được hỗ trợ"
       }
     },
     "message_add_member_success_group": "Thêm thành viên thành công",

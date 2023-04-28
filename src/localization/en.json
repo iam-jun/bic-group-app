@@ -87,7 +87,9 @@
     "label_confirm_send_video": "Send this video?",
     "error": {
       "file": {
-        "over_file_size": "Your file must be less than {n}"
+        "over_file_size": "Your file must be less than {n}",
+        "file_exceed_limit": "File exceeds {n} limit",
+        "file_type_not_support": "File format is not supported"
       }
     },
     "label_discard_changes": "Discard Changes",
