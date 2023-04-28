@@ -6,7 +6,7 @@ import { StyleSheet, View } from 'react-native';
 
 import CollapsibleText from '~/baseComponents/Text/CollapsibleText';
 import PostPhotoPreview from '~/components/posts/PostPhotoPreview';
-import { uploadTypes } from '~/configs/resourceConfig';
+import { ResourceUploadType } from '~/interfaces/IUpload';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IMarkdownAudience, IPost, PostStatus } from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
@@ -145,7 +145,7 @@ const _PostBody: FC<PostBodyProps> = ({
       <>
         <PostPhotoPreview
           data={images}
-          uploadType="postImage"
+          uploadType={ResourceUploadType.postContent}
           enableGalleryModal
           onPressMarkSeenPost={onPressMarkSeenPost}
         />
@@ -157,7 +157,7 @@ const _PostBody: FC<PostBodyProps> = ({
           />
         ) : (
           <UploadingFile
-            uploadType={uploadTypes.postVideo}
+            uploadType={ResourceUploadType.postVideo}
             file={videos?.[0]}
             disableClose
           />

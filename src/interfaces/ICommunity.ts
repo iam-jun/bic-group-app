@@ -37,6 +37,7 @@ export interface IPreviewMember {
   username: string;
   fullname: string;
   avatar: string;
+  isVerified?: boolean;
 }
 
 export interface ICommunityMembers extends IPreviewMember {

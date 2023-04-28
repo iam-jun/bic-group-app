@@ -1,5 +1,5 @@
 import ImagePicker from '~/beinComponents/ImagePicker';
-import { IUploadType } from '~/configs/resourceConfig';
+import { ResourceUploadType } from '~/interfaces/IUpload';
 import { IFilePicked } from '~/interfaces/common';
 import { groupProfileImageCropRatio } from '~/theme/dimension';
 import useGroupsStore from '~/store/entities/groups';
@@ -13,7 +13,7 @@ export const uploadFile = ({
   id: string;
   file: IFilePicked;
   fieldName: 'icon' | 'backgroundImgUrl';
-  uploadType: IUploadType;
+  uploadType: ResourceUploadType;
   destination: 'group' | 'community';
   rootGroupId: string;
 }) => {
@@ -32,7 +32,7 @@ export const _openImagePicker = async ({
   dispatch: any;
   id: string;
   fieldName: 'icon' | 'backgroundImgUrl';
-  uploadType: IUploadType;
+  uploadType: ResourceUploadType;
   destination: 'group' | 'community';
   rootGroupId: string;
 }) => {

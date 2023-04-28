@@ -11,7 +11,14 @@ describe('UserHeader component', () => {
     const latestWork = { company: 'Test', titlePosition: 'Test' };
 
     const rendered = renderWithRedux(
-      <UserHeader id="123" fullname={fullname} username={username} latestWork={latestWork} isCurrentUser />,
+      <UserHeader
+        id="123"
+        fullname={fullname}
+        username={username}
+        latestWork={latestWork}
+        isCurrentUser
+        screenId="test"
+      />,
     );
     const { getByTestId } = rendered;
     const containerComponent = getByTestId('user_profile');
@@ -32,7 +39,14 @@ describe('UserHeader component', () => {
     const latestWork = { company: 'Test', titlePosition: 'Test' };
 
     const rendered = renderWithRedux(
-      <UserHeader id="123" fullname={fullname} username={username} latestWork={latestWork} isCurrentUser={false} />,
+      <UserHeader
+        id="123"
+        fullname={fullname}
+        username={username}
+        latestWork={latestWork}
+        isCurrentUser={false}
+        screenId="test"
+      />,
     );
     const { getByTestId } = rendered;
     const btnBlock = getByTestId('user_header.btn_block');

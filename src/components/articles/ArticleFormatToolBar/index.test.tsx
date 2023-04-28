@@ -26,7 +26,7 @@ describe('ArticleFormatToolBar component', () => {
 
     const upload = jest.fn();
     useUploaderStore.setState((state) => {
-      state.actions.upload = upload;
+      state.actions.uploadImage = upload;
       return state;
     });
 

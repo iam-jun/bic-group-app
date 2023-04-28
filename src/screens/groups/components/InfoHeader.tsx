@@ -44,7 +44,7 @@ const _InfoHeader = ({
       <Avatar.Large
         showBorder
         style={styles.avatar}
-        resizeMode="contain"
+        resizeMode="cover"
         source={{ uri: icon }}
         defaultSource={images.img_group_avatar_default}
       />

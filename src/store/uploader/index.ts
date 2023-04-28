@@ -1,10 +1,11 @@
-import { IUploadType } from '~/configs/resourceConfig';
 import { IFilePicked } from '~/interfaces/common';
 import {
   createStore, resetStore,
 } from '~/store/utils';
 import IBaseState, { InitStateType } from '../interfaces/IBaseState';
-import upload from './actions/upload';
+import { ResourceUploadType } from '~/interfaces/IUpload';
+import uploadFile from './actions/uploadFile';
+import uploadImage from './actions/uploadImage';
 
 export interface IGetFile {
   id?: string;
@@ -12,16 +13,15 @@ export interface IGetFile {
   url?: string;
   size?: any;
   uploading?: boolean;
-  uploadType?: IUploadType;
+  uploadType?: ResourceUploadType;
   result?: any;
   type?: string;
   thumbnails?: any[];
 }
 
 export interface IUploadParam {
-  type?: 'file'|'image'
   file: IFilePicked;
-  uploadType: IUploadType;
+  uploadType: ResourceUploadType;
 }
 
 export interface IFileUploadResponse {
@@ -40,7 +40,8 @@ export interface IUploaderState extends IBaseState {
   abortController: {[x: string]: AbortController};
   errors: {[x: string]: string};
   actions:{
-    upload: (data: IUploadParam) => void;
+    uploadFile: (data: IUploadParam) => void;
+    uploadImage: (data: IUploadParam) => void;
     cancel: (file: any) => void;
     cancelAllFiles: () => void;
   }
@@ -56,7 +57,8 @@ const initialState: InitStateType<IUploaderState> = {
 const uploaderStore = (set, get) => ({
   ...initialState,
   actions: {
-    upload: upload(set, get),
+    uploadFile: uploadFile(set, get),
+    uploadImage: uploadImage(set, get),
     cancel: (file: any) => {
       const filename = file?.name || file?.filename || file?.fileName;
       const { fileAbortController } = get();

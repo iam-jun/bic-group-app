@@ -12,7 +12,7 @@ import { isEmpty } from 'lodash';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import PostInput from '~/beinComponents/inputs/PostInput';
 import UploadingFile from '~/beinComponents/UploadingFile';
-import { uploadTypes } from '~/configs/resourceConfig';
+import { ResourceUploadType } from '~/interfaces/IUpload';
 import { useBaseHook } from '~/hooks';
 import { useKeyboardStatus } from '~/hooks/keyboard';
 import { IFilePicked } from '~/interfaces/common';
@@ -247,7 +247,7 @@ const Content = ({ groupIds, useCreatePostData }: Props) => {
                 />
               ) : video ? (
                 <UploadingFile
-                  uploadType={uploadTypes.postVideo}
+                  uploadType={ResourceUploadType.postVideo}
                   file={video as IFilePicked}
                   onClose={onRemoveVideo}
                   onError={() => onUploadError('video')}
@@ -258,7 +258,7 @@ const Content = ({ groupIds, useCreatePostData }: Props) => {
             <Button activeOpacity={1}>
               <FilesView
                 files={files}
-                uploadType={uploadTypes.postFile}
+                uploadType={ResourceUploadType.postFile}
                 remainingSize={remainingSize}
                 onRemoveFile={onRemoveFile}
                 onError={() => onUploadError('file')}

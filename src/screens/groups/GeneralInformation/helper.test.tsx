@@ -1,5 +1,6 @@
 import RNPermissions from 'react-native-permissions';
 
+import { ResourceUploadType } from '~/interfaces/IUpload';
 import { _openImagePicker } from './helper';
 
 describe('GeneralInformation helper', () => {
@@ -12,7 +13,7 @@ describe('GeneralInformation helper', () => {
       dispatch: jest.fn(),
       id: '1',
       fieldName: 'icon',
-      uploadType: 'user_avatar',
+      uploadType: ResourceUploadType.userAvatar,
       destination: 'group',
       rootGroupId: '1',
     });

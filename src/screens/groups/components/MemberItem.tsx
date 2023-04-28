@@ -1,5 +1,7 @@
-import { StyleSheet, Keyboard } from 'react-native';
 import React, { useCallback } from 'react';
+import {
+  StyleSheet, Keyboard, View,
+} from 'react-native';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/baseComponents/Text';
@@ -18,6 +20,7 @@ import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communi
 import { IGroupMembers } from '~/interfaces/IGroup';
 import { ICommunityMembers } from '~/interfaces/ICommunity';
 import useBlockingStore from '~/store/blocking';
+import VerifiedView from '~/components/VerifiedView';
 
 interface MemberItemProps {
   item: ICommunityMembers | IGroupMembers;
@@ -41,7 +44,7 @@ const MemberItem = ({
   const isBlockedUser = listRelationship.some((userId) => userId === item.id);
 
   const {
-    id, fullname, avatar, username,
+    id, fullname, avatar, username, isVerified,
   } = item || {};
 
   const isMe = user?.username === username;
@@ -96,14 +99,18 @@ const MemberItem = ({
       onPress={goToUserProfile}
       ContentComponent={(
         <>
-          <Text.BodyMMedium
-            testID="member_item.name"
-            ellipsizeMode="middle"
-            color={colors.neutral60}
-            numberOfLines={1}
-          >
-            {memberName}
-          </Text.BodyMMedium>
+          <View style={styles.row}>
+            <Text.BodyMMedium
+              testID="member_item.name"
+              ellipsizeMode="middle"
+              color={colors.neutral60}
+              numberOfLines={1}
+              style={{ flexShrink: 1 }}
+            >
+              {memberName}
+            </Text.BodyMMedium>
+            <VerifiedView size={12} isVerified={isVerified} />
+          </View>
           <Text.BodyS
             testID="member_item.username"
             color={colors.neutral30}
@@ -114,7 +121,7 @@ const MemberItem = ({
         </>
       )}
       RightComponent={(
-        <>
+        <View style={styles.row}>
           {canSendMessage && (
             <Icon
               icon="CommentDotsSolid"
@@ -127,7 +134,7 @@ const MemberItem = ({
             />
           )}
           {renderButtonMenu()}
-        </>
+        </View>
       )}
     />
   );
@@ -149,6 +156,13 @@ const styles = StyleSheet.create({
   },
   iconMenu: {
     marginLeft: spacing.margin.small,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  flex1: {
+    flex: 1,
   },
 });
 

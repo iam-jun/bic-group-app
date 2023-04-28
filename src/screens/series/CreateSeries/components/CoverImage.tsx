@@ -4,7 +4,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
 import UploadingImage from '~/beinComponents/UploadingImage';
-import { uploadTypes } from '~/configs/resourceConfig';
+import { ResourceUploadType } from '~/interfaces/IUpload';
 import { IFilePicked } from '~/interfaces/common';
 import dimension, { scaleSize } from '~/theme/dimension';
 import Icon from '~/baseComponents/Icon';
@@ -102,7 +102,7 @@ const CoverImage = ({
   return (
     <View style={style}>
       <UploadingImage
-        uploadType={uploadTypes.postImage}
+        uploadType={ResourceUploadType.seriesCover}
         file={selectingCover}
         fileName={selectingCover?.filename}
         url={!selectingCover && coverMedia.url}

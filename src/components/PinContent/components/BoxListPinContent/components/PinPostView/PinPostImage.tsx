@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image as RNImage, View, StyleSheet } from 'react-native';
 import UploadingImage from '~/beinComponents/UploadingImage';
-import { IUploadType } from '~/configs/resourceConfig';
+import { ResourceUploadType } from '~/interfaces/IUpload';
 import { IActivityDataImage } from '~/interfaces/IPost';
 import { borderRadius } from '~/theme/spacing';
 
@@ -9,7 +9,7 @@ const ASPECT_RATIO = 0.9;
 
 interface PinPostImageProps {
     data: IActivityDataImage[];
-    uploadType: IUploadType | string;
+    uploadType: ResourceUploadType;
 }
 
 const PinPostImage: React.FC<PinPostImageProps> = ({
@@ -47,7 +47,6 @@ const PinPostImage: React.FC<PinPostImageProps> = ({
         uploadType={uploadType}
         width={isVerticalFirst ? '46%' : '100%'}
         height="100%"
-        fileName={data[0].origin_name}
         url={data[0].url || data[0].name}
       />
     </View>
