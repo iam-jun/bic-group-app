@@ -162,22 +162,25 @@ exports[`ReviewMarkdown component should render correctly 1`] = `
                 },
                 Array [
                   Array [
+                    Array [
+                      Object {
+                        "borderRadius": 8,
+                        "height": 48,
+                        "width": 48,
+                      },
+                      Object {
+                        "borderRadius": 24,
+                      },
+                    ],
                     Object {
-                      "borderRadius": 8,
-                      "height": 48,
-                      "width": 48,
+                      "borderColor": "#F2F5F8",
+                      "borderWidth": 2,
                     },
                     Object {
-                      "borderRadius": 24,
+                      "backgroundColor": "#FFFFFF",
                     },
                   ],
-                  Object {
-                    "borderColor": "#F2F5F8",
-                    "borderWidth": 2,
-                  },
-                  Object {
-                    "backgroundColor": "#FFFFFF",
-                  },
+                  false,
                 ],
               ]
             }
@@ -187,7 +190,7 @@ exports[`ReviewMarkdown component should render correctly 1`] = `
               resizeMode="cover"
               source={
                 Object {
-                  "uri": "https://avatar.com/img",
+                  "uri": "https://avatar.com/img?width=128",
                 }
               }
               style={
@@ -211,21 +214,30 @@ exports[`ReviewMarkdown component should render correctly 1`] = `
           }
         }
       >
-        <Text
+        <View
           style={
-            Array [
-              Object {
-                "color": "#181C32",
-                "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 13,
-              },
-              Object {},
-              undefined,
-            ]
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+            }
           }
         >
-          sonls
-        </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 13,
+                },
+                Object {},
+                undefined,
+              ]
+            }
+          >
+            sonls
+          </Text>
+        </View>
         <View
           style={
             Object {

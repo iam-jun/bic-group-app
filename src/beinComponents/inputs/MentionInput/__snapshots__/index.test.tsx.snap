@@ -519,10 +519,13 @@ Array [
                               Object {
                                 "overflow": "hidden",
                               },
-                              Object {
-                                "height": 20,
-                                "width": 20,
-                              },
+                              Array [
+                                Object {
+                                  "height": 20,
+                                  "width": 20,
+                                },
+                                false,
+                              ],
                             ]
                           }
                         >
@@ -977,10 +980,13 @@ Array [
                             Object {
                               "overflow": "hidden",
                             },
-                            Object {
-                              "height": 20,
-                              "width": 20,
-                            },
+                            Array [
+                              Object {
+                                "height": 20,
+                                "width": 20,
+                              },
+                              false,
+                            ],
                           ]
                         }
                       >

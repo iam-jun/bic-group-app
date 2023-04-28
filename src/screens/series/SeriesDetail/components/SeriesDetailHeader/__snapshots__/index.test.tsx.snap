@@ -24,17 +24,20 @@ exports[`SeriesDetailHeader component render with description view 1`] = `
           Object {
             "overflow": "hidden",
           },
-          Object {
-            "height": 167,
-            "width": 750,
-          },
+          Array [
+            Object {
+              "height": 167,
+              "width": 750,
+            },
+            false,
+          ],
         ]
       }
     >
       <FastImageView
         onFastImageError={[Function]}
         resizeMode="cover"
-        source={null}
+        source={Object {}}
         style={
           Object {
             "bottom": 0,
@@ -478,10 +481,13 @@ exports[`SeriesDetailHeader component render without description view 1`] = `
           Object {
             "overflow": "hidden",
           },
-          Object {
-            "height": 167,
-            "width": 750,
-          },
+          Array [
+            Object {
+              "height": 167,
+              "width": 750,
+            },
+            false,
+          ],
         ]
       }
     >
@@ -490,7 +496,7 @@ exports[`SeriesDetailHeader component render without description view 1`] = `
         resizeMode="cover"
         source={
           Object {
-            "uri": "https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/f6bd62ee-ccec-4526-9b99-376861ad9426.jpeg",
+            "uri": "https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/f6bd62ee-ccec-4526-9b99-376861ad9426.jpeg?width=828",
           }
         }
         style={

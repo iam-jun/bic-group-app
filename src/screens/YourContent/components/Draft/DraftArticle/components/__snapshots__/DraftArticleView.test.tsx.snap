@@ -130,7 +130,7 @@ exports[`DraftArticle component render correctly 1`] = `
               resizeMode="cover"
               source={
                 Object {
-                  "uri": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/c6b8b056-7d77-4382-b95c-010c2fda4809.jpg?width=64",
+                  "uri": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/c6b8b056-7d77-4382-b95c-010c2fda4809.jpg?width=128",
                 }
               }
               style={

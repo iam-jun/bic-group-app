@@ -503,12 +503,15 @@ exports[`ScheduledArticles component render correctly 1`] = `
                   Object {
                     "overflow": "hidden",
                   },
-                  Object {
-                    "borderRadius": 4,
-                    "height": 44,
-                    "marginRight": 8,
-                    "width": 61,
-                  },
+                  Array [
+                    Object {
+                      "borderRadius": 4,
+                      "height": 44,
+                      "marginRight": 8,
+                      "width": 61,
+                    },
+                    false,
+                  ],
                 ]
               }
             >
@@ -517,7 +520,7 @@ exports[`ScheduledArticles component render correctly 1`] = `
                 resizeMode="cover"
                 source={
                   Object {
-                    "uri": "https://bic-dev-user-upload-images-s3-bucket.s3.ap-southeast-1.amazonaws.com/post/original/fa2a7cde-eee0-4c09-9784-45e1c1ef7e6b.png",
+                    "uri": "https://bic-dev-user-upload-images-s3-bucket.s3.ap-southeast-1.amazonaws.com/post/original/fa2a7cde-eee0-4c09-9784-45e1c1ef7e6b.png?width=64",
                   }
                 }
                 style={

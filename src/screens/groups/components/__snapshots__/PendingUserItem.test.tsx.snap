@@ -64,22 +64,25 @@ exports[`PendingUserItem component should render data correctly 1`] = `
               },
               Array [
                 Array [
+                  Array [
+                    Object {
+                      "borderRadius": 8,
+                      "height": 48,
+                      "width": 48,
+                    },
+                    Object {
+                      "borderRadius": 24,
+                    },
+                  ],
                   Object {
-                    "borderRadius": 8,
-                    "height": 48,
-                    "width": 48,
+                    "borderColor": "#F2F5F8",
+                    "borderWidth": 2,
                   },
                   Object {
-                    "borderRadius": 24,
+                    "backgroundColor": "#FFFFFF",
                   },
                 ],
-                Object {
-                  "borderColor": "#F2F5F8",
-                  "borderWidth": 2,
-                },
-                Object {
-                  "backgroundColor": "#FFFFFF",
-                },
+                false,
               ],
             ]
           }
@@ -89,7 +92,7 @@ exports[`PendingUserItem component should render data correctly 1`] = `
             resizeMode="cover"
             source={
               Object {
-                "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/949ad541-c16f-4974-a83c-db04f3a393c9.jpg",
+                "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/949ad541-c16f-4974-a83c-db04f3a393c9.jpg?width=128",
               }
             }
             style={
@@ -115,21 +118,30 @@ exports[`PendingUserItem component should render data correctly 1`] = `
         }
       }
     >
-      <Text
+      <View
         style={
-          Array [
-            Object {
-              "color": "#181C32",
-              "fontFamily": "BeVietnamPro-SemiBold",
-              "fontSize": 15,
-            },
-            Object {},
-            undefined,
-          ]
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+          }
         }
       >
-        User Name Test
-      </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 15,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          User Name Test
+        </Text>
+      </View>
       <View
         style={
           Object {

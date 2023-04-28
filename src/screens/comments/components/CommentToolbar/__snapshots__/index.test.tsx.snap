@@ -293,10 +293,13 @@ exports[`CommentToolbar component renders correctly 1`] = `
                     Object {
                       "overflow": "hidden",
                     },
-                    Object {
-                      "height": 20,
-                      "width": 20,
-                    },
+                    Array [
+                      Object {
+                        "height": 20,
+                        "width": 20,
+                      },
+                      false,
+                    ],
                   ]
                 }
               >

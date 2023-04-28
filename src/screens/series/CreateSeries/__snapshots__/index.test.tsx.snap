@@ -520,10 +520,7 @@ exports[`CreateSeries component renders correctly without data 1`] = `
                   "height": 400,
                   "width": 750,
                 },
-                Object {
-                  "height": 400,
-                  "width": "100%",
-                },
+                undefined,
               ]
             }
             testID="upload_image"

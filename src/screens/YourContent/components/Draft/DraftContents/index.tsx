@@ -5,9 +5,9 @@ import {
 } from 'react-native';
 import Animated from 'react-native-reanimated';
 
-import Image from '~/beinComponents/Image';
 import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import Image from '~/components/Image';
 
 import { useUserIdAuth } from '~/hooks/auth';
 import { IPayloadGetDraftContents, PostType } from '~/interfaces/IPost';
