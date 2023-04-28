@@ -2,7 +2,37 @@
 
 exports[`CommonModal component renders correctly 1`] = `
 <View>
-  <View>
+  <View
+    adjustToContentHeight={true}
+    childrenStyle={
+      Array [
+        Object {
+          "paddingBottom": 16,
+        },
+        undefined,
+      ]
+    }
+    handlePosition="inside"
+    modalStyle={
+      Array [
+        Object {
+          "borderTopLeftRadius": 16,
+          "borderTopRightRadius": 16,
+          "paddingTop": 24,
+        },
+        Object {
+          "borderTopLeftRadius": 20,
+          "borderTopRightRadius": 20,
+        },
+      ]
+    }
+    onClose={[Function]}
+    scrollViewProps={
+      Object {
+        "keyboardShouldPersistTaps": "handled",
+      }
+    }
+  >
     <View
       style={
         Object {

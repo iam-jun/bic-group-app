@@ -16,6 +16,7 @@ import { TargetType, ReportTo } from '~/interfaces/IReport';
 import { generateLink, LinkGeneratorTypes } from '~/utils/link';
 import useModalStore from '~/store/modal';
 import { Button } from '~/baseComponents';
+import { onPressReportThisMember } from '~/helpers/blocking';
 import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
@@ -33,7 +34,7 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
   if (!data) return null;
 
   const {
-    id: articleId, reactionsCount, isSaved, type, audience,
+    id: articleId, reactionsCount, isSaved, type, audience, actor,
   } = data;
 
   const groupAudience = audience?.groups || [];
@@ -114,6 +115,10 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
     modalActions.showToast({ content: 'common:text_link_copied_to_clipboard' });
   };
 
+  const _onPressReportThisMember = () => {
+    onPressReportThisMember({ modalActions, actor });
+  };
+
   const onPressPin = () => {
     modalActions.hideBottomList();
     rootNavigation?.navigate?.(homeStack.pinContent, { postId: articleId });
@@ -178,6 +183,15 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       requireIsActor: false,
       notShowForActor: isActor,
       onPress: onPressReport,
+    },
+    {
+      id: 7,
+      testID: 'article_view_menu.report_this_member',
+      leftIcon: 'UserXmark',
+      title: i18next.t('groups:member_menu:label_report_member'),
+      requireIsActor: false,
+      notShowForActor: isActor,
+      onPress: _onPressReportThisMember,
     },
   ];
 

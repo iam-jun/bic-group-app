@@ -621,6 +621,7 @@ export const mockNoti = {
       comment: {
         id: 'test',
       },
+      contentType: 'post',
     },
   ],
   extra: {

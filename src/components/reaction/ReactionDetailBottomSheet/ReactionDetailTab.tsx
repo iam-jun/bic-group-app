@@ -31,17 +31,14 @@ const _ReactionDetailTab: FC<ReactionDetailTabProps> = ({
 
   const data = useReactionDetailStore((state:IReactionDetailState) => state.data) || [];
   const loading = useReactionDetailStore((state:IReactionDetailState) => state.loading);
-  const doGetReactionDetail = useReactionDetailStore((state:IReactionDetailState) => state.doGetReactionDetail);
-  const doLoadMoreReactionDetail = useReactionDetailStore(
-    (state: IReactionDetailState) => state.doLoadMoreReactionDetail,
-  );
+  const actions = useReactionDetailStore((state:IReactionDetailState) => state.actions);
   const canLoadMore = useReactionDetailStore((state: IReactionDetailState) => state.canLoadMore);
   const reset = useReactionDetailStore((state: IReactionDetailState) => state.reset);
 
   useEffect(
     () => {
       const param = { ...getDataParam, reactionName: reactionType, limit };
-      doGetReactionDetail(param);
+      actions.getReactionDetail(param);
       return () => {
         reset();
       };
@@ -57,7 +54,7 @@ const _ReactionDetailTab: FC<ReactionDetailTabProps> = ({
       const param = {
         ...getDataParam, reactionName: reactionType, limit, latestId: data[data.length - 1].reactionId, order: 'ASC',
       } as IParamGetReactionDetail;
-      doLoadMoreReactionDetail(param);
+      actions.loadMoreReactionDetail(param);
     }
   };
 

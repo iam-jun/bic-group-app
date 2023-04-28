@@ -10,17 +10,17 @@ import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 import { useUserIdAuth } from '~/hooks/auth';
-import { IPayloadGetDraftPosts } from '~/interfaces/IPost';
+import { IPayloadGetDraftContents } from '~/interfaces/IPost';
 import images from '~/resources/images';
 import useNetworkStore from '~/store/network';
 import networkSelectors from '~/store/network/selectors';
-import dimension, { homeHeaderTabHeight, homeHeaderAttributeContainerHeight } from '~/theme/dimension';
+import dimension, { homeHeaderTabHeight, homeHeaderContentContainerHeight } from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
 import PostDraftView from './components/PostDraftView';
 import useDraftPostStore from './store';
 
-const HeaderFilterHeight = homeHeaderTabHeight + homeHeaderAttributeContainerHeight;
+const HeaderFilterHeight = homeHeaderTabHeight + homeHeaderContentContainerHeight;
 
 interface DraftPostProps {
   onScroll: (e: any) => void;
@@ -55,7 +55,7 @@ const DraftPost: React.FC<DraftPostProps> = ({ onScroll }) => {
 
   const getData = (isRefreshing?: boolean) => {
     if (userId) {
-      const payload: IPayloadGetDraftPosts = {
+      const payload: IPayloadGetDraftContents = {
         isRefresh: isRefreshing,
       };
       actions.getDraftPosts(payload);
@@ -91,17 +91,21 @@ const DraftPost: React.FC<DraftPostProps> = ({ onScroll }) => {
     </View>
   );
 
-  const renderEmpty = () => (
-    <View testID="draft_post.empty_view" style={styles.emptyContainer}>
-      <Image source={images.img_empty_draft} style={styles.imgEmpty} />
-      <Text.H6 useI18n color={colors.gray50}>
-        post:draft:title_no_draft_posts
-      </Text.H6>
-      <Text useI18n color={colors.gray50}>
-        post:draft:text_no_draft_posts
-      </Text>
-    </View>
-  );
+  const renderEmpty = () => {
+    if (hasNextPage) return null;
+
+    return (
+      <View testID="draft_post.empty_view" style={styles.emptyContainer}>
+        <Image source={images.img_empty_draft} style={styles.imgEmpty} />
+        <Text.H6 useI18n color={colors.gray50}>
+          post:draft:title_no_draft_posts
+        </Text.H6>
+        <Text useI18n color={colors.gray50}>
+          post:draft:text_no_draft_posts
+        </Text>
+      </View>
+    );
+  };
 
   const renderSeparatorComponent = () => (
     <ViewSpacing height={spacing.margin.large} />

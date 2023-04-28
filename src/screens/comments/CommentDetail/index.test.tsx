@@ -1,22 +1,15 @@
 import { cleanup } from '@testing-library/react-hooks';
 import React from 'react';
 import { cloneDeep } from 'lodash';
-import initialState from '~/storeRedux/initialState';
-import { configureStore, fireEvent, renderWithRedux } from '~/test/testUtils';
+import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import CommentDetail from './index';
-import APIErrorCode from '~/constants/apiErrorCode';
 import * as helper from './helper';
 
 afterEach(cleanup);
 
 describe('CommentDetail component', () => {
-  const mockStore = configureStore([]);
-  let storeData: any;
-
   beforeEach(() => {
     jest.clearAllMocks();
-    storeData = { ...initialState };
-    storeData.post.commentErrorCode = '';
   });
 
   const props = {
@@ -33,9 +26,7 @@ describe('CommentDetail component', () => {
     const propsClone = cloneDeep(props);
     propsClone.route.params.isReported = true;
 
-    storeData.post.commentErrorCode = APIErrorCode.Post.COMMENT_DELETED;
-    const store = mockStore(storeData);
-    const rendered = renderWithRedux(<CommentDetail {...propsClone} />, store);
+    const rendered = renderWithRedux(<CommentDetail {...propsClone} />);
 
     const { getByTestId } = rendered;
 
@@ -46,8 +37,7 @@ describe('CommentDetail component', () => {
   it('should render correctly (isReported = false)', async () => {
     const spyReplacePostDetail = jest.spyOn(helper, 'replacePostDetail');
 
-    const store = mockStore(storeData);
-    const rendered = renderWithRedux(<CommentDetail {...props} />, store);
+    const rendered = renderWithRedux(<CommentDetail {...props} />);
 
     const { getByTestId } = rendered;
 

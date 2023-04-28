@@ -7,7 +7,7 @@ import images from '~/resources/images';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { spacing } from '~/theme';
 import {
-  IPayloadGetDraftPosts,
+  IPayloadGetDraftContents,
   IPost,
 } from '~/interfaces/IPost';
 import dimension, { scaleCoverHeight } from '~/theme/dimension';
@@ -90,7 +90,7 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
 
   const refreshDraftArticles = () => {
     if (userId) {
-      const payload: IPayloadGetDraftPosts = { isRefresh: true };
+      const payload: IPayloadGetDraftContents = { isRefresh: true };
       actions.getDraftArticles(payload);
     }
   };

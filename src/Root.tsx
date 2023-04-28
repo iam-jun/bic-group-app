@@ -10,7 +10,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import useAuthController from '~/screens/auth/store';
 
 /* State Redux */
-import { AppConfig, languages } from './configs';
 import moments from './configs/moments';
 import { AppContext } from './contexts/AppContext';
 import { useRootNavigation } from './hooks/navigation';
@@ -124,7 +123,13 @@ const Root = (): React.ReactElement => {
   const setUpLanguage = async () => {
     const language = await localStorage.getLanguage();
     if (language) {
-      if (i18n.language !== language) { i18n.changeLanguage(language); }
+      if (i18n.language !== language) {
+        /**
+         * Temporarily hidden language in task BEIN-13338
+         */
+        // i18n.changeLanguage(language);
+        i18n.changeLanguage('en');
+      }
       moment.locale(language);
     } else {
       let systemLocale = Platform.OS === 'ios'
@@ -136,11 +141,14 @@ const Root = (): React.ReactElement => {
       // eslint-disable-next-line prefer-destructuring
       else if (systemLocale && systemLocale.includes('-')) systemLocale = systemLocale.split('-')[0];
 
-      const isSupportLanguage = Object.keys(languages).find((item: string) => item === systemLocale);
+      /**
+       * Temporarily hidden language in task BEIN-13338
+       * import { AppConfig, languages } from './configs';
+       */
+      // const isSupportLanguage = Object.keys(languages).find((item: string) => item === systemLocale);
+      // const newLanguage = isSupportLanguage ? systemLocale : AppConfig.defaultLanguage;
+      const newLanguage = 'en';
 
-      const newLanguage = isSupportLanguage
-        ? systemLocale
-        : AppConfig.defaultLanguage;
       changeLanguage(newLanguage);
       moment.locale(newLanguage);
     }

@@ -11,6 +11,7 @@ import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { generateLink, LinkGeneratorTypes } from '~/utils/link';
 import { Button } from '~/baseComponents';
 import useModalStore from '~/store/modal';
+import { onPressReportThisMember } from '~/helpers/blocking';
 import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
@@ -24,10 +25,7 @@ const useSeriesMenu = (
   const { rootNavigation } = useRootNavigation();
 
   const commonActions = useCommonController((state) => state.actions);
-  const {
-    showToast, showAlert, hideBottomList, showBottomList,
-  }
-    = useModalStore((state) => state.actions);
+  const modalActions = useModalStore((state) => state.actions);
 
   const { getAudienceListWithNoPermission } = useMyPermissionsStore(
     (state) => state.actions,
@@ -36,7 +34,7 @@ const useSeriesMenu = (
   if (!data) return null;
 
   const {
-    id: seriesId, reactionsCount, isSaved, type, audience,
+    id: seriesId, reactionsCount, isSaved, type, actor, audience,
   } = data;
 
   const groupAudience = audience?.groups || [];
@@ -50,22 +48,26 @@ const useSeriesMenu = (
   );
 
   const onPressEdit = () => {
-    hideBottomList();
-    rootNavigation?.navigate?.(seriesStack.createSeries, {
-      seriesId,
-      isFromDetail,
-    });
+    modalActions.hideBottomList();
+    rootNavigation?.navigate?.(
+      seriesStack.createSeries, {
+        seriesId,
+        isFromDetail,
+      },
+    );
   };
 
   const onPressCopyLink = () => {
-    hideBottomList();
-    Clipboard.setString(generateLink(LinkGeneratorTypes.SERIRES, seriesId));
-    showToast({ content: 'common:text_link_copied_to_clipboard' });
+    modalActions.hideBottomList();
+    Clipboard.setString(generateLink(
+      LinkGeneratorTypes.SERIRES, seriesId,
+    ));
+    modalActions.showToast({ content: 'common:text_link_copied_to_clipboard' });
   };
 
   const onPressDelete = () => {
-    hideBottomList();
-    showAlert({
+    modalActions.hideBottomList();
+    modalActions.showAlert({
       title: i18next.t('series:menu_text_delete_series'),
       content: i18next.t('series:content_delete_series'),
       cancelBtn: true,
@@ -77,7 +79,7 @@ const useSeriesMenu = (
   };
 
   const onPressSave = () => {
-    hideBottomList();
+    modalActions.hideBottomList();
     if (isSaved) {
       commonActions.unsavePost(seriesId, type);
     } else {
@@ -85,8 +87,12 @@ const useSeriesMenu = (
     }
   };
 
+  const _onPressReportThisMember = () => {
+    onPressReportThisMember({ modalActions, actor });
+  };
+
   const onPressPin = () => {
-    hideBottomList();
+    modalActions.hideBottomList();
     rootNavigation?.navigate?.(homeStack.pinContent, { postId: seriesId });
   };
 
@@ -135,13 +141,22 @@ const useSeriesMenu = (
       requireIsActor: true,
       onPress: onPressDelete,
     },
+    {
+      id: 5,
+      testID: 'series_menu.report_this_member',
+      leftIcon: 'UserXmark',
+      title: i18next.t('groups:member_menu:label_report_member'),
+      requireIsActor: false,
+      notShowForActor: isActor,
+      onPress: _onPressReportThisMember,
+    },
   ];
 
   const menus = getPostMenus(defaultData, isActor, reactionsCount);
 
   const showMenu = () => {
     Keyboard.dismiss();
-    showBottomList({ data: menus } as BottomListProps);
+    modalActions.showBottomList({ data: menus } as BottomListProps);
   };
 
   return {

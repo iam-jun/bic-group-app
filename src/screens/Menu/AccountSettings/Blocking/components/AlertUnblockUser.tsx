@@ -9,9 +9,9 @@ const AlertUnblockUser = () => (
   <View testID="alert_unblock_user" style={styles.container}>
     <Text.BodyM useI18n>settings:text_unblock_user_name_result</Text.BodyM>
     <View style={styles.textContainer}>
-      <Text.BodyM useI18n>{`• ${t('settings:text_unblock_user_name_result_a')}`}</Text.BodyM>
-      <Text.BodyM useI18n>{`• ${t('settings:text_unblock_user_name_result_b')}`}</Text.BodyM>
-      <Text.BodyM useI18n>{`• ${t('settings:text_unblock_user_name_result_c')}`}</Text.BodyM>
+      <Text.BodyM useI18n>{`• ${t('block_user:cannot:search_profile')}`}</Text.BodyM>
+      <Text.BodyM useI18n>{`• ${t('block_user:cannot:mention')}`}</Text.BodyM>
+      <Text.BodyM useI18n>{`• ${t('block_user:cannot:send_message')}`}</Text.BodyM>
     </View>
   </View>
 );
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     paddingLeft: spacing.padding.small,
-    marginTop: spacing.margin.base,
+    marginTop: spacing.margin.tiny,
   },
 });
 

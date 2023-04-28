@@ -8,8 +8,6 @@ import {
 import { IParamGetReportContent, TargetType } from '~/interfaces/IReport';
 import { mockReportReason } from '~/test/mock_data/report';
 import { IPostsState } from '..';
-import Store from '~/storeRedux';
-import postActions from '~/storeRedux/post/actions';
 import streamApi from '~/api/StreamApi';
 import showToast from '~/store/helper/showToast';
 import showToastError from '~/store/helper/showToastError';
@@ -74,7 +72,7 @@ const getPostDetail = (_set, get) => async (payload: IPayloadGetPostDetail) => {
       || e?.code === APIErrorCode.Post.POST_PRIVACY
     ) {
       actions.deletePostLocal(postId);
-      Store.store.dispatch(postActions.setCommentErrorCode(e.code));
+      actions.setCommentErrorCode(e.code);
       if (payload?.showToast) {
         showToast({
           content: 'post:error_post_detail_deleted',

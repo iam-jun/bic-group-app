@@ -3,13 +3,11 @@ import { isEmpty } from 'lodash';
 import {
   useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
-import { useDispatch } from 'react-redux';
 import Text from '~/baseComponents/Text';
 import APIErrorCode from '~/constants/apiErrorCode';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
-import { useKeySelector } from '~/hooks/selector';
 import { IAudienceGroup, IPayloadGetPostDetail } from '~/interfaces/IPost';
 import { rootSwitch } from '~/router/stack';
 import { defaultList, getSectionData } from '~/helpers/post';
@@ -19,8 +17,6 @@ import usePostsStore, { IPostsState } from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import useNetworkStore from '~/store/network';
 import networkSelectors from '~/store/network/selectors';
-import postActions from '~/storeRedux/post/actions';
-import postKeySelector from '~/storeRedux/post/keySelector';
 import useModalStore from '~/store/modal';
 
 const usePostDetailContent = ({
@@ -29,7 +25,6 @@ const usePostDetailContent = ({
   HeaderImageComponent,
   isReported,
 }) => {
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
 
@@ -69,12 +64,13 @@ const usePostDetailContent = ({
     deletePostLocal,
     putMarkSeenPost,
     getPostDetail: actionGetPostDetail,
+    setCommentErrorCode,
   } = usePostsStore((state: IPostsState) => state.actions);
 
   const comments = useCommentsStore(
     useCallback(commentsSelector.getCommentsByParentId(postId), [postId]),
   );
-  const commentError = useKeySelector(postKeySelector.commentErrorCode);
+  const commentError = usePostsStore((state) => state.commentErrorCode);
 
   const commentSectionData = useMemo(
     () => getSectionData(comments),
@@ -136,7 +132,7 @@ const usePostDetailContent = ({
   useEffect(() => {
     onPressMarkSeenPost();
     return () => {
-      dispatch(postActions.setCommentErrorCode(false));
+      setCommentErrorCode(false);
     };
   }, []);
 

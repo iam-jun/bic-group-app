@@ -22,4 +22,29 @@ describe('saveRecentSearchKeywords', () => {
 
     expect(spyApiPostNewRecentSearchKeyword).toBeCalled();
   });
+
+  it('should saveRecentSearchKeywords throw error', () => {
+    const error = 'internal error';
+    const spy = jest.spyOn(streamApi, 'postNewRecentSearchKeyword').mockImplementation(
+      () => Promise.reject(error) as any,
+    );
+    const errorLog = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+
+    jest.useFakeTimers();
+    const { result } = renderHook(() => useFeedSearchStore((state) => state));
+    act(() => {
+      try {
+        result.current.actions.saveRecentSearchKeywords('abc');
+      } catch (e) {
+        expect(e).toBeInstanceOf(TypeError);
+        expect(e).toBe(error);
+      }
+    });
+    expect(spy).toBeCalled();
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(errorLog).toBeCalled();
+  });
 });

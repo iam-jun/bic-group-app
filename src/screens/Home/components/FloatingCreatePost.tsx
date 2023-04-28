@@ -90,8 +90,8 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
   };
 
   return (
-    <View style={styles.container}>
-      <Button onPress={onPress} style={styles.button}>
+    <View style={styles.container} testID="floating_create_post">
+      <Button testID="floating_create_post.btn" onPress={onPress} style={styles.button}>
         <Icon tintColor={colors.white} width={20} height={20} icon="PenLineSolid" />
       </Button>
     </View>

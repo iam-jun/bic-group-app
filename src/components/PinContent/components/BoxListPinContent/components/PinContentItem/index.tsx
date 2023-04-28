@@ -8,14 +8,16 @@ import postsSelector from '~/store/entities/posts/selectors';
 
 interface PinContentItemProps {
   contentId: string;
-  isAdmin: boolean;
+  isAdmin?: boolean;
   id: string;
+  isActiveAnimation?: boolean;
 }
 
 const PinContentItem: React.FC<PinContentItemProps> = ({
   contentId,
   isAdmin,
   id,
+  isActiveAnimation,
 }) => {
   const data = usePostsStore(useCallback(postsSelector.getPost(contentId, {}), [contentId]));
 
@@ -24,14 +26,14 @@ const PinContentItem: React.FC<PinContentItemProps> = ({
   }
 
   if (data?.type === PostType.ARTICLE) {
-    return <PinArticleView data={data} isAdmin={isAdmin} id={id} />;
+    return <PinArticleView data={data} isAdmin={isAdmin} id={id} isActiveAnimation={isActiveAnimation} />;
   }
 
   if (data?.type === PostType.SERIES) {
-    return <PinSeriesView data={data} isAdmin={isAdmin} id={id} />;
+    return <PinSeriesView data={data} isAdmin={isAdmin} id={id} isActiveAnimation={isActiveAnimation} />;
   }
 
-  return <PinPostView data={data} isAdmin={isAdmin} id={id} />;
+  return <PinPostView data={data} isAdmin={isAdmin} id={id} isActiveAnimation={isActiveAnimation} />;
 };
 
 export default PinContentItem;

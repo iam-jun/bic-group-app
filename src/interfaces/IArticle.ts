@@ -1,7 +1,6 @@
 import {
   IArticleCover,
   ILinkPreview,
-  IParamGetDraftPosts,
 } from '~/interfaces/IPost';
 import { SortOder } from './common';
 import { IOrder } from './IHome';
@@ -34,8 +33,6 @@ export interface IParamGetArticleDetail {
   offset: number;
   withComment?: boolean;
 }
-
-export type IParamGetDraftArticles = IParamGetDraftPosts;
 
 export interface IPayloadPublishDraftArticle {
   draftArticleId: string;

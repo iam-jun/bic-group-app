@@ -22,6 +22,11 @@ describe('UserEditProfile screen', () => {
       return state;
     });
 
+    useDraftPostStore.setState((state) => {
+      state.hasNextPage = false;
+      return state;
+    });
+
     const onScroll = jest.fn();
 
     const wrapper = renderWithRedux(<DraftPost

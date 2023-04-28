@@ -29,6 +29,7 @@ import networkSelectors from '~/store/network/selectors';
 
 const AccoutSettings = () => {
   const theme: ExtendedTheme = useTheme();
+  const { colors } = theme || {};
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
   const baseSheetRef: any = useRef();
@@ -86,6 +87,7 @@ const AccoutSettings = () => {
         icon={item.icon}
         rightSubTitle={item?.rightSubTitle}
         rightSubIcon={item?.rightSubIcon}
+        iconProps={{ tintColor: colors.neutral20, size: 18 }}
       />
     </TouchableOpacity>
   );

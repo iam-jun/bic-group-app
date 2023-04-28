@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useRef } from 'react';
 import { View } from 'react-native';
 import uuid from 'react-native-uuid';
-import { useDispatch } from 'react-redux';
 
 import CommentInput, {
   ICommentInputSendParam,
@@ -9,7 +8,6 @@ import CommentInput, {
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
-import { useKeySelector } from '~/hooks/selector';
 import {
   IActivityDataImage,
   ICommentData,
@@ -18,11 +16,10 @@ import {
   IPostMedia,
 } from '~/interfaces/IPost';
 import useCommonController from '~/screens/store';
-import postActions from '~/storeRedux/post/actions';
-import postKeySelector from '~/storeRedux/post/keySelector';
 import ReplyingView from './ReplyingView';
 import useCommentInputStore from './store';
 import ICommentInputState from './store/Interface';
+import usePostsStore from '~/store/entities/posts';
 
 export interface CommentInputViewProps {
   postId: string;
@@ -50,9 +47,9 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   const _commentInputRef = commentInputRef || useRef<any>();
   const mentionInputRef = useRef<any>();
 
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
 
+  const postActions = usePostsStore((state) => state.actions);
   const actions = useCommentInputStore((state: ICommentInputState) => state.actions);
   const createComment = useCommentInputStore((state: ICommentInputState) => state.createComment);
   const { content = '', loading } = createComment || {};
@@ -61,7 +58,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   const myProfile = useCommonController((state) => state.myProfile);
   const { fullname, avatar, username } = myProfile;
 
-  const replying: IPayloadReplying = useKeySelector(postKeySelector.replyingComment);
+  const replying: IPayloadReplying = usePostsStore((state) => state.replyingComment);
   const replyTargetId = replying?.parentComment?.id || replying?.comment?.id;
   const replyTargetUser = replying?.comment?.actor || replying?.parentComment?.actor;
   const replyTargetUserId = replyTargetUser?.id;
@@ -73,7 +70,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   useEffect(
     () => () => {
       actions.setCreateComment({ content: '', loading: false });
-      dispatch(postActions.setPostDetailReplyingComment());
+      postActions.setPostDetailReplyingComment();
     },
     [],
   );

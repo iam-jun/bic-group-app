@@ -17,7 +17,7 @@ const DatePicker = ({
   selectedEndDate,
   onChangeDatePicker,
 }: Props) => (
-  <View style={{ position: 'absolute', alignSelf: 'center' }}>
+  <View testID="date_picker" style={{ position: 'absolute', alignSelf: 'center' }}>
     {selectingStartDate && (
       <DateTimePicker
         isVisible={selectingStartDate}

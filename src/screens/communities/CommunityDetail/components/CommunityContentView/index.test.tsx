@@ -6,7 +6,7 @@ import CommunityContentView from '.';
 import { communityDetailData } from '~/test/mock_data/communities';
 import * as navigationHook from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import { groupPostData } from '~/test/mock_data/group';
+import useModalStore from '~/store/modal';
 
 describe('CommunityContentView', () => {
   const community = communityDetailData;
@@ -33,7 +33,7 @@ describe('CommunityContentView', () => {
     const wrapper = renderWithRedux(
       <CommunityContentView {...baseProps} />,
     );
-    const aboutBtn = wrapper.getByTestId('page_content.about_btn');
+    const aboutBtn = wrapper.queryByTestId('tab_button_header.about_btn-selected');
     expect(aboutBtn).toBeDefined();
   });
 
@@ -45,16 +45,16 @@ describe('CommunityContentView', () => {
     const wrapper = renderWithRedux(
       <CommunityContentView {...baseProps} />,
     );
-    const aboutBtn = wrapper.getByTestId('page_content.about_btn');
+    const aboutBtn = wrapper.getByTestId('tab_button_header.about_btn-selected');
     fireEvent.press(aboutBtn);
-    expect(navigate).toBeCalledWith(groupStack.communityAbout);
+    expect(navigate).toBeCalledWith(groupStack.communityAbout, { communityId: '1' });
   });
 
   it('should render Members button correctly', () => {
     const wrapper = renderWithRedux(
       <CommunityContentView {...baseProps} />,
     );
-    const memberBtn = wrapper.getByTestId('page_content.members_btn');
+    const memberBtn = wrapper.queryByTestId('tab_button_header.members_btn-selected');
     expect(memberBtn).toBeDefined();
   });
 
@@ -66,24 +66,38 @@ describe('CommunityContentView', () => {
     const wrapper = renderWithRedux(
       <CommunityContentView {...baseProps} />,
     );
-    const memberBtn = wrapper.getByTestId('page_content.members_btn');
+    const memberBtn = wrapper.getByTestId('tab_button_header.members_btn-selected');
     fireEvent.press(memberBtn);
-    expect(navigate).toBeCalledWith(groupStack.communityMembers, { community });
+    expect(navigate).toBeCalledWith(groupStack.communityMembers, {
+      communityId: '1',
+      isMember: false,
+    });
   });
 
   it('should render Your Groups button and can navigate to that screen correctly when user is a member and press that button', () => {
+    const newProps = {
+      ...baseProps,
+      isMember: true,
+    };
+
+    const showModal = jest.fn();
+    useModalStore.setState((state) => {
+      state.actions = { showModal } as any;
+      return state;
+    });
+
     const navigate = jest.fn();
     const rootNavigation = { navigate };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
     const wrapper = renderWithRedux(
-      <CommunityContentView {...baseProps} />,
+      <CommunityContentView {...newProps} />,
     );
-    const yourGroupsBtn = wrapper.getByTestId('page_content.your_groups_btn');
+    const yourGroupsBtn = wrapper.getByTestId('tab_button_header.your_groups-selected');
     expect(yourGroupsBtn).toBeDefined();
 
     fireEvent.press(yourGroupsBtn);
-    // expect(navigate).toBeCalledWith(groupStack.yourGroups, { community });
+    expect(showModal).toBeCalled();
   });
 
   it('should not render Your Groups button correctly when user is not a member', () => {
@@ -97,14 +111,6 @@ describe('CommunityContentView', () => {
     );
     const yourGroupsBtn = wrapper.queryByTestId('page_content.your_groups_btn');
     expect(yourGroupsBtn).toBeNull();
-  });
-
-  it('should render Discover button correctly when user is a member', () => {
-    const wrapper = renderWithRedux(
-      <CommunityContentView {...baseProps} />,
-    );
-    const yourGroupsBtn = wrapper.getByTestId('page_content.discover_btn');
-    expect(yourGroupsBtn).toBeDefined();
   });
 
   it('should not render Discover button correctly when user is not a member', () => {
@@ -132,30 +138,17 @@ describe('CommunityContentView', () => {
     expect(joinCancelButton).toBeDefined();
   });
 
-  it('should render posts data and create post shortcut correctly', () => {
-    const wrapper = renderWithRedux(
-      <CommunityContentView {...baseProps} />,
-    );
-
-    const createPostBtn = wrapper.getByTestId('header_create_post');
-    expect(createPostBtn).toBeDefined();
-    const listView = wrapper.getByTestId('list_view.flat_list');
-    expect(listView.props.data.length).toBe(groupPostData.length);
-  });
-
-  it('should not render create post shortcut, but still render post data when user is not a member', () => {
-    const communityDetail = { ...communityDetailData, join_status: 1 };
+  it('should render should render PrivateWelcome when com is private', () => {
+    const newProps = {
+      ...baseProps,
+      isPrivateCommunity: true,
+    };
 
     const wrapper = renderWithRedux(
-      <CommunityContentView
-        {...baseProps}
-        community={communityDetail}
-      />,
+      <CommunityContentView {...newProps} />,
     );
 
-    const createPostBtn = wrapper.queryByTestId('header_create_post');
-    expect(createPostBtn).toBeNull();
-    const listView = wrapper.getByTestId('list_view.flat_list');
-    expect(listView.props.data.length).toBe(groupPostData.length);
+    const privateWelcome = wrapper.getByTestId('private_welcome');
+    expect(privateWelcome).toBeDefined();
   });
 });

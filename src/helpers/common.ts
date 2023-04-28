@@ -3,6 +3,7 @@ import { ICommunityMembers } from '~/interfaces/ICommunity';
 import { IGroupMembers } from '~/interfaces/IGroup';
 import { IParamGetReportContent } from '~/interfaces/IReport';
 import { mockReportReason } from '~/test/mock_data/report';
+import { IUserProfile } from '~/interfaces/IAuth';
 
 export const removeMemberFromMemberList = (userId: string, membersData: object) => {
   let updatedData = {};
@@ -86,3 +87,5 @@ export const getSummaryPostItemInSeires = (content: string, titlePost: string) =
 
   return updatedParagraph?.trim() || '';
 };
+
+export const mapProfile = (data: any): IUserProfile => ({ ...data, language: data?.language || [] });

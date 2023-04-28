@@ -1,7 +1,7 @@
 import streamApi from '~/api/StreamApi';
 import { IPayloadPublishDraftArticle } from '~/interfaces/IArticle';
 import {
-  IPayloadAddToAllPost, IPayloadGetDraftPosts, IPost, PostStatus,
+  IPayloadAddToAllPost, IPayloadGetDraftContents, IPost, PostStatus,
 } from '~/interfaces/IPost';
 import showToastError from '~/store/helper/showToastError';
 import { rootNavigationRef } from '~/router/refs';
@@ -12,6 +12,7 @@ import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack
 import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
 import { IDraftArticleState } from '..';
 import showToast from '~/store/helper/showToast';
+import useDraftContentsStore from '../../../DraftContents/store';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -57,11 +58,12 @@ const publishDraftArticle = (set, get) => async (payload: IPayloadPublishDraftAr
       );
     }
 
-    const payloadGetDraftArticles: IPayloadGetDraftPosts = {
+    const payloadGetDraftArticles: IPayloadGetDraftContents = {
       isRefresh: true,
     };
     useHomeStore.getState().actions.refreshHome();
     actions.getDraftArticles(payloadGetDraftArticles);
+    useDraftContentsStore.getState().actions.getDraftContents({ isRefresh: true });
   } catch (error) {
     console.error('publishDraftArticle error:', error);
     set((state: IDraftArticleState) => {

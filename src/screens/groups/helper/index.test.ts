@@ -24,9 +24,10 @@ describe('Group functions helper', () => {
   });
 
   it('handleLeaveInnerGroups should show error message from server', async () => {
+    const error = 'internal error';
     jest
       .spyOn(groupApi, 'getUserInnerGroups')
-      .mockImplementation(() => Promise.reject());
+      .mockImplementation(() => Promise.reject(error) as any);
     const result = await handleLeaveInnerGroups(
       '1',
       'username',

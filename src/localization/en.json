@@ -217,6 +217,7 @@
     "text_date": "Date",
     "text_time": "Time",
     "text_no_data": "No data",
+    "text_version": "Version: ",
     "text_developing_version": "You’re currently using the developing version.",
     "mark_post_as_important": "Mark this post as Important",
     "mark_article_as_important": "Mark this article as Important",
@@ -228,7 +229,10 @@
     "text_group_terms": "Group terms",
     "text_community_terms": "Community terms",
     "text_sorry_something_went_wrong": "Sorry, something went wrong",
-    "text_pull_to_refresh": "Please pull down to refresh the page or try again later"
+    "text_pull_to_refresh": "Please pull down to refresh the page or try again later",
+    "text_answer_title": "Membership questions",
+    "text_answer_input_placeholder": "Write your answer",
+    "text_send_request_join_successfully": "Sent request successfully"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -367,14 +371,13 @@
     "title_app_policies": "App Policies",
     "title_feedback": "Feedback",
     "title_user_profile": "User Profile",
-    "title_security_login": "Security & Login",
+    "title_security": "Security",
     "title_change_password": "Change Password",
     "subtitle_change_password": "It's always better to use a strong password that you not using it elsewhere",
     "title_two_factor_authentication": "Two-Factor Authentication",
     "subtitle_two_factor_authentication": "We will ask you a code if we notice an unrecognized device attempted to login",
     "title_login_logs": "Login Logs",
     "subtitle_login_logs": "It's always better to use a strong password that you not using it elsewhere",
-    "title_privacy": "Privacy & Terms",
     "title_notification": "Notification",
     "title_appearance": "Appearance",
     "title_language": "Language",
@@ -521,9 +524,6 @@
     "btn_unblock": "Unblock",
     "title_unblock_user_name": "Unblock {{name}}?",
     "text_unblock_user_name_result": "Unblocking this user will allow them to interact with you again below:",
-    "text_unblock_user_name_result_a": "Search and see your individual user profile",
-    "text_unblock_user_name_result_b": "Mention you",
-    "text_unblock_user_name_result_c": "Send a direct message to you",
     "title_blocked_users_list_empty": "Blocked users list is empty",
     "text_blocked_users_list_empty": "User not found",
     "text_blocked_at": "Blocked at"
@@ -539,8 +539,8 @@
     "title_feed_attritube_all": "All",
     "title_feed_attritube_important": "Important",
     "title_feed_attritube_saved": "Saved",
-    "title_feed_attritube_mine": "Mine",
-    "title_feed_content_all": "All",
+    "title_feed_attritube_mine": "My",
+    "title_feed_content_all": "Contents",
     "title_feed_content_posts": "Posts",
     "title_feed_content_articles": "Articles",
     "title_feed_content_series": "Series",
@@ -601,15 +601,16 @@
     "title_media": "Media",
     "title_settings": "Settings",
     "title_display_accessibility": "Display & Accessibility",
-    "title_settings_privacy": "Settings & privacy",
+    "title_settings_privacy": "Settings & Privacy",
     "title_billing_payment": "Billing and payment",
     "title_help_support": "Help & Support",
     "title_report_problem": "Report a problem",
-    "title_logout": "Log Out",
-    "title_your_content": "Your Content"
+    "title_privacy": "Privacy & Terms",
+    "title_logout": "Log out",
+    "title_your_content": "Your Contents"
   },
   "your_content": {
-    "title_draft": "Draft",
+    "title_draft": "Drafted",
     "title_schedule_article": "Scheduled",
     "title_report_content": "Reported",
     "text_empty": "There are no scheduled content yet!",
@@ -851,7 +852,9 @@
       "text_processing_publish": "Your video post will be ready soon",
       "title_no_draft_articles": "No Draft Articles",
       "text_no_draft_articles": "You have no draft articles left",
-      "text_draft_article_published": "Your article has been published"
+      "text_draft_article_published": "Your article has been published",
+      "title_no_draft_contents": "No Draft Contents",
+      "text_no_draft_contents": "You have no draft contents left"
     },
     "comment": {
       "title_delete_comment": "Delete this comment",
@@ -1051,7 +1054,8 @@
       }
     },
     "text_in": "in",
-    "title_add_members": "Add Members"
+    "title_add_members": "Add Members",
+    "text_no_answer": "No answer"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",
@@ -1393,7 +1397,8 @@
   },
   "block_user": {
     "title_block_name": "Block {0}?",
-    "text_block_user": "Block this user",
+    "text_block_user": "Block",
+    "text_blocked_user": "Blocked",
     "general_description": "This blocking is applied to individual purposes. This blocking won't affect your and the blocked person's interactions in a community or group that has joined.",
     "cannot": {
       "title": "will no longer be able to:",
@@ -1415,6 +1420,8 @@
     "unpin": "Unpin",
     "reorder": "Reorder",
     "unpinned_successfully": "Unpinned successfully",
-    "there_is_no_groups": "There is no groups"
+    "there_is_no_groups": "There is no groups",
+    "reorder_pinned": "Reorder pinned",
+    "drag_and_drop_to_reorder_pinned": "Drag and drop to reorder pinned"
   }
 }

@@ -1,8 +1,9 @@
 import React from 'react';
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import ReportContent from '.';
-import { TargetType, IPayloadReportContent, ReportTo } from '~/interfaces/IReport';
+import { TargetType, ReportTo } from '~/interfaces/IReport';
 import useModalStore from '~/store/modal';
+import useBlockingStore from '~/store/blocking';
 
 describe('ReportContent component', () => {
   const baseProps = {
@@ -10,12 +11,22 @@ describe('ReportContent component', () => {
     groupIds: ['b01fb58e-9299-4a0e-a55f-9839293fb42a'],
     targetType: TargetType.COMMENT,
     reportTo: ReportTo.COMMUNITY,
-  } as IPayloadReportContent;
+    dataReportMember: {
+      communityId: 'test',
+      userId: 'test',
+      reportedMember: { fullname: 'test' },
+    },
+  };
 
   it('renders correctly', () => {
     const hideModal = jest.fn();
     useModalStore.setState((state) => {
       state.actions.hideModal = hideModal;
+      return state;
+    });
+
+    useBlockingStore.setState((state) => {
+      state.listRelationship = [baseProps.targetId];
       return state;
     });
 

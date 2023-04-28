@@ -93,6 +93,7 @@ const SearchSuggestion: ForwardRefRenderFunction<any, NFSSuggestionProps> = ({
       <View style={styles.container}>
         {searchText ? (
           <TouchableOpacity
+            testID="search_suggestion.btn_search"
             style={styles.ctaContainer}
             onPress={onPressSearch}
           >

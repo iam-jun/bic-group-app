@@ -5,7 +5,7 @@ const getMemberReportReasons = (set) => async () => {
   try {
     set((state: IReportContentState) => {
       state.memberReportReasons.loading = true;
-    }, 'getMemberReportReasons');
+    }, 'getMemberReportReasons Fetching');
 
     const response = await GroupApi.getMemberReportReasons();
 

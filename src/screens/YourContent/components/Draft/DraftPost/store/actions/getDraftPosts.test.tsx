@@ -7,7 +7,7 @@ import IDraftPostState from '../Interface';
 describe('getDraftPosts', () => {
   it('should call api get draft posts when isRefresh = true throw error', () => {
     const error = 'internal error';
-    const spy = jest.spyOn(streamApi, 'getDraftPosts').mockImplementation(
+    const spy = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(
       () => Promise.reject(error) as any,
     );
 
@@ -37,7 +37,7 @@ describe('getDraftPosts', () => {
       data: [POST_DETAIL],
       canLoadMore: true,
     };
-    const spy = jest.spyOn(streamApi, 'getDraftPosts').mockImplementation(
+    const spy = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(
       () => Promise.resolve(response) as any,
     );
     useDraftPostStore.setState((state:IDraftPostState) => {
@@ -67,7 +67,7 @@ describe('getDraftPosts', () => {
       canLoadMore: true,
       total: 3,
     };
-    const spy = jest.spyOn(streamApi, 'getDraftPosts').mockImplementation(
+    const spy = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(
       () => Promise.resolve(response) as any,
     );
     useDraftPostStore.setState((state:IDraftPostState) => {

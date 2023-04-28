@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 import { StyleSheet } from 'react-native';
 import { ExtendedTheme, useIsFocused, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
@@ -16,10 +15,7 @@ import CommentDetailContent from './CommentDetailContent';
 import EmptyScreen from '~/components/EmptyScreen';
 import Button from '~/beinComponents/Button';
 import { useRootNavigation } from '~/hooks/navigation';
-import postActions from '../../../storeRedux/post/actions';
-import { useKeySelector } from '~/hooks/selector';
 import APIErrorCode from '~/constants/apiErrorCode';
-import postKeySelector from '../../../storeRedux/post/keySelector';
 import spacing from '~/theme/spacing';
 import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
@@ -34,7 +30,6 @@ const CommentDetail: FC<IRouteParams> = (props) => {
 
   const { rootNavigation, goHome } = useRootNavigation();
   const isFocused = useIsFocused();
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
 
   const theme: ExtendedTheme = useTheme();
@@ -44,7 +39,7 @@ const CommentDetail: FC<IRouteParams> = (props) => {
   const actor = usePostsStore(postsSelector.getActor(postId));
   const type = usePostsStore(postsSelector.getType(postId)) || target || '';
   const actionsPostsStore = usePostsStore((state) => state.actions);
-  const copyCommentError = useKeySelector(postKeySelector.commentErrorCode);
+  const copyCommentError = usePostsStore((state) => state.commentErrorCode);
   const [showPrivacyPost, setShowPrivacyPost] = useState(false);
   const comment = useCommentsStore(useCallback(commentsSelector.getComment(commentId), [commentId]));
   const commentActions = useCommentsStore((state) => state.actions);
@@ -72,7 +67,7 @@ const CommentDetail: FC<IRouteParams> = (props) => {
 
   useEffect(
     () => () => {
-      dispatch(postActions.setCommentErrorCode(false));
+      actionsPostsStore.setCommentErrorCode(false);
       actionsPostsStore.setIsLoadingGetPostDetail(false);
     },
     [],

@@ -186,6 +186,7 @@
     "text_date": "Ngày",
     "text_time": "Giờ",
     "text_no_data": "Không có dữ liệu",
+    "text_version": "Phiên bản: ",
     "text_developing_version": "Bạn đang sử dụng phiên bản đang được phát triển.",
     "mark_post_as_important": "Bài viết Quan trọng",
     "mark_article_as_important": "Bài báo Quan trọng",
@@ -198,7 +199,10 @@
     "text_community_terms": "Điều khoản cộng đồng",
     "text_got_it": "Đã biết",
     "text_sorry_something_went_wrong": "Đã có lỗi xảy ra",
-    "text_pull_to_refresh": "Vui lòng kéo xuống để làm mới trang hoặc thử lại sau"
+    "text_pull_to_refresh": "Vui lòng kéo xuống để làm mới trang hoặc thử lại sau",
+    "text_answer_title": "Câu hỏi dành cho thành viên",
+    "text_answer_input_placeholder": "Viết câu trả lời của bạn",
+    "text_send_request_join_successfully": "Gửi yêu cầu thành công"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -337,14 +341,13 @@
     "title_app_policies": "App Policies",
     "title_feedback": "Feedback",
     "title_user_profile": "Thông tin cá nhân",
-    "title_security_login": "Bảo mật & Đăng nhập",
+    "title_security": "Bảo mật",
     "title_change_password": "Đổi mật khẩu",
     "subtitle_change_password": "It's always better to use a strong password that you not using it elsewhere",
     "title_two_factor_authentication": "Bảo mật 2 lớp",
     "subtitle_two_factor_authentication": "We will ask you a code if we notice an unrecognized device attempted to login",
     "title_login_logs": "Thông tin đăng nhập",
     "subtitle_login_logs": "It's always better to use a strong password that you not using it elsewhere",
-    "title_privacy": "Bảo mật & Điều khoản",
     "title_notification": "Thông báo",
     "title_appearance": "Hiển thị",
     "title_language": "Ngôn ngữ",
@@ -482,9 +485,6 @@
     "btn_unblock": "Mở khoá",
     "title_unblock_user_name": "Bỏ chặn {{name}}?",
     "text_unblock_user_name_result": "Bỏ chặn người dùng này sẽ cho phép họ tương tác lại với bạn như sau:",
-    "text_unblock_user_name_result_a": "Tìm kiếm và xem hồ sơ cá nhân của bạn",
-    "text_unblock_user_name_result_b": "Nhắc đến bạn",
-    "text_unblock_user_name_result_c": "Gửi tin nhắn cho bạn",
     "title_blocked_users_list_empty": "Danh sách người dùng bị chặn trống",
     "text_blocked_users_list_empty": "Không tìm thấy người dùng",
     "text_blocked_at": "Đã chặn"
@@ -501,7 +501,7 @@
     "title_feed_attritube_important": "Quan trọng",
     "title_feed_attritube_saved": "Đã lưu",
     "title_feed_attritube_mine": "Của tôi",
-    "title_feed_content_all": "Tất cả",
+    "title_feed_content_all": "Nội dung",
     "title_feed_content_posts": "Bài viết",
     "title_feed_content_articles": "Bài báo",
     "title_feed_content_series": "Series",
@@ -566,6 +566,7 @@
     "title_billing_payment": "Hoá đơn và thanh toán",
     "title_help_support": "Trung tâm trợ giúp",
     "title_report_problem": "Báo cáo sự cố",
+    "title_privacy": "Bảo mật & Điều khoản",
     "title_logout": "Đăng xuất",
     "title_your_content": "Nội dung của bạn"
   },
@@ -814,7 +815,9 @@
       "text_processing_publish": "Bài viết của bạn đang được biên tập",
       "title_no_draft_articles": "Không có bài nháp",
       "text_no_draft_articles": "Bạn không còn bài nháp nào",
-      "text_draft_article_published": "Bài viết của bạn đã được đăng"
+      "text_draft_article_published": "Bài viết của bạn đã được đăng",
+      "title_no_draft_contents": "Không có bài nháp",
+      "text_no_draft_contents": "Bạn không còn bài nháp nào"
     },
     "comment": {
       "title_delete_comment": "Xoá bình luận",
@@ -994,7 +997,8 @@
     "text_no_pending_members_notice": "Không có yêu cầu đăng ký thành viên",
     "text_pending_request_notice_group": "Bạn có thể thêm thành viên",
     "text_pending_request_notice_community": "Bạn có thể thêm thành viên",
-    "title_add_members": "Thêm thành viên"
+    "title_add_members": "Thêm thành viên",
+    "text_no_answer": "Không có câu trả lời"
   },
   "profile": {
     "title_edit_profile": "Chỉnh sửa thông tin",
@@ -1334,7 +1338,8 @@
   },
   "block_user": {
     "title_block_name": "Chặn {0}?",
-    "text_block_user": "Chặn người này",
+    "text_block_user": "Chặn",
+    "text_blocked_user": "Đã chặn",
     "general_description": "Tính năng chặn này chỉ áp dụng cho mục đích cá nhân. Tính năng chặn này sẽ không ảnh hưởng tới việc tương tác của cả hai trong các cộng đồng hoặc nhóm đã tham gia.",
     "cannot": {
       "title": "sẽ không thể:",
@@ -1356,6 +1361,8 @@
     "unpin": "Gỡ ghim",
     "reorder": "Xắp Sếp",
     "unpinned_successfully": "Gỡ pin thành công",
-    "there_is_no_groups": "Không có nhóm"
+    "there_is_no_groups": "Không có nhóm",
+    "reorder_pinned": "Sắp xếp bài ghim",
+    "drag_and_drop_to_reorder_pinned": "Kéo thả để sắp xếp bài ghim"
   }
 }

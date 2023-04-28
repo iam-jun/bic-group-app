@@ -7,8 +7,10 @@ interface IReactionDetailState extends IBaseState, IFetchingState{
   loading: boolean,
   canLoadMore: boolean,
   isLoadingMore: boolean,
-  doGetReactionDetail?: (params: IParamGetReactionDetail) => void;
-  doLoadMoreReactionDetail?: (params: IParamGetReactionDetail) => void;
+  actions: {
+    getReactionDetail: (payload: IParamGetReactionDetail) => void,
+    loadMoreReactionDetail: (payload: IParamGetReactionDetail) => void,
+  }
 }
 
 export default IReactionDetailState;
