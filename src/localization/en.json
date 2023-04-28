@@ -530,7 +530,8 @@
     "text_blocked_users_list_empty": "User not found",
     "text_blocked_at": "Blocked at",
     "title_privacy": "Privacy",
-    "toast_profile_is_verified": "This profile is verified"
+    "toast_profile_is_verified": "This profile is verified",
+    "text_profile_is_verified": "Your information has been verified and can’t be edited"
   },
   "languages": {
     "title_en": "English",
