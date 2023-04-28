@@ -1,10 +1,12 @@
 import streamApi from '~/api/StreamApi';
+import { PostType } from '~/interfaces/IPost';
 import { IPostsInProgressState } from '..';
 
 const getPostsInProgress = (set, get) => async () => {
   try {
-    const response = await streamApi.getDraftPosts({
+    const response = await streamApi.getDraftContents({
       isProcessing: true,
+      type: PostType.POST,
     });
     const data:IPostsInProgressState = get();
     const { total = 0, data: posts = [] } = data;

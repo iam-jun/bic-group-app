@@ -4,9 +4,22 @@ import Draft from '.';
 import useYourContentStore from '../../store';
 
 describe('Draft component', () => {
-  it('should render DraftPost component', () => {
+  it('should render DraftContent component', () => {
     useYourContentStore.setState((state) => {
       state.activeDraftTab = 0;
+      return state;
+    });
+
+    const onScroll = jest.fn();
+    const wrapper = renderWithRedux(<Draft onScroll={onScroll} />);
+
+    const DraftPost = wrapper.getByTestId('draft_contents.list');
+    expect(DraftPost).toBeDefined();
+  });
+
+  it('should render DraftPost component', () => {
+    useYourContentStore.setState((state) => {
+      state.activeDraftTab = 1;
       return state;
     });
 
@@ -19,7 +32,7 @@ describe('Draft component', () => {
 
   it('should render DraftArticle component', () => {
     useYourContentStore.setState((state) => {
-      state.activeDraftTab = 1;
+      state.activeDraftTab = 2;
       return state;
     });
 

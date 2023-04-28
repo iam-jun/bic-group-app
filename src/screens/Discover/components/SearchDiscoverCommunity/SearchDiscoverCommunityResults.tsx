@@ -18,6 +18,7 @@ import useDiscoverCommunitiesSearchStore from './store';
 import useCommunityController from '~/screens/communities/store';
 import useCommunitiesStore from '~/store/entities/communities';
 import useTermStore from '~/components/TermsModal/store';
+import useMemberQuestionsStore, { MembershipQuestionsInfo } from '~/components/MemberQuestionsModal/store';
 
 interface SearchDiscoverCommunityResultsProps {
   onLoadMore?: () => void;
@@ -56,6 +57,7 @@ const SearchDiscoverCommunityResults = ({
   const { hasNextPage, loading, ids } = useDiscoverCommunitiesSearchStore();
 
   const communityController = useCommunityController((state) => state.actions);
+  const membershipQuestionActions = useMemberQuestionsStore((state) => state.actions);
   const termsActions = useTermStore((state) => state.actions);
 
   const onView = (item: any) => {
@@ -68,6 +70,19 @@ const SearchDiscoverCommunityResults = ({
     const {
       id, name, settings, groupId,
     } = item;
+    if (settings?.isActiveMembershipQuestions) {
+      const payload: MembershipQuestionsInfo = {
+        groupId: id,
+        rootGroupId: groupId,
+        name,
+        type: 'community',
+        isActive: true,
+        isActiveGroupTerms: settings?.isActiveGroupTerms,
+      };
+      membershipQuestionActions.setMembershipQuestionsInfo(payload);
+      return;
+    }
+
     if (settings?.isActiveGroupTerms) {
       const payload = {
         groupId: id,
@@ -79,7 +94,10 @@ const SearchDiscoverCommunityResults = ({
       termsActions.setTermInfo(payload);
       return;
     }
-    communityController.joinCommunity(id, name);
+    communityController.joinCommunity({
+      communityId: id,
+      communityName: name,
+    });
   };
 
   const onCancel = (item: any) => {

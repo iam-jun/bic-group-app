@@ -16,11 +16,13 @@ import useDiscoverCommunitiesStore from './store';
 import useCommunityController from '~/screens/communities/store';
 import useCommunitiesStore from '~/store/entities/communities';
 import useTermStore from '~/components/TermsModal/store';
+import useMemberQuestionsStore, { MembershipQuestionsInfo } from '~/components/MemberQuestionsModal/store';
 
 type HandleJoinCommunityData = {
   id: string;
   name: string;
   isActiveGroupTerms: boolean;
+  isActiveMembershipQuestions: boolean;
   rootGroupId: string;
 };
 
@@ -37,6 +39,8 @@ const ItemDiscoverCommunities: FC<ItemDiscoverCommunitiesProps> = ({
 }) => {
   const item = useCommunitiesStore((state) => state.data[id]);
   const isActiveGroupTerms = item?.settings?.isActiveGroupTerms || false;
+  const isActiveMembershipQuestions = item?.settings?.isActiveMembershipQuestions || false;
+
   const rootGroupId = item?.groupId || '';
 
   return (
@@ -48,6 +52,7 @@ const ItemDiscoverCommunities: FC<ItemDiscoverCommunitiesProps> = ({
           id,
           name,
           isActiveGroupTerms,
+          isActiveMembershipQuestions,
           rootGroupId,
         } as any;
         handleJoin(data);
@@ -66,6 +71,7 @@ const DiscoverCommunities = () => {
     = useDiscoverCommunitiesStore();
 
   const communityController = useCommunityController((state) => state.actions);
+  const membershipQuestionActions = useMemberQuestionsStore((state) => state.actions);
   const termsActions = useTermStore((state) => state.actions);
 
   const renderEmptyComponent = () => {
@@ -106,6 +112,18 @@ const DiscoverCommunities = () => {
   };
 
   const handleJoin = (data: HandleJoinCommunityData) => {
+    if (data?.isActiveMembershipQuestions) {
+      const payload: MembershipQuestionsInfo = {
+        groupId: data.id,
+        rootGroupId: data.rootGroupId,
+        name: data.name,
+        type: 'community',
+        isActive: true,
+        isActiveGroupTerms: data?.isActiveGroupTerms,
+      };
+      membershipQuestionActions.setMembershipQuestionsInfo(payload);
+      return;
+    }
     if (data?.isActiveGroupTerms) {
       const payload = {
         groupId: data.id,
@@ -117,7 +135,10 @@ const DiscoverCommunities = () => {
       termsActions.setTermInfo(payload);
       return;
     }
-    communityController.joinCommunity(data.id, data.name);
+    communityController.joinCommunity({
+      communityId: data.id,
+      communityName: data.name,
+    });
   };
 
   const handleCancel = (id: string, name: string) => {

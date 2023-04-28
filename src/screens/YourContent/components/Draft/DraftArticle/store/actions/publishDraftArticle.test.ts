@@ -49,7 +49,7 @@ describe('publishDraftArticle', () => {
       () => Promise.resolve(response) as any,
     );
 
-    const spyGetDraftArticles = jest.spyOn(streamApi, 'getDraftArticles').mockImplementation(
+    const spyGetDraftArticles = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(
       () => Promise.resolve({}) as any,
     );
 
@@ -82,7 +82,7 @@ describe('publishDraftArticle', () => {
       () => Promise.resolve(response) as any,
     );
 
-    const spyGetDraftArticles = jest.spyOn(streamApi, 'getDraftArticles').mockImplementation(
+    const spyGetDraftArticles = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(
       () => Promise.resolve({}) as any,
     );
 
@@ -90,7 +90,7 @@ describe('publishDraftArticle', () => {
     const actions = { showToast };
     jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
-    const spyGetAllPostContainingVideoInProgress = jest.spyOn(streamApi, 'getDraftPosts');
+    const spyGetAllPostContainingVideoInProgress = jest.spyOn(streamApi, 'getDraftContents');
 
     jest.useFakeTimers();
 

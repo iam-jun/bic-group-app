@@ -1,9 +1,9 @@
 import streamApi from '~/api/StreamApi';
-import { IPayloadGetDraftPosts } from '~/interfaces/IPost';
+import { IPayloadGetDraftContents, PostType } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import IDraftPostState from '../Interface';
 
-const getDraftPosts = (set, get) => async (payload: IPayloadGetDraftPosts) => {
+const getDraftPosts = (set, get) => async (payload: IPayloadGetDraftContents) => {
   const { isRefresh = true } = payload;
   const data: IDraftPostState = get();
   const {
@@ -25,7 +25,7 @@ const getDraftPosts = (set, get) => async (payload: IPayloadGetDraftPosts) => {
       }, 'getDraftPosts');
 
       const offset = isRefresh ? 0 : draftPosts?.length || 0;
-      const response = await streamApi.getDraftPosts({ offset });
+      const response = await streamApi.getDraftContents({ offset, type: PostType.POST });
 
       const newPosts = isRefresh
         ? response?.data || []
