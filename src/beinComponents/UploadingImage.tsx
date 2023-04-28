@@ -53,6 +53,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
   const actions = useUploaderStore((state) => state.actions);
   const uploadError = useUploaderStore(useCallback((state) => state.errors[fileName], [fileName]));
   const uploadedFile = useUploaderStore(useCallback((state) => state.uploadedFiles[fileName], [fileName]));
+  const uploadingFile = useUploaderStore(useCallback((state) => state.uploadingFiles[fileName], [fileName]));
 
   const [imageUrl, setImageUrl] = useState<string>(url);
   const [error, setError] = useState('');
@@ -106,6 +107,13 @@ const UploadingImage: FC<UploadingImageProps> = ({
     setImageUrl(url);
   }, [url]);
 
+  const _onPressRemove = () => {
+    if (uploadingFile) {
+      actions.cancel(file);
+    }
+    onPressRemove();
+  }
+
   const renderRemove = () => {
     if (!onPressRemove) {
       return null;
@@ -114,7 +122,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
       <Button
         testID="upload_image.button_close"
         style={styles.icRemove}
-        onPress={onPressRemove}
+        onPress={_onPressRemove}
       >
         <Icon size={12} icon="iconCloseSmall" />
       </Button>
@@ -148,7 +156,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
         <Image source={imageUrl} style={styles.image} />
       ) : (
         <View style={styles.contentContainer}>
-          <LoadingIndicator size="large" />
+          <LoadingIndicator size="large" color={colors.purple50} />
         </View>
       )}
       {renderRemove()}

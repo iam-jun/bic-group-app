@@ -9,6 +9,11 @@ import dimension from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 import { IGetFile } from '~/store/uploader';
 import useCreatePostStore from '../store';
+import { borderRadius } from '~/theme/spacing';
+
+const DeviceWidth = dimension.deviceWidth;
+const WidthImageWithPadding = DeviceWidth - 32;
+const MaxNewsFeedWidth = dimension.maxNewsfeedWidth;
 
 const PostSelectImage = () => {
   const theme: ExtendedTheme = useTheme();
@@ -45,19 +50,18 @@ const PostSelectImage = () => {
     const { file, fileName, url } = item || {};
     const { width = 1, height = 1 } = file || {};
     const ratio = height / width;
-    const dfWidth = Math.min(
-      dimension.deviceWidth, dimension.maxNewsfeedWidth,
-    );
+    const dfWidth = Math.min(WidthImageWithPadding, MaxNewsFeedWidth);
+    const lastItem = index === (selectedImages?.length - 1);
 
     return (
       <UploadingImage
         key={`create_post_image_${index}_${item?.fileName}`}
         uploadType={ResourceUploadType.postContent}
-        style={styles.item}
+        style={[styles.item, !lastItem && styles.mbLarge]}
         file={file}
         fileName={fileName}
         url={url}
-        width={dfWidth}
+        width={"100%"}
         height={dfWidth * ratio}
         onUploadSuccess={onUploadSuccess}
         onPressRemove={() => onPressRemoveImage(
@@ -67,9 +71,13 @@ const PostSelectImage = () => {
     );
   };
 
+  if (!selectedImages || selectedImages?.length === 0) return null;
+
   return (
     <View style={styles.container}>
-      {selectedImages?.map?.(renderItem)}
+      <View style={styles.boxListImage}>
+        {selectedImages?.map?.(renderItem)}
+      </View>
     </View>
   );
 };
@@ -77,8 +85,23 @@ const PostSelectImage = () => {
 const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
-    container: { backgroundColor: colors.white },
-    item: { marginBottom: spacing.margin.large, alignSelf: 'center' },
+    container: {
+      backgroundColor: colors.white,
+      paddingHorizontal: spacing.padding.large,
+      marginBottom: spacing.margin.large,
+    },
+    boxListImage: {
+      borderWidth: 1,
+      borderColor: colors.neutral5,
+      borderRadius: borderRadius.large,
+      padding: spacing.padding.small,
+    },
+    item: {
+      alignSelf: 'center',
+    },
+    mbLarge: {
+      marginBottom: spacing.margin.large,
+    },
   });
 };
 
