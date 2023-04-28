@@ -183,6 +183,9 @@
       "title": "Nội dung này hiện không khả dụng",
       "content": "Khi điều này xảy ra, thường là do chủ sở hữu chỉ chia sẻ nó với một nhóm người, đã thay đổi người có thể nhìn thấy nó hoặc nó đã bị xóa."
     },
+    "content_no_permission": {
+      "title": "Hạn chế quyền!"
+    },
     "text_date": "Ngày",
     "text_time": "Giờ",
     "text_no_data": "Không có dữ liệu",

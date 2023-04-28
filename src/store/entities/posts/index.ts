@@ -8,6 +8,7 @@ import {
   IPost,
   IPayloadRemoveAudiencesOfPost,
   IPayloadReplying,
+  IErrorContent,
 } from '~/interfaces/IPost';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
@@ -26,6 +27,7 @@ export interface IPostsState extends IBaseState {
   scrollToLatestItem: any,
   scrollToCommentsPosition: any,
   commentErrorCode: any,
+  errorContents: { [id: string]: IErrorContent }
 
   actions: {
     setPosts: (payload?: IAllPosts) => void;
@@ -41,6 +43,7 @@ export interface IPostsState extends IBaseState {
     setScrollToLatestItem: (payload: null | { parentCommentId?: string | number }) => void;
     setScrollCommentsPosition: (payload: null | { position?: string }) => void;
     setCommentErrorCode: (payload: boolean | string) => void;
+    addToErrorContents: (id: string, payload: IErrorContent) => void;
   };
 }
 
@@ -51,6 +54,7 @@ const initState: InitStateType<IPostsState> = {
   scrollToLatestItem: null,
   scrollToCommentsPosition: null,
   commentErrorCode: '',
+  errorContents: {},
 };
 
 const postsStore = (set, get) => ({
@@ -93,6 +97,11 @@ const postsStore = (set, get) => ({
       set((state: IPostsState) => {
         state.commentErrorCode = payload;
       }, 'setCommentErrorCode');
+    },
+    addToErrorContents: (id, payload) => {
+      set((state: IPostsState) => {
+        state.errorContents[id] = payload;
+      }, 'addToErrorContents');
     },
   },
 
