@@ -18,6 +18,9 @@ const Post = {
   POST_INVALID_PARAM: 'app.post.invalid_parameter', // invalid series or tags of posts
   CONTENT_NO_PIN_PERMISSION: 'content.no_pin_permission',
   CONTENT_AUDIENCE_NO_BELONG: 'content.audience_no_belong',
+  CONTENT_GROUP_REQUIRED: 'content.group_join_required',
+  POST_NO_READ_PERMISSION: 'post.no_read_permission',
+  ARTICLE_NO_READ_PERMISSION: 'article.no_read_permission',
 };
 
 const Group = {

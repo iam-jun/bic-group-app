@@ -15,7 +15,7 @@ import networkSelectors from '~/store/network/selectors';
 import SvgIcon, { SVGIconProps } from './SvgIcon';
 
 import Text from '~/baseComponents/Text';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import icons, { IconType } from '~/resources/icons';
 
 import TextEmojiIcon from '~/baseComponents/Icon/TextEmojiIcon';

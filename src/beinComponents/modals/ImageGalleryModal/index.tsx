@@ -17,7 +17,7 @@ import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icon from '~/baseComponents/Icon';
 import { ImageGalleryModalProps } from '~/beinComponents/modals/ImageGalleryModal/IImageGalleryModalProps';
 import Text from '~/baseComponents/Text';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
@@ -192,6 +192,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
       onLongPress={onPressMenu}
     >
       <Image
+        width={dimension.deviceWidth}
         style={styles.screenImage}
         source={{ uri: item?.url }}
         resizeMode="contain"
@@ -308,7 +309,6 @@ const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
       margin: spacing.margin.base,
     },
     screenImage: {
-      width: '100%',
       height: '100%',
       resizeMode: 'contain',
     },

@@ -3,7 +3,7 @@ import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import dimension, { scaleCoverHeight } from '~/theme/dimension';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import images from '~/resources/images';
 import spacing from '~/theme/spacing';
 import InfoCard from '~/components/InfoCard';
@@ -40,6 +40,7 @@ const CoverImage = ({
             testID="cover.image"
             style={styles.cover}
             source={backgroundUrl || images.img_cover_default}
+            usePixelWidth
           />
         ) : (
           <View

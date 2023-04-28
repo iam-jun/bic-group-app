@@ -1,6 +1,6 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useState } from 'react';
+import { RefreshControl, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { ICommunity } from '~/interfaces/ICommunity';
 
@@ -9,6 +9,8 @@ import AboutContent from '~/screens/communities/CommunityDetail/components/About
 import spacing from '~/theme/spacing';
 import InfoHeader from '../../components/InfoHeader';
 import GroupJoinCancelButton from './GroupJoinCancelButton';
+import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
+import { onRefresh } from './helper';
 
 interface GroupPrivateWelcomeProps {
   infoDetail: IGroup;
@@ -23,6 +25,16 @@ const GroupPrivateWelcome = ({
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
+  const { group: groupData } = groups[currentGroupId] || {};
+  const { id: groupId } = groupData || {};
+
+  const _onRefresh = async () => {
+    await onRefresh({ setIsRefreshing, groupId });
+  };
+
   return (
     <Animated.ScrollView
       style={styles.content}
@@ -30,6 +42,7 @@ const GroupPrivateWelcome = ({
       testID="group_private_welcome"
       scrollEventThrottle={16}
       onScroll={onScroll}
+      refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={_onRefresh} />}
     >
       <View onLayout={onGetInfoLayout}>
         <InfoHeader

@@ -7,7 +7,7 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Button from '~/beinComponents/Button';
 import Icon from '~/baseComponents/Icon';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Text from '~/baseComponents/Text';
 import { ResourceUploadType } from '~/interfaces/IUpload';
@@ -56,6 +56,8 @@ const UploadingImage: FC<UploadingImageProps> = ({
 
   const [imageUrl, setImageUrl] = useState<string>(url);
   const [error, setError] = useState('');
+
+  const imgWidthStyle = typeof width === 'number' ? width : '100%';
 
   useEffect(() => {
     if (uploadError) {
@@ -145,7 +147,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
       testID="upload_image"
     >
       {!!imageUrl ? (
-        <Image source={imageUrl} style={styles.image} />
+        <Image source={imageUrl} style={{ height: '100%', width: imgWidthStyle }} />
       ) : (
         <View style={styles.contentContainer}>
           <LoadingIndicator size="large" />

@@ -1,6 +1,6 @@
 import { StyleSheet, ScrollView } from 'react-native';
 import React from 'react';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import images from '~/resources/images';
 import { spacing } from '~/theme';
 import { MAX_LENGTH } from './MenuDiscoverCommunity';

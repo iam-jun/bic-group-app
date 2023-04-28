@@ -5,19 +5,17 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import SelectedAudiences from './SelectedAudiences';
+import SelectedAudiences from './components/SelectedAudiences';
+import AudienceItem from './components/AudienceItem';
 import { useBaseHook } from '~/hooks';
 import { IGroup } from '~/interfaces/IGroup';
 import spacing, { padding } from '~/theme/spacing';
 import SearchInput from '../../baseComponents/Input/SearchInput';
 import useSelectAudienceStore from './store/index';
 import NoSearchResultsFound from '../NoSearchResultsFound';
-import GroupTreeItem from '../groups/GroupTreeItem';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import GroupItem from '../groups/GroupItem';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import useMounted from '~/hooks/mounted';
-import useGroupTreeStore from '../groups/store';
 
 export enum ContentType {
   POST = 'post',
@@ -34,43 +32,52 @@ const SelectAudience = ({ contentType }: SelectAudienceProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const tree = useSelectAudienceStore((state) => state.tree);
-  const { data: dataTree = [], loading: loadingTree } = tree || {};
-
   const search = useSelectAudienceStore((state) => state.search);
-  const { data: dataSearch = [], loading: loadingSearch, key: searchKey } = search || {};
+  const {
+    data = [],
+    loading,
+    key: searchKey,
+    hasNextPage,
+  } = search || {};
 
   const actions = useSelectAudienceStore((state) => state.actions);
   const resetStore = useSelectAudienceStore((state) => state.reset);
 
   const selectedAudiences = useSelectAudienceStore((state) => state.selectedAudiences.groups) || {};
-  const resetGroupTree = useGroupTreeStore((state) => state.reset);
-
-  const listData: IGroup[] = (!!searchKey ? dataSearch : dataTree) || [];
-  const loading = !!searchKey ? loadingSearch : loadingTree;
 
   useMounted(() => {
-    actions.getAudienceTree();
+    getData(searchKey, contentType, true);
   });
+
+  const getData = (key: string, type: ContentType, isRefresh: boolean) => {
+    actions.getAudienceSearch(key, type, isRefresh);
+  };
 
   useEffect(
     () => () => {
-      resetGroupTree();
       resetStore();
     }, [],
   );
 
   const onSearch = debounce(
     (searchText: string) => {
-      actions.getAudienceSearch(searchText, contentType);
-    }, 500,
+      getData(searchText, contentType, true);
+    }, 250,
   );
 
   const onChangeTextSearch = (text: string) => {
     onSearch(text);
   };
 
-  const ListEmptyComponent = loading ? null : <NoSearchResultsFound />;
+  const onLoadMore = () => {
+    if (hasNextPage) {
+      getData(searchKey, contentType, false);
+    }
+  };
+
+  const ListEmptyComponent = (loading || hasNextPage) ? null : <NoSearchResultsFound />;
+
+  const ListHeaderComponent = (<ViewSpacing height={padding.small} />);
 
   const ListFooterComponent = (
     <View style={styles.footer}>
@@ -80,34 +87,19 @@ const SelectAudience = ({ contentType }: SelectAudienceProps) => {
     </View>
   );
 
-  const renderItemSeperator = () => (!!searchKey && <ViewSpacing height={padding.small} />);
-
   const onCheckboxPress = useCallback((item: IGroup, isChecked: boolean) => {
     actions.updateItemSelection(item, isChecked);
   }, []);
 
   const shouldBeChecked = useCallback((child) => !!selectedAudiences?.[child.id], [selectedAudiences]);
 
-  const shouldCheckboxDisabled = useCallback((item) => {
-    if (contentType !== ContentType.SERIES) {
-      return !searchKey && !item.canCreatePost;
-    }
-
-    return !searchKey && !item.canCreateSeries;
-  }, [searchKey, contentType]);
-
-  const renderItem = ({ item }) => {
-    const ItemComponent = !!searchKey ? GroupItem : GroupTreeItem;
-
-    return (
-      <ItemComponent
-        item={item}
-        shouldCheckboxDisabled={shouldCheckboxDisabled}
-        shouldBeChecked={shouldBeChecked}
-        onCheckboxPress={onCheckboxPress}
-      />
-    );
-  };
+  const renderItem = ({ item }) => (
+    <AudienceItem
+      item={item}
+      shouldBeChecked={shouldBeChecked}
+      onCheckboxPress={onCheckboxPress}
+    />
+  );
 
   const keyExtractor = (item: IGroup, index: number) => `audience_list_${item?.id}_${index}`;
 
@@ -122,13 +114,15 @@ const SelectAudience = ({ contentType }: SelectAudienceProps) => {
       />
       <SelectedAudiences />
       <FlatList
-        data={listData}
+        data={data}
         style={styles.list}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         ListEmptyComponent={ListEmptyComponent}
+        ListHeaderComponent={ListHeaderComponent}
         ListFooterComponent={ListFooterComponent}
-        ItemSeparatorComponent={renderItemSeperator}
+        onEndReached={onLoadMore}
+        onEndReachedThreshold={0.4}
       />
     </View>
   );
@@ -148,7 +142,8 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingHorizontal: padding.large,
     },
     footer: {
-      marginBottom: spacing.margin.large,
+      marginTop: spacing.margin.extraLarge,
+      marginBottom: spacing.margin.big,
     },
   });
 };
