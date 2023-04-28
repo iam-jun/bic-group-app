@@ -28,7 +28,7 @@ import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import StickerView from '~/components/StickerView';
 import Text from '~/baseComponents/Text';
-import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
+import { ResourceUploadType } from '~/interfaces/IUpload';
 import { useBaseHook } from '~/hooks';
 import { IFilePicked } from '~/interfaces/common';
 import { IActivityDataImage } from '~/interfaces/IPost';
@@ -60,9 +60,9 @@ export interface CommentInputProps {
   loading?: boolean;
   isHandleUpload?: boolean;
   clearWhenUploadDone?: boolean;
-  uploadImageType?: IUploadType;
-  uploadVideoType?: IUploadType;
-  uploadFileType?: IUploadType;
+  uploadImageType?: ResourceUploadType;
+  uploadVideoType?: ResourceUploadType;
+  uploadFileType?: ResourceUploadType;
   disableKeyboardSpacer?: boolean;
   HeaderComponent?: React.ReactNode;
 
@@ -93,7 +93,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   loading = false,
   isHandleUpload,
   clearWhenUploadDone,
-  uploadImageType = uploadTypes.commentImage,
+  uploadImageType = ResourceUploadType.commentContent,
   disableKeyboardSpacer,
 
   onChangeText,
@@ -230,7 +230,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const handleUpload = () => {
     if (selectedImage) {
       setUploading(true);
-      actions.upload({ type: 'image', file: selectedImage, uploadType: uploadImageType });
+      actions.uploadImage({ file: selectedImage, uploadType: uploadImageType });
     } else {
       onPressSend?.({ content: text });
     }

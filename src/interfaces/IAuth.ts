@@ -131,8 +131,8 @@ export interface IUserEdit {
   fullname?: string;
   gender?: GENDER_TYPE;
   birthday?: string;
-  avatar?: string;
-  backgroundImgUrl?: string;
+  avatarId?: string;
+  backgroundImgId?: string;
   phone?: string;
   countryCode?: string | null;
   address?: string;

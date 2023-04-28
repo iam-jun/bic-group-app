@@ -1,8 +1,8 @@
 import { Method } from 'axios';
 import { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
 import appConfig from '~/configs/appConfig';
-import { IUploadType } from '~/configs/resourceConfig';
 import { IFilePicked } from '~/interfaces/common';
+import { ICreateImageIdData, IUploadImageS3Params, ResourceUploadType } from '~/interfaces/IUpload';
 import { makeHttpRequest } from './apiRequest';
 
 const provider = apiProviders.beinUpload;
@@ -13,85 +13,6 @@ const defaultConfig = {
 };
 
 export const uploadApiConfig = {
-  createVideoId: (): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}videos`,
-    method: 'post',
-  }),
-  uploadVideo: (
-    id: string,
-    type: any,
-    data: FormData,
-    onUploadProgress?: (progressEvent: any) => void,
-    abortSignal?: AbortSignal,
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}videos/${id}`,
-    method: 'post',
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-    onUploadProgress,
-    data,
-    signal: abortSignal,
-  }),
-  uploadImage: (
-    type: any,
-    file: IFilePicked,
-    onUploadProgress?: (progressEvent: any) => void,
-  ): HttpApiRequestConfig => {
-    const data = new FormData();
-    data.append('file', file as any, file.name);
-    data.append(
-      'description',
-      JSON.stringify({
-        size: file.size,
-        type: file.type,
-      }),
-    );
-
-    const groupUploadEndPoint: any = {
-      user_avatar: 'upload/user-avatar',
-      user_cover: 'upload/user-cover',
-      group_avatar: 'upload/group-avatar',
-      group_cover: 'upload/group-cover',
-    };
-
-    const uploadEndPoint: any = {
-      post_video: 'videos/',
-    };
-
-    let url: string;
-    let _provider: any;
-
-    if (groupUploadEndPoint[type]) {
-      // upload bein group
-      url = `${apiProviders.bein.url}${groupUploadEndPoint[type]}`;
-      _provider = apiProviders.bein;
-    } else if (uploadEndPoint[type]) {
-      url = `${provider.url}${uploadEndPoint[type]}`;
-      _provider = provider;
-    } else {
-      // upload bein feed
-      url = `${apiProviders.beinFeed.url}media`;
-      _provider = apiProviders.beinFeed;
-      data.append(
-        'upload_type', type,
-      );
-    }
-
-    return {
-      url,
-      method: 'post',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      useRetry: true,
-      provider: _provider,
-      onUploadProgress,
-      data,
-    };
-  },
   createFileId: (uploadType: string): HttpApiRequestConfig => {
     const type = uploadType.split('_')[1];
     return {
@@ -126,17 +47,59 @@ export const uploadApiConfig = {
       onUploadProgress,
     };
   },
+  createImageId: (params?: ICreateImageIdData): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}images`,
+    method: 'post',
+    data: params,
+  }),
+  uploadImagetToS3: (
+    params: IUploadImageS3Params,
+    onUploadProgress: (progressEvent: any) => void,
+  ): HttpApiRequestConfig => {
+    const data: any = new FormData();
+
+    data.append('key', params.presignedPostFields?.key);
+    data.append('bucket', params.presignedPostFields?.bucket);
+    data.append('X-Amz-Algorithm', params.presignedPostFields?.xAmzAlgorithm);
+    data.append('X-Amz-Credential', params.presignedPostFields?.xAmzCredential);
+    data.append('X-Amz-Date', params.presignedPostFields?.xAmzDate);
+    data.append('X-Amz-Security-Token', params.presignedPostFields?.xAmzSecurityToken);
+    data.append('Policy', params.presignedPostFields?.policy);
+    data.append('X-Amz-Signature', params.presignedPostFields?.xAmzSignature);
+    data.append('file', params.file, params.file.name);
+
+    return {
+      url: params.urlUpload,
+      method: 'post',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      useRetry: true,
+      provider: {
+        url: params.urlUpload,
+        name: 's3',
+      },
+      data,
+      onUploadProgress,
+    };
+  },
+  getImageStatus: (id: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}images/${id}?wait=true`,
+    method: 'get',
+    timeout: appConfig.getStatusImageTimeout,
+  }),
 };
 
 const uploadApi = {
-  createFileId: (uploadType: IUploadType) => makeHttpRequest(uploadApiConfig.createFileId(uploadType)),
-  uploadImage: (
-    type: any,
-    file: IFilePicked,
-    onUploadProgress?: (progressEvent: any) => void,
-  ) => makeHttpRequest(uploadApiConfig.uploadImage(
-    type, file, onUploadProgress,
-  )),
+  createFileId: (uploadType: ResourceUploadType) => makeHttpRequest(uploadApiConfig.createFileId(uploadType)),
+  createImageId: (params?: ICreateImageIdData) => makeHttpRequest(uploadApiConfig.createImageId(params)),
+  uploadImageToS3: (
+    params: IUploadImageS3Params,
+    onUploadProgress: (progressEvent: any) => void,
+  ) => makeHttpRequest(uploadApiConfig.uploadImagetToS3(params, onUploadProgress)),
+  getImageStatus: (id: string) => makeHttpRequest(uploadApiConfig.getImageStatus(id)),
 };
 
 export default uploadApi;
