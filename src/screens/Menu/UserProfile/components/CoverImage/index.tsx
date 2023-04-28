@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Image from '~/components/Image';
 import images from '~/resources/images';
-import { spacing } from '~/theme';
+import { dimension, spacing } from '~/theme';
 import EditButton from '../EditButton';
 
 interface Props {
@@ -17,6 +17,7 @@ const CoverImage = ({
 }: Props) => (
   <View testID="user_profile.cover_image">
     <Image
+      width={dimension.deviceWidth}
       style={[styles.cover, { height: (coverHeight * 2) / 3 }]}
       source={bgImg || images.img_cover_default}
       usePixelWidth
