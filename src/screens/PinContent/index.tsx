@@ -22,7 +22,7 @@ import {
   getGroupIdsBySelectedOrUnselected,
 } from '~/components/PinContent/store/helper';
 import showToastSuccess from '~/store/helper/showToastSuccess';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import images from '~/resources/images';
 
 type PinContentProps = {

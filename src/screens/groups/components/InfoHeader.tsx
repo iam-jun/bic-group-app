@@ -13,7 +13,7 @@ import { useBaseHook } from '~/hooks';
 import { ICommunity } from '~/interfaces/ICommunity';
 import { IGroup } from '~/interfaces/IGroup';
 import { formatLargeNumber } from '~/utils/formatter';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 
 interface InfoHeaderProps {
   infoDetail: ICommunity | IGroup;

@@ -2,7 +2,7 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { dimension, spacing } from '~/theme';

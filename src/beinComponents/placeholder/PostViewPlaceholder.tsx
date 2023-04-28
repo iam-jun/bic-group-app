@@ -10,7 +10,7 @@ import {
   PlaceholderLine,
   PlaceholderMedia,
 } from 'rn-placeholder';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import images from '~/resources/images';
 import { getRandomInt } from '~/utils/generator';
 import Divider from '~/beinComponents/Divider';

@@ -3,7 +3,7 @@ import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { scaleCoverHeight } from '~/theme/dimension';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import images from '~/resources/images';
 import spacing from '~/theme/spacing';
 import InfoCard from '~/components/InfoCard';

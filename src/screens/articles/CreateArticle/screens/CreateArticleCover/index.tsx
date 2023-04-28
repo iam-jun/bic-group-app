@@ -130,8 +130,6 @@ const createStyle = (theme: ExtendedTheme) => {
       backgroundColor: colors.neutral1,
     },
     cover: {
-      width: '100%',
-      height: scaleSize(200),
       borderRadius: 0,
     },
     textAddCover: {
