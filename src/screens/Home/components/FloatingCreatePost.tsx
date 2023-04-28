@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
@@ -10,13 +9,13 @@ import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import Icon from '~/baseComponents/Icon';
 import { ISelectAudienceParams } from '~/screens/post/PostSelectAudience/SelectAudienceHelper';
 import spacing from '~/theme/spacing';
-import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import BottomListItem from '~/components/BottomList/BottomListItem';
 import MyDraft from './MyDraft';
 import Button from '~/baseComponents/Button';
+import useModalStore from '~/store/modal';
 
 export interface FloatingCreatePostProps {
   audience?: any;
@@ -31,11 +30,11 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
   const { colors } = theme;
   const styles = createStyle(theme);
   const { rootNavigation } = useRootNavigation();
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
+  const modalActions = useModalStore((state) => state.actions);
 
   const onCreate = () => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
     const params: ISelectAudienceParams = {
       createFromGroupId,
       isFirstStep: true,
@@ -49,7 +48,7 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
   };
 
   const onCreateArticle = () => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
 
     rootNavigation.navigate(
       articleStack.createArticle,
@@ -57,7 +56,7 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
   };
 
   const onCreateSeries = () => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
 
     rootNavigation.navigate(
       seriesStack.seriesSelectAudience,
@@ -66,35 +65,33 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
   };
 
   const onPress = () => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent: (
-          <View>
-            <BottomListItem
-              testID="create_option.write_post"
-              title={t('home:create_content_options:write_post')}
-              onPress={onCreate}
-            />
-            <BottomListItem
-              testID="create_option.write_article"
-              title={t('home:create_content_options:write_article')}
-              onPress={onCreateArticle}
-            />
-            <BottomListItem
-              testID="create_option.write_series"
-              title={t('home:create_content_options:write_series')}
-              onPress={onCreateSeries}
-            />
-            <MyDraft />
-          </View>),
-      }),
-    );
+    modalActions.showModal({
+      isOpen: true,
+      ContentComponent: (
+        <View>
+          <BottomListItem
+            testID="create_option.write_post"
+            title={t('home:create_content_options:write_post')}
+            onPress={onCreate}
+          />
+          <BottomListItem
+            testID="create_option.write_article"
+            title={t('home:create_content_options:write_article')}
+            onPress={onCreateArticle}
+          />
+          <BottomListItem
+            testID="create_option.write_series"
+            title={t('home:create_content_options:write_series')}
+            onPress={onCreateSeries}
+          />
+          <MyDraft />
+        </View>),
+    });
   };
 
   return (
-    <View style={styles.container}>
-      <Button onPress={onPress} style={styles.button}>
+    <View style={styles.container} testID="floating_create_post">
+      <Button testID="floating_create_post.btn" onPress={onPress} style={styles.button}>
         <Icon tintColor={colors.white} width={20} height={20} icon="PenLineSolid" />
       </Button>
     </View>

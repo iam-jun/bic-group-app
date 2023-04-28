@@ -10,7 +10,7 @@ module.exports = {
   clearMocks: true,
   testPathIgnorePatterns: ['/node_modules/'],
   transformIgnorePatterns: [
-    'node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|rollbar-react-native|@fortawesome|@react-native|@react-navigation)',
+    'node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|rollbar-react-native|@fortawesome|@react-native|@react-navigation|rn-fetch-blob|@sentry/react-native)',
   ],
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
@@ -28,6 +28,11 @@ module.exports = {
     '!src/theme/**/*.{js,jsx,ts,tsx}',
     '!src/beinComponents/Markdown/**/*.{js,jsx,ts,tsx}',
     '!src/beinComponents/MarkdownView/**/*.{js,jsx,ts,tsx}',
+    '!src/beinComponents/ReorderList/**/*.{js,jsx,ts,tsx}',
+    '!src/components/LoggerView/**/*.{js,jsx,ts,tsx}',
+    '!src/components/reaction/**/*.{js,jsx,ts,tsx}',
+    '!src/store/codePush/**/*.{js,jsx,ts,tsx}',
+    '!src/store/remoteConfig/**/*.{js,jsx,ts,tsx}',
     '!src/storeRedux/**/*.{js,jsx,ts,tsx}',
     '!src/**/*.stories.{js,jsx,ts,tsx}',
   ],

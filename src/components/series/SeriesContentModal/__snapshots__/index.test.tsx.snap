@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SeriesContentModal component should render correctly 1`] = `
+<View
+  style={
+    Object {
+      "borderTopColor": "#E3E6F2",
+      "borderTopWidth": 1,
+      "flex": 1,
+      "paddingBottom": 0,
+      "paddingHorizontal": 0,
+    }
+  }
+>
+  <RCTScrollView
+    ListEmptyComponent={[Function]}
+    ListHeaderComponent={[Function]}
+    data={Array []}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onEndReached={[Function]}
+    onEndReachedThreshold={0.1}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    showsVerticalScrollIndicator={false}
+    stickyHeaderIndices={Array []}
+    viewabilityConfigCallbackPairs={Array []}
+  >
+    <View>
+      <View
+        onLayout={[Function]}
+      >
+        <View
+          style={
+            Object {
+              "height": 12,
+              "paddingHorizontal": undefined,
+              "paddingVertical": undefined,
+              "width": undefined,
+            }
+          }
+        />
+      </View>
+      <ActivityIndicator
+        color="#A4A9B7"
+        style={
+          Object {
+            "marginTop": 16,
+          }
+        }
+        testID="loading_indicator"
+      />
+    </View>
+  </RCTScrollView>
+</View>
+`;

@@ -1,5 +1,5 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useEffect } from 'react';
 import {
   View, StyleSheet, Platform, KeyboardAvoidingView,
 } from 'react-native';
@@ -10,8 +10,8 @@ import CreateTag from './components/CreateTag';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { spacing } from '~/theme';
 import ListTags from './components/ListTags';
-import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
+import useTagsControllerStore from '../store';
 
 type TagsProps = {
     route: {
@@ -35,30 +35,36 @@ const Tags: FC<TagsProps> = (props) => {
   ) => state.data[type === 'community' ? id : communityId] || {} as ICommunity, [id, type]));
 
   const {
-    name: nameCommunity, joinStatus, id: idCommunity,
+    name: nameCommunity, id: idCommunity,
   } = community;
-
-  const isMember = joinStatus === GroupJoinStatus.MEMBER;
 
   const theme = useTheme();
   const styles = createStyle(theme);
 
+  const actions = useTagsControllerStore((state) => state.actions);
+  const canCUDTag = useTagsControllerStore(useCallback(
+    (state) => state.communityCUDTagPermissions[idCommunity],
+    [idCommunity],
+  ));
+
   const titleHeader = type === 'community' ? nameCommunity : nameGroup;
+
+  useEffect(() => {
+    actions.getCommunityCUDTagPermission(idCommunity);
+  }, [idCommunity]);
 
   return (
     <KeyboardAvoidingView style={styles.keyboardAvoidingView} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <View style={styles.container}>
-        <Header
-          title={titleHeader}
-        />
+        <Header title={titleHeader} />
         {
-        isMember && (
-        <>
-          <ViewSpacing height={spacing.padding.large} />
-          <CreateTag communityId={idCommunity} />
-        </>
-        )
-      }
+          canCUDTag && (
+            <>
+              <ViewSpacing height={spacing.padding.large} />
+              <CreateTag communityId={idCommunity} />
+            </>
+          )
+        }
         <ViewSpacing height={spacing.padding.large} />
         <ListTags communityId={idCommunity} />
       </View>

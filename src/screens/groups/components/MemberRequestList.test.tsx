@@ -11,8 +11,14 @@ describe('MemberRequestList', () => {
   const onPressAdd = jest.fn();
 
   it('should render empty screen when data is empty and loading = false', () => {
-    const state = { ...initialState };
-    const store = createTestStore(state);
+    useCommunityMemberStore.setState((state: ICommunityMemberState) => {
+      state.communityMemberRequests.total = 0;
+      state.communityMemberRequests.loading = false;
+      state.communityMemberRequests.canLoadMore = false;
+      state.communityMemberRequests.ids = [];
+      state.communityMemberRequests.items = {};
+      return state;
+    });
     const wrapper = renderWithRedux(
       <MemberRequestList
         type="community"
@@ -20,7 +26,6 @@ describe('MemberRequestList', () => {
         onRefresh={onRefresh}
         onPressAdd={onPressAdd}
       />,
-      store,
     );
     const emptyScreen = wrapper.getByTestId('empty_screen');
     expect(emptyScreen).toBeDefined();

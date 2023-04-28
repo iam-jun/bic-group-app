@@ -1,0 +1,182 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InvalidSeriesTagsContentModal component should renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "maxHeight": 667,
+    }
+  }
+  testID="invalid_series_tags_content_modal"
+>
+  <RCTScrollView>
+    <View>
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={false}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+            "paddingBottom": 12,
+            "paddingHorizontal": 16,
+            "paddingTop": 4,
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 14,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          The following information will be removed when removed audiences:
+        </Text>
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 14,
+                },
+                Object {},
+                undefined,
+              ]
+            }
+          >
+             • 
+          </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 14,
+                },
+                Object {},
+                Object {
+                  "flex": 1,
+                  "marginLeft": 4,
+                },
+              ]
+            }
+          >
+            Series: 
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {},
+                  undefined,
+                ]
+              }
+            >
+              basic-1, basic-2
+            </Text>
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 14,
+                },
+                Object {},
+                undefined,
+              ]
+            }
+          >
+             • 
+          </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 14,
+                },
+                Object {},
+                Object {
+                  "flex": 1,
+                  "marginLeft": 4,
+                },
+              ]
+            }
+          >
+            Tags: 
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {},
+                  undefined,
+                ]
+              }
+            >
+              noob, beginner
+            </Text>
+          </Text>
+        </View>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 14,
+              },
+              Object {},
+              Object {
+                "marginTop": 24,
+              },
+            ]
+          }
+        >
+          Are you sure you want to remove audience?
+        </Text>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;

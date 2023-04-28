@@ -8,6 +8,7 @@ import React from 'react';
 import initialState from '~/storeRedux/initialState';
 import { configureStore, fireEvent, renderWithRedux } from '~/test/testUtils';
 import SignIn from '.';
+import i18n from '~/localization';
 
 afterEach(cleanup);
 
@@ -37,14 +38,14 @@ describe('SignIn screen', () => {
     expect(Keyboard.dismiss).toBeCalled();
   });
 
-  it('should show sample email placeholder on mobile', async () => {
+  it('should show email placeholder on mobile', async () => {
     const store = mockStore(initialState);
     Platform.OS = 'ios';
 
     const wrapper = renderWithRedux(<SignIn />, store);
-    const inputEmail = wrapper.getByTestId('sign_in.input_email');
+    const inputEmail = wrapper.getByTestId('input_email');
 
-    expect(inputEmail.props.placeholder).toBe('example@gmail.com');
+    expect(inputEmail.props.placeholder).toBe(i18n.t('auth:input_label_email_placeholder'));
   });
 
   it('Login button should be clickable', async () => {
@@ -52,8 +53,8 @@ describe('SignIn screen', () => {
 
     const wrapper = await waitFor(() => renderWithRedux(<SignIn />, store));
     const buttonLogin = wrapper.getByTestId('sign_in.btn_login');
-    const inputEmail = wrapper.getByTestId('sign_in.input_email');
-    const inputPassword = wrapper.getByTestId('sign_in.input_password');
+    const inputEmail = wrapper.getByTestId('input_email');
+    const inputPassword = wrapper.getByTestId('input_password');
 
     fireEvent.changeText(inputEmail, 'email@domain.com');
     fireEvent.changeText(inputPassword, '12345678');

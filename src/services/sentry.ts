@@ -5,7 +5,7 @@ import { APP_ENV } from '~/configs/appConfig';
 const PROJECT_DSN = 'https://a69cedef20a54a25815edd9ab9ff8c92@o973991.ingest.sentry.io/5930517';
 
 const CONFIG = {
-  TRACES_SAMPLE_RATE: 0.2,
+  TRACES_SAMPLE_RATE: 0,
   TRACES_SAMPLE_RATE_TEST: 1,
 };
 
@@ -19,7 +19,7 @@ export const initSentry = () => {
   if (ignoreSentry) return;
   Sentry.init({
     dsn: PROJECT_DSN,
-    tracesSampleRate: CONFIG.TRACES_SAMPLE_RATE_TEST,
+    tracesSampleRate: appEnv === APP_ENV.STAGING ? CONFIG.TRACES_SAMPLE_RATE_TEST : CONFIG.TRACES_SAMPLE_RATE,
     integrations: [
       new Sentry.ReactNativeTracing({
         routingInstrumentation,

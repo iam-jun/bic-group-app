@@ -4,15 +4,17 @@ import usePostsStore from '~/store/entities/posts';
 import { IBaseListState } from '~/store/interfaces/IBaseState';
 import { ITimelineState } from '..';
 import {
-  getParamsSavedAttributeFeed,
   getParamsContentFeed,
-  getParamsImportantAttributeFeed,
+  isFilterWithThisAttributeFeed,
 } from '~/screens/Home/store/helper';
+import { timeOut } from '~/utils/common';
+import { AttributeFeed } from '~/interfaces/IFeed';
 
-const getPosts = (set, get) => async (id: string, isRefresh?: boolean) => {
+const getPosts = (set, get) => async (id: string, isRefresh = false) => {
   const { timelines }: ITimelineState = get();
   const { contentFilter, attributeFilter, data } = timelines[id] || {};
   const currentPosts: IBaseListState<IPost> = data[contentFilter][attributeFilter];
+
   if (currentPosts.loading) return;
 
   set((state: ITimelineState) => {
@@ -29,11 +31,13 @@ const getPosts = (set, get) => async (id: string, isRefresh?: boolean) => {
       groupId: id,
       offset,
       limit: 10,
-      isImportant: getParamsImportantAttributeFeed(attributeFilter),
-      isSaved: getParamsSavedAttributeFeed(attributeFilter),
+      isImportant: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.IMPORTANT),
+      isSaved: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.SAVED),
+      isMine: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.MINE),
       type: getParamsContentFeed(contentFilter),
     };
     const response = await groupApi.getGroupPosts(params);
+    await timeOut(200);
     const result = response.data?.list || [];
     usePostsStore.getState().actions.addToPosts({ data: result, handleComment: true });
 

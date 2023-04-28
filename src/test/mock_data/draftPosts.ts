@@ -133,10 +133,10 @@ export const LOAD_MORE_LIST_DRAFT_POST = [
       ],
       users: [],
     },
-    foreign_id: 'b76809ad-ab41-471e-987d-6d39040adc9b',
+    foreignId: 'b76809ad-ab41-471e-987d-6d39040adc9b',
     id: 'e3f89ee0-99fd-11ec-8080-99900000997788',
     important: { active: false, expiresTime: null },
-    is_draft: true,
+    isDraft: true,
     mentions: { groupIds: [], userIds: [] },
     object: {
       id: 'e4252077-5ba6-4868-b42a-1c340b033a00',
@@ -242,3 +242,65 @@ export const LIST_POST_CONTAINING_VIDEO_PROCESS_2 = [
   POST_CONTAINING_VIDEO_PROCESS,
   { ...POST_CONTAINING_VIDEO_PROCESS, id: '2' },
 ];
+
+export const mockDraftPost = {
+  actor: {
+    avatar: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/c6b8b056-7d77-4382-b95c-010c2fda4809.jpg',
+    email: 'thuquyen@tgm.vn',
+    fullname: 'Nguyen Thi Thu Quyền',
+    id: 'a0143446-0e51-4903-b280-8c794d470903',
+    username: 'thuquyen',
+  },
+  articles: [],
+  audience: {
+    groups: [
+      {
+        communityId: '15337361-1577-4b7b-a31d-990df06aa446',
+        icon: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/26a806d3-3557-4f7a-b96a-132a9befccff',
+        id: '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
+        isCommunity: true,
+        name: 'EVOL Community',
+        privacy: 'OPEN',
+        rootGroupId: '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
+      },
+    ],
+  },
+  commentsCount: 0,
+  communities: [
+    {
+      communityId: '15337361-1577-4b7b-a31d-990df06aa446',
+      icon: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/26a806d3-3557-4f7a-b96a-132a9befccff',
+      id: '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
+      name: 'EVOL Community',
+      privacy: 'OPEN',
+    },
+  ],
+  content: 'Test video',
+  createdAt: '2023-02-03T07:48:11.646Z',
+  createdBy: 'a0143446-0e51-4903-b280-8c794d470903',
+  id: '026e1977-96d1-4f02-a06d-695c3f900b42',
+  isHidden: false,
+  isReported: false,
+  lang: null,
+  media: {
+    files: [],
+    images: [
+    ],
+    videos: [],
+  },
+  mentions: {},
+  privacy: 'OPEN',
+  reactionsCount: null,
+  setting: {
+    canComment: true,
+    canReact: true,
+    canShare: true,
+    importantExpiredAt: null,
+    isImportant: false,
+  },
+  status: 'DRAFT',
+  tags: [],
+  totalUsersSeen: 0,
+  type: 'POST',
+  updatedAt: '2023-02-14T04:11:41.368Z',
+};

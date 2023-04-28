@@ -259,4 +259,48 @@ export const NOTIFICATION_TYPE = {
    * Aggregate notifications when multiple users reported the same content
    */
   REPORT_USER_TO_USER_AGGREGATED: 'report.user.to_user.aggregated',
+
+  /**
+   * When community admin leave community.
+   * notify for community owner
+   */
+  LEAVE_COMMUNITY_TO_USER: 'leave.community.to_user',
+
+  /**
+   * When group admin leave group.
+   * notify for community owner
+   */
+  LEAVE_GROUP_TO_USER: 'leave.group.to_user',
+
+  /**
+   * When group admin leave multiple group
+   * notify for community owner
+   */
+  LEAVE_MULTIPLE_GROUP_TO_USER: 'leave.multiple_group.to_user',
+
+  /**
+   * When new post was added to series
+   */
+  ADD_POST_TO_USER: 'add.post.to_user',
+
+  /**
+   * When post was removed from series
+   */
+  REMOVE_POST_TO_USER: 'remove.post.to_user',
+
+  /**
+   * When article was removed from series
+   */
+  REMOVE_ARTICLE_TO_USER: 'remove.article.to_user',
+
+  /**
+   * When series contain your content was deleted
+   */
+  DELETE_SERIES_TO_USER: 'delete.series.to_user',
+
+  REMOVE_POST_TO_CREATOR: 'remove.post.to_creator',
+  REMOVE_ARTICLE_TO_CREATOR: 'remove.article.creator',
+
+  // maintenance notification
+  SCHEDULED_MAINTENANCE_DOWNTIME: 'scheduled_maintenance_downtime',
 };

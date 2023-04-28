@@ -7,7 +7,7 @@ import CollapsibleText from '~/baseComponents/Text/CollapsibleText';
 import { GroupPrivacyDetail, GroupPrivacyType } from '~/constants/privacyTypes';
 import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import { formatLargeNumber } from '~/utils/formatData';
+import { formatLargeNumber } from '~/utils/formatter';
 import { IPreviewMember } from '~/interfaces/ICommunity';
 import { useBaseHook } from '~/hooks';
 import { Button } from '~/baseComponents';

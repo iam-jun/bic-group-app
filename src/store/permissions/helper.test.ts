@@ -1,3 +1,4 @@
+import { PermissionKey } from '~/constants/permissionScheme';
 import { myPermissionsData } from '~/test/mock_data/myPermissions';
 import { checkIfHasPermission } from './helper';
 
@@ -40,6 +41,13 @@ describe('helper function', () => {
   available permissions have at least 1 required permission`, () => {
     const requiredPermissions = ['add_member', 'edit_privacy', 'create_custom_emoji'];
     const result = checkIfHasPermission(requiredPermissions, availablePermissions);
+    expect(result).toBe(true);
+  });
+
+  it(`checkIfHasPermission should return true correctly when current
+  available permissions has no required permission but has full permission`, () => {
+    const requiredPermissions = ['channel_mentions', 'edit_privacy'];
+    const result = checkIfHasPermission(requiredPermissions, [...availablePermissions, PermissionKey.FULL_PERMISSION]);
     expect(result).toBe(true);
   });
 

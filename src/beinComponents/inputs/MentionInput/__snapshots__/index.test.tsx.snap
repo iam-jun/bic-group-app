@@ -1202,14 +1202,8 @@ Array [
                 }
                 collapsable={false}
                 forwardedRef={[Function]}
-                hitSlop={
-                  Object {
-                    "bottom": 10,
-                    "left": 10,
-                    "right": 10,
-                    "top": 10,
-                  }
-                }
+                handlerTag={1}
+                handlerType="PanGestureHandler"
                 onGestureHandlerEvent={[Function]}
                 style={
                   Object {
@@ -1369,6 +1363,7 @@ Array [
                         "flex": 1,
                       }
                     }
+                    testID="sticker_view.emoij"
                   >
                     <View
                       style={
@@ -1377,6 +1372,7 @@ Array [
                           "flex": 1,
                         }
                       }
+                      testID="emoji_picker"
                     >
                       <RCTScrollView
                         data={Array []}
@@ -1402,13 +1398,11 @@ Array [
                         showsVerticalScrollIndicator={false}
                         stickyHeaderIndices={Array []}
                         style={
-                          Array [
-                            Object {},
-                            Object {
-                              "width": 720,
-                            },
-                          ]
+                          Object {
+                            "width": 720,
+                          }
                         }
+                        testID="emoji_picker.section_list"
                       >
                         <View />
                       </RCTScrollView>
@@ -1490,14 +1484,8 @@ Array [
                 }
                 collapsable={false}
                 forwardedRef={[Function]}
-                hitSlop={
-                  Object {
-                    "bottom": 10,
-                    "left": 10,
-                    "right": 10,
-                    "top": 10,
-                  }
-                }
+                handlerTag={2}
+                handlerType="PanGestureHandler"
                 onGestureHandlerEvent={[Function]}
                 style={
                   Object {
@@ -1657,6 +1645,7 @@ Array [
                         "flex": 1,
                       }
                     }
+                    testID="sticker_view.emoij"
                   >
                     <View
                       style={
@@ -1665,6 +1654,7 @@ Array [
                           "flex": 1,
                         }
                       }
+                      testID="emoji_picker"
                     >
                       <RCTScrollView
                         data={Array []}
@@ -1690,13 +1680,11 @@ Array [
                         showsVerticalScrollIndicator={false}
                         stickyHeaderIndices={Array []}
                         style={
-                          Array [
-                            Object {},
-                            Object {
-                              "width": 720,
-                            },
-                          ]
+                          Object {
+                            "width": 720,
+                          }
                         }
+                        testID="emoji_picker.section_list"
                       >
                         <View />
                       </RCTScrollView>

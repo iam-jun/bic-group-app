@@ -4,6 +4,7 @@ import { IPayloadGetScheduleArticles } from '~/interfaces/IArticle';
 import { PostStatus } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import showToastError from '~/store/helper/showToastError';
+import { timeOut } from '~/utils/common';
 
 const getScheduleArticles = (set, get) => async (payload: IPayloadGetScheduleArticles) => {
   const { isRefresh = true } = payload;
@@ -30,6 +31,7 @@ const getScheduleArticles = (set, get) => async (payload: IPayloadGetScheduleArt
       limit: 10,
     };
     const response = await streamApi.getArticleByParams(params);
+    await timeOut(300);
     const newScheduleArticles
       = isRefresh ? response?.data?.list || [] : listScheduleArticle?.concat(response?.data?.list || []);
 

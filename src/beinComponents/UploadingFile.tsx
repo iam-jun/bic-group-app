@@ -12,7 +12,7 @@ import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import { IFilePicked } from '~/interfaces/common';
 import Icon from '~/baseComponents/Icon';
 import Button from '~/beinComponents/Button';
-import { formatBytes } from '~/utils/formatData';
+import { formatBytes } from '~/utils/formatter';
 import { useBaseHook } from '~/hooks';
 import { supportedTypes } from '~/beinComponents/DocumentPicker';
 import { openUrl } from '~/utils/link';
@@ -62,7 +62,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
   const errorUpload = useUploaderStore(useCallback((state) => state.errors[fileName], [fileName]));
   const uploadProgress = useUploaderStore(useCallback((state) => state.uploadingFiles[fileName], [fileName]));
   const uploadedFile = useUploaderStore(useCallback((state) => state.uploadedFiles[fileName], [fileName]));
-  const isUploading = uploadProgress && uploadProgress >= 0;
+  const isUploading = uploadProgress !== undefined;
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -73,12 +73,16 @@ const UploadingFile: FC<UploadingFileProps> = ({
   }, [errorUpload]);
 
   useEffect(() => {
-    if (uploadedFile) onSuccess?.(uploadedFile);
+    if (uploadedFile) {
+      onSuccess?.(uploadedFile);
+    }
   }, [uploadedFile]);
 
   useEffect(
     () => {
-      if (file && !isUploading) uploadFile();
+      if (file && !isUploading) {
+        uploadFile();
+      }
     }, [file],
   );
 
@@ -154,7 +158,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
   const icon = getFileIcons(fileExt) as IconType;
 
   return (
-    <View style={[styles.container, style]}>
+    <View testID="uploading_file" style={[styles.container, style]}>
       <Icon size={22} icon={icon} style={styles.iconFile} />
       <View style={styles.contentContainer}>
         <Text.SubtitleXS
@@ -191,6 +195,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
       )}
       {!disableClose && (
         <Button
+          testID="uploading_file.btn_close"
           hitSlop={HIT_SLOP}
           onPress={onPressClose}
         >

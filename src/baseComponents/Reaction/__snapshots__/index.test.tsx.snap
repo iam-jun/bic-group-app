@@ -64,14 +64,23 @@ exports[`Reaction component renders correctly 1`] = `
             allowFontScaling={true}
             style={
               Array [
-                undefined,
                 Object {
-                  "color": "#000",
-                  "fontSize": 13,
-                  "fontWeight": "bold",
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 14,
                 },
+                Object {},
+                Array [
+                  undefined,
+                  Object {
+                    "color": "#000",
+                    "fontSize": 13,
+                    "fontWeight": "bold",
+                  },
+                ],
               ]
             }
+            testID="emoji.unicode"
           >
             😚
           </Text>

@@ -5,6 +5,11 @@ import { act, renderHook } from '~/test/testUtils';
 import useCommunityMemberStore from '../index';
 
 describe('searchCommunityMembers', () => {
+  afterEach(() => {
+    jest.runOnlyPendingTimers(); // you must add this
+    jest.useRealTimers(); // you must add this
+  });
+
   const groupId = 'de605abc-15d4-4828-9494-aaedd9565850';
   const key = 'test';
 
@@ -79,7 +84,7 @@ describe('searchCommunityMembers', () => {
     const { result } = renderHook(() => useCommunityMemberStore((state) => state));
     act(() => {
       try {
-        result.current.actions.searchCommunityMembers({ key, groupId, isLoadMore: true });
+        result.current.actions.searchCommunityMembers({ key, groupId });
       } catch (e) {
         expect(e).toBeInstanceOf(TypeError);
         expect(e).toBe(error);

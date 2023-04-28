@@ -4,21 +4,22 @@ import useUploaderStore from '~/store/uploader';
 import showAlert from '~/store/helper/showAlert';
 import showToast from '~/store/helper/showToast';
 
-import useDraftPostStore from '../../Draft/DraftPost/store';
+import useDraftPostStore from '../../YourContent/components/Draft/DraftPost/store';
+import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftContents/store';
 
 export const handleBack = ({
   isEditPost,
   isEditPostHasChange,
   hasPostId,
   rootNavigation,
-  isNewsfeed,
+  isEditDraftPost,
   onPressDraftPost,
 }: {
   isEditPost: boolean | undefined;
   isEditPostHasChange: boolean | undefined;
   hasPostId: boolean | undefined;
   rootNavigation: any;
-  isNewsfeed: boolean | undefined;
+  isEditDraftPost: boolean | undefined;
   onPressDraftPost: () => void;
 }) => {
   Keyboard.dismiss();
@@ -30,7 +31,7 @@ export const handleBack = ({
         cancelBtn: true,
         cancelLabel: i18next.t('common:btn_discard'),
         confirmLabel: i18next.t('common:btn_stay_here'),
-        onCancel: () => rootNavigation.goBack(),
+        onCancel: () => rootNavigation?.goBack(),
       });
       return;
     }
@@ -46,17 +47,18 @@ export const handleBack = ({
         confirmLabel: i18next.t('common:btn_stay_on_this_page'),
         onCancel: () => {
           useUploaderStore.getState().actions.cancelAllFiles();
-          rootNavigation.goBack();
+          rootNavigation?.goBack();
         },
       });
       return;
     }
     useDraftPostStore.getState().actions.getDraftPosts({ isRefresh: true });
+    useDraftContentsStore.getState().actions.getDraftContents({ isRefresh: true });
     showToast({
       content: 'post:saved_to_draft',
-      buttonText: isNewsfeed ? i18next.t('home:draft_post') : '',
+      buttonText: isEditDraftPost ? i18next.t('home:draft_post') : '',
       onButtonPress: onPressDraftPost,
     });
   }
-  rootNavigation.goBack();
+  rootNavigation?.goBack();
 };

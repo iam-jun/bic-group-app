@@ -41,3 +41,9 @@ export interface ISocketNotification {
   type?: string;
   postId?: string;
 }
+
+export enum ContentType {
+  post = 'post',
+  article = 'article',
+  series = 'series',
+}

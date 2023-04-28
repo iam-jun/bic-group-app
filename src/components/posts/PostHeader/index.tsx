@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
+import { useRoute } from '@react-navigation/native';
 import { Button } from '~/baseComponents';
 
 import { ContentHeader, ContentHeaderProps } from '~/components/ContentView';
@@ -11,9 +11,9 @@ import useMyPermissionsStore from '~/store/permissions';
 import usePostMenu from '~/hooks/usePostMenu';
 import { IAudienceGroup } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import postActions from '~/storeRedux/post/actions';
 import AlertDeleteAudiences from '../AlertDeleteAudiences';
 import useModalStore from '~/store/modal';
+import usePostsStore from '~/store/entities/posts';
 
 export interface PostHeaderProps extends Partial<ContentHeaderProps> {
   data: any,
@@ -27,10 +27,11 @@ const PostHeader: FC<PostHeaderProps> = ({
   onPressHeader,
   ...props
 }) => {
+  const route = useRoute();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
   const { showAlert } = useModalStore((state) => state.actions);
+  const postActions = usePostsStore((state) => state.actions);
 
   const {
     id: postId, actor, audience, createdAt,
@@ -38,6 +39,8 @@ const PostHeader: FC<PostHeaderProps> = ({
 
   const userId = useUserIdAuth();
   const isActor = actor?.id === userId;
+
+  const isPostDetailScreen = route.name === homeStack.postDetail;
 
   const { shouldHavePermissionOnSomeAudience } = useMyPermissionsStore((state) => state.actions);
   const canDeleteOwnPost = shouldHavePermissionOnSomeAudience(
@@ -76,12 +79,10 @@ const PostHeader: FC<PostHeaderProps> = ({
         cancelBtn: true,
         confirmLabel: t('common:text_remove'),
         ConfirmBtnComponent: Button.Danger,
-        onConfirm: () => dispatch(
-          postActions.removePostAudiences({
-            id: postId,
-            listAudiences: listIdAudiences,
-          }),
-        ),
+        onConfirm: () => postActions.removeAudiencesFromPost({
+          id: postId,
+          listAudiences: listIdAudiences,
+        }),
         confirmBtnProps: { type: 'ghost' },
       });
     } else {
@@ -100,7 +101,7 @@ const PostHeader: FC<PostHeaderProps> = ({
     }
   };
 
-  const { showMenu } = usePostMenu(data, isActor, true, handleDeletePostError);
+  const { showMenu } = usePostMenu(data, isActor, isPostDetailScreen, handleDeletePostError);
 
   const onPressMenu = useDefaultMenu ? showMenu : undefined;
 

@@ -1,35 +1,38 @@
-import React, { FC, useEffect, useRef } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, {
+  FC, useEffect, useRef, useState,
+} from 'react';
+import { Keyboard, StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
-import appConfig from '~/configs/appConfig';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
-import { IAudience, ICreatePostParams, PostStatus } from '~/interfaces/IPost';
+import {
+  IAudience,
+  ICreatePostParams,
+  IPostCreatePost,
+} from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import useCreatePost from '~/screens/post/CreatePost/hooks/useCreatePost';
-import postActions from '~/storeRedux/post/actions';
 
 import spacing from '~/theme/spacing';
 import CreatePostChosenAudiences from '../../../components/posts/CreatePostChosenAudiences';
-import { getTotalFileSize } from '~/storeRedux/post/selectors';
 import CreatePostContent from './components/CreatePostContent';
 import CreatePostFooter from './components/CreatePostFooter';
-import CreatePostBannerImportant from './components/CreatePostBannerImportant';
+import CreateBannerImportant from '~/components/ImportantSettings/CreateBannerImportant';
 import { handleBack } from './handler';
-import useDraftPostStore from '../../Draft/DraftPost/store';
+import useDraftPostStore from '../../YourContent/components/Draft/DraftPost/store';
 import useCommentInputStore from '../../comments/components/CommentInputView/store';
 import ICommentInputState from '../../comments/components/CommentInputView/store/Interface';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
-import useMyPermissionsStore from '~/store/permissions';
-import { PermissionKey } from '~/constants/permissionScheme';
 import { useBaseHook } from '~/hooks';
 import Text from '~/baseComponents/Text';
 import useModalStore from '~/store/modal';
+import useCreatePost from './hooks/useCreatePost';
+import useCreatePostStore from './store';
+import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
+import useLinkPreviewStore from '~/store/linkPreview';
 
 export interface CreatePostProps {
   route?: {
@@ -39,89 +42,96 @@ export interface CreatePostProps {
 
 const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   const toolbarRef = useRef<any>();
-  const mentionInputRef = useRef<any>();
   const screenParams = route?.params || {};
 
-  const actions = useCommentInputStore((state: ICommentInputState) => state.actions);
+  const commentInputStoreActions = useCommentInputStore(
+    (state: ICommentInputState) => state.actions,
+  );
 
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
-  const refTextInput = useRef<any>();
   const { showAlert } = useModalStore((state) => state.actions);
 
-  const { actions: draftPostActions } = useDraftPostStore();
+  const [postId, setPostId] = useState(
+    screenParams?.postId || screenParams?.draftPostId,
+  );
 
   const useCreatePostData = useCreatePost({
-    screenParams,
-    mentionInputRef,
+    screenParams: {
+      ...screenParams,
+      postId,
+    },
   });
+  const createPostStoreActions = useCreatePostStore((state) => state.actions);
+  const loading = useCreatePostStore((state) => state.loading);
+
+  const resetCreatePostStore = useCreatePostStore((state) => state.reset);
+  const resetMentionInputStore = useMentionInputStore((state) => state.reset);
+  const resetLinkPreviewStore = useLinkPreviewStore((state) => state.reset);
+
   const {
-    refIsRefresh,
-    sPostData,
     createPostData,
-    images,
-    video,
-    files,
-    disableButtonPost,
     isEditPost,
     isEditDraftPost,
+    disableButtonPost,
     isEditPostHasChange,
-    handlePressPost,
-    isNewsfeed,
+    savePost,
+    publishPost,
+    disableButtonsCreatePostFooter,
+    audienceListWithNoPermission,
   } = useCreatePostData;
 
   const {
-    loading,
-    data,
-    chosenAudiences = [],
-    important,
-    count,
-  } = createPostData || {};
-  const { content } = data || {};
-  const { totalFiles, totalSize } = getTotalFileSize();
+    chosenAudiences, id, important, count,
+  } = createPostData;
 
-  const groupIds: any[] = [];
+  const {
+    imageDisabled, videoDisabled, fileDisabled, settingDisabled,
+  }
+    = disableButtonsCreatePostFooter;
+
+  const isCreatingNewPost = !screenParams?.postId || screenParams?.draftPostId;
+
+  const buttonPostProps = {
+    loading,
+    disabled: disableButtonPost,
+    useI18n: true,
+    style: { borderWidth: 0 },
+    testID: 'create_post.btn_post',
+  };
+
+  const userIds: string[] = [];
+  const groupIds: string[] = [];
   chosenAudiences.forEach((selected: IAudience) => {
-    if (selected.type !== 'user') {
+    if (selected.type === 'user') {
+      userIds.push(selected.id);
+    } else {
       groupIds.push(selected.id);
     }
   });
 
-  const { getAudienceListWithNoPermission } = useMyPermissionsStore((state) => state.actions);
+  useEffect(() => {
+    if (!postId) {
+      const audience = { groupIds, userIds };
 
-  const audienceListWithNoPermission = getAudienceListWithNoPermission(
-    chosenAudiences,
-    PermissionKey.EDIT_POST_SETTING,
-  );
-  const shouldDisablePostSettings = audienceListWithNoPermission.length === chosenAudiences.length;
+      const newPost: IPostCreatePost = {
+        audience,
+        content: '',
+      };
+      createPostStoreActions.createNewPost(newPost);
+    }
+  }, []);
 
-  const sPostId = sPostData?.id;
-  const isEdit = !!(sPostId && !(sPostData?.status === PostStatus.DRAFT));
+  // After createNewPost, we have post id, then update post id state
+  useEffect(() => {
+    if (id) {
+      setPostId(id);
+    }
+  }, [id]);
 
-  let imageDisabled; let fileDisabled; let
-    videoDisabled;
-
-  if (video) {
-    videoDisabled = true;
-    imageDisabled = true;
-    fileDisabled = true;
-  } else if (images?.length > 0) {
-    videoDisabled = true;
-    fileDisabled = true;
-  } else if (files?.length > 0) {
-    videoDisabled = true;
-    imageDisabled = true;
-  }
-
-  if (
-    totalFiles === appConfig.maxFiles
-    || totalSize >= appConfig.totalFileSize
-  ) {
-    fileDisabled = true;
-  }
+  const { actions: draftPostActions } = useDraftPostStore();
 
   const handleBackPress = () => {
     toolbarRef?.current?.goBack?.();
@@ -130,55 +140,52 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   useBackPressListener(handleBackPress);
 
   useEffect(
-    () => {
-    // disable clear data for flow select audience before create post
-    // dispatch(postActions.clearCreatPostData());
-      if (screenParams?.initAudience?.id) {
-        dispatch(postActions.setCreatePostChosenAudiences(new Array(screenParams?.initAudience)));
-      }
-      return () => {
-        dispatch(postActions.clearCreatPostData());
-        dispatch(postActions.setCreatePostImagesDraft([]));
-
-        // clear comment because of comment input view listen emit event change text
-        actions.setCreateComment({ content: '', loading: false });
-      };
-    }, [],
-  );
-
-  useEffect(
-    () => {
-      if (content && !mentionInputRef?.current?.getContent?.()) {
-        mentionInputRef?.current?.setContent?.(content);
-      }
-    }, [content, images],
+    () => () => {
+      resetCreatePostStore();
+      resetMentionInputStore();
+      resetLinkPreviewStore();
+      // clear comment because of comment input view listen emit event change text
+      commentInputStoreActions.setCreateComment({ content: '', loading: false });
+    },
+    [],
   );
 
   const onPressBack = () => {
     handleBack({
-      isEditPost: !!(isEditPost && !isEditDraftPost),
+      isEditPost,
       isEditPostHasChange,
-      hasPostId: !!(sPostId && refIsRefresh.current),
+      hasPostId: !!postId,
       rootNavigation,
-      isNewsfeed,
+      isEditDraftPost,
       onPressDraftPost,
     });
   };
 
   const onPressDraftPost = () => {
-    if (isNewsfeed) {
+    if (isEditDraftPost) {
       draftPostActions.getDraftPosts({ isRefresh: true });
-      rootNavigation.navigate(menuStack.draft);
+      rootNavigation.navigate(menuStack.yourContent, { initTab: 0 });
     }
   };
 
-  const onPressPost = async () => {
-    handlePressPost();
+  const onSavePost = () => {
+    Keyboard.dismiss();
+    savePost({
+      disableNavigate: false,
+      replaceWithDetail: screenParams.replaceWithDetail,
+    });
+  };
+
+  const onPublishPost = () => {
+    Keyboard.dismiss();
+    publishPost();
   };
 
   const onPressSettings = () => {
     if (audienceListWithNoPermission.length > 0) {
-      const audienceListNames = audienceListWithNoPermission.map((audience) => audience.name).join(', ');
+      const audienceListNames = audienceListWithNoPermission
+        .map((audience) => audience.name)
+        .join(', ');
       const alertPayload = {
         title: t('post:post_setting_permissions_alert:title'),
         children: (
@@ -198,32 +205,37 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     rootNavigation.navigate(homeStack.postSettings);
   };
 
+  const onPressTags = () => {
+    rootNavigation.navigate(homeStack.createPostTags);
+  };
+
+  const onPressSeries = () => {
+    rootNavigation.navigate(homeStack.createPostSeries);
+  };
+
   return (
     <ScreenWrapper isFullView testID="CreatePostScreen">
       <Header
         titleTextProps={{ useI18n: true }}
-        title={isEdit ? 'post:title_edit_post' : 'post:title_create_post'}
-        buttonText={isEdit ? 'post:save' : 'common:btn_publish'}
-        buttonProps={{
-          loading,
-          disabled: disableButtonPost,
-          useI18n: true,
-          style: { borderWidth: 0 },
-          testID: 'create_post.btn_post',
-        }}
+        title={
+          isCreatingNewPost ? 'post:title_create_post' : 'post:title_edit_post'
+        }
+        buttonText={isCreatingNewPost ? 'common:btn_publish' : 'post:save'}
+        buttonProps={buttonPostProps}
         onPressBack={onPressBack}
-        onPressButton={onPressPost}
+        onPressButton={isCreatingNewPost ? onPublishPost : onSavePost}
         style={styles.headerStyle}
       />
       <View style={styles.flex1}>
         <View>
-          {!!important?.active && <CreatePostBannerImportant expiresTime={important.expiresTime} />}
+          {!!important?.active && (
+            <CreateBannerImportant type="post" expiresTime={important.expiresTime} />
+          )}
           <CreatePostChosenAudiences disabled={loading} />
           <Divider color={theme.colors.neutral5} />
         </View>
         <CreatePostContent
           groupIds={groupIds}
-          inputRef={refTextInput}
           useCreatePostData={useCreatePostData}
         />
         <CreatePostFooter
@@ -235,7 +247,9 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
           fileDisabled={fileDisabled}
           onPressSetting={onPressSettings}
           isSetting={count > 0}
-          settingDisabled={shouldDisablePostSettings}
+          settingDisabled={settingDisabled}
+          onPressTags={onPressTags}
+          onPressSeries={onPressSeries}
         />
       </View>
     </ScreenWrapper>

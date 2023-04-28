@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import {
-  FlatList, View, StyleSheet, ActivityIndicator, RefreshControl,
+  View, StyleSheet, ActivityIndicator, RefreshControl,
 } from 'react-native';
+import Animated from 'react-native-reanimated';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { spacing } from '~/theme';
 import Image from '~/beinComponents/Image';
@@ -10,11 +12,16 @@ import images from '~/resources/images';
 import Text from '~/baseComponents/Text';
 import useScheduleArticlesStore from './store';
 import { ArticleScheduleItem } from '~/components/articles';
+import { homeHeaderTabHeight } from '~/theme/dimension';
 
-const ScheduledArticles = () => {
+interface ScheduledArticlesProps {
+  onScroll: (e: any) => void;
+}
+
+const ScheduledArticles: React.FC<ScheduledArticlesProps> = ({ onScroll }) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = createStyle(theme);
+  const styles = createStyle();
 
   const { scheduleArticles, actions } = useScheduleArticlesStore();
   const {
@@ -25,9 +32,7 @@ const ScheduledArticles = () => {
   } = scheduleArticles || {};
 
   useEffect(() => {
-    if (data?.length === 0) {
-      getData(true);
-    }
+    getData(true);
   }, []);
 
   const getData = (isRefresh?: boolean) => {
@@ -51,7 +56,7 @@ const ScheduledArticles = () => {
       <View style={styles.boxEmpty} testID="schedule_article.empty_view">
         <Image
           resizeMode="contain"
-          source={images.img_empty_search_post}
+          source={images.img_empty_box}
           style={styles.imgEmpty}
         />
         <Text.BodyS color={colors.neutral40} useI18n>
@@ -65,7 +70,11 @@ const ScheduledArticles = () => {
     <ArticleScheduleItem data={item} showAvatar={false} />
   );
 
-  const renderHeaderComponent = () => <ViewSpacing height={spacing.margin.large} />;
+  const renderHeaderComponent = () => (
+    <View style={styles.header}>
+      <ViewSpacing height={spacing.margin.large} />
+    </View>
+  );
 
   const renderFooterComponent = () => {
     if (!loading) return <ViewSpacing height={spacing.padding.large} />;
@@ -82,7 +91,7 @@ const ScheduledArticles = () => {
   const renderSeparatorComponent = () => <ViewSpacing height={spacing.margin.large} />;
 
   return (
-    <FlatList
+    <Animated.FlatList
       testID="schedule_article.content"
       data={data}
       renderItem={renderItem}
@@ -93,37 +102,38 @@ const ScheduledArticles = () => {
       ItemSeparatorComponent={renderSeparatorComponent}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.2}
+      onScroll={onScroll}
       refreshControl={(
         <RefreshControl
           refreshing={refreshing}
           onRefresh={onRefresh}
           tintColor={theme.colors.gray40}
+          progressViewOffset={homeHeaderTabHeight}
         />
             )}
     />
   );
 };
 
-const createStyle = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-
-  return StyleSheet.create({
-    boxFooter: {
-      height: 100,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    boxEmpty: {
-      backgroundColor: colors.white,
-      alignItems: 'center',
-      paddingTop: 32,
-      paddingBottom: 48,
-    },
-    imgEmpty: {
-      width: 100,
-      aspectRatio: 1,
-    },
-  });
-};
+const createStyle = () => StyleSheet.create({
+  boxFooter: {
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxEmpty: {
+    alignItems: 'center',
+    paddingTop: 32,
+    paddingBottom: 48,
+  },
+  imgEmpty: {
+    width: 100,
+    aspectRatio: 1,
+    marginBottom: spacing.margin.base,
+  },
+  header: {
+    paddingTop: homeHeaderTabHeight,
+  },
+});
 
 export default ScheduledArticles;

@@ -18,7 +18,6 @@ import {
   ViewStyle,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useDispatch } from 'react-redux';
 import PasteInput from 'react-native-paste-image-input';
 import Button from '~/beinComponents/Button';
 import Icon from '~/baseComponents/Icon';
@@ -33,16 +32,15 @@ import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import { useBaseHook } from '~/hooks';
 import { IFilePicked } from '~/interfaces/common';
 import { IActivityDataImage } from '~/interfaces/IPost';
-import modalActions from '~/storeRedux/modal/actions';
 import dimension from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
-import { checkPermission, permissionTypes } from '~/utils/permission';
-import { formatTextWithEmoji } from '~/utils/emojiUtils';
+import { checkPermission, PermissionTypes } from '~/utils/permission';
+import { formatTextWithEmoji } from '~/utils/emojis';
 import { IGiphy } from '~/interfaces/IGiphy';
 import useUploaderStore from '~/store/uploader';
 import { getErrorMessageFromResponse } from '~/utils/link';
-import { getImagePastedFromClipboard } from '~/utils/common';
+import { getImagePastedFromClipboard } from '~/utils/images';
 
 export interface ICommentInputSendParam {
   content: string;
@@ -142,7 +140,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const _loading = loading || uploading;
 
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -192,7 +189,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   }, [selectedEmoji]);
 
   const _onPressSelectImage = () => {
-    checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
+    checkPermission(PermissionTypes.photo, (canOpenPicker) => {
       if (canOpenPicker) {
         ImagePicker.openPickerSingle({ mediaType: 'photo' }).then((file) => {
           if (!file) return;
@@ -207,16 +204,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
         });
       }
     });
-  };
-
-  const _onPressFile = async () => {
-    // const file: any = await DocumentPicker.openPickerSingle();
-    // onPressFile?.(file);
-    dispatch(modalActions.showAlertNewFeature());
-  };
-
-  const onPressCamera = () => {
-    dispatch(modalActions.showAlertNewFeature());
   };
 
   const onPressEmoji = () => {
@@ -236,9 +223,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
   }, []);
 
   const onPressIcon = () => {
-    // dispatch(modalActions.setShowReactionBottomSheet(
-    //   { visible: true, callback: onEmojiSelected },
-    // ));
     giphyViewRef?.current?.hide?.();
     emojiViewRef?.current?.show?.('emoji');
   };
@@ -471,9 +455,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
             isHideBtnSend={isHideBtnSend}
             isDisplayNone={text.trim().length !== 0}
             onPressIcon={onPressIcon}
-            onPressFile={_onPressFile}
             onPressImage={_onPressSelectImage}
-            onPressCamera={onPressCamera}
             onPressEmoji={onPressEmoji}
             onPressSend={_onPressSend}
           />
@@ -486,9 +468,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           isDisplayNone={text.trim().length === 0}
           disabledBtnSend={disabledBtnSend}
           onPressIcon={onPressIcon}
-          onPressFile={_onPressFile}
           onPressImage={_onPressSelectImage}
-          onPressCamera={onPressCamera}
           onPressEmoji={onPressEmoji}
           onPressSend={_onPressSend}
         />

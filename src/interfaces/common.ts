@@ -7,6 +7,7 @@ import { IconType } from '~/resources/icons';
 import { BaseToastProps } from '~/baseComponents/Toast/BaseToast';
 import { BaseBottomSheetProps } from '~/baseComponents/BottomSheet/BaseBottomSheet';
 import { HeaderProps } from '~/beinComponents/Header';
+import { ReactionType } from '~/constants/reactions';
 
 export interface IObject<T> {
   [key: string | number]: T;
@@ -85,12 +86,10 @@ export interface IPayloadShowModal {
   closeOutSide?: boolean;
 }
 
-export interface ILinkPreview {
-  url: string;
-  thumbnail?: string;
+export interface IReactionBottomSheet {
+  visible?: boolean;
   title?: string;
-  description?: string;
-  domain?: string;
+  callback?: (reactionId: ReactionType) => void;
 }
 
 export interface ICountryCodeList {
@@ -104,12 +103,6 @@ export interface ILocation {
   type: string;
   name_with_type: string;
   country: string;
-}
-
-export interface ISearchReq {
-  limit: number,
-  offset: number,
-  key?: string,
 }
 
 export enum SortOder {

@@ -39,6 +39,10 @@ const ListTags: FC<ListTagsProps> = ({ communityId }) => {
   const communityTags = useTagsControllerStore(
     (state) => state.communityTags[communityId],
   );
+  const canCUDTag = useTagsControllerStore(useCallback(
+    (state) => state.communityCUDTagPermissions[communityId],
+    [communityId],
+  ));
 
   const {
     ids, refreshing, loading, hasNextPage,
@@ -55,6 +59,7 @@ const ListTags: FC<ListTagsProps> = ({ communityId }) => {
       isMember={isMember}
       item={tags[item]}
       communityId={communityId}
+      canCUDTag={canCUDTag}
     />
   );
 

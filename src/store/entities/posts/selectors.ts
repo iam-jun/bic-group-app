@@ -1,4 +1,4 @@
-import IPostsState from './Interface';
+import { IPostsState } from './index';
 
 const postsSelector = {
   getPost: (id: string, defaultValue?: any) => (state: IPostsState) => state?.posts?.[id] || defaultValue,
@@ -20,7 +20,6 @@ const postsSelector = {
   getMarkedRead: (id: string) => (state: IPostsState) => state?.posts?.[id]?.markedReadPost,
   getMarkedReadSuccess: (id: string) => (state: IPostsState) => state?.posts?.[id]?.markedReadSuccess,
   getTotalUsersSeen: (id: string) => (state: IPostsState) => state?.posts?.[id]?.totalUsersSeen,
-  getLinkPreview: (id: string) => (state: IPostsState) => state?.posts?.[id]?.linkPreview,
   getReported: (id: string) => (state: IPostsState) => state?.posts?.[id]?.reported,
   getType: (id: string) => (state: IPostsState) => state?.posts?.[id]?.type,
   getReportDetails: (id: string) => (state: IPostsState) => state?.posts?.[id]?.reportDetails,

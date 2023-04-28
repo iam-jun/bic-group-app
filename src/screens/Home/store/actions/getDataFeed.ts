@@ -1,8 +1,11 @@
 import streamApi from '~/api/StreamApi';
+import { AttributeFeed } from '~/interfaces/IFeed';
 import { IParamGetFeed } from '~/interfaces/IHome';
 import { IPayloadAddToAllPost } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
-import { getParamsSavedAttributeFeed, getParamsContentFeed, getParamsImportantAttributeFeed } from '../helper';
+import {
+  getParamsContentFeed, isFilterWithThisAttributeFeed,
+} from '../helper';
 import IHomeState from '../Interface';
 
 const getDataFeed = (set, get) => async (isRefresh?: boolean) => {
@@ -19,8 +22,9 @@ const getDataFeed = (set, get) => async (isRefresh?: boolean) => {
   const offset = isRefresh ? 0 : currentList.length || 0;
   const requestParams: IParamGetFeed = {
     offset,
-    isImportant: getParamsImportantAttributeFeed(attributeFilter),
-    isSaved: getParamsSavedAttributeFeed(attributeFilter),
+    isImportant: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.IMPORTANT),
+    isSaved: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.SAVED),
+    isMine: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.MINE),
     type: getParamsContentFeed(contentFilter),
   };
 

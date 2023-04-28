@@ -1,32 +1,39 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import isEmpty from 'lodash/isEmpty';
 
 import Text from '~/baseComponents/Text';
-import TextInputController from '~/beinComponents/inputs/TextInputController';
 import { Button } from '~/baseComponents';
 import * as validation from '~/constants/commonRegex';
 import { useBaseHook } from '~/hooks';
 import { IObject } from '~/interfaces/common';
 import spacing from '~/theme/spacing';
 import useForgotPasswordStore, { IForgotPasswordState } from '../../store';
+import RequestVerifyEmailModal from '~/screens/auth/VerifyEmail/RequestVerifyEmailModal';
+import { authErrorMessage, authErrors } from '~/constants/authConstants';
+import showToastError from '~/store/helper/showToastError';
+import useModalStore from '~/store/modal';
+import { FieldNameType } from '~/interfaces/IAuth';
+import FormInput from '~/screens/auth/components/FormInput';
 
 interface Props {
   useFormData: IObject<any>;
 }
 
+const {
+  EMAIL, CODE, NEW_PASSWORD, CONFIRM_PASSWORD,
+} = FieldNameType;
+
 const EmailInputView: React.FC<Props> = ({ useFormData }) => {
   const theme: ExtendedTheme = useTheme();
   const { t } = useBaseHook();
   const styles = themeStyles(theme);
-  const { colors } = theme;
 
   const actions = useForgotPasswordStore((state: IForgotPasswordState) => state.actions);
   const errorRequest = useForgotPasswordStore((state: IForgotPasswordState) => state.errorRequest);
   const loadingRequest = useForgotPasswordStore((state: IForgotPasswordState) => state.loadingRequest);
-
-  const refTextInput = useRef<any>();
+  const modalActions = useModalStore((state) => state.actions);
 
   const {
     getValues,
@@ -39,27 +46,21 @@ const EmailInputView: React.FC<Props> = ({ useFormData }) => {
 
   useEffect(
     () => {
-      refTextInput.current?.focus();
-    }, [],
-  );
-
-  useEffect(
-    () => {
       if (errorRequest) {
         setError(
-          'email', {
+          EMAIL, {
             type: 'manual',
             message: errorRequest,
           },
         );
       } else {
-        clearErrors('email');
+        clearErrors(EMAIL);
       }
     }, [errorRequest],
   );
 
   const checkDisableRequest = () => {
-    const email = getValues('email');
+    const email = getValues(EMAIL);
     return (
       loadingRequest
       || !email
@@ -69,25 +70,52 @@ const EmailInputView: React.FC<Props> = ({ useFormData }) => {
   };
   const disableRequest = checkDisableRequest();
 
+  const handleError = (error: any) => {
+    if (error?.code === authErrors.USER_NOT_FOUND_EXCEPTION) {
+      const email = getValues(EMAIL);
+      modalActions.showModal({
+        isOpen: true,
+        titleFullScreen: 'groups:group_content:btn_your_groups',
+        ContentComponent: <RequestVerifyEmailModal email={email} isFromSignIn={false} />,
+      });
+    } else if (
+      error?.code === authErrors.NOT_AUTHORIZED_EXCEPTION
+      && error?.message === authErrorMessage.USER_IS_DISABLED
+    ) {
+      setError(EMAIL, {
+        type: 'validate',
+        message: t('auth:text_err_user_deactivated'),
+      });
+    } else {
+      if (error?.code === authErrors.LIMIT_EXCEEDED_EXCEPTION) {
+        showToastError({ meta: { message: t('auth:text_err_limit_exceeded') } });
+      } else {
+        showToastError(error);
+      }
+      actions.setErrorRequest('');
+    }
+  };
+
   const onRequestForgotPassword = () => {
-    const email = getValues('email');
+    const email = getValues(EMAIL);
     if (email && !disableRequest) {
       setValue(
-        'code', '', { shouldValidate: false },
+        CODE, '', { shouldValidate: false },
       );
       setValue(
-        'newPassword', '', { shouldValidate: false },
+        NEW_PASSWORD, '', { shouldValidate: false },
       );
       setValue(
-        'confirmPassword', '', { shouldValidate: false },
+        CONFIRM_PASSWORD, '', { shouldValidate: false },
       );
-      clearErrors(['code', 'newPassword', 'confirmPassword']);
-      actions.requestResetPassword(email);
+      clearErrors([CODE, NEW_PASSWORD, CONFIRM_PASSWORD]);
+
+      actions.requestResetPassword(email, handleError);
     }
   };
 
   const validateEmail = async () => {
-    await trigger('email');
+    await trigger(EMAIL);
   };
 
   return (
@@ -96,21 +124,17 @@ const EmailInputView: React.FC<Props> = ({ useFormData }) => {
       <Text.BodyS useI18n style={styles.desc}>
         auth:text_forgot_password_input_desc
       </Text.BodyS>
-      <TextInputController
+      <FormInput
         useFormData={useFormData}
-        name="email"
+        fieldName={EMAIL}
         testID="forgot_password.input_email"
         placeholder={t('auth:input_label_email')}
-        placeholderTextColor={colors.neutral20}
+        isAutoFocus
         keyboardType="email-address"
         autoCapitalize="none"
-        autoFocus
-        editable={!loadingRequest}
-        style={styles.inputEmailContainer}
-        onSubmitEditing={onRequestForgotPassword}
+        isEditable={!loadingRequest}
+        onSubmit={onRequestForgotPassword}
         validateValue={validateEmail}
-        textColor={colors.neutral60}
-        ref={refTextInput}
       />
       <Button.Primary
         useI18n
@@ -140,9 +164,6 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     btnSendRecoverCode: {
       marginTop: spacing.margin.big,
-    },
-    inputEmailContainer: {
-      marginVertical: 0,
     },
   });
 };

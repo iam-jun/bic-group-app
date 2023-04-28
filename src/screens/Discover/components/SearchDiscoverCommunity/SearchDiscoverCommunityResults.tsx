@@ -17,6 +17,8 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import useDiscoverCommunitiesSearchStore from './store';
 import useCommunityController from '~/screens/communities/store';
 import useCommunitiesStore from '~/store/entities/communities';
+import useTermStore from '~/components/TermsModal/store';
+import useMemberQuestionsStore, { MembershipQuestionsInfo } from '~/components/MemberQuestionsModal/store';
 
 interface SearchDiscoverCommunityResultsProps {
   onLoadMore?: () => void;
@@ -37,7 +39,7 @@ const SearchDiscoverCommunityItemContainer: FC<
   const item = useCommunitiesStore((state) => state.data[id]);
   return (
     <SearchDiscoverCommunityItem
-      testID={`global_search_results.item_${id}`}
+      testID="global_search_results.item"
       item={item}
       onView={onView}
       onJoin={onJoin}
@@ -55,6 +57,8 @@ const SearchDiscoverCommunityResults = ({
   const { hasNextPage, loading, ids } = useDiscoverCommunitiesSearchStore();
 
   const communityController = useCommunityController((state) => state.actions);
+  const membershipQuestionActions = useMemberQuestionsStore((state) => state.actions);
+  const termsActions = useTermStore((state) => state.actions);
 
   const onView = (item: any) => {
     rootNavigation.navigate(groupStack.communityDetail, {
@@ -63,8 +67,37 @@ const SearchDiscoverCommunityResults = ({
   };
 
   const onJoin = (item: any) => {
-    const { id, name } = item;
-    communityController.joinCommunity(id, name);
+    const {
+      id, name, settings, groupId,
+    } = item;
+    if (settings?.isActiveMembershipQuestions) {
+      const payload: MembershipQuestionsInfo = {
+        groupId: id,
+        rootGroupId: groupId,
+        name,
+        type: 'community',
+        isActive: true,
+        isActiveGroupTerms: settings?.isActiveGroupTerms,
+      };
+      membershipQuestionActions.setMembershipQuestionsInfo(payload);
+      return;
+    }
+
+    if (settings?.isActiveGroupTerms) {
+      const payload = {
+        groupId: id,
+        rootGroupId: groupId,
+        name,
+        type: 'community',
+        isActive: true,
+      } as any;
+      termsActions.setTermInfo(payload);
+      return;
+    }
+    communityController.joinCommunity({
+      communityId: id,
+      communityName: name,
+    });
   };
 
   const onCancel = (item: any) => {
@@ -117,7 +150,7 @@ const SearchDiscoverCommunityResults = ({
 
   return (
     <FlatList
-      testID="flatlist"
+      testID="community_search_results.list"
       data={ids}
       keyboardShouldPersistTaps="handled"
       renderItem={renderItem}

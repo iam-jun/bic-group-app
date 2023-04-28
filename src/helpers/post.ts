@@ -6,8 +6,10 @@ import {
 import { dimension } from '~/theme';
 import appConfig from '~/configs/appConfig';
 import { blacklistReactions } from '~/constants/reactions';
+import { PosterInfo } from '~/baseComponents/VideoPlayer';
 
 export const defaultList = [{ title: '', type: 'empty', data: [] }];
+const ASPECT_RATIO = 0.7;
 
 export const sortComments = (comments: ICommentData[]) => {
   let newComments: any[] = comments || [];
@@ -46,20 +48,49 @@ export const getMentionsFromContent = (
   return mentions;
 };
 
-export const getThumbnailImageLink = (thumbnails: any[]): string => {
+const getVideoWidthHeight = (width: number, height: number) => {
+  const maxVideoHeight = dimension.deviceHeight * ASPECT_RATIO;
+  const maxVideoWidth = dimension.deviceWidth;
+
+  const imageRatio = (width || 1) / (height || 1);
+
+  if (imageRatio === 1) {
+    const videoWidth = Math.min(width, maxVideoWidth);
+    return { videoWidth, videoHeight: videoWidth };
+  }
+
+  if (imageRatio > 1) {
+    const videoWidth = Math.min(width, maxVideoWidth);
+    return { videoWidth, videoHeight: videoWidth / imageRatio };
+  }
+
+  const videoHeight = Math.min(
+    height, maxVideoHeight,
+  );
+  return { videoWidth: videoHeight * imageRatio, videoHeight };
+};
+
+export const getThumbnailImageLink = (thumbnails: any[]): PosterInfo => {
   const deviceWidthPixel = PixelRatio.get() * dimension.deviceWidth;
+
   if (thumbnails?.length > 0) {
     const newThumbnails = orderBy(
       thumbnails, ['width'], ['asc'],
     );
     for (let index = 0; index < thumbnails.length; index++) {
       if (newThumbnails[index]?.width >= deviceWidthPixel) {
-        return newThumbnails[index]?.url;
+        const { width = 0, height = 0 } = newThumbnails[index];
+        const vWidthHeight = getVideoWidthHeight(width, height);
+
+        return { ...newThumbnails[index], ...vWidthHeight };
       }
     }
-    return newThumbnails[thumbnails.length - 1]?.url;
+
+    const { width = 0, height = 0 } = newThumbnails[thumbnails.length - 1];
+    const vWidthHeight = getVideoWidthHeight(width, height);
+    return { ...newThumbnails[thumbnails.length - 1], ...vWidthHeight };
   }
-  return '';
+  return { url: '', videoHeight: 0, videoWidth: 0 };
 };
 
 export const isPostExpired = (expireTime: string) => new Date().getTime() >= new Date(expireTime).getTime();
@@ -154,7 +185,7 @@ export const isEmptyPost = (post: IPost) => {
     && isEmpty(files);
 };
 
-export const getPostMenus = (data: any[], isActor: boolean, reactionsCount: any) => {
+export const getPostMenus = (data: any[], isActor?: boolean, reactionsCount?: any) => {
   const result = [];
   data.forEach((item: any) => {
     const requireNothing = !item.requireIsActor && !item?.requireReactionCounts;
@@ -181,4 +212,14 @@ export const getRootGroupids = (audience: IPostAudience) => {
     }
   });
   return result;
+};
+
+export const getRootGroupIdFromGroupItem = (group: any) => {
+  const {
+    id, rootGroupId, level, parents,
+  } = group;
+
+  if (rootGroupId) return rootGroupId;
+
+  return level === 0 ? id : parents?.[0] || '';
 };

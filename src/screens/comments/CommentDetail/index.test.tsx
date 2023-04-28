@@ -1,78 +1,49 @@
+import { cleanup } from '@testing-library/react-hooks';
 import React from 'react';
+import { cloneDeep } from 'lodash';
+import { fireEvent, renderWithRedux } from '~/test/testUtils';
+import CommentDetail from './index';
+import * as helper from './helper';
 
-import i18next from 'i18next';
-import {
-  configureStore,
-  createTestStore,
-  fireEvent,
-  renderWithRedux,
-} from '~/test/testUtils';
-import initialState from '~/storeRedux/initialState';
-import CommentDetail from '.';
-import { baseCommentData, POST_DETAIL_3 } from '~/test/mock_data/post';
-import MockedNavigator from '~/test/MockedNavigator';
-import * as navigationHook from '~/hooks/navigation';
-import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import ApiErrorCode from '~/constants/apiErrorCode';
+afterEach(cleanup);
 
-describe('Comment Detail screen', () => {
-  const mockStore = configureStore([]);
-  let storeData: any;
-
+describe('CommentDetail component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    storeData = { ...initialState };
-    storeData.post.commentErrorCode = '';
-    storeData.auth.user = {} as any;
-    storeData.post.allPosts = {} as any;
-    storeData.post.loadingGetPostDetail = false;
-    storeData.post.parentCommentIsDeleted = false;
-    storeData.post.allCommentsByParentIds = {};
-    storeData.post.allPosts = { [POST_DETAIL_3.id]: POST_DETAIL_3 };
   });
 
   const props = {
     route: {
       params: {
-        commentData: baseCommentData,
-        postId: 302,
-        replyItem: undefined,
-        commentParent: undefined,
+        commentId: 'test',
+        postId: 'test',
+        isReported: false,
       },
     },
   };
 
-  it('should render correctly title', () => {
-    const store = createTestStore({ ...initialState });
-    const wrapper = renderWithRedux(
-      <MockedNavigator component={() => <CommentDetail {...props} />} />,
-      store,
-    );
-    const headerTitle = wrapper.getByTestId('header.text');
-    expect(headerTitle).toBeDefined();
+  it('should render correctly (isReported = true)', () => {
+    const propsClone = cloneDeep(props);
+    propsClone.route.params.isReported = true;
 
-    expect(headerTitle.props?.children).toBe(i18next.t('post:label_comment'));
+    const rendered = renderWithRedux(<CommentDetail {...propsClone} />);
+
+    const { getByTestId } = rendered;
+
+    const containerComponent = getByTestId('comment_detail');
+    expect(containerComponent).toBeDefined();
   });
 
-  it('should go back to News Feed when click button in the screen the user does not have permission', () => {
-    const replace = jest.fn();
-    const rootNavigation = { replace };
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
+  it('should render correctly (isReported = false)', async () => {
+    const spyReplacePostDetail = jest.spyOn(helper, 'replacePostDetail');
 
-    storeData.post.commentErrorCode = ApiErrorCode.Post.POST_PRIVACY;
+    const rendered = renderWithRedux(<CommentDetail {...props} />);
 
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<CommentDetail {...props} />, store);
-    const buttonComponent = wrapper.getByTestId(
-      'comment_detail.back_to_news_feed',
-    );
+    const { getByTestId } = rendered;
 
-    expect(buttonComponent).toBeDefined();
-    fireEvent.press(buttonComponent);
-
-    // [FIXME]
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(replace).toBeCalledWith(homeStack.newsfeed);
+    const text = getByTestId('comment_detail.text_header_title');
+    expect(text).toBeDefined();
+    fireEvent.press(text);
+    expect(spyReplacePostDetail).toBeCalled();
   });
 });

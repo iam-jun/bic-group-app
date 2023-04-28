@@ -42,7 +42,7 @@ const Menu = (): React.ReactElement => {
   };
 
   return (
-    <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
+    <ScreenWrapper testID="MenuScreen" style={styles.container} isFullView>
       <MenuHeader />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -52,10 +52,14 @@ const Menu = (): React.ReactElement => {
             onRefresh={onRefresh}
             tintColor={colors.gray40}
           />
-)}
+        )}
       >
         <MenuDiscoverCommunity />
-        <Button style={styles.buttonDiscover} onPress={() => rootNavigation.navigate(menuStack.discover)}>
+        <Button
+          testID="menu_screen.button_discover"
+          style={styles.buttonDiscover}
+          onPress={() => rootNavigation.navigate(menuStack.discover)}
+        >
           <Icon icon="CompassSolid" tintColor={colors.neutral20} />
           <Text.BodyMMedium style={styles.textDiscover} useI18n>menu:title_discover</Text.BodyMMedium>
         </Button>

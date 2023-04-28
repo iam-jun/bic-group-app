@@ -16,8 +16,7 @@ import Animated, {
 import { Portal } from 'react-native-portalize';
 import EmojiPicker from '~/baseComponents/EmojiPicker';
 import EmojiSectionIcons from '~/baseComponents/EmojiPicker/components/EmojiSectionIcons';
-import useEmojiPickerStore from '~/baseComponents/EmojiPicker/store';
-import IEmojiPickerState from '~/baseComponents/EmojiPicker/store/Interface';
+import useEmojiPickerStore, { IEmojiPickerState } from '~/baseComponents/EmojiPicker/store';
 import { SearchInput } from '~/baseComponents/Input';
 import { AppConfig } from '~/configs';
 import { useBaseHook } from '~/hooks';
@@ -169,7 +168,7 @@ const _StickerView = ({
     content = <GiphyView searchQuery={searchQuery} onSelected={onGiphyPress} />;
   } else if (type === 'emoji') {
     content = (
-      <View style={styles.emojiView}>
+      <View testID="sticker_view.emoij" style={styles.emojiView}>
         <EmojiPicker
           emojiPickerRef={emojiPickerRef}
           onEmojiPress={onEmojiPress}
@@ -235,12 +234,6 @@ const createStyle = (theme: ExtendedTheme) => {
     header: {
       paddingVertical: spacing.margin.base,
       marginHorizontal: spacing.margin.base,
-    },
-    gridView: {
-      height: '100%',
-    },
-    loading: {
-      marginTop: spacing.margin.base,
     },
   });
 };

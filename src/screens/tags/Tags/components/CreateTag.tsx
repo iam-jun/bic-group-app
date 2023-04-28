@@ -43,7 +43,7 @@ const CreateTag: FC<CreateTagProps> = ({ communityId }) => {
   const createTag = () => {
     const newTag: CreateTagType = {
       groupId,
-      name: tag.trim().toLowerCase(),
+      name: tag.trim().toUpperCase(),
     };
     actions.createTag(communityId, newTag);
     setTag('');
@@ -74,7 +74,7 @@ const CreateTag: FC<CreateTagProps> = ({ communityId }) => {
         placeholder={t('tags:input_tag')}
         onChangeText={onChangeText}
         maxLength={32}
-        autoCapitalize="none"
+        autoCapitalize="characters"
         autoCorrect={false}
         autoComplete="off"
       />

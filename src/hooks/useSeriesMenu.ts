@@ -1,39 +1,54 @@
 import i18next from 'i18next';
 import Clipboard from '@react-native-clipboard/clipboard';
-
-import { useDispatch } from 'react-redux';
 import { Keyboard } from 'react-native';
-import modalActions from '~/storeRedux/modal/actions';
+
 import { IPost } from '~/interfaces/IPost';
 import { useRootNavigation } from './navigation';
 import { BottomListProps } from '~/components/BottomList';
 import useCommonController from '~/screens/store';
 import { getPostMenus } from '~/helpers/post';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
-import { getLink, LINK_SERIRES } from '~/utils/link';
+import { generateLink, LinkGeneratorTypes } from '~/utils/link';
 import { Button } from '~/baseComponents';
 import useModalStore from '~/store/modal';
+import { onPressReportThisMember } from '~/helpers/blocking';
+import useMyPermissionsStore from '~/store/permissions';
+import { PermissionKey } from '~/constants/permissionScheme';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 
 const useSeriesMenu = (
   data: IPost,
   isActor: boolean,
   isFromDetail: boolean,
-  handleConfirmDelete: ()=> void,
+  handleConfirmDelete: () => void,
 ) => {
   const { rootNavigation } = useRootNavigation();
-  const dispatch = useDispatch();
 
   const commonActions = useCommonController((state) => state.actions);
-  const { showToast, showAlert } = useModalStore((state) => state.actions);
+  const modalActions = useModalStore((state) => state.actions);
+
+  const { getAudienceListWithNoPermission } = useMyPermissionsStore(
+    (state) => state.actions,
+  );
 
   if (!data) return null;
 
   const {
-    id: seriesId, reactionsCount, isSaved, type,
+    id: seriesId, reactionsCount, isSaved, type, actor, audience,
   } = data;
 
+  const groupAudience = audience?.groups || [];
+
+  const audienceListCannotPinContent = getAudienceListWithNoPermission(
+    groupAudience,
+    [
+      PermissionKey.FULL_PERMISSION,
+      PermissionKey.PIN_CONTENT,
+    ],
+  );
+
   const onPressEdit = () => {
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     rootNavigation?.navigate?.(
       seriesStack.createSeries, {
         seriesId,
@@ -43,16 +58,16 @@ const useSeriesMenu = (
   };
 
   const onPressCopyLink = () => {
-    dispatch(modalActions.hideBottomList());
-    Clipboard.setString(getLink(
-      LINK_SERIRES, seriesId,
+    modalActions.hideBottomList();
+    Clipboard.setString(generateLink(
+      LinkGeneratorTypes.SERIRES, seriesId,
     ));
-    showToast({ content: 'common:text_link_copied_to_clipboard' });
+    modalActions.showToast({ content: 'common:text_link_copied_to_clipboard' });
   };
 
   const onPressDelete = () => {
-    dispatch(modalActions.hideBottomList());
-    showAlert({
+    modalActions.hideBottomList();
+    modalActions.showAlert({
       title: i18next.t('series:menu_text_delete_series'),
       content: i18next.t('series:content_delete_series'),
       cancelBtn: true,
@@ -64,12 +79,21 @@ const useSeriesMenu = (
   };
 
   const onPressSave = () => {
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     if (isSaved) {
       commonActions.unsavePost(seriesId, type);
     } else {
       commonActions.savePost(seriesId, type);
     }
+  };
+
+  const _onPressReportThisMember = () => {
+    onPressReportThisMember({ modalActions, actor });
+  };
+
+  const onPressPin = () => {
+    modalActions.hideBottomList();
+    rootNavigation?.navigate?.(homeStack.pinContent, { postId: seriesId });
   };
 
   const defaultData = [
@@ -93,17 +117,38 @@ const useSeriesMenu = (
       id: 3,
       testID: 'series_menu.save',
       leftIcon: isSaved ? 'BookmarkSlash' : 'Bookmark',
-      title: i18next.t(`series:menu_text_${isSaved ? 'unsave' : 'save'}_series`),
+      title: i18next.t(
+        `series:menu_text_${isSaved ? 'unsave' : 'save'}_series`,
+      ),
       requireIsActor: false,
       onPress: onPressSave,
     },
     {
       id: 4,
+      testID: 'series_menu.pin',
+      leftIcon: 'Thumbtack',
+      title: i18next.t('common:pin_unpin'),
+      requireIsActor: false,
+      shouldBeHidden:
+        audienceListCannotPinContent.length === groupAudience.length,
+      onPress: onPressPin,
+    },
+    {
+      id: 5,
       testID: 'series_menu.delete',
       leftIcon: 'TrashCan',
       title: i18next.t('series:menu_text_delete_series'),
       requireIsActor: true,
       onPress: onPressDelete,
+    },
+    {
+      id: 5,
+      testID: 'series_menu.report_this_member',
+      leftIcon: 'UserXmark',
+      title: i18next.t('groups:member_menu:label_report_member'),
+      requireIsActor: false,
+      notShowForActor: isActor,
+      onPress: _onPressReportThisMember,
     },
   ];
 
@@ -111,9 +156,7 @@ const useSeriesMenu = (
 
   const showMenu = () => {
     Keyboard.dismiss();
-    dispatch(
-      modalActions.showBottomList({ isOpen: true, data: menus } as BottomListProps),
-    );
+    modalActions.showBottomList({ data: menus } as BottomListProps);
   };
 
   return {

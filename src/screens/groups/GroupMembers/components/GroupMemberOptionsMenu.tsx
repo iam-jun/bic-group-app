@@ -1,9 +1,6 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
 import { IGroupMembers } from '~/interfaces/IGroup';
-
-import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
 import useMyPermissionsStore from '~/store/permissions';
 import useGroupMemberStore from '../store';
@@ -28,13 +25,12 @@ const GroupMemberOptionsMenu = ({
   selectedMember,
   onOptionsClosed,
 }: GroupMemberOptionsMenuProps) => {
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
 
   const groupDetail = useGroupsStore(groupsSelector.getGroup(groupId, {}));
   const { group } = groupDetail || {};
   const { communityId } = group || {};
-  const { showAlert } = useModalStore((state) => state.actions);
+  const { showAlert, showModal } = useModalStore((state) => state.actions);
 
   const actions = useGroupMemberStore((state) => state.actions);
   const deleteRemoveGroupMember = useGroupMemberStore(
@@ -53,7 +49,7 @@ const GroupMemberOptionsMenu = ({
 
   const onPressSetAdminRole = () => {
     if (!selectedMember?.id) return;
-    actions.assignGroupAdmin(groupId, [selectedMember.id]);
+    actions.assignGroupAdmin(groupId, selectedMember.id);
   };
 
   const onConfirmRemoveAdminRole = () => {
@@ -93,16 +89,17 @@ const GroupMemberOptionsMenu = ({
 
     const dataReportMember = {
       communityId,
+      reportedMember: selectedMember,
     };
 
-    dispatch(modalActions.showModal({
+    showModal({
       isOpen: true,
       ContentComponent: <ReportContent
         targetId={selectedMember?.id}
         targetType={TargetType.MEMBER}
         dataReportMember={dataReportMember}
       />,
-    }));
+    });
   };
 
   return (

@@ -1,4 +1,5 @@
 import React from 'react';
+import useNetworkStore, { INetworkState } from '~/store/network';
 
 import PillTabButton from './PillTabButton';
 import { renderWithRedux } from '~/test/testUtils';
@@ -38,5 +39,20 @@ describe('PillTabButton', () => {
       </PillTabButton>,
     ).toJSON();
     expect(rendered).toMatchSnapshot();
+  });
+
+  it('should disable button when cant connect to internet', () => {
+    useNetworkStore.setState((state:INetworkState) => {
+      state.isInternetReachable = false;
+      return state;
+    });
+
+    const rendered = renderWithRedux(
+      <PillTabButton testID="hometab" isSelected size="medium">
+        Tab button
+      </PillTabButton>,
+    );
+    const button = rendered.getByTestId('hometab-selected');
+    expect(button.props.accessibilityState.disabled).toBeTruthy();
   });
 });

@@ -1,10 +1,9 @@
 import ImagePicker from '~/beinComponents/ImagePicker';
 import { IUploadType } from '~/configs/resourceConfig';
 import { IFilePicked } from '~/interfaces/common';
-import groupsActions from '~/storeRedux/groups/actions';
 import { groupProfileImageCropRatio } from '~/theme/dimension';
-
-import { checkPermission, permissionTypes } from '~/utils/permission';
+import useGroupsStore from '~/store/entities/groups';
+import { checkPermission, PermissionTypes } from '~/utils/permission';
 
 export const uploadFile = ({
   dispatch,
@@ -18,7 +17,7 @@ export const uploadFile = ({
   destination: 'group' | 'community';
   rootGroupId: string;
 }) => {
-  dispatch(groupsActions.uploadImage({ ...props }));
+  useGroupsStore.getState().actions.uploadImage({ ...props });
 };
 
 // 'icon' for avatar and 'backgroundImgUrl' for cover
@@ -38,7 +37,7 @@ export const _openImagePicker = async ({
   rootGroupId: string;
 }) => {
   await checkPermission(
-    permissionTypes.photo, dispatch, (canOpenPicker:boolean) => {
+    PermissionTypes.photo, (canOpenPicker:boolean) => {
       if (canOpenPicker) {
         ImagePicker.openPickerSingle({
           ...groupProfileImageCropRatio[fieldName],

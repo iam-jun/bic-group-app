@@ -2,7 +2,7 @@ import groupApi from '~/api/GroupApi';
 import { IGetUserProfile } from '~/interfaces/IAuth';
 import { updateUserFromSharedPreferences } from '~/services/sharePreferences';
 import showToastError from '~/store/helper/showToastError';
-import { mapProfile } from '~/storeRedux/menu/helper';
+import { mapProfile } from '~/helpers/common';
 import { ICommonController } from '..';
 
 const getMyProfile = (set, _get) => async ({ userId, params }: IGetUserProfile) => {

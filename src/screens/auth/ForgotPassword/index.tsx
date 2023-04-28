@@ -38,6 +38,7 @@ const ForgotPassword = () => {
   const goBack = () => {
     if (currentPasswordStage === forgotPasswordStages.INPUT_CODE_PW) {
       actions.setScreenCurrentStage(forgotPasswordStages.INPUT_ID);
+      actions.setErrorConfirm();
     } else {
       rootNavigation.goBack();
     }

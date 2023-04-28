@@ -16,19 +16,25 @@ import {
   IPayloadPutEditArticle,
 } from '~/interfaces/IArticle';
 import { withNavigation } from '~/router/helper';
-import { getAudienceIdsFromAudienceObject, isEmptyContent } from '~/screens/articles/CreateArticle/helper';
+import {
+  getAudienceIdsFromAudienceObject,
+  isEmptyContent,
+} from '~/screens/articles/CreateArticle/helper';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import { getMentionsFromContent } from '~/helpers/post';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import { useBaseHook } from '~/hooks';
+import useMyPermissionsStore from '~/store/permissions';
 
 import { rootNavigationRef } from '~/router/refs';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
-import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
+import useDraftArticleStore from '~/screens/YourContent/components/Draft/DraftArticle/store';
 import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import useModalStore from '~/store/modal';
-import { PostStatus } from '~/interfaces/IPost';
+import { PermissionKey } from '~/constants/permissionScheme';
+import { PostStatus, PostType } from '~/interfaces/IPost';
+import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
 
 interface IHandleSaveOptions {
   isShowLoading?: boolean;
@@ -46,18 +52,26 @@ export interface IUseEditArticle {
   handleSaveAudienceError?: (listIdAudiences: string[]) => void;
 }
 
-const useCreateArticle = ({
-  articleId,
-}: IUseEditArticle) => {
+const useCreateArticle = ({ articleId }: IUseEditArticle) => {
   const article = usePostsStore(postsSelector.getPost(articleId, {}));
 
   const actions = useCreateArticleStore((state) => state.actions);
 
+  const validateSeriesTagsActions = useValidateSeriesTags(
+    (state) => state.actions,
+  );
+  const isValidating = useValidateSeriesTags((state) => state.isValidating);
+
   const data = useCreateArticleStore((state) => state.data, useShallow) || {};
   const loading = useCreateArticleStore((state) => state.loading);
-  const isValidating = useCreateArticleStore((state) => state.isValidating);
   const isDraft = useCreateArticleStore((state) => state.isDraft);
-  const publishedAt = useCreateArticleStore((state) => state.schedule.publishedAt);
+  const publishedAt = useCreateArticleStore(
+    (state) => state.schedule.publishedAt,
+  );
+  const chooseAudiences = useCreateArticleStore((state) => state.chooseAudiences);
+  const { getAudienceListWithNoPermission } = useMyPermissionsStore(
+    (state) => state.actions,
+  );
 
   const { showAlert } = useModalStore((state) => state.actions);
 
@@ -75,28 +89,32 @@ const useCreateArticle = ({
     [data.audience],
   );
 
+  const audiencesWithNoPermission = getAudienceListWithNoPermission(
+    chooseAudiences,
+    PermissionKey.EDIT_OWN_CONTENT_SETTING,
+  );
+  const disableArticleSettings = audiencesWithNoPermission.length === chooseAudiences?.length;
+
   const { t } = useBaseHook();
 
   const isValidScheduleTime = () => moment(publishedAt).isSameOrAfter(moment());
 
   // auto save for draft article, so no need to check if content is empty
-  const isDraftContentUpdated
-    = article.content !== data.content;
+  const isDraftContentUpdated = article.content !== data.content;
 
   const isHasChange = () => {
     // self check at src/screens/articles/CreateArticle/screens/CreateArticleContent/index.tsx
     // const isContentUpdated = article.content !== data.content && !isEmptyContent();
     const isSummaryUpdated = article.summary !== data.summary;
     const isTitleUpdated = article.title !== data.title;
-    const isCategoriesUpdated
-      = !isEqual(article.categories, data.categories);
+    const isCategoriesUpdated = !isEqual(article.categories, data.categories);
     // self check at src/screens/articles/CreateArticle/screens/CreateArticleAudience/index.tsx
     // const isAudienceUpdated = !isEqual(getAudienceIdsFromAudienceObject(article.audience), data.audience)
     // && !(isEmpty(data.audience?.groupIds) && isEmpty(data.audience?.userIds));
-    const isCoverMediaUpdated
-      = article.coverMedia?.id !== data.coverMedia?.id;
+    const isCoverMediaUpdated = article.coverMedia?.id !== data.coverMedia?.id;
     const isSeriesUpdated = !isEqual(article?.series, data.series);
     const isTagsUpdated = !isEqual(article?.tags, data.tags);
+    const isSettingsUpdated = !isEqual(article?.setting, data.setting);
 
     return (
       isTitleUpdated
@@ -105,6 +123,7 @@ const useCreateArticle = ({
       || isCoverMediaUpdated
       || isSeriesUpdated
       || isTagsUpdated
+      || isSettingsUpdated
     );
   };
 
@@ -112,7 +131,8 @@ const useCreateArticle = ({
     // self check at src/screens/articles/CreateArticle/screens/CreateArticleContent/index.tsx
     // const isContentUpdated = article.content !== data.content && !isEmptyContent();
     const isSummaryUpdated = article.summary !== data.summary;
-    const isTitleUpdated = article.title !== data.title && !isEmpty(data.title?.trim());
+    const isTitleUpdated
+      = article.title !== data.title && !isEmpty(data.title?.trim());
     const isCategoriesUpdated
       = !isEqual(article.categories, data.categories)
       && !isEmpty(data.categories);
@@ -124,6 +144,7 @@ const useCreateArticle = ({
       && !isEmpty(data.coverMedia);
     const isSeriesUpdated = !isEqual(article?.series, data.series);
     const isTagsUpdated = !isEqual(article?.tags, data.tags);
+    const isSettingsUpdated = !isEqual(article?.setting, data.setting);
 
     return (
       isTitleUpdated
@@ -132,6 +153,7 @@ const useCreateArticle = ({
       || isCoverMediaUpdated
       || isSeriesUpdated
       || isTagsUpdated
+      || isSettingsUpdated
     );
   };
 
@@ -153,6 +175,21 @@ const useCreateArticle = ({
     );
   };
 
+  const initSettings = (settings) => {
+    const notExpired = new Date().getTime() < new Date(settings?.importantExpiredAt).getTime();
+    const isNever = settings?.isImportant && !settings?.importantExpiredAt;
+
+    const initData = {
+      isImportant: (!!notExpired || isNever) && settings?.isImportant,
+      importantExpiredAt: !!notExpired ? settings?.importantExpiredAt : null,
+      canShare: settings?.canShare,
+      canReact: settings?.canReact,
+      canComment: settings?.canComment,
+    };
+
+    return initData;
+  };
+
   const initEditStoreData = () => {
     const {
       id,
@@ -167,9 +204,12 @@ const useCreateArticle = ({
       tags,
       status,
       publishedAt,
+      setting,
     } = article;
+
     const audienceIds: IEditArticleAudience
       = getAudienceIdsFromAudienceObject(audienceObject);
+
     const data: IEditArticleData = {
       id,
       title,
@@ -181,13 +221,20 @@ const useCreateArticle = ({
       coverMedia,
       series,
       tags,
+      setting: initSettings(setting),
     };
     actions.setData(data);
-    const isDraft = [PostStatus.DRAFT, PostStatus.WAITING_SCHEDULE, PostStatus.SCHEDULE_FAILED].includes(status);
+    const isDraft = [
+      PostStatus.DRAFT,
+      PostStatus.WAITING_SCHEDULE,
+      PostStatus.SCHEDULE_FAILED,
+    ].includes(status);
     actions.setIsDraft(isDraft);
     if (isDraft) {
       actions.setPublishedAt(publishedAt || '');
     }
+    // setChooseAudiences for handle article settings
+    actions.setChooseAudiences(audienceObject?.groups);
   };
 
   useEffect(() => {
@@ -233,7 +280,11 @@ const useCreateArticle = ({
     refStopTyping.current = setTimeout(() => {
       clearTimeout(refTypingConstantly.current);
       refTypingConstantly.current = null;
-      handleSave({ isNavigateBack: false, isShowLoading: false, isShowToast: false });
+      handleSave({
+        isNavigateBack: false,
+        isShowLoading: false,
+        isShowToast: false,
+      });
       showToastAutoSave();
     }, 500);
   };
@@ -241,7 +292,11 @@ const useCreateArticle = ({
   const debounceTypingConstantly = () => {
     if (!refTypingConstantly.current) {
       refTypingConstantly.current = setTimeout(() => {
-        handleSave({ isNavigateBack: false, isShowLoading: false, isShowToast: false });
+        handleSave({
+          isNavigateBack: false,
+          isShowLoading: false,
+          isShowToast: false,
+        });
         refTypingConstantly.current = null;
         showToastAutoSave();
       }, 5000);
@@ -256,24 +311,28 @@ const useCreateArticle = ({
     }
   }, [data.content]);
 
-  useEffect(() => () => {
-    actions.setIsDraft(false);
-  }, []);
-
-  const validateSeriesTags = (onSuccess: (response) => void, onError: (error) => void) => {
+  const validateSeriesTags = (
+    onSuccess: (response) => void,
+    onError: (error) => void,
+  ) => {
     const dataUpdate = useCreateArticleStore.getState().data;
     const validateParams: IParamsValidateSeriesTags = {
       groups: dataUpdate?.audience?.groupIds || [],
       series: dataUpdate?.series?.map?.((item) => item.id) || [],
       tags: dataUpdate?.tags?.map?.((item) => item.id) || [],
     };
-    actions.validateSeriesTags(validateParams, onSuccess, onError);
+    validateSeriesTagsActions.validateSeriesTags(validateParams, onSuccess, onError);
   };
 
   const handleSave = (options?: IHandleSaveOptions) => {
     Keyboard.dismiss();
     const {
-      isNavigateBack = true, isShowLoading = true, isShowToast = true, shouldValidateSeriesTags, onSuccess, titleAlert,
+      isNavigateBack = true,
+      isShowLoading = true,
+      isShowToast = true,
+      shouldValidateSeriesTags,
+      onSuccess,
+      titleAlert,
     } = options || {};
     updateMentions();
 
@@ -294,7 +353,12 @@ const useCreateArticle = ({
     if (shouldValidateSeriesTags) {
       const onSuccess = () => actions.putEditArticle(putEditArticleParams);
       const onError = (error) => {
-        actions.handleSaveError(error, () => handleSave(options), titleAlert);
+        validateSeriesTagsActions.handleSeriesTagsError({
+          error,
+          onNext: () => handleSave(options),
+          titleAlert,
+          postType: PostType.ARTICLE,
+        });
       };
       validateSeriesTags(onSuccess, onError);
     } else {
@@ -320,9 +384,15 @@ const useCreateArticle = ({
       draftArticleId: data.id,
       onSuccess: () => {
         goToArticleDetail();
-        useScheduleArticlesStore.getState().actions.getScheduleArticles({ isRefresh: true });
+        useScheduleArticlesStore
+          .getState()
+          .actions.getScheduleArticles({ isRefresh: true });
       },
-      onError: (error) => actions.handleSaveError(error, onHandleSaveErrorDone),
+      onError: (error) => validateSeriesTagsActions.handleSeriesTagsError({
+        error,
+        onNext: onHandleSaveErrorDone,
+        postType: PostType.ARTICLE,
+      }),
     };
     useDraftArticleStore.getState().actions.publishDraftArticle(payload);
   };
@@ -366,6 +436,8 @@ const useCreateArticle = ({
     title: data.title,
     content: data.content,
     groupIds,
+    disableArticleSettings,
+    audiencesWithNoPermission,
     handleTitleChange,
     handleContentChange,
     handleSave,

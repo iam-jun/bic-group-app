@@ -1,7 +1,7 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { t } from 'i18next';
 import React, {
-  FC, useCallback, useEffect, useRef, useState,
+  FC, useEffect, useRef, useState,
 } from 'react';
 import { StyleSheet } from 'react-native';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -18,7 +18,7 @@ import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import { parseSafe } from '~/utils/common';
 import useArticlesStore, { IArticlesState } from '../ArticleDetail/store';
-import { handleMessage } from './helper';
+import { getListImage, handleMessage } from './helper';
 
 const HEADER_HEIGHT = 244;
 
@@ -31,7 +31,8 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
   const ref = useRef<ArticleWebviewRef>();
   const headerRef = useRef<any>();
 
-  const data = usePostsStore(useCallback(postsSelector.getPost(id, {}), [id]));
+  // Not use useCallback because id change before get new content => data is outdated
+  const data = usePostsStore(postsSelector.getPost(id, {}));
   const { actions, errors } = useArticlesStore((state: IArticlesState) => state);
   const isFetchError = errors[id];
 
@@ -63,15 +64,40 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
   const isMounted = useMounted(() => actions.getArticleDetail({ articleId: id, isReported }));
 
   /**
+   * In case navigate to article content detail when it already in stack, we should get data and inject to webview again
+   * E.g: Newsfeed => Article detail => Article content detail => Series detail
+   * => press article item, navigate to article detail
+   */
+  useEffect(() => {
+    if (isMounted && id) {
+      actions.getArticleDetail({ articleId: id, isReported });
+    }
+  }, [id]);
+
+  /**
    * API feed does not return series, so must await
    * getArticleDetail response then init webview again
    */
   useEffect(() => {
-    // reload webview after content change
     if (isMounted) injectJavaScript(initScript);
-  }, [series, content, isMounted]);
+  }, [series, isMounted]);
 
+  /**
+   * Webview init content only one time, if we want update new content, we must set null for web init again
+   */
   useEffect(() => {
+    // reload webview after content change
+    if (isMounted) {
+      const emptyContentScript = {
+        ...initScript,
+        payload: {
+          ...initScript.payload,
+          contentState: null,
+        },
+      };
+      injectJavaScript(emptyContentScript);
+      injectJavaScript(initScript);
+    }
     if (content) {
       getImageUrls();
     }
@@ -92,20 +118,19 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
     let listImage = [];
 
     if (contentParse.length > 0) {
-      const listImageContent = contentParse?.filter((item: any) => item.type === 'img');
+      const listImageContent = getListImage({
+        type: 'content',
+        children: contentParse,
+      });
       listImage = [{ ...coverMedia }].concat(listImageContent);
     } else {
       listImage = [{ ...coverMedia }];
     }
 
-    const result: any = [];
-    listImage.forEach((item) => {
-      result.push({
-        uri: item.url,
-        name: item?.name || `${item?.id}.png`,
-      });
-    });
-
+    const result = listImage.map((item) => ({
+      uri: item.url,
+      name: item?.name || `${item?.id}.png`,
+    }));
     setListImage(result);
   };
 

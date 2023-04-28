@@ -1,9 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
-import * as modalActions from '~/storeRedux/modal/actions';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IconType } from '~/resources/icons';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
@@ -25,7 +23,6 @@ const GroupAdministration = (props: any) => {
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles();
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
   const { group } = groups[currentGroupId] || {};
@@ -39,8 +36,6 @@ const GroupAdministration = (props: any) => {
       PermissionKey.EDIT_PRIVACY,
     ],
   );
-
-  const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
 
   const goToGeneralInfo = () => {
     rootNavigation.navigate(
@@ -74,23 +69,14 @@ const GroupAdministration = (props: any) => {
   );
 
   const renderGroupModerating = () => (
-    <>
-      <Text.H5
-        style={styles.headerTitle}
-        color={theme.colors.neutral80}
-        variant="bodyM"
-        useI18n
-      >
-        settings:title_group_moderating
-      </Text.H5>
-      {renderItem(
-        'FileExclamation',
-        'settings:title_pending_posts',
-        displayNewFeature,
-        23,
-        'group_administration.pending_posts',
-      )}
-    </>
+    <Text.H5
+      style={styles.headerTitle}
+      color={theme.colors.neutral80}
+      variant="bodyM"
+      useI18n
+    >
+      settings:title_group_moderating
+    </Text.H5>
   );
 
   const renderGroupSettings = () => (
@@ -111,20 +97,6 @@ const GroupAdministration = (props: any) => {
           undefined,
           'group_administration.profile_info',
         )}
-      {renderItem(
-        'Copy',
-        'settings:title_post_settings',
-        displayNewFeature,
-        undefined,
-        'group_administration.post_settings',
-      )}
-      {renderItem(
-        'CircleUser',
-        'settings:title_membership_settings',
-        displayNewFeature,
-        undefined,
-        'group_administration.membership_settings',
-      )}
       {renderItem(
         'BallotCheck',
         'settings:title_schedule_content',

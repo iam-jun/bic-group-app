@@ -4,7 +4,7 @@ import { makeHttpRequest, withHttpRequestPromise } from '~/api/apiRequest';
 import {
   IParamDeleteReaction,
   ICommentData,
-  IParamGetDraftPosts,
+  IParamGetDraftContents,
   IParamGetPostAudiences,
   IParamGetPostDetail,
   IParamGetReactionDetail,
@@ -31,7 +31,6 @@ import {
   IParamGetArticleDetail,
   IParamGetArticles,
   IParamGetCategories,
-  IParamGetDraftArticles,
   IParamPutEditArticle,
   IParamsGetArticleScheduleContent,
   IParamsValidateSeriesTags,
@@ -40,7 +39,7 @@ import appConfig from '~/configs/appConfig';
 import { IGetGiphyTrendingParams, IGetSearchGiphyParams } from '~/interfaces/IGiphy';
 import {
   IAddArticleInSeries,
-  IGetSeries, IParamGetSeriesDetail, IPostCreateSeries, IReorderArticles, IRemoveArticleInSeries,
+  IGetSeries, IParamGetSeriesDetail, IPostCreateSeries, IReorderItems, IRemoveItemInSeries,
 } from '~/interfaces/ISeries';
 import { IParamGetReportContent, IParamsReportContent } from '~/interfaces/IReport';
 import { CreateTag, EditTag, IParamGetCommunityTags } from '~/interfaces/ITag';
@@ -73,6 +72,7 @@ export const streamApiConfig = {
       idLt: param?.idLt,
       isImportant: param?.isImportant,
       isSaved: param?.isSaved,
+      isMine: param?.isMine,
       type: param?.type,
     },
   }),
@@ -110,13 +110,14 @@ export const streamApiConfig = {
       params: restParams,
     };
   },
-  getDraftPosts: (params: IParamGetDraftPosts): HttpApiRequestConfig => ({
+  getDraftContents: (params: IParamGetDraftContents): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}posts/draft`,
+    url: `${provider.url}content/draft`,
     params: {
       offset: params?.offset || 0,
       limit: params?.limit || 10,
       isProcessing: params?.isProcessing || false,
+      type: params?.type,
     },
   }),
   postCreateNewPost: (data: IPostCreatePost): HttpApiRequestConfig => ({
@@ -216,9 +217,9 @@ export const streamApiConfig = {
     url: `${provider.url}posts/${postId}/mark-as-read`,
     method: 'put',
   }),
-  putMarkSeenPost: (postId: string): HttpApiRequestConfig => ({
+  putMarkSeenContent: (id: string): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}feeds/seen/${postId}`,
+    url: `${provider.url}content/seen/${id}`,
     method: 'put',
   }),
 
@@ -362,7 +363,7 @@ export const streamApiConfig = {
     method: 'put',
     data,
   }),
-  reorderArticles: (id: string, data: IReorderArticles): HttpApiRequestConfig => ({
+  reorderItemsInSeries: (id: string, data: IReorderItems): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}series/${id}/reorder`,
     method: 'put',
@@ -372,15 +373,6 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}series`,
     params,
-  }),
-  getDraftArticles: (params: IParamGetDraftArticles): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}articles/draft`,
-    params: {
-      offset: params?.offset || 0,
-      limit: params?.limit || 10,
-      isProcessing: params?.isProcessing || false,
-    },
   }),
   publishDraftArticle: (draftArticleId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -404,14 +396,14 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}posts/total-draft`,
   }),
-  postSavePost: (id: string): HttpApiRequestConfig => ({
+  postSaveContent: (id: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     method: 'post',
-    url: `${provider.url}posts/${id}/save`,
+    url: `${provider.url}content/${id}/save`,
   }),
-  postUnsavePost: (id: string): HttpApiRequestConfig => ({
+  postUnsaveContent: (id: string): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}posts/${id}/unsave`,
+    url: `${provider.url}content/${id}/unsave`,
     method: 'delete',
   }),
   getTopicDetail: (id: string): HttpApiRequestConfig => ({
@@ -437,13 +429,13 @@ export const streamApiConfig = {
   }),
   addArticleInSeries: (id: string, data: IAddArticleInSeries): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}series/${id}/add-articles`,
+    url: `${provider.url}series/${id}/add-items`,
     method: 'put',
     data,
   }),
-  removeArticleFromSeriesDetail: (id: string, params: IRemoveArticleInSeries): HttpApiRequestConfig => ({
+  removeItemFromSeriesDetail: (id: string, params: IRemoveItemInSeries): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}series/${id}/remove-articles`,
+    url: `${provider.url}series/${id}/remove-items`,
     method: 'delete',
     data: { ...params },
   }),
@@ -520,6 +512,29 @@ export const streamApiConfig = {
       limit: params?.limit || DEFAULT_LIMIT,
       ...params,
     },
+  }),
+  updatePinContent: (postId: string, pinGroupIds: string[], unpinGroupIds: string[]): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}content/${postId}/pin`,
+    method: 'put',
+    data: { pinGroupIds, unpinGroupIds },
+  }),
+  getPinnableAudiences: (postId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}content/${postId}/audience`,
+    params: {
+      pinnable: true,
+    },
+  }),
+  getPinContentsGroup: (id: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}feeds/group/${id}/pinned`,
+  }),
+  reorderPinContentGroup: (reorderedPinContent: string[], groupId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}content/group/${groupId}/reorder`,
+    method: 'post',
+    data: reorderedPinContent,
   }),
 };
 
@@ -612,7 +627,7 @@ const streamApi = {
   postNewComment: (params: IRequestPostComment) => withHttpRequestPromise(streamApiConfig.postNewComment, params),
   postReplyComment: (params: IRequestReplyComment) => withHttpRequestPromise(streamApiConfig.postReplyComment, params),
   putMarkAsRead: (postId: string) => withHttpRequestPromise(streamApiConfig.putMarkAsRead, postId),
-  putMarkSeenPost: (postId: string) => withHttpRequestPromise(streamApiConfig.putMarkSeenPost, postId),
+  putMarkSeenContent: (id: string) => withHttpRequestPromise(streamApiConfig.putMarkSeenContent, id),
   getSearchMentionAudiences: (params: IParamSearchMentionAudiences) => withHttpRequestPromise(
     streamApiConfig.getSearchMentionAudiences, params,
   ),
@@ -646,10 +661,10 @@ const streamApi = {
     };
     return withHttpRequestPromise(streamApiConfig.getPostDetail, requestParams);
   },
-  getDraftPosts: async (param: IParamGetDraftPosts) => {
+  getDraftContents: async (param: IParamGetDraftContents) => {
     try {
       const response: any = await makeHttpRequest(
-        streamApiConfig.getDraftPosts(param),
+        streamApiConfig.getDraftContents(param),
       );
       if (response && response?.data?.data) {
         return Promise.resolve({
@@ -686,25 +701,6 @@ const streamApi = {
   getArticleDetailByAdmin: (id: string, params?: IParamGetArticleDetail) => withHttpRequestPromise(
     streamApiConfig.getArticleDetailByAdmin, id, params,
   ),
-  getDraftArticles: async (param: IParamGetDraftArticles) => {
-    try {
-      const response: any = await makeHttpRequest(
-        streamApiConfig.getDraftArticles(param),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve({
-          data: response?.data?.data?.list || [],
-          canLoadMore:
-            (param?.offset || 0) + (param?.limit || DEFAULT_LIMIT)
-            <= response?.data?.data?.meta?.total,
-          total: response?.data?.data?.meta?.total,
-        });
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
   publishDraftArticle: (draftArticleId: string) => withHttpRequestPromise(
     streamApiConfig.publishDraftArticle, draftArticleId,
   ),
@@ -735,10 +731,10 @@ const streamApi = {
   ),
   getTotalDraft: () => withHttpRequestPromise(streamApiConfig.getTotalDraft),
   searchSeries: (params?: IGetSeries) => withHttpRequestPromise(streamApiConfig.searchSeries, params),
-  postSavePost: (id: string) => withHttpRequestPromise(streamApiConfig.postSavePost, id),
-  postUnsavePost: (id: string) => withHttpRequestPromise(streamApiConfig.postUnsavePost, id),
-  reorderArticles: (id: string, data: IReorderArticles) => withHttpRequestPromise(
-    streamApiConfig.reorderArticles, id, data,
+  postSaveContent: (id: string) => withHttpRequestPromise(streamApiConfig.postSaveContent, id),
+  postUnsaveContent: (id: string) => withHttpRequestPromise(streamApiConfig.postUnsaveContent, id),
+  reorderItemsInSeries: (id: string, data: IReorderItems) => withHttpRequestPromise(
+    streamApiConfig.reorderItemsInSeries, id, data,
   ),
   getTopicDetail: (id: string) => withHttpRequestPromise(streamApiConfig.getTopicDetail, id),
   getArticleTopicDetail: async (params: any) => {
@@ -761,12 +757,28 @@ const streamApi = {
   searchArticleInSeries: (params: IGetSearchArticleInSeries) => withHttpRequestPromise(
     streamApiConfig.searchArticleInSeries, params,
   ),
-  addArticleInSeries: async (id: string, data: IAddArticleInSeries) => withHttpRequestPromise(
-    streamApiConfig.addArticleInSeries, id, data,
-  ),
-  removeArticleFromSeriesDetail: async (id: string, params: IRemoveArticleInSeries) => withHttpRequestPromise(
-    streamApiConfig.removeArticleFromSeriesDetail, id, params,
-  ),
+  addArticleInSeries: async (id: string, data: IAddArticleInSeries) => {
+    try {
+      const response: any = await makeHttpRequest(streamApiConfig.addArticleInSeries(id, data));
+      if (response && response?.data) {
+        return Promise.resolve(true);
+      }
+      return Promise.reject(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  removeItemFromSeriesDetail: async (id: string, params: IRemoveItemInSeries) => {
+    try {
+      const response: any = await makeHttpRequest(streamApiConfig.removeItemFromSeriesDetail(id, params));
+      if (response && response?.data) {
+        return Promise.resolve(true);
+      }
+      return Promise.reject(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
   reportContent: (params: IParamsReportContent) => withHttpRequestPromise(streamApiConfig.reportContent, params),
   searchTagsInAudiences: (params?: IGetSearchTags) => withHttpRequestPromise(
     streamApiConfig.searchTagsInAudiences, params,
@@ -810,6 +822,16 @@ const streamApi = {
   ),
   getArticleScheduleContent: async (params: IParamsGetArticleScheduleContent) => withHttpRequestPromise(
     streamApiConfig.getArticleScheduleContent, params,
+  ),
+  updatePinContent: (postId: string, pinGroupIds: string[], unpinGroupIds: string[]) => withHttpRequestPromise(
+    streamApiConfig.updatePinContent, postId, pinGroupIds, unpinGroupIds,
+  ),
+  getPinnableAudiences: (postId: string) => withHttpRequestPromise(
+    streamApiConfig.getPinnableAudiences, postId,
+  ),
+  getPinContentsGroup: (id: string) => withHttpRequestPromise(streamApiConfig.getPinContentsGroup, id),
+  reorderPinContentGroup: (reorderedPinContent: string[], groupId: string) => withHttpRequestPromise(
+    streamApiConfig.reorderPinContentGroup, reorderedPinContent, groupId,
   ),
 };
 

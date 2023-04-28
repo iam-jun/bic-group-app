@@ -1,8 +1,7 @@
 import React, {
-  useState, useEffect, useRef, useCallback,
+  useState, useEffect, useRef, useCallback, useMemo,
 } from 'react';
 import { StyleSheet, DeviceEventEmitter, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -20,12 +19,11 @@ import ContentView from './components/CommunityContentView';
 import CommunityJoinCancelButton from './components/CommunityJoinCancelButton';
 import {
   formatChannelLink,
-  getLink,
-  LINK_COMMUNITY,
+  generateLink,
+  LinkGeneratorTypes,
   openUrl,
 } from '~/utils/link';
 import { chatSchemes } from '~/constants/chat';
-import modalActions from '~/storeRedux/modal/actions';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
@@ -43,17 +41,19 @@ import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import useMounted from '~/hooks/mounted';
 import useTimelineStore, { ITimelineState } from '~/store/timeline';
 import useCommunityController from '../store';
-import homeActions from '~/storeRedux/home/actions';
 import ContentSearch from '~/screens/Home/HomeSearch';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 import useModalStore from '~/store/modal';
+import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
+import usePinContentStore from '~/components/PinContent/store';
+import TermsView from '~/components/TermsModal';
+import MemberQuestionsModal from '~/components/MemberQuestionsModal';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
   const communityId = params?.communityId;
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
 
   const headerRef = useRef<any>();
@@ -65,7 +65,7 @@ const CommunityDetail = (props: any) => {
   const styles = themeStyles(theme, insets);
   const { t } = useBaseHook();
   const isMounted = useMounted();
-  const { showToast, showAlert } = useModalStore((state) => state.actions);
+  const modalActions = useModalStore((state) => state.actions);
 
   // community detail
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
@@ -97,15 +97,18 @@ const CommunityDetail = (props: any) => {
     ]),
   );
 
+  const actionsFeedSearch = useFeedSearchStore((state) => state.actions);
+  const actionPinContent = usePinContentStore((state) => state.actions);
+
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
-  const searchViewRef = useRef(null);
 
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
   const canSetting = shouldHavePermission(
     groupId,
     [
-      PermissionKey.EDIT_INFO,
-      PermissionKey.EDIT_PRIVACY,
+      PermissionKey.ROLE_COMMUNITY_OWNER,
+      PermissionKey.ROLE_COMMUNITY_ADMIN,
+      PermissionKey.ROLE_GROUP_ADMIN,
     ],
   );
   const isPrivateCommunity = !isMember && privacy === CommunityPrivacyType.PRIVATE;
@@ -166,6 +169,21 @@ const CommunityDetail = (props: any) => {
     if (groupId) timelineActions.resetTimeline(groupId);
   }, [groupId]);
 
+  useMemo(() => {
+    // prevent showing the old data before being refreshed
+    if (groupId) {
+      actionPinContent.resetDataPinContentsGroup(groupId);
+    }
+  }, [groupId]);
+
+  useEffect(() => {
+    if (groupId) actionPinContent.getPinContentsGroup(groupId);
+  }, [groupId]);
+
+  useEffect(() => () => {
+    if (groupId) actionPinContent.resetDataPinContentsGroup(groupId);
+  }, [groupId]);
+
   const onRefresh = useCallback((isGetPost: boolean) => {
     /**
      * must getPosts before getCommunityDetail
@@ -174,18 +192,19 @@ const CommunityDetail = (props: any) => {
     if (isGetPost) {
       timelineActions.getPosts(groupId, true);
     }
+    actionPinContent.getPinContentsGroup(groupId);
     getCommunityDetail();
   }, [groupId, contentFilter, attributeFilter]);
 
   const onPressAdminTools = () => {
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     rootNavigation.navigate(groupStack.communityAdmin, { communityId });
   };
 
   const onPressCopyLink = () => {
-    dispatch(modalActions.hideBottomList());
-    Clipboard.setString(getLink(LINK_COMMUNITY, communityId));
-    showToast({ content: 'common:text_copied' });
+    modalActions.hideBottomList();
+    Clipboard.setString(generateLink(LinkGeneratorTypes.COMMUNITY, communityId));
+    modalActions.showToast({ content: 'common:text_copied' });
   };
 
   const onConfirmLeaveCommunity = async () => {
@@ -193,8 +212,8 @@ const CommunityDetail = (props: any) => {
   };
 
   const onPressLeave = () => {
-    dispatch(modalActions.hideBottomList());
-    showAlert({
+    modalActions.hideBottomList();
+    modalActions.showAlert({
       title: t('communities:modal_confirm_leave_community:title'),
       confirmLabel: t(
         'communities:modal_confirm_leave_community:button_leave',
@@ -216,17 +235,13 @@ const CommunityDetail = (props: any) => {
       type: 'community',
       isMember,
       canSetting,
-      dispatch,
       onPressAdminTools,
       onPressCopyLink,
       onPressLeave,
     });
-    dispatch(
-      modalActions.showBottomList({
-        isOpen: true,
-        data: headerMenuData,
-      } as BottomListProps),
-    );
+    modalActions.showBottomList({
+      data: headerMenuData,
+    } as BottomListProps);
   };
 
   const onPressChat = () => {
@@ -287,12 +302,12 @@ const CommunityDetail = (props: any) => {
   };
 
   const onPressSearch = () => {
-    dispatch(homeActions.setNewsfeedSearch({ isShow: true, searchViewRef }));
+    actionsFeedSearch.setNewsfeedSearch({ isShow: true });
   };
 
   const hasNoDataInStore = !groupId;
 
-  const shouldShowPlaceholder = !isMounted || hasNoDataInStore;
+  const shouldShowPlaceholder = (!isMounted || hasNoDataInStore) && !error;
 
   if (shouldShowPlaceholder) {
     return <PlaceholderView style={styles.contentContainer} headerStyle={styles.header} />;
@@ -367,7 +382,9 @@ const CommunityDetail = (props: any) => {
           isMember={isMember}
         />
       </Animated.View>
-      <ContentSearch searchViewRef={searchViewRef} groupId={groupId} />
+      <ContentSearch groupId={groupId} />
+      <MemberQuestionsModal />
+      <TermsView />
     </View>
   );
 };

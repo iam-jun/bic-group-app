@@ -1,38 +1,23 @@
 import React from 'react';
-import { renderWithRedux, configureStore } from '../../../test/testUtils';
-import initialState from '../../../storeRedux/initialState';
+import { fireEvent, render } from '../../../test/testUtils';
 import SearchSuggestion from './SearchSuggestion';
+import useFeedSearchStore from './store';
 
 describe('SearchSuggestion component', () => {
-  const mockStore = configureStore([]);
+  it('should render correctly', () => {
+    const setNewsfeedSearch = jest.fn();
+    useFeedSearchStore.setState((state) => {
+      state.actions.setNewsfeedSearch = setNewsfeedSearch;
+      state.newsfeedSearch.searchText = 'abc';
+      return state;
+    });
 
-  it('should render button search keyword', () => {
     const onSelectKeyword = jest.fn();
-    const storeData = { ...initialState };
-    storeData.home.newsfeedSearch.isShow = true;
-    storeData.home.newsfeedSearch.isSuggestion = true;
-    storeData.home.newsfeedSearch.searchText = 'hello';
-    const store = mockStore(storeData);
 
-    const rendered = renderWithRedux(
-      <SearchSuggestion onSelectKeyword={onSelectKeyword} />,
-      store,
-    );
-    expect(rendered.toJSON()).toMatchSnapshot();
-  });
+    const wrapper = render(<SearchSuggestion onSelectKeyword={onSelectKeyword} />);
 
-  it('should render SearchResult', () => {
-    const onSelectKeyword = jest.fn();
-    const storeData = { ...initialState };
-    storeData.home.newsfeedSearch.isShow = true;
-    storeData.home.newsfeedSearch.isSuggestion = true;
-    storeData.home.newsfeedSearch.searchText = '';
-    const store = mockStore(storeData);
-
-    const rendered = renderWithRedux(
-      <SearchSuggestion onSelectKeyword={onSelectKeyword} />,
-      store,
-    );
-    expect(rendered.toJSON()).toMatchSnapshot();
+    const btnSearch = wrapper.getByTestId('search_suggestion.btn_search');
+    fireEvent.press(btnSearch);
+    expect(setNewsfeedSearch).toBeCalled();
   });
 });

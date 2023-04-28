@@ -6,7 +6,6 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useDispatch } from 'react-redux';
 
 import Avatar from '~/baseComponents/Avatar';
 import Button from '~/beinComponents/Button';
@@ -38,14 +37,13 @@ import useCommentsStore from '~/store/entities/comments';
 import commentsSelector from '~/store/entities/comments/selectors';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import * as modalActions from '~/storeRedux/modal/actions';
-import { showReactionDetailBottomSheet } from '~/storeRedux/modal/actions';
 import dimension from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 import useCommentInputStore from '../CommentInputView/store';
 import useDeleteCommentController from './store';
 import { PlaceHolderRemoveContent } from '~/baseComponents';
 import useModalStore from '~/store/modal';
+import DeactivatedView from '~/components/DeactivatedView';
 
 export interface CommentViewProps {
   postId: string;
@@ -70,7 +68,6 @@ const _CommentView: React.FC<CommentViewProps> = ({
 }: CommentViewProps) => {
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
   const commentInputStore = useCommentInputStore((state) => state.actions);
   const deleteCommentController = useDeleteCommentController((state) => state.actions);
 
@@ -87,7 +84,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
 
   const setting = usePostsStore(postsSelector.getSetting(postId));
   const cancelCommentFailed = useCommentsStore((state) => state.actions.cancelCommentFailed);
-  const { showAlert } = useModalStore((state) => state.actions);
+  const modalActions = useModalStore((state) => state.actions);
 
   const _commentData = comment || commentData || {};
   const {
@@ -112,7 +109,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
       }
       : null);
 
-  const { fullname, avatar } = actor || {};
+  const { fullname, avatar, isDeactivated } = actor || {};
 
   const isActor = currentUserId === actor?.id;
 
@@ -146,12 +143,12 @@ const _CommentView: React.FC<CommentViewProps> = ({
 
   const onPressUser = () => {
     const id = actor?.id;
-    if (!id) return;
+    if (!id || isDeactivated) return;
     navigateToUserProfile(id);
   };
 
   const onPressAudience = useCallback((audience: IMarkdownAudience) => {
-    if (!audience) return;
+    if (!audience || audience?.isDeactivated) return;
     navigateToUserProfile(audience.id);
   }, []);
 
@@ -189,16 +186,16 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const onEmojiSelected = (
     key: string,
   ) => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
     if (key) {
       onAddReaction?.(key);
     }
   };
 
   const onPressReact = () => {
-    dispatch(modalActions.setShowReactionBottomSheet(
+    modalActions.setShowReactionBottomSheet(
       { visible: true, callback: onEmojiSelected },
-    ));
+    );
   };
 
   const _onPressReply = () => {
@@ -227,43 +224,40 @@ const _CommentView: React.FC<CommentViewProps> = ({
       confirmLabel: t('common:btn_delete'),
       ConfirmBtnComponent: Button.Danger,
     };
-    showAlert(alertPayload);
+    modalActions.showAlert(alertPayload);
   };
 
   const onLongPress = () => {
     if (isReported) {
       return null;
     }
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent: (
-          <CommentViewMenu
-            commentId={id}
-            parentCommentId={parentCommentId}
-            content={content}
-            groupIds={groupIds}
-            postId={postId}
-            isActor={isActor}
-            audience={audience}
-            onPressMoreReaction={onPressReact}
-            onAddReaction={onAddReaction}
-            onPressReply={_onPressReply}
-            onPressDelete={_onPressDelete}
-          />
-        ),
-      }),
-    );
+    modalActions.showModal({
+      isOpen: true,
+      ContentComponent: (
+        <CommentViewMenu
+          commentId={id}
+          parentCommentId={parentCommentId}
+          content={content}
+          groupIds={groupIds}
+          postId={postId}
+          isActor={isActor}
+          audience={audience}
+          onPressMoreReaction={onPressReact}
+          onAddReaction={onAddReaction}
+          onPressReply={_onPressReply}
+          onPressDelete={_onPressDelete}
+        />
+      ),
+    });
   };
 
   const onLongPressReaction = (reactionType: ReactionType) => {
     const payload: IPayloadReactionDetailBottomSheet = {
-      isOpen: true,
       reactionsCount,
       initReaction: reactionType,
       getDataParam: { target: 'COMMENT', targetId: id },
     };
-    dispatch(showReactionDetailBottomSheet(payload));
+    modalActions.showReactionDetailBottomSheet(payload);
   };
 
   const onPressRetry = () => {
@@ -343,6 +337,8 @@ const _CommentView: React.FC<CommentViewProps> = ({
     );
   }
 
+  const colorFullName = isDeactivated ? colors.grey40 : colors.neutral80;
+
   return (
     <View>
       <Animated.View style={[styles.container, animatedStyle]}>
@@ -366,13 +362,16 @@ const _CommentView: React.FC<CommentViewProps> = ({
               >
                 <View style={styles.header}>
                   <View style={styles.userName}>
-                    <ButtonWrapper onPress={onPressUser}>
+                    <ButtonWrapper style={styles.buttonWrapper} onPress={onPressUser}>
                       <Text.H5
+                        color={colorFullName}
                         testID={`comment_view.level_${parentCommentId ? 2 : 1}.user_name`}
                         numberOfLines={1}
+                        style={styles.fullname}
                       >
                         {`${fullname}`}
                       </Text.H5>
+                      {isDeactivated && <DeactivatedView style={styles.deactivatedView} />}
                     </ButtonWrapper>
                   </View>
                 </View>
@@ -450,6 +449,16 @@ const createStyle = (theme: ExtendedTheme) => {
     reactionView: {
       paddingTop: 0,
       paddingBottom: 0,
+    },
+    buttonWrapper: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    deactivatedView: {
+      marginLeft: spacing.margin.tiny,
+    },
+    fullname: {
+      flexShrink: 1,
     },
   });
 };

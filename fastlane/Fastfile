@@ -29,13 +29,6 @@ platform :android do
       )
 
       if (disable_notice != 'true')
-        notice_to_bic("🟡🤖 Alo alo có build **#{app_version} #{update_desc}** @ngoclinh @trankimmai @ngoccuong @triduc
-                \n **BIC Group Staging Android**
-                \n Tải tại: #{download_destination}
-                \n **Git Branch**: #{git_branch}
-                \n **Git Commit**: #{git_mess}",
-                ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
-                'bicbotnotice2')
         notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
       end
     rescue => error
@@ -43,6 +36,42 @@ platform :android do
     end
 
   end
+
+  lane :update_prerelease do |options|
+      Dotenv.overload('../.env.base', '../.env.prerelease')
+      disable_notice = options[:disable_notice]
+
+      app_version = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+      update_desc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
+
+      webhook = ENV['NOTICE_WEBHOOK'].length > 0 ? ENV['NOTICE_WEBHOOK'] : ""
+      title = "🔵🤖 BIC Group Release Android"
+      version_text = "**#{app_version} #{update_desc}**"
+      download_destination = options[:download_destination] || 'In-app Update'
+      git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+      message = "Build successful"
+      color = "#9E6FD8"
+      code = ""
+
+      begin
+        appcenter_codepush_release_react(
+          api_token: ENV["CODE_PUSH_ACCESS_KEY_ANDROID"],
+          app_name: ENV["APPCENTER_APP_NAME_ANDROID"],
+          deployment: "Release",
+          target_version: ENV['VERSION_NAME'],
+          description: ENV['UPDATE_DESC'],
+          mandatory: false,
+          dry_run: false,
+        )
+
+        if (disable_notice != 'true')
+          notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
+        end
+      rescue => error
+        notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, error, "#F64E60")
+      end
+
+    end
 
   lane :update_production do |options|
     Dotenv.overload('../.env.base', '../.env.production')
@@ -72,13 +101,6 @@ platform :android do
       )
 
       if (disable_notice != 'true')
-        notice_to_bic("🟢🤖 Alo alo có build **#{app_version} #{update_desc}** @ngoclinh @trankimmai @ngoccuong @triduc
-                \n **BIC Group Production Android**
-                \n Tải tại: #{download_destination}
-                \n **Git Branch**: #{git_branch}
-                \n **Git Commit**: #{git_mess}",
-                ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
-                'bicbotnotice2')
         notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
       end
     rescue => error
@@ -94,6 +116,21 @@ platform :android do
       task: "assemble",
       build_type: "Release",
       flavor: "Staging",
+      project_dir: 'android/',
+    )
+  end
+
+  lane :build_prerelease do
+    Dotenv.overload('../.env.base', '../.env.prerelease')
+
+    app_env =  ENV['APP_ENV'] || 'Beincomm Dev'
+    UI.message("Build app env: #{app_env}")
+
+    gradle(task: "clean", project_dir: 'android/')
+    gradle(
+      task: "assemble",
+      build_type: "Release",
+      flavor: "Prerelease",
       project_dir: 'android/',
     )
   end
@@ -138,6 +175,36 @@ platform :android do
 
   end
 
+  lane :deploy_prerelease do
+      Dotenv.overload('../.env.base', '../.env.prerelease')
+
+      appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+      updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
+
+      commit = last_git_commit
+      git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+
+      gradle(task: "clean", project_dir: 'android/')
+      gradle(
+        task: "assemble",
+        build_type: "Release",
+        flavor: "Prerelease",
+        project_dir: 'android/',
+      )
+
+      file_apk = lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0]
+
+      firebase_app_distribution(
+          app: "1:720928498310:android:16596a00d97490b19da707",
+          android_artifact_path: file_apk,
+          release_notes: "BIC Group Release: #{appVersionText}",
+          groups: "bicteam",
+      )
+
+      update_prerelease({:download_destination => 'Firebase App Tester'})
+
+    end
+
   lane :deploy_production do
     Dotenv.overload('../.env.base', '../.env.production')
 
@@ -167,6 +234,54 @@ platform :android do
     update_production({:download_destination => 'Firebase App Tester'})
 
   end
+
+  lane :bundle_aab_production do
+    Dotenv.overload('../.env.base', '../.env.production')
+    gradle(task: "clean", project_dir: 'android/')
+    gradle(
+        task: 'app:bundle',
+        build_type: "Release",
+        flavor: "Production",
+        project_dir: 'android/',
+    )
+
+    app_name =  'bic-group'
+    version_number = android_get_version_name(gradle_file: './android/app/build.gradle')
+    timestamp = Time.now.strftime("%Y%m%d%H%M")
+    file_name = "#{app_name}-#{version_number}-#{timestamp}.aab"
+    UI.message("Generated file name: #{file_name}")
+
+    aab_path = lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]
+    new_aab_path = "./#{file_name}"
+    sh("mv #{aab_path} #{new_aab_path}")
+
+    UI.message("Start upload #{file_name} to Google Drive")
+    # Upload to folder: https://drive.google.com/drive/folders/1UJz1cv0CoyRcbl6xYrqPRzmPFfJJHTMR
+
+    upload_path = "./fastlane/#{new_aab_path}"
+    upload_to_google_drive(
+        drive_keyfile: "fastlane/google-drive.json",
+        service_account: true,
+        folder_id: "1UJz1cv0CoyRcbl6xYrqPRzmPFfJJHTMR",
+        upload_files: [''+upload_path+'']
+      )
+    file_upload_path=lane_context[SharedValues::GDRIVE_UPLOADED_FILE_URLS][0]
+    UI.message("File uploaded to google drive: #{file_upload_path}")
+    UI.message("Upload done!")
+
+    version_number = android_get_version_name(gradle_file: './android/app/build.gradle')
+    build_number = android_get_version_code(gradle_file: './android/app/build.gradle')
+    commit = last_git_commit
+    git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- %s")
+
+    webhook = "https://chat.beincom.com/hooks/oiswgg13ntnr3yw5698k7hunxh"
+    git_branch = ENV['BRANCH_TO_BUILD'] || ENV['GIT_BRANCH']
+    message = "Uploaded to [Google Drive](https://drive.google.com/drive/folders/1UJz1cv0CoyRcbl6xYrqPRzmPFfJJHTMR)"
+    color = "#9E6FD8"
+    title = "🟢🤖 BIC Group Production - Bundle Aab"
+    download_destination = "Google Drive"
+    notice_bic_chat(webhook, title, version_number, download_destination, git_branch, git_mess, message, color)
+    end
 end
 
 ########################################################################################################################
@@ -208,13 +323,6 @@ platform :ios do
       )
 
       if (disable_notice != 'true')
-        notice_to_bic("🟡🍎 Alo alo có build **#{app_version} #{update_desc}** @ngoclinh @trankimmai @ngoccuong @triduc
-                \n **BIC Group Staging iOS**
-                \n Tải tại: #{download_destination}
-                \n **Git Branch**: #{git_branch}
-                \n **Git Commit**: #{git_mess}",
-                ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
-                'noticebot')
         notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
       end
     rescue => error
@@ -222,6 +330,42 @@ platform :ios do
     end
 
   end
+
+  lane :update_prerelease do |options|
+      Dotenv.overload('../.env.base', '../.env.prerelease')
+      disable_notice = options[:disable_notice]
+
+      app_version = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+      update_desc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
+
+      webhook = ENV['NOTICE_WEBHOOK'].length > 0 ? ENV['NOTICE_WEBHOOK'] : ""
+      title = "🔵🍎 BIC Group Release iOS"
+      version_text = "**#{app_version} #{update_desc}**"
+      download_destination = options[:download_destination] || 'In-app Update'
+      git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+      message = "Build successful"
+      color = "#9E6FD8"
+      code = ""
+
+      begin
+        appcenter_codepush_release_react(
+          api_token: ENV["CODE_PUSH_ACCESS_KEY_IOS"],
+          app_name: ENV["APPCENTER_APP_NAME_IOS"],
+          deployment: "Release",
+          target_version: ENV['VERSION_NAME'],
+          description: ENV['UPDATE_DESC'],
+          mandatory: false,
+          dry_run: false,
+        )
+
+        if (disable_notice != 'true')
+          notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
+        end
+      rescue => error
+        notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, error, "#F64E60")
+      end
+
+    end
 
   lane :update_production do |options|
     Dotenv.overload('../.env.base', '../.env.production')
@@ -251,13 +395,6 @@ platform :ios do
       )
 
       if (disable_notice != 'true')
-        notice_to_bic("🟢🍎 Alo alo có build **#{app_version} #{update_desc}** @ngoclinh @trankimmai @ngoccuong @triduc
-                \n **BIC Group iOS**
-                \n Tải tại: #{download_destination}
-                \n **Git Branch**: #{git_branch}
-                \n **Git Commit**: #{git_mess}",
-                ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
-                'noticebot')
         notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
       end
     rescue => error
@@ -313,6 +450,53 @@ platform :ios do
 
   end
 
+  lane :deploy_prerelease do
+    Dotenv.overload('../.env.base', '../.env.prerelease')
+
+    match(
+      type: "appstore",
+      app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.prerelease",
+      storage_mode: "git",
+      team_id: "44S5N8GAPS",
+      team_name: "UFUTURE CORPORATION",
+      readonly: false,
+      force: true,
+      verbose: true,
+    )
+
+    appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+    updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
+
+    commit = last_git_commit
+    git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+
+    increment_build_number(
+      build_number: latest_testflight_build_number(app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.prerelease") + 1,
+      xcodeproj: "./ios/#{ENV['SCHEME_NAME']}.xcodeproj"
+    )
+
+    build_app(
+      workspace: "./ios/#{ENV['SCHEME_NAME']}.xcworkspace",
+      scheme: "#{ENV['SCHEME_NAME_IOS']}",
+      configuration: "ReleasePrerelease",
+      output_directory:"./fastlane/prerelease/",
+      output_name: "#{ENV['SCHEME_NAME_IOS']}.ipa",
+      export_method: "app-store",
+      silent: true,
+      clean: true,
+    )
+
+    upload_to_testflight(
+      app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.prerelease",
+      ipa: "./fastlane/prerelease/#{ENV['SCHEME_NAME_IOS']}.ipa",
+      changelog: "Release version #{ENV['APP_VERSION']}",
+      api_key_path: "./fastlane/api_key_info.json",
+    )
+
+    update_prerelease({:download_destination => 'TestFlight'})
+
+  end
+
   lane :deploy_production do
     Dotenv.overload('../.env.base', '../.env.production')
 
@@ -363,6 +547,11 @@ platform :ios do
   lane :deploy_staging_ci do
     app_store_connect_api_key(key_id: ENV['APPLE_KEY_ID'],issuer_id: ENV['APPLE_ISSUER_ID'],key_content: ENV['APPLE_KEY_CONTENT'])
     deploy_staging
+  end
+
+  lane :deploy_prerelease_ci do
+    app_store_connect_api_key(key_id: ENV['APPLE_KEY_ID'],issuer_id: ENV['APPLE_ISSUER_ID'],key_content: ENV['APPLE_KEY_CONTENT'])
+    deploy_prerelease
   end
 
   lane :deploy_production_ci do

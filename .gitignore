@@ -50,6 +50,7 @@ buck-out/
 # https://docs.fastlane.tools/best-practices/source-control/
 
 fastlane/api_key_info.json
+fastlane/google-drive.json
 */fastlane/report.xml
 */fastlane/Preview.html
 */fastlane/screenshots
@@ -66,6 +67,7 @@ production/google-services.json
 staging/google-services.json
 android/app/src/staging/*
 android/app/src/production/*
+android/app/src/prerelease/*
 amplify/*
 src/aws-exports.js
 .firebaserc
@@ -73,12 +75,15 @@ android/app/production/
 *.dSYM.zip
 .env.production
 .env.staging
+.env.prerelease
 fastlane/.env
 GoogleService-Info-Production.plist
 GoogleService-Info-Staging.plist
+GoogleService-Info-Prerelease.plist
 
 # Testing
 .nyc_output
 coverage
 .tmp
 /ios/I/
+test-report.xml

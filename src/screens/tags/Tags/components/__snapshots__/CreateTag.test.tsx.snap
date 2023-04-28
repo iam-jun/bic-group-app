@@ -70,7 +70,6 @@ exports[`CreateTag component render correctly with default state 1`] = `
           style={
             Array [
               Object {
-                "backgroundColor": "green",
                 "borderBottomLeftRadius": 6,
                 "borderBottomRightRadius": 6,
                 "borderTopLeftRadius": 6,
@@ -98,7 +97,7 @@ exports[`CreateTag component render correctly with default state 1`] = `
             }
           >
             <TextInput
-              autoCapitalize="none"
+              autoCapitalize="characters"
               autoComplete="off"
               autoCorrect={false}
               editable={true}
@@ -177,7 +176,7 @@ exports[`CreateTag component render correctly with default state 1`] = `
         ]
       }
     >
-      The tag will be automatically converted to lowercase after created or updated.
+      The tag will be automatically converted to uppercase after created or updated.
     </Text>
   </View>
   <View

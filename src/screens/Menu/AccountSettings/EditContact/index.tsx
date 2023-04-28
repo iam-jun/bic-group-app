@@ -1,29 +1,27 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   StyleSheet, View, Keyboard, ScrollView,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch, useFormState } from 'react-hook-form';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 
 import { useBaseHook } from '~/hooks';
-import { useKeySelector } from '~/hooks/selector';
-import menuKeySelector from '../../../../storeRedux/menu/keySelector';
 import { useRootNavigation } from '~/hooks/navigation';
 import Button from '~/beinComponents/Button';
 import TitleComponent from '../fragments/TitleComponent';
 import EditPhoneNumber from './fragments/EditPhoneNumber';
 import EditLocation from './fragments/EditLocation';
-import menuActions from '../../../../storeRedux/menu/actions';
 import spacing from '~/theme/spacing';
 import { TextInput } from '~/baseComponents/Input';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { ICityResponseItem } from '~/interfaces/IAuth';
 import useCommonController from '~/screens/store';
 import useMenuController from '../../store';
+
+const PHONE_INPUT_NAME = 'phoneNumber';
 
 const EditContact = () => {
   const theme: ExtendedTheme = useTheme();
@@ -33,8 +31,6 @@ const EditContact = () => {
 
   const locationRef = useRef<any>();
 
-  const dispatch = useDispatch();
-
   const myProfile = useCommonController((state) => state.myProfile);
   const {
     email, phone, countryCode, city, id,
@@ -42,26 +38,12 @@ const EditContact = () => {
   const actions = useMenuController((state) => state.actions);
 
   const [countryCodeState, setCountryCountryCodeState]
-    = useState<string>(countryCode || '+84');
+    = useState<string>(countryCode);
   const [cityState, setCityState] = useState<string>(city);
-  const phoneNumberEditError = useKeySelector(
-    menuKeySelector.phoneNumberEditError,
-  );
 
-  const {
-    control,
-    formState: { errors },
-    trigger,
-    getValues,
-    setError,
-    clearErrors,
-    setValue,
-    watch,
-  } = useForm();
-
-  useEffect(() => {
-    setValue('phoneNumber', phone);
-  }, []);
+  const useFormData = useForm();
+  const phoneNumber = useWatch({ control: useFormData.control, name: PHONE_INPUT_NAME }) || phone;
+  const { errors } = useFormState({ control: useFormData.control, name: PHONE_INPUT_NAME });
 
   const navigateBack = () => {
     Keyboard.dismiss();
@@ -70,20 +52,7 @@ const EditContact = () => {
     }
   };
 
-  useEffect(() => {
-    phoneNumberEditError && showErrors();
-    return () => {
-      dispatch(menuActions.setPhoneNumberEditError(''));
-    };
-  }, [phoneNumberEditError]);
-
-  const onSave = async () => {
-    const validInputs = await validateInputs();
-    if (!validInputs) {
-      return;
-    }
-    const phoneNumber = getValues('phoneNumber');
-
+  const onSave = () => {
     actions.editMyProfile({
       data: {
         id,
@@ -93,20 +62,6 @@ const EditContact = () => {
       },
       callback: navigateBack,
     });
-  };
-
-  const validateInputs = async () => trigger('phoneNumber');
-
-  const showErrors = () => {
-    setError('phoneNumber', {
-      type: 'validate',
-      message: phoneNumberEditError,
-    });
-  };
-
-  const clearAllErrors = () => {
-    clearErrors('phoneNumber');
-    dispatch(menuActions.setPhoneNumberEditError(''));
   };
 
   const onEditLocationOpen = (e: any) => {
@@ -130,12 +85,12 @@ const EditContact = () => {
     phoneNumber: string,
   ) => countryCode !== countryCodeState
     || city !== cityState
-    || phone !== phoneNumber;
+    || (phone !== phoneNumber && !errors?.phoneNumber?.message);
 
   const isValid = checkIsValid(
     countryCodeState,
     cityState,
-    watch('phoneNumber'),
+    phoneNumber,
   );
 
   return (
@@ -170,9 +125,7 @@ const EditContact = () => {
             countryCode={countryCodeState}
             phoneNumber={phone}
             onChangeCountryCode={onChangeCountryCode}
-            control={control}
-            errorsState={errors}
-            clearAllErrors={clearAllErrors}
+            useFormData={useFormData}
           />
           <ViewSpacing height={spacing.padding.large} />
           <TitleComponent title="settings:title_location" isOptional />

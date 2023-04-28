@@ -10,7 +10,7 @@ const getDiscoverGroups = (set, get) => async (
   try {
     const { communityId, params, isRefreshing } = payload;
     const {
-      ids, items, canLoadMore, doGetCommunityGroups,
+      ids, items, canLoadMore,
     }: IDiscoverGroupsState = get();
     if (!isRefreshing && !canLoadMore) return;
     set((state: IDiscoverGroupsState) => {
@@ -33,10 +33,6 @@ const getDiscoverGroups = (set, get) => async (
       state.ids = isRefreshing ? [...newIds] : [...ids, ...newIds];
       state.items = isRefreshing ? { ...newItems } : { ...items, ...newItems };
     }, 'getDiscoverGroupsSuccess');
-
-    if (responseData.length === 0) {
-      doGetCommunityGroups(communityId);
-    }
   } catch (err) {
     console.error(
       'getDiscoverGroups error:', err,

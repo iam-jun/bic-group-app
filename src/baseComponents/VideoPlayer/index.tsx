@@ -11,13 +11,22 @@ import FileVideo from './components/FileVideo';
 export interface VideoPlayerRef {
   play: () => void,
   pause: () => void,
+  resetVideoPosition: () => void,
 }
 
 const SUPPORTED_VIDEOS = ['mp4', 'mov', 'webm', 'wmv', 'avi', 'm3u8'];
 
+export interface PosterInfo {
+  url: string,
+  videoHeight: number,
+  videoWidth: number,
+  height?: number,
+  width?: number,
+}
+
 export interface VideoPlayerProps extends VideoProps {
   src: string;
-  thumbnail: string,
+  posterInfo: PosterInfo,
   videoRef?: React.MutableRefObject<VideoPlayerRef>;
 }
 

@@ -97,12 +97,12 @@ const HomeHeader: FC<HomeHeaderProps> = ({
   };
 
   return (
-    <View style={style}>
+    <View style={style} testID="home_header">
       <View style={styles.statusBar} />
       <Animated.View style={[styles.container, containerAnimatedStyle]}>
         <Animated.View style={[styles.logoContainer, logoAnimatedStyle]}>
           <View style={styles.logo}>
-            <SvgIcon source={BicHomeLogo} width={145} height={28} />
+            <SvgIcon source={BicHomeLogo} width={200} height={28} />
           </View>
         </Animated.View>
         <FilterFeedButtonGroup

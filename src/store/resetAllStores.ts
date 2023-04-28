@@ -7,13 +7,10 @@ import usePostsStore from './entities/posts';
 import useHomeStore from '~/screens/Home/store';
 import useMenuController from '~/screens/Menu/store';
 import useChatStore from '~/store/chat';
-import useDraftPostStore from '../screens/Draft/DraftPost/store';
-import useGroupStructureStore from '~/screens/groups/GroupStructureSettings/store';
+import useDraftPostStore from '../screens/YourContent/components/Draft/DraftPost/store';
 import useReactionDetailStore from '~/components/reaction/ReactionDetailBottomSheet/store';
 import useCommunitiesStore from './entities/communities';
 import useUserProfileStore from '~/screens/Menu/UserProfile/store';
-import useAccountSettingsStore from '~/screens/Menu/AccountSettings/store';
-import usePermissionSchemeStore from '~/screens/PermissionScheme/store';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 import useCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
 import useGroupMemberStore from '~/screens/groups/GroupMembers/store';
@@ -29,13 +26,12 @@ import useYourGroupsStore from '~/screens/communities/Communities/components/You
 import useSearchJoinedCommunitiesStore from '~/screens/communities/Communities/components/SearchCommunity/store';
 import useNotificationStore from '~/screens/Notification/store';
 import useGiphyStore from './giphy';
-import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
+import useDraftArticleStore from '~/screens/YourContent/components/Draft/DraftArticle/store';
 import useArticleController from '~/screens/articles/store';
 import useSeriesStore from '~/screens/series/store';
 import useTopicStore from '~/screens/topic/store';
 import useAddArticlesStore from '~/screens/series/SeriesDetail/components/AddArticles/store';
 import useCreateArticleCategoryStore from '~/screens/articles/CreateArticle/screens/CreateArticleCategory/store';
-import useCreateArticleSeriesStore from '~/screens/articles/CreateArticle/screens/CreateArticleSeries/store';
 import useForgotPasswordStore from '~/screens/auth/ForgotPassword/store';
 import useChangePasswordStore from '~/screens/Menu/AccountSettings/SecurityLogin/ChangePassword/store';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
@@ -48,10 +44,34 @@ import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNo
 import useCommentInputStore from '~/screens/comments/components/CommentInputView/store';
 import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import useReportContentStore from '~/components/Report/store';
+import useNetworkStore from '~/store/network';
+import useModalStore from '~/store/modal';
 import useArticleScheduleContentStore from '~/screens/articles/ArticleScheduleContent/store';
+import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
+import useButtonMarkAsReadStore from '~/components/posts/ButtonMarkAsRead/store';
+import useCreatePostStore from '~/screens/post/CreatePost/store';
+import useLinkPreviewStore from './linkPreview';
+import useSeriesContentModalStore from '~/components/series/SeriesContentModal/store';
+import useAppStore from './app';
+import useGroupJoinableUsersStore from '~/screens/groups/GroupMembers/AddMembersToGroup/store';
+import useSelectSeriesStore from '~/components/SelectSeries/store';
+import useSelectTagsStore from '~/components/SelectTags/store';
+import useValidateSeriesTagsStore from '~/components/ValidateSeriesTags/store';
+import useCommonController from '~/screens/store';
+import useBlockingStore from './blocking';
+import useYourContentStore from '~/screens/YourContent/store';
+import useMaintenanceStore from './maintenance';
+import usePinContentStore from '~/components/PinContent/store';
+import useTermStore from '~/components/TermsModal/store';
+import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftContents/store';
 
 export const excludedStore = [
   useAuthController,
+  useModalStore,
+  useNetworkStore,
+
+  // components
+  useButtonMarkAsReadStore,
 ];
 
 const stores = [
@@ -72,15 +92,15 @@ const stores = [
   useCommunityJoinedGroupTreeStore,
   useReactionDetailStore,
   useUserProfileStore,
-  useAccountSettingsStore,
-  useGroupStructureStore,
-  usePermissionSchemeStore,
   useNotificationStore,
   useDraftArticleStore,
   useArticleController,
   useTopicStore,
   useScheduleArticlesStore,
+  useYourContentStore,
   useArticleScheduleContentStore,
+  useCreatePostStore,
+  useGroupJoinableUsersStore,
 
   // others
   useChatStore,
@@ -89,7 +109,7 @@ const stores = [
   useGroupMemberStore,
   useCreateArticleStore,
   useCreateArticleCategoryStore,
-  useCreateArticleSeriesStore,
+  useSelectSeriesStore,
   useArticlesStore,
   useUserInterestedPostStore,
   useDiscoverCommunitiesStore,
@@ -113,6 +133,18 @@ const stores = [
   useRemoteConfigStore,
   usePostsInProgressStore,
   useCommentInputStore,
+  useFeedSearchStore,
+  useLinkPreviewStore,
+  useSeriesContentModalStore,
+  useAppStore,
+  useSelectTagsStore,
+  useValidateSeriesTagsStore,
+  useCommonController,
+  useBlockingStore,
+  useMaintenanceStore,
+  usePinContentStore,
+  useTermStore,
+  useDraftContentsStore,
 ];
 
 export const resetAllStores = () => {
@@ -122,11 +154,19 @@ export const resetAllStores = () => {
       if (functionReset) {
         functionReset();
       } else {
-        console.error('\x1b[35m🐣️ resetAllStores a store error ', store?.name, '\x1b[0m');
+        console.error(
+          '\x1b[35m🐣️ resetAllStores a store error ',
+          store?.name,
+          '\x1b[0m',
+        );
       }
     });
   } catch (e) {
-    console.error('\x1b[35m🐣️ resetAllStores resetAllStores Error', e, '\x1b[0m');
+    console.error(
+      '\x1b[35m🐣️ resetAllStores resetAllStores Error',
+      e,
+      '\x1b[0m',
+    );
   }
 };
 

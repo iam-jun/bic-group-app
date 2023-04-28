@@ -7,13 +7,12 @@ import useArticlesStore from '~/screens/articles/ArticleDetail/store';
 import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import showToastError from '~/store/helper/showToastError';
 import showToastSuccess from '~/store/helper/showToastSuccess';
+import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
+import { PostType } from '~/interfaces/IPost';
 
 const navigation = withNavigation(rootNavigationRef);
 
-const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
-  const state: ICreateArticleState = get();
-  const createArticleActions = state?.actions;
-
+const putEditArticle = (set, _get) => async (params: IPayloadPutEditArticle) => {
   const {
     articleId, data, isNavigateBack = true, isShowToast = true, isShowLoading = true, onSuccess,
   } = params || {};
@@ -62,7 +61,7 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
     set((state: ICreateArticleState) => {
       state.loading = false;
     }, 'putEditArticleError');
-    createArticleActions?.handleSaveError(error);
+    useValidateSeriesTags.getState().actions.handleSeriesTagsError({ error, postType: PostType.ARTICLE });
   }
 };
 

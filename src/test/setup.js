@@ -13,18 +13,35 @@ import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock.js
 import 'react-native-gesture-handler/jestSetup';
 import { initReactI18next } from 'react-i18next';
 
-import mock from 'react-native-permissions/mock';
+import mockPermissions from 'react-native-permissions/mock';
 import mockSafeAreaContext from '~/test/mockSafeAreaContext';
 import colors from '~/theme/theme';
 
 jest.mock('zustand');
 
-jest.mock('rn-fetch-blob', () => ({
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  DocumentDir: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  polyfill: () => {},
-}));
+jest.mock('rn-fetch-blob', () => {
+  const rnFetchBlobMock = {
+    DocumentDir: jest.fn(),
+    polyfill: jest.fn(),
+    fetch: jest.fn(),
+    fs: {
+      scanFile: jest.fn(),
+      unlink: jest.fn(),
+      mkdir: jest.fn(),
+      dirs: {
+        MainBundleDir: '',
+        CacheDir: '',
+        DocumentDir: '',
+        PictureDir: '',
+      },
+    },
+  };
+
+  return {
+    ...rnFetchBlobMock,
+    config: () => rnFetchBlobMock,
+  };
+});
 
 configure({ adapter: new Adapter() });
 
@@ -36,10 +53,17 @@ require('react-native-reanimated/lib/reanimated2/jestUtils').setUpTests();
 
 jest.mock('@react-native-clipboard/clipboard');
 
-jest.mock('@react-native-firebase/messaging', () => () => ({
-  ...jest.requireActual('@react-native-firebase/messaging'),
-  deleteToken: jest.fn(() => Promise.resolve(true)),
-}));
+/* eslint-disable no-undef */
+// jest.doMock('@react-native-firebase', () => ({
+//   ...jest.requireActual('@react-native-firebase'),
+//   messaging: jest.fn(() => ({
+//     hasPermission: jest.fn(() => Promise.resolve(true)),
+//     subscribeToTopic: jest.fn(),
+//     unsubscribeFromTopic: jest.fn(),
+//     requestPermission: jest.fn(() => Promise.resolve(true)),
+//     getToken: jest.fn(() => Promise.resolve('myMockToken')),
+//   })),
+// }));
 
 jest.mock('~/services/sharePreferences', () => ({
   getUserFromSharedPreferences: jest.fn(),
@@ -57,7 +81,7 @@ jest.mock('react-native-image-crop-picker', () => ({
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
 
-jest.mock('react-native-permissions', () => mock);
+jest.mock('react-native-permissions', () => mockPermissions);
 
 global.FormData = require('react-native/Libraries/Network/FormData');
 
@@ -119,6 +143,9 @@ jest.doMock('@react-navigation/native', () => ({
     colors: colors.light.colors,
     elevations: colors.light.elevations,
   }),
+  useRoute: () => ({
+    route: { name: '' },
+  }),
 }));
 
 jest.doMock('react-native-modalize', () => {
@@ -127,7 +154,14 @@ jest.doMock('react-native-modalize', () => {
   const MockedModule = {
     ...RealModule,
     // eslint-disable-next-line react/prop-types
-    Modalize: ({ children }) => <ReactNative.View>{children}</ReactNative.View>,
+    Modalize: ({ children, ...props }) => (
+      <ReactNative.View {...props}>
+        {/* <ReactNative.View>
+          <HeaderComponent />
+        </ReactNative.View> */}
+        {children}
+      </ReactNative.View>
+    ),
   };
   return MockedModule;
 });
@@ -164,6 +198,10 @@ jest.doMock('aws-amplify', () => {
   };
   return MockedModule;
 });
+
+jest.mock('@react-native-camera-roll/camera-roll', () => ({
+  save: jest.fn(),
+}));
 
 jest.doMock('react-native', () => {
   const {
@@ -241,6 +279,17 @@ jest.doMock('react-native', () => {
       setupLibrary: jest.fn(),
       setStringAsync: jest.fn(),
     },
+    RNCCameraRollPermissionModule: {
+      checkPermission: jest.fn(),
+      requestReadWritePermission: jest.fn(),
+      requestAddOnlyPermission: jest.fn(),
+      refreshPhotoSelection: jest.fn(),
+    },
+    RNCCameraRoll: {
+      deletePhotos: jest.fn(),
+      saveToCameraRoll: jest.fn(),
+      getPhotos: jest.fn(),
+    },
   };
 
   const Linking = {
@@ -270,10 +319,10 @@ jest.doMock('react-native', () => {
 
 jest.mock('react-hook-form', () => ({
   ...jest.requireActual('react-hook-form'),
-  useController: () => ({
+  useController: ({ defaultValue }) => ({
     field: {
       onChange: jest.fn(),
-      value: '',
+      value: defaultValue,
     },
   }),
   Controller: ({ children }) => [children],

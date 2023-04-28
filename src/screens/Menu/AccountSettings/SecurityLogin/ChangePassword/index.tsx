@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { isEmpty } from 'lodash';
 import { useForm } from 'react-hook-form';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { useBaseHook } from '~/hooks';
-import * as modalActions from '~/storeRedux/modal/actions';
 
 import spacing from '~/theme/spacing';
 import Button from '~/beinComponents/Button';
-import Text from '~/baseComponents/Text';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
 import getEnv from '~/utils/env';
 import { APP_ENV } from '~/configs/appConfig';
@@ -20,13 +17,10 @@ import useChangePasswordStore, { IChangePasswordState } from './store';
 
 const ChangePassword = () => {
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
-  const actions = useChangePasswordStore((state: IChangePasswordState) => state.actions);
-  const errorText = useChangePasswordStore((state: IChangePasswordState) => state.errorText);
-  const loading = useChangePasswordStore((state: IChangePasswordState) => state.loading);
+  const { actions, errorText, loading } = useChangePasswordStore((state: IChangePasswordState) => state);
 
   const [disableSaveButton, setDisableSaveButton] = useState(true);
 
@@ -126,12 +120,8 @@ const ChangePassword = () => {
     setDisableSaveButton(result);
   };
 
-  const handleForgotPassword = () => {
-    dispatch(modalActions.showAlertNewFeature());
-  };
-
-  const handleOnSaveChangePassword = async () => {
-    await checkDisableSaveButton();
+  const handleOnSaveChangePassword = () => {
+    checkDisableSaveButton();
     if (disableSaveButton) {
       return;
     }
@@ -142,7 +132,7 @@ const ChangePassword = () => {
   };
 
   return (
-    <ScreenWrapper testID="SecurityLogin" isFullView>
+    <ScreenWrapper testID="change_password" isFullView>
       <Header title={t('settings:title_change_password')} />
       <View style={styles.container}>
         <PasswordInputController
@@ -218,16 +208,16 @@ const ChangePassword = () => {
         >
           {t('common:text_save')}
         </Button.Primary>
-        <View style={styles.forgotPasswordContainer}>
-          <TouchableOpacity onPress={handleForgotPassword}>
-            <Text.H6
-              testID="change_password.forgot_password"
-              style={styles.forgotPasswordText}
-            >
-              {t('auth:btn_forgot_password')}
-            </Text.H6>
-          </TouchableOpacity>
-        </View>
+        {/* <View style={styles.forgotPasswordContainer}> */}
+        {/*  <TouchableOpacity onPress={handleForgotPassword}> */}
+        {/*    <Text.H6 */}
+        {/*      testID="change_password.forgot_password" */}
+        {/*      style={styles.forgotPasswordText} */}
+        {/*    > */}
+        {/*      {t('auth:btn_forgot_password')} */}
+        {/*    </Text.H6> */}
+        {/*  </TouchableOpacity> */}
+        {/* </View> */}
       </View>
     </ScreenWrapper>
   );

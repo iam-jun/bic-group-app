@@ -12,6 +12,7 @@ const articleStack = {
   createArticleAudience: 'create-article-audience',
   createArticleSeries: 'create-article-series',
   createArticleTags: 'create-article-tags',
+  createArticleSettings: 'create-article-settings',
 };
 
 export default articleStack;

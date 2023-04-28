@@ -1,9 +1,11 @@
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import getEnv from '~/utils/env';
+import homeStack from './navigator/MainStack/stacks/homeStack/stack';
 
 export const PREFIX_DEEPLINK_GROUP = 'bic://';
 
-export const PREFIX_HTTPS = 'https://';
+// added www because related to performance, auth,...
+export const PREFIX_URL = 'https://www.';
 
 export const customBackHandlerRoutes = [
   'home',
@@ -20,6 +22,10 @@ export const customBackHandlerRoutes = [
   articleStack.createArticleSeries,
   articleStack.createArticleTags,
   articleStack.createArticleContent,
+  homeStack.createPostTags,
+  homeStack.createPostSeries,
+  homeStack.pinContent,
+  homeStack.reorderedPinContent,
 ];
 
 export const EVENT_NAVIGATION_BACK_PRESSED = 'navigation-back-pressed';
@@ -42,7 +48,7 @@ export const bottomTabIconsFocused = {
 
 export const linkingConfig = {
   prefixes: [
-    __DEV__ ? 'http://localhost:8088' : `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}`,
+    __DEV__ ? 'http://localhost:8088' : `${PREFIX_URL}${getEnv('SELF_DOMAIN')}`,
     PREFIX_DEEPLINK_GROUP,
   ],
 };

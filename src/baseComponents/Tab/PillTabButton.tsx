@@ -2,14 +2,18 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text, { TextVariant } from '~/baseComponents/Text';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import { spacing } from '~/theme';
 import { borderRadius } from '~/theme/spacing';
 import elevation from '~/theme/elevations';
-import { useKeySelector } from '~/hooks/selector';
 import { TabButtonProps } from './TabButton';
+import Icon from '../Icon';
 
 export interface PillTabButtonProps extends TabButtonProps {
   type?: 'primary' | 'secondary' | 'neutral';
+  icon?: any;
+  onPressIcon?: () => void;
 }
 
 const textVariant = {
@@ -28,10 +32,12 @@ const PillTabButton = ({
   useI18n,
   disabled,
   onPress,
+  icon,
+  onPressIcon,
 }: PillTabButtonProps) => {
   const theme = useTheme();
   const styles = createStyles(theme);
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   return (
     <TouchableOpacity
@@ -50,6 +56,18 @@ const PillTabButton = ({
       >
         {children}
       </Text>
+      {
+        onPressIcon && (
+        <Icon
+          testID="tag.icon"
+          style={styles.icon}
+          icon={icon}
+          size={12}
+          tintColor={theme.colors.neutral80}
+          onPress={onPressIcon}
+        />
+        )
+      }
     </TouchableOpacity>
   );
 };
@@ -62,8 +80,8 @@ const createStyles = (theme: ExtendedTheme) => {
     container: {
       borderRadius: borderRadius.pill,
       alignItems: 'center',
-      justifyContent: 'center',
       boxShadow: elevation.light.e1,
+      flexDirection: 'row',
     },
 
     // background color
@@ -101,6 +119,9 @@ const createStyles = (theme: ExtendedTheme) => {
     },
     neutralText: {
       color: colors.neutral40,
+    },
+    icon: {
+      marginLeft: spacing.margin.tiny,
     },
   });
 };

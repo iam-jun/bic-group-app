@@ -54,6 +54,7 @@ const CreateArticleTitle: FC<CreateArticleProps> = ({
       />
       <View style={styles.content}>
         <TextInput
+          autoFocus
           testID="edit_title"
           value={title}
           maxLength={64}

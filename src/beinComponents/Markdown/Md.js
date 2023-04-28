@@ -44,6 +44,7 @@ export default class Md extends PureComponent {
       PropTypes.array,
     ]),
     blockStyles: PropTypes.object,
+    paragraphStyles: PropTypes.object,
     channelMentions: PropTypes.object,
     imagesMetadata: PropTypes.object,
     isEdited: PropTypes.bool,
@@ -77,6 +78,7 @@ export default class Md extends PureComponent {
     value: '',
     textStyles: {},
     blockStyles: {},
+    paragraphStyles: {},
     limitMarkdownTypes: false,
     disableImage: true,
     disableHashtags: false,
@@ -247,9 +249,10 @@ export default class Md extends PureComponent {
     }
 
     const styleParagraph = context?.length === 0 ? style.paragraph : {};
+    const paragraphStyles = this.props.paragraphStyles;
 
     return (
-      <View style={[blockStyle, styleParagraph,]}>
+      <View style={[blockStyle, styleParagraph, paragraphStyles]}>
         <Text>{children}</Text>
       </View>
     );
@@ -262,10 +265,10 @@ export default class Md extends PureComponent {
     ];
     const textStyle = this.props.blockStyles[`heading${level}Text`];
     const style = getStyleSheet(this.props.theme);
-
+    const paragraphStyles = this.props.paragraphStyles;
 
     return (
-      <View style={[containerStyle,style.paragraph]}>
+      <View style={[containerStyle,style.paragraph, paragraphStyles]}>
         <Text style={textStyle}>{children}</Text>
       </View>
     );
@@ -301,8 +304,9 @@ export default class Md extends PureComponent {
     children, start, tight, type,
   }) => {
     const style = getStyleSheet(this.props.theme);
+    const paragraphStyles = this.props.paragraphStyles;
 
-    return <View style={style.paragraph}>
+    return <View style={[style.paragraph, paragraphStyles]}>
     <MarkdownList ordered={type !== 'bullet'} start={start} tight={tight}>
       {children}
     </MarkdownList>

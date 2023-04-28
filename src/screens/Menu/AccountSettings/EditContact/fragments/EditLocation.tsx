@@ -1,6 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import {
-  StyleSheet, View, ScrollView, useWindowDimensions,
+  StyleSheet,
+  View,
+  ScrollView,
+  useWindowDimensions,
 } from 'react-native';
 import i18next from 'i18next';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -30,30 +33,26 @@ const EditLocation = ({ modalizeRef, onItemPress }: EditLocationProps) => {
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyles(
-    theme, screenHeight,
-  );
+  const styles = createStyles(theme, screenHeight);
   const insets = useSafeAreaInsets();
 
   const city = useUserProfileStore((state) => state.city);
 
-  const [lstResultSearch, setLstResultSearch] = useState<ICityResponseItem[]>([]);
+  const [lstResultSearch, setLstResultSearch] = useState<ICityResponseItem[]>(
+    [],
+  );
 
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   const doSearch = (searchQuery: string) => {
     if (searchQuery) {
-      const resultSearch = city.filter((item) => searchText(
-        searchQuery, item.name,
-      ));
+      const resultSearch = city.filter((item) => searchText(searchQuery, item.name));
       setLstResultSearch(resultSearch);
     }
   };
 
   const searchHandler = useCallback(
-    debounce(
-      doSearch, appConfig.searchTriggerTime,
-    ),
+    debounce(doSearch, appConfig.searchTriggerTime),
     [],
   );
 
@@ -90,7 +89,7 @@ const EditLocation = ({ modalizeRef, onItemPress }: EditLocationProps) => {
         },
       }}
       ContentComponent={(
-        <View style={styles.contentComponent}>
+        <View testID="edit_location" style={styles.contentComponent}>
           <Text.BodyS useI18n style={styles.titleSearch}>
             settings:title_choose_location
           </Text.BodyS>
@@ -124,9 +123,7 @@ const EditLocation = ({ modalizeRef, onItemPress }: EditLocationProps) => {
 
 export default EditLocation;
 
-const createStyles = (
-  theme: ExtendedTheme, screenHeight: number,
-) => StyleSheet.create({
+const createStyles = (theme: ExtendedTheme, screenHeight: number) => StyleSheet.create({
   searchInput: {
     margin: spacing.margin.base,
   },

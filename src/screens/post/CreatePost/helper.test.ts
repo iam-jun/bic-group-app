@@ -1,163 +1,152 @@
-/* eslint-disable max-len */
-// /* eslint-disable @typescript-eslint/ban-ts-comment */
-// import { get } from 'lodash';
-// import { validateImages, validateVideo } from '~/screens/post/CreatePost/helper';
-// import { languages } from '~/test/testUtils';
-// import { imagePicked, videoSelected, videoUploaded } from '~/test/mock_data/file';
+import i18next from 'i18next';
+import { isEqual } from 'lodash';
+import appConfig from '~/configs/appConfig';
+import useModalStore from '~/store/modal';
+import useUploaderStore from '~/store/uploader';
+import { act, renderHook, waitFor } from '~/test/testUtils';
+import {
+  getParamsValidateSeriesTags,
+  isEqualById,
+  validateFilesPicker,
+  validateVideo,
+} from './helper';
+import useCreatePostStore from './store';
 
-// describe('CreatePost helper', () => {
-//   // @ts-ignore
-//   const t = (path: string) => get(languages, path?.replaceAll?.(':', '.'));
-//   const imageUrl
-// = 'https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/d47669b1-fd3c-4e15-9eb0-24162b4342bc.jpg';
-//   const imageParseFromEditPost = {
-//     fileName: '20220107_223640.jpg',
-//     file: {
-//       name: '20220107_223640.jpg',
-//       filename: '20220107_223640.jpg',
-//       width: 4032,
-//       height: 3024,
-//     },
-//     url: 'https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/d47669b1-fd3c-4e15-9eb0-24162b4342bc.jpg',
-//   };
-//   const imageValidated = {
-//     name: imageUrl,
-//     origin_name: '20220107_223640.jpg',
-//     width: 4032,
-//     height: 3024,
-//   };
+describe('helper create post', () => {
+  describe('getParamsValidateSeriesTags function', () => {
+    it('given selectedAudiences should return object validate series tags', async () => {
+      const { result: resultCreatePostStore } = renderHook(() => useCreatePostStore((state) => state));
 
-//   it('validateImages: validate empty array', () => {
-//     const result = validateImages([], t);
-//     expect(result).toEqual({ images: [], imageError: '', imageUploading: false });
-//   });
+      act(() => {
+        resultCreatePostStore.current.actions.updateCreatePost({
+          series: [
+            {
+              id: '1',
+            },
+          ],
+          tags: [
+            {
+              id: '2',
+            },
+          ],
+        });
+      });
 
-//   it('validateImages: validate picked 1 image upload success', () => {
-//     jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => ({
-//       getFile: jest.fn().mockImplementation(() => ({ url: imageUrl })),
-//     } as any));
+      const selectedAudiences = [{ id: '3' }, { id: '4' }];
+      const expectedResult = {
+        groups: ['3', '4'],
+        series: ['1'],
+        tags: ['2'],
+      };
 
-//     const result = validateImages([imagePicked] as any, t);
-//     expect(result).toEqual({
-//       images: [{
-//         ...imageValidated,
-//         id: undefined,
-//         name: '',
-//       }],
-//       imageError: languages.post.error_upload_failed,
-//       imageUploading: false,
-//     });
-//   });
+      expect(
+        JSON.stringify(getParamsValidateSeriesTags(selectedAudiences)),
+      ).toBe(JSON.stringify(expectedResult));
+    });
+  });
 
-//   it('validateImages: validate picked 1 image uploading', () => {
-//     jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => ({
-//       getFile: jest
-//         .fn()
-//         .mockImplementation(() => ({ url: imageUrl, uploading: true })),
-//     } as any));
+  describe('isEqualById function', () => {
+    it('given two different length arrays should return false', () => {
+      expect(
+        isEqualById([{ id: '1' }], [{ id: '1' }, { id: '2' }]),
+      ).toBeFalsy();
+    });
 
-//     const result = validateImages([imagePicked] as any, t);
-//     expect(result).toEqual({
-//       images: [{
-//         ...imageValidated,
-//         id: undefined,
-//         name: '',
-//       }],
-//       imageError: languages.post.error_upload_failed,
-//       imageUploading: false,
-//     });
-//   });
+    it('given two arrays and has item not equal the same id should return false', () => {
+      expect(isEqualById([{ id: '1' }], [{ id: '2' }])).toBeFalsy();
+    });
 
-//   it('validateImages: validate picked 1 image upload failed', () => {
-//     jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => ({
-//       getFile: jest.fn().mockImplementation(() => ({})),
-//     } as any));
+    it('given two arrays and all items are equal the same id should return true', () => {
+      expect(isEqualById([{ id: '1' }], [{ id: '1' }])).toBeTruthy();
+    });
 
-//     const result = validateImages([imagePicked] as any, t);
-//     expect(result).toEqual({
-//       images: [{ ...imageValidated, name: '' }],
-//       imageError: languages.post.error_upload_failed,
-//       imageUploading: false,
-//     });
-//   });
+    it('given two objects with the same id should return true', () => {
+      expect(isEqualById({ id: '1' }, { id: '1' })).toBeTruthy();
+    });
 
-//   it('validateImages: validate file from edit post', () => {
-//     const result = validateImages([imageParseFromEditPost] as any, t);
-//     expect(result).toEqual({
-//       images: [imageValidated],
-//       imageError: '',
-//       imageUploading: false,
-//     });
-//   });
+    it('given two objects with not the same id should return false', () => {
+      expect(isEqualById({ id: '1' }, { id: '2' })).toBeFalsy();
+    });
+  });
 
-//   it('validateVideo: return empty data if invalid input video', () => {
-//     const result = validateVideo(undefined, t);
-//     expect(result).toEqual({
-//       video: undefined,
-//       videoError: '',
-//     });
-//   });
+  describe('validateFilesPicker function', () => {
+    it('given files over total size should show toast', async () => {
+      const files: any = [
+        {
+          size: 1234567899999,
+        },
+      ];
+      const totalFiles = 0;
+      const totalSize = 0;
 
-//   it('validateVideo: return empty data if invalid input video', () => {
-//     const result = validateVideo(undefined, t);
-//     expect(result).toEqual({
-//       video: undefined,
-//       videoError: '',
-//     });
-//   });
+      validateFilesPicker(files, totalFiles, totalSize);
 
-//   it('validateVideo: return selected file if it has been uploaded (has id)', () => {
-//     const result = validateVideo(videoUploaded, t);
-//     expect(result).toEqual({
-//       video: videoUploaded,
-//       videoError: '',
-//       videoUploading: false,
-//     });
-//   });
+      await waitFor(() => {
+        expect(useModalStore.getState().toast.content).toBe(
+          i18next.t('upload:text_file_over_size'),
+        );
+      });
+    });
 
-//   it('validateVideo: return error uploading file', () => {
-//     jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => ({
-//       getFile: jest
-//         .fn()
-//         .mockImplementation(() => ({ uploading: true, result: videoUploaded })),
-//     } as any));
+    it('given files over maximum allowed should show toast', async () => {
+      const files: any = [
+        {
+          size: 123,
+        },
+        {
+          size: 123,
+        },
+      ];
+      const totalFiles = 24;
+      const totalSize = 0;
 
-//     const result = validateVideo(videoSelected, t);
-//     expect(result).toEqual({
-//       video: undefined,
-//       videoError: languages.post.error_wait_uploading,
-//       videoUploading: true,
-//     });
-//   });
+      const result = validateFilesPicker(files, totalFiles, totalSize);
 
-//   it('validateVideo: return error upload failed', () => {
-//     jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => ({
-//       getFile: jest
-//         .fn()
-//         .mockImplementation(() => ({ uploading: false, result: {} })),
-//     } as any));
+      await waitFor(() => {
+        expect(useModalStore.getState().toast.content).toBe(
+          i18next.t('upload:text_file_over_length', {
+            max_files: appConfig.maxFiles,
+          }),
+        );
+        expect(result.length).toBe(1);
+      });
+    });
+  });
 
-//     const result = validateVideo(videoSelected, t);
-//     expect(result).toEqual({
-//       video: undefined,
-//       videoError: languages.post.error_upload_failed,
-//       videoUploading: false,
-//     });
-//   });
+  describe('validateVideo function', () => {
+    it('given no selecting video should return video undefined', () => {
+      expect(validateVideo(undefined, undefined).video).toBeUndefined();
+    });
 
-//   it('validateVideo: return file uploaded', () => {
-//     jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => ({
-//       getFile: jest.fn().mockImplementation(() => ({
-//         uploading: false,
-//         result: videoUploaded,
-//       })),
-//     } as any));
+    it('given selecting video that is uploading should return videoUploading is true', () => {
+      useUploaderStore.setState((state) => ({
+        ...state,
+        uploadingFiles: {
+          123: 60,
+        },
+      }));
+      expect(validateVideo({ fileName: '123' }, undefined).videoUploading).toBeTruthy();
+    });
 
-//     const result = validateVideo(videoSelected, t);
-//     expect(result).toEqual({
-//       video: videoUploaded,
-//       videoError: '',
-//       videoUploading: false,
-//     });
-//   });
-// });
+    it('given selecting video that is error should return videoError', () => {
+      useUploaderStore.setState((state) => ({
+        ...state,
+        uploadedFiles: {
+          123: {} as any,
+        },
+      }));
+      expect(validateVideo({ fileName: '123' }, i18next.t).videoError).toBe(i18next.t('post:error_upload_failed'));
+    });
+
+    it('given selecting video and that video is uploaded should return video', () => {
+      const videoUploaded = { id: '123', url: 'https://video.com/123' };
+      useUploaderStore.setState((state) => ({
+        ...state,
+        uploadedFiles: {
+          123: videoUploaded as any,
+        },
+      }));
+      expect(isEqual(validateVideo({ fileName: '123' }, undefined).video, videoUploaded)).toBeTruthy();
+    });
+  });
+});

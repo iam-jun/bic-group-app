@@ -1,39 +1,42 @@
-import { render } from '@testing-library/react-native';
-import * as React from 'react';
+import React from 'react';
+import useModalStore from '~/store/modal';
 
-import UserHeader from '.';
+import { fireEvent, renderWithRedux } from '~/test/testUtils';
+import UserHeader from './index';
 
 describe('UserHeader component', () => {
-  const baseProps = {
-    fullname: 'fullname',
-    username: 'username',
-    description: 'description',
-    latestWork: {
-      titlePosition: 'titlePosition',
-      company: 'company',
-    },
-  };
-
   it('renders correctly', () => {
-    const rendered = render(<UserHeader {...baseProps} />).toJSON();
-    expect(rendered).toMatchSnapshot();
+    const fullname = 'test';
+    const username = 'test';
+    const latestWork = { company: 'Test', titlePosition: 'Test' };
+
+    const rendered = renderWithRedux(
+      <UserHeader id="123" fullname={fullname} username={username} latestWork={latestWork} isCurrentUser />,
+    );
+    const { getByTestId } = rendered;
+    const containerComponent = getByTestId('user_profile');
+    expect(containerComponent).toBeDefined();
   });
 
-  it('should hide username when username is empty ', () => {
-    const props = { ...baseProps, username: '' };
-    const { queryByTestId } = render(<UserHeader {...props} />);
+  it('renders isCurrentUser=false correctly', () => {
+    const showModal = jest.fn();
+    const hideModal = jest.fn();
+    useModalStore.setState((state) => {
+      state.actions.showModal = showModal;
+      state.actions.hideModal = hideModal;
+      return state;
+    });
 
-    const usernameText = queryByTestId('user_profile.username');
+    const fullname = 'test';
+    const username = 'test';
+    const latestWork = { company: 'Test', titlePosition: 'Test' };
 
-    expect(usernameText).toBeNull();
-  });
-
-  it('should hide description when description is empty ', () => {
-    const props = { ...baseProps, description: '' };
-    const { queryByTestId } = render(<UserHeader {...props} />);
-
-    const descriptionText = queryByTestId('user_profile.description');
-
-    expect(descriptionText).toBeNull();
+    const rendered = renderWithRedux(
+      <UserHeader id="123" fullname={fullname} username={username} latestWork={latestWork} isCurrentUser={false} />,
+    );
+    const { getByTestId } = rendered;
+    const btnBlock = getByTestId('user_header.btn_block');
+    fireEvent.press(btnBlock);
+    expect(showModal).toBeCalled();
   });
 });

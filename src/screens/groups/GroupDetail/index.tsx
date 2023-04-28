@@ -5,12 +5,11 @@ import {
 } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
 import React, {
-  useCallback, useEffect, useRef, useState,
+  useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
 import {
   DeviceEventEmitter, Share, StyleSheet, View,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 import Animated, {
@@ -33,7 +32,6 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { rootSwitch } from '~/router/stack';
 import useAuthController, { IAuthState } from '~/screens/auth/store';
 import GroupContent from '~/screens/groups/GroupDetail/components/GroupContent';
-import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import {
   formatChannelLink, getGroupLink, openUrl,
@@ -49,13 +47,16 @@ import NotFound from '~/screens/NotFound/components/NotFound';
 import { GroupPrivacyType } from '~/constants/privacyTypes';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import useTimelineStore, { ITimelineState } from '~/store/timeline';
-import homeActions from '~/storeRedux/home/actions';
 import ContentSearch from '~/screens/Home/HomeSearch';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useGroupDetailStore from './store';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 import useModalStore from '~/store/modal';
+import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
+import usePinContentStore from '~/components/PinContent/store';
+import TermsView from '~/components/TermsModal';
+import MemberQuestionsModal from '~/components/MemberQuestionsModal';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -68,7 +69,6 @@ const GroupDetail = (props: any) => {
 
   const user = useAuthController(useCallback((state: IAuthState) => state.authUser, []));
   const userId = useUserIdAuth();
-  const dispatch = useDispatch();
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
   const {
     isLoadingGroupDetailError,
@@ -80,7 +80,7 @@ const GroupDetail = (props: any) => {
   const {
     name, privacy, teamName, slug,
   } = groupInfo || {};
-  const { showToast } = useModalStore((state) => state.actions);
+  const modalActions = useModalStore((state) => state.actions);
 
   const headerRef = useRef<any>();
   const [groupInfoHeight, setGroupInfoHeight] = useState(300);
@@ -102,12 +102,13 @@ const GroupDetail = (props: any) => {
   // const hasNoDataInStore = !groupInfo;
   // const shouldShowPlaceholder = hasNoDataInStore && isLoadingGroup;
 
-  const shouldShowPlaceholder = currentGroupId !== groupId;
+  const shouldShowPlaceholder = currentGroupId !== groupId && !isLoadingGroupDetailError;
 
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
   const canSetting = shouldHavePermission(groupId, [
-    PermissionKey.EDIT_INFO,
-    PermissionKey.EDIT_PRIVACY,
+    PermissionKey.ROLE_COMMUNITY_OWNER,
+    PermissionKey.ROLE_COMMUNITY_ADMIN,
+    PermissionKey.ROLE_GROUP_ADMIN,
   ]);
   const showPrivate
     = !isMember
@@ -126,10 +127,12 @@ const GroupDetail = (props: any) => {
     ]),
   );
 
+  const actionsFeedSearch = useFeedSearchStore((state) => state.actions);
+  const actionPinContent = usePinContentStore((state) => state.actions);
+
   const buttonShow = useSharedValue(0);
   const containerPaddingBottom = useSharedValue(0);
   const heightButtonBottom = useSharedValue(0);
-  const searchViewRef = useRef(null);
 
   useFocusEffect(() => {
     if (!userId) {
@@ -183,19 +186,34 @@ const GroupDetail = (props: any) => {
     if (groupId) timelineActions.resetTimeline(groupId);
   }, [groupId]);
 
+  useMemo(() => {
+    // prevent showing the old data before being refreshed
+    if (groupId) {
+      actionPinContent.resetDataPinContentsGroup(groupId);
+    }
+  }, [groupId]);
+
+  useEffect(() => {
+    if (groupId) actionPinContent.getPinContentsGroup(groupId);
+  }, [groupId]);
+
+  useEffect(() => () => {
+    if (groupId) actionPinContent.resetDataPinContentsGroup(groupId);
+  }, [groupId]);
+
   const onPressAdminTools = () => {
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     rootNavigation.navigate(groupStack.groupAdmin, { groupId });
   };
 
   const onPressCopyLink = () => {
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     Clipboard.setString(getGroupLink({ communityId: communityDetail?.id, groupId }));
-    showToast({ content: 'common:text_link_copied_to_clipboard' });
+    modalActions.showToast({ content: 'common:text_link_copied_to_clipboard' });
   };
 
   const onPressShare = () => {
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     const groupLink = getGroupLink({ communityId: communityDetail?.id, groupId });
     try {
       Share.share({ message: groupLink, url: groupLink });
@@ -211,7 +229,7 @@ const GroupDetail = (props: any) => {
   });
 
   const onPressLeave = () => {
-    dispatch(modalActions.hideBottomList());
+    modalActions.hideBottomList();
     alertLeaveGroup();
   };
 
@@ -264,16 +282,12 @@ const GroupDetail = (props: any) => {
       type: 'group',
       isMember,
       canSetting,
-      dispatch,
       onPressAdminTools,
       onPressCopyLink,
       onPressShare,
       onPressLeave,
     });
-    dispatch(modalActions.showBottomList({
-      isOpen: true,
-      data: headerMenuData,
-    } as BottomListProps));
+    modalActions.showBottomList({ data: headerMenuData } as BottomListProps);
   };
 
   const onPressChat = () => {
@@ -287,7 +301,7 @@ const GroupDetail = (props: any) => {
   };
 
   const onPressSearch = () => {
-    dispatch(homeActions.setNewsfeedSearch({ isShow: true, searchViewRef }));
+    actionsFeedSearch.setNewsfeedSearch({ isShow: true });
   };
 
   const _onPressContentFilterTab = (item: any) => {
@@ -376,7 +390,9 @@ const GroupDetail = (props: any) => {
         <Animated.View onLayout={onButtonBottomLayout} style={[styles.button, buttonStyle]}>
           <GroupJoinCancelButton style={styles.joinBtn} community={communityDetail} />
         </Animated.View>
-        <ContentSearch searchViewRef={searchViewRef} groupId={groupId} />
+        <ContentSearch groupId={groupId} />
+        <MemberQuestionsModal />
+        <TermsView />
       </>
     );
   };

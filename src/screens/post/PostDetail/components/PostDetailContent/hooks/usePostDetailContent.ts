@@ -3,32 +3,34 @@ import { isEmpty } from 'lodash';
 import {
   useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
-import { useDispatch } from 'react-redux';
 import Text from '~/baseComponents/Text';
 import APIErrorCode from '~/constants/apiErrorCode';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
-import { useKeySelector } from '~/hooks/selector';
 import { IAudienceGroup, IPayloadGetPostDetail } from '~/interfaces/IPost';
 import { rootSwitch } from '~/router/stack';
 import { defaultList, getSectionData } from '~/helpers/post';
 import useCommentsStore from '~/store/entities/comments';
 import commentsSelector from '~/store/entities/comments/selectors';
-import usePostsStore from '~/store/entities/posts';
+import usePostsStore, { IPostsState } from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import postActions from '~/storeRedux/post/actions';
-import postKeySelector from '~/storeRedux/post/keySelector';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import useModalStore from '~/store/modal';
 
 const usePostDetailContent = ({
-  postId, notificationId, HeaderImageComponent, isReported,
+  postId,
+  notificationId,
+  HeaderImageComponent,
+  isReported,
 }) => {
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
 
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(
+    networkSelectors.getIsInternetReachable,
+  );
 
   const isFocused = useIsFocused();
 
@@ -37,19 +39,45 @@ const usePostDetailContent = ({
   const userId = useUserIdAuth();
   const { showAlert } = useModalStore((state) => state.actions);
 
-  const actor = usePostsStore(useCallback(postsSelector.getActor(postId), [postId]));
-  const deleted = usePostsStore(useCallback(postsSelector.getDeleted(postId), [postId]));
-  const createdAt = usePostsStore(useCallback(postsSelector.getCreatedAt(postId), [postId]));
-  const audience = usePostsStore(useCallback(postsSelector.getAudience(postId), [postId]));
-  const commentLeft = usePostsStore(useCallback(postsSelector.getCommentOnlyCount(postId), [postId]));
-  const setting = usePostsStore(useCallback(postsSelector.getSetting(postId), [postId]));
-  const reported = usePostsStore(useCallback(postsSelector.getReported(postId), [postId]));
+  const actor = usePostsStore(
+    useCallback(postsSelector.getActor(postId), [postId]),
+  );
+  const deleted = usePostsStore(
+    useCallback(postsSelector.getDeleted(postId), [postId]),
+  );
+  const createdAt = usePostsStore(
+    useCallback(postsSelector.getCreatedAt(postId), [postId]),
+  );
+  const audience = usePostsStore(
+    useCallback(postsSelector.getAudience(postId), [postId]),
+  );
+  const commentLeft = usePostsStore(
+    useCallback(postsSelector.getCommentOnlyCount(postId), [postId]),
+  );
+  const setting = usePostsStore(
+    useCallback(postsSelector.getSetting(postId), [postId]),
+  );
+  const reported = usePostsStore(
+    useCallback(postsSelector.getReported(postId), [postId]),
+  );
+  const {
+    deletePostLocal,
+    putMarkSeenPost,
+    getPostDetail: actionGetPostDetail,
+    setCommentErrorCode,
+  } = usePostsStore((state: IPostsState) => state.actions);
 
-  const comments = useCommentsStore(useCallback(commentsSelector.getCommentsByParentId(postId), [postId]));
-  const commentError = useKeySelector(postKeySelector.commentErrorCode);
+  const comments = useCommentsStore(
+    useCallback(commentsSelector.getCommentsByParentId(postId), [postId]),
+  );
+  const commentError = usePostsStore((state) => state.commentErrorCode);
 
-  const commentSectionData = useMemo(() => getSectionData(comments), [comments]);
-  const sectionData = deleted || !setting?.canComment ? defaultList : commentSectionData;
+  const commentSectionData = useMemo(
+    () => getSectionData(comments),
+    [comments],
+  );
+  const sectionData
+    = deleted || !setting?.canComment ? defaultList : commentSectionData;
 
   const [refreshing, setRefreshing] = useState(false);
   const [isEmptyContent, setIsEmptyContent] = useState(false);
@@ -98,21 +126,20 @@ const usePostDetailContent = ({
   };
 
   const onPressMarkSeenPost = useCallback(() => {
-    dispatch(postActions.putMarkSeenPost({ postId }));
+    putMarkSeenPost({ postId });
   }, [postId]);
 
   useEffect(() => {
     onPressMarkSeenPost();
     return () => {
-      dispatch(postActions.setCreatePostInitAudiences());
-      dispatch(postActions.setCommentErrorCode(false));
+      setCommentErrorCode(false);
     };
   }, []);
 
   useEffect(
     () => () => {
       if (commentError === APIErrorCode.Post.POST_DELETED) {
-        dispatch(postActions.deletePostLocal(postId));
+        deletePostLocal(postId);
       }
     },
     [commentError],
@@ -164,7 +191,7 @@ const usePostDetailContent = ({
         showToast: !!notificationId,
         isReported,
       };
-      dispatch(postActions.getPostDetail(payload));
+      actionGetPostDetail(payload);
     }
   };
 

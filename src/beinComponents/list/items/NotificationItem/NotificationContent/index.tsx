@@ -2,15 +2,14 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text from '~/baseComponents/Text';
 import MarkdownView from '~/beinComponents/MarkdownView';
 import TimeView from '~/beinComponents/TimeView';
 import spacing from '~/theme/spacing';
 
 interface Props {
   description: string;
-  content?: string;
-  updatedAt?: string;
+  content: string;
+  updatedAt: string;
 
 }
 
@@ -28,16 +27,14 @@ const NotificationContent = ({
         {description}
       </MarkdownView>
       {!!content && (
-        <Text.BodyM
+        <MarkdownView
           testID="notification_content.content"
-          numberOfLines={2}
-          color={colors.neutral60}
         >
           {content}
-        </Text.BodyM>
+        </MarkdownView>
       )}
       <TimeView
-        testID="notification_item.time_view"
+        testID="notification_content.time_view"
         time={updatedAt}
         style={styles.timeCreated}
         type="short"

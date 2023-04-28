@@ -38,11 +38,12 @@ const Experiences: FC<ExperiencesProps> = ({ isCurrentUser }) => {
       onPress={addExperience}
       icon="PlusSolid"
       title="common:text_add"
+      testID="experiences.add_btn"
     />
   );
 
   return (
-    <>
+    <View testID="experiences">
       <Divider color={colors.gray5} size={spacing.padding.large} />
       <InfoCard
         title="settings:title_experience"
@@ -61,7 +62,7 @@ const Experiences: FC<ExperiencesProps> = ({ isCurrentUser }) => {
           </View>
         ))}
       </InfoCard>
-    </>
+    </View>
   );
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleProp, StyleSheet, ViewStyle,
+  StyleProp, StyleSheet, TextStyle, ViewStyle,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
@@ -25,6 +25,7 @@ export interface TagProps {
   onPressIcon?: () => void;
   style?: StyleProp<ViewStyle>;
   textProps?: TextProps;
+  textStyle?: StyleProp<TextStyle>;
   buttonProps?: ButtonProps;
   testID?: string;
 }
@@ -40,6 +41,7 @@ const Tag: React.FC<TagProps> = ({
   onPressIcon,
   style,
   textProps,
+  textStyle,
   buttonProps,
   testID,
 }: TagProps) => {
@@ -72,11 +74,10 @@ const Tag: React.FC<TagProps> = ({
       {...buttonProps}
     >
       {!!avatar && <Avatar.Tiny source={avatar} style={styles.avatar} />}
-      {!!label
-      && (
-      <Text variant={variant} testID="tag.label" style={styles.labelText} {...textProps}>
-        {label}
-      </Text>
+      {!!label && (
+        <Text variant={variant} testID="tag.label" style={[styles.labelText, textStyle]} {...textProps}>
+          {label}
+        </Text>
       )}
       {!disabled && onPressIcon && !!icon && (
         <Icon

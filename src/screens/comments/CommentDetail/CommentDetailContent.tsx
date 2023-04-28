@@ -6,22 +6,18 @@ import {
   FlatList, RefreshControl, StyleSheet, View,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import CommentItem from '~/beinComponents/list/items/CommentItem';
 import CommentViewPlaceholder from '~/beinComponents/placeholder/CommentViewPlaceholder';
 import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
-import { useKeySelector } from '~/hooks/selector';
 import { IAudienceGroup, ICommentData } from '~/interfaces/IPost';
 import useCommentsStore from '~/store/entities/comments';
 import commentsSelector from '~/store/entities/comments/selectors';
-import usePostsStore from '~/store/entities/posts';
+import usePostsStore, { IPostsState } from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 
 import CommentInputView from '~/screens/comments/components/CommentInputView';
-import postActions from '~/storeRedux/post/actions';
-import postKeySelector from '~/storeRedux/post/keySelector';
 import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -46,28 +42,37 @@ const CommentDetailContent = (props: any) => {
   const styles = createStyle(theme);
 
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
   const { rootNavigation, goHome } = useRootNavigation();
 
-  const commentDetailController = useCommentDetailController((state) => state.actions);
+  const commentDetailController = useCommentDetailController(
+    (state) => state.actions,
+  );
   const { showToast, showAlert } = useModalStore((state) => state.actions);
+  const postActions = usePostsStore((state) => state.actions);
 
   const listRef = useRef<any>();
   const commentInputRef = useRef<any>();
 
   const params = props?.route?.params;
   const {
-    postId, replyItem, commentParent, commentId, parentId, notiId, isReported,
-  }
-    = params || {};
+    postId,
+    replyItem,
+    commentParent,
+    commentId,
+    parentId,
+    notiId,
+    isReported,
+  } = params || {};
   const id = postId;
 
   const actor = usePostsStore(postsSelector.getActor(id));
   const type = usePostsStore(postsSelector.getType(postId));
   const audience = usePostsStore(postsSelector.getAudience(id));
-  const postDetailLoadingState = useKeySelector(
-    postKeySelector.loadingGetPostDetail,
+  const postDetailLoadingState = usePostsStore(
+    (state) => state.isLoadingGetPostDetail,
   );
+  const { deletePostLocal, putMarkSeenPost, setIsLoadingGetPostDetail }
+    = usePostsStore((state: IPostsState) => state.actions);
 
   let comments = null;
   if (isReported) {
@@ -84,11 +89,9 @@ const CommentDetailContent = (props: any) => {
     notFoundComment,
   } = getListChildComment(comments, parentId || commentId);
 
-  const scrollToCommentsPosition = useKeySelector(
-    postKeySelector.scrollToCommentsPosition,
-  );
+  const scrollToCommentsPosition = usePostsStore((state) => state.scrollToCommentsPosition);
 
-  const copyCommentError = useKeySelector(postKeySelector.commentErrorCode);
+  const copyCommentError = usePostsStore((state) => state.commentErrorCode);
 
   const headerTitle = t(getTitle(type), {
     name: actor?.fullname || '',
@@ -117,12 +120,12 @@ const CommentDetailContent = (props: any) => {
       replacePostDetail(type, postId);
     }
     if (copyCommentError === APIErrorCode.Post.POST_DELETED && !!notiId) {
-      dispatch(postActions.deletePostLocal(id));
+      deletePostLocal(id);
       showToast({ content: 'post:error_post_detail_deleted' });
       rootNavigation.popToTop();
     }
     if (!postDetailLoadingState && !copyCommentError) {
-      dispatch(postActions.setScrollCommentsPosition(null));
+      postActions.setScrollCommentsPosition(null);
       commentDetailController.getCommentDetail({
         commentId,
         params: { postId },
@@ -130,12 +133,10 @@ const CommentDetailContent = (props: any) => {
         callbackLoading: (loading: boolean) => {
           setLoading(loading);
           if (!loading && !!replyItem) {
-            dispatch(
-              postActions.setPostDetailReplyingComment({
-                comment: replyItem,
-                parentComment: commentParent,
-              }),
-            );
+            postActions.setPostDetailReplyingComment({
+              comment: replyItem,
+              parentComment: commentParent,
+            });
           }
         },
       });
@@ -160,7 +161,7 @@ const CommentDetailContent = (props: any) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       if (scrollToCommentsPosition?.position === 'top') {
-        dispatch(postActions.setScrollCommentsPosition(null));
+        postActions.setScrollCommentsPosition(null);
       } else if (scrollToCommentsPosition?.position === 'bottom') {
         scrollToIndex();
       } else if (!!parentId && childrenComments?.length > 0 && !isScrollFirst) {
@@ -183,7 +184,7 @@ const CommentDetailContent = (props: any) => {
         animated: true,
         index: index || (position > 0 ? position : 0),
       });
-      dispatch(postActions.setScrollCommentsPosition(null));
+      postActions.setScrollCommentsPosition(null);
     } catch (error) {
       // scroll to the first comment to avoid scroll error
       listRef.current?.scrollToOffset?.({ animated: true, offset: 0 });
@@ -199,16 +200,12 @@ const CommentDetailContent = (props: any) => {
     );
   };
 
-  const goToPostDetail = () => {
-    replacePostDetail(type, postId);
-  };
-
   const showNotice = (type = 'deleted_comment') => {
     showAlert({
       HeaderImageComponent: (
         <View style={{ alignItems: 'center' }}>
           <SVGIcon
-              // @ts-ignore
+            // @ts-ignore
             source={CommentNotFoundImg}
             width={120}
             height={120}
@@ -252,7 +249,7 @@ const CommentDetailContent = (props: any) => {
       return;
     }
     if (copyCommentError === APIErrorCode.Post.POST_DELETED) {
-      dispatch(postActions.setLoadingGetPostDetail(true));
+      setIsLoadingGetPostDetail(true);
       setIsEmpty(true);
       setRefreshing(true);
       showNotice('deleted_post');
@@ -270,7 +267,7 @@ const CommentDetailContent = (props: any) => {
   };
 
   const onPressMarkSeenPost = useCallback(() => {
-    dispatch(postActions.putMarkSeenPost({ postId }));
+    putMarkSeenPost({ postId });
   }, [postId]);
 
   const renderCommentItem = (data: any) => {
@@ -333,7 +330,7 @@ const CommentDetailContent = (props: any) => {
     return null;
   }
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1 }} testID="comment_detail_content">
       <BannerReport commentId={commentId} />
       <FlatList
         ref={listRef}
@@ -349,7 +346,6 @@ const CommentDetailContent = (props: any) => {
             audience={audience}
             id={id}
             isReported={isReported}
-            onPress={goToPostDetail}
             onPressMarkSeenPost={onPressMarkSeenPost}
           />
         )}
@@ -386,11 +382,8 @@ const CommentLevel1 = ({
   }
 
   return (
-    <View>
-      <Divider
-        size={spacing.padding.large}
-        color={color}
-      />
+    <View testID="comment_level_1">
+      <Divider size={spacing.padding.large} color={color} />
       <CommentItem
         postId={id}
         commentData={commentData}

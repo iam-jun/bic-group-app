@@ -393,7 +393,7 @@ exports[`CreateArticleContent screen should render correctly 1`] = `
                 showsVerticalScrollIndicator={false}
                 source={
                   Object {
-                    "uri": "https://undefined/article/webview/v1",
+                    "uri": "https://beincom.io/article/webview/v1",
                   }
                 }
                 style={
@@ -872,7 +872,7 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                 showsVerticalScrollIndicator={false}
                 source={
                   Object {
-                    "uri": "https://undefined/article/webview/v1",
+                    "uri": "https://beincom.io/article/webview/v1",
                   }
                 }
                 style={
@@ -934,6 +934,7 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
               }
               collapsable={false}
               entering={[Function]}
+              testID="article_format_toolbar"
             >
               <View
                 style={
@@ -972,7 +973,7 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                       "padding": 6,
                     }
                   }
-                  testID="button_wrapper"
+                  testID="article_format_toolbar.btn_icon"
                 >
                   <View
                     accessibilityState={
@@ -1069,7 +1070,7 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                       "padding": 6,
                     }
                   }
-                  testID="button_wrapper"
+                  testID="article_format_toolbar.btn_paragraph"
                 >
                   <View
                     accessibilityState={
@@ -1316,7 +1317,9 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                         ]
                       }
                     >
-                      <View />
+                      <View
+                        testID="article_format_toolbar.btn_image"
+                      />
                     </View>
                   </View>
                 </View>
@@ -1376,7 +1379,9 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                         ]
                       }
                     >
-                      <View />
+                      <View
+                        testID="article_format_toolbar.btn_embed"
+                      />
                     </View>
                   </View>
                 </View>
@@ -1543,7 +1548,9 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                         ]
                       }
                     >
-                      <View />
+                      <View
+                        testID="article_format_toolbar.btn_link"
+                      />
                     </View>
                   </View>
                 </View>
@@ -1603,14 +1610,8 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                         }
                         collapsable={false}
                         forwardedRef={[Function]}
-                        hitSlop={
-                          Object {
-                            "bottom": 10,
-                            "left": 10,
-                            "right": 10,
-                            "top": 10,
-                          }
-                        }
+                        handlerTag={1}
+                        handlerType="PanGestureHandler"
                         onGestureHandlerEvent={[Function]}
                         style={
                           Object {
@@ -1770,6 +1771,7 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                                 "flex": 1,
                               }
                             }
+                            testID="sticker_view.emoij"
                           >
                             <View
                               style={
@@ -1778,6 +1780,7 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                                   "flex": 1,
                                 }
                               }
+                              testID="emoji_picker"
                             >
                               <RCTScrollView
                                 data={Array []}
@@ -1803,13 +1806,11 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                                 showsVerticalScrollIndicator={false}
                                 stickyHeaderIndices={Array []}
                                 style={
-                                  Array [
-                                    Object {},
-                                    Object {
-                                      "width": 720,
-                                    },
-                                  ]
+                                  Object {
+                                    "width": 720,
+                                  }
                                 }
+                                testID="emoji_picker.section_list"
                               >
                                 <View />
                               </RCTScrollView>

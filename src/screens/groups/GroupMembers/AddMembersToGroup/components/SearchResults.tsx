@@ -3,25 +3,26 @@ import {
 } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { spacing } from '~/theme';
-import { IUser } from '~/interfaces/IAuth';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 import images from '~/resources/images';
+import useGroupJoinableUsersStore from '../store';
+import { IObject } from '~/interfaces/common';
+import { IJoinableUsers } from '~/interfaces/IGroup';
 
 interface Props {
-  loading: boolean;
-  data: IUser[];
-  selectedUsers: IUser[];
+  data: IObject<IJoinableUsers>;
+  selectedUsers: string[];
   onLoadMore: () => void;
-  onSelectUser: (user: IUser) => void;
+  onSelectUser: (userId: string) => void;
 }
 
 const SearchResults = ({
-  loading,
   data,
   selectedUsers,
   onLoadMore,
@@ -30,37 +31,51 @@ const SearchResults = ({
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyles();
+  const insets = useSafeAreaInsets();
+
+  const { ids, loading, hasNextPage } = useGroupJoinableUsersStore((state) => state.users);
 
   const renderEmpty = () => (!!loading ? null : <NoSearchResultsFound />);
 
-  const renderItemUser = ({ item }: {item: IUser; index: number}) => {
-    const selected = selectedUsers.find((user: IUser) => user.id === item.id);
-    const { name, username } = item;
+  const renderItemUser = ({ item }: {item: string; index: number}) => {
+    const isSelected = selectedUsers.includes(item);
+    const currentUser = data[item];
+    const { fullname, username, avatar } = currentUser;
 
     return (
       <PrimaryItem
         showAvatar
         style={styles.paddingHorizontal}
-        avatar={item.avatar || images.img_user_avatar_default}
+        avatar={avatar || images.img_user_avatar_default}
         avatarProps={{ isRounded: true, variant: 'small' }}
         ContentComponent={(
           <>
             <Text.BodyMMedium ellipsizeMode="middle" color={colors.neutral70} numberOfLines={1}>
-              {name}
+              {fullname}
             </Text.BodyMMedium>
             <Text.BodyS color={colors.neutral40} numberOfLines={1}>{`@${username}`}</Text.BodyS>
           </>
         )}
-        isChecked={!!selected}
+        isChecked={isSelected}
         checkboxProps={{ testID: 'search_results.checkbox' }}
         onPressCheckbox={() => onSelectUser(item)}
       />
     );
   };
 
+  const renderFooterComponent = () => {
+    if (!hasNextPage) return <ViewSpacing height={insets.bottom || spacing.padding.large} />;
+
+    return (
+      <View style={styles.boxFooter} testID="search_results.loading_more">
+        <ActivityIndicator />
+      </View>
+    );
+  };
+
   if (loading) {
     return (
-      <View style={styles.loadingIndicator}>
+      <View style={styles.loadingIndicator} testID="search_results.loading">
         <ActivityIndicator color={colors.neutral40} />
       </View>
     );
@@ -71,16 +86,18 @@ const SearchResults = ({
       <Text.SubtitleM
         color={colors.neutral60}
         style={styles.marginHorizontal}
+        testID="search_results.title"
         useI18n
       >
         common:text_search_results
       </Text.SubtitleM>
       <ViewSpacing height={spacing.margin.tiny} />
       <FlatList
-        data={data}
+        data={ids}
         style={styles.flex1}
         initialNumToRender={15}
         ListEmptyComponent={renderEmpty}
+        ListFooterComponent={renderFooterComponent}
         renderItem={renderItemUser}
         onEndReached={onLoadMore}
         onEndReachedThreshold={0.2}
@@ -95,6 +112,11 @@ const createStyles = () => StyleSheet.create({
   loadingIndicator: { marginTop: spacing.margin.extraLarge },
   marginHorizontal: { marginHorizontal: spacing.margin.large },
   paddingHorizontal: { paddingHorizontal: spacing.padding.large },
+  boxFooter: {
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default SearchResults;

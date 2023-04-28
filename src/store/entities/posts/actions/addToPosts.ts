@@ -2,7 +2,7 @@ import { isArray, isEmpty } from 'lodash';
 import { ICommentData, IPayloadAddToAllPost, IPost } from '~/interfaces/IPost';
 import { sortComments } from '~/helpers/post';
 import useCommentsStore from '~/store/entities/comments';
-import IPostsState from '../Interface';
+import { IPostsState } from '../index';
 
 const addToPosts = (_set, get) => (payload: IPayloadAddToAllPost) => {
   const { data, handleComment } = payload || {};

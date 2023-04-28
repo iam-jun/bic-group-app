@@ -53,7 +53,11 @@ const VideoPlayerWebView = () => {
           />
         </Button>
         <View style={[styles.video, { marginTop }]} onLayout={onLayout}>
-          <VideoPlayer shouldPlay src={video?.src} thumbnail={video?.thumbnail} />
+          <VideoPlayer
+            shouldPlay
+            src={video?.src}
+            posterInfo={{ url: video?.thumbnail, videoHeight: 0, videoWidth: 0 }}
+          />
         </View>
       </View>
     </Modal>

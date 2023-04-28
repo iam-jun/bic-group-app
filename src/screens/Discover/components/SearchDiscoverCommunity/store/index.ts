@@ -1,8 +1,17 @@
 import { createStore, resetStore } from '~/store/utils';
 import getDiscoverCommunitiesSearch from './actions/getDiscoverCommunitiesSearch';
-import { IDiscoverCommunitiesSearchState } from './Interface';
+import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
+import IFetchingState from '~/store/interfaces/IFetchingState';
+import { IParamGetCommunities } from '~/interfaces/ICommunity';
 
-const initDiscoverCommunitiesSearchState: IDiscoverCommunitiesSearchState = {
+export interface IDiscoverCommunitiesSearchState extends IBaseState, IFetchingState {
+  ids: string[];
+  actions: {
+    getDiscoverCommunitiesSearch?: (params: IParamGetCommunities) => void;
+  };
+}
+
+const initDiscoverCommunitiesSearchState: InitStateType<IDiscoverCommunitiesSearchState> = {
   ids: [],
   loading: false,
   hasNextPage: true,

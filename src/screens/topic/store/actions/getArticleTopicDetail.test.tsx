@@ -39,8 +39,8 @@ describe('getArticleTopicDetail', () => {
       jest.runAllTimers();
     });
 
-    expect(result.current.refreshing).toBe(false);
-    expect(result.current.loading).toBe(false);
+    expect(result.current.articles.refreshing).toBe(false);
+    expect(result.current.articles.loading).toBe(false);
   });
 
   it('should not call API when isRefresh = false and cannot load more', () => {
@@ -51,7 +51,7 @@ describe('getArticleTopicDetail', () => {
     useTopicStore.setState((state: ITopicState) => {
       state.articles.data = [];
       state.articles.total = 0;
-      state.hasNextPage = false;
+      state.articles.hasNextPage = false;
       return state;
     });
 

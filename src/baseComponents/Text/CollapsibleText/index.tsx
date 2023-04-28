@@ -17,7 +17,7 @@ import Text, { TextProps } from '~/baseComponents/Text';
 import MarkdownView from '~/beinComponents/MarkdownView';
 import Markdown from '~/beinComponents/Markdown';
 import CopyableView from '../../../beinComponents/CopyableView';
-import { escapeMarkDown } from '~/utils/formatData';
+import { escapeMarkDown } from '~/utils/formatter';
 import spacing from '~/theme/spacing';
 
 export interface CollapsibleTextProps extends TextProps {

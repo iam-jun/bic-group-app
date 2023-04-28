@@ -12,13 +12,15 @@ import {
 import {
   IParamGetCommunities,
   IParamGetDiscoverGroups,
+  MembershipAnswerRequestParam,
 } from '~/interfaces/ICommunity';
 import { withHttpRequestPromise } from '~/api/apiRequest';
 import appConfig from '~/configs/appConfig';
-import { IUserEdit } from '~/interfaces/IAuth';
+import {
+  IParamsSignUp, IParamValidateReferralCode, IUserEdit, IVerifyEmail,
+} from '~/interfaces/IAuth';
 import { IAddWorkExperienceReq } from '~/interfaces/IWorkExperienceRequest';
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
-import { ISearchReq } from '~/interfaces/common';
 import { IParamsReportMember } from '~/interfaces/IReport';
 import { ContentType } from '~/components/SelectAudience';
 
@@ -30,6 +32,15 @@ const defaultConfig = {
 };
 
 export const groupsApiConfig = {
+  blockUser: (blockedUserId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}users/${blockedUserId}/block`,
+    method: 'post',
+  }),
+  getCommunityCUDTagPermission: (communityId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/permissions/can-cud-tags/community/${communityId}`,
+  }),
   updateGroupJoinSetting: (groupId: string, isJoinApproval: boolean): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/settings`,
@@ -114,15 +125,6 @@ export const groupsApiConfig = {
     ...defaultConfig,
     url: `${provider.url}communities/${id}/group-structure`,
   }),
-  putGroupStructureReorder: (
-    communityId: string,
-    data: number[],
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/group-structure/order`,
-    method: 'put',
-    data,
-  }),
   getCommunityStructureMoveTargets: (
     communityId: string,
     groupId: string,
@@ -131,19 +133,6 @@ export const groupsApiConfig = {
     ...defaultConfig,
     url: `${provider.url}communities/${communityId}/group-structure/move-targets/${groupId}`,
     ...(key ? { params: { key } } : {}),
-  }),
-  putGroupStructureMoveToTarget: (
-    communityId: string,
-    moveId: string,
-    targetId: string,
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/group-structure/move`,
-    method: 'put',
-    data: {
-      group_id: moveId,
-      target_outer_group_id: targetId,
-    },
   }),
   putGroupStructureCollapseStatus: (
     communityId: string,
@@ -301,7 +290,7 @@ export const groupsApiConfig = {
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
-  addUsers: (groupId: string, userIds: string[]): HttpApiRequestConfig => ({
+  addUsersToGroup: (userIds: string[], groupId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/users/add`,
     method: 'post',
@@ -316,10 +305,11 @@ export const groupsApiConfig = {
     method: 'put',
     data: { userIds },
   }),
-  joinGroup: (groupId: string): HttpApiRequestConfig => ({
+  joinGroup: (groupId: string, params?: MembershipAnswerRequestParam): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/join`,
     method: 'post',
+    data: { ...params },
   }),
   cancelJoinGroup: (groupId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -333,27 +323,28 @@ export const groupsApiConfig = {
   }),
   setGroupAdmin: (
     groupId: string,
-    userIds: string[],
+    userId: string,
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/assign-admin`,
-    method: 'post',
-    data: { userIds },
+    method: 'put',
+    data: { userId },
   }),
   removeGroupAdmin: (
     groupId: string,
     userId: string,
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}groups/${groupId}/revoke-admin/${userId}`,
+    url: `${provider.url}groups/${groupId}/revoke-admin`,
     method: 'put',
+    data: { userId },
   }),
   getGroupMemberRequests: (
     groupId: string,
     params: any,
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}groups/${groupId}/joining-requests`,
+    url: `${provider.url}groups/${groupId}/join-requests`,
     params: {
       ...params,
       sort: 'updated_at:desc',
@@ -386,13 +377,6 @@ export const groupsApiConfig = {
     url: `${provider.url}groups/${groupId}/joining-requests/decline`,
     method: 'put',
   }),
-  getInnerGroupsLastAdmin: (
-    groupId: string,
-    userId: string,
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}groups/${groupId}/inner-groups-have-last-admin/${userId}`,
-  }),
   getDiscoverCommunities: (
     params: IParamGetCommunities,
   ): HttpApiRequestConfig => ({
@@ -402,6 +386,19 @@ export const groupsApiConfig = {
       ...params,
       key: params?.key?.trim?.() ? params.key : undefined,
     },
+  }),
+  getListBlockingUsers: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/blockings`,
+  }),
+  getListRelationship: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/blocking-relationships`,
+  }),
+  unblockUser: (userId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}users/${userId}/unblock`,
+    method: 'post',
   }),
   searchJoinedCommunities: (
     params: IParamGetCommunities,
@@ -447,10 +444,11 @@ export const groupsApiConfig = {
     url: `${provider.url}communities/${communityId}/groups/discover`,
     params,
   }),
-  joinCommunity: (communityId: string): HttpApiRequestConfig => ({
+  joinCommunity: (communityId: string, params?: MembershipAnswerRequestParam): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}communities/${communityId}/join`,
     method: 'post',
+    data: { ...params },
   }),
   cancelJoinCommunity: (communityId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -468,24 +466,6 @@ export const groupsApiConfig = {
     params: {
       ...params,
       key: params?.key?.trim?.() ? params.key : undefined,
-    },
-  }),
-  searchGlobal: (params?: ISearchReq): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}groups/search/global`,
-    params: {
-      ...params,
-      keyword: params?.key?.trim?.() ? params.key : undefined,
-    },
-  }),
-  checkMembersCommunityStructureMovePreview: (
-    communityId: string,
-    params: any,
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/group-structure/move-preview/`,
-    params: {
-      ...params,
     },
   }),
   getJoinedAllGroups: (
@@ -523,9 +503,46 @@ export const groupsApiConfig = {
     method: 'post',
     data: { ...params },
   }),
+  reportMemberByUserId: (
+    userId: string,
+    params: IParamsReportMember,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}users/${userId}/member-reports`,
+    method: 'post',
+    data: { ...params },
+  }),
+  resendVerificationEmail: (params: IVerifyEmail): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}auth/resend-confirmation-code?email=${params.email}&redirect_page=${params.redirectPage}`,
+    method: 'post',
+  }),
+  validateReferralCode: (param: IParamValidateReferralCode): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}public/referral/verify`,
+    params: { ...param },
+  }),
+  signUp: (params: IParamsSignUp): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}auth/signup/referral`,
+    method: 'post',
+    data: { ...params },
+  }),
+  getGroupTerms: (groupId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/terms`,
+  }),
+  getMembershipQuestions: (groupId: string) : HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/membership-questions`,
+  }),
 };
 
 const groupApi = {
+  blockUser: (blockedUserId: string) => withHttpRequestPromise(groupsApiConfig.blockUser, blockedUserId),
+  getCommunityCUDTagPermission: (communityId: string) => withHttpRequestPromise(
+    groupsApiConfig.getCommunityCUDTagPermission, communityId,
+  ),
   updateGroupJoinSetting: (groupId: string, isJoinApproval: boolean) => withHttpRequestPromise(
     groupsApiConfig.updateGroupJoinSetting, groupId, isJoinApproval,
   ),
@@ -565,14 +582,6 @@ const groupApi = {
     groupsApiConfig.getWorkExperience, id,
   ),
   getMyPermissions: () => withHttpRequestPromise(groupsApiConfig.getMyPermissions),
-  getCommunityGroupTree: (id: string) => withHttpRequestPromise(
-    groupsApiConfig.getCommunityGroupsTree, id,
-  ),
-  putGroupStructureReorder: (communityId: string, data: string[]) => withHttpRequestPromise(
-    groupsApiConfig.putGroupStructureReorder,
-    communityId,
-    data,
-  ),
   getCommunityStructureMoveTargets: (
     communityId: string,
     groupId: string,
@@ -588,23 +597,6 @@ const groupApi = {
       communityId,
       groupId,
       key,
-    );
-  },
-  putGroupStructureMoveToTarget: (
-    communityId: string,
-    moveId: string,
-    targetId: string,
-  ) => {
-    if (!communityId || !moveId || !targetId) {
-      return Promise.reject(
-        new Error('putGroupStructureMoveToTarget invalid params'),
-      );
-    }
-    return withHttpRequestPromise(
-      groupsApiConfig.putGroupStructureMoveToTarget,
-      communityId,
-      moveId,
-      targetId,
     );
   },
   putGroupStructureCollapseStatus: (
@@ -745,15 +737,19 @@ const groupApi = {
   getJoinableUsers: (groupId: string, params: any) => withHttpRequestPromise(
     groupsApiConfig.getJoinableUsers, groupId, params,
   ),
-  addUsers: (groupId: string, userIds: string[]) => withHttpRequestPromise(groupsApiConfig.addUsers, groupId, userIds),
+  addUsersToGroup: (userIds: string[], groupId: string) => withHttpRequestPromise(
+    groupsApiConfig.addUsersToGroup, userIds, groupId,
+  ),
   removeGroupMembers: (groupId: string, userIds: string[]) => withHttpRequestPromise(
     groupsApiConfig.removeGroupMembers, groupId, userIds,
   ),
-  joinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.joinGroup, groupId),
+  joinGroup: (groupId: string, params?: MembershipAnswerRequestParam) => withHttpRequestPromise(
+    groupsApiConfig.joinGroup, groupId, params,
+  ),
   cancelJoinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.cancelJoinGroup, groupId),
   leaveGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.leaveGroup, groupId),
-  setGroupAdmin: (groupId: string, userIds: string[]) => withHttpRequestPromise(
-    groupsApiConfig.setGroupAdmin, groupId, userIds,
+  setGroupAdmin: (groupId: string, userId: string) => withHttpRequestPromise(
+    groupsApiConfig.setGroupAdmin, groupId, userId,
   ),
   removeGroupAdmin: (groupId: string, userId: string) => withHttpRequestPromise(
     groupsApiConfig.removeGroupAdmin, groupId, userId,
@@ -781,14 +777,12 @@ const groupApi = {
     groupsApiConfig.declineAllGroupMemberRequests,
     groupId,
   ),
-  getInnerGroupsLastAdmin: (groupId: string, userId: string) => withHttpRequestPromise(
-    groupsApiConfig.getInnerGroupsLastAdmin,
-    groupId,
-    userId,
-  ),
   getDiscoverCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(
     groupsApiConfig.getDiscoverCommunities, params,
   ),
+  getListBlockingUsers: () => withHttpRequestPromise(groupsApiConfig.getListBlockingUsers),
+  getListRelationship: () => withHttpRequestPromise(groupsApiConfig.getListRelationship),
+  unblockUser: (userId: string) => withHttpRequestPromise(groupsApiConfig.unblockUser, userId),
   searchJoinedCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(
     groupsApiConfig.searchJoinedCommunities, params,
   ),
@@ -807,21 +801,14 @@ const groupApi = {
     communityId,
     params,
   ),
-  joinCommunity: (communityId: string) => withHttpRequestPromise(groupsApiConfig.joinCommunity, communityId),
+  joinCommunity: (communityId: string, params?: MembershipAnswerRequestParam) => withHttpRequestPromise(
+    groupsApiConfig.joinCommunity, communityId, params,
+  ),
   cancelJoinCommunity: (communityId: string) => withHttpRequestPromise(
     groupsApiConfig.cancelJoinCommunity, communityId,
   ),
   leaveCommunity: (communityId: string) => withHttpRequestPromise(groupsApiConfig.leaveCommunity, communityId),
   getCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getCommunities, params),
-  searchGlobal: (params?: ISearchReq) => withHttpRequestPromise(groupsApiConfig.searchGlobal, params),
-  checkMembersCommunityStructureMovePreview: (
-    communityId: string,
-    params: any,
-  ) => withHttpRequestPromise(
-    groupsApiConfig.checkMembersCommunityStructureMovePreview,
-    communityId,
-    params,
-  ),
   getJoinedAllGroups: (params: IParamsGetJoinedAllGroups) => withHttpRequestPromise(
     groupsApiConfig.getJoinedAllGroups, params,
   ),
@@ -841,6 +828,22 @@ const groupApi = {
     communityId,
     params,
   ),
+  reportMemberByUserId: (
+    userId: string,
+    params: IParamsReportMember,
+  ) => withHttpRequestPromise(
+    groupsApiConfig.reportMemberByUserId,
+    userId,
+    params,
+  ),
+  resendVerificationEmail: (params: IVerifyEmail) => withHttpRequestPromise(
+    groupsApiConfig.resendVerificationEmail, params,
+  ),
+  // eslint-disable-next-line max-len
+  validateReferralCode: (param: IParamValidateReferralCode) => withHttpRequestPromise(groupsApiConfig.validateReferralCode, param),
+  signUp: (params: IParamsSignUp) => withHttpRequestPromise(groupsApiConfig.signUp, params),
+  getGroupTerms: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getGroupTerms, groupId),
+  getMembershipQuestions: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getMembershipQuestions, groupId),
 };
 
 export default groupApi;

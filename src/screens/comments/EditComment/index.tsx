@@ -59,6 +59,7 @@ const EditComment: FC<EditCommentProps> = ({ route }: EditCommentProps) => {
 
   const emojiViewRef = useRef<any>();
   const giphyViewRef = useRef<any>();
+  const cursorPosition = useRef(0);
 
   const { commentId, groupIds } = route?.params || {};
   const {
@@ -92,9 +93,14 @@ const EditComment: FC<EditCommentProps> = ({ route }: EditCommentProps) => {
     refTextInput?.current?.setClear?.();
   }, []);
 
+  const onSelectionChange = (event: any) => {
+    const position = event.nativeEvent.selection.end;
+    cursorPosition.current = position;
+  };
+
   const onEmojiSelected = useCallback((emoji: string) => {
     emojiViewRef?.current?.hide?.();
-    handleSelectEmoij(emoji);
+    handleSelectEmoij(emoji, cursorPosition.current);
     refTextInput?.current?.setFocus?.();
   }, []);
 
@@ -171,15 +177,19 @@ const EditComment: FC<EditCommentProps> = ({ route }: EditCommentProps) => {
   const renderGiphy = () => {
     if (!giphy) return null;
     return (
-      <View>
+      <View testID="edit_comment_screen.giphy">
         <Button
           style={styles.icRemove}
           onPress={handleRemoveGiphy}
           hitSlop={{
             top: 10, bottom: 10, right: 10, left: 10,
           }}
+          testID="edit_comment_screen.giphy.close_button"
         >
-          <Icon size={12} icon="iconCloseSmall" />
+          <Icon
+            size={12}
+            icon="iconCloseSmall"
+          />
         </Button>
         <GifView style={styles.gifView} giphy={giphy as any} />
       </View>
@@ -213,6 +223,7 @@ const EditComment: FC<EditCommentProps> = ({ route }: EditCommentProps) => {
           style={styles.flex1}
           activeOpacity={1}
           onPress={onPressInput}
+          testID="edit_comment_screen.input_view"
         >
           <Animated.ScrollView
             showsVerticalScrollIndicator={false}
@@ -241,6 +252,7 @@ const EditComment: FC<EditCommentProps> = ({ route }: EditCommentProps) => {
                   onFocus,
                   onPasteImage,
                 }}
+                onSelectionChange={onSelectionChange}
                 autocompleteProps={{
                   modalPosition: 'bottom',
                   title: t('post:mention_title'),

@@ -19,6 +19,7 @@ exports[`AddArticles component renders correctly 1`] = `
       "zIndex": 99,
     }
   }
+  testID="search_base_view"
 >
   <View
     style={
@@ -261,6 +262,7 @@ exports[`AddArticles component renders correctly 1`] = `
           "id": "1",
           "summary": "Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.",
           "title": "Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.",
+          "type": "ARTICLE",
           "updatedAt": "2022-11-03T07:36:28.870Z",
         },
         Object {
@@ -277,6 +279,7 @@ exports[`AddArticles component renders correctly 1`] = `
           "id": "2",
           "summary": "Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.",
           "title": "Be The First Line List Series.",
+          "type": "POST",
           "updatedAt": "2022-11-03T07:36:28.870Z",
         },
         Object {
@@ -783,6 +786,7 @@ exports[`AddArticles component renders correctly with empty data 1`] = `
       "zIndex": 99,
     }
   }
+  testID="search_base_view"
 >
   <View
     style={

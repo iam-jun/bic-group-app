@@ -101,6 +101,7 @@ const FilterComponent: React.FC<FilterProps> = ({
       <View
         style={styles.itemView}
         key={`${itemTestID || 'item_filter'}_${item?.text}`}
+        testID={`container_${itemTestID || 'item_filter'}_${item?.text}`}
         onLayout={(event) => {
           const { x, width, height } = event?.nativeEvent?.layout || {};
           if (
@@ -115,7 +116,7 @@ const FilterComponent: React.FC<FilterProps> = ({
         <TouchableOpacity
           activeOpacity={0.25}
           style={itemStyle}
-          testID={`${itemTestID || 'item_filter'}_${item.id}`}
+          testID={`${itemTestID || 'item_filter'}_${item?.text}`}
           onPress={() => {
             _onPress(
               item, index,

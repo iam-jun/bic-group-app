@@ -10,6 +10,7 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
       undefined,
     ]
   }
+  testID="button_approve_decline_all_requests"
 >
   <View
     style={

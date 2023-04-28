@@ -5,7 +5,7 @@ import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { IUserWorkExperience } from '~/interfaces/IAuth';
 import { spacing } from '~/theme';
-import { formatDate } from '~/utils/formatData';
+import { formatDate } from '~/utils/formatter';
 import { getEndDateText } from '../../helper';
 import InfoItem from '../InfoItem';
 import EditButton from '../../components/EditButton';
@@ -67,12 +67,14 @@ const ItemExperience: FC<ItemExperienceProps> = ({
             isCurrentUser={isCurrentUser}
             onPress={deleteItemExperience}
             icon="TrashCanSolid"
+            testID="item_experience.delete_btn"
           />
           <ViewSpacing width={spacing.margin.small} />
           <EditButton
             isCurrentUser={isCurrentUser}
             onPress={editItemExperience}
             icon="PenToSquareSolid"
+            testID="item_experience.edit_btn"
           />
         </View>
       </View>

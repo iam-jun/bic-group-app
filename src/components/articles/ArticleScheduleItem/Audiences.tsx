@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import { IPostAudience } from '~/interfaces/IPost';
 import { useRootNavigation } from '~/hooks/navigation';
 import Text from '~/baseComponents/Text';
@@ -10,20 +9,20 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useBaseHook } from '~/hooks';
 import mainStack from '~/router/navigator/MainStack/stack';
 import Tag from '~/baseComponents/Tag';
-import modalActions from '~/storeRedux/modal/actions';
 import { PostAudiencesModal } from '~/components/posts';
+import useModalStore from '~/store/modal';
 
 interface IAudiences {
   audience: IPostAudience;
 }
 
 const Audiences: React.FC<IAudiences> = ({ audience }) => {
-  const dispatch = useDispatch();
   const theme = useTheme();
   const { colors } = theme;
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const { groups = [] } = audience || {};
+  const modalActions = useModalStore((state) => state.actions);
 
   const navigateToGroup = (groupId: any, communityId: any) => {
     rootNavigation.navigate(mainStack.groupDetail, { groupId, communityId });
@@ -43,14 +42,12 @@ const Audiences: React.FC<IAudiences> = ({ audience }) => {
   };
 
   const onPressMoreItem = () => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        isFullScreen: true,
-        titleFullScreen: t('post:title_post_to'),
-        ContentComponent: <PostAudiencesModal data={groups || []} onPressItemAudience={onPressAudience} />,
-      }),
-    );
+    modalActions.showModal({
+      isOpen: true,
+      isFullScreen: true,
+      titleFullScreen: t('post:title_post_to'),
+      ContentComponent: <PostAudiencesModal data={groups || []} onPressItemAudience={onPressAudience} />,
+    });
   };
 
   const renderContent = () => {
@@ -69,12 +66,11 @@ const Audiences: React.FC<IAudiences> = ({ audience }) => {
     const firstItem = groups[0];
     return (
       <Tag
-        style={styles.tagContainer}
         type="neutral"
         size="small"
         label={firstItem.name}
         onActionPress={() => onPressAudience(firstItem)}
-        textProps={{ numberOfLines: 1 }}
+        textProps={{ numberOfLines: 1, style: styles.text }}
         testID="audiences.tag_item"
       />
     );
@@ -86,12 +82,11 @@ const Audiences: React.FC<IAudiences> = ({ audience }) => {
     }
     return (
       <Tag
-        style={styles.tagContainer}
         type="neutral"
         size="small"
         label={renderLabelMoreItem()}
         onActionPress={onPressMoreItem}
-        textProps={{ numberOfLines: 1 }}
+        textProps={{ numberOfLines: 1, style: styles.text }}
         testID="audiences.tag_more_item"
       />
     );
@@ -114,8 +109,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  tagContainer: {
+  text: {
     maxWidth: 255,
+    paddingLeft: spacing.padding.tiny,
   },
 });
 

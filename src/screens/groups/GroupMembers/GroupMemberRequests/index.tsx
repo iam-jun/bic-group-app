@@ -1,10 +1,6 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 
-import groupsActions from '~/storeRedux/groups/actions';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import MemberRequestList from '../../components/MemberRequestList';
 import GroupApproveDeclineAllRequests from './components/GroupApproveDeclineAllRequests';
 import JoinRequestSetting from '~/screens/communities/CommunityMembers/CommunityMemberRequests/components/JoinRequestSetting';
@@ -27,8 +23,6 @@ const GroupMemberRequests = ({
   canEditJoinSetting,
   onPressAdd,
 }: GroupMemberRequestsProps) => {
-  const dispatch = useDispatch();
-  const { ids, canLoadMore, total } = useKeySelector(groupsKeySelector.groupMemberRequests);
   const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
   const { group } = groups[currentGroupId] || {};
   const { id, settings, privacy } = group || {};
@@ -36,6 +30,7 @@ const GroupMemberRequests = ({
   const {
     actions: { getGroupDetail },
   } = useGroupDetailStore((state: IGroupDetailState) => state);
+  const { ids, canLoadMore, total } = useGroupMemberStore((state) => state.groupMemberRequests);
   const actions = useGroupMemberStore((state) => state.actions);
 
   useEffect(
@@ -49,13 +44,13 @@ const GroupMemberRequests = ({
 
       getData();
       return () => {
-        dispatch(groupsActions.resetGroupMemberRequests());
+        actions.resetGroupMemberRequests();
       };
     }, [id, groupId, canApproveRejectJoiningRequests],
   );
 
   const getData = (isRefreshing?: boolean) => {
-    dispatch(groupsActions.getGroupMemberRequests({ groupId, isRefreshing }));
+    actions.getGroupMemberRequests({ groupId, isRefreshing });
   };
 
   const onLoadMore = () => {
@@ -72,7 +67,7 @@ const GroupMemberRequests = ({
   };
 
   const onPressApproveAll = () => {
-    dispatch(groupsActions.approveAllGroupMemberRequests({ groupId, total }));
+    actions.approveAllGroupMemberRequests({ groupId, total });
   };
 
   return (

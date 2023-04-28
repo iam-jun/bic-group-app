@@ -24,531 +24,223 @@ exports[`SearchResult component should render empty search result 1`] = `
     }
   >
     <RCTScrollView
+      alwaysBounceHorizontal={false}
+      collapsable={false}
+      contentContainerStyle={
+        Object {
+          "backgroundColor": "#FFFFFF",
+          "borderBottomWidth": 1,
+          "borderColor": "#F8F9FF",
+          "paddingBottom": 12,
+          "paddingHorizontal": 16,
+          "paddingTop": 8,
+        }
+      }
+      handlerTag={1}
+      handlerType="NativeViewGestureHandler"
       horizontal={true}
+      onGestureHandlerEvent={[Function]}
+      onGestureHandlerStateChange={[Function]}
+      showsHorizontalScrollIndicator={false}
       style={
         Object {
           "backgroundColor": "#FFFFFF",
+          "width": 750,
         }
       }
-    >
-      <View>
-        <View
-          style={
-            Object {
-              "backgroundColor": "#FFFFFF",
-              "borderBottomWidth": 1,
-              "borderColor": "#F8F9FF",
-              "flexDirection": "row",
-              "paddingBottom": 12,
-              "paddingHorizontal": 16,
-              "paddingTop": 8,
-            }
-          }
-        >
-          <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#F1F2F8",
-                "borderRadius": 100,
-                "boxShadow": Object {
-                  "elevation": 1,
-                  "shadowColor": "rgba(0, 0, 0, 1)",
-                  "shadowOffset": Object {
-                    "height": 1,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.08,
-                  "shadowRadius": 1,
-                },
-                "justifyContent": "center",
-                "opacity": 1,
-                "paddingHorizontal": 12,
-                "paddingVertical": 6,
-              }
-            }
-            testID="undefined-selected"
-          >
-            <Text
-              style={
-                Array [
-                  Object {
-                    "color": "#353E6E",
-                    "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 14,
-                  },
-                  Object {},
-                  Array [
-                    Object {},
-                    Object {
-                      "color": "#353E6E",
-                    },
-                  ],
-                ]
-              }
-            >
-              Date posted
-            </Text>
-          </View>
-          <View
-            style={
-              Object {
-                "height": undefined,
-                "paddingHorizontal": undefined,
-                "paddingVertical": undefined,
-                "width": 8,
-              }
-            }
-          />
-          <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#F1F2F8",
-                "borderRadius": 100,
-                "boxShadow": Object {
-                  "elevation": 1,
-                  "shadowColor": "rgba(0, 0, 0, 1)",
-                  "shadowOffset": Object {
-                    "height": 1,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.08,
-                  "shadowRadius": 1,
-                },
-                "justifyContent": "center",
-                "opacity": 1,
-                "paddingHorizontal": 12,
-                "paddingVertical": 6,
-              }
-            }
-            testID="undefined-selected"
-          >
-            <Text
-              style={
-                Array [
-                  Object {
-                    "color": "#353E6E",
-                    "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 14,
-                  },
-                  Object {},
-                  Array [
-                    Object {},
-                    Object {
-                      "color": "#353E6E",
-                    },
-                  ],
-                ]
-              }
-            >
-              Created by
-            </Text>
-          </View>
-        </View>
-      </View>
-    </RCTScrollView>
-  </View>
-  <View
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#FFFFFF",
-        "flexDirection": "row",
-        "marginTop": 2,
-        "paddingHorizontal": 16,
-        "paddingVertical": 12,
-      }
-    }
-  >
-    <View
-      accessibilityState={
-        Object {
-          "disabled": true,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={false}
-      hitSlop={
-        Object {
-          "bottom": 10,
-          "left": 10,
-          "right": 10,
-          "top": 10,
-        }
-      }
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "opacity": 1,
-        }
-      }
-    >
-      <View
-        style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "flexDirection": "row",
-            },
-            undefined,
-            Object {
-              "backgroundColor": undefined,
-            },
-          ]
-        }
-      >
-        <View
-          style={
-            Array [
-              undefined,
-              undefined,
-              undefined,
-            ]
-          }
-        >
-          <View />
-        </View>
-      </View>
-    </View>
-    <Text
-      style={
+      waitFor={
         Array [
           Object {
-            "color": "#212745",
-            "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 13,
-          },
-          Object {
-            "color": "#353E6E",
-          },
-          Object {
-            "flex": 1,
-            "marginLeft": 8,
+            "current": null,
           },
         ]
       }
     >
-      Searched results are removed all text formats to make sure looking the precise content
-    </Text>
-  </View>
-  <RCTScrollView
-    ItemSeparatorComponent={[Function]}
-    ListEmptyComponent={[Function]}
-    ListFooterComponent={[Function]}
-    ListHeaderComponent={[Function]}
-    data={Array []}
-    getItem={[Function]}
-    getItemCount={[Function]}
-    keyExtractor={[Function]}
-    onContentSizeChange={[Function]}
-    onEndReached={[Function]}
-    onLayout={[Function]}
-    onMomentumScrollBegin={[Function]}
-    onMomentumScrollEnd={[Function]}
-    onScroll={[Function]}
-    onScrollBeginDrag={[Function]}
-    onScrollEndDrag={[Function]}
-    removeClippedSubviews={false}
-    renderItem={[Function]}
-    scrollEventThrottle={50}
-    stickyHeaderIndices={Array []}
-    style={
-      Object {
-        "flex": 1,
-      }
-    }
-    viewabilityConfigCallbackPairs={Array []}
-  >
-    <View>
-      <View
-        onLayout={[Function]}
-      >
+      <View>
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#F1F2F8",
+              "borderRadius": 100,
+              "boxShadow": Object {
+                "elevation": 1,
+                "shadowColor": "rgba(0, 0, 0, 1)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.08,
+                "shadowRadius": 1,
+              },
+              "flexDirection": "row",
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 6,
+            }
+          }
+          testID="filter_tool_bar.btn_filter_post_type-selected"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 14,
+                },
+                Object {},
+                Array [
+                  Object {},
+                  Object {
+                    "color": "#353E6E",
+                  },
+                ],
+              ]
+            }
+          >
+            Content type
+          </Text>
+        </View>
         <View
           style={
             Object {
-              "height": 16,
+              "height": undefined,
               "paddingHorizontal": undefined,
               "paddingVertical": undefined,
-              "width": undefined,
+              "width": 8,
             }
           }
         />
-      </View>
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-            "marginTop": 24,
-          }
-        }
-      >
         <View
-          style={
-            Array [
-              Object {
-                "overflow": "hidden",
-              },
-              Object {
-                "height": 320,
-                "maxHeight": 160,
-                "maxWidth": 240,
-                "width": 480,
-              },
-            ]
-          }
-        >
-          <FastImageView
-            onFastImageError={[Function]}
-            resizeMode="contain"
-            source={
-              Object {
-                "testUri": "../../../assets/images/img_empty_search_post.png",
-              }
-            }
-            style={
-              Object {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              }
-            }
-          />
-        </View>
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#212745",
-                "fontFamily": "BeVietnamPro-Light",
-                "fontSize": 14,
-              },
-              Object {},
-              Object {
-                "color": "#767D93",
-                "textAlign": "center",
-              },
-            ]
-          }
-        >
-          Sorry, we couldn’t find anything related
-to your search.
-        </Text>
-      </View>
-      <View
-        onLayout={[Function]}
-      >
-        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
             Object {
-              "paddingVertical": 16,
-            }
-          }
-        >
-          <ActivityIndicator
-            color="#D1D4DB"
-          />
-        </View>
-      </View>
-    </View>
-  </RCTScrollView>
-</View>
-`;
-
-exports[`SearchResult component should render list search result 1`] = `
-<View
-  style={
-    Object {
-      "backgroundColor": "#F8F9FF",
-      "flex": 1,
-    }
-  }
->
-  <View
-    style={
-      Object {
-        "elevation": 2,
-        "shadowColor": "rgba(0, 0, 0, 1)",
-        "shadowOffset": Object {
-          "height": 2,
-          "width": 0,
-        },
-        "shadowOpacity": 0.12,
-        "shadowRadius": 1.5,
-      }
-    }
-  >
-    <RCTScrollView
-      horizontal={true}
-      style={
-        Object {
-          "backgroundColor": "#FFFFFF",
-        }
-      }
-    >
-      <View>
-        <View
-          style={
-            Object {
-              "backgroundColor": "#FFFFFF",
-              "borderBottomWidth": 1,
-              "borderColor": "#F8F9FF",
+              "alignItems": "center",
+              "backgroundColor": "#F1F2F8",
+              "borderRadius": 100,
+              "boxShadow": Object {
+                "elevation": 1,
+                "shadowColor": "rgba(0, 0, 0, 1)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.08,
+                "shadowRadius": 1,
+              },
               "flexDirection": "row",
-              "paddingBottom": 12,
-              "paddingHorizontal": 16,
-              "paddingTop": 8,
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 6,
             }
           }
+          testID="filter_tool_bar.filter_created_by-selected"
         >
-          <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+          <Text
             style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#F1F2F8",
-                "borderRadius": 100,
-                "boxShadow": Object {
-                  "elevation": 1,
-                  "shadowColor": "rgba(0, 0, 0, 1)",
-                  "shadowOffset": Object {
-                    "height": 1,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.08,
-                  "shadowRadius": 1,
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 14,
                 },
-                "justifyContent": "center",
-                "opacity": 1,
-                "paddingHorizontal": 12,
-                "paddingVertical": 6,
-              }
-            }
-            testID="undefined-selected"
-          >
-            <Text
-              style={
+                Object {},
                 Array [
+                  Object {},
                   Object {
                     "color": "#353E6E",
-                    "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 14,
                   },
-                  Object {},
-                  Array [
-                    Object {},
-                    Object {
-                      "color": "#353E6E",
-                    },
-                  ],
-                ]
-              }
-            >
-              Date posted
-            </Text>
-          </View>
-          <View
-            style={
-              Object {
-                "height": undefined,
-                "paddingHorizontal": undefined,
-                "paddingVertical": undefined,
-                "width": 8,
-              }
+                ],
+              ]
             }
-          />
-          <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#F1F2F8",
-                "borderRadius": 100,
-                "boxShadow": Object {
-                  "elevation": 1,
-                  "shadowColor": "rgba(0, 0, 0, 1)",
-                  "shadowOffset": Object {
-                    "height": 1,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.08,
-                  "shadowRadius": 1,
-                },
-                "justifyContent": "center",
-                "opacity": 1,
-                "paddingHorizontal": 12,
-                "paddingVertical": 6,
-              }
-            }
-            testID="undefined-selected"
           >
-            <Text
-              style={
+            Created by
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "height": undefined,
+              "paddingHorizontal": undefined,
+              "paddingVertical": undefined,
+              "width": 8,
+            }
+          }
+        />
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#F1F2F8",
+              "borderRadius": 100,
+              "boxShadow": Object {
+                "elevation": 1,
+                "shadowColor": "rgba(0, 0, 0, 1)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.08,
+                "shadowRadius": 1,
+              },
+              "flexDirection": "row",
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 6,
+            }
+          }
+          testID="filter_tool_bar.filter_date_option-selected"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 14,
+                },
+                Object {},
                 Array [
+                  Object {},
                   Object {
                     "color": "#353E6E",
-                    "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 14,
                   },
-                  Object {},
-                  Array [
-                    Object {},
-                    Object {
-                      "color": "#353E6E",
-                    },
-                  ],
-                ]
-              }
-            >
-              Created by
-            </Text>
-          </View>
+                ],
+              ]
+            }
+          >
+            Day posted
+          </Text>
         </View>
       </View>
     </RCTScrollView>
@@ -652,53 +344,90 @@ exports[`SearchResult component should render list search result 1`] = `
       Array [
         Object {
           "actor": Object {
-            "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/a0f2b4bb-abf7-423d-9fed-0b706751b323.jpg",
-            "fullname": "Nguyễn Thị Ngọc Linh",
-            "id": "33",
-            "username": "ngoclinh",
+            "avatar": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/206550db-26f1-4115-80dc-98134e4d8590.webp",
+            "email": "thevan@tgm.vn",
+            "fullname": "Thân Thế Văn",
+            "id": "45a7942e-0369-4c78-9915-1aeb46463172",
+            "username": "thanthevan",
           },
+          "articles": Array [],
           "audience": Object {
             "groups": Array [
               Object {
-                "child": Array [
-                  "139",
-                  "2",
-                  "10",
-                  "152",
-                  "66",
-                  "67",
-                  "103",
-                  "2",
-                  "2",
-                ],
-                "icon": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/avatar/Avatar_Group.png",
-                "id": "1",
+                "communityId": "15337361-1577-4b7b-a31d-990df06aa446",
+                "icon": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/26a806d3-3557-4f7a-b96a-132a9befccff",
+                "id": "35b5fb8f-6f7a-4ac2-90bb-18199096c429",
+                "isCommunity": true,
                 "name": "EVOL Community",
+                "privacy": "OPEN",
+                "rootGroupId": "35b5fb8f-6f7a-4ac2-90bb-18199096c429",
               },
             ],
           },
+          "categories": Array [],
           "commentsCount": 0,
-          "content": "Important post",
-          "createdAt": "2022-04-20T10:06:45.649Z",
-          "createdBy": 33,
-          "highlight": "==Important== post",
-          "id": "29",
+          "communities": Array [
+            Object {
+              "communityId": "15337361-1577-4b7b-a31d-990df06aa446",
+              "icon": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/26a806d3-3557-4f7a-b96a-132a9befccff",
+              "id": "35b5fb8f-6f7a-4ac2-90bb-18199096c429",
+              "name": "EVOL Community",
+              "privacy": "OPEN",
+            },
+          ],
+          "content": "Hư cấu quá :'( @ngoclinh ",
+          "coverMedia": null,
+          "createdAt": "2022-06-06T04:56:19.855Z",
+          "createdBy": "45a7942e-0369-4c78-9915-1aeb46463172",
+          "highlight": "==Hư== cấu quá :'( @ngoclinh ",
+          "id": "a52fe0b0-b2d8-4b7c-845e-3faeb921cb12",
           "media": Object {
             "files": Array [],
             "images": Array [],
             "videos": Array [],
           },
           "mentions": Array [],
-          "ownerReactions": Array [],
-          "reactionsCount": Object {},
+          "reactionsCount": Array [
+            Object {
+              "grinning": 3,
+            },
+            Object {
+              "grinningFaceWithStarEyes": 3,
+            },
+            Object {
+              "heartEyes": 3,
+            },
+            Object {
+              "kissing": 4,
+            },
+            Object {
+              "kissingClosedEyes": 2,
+            },
+            Object {
+              "kissingSmilingEyes": 2,
+            },
+            Object {
+              "yum": 2,
+            },
+            Object {
+              "upsideDownFace": 2,
+            },
+            Object {
+              "rollingOnTheFloorLaughing": 2,
+            },
+          ],
           "setting": Object {
             "canComment": true,
             "canReact": true,
             "canShare": true,
-            "importantExpiredAt": "2022-04-20T11:07:08.129Z",
-            "isImportant": true,
+            "importantExpiredAt": null,
+            "isImportant": false,
           },
-          "status": "PUBLISHED",
+          "summary": null,
+          "tags": Array [],
+          "title": null,
+          "totalUsersSeen": 6,
+          "type": "POST",
         },
       ]
     }
@@ -767,113 +496,46 @@ exports[`SearchResult component should render list search result 1`] = `
           testID="post_view"
         >
           <View
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "backgroundColor": "#7335C0",
-                "borderBottomLeftRadius": 8,
-                "borderBottomRightRadius": 8,
-                "left": 0,
-                "paddingBottom": 4,
-                "paddingHorizontal": 4,
-                "paddingTop": 8,
-                "position": "absolute",
-                "top": 0,
-                "zIndex": 1,
+                "alignItems": "center",
+                "backgroundColor": "#D6D9EB",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+                "opacity": 1,
+                "paddingHorizontal": 16,
+                "paddingVertical": 6,
               }
             }
-            testID="post_view.important_status_lite"
+            testID="button_wrapper"
           >
-            <View
-              accessibilityState={
-                Object {
-                  "disabled": true,
-                }
-              }
-              accessible={true}
-              collapsable={false}
-              focusable={false}
-              hitSlop={
-                Object {
-                  "bottom": 10,
-                  "left": 10,
-                  "right": 10,
-                  "top": 10,
-                }
-              }
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
+            <Text
               style={
-                Object {
-                  "opacity": 1,
-                }
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 11,
+                  },
+                  Object {
+                    "color": "#353E6E",
+                  },
+                  undefined,
+                ]
               }
             >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                    },
-                    undefined,
-                    Object {
-                      "backgroundColor": undefined,
-                    },
-                  ]
-                }
-              >
-                <View
-                  style={
-                    Array [
-                      undefined,
-                      undefined,
-                      Object {
-                        "backgroundColor": "#FFFFFF",
-                        "borderRadius": 4,
-                        "padding": 2,
-                      },
-                    ]
-                  }
-                >
-                  <View>
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "height": 12,
-                            "width": 12,
-                          },
-                        ]
-                      }
-                    >
-                      <FastImageView
-                        onFastImageError={[Function]}
-                        resizeMode="cover"
-                        size={12}
-                        source={null}
-                        style={
-                          Object {
-                            "bottom": 0,
-                            "left": 0,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                      />
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
+              EVOL Community
+            </Text>
           </View>
           <View
             style={
@@ -1002,7 +664,7 @@ exports[`SearchResult component should render list search result 1`] = `
                         resizeMode="cover"
                         source={
                           Object {
-                            "uri": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/a0f2b4bb-abf7-423d-9fed-0b706751b323.jpg",
+                            "uri": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/206550db-26f1-4115-80dc-98134e4d8590.webp",
                           }
                         }
                         style={
@@ -1040,7 +702,8 @@ exports[`SearchResult component should render list search result 1`] = `
                   onStartShouldSetResponder={[Function]}
                   style={
                     Object {
-                      "alignSelf": "flex-start",
+                      "alignItems": "center",
+                      "flexDirection": "row",
                       "marginRight": 12,
                       "opacity": 1,
                     }
@@ -1059,12 +722,14 @@ exports[`SearchResult component should render list search result 1`] = `
                         Object {
                           "color": "#181C32",
                         },
-                        undefined,
+                        Object {
+                          "flexShrink": 1,
+                        },
                       ]
                     }
                     testID="content_header.actor"
                   >
-                    Nguyễn Thị Ngọc Linh
+                    Thân Thế Văn
                   </Text>
                 </View>
                 <View
@@ -1139,13 +804,11 @@ exports[`SearchResult component should render list search result 1`] = `
                     }
                     testID="time_view"
                   >
-                    Apr 20, 2022
+                    Jun 06, 2022
                   </Text>
                 </View>
               </View>
-              <View
-                style={Object {}}
-              >
+              <View>
                 <View
                   accessible={true}
                   focusable={true}
@@ -1331,7 +994,7 @@ exports[`SearchResult component should render list search result 1`] = `
                                 ]
                               }
                             >
-                              Important
+                              Hư
                             </Text>
                           </Text>
                           <Text
@@ -1346,7 +1009,36 @@ exports[`SearchResult component should render list search result 1`] = `
                               ]
                             }
                           >
-                             post
+                             cấu quá 
+                          </Text>
+                          <Text
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#212745",
+                                  "fontFamily": "BeVietnamPro-Light",
+                                  "fontSize": 14,
+                                },
+                                Object {},
+                                Object {},
+                              ]
+                            }
+                          >
+                            😢
+                          </Text>
+                          <Text
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#212745",
+                                  "fontFamily": "BeVietnamPro-Light",
+                                  "fontSize": 14,
+                                },
+                                Object {},
+                              ]
+                            }
+                          >
+                             @ngoclinh
                           </Text>
                         </Text>
                       </View>
@@ -1388,7 +1080,7 @@ exports[`SearchResult component should render list search result 1`] = `
                     ]
                   }
                 >
-                  0 React
+                  23 React
                 </Text>
                 <View
                   style={
@@ -1487,7 +1179,7 @@ exports[`SearchResult component should render list search result 1`] = `
                         ]
                       }
                     >
-                      0
+                      6
                     </Text>
                   </Text>
                 </View>
@@ -1502,21 +1194,20 @@ exports[`SearchResult component should render list search result 1`] = `
         <View
           style={
             Object {
-              "paddingVertical": 16,
+              "height": 16,
+              "paddingHorizontal": undefined,
+              "paddingVertical": undefined,
+              "width": undefined,
             }
           }
-        >
-          <ActivityIndicator
-            color="#D1D4DB"
-          />
-        </View>
+        />
       </View>
     </View>
   </RCTScrollView>
 </View>
 `;
 
-exports[`SearchResult component should render loading search result 1`] = `
+exports[`SearchResult component should render list search result 1`] = `
 <View
   style={
     Object {
@@ -1540,147 +1231,223 @@ exports[`SearchResult component should render loading search result 1`] = `
     }
   >
     <RCTScrollView
+      alwaysBounceHorizontal={false}
+      collapsable={false}
+      contentContainerStyle={
+        Object {
+          "backgroundColor": "#FFFFFF",
+          "borderBottomWidth": 1,
+          "borderColor": "#F8F9FF",
+          "paddingBottom": 12,
+          "paddingHorizontal": 16,
+          "paddingTop": 8,
+        }
+      }
+      handlerTag={2}
+      handlerType="NativeViewGestureHandler"
       horizontal={true}
+      onGestureHandlerEvent={[Function]}
+      onGestureHandlerStateChange={[Function]}
+      showsHorizontalScrollIndicator={false}
       style={
         Object {
           "backgroundColor": "#FFFFFF",
+          "width": 750,
         }
+      }
+      waitFor={
+        Array [
+          Object {
+            "current": null,
+          },
+        ]
       }
     >
       <View>
         <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
             Object {
-              "backgroundColor": "#FFFFFF",
-              "borderBottomWidth": 1,
-              "borderColor": "#F8F9FF",
+              "alignItems": "center",
+              "backgroundColor": "#F1F2F8",
+              "borderRadius": 100,
+              "boxShadow": Object {
+                "elevation": 1,
+                "shadowColor": "rgba(0, 0, 0, 1)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.08,
+                "shadowRadius": 1,
+              },
               "flexDirection": "row",
-              "paddingBottom": 12,
-              "paddingHorizontal": 16,
-              "paddingTop": 8,
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 6,
             }
           }
+          testID="filter_tool_bar.btn_filter_post_type-selected"
         >
-          <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+          <Text
             style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#F1F2F8",
-                "borderRadius": 100,
-                "boxShadow": Object {
-                  "elevation": 1,
-                  "shadowColor": "rgba(0, 0, 0, 1)",
-                  "shadowOffset": Object {
-                    "height": 1,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.08,
-                  "shadowRadius": 1,
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 14,
                 },
-                "justifyContent": "center",
-                "opacity": 1,
-                "paddingHorizontal": 12,
-                "paddingVertical": 6,
-              }
-            }
-            testID="undefined-selected"
-          >
-            <Text
-              style={
+                Object {},
                 Array [
+                  Object {},
                   Object {
                     "color": "#353E6E",
-                    "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 14,
                   },
-                  Object {},
-                  Array [
-                    Object {},
-                    Object {
-                      "color": "#353E6E",
-                    },
-                  ],
-                ]
-              }
-            >
-              Date posted
-            </Text>
-          </View>
-          <View
-            style={
-              Object {
-                "height": undefined,
-                "paddingHorizontal": undefined,
-                "paddingVertical": undefined,
-                "width": 8,
-              }
+                ],
+              ]
             }
-          />
-          <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#F1F2F8",
-                "borderRadius": 100,
-                "boxShadow": Object {
-                  "elevation": 1,
-                  "shadowColor": "rgba(0, 0, 0, 1)",
-                  "shadowOffset": Object {
-                    "height": 1,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.08,
-                  "shadowRadius": 1,
-                },
-                "justifyContent": "center",
-                "opacity": 1,
-                "paddingHorizontal": 12,
-                "paddingVertical": 6,
-              }
-            }
-            testID="undefined-selected"
           >
-            <Text
-              style={
+            Content type
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "height": undefined,
+              "paddingHorizontal": undefined,
+              "paddingVertical": undefined,
+              "width": 8,
+            }
+          }
+        />
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#F1F2F8",
+              "borderRadius": 100,
+              "boxShadow": Object {
+                "elevation": 1,
+                "shadowColor": "rgba(0, 0, 0, 1)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.08,
+                "shadowRadius": 1,
+              },
+              "flexDirection": "row",
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 6,
+            }
+          }
+          testID="filter_tool_bar.filter_created_by-selected"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 14,
+                },
+                Object {},
                 Array [
+                  Object {},
                   Object {
                     "color": "#353E6E",
-                    "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 14,
                   },
+                ],
+              ]
+            }
+          >
+            Created by
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "height": undefined,
+              "paddingHorizontal": undefined,
+              "paddingVertical": undefined,
+              "width": 8,
+            }
+          }
+        />
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#F1F2F8",
+              "borderRadius": 100,
+              "boxShadow": Object {
+                "elevation": 1,
+                "shadowColor": "rgba(0, 0, 0, 1)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.08,
+                "shadowRadius": 1,
+              },
+              "flexDirection": "row",
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 6,
+            }
+          }
+          testID="filter_tool_bar.filter_date_option-selected"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 14,
+                },
+                Object {},
+                Array [
                   Object {},
-                  Array [
-                    Object {},
-                    Object {
-                      "color": "#353E6E",
-                    },
-                  ],
-                ]
-              }
-            >
-              Created by
-            </Text>
-          </View>
+                  Object {
+                    "color": "#353E6E",
+                  },
+                ],
+              ]
+            }
+          >
+            Day posted
+          </Text>
         </View>
       </View>
     </RCTScrollView>
@@ -1780,7 +1547,97 @@ exports[`SearchResult component should render loading search result 1`] = `
     ListEmptyComponent={[Function]}
     ListFooterComponent={[Function]}
     ListHeaderComponent={[Function]}
-    data={Array []}
+    data={
+      Array [
+        Object {
+          "actor": Object {
+            "avatar": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/206550db-26f1-4115-80dc-98134e4d8590.webp",
+            "email": "thevan@tgm.vn",
+            "fullname": "Thân Thế Văn",
+            "id": "45a7942e-0369-4c78-9915-1aeb46463172",
+            "username": "thanthevan",
+          },
+          "articles": Array [],
+          "audience": Object {
+            "groups": Array [
+              Object {
+                "communityId": "15337361-1577-4b7b-a31d-990df06aa446",
+                "icon": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/26a806d3-3557-4f7a-b96a-132a9befccff",
+                "id": "35b5fb8f-6f7a-4ac2-90bb-18199096c429",
+                "isCommunity": true,
+                "name": "EVOL Community",
+                "privacy": "OPEN",
+                "rootGroupId": "35b5fb8f-6f7a-4ac2-90bb-18199096c429",
+              },
+            ],
+          },
+          "categories": Array [],
+          "commentsCount": 0,
+          "communities": Array [
+            Object {
+              "communityId": "15337361-1577-4b7b-a31d-990df06aa446",
+              "icon": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/26a806d3-3557-4f7a-b96a-132a9befccff",
+              "id": "35b5fb8f-6f7a-4ac2-90bb-18199096c429",
+              "name": "EVOL Community",
+              "privacy": "OPEN",
+            },
+          ],
+          "content": "Hư cấu quá :'( @ngoclinh ",
+          "coverMedia": null,
+          "createdAt": "2022-06-06T04:56:19.855Z",
+          "createdBy": "45a7942e-0369-4c78-9915-1aeb46463172",
+          "highlight": "==Hư== cấu quá :'( @ngoclinh ",
+          "id": "a52fe0b0-b2d8-4b7c-845e-3faeb921cb12",
+          "media": Object {
+            "files": Array [],
+            "images": Array [],
+            "videos": Array [],
+          },
+          "mentions": Array [],
+          "reactionsCount": Array [
+            Object {
+              "grinning": 3,
+            },
+            Object {
+              "grinningFaceWithStarEyes": 3,
+            },
+            Object {
+              "heartEyes": 3,
+            },
+            Object {
+              "kissing": 4,
+            },
+            Object {
+              "kissingClosedEyes": 2,
+            },
+            Object {
+              "kissingSmilingEyes": 2,
+            },
+            Object {
+              "yum": 2,
+            },
+            Object {
+              "upsideDownFace": 2,
+            },
+            Object {
+              "rollingOnTheFloorLaughing": 2,
+            },
+          ],
+          "setting": Object {
+            "canComment": true,
+            "canReact": true,
+            "canShare": true,
+            "importantExpiredAt": null,
+            "isImportant": false,
+          },
+          "summary": null,
+          "tags": Array [],
+          "title": null,
+          "totalUsersSeen": 6,
+          "type": "POST",
+        },
+      ]
+    }
     getItem={[Function]}
     getItemCount={[Function]}
     keyExtractor={[Function]}
@@ -1820,18 +1677,737 @@ exports[`SearchResult component should render loading search result 1`] = `
       </View>
       <View
         onLayout={[Function]}
+        style={null}
+      >
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="post_view"
+        >
+          <View
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#D6D9EB",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+                "opacity": 1,
+                "paddingHorizontal": 16,
+                "paddingVertical": 6,
+              }
+            }
+            testID="button_wrapper"
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 11,
+                  },
+                  Object {
+                    "color": "#353E6E",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              EVOL Community
+            </Text>
+          </View>
+          <View
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "#FFFFFF",
+                  "elevation": 2,
+                  "shadowColor": "rgba(0, 0, 0, 1)",
+                  "shadowOffset": Object {
+                    "height": 2,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.12,
+                  "shadowRadius": 1.5,
+                },
+              ]
+            }
+          >
+            <View
+              accessibilityState={
+                Object {
+                  "disabled": false,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "flexDirection": "row",
+                  "marginHorizontal": 16,
+                  "opacity": 1,
+                  "paddingTop": 8,
+                }
+              }
+              testID="content_header"
+            >
+              <View
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "marginRight": 12,
+                    "marginTop": 4,
+                    "opacity": 1,
+                  }
+                }
+                testID="button_wrapper"
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "borderRadius": 8,
+                        "height": 48,
+                        "width": 48,
+                      },
+                      undefined,
+                    ]
+                  }
+                  testID="avatar"
+                >
+                  <View
+                    style={
+                      Array [
+                        Array [
+                          Object {
+                            "borderRadius": 8,
+                            "height": 48,
+                            "width": 48,
+                          },
+                          Object {
+                            "borderRadius": 24,
+                          },
+                        ],
+                        Object {},
+                      ]
+                    }
+                    testID="avatar_container"
+                  >
+                    <View
+                      style={
+                        Array [
+                          Object {
+                            "overflow": "hidden",
+                          },
+                          Array [
+                            Array [
+                              Object {
+                                "borderRadius": 8,
+                                "height": 48,
+                                "width": 48,
+                              },
+                              Object {
+                                "borderRadius": 24,
+                              },
+                            ],
+                            Object {
+                              "borderColor": "#F2F5F8",
+                              "borderWidth": 2,
+                            },
+                            Object {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ],
+                        ]
+                      }
+                    >
+                      <FastImageView
+                        onFastImageError={[Function]}
+                        resizeMode="cover"
+                        source={
+                          Object {
+                            "uri": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/206550db-26f1-4115-80dc-98134e4d8590.webp",
+                          }
+                        }
+                        style={
+                          Object {
+                            "bottom": 0,
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          }
+                        }
+                        testID="avatar.image"
+                      />
+                    </View>
+                  </View>
+                </View>
+              </View>
+              <View
+                style={
+                  Object {
+                    "flex": 1,
+                  }
+                }
+              >
+                <View
+                  accessible={true}
+                  collapsable={false}
+                  focusable={true}
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "marginRight": 12,
+                      "opacity": 1,
+                    }
+                  }
+                  testID="button_wrapper"
+                >
+                  <Text
+                    numberOfLines={1}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 15,
+                        },
+                        Object {
+                          "color": "#181C32",
+                        },
+                        Object {
+                          "flexShrink": 1,
+                        },
+                      ]
+                    }
+                    testID="content_header.actor"
+                  >
+                    Thân Thế Văn
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "marginVertical": 4,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 13,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        Object {
+                          "marginRight": 4,
+                        },
+                      ]
+                    }
+                  >
+                    to
+                  </Text>
+                  <Text
+                    onPress={[Function]}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 13,
+                        },
+                        Object {
+                          "color": "#181C32",
+                        },
+                        undefined,
+                      ]
+                    }
+                    testID="content_header.audiences"
+                  >
+                    EVOL Community
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 11,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                    testID="time_view"
+                  >
+                    Jun 06, 2022
+                  </Text>
+                </View>
+              </View>
+              <View>
+                <View
+                  accessible={true}
+                  focusable={true}
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Array [
+                      Object {
+                        "borderRadius": 6,
+                      },
+                      undefined,
+                    ]
+                  }
+                  testID="content_header.menu"
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "borderRadius": 6,
+                          "elevation": 2,
+                          "flexDirection": "row",
+                          "justifyContent": "center",
+                          "shadowColor": "rgba(0, 0, 0, 1)",
+                          "shadowOffset": Object {
+                            "height": 2,
+                            "width": 0,
+                          },
+                          "shadowOpacity": 0.12,
+                          "shadowRadius": 1.5,
+                        },
+                        undefined,
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                          "height": 28,
+                          "paddingHorizontal": 8,
+                        },
+                      ]
+                    }
+                    testID="button.content"
+                  >
+                    <View
+                      accessibilityState={
+                        Object {
+                          "disabled": true,
+                        }
+                      }
+                      accessible={true}
+                      collapsable={false}
+                      focusable={false}
+                      hitSlop={
+                        Object {
+                          "bottom": 10,
+                          "left": 10,
+                          "right": 10,
+                          "top": 10,
+                        }
+                      }
+                      onClick={[Function]}
+                      onResponderGrant={[Function]}
+                      onResponderMove={[Function]}
+                      onResponderRelease={[Function]}
+                      onResponderTerminate={[Function]}
+                      onResponderTerminationRequest={[Function]}
+                      onStartShouldSetResponder={[Function]}
+                      style={
+                        Object {
+                          "opacity": 1,
+                        }
+                      }
+                    >
+                      <View
+                        style={
+                          Array [
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                            },
+                            undefined,
+                            Object {
+                              "backgroundColor": undefined,
+                            },
+                          ]
+                        }
+                      >
+                        <View
+                          style={
+                            Array [
+                              undefined,
+                              undefined,
+                              undefined,
+                            ]
+                          }
+                        >
+                          <View
+                            testID="button.icon"
+                          />
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "marginHorizontal": 16,
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  accessibilityState={
+                    Object {
+                      "disabled": true,
+                    }
+                  }
+                  accessible={true}
+                  focusable={true}
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  testID="post_view_content"
+                >
+                  <View>
+                    <View
+                      style={Object {}}
+                    >
+                      <View
+                        style={
+                          Object {
+                            "alignItems": "flex-start",
+                            "flexDirection": "row",
+                            "flexWrap": "wrap",
+                            "justifyContent": "flex-start",
+                            "marginBottom": 2,
+                            "marginTop": 2,
+                            "width": "100%",
+                          }
+                        }
+                      >
+                        <Text
+                          style={Object {}}
+                        >
+                          <Text
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#212745",
+                                  "fontFamily": "BeVietnamPro-Light",
+                                  "fontSize": 14,
+                                },
+                                Object {},
+                                Object {
+                                  "backgroundColor": "#F6EF79",
+                                  "borderRadius": 6,
+                                  "overflow": "hidden",
+                                },
+                              ]
+                            }
+                          >
+                            <Text
+                              style={
+                                Array [
+                                  Object {
+                                    "color": "#212745",
+                                    "fontFamily": "BeVietnamPro-Light",
+                                    "fontSize": 14,
+                                  },
+                                  Object {},
+                                ]
+                              }
+                            >
+                              Hư
+                            </Text>
+                          </Text>
+                          <Text
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#212745",
+                                  "fontFamily": "BeVietnamPro-Light",
+                                  "fontSize": 14,
+                                },
+                                Object {},
+                              ]
+                            }
+                          >
+                             cấu quá 
+                          </Text>
+                          <Text
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#212745",
+                                  "fontFamily": "BeVietnamPro-Light",
+                                  "fontSize": 14,
+                                },
+                                Object {},
+                                Object {},
+                              ]
+                            }
+                          >
+                            😢
+                          </Text>
+                          <Text
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#212745",
+                                  "fontFamily": "BeVietnamPro-Light",
+                                  "fontSize": 14,
+                                },
+                                Object {},
+                              ]
+                            }
+                          >
+                             @ngoclinh
+                          </Text>
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                  "paddingHorizontal": 16,
+                  "paddingVertical": 8,
+                }
+              }
+              testID="content_footer_lite"
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#212745",
+                        "fontFamily": "BeVietnamPro-Light",
+                        "fontSize": 13,
+                      },
+                      Object {},
+                      undefined,
+                    ]
+                  }
+                >
+                  23 React
+                </Text>
+                <View
+                  style={
+                    Object {
+                      "height": undefined,
+                      "paddingHorizontal": undefined,
+                      "paddingVertical": undefined,
+                      "width": 16,
+                    }
+                  }
+                />
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#212745",
+                        "fontFamily": "BeVietnamPro-Light",
+                        "fontSize": 13,
+                      },
+                      Object {},
+                      undefined,
+                    ]
+                  }
+                  testID="content_footer_lite.comment_text"
+                >
+                  0 Comment
+                </Text>
+              </View>
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "flex-end",
+                      "paddingBottom": 6,
+                      "paddingHorizontal": 16,
+                      "paddingTop": 12,
+                    },
+                    Object {
+                      "alignItems": "center",
+                      "paddingBottom": 0,
+                      "paddingHorizontal": 0,
+                      "paddingTop": 0,
+                    },
+                  ]
+                }
+                testID="content_interested_user_count"
+              >
+                <View
+                  accessible={true}
+                  collapsable={false}
+                  focusable={true}
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Object {
+                      "opacity": 1,
+                    }
+                  }
+                  testID="content_interested_user_count.button"
+                >
+                  <Text
+                    numberOfLines={1}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 13,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                    testID="content_interested_user_count.show_text"
+                  >
+                    Interested by 
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "#212745",
+                            "fontFamily": "BeVietnamPro-Medium",
+                            "fontSize": 13,
+                          },
+                          Object {
+                            "color": "#353E6E",
+                          },
+                          undefined,
+                        ]
+                      }
+                    >
+                      6
+                    </Text>
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
       >
         <View
           style={
             Object {
-              "paddingVertical": 16,
+              "height": 16,
+              "paddingHorizontal": undefined,
+              "paddingVertical": undefined,
+              "width": undefined,
             }
           }
-        >
-          <ActivityIndicator
-            color="#D1D4DB"
-          />
-        </View>
+        />
       </View>
     </View>
   </RCTScrollView>

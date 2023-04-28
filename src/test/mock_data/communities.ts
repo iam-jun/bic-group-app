@@ -8,7 +8,7 @@ export const communities = [
     slug: 'string',
     privacy: CommunityPrivacyType.OPEN,
     description: 'string',
-    icon: 'string',
+    icon: 'https://evolgroup.vn/wp-content/uploads/sites/18/2020/04/Thumb-EVOL.jpg',
     backgroundImgUrl: 'string',
     teamId: 'string',
     members: [
@@ -35,6 +35,9 @@ export const communities = [
     updatedAt: '2022-04-26T08:29:58.579Z',
     userCount: 0,
     joinStatus: 0,
+    settings: {
+      isActiveGroupTerms: false,
+    },
   },
 ];
 
@@ -206,7 +209,24 @@ export const memberRequestDetail = {
     countryCode: null,
     latestWork: null,
   },
+  membershipAnswers: [],
 };
+
+export const mockAnswers = [
+  {
+    question: '1. What is the cross with the loop at the top?',
+    answer: 'This is answer.....',
+    isRequired: true,
+  },
+  {
+    question: '2. What is the best courses to do after MBA marketing? What is the best courses to do after MBA marketing? What is the best courses to do after MBA marketing? What is the best courses to do after MBA marketing?',
+    answer: '',
+  },
+  {
+    question: '1. What is the cross with the loop at the top?',
+    answer: 'This is answer.....',
+  },
+];
 
 export const listDiscoverCommunities = [
   {

@@ -34,7 +34,6 @@ exports[`TextInputController component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "backgroundColor": "green",
               "borderBottomLeftRadius": 6,
               "borderBottomRightRadius": 6,
               "borderTopLeftRadius": 6,
@@ -66,7 +65,7 @@ exports[`TextInputController component renders correctly 1`] = `
             onBlur={[Function]}
             onChangeText={[Function]}
             onFocus={[Function]}
-            placeholder="New password"
+            placeholder="New Password"
             placeholderTextColor="#BAC0DE"
             selectionColor="#767D93"
             style={

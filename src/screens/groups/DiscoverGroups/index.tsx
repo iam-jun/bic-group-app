@@ -20,6 +20,16 @@ import useDiscoverGroupsStore from './store';
 import IDiscoverGroupsState from './store/Interface';
 import { useBaseHook } from '~/hooks';
 import useCommunitiesStore from '~/store/entities/communities';
+import useTermStore from '~/components/TermsModal/store';
+import TermsView from '~/components/TermsModal';
+import MemberQuestionsModal from '~/components/MemberQuestionsModal';
+import useMemberQuestionsStore, { MembershipQuestionsInfo } from '~/components/MemberQuestionsModal/store';
+
+type HandleJoinGroupData = {
+  isActiveGroupTerms: boolean;
+  isActiveMembershipQuestions: boolean;
+  groupId: string;
+};
 
 const DiscoverGroups = ({ route }: any) => {
   const { communityId } = route.params;
@@ -30,17 +40,18 @@ const DiscoverGroups = ({ route }: any) => {
 
   const [searchText, setSearchText] = useState('');
 
-  const doGetDiscoverGroups = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doGetDiscoverGroups);
-  const joinNewGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doJoinNewGroup);
-  const cancelJoinGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doCancelJoinGroup);
+  const actions = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.actions);
   const {
     ids, items, loading, canLoadMore, noGroupInCommuntity,
   } = useDiscoverGroupsStore();
 
   const communityDetail = useCommunitiesStore((state) => state.data[communityId]);
 
+  const membershipQuestionActions = useMemberQuestionsStore((state) => state.actions);
+  const termsActions = useTermStore((state) => state.actions);
+
   const getDiscoverGroups = (isRefreshing?: boolean) => {
-    doGetDiscoverGroups({ communityId, isRefreshing });
+    actions.getDiscoverGroups({ communityId, isRefreshing });
   };
 
   useEffect(
@@ -49,12 +60,32 @@ const DiscoverGroups = ({ route }: any) => {
     }, [communityId],
   );
 
-  const handleJoinGroup = (groupId: string) => {
-    joinNewGroup(groupId);
+  const handleJoinGroup = ({ isActiveGroupTerms, groupId, isActiveMembershipQuestions } : HandleJoinGroupData) => {
+    if (isActiveMembershipQuestions) {
+      const payload: MembershipQuestionsInfo = {
+        groupId,
+        name: '',
+        rootGroupId: groupId,
+        type: 'group',
+        isActive: true,
+        isActiveGroupTerms,
+      };
+      membershipQuestionActions.setMembershipQuestionsInfo(payload);
+      return;
+    }
+
+    if (isActiveGroupTerms) {
+      const payload = {
+        groupId, rootGroupId: groupId, name: '', type: 'group', isActive: true,
+      } as any;
+      termsActions.setTermInfo(payload);
+      return;
+    }
+    actions.joinNewGroup(groupId);
   };
 
   const handleCancelJoinGroup = (groupId: string) => {
-    cancelJoinGroup(groupId);
+    actions.cancelJoinGroup(groupId);
   };
 
   const onLoadMore = () => {
@@ -71,28 +102,34 @@ const DiscoverGroups = ({ route }: any) => {
   const onSearchText = debounce(
     (text: string) => {
       setSearchText(text);
-      doGetDiscoverGroups({ isRefreshing: true, communityId, params: { key: text } });
+      actions.getDiscoverGroups({ isRefreshing: true, communityId, params: { key: text } });
     }, 500,
   );
 
-  const renderItem = ({ item, index }: {item: number; index: number}) => {
+  const renderItem = ({ item }: {item: string;}) => {
     const currentItem = {
       ...items[item],
       community: { ...communityDetail },
     };
+
+    const isActiveGroupTerms = currentItem?.settings?.isActiveGroupTerms || false;
+    const isActiveMembershipQuestions = currentItem?.settings?.isActiveMembershipQuestions || false;
+
+    const data: HandleJoinGroupData = { isActiveGroupTerms, groupId: item, isActiveMembershipQuestions };
+
     return (
       <CommunityGroupCard
         item={currentItem}
-        testID={`browse_groups_item_${index}`}
+        testID="discover_groups.items"
         shouldShowAlertJoinTheCommunityFirst
-        onJoin={handleJoinGroup}
+        onJoin={() => { handleJoinGroup(data); }}
         onCancel={handleCancelJoinGroup}
       />
     );
   };
 
   const renderEmptyComponent = () => {
-    if (loading) return <ActivityIndicator />;
+    if (loading) return <ActivityIndicator testID="discover_groups.loading" />;
     return (
       <EmptyScreen
         source={images.img_empty_search_post}
@@ -127,7 +164,7 @@ const DiscoverGroups = ({ route }: any) => {
       {ids?.length > 0
         ? (
           <FlatList
-            testID="flatlist"
+            testID="discover_groups.list_group"
             data={ids}
             renderItem={renderItem}
             style={{ flex: 1 }}
@@ -147,6 +184,8 @@ const DiscoverGroups = ({ route }: any) => {
         )}
           />
         ) : renderEmptyComponent()}
+      <MemberQuestionsModal />
+      <TermsView />
     </ScreenWrapper>
   );
 };

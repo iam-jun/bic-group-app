@@ -34,7 +34,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
   scrollEventThrottle={50}
   showsVerticalScrollIndicator={false}
   stickyHeaderIndices={Array []}
-  testID="flatlist"
+  testID="member_request_list"
   viewabilityConfigCallbackPairs={Array []}
 >
   <RCTRefreshControl />
@@ -288,93 +288,6 @@ exports[`MemberRequestList should render data correctly 1`] = `
                 }
               >
                 Hồ Chí Minh
-              </Text>
-            </View>
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "marginBottom": 8,
-                  "marginRight": 12,
-                }
-              }
-            >
-              <View
-                accessibilityState={
-                  Object {
-                    "disabled": true,
-                  }
-                }
-                accessible={true}
-                collapsable={false}
-                focusable={false}
-                hitSlop={
-                  Object {
-                    "bottom": 10,
-                    "left": 10,
-                    "right": 10,
-                    "top": 10,
-                  }
-                }
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Object {
-                    "opacity": 1,
-                  }
-                }
-              >
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "flexDirection": "row",
-                      },
-                      undefined,
-                      Object {
-                        "backgroundColor": undefined,
-                      },
-                    ]
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        undefined,
-                        undefined,
-                        undefined,
-                      ]
-                    }
-                  >
-                    <View />
-                  </View>
-                </View>
-              </View>
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 14,
-                    },
-                    Object {
-                      "color": "#353E6E",
-                    },
-                    Object {
-                      "marginLeft": 12,
-                    },
-                  ]
-                }
-              >
-                usernametest@mail.com
               </Text>
             </View>
           </View>

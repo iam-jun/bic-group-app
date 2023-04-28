@@ -1,33 +1,33 @@
 import React from 'react';
-import { renderWithRedux, configureStore } from '../../../test/testUtils';
+
+import { fireEvent, render } from '~/test/testUtils';
 import HomeSearch from './index';
-import initialState from '../../../storeRedux/initialState';
+import useFeedSearchStore from './store';
+import useFilterToolbarStore from '~/components/FilterToolbar/store';
 
-describe('NewsfeedSearch component', () => {
-  const mockStore = configureStore([]);
+describe('MyDraft component', () => {
+  const baseProps = {
+    groupId: 'test',
+  };
+  it('renders correctly', () => {
+    useFeedSearchStore.setState((state) => {
+      state.newsfeedSearch.isShow = true;
+      return state;
+    });
 
-  it('should render null', () => {
-    const storeData = { ...initialState };
-    storeData.home.newsfeedSearch.isShow = false;
-    const store = mockStore(storeData);
-    const rendered = renderWithRedux(<HomeSearch />, store);
-    expect(rendered.toJSON()).toMatchSnapshot();
-  });
+    const resetFilter = jest.fn();
+    useFilterToolbarStore.setState((state) => {
+      state.reset = resetFilter;
+      return state;
+    });
 
-  it('should render search', () => {
-    const storeData = { ...initialState };
-    storeData.home.newsfeedSearch.isShow = true;
-    const store = mockStore(storeData);
-    const rendered = renderWithRedux(<HomeSearch />, store);
-    expect(rendered.toJSON()).toMatchSnapshot();
-  });
+    const rendered = render(<HomeSearch {...baseProps} />);
+    const { getByTestId } = rendered;
+    const containerView = getByTestId('search_base_view');
+    expect(containerView).toBeDefined();
 
-  it('should render suggestion', () => {
-    const storeData = { ...initialState };
-    storeData.home.newsfeedSearch.isShow = true;
-    storeData.home.newsfeedSearch.isSuggestion = true;
-    const store = mockStore(storeData);
-    const rendered = renderWithRedux(<HomeSearch />, store);
-    expect(rendered.toJSON()).toMatchSnapshot();
+    const btnBack = getByTestId('search_base_view.back_button');
+    fireEvent.press(btnBack);
+    expect(resetFilter).toBeCalled();
   });
 });

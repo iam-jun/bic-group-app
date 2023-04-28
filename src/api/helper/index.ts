@@ -3,7 +3,6 @@
 import { Auth } from 'aws-amplify';
 import { AxiosError } from 'axios';
 import i18n from 'i18next';
-import _ from 'lodash';
 import { DeviceEventEmitter } from 'react-native';
 import { apiProviders, HttpApiResponseFormat } from '~/api/apiConfig';
 import { makeHttpRequest } from '~/api/apiRequest';
@@ -13,9 +12,8 @@ import APIErrorCode from '~/constants/apiErrorCode';
 import { uuidRegex } from '~/constants/commonRegex';
 import useAuthController from '~/screens/auth/store';
 import { updateUserFromSharedPreferences } from '~/services/sharePreferences';
+import useNetworkStore from '~/store/network';
 import useMyPermissionsStore from '~/store/permissions';
-import Store from '~/storeRedux';
-import noInternetActions from '~/storeRedux/network/actions';
 import { timeOut } from '~/utils/common';
 import ConvertHelper from '~/utils/convertHelper';
 
@@ -97,18 +95,13 @@ const handleRefreshTokenFailed = () => {
 
 const handleSystemIssue = (axiosError: AxiosError) => {
   console.error(axiosError.request);
-  Store.store.dispatch(noInternetActions.checkInternetReachable());
+  useNetworkStore.getState().actions.checkIsInternetReachable();
+  const { isInternetReachable } = useNetworkStore.getState() || {};
 
-  const state = Store.store.getState();
-  const isInternetReachable: boolean = _.get(
-    state,
-    'noInternet.isInternetReachable',
-    false,
-  );
-
-  if (isInternetReachable === false) return;
-
-  Store.store.dispatch(noInternetActions.showSystemIssueThenLogout());
+  // If device still can connect to internet and request doesn't have response, maybe something went wrong with server
+  if (isInternetReachable) {
+    useNetworkStore.getState().actions.showSystemIssueThenLogout();
+  }
 };
 
 /**

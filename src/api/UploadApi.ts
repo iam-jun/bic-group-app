@@ -1,7 +1,9 @@
 import { Method } from 'axios';
 import { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
 import appConfig from '~/configs/appConfig';
+import { IUploadType } from '~/configs/resourceConfig';
 import { IFilePicked } from '~/interfaces/common';
+import { makeHttpRequest } from './apiRequest';
 
 const provider = apiProviders.beinUpload;
 const defaultConfig = {
@@ -126,6 +128,15 @@ export const uploadApiConfig = {
   },
 };
 
-const uploadApi = {};
+const uploadApi = {
+  createFileId: (uploadType: IUploadType) => makeHttpRequest(uploadApiConfig.createFileId(uploadType)),
+  uploadImage: (
+    type: any,
+    file: IFilePicked,
+    onUploadProgress?: (progressEvent: any) => void,
+  ) => makeHttpRequest(uploadApiConfig.uploadImage(
+    type, file, onUploadProgress,
+  )),
+};
 
 export default uploadApi;

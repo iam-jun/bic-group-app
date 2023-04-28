@@ -1,6 +1,6 @@
 import { IObject } from '~/interfaces/common';
 import { IEditArticleAudience } from '~/interfaces/IArticle';
-import { IArticleCover } from '~/interfaces/IPost';
+import { IArticleCover, IPostSetting } from '~/interfaces/IPost';
 import { ISeriesData } from '~/interfaces/ISeries';
 import IBaseState from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
@@ -9,7 +9,7 @@ import editSeries from './actions/editSeries';
 import getSeriesDetail from './actions/getSeriesDetail';
 import postCreateNewSeries from './actions/postCreateNewSeries';
 import removeAudiences from './actions/removeAudiences';
-import { reorderArticles } from './actions/reorderArticles';
+import { reorderItemsInSeries } from './actions/reorderItemsInSeries';
 
 export interface ISeriesState extends IBaseState{
   loading: boolean;
@@ -25,12 +25,13 @@ export interface ISeriesState extends IBaseState{
     setAudience: (audience: IEditArticleAudience) => void;
     setCover: (cover: IArticleCover) => void;
     setAudienceGroups: (groups: any) => void;
+    setSettings: (setting: IPostSetting) => void;
     postCreateNewSeries?: () => void;
     getSeriesDetail: (id: string) => void;
     deleteSeries: (id: string, callbackError: any) => void;
     editSeries: (id: string, shouldReplaceWithDetail: boolean, onRetry: any, callbackError: any) => void;
     removeAudiences: (id: string, listAudiences: string[]) => void;
-    reorderArticles: (id: string, indexArticlesOrder: number[]) => void;
+    reorderItemsInSeries: (id: string, indexItemsOrder: number[]) => void;
   }
 
   reset?: () => void;
@@ -45,6 +46,13 @@ const initialState = {
     audience: {
       userIds: [],
       groupIds: [],
+    },
+    setting: {
+      canShare: true,
+      canReact: true,
+      canComment: true,
+      isImportant: false,
+      importantExpiredAt: null,
     },
   },
   requestings: {},
@@ -86,12 +94,20 @@ const useSeries = (set, get) => ({
         state.groups = Object.values(groups) || [];
       }, 'setAudienceGroups');
     },
+    setSettings: (setting: IPostSetting) => {
+      set((state: ISeriesState) => {
+        state.data.setting = {
+          ...state.data.setting,
+          ...setting,
+        };
+      }, 'setSettings Series');
+    },
     postCreateNewSeries: postCreateNewSeries(set, get),
     getSeriesDetail: getSeriesDetail(set, get),
     deleteSeries: deleteSeries(set, get),
     editSeries: editSeries(set, get),
     removeAudiences: removeAudiences(set, get),
-    reorderArticles: reorderArticles(set, get),
+    reorderItemsInSeries: reorderItemsInSeries(set, get),
   },
 
   reset: () => resetStore(initialState, set),

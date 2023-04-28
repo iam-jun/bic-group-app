@@ -4,26 +4,25 @@ import streamApi from '~/api/StreamApi';
 import { timeOut } from '~/utils/common';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
-import { getMentionsFromContent } from '~/helpers/post';
 import useCommentInputStore from '~/screens/comments/components/CommentInputView/store';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 import showToastError from '~/store/helper/showToastError';
-import Store from '~/storeRedux';
+import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
+import { getMentionsFromContent } from '~/helpers/post';
 
 const navigation = withNavigation(rootNavigationRef);
 
 const editComment = (_set, _get) => async (payload: IPayloadPutEditComment) => {
   const { id, comment, data } = payload;
+
   if (!id || !data || !comment) {
-    console.error('\x1b[31m🐣️ saga putEditPost: id or data not found\x1b[0m');
+    console.error('\x1b[31m🐣️ edit comment: id or data not found\x1b[0m');
     return;
   }
   try {
     useCommentInputStore.getState().actions.setCreateComment({ loading: true });
 
-    // get mentions from temp selected in mention input
-    const { mentionInput } = Store.store.getState();
-    const tempMentions = mentionInput?.tempSelected;
+    const tempMentions = useMentionInputStore.getState().tempSelected;
     const newMentions = getMentionsFromContent(
       data?.content, tempMentions,
     );

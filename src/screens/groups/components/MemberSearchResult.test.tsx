@@ -12,6 +12,7 @@ describe('MemberSearchResult component', () => {
       <MemberSearchResult
         canManageMember
         memberSearchData={{ loading: true, canLoadMore: true, data: [] }}
+        isAdminRole
         onPressMenu={onPressMenu}
       />,
     );
@@ -28,6 +29,7 @@ describe('MemberSearchResult component', () => {
           canLoadMore: true,
           data: [adminDetail, memberDetail],
         }}
+        isAdminRole
         onPressMenu={onPressMenu}
       />,
     );
@@ -44,10 +46,11 @@ describe('MemberSearchResult component', () => {
           canLoadMore: true,
           data: [],
         }}
+        isAdminRole
         onPressMenu={onPressMenu}
       />,
     );
-    const emptyText = wrapper.getByTestId('member_search_result.no_results');
+    const emptyText = wrapper.getByTestId('no_search_results');
     expect(emptyText).toBeDefined();
   });
 
@@ -60,6 +63,7 @@ describe('MemberSearchResult component', () => {
           canLoadMore: true,
           data: [adminDetail, memberDetail],
         }}
+        isAdminRole
         onPressMenu={onPressMenu}
       />,
     );
@@ -78,6 +82,7 @@ describe('MemberSearchResult component', () => {
           canLoadMore: true,
           data: [],
         }}
+        isAdminRole
         onPressMenu={onPressMenu}
       />,
     );
@@ -96,13 +101,13 @@ describe('MemberSearchResult component', () => {
           canLoadMore: false,
           data: [adminDetail, memberDetail],
         }}
+        isAdminRole
         onPressMenu={onPressMenu}
       />,
     );
     const flatlist = wrapper.getByTestId('flatlist');
     expect(flatlist).toBeDefined();
     const items = wrapper.getAllByTestId('member_item');
-    expect(wrapper).toMatchSnapshot();
     expect(items.length).toBe(2);
   });
 });

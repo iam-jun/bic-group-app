@@ -1,65 +1,104 @@
 import { Linking } from 'react-native';
+import groupApi from '~/api/GroupApi';
+import APIErrorCode from '~/constants/apiErrorCode';
 import { useRootNavigation } from '~/hooks/navigation';
-import { linkingConfig, PREFIX_DEEPLINK_GROUP, PREFIX_HTTPS } from '~/router/config';
+import { linkingConfig, PREFIX_DEEPLINK_GROUP, PREFIX_URL } from '~/router/config';
+import authStacks from '~/router/navigator/AuthStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
+import useAuthController from '~/screens/auth/store';
+import useAppStore from '~/store/app';
+import showToastError from '~/store/helper/showToastError';
 import getEnv from '~/utils/env';
-import { DEEP_LINK_TYPES, matchDeepLink } from '~/utils/link';
+import { DeepLinkTypes, matchDeepLink, openInAppBrowser } from '~/utils/link';
+
+export const onReceiveURL = async ({ url, navigation, listener }: { url: string; navigation: any; listener?: any }) => {
+  const match = matchDeepLink(url);
+
+  const userId = useAuthController?.getState?.().authUser?.userId;
+
+  if (match) {
+    switch (match.type) {
+      case DeepLinkTypes.POST_DETAIL:
+        navigation?.navigate?.(mainStack.postDetail, { post_id: match.postId });
+        break;
+
+      case DeepLinkTypes.COMMENT_DETAIL:
+        navigation?.navigate?.(mainStack.commentDetail, {
+          ...match.params,
+          postId: match.postId,
+        });
+        break;
+
+      case DeepLinkTypes.COMMUNTY_DETAIL:
+        navigation?.navigate?.(mainStack.communityDetail, { communityId: match.communityId });
+        break;
+
+      case DeepLinkTypes.GROUP_DETAIL:
+        navigation?.navigate?.(mainStack.groupDetail, {
+          communityId: match.communityId,
+          groupId: match.groupId,
+        });
+        break;
+      case DeepLinkTypes.SERIES_DETAIL:
+        navigation?.navigate?.(mainStack.seriesDetail, {
+          seriesId: match.seriesId,
+        });
+        break;
+      case DeepLinkTypes.ARTICLE_DETAIL:
+        navigation?.navigate?.(mainStack.articleContentDetail, {
+          articleId: match.articleId,
+        });
+        break;
+      case DeepLinkTypes.LOGIN:
+        if (userId) return;
+        navigation?.navigate?.(authStacks.signIn);
+        break;
+      case DeepLinkTypes.FORGOT_PASSWORD:
+        if (userId) return;
+        navigation?.navigate?.(authStacks.forgotPassword);
+        break;
+      case DeepLinkTypes.CONFIRM_USER:
+        navigation?.navigate?.(userId ? mainStack.confirmUser : authStacks.confirmUser, { params: match.params });
+        break;
+      case DeepLinkTypes.REFERRAL:
+        await navigateFromReferralLink({ match, navigation, userId });
+        break;
+      case DeepLinkTypes.USER_PROFILE:
+        if (userId) {
+          navigation?.navigate?.(mainStack.userProfile, {
+            userId: match.userName,
+            params: {
+              type: 'username',
+            },
+          });
+          break;
+        }
+
+        navigation?.navigate?.(authStacks.signIn);
+        useAppStore.getState().actions.setRedirectUrl(url);
+        break;
+      case DeepLinkTypes.APP:
+        break;
+      default:
+        listener?.(url);
+    }
+  } else {
+    /**
+     * convert back to normal web link to open on browser
+     * for unsupported deep link
+     */
+    const webLink = url.replace(PREFIX_DEEPLINK_GROUP, PREFIX_URL + getEnv('SELF_DOMAIN'));
+    openInAppBrowser(webLink);
+  }
+};
 
 const getLinkingCustomConfig = (
   config: any, navigation: any,
 ) => ({
   ...config,
   subscribe(listener: any) {
-    const onReceiveURL = ({ url }: { url: string }) => {
-      const match = matchDeepLink(url);
-
-      if (match) {
-        switch (match.type) {
-          case DEEP_LINK_TYPES.POST_DETAIL:
-            navigation?.navigate?.(mainStack.postDetail, { post_id: match.postId });
-            break;
-
-          case DEEP_LINK_TYPES.COMMENT_DETAIL:
-            navigation?.navigate?.(mainStack.commentDetail, {
-              ...match.params,
-              postId: match.postId,
-            });
-            break;
-
-          case DEEP_LINK_TYPES.COMMUNTY_DETAIL:
-            navigation?.navigate?.(mainStack.communityDetail, { communityId: match.communityId });
-            break;
-
-          case DEEP_LINK_TYPES.GROUP_DETAIL:
-            navigation?.navigate?.(mainStack.groupDetail, {
-              communityId: match.communityId,
-              groupId: match.groupId,
-            });
-            break;
-          case DEEP_LINK_TYPES.SERIES_DETAIL:
-            navigation?.navigate?.(mainStack.seriesDetail, {
-              seriesId: match.seriesId,
-            });
-            break;
-          case DEEP_LINK_TYPES.ARTICLE_DETAIL:
-            navigation?.navigate?.(mainStack.articleContentDetail, {
-              articleId: match.articleId,
-            });
-            break;
-          default:
-            listener(url);
-        }
-      } else {
-        /**
-         * convert back to normal web link to open on browser
-         * for unsupported deep link
-         */
-        const webLink = url.replace(PREFIX_DEEPLINK_GROUP, PREFIX_HTTPS + getEnv('SELF_DOMAIN'));
-        Linking.openURL(webLink);
-      }
-    };
     const linkingListener = Linking.addEventListener(
-      'url', onReceiveURL,
+      'url', ({ url }: {url: string}) => onReceiveURL({ url, navigation, listener }),
     );
 
     return () => {
@@ -72,6 +111,71 @@ const useNavigationLinkingConfig = () => {
   const { rootNavigation } = useRootNavigation();
 
   return getLinkingCustomConfig(linkingConfig, rootNavigation);
+};
+
+const navigateFromReferralLink = async (payload: { match: any; navigation: any; userId: string }) => {
+  const { match, navigation, userId } = payload || {};
+  const { referralCode } = match || {};
+  let responseValidate = null;
+
+  try {
+    responseValidate = await groupApi.validateReferralCode({ code: referralCode });
+  } catch (error) {
+    console.error('validateReferralCode error:', error);
+  }
+
+  if (responseValidate && responseValidate?.data) {
+    await navigateWithValidReferralCode({
+      userId,
+      responseValidate,
+      navigation,
+      referralCode,
+    });
+  } else {
+    navigateWithInvalidReferralCode({ userId, navigation });
+  }
+};
+
+const navigateWithValidReferralCode = async (payload: {
+  userId: string;
+  responseValidate: any;
+  navigation: any;
+  referralCode: string;
+}) => {
+  const {
+    userId, responseValidate, navigation, referralCode,
+  } = payload;
+  if (userId) {
+    const { id: communityId } = responseValidate?.data || {};
+    try {
+      const responseJoinCommunity = await groupApi.joinCommunity(communityId);
+      if (responseJoinCommunity && responseJoinCommunity?.data) {
+        navigation?.navigate?.(mainStack.communityDetail, { communityId });
+      }
+    } catch (error) {
+      console.error('joinCommunity error:', error);
+      if (
+        error?.code === APIErrorCode.Group.ALREADY_MEMBER
+        || error?.code === APIErrorCode.Group.JOIN_REQUEST_ALREADY_SENT
+      ) {
+        navigation?.navigate?.(mainStack.communityDetail, { communityId });
+      } else {
+        navigation?.navigate?.('home');
+        showToastError(error);
+      }
+    }
+  } else {
+    navigation?.navigate?.(authStacks.signUp, { isValidLink: true, referralCode });
+  }
+};
+
+const navigateWithInvalidReferralCode = (payload: { userId: string; navigation: any }) => {
+  const { userId, navigation } = payload;
+  if (userId) {
+    navigation?.navigate?.('home');
+  } else {
+    navigation?.navigate?.(authStacks.signUp, { isValidLink: false });
+  }
 };
 
 export default useNavigationLinkingConfig;

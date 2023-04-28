@@ -6,7 +6,11 @@ const homeStack = {
   draftPost: 'draft-post',
   userProfile: 'user-profile',
   postSettings: 'post-settings',
+  createPostTags: 'create-post-tags',
+  createPostSeries: 'create-post-series',
   commentDetail: 'comment-detail',
+  pinContent: 'pin-content',
+  reorderedPinContent: 'reordered-pin-content',
 };
 
 export default homeStack;

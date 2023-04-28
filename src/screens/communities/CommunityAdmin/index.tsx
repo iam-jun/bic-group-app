@@ -1,7 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -10,7 +9,6 @@ import Divider from '~/beinComponents/Divider';
 import { useRootNavigation } from '~/hooks/navigation';
 import Text from '~/baseComponents/Text';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
-import modalActions from '~/storeRedux/modal/actions';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
@@ -24,7 +22,6 @@ const CommunityAdmin = (props: any) => {
 
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles();
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const community = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
   const { name = '', groupId } = community || {};
@@ -37,8 +34,6 @@ const CommunityAdmin = (props: any) => {
       PermissionKey.EDIT_PRIVACY,
     ],
   );
-
-  const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
 
   const onPressGeneralInfo = () => {
     rootNavigation.navigate(
@@ -55,31 +50,32 @@ const CommunityAdmin = (props: any) => {
     );
   };
 
-  const renderModerating = () => (
-    <>
-      <Text.BodyM
-        style={styles.headerTitle}
-        color={theme.colors.neutral80}
-        variant="bodyM"
-        useI18n
-      >
-        settings:title_community_moderating
-      </Text.BodyM>
-      <MenuItem
-        testID="community_admin.pending_posts"
-        title="settings:title_pending_posts"
-        icon="FileExclamation"
-        iconProps={{
-          icon: 'FileExclamation',
-          tintColor: theme.colors.purple50,
-        }}
-        notificationsBadgeNumber={999}
-        notificationsBadgeProps={{ maxNumber: 99, variant: 'alert' }}
-        rightSubIcon="AngleRightSolid"
-        onPress={displayNewFeature}
-      />
-    </>
-  );
+  const renderModerating = () => null;
+  // return (
+  //   <>
+  //     <Text.BodyM
+  //       style={styles.headerTitle}
+  //       color={theme.colors.neutral80}
+  //       variant="bodyM"
+  //       useI18n
+  //     >
+  //       settings:title_community_moderating
+  //     </Text.BodyM>
+  //     <MenuItem
+  //       testID="community_admin.pending_posts"
+  //       title="settings:title_pending_posts"
+  //       icon="FileExclamation"
+  //       iconProps={{
+  //         icon: 'FileExclamation',
+  //         tintColor: theme.colors.purple50,
+  //       }}
+  //       notificationsBadgeNumber={999}
+  //       notificationsBadgeProps={{ maxNumber: 99, variant: 'alert' }}
+  //       rightSubIcon="AngleRightSolid"
+  //       onPress={displayNewFeature}
+  //     />
+  //   </>
+  // );
 
   const renderSettings = () => (
     <>
@@ -101,14 +97,6 @@ const CommunityAdmin = (props: any) => {
           onPress={onPressGeneralInfo}
         />
       )}
-      <MenuItem
-        testID="community_admin.post_settings"
-        title="settings:title_post_settings"
-        icon="Copy"
-        iconProps={{ icon: 'Copy', tintColor: theme.colors.purple50 }}
-        rightSubIcon="AngleRightSolid"
-        onPress={displayNewFeature}
-      />
       <MenuItem
         testID="community_admin.schedule_content"
         title="settings:title_schedule_content"

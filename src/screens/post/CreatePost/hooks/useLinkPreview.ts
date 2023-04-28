@@ -1,10 +1,7 @@
-import { useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useRef } from 'react';
 import groupApi from '~/api/GroupApi';
-import { useKeySelector } from '~/hooks/selector';
 import { ILinkPreviewCreatePost } from '~/interfaces/IPost';
-import postActions from '~/storeRedux/post/actions';
-import postKeySelector from '~/storeRedux/post/keySelector';
+import useLinkPreviewStore, { ILinkPreviewState } from '~/store/linkPreview';
 import { getUrlFromText } from '~/utils/common';
 import {
   createNewArrayLinkPreview,
@@ -15,12 +12,19 @@ import {
 } from '../helper';
 
 const useLinkPreview = () => {
-  const dispatch = useDispatch();
-
   const refHandleLinkPreview = useRef<any>();
 
-  const linkPreview = useKeySelector(postKeySelector.createPost.linkPreview);
-  const { lstLinkPreview, lstRemovedLinkPreview } = linkPreview;
+  const {
+    lstLinkPreview,
+    lstRemovedLinkPreview,
+    actions: { updateLinkPreview },
+  } = useLinkPreviewStore((state: ILinkPreviewState) => state);
+
+  const linkPreview = { lstLinkPreview, lstRemovedLinkPreview };
+
+  useEffect(() => () => {
+    updateLinkPreview();
+  }, []);
 
   const debounceHandleLinkPreview = (text: string) => {
     if (refHandleLinkPreview?.current) {
@@ -42,18 +46,10 @@ const useLinkPreview = () => {
 
     if (urls.length === 0) {
       if (additionalLinkPreview) {
-        dispatch(
-          postActions.updateLinkPreview({
-            lstLinkPreview: [...additionalLinkPreview],
-          }),
-        );
+        updateLinkPreview({ lstLinkPreview: [...additionalLinkPreview] });
       }
       // reset lstRemovedLinkPreview
-      dispatch(
-        postActions.updateLinkPreview({
-          lstRemovedLinkPreview: [],
-        }),
-      );
+      updateLinkPreview({ lstRemovedLinkPreview: [] });
       return;
     }
 
@@ -92,12 +88,10 @@ const useLinkPreview = () => {
       ];
     }
 
-    dispatch(
-      postActions.updateLinkPreview({
-        lstLinkPreview: lstLinkPreviewUpdate,
-        lstRemovedLinkPreview: lstRemovedLinkPreviewUpdate,
-      }),
-    );
+    updateLinkPreview({
+      lstLinkPreview: lstLinkPreviewUpdate,
+      lstRemovedLinkPreview: lstRemovedLinkPreviewUpdate,
+    });
   };
 
   const onCloseLinkPreview = () => {
@@ -106,12 +100,10 @@ const useLinkPreview = () => {
     const removedLinkPreviewItem = newLstLinkPreview.pop();
     newLstRemovedLinkPreview.push(removedLinkPreviewItem.url);
 
-    dispatch(
-      postActions.updateLinkPreview({
-        lstLinkPreview: newLstLinkPreview,
-        lstRemovedLinkPreview: newLstRemovedLinkPreview,
-      }),
-    );
+    updateLinkPreview({
+      lstLinkPreview: newLstLinkPreview,
+      lstRemovedLinkPreview: newLstRemovedLinkPreview,
+    });
   };
 
   const updateLinkPreviewState = (
@@ -127,11 +119,8 @@ const useLinkPreview = () => {
       }
       return item;
     });
-    dispatch(
-      postActions.updateLinkPreview({
-        lstLinkPreview: updateLinkPreviewState,
-      }),
-    );
+
+    updateLinkPreview({ lstLinkPreview: updateLinkPreviewState });
   };
 
   const loadLinkPreview = async (url: string) => {

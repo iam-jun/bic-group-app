@@ -1,8 +1,5 @@
 import { Auth } from 'aws-amplify';
-import { ToastType } from '~/baseComponents/Toast/BaseToast';
-import { authErrors, forgotPasswordStages } from '~/constants/authConstants';
-import i18n from '~/localization';
-import useModalStore from '~/store/modal';
+import { forgotPasswordStages } from '~/constants/authConstants';
 import { act, renderHook } from '~/test/testUtils';
 import useForgotPasswordStore from '../index';
 
@@ -43,22 +40,20 @@ describe('requestResetPassword', () => {
     expect(result.current.errorRequest).toBe('');
   });
 
-  it('should request forgot password throw error and should show toast', () => {
+  it('should request forgot password throw error and call callbackError prop', () => {
     const error = { message: 'ERRORRRRR!' };
     const spy = jest.spyOn(Auth, 'forgotPassword').mockImplementation(
       () => Promise.reject(error),
     );
 
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
+    const callbackError = jest.fn();
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useForgotPasswordStore((state) => state));
 
     act(() => {
       try {
-        result.current.actions.requestResetPassword('email@tgm.vn');
+        result.current.actions.requestResetPassword('email@tgm.vn', callbackError);
       } catch (e) {
         expect(e).toBe(error);
       }
@@ -71,72 +66,7 @@ describe('requestResetPassword', () => {
       jest.runAllTimers();
     });
 
-    expect(showToast).toBeCalled();
-    expect(result.current.errorRequest).toBe('');
-    expect(result.current.loadingRequest).toBeFalsy();
-  });
-
-  it('should request forgot password throw error and should show toast when error code = limit exceeded exception', () => {
-    const error = { code: authErrors.LIMIT_EXCEEDED_EXCEPTION, message: 'error' };
-    const spy = jest.spyOn(Auth, 'forgotPassword').mockImplementation(
-      () => Promise.reject(error),
-    );
-
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
-
-    jest.useFakeTimers();
-    const { result } = renderHook(() => useForgotPasswordStore((state) => state));
-
-    act(() => {
-      try {
-        result.current.actions.requestResetPassword('email@tgm.vn');
-      } catch (e) {
-        expect(e).toBe(error);
-      }
-    });
-
-    expect(result.current.loadingRequest).toBeTruthy();
-    expect(spy).toBeCalled();
-
-    act(() => {
-      jest.runAllTimers();
-    });
-
-    expect(showToast).toBeCalledWith({
-      content: i18n.t('auth:text_err_limit_exceeded'),
-      type: ToastType.ERROR,
-    });
-    expect(result.current.errorRequest).toBe('');
-    expect(result.current.loadingRequest).toBeFalsy();
-  });
-
-  it('should request forgot password throw error when error code is user not found exception', () => {
-    const error = { code: authErrors.USER_NOT_FOUND_EXCEPTION, message: 'error' };
-    const spy = jest.spyOn(Auth, 'forgotPassword').mockImplementation(
-      () => Promise.reject(error) as any,
-    );
-
-    jest.useFakeTimers();
-    const { result } = renderHook(() => useForgotPasswordStore((state) => state));
-
-    act(() => {
-      try {
-        result.current.actions.requestResetPassword('email@tgm.vn');
-      } catch (e) {
-        expect(e).toBe(error);
-      }
-    });
-
-    expect(result.current.loadingRequest).toBeTruthy();
-    expect(spy).toBeCalled();
-
-    act(() => {
-      jest.runAllTimers();
-    });
-
-    expect(result.current.errorRequest).toBe(i18n.t('auth:text_forgot_password_email_not_found'));
+    expect(callbackError).toBeCalled();
     expect(result.current.loadingRequest).toBeFalsy();
   });
 

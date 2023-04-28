@@ -10,9 +10,8 @@ import { rootSwitch } from '~/router/stack';
 import { IAuthState } from '~/screens/auth/store';
 import useCommonController from '~/screens/store';
 import { getUserFromSharedPreferences, saveUserToSharedPreferences } from '~/services/sharePreferences';
-import Store from '~/storeRedux';
-import { mapProfile } from '~/storeRedux/menu/helper';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
+import { mapProfile } from '~/helpers/common';
 import { timeOut } from '~/utils/common';
 
 const navigation = withNavigation(rootNavigationRef);
@@ -38,7 +37,7 @@ const handleAuthEvent = (set, get) => async (data: HubCapsule) => {
     if (event === 'signIn') {
       const currentAuthUser = await Auth.currentAuthenticatedUser();
       const { attributes, username, signInUserSession } = currentAuthUser || {};
-      Store.store.dispatch(modalActions.showLoading());
+      useModalStore.getState().actions.setLoadingModal(true);
       const name = attributes?.name?.length < 50
         ? attributes?.name
         : attributes?.email?.match?.(/^([^@]*)@/)[1];
@@ -84,7 +83,7 @@ const handleAuthEvent = (set, get) => async (data: HubCapsule) => {
       navigation.replace(rootSwitch.mainStack);
       authActions.setSignInLoading(false);
       await timeOut(500);
-      Store.store.dispatch(modalActions.hideLoading());
+      useModalStore.getState().actions.setLoadingModal(false);
     }
   } catch (e) {
     console.error('\x1b[35m🐣️ handleAuthEvent  ', e, '\x1b[0m');

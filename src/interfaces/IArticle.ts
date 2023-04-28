@@ -1,7 +1,6 @@
 import {
   IArticleCover,
   ILinkPreview,
-  IParamGetDraftPosts,
 } from '~/interfaces/IPost';
 import { SortOder } from './common';
 import { IOrder } from './IHome';
@@ -34,8 +33,6 @@ export interface IParamGetArticleDetail {
   offset: number;
   withComment?: boolean;
 }
-
-export type IParamGetDraftArticles = IParamGetDraftPosts;
 
 export interface IPayloadPublishDraftArticle {
   draftArticleId: string;
@@ -94,11 +91,11 @@ export interface IEditArticleData {
   audience?: IEditArticleAudience;
   coverMedia?: IArticleCover;
   setting?: {
-    canShare: boolean;
-    canReact: boolean;
-    canComment: boolean;
-    isImportant: boolean;
-    importantExpiredAt: string;
+    canShare?: boolean;
+    canReact?: boolean;
+    canComment?: boolean;
+    isImportant?: boolean;
+    importantExpiredAt?: string;
   };
   mentions?: any;
   linkPreview?: ILinkPreview;
@@ -124,6 +121,10 @@ export interface CreateArticleProps {
       isFromReviewSchedule?: boolean;
     };
   };
+}
+
+export interface IArticleSettingsParams {
+  articleId?: string;
 }
 
 export interface IEditAritcleError {

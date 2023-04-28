@@ -2,6 +2,7 @@ package com.beincom.group;
 import expo.modules.ReactActivityDelegateWrapper;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.core.splashscreen.SplashScreen;
@@ -26,6 +27,10 @@ public class MainActivity extends ReactActivity {
     SplashScreen.installSplashScreen(this);
 
     super.onCreate(null);
+    // ATTENTION: This was auto-generated to handle app links.
+    Intent appLinkIntent = getIntent();
+    String appLinkAction = appLinkIntent.getAction();
+    Uri appLinkData = appLinkIntent.getData();
   }
 
   @Override

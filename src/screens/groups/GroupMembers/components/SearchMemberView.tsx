@@ -1,22 +1,18 @@
-import React, { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useCallback } from 'react';
 
 import { debounce } from 'lodash';
-import actions from '~/storeRedux/groups/actions';
 import appConfig from '~/configs/appConfig';
 import { IGroupMembers } from '~/interfaces/IGroup';
 import SearchBaseView from '~/beinComponents/SearchBaseView';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 import MemberSearchResult from '../../components/MemberSearchResult';
 import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
+import useGroupMemberStore from '../store';
 
 interface SearchMemberViewProps {
   groupId: string;
   isOpen: boolean;
   placeholder?: string;
-  initSearch?: string;
   onClose?: () => void;
   onPressMenu: (item: IGroupMembers) => void;
 }
@@ -25,12 +21,9 @@ const SearchMemberView = ({
   isOpen,
   groupId,
   placeholder,
-  initSearch,
   onClose,
   onPressMenu,
 }: SearchMemberViewProps) => {
-  const dispatch = useDispatch();
-  const [searchText, setSearchText] = useState(initSearch || '');
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
   const canManageMember = shouldHavePermission(
     groupId,
@@ -39,14 +32,23 @@ const SearchMemberView = ({
       PermissionKey.ASSIGN_UNASSIGN_ROLE,
     ],
   );
-  const groupSearchMembers = useKeySelector(
-    groupsKeySelector.groupSearchMembers,
+  const isAdminRole = shouldHavePermission(
+    groupId,
+    [
+      PermissionKey.ROLE_COMMUNITY_OWNER,
+      PermissionKey.ROLE_COMMUNITY_ADMIN,
+      PermissionKey.ROLE_GROUP_ADMIN,
+    ],
   );
 
-  const getGroupSearchMembers = (searchText: string) => {
-    if (!searchText?.trim?.()) return;
+  const actions = useGroupMemberStore((state) => state.actions);
+  const searchText = useGroupMemberStore((state) => state.search.key);
+  const groupSearchMembers = useGroupMemberStore((state) => state.search);
 
-    dispatch(actions.getGroupSearchMembers({ groupId, params: { key: searchText } }));
+  const getGroupSearchMembers = (searchQuery: string) => {
+    if (!searchQuery?.trim?.()) return;
+
+    actions.getGroupSearchMembers({ groupId, params: { key: searchQuery } });
   };
 
   const onLoadMore = () => {
@@ -54,8 +56,7 @@ const SearchMemberView = ({
   };
 
   const searchMembers = (searchQuery: string) => {
-    dispatch(actions.clearGroupSearchMembers());
-    setSearchText(searchQuery);
+    actions.clearGroupSearchMembers();
     getGroupSearchMembers(searchQuery);
   };
 
@@ -81,6 +82,7 @@ const SearchMemberView = ({
         <MemberSearchResult
           canManageMember={canManageMember}
           memberSearchData={groupSearchMembers}
+          isAdminRole={isAdminRole}
           onLoadMore={onLoadMore}
           onPressMenu={onPressMenu}
         />

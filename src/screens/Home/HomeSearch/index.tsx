@@ -1,46 +1,46 @@
 import { StyleProp, ViewStyle, Keyboard } from 'react-native';
-import React, { useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import React, {
+  FC, useRef,
+} from 'react';
 
 import SearchBaseView from '~/beinComponents/SearchBaseView';
-import { useKeySelector } from '~/hooks/selector';
-import homeKeySelector from '~/storeRedux/home/keySelector';
-import homeActions from '~/storeRedux/home/actions';
 import SearchSuggestion from '~/screens/Home/HomeSearch/SearchSuggestion';
 import SearchResult from '~/screens/Home/HomeSearch/SearchResult';
 import { useBaseHook } from '~/hooks';
 import { IPayloadSetNewsfeedSearch } from '~/interfaces/IHome';
 import spacing from '~/theme/spacing';
 import useFilterToolbarStore from '~/components/FilterToolbar/store';
+import useFeedSearchStore from './store';
 
 interface HomeSearchProps {
   style?: StyleProp<ViewStyle>;
-  searchViewRef?: any;
   groupId?: string;
 }
 
-const HomeSearch = ({ style, searchViewRef, groupId }: HomeSearchProps) => {
-  const _searchViewRef = searchViewRef || useRef(null);
+const HomeSearch: FC<HomeSearchProps> = (
+  { style, groupId },
+) => {
+  const _searchViewRef = useRef<any>(null);
 
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const resetFilter = useFilterToolbarStore((state) => state.reset);
 
-  const isShow = useKeySelector(homeKeySelector.newsfeedSearch.isShow);
-  const isSuggestion = useKeySelector(
-    homeKeySelector.newsfeedSearch.isSuggestion,
+  const isShow = useFeedSearchStore((state) => state.newsfeedSearch.isShow);
+  const isSuggestion = useFeedSearchStore(
+    (state) => state.newsfeedSearch.isSuggestion,
   );
+  const actions = useFeedSearchStore((state) => state.actions);
+  const resetFeedSearchStore = useFeedSearchStore((state) => state.reset);
 
   const onSelectKeyword = (keyword: string) => {
     _searchViewRef?.current?.setSearchText?.(keyword);
-    dispatch(
-      homeActions.setNewsfeedSearch({
-        isSuggestion: false,
-        searchResults: [],
-        searchText: keyword,
-        groupId,
-      }),
-    );
+    actions.setNewsfeedSearch({
+      isSuggestion: false,
+      hasNextPage: true,
+      searchResults: [],
+      searchText: keyword,
+      groupId,
+    });
     Keyboard.dismiss();
   };
 
@@ -51,19 +51,25 @@ const HomeSearch = ({ style, searchViewRef, groupId }: HomeSearchProps) => {
       payload.isSuggestion = true;
       _searchViewRef?.current?.focus?.();
     }
-    dispatch(homeActions.setNewsfeedSearch(payload));
+    actions.setNewsfeedSearch(payload);
   };
 
   const onFocusSearch = () => {
-    dispatch(
-      homeActions.setNewsfeedSearch({ isSuggestion: true, searchResults: [], groupId }),
-    );
+    actions.setNewsfeedSearch({
+      isSuggestion: true,
+      searchResults: [],
+      hasNextPage: true,
+      groupId,
+    });
   };
 
   const onSubmitSearch = () => {
-    dispatch(
-      homeActions.setNewsfeedSearch({ isSuggestion: false, searchResults: [], groupId }),
-    );
+    actions.setNewsfeedSearch({
+      isSuggestion: false,
+      searchResults: [],
+      hasNextPage: true,
+      groupId,
+    });
   };
 
   if (!isShow) {
@@ -72,7 +78,7 @@ const HomeSearch = ({ style, searchViewRef, groupId }: HomeSearchProps) => {
 
   const onClose = () => {
     resetFilter();
-    dispatch(homeActions.clearAllNewsfeedSearch());
+    resetFeedSearchStore();
   };
 
   return (
@@ -81,7 +87,7 @@ const HomeSearch = ({ style, searchViewRef, groupId }: HomeSearchProps) => {
       isOpen={isShow}
       onClose={onClose}
       placeholder={t('input:search_content')}
-      searchViewRef={_searchViewRef}
+      ref={_searchViewRef}
       onFocus={onFocusSearch}
       onChangeText={onSearchText}
       onSubmitEditing={onSubmitSearch}
@@ -91,7 +97,7 @@ const HomeSearch = ({ style, searchViewRef, groupId }: HomeSearchProps) => {
       }}
     >
       {isSuggestion ? (
-        <SearchSuggestion onSelectKeyword={onSelectKeyword} />
+        <SearchSuggestion ref={_searchViewRef} onSelectKeyword={onSelectKeyword} />
       ) : (
         <SearchResult />
       )}

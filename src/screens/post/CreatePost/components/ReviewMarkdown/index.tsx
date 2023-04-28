@@ -10,17 +10,17 @@ import Text from '~/baseComponents/Text';
 import { Button } from '~/baseComponents';
 import Avatar from '~/baseComponents/Avatar';
 import Markdown from '~/beinComponents/Markdown';
-import { useKeySelector } from '~/hooks/selector';
 import { IAudience } from '~/interfaces/IPost';
 import useCommonController from '~/screens/store';
-import postKeySelector from '~/storeRedux/post/keySelector';
 import spacing from '~/theme/spacing';
+import useCreatePostStore from '../../store';
 
 export interface ReviewMarkdownProps {
+  testID?: string;
   onPressDone: () => void
 }
 
-const ReviewMarkdown: FC<ReviewMarkdownProps> = ({ onPressDone }) => {
+const ReviewMarkdown: FC<ReviewMarkdownProps> = ({ testID, onPressDone }) => {
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
 
@@ -28,9 +28,9 @@ const ReviewMarkdown: FC<ReviewMarkdownProps> = ({ onPressDone }) => {
   const styles = createStyles(
     theme, screenHeight,
   );
-  const content = useKeySelector(postKeySelector.createPost.content);
+  const content = useCreatePostStore((state) => state.createPost.content);
+  const chosenAudiences = useCreatePostStore((state) => state.createPost.chosenAudiences || []);
   const { fullname, avatar } = useCommonController((state) => state.myProfile) || {};
-  const chosenAudiences = useKeySelector(postKeySelector.createPost.chosenAudiences);
 
   const renderTitleHeader = () => (
     <View style={styles.header}>
@@ -75,7 +75,7 @@ const ReviewMarkdown: FC<ReviewMarkdownProps> = ({ onPressDone }) => {
   );
 
   return (
-    <View style={styles.container}>
+    <View testID={testID} style={styles.container}>
       {renderTitleHeader()}
       {renderPost()}
     </View>

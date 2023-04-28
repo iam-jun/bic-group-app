@@ -1,52 +1,44 @@
-import { cleanup } from '@testing-library/react-native';
+import React from 'react';
 
-afterEach(cleanup);
+import { fireEvent, renderWithRedux } from '~/test/testUtils';
+import Experiences from './index';
+import * as navigationHook from '~/hooks/navigation';
+import useUserProfileStore, { IUserProfileState } from '../../store';
+import { responseGetWorkExperience } from '../../store/__mocks__/data';
 
-describe('Experiences screen', () => {
-  // const data = [
-  //   {
-  //     id: '1',
-  //     company: 'company',
-  //     titlePosition: 'titlePosition',
-  //     startDate: '2022-03-07T07:58:05.436Z',
-  //     currentlyWorkHere: true,
-  //     endDate: null,
-  //     location: 'location',
-  //   },
-  // ];
+describe('Experiences component', () => {
+  it('renders correctly', () => {
+    useUserProfileStore.setState((state: IUserProfileState) => {
+      state.userWorkExperience = responseGetWorkExperience.data;
+      return state;
+    });
 
-  // beforeEach(() => {
-  //   jest.clearAllMocks();
-  //   storeData = { ...initialState };
-  //   storeData.menu.myProfile = {} as any;
-  //   storeData.auth.user = {} as any;
-  //   storeData.menu.userWorkExperience = [];
-  // });
+    const baseProps = {
+      isCurrentUser: true,
+    };
 
-  // let storeData: any;
+    const navigate = jest.fn();
+    const rootNavigation = { navigate };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
-  // it('renders correctly', () => {
-  //   const mockActionGetUserWorkExperience = () => ({
-  //     type: menuTypes.SET_USER_PROFILE,
-  //     payload: USER_PROFILE,
-  //   });
+    const rendered = renderWithRedux(<Experiences {...baseProps} />);
+    const { getByTestId } = rendered;
+    const containerComponent = getByTestId('experiences');
+    expect(containerComponent).toBeDefined();
 
-  //   jest
-  //     .spyOn(menuActions, 'getUserWorkExperience')
-  //     .mockImplementation(mockActionGetUserWorkExperience as any);
+    const addBtn = getByTestId('experiences.add_btn');
+    fireEvent.press(addBtn);
+    expect(navigate).toBeCalled();
+  });
 
-  //   storeData.menu.userWorkExperience = data;
+  it('should not render', () => {
+    const baseProps = {
+      isCurrentUser: false,
+    };
 
-  //   const store = createTestStore(storeData);
-
-  //   const wrapper = renderWithRedux(<Experiences />, store);
-  //   expect(wrapper).toMatchSnapshot();
-  // });
-
-  // it('renders null', () => {
-  //   const store = createTestStore(storeData);
-
-  //   const wrapper = renderWithRedux(<Experiences />, store);
-  //   expect(wrapper).toMatchSnapshot();
-  // });
+    const rendered = renderWithRedux(<Experiences {...baseProps} />);
+    const { queryByTestId } = rendered;
+    const addBtn = queryByTestId('experiences');
+    expect(addBtn).toBeNull();
+  });
 });

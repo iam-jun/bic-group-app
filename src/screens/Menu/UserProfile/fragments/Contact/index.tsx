@@ -34,6 +34,7 @@ const Contact = ({
       isCurrentUser={isCurrentUser}
       onPress={editContact}
       icon="PenToSquareSolid"
+      testID="contact.edit_btn"
     />
   );
 
@@ -44,11 +45,15 @@ const Contact = ({
       rightTitle={BtnEditContact}
       style={styles.container}
     >
-      <InfoItem title="settings:title_email" value={email} />
-      <InfoItem
-        title="settings:title_phone_number"
-        value={formatPhoneNumber(phone, countryCode)}
-      />
+      {isCurrentUser && (
+        <>
+          <InfoItem title="settings:title_email" value={email} />
+          <InfoItem
+            title="settings:title_phone_number"
+            value={formatPhoneNumber(phone, countryCode)}
+          />
+        </>
+      )}
       <InfoItem
         title="settings:title_location"
         value={city}

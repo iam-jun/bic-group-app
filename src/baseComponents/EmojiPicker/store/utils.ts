@@ -2,7 +2,7 @@ import {
   CategoryNames, EmojiIndicesByAlias, EmojiIndicesByCategory, Emojis,
 } from '~/baseComponents/Emoji/emojis';
 import custom_emojis from '~/resources/custom_emojis';
-import { compareEmojis } from '~/utils/emojiUtils';
+import { compareEmojis } from '~/utils/emojis';
 import {
   CATEGORIES_ICONS, EMOJI_GUTTER, EMOJI_SIZE, SECTION_HEADER_HEIGHT, SECTION_MARGIN,
 } from './constant';
@@ -21,7 +21,7 @@ export const getRenderableEmojis = (emojis: any[], deviceWidth: number) => {
       if (index % numberOfColumns === 0 && index !== 0) {
         data.push(row);
         row = {
-          key: `${section.key}-${index}`,
+          key: `${section.id}-${index}`,
           items: [],
         };
       }

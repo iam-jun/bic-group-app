@@ -5,7 +5,7 @@ import { spacing } from '~/theme';
 import Text from '~/baseComponents/Text';
 import Icon from '~/baseComponents/Icon';
 import { PostStatus } from '~/interfaces/IPost';
-import { formatDate } from '~/utils/formatData';
+import { formatDate } from '~/utils/formatter';
 
 interface ArticleBoxScheduleTimeProps {
   publishedAt: string;

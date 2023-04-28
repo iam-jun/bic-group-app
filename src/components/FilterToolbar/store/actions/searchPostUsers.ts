@@ -1,51 +1,52 @@
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 import groupApi from '~/api/GroupApi';
-import Store from '~/storeRedux';
 import { IFilterToolbarState } from '..';
 import appConfig from '~/configs/appConfig';
 
-const searchPostUsers = (set, get) => async (contentSearch: string, isLoadMore?: boolean) => {
+const searchPostUsers = (set, get) => async (contentSearch?: string, isLoadMore?: boolean) => {
   try {
-    if (!contentSearch) {
+    if (!isLoadMore) {
       set((state: IFilterToolbarState) => {
-        state.search.key = '';
-        state.search.loading = false;
-        state.search.items = [];
+        state.search.loading = true;
         state.search.hasNextPage = true;
-      }, 'searchPostUserWithoutKey');
+        state.search.items = [];
+      }, 'resetSearchPostUser');
     }
-    const filterToolbarData = get() || {};
-    const listUserSearched = filterToolbarData.search || [];
+    const filterToolbarData: IFilterToolbarState = get();
+    const listUserSearched = filterToolbarData.search;
+    const {
+      hasNextPage, loading, groupId, items,
+    } = listUserSearched;
 
-    if (!!isLoadMore && !listUserSearched.hasNextPage) {
+    if (!!isLoadMore && (!hasNextPage || loading)) {
       return;
     }
 
-    const { home } = Store.store.getState() || {};
-    const { groupId } = home?.newsfeedSearch || {};
-
     set((state: IFilterToolbarState) => {
-      state.search.key = contentSearch;
       state.search.loading = true;
     }, isLoadMore ? 'searchPostUserLoadMore' : 'searchPostUser');
 
-    const params:IParamsGetUsers = {
+    const params: IParamsGetUsers = {
       key: contentSearch,
       limit: appConfig.recordsPerPage,
-      offset: isLoadMore ? listUserSearched?.items?.length : 0,
-      groupId,
+      offset: isLoadMore ? items?.length : 0,
     };
+
+    if (groupId) {
+      params.groupId = groupId;
+    }
 
     const response = await groupApi.getUsers(params);
 
     const listResult = response?.data || [];
     const newListUser = isLoadMore ? [...listUserSearched.items, ...listResult] : listResult;
-    const hasNextPage = response?.meta?.hasNextPage;
+    const newHasNextPage = response?.meta?.hasNextPage;
 
     set((state: IFilterToolbarState) => {
+      state.search.key = contentSearch;
       state.search.loading = false;
       state.search.items = newListUser;
-      state.search.hasNextPage = hasNextPage;
+      state.search.hasNextPage = newHasNextPage;
     }, 'searchPostUserSuccess');
   } catch (e) {
     console.error(

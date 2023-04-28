@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createJSONStorage } from 'zustand/middleware';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
 import getPostsInProgress from './actions/getPostsInProgress';
@@ -6,16 +7,14 @@ import updatePostsInProgress from './actions/updatePostsInProgress';
 import { ISocketNotification } from '~/interfaces/INotification';
 
 export interface IPostsInProgressState extends IBaseState{
-    total: number,
-    data: any[],
+  total: number,
+  data: any[],
 
   actions: {
     setTotal: (newTotal: number) => void;
     getPosts: () => void;
     updatePosts: (payload: ISocketNotification) => void;
   }
-
-  reset?: () => void;
 }
 
 const initialState: InitStateType<IPostsInProgressState> = {
@@ -44,7 +43,7 @@ const usePostsInProgressStore = createStore<IPostsInProgressState>(
   {
     persist: {
       name: 'PostContainerStore',
-      getStorage: () => AsyncStorage,
+      storage: createJSONStorage(() => AsyncStorage),
       partialize: (state) => ({
         total: state.total,
         data: state.data,

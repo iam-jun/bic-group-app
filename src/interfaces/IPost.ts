@@ -14,6 +14,7 @@ export enum PostType {
 export enum TargetType {
   POST = 'POST',
   ARTICLE = 'ARTICLE',
+  SERIES = 'SERIES',
   COMMENT = 'COMMENT',
   COMMENT_ARTICLE = 'COMMENT.ARTICLE',
   COMMENT_POST = 'COMMENT.POST',
@@ -30,7 +31,7 @@ export enum PostStatus {
 export interface IPost {
   id?: string;
   audience?: IPostAudience;
-  articles?: IPostArticles[];
+  items?: IPostArticles[];
   communities?: IPostCommunities[];
   content?: string;
   highlight?: string;
@@ -94,6 +95,7 @@ export interface IAudienceUser {
   username?: string;
   fullname?: string;
   avatar?: string;
+  isDeactivated?: boolean;
 }
 
 export interface IAudienceGroup {
@@ -102,6 +104,7 @@ export interface IAudienceGroup {
   icon?: string;
   child?: number[];
   rootGroupId?: string;
+  isPinned?: boolean;
 }
 
 export interface IMarkdownAudience {
@@ -113,6 +116,7 @@ export interface IMarkdownAudience {
   };
   createdAt: string;
   updatedAt: string;
+  isDeactivated?: boolean;
 }
 
 export interface IAudience {
@@ -267,6 +271,8 @@ export interface IPostCreatePost {
   status?: PostStatus;
   linkPreview?: ILinkPreview;
   createFromGroupId?: string;
+  tags?: string[];
+  series?: string[];
 }
 
 export interface IPayloadCreateComment {
@@ -289,6 +295,7 @@ export interface IPayloadPutEditPost {
   msgSuccess?: string;
   msgError?: string;
   disableNavigate?: boolean;
+  isShowLoading?: boolean;
 }
 
 export interface IPayloadPutEditComment {
@@ -397,6 +404,7 @@ export interface IMentionUser {
   avatar: string;
   beinStaffRole?: string;
   chatUserId?: string;
+  isDeactivated?: boolean;
 }
 
 export interface IParamGetReactionDetail {
@@ -474,7 +482,7 @@ export interface IPayloadReplying {
   parentComment?: ICommentData;
 }
 
-export interface IParamGetDraftPosts {
+export interface IParamGetDraftContents {
   order?: 'ASC';
   offset?: number;
   limit?: number;
@@ -488,9 +496,10 @@ export interface IParamGetDraftPosts {
   createdAtLte?: string;
   isFailed?: boolean;
   isProcessing?: boolean;
+  type?: PostType;
 }
 
-export interface IPayloadGetDraftPosts {
+export interface IPayloadGetDraftContents {
   isRefresh?: boolean;
   offset?: number;
   isProcessing?: boolean;
@@ -503,6 +512,7 @@ export interface IPayloadPublishDraftPost {
   onError?: () => void;
   refreshDraftPosts?: boolean;
   createFromGroupId?: string;
+  isHandleSeriesTagsError?: boolean;
 }
 
 export interface IPayloadPutEditDraftPost {
@@ -550,7 +560,6 @@ export interface IPayloadPutMarkAsRead {
 }
 export interface IPayloadPutMarkSeenPost {
   postId: string;
-  callback?: (isSuccess: boolean) => void;
 }
 export interface IRequestGetUsersInterestedPost {
   postId: string;
@@ -592,4 +601,26 @@ export interface IParamsGetPostByParams {
   status: string;
   offset?: number;
   limit?: number;
+}
+
+export interface IRemoveChildComment {
+  localId: string;
+  parentCommentId: string;
+  postId: string;
+}
+
+export interface IRemoveComment {
+  commentId?: string;
+  localId?: string;
+  postId: string;
+}
+export interface ICreatePostTags {
+  id?: string;
+  name?: string;
+  slug?: string;
+  total?: number;
+}
+export interface ICreatePostSeries {
+  id?: string;
+  title?: string;
 }

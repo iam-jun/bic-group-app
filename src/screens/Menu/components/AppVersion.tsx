@@ -1,3 +1,4 @@
+import { t } from 'i18next';
 import React from 'react';
 import { Button } from '~/baseComponents';
 import Text from '~/baseComponents/Text';
@@ -20,11 +21,12 @@ const AppVersion = () => {
   };
 
   return (
-    <Button disabled={isProduction} onPress={onPressAppVersion}>
-      <Text.SubtitleXS>
+    <Button disabled={isProduction} onPress={onPressAppVersion} testID="app_version">
+      <Text.BodyS>
+        {t('common:text_version')}
         {getEnv('APP_VERSION')}
         {!!updateDescription && updateDescription !== '(0)' && ` ${updateDescription}`}
-      </Text.SubtitleXS>
+      </Text.BodyS>
     </Button>
   );
 };

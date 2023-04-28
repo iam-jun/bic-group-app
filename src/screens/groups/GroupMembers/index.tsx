@@ -3,13 +3,13 @@ import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import i18next from 'i18next';
 
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IGroupMembers } from '~/interfaces/IGroup';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header, { HeaderProps } from '~/beinComponents/Header';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import MemberOptionsMenu from './components/GroupMemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
 import spacing from '~/theme/spacing';
@@ -30,10 +30,10 @@ const _GroupMembers = ({ route }: any) => {
   const [selectedMember, setSelectedMember] = useState<IGroupMembers>();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(targetIndex || 0);
-  const { ids } = useKeySelector(groupsKeySelector.groupMemberRequests);
+  const { ids } = useGroupMemberStore((state) => state.groupMemberRequests);
 
   const [needReloadWhenReconnected, setNeedReloadWhenReconnected] = useState(false);
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -63,7 +63,7 @@ const _GroupMembers = ({ route }: any) => {
 
   const getMembers = () => {
     if (!groupId) return;
-    actions.getGroupMembers({ groupId });
+    actions.getGroupMembers({ groupId, isRefreshing: true });
   };
 
   useEffect(

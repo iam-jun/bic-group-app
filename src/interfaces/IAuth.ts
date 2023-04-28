@@ -1,10 +1,47 @@
 import { ISignUpResult } from 'amazon-cognito-identity-js';
 import { GENDER_TYPE, RELATIONSHIP_TYPE } from './IEditUser';
 
+export enum FieldNameType {
+  EMAIL = 'email',
+  FULL_NAME = 'fullName',
+  USER_NAME = 'userName',
+  PASSWORD = 'password',
+  NEW_PASSWORD = 'newPassword',
+  CONFIRM_PASSWORD = 'confirmPassword',
+  CODE = 'code',
+}
+
 // Actiontype
 export interface ISignIn {
   email: string;
   password: string;
+}
+
+export interface SignUpProps {
+  route?: {
+    params?: {
+      isValidLink: boolean;
+      referralCode?: string;
+    };
+  };
+}
+
+export interface IPayloadSignUp {
+  referralCode: string;
+  email: string;
+  fullName: string;
+  userName: string;
+  password: string;
+}
+
+export interface IParamsSignUp {
+  referralCode: string;
+  user: {
+    email: string;
+    username: string;
+    fullname: string;
+    password: string;
+  };
 }
 
 export interface IForgotPasswordConfirm {
@@ -150,9 +187,19 @@ export interface ICityResponseItem {
   countryCode: string;
 }
 
-export interface IFormCheckPw {
+export interface IFormCheckPassword {
   isLimitCharacter: boolean;
   isUppercaseLetter: boolean;
+  isLowercaseLetter: boolean;
   isDigits: boolean;
   isSpecialCharacter: boolean;
+}
+
+export interface IVerifyEmail {
+  email: string;
+  redirectPage: 'login' | 'reset-password'
+}
+
+export interface IParamValidateReferralCode {
+  code: string;
 }

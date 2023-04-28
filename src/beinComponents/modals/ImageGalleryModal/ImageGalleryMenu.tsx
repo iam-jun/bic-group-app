@@ -9,7 +9,7 @@ import { Modalize } from 'react-native-modalize';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import BottomListItem from '~/components/BottomList/BottomListItem';
 import spacing from '~/theme/spacing';
-import { copyImageFromUrl, downloadImage } from '~/utils/common';
+import { copyImageFromUrl, downloadImage } from '~/utils/images';
 
 type ImageGalleryMenuProps = {
     photo: any

@@ -16,15 +16,8 @@ describe('TimeView component', () => {
   const currentData = new Date();
   const date = new Date(currentData.setHours(0, 0, 0, 0)).toISOString();
 
-  it('renders correctly', () => {
-    const time = moment('20/10/2020', 'DD/MM/YYYY').toISOString();
-    const rendered = render(<TimeView time={time} />).toJSON();
-    expect(rendered).toMatchSnapshot();
-  });
-
   it('renders correctly with time empty', () => {
     const rendered = render(<TimeView time="" />);
-    expect(rendered.toJSON()).toMatchSnapshot();
     const timeComponent = rendered.getByTestId('time_view');
     expect(timeComponent).toBeDefined();
     expect(timeComponent.children).toBeDefined();
@@ -34,7 +27,6 @@ describe('TimeView component', () => {
     const rendered = render(
       <TimeView time={date} style={{ color: '#FF9800' }} />,
     );
-    expect(rendered.toJSON()).toMatchSnapshot();
     const timeComponent = rendered.getByTestId('time_view');
     expect(timeComponent).toBeDefined();
     const flattenedStyle = StyleSheet.flatten(timeComponent.props.style);
@@ -45,7 +37,6 @@ describe('TimeView component', () => {
     const rendered = render(
       <TimeView time={date} textProps={{ numberOfLines: 2 }} />,
     );
-    expect(rendered.toJSON()).toMatchSnapshot();
     const timeComponent = rendered.getByTestId('time_view');
     expect(timeComponent).toBeDefined();
     expect(timeComponent.props.numberOfLines).toEqual(2);
@@ -57,7 +48,7 @@ describe('TimeView component', () => {
     const timeComponent = getByTestId('time_view');
     expect(timeComponent.children).toBeDefined();
     expect(
-      getByText(`Feb 02 ${languages.common.time.at} 12:00 AM`),
+      getByText('Feb 02, 2022'),
     ).toBeDefined();
   });
 
@@ -69,7 +60,7 @@ describe('TimeView component', () => {
     const timeComponent = getByTestId('time_view');
     expect(timeComponent.children).toBeDefined();
     expect(
-      getByText(`Feb 02 ${languages.common.time.at} 12:00 AM`),
+      getByText('Feb 02, 2022'),
     ).toBeDefined();
   });
 

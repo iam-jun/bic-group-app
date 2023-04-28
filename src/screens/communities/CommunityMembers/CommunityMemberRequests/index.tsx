@@ -66,7 +66,7 @@ const CommunityMemberRequests = ({
   };
 
   return (
-    <View style={styles.container} testID="CommunityMemberRequests">
+    <View style={styles.container} testID="community_member_requests">
       {!!canEditJoinSetting && (
         <JoinRequestSetting
           type="community"

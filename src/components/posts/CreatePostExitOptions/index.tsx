@@ -1,15 +1,14 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
-import modalActions from '~/storeRedux/modal/actions';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
+import useModalStore from '~/store/modal';
 
 export interface CreatePostExitOptionsProps {
   onPressSaveDraft?: () => void;
@@ -18,24 +17,24 @@ export interface CreatePostExitOptionsProps {
 const CreatePostExitOptions: FC<CreatePostExitOptionsProps> = ({
   onPressSaveDraft,
 }: CreatePostExitOptionsProps) => {
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
+  const modalActions = useModalStore((state) => state.actions);
 
   const onPressSaveAsDraft = () => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
     onPressSaveDraft?.();
   };
 
   const onPressDiscard = () => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
     rootNavigation.goBack();
   };
 
   const onPressContinue = () => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
   };
 
   return (

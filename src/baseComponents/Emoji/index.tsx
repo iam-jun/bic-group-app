@@ -1,45 +1,83 @@
-// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
-// See LICENSE.txt for license information.
-import React from 'react';
+import React, { FC } from 'react';
+import {
+  Image, ImageStyle, Platform, StyleProp, StyleSheet, TextStyle,
+} from 'react-native';
 import { EmojiIndicesByAlias, Emojis } from './emojis';
 
-import EmojiComponent, { EmojiProps } from './EmojiComponent';
-import { getCustomEmojisByName } from '~/utils/emojiUtils';
+import { getCustomEmojisByName } from '~/utils/emojis';
+import Text from '../Text';
 
-function Emoji(ownProps: EmojiProps) {
-  const { emojiName } = ownProps;
-  //   const customEmojis = getCustomEmojisByName(state);
-  //   const customEmojis = getCustomEmojisByName(state);
-  //   const serverUrl = Client4.getUrl();
-  const customEmoji = getCustomEmojisByName(emojiName);
-  const imageUrl = '';
-  let unicode;
-  let assetImage = '';
-  let displayTextOnly = false;
-  if (customEmoji) {
-    assetImage = customEmoji.path;
-  } else if (EmojiIndicesByAlias.has(emojiName)) {
-    const emoji = Emojis[EmojiIndicesByAlias.get(emojiName)!];
-    if (emoji.category === 'custom') {
-      assetImage = emoji.fileName;
-    } else {
-      unicode = emoji.image;
-    }
-  } else {
-    displayTextOnly = true;
-  }
-
-  const props = {
-    ...ownProps,
-    imageUrl,
-    assetImage,
-    displayTextOnly,
-    unicode,
-  };
-
-  return (
-    <EmojiComponent {...props} />
-  );
+export type EmojiProps = {
+  testID?: string;
+  emojiName: string;
+  size?: number;
+  textStyle?: StyleProp<TextStyle>;
+  customEmojiStyle?: StyleProp<ImageStyle>;
 }
 
-export default Emoji;
+const Emoji: FC<EmojiProps> = ({
+  testID,
+  emojiName,
+  customEmojiStyle,
+  size,
+  textStyle,
+}) => {
+  if (!size && textStyle) {
+    const flatten = StyleSheet.flatten(textStyle);
+    size = flatten.fontSize;
+  }
+
+  const renderImageEmoji = (assetImage: any) => {
+    const width = size * 1.2;
+    const height = size * 1.2;
+    const key = Platform.OS === 'android' ? (`${emojiName}-${height}-${width}`) : null;
+
+    return (
+      <Image
+        testID={testID || 'emoji.image'}
+        key={key}
+        source={assetImage}
+        style={[customEmojiStyle, { width, height }]}
+        resizeMode="contain"
+      />
+    );
+  };
+
+  const renderUnicodeEmoji = (unicode: string) => {
+    const codeArray = unicode.split('-');
+    const code = codeArray.reduce((acc, c) => acc + String.fromCodePoint(parseInt(c, 16)), '');
+
+    return (
+      <Text
+        testID={testID || 'emoji.unicode'}
+        allowFontScaling
+        adjustsFontSizeToFit
+        style={[textStyle, {
+          fontSize: size,
+          color: '#000',
+          fontWeight: 'bold',
+        }]}
+      >
+        {code}
+      </Text>
+    );
+  };
+
+  const customEmoji = getCustomEmojisByName(emojiName);
+
+  if (customEmoji) {
+    return renderImageEmoji(customEmoji.path);
+  }
+
+  if (EmojiIndicesByAlias.has(emojiName)) {
+    const emoji = Emojis[EmojiIndicesByAlias.get(emojiName)!];
+    // if (emoji.category === 'custom') {
+    //   return renderImageEmoji(emoji.fileName);
+    // }
+    return renderUnicodeEmoji(emoji.image);
+  }
+
+  return null;
+};
+
+export default React.memo(Emoji);

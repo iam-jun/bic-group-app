@@ -31,17 +31,14 @@ const _ReactionDetailTab: FC<ReactionDetailTabProps> = ({
 
   const data = useReactionDetailStore((state:IReactionDetailState) => state.data) || [];
   const loading = useReactionDetailStore((state:IReactionDetailState) => state.loading);
-  const doGetReactionDetail = useReactionDetailStore((state:IReactionDetailState) => state.doGetReactionDetail);
-  const doLoadMoreReactionDetail = useReactionDetailStore(
-    (state: IReactionDetailState) => state.doLoadMoreReactionDetail,
-  );
+  const actions = useReactionDetailStore((state:IReactionDetailState) => state.actions);
   const canLoadMore = useReactionDetailStore((state: IReactionDetailState) => state.canLoadMore);
   const reset = useReactionDetailStore((state: IReactionDetailState) => state.reset);
 
   useEffect(
     () => {
       const param = { ...getDataParam, reactionName: reactionType, limit };
-      doGetReactionDetail(param);
+      actions.getReactionDetail(param);
       return () => {
         reset();
       };
@@ -57,24 +54,28 @@ const _ReactionDetailTab: FC<ReactionDetailTabProps> = ({
       const param = {
         ...getDataParam, reactionName: reactionType, limit, latestId: data[data.length - 1].reactionId, order: 'ASC',
       } as IParamGetReactionDetail;
-      doLoadMoreReactionDetail(param);
+      actions.loadMoreReactionDetail(param);
     }
   };
 
-  const renderItem = (item: any) => (
-    <PrimaryItem
-      testID={`reaction_detail_bottomSheet.${item?.item?.fullname}`}
-      showAvatar
-      onPress={() => _onPressItem(item)}
-      avatar={item?.item?.avatar}
-      avatarProps={{ isRounded: true, style: { marginRight: spacing.margin.small } }}
-      title={item?.item?.fullname}
-      titleProps={{ color: colors.neutral70, variant: 'bodyMMedium' }}
-      subTitle={`@${item?.item?.username}`}
-      subTitleProps={{ color: colors.neutral40, variant: 'bodyS' }}
-      style={{ paddingHorizontal: spacing.padding.large }}
-    />
-  );
+  const renderItem = (item: any) => {
+    const colorTitle = item?.item?.isDeactivated ? colors.grey40 : colors.neutral80;
+    return (
+      <PrimaryItem
+        testID={`reaction_detail_bottomSheet.${item?.item?.fullname}`}
+        showAvatar
+        onPress={() => _onPressItem(item)}
+        avatar={item?.item?.avatar}
+        avatarProps={{ isRounded: true, style: { marginRight: spacing.margin.small } }}
+        title={item?.item?.fullname}
+        isDeactivated={item?.item?.isDeactivated}
+        titleProps={{ color: colorTitle, variant: 'bodyMMedium' }}
+        subTitle={`@${item?.item?.username}`}
+        subTitleProps={{ color: colors.neutral40, variant: 'bodyS' }}
+        style={{ paddingHorizontal: spacing.padding.large }}
+      />
+    );
+  };
 
   const renderFooter = () => {
     if (loading) {

@@ -1,11 +1,15 @@
 import CreatePost from '~/screens/post/CreatePost';
 import PostDetail from '~/screens/post/PostDetail';
 import PostSelectAudience from '~/screens/post/PostSelectAudience';
-import DraftPost from '~/screens/Draft/DraftPost';
+import DraftPost from '~/screens/YourContent/components/Draft/DraftPost';
 import UserProfile from '~/screens/Menu/UserProfile';
 import PostSettings from '~/screens/post/PostSettings';
 import CommentDetail from '~/screens/comments/CommentDetail';
 import EditComment from '~/screens/comments/EditComment';
+import CreatePostTags from '~/screens/post/CreatePostTags';
+import CreatePostSeries from '~/screens/post/CreatePostSeries';
+import PinContent from '~/screens/PinContent';
+import ReorderedPinContent from '~/screens/PinContent/Reordered';
 
 const homeScreens = {
   'post-detail': PostDetail,
@@ -15,7 +19,11 @@ const homeScreens = {
   'draft-post': DraftPost,
   'user-profile': UserProfile,
   'post-settings': PostSettings,
+  'create-post-tags': CreatePostTags,
+  'create-post-series': CreatePostSeries,
   'comment-detail': CommentDetail,
+  'pin-content': PinContent,
+  'reordered-pin-content': ReorderedPinContent,
 };
 
 export default homeScreens;

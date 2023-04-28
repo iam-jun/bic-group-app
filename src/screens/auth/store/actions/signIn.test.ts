@@ -1,29 +1,30 @@
 import { Auth } from 'aws-amplify';
 import useAuthController from '~/screens/auth/store';
-import modalActions from '~/storeRedux/modal/actions';
-import { act, languages, renderHook } from '~/test/testUtils';
+import { act, renderHook } from '~/test/testUtils';
 
 describe('signIn', () => {
   it('should call auth amplify sign in success, keep loading', () => {
-    Auth.signIn = jest.fn();
-    const spyHideLoading = jest.spyOn(modalActions, 'hideLoading');
+    const callbackError = jest.fn();
+
+    const spy = jest.spyOn(Auth, 'signIn').mockImplementation(
+      () => Promise.resolve(true) as any,
+    );
 
     jest.useFakeTimers();
 
     const { result } = renderHook(() => useAuthController((state) => state));
     act(() => {
-      result.current.actions.signIn({ email: 'namanh@tgm.vn', password: '12345678' });
+      result.current.actions.signIn({ email: 'namanh@tgm.vn', password: '12345678' }, callbackError);
     });
 
     act(() => {
       jest.runAllTimers();
     });
-    expect(Auth.signIn).toBeCalled();
-    expect(spyHideLoading).not.toBeCalled();
+    expect(spy).toBeCalled();
   });
 
-  it('should call auth amplify error, hide loading', () => {
-    const spyHideLoading = jest.spyOn(modalActions, 'hideLoading');
+  it('should call auth amplify error, call prop callbackError', () => {
+    const callbackError = jest.fn();
     Auth.signIn = jest.fn().mockImplementation(() => new Promise((_resolve, reject) => {
       reject({
         name: 'NotAuthorizedException',
@@ -34,14 +35,13 @@ describe('signIn', () => {
 
     const { result } = renderHook(() => useAuthController((state) => state));
     act(() => {
-      result.current.actions.signIn({ email: 'namanh@tgm.vn', password: '12345678' });
+      result.current.actions.signIn({ email: 'namanh@tgm.vn', password: '12345678' }, callbackError);
     });
 
     act(() => {
       jest.runAllTimers();
     });
     expect(Auth.signIn).toBeCalled();
-    expect(spyHideLoading).toBeCalled();
-    expect(result.current.signIn.error).toEqual(languages.auth.text_err_id_password_not_matched);
+    expect(callbackError).toBeCalled();
   });
 });

@@ -1,39 +1,36 @@
 import { createStore, resetStore } from '~/store/utils';
 import IBaseState from '~/store/interfaces/IBaseState';
-import getPostUsers from './actions/getPostUsers';
 import searchPostUsers from './actions/searchPostUsers';
+import { PostType } from '~/interfaces/IPost';
+
+export type SearchUser = {
+  groupId: string;
+  key: string;
+  loading: boolean;
+  items: any[];
+  hasNextPage: boolean;
+};
 
 export interface IFilterToolbarState extends IBaseState {
-  createdBy: any,
-  datePosted: any,
-  listUser: {
-    loading: boolean;
-    items: any[];
-    hasNextPage: boolean;
-  },
-  search: {
-    key: string;
-    loading: boolean;
-    items: any[];
-    hasNextPage: boolean;
-  },
+  postType: any;
+  createdBy: any;
+  datePosted: any;
+  search: SearchUser;
   actions: {
-    setFilterCreateBy: (createdBy: 'me' | undefined | any)=> void;
+    setFilterPostType: (postType: PostType) => void;
+    setFilterCreateBy: (createdBy: 'me' | undefined | any) => void;
     setFilterDatePosted: (date: any) => void;
-    getPostUsers: (isLoadMore?: boolean) => void;
-    searchPostUsers: (contentSearch: string, isLoadMore?: boolean) => void;
-  }
+    setSearchUser: (search: Partial<SearchUser>) => void;
+    searchPostUsers: (contentSearch?: string, isLoadMore?: boolean) => void;
+  };
 }
 
 const initialState = {
+  postType: undefined,
   createdBy: undefined,
   datePosted: undefined,
-  listUser: {
-    loading: false,
-    items: [],
-    hasNextPage: true,
-  },
   search: {
+    groupId: '',
     key: '',
     loading: false,
     items: [],
@@ -45,6 +42,11 @@ const useFilterToolbar = (set, get) => ({
   ...initialState,
 
   actions: {
+    setFilterPostType: (postType: PostType) => {
+      set((state: IFilterToolbarState) => {
+        state.postType = postType;
+      }, 'setFilterPostType');
+    },
     setFilterCreateBy: (createdBy: 'me' | undefined | any) => {
       set((state: IFilterToolbarState) => {
         state.createdBy = createdBy;
@@ -55,13 +57,21 @@ const useFilterToolbar = (set, get) => ({
         state.datePosted = date;
       }, 'setDatePosted');
     },
-    getPostUsers: getPostUsers(set, get),
+    setSearchUser: (search: Partial<SearchUser>) => {
+      set((state: IFilterToolbarState) => {
+        state.search = {
+          ...state.search,
+          ...search,
+        };
+      }, 'setSearchUser');
+    },
     searchPostUsers: searchPostUsers(set, get),
   },
 
   reset: () => resetStore(initialState, set),
 });
 
-const useFilterToolbarStore = createStore<IFilterToolbarState>(useFilterToolbar);
+const useFilterToolbarStore
+  = createStore<IFilterToolbarState>(useFilterToolbar);
 
 export default useFilterToolbarStore;

@@ -37,6 +37,7 @@ describe('MemberList component', () => {
     const wrapper = renderWithRedux(
       <MemberList
         type="community"
+        isAdminRole
         canManageMember={canManageMember}
         onLoadMore={onLoadMore}
         onPressMenu={onPressMenu}
@@ -44,14 +45,13 @@ describe('MemberList component', () => {
       />,
     );
     const dataItem = wrapper.getAllByTestId('member_item');
-    expect(wrapper).toMatchSnapshot();
     expect(dataItem.length).toBe(4);
   });
 
   it('should render loading more indicator correctly when getting more data', () => {
     useCommunityMemberStore.setState((state: ICommunityMemberState) => {
       state.communityMembers = {
-        loading: false,
+        loading: true,
         canLoadMore: true,
         offset: 4,
         // @ts-ignore
@@ -72,6 +72,7 @@ describe('MemberList component', () => {
     const wrapper = renderWithRedux(
       <MemberList
         type="community"
+        isAdminRole
         canManageMember={canManageMember}
         onLoadMore={onLoadMore}
         onPressMenu={onPressMenu}

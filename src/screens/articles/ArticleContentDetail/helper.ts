@@ -5,6 +5,7 @@ import topicStack from '~/router/navigator/MainStack/stacks/topic/stack';
 import useCommunitiesStore from '~/store/entities/communities';
 import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import { IMentionUser } from '~/interfaces/IPost';
+import { openUrl } from '~/utils/link';
 
 export enum EventType {
   ON_PRESS_ACTOR = 'onPressActor',
@@ -14,6 +15,7 @@ export enum EventType {
   ON_PRESS_TOPIC = 'onPressTopic',
   ON_PRESS_TAG = 'onPressTag',
   ON_PRESS_IMAGE = 'onPressImage',
+  ON_PRESS_LINK = 'onPressLink',
 }
 
 const rootNavigation = withNavigation(rootNavigationRef);
@@ -45,6 +47,8 @@ export const handleMessage = (data: {
       return onPressImages({
         payload, listImage, setInitIndex, setGalleryVisible,
       });
+    case EventType.ON_PRESS_LINK:
+      return onPressLink(payload);
     default:
       return console.warn('Article webview onMessage unhandled', message);
   }
@@ -80,6 +84,12 @@ export const onPressTags = (payload: any) => {
   rootNavigation.navigate(tagsStack.tagDetail, { tagData: payload, communityId });
 };
 
+export const onPressLink = (payload: any) => {
+  if (!payload) return;
+
+  openUrl(payload.url);
+};
+
 export const onPressImages = (data: { payload: any; listImage; setInitIndex; setGalleryVisible }) => {
   const {
     payload, listImage, setInitIndex, setGalleryVisible,
@@ -87,12 +97,32 @@ export const onPressImages = (data: { payload: any; listImage; setInitIndex; set
   if (!payload) return;
 
   const indexImage = listImage.findIndex((item: any) => item.uri === payload);
-  setInitIndex(indexImage);
+  setInitIndex(indexImage < 0 ? 0 : indexImage);
   setGalleryVisible(true);
 };
 
 export const onPressMentionAudience = (payload: IMentionUser) => {
-  if (!payload) return;
+  if (!payload || payload?.isDeactivated) return;
 
   rootNavigation.navigate(mainStack.userProfile, { userId: payload.id });
+};
+
+export const getListImage = (node: any) => {
+  // Return early if the node is undefined
+  if (!node) return [];
+  // Return immediately if the node is an image
+  if (node?.type === 'img') {
+    return [node];
+  }
+  // Or else,
+  // Recursively search for images in the children array
+  if (Array.isArray(node.children)) {
+    const result = [];
+    node.children.forEach((children: any) => {
+      if (children) result.push(...getListImage(children));
+    });
+    return result.flat();
+  }
+  // Node is text node, no children, or children is not an array
+  return [];
 };

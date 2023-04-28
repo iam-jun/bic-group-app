@@ -7,24 +7,24 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import Text from '~/baseComponents/Text';
 import SvgIcon from '~/baseComponents/Icon/SvgIcon';
+import useNetworkStore from '~/store/network';
+import networkSelectors from '~/store/network/selectors';
 import SystemIssueImg from '../../../assets/images/SystemIssue.svg';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import noInternetKeySelector from '../../storeRedux/network/keySelector';
-import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';
 
 const SystemIssueModal = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
-  const systemIssue = useKeySelector(noInternetKeySelector.systemIssue);
+  const isShowSystemIssue = useNetworkStore(networkSelectors.getIsShowSystemIssue);
   const optionsStyle = useAnimatedStyle(() => ({
     opacity: withTiming(
-      systemIssue ? 1 : 0, { duration: 500 },
+      isShowSystemIssue ? 1 : 0, { duration: 500 },
     ),
   }));
 
-  if (!systemIssue) return null;
+  if (!isShowSystemIssue) return null;
 
   return (
     <Animated.View style={[styles.root, optionsStyle]}>

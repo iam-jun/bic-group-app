@@ -219,7 +219,7 @@ const Header: React.FC<HeaderProps> = ({
   }), [showStickyHeight]) : {};
 
   const setScrollY = (offsetY: number) => {
-    const _height = headerHeight || showStickyHeight;
+    const _height = showStickyHeight;
     if (offsetY > _height && offsetY < scrollY.value) {
       // show sticky header when scrolling up
       stickyShow.value = withTiming(1);

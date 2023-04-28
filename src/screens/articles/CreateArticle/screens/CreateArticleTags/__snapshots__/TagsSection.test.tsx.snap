@@ -196,10 +196,13 @@ exports[`TagsSection should disabled if audience is empty 1`] = `
                           "fontSize": 13,
                         },
                         Object {},
-                        Object {
-                          "color": "#2D3039",
-                          "paddingLeft": 4,
-                        },
+                        Array [
+                          Object {
+                            "color": "#2D3039",
+                            "paddingLeft": 4,
+                          },
+                          undefined,
+                        ],
                       ]
                     }
                     testID="tag.label"
@@ -254,10 +257,13 @@ exports[`TagsSection should disabled if audience is empty 1`] = `
                           "fontSize": 13,
                         },
                         Object {},
-                        Object {
-                          "color": "#2D3039",
-                          "paddingLeft": 4,
-                        },
+                        Array [
+                          Object {
+                            "color": "#2D3039",
+                            "paddingLeft": 4,
+                          },
+                          undefined,
+                        ],
                       ]
                     }
                     testID="tag.label"
@@ -583,10 +589,13 @@ exports[`TagsSection should render correctly 1`] = `
                           "fontSize": 13,
                         },
                         Object {},
-                        Object {
-                          "color": "#2D3039",
-                          "paddingLeft": 4,
-                        },
+                        Array [
+                          Object {
+                            "color": "#2D3039",
+                            "paddingLeft": 4,
+                          },
+                          undefined,
+                        ],
                       ]
                     }
                     testID="tag.label"
@@ -641,10 +650,13 @@ exports[`TagsSection should render correctly 1`] = `
                           "fontSize": 13,
                         },
                         Object {},
-                        Object {
-                          "color": "#2D3039",
-                          "paddingLeft": 4,
-                        },
+                        Array [
+                          Object {
+                            "color": "#2D3039",
+                            "paddingLeft": 4,
+                          },
+                          undefined,
+                        ],
                       ]
                     }
                     testID="tag.label"

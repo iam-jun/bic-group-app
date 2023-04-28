@@ -3,7 +3,6 @@ import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Avatar, Button } from '~/baseComponents';
 import Icon from '~/baseComponents/Icon';
-import Tag from '~/baseComponents/Tag';
 import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
@@ -14,7 +13,7 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { isGroup } from '~/helpers/groups';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import { spacing } from '~/theme';
-import { formatLargeNumber } from '~/utils/formatData';
+import { formatLargeNumber } from '~/utils/formatter';
 import ButtonCommunityGroupCard from './ButtonCommunityGroupCard';
 import useModalStore from '~/store/modal';
 
@@ -22,7 +21,6 @@ type CommunityGroupCardProps = {
   item: any;
   testID?: string;
   shouldShowAlertJoinTheCommunityFirst?: boolean;
-  isManagedGroups?: boolean;
   onJoin?: (id: string, name: string, isGroup?: boolean)=>void;
   onCancel?: (id: string, name: string, isGroup?: boolean)=>void;
 };
@@ -31,7 +29,6 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
   item,
   testID,
   shouldShowAlertJoinTheCommunityFirst,
-  isManagedGroups,
   onJoin,
   onCancel,
 }) => {
@@ -109,13 +106,6 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
     }
   };
 
-  const renderLabel = () => {
-    if (isGroup(item) || isManagedGroups) {
-      return t('common:text_group');
-    }
-    return t('common:text_community');
-  };
-
   return (
     <View testID={testID} style={[styles.container, elevations.e1]}>
       {isGroup(item) && (
@@ -162,12 +152,6 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
                 </View>
               </View>
               <ViewSpacing height={spacing.margin.xSmall} />
-              <Tag
-                style={styles.tagContainer}
-                type="secondary"
-                size="small"
-                label={renderLabel()}
-              />
             </View>
           </View>
           {!!description && (

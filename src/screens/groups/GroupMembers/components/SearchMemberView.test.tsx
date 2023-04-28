@@ -1,5 +1,6 @@
 import React from 'react';
 import { renderWithRedux } from '~/test/testUtils';
+import useGroupMemberStore from '../store';
 import SearchMemberView from './SearchMemberView';
 
 describe('SearchMemberView component', () => {
@@ -8,11 +9,15 @@ describe('SearchMemberView component', () => {
   const onPressMenu = jest.fn();
 
   it('should render data list correctly', () => {
+    useGroupMemberStore.setState((state) => {
+      state.search.key = 'test';
+      return state;
+    });
+
     const wrapper = renderWithRedux(
       <SearchMemberView
         groupId={groupId}
         isOpen={isOpen}
-        initSearch="test"
         onPressMenu={onPressMenu}
       />,
     );

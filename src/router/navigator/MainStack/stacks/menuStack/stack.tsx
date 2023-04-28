@@ -8,8 +8,8 @@ const menuStack = {
   editContact: 'edit-contact',
   addWork: 'add-work',
   discover: 'discover',
-  draft: 'draft',
   yourContent: 'your-content',
+  blocking: 'blocking',
 };
 
 export default menuStack;

@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import genders from '~/constants/genders';
 import RELATIONSHIP_STATUS from '~/constants/relationshipStatus';
 import { useRootNavigation } from '~/hooks/navigation';
-import { formatDate } from '~/utils/formatData';
+import { formatDate } from '~/utils/formatter';
 import { InfoItem } from '../../components';
 import EditButton from '../../components/EditButton';
 import InfoCard from '~/components/InfoCard';
@@ -29,6 +29,9 @@ const BasicInfo = ({
   isCurrentUser,
 }: Props) => {
   const { rootNavigation } = useRootNavigation();
+  // BE requests to clear timezone effect
+  const birthdayWithoutTime = birthday?.substring(0, birthday?.indexOf('T'));
+  const formattedBirthday = formatDate(birthdayWithoutTime, 'MMM D, YYYY');
 
   const editInfo = () => {
     rootNavigation.navigate(mainStack.editBasicInfo);
@@ -39,6 +42,7 @@ const BasicInfo = ({
       isCurrentUser={isCurrentUser}
       onPress={editInfo}
       icon="PenToSquareSolid"
+      testID="basic_info.edit_btn"
     />
   );
 
@@ -51,10 +55,12 @@ const BasicInfo = ({
     >
       <InfoItem title="settings:title_name" value={fullname} />
       <InfoItem title="settings:title_gender" value={genders[gender]} />
-      <InfoItem
-        title="settings:title_birthday"
-        value={formatDate(birthday, 'MMM D, YYYY')}
-      />
+      {isCurrentUser && (
+        <InfoItem
+          title="settings:title_birthday"
+          value={formattedBirthday}
+        />
+      )}
       <InfoItem title="settings:title_language" value={getLanguages(language)} />
       <InfoItem
         title="settings:title_relationship_status"

@@ -40,6 +40,14 @@ const SearchMemberView = ({
       PermissionKey.ASSIGN_UNASSIGN_ROLE,
     ],
   );
+  const isAdminRole = shouldHavePermission(
+    groupId,
+    [
+      PermissionKey.ROLE_COMMUNITY_OWNER,
+      PermissionKey.ROLE_COMMUNITY_ADMIN,
+      PermissionKey.ROLE_GROUP_ADMIN,
+    ],
+  );
 
   const getCommunitySearchMembers = (searchText: string, isLoadMore?:boolean) => {
     if (!searchText?.trim?.()) return;
@@ -77,6 +85,7 @@ const SearchMemberView = ({
         <MemberSearchResult
           canManageMember={canManageMember}
           memberSearchData={communitySearchMembers}
+          isAdminRole={isAdminRole}
           onLoadMore={onLoadMore}
           onPressMenu={onPressMenu}
         />

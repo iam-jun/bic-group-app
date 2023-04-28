@@ -166,7 +166,8 @@ exports[`ArticleItem Component renders correctly 1`] = `
         onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "alignSelf": "flex-start",
+            "alignItems": "center",
+            "flexDirection": "row",
             "marginRight": 12,
             "opacity": 1,
           }
@@ -185,7 +186,9 @@ exports[`ArticleItem Component renders correctly 1`] = `
               Object {
                 "color": "#181C32",
               },
-              undefined,
+              Object {
+                "flexShrink": 1,
+              },
             ]
           }
           testID="content_header.actor"
@@ -269,9 +272,7 @@ exports[`ArticleItem Component renders correctly 1`] = `
         </Text>
       </View>
     </View>
-    <View
-      style={Object {}}
-    >
+    <View>
       <View
         accessible={true}
         focusable={true}
@@ -528,145 +529,222 @@ exports[`ArticleItem Component renders correctly 1`] = `
       <View
         style={
           Object {
+            "flex": 1,
             "flexDirection": "row",
-            "flexWrap": "wrap",
           }
         }
       >
         <View
+          accessibilityState={
+            Object {
+              "disabled": true,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          hitSlop={
+            Object {
+              "bottom": 10,
+              "left": 10,
+              "right": 10,
+              "top": 10,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
             Object {
-              "marginTop": 8,
-              "maxWidth": 718,
-              "paddingRight": 8,
+              "opacity": 1,
             }
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 4,
-                "left": 4,
-                "right": 4,
-                "top": 4,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#FFFFFF",
-                "borderColor": "#E3E6F2",
-                "borderRadius": 4,
-                "borderWidth": 1,
-                "flexDirection": "row",
-                "height": 24,
-                "justifyContent": "center",
-                "marginRight": 0,
-                "opacity": 1,
-                "paddingLeft": 4,
-                "paddingRight": 8,
-              }
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                Object {
+                  "marginRight": 8,
+                  "marginTop": 12,
+                },
+                Object {
+                  "backgroundColor": undefined,
+                },
+              ]
             }
-            testID="tag_item_21a08db3-92d2-4758-a64c-d22e2ba01f33.button_navigate"
           >
-            <Text
-              numberOfLines={1}
+            <View
               style={
                 Array [
-                  Object {
-                    "color": "#212745",
-                    "fontFamily": "BeVietnamPro-Light",
-                    "fontSize": 11,
-                  },
-                  Object {},
-                  Object {
-                    "color": "#353E6E",
-                    "paddingLeft": 4,
-                  },
+                  undefined,
+                  undefined,
+                  undefined,
                 ]
               }
-              testID="tag.label"
             >
-              tag 1
-            </Text>
+              <View />
+            </View>
           </View>
         </View>
         <View
           style={
             Object {
-              "marginTop": 8,
-              "maxWidth": 718,
-              "paddingRight": 8,
+              "flexDirection": "row",
+              "flexWrap": "wrap",
             }
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 4,
-                "left": 4,
-                "right": 4,
-                "top": 4,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "alignItems": "center",
-                "backgroundColor": "#FFFFFF",
-                "borderColor": "#E3E6F2",
-                "borderRadius": 4,
-                "borderWidth": 1,
-                "flexDirection": "row",
-                "height": 24,
-                "justifyContent": "center",
-                "marginRight": 0,
-                "opacity": 1,
-                "paddingLeft": 4,
+                "marginTop": 8,
                 "paddingRight": 8,
               }
             }
-            testID="tag_item_f8614f2a-c746-493e-a861-60029ec75f8c.button_navigate"
           >
-            <Text
-              numberOfLines={1}
-              style={
-                Array [
-                  Object {
-                    "color": "#212745",
-                    "fontFamily": "BeVietnamPro-Light",
-                    "fontSize": 11,
-                  },
-                  Object {},
-                  Object {
-                    "color": "#353E6E",
-                    "paddingLeft": 4,
-                  },
-                ]
+            <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 4,
+                  "left": 4,
+                  "right": 4,
+                  "top": 4,
+                }
               }
-              testID="tag.label"
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#FFFFFF",
+                  "borderColor": "#E3E6F2",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                  "flexDirection": "row",
+                  "height": 24,
+                  "justifyContent": "center",
+                  "marginRight": 0,
+                  "opacity": 1,
+                  "paddingLeft": 4,
+                  "paddingRight": 8,
+                }
+              }
+              testID="tag_item_21a08db3-92d2-4758-a64c-d22e2ba01f33.button_navigate"
             >
-              tag 2
-            </Text>
+              <Text
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "color": "#212745",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 11,
+                    },
+                    Object {},
+                    Array [
+                      Object {
+                        "color": "#353E6E",
+                        "paddingLeft": 4,
+                      },
+                      Object {
+                        "fontSize": 10,
+                      },
+                    ],
+                  ]
+                }
+                testID="tag.label"
+              >
+                TAG 1
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "marginTop": 8,
+                "paddingRight": 8,
+              }
+            }
+          >
+            <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 4,
+                  "left": 4,
+                  "right": 4,
+                  "top": 4,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#FFFFFF",
+                  "borderColor": "#E3E6F2",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                  "flexDirection": "row",
+                  "height": 24,
+                  "justifyContent": "center",
+                  "marginRight": 0,
+                  "opacity": 1,
+                  "paddingLeft": 4,
+                  "paddingRight": 8,
+                }
+              }
+              testID="tag_item_f8614f2a-c746-493e-a861-60029ec75f8c.button_navigate"
+            >
+              <Text
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "color": "#212745",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 11,
+                    },
+                    Object {},
+                    Array [
+                      Object {
+                        "color": "#353E6E",
+                        "paddingLeft": 4,
+                      },
+                      Object {
+                        "fontSize": 10,
+                      },
+                    ],
+                  ]
+                }
+                testID="tag.label"
+              >
+                TAG 2
+              </Text>
+            </View>
           </View>
         </View>
       </View>
@@ -765,7 +843,7 @@ exports[`ArticleItem Component renders correctly 1`] = `
     testID="article_footer"
   >
     <View
-      testID="reaction_view"
+      testID="reaction_view_container"
     >
       <View
         style={
@@ -830,41 +908,24 @@ exports[`ArticleItem Component renders correctly 1`] = `
             }
             testID="reaction.children"
           >
-            <View
+            <Image
+              resizeMode="contain"
+              source={
+                Object {
+                  "testUri": "../../../assets/emoji/static/bic_heart_gift.png",
+                }
+              }
               style={
                 Array [
+                  undefined,
                   Object {
-                    "overflow": "hidden",
+                    "height": 15.6,
+                    "width": 15.6,
                   },
-                  Array [
-                    undefined,
-                    Object {
-                      "height": 15.6,
-                      "width": 15.6,
-                    },
-                  ],
                 ]
               }
-            >
-              <FastImageView
-                onFastImageError={[Function]}
-                resizeMode="contain"
-                source={
-                  Object {
-                    "testUri": "../../../assets/emoji/static/bic_heart_gift.png",
-                  }
-                }
-                style={
-                  Object {
-                    "bottom": 0,
-                    "left": 0,
-                    "position": "absolute",
-                    "right": 0,
-                    "top": 0,
-                  }
-                }
-              />
-            </View>
+              testID="emoji.image"
+            />
             <Text
               style={
                 Array [

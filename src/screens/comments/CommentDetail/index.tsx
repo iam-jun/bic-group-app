@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 import { StyleSheet } from 'react-native';
 import { ExtendedTheme, useIsFocused, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
@@ -16,10 +15,7 @@ import CommentDetailContent from './CommentDetailContent';
 import EmptyScreen from '~/components/EmptyScreen';
 import Button from '~/beinComponents/Button';
 import { useRootNavigation } from '~/hooks/navigation';
-import postActions from '../../../storeRedux/post/actions';
-import { useKeySelector } from '~/hooks/selector';
 import APIErrorCode from '~/constants/apiErrorCode';
-import postKeySelector from '../../../storeRedux/post/keySelector';
 import spacing from '~/theme/spacing';
 import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
@@ -28,11 +24,12 @@ import { getTitle, replacePostDetail } from './helper';
 
 const CommentDetail: FC<IRouteParams> = (props) => {
   const params = props?.route?.params;
-  const { postId, commentId, isReported } = params || {};
+  const {
+    postId, commentId, isReported, target = '',
+  } = params || {};
 
   const { rootNavigation, goHome } = useRootNavigation();
   const isFocused = useIsFocused();
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
 
   const theme: ExtendedTheme = useTheme();
@@ -40,10 +37,12 @@ const CommentDetail: FC<IRouteParams> = (props) => {
   const styles = createStyle(theme);
 
   const actor = usePostsStore(postsSelector.getActor(postId));
-  const type = usePostsStore(postsSelector.getType(postId));
-  const copyCommentError = useKeySelector(postKeySelector.commentErrorCode);
+  const type = usePostsStore(postsSelector.getType(postId)) || target || '';
+  const actionsPostsStore = usePostsStore((state) => state.actions);
+  const copyCommentError = usePostsStore((state) => state.commentErrorCode);
   const [showPrivacyPost, setShowPrivacyPost] = useState(false);
   const comment = useCommentsStore(useCallback(commentsSelector.getComment(commentId), [commentId]));
+  const commentActions = useCommentsStore((state) => state.actions);
   const { reported } = comment || {};
 
   useEffect(() => {
@@ -68,8 +67,8 @@ const CommentDetail: FC<IRouteParams> = (props) => {
 
   useEffect(
     () => () => {
-      dispatch(postActions.setCommentErrorCode(false));
-      dispatch(postActions.setLoadingGetPostDetail(false));
+      actionsPostsStore.setCommentErrorCode(false);
+      actionsPostsStore.setIsLoadingGetPostDetail(false);
     },
     [],
   );
@@ -79,7 +78,7 @@ const CommentDetail: FC<IRouteParams> = (props) => {
       if (copyCommentError === APIErrorCode.Post.COMMENT_DELETED) {
         const params = props?.route?.params;
         const { postId, commentId } = params || {};
-        dispatch(postActions.removeCommentLevel1Deleted({ postId, commentId }));
+        commentActions.removeCommentDeleted({ postId, commentId });
       }
     },
     [copyCommentError],
@@ -107,7 +106,12 @@ const CommentDetail: FC<IRouteParams> = (props) => {
     return (
       <Text.SubtitleXS>
         {`${t('common:in')} `}
-        <Text.SubtitleXS onPress={goToPostDetail} suppressHighlighting style={styles.highlightText}>
+        <Text.SubtitleXS
+          testID="comment_detail.text_header_title"
+          onPress={goToPostDetail}
+          suppressHighlighting
+          style={styles.highlightText}
+        >
           {headerTitle}
         </Text.SubtitleXS>
       </Text.SubtitleXS>
@@ -115,7 +119,7 @@ const CommentDetail: FC<IRouteParams> = (props) => {
   };
 
   return (
-    <ScreenWrapper isFullView backgroundColor={colors.neutral5}>
+    <ScreenWrapper isFullView backgroundColor={colors.neutral5} testID="comment_detail">
       <Header
         titleTextProps={{ useI18n: true }}
         title={renderTitle()}

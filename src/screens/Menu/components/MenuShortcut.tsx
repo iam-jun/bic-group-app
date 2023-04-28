@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import { useDispatch } from 'react-redux';
 import spacing from '~/theme/spacing';
 import Icon from '~/baseComponents/Icon';
 import Button from '~/beinComponents/Button';
@@ -12,13 +11,11 @@ import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import modalActions from '~/storeRedux/modal/actions';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 
 const MenuShortcut = () => {
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const { t } = useBaseHook();
@@ -38,29 +35,28 @@ const MenuShortcut = () => {
     rootNavigation.navigate(seriesStack.seriesSelectAudience, { isFirstStep: true });
   };
 
-  const onPressDraft = () => {
-    rootNavigation.navigate(menuStack.draft);
-  };
-
-  const onPressSavedItems = () => {
-    dispatch(modalActions.showAlertNewFeature());
-  };
-
+  // in this sprint: auto focus Scheduled tab
   const onPressYourContent = () => {
-    rootNavigation.navigate(menuStack.yourContent);
+    rootNavigation.navigate(menuStack.yourContent, { initTab: 1 });
   };
 
   const renderButton = (icon, name, onPress) => (
-    <Button style={styles.button} onPress={onPress}>
+    <Button testID="menu_shortcut.item" style={styles.button} onPress={onPress}>
       <View>
         <Icon size={18} tintColor={theme.colors.neutral20} icon={icon} />
-        <Text.SubtitleM style={styles.buttonText}>{name}</Text.SubtitleM>
+        <Text.SubtitleM
+          testID="menu_shortcut.item.text"
+          style={styles.buttonText}
+        >
+          {name}
+
+        </Text.SubtitleM>
       </View>
     </Button>
   );
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="menu_shortcut">
       <View style={styles.directionRow}>
         {renderButton('PenLineSolid', t('menu:title_write_post'), onPressCreatePost)}
         {renderButton('FilePenSolid', t('menu:title_write_article'), onPressWriteArticle)}
@@ -68,10 +64,6 @@ const MenuShortcut = () => {
       <View style={styles.directionRow}>
         {renderButton('AlbumCollectionSolid', t('menu:title_write_series'), onPressWriteSeries)}
         {renderButton('BallotCheckSolid', t('menu:title_your_content'), onPressYourContent)}
-      </View>
-      <View style={styles.directionRow}>
-        {renderButton('BookmarkSolid', t('menu:title_saved_items'), onPressSavedItems)}
-        {renderButton('FloppyDiskPenSolid', t('menu:title_draft'), onPressDraft)}
       </View>
     </View>
   );

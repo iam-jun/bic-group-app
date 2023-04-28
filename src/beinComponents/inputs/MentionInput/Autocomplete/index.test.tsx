@@ -4,6 +4,7 @@ import { cleanup } from '@testing-library/react-native';
 import { StyleSheet } from 'react-native';
 import { renderWithRedux } from '~/test/testUtils';
 import Autocomplete, { IModalPosition } from '.';
+import useMentionInputStore from '../store';
 
 afterEach(cleanup);
 
@@ -16,13 +17,6 @@ describe('Autocomplete component', () => {
     modalPosition: 'top' as IModalPosition,
     onCompletePress: jest.fn(),
   };
-
-  it('renders correctly', async () => {
-    const wrapper = renderWithRedux(<Autocomplete {...baseProps} />);
-
-    const rendered = wrapper.toJSON();
-    expect(rendered).toMatchSnapshot();
-  });
 
   it('should hide "Autocomplete"', async () => {
     const wrapper = renderWithRedux(<Autocomplete {...baseProps} />);
@@ -82,6 +76,10 @@ describe('Autocomplete component', () => {
     expect(flattenedStyle.shadowOffset).not.toBeNull();
   });
   it('should show "Autocomplete" with title', async () => {
+    useMentionInputStore.setState((state) => {
+      state.key = '';
+      return state;
+    });
     const props = {
       ...baseProps,
       title: 'title',

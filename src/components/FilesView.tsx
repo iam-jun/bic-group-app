@@ -16,7 +16,7 @@ import { useBaseHook } from '~/hooks';
 import { IActivityDataFile } from '~/interfaces/IPost';
 
 import spacing from '~/theme/spacing';
-import { formatBytes } from '~/utils/formatData';
+import { formatBytes } from '~/utils/formatter';
 import Icon from '~/baseComponents/Icon';
 import { IGetFile } from '~/store/uploader';
 

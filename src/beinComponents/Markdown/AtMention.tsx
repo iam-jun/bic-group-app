@@ -41,10 +41,17 @@ const AtMention = ({
     onPress?.(audience, e);
   };
 
+  const handleStyleText = () => {
+    if (audience?.isDeactivated) {
+      return styles.deactivedStyle;
+    }
+    return withAudience ? style : styles.baseStyle;
+  };
+
   return (
     <Text
       testID="text_mention"
-      style={withAudience ? style : styles.baseStyle}
+      style={handleStyleText()}
       onPress={withAudience ? _onPress : undefined}
     >
       {`@${
@@ -61,6 +68,10 @@ const createStyles = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     baseStyle: {
       color: colors.neutral80,
+      fontFamily: fontFamilies.BeVietnamProLight,
+    },
+    deactivedStyle: {
+      color: colors.grey40,
       fontFamily: fontFamilies.BeVietnamProLight,
     },
   });

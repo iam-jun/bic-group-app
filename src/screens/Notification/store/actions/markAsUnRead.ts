@@ -2,11 +2,11 @@ import { cloneDeep } from 'lodash';
 import notificationApi from '~/api/NotificationApi';
 import INotificationsState from '../Interface';
 
-const markAsUnRead = (set, get) => (notificationId:string) => {
+const markAsUnRead = (set, get) => async (notificationId:string) => {
   try {
     if (!notificationId) return;
 
-    notificationApi.markAsUnRead(notificationId);
+    await notificationApi.markAsUnRead(notificationId);
     const data: INotificationsState = get();
 
     // get all notifications from store

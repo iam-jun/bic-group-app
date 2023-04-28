@@ -89,7 +89,6 @@ exports[`CodeInputView component renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "backgroundColor": "green",
                   "borderBottomLeftRadius": 6,
                   "borderBottomRightRadius": 6,
                   "borderTopLeftRadius": 6,
@@ -467,13 +466,11 @@ exports[`CodeInputView component renders correctly 1`] = `
             "fontSize": 20,
           },
           Object {},
-          Object {
-            "marginBottom": 16,
-          },
+          undefined,
         ]
       }
     >
-      Choose new password
+      Create New Password
     </Text>
     <Text
       style={
@@ -485,12 +482,12 @@ exports[`CodeInputView component renders correctly 1`] = `
           },
           Object {},
           Object {
-            "marginBottom": 4,
+            "marginTop": 16,
           },
         ]
       }
     >
-      New password
+      New Password
     </Text>
     <View
       style={
@@ -499,7 +496,9 @@ exports[`CodeInputView component renders correctly 1`] = `
             "flexDirection": "column",
             "marginVertical": 4,
           },
-          undefined,
+          Object {
+            "marginTop": 8,
+          },
         ]
       }
       testID="text_input"
@@ -525,7 +524,6 @@ exports[`CodeInputView component renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "backgroundColor": "green",
                   "borderBottomLeftRadius": 6,
                   "borderBottomRightRadius": 6,
                   "borderTopLeftRadius": 6,
@@ -558,7 +556,7 @@ exports[`CodeInputView component renders correctly 1`] = `
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
-                placeholder="New password"
+                placeholder="New Password"
                 placeholderTextColor="#BAC0DE"
                 secureTextEntry={true}
                 selectionColor="#767D93"
@@ -576,7 +574,7 @@ exports[`CodeInputView component renders correctly 1`] = `
                     },
                   ]
                 }
-                testID="forgot_password.input_new_password"
+                testID="form_check_password.input"
                 textContentType="oneTimeCode"
                 value=""
               />
@@ -1010,7 +1008,7 @@ exports[`CodeInputView component renders correctly 1`] = `
         ]
       }
     >
-      Confirm new password
+      Confirm New Password
     </Text>
     <View
       style={
@@ -1045,7 +1043,6 @@ exports[`CodeInputView component renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "backgroundColor": "green",
                   "borderBottomLeftRadius": 6,
                   "borderBottomRightRadius": 6,
                   "borderTopLeftRadius": 6,
@@ -1078,7 +1075,7 @@ exports[`CodeInputView component renders correctly 1`] = `
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
-                placeholder="Confirm new password"
+                placeholder="Confirm password"
                 placeholderTextColor="#BAC0DE"
                 secureTextEntry={true}
                 selectionColor="#767D93"

@@ -7,13 +7,13 @@ import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import { scaleCoverHeight } from '~/theme/dimension';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import { PostImportant } from '~/components/posts';
+import { ButtonMarkAsRead, PostImportant } from '~/components/posts';
 import ArticleHeader from '../ArticleHeader';
 import ArticleFooter from '../ArticleFooter';
 import { ContentFooterLite, ContentInterestedUserCount } from '~/components/ContentView';
 import { Button, PlaceHolderRemoveContent } from '~/baseComponents';
 import { IPost } from '~/interfaces/IPost';
-import { formatLargeNumber } from '~/utils/formatData';
+import { formatLargeNumber } from '~/utils/formatter';
 import { ArticleSummary, ArticleTitle } from '../ArticleText';
 import { getTotalReactions } from '~/helpers/post';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -24,6 +24,7 @@ import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import { ITag } from '~/interfaces/ITag';
 import Divider from '~/beinComponents/Divider';
 import DeletedItem from '~/components/DeletedItem';
+import { useUserIdAuth } from '~/hooks/auth';
 
 export interface ArticleItemProps {
   data: IPost;
@@ -39,6 +40,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
+  const userId = useUserIdAuth();
 
   const {
     id,
@@ -163,6 +165,16 @@ const ArticleItem: FC<ArticleItemProps> = ({
     </>
   );
 
+  const renderMarkAsRead = () => (
+    <ButtonMarkAsRead
+      postId={id}
+      markedReadPost={markedReadPost}
+      isImportant={isImportant}
+      expireTime={importantExpiredAt}
+      isActor={actor?.id == userId}
+    />
+  );
+
   if (deleted) {
     return <DeletedItem title="article:text_delete_article_success" />;
   }
@@ -182,6 +194,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
       {isLite && renderLite()}
       {!isLite && renderInterestedBy()}
       {!isLite && renderFooter()}
+      {!isLite && renderMarkAsRead()}
     </View>
   );
 };

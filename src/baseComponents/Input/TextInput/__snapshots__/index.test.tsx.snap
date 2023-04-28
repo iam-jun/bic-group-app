@@ -159,7 +159,6 @@ exports[`TextInput component renders active banner correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "backgroundColor": "green",
                       "borderBottomLeftRadius": 0,
                       "borderBottomRightRadius": 6,
                       "borderTopLeftRadius": 0,

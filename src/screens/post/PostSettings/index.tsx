@@ -3,39 +3,24 @@ import {
   FlatList, ScrollView, StyleSheet, View,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
-import { isEmpty } from 'lodash';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/baseComponents/Text';
 import Toggle from '~/baseComponents/Toggle';
-
+import MarkImportant from '~/components/ImportantSettings/MarkImportant';
 import { useRootNavigation } from '~/hooks/navigation';
-import usePostsStore from '~/store/entities/posts';
-import postsSelector from '~/store/entities/posts/selectors';
-
 import { useBaseHook } from '~/hooks';
 import { usePostSettings } from '~/screens/post/PostSettings/usePostSettings';
-import useCreatePost from '~/screens/post/CreatePost/hooks/useCreatePost';
 import { IPostSettingsParams } from '~/interfaces/IPost';
-import postActions from '~/storeRedux/post/actions';
 import spacing from '~/theme/spacing';
-import { useKeySelector } from '~/hooks/selector';
-import postKeySelector from '../../../storeRedux/post/keySelector';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import images from '~/resources/images';
-import { isPostExpired } from '~/helpers/post';
-import Icon from '~/baseComponents/Icon';
-import { formatDate } from '~/utils/formatData';
 import { timeSuggest } from '~/constants/importantTimeSuggest';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
-import { DateInput } from '~/baseComponents/Input';
-import { Button } from '~/baseComponents';
-import { PermissionKey } from '~/constants/permissionScheme';
-import useMyPermissionsStore from '~/store/permissions';
 import useModalStore from '~/store/modal';
+import useCreatePost from '../CreatePost/hooks/useCreatePost';
+import useCreatePostStore from '../CreatePost/store';
 
 export interface PostSettingsProps {
   route?: {
@@ -44,7 +29,6 @@ export interface PostSettingsProps {
 }
 
 const PostSettings = ({ route }: PostSettingsProps) => {
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
@@ -55,27 +39,23 @@ const PostSettings = ({ route }: PostSettingsProps) => {
   const expireTimeSheetRef = useRef<any>();
   const { showAlert } = useModalStore((state) => state.actions);
 
-  let chosenAudiences: any[];
   const screenParams = route?.params || {};
   const { postId } = screenParams;
-  if (postId) {
-    useCreatePost({ screenParams });
-    chosenAudiences = usePostsStore(postsSelector.getAudience(postId))?.groups;
-  } else {
-    chosenAudiences = useKeySelector(postKeySelector.createPost.chosenAudiences);
-  }
 
-  const { getAudienceListWithNoPermission } = useMyPermissionsStore((state) => state.actions);
+  // in case of going directly to PostSetting from post's menu
+  // we have postId, and useCreatePost will init create post store
+  // if go to PostSetting from CreatePost, then we already have the data create post store,
+  // so you may or may not need to pass the postId in screenParams
+  const { audienceListWithNoPermission: listAudiencesWithoutPermission } = useCreatePost({ screenParams });
 
-  const listAudiencesWithoutPermission = getAudienceListWithNoPermission(
-    chosenAudiences,
-    PermissionKey.EDIT_POST_SETTING,
-  );
+  const resetCreatePostStore = useCreatePostStore((state) => state.reset);
 
   useEffect(
     () => () => {
+      // in case of going directly to PostSetting from post's menu
+      // when navigate back, need to clear create post store
       if (postId) {
-        dispatch(postActions.clearCreatPostData());
+        resetCreatePostStore();
       }
     }, [],
   );
@@ -124,153 +104,6 @@ const PostSettings = ({ route }: PostSettingsProps) => {
   const handlePressSuggestDate = (item: any) => {
     expireTimeSheetRef?.current?.close?.();
     handleChangeSuggestDate(item);
-  };
-
-  const renderListAudienceWithoutPermission = (list: any[]) => {
-    if (!Array.isArray(list) || isEmpty(list)) {
-      return null;
-    }
-    switch (list?.length) {
-      case 1:
-        return (
-          <Text.BodyXS color={colors.danger}>{` ${list[0]?.name}`}</Text.BodyXS>
-        );
-      case 2:
-        return (
-          <Text.BodyXS
-            color={
-              colors.danger
-            }
-          >
-            {` ${list[0]?.name}, ${list[1]?.name}`}
-          </Text.BodyXS>
-        );
-      case 3:
-        return (
-          <Text.BodyXS
-            color={
-              colors.danger
-            }
-          >
-            {` ${list[0]?.name}, ${list[1]?.name}, ${list[2]?.name}`}
-          </Text.BodyXS>
-        );
-      default:
-        return (
-          <Text.BodyXS color={colors.danger}>
-            {` ${list[0]?.name}, ${list[1]?.name}, ${t('post:and')} `}
-            <Text.BodyXSMedium
-              color={colors.danger}
-              onPress={onPressAudiences}
-            >
-              {`${t('common:text_more').replace('(number)', list.length - 2)}`}
-            </Text.BodyXSMedium>
-          </Text.BodyXS>
-        );
-    }
-  };
-
-  const renderImportantDate = () => {
-    const { expiresTime, chosenSuggestedTime, neverExpires } = sImportant || {};
-    const dateValue = formatDate(expiresTime, 'MMMM DD, YYYY HH:mm');
-    const timeContent = chosenSuggestedTime || t('common:text_expires_on');
-
-    return (
-      <View>
-        <Button onPress={handleDropDown} style={[styles.row, styles.dropdownStyle]}>
-          <Text.DropdownM
-            useI18n
-            color={chosenSuggestedTime ? colors.neutral60 : colors.neutral20}
-            style={styles.flex1}
-          >
-            {timeContent}
-          </Text.DropdownM>
-          <Icon icon="AngleDown" size={16} tintColor={colors.neutral40} />
-        </Button>
-        {neverExpires
-          ? (
-            <View style={styles.neverExpiresText}>
-              <Icon icon="CircleInfo" size={16} tintColor={colors.neutral20} />
-              <ViewSpacing width={spacing.margin.small} />
-              <Text.BodyXS useI18n color={colors.neutral40}>common:text_never_expire</Text.BodyXS>
-            </View>
-          )
-          : (
-            <View style={styles.expiresOnTextContainer}>
-              <Text.BodyS useI18n color={colors.neutral40} style={styles.expiresOnText}>
-                common:text_expires_on
-              </Text.BodyS>
-              <Text.BodySMedium>
-                {dateValue}
-              </Text.BodySMedium>
-            </View>
-          )}
-        {
-          showCustomExpire
-          && (
-          <View style={styles.importantButtons}>
-            <DateInput
-              testID="post_settings.important.btn_date"
-              mode="date"
-              value={expiresTime}
-              minDate={getMinDate()}
-              maxDate={getMaxDate()}
-              label={t('common:text_end_date')}
-              onConfirm={handleChangeDatePicker}
-              style={styles.flex1}
-            />
-            <ViewSpacing width={16} />
-            <DateInput
-              testID="post_settings.important.btn_time"
-              mode="time"
-              value={expiresTime}
-              minDate={getMinDate()}
-              maxDate={getMaxDate()}
-              label={t('common:text_end_hour')}
-              onConfirm={handleChangeTimePicker}
-              style={styles.flex1}
-            />
-          </View>
-          )
-        }
-      </View>
-    );
-  };
-
-  const renderImportant = () => {
-    const { active, expiresTime } = sImportant || {};
-    const isExpired = isPostExpired(expiresTime);
-
-    return (
-      <View style={styles.content}>
-        <View
-          style={[
-            styles.row,
-            active ? styles.active : styles.important,
-          ]}
-        >
-          <View style={[styles.flex1]}>
-            <Text.SubtitleM style={[styles.flex1]} useI18n>
-              post:mark_as_important
-            </Text.SubtitleM>
-            {!!showWarning && listAudiencesWithoutPermission?.length > 0 ? (
-              <Text.BodyXS color={colors.danger} style={styles.warningText}>
-                {`${t('post:text_important_warning_1')}`}
-                {renderListAudienceWithoutPermission(listAudiencesWithoutPermission)}
-                {`${t('post:text_important_warning_2')}`}
-              </Text.BodyXS>
-            ) : null}
-          </View>
-          <Toggle
-            testID="post_settings.toggle_important"
-            isChecked={active}
-            onValueChanged={handleToggleImportant}
-            disableBuiltInState
-          />
-        </View>
-        {!!active && (listAudiencesWithoutPermission?.length < 1 || !isExpired) && renderImportantDate()}
-      </View>
-    );
   };
 
   const keyExtractor = (item: any) => JSON.stringify(item);
@@ -356,10 +189,10 @@ const PostSettings = ({ route }: PostSettingsProps) => {
   );
 
   return (
-    <ScreenWrapper isFullView backgroundColor={colors.neutral1}>
+    <ScreenWrapper testID="post_settings" isFullView backgroundColor={colors.neutral1}>
       <Header
         titleTextProps={{ useI18n: true }}
-        title={!!postId ? 'post:post_menu_edit_settings' : 'post:settings'}
+        title={!!postId ? 'post:post_menu_edit_settings' : 'common:settings'}
         buttonText="post:save"
         onPressBack={onPressBack}
         onPressButton={handlePressSave}
@@ -372,7 +205,20 @@ const PostSettings = ({ route }: PostSettingsProps) => {
       />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {renderImportant()}
+          <MarkImportant
+            type="post"
+            dataImportant={sImportant}
+            showWarning={showWarning}
+            onPressAudiences={onPressAudiences}
+            listAudiencesWithoutPermission={listAudiencesWithoutPermission}
+            handleToggleImportant={handleToggleImportant}
+            handleDropDown={handleDropDown}
+            showCustomExpire={showCustomExpire}
+            getMinDate={getMinDate}
+            getMaxDate={getMaxDate}
+            handleChangeDatePicker={handleChangeDatePicker}
+            handleChangeTimePicker={handleChangeTimePicker}
+          />
           {renderCanComment()}
           {renderCanReact()}
         </ScrollView>
@@ -404,42 +250,8 @@ const createStyle = (theme: ExtendedTheme) => {
       marginHorizontal: spacing.margin.large,
       justifyContent: 'center',
     },
-    important: { marginTop: spacing.margin.base, alignItems: 'flex-start' },
-    active: { marginTop: spacing.margin.tiny },
-    importantButtons: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingTop: spacing.padding.base,
-    },
-    warningText: {
-      marginTop: spacing.padding.base,
-    },
     expireTimeDesc: {
       marginTop: spacing.margin.tiny,
-    },
-    dropdownStyle: {
-      backgroundColor: colors.white,
-      paddingVertical: spacing.padding.small,
-      paddingLeft: spacing.padding.large,
-      paddingRight: spacing.padding.base,
-      borderColor: colors.neutral5,
-      borderRadius: spacing.borderRadius.large,
-      borderWidth: 1,
-      marginTop: spacing.margin.large,
-    },
-    expiresOnTextContainer: {
-      flexDirection: 'row',
-      alignItems: 'baseline',
-    },
-    expiresOnText: {
-      marginTop: spacing.margin.large,
-    },
-    neverExpiresText: {
-      marginTop: spacing.margin.extraLarge,
-      backgroundColor: colors.gray1,
-      padding: spacing.padding.small,
-      flexDirection: 'row',
-      alignItems: 'center',
     },
     expireTimeSheet: {
       flex: 1,

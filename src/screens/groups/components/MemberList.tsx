@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 import Text from '~/baseComponents/Text';
@@ -14,33 +15,46 @@ import MemberItem from './MemberItem';
 import appConfig from '~/configs/appConfig';
 import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import { formatLargeNumber } from '~/utils/formatData';
+import { formatLargeNumber } from '~/utils/formatter';
 import useMemberSection from '~/hooks/useMemberSection';
+import useBlockingStore from '~/store/blocking';
 
 interface MemberListProps {
   type: 'group' | 'community';
+  isAdminRole: boolean;
   canManageMember: boolean;
   onLoadMore: () => void;
   onPressMenu: (item: any) => void;
-  onRefresh?: () => void;
+  onRefresh: () => void;
 }
 
 const MemberList = ({
   type,
+  isAdminRole,
   canManageMember,
   onLoadMore,
   onPressMenu,
   onRefresh,
 }: MemberListProps) => {
+  const insets = useSafeAreaInsets();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyles(theme);
 
   const memberSectionData = useMemberSection(type);
 
-  const { loading, canLoadMore, sectionList } = memberSectionData;
+  const {
+    loading, refreshing, sectionList,
+  } = memberSectionData;
 
-  const renderEmpty = () => (!loading ? <NoSearchResultsFound /> : null);
+  const {
+    loading: loadingBlocking,
+  } = useBlockingStore();
+
+  const renderEmpty = () => {
+    if (loading || loadingBlocking) return null;
+    return <NoSearchResultsFound />;
+  };
 
   const renderSectionHeader = ({ section: { title, userCount } }: any) => (
     <View style={styles.sectionHeader}>
@@ -51,58 +65,57 @@ const MemberList = ({
   );
 
   const renderListFooter = () => {
-    if (
-      canLoadMore
-      && (sectionList[0]?.data?.length || 0) + (sectionList[1]?.data?.length || 0) > 0
-    ) {
-      return (
-        <View
-          testID="member_list.loading_more_indicator"
-          style={styles.listFooter}
-        >
-          <ActivityIndicator />
-        </View>
-      );
-    }
+    if (!loading && !loadingBlocking) return <ViewSpacing height={insets.bottom || spacing.padding.large} />;
 
-    return null;
+    return (
+      <View
+        testID="member_list.loading_more_indicator"
+        style={styles.listFooter}
+      >
+        <ActivityIndicator />
+      </View>
+    );
   };
 
   const renderItem = ({ item }: {item: any}) => (
     <MemberItem
       item={item}
+      isAdminRole={isAdminRole}
       canManageMember={canManageMember}
       onPressMenu={onPressMenu}
     />
   );
 
+  const renderSeparatorComponent = () => <ViewSpacing height={spacing.margin.small} />;
+
+  const keyExtractor = (item, index) => `member_list_${item.id}_${index}`;
+
+  // The purpose of waiting for 2 api (getListMembers && getListRelationship) to finish running at the same time
+  const sections = loadingBlocking ? [] : sectionList;
+
   return (
     <SectionList
       testID="member_list"
       style={styles.content}
-      sections={sectionList}
-      keyExtractor={(
-        item, index,
-      ) => `member_list_${item.id}_${index}`}
+      sections={sections}
+      keyExtractor={keyExtractor}
       onEndReached={onLoadMore}
-      onEndReachedThreshold={0.1}
+      onEndReachedThreshold={0.2}
       ListEmptyComponent={renderEmpty}
       initialNumToRender={appConfig.recordsPerPage}
       ListFooterComponent={renderListFooter}
       renderSectionHeader={renderSectionHeader}
       renderItem={renderItem}
-      ItemSeparatorComponent={() => <ViewSpacing height={8} />}
+      ItemSeparatorComponent={renderSeparatorComponent}
       stickySectionHeadersEnabled={false}
       showsVerticalScrollIndicator={false}
-      refreshControl={
-        onRefresh ? (
-          <RefreshControl
-            refreshing={loading}
-            onRefresh={onRefresh}
-            tintColor={colors.gray40}
-          />
-        ) : undefined
-      }
+      refreshControl={(
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          tintColor={colors.gray40}
+        />
+      )}
     />
   );
 };

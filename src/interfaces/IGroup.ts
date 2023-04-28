@@ -2,6 +2,8 @@ import { GroupPrivacyType } from '~/constants/privacyTypes';
 import { IFilePicked } from './common';
 import { IUploadType } from '~/configs/resourceConfig';
 import { RoleType } from '~/constants/permissionScheme';
+import { IObject } from '~/interfaces/common';
+import { MembershipAnswer } from './ICommunity';
 
 export interface IRole {
   id?: string;
@@ -91,6 +93,8 @@ export interface IGroup {
   treeData?: IGroup;
   settings?: {
     isJoinApproval?: boolean;
+    isActiveGroupTerms?: boolean;
+    isActiveMembershipQuestions?: boolean;
   };
 }
 
@@ -147,14 +151,23 @@ export interface IGroupImageUpload {
   rootGroupId: string;
 }
 
-export interface IGroupGetJoinableMembers {
+export interface IJoinableUsers {
+  id: string;
+  username: string;
+  fullname: string;
+  avatar: string;
+}
+
+export interface IParamsGetJoinableUsers {
   groupId: string;
-  params?: any;
+  key: string;
+  isLoadMore: boolean;
 }
 
 export interface IGroupGetMembers {
   groupId: string;
   isRefreshing?: boolean;
+  silentRefresh?: boolean;
   params?: IParamGetGroupMembers;
 }
 
@@ -186,11 +199,13 @@ export interface IGroupMembers {
 export interface IJoiningMember {
   id: string;
   userId: string;
+  status: string;
   groupId: string;
   createdAt: string;
   updatedAt: string;
   user: IJoiningUserInfo;
   noticeMessage?: string;
+  membershipAnswers: MembershipAnswer[],
 }
 
 export interface IJoiningUserInfo {
@@ -237,24 +252,39 @@ export interface IParamsGetManagedCommunityAndGroup {
   offset?: number;
 }
 
-export interface IPayloadGetGroupStructureCommunityTree {
-  communityId: string;
-  showLoading?: boolean;
+export interface IPayloadGetGroupMemberRequests {
+  groupId: string;
+  isRefreshing?: boolean;
+  params?: any;
 }
 
-export interface IPayloadGetGroupStructureMoveTargets {
-    communityId: string;
-    groupId: string;
-    key?: string;
-  }
+export interface IPayloadSetGroupMemberRequests {
+  total?: number;
+  loading?: boolean;
+  canLoadMore?: boolean;
+  ids?: string[];
+  items?: IObject<IJoiningMember>;
+}
 
-export interface IPayloadPutGroupStructureMoveToTarget {
-    communityId: string;
-    moveId: string;
-    targetId: string
-  }
+export interface IPayloadApproveAllGroupMemberRequests {
+  groupId: string;
+  total: number;
+}
 
-export interface IPayloadPutGroupStructureReorder {
-  communityId: string;
-  newOrder: any[];
+export interface IPayloadApproveSingleGroupMemberRequest {
+  groupId: string;
+  requestId: string;
+  fullName: string;
+}
+
+export interface IPayloadDeclineAllGroupMemberRequests {
+  groupId: string;
+  total: number;
+  callback?: () => void;
+}
+
+export interface IPayloadDeclineSingleGroupMemberRequest {
+  groupId: string;
+  requestId: string;
+  fullName: string;
 }

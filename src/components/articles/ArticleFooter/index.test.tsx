@@ -15,19 +15,6 @@ describe('ArticleFooter Component', () => {
   const state = { ...initialState };
   const article = mockArticle as IPost;
 
-  it('renders correctly', () => {
-    const store = createTestStore(state);
-
-    const rendered = renderWithRedux(
-      <ArticleFooter
-        articleId={article.id}
-        reactionsCount={{}}
-        ownerReactions={[]}
-      />, store,
-    );
-    expect(rendered).toMatchSnapshot();
-  });
-
   it('should hide ReactionView', () => {
     const store = createTestStore(state);
 

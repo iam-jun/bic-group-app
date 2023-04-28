@@ -2,8 +2,8 @@ import React from 'react';
 import useAuthController, { IAuthState } from '~/screens/auth/store';
 
 import MemberItem from './MemberItem';
-import { renderWithRedux, fireEvent } from '~/test/testUtils';
-import { adminDetail } from '~/test/mock_data/communities';
+import { render, fireEvent } from '~/test/testUtils';
+import { adminDetail, previewMemberDetail } from '~/test/mock_data/communities';
 import * as navigationHook from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 
@@ -11,56 +11,76 @@ describe('MemberItem component', () => {
   const canManageMember = true;
   const onPressMenu = jest.fn();
 
-  it('should render data correctly', () => {
+  it('should render data correctly for own item and not have admin role', () => {
     const item = { ...adminDetail };
     useAuthController.setState((state:IAuthState) => {
       state.authUser = { username: 'test' } as any;
       return state;
     });
-    const wrapper = renderWithRedux(
+    const { getByTestId, queryByTestId } = render(
       <MemberItem
         item={item}
-        canManageMember={canManageMember}
-        onPressMenu={onPressMenu}
-      />,
-    );
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  it('should render icon member option correctly when user is an admin', () => {
-    useAuthController.setState((state:IAuthState) => {
-      state.authUser = { username: 'anothertest' } as any;
-      return state;
-    });
-    const item = { ...adminDetail };
-    const wrapper = renderWithRedux(
-      <MemberItem
-        item={item}
-        canManageMember={canManageMember}
-        onPressMenu={onPressMenu}
-      />,
-    );
-    const iconOption = wrapper.getByTestId('member_item.icon_option.button');
-    expect(iconOption).toBeDefined();
-    fireEvent.press(iconOption);
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  it('should NOT render icon member option correctly when user is NOT an admin', () => {
-    useAuthController.setState((state:IAuthState) => {
-      state.authUser = { username: 'anothertest' } as any;
-      return state;
-    });
-    const item = { ...adminDetail };
-    const wrapper = renderWithRedux(
-      <MemberItem
-        item={item}
+        isAdminRole
         canManageMember={false}
         onPressMenu={onPressMenu}
       />,
     );
-    const iconClose = wrapper.queryByTestId('member_item.icon_option.button');
-    expect(iconClose).toBeNull();
+    const fullnameComp = getByTestId('member_item.name');
+    const usernameComp = getByTestId('member_item.username');
+    const iconChat = queryByTestId('member_item.icon_chat.button');
+    const iconOptions = queryByTestId('member_item.icon_option.button');
+    expect(fullnameComp.props.children).toEqual(`${previewMemberDetail.fullname} (You)`);
+    expect(usernameComp.props.children).toEqual(`@${previewMemberDetail.username}`);
+    expect(iconChat).toBeNull();
+    expect(iconOptions).toBeNull();
+  });
+
+  it('should render data correctly for other memnber item and NOT have admin role', () => {
+    useAuthController.setState((state:IAuthState) => {
+      state.authUser = { username: 'anothertest' } as any;
+      return state;
+    });
+    const item = { ...adminDetail };
+    const { getByTestId, queryByTestId } = render(
+      <MemberItem
+        item={item}
+        isAdminRole={false}
+        canManageMember={false}
+        onPressMenu={onPressMenu}
+      />,
+    );
+    const fullnameComp = getByTestId('member_item.name');
+    const usernameComp = getByTestId('member_item.username');
+    const iconChat = queryByTestId('member_item.icon_chat.button');
+    const iconOptions = queryByTestId('member_item.icon_option.button');
+    expect(fullnameComp.props.children).toEqual(`${previewMemberDetail.fullname}`);
+    expect(usernameComp.props.children).toEqual(`@${previewMemberDetail.username}`);
+    expect(iconChat).toBeNull();
+    expect(iconOptions).not.toBeNull();
+  });
+
+  it('should render data correctly for other memnber item and have admin role', () => {
+    useAuthController.setState((state:IAuthState) => {
+      state.authUser = { username: 'anothertest' } as any;
+      return state;
+    });
+    const item = { ...adminDetail };
+    const { getByTestId, queryByTestId } = render(
+      <MemberItem
+        item={item}
+        isAdminRole
+        canManageMember={false}
+        onPressMenu={onPressMenu}
+      />,
+    );
+    const fullnameComp = getByTestId('member_item.name');
+    const usernameComp = getByTestId('member_item.username');
+    const iconChat = queryByTestId('member_item.icon_chat.button');
+    const iconOptions = queryByTestId('member_item.icon_option.button');
+    expect(fullnameComp.props.children).toEqual(`${previewMemberDetail.fullname}`);
+    expect(usernameComp.props.children).toEqual(`@${previewMemberDetail.username}`);
+    expect(iconChat).not.toBeNull();
+    expect(iconOptions).not.toBeNull();
   });
 
   it('should navigate to User profile correctly', () => {
@@ -73,9 +93,10 @@ describe('MemberItem component', () => {
     const rootNavigation = { navigate };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
-    const wrapper = renderWithRedux(
+    const wrapper = render(
       <MemberItem
         item={item}
+        isAdminRole={false}
         canManageMember={canManageMember}
         onPressMenu={onPressMenu}
       />,

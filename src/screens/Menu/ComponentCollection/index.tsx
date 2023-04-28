@@ -8,7 +8,7 @@ import Header from '~/beinComponents/Header';
 const ComponentCollection = (): React.ReactElement => {
 
   return (
-    <ScreenWrapper isFullView>
+    <ScreenWrapper testID='ComponentCollectionScreen' isFullView>
       <Header title={'ComponentCollection'} />
       <StorybookUIRoot/>
     </ScreenWrapper>

@@ -1,4 +1,4 @@
-import { IPayloadGetDiscoverGroups } from '~/interfaces/ICommunity';
+import { IPayloadGetDiscoverGroups, MembershipAnswerRequest } from '~/interfaces/ICommunity';
 import IBaseState from '~/store/interfaces/IBaseState';
 import IFetchingState from '~/store/interfaces/IFetchingState';
 
@@ -8,11 +8,12 @@ interface IDiscoverGroupsState extends IBaseState, IFetchingState {
     items: any,
     canLoadMore: boolean,
     noGroupInCommuntity: boolean,
-    doSetGroupStatus?: (groupId: string, status: number) => void,
-    doJoinNewGroup?: (groupId: string) => void,
-    doCancelJoinGroup?: (groupId: string) => void,
-    doGetDiscoverGroups?: (payload: IPayloadGetDiscoverGroups) => void,
-    doGetCommunityGroups?: (communityId: string) => void;
+    actions: {
+        setGroupStatus?: (groupId: string, status: number) => void,
+        joinNewGroup?: (groupId: string, membershipAnswers?: MembershipAnswerRequest[],) => void,
+        cancelJoinGroup?: (groupId: string) => void,
+        getDiscoverGroups?: (payload: IPayloadGetDiscoverGroups) => void,
+    }
 }
 
 export default IDiscoverGroupsState;

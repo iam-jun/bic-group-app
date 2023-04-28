@@ -11,11 +11,13 @@ import CoverImage from './components/CoverImage';
 import { TextArea, TextInput } from '~/baseComponents/Input';
 import { useBaseHook } from '~/hooks';
 import Text from '~/baseComponents/Text';
+import SettingsButton from '~/components/ImportantSettings/SettingsButton';
 import useSeriesCreation from '../hooks/useSeriesCreation';
 import { CreationSeriesProps } from '~/interfaces/ISeries';
 import useSeriesStore, { ISeriesState } from '../store';
-import { IAudienceGroup } from '~/interfaces/IPost';
+import { IAudienceGroup, PostType } from '~/interfaces/IPost';
 import AlertDeleteAudiencesConfirmContent from '~/components/posts/AlertDeleteAudiences';
+import CreateBannerImportant from '~/components/ImportantSettings/CreateBannerImportant';
 import useModalStore from '~/store/modal';
 
 const CreateSeries = ({ route }: CreationSeriesProps) => {
@@ -28,7 +30,9 @@ const CreateSeries = ({ route }: CreationSeriesProps) => {
 
   const scrollRef = useRef<any>(null);
 
+  const seriesData = useSeriesStore((state: ISeriesState) => state.data);
   const resetStore = useSeriesStore((state:ISeriesState) => state.reset);
+  const { setting } = seriesData || {};
 
   useEffect(() => () => { resetStore(); }, []);
 
@@ -80,6 +84,20 @@ const CreateSeries = ({ route }: CreationSeriesProps) => {
     }
   };
 
+  const renderSettingsButton = () => (<SettingsButton type={PostType.SERIES} seriesId={seriesId} />);
+
+  const renderImportantLabel = () => {
+    if (!setting?.isImportant) return null;
+
+    return (
+      <CreateBannerImportant
+        type="series"
+        expiresTime={setting.importantExpiredAt}
+        style={styles.bannerImportantTime}
+      />
+    );
+  };
+
   return (
     <ScreenWrapper isFullView testID="create_series_screen">
       <Header
@@ -95,7 +113,9 @@ const CreateSeries = ({ route }: CreationSeriesProps) => {
         }}
         onPressBack={handleBack}
         onPressButton={handleSave}
+        renderCustomComponent={renderSettingsButton}
       />
+      {renderImportantLabel()}
       <ChosenAudiences
         audiences={audience}
         disabled={loading}
@@ -178,6 +198,10 @@ const themeStyles = (theme: ExtendedTheme) => {
     textInput: {
       paddingVertical: 0,
       marginTop: 0,
+    },
+    bannerImportantTime: {
+      backgroundColor: colors.white,
+      paddingBottom: spacing.padding.large,
     },
   });
 };

@@ -1,6 +1,7 @@
 import streamApi from '~/api/StreamApi';
 import { IPayloadAddToAllPost } from '~/interfaces/IPost';
-import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
+import useDraftArticleStore from '~/screens/YourContent/components/Draft/DraftArticle/store';
+import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftContents/store';
 import usePostsStore from '~/store/entities/posts';
 import showToastError from '~/store/helper/showToastError';
 import showToastSuccess from '~/store/helper/showToastSuccess';
@@ -22,6 +23,7 @@ const deleteArticle = (_set, _get) => async (id: string) => {
       };
       usePostsStore.getState().actions.addToPosts({ data: deletedPost } as IPayloadAddToAllPost);
       useDraftArticleStore.getState().actions.getDraftArticles({ isRefresh: true });
+      useDraftContentsStore.getState().actions.getDraftContents({ isRefresh: true });
       showToastSuccess(response);
     }
   } catch (error) {

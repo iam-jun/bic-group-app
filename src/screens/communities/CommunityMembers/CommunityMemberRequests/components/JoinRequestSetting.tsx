@@ -119,7 +119,7 @@ const JoinRequestSetting = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="join_request_setting">
       <View style={styles.line1}>
         <Text.BodyMMedium useI18n>communities:join_request_setting:title</Text.BodyMMedium>
         {!isSecretPrivacy && (

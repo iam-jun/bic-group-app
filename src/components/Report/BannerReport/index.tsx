@@ -46,7 +46,7 @@ const BannerReport: FC<Props> = ({ postId, commentId }) => {
   if (!isHidden) return null;
 
   return (
-    <View style={styles.reportContentContainer}>
+    <View style={styles.reportContentContainer} testID="banner_report">
       <Text.BodyS style={styles.textReportContent}>
         {t('report:banner_report_content')}
         <Text.SubtitleS>{reportReasons}</Text.SubtitleS>

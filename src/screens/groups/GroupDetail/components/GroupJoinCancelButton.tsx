@@ -9,6 +9,8 @@ import IDiscoverGroupsState from '../../DiscoverGroups/store/Interface';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 import useModalStore from '~/store/modal';
 import { ICommunity } from '~/interfaces/ICommunity';
+import useTermStore from '~/components/TermsModal/store';
+import useMemberQuestionsStore, { MembershipQuestionsInfo } from '~/components/MemberQuestionsModal/store';
 
 interface GroupJoinCancelButtonProps {
   style?: StyleProp<ViewStyle>;
@@ -22,14 +24,16 @@ const GroupJoinCancelButton = ({ style, community }: GroupJoinCancelButtonProps)
   const {
     privacy,
     id: groupId,
+    settings,
   } = infoDetail || {};
   const joinStatusCommunity = community?.joinStatus;
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
   const isMemberOfCommunity = joinStatusCommunity === GroupJoinStatus.MEMBER;
 
-  const joinNewGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doJoinNewGroup);
-  const cancelJoinGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doCancelJoinGroup);
+  const actions = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.actions);
   const { showAlert } = useModalStore((state) => state.actions);
+  const membershipQuestionActions = useMemberQuestionsStore((state) => state.actions);
+  const termsActions = useTermStore((state) => state.actions);
 
   if (isMember) return null;
 
@@ -42,12 +46,32 @@ const GroupJoinCancelButton = ({ style, community }: GroupJoinCancelButtonProps)
       });
       return;
     }
+    if (settings?.isActiveMembershipQuestions) {
+      const payload: MembershipQuestionsInfo = {
+        groupId,
+        name: '',
+        rootGroupId: groupId,
+        type: 'group',
+        isActive: true,
+        isActiveGroupTerms: settings?.isActiveGroupTerms,
+      };
+      membershipQuestionActions.setMembershipQuestionsInfo(payload);
+      return;
+    }
 
-    joinNewGroup(groupId);
+    if (settings.isActiveGroupTerms) {
+      const payload = {
+        groupId, rootGroupId: groupId, name: '', type: 'group', isActive: true,
+      } as any;
+      termsActions.setTermInfo(payload);
+      return;
+    }
+
+    actions.joinNewGroup(groupId);
   };
 
   const onPressCancelRequest = () => {
-    cancelJoinGroup(groupId);
+    actions.cancelJoinGroup(groupId);
   };
 
   return (

@@ -2,10 +2,11 @@ import NetInfo from '@react-native-community/netinfo';
 import { NavigationContainer, useTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useEffect } from 'react';
-import { StatusBar, StyleSheet, View } from 'react-native';
+import {
+  Linking, StatusBar, StyleSheet, View,
+} from 'react-native';
 import { Host } from 'react-native-portalize';
 
-import { useDispatch } from 'react-redux';
 import AlertModal from '~/beinComponents/modals/AlertModal';
 import AlertNewFeatureModal from '~/beinComponents/modals/AlertNewFeatureModal';
 import LoadingModal from '~/beinComponents/modals/LoadingModal';
@@ -13,9 +14,9 @@ import Toast from '~/baseComponents/Toast';
 import { AppConfig } from '~/configs';
 import InternetConnectionStatus from '~/components/network/InternetConnectionStatus';
 import SystemIssueModal from '~/components/network/SystemIssueModal';
-import noInternetActions from '~/storeRedux/network/actions';
+import useNetworkStore from '~/store/network';
 import { makeRemovePushTokenRequest } from '~/api/apiRequest';
-import { isNavigationRefReady } from './helper';
+import { isNavigationRefReady, withNavigation } from './helper';
 
 import { rootNavigationRef } from './refs';
 import { rootSwitch } from './stack';
@@ -24,16 +25,19 @@ import { registerNavigationContainerWithSentry } from '~/services/sentry';
 
 import AuthStack from '~/router/navigator/AuthStack';
 import MainStack from '~/router/navigator/MainStack';
-import useNavigationLinkingConfig from '~/hooks/navigationLinking';
+import useNavigationLinkingConfig, { onReceiveURL } from '~/hooks/navigationLinking';
 import { useAuthValidateSession, useUserIdAuth } from '~/hooks/auth';
 import VideoPlayerWebView from '~/components/VideoPlayerWebView';
 import ForceUpdateView from '~/components/ForceUpdateView';
+import Maintenance from '~/screens/Maintenance';
 
 const Stack = createNativeStackNavigator();
+const rootNavigation = withNavigation(rootNavigationRef);
 
 const RootNavigator = (): React.ReactElement => {
   const theme = useTheme();
-  const dispatch = useDispatch();
+
+  const networkActions = useNetworkStore((state) => state.actions);
 
   useAuthValidateSession();
 
@@ -41,12 +45,24 @@ const RootNavigator = (): React.ReactElement => {
 
   const linkingConfig = useNavigationLinkingConfig();
 
+  useEffect(() => {
+    const getInitialUrl = async () => {
+      const url = await Linking.getInitialURL();
+      if (url) {
+        onReceiveURL({ url, navigation: rootNavigation });
+      }
+    };
+    getInitialUrl();
+  }, []);
+
   useEffect(
     () => {
       isNavigationRefReady.current = false;
-      dispatch(noInternetActions.setSystemIssue(false));
+      networkActions.setIsShowSystemIssue(false);
 
-      const unsubscribeNetInfo = NetInfo.addEventListener(() => dispatch(noInternetActions.checkInternetReachable()));
+      const unsubscribeNetInfo = NetInfo.addEventListener(() => {
+        useNetworkStore.getState().actions.checkIsInternetReachable();
+      });
       if (!userId) {
         makeRemovePushTokenRequest();
       }
@@ -104,6 +120,7 @@ const RootNavigator = (): React.ReactElement => {
           <InternetConnectionStatus />
           <VideoPlayerWebView />
           <ForceUpdateView />
+          <Maintenance />
         </Host>
       </NavigationContainer>
     </View>

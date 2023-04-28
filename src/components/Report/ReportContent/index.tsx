@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import {
-  View, StyleSheet, ActivityIndicator, Dimensions,
+  View, StyleSheet, ActivityIndicator, Dimensions, ScrollView,
 } from 'react-native';
 import { useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
-import * as modalActions from '~/storeRedux/modal/actions';
 
+import { t } from 'i18next';
 import { spacing } from '~/theme';
 import Text from '~/baseComponents/Text';
 import Icon from '~/baseComponents/Icon';
-import Button from '~/beinComponents/Button';
 import ReportReasons from './ReportReasons';
 import {
   TargetType, ReportTo, IPayloadReportContent, IPayloadReportMember,
 } from '~/interfaces/IReport';
 import useReportContentStore from '../store';
+import useModalStore from '~/store/modal';
+import BlockUserInfo from '~/components/BlockUserInfo';
+import { ICommunityMembers } from '~/interfaces/ICommunity';
+import { IGroupMembers } from '~/interfaces/IGroup';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
+import Checkbox from '~/baseComponents/Checkbox';
+import Divider from '~/beinComponents/Divider';
+import useBlockingStore from '~/store/blocking';
+import { Button } from '~/baseComponents';
 
 const screenHeight = Dimensions.get('window').height;
 const modalHeight = 0.35 * screenHeight;
@@ -30,20 +37,33 @@ interface IReportContentProps {
   };
   dataReportMember?: {
     communityId?: string;
+    userId?: string;
+    reportedMember: ICommunityMembers | IGroupMembers;
   };
 }
 
 const ReportContent: React.FC<IReportContentProps> = (props) => {
-  const dispatch = useDispatch();
   const theme = useTheme();
   const { colors } = theme;
   const { targetId, targetType, dataReportMember } = props || {};
 
+  const [shouldBlockUserInfo, setShouldBlockUserInfo] = useState(false);
   const [reasonState, setReasonState] = useState<any>(null);
   const reportContentActions = useReportContentStore((state) => state.actions);
   const { reportReasons, memberReportReasons } = useReportContentStore((state) => state);
-  const headerTitle = targetType === TargetType.MEMBER
+  const shouldReportMember = targetType === TargetType.MEMBER;
+  const headerTitle = shouldReportMember
     ? 'groups:member_menu:label_report_member' : 'common:text_report_content';
+  const modalActions = useModalStore((state) => state.actions);
+
+  const {
+    listRelationship,
+    loading: loadingBlocking,
+    refreshing: refreshingBlocking,
+    actions: { getListRelationship, blockUser },
+    reset: resetBlocking,
+  } = useBlockingStore();
+  const isBlockedUser = listRelationship.some((userId) => userId === targetId);
 
   useEffect(() => {
     if (!reportReasons.data || reportReasons.data?.length === 0) {
@@ -52,15 +72,28 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
     if (!memberReportReasons.data || memberReportReasons.data?.length === 0) {
       reportContentActions.getMemberReportReasons();
     }
+    if (dataReportMember?.userId) {
+      getListRelationship();
+      return () => {
+        resetBlocking();
+      };
+    }
   }, []);
 
   const onClose = () => {
-    dispatch(modalActions.hideModal());
+    modalActions.hideModal();
     setReasonState(null);
   };
 
-  const onSubmit = () => {
-    if (targetType === TargetType.MEMBER) {
+  const reportMember = async () => {
+    if (dataReportMember?.userId) {
+      const payload = {
+        targetId,
+        reason: reasonState?.id,
+      } as IPayloadReportMember;
+
+      reportContentActions.reportMemberByUserId(payload);
+    } else {
       const payload = {
         targetId,
         communityId: dataReportMember?.communityId,
@@ -68,6 +101,17 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
       } as IPayloadReportMember;
 
       reportContentActions.reportMember(payload);
+    }
+  };
+
+  const onSubmit = async () => {
+    if (shouldReportMember) {
+      reportMember();
+
+      if (shouldBlockUserInfo) {
+        await blockUser(targetId);
+        dataReportMember?.communityId && await getListRelationship(true);
+      }
     } else {
       const payload = {
         ...props,
@@ -84,6 +128,7 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
   const renderHeaderComponent = () => (
     <View style={styles.header}>
       <Icon
+        testID="report_content.btn_back"
         icon="iconBack"
         size={18}
         onPress={onClose}
@@ -100,8 +145,28 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
     </View>
   );
 
+  const onPressCheckBlockUser = (isChecked: boolean) => {
+    setShouldBlockUserInfo(isChecked);
+  };
+
+  const renderBlockUser = () => (
+    shouldReportMember && !isBlockedUser && (
+      <>
+        <Divider />
+        <ViewSpacing height={spacing.margin.base} />
+        <Checkbox label="block_user:text_block_user_also" onPress={onPressCheckBlockUser} useI18n />
+        {shouldBlockUserInfo && (
+          <View>
+            <ViewSpacing height={spacing.margin.base} />
+            <BlockUserInfo fullname={dataReportMember?.reportedMember?.fullname} />
+          </View>
+        )}
+      </>
+    )
+  );
+
   const renderContentComponent = () => {
-    if (reportReasons.loading) {
+    if (reportReasons.loading || loadingBlocking) {
       return (
         <View style={styles.boxLoading}>
           <ActivityIndicator size="small" color={colors.gray30} />
@@ -109,30 +174,34 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
       );
     }
 
+    const isLoading = !!(shouldBlockUserInfo && refreshingBlocking);
+    const isDisabled = !reasonState || !targetId || isLoading;
+
     return (
-      <>
-        <ReportReasons
-          reasonState={reasonState}
-          targetType={targetType}
-          setReasonState={setReasonState}
-        />
+      <View>
+        <ScrollView style={styles.containerScroll}>
+          <ReportReasons reasonState={reasonState} targetType={targetType} setReasonState={setReasonState} />
+          {renderBlockUser()}
+        </ScrollView>
         <Button.Primary
           useI18n
           testID="report_content_bottom_sheet.btn_submit"
           onPress={onSubmit}
           style={styles.btnSubmit}
-          disabled={!reasonState || !targetId}
-          borderRadius={spacing.borderRadius.base}
-          textProps={{ variant: 'buttonM' }}
+          disabled={isDisabled}
+          loading={isLoading}
         >
           common:btn_submit
         </Button.Primary>
-      </>
+        <Button.Neutral style={styles.btnCancel} type="ghost" onPress={onClose}>
+          {t('common:btn_cancel')}
+        </Button.Neutral>
+      </View>
     );
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="report_content">
       {renderHeaderComponent()}
       {renderContentComponent()}
     </View>
@@ -160,7 +229,13 @@ const styles = StyleSheet.create({
     marginRight: spacing.margin.small,
   },
   btnSubmit: {
-    marginTop: 43,
+    marginTop: spacing.margin.large + spacing.margin.tiny,
+  },
+  btnCancel: {
+    marginTop: spacing.margin.small + spacing.margin.xTiny,
+  },
+  containerScroll: {
+    maxHeight: (Dimensions.get('window').height * 2) / 3,
   },
 });
 

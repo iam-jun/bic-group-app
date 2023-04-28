@@ -1,7 +1,9 @@
 import {
   StyleSheet, View, StyleProp, ViewStyle,
 } from 'react-native';
-import React, { useImperativeHandle, useRef, useState } from 'react';
+import React, {
+  ForwardRefRenderFunction, useImperativeHandle, useRef, useState,
+} from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -22,11 +24,10 @@ export interface SearchBaseViewProps {
   onChangeText?: (text: string) => void;
   onFocus?: () => void;
   onSubmitEditing?: () => void;
-  searchViewRef?: any;
   headerContainerStyle?: StyleProp<ViewStyle>;
 }
 
-function SearchBaseView({
+const SearchBaseView: ForwardRefRenderFunction<any, SearchBaseViewProps> = ({
   style,
   isOpen,
   children,
@@ -36,9 +37,8 @@ function SearchBaseView({
   onChangeText,
   onFocus,
   onSubmitEditing,
-  searchViewRef,
   headerContainerStyle,
-}: SearchBaseViewProps) {
+}, searchViewRef) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
@@ -81,7 +81,6 @@ function SearchBaseView({
         <SearchInput
           autoFocus
           inputRef={textInputRef}
-          testID="search_base_view.text_input"
           style={styles.textInput}
           value={searchText}
           autoComplete="off"
@@ -99,12 +98,17 @@ function SearchBaseView({
   if (!isOpen) return null;
 
   return (
-    <Animated.View style={[styles.container, style]} entering={FadeInUp} exiting={FadeOutDown}>
+    <Animated.View
+      testID="search_base_view"
+      style={[styles.container, style]}
+      entering={FadeInUp}
+      exiting={FadeOutDown}
+    >
       {renderHeader()}
       {children}
     </Animated.View>
   );
-}
+};
 
 const createStyles = (theme: ExtendedTheme) => {
   const { colors, elevations } = theme;
@@ -155,4 +159,4 @@ const createStyles = (theme: ExtendedTheme) => {
   });
 };
 
-export default SearchBaseView;
+export default React.forwardRef(SearchBaseView);

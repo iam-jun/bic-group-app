@@ -10,7 +10,6 @@ const registerPushToken = (set, get) => async (payload?: any) => {
 
     const messaging: any = await initPushTokenMessage();
     const newToken: string = payload?.token || (await messaging().getToken());
-
     if (!!savedToken && newToken === savedToken) {
       // if current token same as new token, just skip
       return;

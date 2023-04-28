@@ -1,24 +1,21 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import UploadingImage from '~/beinComponents/UploadingImage';
 import { uploadTypes } from '~/configs/resourceConfig';
-import { useKeySelector } from '~/hooks/selector';
 import { ICreatePostImage } from '~/interfaces/IPost';
-import postKeySelector from '~/storeRedux/post/keySelector';
 import dimension from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
-import postActions from '~/storeRedux/post/actions';
 import { IGetFile } from '~/store/uploader';
+import useCreatePostStore from '../store';
 
 const PostSelectImage = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
-  const dispatch = useDispatch();
 
-  const selectedImagesDraft: ICreatePostImage[] = useKeySelector(postKeySelector.createPost.imagesDraft) || [];
+  const selectedImages = useCreatePostStore((state) => state.createPost.images || []);
+  const createPostStoreActions = useCreatePostStore((state) => state.actions);
 
   const onUploadSuccess = (
     file: IGetFile,
@@ -26,23 +23,22 @@ const PostSelectImage = () => {
     // eslint-disable-next-line no-console
     console.log(`\x1b[36m🐣️ index onUploadSuccess ${file?.name}: ${file?.url}\x1b[0m`);
 
-    const newList = selectedImagesDraft.map((selectImage) => (selectImage?.file?.name === file?.name
+    const newList = selectedImages.map((selectImage) => (selectImage?.file?.name === file?.name
       ? { ...selectImage, uploading: false }
       : selectImage
     ));
 
-    dispatch(postActions.setCreatePostImagesDraft(newList));
-    dispatch(postActions.setCreatePostImages(newList));
+    createPostStoreActions.updateCreatePost({ images: newList });
   };
 
   const onPressRemoveImage = (
     item: ICreatePostImage, index: number,
   ) => {
-    const newList = selectedImagesDraft.filter((
+    const newList = selectedImages.filter((
       image, i,
     ) => image.fileName !== item.fileName || index !== i);
-    dispatch(postActions.setCreatePostImagesDraft(newList));
-    dispatch(postActions.setCreatePostImages(newList));
+
+    createPostStoreActions.updateCreatePost({ images: newList });
   };
 
   const renderItem = (item, index) => {
@@ -73,7 +69,7 @@ const PostSelectImage = () => {
 
   return (
     <View style={styles.container}>
-      {selectedImagesDraft?.map?.(renderItem)}
+      {selectedImages?.map?.(renderItem)}
     </View>
   );
 };

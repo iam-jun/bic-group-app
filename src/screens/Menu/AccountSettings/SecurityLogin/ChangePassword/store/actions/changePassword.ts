@@ -44,7 +44,7 @@ const changePassword = (set, _get) => async (payload: IChangePasswordPayload) =>
         errCurrentPassword = i18n.t('auth:text_err_wrong_current_password');
         break;
       case authErrors.LIMIT_EXCEEDED_EXCEPTION:
-        showToastError({ message: i18n.t('auth:text_err_limit_exceeded') });
+        showToastError({ meta: { message: i18n.t('auth:text_change_password_err_limit_exceeded') } });
         break;
       default:
         showToastError(error);

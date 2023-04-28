@@ -10,7 +10,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import useAuthController from '~/screens/auth/store';
 
 /* State Redux */
-import { AppConfig, languages } from './configs';
 import moments from './configs/moments';
 import { AppContext } from './contexts/AppContext';
 import { useRootNavigation } from './hooks/navigation';
@@ -20,6 +19,8 @@ import RootNavigator from '~/router';
 import { getScreenAndParams, isNavigationRefReady } from '~/router/helper';
 import { initFontAwesomeIcon } from '~/services/fontAwesomeIcon';
 import localStorage from '~/services/localStorage';
+import { parseSafe } from './utils/common';
+import useMaintenanceStore from './store/maintenance';
 
 moment.updateLocale(
   'en', moments.en,
@@ -103,18 +104,32 @@ const Root = (): React.ReactElement => {
     }
   };
 
-  const handleMessageData = (remoteMessage: FirebaseMessagingTypes.RemoteMessage | null)
-  : {screen: string; params: any} | null => {
+  const handleMessageData = (
+    remoteMessage: FirebaseMessagingTypes.RemoteMessage | null,
+  ): { screen: string; params: any } | null => {
     if (!remoteMessage) return null;
 
-    return getScreenAndParams(remoteMessage?.data?.extraData);
+    const data = remoteMessage?.data?.extraData;
+    const newData = typeof data === 'string' ? parseSafe(data) : {};
+
+    if (newData?.startAt && newData?.duration) {
+      useMaintenanceStore.getState().actions.checkMaintenance();
+    }
+
+    return getScreenAndParams(newData);
   };
 
   /* Change language */
   const setUpLanguage = async () => {
     const language = await localStorage.getLanguage();
     if (language) {
-      if (i18n.language !== language) { i18n.changeLanguage(language); }
+      if (i18n.language !== language) {
+        /**
+         * Temporarily hidden language in task BEIN-13338
+         */
+        // i18n.changeLanguage(language);
+        i18n.changeLanguage('en');
+      }
       moment.locale(language);
     } else {
       let systemLocale = Platform.OS === 'ios'
@@ -126,11 +141,14 @@ const Root = (): React.ReactElement => {
       // eslint-disable-next-line prefer-destructuring
       else if (systemLocale && systemLocale.includes('-')) systemLocale = systemLocale.split('-')[0];
 
-      const isSupportLanguage = Object.keys(languages).find((item: string) => item === systemLocale);
+      /**
+       * Temporarily hidden language in task BEIN-13338
+       * import { AppConfig, languages } from './configs';
+       */
+      // const isSupportLanguage = Object.keys(languages).find((item: string) => item === systemLocale);
+      // const newLanguage = isSupportLanguage ? systemLocale : AppConfig.defaultLanguage;
+      const newLanguage = 'en';
 
-      const newLanguage = isSupportLanguage
-        ? systemLocale
-        : AppConfig.defaultLanguage;
       changeLanguage(newLanguage);
       moment.locale(newLanguage);
     }

@@ -13,27 +13,27 @@ import { CreateArticleProps, IEditArticleSeries } from '~/interfaces/IArticle';
 import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
 import spacing from '~/theme/spacing';
 import Divider from '~/beinComponents/Divider';
-import ListSeriesWithAudiences from './components/ListSeriesWithAudiences';
-import useCreateArticleSeriesStore from './store';
 import useCreateArticleStore from '../../store';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import appConfig from '~/configs/appConfig';
-import ArticleSelectingListInfo from '~/components/articles/ArticleSelectingListInfo';
+import { ListSeriesWithAudiences } from '~/components/SelectSeries';
+import useSelectSeriesStore from '~/components/SelectSeries/store';
+import SelectingListInfo from '~/components/SelectingListInfo';
 
 const CreateArticleSeries: FC<CreateArticleProps> = ({ route }: CreateArticleProps) => {
   const articleId = route?.params?.articleId;
 
-  const serieActions = useCreateArticleSeriesStore((state) => state.actions);
-  const resetSeries = useCreateArticleSeriesStore((state) => state.reset);
+  const serieActions = useSelectSeriesStore((state) => state.actions);
+  const resetSeries = useSelectSeriesStore((state) => state.reset);
+  const seriesData = useSelectSeriesStore((state) => state.listSeries);
+
   const selectedSeries = useCreateArticleStore((state) => state.data.series);
   const editArticleActions = useCreateArticleStore((state) => state.actions);
-
-  const seriesData = useCreateArticleSeriesStore((state) => state.listSeries);
   const groupIds = useCreateArticleStore((state) => state.data.audience.groupIds);
 
   const { items: seriesItems, loading: loadingSeries } = seriesData || {};
 
-  const searchData = useCreateArticleSeriesStore((state) => state.search);
+  const searchData = useSelectSeriesStore((state) => state.search);
   const { key: searchKey, items: searchItems, loading: loadingSearch } = searchData || {};
 
   const listData = searchKey ? searchItems : seriesItems;
@@ -101,7 +101,7 @@ const CreateArticleSeries: FC<CreateArticleProps> = ({ route }: CreateArticlePro
         onChangeText={onChangeTextSearch}
         placeholder={t('article:text_search_category_placeholder')}
       />
-      <ArticleSelectingListInfo
+      <SelectingListInfo
         data={selectedSeries}
         type="series"
         tagProps={{

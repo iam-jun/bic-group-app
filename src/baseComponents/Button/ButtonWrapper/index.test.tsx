@@ -1,30 +1,29 @@
 import { cleanup } from '@testing-library/react-native';
 import * as React from 'react';
-import { renderWithRedux, configureStore } from '~/test/testUtils';
-import initialState from '~/storeRedux/initialState';
+import useNetworkStore, { INetworkState } from '~/store/network';
+import { renderWithRedux } from '~/test/testUtils';
 import Button from '.';
 
 afterEach(cleanup);
 
 describe('Button component', () => {
-  const mockStore = configureStore([]);
-
-  const storeData = { ...initialState };
-
-  storeData.noInternet.isInternetReachable = true;
-
-  const store = mockStore(storeData);
-
   it('renders correctly', () => {
-    const rendered = renderWithRedux(<Button />, store).toJSON();
+    useNetworkStore.setState((state:INetworkState) => {
+      state.isInternetReachable = true;
+      return state;
+    });
+
+    const rendered = renderWithRedux(<Button />).toJSON();
     expect(rendered).toMatchSnapshot();
   });
 
   it('renders correctly button when no internet connection', () => {
-    storeData.noInternet.isInternetReachable = false;
+    useNetworkStore.setState((state:INetworkState) => {
+      state.isInternetReachable = false;
+      return state;
+    });
 
-    const store = mockStore(storeData);
-    const rendered = renderWithRedux(<Button />, store);
+    const rendered = renderWithRedux(<Button />);
     const { getByTestId } = rendered;
     const btnComponent = getByTestId('button_wrapper');
 
