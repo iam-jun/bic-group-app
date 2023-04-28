@@ -2,7 +2,7 @@ import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import { scaleCoverHeight } from '~/theme/dimension';
+import dimension, { scaleCoverHeight } from '~/theme/dimension';
 import Image from '~/components/Image';
 import images from '~/resources/images';
 import spacing from '~/theme/spacing';
@@ -71,7 +71,7 @@ const themeStyles = (theme: ExtendedTheme) => {
       justifyContent: 'center',
     },
     cover: {
-      width: '100%',
+      width: dimension.deviceWidth,
       height: scaleCoverHeight(),
     },
     basicInfoList: {

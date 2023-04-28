@@ -18,7 +18,7 @@ interface ICommunityController {
     updateCommunityJoinSetting: (communityId: string, groupId: string, isJoinApproval: boolean) => void;
     editCommunityDetail: (
       data: IGroupDetailEdit, editFieldName?: string, callback?: () => void
-    ) => void;
+    ) => Promise<void>;
     assignCommunityAdmin: (id: string, userId: string) => void;
     revokeCommunityAdmin: (id: string, userId: string) => void;
   }
