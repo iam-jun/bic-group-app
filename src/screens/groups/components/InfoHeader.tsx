@@ -13,7 +13,7 @@ import { useBaseHook } from '~/hooks';
 import { ICommunity } from '~/interfaces/ICommunity';
 import { IGroup } from '~/interfaces/IGroup';
 import { formatLargeNumber } from '~/utils/formatter';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 
 interface InfoHeaderProps {
   infoDetail: ICommunity | IGroup;
@@ -40,11 +40,12 @@ const _InfoHeader = ({
         resizeMode="cover"
         source={{ uri: backgroundImgUrl }}
         defaultSource={images.img_cover_default}
+        usePixelWidth
       />
       <Avatar.Large
         showBorder
         style={styles.avatar}
-        resizeMode="contain"
+        resizeMode="cover"
         source={{ uri: icon }}
         defaultSource={images.img_group_avatar_default}
       />

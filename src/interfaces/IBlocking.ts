@@ -4,4 +4,5 @@ export interface IBlockingUser {
   fullname: string;
   id: string;
   username: string;
+  isVerified?: boolean;
 }

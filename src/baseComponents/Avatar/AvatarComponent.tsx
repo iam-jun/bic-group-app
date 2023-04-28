@@ -6,7 +6,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { ImageStyle } from 'react-native-fast-image';
 
 import Icon from '~/baseComponents/Icon';
-import Image, { ImageProps } from '~/beinComponents/Image';
+import Image, { ImageProps } from '~/components/Image';
 import { IconType } from '~/resources/icons';
 import dimension from '~/theme/dimension';
 import spacing, { borderRadius } from '~/theme/spacing';
@@ -198,6 +198,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
           testID="avatar.image"
           style={[avatarStyle, borderStyle, { backgroundColor: _backgroundColor }]}
           source={source}
+          usePixelWidth
           {...props}
         />
         {renderCounter()}

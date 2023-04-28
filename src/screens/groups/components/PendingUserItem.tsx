@@ -14,6 +14,7 @@ import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 import { Button } from '~/baseComponents';
 import { MembershipAnswer } from '~/interfaces/ICommunity';
+import VerifiedView from '~/components/VerifiedView';
 
 interface PendingUserItemProps {
   requestItem: IJoiningMember;
@@ -36,7 +37,7 @@ const PendingUserItem = ({
     user, updatedAt, noticeMessage, membershipAnswers = [],
   } = requestItem || {};
   const {
-    avatar, fullname, latestWork, city,
+    avatar, fullname, latestWork, city, isVerified,
   } = user || {};
   const { titlePosition, company } = latestWork || {};
 
@@ -136,7 +137,10 @@ const PendingUserItem = ({
         <Avatar.Medium source={avatar} isRounded />
 
         <View style={styles.textHeader}>
-          <Text.H5>{fullname}</Text.H5>
+          <View style={styles.row}>
+            <Text.H5>{fullname}</Text.H5>
+            <VerifiedView size={12} isVerified={isVerified} />
+          </View>
           <View style={{ marginVertical: 2 }} />
           <Text.BodyS color={colors.neutral40}>
             {`${t('groups:text_requested_at')} ${formatFullTime(
@@ -220,6 +224,10 @@ const createStyles = (theme: ExtendedTheme) => {
     answerItemContainer: { marginTop: spacing.margin.small },
     questionRequired: { color: colors.red40 },
     noAnswer: { fontStyle: 'italic', color: colors.neutral20 },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
   });
 };
 

@@ -1183,7 +1183,7 @@ exports[`SignUp component renders correctly 1`] = `
                       "opacity": 1,
                     }
                   }
-                  testID="button_wrapper"
+                  testID="sign_up.checkbox"
                 >
                   <View
                     style={
@@ -1349,7 +1349,7 @@ exports[`SignUp component renders correctly 1`] = `
                     },
                   ]
                 }
-                testID="sign_in.btn_sign_up"
+                testID="sign_up.btn_sign_up"
               >
                 <View
                   style={

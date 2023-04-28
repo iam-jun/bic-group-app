@@ -15,6 +15,7 @@ import Avatar from '~/baseComponents/Avatar';
 import { AvatarProps } from '~/baseComponents/Avatar/AvatarComponent';
 import spacing from '~/theme/spacing';
 import DeactivatedView from '~/components/DeactivatedView';
+import VerifiedView from '~/components/VerifiedView';
 
 type ItemIconProps = Omit<IconProps, 'icon'>
 export interface PrimaryItemProps {
@@ -31,6 +32,7 @@ export interface PrimaryItemProps {
   leftIconProps?: ItemIconProps;
   isChecked?: boolean;
   isDeactivated?: boolean;
+  isVerified?: boolean;
   checkboxProps?: CheckboxProps;
   toggleChecked?: boolean;
   menuIconTestID?: string;
@@ -60,6 +62,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   LeftComponent,
   isChecked,
   isDeactivated = false,
+  isVerified = false,
   checkboxProps,
   onPress,
   toggleChecked,
@@ -113,6 +116,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
               <Text testID="primary_item.title" variant="h6" numberOfLines={2} {...titleProps} style={styles.title}>
                 {title}
               </Text>
+              <VerifiedView size={12} isVerified={isVerified} />
               {isDeactivated && <DeactivatedView style={styles.deactivatedView} />}
             </View>
           )}

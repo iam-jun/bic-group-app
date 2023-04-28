@@ -10,7 +10,7 @@ module.exports = {
   clearMocks: true,
   testPathIgnorePatterns: ['/node_modules/'],
   transformIgnorePatterns: [
-    'node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|rollbar-react-native|@fortawesome|@react-native|@react-navigation|rn-fetch-blob|@sentry/react-native)',
+    'node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|rollbar-react-native|@fortawesome|@react-native|@react-navigation|rn-fetch-blob|@sentry/react-native|expo(nent)?|@expo(nent)?/.*)',
   ],
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
