@@ -34,6 +34,9 @@ export interface IFileUploadResponse {
   };
 }
 
+// thêm field localUrl vào obj uploadingFiles để hiện ảnh local khi update
+// sau khi upload xong thì xóa hết field đó đi
+
 export interface IUploaderState extends IBaseState {
   uploadingFiles: {[x: string]: number};
   uploadedFiles: {[x: string]: IGetFile};
