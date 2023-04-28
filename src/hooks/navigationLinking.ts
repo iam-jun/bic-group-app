@@ -3,6 +3,7 @@ import groupApi from '~/api/GroupApi';
 import APIErrorCode from '~/constants/apiErrorCode';
 import { useRootNavigation } from '~/hooks/navigation';
 import { linkingConfig, PREFIX_DEEPLINK_GROUP, PREFIX_URL } from '~/router/config';
+import { hideSplashScreen } from '~/router/helper';
 import authStacks from '~/router/navigator/AuthStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
 import useAuthController from '~/screens/auth/store';
@@ -17,6 +18,10 @@ export const onReceiveURL = async ({ url, navigation, listener }: { url: string;
   const userId = useAuthController?.getState?.().authUser?.userId;
 
   if (match) {
+    if (match.type !== DeepLinkTypes.REFERRAL) {
+      await hideSplashScreen();
+    }
+
     switch (match.type) {
       case DeepLinkTypes.POST_DETAIL:
         navigation?.navigate?.(mainStack.postDetail, { post_id: match.postId });
@@ -83,6 +88,7 @@ export const onReceiveURL = async ({ url, navigation, listener }: { url: string;
         listener?.(url);
     }
   } else {
+    await hideSplashScreen();
     /**
      * convert back to normal web link to open on browser
      * for unsupported deep link
@@ -132,7 +138,7 @@ const navigateFromReferralLink = async (payload: { match: any; navigation: any; 
       referralCode,
     });
   } else {
-    navigateWithInvalidReferralCode({ userId, navigation });
+    await navigateWithInvalidReferralCode({ userId, navigation });
   }
 };
 
@@ -154,6 +160,7 @@ const navigateWithValidReferralCode = async (payload: {
       }
     } catch (error) {
       console.error('joinCommunity error:', error);
+      await hideSplashScreen();
       if (
         error?.code === APIErrorCode.Group.ALREADY_MEMBER
         || error?.code === APIErrorCode.Group.JOIN_REQUEST_ALREADY_SENT
@@ -165,17 +172,29 @@ const navigateWithValidReferralCode = async (payload: {
       }
     }
   } else {
-    navigation?.navigate?.(authStacks.signUp, { isValidLink: true, referralCode });
+    navigation?.replaceListScreenByNewScreen?.(getListScreenToReplace(), {
+      name: authStacks.signUp,
+      params: { isValidLink: true, referralCode },
+    });
   }
 };
 
-const navigateWithInvalidReferralCode = (payload: { userId: string; navigation: any }) => {
+const navigateWithInvalidReferralCode = async (payload: { userId: string; navigation: any }) => {
   const { userId, navigation } = payload;
   if (userId) {
+    await hideSplashScreen();
     navigation?.navigate?.('home');
   } else {
-    navigation?.navigate?.(authStacks.signUp, { isValidLink: false });
+    navigation?.replaceListScreenByNewScreen?.(getListScreenToReplace(), {
+      name: authStacks.signUp,
+      params: { isValidLink: false },
+    });
   }
+};
+
+const getListScreenToReplace = () => {
+  const listScreen = Object.values(authStacks).filter((screen) => screen !== authStacks.signUp);
+  return listScreen;
 };
 
 export default useNavigationLinkingConfig;

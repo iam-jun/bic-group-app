@@ -1,4 +1,5 @@
 import { ISignUpResult } from 'amazon-cognito-identity-js';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { GENDER_TYPE, RELATIONSHIP_TYPE } from './IEditUser';
 
 export enum FieldNameType {
@@ -18,12 +19,13 @@ export interface ISignIn {
 }
 
 export interface SignUpProps {
-  route?: {
-    params?: {
+  route: {
+    params: {
       isValidLink: boolean;
       referralCode?: string;
     };
   };
+  navigation: NativeStackNavigationProp<any>;
 }
 
 export interface IPayloadSignUp {

@@ -9,6 +9,7 @@ import {
 } from '@react-navigation/native';
 
 import { isEmpty, isNumber } from 'lodash';
+import * as SplashScreen from 'expo-splash-screen';
 import { IObject } from '~/interfaces/common';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import seriesStack from './navigator/MainStack/stacks/series/stack';
@@ -395,6 +396,10 @@ const navigatePostDetailWithContentType = ({ contentType, contentId }) => {
     };
   }
   return null;
+};
+
+export const hideSplashScreen = async () => {
+  await SplashScreen.hideAsync();
 };
 
 export default routerHelper;

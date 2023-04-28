@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { Host } from 'react-native-portalize';
 
+import * as SplashScreen from 'expo-splash-screen';
 import AlertModal from '~/beinComponents/modals/AlertModal';
 import AlertNewFeatureModal from '~/beinComponents/modals/AlertNewFeatureModal';
 import LoadingModal from '~/beinComponents/modals/LoadingModal';
@@ -16,7 +17,7 @@ import InternetConnectionStatus from '~/components/network/InternetConnectionSta
 import SystemIssueModal from '~/components/network/SystemIssueModal';
 import useNetworkStore from '~/store/network';
 import { makeRemovePushTokenRequest } from '~/api/apiRequest';
-import { isNavigationRefReady, withNavigation } from './helper';
+import { hideSplashScreen, isNavigationRefReady, withNavigation } from './helper';
 
 import { rootNavigationRef } from './refs';
 import { rootSwitch } from './stack';
@@ -30,6 +31,9 @@ import { useAuthValidateSession, useUserIdAuth } from '~/hooks/auth';
 import VideoPlayerWebView from '~/components/VideoPlayerWebView';
 import ForceUpdateView from '~/components/ForceUpdateView';
 import Maintenance from '~/screens/Maintenance';
+
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
 const rootNavigation = withNavigation(rootNavigationRef);
@@ -49,7 +53,9 @@ const RootNavigator = (): React.ReactElement => {
     const getInitialUrl = async () => {
       const url = await Linking.getInitialURL();
       if (url) {
-        onReceiveURL({ url, navigation: rootNavigation });
+        await onReceiveURL({ url, navigation: rootNavigation });
+      } else {
+        await hideSplashScreen();
       }
     };
     getInitialUrl();
