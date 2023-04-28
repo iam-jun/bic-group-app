@@ -241,7 +241,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   );
 
   return (
-    <Modal visible={visible} transparent onRequestClose={onRequestClose}>
+    <Modal testID="image_gallery_modal" visible={visible} transparent onRequestClose={onRequestClose}>
       {visible && (
         <TouchableWithoutFeedback onPress={closeModal}>
           <View style={styles.container}>
@@ -252,6 +252,8 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
                 style={{ flex: 1 }}
                 initialPage={initIndex}
                 onPageSelected={onPageSelected}
+                // for unit test
+                layoutDirection="ltr"
               >
                 {imageUrls.map(renderScreen)}
               </PagerView>
