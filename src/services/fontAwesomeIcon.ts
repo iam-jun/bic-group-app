@@ -215,6 +215,7 @@ import { faRectangleHistory } from '@fortawesome/pro-regular-svg-icons/faRectang
 import { faUserLargeSlash as faUserLargeSlashSolid } from '@fortawesome/pro-solid-svg-icons/faUserLargeSlash';
 import { faChevronDown } from '@fortawesome/pro-regular-svg-icons/faChevronDown';
 import { faChevronUp } from '@fortawesome/pro-regular-svg-icons/faChevronUp';
+import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -450,6 +451,7 @@ export const initFontAwesomeIcon = () => {
     faUserLargeSlashSolid,
     faChevronDown,
     faChevronUp,
+    faBadgeCheck,
   );
 };
 
@@ -670,6 +672,7 @@ export const fontAwesomeIcons = {
   UserLargeSlash: 'fa-solid fa-user-large-slash',
   ChevronDown: 'fa-regular fa-chevron-down',
   ChevronUp: 'fa-regular fa-chevron-up',
+  BadgeCheck: 'fa-solid fa-badge-check',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

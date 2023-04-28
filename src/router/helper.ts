@@ -16,6 +16,7 @@ import articleStack from './navigator/MainStack/stacks/articleStack/stack';
 import { TargetType } from '~/interfaces/IPost';
 import homeStack from './navigator/MainStack/stacks/homeStack/stack';
 import menuStack from './navigator/MainStack/stacks/menuStack/stack';
+import mainStack from './navigator/MainStack/stack';
 import { ContentType } from '~/interfaces/INotification';
 
 export const isNavigationRefReady: any = React.createRef();
@@ -158,6 +159,7 @@ export const getScreenAndParams = (data: {
   groupId: string;
   contentId: string;
   contentType: string;
+  userId: string;
 }) => {
   if (isEmpty(data)) {
     return null;
@@ -173,6 +175,7 @@ export const getScreenAndParams = (data: {
     groupId = null,
     contentId = null,
     contentType = '',
+    userId = '',
   } = data || {};
 
   if (type === undefined) {
@@ -299,6 +302,8 @@ export const getScreenAndParams = (data: {
     case NOTIFICATION_TYPE.LEAVE_MULTIPLE_GROUP_TO_USER:
     case NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME:
       return null;
+    case NOTIFICATION_TYPE.APPROVED_KYC:
+      return { screen: mainStack.userProfile, params: { userId } };
     default:
       console.warn(`Notification type ${type} have not implemented yet`);
       return { screen: homeStack.postDetail, params: { post_id: postId } };
