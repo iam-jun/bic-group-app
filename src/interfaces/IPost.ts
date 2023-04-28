@@ -96,6 +96,7 @@ export interface IAudienceUser {
   fullname?: string;
   avatar?: string;
   isDeactivated?: boolean;
+  isVerified?: boolean;
 }
 
 export interface IAudienceGroup {
