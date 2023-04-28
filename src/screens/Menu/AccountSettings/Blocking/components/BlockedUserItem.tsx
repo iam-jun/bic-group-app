@@ -14,6 +14,7 @@ import useModalStore from '~/store/modal';
 import { IBlockingUser } from '~/interfaces/IBlocking';
 import { formatDate } from '~/utils/formatter';
 import useBlockingStore from '~/store/blocking';
+import VerifiedView from '~/components/VerifiedView';
 
 interface Props {
   item: IBlockingUser;
@@ -29,7 +30,7 @@ const BlockedUserItem = ({ item }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const {
-    fullname, avatar, id, createdAt, username,
+    fullname, avatar, id, createdAt, username, isVerified,
   } = item || {};
 
   const onConfirm = async () => {
@@ -51,15 +52,18 @@ const BlockedUserItem = ({ item }: Props) => {
   };
 
   const renderUser = () => (
-    <>
-      <Text.BodyMMedium color={colors.neutral60} numberOfLines={1}>
-        {fullname}
-      </Text.BodyMMedium>
+    <View style={styles.userContainer}>
+      <View style={styles.row}>
+        <Text.BodyMMedium color={colors.neutral60} numberOfLines={1}>
+          {fullname}
+        </Text.BodyMMedium>
+        <VerifiedView size={12} isVerified={isVerified} />
+      </View>
       <Text.BodyS color={colors.neutral30} numberOfLines={1}>
         @
         {username}
       </Text.BodyS>
-    </>
+    </View>
   );
 
   const renderButtonUnblock = () => (
@@ -112,6 +116,13 @@ const styles = StyleSheet.create({
   btnUnblock: {
     marginTop: spacing.margin.base,
     alignSelf: 'flex-start',
+  },
+  userContainer: {
+    paddingRight: spacing.padding.xSmall,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 

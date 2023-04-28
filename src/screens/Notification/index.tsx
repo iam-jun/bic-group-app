@@ -15,6 +15,7 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
+import mainStack from '~/router/navigator/MainStack/stack';
 import { notificationMenuData } from '~/screens/Notification/constants';
 import { MEMBER_TABS } from '../communities/CommunityMembers';
 import { MEMBER_TAB_TYPES } from '../communities/constants';
@@ -365,6 +366,9 @@ const Notification = () => {
                   rootNavigation.navigate(articleStack.articleDetail, { articleId: content.id });
                 }
               }
+              break;
+            case NOTIFICATION_TYPE.APPROVED_KYC:
+              rootNavigation.navigate(mainStack.userProfile, { userId });
               break;
             default:
               console.warn(`Notification type ${type} have not implemented yet`);

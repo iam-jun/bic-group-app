@@ -1,9 +1,9 @@
 import { GroupPrivacyType } from '~/constants/privacyTypes';
 import { IFilePicked } from './common';
-import { IUploadType } from '~/configs/resourceConfig';
+import { ResourceUploadType } from './IUpload';
 import { RoleType } from '~/constants/permissionScheme';
 import { IObject } from '~/interfaces/common';
-import { MembershipAnswer } from './ICommunity';
+import { ICommunity, MembershipAnswer } from './ICommunity';
 
 export interface IRole {
   id?: string;
@@ -70,6 +70,7 @@ export interface IGroup {
   description?: string;
   level?: number;
   parent?: any;
+  community?: ICommunity;
   createdBy?: string;
   icon?: string;
   backgroundImgUrl?: string | null;
@@ -146,7 +147,7 @@ export interface IGroupImageUpload {
   id: string;
   fieldName: 'icon' | 'backgroundImgUrl';
   file: IFilePicked;
-  uploadType: IUploadType;
+  uploadType: ResourceUploadType;
   destination: 'group' | 'community';
   rootGroupId: string;
 }
@@ -194,6 +195,7 @@ export interface IGroupMembers {
   isAdmin?: boolean;
   customRoleIds?: any[];
   roles?: any[];
+  isVerified?: boolean;
 }
 
 export interface IJoiningMember {
@@ -226,6 +228,7 @@ export interface IJoiningUserInfo {
     company: string | null;
     titlePosition: string | null;
   } | null;
+  isVerified?: boolean;
 }
 
 export interface IGetCommunityGroup {

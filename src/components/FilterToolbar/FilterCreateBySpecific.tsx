@@ -27,6 +27,7 @@ import { Icon } from '../articles/ArticleFormatToolBar/components/Icon';
 import { getTextNameUserDisplay } from './helper';
 import useCommonController from '~/screens/store';
 import useModalStore from '~/store/modal';
+import VerifiedView from '../VerifiedView';
 
 export interface NFSFilterCreateBySpecificProps {
   selectedCreatedBy?: any;
@@ -89,9 +90,17 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
         <View style={{ flex: 1 }}>
           <Text.BodyM numberOfLines={1} color={colors.neutral60}>{`${getTextNameUserDisplay(item)}`}</Text.BodyM>
         </View>
+        <VerifiedView size={12} isVerified={item?.isVerified} />
       </View>
       {
-        item?.id === selectedCreatedBy?.id && <Icon testID={`filter_create_by_specific.check_${item?.id}`} style={styles.check} icon="CircleCheckSolid" tintColor={colors.blue50} />
+        item?.id === selectedCreatedBy?.id && (
+        <Icon
+          testID={`filter_create_by_specific.check_${item?.id}`}
+          style={styles.check}
+          icon="CircleCheckSolid"
+          tintColor={colors.blue50}
+        />
+        )
       }
     </Button>
   );

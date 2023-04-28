@@ -12,6 +12,7 @@ import Image from '~/beinComponents/Image';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { borderRadius } from '~/theme/spacing';
 import { spacing } from '~/theme';
+import VerifiedView from '~/components/VerifiedView';
 
 interface ContentArticleProps {
     id: string;
@@ -29,7 +30,7 @@ const ContentArticle: React.FC<ContentArticleProps> = ({
   const theme = useTheme();
   const { colors } = theme;
   const { url } = coverMedia || {};
-  const { avatar, fullname } = actor || {};
+  const { avatar, fullname, isVerified } = actor || {};
   const { rootNavigation } = useRootNavigation();
 
   const onPressActor = () => {
@@ -66,6 +67,7 @@ const ContentArticle: React.FC<ContentArticleProps> = ({
             <Text.BodyS color={colors.neutral60} numberOfLines={1}>
               {fullname}
             </Text.BodyS>
+            <VerifiedView size={12} isVerified={isVerified} />
           </View>
         </Button>
       </View>
@@ -103,7 +105,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   boxFullName: {
-    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 
