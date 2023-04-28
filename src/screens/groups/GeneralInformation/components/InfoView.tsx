@@ -47,8 +47,8 @@ const InfoView = ({
 
   const isPrivatePrivacy = privacy === CommunityPrivacyType.PRIVATE
   || privacy === GroupPrivacyType.PRIVATE;
-  const isSecretPrivacy = privacy === CommunityPrivacyType.SECRET
-    || privacy === GroupPrivacyType.SECRET;
+
+  const isSecretPrivacy = privacy === GroupPrivacyType.SECRET;
 
   const privateCheckboxType = isJoinApproval ? 'disabled-auto-selected' : 'disabled';
 

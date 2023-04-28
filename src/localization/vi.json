@@ -395,7 +395,6 @@
     "title_private_subtitle_community": "Cộng đồng có thể nhìn thấy và truy cập được đối với những người không phải là thành viên chưa tham gia. Tuy nhiên, tất cả nội dung & hoạt động bên trong đều không hiển thị và có thể truy cập được đối với những người không phải là thành viên.",
     "title_private_subtitle_group": "Nhóm có thể nhìn thấy và truy cập được đối với những người không phải là thành viên và thành viên cộng đồng. Tất cả nội dung & hoạt động bên trong đều không hiển thị và có thể truy cập được đối với tất cả các loại thành viên.",
     "title_secret": "Bí mật",
-    "title_secret_subtitle_community": "Những người dùng đã đăng nhập không thể khám phá và tìm kiếm cộng đồng này trong ứng dụng. Nội dung và hoạt động sẽ không được hiển thị cho tất cả người dùng.",
     "title_secret_subtitle_group": "Nhóm không hiển thị và không thể truy cập đối với những người không phải là thành viên và thành viên cộng đồng. Tất cả nội dung & hoạt động bên trong đều không hiển thị và cũng không thể truy cập được đối với tất cả các loại thành viên.",
     "title_closed": "Đóng",
     "title_closed_subtitle_group": "Nhóm có thể nhìn thấy và truy cập được đối với những người không phải là thành viên và thành viên cộng đồng. Tuy nhiên, tất cả nội dung & hoạt động bên trong chỉ các thành viên cộng đồng mới có thể nhìn thấy và truy cập được.",
@@ -491,6 +490,7 @@
     "title_blocked_users_list_empty": "Danh sách người dùng bị chặn trống",
     "text_blocked_users_list_empty": "Không tìm thấy người dùng",
     "text_blocked_at": "Đã chặn",
+    "title_privacy": "Bảo mật",
     "toast_profile_is_verified": "Hồ sơ này đã được xác minh",
     "text_profile_is_verified": "Thông tin của bạn đã được xác minh và không thể chỉnh sửa"
   },
