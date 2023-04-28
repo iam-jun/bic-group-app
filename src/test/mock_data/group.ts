@@ -4,7 +4,7 @@ import { POST_DETAIL } from './post';
 
 export const groupDetailData: IGroupDetail = {
   group: {
-    id: '1',
+    id: '0f5c4bb8-323b-41ee-8aed-b064fecf492b',
     parentId: undefined,
     name: 'EVOL Community',
     slug: 'evol-community-1641809088',
@@ -332,3 +332,45 @@ export const GROUP_ASSIGNMENTS = {
     },
   ],
 };
+
+export const MEMBERSHIP_QUESITONS = [
+  {
+    id: 'string 1',
+    groupId: ' 1',
+    question: '1. What is the cross with the loop at the top?',
+    isRequired: true,
+    createdAt: 'string',
+    updatedAt: 'string',
+  },
+  {
+    id: 'string 2',
+    groupId: ' 1',
+    question: '2. What is the best courses to do after MBA marketing? What is the best courses to do after MBA marketing? What is the best courses to do after MBA marketing? What is the best courses to do after MBA marketing?',
+    isRequired: false,
+    createdAt: 'string',
+    updatedAt: 'string',
+  },
+  {
+    id: 'string 3',
+    groupId: ' 1',
+    question: '3. What is the cross with the loop at the top?',
+    isRequired: false,
+    createdAt: 'string',
+    updatedAt: 'string',
+  },
+  {
+    id: 'string 4',
+    groupId: ' 1',
+    question: '4. What is the cross with the loop at the top?',
+    isRequired: false,
+    createdAt: 'string',
+    updatedAt: 'string',
+  }, {
+    id: 'string 5',
+    groupId: ' 1',
+    question: '5. What is the cross with the loop at the top?',
+    isRequired: false,
+    createdAt: 'string',
+    updatedAt: 'string',
+  },
+];

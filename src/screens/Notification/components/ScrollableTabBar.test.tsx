@@ -26,9 +26,10 @@ describe('ScrollableTabBar component', () => {
     const filterComponent = rendered.queryByTestId('notification.filter');
     expect(filterComponent).toBeDefined();
 
-    const filterItems = rendered.getAllByTestId('notification.filter.item');
-    expect(filterItems).toBeDefined();
-    expect(filterItems.length).toEqual(notificationMenuData.length);
+    notificationMenuData.forEach((item) => {
+      const itemComp = rendered.getByTestId(`notification.filter.item_${item?.text}`);
+      expect(itemComp).toBeDefined();
+    });
 
     const scrollViewContainerComponent = rendered.queryByTestId('notification.list_container');
     expect(scrollViewContainerComponent).toBeDefined();
@@ -92,11 +93,15 @@ describe('ScrollableTabBar component', () => {
     const filterComponent = rendered.queryByTestId('notification.filter');
     expect(filterComponent).toBeDefined();
 
-    const filterItems = rendered.getAllByTestId('notification.filter.item');
-    expect(filterItems).toBeDefined();
-    expect(filterItems.length).toEqual(notificationMenuData.length);
+    const filterItemsComp = [];
+    notificationMenuData.forEach((item) => {
+      const itemComp = rendered.getByTestId(`notification.filter.item_${item?.text}`);
+      expect(itemComp).toBeDefined();
 
-    fireEvent.press(filterItems[1]);
+      filterItemsComp.push(itemComp);
+    });
+
+    fireEvent.press(filterItemsComp[1]);
     expect(onPressFilterItem).toHaveBeenCalled();
   });
 });

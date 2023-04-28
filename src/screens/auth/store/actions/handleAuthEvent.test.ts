@@ -1,4 +1,5 @@
 import { Auth } from 'aws-amplify';
+import { groupsApiConfig } from '~/api/GroupApi';
 import useAuthController from '~/screens/auth/store';
 import { amplifyUser, authUser } from '~/test/mock_data/auth';
 import { act, renderHook } from '~/test/testUtils';
@@ -8,6 +9,13 @@ describe('handleAuthEvent', () => {
 
   it('should handle signIn saving auth user', () => {
     jest.useFakeTimers();
+
+    const response = { data: { data: { id: 'test' } } };
+    jest.spyOn(groupsApiConfig, 'getUserProfile').mockImplementation(
+      () => Promise.resolve(response) as any,
+    );
+
+    const expectAuthUser = { ...authUser, userId: undefined };
     Auth.currentAuthenticatedUser = jest.fn().mockImplementation(() => new Promise((resolve, _reject) => {
       resolve(amplifyUser);
     }));
@@ -23,6 +31,6 @@ describe('handleAuthEvent', () => {
       jest.runAllTimers();
     });
 
-    expect(result.current.authUser).toEqual(authUser);
+    expect(result.current.authUser).toEqual(expectAuthUser);
   });
 });

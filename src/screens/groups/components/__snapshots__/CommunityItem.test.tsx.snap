@@ -111,22 +111,34 @@ exports[`CommunitItem component should render data correctly 1`] = `
         }
       }
     >
-      <Text
-        numberOfLines={2}
+      <View
         style={
-          Array [
-            Object {
-              "color": "#181C32",
-              "fontFamily": "BeVietnamPro-SemiBold",
-              "fontSize": 15,
-            },
-            Object {},
-            undefined,
-          ]
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+          }
         }
       >
-        EVOL Community
-      </Text>
+        <Text
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 15,
+              },
+              Object {},
+              Object {
+                "flexShrink": 1,
+              },
+            ]
+          }
+          testID="primary_item.title"
+        >
+          EVOL Community
+        </Text>
+      </View>
       <View
         style={
           Object {

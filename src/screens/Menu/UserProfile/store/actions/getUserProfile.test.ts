@@ -1,6 +1,6 @@
 import groupApi from '~/api/GroupApi';
 import { IGetUserProfile } from '~/interfaces/IAuth';
-import { mapProfile } from '~/storeRedux/menu/helper';
+import { mapProfile } from '~/helpers/common';
 import { act, renderHook } from '~/test/testUtils';
 import useUserProfileStore from '../index';
 import { responseGetUserProfile } from '../__mocks__/data';

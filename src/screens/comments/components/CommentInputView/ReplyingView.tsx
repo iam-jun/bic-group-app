@@ -1,23 +1,19 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import i18next from 'i18next';
-import { useKeySelector } from '~/hooks/selector';
 import { IPayloadReplying } from '~/interfaces/IPost';
 
-import postKeySelector from '../../../../storeRedux/post/keySelector';
-
 import Text from '~/baseComponents/Text';
-import postActions from '../../../../storeRedux/post/actions';
 import { useUserIdAuth } from '~/hooks/auth';
 import spacing from '~/theme/spacing';
 import useCommentInputStore from './store';
 import ICommentInputState from './store/Interface';
+import usePostsStore from '~/store/entities/posts';
 
 const ReplyingView = () => {
-  const dispatch = useDispatch();
-  const replying: IPayloadReplying = useKeySelector(postKeySelector.replyingComment);
+  const postActions = usePostsStore((state) => state.actions);
+  const replying: IPayloadReplying = usePostsStore((state) => state.replyingComment);
 
   const userId = useUserIdAuth();
 
@@ -38,7 +34,7 @@ const ReplyingView = () => {
   }
 
   const onPress = () => {
-    !loading && dispatch(postActions.setPostDetailReplyingComment());
+    !loading && postActions.setPostDetailReplyingComment();
   };
 
   return (

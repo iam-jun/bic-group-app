@@ -934,6 +934,7 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
               }
               collapsable={false}
               entering={[Function]}
+              testID="article_format_toolbar"
             >
               <View
                 style={
@@ -972,7 +973,7 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                       "padding": 6,
                     }
                   }
-                  testID="button_wrapper"
+                  testID="article_format_toolbar.btn_icon"
                 >
                   <View
                     accessibilityState={
@@ -1069,7 +1070,7 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                       "padding": 6,
                     }
                   }
-                  testID="button_wrapper"
+                  testID="article_format_toolbar.btn_paragraph"
                 >
                   <View
                     accessibilityState={
@@ -1316,7 +1317,9 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                         ]
                       }
                     >
-                      <View />
+                      <View
+                        testID="article_format_toolbar.btn_image"
+                      />
                     </View>
                   </View>
                 </View>
@@ -1376,7 +1379,9 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                         ]
                       }
                     >
-                      <View />
+                      <View
+                        testID="article_format_toolbar.btn_embed"
+                      />
                     </View>
                   </View>
                 </View>
@@ -1543,7 +1548,9 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                         ]
                       }
                     >
-                      <View />
+                      <View
+                        testID="article_format_toolbar.btn_link"
+                      />
                     </View>
                   </View>
                 </View>
@@ -1603,6 +1610,8 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                         }
                         collapsable={false}
                         forwardedRef={[Function]}
+                        handlerTag={1}
+                        handlerType="PanGestureHandler"
                         onGestureHandlerEvent={[Function]}
                         style={
                           Object {

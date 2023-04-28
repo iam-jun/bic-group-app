@@ -66,7 +66,7 @@ const MyDraft = () => {
   };
 
   return (
-    <ButtonWrapper onPress={goToDraftPost} style={styles.container}>
+    <ButtonWrapper onPress={goToDraftPost} style={styles.container} testID="my_draft">
       <Text.BodyM color={colors.neutral60} style={styles.flex1} useI18n>
         home:create_content_options:my_draft
       </Text.BodyM>

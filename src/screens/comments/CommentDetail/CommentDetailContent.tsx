@@ -6,13 +6,11 @@ import {
   FlatList, RefreshControl, StyleSheet, View,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import CommentItem from '~/beinComponents/list/items/CommentItem';
 import CommentViewPlaceholder from '~/beinComponents/placeholder/CommentViewPlaceholder';
 import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
-import { useKeySelector } from '~/hooks/selector';
 import { IAudienceGroup, ICommentData } from '~/interfaces/IPost';
 import useCommentsStore from '~/store/entities/comments';
 import commentsSelector from '~/store/entities/comments/selectors';
@@ -20,8 +18,6 @@ import usePostsStore, { IPostsState } from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 
 import CommentInputView from '~/screens/comments/components/CommentInputView';
-import postActions from '~/storeRedux/post/actions';
-import postKeySelector from '~/storeRedux/post/keySelector';
 import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -46,13 +42,13 @@ const CommentDetailContent = (props: any) => {
   const styles = createStyle(theme);
 
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
   const { rootNavigation, goHome } = useRootNavigation();
 
   const commentDetailController = useCommentDetailController(
     (state) => state.actions,
   );
   const { showToast, showAlert } = useModalStore((state) => state.actions);
+  const postActions = usePostsStore((state) => state.actions);
 
   const listRef = useRef<any>();
   const commentInputRef = useRef<any>();
@@ -93,11 +89,9 @@ const CommentDetailContent = (props: any) => {
     notFoundComment,
   } = getListChildComment(comments, parentId || commentId);
 
-  const scrollToCommentsPosition = useKeySelector(
-    postKeySelector.scrollToCommentsPosition,
-  );
+  const scrollToCommentsPosition = usePostsStore((state) => state.scrollToCommentsPosition);
 
-  const copyCommentError = useKeySelector(postKeySelector.commentErrorCode);
+  const copyCommentError = usePostsStore((state) => state.commentErrorCode);
 
   const headerTitle = t(getTitle(type), {
     name: actor?.fullname || '',
@@ -131,7 +125,7 @@ const CommentDetailContent = (props: any) => {
       rootNavigation.popToTop();
     }
     if (!postDetailLoadingState && !copyCommentError) {
-      dispatch(postActions.setScrollCommentsPosition(null));
+      postActions.setScrollCommentsPosition(null);
       commentDetailController.getCommentDetail({
         commentId,
         params: { postId },
@@ -139,12 +133,10 @@ const CommentDetailContent = (props: any) => {
         callbackLoading: (loading: boolean) => {
           setLoading(loading);
           if (!loading && !!replyItem) {
-            dispatch(
-              postActions.setPostDetailReplyingComment({
-                comment: replyItem,
-                parentComment: commentParent,
-              }),
-            );
+            postActions.setPostDetailReplyingComment({
+              comment: replyItem,
+              parentComment: commentParent,
+            });
           }
         },
       });
@@ -169,7 +161,7 @@ const CommentDetailContent = (props: any) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       if (scrollToCommentsPosition?.position === 'top') {
-        dispatch(postActions.setScrollCommentsPosition(null));
+        postActions.setScrollCommentsPosition(null);
       } else if (scrollToCommentsPosition?.position === 'bottom') {
         scrollToIndex();
       } else if (!!parentId && childrenComments?.length > 0 && !isScrollFirst) {
@@ -192,7 +184,7 @@ const CommentDetailContent = (props: any) => {
         animated: true,
         index: index || (position > 0 ? position : 0),
       });
-      dispatch(postActions.setScrollCommentsPosition(null));
+      postActions.setScrollCommentsPosition(null);
     } catch (error) {
       // scroll to the first comment to avoid scroll error
       listRef.current?.scrollToOffset?.({ animated: true, offset: 0 });

@@ -11,7 +11,7 @@ import { IAuthState } from '~/screens/auth/store';
 import useCommonController from '~/screens/store';
 import { getUserFromSharedPreferences, saveUserToSharedPreferences } from '~/services/sharePreferences';
 import useModalStore from '~/store/modal';
-import { mapProfile } from '~/storeRedux/menu/helper';
+import { mapProfile } from '~/helpers/common';
 import { timeOut } from '~/utils/common';
 
 const navigation = withNavigation(rootNavigationRef);

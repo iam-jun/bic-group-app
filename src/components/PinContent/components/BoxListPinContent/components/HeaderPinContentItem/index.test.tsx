@@ -31,7 +31,7 @@ describe('HeaderPinContentItem component', () => {
         id="1"
       />,
     );
-    const unpinButton = rendered.queryByTestId('header_pin_content_item.unpin_button');
+    const unpinButton = rendered.queryByTestId('header_pin_content_item.menu_button');
     expect(unpinButton).toBeDefined();
     fireEvent.press(unpinButton);
     expect(showBottomList).toBeCalled();

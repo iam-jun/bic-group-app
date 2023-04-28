@@ -36,6 +36,8 @@ exports[`SearchResult component should render empty search result 1`] = `
           "paddingTop": 8,
         }
       }
+      handlerTag={1}
+      handlerType="NativeViewGestureHandler"
       horizontal={true}
       onGestureHandlerEvent={[Function]}
       onGestureHandlerStateChange={[Function]}
@@ -45,6 +47,13 @@ exports[`SearchResult component should render empty search result 1`] = `
           "backgroundColor": "#FFFFFF",
           "width": 750,
         }
+      }
+      waitFor={
+        Array [
+          Object {
+            "current": null,
+          },
+        ]
       }
     >
       <View>
@@ -693,7 +702,8 @@ exports[`SearchResult component should render empty search result 1`] = `
                   onStartShouldSetResponder={[Function]}
                   style={
                     Object {
-                      "alignSelf": "flex-start",
+                      "alignItems": "center",
+                      "flexDirection": "row",
                       "marginRight": 12,
                       "opacity": 1,
                     }
@@ -712,7 +722,9 @@ exports[`SearchResult component should render empty search result 1`] = `
                         Object {
                           "color": "#181C32",
                         },
-                        undefined,
+                        Object {
+                          "flexShrink": 1,
+                        },
                       ]
                     }
                     testID="content_header.actor"
@@ -796,9 +808,7 @@ exports[`SearchResult component should render empty search result 1`] = `
                   </Text>
                 </View>
               </View>
-              <View
-                style={Object {}}
-              >
+              <View>
                 <View
                   accessible={true}
                   focusable={true}
@@ -1233,6 +1243,8 @@ exports[`SearchResult component should render list search result 1`] = `
           "paddingTop": 8,
         }
       }
+      handlerTag={2}
+      handlerType="NativeViewGestureHandler"
       horizontal={true}
       onGestureHandlerEvent={[Function]}
       onGestureHandlerStateChange={[Function]}
@@ -1242,6 +1254,13 @@ exports[`SearchResult component should render list search result 1`] = `
           "backgroundColor": "#FFFFFF",
           "width": 750,
         }
+      }
+      waitFor={
+        Array [
+          Object {
+            "current": null,
+          },
+        ]
       }
     >
       <View>
@@ -1890,7 +1909,8 @@ exports[`SearchResult component should render list search result 1`] = `
                   onStartShouldSetResponder={[Function]}
                   style={
                     Object {
-                      "alignSelf": "flex-start",
+                      "alignItems": "center",
+                      "flexDirection": "row",
                       "marginRight": 12,
                       "opacity": 1,
                     }
@@ -1909,7 +1929,9 @@ exports[`SearchResult component should render list search result 1`] = `
                         Object {
                           "color": "#181C32",
                         },
-                        undefined,
+                        Object {
+                          "flexShrink": 1,
+                        },
                       ]
                     }
                     testID="content_header.actor"
@@ -1993,9 +2015,7 @@ exports[`SearchResult component should render list search result 1`] = `
                   </Text>
                 </View>
               </View>
-              <View
-                style={Object {}}
-              >
+              <View>
                 <View
                   accessible={true}
                   focusable={true}

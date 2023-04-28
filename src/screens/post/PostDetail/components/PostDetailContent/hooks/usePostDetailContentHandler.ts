@@ -1,18 +1,15 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { DeviceEventEmitter } from 'react-native';
-import { useDispatch } from 'react-redux';
 import { useRootNavigation } from '~/hooks/navigation';
-import { useKeySelector } from '~/hooks/selector';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import postActions from '~/storeRedux/post/actions';
-import postKeySelector from '~/storeRedux/post/keySelector';
+import usePostsStore from '~/store/entities/posts';
 
 const usePostDetailContentHandler = ({
   postId, comments, sectionData, focusComment, listRef, commentInputRef,
 }) => {
   const { rootNavigation } = useRootNavigation();
-  const dispatch = useDispatch();
-  const scrollToLatestItem = useKeySelector(postKeySelector.scrollToLatestItem);
+  const scrollToLatestItem = usePostsStore((state) => state.scrollToLatestItem);
+  const postActions = usePostsStore((state) => state.actions);
 
   const countRetryScrollToBottom = useRef(0);
   const layoutSet = useRef(false);
@@ -20,7 +17,7 @@ const usePostDetailContentHandler = ({
   useEffect(() => {
     if (scrollToLatestItem) {
       onCommentSuccess(scrollToLatestItem);
-      dispatch(postActions.setScrollToLatestItem(null));
+      postActions.setScrollToLatestItem(null);
     }
   }, [scrollToLatestItem]);
 

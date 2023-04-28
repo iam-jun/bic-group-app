@@ -1,9 +1,3 @@
-import { postInitState } from '~/storeRedux/post/reducer';
-import { groupInitState } from '~/storeRedux/groups/reducer';
-
-const initialState = {
-  post: postInitState,
-  groups: groupInitState,
-};
+const initialState = {};
 
 export default initialState;

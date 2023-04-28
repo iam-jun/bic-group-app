@@ -1,3 +1,5 @@
+import { PostType } from '~/interfaces/IPost';
+
 export const mockSeries = {
   owner_reactions: [],
   id: '5264f1b3-c8b8-428a-9fb8-7f075f03d0c8',
@@ -175,6 +177,7 @@ export const listArticle = [
       email: 'bicnoticebot2@mailinator.com',
     },
     updatedAt: '2022-11-03T07:36:28.870Z',
+    type: PostType.ARTICLE,
   },
   {
     id: '2',
@@ -193,6 +196,7 @@ export const listArticle = [
       email: 'bicnoticebot2@mailinator.com',
     },
     updatedAt: '2022-11-03T07:36:28.870Z',
+    type: PostType.POST,
   },
   {
     id: '3',

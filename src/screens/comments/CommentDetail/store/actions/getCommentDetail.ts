@@ -4,10 +4,8 @@ import { IPayloadAddToAllPost, IPayloadGetCommentsById } from '~/interfaces/IPos
 import streamApi from '~/api/StreamApi';
 import useCommentsStore from '~/store/entities/comments';
 import usePostsStore from '~/store/entities/posts';
-import postActions from '~/storeRedux/post/actions';
 import APIErrorCode from '~/constants/apiErrorCode';
 import showToastError from '~/store/helper/showToastError';
-import Store from '~/storeRedux';
 import { sortComments } from '~/helpers/post';
 import { TargetType } from '~/interfaces/IReport';
 import { getReportContent } from '~/helpers/common';
@@ -59,7 +57,7 @@ const getCommentDetail = (_set, _get) => async (payload: IPayloadGetCommentsById
       || e?.code === APIErrorCode.Post.COPIED_COMMENT_IS_DELETED
       || e?.code === APIErrorCode.Post.POST_DELETED
     ) {
-      Store.store.dispatch(postActions.setCommentErrorCode(e.code));
+      usePostsStore.getState().actions.setCommentErrorCode(e.code);
     } else {
       showToastError(e);
     }
