@@ -216,7 +216,7 @@ exports[`CreateArticleCover should render correctly if cover is empty 1`] = `
               ]
             }
           >
-            Select File
+            + Add cover
           </Text>
         </View>
       </View>

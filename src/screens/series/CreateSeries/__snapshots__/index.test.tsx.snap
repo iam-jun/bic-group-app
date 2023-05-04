@@ -432,7 +432,7 @@ exports[`CreateSeries component renders correctly without data 1`] = `
         ]
       }
     >
-      Post to 
+      Publish to 
       <Text
         style={
           Array [
@@ -643,7 +643,7 @@ exports[`CreateSeries component renders correctly without data 1`] = `
                 ]
               }
             >
-              Add a cover
+              + Add cover
             </Text>
           </View>
         </View>

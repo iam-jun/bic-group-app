@@ -268,7 +268,7 @@ exports[`SeriesDetailHeader component render with description view 1`] = `
           ]
         }
       >
-        Audiences:
+        Communities / Groups:
       </Text>
       <View
         style={
@@ -726,7 +726,7 @@ exports[`SeriesDetailHeader component render without description view 1`] = `
           ]
         }
       >
-        Audiences:
+        Communities / Groups:
       </Text>
       <View
         style={

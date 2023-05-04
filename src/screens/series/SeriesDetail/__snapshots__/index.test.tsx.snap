@@ -560,7 +560,7 @@ exports[`SeriesDetail component renders correctly 1`] = `
                   ]
                 }
               >
-                Audiences:
+                Communities / Groups:
               </Text>
               <View
                 style={
