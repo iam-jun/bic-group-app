@@ -795,7 +795,10 @@
       "text_discard_change_audience": "Bạn có chắc muốn đổi đối tượng? Thay đổi này đồng thời sẽ ảnh hưởng tới quyền của bài viết",
       "btn_save_change": "Lưu thay đổi",
       "btn_keep_edit": "Tiếp tục sửa",
-      "btn_keep_selecting": "Tiếp tục chọn"
+      "btn_keep_selecting": "Tiếp tục chọn",
+      "preview_image": "Xem trước",
+      "edit": "Chỉnh sửa",
+      "remove_all_image": "Xóa tất cả"
     },
     "draft": {
       "title_draft": "Nháp",

@@ -1,26 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
+import * as _ from 'lodash';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import UploadingImage from '~/beinComponents/UploadingImage';
+import { Button } from '~/baseComponents';
+import PostPhotoPreview from '~/components/posts/PostPhotoPreview';
 import { ResourceUploadType } from '~/interfaces/IUpload';
 import { ICreatePostImage } from '~/interfaces/IPost';
 import dimension from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
-import { IGetFile } from '~/store/uploader';
+import useUploaderStore, { IGetFile } from '~/store/uploader';
 import useCreatePostStore from '../store';
 import { borderRadius } from '~/theme/spacing';
+import { useBaseHook } from '~/hooks';
 
 const DeviceWidth = dimension.deviceWidth;
-const WidthImageWithPadding = DeviceWidth - 32;
+const WidthImageWithPadding = DeviceWidth - 48;
 const MaxNewsFeedWidth = dimension.maxNewsfeedWidth;
 
 const PostSelectImage = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
+  const { t } = useBaseHook();
+  const [isShowPreview, setShowPreview] = useState(false);
 
   const selectedImages = useCreatePostStore((state) => state.createPost.images || []);
   const createPostStoreActions = useCreatePostStore((state) => state.actions);
+  const uploadedImage = useUploaderStore((state) => state.uploadedFiles);
+  const uploadImageActions = useUploaderStore((state) => state.actions);
+  const imagePreviews = getImagePreview(uploadedImage, selectedImages);
 
   const onUploadSuccess = (
     file: IGetFile,
@@ -46,6 +55,35 @@ const PostSelectImage = () => {
     createPostStoreActions.updateCreatePost({ images: newList });
   };
 
+  const onPressPreview = () => {
+    setShowPreview(!isShowPreview);
+  }
+
+  const onPressRemoveAll = () => {
+    uploadImageActions.cancelAllFiles();
+  };
+
+  const renderRowButton = () => {
+    return (
+      <View style={[isShowPreview ? styles.rowBtnFloat : styles.rowBtn]}>
+        <Button.Neutral
+          type="ghost"
+          useI18n
+          onPress={onPressPreview}
+        >
+          {isShowPreview ? t('post:create_post:edit') : t('post:create_post:preview_image')}
+        </Button.Neutral>
+        <Button.Neutral
+          type="ghost"
+          useI18n
+          onPress={onPressRemoveAll}
+        >
+          post:create_post:remove_all_image
+        </Button.Neutral>
+      </View>
+    );
+  };
+
   const renderItem = (item, index) => {
     const { file, fileName, url } = item || {};
     const { width = 1, height = 1 } = file || {};
@@ -57,7 +95,8 @@ const PostSelectImage = () => {
       <UploadingImage
         key={`create_post_image_${index}_${item?.fileName}`}
         uploadType={ResourceUploadType.postContent}
-        style={[styles.item, !lastItem && styles.mbLarge]}
+        style={[styles.item, !lastItem && styles.mbSmall]}
+        styleError={[!lastItem && styles.mbSmall]}
         file={file}
         fileName={fileName}
         url={url}
@@ -67,7 +106,29 @@ const PostSelectImage = () => {
         onPressRemove={() => onPressRemoveImage(
           item, index,
         )}
+        showThumbnail
       />
+    );
+  };
+
+  const renderContent = () => {
+    if (isShowPreview) {
+      return (
+        <View style={styles.boxPreviewImg}>
+          {renderRowButton()}
+          <PostPhotoPreview
+            data={imagePreviews}
+            uploadType={ResourceUploadType.postContent}
+          />
+        </View>
+      )
+    }
+
+    return (
+      <View style={styles.boxListImage}>
+        {renderRowButton()}
+        {selectedImages?.map?.(renderItem)}
+      </View>
     );
   };
 
@@ -75,9 +136,7 @@ const PostSelectImage = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.boxListImage}>
-        {selectedImages?.map?.(renderItem)}
-      </View>
+      {renderContent()}
     </View>
   );
 };
@@ -99,10 +158,45 @@ const createStyle = (theme: ExtendedTheme) => {
     item: {
       alignSelf: 'center',
     },
-    mbLarge: {
-      marginBottom: spacing.margin.large,
+    mbSmall: {
+      marginBottom: spacing.margin.small,
+    },
+    rowBtn: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: spacing.margin.small,
+    },
+    rowBtnFloat: {
+      width: '100%',
+      paddingTop: spacing.padding.base,
+      paddingHorizontal: spacing.padding.large,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      zIndex: 1,
+    },
+    boxPreviewImg: {
+      marginHorizontal: -spacing.padding.large,
     },
   });
 };
 
 export default PostSelectImage;
+
+const getImagePreview = (uploadedImg, selectedImgs) => {
+  let result = [];
+
+  selectedImgs.forEach((item) => {
+    if (_.has(uploadedImg, item?.fileName)) {
+      result.push({
+        ...uploadedImg?.[item?.fileName],
+        width: uploadedImg?.[item?.fileName]?.result?.properties?.width || 1,
+        height: uploadedImg?.[item?.fileName]?.result?.properties?.height || 1,
+      });
+    }
+  });
+
+  return result;
+};

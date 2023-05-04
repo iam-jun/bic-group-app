@@ -832,7 +832,10 @@
       "text_discard_change_audience": "Are you sure to change the audience? This change will also effect on post's permission",
       "btn_save_change": "Save Changes",
       "btn_keep_edit": "Keep Editing",
-      "btn_keep_selecting": "Keep Selecting"
+      "btn_keep_selecting": "Keep Selecting",
+      "preview_image": "Preview",
+      "edit": "Edit",
+      "remove_all_image": "Remove all"
     },
     "draft": {
       "title_draft": "Draft",
