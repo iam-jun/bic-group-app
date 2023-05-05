@@ -28,8 +28,11 @@ const PostSelectImage = () => {
   const selectedImages = useCreatePostStore((state) => state.createPost.images || []);
   const createPostStoreActions = useCreatePostStore((state) => state.actions);
   const uploadedImage = useUploaderStore((state) => state.uploadedFiles);
-  const uploadImageActions = useUploaderStore((state) => state.actions);
+  const uploadingImage = useUploaderStore((state) => state.uploadingFiles);
+  const resetUploadStore = useUploaderStore((state) => state.reset);
+
   const imagePreviews = getImagePreview(uploadedImage, selectedImages);
+  const hasUploadingProcess = Object.keys(uploadingImage).length > 0;
 
   const onUploadSuccess = (
     file: IGetFile,
@@ -38,7 +41,7 @@ const PostSelectImage = () => {
     console.log(`\x1b[36m🐣️ index onUploadSuccess ${file?.name}: ${file?.url}\x1b[0m`);
 
     const newList = selectedImages.map((selectImage) => (selectImage?.file?.name === file?.name
-      ? { ...selectImage, uploading: false }
+      ? { ...selectImage, uploading: false, url: file?.url, id: file?.id }
       : selectImage
     ));
 
@@ -55,15 +58,18 @@ const PostSelectImage = () => {
     createPostStoreActions.updateCreatePost({ images: newList });
   };
 
+  const onPressRemoveAll = () => {
+    resetUploadStore();
+    createPostStoreActions.updateCreatePost({ images: [] });
+  };
+
   const onPressPreview = () => {
     setShowPreview(!isShowPreview);
   }
 
-  const onPressRemoveAll = () => {
-    uploadImageActions.cancelAllFiles();
-  };
-
   const renderRowButton = () => {
+    if (hasUploadingProcess || imagePreviews?.length === 0) return null;
+
     return (
       <View style={[isShowPreview ? styles.rowBtnFloat : styles.rowBtn]}>
         <Button.Neutral
@@ -189,11 +195,17 @@ const getImagePreview = (uploadedImg, selectedImgs) => {
   let result = [];
 
   selectedImgs.forEach((item) => {
-    if (_.has(uploadedImg, item?.fileName)) {
+    if (item?.url) {
+      result.push({
+        ...item,
+        width: item?.file?.width || 1,
+        height: item?.file?.height || 1,
+      });
+    } else if (_.has(uploadedImg, item?.fileName)) {
       result.push({
         ...uploadedImg?.[item?.fileName],
-        width: uploadedImg?.[item?.fileName]?.result?.properties?.width || 1,
-        height: uploadedImg?.[item?.fileName]?.result?.properties?.height || 1,
+        width: item?.file?.width || 1,
+        height: item?.file?.height || 1,
       });
     }
   });

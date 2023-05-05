@@ -63,6 +63,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
   const [error, setError] = useState('');
 
   useEffect(() => {
+    console.log('error 123: ', uploadError)
     if (uploadError) {
       const errorMessage = typeof uploadError === 'string' ? uploadError : t('post:error_upload_photo_failed');
       setError(errorMessage);
@@ -241,14 +242,12 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     thumbnailLoading: {
       position: 'absolute',
-      zIndex: 1,
       top: 0,
       width: '100%',
       height: '100%',
     },
     mask: {
       position: 'absolute',
-      zIndex: 2,
       top: 0,
       width: '100%',
       height: '100%',
