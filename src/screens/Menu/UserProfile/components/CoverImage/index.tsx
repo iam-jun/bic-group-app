@@ -18,7 +18,7 @@ const CoverImage = ({
   <View testID="user_profile.cover_image">
     <Image
       width={dimension.deviceWidth}
-      style={[styles.cover, { height: (coverHeight * 2) / 3 }]}
+      style={{ height: (coverHeight * 2) / 3 }}
       source={bgImg || images.img_cover_default}
       usePixelWidth
     />
@@ -33,9 +33,6 @@ const CoverImage = ({
 );
 
 const styles = StyleSheet.create({
-  cover: {
-    width: '100%',
-  },
   editCoverPhoto: {
     position: 'absolute',
     top: spacing.margin.large,
