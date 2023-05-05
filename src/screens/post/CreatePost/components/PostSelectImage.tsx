@@ -9,10 +9,9 @@ import { ResourceUploadType } from '~/interfaces/IUpload';
 import { ICreatePostImage } from '~/interfaces/IPost';
 import dimension from '~/theme/dimension';
 
-import spacing from '~/theme/spacing';
+import spacing, { borderRadius } from '~/theme/spacing';
 import useUploaderStore, { IGetFile } from '~/store/uploader';
 import useCreatePostStore from '../store';
-import { borderRadius } from '~/theme/spacing';
 import { useBaseHook } from '~/hooks';
 
 const DeviceWidth = dimension.deviceWidth;
@@ -41,7 +40,9 @@ const PostSelectImage = () => {
     console.log(`\x1b[36m🐣️ index onUploadSuccess ${file?.name}: ${file?.url}\x1b[0m`);
 
     const newList = selectedImages.map((selectImage) => (selectImage?.file?.name === file?.name
-      ? { ...selectImage, uploading: false, url: file?.url, id: file?.id }
+      ? {
+        ...selectImage, uploading: false, url: file?.url, id: file?.id,
+      }
       : selectImage
     ));
 
@@ -65,7 +66,7 @@ const PostSelectImage = () => {
 
   const onPressPreview = () => {
     setShowPreview(!isShowPreview);
-  }
+  };
 
   const renderRowButton = () => {
     if (hasUploadingProcess || imagePreviews?.length === 0) return null;
@@ -95,7 +96,7 @@ const PostSelectImage = () => {
     const { width = 1, height = 1 } = file || {};
     const ratio = height / width;
     const dfWidth = Math.min(WidthImageWithPadding, MaxNewsFeedWidth);
-    const lastItem = index === (selectedImages?.length - 1);
+    const lastItem = index === (Number(selectedImages?.length) - 1);
 
     return (
       <UploadingImage
@@ -106,7 +107,7 @@ const PostSelectImage = () => {
         file={file}
         fileName={fileName}
         url={url}
-        width={"100%"}
+        width="100%"
         height={dfWidth * ratio}
         onUploadSuccess={onUploadSuccess}
         onPressRemove={() => onPressRemoveImage(
@@ -127,7 +128,7 @@ const PostSelectImage = () => {
             uploadType={ResourceUploadType.postContent}
           />
         </View>
-      )
+      );
     }
 
     return (
@@ -192,7 +193,7 @@ const createStyle = (theme: ExtendedTheme) => {
 export default PostSelectImage;
 
 const getImagePreviews = (uploadedImg, selectedImgs) => {
-  let result = [];
+  const result = [];
 
   selectedImgs.forEach((item) => {
     if (item?.url) {

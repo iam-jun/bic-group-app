@@ -117,7 +117,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
       actions.cancel(file);
     }
     onPressRemove();
-  }
+  };
 
   const renderRemove = () => {
     if (!onPressRemove) {
@@ -145,7 +145,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
         <View style={[styles.mask, { backgroundColor }]} />
       </View>
     );
-  }
+  };
 
   const renderLoading = () => (
     <View style={styles.contentContainer}>
@@ -155,23 +155,25 @@ const UploadingImage: FC<UploadingImageProps> = ({
   );
 
   const renderErrorContent = () => {
-    if (uploadingFile) return (
-      <LoadingIndicator size="large" color={colors.purple50} />
-    );
+    if (uploadingFile) {
+      return (
+        <LoadingIndicator size="large" color={colors.purple50} />
+      );
+    }
 
     return (
-      <React.Fragment>
+      <>
         <Icon icon="CircleExclamation" tintColor={colors.red40} size={30} />
         <Text.BodyM style={styles.textError}>{error}</Text.BodyM>
         <Button.Primary
-          type='ghost'
+          type="ghost"
           style={styles.btnRetry}
           onPress={() => upload()}
           useI18n
         >
           common:text_retry
         </Button.Primary>
-      </React.Fragment>
+      </>
     );
   };
 

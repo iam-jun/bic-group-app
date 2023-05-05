@@ -294,7 +294,7 @@ export const getErrorMessageFromResponse = (response: any) => {
   if (typeof response === 'string') return response;
   if (response?.message) return response.message;
 
-  const meta = response?.data?.meta || response?.meta ||  {};
+  const meta = response?.data?.meta || response?.meta || {};
   return meta?.errors?.[0]?.message || meta?.message;
 };
 
