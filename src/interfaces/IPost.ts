@@ -4,6 +4,7 @@ import { ICategory } from '~/interfaces/IArticle';
 import { IGiphy } from './IGiphy';
 import { ITag } from './ITag';
 import { IReportDetail } from './IReport';
+import { IGroup } from './IGroup';
 
 export enum PostType {
   POST = 'POST',
@@ -96,6 +97,7 @@ export interface IAudienceUser {
   fullname?: string;
   avatar?: string;
   isDeactivated?: boolean;
+  isVerified?: boolean;
 }
 
 export interface IAudienceGroup {
@@ -623,4 +625,11 @@ export interface ICreatePostTags {
 export interface ICreatePostSeries {
   id?: string;
   title?: string;
+}
+
+export interface IErrorContent {
+  isError?: boolean;
+  code?: string;
+  message?: string;
+  requireGroups?: IGroup[];
 }

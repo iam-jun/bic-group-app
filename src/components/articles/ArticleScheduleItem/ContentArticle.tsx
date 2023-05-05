@@ -5,12 +5,13 @@ import { IArticleCover, IAudienceUser, IPostAudience } from '~/interfaces/IPost'
 import { useRootNavigation } from '~/hooks/navigation';
 import { Avatar, Button } from '~/baseComponents';
 import Text from '~/baseComponents/Text';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import mainTabStack from '~/router/navigator/MainStack/stack';
 import { borderRadius } from '~/theme/spacing';
 import { spacing } from '~/theme';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Audiences from './Audiences';
+import VerifiedView from '~/components/VerifiedView';
 
 interface ContentArticleProps {
     title: string;
@@ -33,7 +34,7 @@ const ContentArticle: React.FC<ContentArticleProps> = ({
   const { colors } = theme;
   const styles = createStyle(theme);
   const { url } = coverMedia || {};
-  const { avatar, fullname } = actor || {};
+  const { avatar, fullname, isVerified } = actor || {};
   const { rootNavigation } = useRootNavigation();
 
   const onPressActor = () => {
@@ -71,6 +72,7 @@ const ContentArticle: React.FC<ContentArticleProps> = ({
               <Text.BodyXSMedium color={colors.neutral60} numberOfLines={1}>
                 {fullname}
               </Text.BodyXSMedium>
+              <VerifiedView size={12} isVerified={isVerified} />
             </View>
           </Button>
         </View>
@@ -111,7 +113,8 @@ const createStyle = (theme: ExtendedTheme) => {
       alignItems: 'center',
     },
     boxFullName: {
-      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
     },
   });
 };

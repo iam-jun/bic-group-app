@@ -8,13 +8,14 @@ import { IPost, PostType } from '~/interfaces/IPost';
 import mainTabStack from '~/router/navigator/MainStack/stack';
 import { spacing } from '~/theme';
 import Text from '~/baseComponents/Text';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import { borderRadius } from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import images from '~/resources/images';
 import DeactivatedView from '~/components/DeactivatedView';
 import { escapeMarkDown } from '~/utils/formatter';
 import { getSummaryPostItemInSeires, getTitlePostItemInSeries } from '~/helpers/common';
+import VerifiedView from '~/components/VerifiedView';
 
 type ContentItemProps = {
   item: IPost;
@@ -26,7 +27,9 @@ const ContentItem: FC<ContentItemProps> = ({
   const {
     actor, coverMedia, summary, content, media,
   } = item || {};
-  const { avatar, fullname, isDeactivated } = actor || {};
+  const {
+    avatar, fullname, isDeactivated, isVerified,
+  } = actor || {};
   const { url } = coverMedia || {};
   const { images: imagesPost } = media || {};
   const coverUrlItem = item?.type === PostType.ARTICLE ? url : imagesPost?.[0]?.url;
@@ -61,9 +64,12 @@ const ContentItem: FC<ContentItemProps> = ({
             <Avatar.Small style={styles.avatar} isRounded source={avatar} />
             <ViewSpacing width={spacing.margin.small} />
             <View style={styles.fullnameContainer}>
-              <Text.BodyXSMedium color={colorFullName} numberOfLines={1}>
-                {fullname}
-              </Text.BodyXSMedium>
+              <View style={styles.fullnameVerifiedContainer}>
+                <Text.BodyXSMedium color={colorFullName} numberOfLines={1}>
+                  {fullname}
+                </Text.BodyXSMedium>
+                <VerifiedView size={12} isVerified={isVerified} />
+              </View>
               {isDeactivated && <DeactivatedView style={styles.deactivatedView} />}
             </View>
           </Button>
@@ -117,6 +123,10 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     deactivatedView: {
       marginTop: spacing.margin.tiny,
+    },
+    fullnameVerifiedContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
     },
   });
 };

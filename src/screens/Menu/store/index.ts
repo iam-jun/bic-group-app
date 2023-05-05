@@ -2,7 +2,6 @@ import { createStore, resetStore } from '~/store/utils';
 import IMenuController from '~/screens/Menu/store/Interface';
 import { IUserWorkExperience } from '~/interfaces/IAuth';
 import editMyProfile from './actions/editMyProfile';
-import uploadImage from './actions/uploadImage';
 import getJoinedCommunities from './actions/getJoinedCommunities';
 
 const initState = {
@@ -16,9 +15,7 @@ const menuController = (set, get) => ({
 
   actions: {
     getJoinedCommunities: getJoinedCommunities(set, get),
-
     editMyProfile: editMyProfile(set, get),
-    uploadImage: uploadImage(set, get),
 
     setSelectedWorkItem: (payload: IUserWorkExperience) => {
       set((state: IMenuController) => {

@@ -3,7 +3,6 @@ import { IconType } from '~/resources/icons';
 export enum CommunityPrivacyType {
   OPEN = 'OPEN',
   PRIVATE = 'PRIVATE',
-  SECRET = 'SECRET'
 }
 
 export enum GroupPrivacyType {
@@ -66,12 +65,5 @@ export const CommunityPrivacyDetail = {
     icon: 'iconPrivate',
     subtitle: 'settings:title_private_subtitle_community',
     privacyTitle: 'settings:privacy_private',
-  },
-  SECRET: {
-    type: CommunityPrivacyType.SECRET,
-    title: 'settings:title_secret',
-    icon: 'iconSecret',
-    subtitle: 'settings:title_secret_subtitle_community',
-    privacyTitle: 'settings:privacy_secret',
   },
 };

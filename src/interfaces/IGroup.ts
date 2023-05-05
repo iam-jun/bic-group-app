@@ -3,7 +3,7 @@ import { IFilePicked } from './common';
 import { ResourceUploadType } from './IUpload';
 import { RoleType } from '~/constants/permissionScheme';
 import { IObject } from '~/interfaces/common';
-import { MembershipAnswer } from './ICommunity';
+import { ICommunity, MembershipAnswer } from './ICommunity';
 
 export interface IRole {
   id?: string;
@@ -70,6 +70,7 @@ export interface IGroup {
   description?: string;
   level?: number;
   parent?: any;
+  community?: ICommunity;
   createdBy?: string;
   icon?: string;
   backgroundImgUrl?: string | null;
@@ -114,7 +115,9 @@ export interface IGroupDetailEdit {
   name?: string;
   description?: string | null;
   icon?: string;
+  [FieldNameImageUpload.ICON]?: string;
   backgroundImgUrl?: string;
+  [FieldNameImageUpload.BACKGROUND_IMG]?: string;
   privacy?: GroupPrivacyType;
 }
 
@@ -142,9 +145,15 @@ export interface IParamGetGroupMembers {
   sort?: string;
 }
 
+export enum FieldNameImageUpload {
+  // Named by field name in API
+  ICON = 'iconId',
+  BACKGROUND_IMG = 'backgroundImgId',
+}
+
 export interface IGroupImageUpload {
   id: string;
-  fieldName: 'icon' | 'backgroundImgUrl';
+  fieldName: FieldNameImageUpload;
   file: IFilePicked;
   uploadType: ResourceUploadType;
   destination: 'group' | 'community';
@@ -194,6 +203,7 @@ export interface IGroupMembers {
   isAdmin?: boolean;
   customRoleIds?: any[];
   roles?: any[];
+  isVerified?: boolean;
 }
 
 export interface IJoiningMember {
@@ -226,6 +236,7 @@ export interface IJoiningUserInfo {
     company: string | null;
     titlePosition: string | null;
   } | null;
+  isVerified?: boolean;
 }
 
 export interface IGetCommunityGroup {

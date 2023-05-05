@@ -73,6 +73,7 @@ const _ReactionDetailTab: FC<ReactionDetailTabProps> = ({
         subTitle={`@${item?.item?.username}`}
         subTitleProps={{ color: colors.neutral40, variant: 'bodyS' }}
         style={{ paddingHorizontal: spacing.padding.large }}
+        isVerified={item?.item?.isVerified}
       />
     );
   };

@@ -33,8 +33,7 @@ const JoinRequestSetting = ({
   const { showAlert } = useModalStore((state) => state.actions);
   const { t } = useBaseHook();
 
-  const isSecretPrivacy = privacy === CommunityPrivacyType.SECRET
-  || privacy === GroupPrivacyType.SECRET;
+  const isSecretPrivacy = privacy === GroupPrivacyType.SECRET;
 
   const settingDescription = isSecretPrivacy
     ? 'communities:join_request_setting:description_disabled'

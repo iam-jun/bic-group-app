@@ -1,8 +1,5 @@
 import groupApi from '~/api/GroupApi';
 import { IToastMessage } from '~/interfaces/common';
-import { withNavigation } from '~/router/helper';
-import { rootNavigationRef } from '~/router/refs';
-import { CommunityPrivacyType } from '~/constants/privacyTypes';
 import useMenuController from '~/screens/Menu/store';
 import useCommunitiesStore from '~/store/entities/communities';
 import useYourCommunitiesStore from '../../Communities/components/YourCommunities/store';
@@ -11,20 +8,13 @@ import useManagedStore from '~/screens/communities/Communities/components/Manage
 import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
-const rootNavigation = withNavigation(rootNavigationRef);
-
 const leaveCommunity = (_set, _get) => async (
   communityId: string,
-  privacy: CommunityPrivacyType,
 ) => {
   try {
     await groupApi.leaveCommunity(communityId);
 
-    if (privacy === CommunityPrivacyType.SECRET) {
-      rootNavigation.popToTop();
-    } else {
-      useCommunitiesStore.getState().actions.getCommunity(communityId);
-    }
+    useCommunitiesStore.getState().actions.getCommunity(communityId);
 
     // refresh list in screen Managed
     useManagedStore.getState().actions.getManaged(true);

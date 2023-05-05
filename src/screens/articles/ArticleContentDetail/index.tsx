@@ -11,6 +11,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { ArticleFooter } from '~/components/articles';
 import ArticleWebview, { ArticleWebviewRef } from '~/components/articles/ArticleWebview';
 import ContentUnavailable from '~/components/ContentUnavailable';
+import ContentNoPermission from '~/components/ContentNoPermission';
 import BannerReport from '~/components/Report/BannerReport';
 import useMounted from '~/hooks/mounted';
 import { IRouteParams } from '~/interfaces/IRouter';
@@ -19,6 +20,7 @@ import postsSelector from '~/store/entities/posts/selectors';
 import { parseSafe } from '~/utils/common';
 import useArticlesStore, { IArticlesState } from '../ArticleDetail/store';
 import { getListImage, handleMessage } from './helper';
+import APIErrorCode from '~/constants/apiErrorCode';
 
 const HEADER_HEIGHT = 244;
 
@@ -33,8 +35,8 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
 
   // Not use useCallback because id change before get new content => data is outdated
   const data = usePostsStore(postsSelector.getPost(id, {}));
-  const { actions, errors } = useArticlesStore((state: IArticlesState) => state);
-  const isFetchError = errors[id];
+  const errorContent = usePostsStore(postsSelector.getErrorContent(id));
+  const { actions } = useArticlesStore((state: IArticlesState) => state);
 
   const [galleryVisible, setGalleryVisible] = useState(false);
   const [listImage, setListImage] = useState([]);
@@ -44,6 +46,8 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
     content, title, summary, coverMedia, createdAt, audience,
     series, categories, actor, setting, reactionsCount, commentsCount, ownerReactions, tags,
   } = data;
+
+  const { isError, code } = errorContent || {};
 
   const initScript = {
     type: 'initView',
@@ -165,7 +169,17 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
     );
   };
 
-  if (isFetchError) {
+  if (isError && (
+    code === APIErrorCode.Post.CONTENT_GROUP_REQUIRED
+    || code === APIErrorCode.Post.ARTICLE_NO_READ_PERMISSION
+  )) {
+    return <ContentNoPermission data={errorContent} />;
+  }
+
+  if (isError && (
+    code !== APIErrorCode.Post.CONTENT_GROUP_REQUIRED
+    || code !== APIErrorCode.Post.ARTICLE_NO_READ_PERMISSION
+  )) {
     return <ContentUnavailable />;
   }
 

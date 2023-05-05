@@ -44,6 +44,7 @@ import useDeleteCommentController from './store';
 import { PlaceHolderRemoveContent } from '~/baseComponents';
 import useModalStore from '~/store/modal';
 import DeactivatedView from '~/components/DeactivatedView';
+import VerifiedView from '~/components/VerifiedView';
 
 export interface CommentViewProps {
   postId: string;
@@ -109,7 +110,9 @@ const _CommentView: React.FC<CommentViewProps> = ({
       }
       : null);
 
-  const { fullname, avatar, isDeactivated } = actor || {};
+  const {
+    fullname, avatar, isDeactivated, isVerified,
+  } = actor || {};
 
   const isActor = currentUserId === actor?.id;
 
@@ -371,6 +374,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
                       >
                         {`${fullname}`}
                       </Text.H5>
+                      <VerifiedView isVerified={isVerified} />
                       {isDeactivated && <DeactivatedView style={styles.deactivatedView} />}
                     </ButtonWrapper>
                   </View>

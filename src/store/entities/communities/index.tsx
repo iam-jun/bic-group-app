@@ -20,7 +20,7 @@ export interface ICommunitiesState extends IBaseState {
   currentCommunityId?: string;
   errors: IObject<any>;
   actions: {
-    getCommunity: (id: string) => void;
+    getCommunity: (id: string) => Promise<void>;
     updateCommunity: (id: string, payload: ICommunity) => void;
     resetCommunity: (id: string) => void;
     addCommunity: (data: ICommunity | ICommunity[]) => void;
