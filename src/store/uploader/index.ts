@@ -61,8 +61,8 @@ const uploaderStore = (set, get) => ({
     uploadImage: uploadImage(set, get),
     cancel: (file: any) => {
       const filename = file?.name || file?.filename || file?.fileName;
-      const { fileAbortController } = get();
-      fileAbortController?.[filename]?.abort?.();
+      const { abortController } = get();
+      abortController?.[filename]?.abort?.();
 
       set((state) => {
         state.error?.[filename] && delete state.error?.[filename];
@@ -71,8 +71,8 @@ const uploaderStore = (set, get) => ({
       }, 'cancel');
     },
     cancelAllFiles: () => {
-      const { fileAbortController } = get();
-      Object.keys(fileAbortController).forEach((file) => fileAbortController?.[file]?.abort?.());
+      const { abortController } = get();
+      Object.keys(abortController).forEach((file) => abortController?.[file]?.abort?.());
       set((state) => {
         state.error = {};
         state.uploadingFiles = {};

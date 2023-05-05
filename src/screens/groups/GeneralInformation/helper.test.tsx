@@ -1,5 +1,5 @@
-import RNPermissions from 'react-native-permissions';
 import { ResourceUploadType } from '~/interfaces/IUpload';
+import RNPermissions from 'react-native-permissions';
 
 import { _openImagePicker } from './helper';
 import { FieldNameImageUpload } from '~/interfaces/IGroup';

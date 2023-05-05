@@ -75,6 +75,7 @@ const uploadImage = (set, _get) => async (data: IUploadParam) => {
         } else {
           set((state: IUploaderState) => {
             state.errors[file.name] = i18next.t('upload:text_upload_request_failed');
+            state.uploadingFiles?.[file.name] && delete state.uploadingFiles?.[file.name];
           }, 'action uploadImage error');
         }
       }
@@ -87,6 +88,7 @@ const uploadImage = (set, _get) => async (data: IUploadParam) => {
     const message = getErrorMessageFromResponse(error) || errorUploadMessage;
     set((state: IUploaderState) => {
       state.errors[file.name] = message;
+      state.uploadingFiles?.[file.name] && delete state.uploadingFiles?.[file.name];
     }, 'action uploadImage error');
   }
 };
