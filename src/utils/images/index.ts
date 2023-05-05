@@ -4,10 +4,13 @@ import RNFetchBlob from 'rn-fetch-blob';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { PastedFile } from 'react-native-paste-image-input';
 import { CameraRoll } from '@react-native-camera-roll/camera-roll';
-import { IToastMessage } from '~/interfaces/common';
+import { IFilePicked, IToastMessage } from '~/interfaces/common';
 import { checkPermission, PermissionTypes } from '../permission';
 import showToast from '~/store/helper/showToast';
 import showAlert from '~/store/helper/showAlert';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import { formatBytes } from '../formatter';
+import { AppConfig } from '~/configs';
 
 const downloadImageiOS = (photo: any) => {
   const onPermissionGranted = async () => {
@@ -121,4 +124,22 @@ export const getImagePastedFromClipboard = (files: any[]) => {
     return img;
   }
   return null;
+};
+
+export const checkFileSelected = (file: IFilePicked) => {
+  if (Platform.OS === 'ios') {
+    if (file?.sourceURL?.includes('GIF') || file?.sourceURL?.includes('WEBP')) {
+      const error = i18next.t('common:error:file:file_type_not_support');
+      showToast({ content: error, type: ToastType.ERROR });
+      return false;
+    }
+  }
+
+  if (file?.size > AppConfig.groupImageMaxSize) {
+    const error = i18next.t('common:error:file:file_exceed_limit').replace('{n}', formatBytes(AppConfig.groupImageMaxSize, 0));
+    showToast({ content: error, type: ToastType.ERROR });
+    return false;
+  }
+
+  return true;
 };
