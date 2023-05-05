@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { ResourceUploadType } from '~/interfaces/IUpload';
-import { scaleCoverHeight } from '~/theme/dimension';
+import { scaleCoverHeight, userProfileImageCropRatio } from '~/theme/dimension';
 import AvatarImage from '../../components/AvatarImage';
 import CoverImage from '../../components/CoverImage';
 import ImagePicker from '~/beinComponents/ImagePicker';
@@ -83,6 +83,7 @@ const CoverHeader = ({
 
   const onEditCover = async () => {
     const image = await ImagePicker.openPickerSingle({
+      ...userProfileImageCropRatio.backgroundImgUrl,
       cropping: true,
       mediaType: 'photo',
     });
@@ -98,6 +99,7 @@ const CoverHeader = ({
 
   const onEditAvatar = async () => {
     const image = await ImagePicker.openPickerSingle({
+      ...userProfileImageCropRatio.avatar,
       cropping: true,
       mediaType: 'photo',
     });
