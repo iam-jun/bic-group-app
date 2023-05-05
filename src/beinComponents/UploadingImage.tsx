@@ -63,7 +63,6 @@ const UploadingImage: FC<UploadingImageProps> = ({
   const [error, setError] = useState('');
 
   useEffect(() => {
-    console.log('error 123: ', uploadError)
     if (uploadError) {
       const errorMessage = typeof uploadError === 'string' ? uploadError : t('post:error_upload_photo_failed');
       setError(errorMessage);
@@ -155,13 +154,13 @@ const UploadingImage: FC<UploadingImageProps> = ({
     </View>
   );
 
-  if (error) {
-    if (renderError) {
-      return renderError(error);
-    }
+  const renderErrorContent = () => {
+    if (uploadingFile) return (
+      <LoadingIndicator size="large" color={colors.purple50} />
+    );
+
     return (
-      <View style={[styles.errorContainer, { width, height }, styleError]}>
-        {renderThumbnail()}
+      <React.Fragment>
         <Icon icon="CircleExclamation" tintColor={colors.red40} size={30} />
         <Text.BodyM style={styles.textError}>{error}</Text.BodyM>
         <Button.Primary
@@ -172,6 +171,18 @@ const UploadingImage: FC<UploadingImageProps> = ({
         >
           common:text_retry
         </Button.Primary>
+      </React.Fragment>
+    );
+  };
+
+  if (error) {
+    if (renderError) {
+      return renderError(error);
+    }
+    return (
+      <View style={[styles.errorContainer, { width, height }, styleError]}>
+        {renderThumbnail()}
+        {renderErrorContent()}
         {renderRemove()}
       </View>
     );
@@ -234,6 +245,7 @@ const createStyle = (theme: ExtendedTheme) => {
       marginHorizontal: spacing.margin.extraLarge,
       marginTop: spacing.margin.small,
       color: colors.red40,
+      textAlign: 'center',
     },
     boxThumbnail: {
       position: 'absolute',

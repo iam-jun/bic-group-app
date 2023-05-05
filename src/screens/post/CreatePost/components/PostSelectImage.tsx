@@ -31,7 +31,7 @@ const PostSelectImage = () => {
   const uploadingImage = useUploaderStore((state) => state.uploadingFiles);
   const resetUploadStore = useUploaderStore((state) => state.reset);
 
-  const imagePreviews = getImagePreview(uploadedImage, selectedImages);
+  const imagePreviews = getImagePreviews(uploadedImage, selectedImages);
   const hasUploadingProcess = Object.keys(uploadingImage).length > 0;
 
   const onUploadSuccess = (
@@ -181,7 +181,7 @@ const createStyle = (theme: ExtendedTheme) => {
       position: 'absolute',
       top: 0,
       left: 0,
-      zIndex: 1,
+      zIndex: 2,
     },
     boxPreviewImg: {
       marginHorizontal: -spacing.padding.large,
@@ -191,7 +191,7 @@ const createStyle = (theme: ExtendedTheme) => {
 
 export default PostSelectImage;
 
-const getImagePreview = (uploadedImg, selectedImgs) => {
+const getImagePreviews = (uploadedImg, selectedImgs) => {
   let result = [];
 
   selectedImgs.forEach((item) => {
