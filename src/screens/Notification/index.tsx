@@ -26,6 +26,7 @@ import spacing from '~/theme/spacing';
 import useModalStore from '~/store/modal';
 import { ContentType } from '~/interfaces/INotification';
 import { useUserIdAuth } from '~/hooks/auth';
+import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 
 const Notification = () => {
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
@@ -371,6 +372,10 @@ const Notification = () => {
               break;
             case NOTIFICATION_TYPE.APPROVED_KYC:
               rootNavigation.navigate(mainStack.userProfile, { userId });
+              break;
+
+            case NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME:
+              rootNavigation.navigate(notiStack.notiMaintenancePage, { maintenanceInfo: act?.maintenanceInfo });
               break;
             default:
               console.warn(`Notification type ${type} have not implemented yet`);

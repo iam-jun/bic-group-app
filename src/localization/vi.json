@@ -10,7 +10,9 @@
       "short_hour": "giờ",
       "short_day": "ngày",
       "short_week": "tuần",
-      "short_year": "năm"
+      "short_year": "năm",
+      "minutes": "phút",
+      "hours": "giờ"
     },
     "text_update_title": "Đã có bản cập nhật mới",
     "text_update_content": "System optimization, faster, more convenient",
@@ -1055,7 +1057,10 @@
     "mark_as_read": "Đánh dấu là đã đọc",
     "mark_as_unread": "Đánh dấu là chưa đọc",
     "off_notification_from_group": "Tắt nhận thông báo cho nhóm này",
-    "seen_all_notifications": "Bạn đã đọc hết thông báo"
+    "seen_all_notifications": "Bạn đã đọc hết thông báo",
+    "text_scheduled": "Scheduled Maintenance Downtime",
+    "content_scheduled_maintenance_downtime": "Chúng tôi sẽ cải thiện nền tảng để nâng cao trải nghiệm của bạn. Trong quá trình bảo trì, các tính năng có thể không khả dụng hoặc bị hạn chế.\n \nThời gian bảo trì bắt đầu lúc **(startAt)** trong khoảng **(duration)**.\n \nChúng tôi xin lỗi vì bất kỳ sự bất tiện nào và đánh giá cao sự hỗ trợ liên tục của bạn.",
+    "text_bic_team": "BIC team"
   },
   "new_feature": {
     "title": "New feature",
