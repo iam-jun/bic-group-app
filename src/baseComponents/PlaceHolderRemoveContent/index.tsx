@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
 import resourceImages from '~/resources/images';

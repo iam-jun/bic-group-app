@@ -5,7 +5,7 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/baseComponents/Text';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import spacing from '~/theme/spacing';
 import { openUrl } from '~/utils/link';
 import { Button } from '~/baseComponents';

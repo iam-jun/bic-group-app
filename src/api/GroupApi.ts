@@ -77,9 +77,9 @@ export const groupsApiConfig = {
     ...defaultConfig,
     url: `${provider.url}cities?country_code=84`,
   }),
-  editMyProfile: (userId: string, data: IUserEdit): HttpApiRequestConfig => ({
+  editMyProfile: (data: IUserEdit): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}users/${userId}/profile`,
+    url: `${provider.url}me/profile`,
     method: 'put',
     data: {
       ...data,
@@ -564,10 +564,7 @@ const groupApi = {
   getCity: () => withHttpRequestPromise(
     groupsApiConfig.getCity,
   ),
-  editMyProfile: (params: IUserEdit) => {
-    const { id, ...data } = params || {};
-    return withHttpRequestPromise(groupsApiConfig.editMyProfile, id, data);
-  },
+  editMyProfile: (data: IUserEdit) => withHttpRequestPromise(groupsApiConfig.editMyProfile, data),
   getMyWorkExperience: () => withHttpRequestPromise(groupsApiConfig.getMyWorkExperience),
   addWorkExperience: (data: IAddWorkExperienceReq) => withHttpRequestPromise(
     groupsApiConfig.addWorkExperience, data,

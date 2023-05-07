@@ -128,22 +128,25 @@ exports[`ReactionDetailTab component should render list user react corresponding
                     },
                     Array [
                       Array [
+                        Array [
+                          Object {
+                            "borderRadius": 6,
+                            "height": 40,
+                            "width": 40,
+                          },
+                          Object {
+                            "borderRadius": 20,
+                          },
+                        ],
                         Object {
-                          "borderRadius": 6,
-                          "height": 40,
-                          "width": 40,
+                          "borderColor": "#F2F5F8",
+                          "borderWidth": 2,
                         },
                         Object {
-                          "borderRadius": 20,
+                          "backgroundColor": "#FFFFFF",
                         },
                       ],
-                      Object {
-                        "borderColor": "#F2F5F8",
-                        "borderWidth": 2,
-                      },
-                      Object {
-                        "backgroundColor": "#FFFFFF",
-                      },
+                      false,
                     ],
                   ]
                 }
@@ -153,7 +156,7 @@ exports[`ReactionDetailTab component should render list user react corresponding
                   resizeMode="cover"
                   source={
                     Object {
-                      "uri": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/75f92c17-843b-49de-8445-93531854fd65.jpeg",
+                      "uri": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/75f92c17-843b-49de-8445-93531854fd65.jpeg?width=96",
                     }
                   }
                   style={
@@ -303,22 +306,25 @@ exports[`ReactionDetailTab component should render list user react corresponding
                     },
                     Array [
                       Array [
+                        Array [
+                          Object {
+                            "borderRadius": 6,
+                            "height": 40,
+                            "width": 40,
+                          },
+                          Object {
+                            "borderRadius": 20,
+                          },
+                        ],
                         Object {
-                          "borderRadius": 6,
-                          "height": 40,
-                          "width": 40,
+                          "borderColor": "#F2F5F8",
+                          "borderWidth": 2,
                         },
                         Object {
-                          "borderRadius": 20,
+                          "backgroundColor": "#FFFFFF",
                         },
                       ],
-                      Object {
-                        "borderColor": "#F2F5F8",
-                        "borderWidth": 2,
-                      },
-                      Object {
-                        "backgroundColor": "#FFFFFF",
-                      },
+                      false,
                     ],
                   ]
                 }
@@ -328,7 +334,7 @@ exports[`ReactionDetailTab component should render list user react corresponding
                   resizeMode="cover"
                   source={
                     Object {
-                      "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                      "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png?width=96",
                     }
                   }
                   style={
@@ -478,22 +484,25 @@ exports[`ReactionDetailTab component should render list user react corresponding
                     },
                     Array [
                       Array [
+                        Array [
+                          Object {
+                            "borderRadius": 6,
+                            "height": 40,
+                            "width": 40,
+                          },
+                          Object {
+                            "borderRadius": 20,
+                          },
+                        ],
                         Object {
-                          "borderRadius": 6,
-                          "height": 40,
-                          "width": 40,
+                          "borderColor": "#F2F5F8",
+                          "borderWidth": 2,
                         },
                         Object {
-                          "borderRadius": 20,
+                          "backgroundColor": "#FFFFFF",
                         },
                       ],
-                      Object {
-                        "borderColor": "#F2F5F8",
-                        "borderWidth": 2,
-                      },
-                      Object {
-                        "backgroundColor": "#FFFFFF",
-                      },
+                      false,
                     ],
                   ]
                 }
@@ -503,7 +512,7 @@ exports[`ReactionDetailTab component should render list user react corresponding
                   resizeMode="cover"
                   source={
                     Object {
-                      "uri": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/363963d1-e89a-4899-855e-44b1f66401dc.jpg",
+                      "uri": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/363963d1-e89a-4899-855e-44b1f66401dc.jpg?width=96",
                     }
                   }
                   style={

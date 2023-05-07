@@ -86,6 +86,7 @@ const UserInterestedPost: FC<UserInterestedPostProps> = ({ postId }) => {
         titleProps={{ color: colorTitle, variant: 'bodyMMedium' }}
         subTitle={`@${item?.item?.username}`}
         subTitleProps={{ variant: 'bodyS' }}
+        isVerified={item?.item?.isVerified}
       />
     );
   };

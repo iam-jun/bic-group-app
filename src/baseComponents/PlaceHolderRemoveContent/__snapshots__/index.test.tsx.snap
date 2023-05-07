@@ -19,11 +19,14 @@ exports[`PlaceHolderRemoveContent component renders correctly 1`] = `
         Object {
           "overflow": "hidden",
         },
-        Object {
-          "height": 35,
-          "marginRight": 16,
-          "width": 35,
-        },
+        Array [
+          Object {
+            "height": 35,
+            "marginRight": 16,
+            "width": 35,
+          },
+          false,
+        ],
       ]
     }
   >

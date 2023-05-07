@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
@@ -20,7 +20,7 @@ import Divider from '~/beinComponents/Divider';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import { BoxListPinContent } from '~/components/PinContent/components';
-import usePinContentStore from '~/components/PinContent/store';
+import { onRefresh } from './helper';
 
 interface GroupContentProps {
   community: ICommunity;
@@ -37,6 +37,8 @@ const GroupContent = ({
   const { colors } = theme || {};
   const styles = themeStyles();
   const isMounted = useMounted();
+
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
   const { group: groupData, joinStatus } = groups[currentGroupId] || {};
@@ -57,9 +59,8 @@ const GroupContent = ({
       attributeFilter,
     ]),
   );
-  const { ids: posts, loading, refreshing: isRefreshingPost } = groupPost || {};
-  const isLoadingPosts = (!isMounted || loading) && !isRefreshingPost;
-  const actionPinContent = usePinContentStore((state) => state.actions);
+  const { ids: posts, loading } = groupPost || {};
+  const isLoadingPosts = (!isMounted || loading) && !isRefreshing;
 
   const isLoadingMore = !isEmpty(posts) && loading;
 
@@ -85,9 +86,8 @@ const GroupContent = ({
     />
   );
 
-  const _onRefresh = () => {
-    timelineActions.getPosts(groupId, true);
-    actionPinContent.getPinContentsGroup(groupId);
+  const _onRefresh = async () => {
+    await onRefresh({ setIsRefreshing, groupId });
   };
 
   const renderHeader = () => (
@@ -152,7 +152,7 @@ const GroupContent = ({
       keyExtractor={(item: any, index: number) => `list-item-${item.id}-${index}`}
       refreshControl={(
         <RefreshControl
-          refreshing={isRefreshingPost}
+          refreshing={isRefreshing}
           tintColor={colors.gray40}
           onRefresh={_onRefresh}
         />

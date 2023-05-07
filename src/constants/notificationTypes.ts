@@ -303,4 +303,7 @@ export const NOTIFICATION_TYPE = {
 
   // maintenance notification
   SCHEDULED_MAINTENANCE_DOWNTIME: 'scheduled_maintenance_downtime',
+
+  // approved kyc
+  APPROVED_KYC: 'approved_kyc',
 };

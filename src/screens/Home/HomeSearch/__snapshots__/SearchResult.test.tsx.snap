@@ -639,22 +639,25 @@ exports[`SearchResult component should render empty search result 1`] = `
                           },
                           Array [
                             Array [
+                              Array [
+                                Object {
+                                  "borderRadius": 8,
+                                  "height": 48,
+                                  "width": 48,
+                                },
+                                Object {
+                                  "borderRadius": 24,
+                                },
+                              ],
                               Object {
-                                "borderRadius": 8,
-                                "height": 48,
-                                "width": 48,
+                                "borderColor": "#F2F5F8",
+                                "borderWidth": 2,
                               },
                               Object {
-                                "borderRadius": 24,
+                                "backgroundColor": "#FFFFFF",
                               },
                             ],
-                            Object {
-                              "borderColor": "#F2F5F8",
-                              "borderWidth": 2,
-                            },
-                            Object {
-                              "backgroundColor": "#FFFFFF",
-                            },
+                            false,
                           ],
                         ]
                       }
@@ -664,7 +667,7 @@ exports[`SearchResult component should render empty search result 1`] = `
                         resizeMode="cover"
                         source={
                           Object {
-                            "uri": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/206550db-26f1-4115-80dc-98134e4d8590.webp",
+                            "uri": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/206550db-26f1-4115-80dc-98134e4d8590.webp?width=128",
                           }
                         }
                         style={
@@ -1846,22 +1849,25 @@ exports[`SearchResult component should render list search result 1`] = `
                           },
                           Array [
                             Array [
+                              Array [
+                                Object {
+                                  "borderRadius": 8,
+                                  "height": 48,
+                                  "width": 48,
+                                },
+                                Object {
+                                  "borderRadius": 24,
+                                },
+                              ],
                               Object {
-                                "borderRadius": 8,
-                                "height": 48,
-                                "width": 48,
+                                "borderColor": "#F2F5F8",
+                                "borderWidth": 2,
                               },
                               Object {
-                                "borderRadius": 24,
+                                "backgroundColor": "#FFFFFF",
                               },
                             ],
-                            Object {
-                              "borderColor": "#F2F5F8",
-                              "borderWidth": 2,
-                            },
-                            Object {
-                              "backgroundColor": "#FFFFFF",
-                            },
+                            false,
                           ],
                         ]
                       }
@@ -1871,7 +1877,7 @@ exports[`SearchResult component should render list search result 1`] = `
                         resizeMode="cover"
                         source={
                           Object {
-                            "uri": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/206550db-26f1-4115-80dc-98134e4d8590.webp",
+                            "uri": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/206550db-26f1-4115-80dc-98134e4d8590.webp?width=128",
                           }
                         }
                         style={
