@@ -29,6 +29,7 @@ import usePostDetailContentHandler from './hooks/usePostDetailContentHandler';
 import BannerReport from '~/components/Report/BannerReport';
 import useModalStore from '~/store/modal';
 import ContentNoPermission from '~/components/ContentNoPermission';
+import ContentUnavailable from '~/components/ContentUnavailable';
 
 const _PostDetailContent = (props) => {
   const { t } = useBaseHook();
@@ -185,6 +186,14 @@ const _PostDetailContent = (props) => {
   }
 
   const renderContent = () => {
+    if (isReported && deleted) {
+      return (
+        <View style={styles.flex1} onLayout={props?.onContentLayout}>
+          <ContentUnavailable showButton={false} />
+        </View>
+      );
+    }
+
     if (!createdAt) return <PostViewPlaceholder />;
 
     if (isEmptyContent) return null;
@@ -232,7 +241,8 @@ const _PostDetailContent = (props) => {
 
   return (
     <View style={styles.flex1} testID="post_detail_content">
-      <Header title={headerTitle} onPressBack={onPressBack} />
+      {!isReported && !deleted
+      && <Header title={headerTitle} onPressBack={onPressBack} />}
       {renderContent()}
     </View>
   );

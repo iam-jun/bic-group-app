@@ -12,6 +12,7 @@ const deletePostLocal = (_set, get) => (id: string) => {
     const { posts, actions }: IPostsState = get();
     const deletedPost = {
       ...posts[id],
+      id,
       deleted: true,
     };
     actions.addToPosts({ data: deletedPost } as IPayloadAddToAllPost);
