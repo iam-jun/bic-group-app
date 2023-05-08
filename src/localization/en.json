@@ -214,6 +214,9 @@
       "title": "This content isn’t available right now",
       "content": "When this happens, it’s usually because the owner only shared it with a small group of people, changed who can see it or it’s been deleted."
     },
+    "content_no_permission": {
+      "title": "Restricted permission!"
+    },
     "text_date": "Date",
     "text_time": "Time",
     "text_no_data": "No data",
@@ -226,8 +229,8 @@
     "settings": "Settings",
     "pin_unpin": "Pin/Unpin",
     "text_i_agree": "I agree",
-    "text_group_terms": "Group terms",
-    "text_community_terms": "Community terms",
+    "text_group_terms": "Group Terms & Conditions",
+    "text_community_terms": "Community Terms & Conditions",
     "text_sorry_something_went_wrong": "Sorry, something went wrong",
     "text_pull_to_refresh": "Please pull down to refresh the page or try again later",
     "text_answer_title": "Membership questions",
@@ -423,17 +426,16 @@
     "text_popup_message": "Function has not been developed. Stay tuned for further releases 😀",
     "text_got_it": "Got it",
     "title_open": "Open",
-    "title_open_subtitle_community": "Everyone can discover or search in-app and global to find this community. The content & activities inside are visible to everyone.",
-    "title_open_subtitle_group": "Everyone can discover or search in-app and global to find this group. The content & activities inside are visible to everyone.",
+    "title_open_subtitle_community": "The community is visible and accessible to non-members who haven’t joined. All content & activities inside are visible to non-members also.",
+    "title_open_subtitle_group": "The group is visible and accessible to non-members who haven’t joined. All content & activities inside are visible to non-members also.",
     "title_private": "Private",
-    "title_private_subtitle_community": "All registered users can discover and search in-app to find this community. The content & activities inside are not visible to all users.",
-    "title_private_subtitle_group": "All registered users can discover and search in-app to find this group. The content & activities inside are not visible to all users.",
+    "title_private_subtitle_community": "The community is visible and accessible to non-members who haven’t joined. However, all content & activities inside are not visible and accessible to non-members.",
+    "title_private_subtitle_group": "The group is visible and accessible to non-members and community members. All content & activities inside are not visible and accessible to all member types.",
     "text_learn_more": "Learn more",
     "title_secret": "Secret",
-    "title_secret_subtitle_community": "All registered users cannot discover and search to find this community. The content & activities inside are not visible to all users.",
-    "title_secret_subtitle_group": "All registered users cannot discover and search to find this group. The content & activities inside are not visible to all users.",
+    "title_secret_subtitle_group": "The group is not visible and not accessible to non-members and community members. All content & activities inside are not visible and not accessible to all member types also.",
     "title_closed": "Closed",
-    "title_closed_subtitle_group": "All members in the same community can discover and search in-app to find this group. The content & activities inside are visible to all members. For all registered users who are not in the community, the content & activities inside are not visible to them.",
+    "title_closed_subtitle_group": "The group is visible and accessible to non-members and community members. However, all content & activities inside are only visible and accessible to community members only.",
     "title_privacy_note": "All members and admins will receive a notification that the privacy settings have changed.",
     "text_secret_community_banner_message": "According to the privacy, the join request setting is disabled and all pending requests will be also declined. Member must be invited to join the community.",
     "text_secret_group_banner_message": "According to the privacy, the join request setting is disabled and all pending requests will be also declined. Member must be invited to join the group.",
@@ -526,7 +528,10 @@
     "text_unblock_user_name_result": "Unblocking this user will allow them to interact with you again below:",
     "title_blocked_users_list_empty": "Blocked users list is empty",
     "text_blocked_users_list_empty": "User not found",
-    "text_blocked_at": "Blocked at"
+    "text_blocked_at": "Blocked at",
+    "title_privacy": "Privacy",
+    "toast_profile_is_verified": "This profile is verified",
+    "text_profile_is_verified": "Your information has been verified and can’t be edited"
   },
   "languages": {
     "title_en": "English",
@@ -1300,7 +1305,8 @@
     "text_file_over_size": "Your files are larger than 25MB",
     "text_file_over_length": "You cannot upload more than {{max_files}} files",
     "text_file_extension_not_supported": "Not Supported",
-    "text_file_remainning": "The maximum files is {{max_files}} and {{remaining_size}} is available to upload"
+    "text_file_remainning": "The maximum files is {{max_files}} and {{remaining_size}} is available to upload",
+    "text_upload_image_fail": "Failed to upload"
   },
   "file_type": {
     "image": "image",

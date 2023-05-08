@@ -41,7 +41,7 @@ export interface IUploaderState extends IBaseState {
   errors: {[x: string]: string};
   actions:{
     uploadFile: (data: IUploadParam) => void;
-    uploadImage: (data: IUploadParam) => void;
+    uploadImage: (data: IUploadParam) => Promise<void>;
     cancel: (file: any) => void;
     cancelAllFiles: () => void;
   }

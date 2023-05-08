@@ -59,7 +59,7 @@ const SelectedAudiences = () => {
       <Text.SubtitleM style={styles.textTitle}>
         {`${t('post:text_chosen_audience')}: ${list?.length || 0}`}
       </Text.SubtitleM>
-      <ScrollView horizontal>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {list?.map?.(renderItem)}
       </ScrollView>
     </View>
@@ -70,7 +70,9 @@ const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {
-      marginBottom: spacing.margin.large,
+      paddingBottom: spacing.margin.small,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.neutral5,
     },
     textTitle: {
       paddingHorizontal: spacing.padding.large,

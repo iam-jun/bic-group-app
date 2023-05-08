@@ -1,6 +1,7 @@
 /* Declare Dimensions */
 import { Dimensions, Platform } from 'react-native';
 import deviceInfoModule from 'react-native-device-info';
+import { FieldNameImageUpload } from '~/interfaces/IGroup';
 
 const guidelineBaseWidth = 375;
 
@@ -12,12 +13,12 @@ export const scaleCoverHeight = (widthSize = DeviceWidth) => (widthSize / 21) * 
 
 export const groupProfileImageCropRatio = {
   // image crop ratio for cover photo: 25:11
-  backgroundImgUrl: {
+  [FieldNameImageUpload.BACKGROUND_IMG]: {
     width: 1080,
     height: 475,
   },
   // image crop ratio for avatar: 1:1 -> default, no need to define
-  icon: {},
+  [FieldNameImageUpload.ICON]: {},
 };
 
 export const userProfileImageCropRatio = {

@@ -183,6 +183,9 @@
       "title": "Nội dung này hiện không khả dụng",
       "content": "Khi điều này xảy ra, thường là do chủ sở hữu chỉ chia sẻ nó với một nhóm người, đã thay đổi người có thể nhìn thấy nó hoặc nó đã bị xóa."
     },
+    "content_no_permission": {
+      "title": "Hạn chế quyền!"
+    },
     "text_date": "Ngày",
     "text_time": "Giờ",
     "text_no_data": "Không có dữ liệu",
@@ -386,16 +389,15 @@
     "title_basic_info": "Thông tin cơ bản",
     "title_privacy_type": "Loại quyền riêng tư",
     "title_open": "Mở",
-    "title_open_subtitle_community": "Mọi người đều có thể khám phá và tìm kiếm cộng đồng này trong ứng dụng. Nội dung và hoạt động đều được hiển thị cho tất cả người dùng.",
-    "title_open_subtitle_group": "Mọi người đều có thể khám phá và tìm kiếm nhóm này trong ứng dụng. Nội dung và hoạt động đều được hiển thị cho tất cả người dùng.",
+    "title_open_subtitle_community": "Cộng đồng có thể nhìn thấy và truy cập được đối với những người không phải là thành viên chưa tham gia. Tất cả nội dung & hoạt động bên trong cũng được hiển thị cho những người không phải là thành viên.",
+    "title_open_subtitle_group": "Nhóm này hiển thị và có thể truy cập được đối với những người không phải là thành viên chưa tham gia. Tất cả nội dung & hoạt động bên trong cũng được hiển thị cho những người không phải là thành viên.",
     "title_private": "Riêng tư",
-    "title_private_subtitle_community": "Những người dùng đã đăng nhập có thể khám phá và tìm kiếm cộng đồng này trong ứng dụng. Nội dung và hoạt động sẽ không được hiển thị cho tất cả người dùng.",
-    "title_private_subtitle_group": "Những người dùng đã đăng nhập có thể khám phá và tìm kiếm nhóm này trong ứng dụng. Nội dung và hoạt động sẽ không được hiển thị cho tất cả người dùng.",
+    "title_private_subtitle_community": "Cộng đồng có thể nhìn thấy và truy cập được đối với những người không phải là thành viên chưa tham gia. Tuy nhiên, tất cả nội dung & hoạt động bên trong đều không hiển thị và có thể truy cập được đối với những người không phải là thành viên.",
+    "title_private_subtitle_group": "Nhóm có thể nhìn thấy và truy cập được đối với những người không phải là thành viên và thành viên cộng đồng. Tất cả nội dung & hoạt động bên trong đều không hiển thị và có thể truy cập được đối với tất cả các loại thành viên.",
     "title_secret": "Bí mật",
-    "title_secret_subtitle_community": "Những người dùng đã đăng nhập không thể khám phá và tìm kiếm cộng đồng này trong ứng dụng. Nội dung và hoạt động sẽ không được hiển thị cho tất cả người dùng.",
-    "title_secret_subtitle_group": "Những người dùng đã đăng nhập không thể khám phá và tìm kiếm nhóm này trong ứng dụng. Nội dung và hoạt động sẽ không được hiển thị cho tất cả người dùng.",
+    "title_secret_subtitle_group": "Nhóm không hiển thị và không thể truy cập đối với những người không phải là thành viên và thành viên cộng đồng. Tất cả nội dung & hoạt động bên trong đều không hiển thị và cũng không thể truy cập được đối với tất cả các loại thành viên.",
     "title_closed": "Đóng",
-    "title_closed_subtitle_group": "Tất cả các thành viên trong cùng một cộng đồng có thể khám phá và tìm kiếm nhóm này trong ứng dụng. Nội dung và hoạt động đều được hiển thị cho tất cả các thành viên. Đối với tất cả người dùng đã đăng ký không thuộc cộng đồng, nội dung và hoạt động bên trong sẽ không hiển thị với họ.",
+    "title_closed_subtitle_group": "Nhóm có thể nhìn thấy và truy cập được đối với những người không phải là thành viên và thành viên cộng đồng. Tuy nhiên, tất cả nội dung & hoạt động bên trong chỉ các thành viên cộng đồng mới có thể nhìn thấy và truy cập được.",
     "title_privacy_note": "Tất cả thành viên và ban quản trị sẽ nhận được thông báo về sự thay đổi này.",
     "text_secret_community_banner_message": "Theo chế độ riêng tư, thiết lập yêu cầu tham gia sẽ bị khóa và tất cả yêu cầu tham gia sẽ bị từ chối. Thành viên phải được mời mới được tham gia cộng đồng này.",
     "text_secret_group_banner_message": "Theo chế độ riêng tư, thiết lập yêu cầu tham gia sẽ bị khóa và tất cả yêu cầu tham gia sẽ bị từ chối. Thành viên phải được mời mới được tham gia nhóm này.",
@@ -487,7 +489,10 @@
     "text_unblock_user_name_result": "Bỏ chặn người dùng này sẽ cho phép họ tương tác lại với bạn như sau:",
     "title_blocked_users_list_empty": "Danh sách người dùng bị chặn trống",
     "text_blocked_users_list_empty": "Không tìm thấy người dùng",
-    "text_blocked_at": "Đã chặn"
+    "text_blocked_at": "Đã chặn",
+    "title_privacy": "Bảo mật",
+    "toast_profile_is_verified": "Hồ sơ này đã được xác minh",
+    "text_profile_is_verified": "Thông tin của bạn đã được xác minh và không thể chỉnh sửa"
   },
   "languages": {
     "title_en": "English",
@@ -1243,7 +1248,8 @@
     "text_file_over_size": "Tổng kích thước các tệp của bạn lớn hơn 25MB",
     "text_file_over_length": "Bạn không thể tải lên hơn {{max_files}} tệp",
     "text_file_extension_not_supported": "Không được hỗ trợ",
-    "text_file_remainning": "Tổng tệp có thể thêm là {{max_files}} và dung lượng còn lại là {{remaining_size}}"
+    "text_file_remainning": "Tổng tệp có thể thêm là {{max_files}} và dung lượng còn lại là {{remaining_size}}",
+    "text_upload_image_fail": "Không thể tải lên hình ảnh"
   },
   "file_type": {
     "image": "hình ảnh",

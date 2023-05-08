@@ -1,7 +1,7 @@
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 
 import images from '~/resources/images';
 import spacing from '~/theme/spacing';
@@ -37,6 +37,7 @@ const AvatarImage = ({
             testID="avatar.image"
             style={styles.avatar}
             source={avatar || images.img_user_avatar_default}
+            usePixelWidth
           />
         ) : (
           <View

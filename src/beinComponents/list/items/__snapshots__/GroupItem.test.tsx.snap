@@ -197,18 +197,21 @@ exports[`Group Item component renders correctly 1`] = `
                   "overflow": "hidden",
                 },
                 Array [
-                  Object {
-                    "borderRadius": 6,
-                    "height": 40,
-                    "width": 40,
-                  },
-                  Object {
-                    "borderColor": "#F2F5F8",
-                    "borderWidth": 2,
-                  },
-                  Object {
-                    "backgroundColor": "#FFFFFF",
-                  },
+                  Array [
+                    Object {
+                      "borderRadius": 6,
+                      "height": 40,
+                      "width": 40,
+                    },
+                    Object {
+                      "borderColor": "#F2F5F8",
+                      "borderWidth": 2,
+                    },
+                    Object {
+                      "backgroundColor": "#FFFFFF",
+                    },
+                  ],
+                  false,
                 ],
               ]
             }
@@ -216,7 +219,7 @@ exports[`Group Item component renders correctly 1`] = `
             <FastImageView
               onFastImageError={[Function]}
               resizeMode="cover"
-              source={null}
+              source={Object {}}
               style={
                 Object {
                   "bottom": 0,
@@ -528,18 +531,21 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
                   "overflow": "hidden",
                 },
                 Array [
-                  Object {
-                    "borderRadius": 6,
-                    "height": 40,
-                    "width": 40,
-                  },
-                  Object {
-                    "borderColor": "#F2F5F8",
-                    "borderWidth": 2,
-                  },
-                  Object {
-                    "backgroundColor": "#FFFFFF",
-                  },
+                  Array [
+                    Object {
+                      "borderRadius": 6,
+                      "height": 40,
+                      "width": 40,
+                    },
+                    Object {
+                      "borderColor": "#F2F5F8",
+                      "borderWidth": 2,
+                    },
+                    Object {
+                      "backgroundColor": "#FFFFFF",
+                    },
+                  ],
+                  false,
                 ],
               ]
             }
@@ -547,7 +553,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
             <FastImageView
               onFastImageError={[Function]}
               resizeMode="cover"
-              source={null}
+              source={Object {}}
               style={
                 Object {
                   "bottom": 0,
@@ -775,18 +781,21 @@ exports[`Group Item component should render default prop 1`] = `
                   "overflow": "hidden",
                 },
                 Array [
-                  Object {
-                    "borderRadius": 6,
-                    "height": 40,
-                    "width": 40,
-                  },
-                  Object {
-                    "borderColor": "#F2F5F8",
-                    "borderWidth": 2,
-                  },
-                  Object {
-                    "backgroundColor": "#FFFFFF",
-                  },
+                  Array [
+                    Object {
+                      "borderRadius": 6,
+                      "height": 40,
+                      "width": 40,
+                    },
+                    Object {
+                      "borderColor": "#F2F5F8",
+                      "borderWidth": 2,
+                    },
+                    Object {
+                      "backgroundColor": "#FFFFFF",
+                    },
+                  ],
+                  false,
                 ],
               ]
             }
@@ -794,7 +803,7 @@ exports[`Group Item component should render default prop 1`] = `
             <FastImageView
               onFastImageError={[Function]}
               resizeMode="cover"
-              source={null}
+              source={Object {}}
               style={
                 Object {
                   "bottom": 0,
@@ -1093,18 +1102,21 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
                   "overflow": "hidden",
                 },
                 Array [
-                  Object {
-                    "borderRadius": 6,
-                    "height": 40,
-                    "width": 40,
-                  },
-                  Object {
-                    "borderColor": "#F2F5F8",
-                    "borderWidth": 2,
-                  },
-                  Object {
-                    "backgroundColor": "#FFFFFF",
-                  },
+                  Array [
+                    Object {
+                      "borderRadius": 6,
+                      "height": 40,
+                      "width": 40,
+                    },
+                    Object {
+                      "borderColor": "#F2F5F8",
+                      "borderWidth": 2,
+                    },
+                    Object {
+                      "backgroundColor": "#FFFFFF",
+                    },
+                  ],
+                  false,
                 ],
               ]
             }
@@ -1112,7 +1124,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
             <FastImageView
               onFastImageError={[Function]}
               resizeMode="cover"
-              source={null}
+              source={Object {}}
               style={
                 Object {
                   "bottom": 0,

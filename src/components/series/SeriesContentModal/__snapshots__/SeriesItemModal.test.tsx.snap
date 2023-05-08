@@ -70,18 +70,21 @@ exports[`SeriesItemModal component should render correctly 1`] = `
                 "overflow": "hidden",
               },
               Array [
-                Object {
-                  "borderRadius": 6,
-                  "height": 32,
-                  "width": 32,
-                },
-                Object {
-                  "borderColor": "#F2F5F8",
-                  "borderWidth": 2,
-                },
-                Object {
-                  "backgroundColor": "#FFFFFF",
-                },
+                Array [
+                  Object {
+                    "borderRadius": 6,
+                    "height": 32,
+                    "width": 32,
+                  },
+                  Object {
+                    "borderColor": "#F2F5F8",
+                    "borderWidth": 2,
+                  },
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                  },
+                ],
+                false,
               ],
             ]
           }
@@ -91,7 +94,7 @@ exports[`SeriesItemModal component should render correctly 1`] = `
             resizeMode="cover"
             source={
               Object {
-                "uri": "https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/f6bd62ee-ccec-4526-9b99-376861ad9426.jpeg",
+                "uri": "https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/f6bd62ee-ccec-4526-9b99-376861ad9426.jpeg?width=96",
               }
             }
             style={

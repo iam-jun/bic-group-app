@@ -28,6 +28,7 @@ import usePostDetailContent from './hooks/usePostDetailContent';
 import usePostDetailContentHandler from './hooks/usePostDetailContentHandler';
 import BannerReport from '~/components/Report/BannerReport';
 import useModalStore from '~/store/modal';
+import ContentNoPermission from '~/components/ContentNoPermission';
 
 const _PostDetailContent = (props) => {
   const { t } = useBaseHook();
@@ -58,7 +59,7 @@ const _PostDetailContent = (props) => {
 
   const {
     refreshing, isEmptyContent, actor, setting, deleted, createdAt,
-    commentLeft, groupIds, comments, sectionData, audience, onRefresh, onPressMarkSeenPost,
+    commentLeft, groupIds, comments, sectionData, audience, errorContent, onRefresh, onPressMarkSeenPost,
   } = usePostDetailContent({
     postId, notificationId, HeaderImageComponent, isReported,
   });
@@ -173,6 +174,15 @@ const _PostDetailContent = (props) => {
     }
     return null;
   };
+
+  if (errorContent?.isError) {
+    return (
+      <ContentNoPermission
+        data={errorContent}
+        onContentLayout={props?.onContentLayout}
+      />
+    );
+  }
 
   const renderContent = () => {
     if (!createdAt) return <PostViewPlaceholder />;
