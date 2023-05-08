@@ -62,6 +62,7 @@ const PostSelectImage = () => {
   const onPressRemoveAll = () => {
     resetUploadStore();
     createPostStoreActions.updateCreatePost({ images: [] });
+    setShowPreview(false);
   };
 
   const onPressPreview = () => {
