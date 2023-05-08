@@ -1,13 +1,11 @@
 import groupApi from '~/api/GroupApi';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
-import { CommunityPrivacyType } from '~/constants/privacyTypes';
 import useModalStore from '~/store/modal';
 import { act, renderHook } from '~/test/testUtils';
 import useCommunityController from '../index';
 
 describe('leaveCommunity', () => {
   const communityId = '879c8129-0840-437f-8f23-a7585dc6ba22';
-  const privacy = CommunityPrivacyType.OPEN;
 
   it('should leave community success:', () => {
     const response = {
@@ -35,7 +33,7 @@ describe('leaveCommunity', () => {
     jest.useFakeTimers();
     const { result } = renderHook(() => useCommunityController((state) => state));
     act(() => {
-      result.current.actions.leaveCommunity(communityId, privacy);
+      result.current.actions.leaveCommunity(communityId);
     });
     expect(spy).toBeCalled();
     act(() => {
@@ -65,7 +63,7 @@ describe('leaveCommunity', () => {
     const { result } = renderHook(() => useCommunityController((state) => state));
     act(() => {
       try {
-        result.current.actions.leaveCommunity(communityId, privacy);
+        result.current.actions.leaveCommunity(communityId);
       } catch (e) {
         expect(e).toBeInstanceOf(TypeError);
         expect(e).toBe(error);

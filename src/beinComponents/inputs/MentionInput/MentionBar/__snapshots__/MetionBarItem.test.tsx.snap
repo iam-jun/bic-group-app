@@ -69,22 +69,25 @@ exports[`MentionBarItem component renders correctly 1`] = `
             },
             Array [
               Array [
+                Array [
+                  Object {
+                    "borderRadius": 4,
+                    "height": 24,
+                    "width": 24,
+                  },
+                  Object {
+                    "borderRadius": 12,
+                  },
+                ],
                 Object {
-                  "borderRadius": 4,
-                  "height": 24,
-                  "width": 24,
+                  "borderColor": "#F2F5F8",
+                  "borderWidth": 2,
                 },
                 Object {
-                  "borderRadius": 12,
+                  "backgroundColor": "#FFFFFF",
                 },
               ],
-              Object {
-                "borderColor": "#F2F5F8",
-                "borderWidth": 2,
-              },
-              Object {
-                "backgroundColor": "#FFFFFF",
-              },
+              false,
             ],
           ]
         }

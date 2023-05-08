@@ -297,22 +297,25 @@ exports[`FilterCreateBySpecific component should render correctly 1`] = `
                       },
                       Array [
                         Array [
+                          Array [
+                            Object {
+                              "borderRadius": 6,
+                              "height": 32,
+                              "width": 32,
+                            },
+                            Object {
+                              "borderRadius": 16,
+                            },
+                          ],
                           Object {
-                            "borderRadius": 6,
-                            "height": 32,
-                            "width": 32,
+                            "borderColor": "#F2F5F8",
+                            "borderWidth": 2,
                           },
                           Object {
-                            "borderRadius": 16,
+                            "backgroundColor": "#FFFFFF",
                           },
                         ],
-                        Object {
-                          "borderColor": "#F2F5F8",
-                          "borderWidth": 2,
-                        },
-                        Object {
-                          "backgroundColor": "#FFFFFF",
-                        },
+                        false,
                       ],
                     ]
                   }
@@ -320,7 +323,7 @@ exports[`FilterCreateBySpecific component should render correctly 1`] = `
                   <FastImageView
                     onFastImageError={[Function]}
                     resizeMode="cover"
-                    source={null}
+                    source={Object {}}
                     style={
                       Object {
                         "bottom": 0,
@@ -511,22 +514,25 @@ exports[`FilterCreateBySpecific component should render correctly 1`] = `
                       },
                       Array [
                         Array [
+                          Array [
+                            Object {
+                              "borderRadius": 6,
+                              "height": 32,
+                              "width": 32,
+                            },
+                            Object {
+                              "borderRadius": 16,
+                            },
+                          ],
                           Object {
-                            "borderRadius": 6,
-                            "height": 32,
-                            "width": 32,
+                            "borderColor": "#F2F5F8",
+                            "borderWidth": 2,
                           },
                           Object {
-                            "borderRadius": 16,
+                            "backgroundColor": "#FFFFFF",
                           },
                         ],
-                        Object {
-                          "borderColor": "#F2F5F8",
-                          "borderWidth": 2,
-                        },
-                        Object {
-                          "backgroundColor": "#FFFFFF",
-                        },
+                        false,
                       ],
                     ]
                   }
@@ -536,7 +542,7 @@ exports[`FilterCreateBySpecific component should render correctly 1`] = `
                     resizeMode="cover"
                     source={
                       Object {
-                        "uri": "https://bic-stg-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/user/default-avatar.png",
+                        "uri": "https://bic-stg-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/user/default-avatar.png?width=96",
                       }
                     }
                     style={
@@ -668,22 +674,25 @@ exports[`FilterCreateBySpecific component should render correctly 1`] = `
                       },
                       Array [
                         Array [
+                          Array [
+                            Object {
+                              "borderRadius": 6,
+                              "height": 32,
+                              "width": 32,
+                            },
+                            Object {
+                              "borderRadius": 16,
+                            },
+                          ],
                           Object {
-                            "borderRadius": 6,
-                            "height": 32,
-                            "width": 32,
+                            "borderColor": "#F2F5F8",
+                            "borderWidth": 2,
                           },
                           Object {
-                            "borderRadius": 16,
+                            "backgroundColor": "#FFFFFF",
                           },
                         ],
-                        Object {
-                          "borderColor": "#F2F5F8",
-                          "borderWidth": 2,
-                        },
-                        Object {
-                          "backgroundColor": "#FFFFFF",
-                        },
+                        false,
                       ],
                     ]
                   }
@@ -693,7 +702,7 @@ exports[`FilterCreateBySpecific component should render correctly 1`] = `
                     resizeMode="cover"
                     source={
                       Object {
-                        "uri": "https://bic-stg-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/user/default-avatar.png",
+                        "uri": "https://bic-stg-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/user/default-avatar.png?width=96",
                       }
                     }
                     style={

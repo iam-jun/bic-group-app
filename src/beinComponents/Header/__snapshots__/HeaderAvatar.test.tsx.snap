@@ -71,22 +71,25 @@ exports[`Header Avatar component renders correctly 1`] = `
             },
             Array [
               Array [
+                Array [
+                  Object {
+                    "borderRadius": 8,
+                    "height": 48,
+                    "width": 48,
+                  },
+                  Object {
+                    "borderRadius": 24,
+                  },
+                ],
                 Object {
-                  "borderRadius": 8,
-                  "height": 48,
-                  "width": 48,
+                  "borderColor": "#F2F5F8",
+                  "borderWidth": 2,
                 },
                 Object {
-                  "borderRadius": 24,
+                  "backgroundColor": "#FFFFFF",
                 },
               ],
-              Object {
-                "borderColor": "#F2F5F8",
-                "borderWidth": 2,
-              },
-              Object {
-                "backgroundColor": "#FFFFFF",
-              },
+              false,
             ],
           ]
         }
@@ -96,7 +99,7 @@ exports[`Header Avatar component renders correctly 1`] = `
           resizeMode="cover"
           source={
             Object {
-              "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+              "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png?width=128",
             }
           }
           style={
@@ -231,22 +234,25 @@ exports[`Header Avatar component renders correctly with props Container Style 1`
             },
             Array [
               Array [
+                Array [
+                  Object {
+                    "borderRadius": 8,
+                    "height": 48,
+                    "width": 48,
+                  },
+                  Object {
+                    "borderRadius": 24,
+                  },
+                ],
                 Object {
-                  "borderRadius": 8,
-                  "height": 48,
-                  "width": 48,
+                  "borderColor": "#F2F5F8",
+                  "borderWidth": 2,
                 },
                 Object {
-                  "borderRadius": 24,
+                  "backgroundColor": "#FFFFFF",
                 },
               ],
-              Object {
-                "borderColor": "#F2F5F8",
-                "borderWidth": 2,
-              },
-              Object {
-                "backgroundColor": "#FFFFFF",
-              },
+              false,
             ],
           ]
         }
@@ -256,7 +262,7 @@ exports[`Header Avatar component renders correctly with props Container Style 1`
           resizeMode="cover"
           source={
             Object {
-              "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+              "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png?width=128",
             }
           }
           style={
@@ -389,22 +395,25 @@ exports[`Header Avatar component renders correctly with props First Label Props 
             },
             Array [
               Array [
+                Array [
+                  Object {
+                    "borderRadius": 8,
+                    "height": 48,
+                    "width": 48,
+                  },
+                  Object {
+                    "borderRadius": 24,
+                  },
+                ],
                 Object {
-                  "borderRadius": 8,
-                  "height": 48,
-                  "width": 48,
+                  "borderColor": "#F2F5F8",
+                  "borderWidth": 2,
                 },
                 Object {
-                  "borderRadius": 24,
+                  "backgroundColor": "#FFFFFF",
                 },
               ],
-              Object {
-                "borderColor": "#F2F5F8",
-                "borderWidth": 2,
-              },
-              Object {
-                "backgroundColor": "#FFFFFF",
-              },
+              false,
             ],
           ]
         }
@@ -414,7 +423,7 @@ exports[`Header Avatar component renders correctly with props First Label Props 
           resizeMode="cover"
           source={
             Object {
-              "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+              "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png?width=128",
             }
           }
           style={
@@ -550,22 +559,25 @@ exports[`Header Avatar component renders correctly with props Icon Check Circle 
             },
             Array [
               Array [
+                Array [
+                  Object {
+                    "borderRadius": 8,
+                    "height": 48,
+                    "width": 48,
+                  },
+                  Object {
+                    "borderRadius": 24,
+                  },
+                ],
                 Object {
-                  "borderRadius": 8,
-                  "height": 48,
-                  "width": 48,
+                  "borderColor": "#F2F5F8",
+                  "borderWidth": 2,
                 },
                 Object {
-                  "borderRadius": 24,
+                  "backgroundColor": "#FFFFFF",
                 },
               ],
-              Object {
-                "borderColor": "#F2F5F8",
-                "borderWidth": 2,
-              },
-              Object {
-                "backgroundColor": "#FFFFFF",
-              },
+              false,
             ],
           ]
         }
@@ -575,7 +587,7 @@ exports[`Header Avatar component renders correctly with props Icon Check Circle 
           resizeMode="cover"
           source={
             Object {
-              "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+              "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png?width=128",
             }
           }
           style={
@@ -782,22 +794,25 @@ exports[`Header Avatar component renders correctly with props Icon First Label 1
             },
             Array [
               Array [
+                Array [
+                  Object {
+                    "borderRadius": 8,
+                    "height": 48,
+                    "width": 48,
+                  },
+                  Object {
+                    "borderRadius": 24,
+                  },
+                ],
                 Object {
-                  "borderRadius": 8,
-                  "height": 48,
-                  "width": 48,
+                  "borderColor": "#F2F5F8",
+                  "borderWidth": 2,
                 },
                 Object {
-                  "borderRadius": 24,
+                  "backgroundColor": "#FFFFFF",
                 },
               ],
-              Object {
-                "borderColor": "#F2F5F8",
-                "borderWidth": 2,
-              },
-              Object {
-                "backgroundColor": "#FFFFFF",
-              },
+              false,
             ],
           ]
         }
@@ -807,7 +822,7 @@ exports[`Header Avatar component renders correctly with props Icon First Label 1
           resizeMode="cover"
           source={
             Object {
-              "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+              "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png?width=128",
             }
           }
           style={
@@ -1000,22 +1015,25 @@ exports[`Header Avatar component renders correctly with props Icon First Label P
             },
             Array [
               Array [
+                Array [
+                  Object {
+                    "borderRadius": 8,
+                    "height": 48,
+                    "width": 48,
+                  },
+                  Object {
+                    "borderRadius": 24,
+                  },
+                ],
                 Object {
-                  "borderRadius": 8,
-                  "height": 48,
-                  "width": 48,
+                  "borderColor": "#F2F5F8",
+                  "borderWidth": 2,
                 },
                 Object {
-                  "borderRadius": 24,
+                  "backgroundColor": "#FFFFFF",
                 },
               ],
-              Object {
-                "borderColor": "#F2F5F8",
-                "borderWidth": 2,
-              },
-              Object {
-                "backgroundColor": "#FFFFFF",
-              },
+              false,
             ],
           ]
         }
@@ -1025,7 +1043,7 @@ exports[`Header Avatar component renders correctly with props Icon First Label P
           resizeMode="cover"
           source={
             Object {
-              "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+              "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png?width=128",
             }
           }
           style={
@@ -1218,22 +1236,25 @@ exports[`Header Avatar component renders correctly with props Second Label Props
             },
             Array [
               Array [
+                Array [
+                  Object {
+                    "borderRadius": 8,
+                    "height": 48,
+                    "width": 48,
+                  },
+                  Object {
+                    "borderRadius": 24,
+                  },
+                ],
                 Object {
-                  "borderRadius": 8,
-                  "height": 48,
-                  "width": 48,
+                  "borderColor": "#F2F5F8",
+                  "borderWidth": 2,
                 },
                 Object {
-                  "borderRadius": 24,
+                  "backgroundColor": "#FFFFFF",
                 },
               ],
-              Object {
-                "borderColor": "#F2F5F8",
-                "borderWidth": 2,
-              },
-              Object {
-                "backgroundColor": "#FFFFFF",
-              },
+              false,
             ],
           ]
         }
@@ -1243,7 +1264,7 @@ exports[`Header Avatar component renders correctly with props Second Label Props
           resizeMode="cover"
           source={
             Object {
-              "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+              "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png?width=128",
             }
           }
           style={

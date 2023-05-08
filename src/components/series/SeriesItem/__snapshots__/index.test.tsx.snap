@@ -101,22 +101,25 @@ exports[`SeriesItem component renders correctly 1`] = `
                 },
                 Array [
                   Array [
+                    Array [
+                      Object {
+                        "borderRadius": 8,
+                        "height": 48,
+                        "width": 48,
+                      },
+                      Object {
+                        "borderRadius": 24,
+                      },
+                    ],
                     Object {
-                      "borderRadius": 8,
-                      "height": 48,
-                      "width": 48,
+                      "borderColor": "#F2F5F8",
+                      "borderWidth": 2,
                     },
                     Object {
-                      "borderRadius": 24,
+                      "backgroundColor": "#FFFFFF",
                     },
                   ],
-                  Object {
-                    "borderColor": "#F2F5F8",
-                    "borderWidth": 2,
-                  },
-                  Object {
-                    "backgroundColor": "#FFFFFF",
-                  },
+                  false,
                 ],
               ]
             }
@@ -126,7 +129,7 @@ exports[`SeriesItem component renders correctly 1`] = `
               resizeMode="cover"
               source={
                 Object {
-                  "uri": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/91fae044-2182-47eb-97fb-c9e0bb6e5e6a.webp",
+                  "uri": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/91fae044-2182-47eb-97fb-c9e0bb6e5e6a.webp?width=128",
                 }
               }
               style={
@@ -425,11 +428,14 @@ exports[`SeriesItem component renders correctly 1`] = `
                 Object {
                   "overflow": "hidden",
                 },
-                Object {
-                  "borderRadius": 8,
-                  "height": 90,
-                  "width": 90,
-                },
+                Array [
+                  Object {
+                    "borderRadius": 8,
+                    "height": 90,
+                    "width": 90,
+                  },
+                  false,
+                ],
               ]
             }
           >
@@ -438,7 +444,7 @@ exports[`SeriesItem component renders correctly 1`] = `
               resizeMode="cover"
               source={
                 Object {
-                  "uri": "https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/f6bd62ee-ccec-4526-9b99-376861ad9426.jpeg",
+                  "uri": "https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/f6bd62ee-ccec-4526-9b99-376861ad9426.jpeg?width=96",
                 }
               }
               style={

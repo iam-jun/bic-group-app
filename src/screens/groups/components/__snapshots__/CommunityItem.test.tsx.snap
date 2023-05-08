@@ -66,18 +66,21 @@ exports[`CommunitItem component should render data correctly 1`] = `
                 "overflow": "hidden",
               },
               Array [
-                Object {
-                  "borderRadius": 8,
-                  "height": 64,
-                  "width": 64,
-                },
-                Object {
-                  "borderColor": "#F2F5F8",
-                  "borderWidth": 2,
-                },
-                Object {
-                  "backgroundColor": "#FFFFFF",
-                },
+                Array [
+                  Object {
+                    "borderRadius": 8,
+                    "height": 64,
+                    "width": 64,
+                  },
+                  Object {
+                    "borderColor": "#F2F5F8",
+                    "borderWidth": 2,
+                  },
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                  },
+                ],
+                false,
               ],
             ]
           }
@@ -87,7 +90,7 @@ exports[`CommunitItem component should render data correctly 1`] = `
             resizeMode="cover"
             source={
               Object {
-                "uri": "https://img.flaticon.com/icons/png/512/86/86494.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF",
+                "uri": "https://img.flaticon.com/icons/png/512/86/86494.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF&width=256",
               }
             }
             style={

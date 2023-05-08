@@ -6,7 +6,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { IPayloadGetSearchPosts } from '~/interfaces/IHome';
 
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import images from '~/resources/images';
 import Text from '~/baseComponents/Text';
 import { scaleSize } from '~/theme/dimension';

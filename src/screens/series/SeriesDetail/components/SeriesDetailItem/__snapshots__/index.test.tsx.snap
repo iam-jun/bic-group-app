@@ -296,22 +296,25 @@ exports[`SeriesDetailItem component render correctly 1`] = `
                     },
                     Array [
                       Array [
+                        Array [
+                          Object {
+                            "borderRadius": 6,
+                            "height": 32,
+                            "width": 32,
+                          },
+                          Object {
+                            "borderRadius": 16,
+                          },
+                        ],
                         Object {
-                          "borderRadius": 6,
-                          "height": 32,
-                          "width": 32,
+                          "borderColor": "#F2F5F8",
+                          "borderWidth": 2,
                         },
                         Object {
-                          "borderRadius": 16,
+                          "backgroundColor": "#FFFFFF",
                         },
                       ],
-                      Object {
-                        "borderColor": "#F2F5F8",
-                        "borderWidth": 2,
-                      },
-                      Object {
-                        "backgroundColor": "#FFFFFF",
-                      },
+                      false,
                     ],
                   ]
                 }
@@ -321,7 +324,7 @@ exports[`SeriesDetailItem component render correctly 1`] = `
                   resizeMode="cover"
                   source={
                     Object {
-                      "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/e69febe3-5962-41f9-9258-3a8579f3b0ab",
+                      "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/e69febe3-5962-41f9-9258-3a8579f3b0ab?width=96",
                     }
                   }
                   style={
@@ -355,24 +358,33 @@ exports[`SeriesDetailItem component render correctly 1`] = `
               }
             }
           >
-            <Text
-              numberOfLines={1}
+            <View
               style={
-                Array [
-                  Object {
-                    "color": "#212745",
-                    "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 11,
-                  },
-                  Object {
-                    "color": "#282E53",
-                  },
-                  undefined,
-                ]
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                }
               }
             >
-              Wall-E
-            </Text>
+              <Text
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "color": "#212745",
+                      "fontFamily": "BeVietnamPro-Medium",
+                      "fontSize": 11,
+                    },
+                    Object {
+                      "color": "#282E53",
+                    },
+                    undefined,
+                  ]
+                }
+              >
+                Wall-E
+              </Text>
+            </View>
           </View>
         </View>
       </View>
@@ -382,11 +394,14 @@ exports[`SeriesDetailItem component render correctly 1`] = `
             Object {
               "overflow": "hidden",
             },
-            Object {
-              "borderRadius": 4,
-              "height": 80,
-              "width": 120,
-            },
+            Array [
+              Object {
+                "borderRadius": 4,
+                "height": 80,
+                "width": 120,
+              },
+              false,
+            ],
           ]
         }
       >

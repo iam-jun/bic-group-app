@@ -102,22 +102,25 @@ exports[`DraftArticle component render correctly 1`] = `
                 },
                 Array [
                   Array [
+                    Array [
+                      Object {
+                        "borderRadius": 8,
+                        "height": 48,
+                        "width": 48,
+                      },
+                      Object {
+                        "borderRadius": 24,
+                      },
+                    ],
                     Object {
-                      "borderRadius": 8,
-                      "height": 48,
-                      "width": 48,
+                      "borderColor": "#F2F5F8",
+                      "borderWidth": 2,
                     },
                     Object {
-                      "borderRadius": 24,
+                      "backgroundColor": "#FFFFFF",
                     },
                   ],
-                  Object {
-                    "borderColor": "#F2F5F8",
-                    "borderWidth": 2,
-                  },
-                  Object {
-                    "backgroundColor": "#FFFFFF",
-                  },
+                  false,
                 ],
               ]
             }
@@ -127,7 +130,7 @@ exports[`DraftArticle component render correctly 1`] = `
               resizeMode="cover"
               source={
                 Object {
-                  "uri": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/c6b8b056-7d77-4382-b95c-010c2fda4809.jpg",
+                  "uri": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/c6b8b056-7d77-4382-b95c-010c2fda4809.jpg?width=128",
                 }
               }
               style={
@@ -278,11 +281,14 @@ exports[`DraftArticle component render correctly 1`] = `
         Object {
           "overflow": "hidden",
         },
-        Object {
-          "height": 321.42857142857144,
-          "marginTop": 12,
-          "width": "100%",
-        },
+        Array [
+          Object {
+            "height": 321.42857142857144,
+            "marginTop": 12,
+            "width": 750,
+          },
+          false,
+        ],
       ]
     }
   >
@@ -291,7 +297,7 @@ exports[`DraftArticle component render correctly 1`] = `
       resizeMode="cover"
       source={
         Object {
-          "uri": "https://bic-dev-user-upload-images-s3-bucket.s3.ap-southeast-1.amazonaws.com/post/original/fa2a7cde-eee0-4c09-9784-45e1c1ef7e6b.png",
+          "uri": "https://bic-dev-user-upload-images-s3-bucket.s3.ap-southeast-1.amazonaws.com/post/original/fa2a7cde-eee0-4c09-9784-45e1c1ef7e6b.png?width=828",
         }
       }
       style={

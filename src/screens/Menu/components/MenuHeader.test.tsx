@@ -14,19 +14,21 @@ describe('MenuHeader component', () => {
     avatar: 'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/05bcb2c1-2b5c-4f6e-b493-9183946c9318',
   };
 
+  const screenId = 'screenId';
+
   it('renders correctly', () => {
     useCommonController.setState((state) => {
       state.myProfile = fakeDataUserProfile as any;
       return state;
     });
-    const rendered = render(<MenuHeader />);
+    const rendered = render(<MenuHeader screenId={screenId} />);
 
     const fullNameComponent = rendered.getByTestId('menu_header.full_name');
     expect(fullNameComponent).toBeDefined();
 
     const fullNameTextComponent = rendered.getByTestId('menu_header.full_name.text');
     expect(fullNameTextComponent).toBeDefined();
-    expect(fullNameTextComponent.props?.children).toEqual(fakeDataUserProfile.fullname);
+    expect(fullNameTextComponent.props?.children?.[0]).toEqual(`${fakeDataUserProfile.fullname} `);
 
     const userNameComponent = rendered.getByTestId('menu_header.user_name');
     expect(userNameComponent).toBeDefined();
@@ -48,7 +50,7 @@ describe('MenuHeader component', () => {
     const rootNavigation = { navigate };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
-    const rendered = render(<MenuHeader />);
+    const rendered = render(<MenuHeader screenId={screenId} />);
     const itemComponent = rendered.getByTestId('menu_header.full_name');
     expect(itemComponent).toBeDefined();
     fireEvent.press(itemComponent);
@@ -65,7 +67,7 @@ describe('MenuHeader component', () => {
     const rootNavigation = { navigate };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
-    const rendered = render(<MenuHeader />);
+    const rendered = render(<MenuHeader screenId={screenId} />);
     const itemComponent = rendered.getByTestId('menu_header.user_name');
     expect(itemComponent).toBeDefined();
     fireEvent.press(itemComponent);
@@ -82,7 +84,7 @@ describe('MenuHeader component', () => {
     const rootNavigation = { navigate };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
-    const rendered = render(<MenuHeader />);
+    const rendered = render(<MenuHeader screenId={screenId} />);
     const itemComponent = rendered.getByTestId('menu_header.avatar');
     expect(itemComponent).toBeDefined();
     fireEvent.press(itemComponent);
