@@ -82,7 +82,7 @@ const ContentHeader: FC<ContentHeaderProps> = ({
       modalActions.showModal({
         isOpen: true,
         isFullScreen: true,
-        titleFullScreen: t('post:title_publish_to'),
+        titleFullScreen: t('post:title_published_to'),
         ContentComponent: (
           <PostAudiencesModal
             data={audience?.groups || []}
