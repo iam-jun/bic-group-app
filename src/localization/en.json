@@ -1305,7 +1305,8 @@
     "text_file_over_size": "Your files are larger than 25MB",
     "text_file_over_length": "You cannot upload more than {{max_files}} files",
     "text_file_extension_not_supported": "Not Supported",
-    "text_file_remainning": "The maximum files is {{max_files}} and {{remaining_size}} is available to upload"
+    "text_file_remainning": "The maximum files is {{max_files}} and {{remaining_size}} is available to upload",
+    "text_upload_image_fail": "Failed to upload"
   },
   "file_type": {
     "image": "image",

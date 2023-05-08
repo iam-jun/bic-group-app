@@ -1248,7 +1248,8 @@
     "text_file_over_size": "Tổng kích thước các tệp của bạn lớn hơn 25MB",
     "text_file_over_length": "Bạn không thể tải lên hơn {{max_files}} tệp",
     "text_file_extension_not_supported": "Không được hỗ trợ",
-    "text_file_remainning": "Tổng tệp có thể thêm là {{max_files}} và dung lượng còn lại là {{remaining_size}}"
+    "text_file_remainning": "Tổng tệp có thể thêm là {{max_files}} và dung lượng còn lại là {{remaining_size}}",
+    "text_upload_image_fail": "Không thể tải lên hình ảnh"
   },
   "file_type": {
     "image": "hình ảnh",

@@ -80,10 +80,7 @@ const uploadImage = (set, _get) => async (data: IUploadParam) => {
       }
     }
   } catch (error) {
-    const fileType = i18next.t('file_type:image');
-    const errorUploadMessage = i18next.t('upload:text_upload_request_failed', {
-      file_type: fileType,
-    });
+    const errorUploadMessage = i18next.t('upload:text_upload_image_fail');
     const message = getErrorMessageFromResponse(error) || errorUploadMessage;
     set((state: IUploaderState) => {
       state.errors[file.name] = message;
