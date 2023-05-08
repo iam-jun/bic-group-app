@@ -1,4 +1,4 @@
-import { IUploadType } from '~/configs/resourceConfig';
+import { ResourceUploadType } from './IUpload';
 import { IFilePicked } from './common';
 import { ILanguageResponseItem } from './IAuth';
 
@@ -19,7 +19,7 @@ export interface IUserImageUpload {
   id: string;
   fieldName: 'avatar' | 'backgroundImgUrl';
   file: IFilePicked;
-  uploadType: IUploadType;
+  uploadType: ResourceUploadType;
 }
 
 export interface IGenderItem {

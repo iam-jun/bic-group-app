@@ -27,6 +27,7 @@ const ImagePreviewer: React.FC<ImagePreviewerProps> = ({
   return (
     <View>
       <TouchableOpacity
+        testID="image_previewer.touchable_img"
         onPress={() => setVisible(true)}
         onLongPress={_onLongPress}
       >

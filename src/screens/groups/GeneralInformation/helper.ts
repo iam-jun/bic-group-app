@@ -1,44 +1,40 @@
 import { t } from 'i18next';
 import { Platform } from 'react-native';
 import ImagePicker from '~/beinComponents/ImagePicker';
-import { IUploadType } from '~/configs/resourceConfig';
+import { ResourceUploadType } from '~/interfaces/IUpload';
 import { IFilePicked } from '~/interfaces/common';
 import { groupProfileImageCropRatio } from '~/theme/dimension';
-import useGroupsStore from '~/store/entities/groups';
 import { checkPermission, PermissionTypes } from '~/utils/permission';
 import { AppConfig } from '~/configs';
 import { formatBytes } from '~/utils/formatter';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import showToast from '~/store/helper/showToast';
+import useGeneralInformationStore from './store';
+import { FieldNameImageUpload } from '~/interfaces/IGroup';
 
 export const uploadFile = ({
-  dispatch,
   ...props
-}: {
-  dispatch: any;
+}:{
   id: string;
   file: IFilePicked;
-  fieldName: 'icon' | 'backgroundImgUrl';
-  uploadType: IUploadType;
+  fieldName: FieldNameImageUpload;
+  uploadType: ResourceUploadType;
   destination: 'group' | 'community';
   rootGroupId: string;
 }) => {
-  useGroupsStore.getState().actions.uploadImage({ ...props });
+  useGeneralInformationStore.getState().actions.uploadImage({ ...props });
 };
 
-// 'icon' for avatar and 'backgroundImgUrl' for cover
 export const _openImagePicker = async ({
-  dispatch,
   id,
   fieldName,
   uploadType,
   destination,
   rootGroupId,
-}: {
-  dispatch: any;
+}:{
   id: string;
-  fieldName: 'icon' | 'backgroundImgUrl';
-  uploadType: IUploadType;
+  fieldName: FieldNameImageUpload;
+  uploadType: ResourceUploadType;
   destination: 'group' | 'community';
   rootGroupId: string;
 }) => {
@@ -53,7 +49,6 @@ export const _openImagePicker = async ({
           const isValidFileSelected = checkFileSelected(file);
           if (isValidFileSelected) {
             uploadFile({
-              dispatch,
               id,
               file,
               fieldName,

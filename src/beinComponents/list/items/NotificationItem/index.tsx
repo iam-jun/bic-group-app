@@ -31,6 +31,7 @@ const NOT_SHOW_AVATAR_LIST = [
   NOTIFICATION_TYPE.GROUP_ADDED_TO_GROUP_TO_USER_IN_MULTIPLE_GROUPS,
   NOTIFICATION_TYPE.CONTENT_HIDE_TO_USER,
   NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME,
+  NOTIFICATION_TYPE.APPROVED_KYC,
 ];
 
 export interface NotificationItemProps {
@@ -96,6 +97,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           description={extra?.description || ''}
           content={extra?.content || ''}
           updatedAt={updatedAt}
+          type={extra.type}
         />
       )}
       <ButtonWrapper

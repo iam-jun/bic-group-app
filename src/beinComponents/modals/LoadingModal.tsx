@@ -7,7 +7,7 @@ import {
 import LottieView from 'lottie-react-native';
 import Animated, { FadeInUp, FadeOutDown } from 'react-native-reanimated';
 
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import images from '~/resources/images';
 import { LottieFileLoading } from '~/resources/lottieJson';
 import useModalStore from '~/store/modal';

@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import Animated from 'react-native-reanimated';
 
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 

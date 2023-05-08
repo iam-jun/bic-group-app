@@ -7,10 +7,10 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Button from '~/beinComponents/Button';
 import Icon from '~/baseComponents/Icon';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Text from '~/baseComponents/Text';
-import { getResourceUrl, IUploadType } from '~/configs/resourceConfig';
+import { ResourceUploadType } from '~/interfaces/IUpload';
 import { useBaseHook } from '~/hooks';
 import { IFilePicked } from '~/interfaces/common';
 
@@ -21,7 +21,7 @@ import { formatBytes } from '~/utils/formatter';
 
 export interface UploadingImageProps {
   style?: StyleProp<ViewStyle>;
-  uploadType: IUploadType | string;
+  uploadType: ResourceUploadType;
   file?: IFilePicked;
   fileName?: string;
   url?: string;
@@ -57,6 +57,8 @@ const UploadingImage: FC<UploadingImageProps> = ({
   const [imageUrl, setImageUrl] = useState<string>(url);
   const [error, setError] = useState('');
 
+  const imgWidthStyle = typeof width === 'number' ? width : '100%';
+
   useEffect(() => {
     if (uploadError) {
       const errorMessage = typeof uploadError === 'string' ? uploadError : t('post:error_upload_photo_failed');
@@ -79,10 +81,6 @@ const UploadingImage: FC<UploadingImageProps> = ({
   const _setImageUrl = (url: string) => {
     if (url?.includes('http')) {
       setImageUrl(url);
-    } else {
-      setImageUrl(getResourceUrl(
-        uploadType, url,
-      ));
     }
   };
 
@@ -96,7 +94,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
     if (url) {
       _setImageUrl(url);
     } else if (file) {
-      actions.upload({ type: 'image', file, uploadType });
+      actions.uploadImage({ file, uploadType });
     }
   };
 
@@ -149,7 +147,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
       testID="upload_image"
     >
       {!!imageUrl ? (
-        <Image source={imageUrl} style={styles.image} />
+        <Image source={imageUrl} style={{ height: '100%', width: imgWidthStyle }} />
       ) : (
         <View style={styles.contentContainer}>
           <LoadingIndicator size="large" />

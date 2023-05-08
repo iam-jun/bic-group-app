@@ -24,6 +24,7 @@ const postsSelector = {
   getType: (id: string) => (state: IPostsState) => state?.posts?.[id]?.type,
   getReportDetails: (id: string) => (state: IPostsState) => state?.posts?.[id]?.reportDetails,
   getIsHidden: (id: string) => (state: IPostsState) => state?.posts?.[id]?.isHidden,
+  getErrorContent: (id: string) => (state: IPostsState) => state?.errorContents?.[id],
 };
 
 export default postsSelector;

@@ -21,12 +21,15 @@ const appConfig = {
   maxFiles: 25,
   totalFileSize: 25 * 1024 * 1024, // kb => byte = 25Mb
   fileUploadTimeout: 5 * 60 * 1000, // 5 minutes,
+  getStatusImageTimeout: 60 * 1000, // 1 minute,
   commentLimit: 10,
   limitPostContentLength: 400,
   shortPostContentLength: 400,
   articlesInSeriesLimit: 20,
   articlePhotoMaxSize: 25 * 1024 * 1024, // kb => byte = 25Mb
   groupImageMaxSize: 25 * 1024 * 1024,
+  userCoverImageMaxSize: 10 * 1024 * 1024,
+  userAvatarImageMaxSize: 10 * 1024 * 1024,
   superUsers: [
     'namanh@evolgroup.vn',
     'dieplamminhthu@evolgroup.vn',

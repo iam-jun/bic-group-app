@@ -11,7 +11,7 @@ import { spacing } from '~/theme';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import BannerReport from '~/components/Report/BannerReport';
 import useReportContentStore from '~/components/Report/store';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import images from '~/resources/images';
 import Text from '~/baseComponents/Text';
 import ContentItem from '~/components/ContentItem';

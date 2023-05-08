@@ -33,7 +33,7 @@ const EditPrivacy = (props: any) => {
   const groupActions = useGeneralInformationStore((state) => state.actions);
   const actions = useGroupMemberStore((state) => state.actions);
 
-  const shouldSelectSecretPrivacy = selectedPrivacy === privacyType.SECRET;
+  const shouldSelectSecretPrivacy = selectedPrivacy === GroupPrivacyType.SECRET;
   const shouldSelectPrivatePrivacy = selectedPrivacy === privacyType.PRIVATE;
 
   const [joinSettingState, setJoinSettingState] = useState(isJoinApproval);
@@ -118,14 +118,17 @@ const EditPrivacy = (props: any) => {
         </View>
       )}
 
-      <PrivacyItem
-        value={privacyType.SECRET}
-        icon="iconSecret"
-        title="settings:title_secret"
-        subtitle={`settings:title_secret_subtitle_${type}`}
-        selectedPrivacy={selectedPrivacy}
-        onPress={onSelectPrivacy}
-      />
+      {isGroupScope && (
+        <PrivacyItem
+          value={GroupPrivacyType.SECRET}
+          icon="iconSecret"
+          title="settings:title_secret"
+          subtitle="settings:title_secret_subtitle_group"
+          selectedPrivacy={selectedPrivacy}
+          onPress={onSelectPrivacy}
+        />
+      )}
+
       {shouldSelectSecretPrivacy && (
         <View style={styles.privacyBannerView}>
           <Icon icon="CircleInfo" tintColor={colors.neutral20} size={18} />
