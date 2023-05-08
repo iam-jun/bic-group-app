@@ -21,6 +21,9 @@ import CoverHeader from './fragments/CoverHeader';
 import UserHeader from './fragments/UserHeader';
 import useUserProfileStore from './store';
 import useCommonController from '~/screens/store';
+import Tooltip from '../../../components/Tooltip.tsx';
+
+const screenId = 'userProfile';
 
 const UserProfile = (props: any) => {
   const { userId, params } = props?.route?.params || {};
@@ -121,6 +124,7 @@ const UserProfile = (props: any) => {
             uploadCallback={uploadCallback}
           />
           <UserHeader
+            screenId={screenId}
             id={userId}
             fullname={fullname}
             username={username}
@@ -145,6 +149,7 @@ const UserProfile = (props: any) => {
             isCurrentUser={isCurrentUser}
           />
           <Experiences isCurrentUser={isCurrentUser} />
+          <Tooltip screenId={screenId} />
         </ScrollView>
       )}
     </ScreenWrapper>

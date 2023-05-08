@@ -312,10 +312,13 @@ exports[`SeriesDetail component renders correctly 1`] = `
                   Object {
                     "overflow": "hidden",
                   },
-                  Object {
-                    "height": 167,
-                    "width": 750,
-                  },
+                  Array [
+                    Object {
+                      "height": 167,
+                      "width": 750,
+                    },
+                    false,
+                  ],
                 ]
               }
             >
@@ -324,7 +327,7 @@ exports[`SeriesDetail component renders correctly 1`] = `
                 resizeMode="cover"
                 source={
                   Object {
-                    "uri": "https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/f6bd62ee-ccec-4526-9b99-376861ad9426.jpeg",
+                    "uri": "https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/f6bd62ee-ccec-4526-9b99-376861ad9426.jpeg?width=828",
                   }
                 }
                 style={
@@ -945,11 +948,14 @@ exports[`SeriesDetail component renders delete item when series deleted 1`] = `
           Object {
             "overflow": "hidden",
           },
-          Object {
-            "height": 35,
-            "marginRight": 16,
-            "width": 35,
-          },
+          Array [
+            Object {
+              "height": 35,
+              "marginRight": 16,
+              "width": 35,
+            },
+            false,
+          ],
         ]
       }
     >

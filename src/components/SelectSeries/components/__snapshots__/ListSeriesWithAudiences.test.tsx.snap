@@ -827,10 +827,13 @@ exports[`ListSeriesWithAudiences component render correctly when data is empty 1
             Object {
               "overflow": "hidden",
             },
-            Object {
-              "aspectRatio": 1,
-              "width": 150,
-            },
+            Array [
+              Object {
+                "aspectRatio": 1,
+                "width": 150,
+              },
+              false,
+            ],
           ]
         }
       >

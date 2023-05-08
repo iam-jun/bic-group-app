@@ -27,6 +27,8 @@ import { getSectionData } from '~/helpers/post';
 import { useRootNavigation } from '~/hooks/navigation';
 import ContentUnavailable from '~/components/ContentUnavailable';
 import BannerReport from '~/components/Report/BannerReport';
+import APIErrorCode from '~/constants/apiErrorCode';
+import ContentNoPermission from '~/components/ContentNoPermission';
 
 const _ArticleDetail: FC<IRouteParams> = (props) => {
   const { params } = props.route;
@@ -44,14 +46,15 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
 
   const [refreshing, setRefreshing] = useState(false);
   const data = usePostsStore(useCallback(postsSelector.getPost(id, {}), [id]));
+  const errorContent = usePostsStore(useCallback(postsSelector.getErrorContent(id), [id]));
 
   const comments = useCommentsStore(useCallback(commentsSelector.getCommentsByParentId(id), [id]));
   const firstCommentId = comments[0]?.id || '';
   const sectionData = useMemo(() => getSectionData(comments), [comments]);
 
-  const { actions, errors } = useArticlesStore((state: IArticlesState) => state);
+  const { actions } = useArticlesStore((state: IArticlesState) => state);
   const { putMarkSeenPost } = usePostsStore((state: IPostsState) => state.actions);
-  const isFetchError = errors[id];
+  const { isError, code } = errorContent || {};
 
   const { audience, setting, reported } = data || {};
 
@@ -185,11 +188,22 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     );
   };
 
-  if (!isMounted || !data || (isEmpty(data) && !isFetchError)) return renderLoading();
+  if (!isMounted || !data || (isEmpty(data) && !isError)) return renderLoading();
 
-  if (isFetchError) {
+  if (isError && (
+    code === APIErrorCode.Post.CONTENT_GROUP_REQUIRED
+    || code === APIErrorCode.Post.ARTICLE_NO_READ_PERMISSION
+  )) {
+    return <ContentNoPermission data={errorContent} />;
+  }
+
+  if (isError && (
+    code !== APIErrorCode.Post.CONTENT_GROUP_REQUIRED
+    || code !== APIErrorCode.Post.ARTICLE_NO_READ_PERMISSION
+  )) {
     return <ContentUnavailable />;
   }
+
   return (
     <ScreenWrapper
       testID="article_detail"

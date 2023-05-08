@@ -37,15 +37,22 @@ const getArticleDetail = (set, get) => async (payload: IPayloadGetArticleDetail)
 
     set((state) => {
       delete state.requestings[id];
-      state.errors[id] = false;
     }, 'getArticlesSuccess');
 
     usePostsStore.getState().actions.addToPosts({ data: response || {}, handleComment: true });
+    usePostsStore.getState().actions.addToErrorContents(id, { isError: false });
   } catch (error) {
+    usePostsStore.getState().actions.addToErrorContents(id, {
+      isError: true,
+      code: error?.code,
+      message: error?.meta?.message || '',
+      requireGroups: error?.meta?.errors?.requireGroups || [],
+    });
+
     set((state) => {
       delete state.requestings[id];
-      state.errors[id] = true;
     }, 'getArticlesError');
+
     console.error('getArticleDetail', error);
   }
 };

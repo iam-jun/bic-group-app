@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import images from '~/resources/images';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { spacing } from '~/theme';
@@ -10,7 +10,7 @@ import {
   IPayloadGetDraftContents,
   IPost,
 } from '~/interfaces/IPost';
-import { scaleCoverHeight } from '~/theme/dimension';
+import dimension, { scaleCoverHeight } from '~/theme/dimension';
 import Divider from '~/beinComponents/Divider';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -197,7 +197,7 @@ const createStyles = (theme: ExtendedTheme) => {
       ...elevations.e2,
     },
     cover: {
-      width: '100%',
+      width: dimension.deviceWidth,
       height: scaleCoverHeight(),
       marginTop: spacing.margin.base,
     },

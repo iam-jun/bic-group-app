@@ -1448,10 +1448,13 @@ exports[`CreateArticleContent screen should trigger onInitializeEnd 1`] = `
                               Object {
                                 "overflow": "hidden",
                               },
-                              Object {
-                                "height": 14,
-                                "width": 14,
-                              },
+                              Array [
+                                Object {
+                                  "height": 14,
+                                  "width": 14,
+                                },
+                                false,
+                              ],
                             ]
                           }
                         >

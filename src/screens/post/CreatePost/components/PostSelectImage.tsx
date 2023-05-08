@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import UploadingImage from '~/beinComponents/UploadingImage';
-import { uploadTypes } from '~/configs/resourceConfig';
+import { ResourceUploadType } from '~/interfaces/IUpload';
 import { ICreatePostImage } from '~/interfaces/IPost';
 import dimension from '~/theme/dimension';
 
@@ -52,7 +52,7 @@ const PostSelectImage = () => {
     return (
       <UploadingImage
         key={`create_post_image_${index}_${item?.fileName}`}
-        uploadType={uploadTypes.postImage}
+        uploadType={ResourceUploadType.postContent}
         style={styles.item}
         file={file}
         fileName={fileName}

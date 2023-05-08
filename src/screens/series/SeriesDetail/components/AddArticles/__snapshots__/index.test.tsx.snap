@@ -1054,10 +1054,13 @@ exports[`AddArticles component renders correctly with empty data 1`] = `
               Object {
                 "overflow": "hidden",
               },
-              Object {
-                "aspectRatio": 1,
-                "width": 150,
-              },
+              Array [
+                Object {
+                  "aspectRatio": 1,
+                  "width": 150,
+                },
+                false,
+              ],
             ]
           }
         >

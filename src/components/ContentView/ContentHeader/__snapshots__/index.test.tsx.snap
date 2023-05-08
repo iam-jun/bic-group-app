@@ -88,22 +88,25 @@ exports[`ContentHeader component render correctly 1`] = `
               },
               Array [
                 Array [
+                  Array [
+                    Object {
+                      "borderRadius": 8,
+                      "height": 48,
+                      "width": 48,
+                    },
+                    Object {
+                      "borderRadius": 24,
+                    },
+                  ],
                   Object {
-                    "borderRadius": 8,
-                    "height": 48,
-                    "width": 48,
+                    "borderColor": "#F2F5F8",
+                    "borderWidth": 2,
                   },
                   Object {
-                    "borderRadius": 24,
+                    "backgroundColor": "#FFFFFF",
                   },
                 ],
-                Object {
-                  "borderColor": "#F2F5F8",
-                  "borderWidth": 2,
-                },
-                Object {
-                  "backgroundColor": "#FFFFFF",
-                },
+                false,
               ],
             ]
           }
@@ -111,7 +114,7 @@ exports[`ContentHeader component render correctly 1`] = `
           <FastImageView
             onFastImageError={[Function]}
             resizeMode="cover"
-            source={null}
+            source={Object {}}
             style={
               Object {
                 "bottom": 0,

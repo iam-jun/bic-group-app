@@ -3,9 +3,9 @@ import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import spacing, { margin } from '~/theme/spacing';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import images from '~/resources/images';
-import { scaleCoverHeight } from '~/theme/dimension';
+import dimension, { scaleCoverHeight } from '~/theme/dimension';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { ButtonMarkAsRead, PostImportant } from '~/components/posts';
 import ArticleHeader from '../ArticleHeader';
@@ -209,7 +209,7 @@ const themeStyles = (theme: ExtendedTheme) => {
       ...elevations.e2,
     },
     cover: {
-      width: '100%',
+      width: dimension.deviceWidth,
       height: coverHeight,
       marginTop: margin.base,
     },

@@ -15,7 +15,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import DeviceInfo from 'react-native-device-info';
 
 import { useBaseHook } from '~/hooks';
-import { uploadTypes } from '~/configs/resourceConfig';
+import { ResourceUploadType } from '~/interfaces/IUpload';
 import { fontFamilies } from '~/theme/fonts';
 
 import Header from '~/beinComponents/Header';
@@ -161,7 +161,7 @@ const EditComment: FC<EditCommentProps> = ({ route }: EditCommentProps) => {
 
     return (
       <UploadingImage
-        uploadType={uploadTypes.commentImage}
+        uploadType={ResourceUploadType.commentContent}
         style={{ alignSelf: 'center' }}
         file={file}
         fileName={fileName}

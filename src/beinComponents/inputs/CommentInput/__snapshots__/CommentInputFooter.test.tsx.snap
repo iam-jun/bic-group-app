@@ -289,10 +289,13 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
                     Object {
                       "overflow": "hidden",
                     },
-                    Object {
-                      "height": 20,
-                      "width": 20,
-                    },
+                    Array [
+                      Object {
+                        "height": 20,
+                        "width": 20,
+                      },
+                      false,
+                    ],
                   ]
                 }
               >
@@ -744,10 +747,13 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
                     Object {
                       "overflow": "hidden",
                     },
-                    Object {
-                      "height": 20,
-                      "width": 20,
-                    },
+                    Array [
+                      Object {
+                        "height": 20,
+                        "width": 20,
+                      },
+                      false,
+                    ],
                   ]
                 }
               >

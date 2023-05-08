@@ -50,7 +50,7 @@ describe('PostSelectImage component', () => {
       .spyOn(uploadApi, 'createFileId')
       .mockImplementation(() => Promise.resolve(createIdResponse) as any);
     jest
-      .spyOn(uploadApi, 'uploadImage')
+      .spyOn(uploadApi, 'uploadImageToS3')
       .mockImplementation(() => Promise.resolve(uploadResponse) as any);
 
     const { result: resultCreatePostStore } = renderHook(() => useCreatePostStore((state) => state));

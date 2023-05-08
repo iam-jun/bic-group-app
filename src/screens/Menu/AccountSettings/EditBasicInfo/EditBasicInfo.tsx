@@ -40,7 +40,7 @@ const EditBasicInfo = () => {
 
   const myProfileData = useCommonController((state) => state.myProfile);
   const {
-    id, fullname, gender, birthday, relationshipStatus, language,
+    id, fullname, gender, birthday, relationshipStatus, language, isVerified,
   }
     = myProfileData;
 
@@ -82,6 +82,7 @@ const EditBasicInfo = () => {
   const onSave = () => {
     Keyboard.dismiss();
     actions.editMyProfile({
+      isVerified,
       data: {
         id,
         fullname: nameState,
@@ -175,13 +176,25 @@ const EditBasicInfo = () => {
           }
           maxLength={64}
           placeholder={t('settings:enter_name')}
+          editable={!isVerified}
         />
         <Text.BodyXS useI18n>
-          settings:text_input_edit_info_fullname_max_64
+          {isVerified ? 'settings:text_profile_is_verified' : 'settings:text_input_edit_info_fullname_max_64'}
         </Text.BodyXS>
         <ViewSpacing height={spacing.padding.large} />
         <TitleComponent title="settings:title_gender" isOptional />
-        <Gender genderState={genderState} setGenderState={setGenderState} />
+        <Gender
+          genderState={genderState}
+          setGenderState={setGenderState}
+          disabled={isVerified}
+        />
+        {
+        isVerified && (
+        <Text.BodyXS useI18n style={styles.textGenderIsVerified}>
+          settings:text_profile_is_verified
+        </Text.BodyXS>
+        )
+        }
         <ViewSpacing height={spacing.padding.large} />
         <TitleComponent title="settings:title_birthday" isOptional />
         <DateInput
@@ -192,7 +205,15 @@ const EditBasicInfo = () => {
           maxDate={maxBirthday()}
           onConfirm={onSetBirthday}
           placeholder="DD/MM/YYYY"
+          disabled={isVerified}
         />
+        {
+        isVerified && (
+        <Text.BodyXS useI18n style={styles.textBirthdayIsVerified}>
+          settings:text_profile_is_verified
+        </Text.BodyXS>
+        )
+        }
         <ViewSpacing height={spacing.padding.large} />
         <LanguageOptionMenu
           onChangeLanguages={_onChangeLanguages}
@@ -261,6 +282,12 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     btnRightHeader: {
       marginRight: spacing.margin.small,
+    },
+    textGenderIsVerified: {
+      marginTop: spacing.margin.small,
+    },
+    textBirthdayIsVerified: {
+      marginTop: spacing.margin.tiny,
     },
   });
 };

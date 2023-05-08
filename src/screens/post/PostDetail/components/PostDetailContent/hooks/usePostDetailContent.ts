@@ -60,6 +60,9 @@ const usePostDetailContent = ({
   const reported = usePostsStore(
     useCallback(postsSelector.getReported(postId), [postId]),
   );
+  const errorContent = usePostsStore(
+    useCallback(postsSelector.getErrorContent(postId), [postId]),
+  );
   const {
     deletePostLocal,
     putMarkSeenPost,
@@ -208,6 +211,7 @@ const usePostDetailContent = ({
     groupIds,
     comments,
     sectionData,
+    errorContent,
 
     onRefresh,
     onPressMarkSeenPost,

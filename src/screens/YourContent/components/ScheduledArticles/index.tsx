@@ -7,7 +7,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { spacing } from '~/theme';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import images from '~/resources/images';
 import Text from '~/baseComponents/Text';
 import useScheduleArticlesStore from './store';

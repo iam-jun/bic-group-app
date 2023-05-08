@@ -408,7 +408,9 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
       <View
         style={
           Object {
-            "marginBottom": 16,
+            "borderBottomColor": "#E3E6F2",
+            "borderBottomWidth": 1,
+            "paddingBottom": 8,
           }
         }
         testID="selecting_audience.container"
@@ -432,18 +434,19 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
         </Text>
         <RCTScrollView
           horizontal={true}
+          showsHorizontalScrollIndicator={false}
         >
           <View />
         </RCTScrollView>
       </View>
       <RCTScrollView
-        ItemSeparatorComponent={[Function]}
         ListEmptyComponent={null}
         ListFooterComponent={
           <View
             style={
               Object {
-                "marginBottom": 16,
+                "marginBottom": 32,
+                "marginTop": 24,
               }
             }
           >
@@ -453,11 +456,18 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
             />
           </View>
         }
+        ListHeaderComponent={
+          <ViewSpacing
+            height={8}
+          />
+        }
         data={Array []}
         getItem={[Function]}
         getItemCount={[Function]}
         keyExtractor={[Function]}
         onContentSizeChange={[Function]}
+        onEndReached={[Function]}
+        onEndReachedThreshold={0.4}
         onLayout={[Function]}
         onMomentumScrollBegin={[Function]}
         onMomentumScrollEnd={[Function]}
@@ -482,7 +492,22 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
             <View
               style={
                 Object {
-                  "marginBottom": 16,
+                  "height": 8,
+                  "paddingHorizontal": undefined,
+                  "paddingVertical": undefined,
+                  "width": undefined,
+                }
+              }
+            />
+          </View>
+          <View
+            onLayout={[Function]}
+          >
+            <View
+              style={
+                Object {
+                  "marginBottom": 32,
+                  "marginTop": 24,
                 }
               }
             >

@@ -1,7 +1,8 @@
-import { IGroupDetailEdit } from '~/interfaces/IGroup';
+import { IGroupDetailEdit, IGroupImageUpload } from '~/interfaces/IGroup';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore } from '~/store/utils';
 import editGroupDetail from './actions/editGroupDetail';
+import uploadImage from './actions/uploadImage';
 
 export interface IGeneralInformationState extends IBaseState {
   loadingAvatar: boolean;
@@ -9,7 +10,8 @@ export interface IGeneralInformationState extends IBaseState {
   actions: {
     setLoadingAvatar: (payload: boolean) => void;
     setLoadingCover: (payload: boolean) => void;
-    editGroupDetail: (data: IGroupDetailEdit, callback?: () => void) => void;
+    editGroupDetail: (data: IGroupDetailEdit, callback?: () => void) => Promise<void>;
+    uploadImage: (payload: IGroupImageUpload) => void;
   };
 }
 
@@ -22,6 +24,7 @@ const generalInformationStore = (set, get) => ({
   ...initialState,
   actions: {
     editGroupDetail: editGroupDetail(set, get),
+    uploadImage: uploadImage(set, get),
     setLoadingAvatar: (payload: boolean) => {
       set((state: IGeneralInformationState) => {
         state.loadingAvatar = payload;

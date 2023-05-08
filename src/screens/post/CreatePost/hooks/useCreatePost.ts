@@ -1,7 +1,6 @@
 import { isEmpty } from 'lodash';
 import { useEffect } from 'react';
 import appConfig from '~/configs/appConfig';
-import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
 import { PermissionKey } from '~/constants/permissionScheme';
 import { useBaseHook } from '~/hooks';
 import { IFilePicked } from '~/interfaces/common';
@@ -131,9 +130,7 @@ export const useCreatePost = (params?: UseCreatePostParams) => {
           width: item?.width || 0,
           height: item?.height || 0,
         },
-        url: item?.name?.includes('http')
-          ? item.name
-          : getResourceUrl(uploadTypes.postImage, item?.name),
+        url: item?.url,
       });
     });
     return initImgs;

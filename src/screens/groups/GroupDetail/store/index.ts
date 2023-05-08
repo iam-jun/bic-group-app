@@ -3,7 +3,6 @@ import { IGroupDetail } from '~/interfaces/IGroup';
 import useGroupsStore from '~/store/entities/groups';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore } from '~/store/utils';
-import useGeneralInformationStore from '../../GeneralInformation/store';
 import getGroupDetail from './actions/getGroupDetail';
 import leaveGroup from './actions/leaveGroup';
 
@@ -29,9 +28,6 @@ const groupDetailStore = (set) => ({
     getGroupDetail: getGroupDetail(set),
     setGroupDetail: (payload: IGroupDetail | null) => {
       set((state: IGroupDetailState) => {
-        const { setLoadingAvatar, setLoadingCover } = useGeneralInformationStore.getState().actions;
-        setLoadingAvatar(false);
-        setLoadingCover(false);
         state.isLoadingGroupDetailError = initialState.isLoadingGroupDetailError;
         state.loadingGroupDetail = initialState.loadingGroupDetail;
       }, 'setGroupDetail');

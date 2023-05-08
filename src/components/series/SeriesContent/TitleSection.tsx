@@ -2,7 +2,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import spacing, { borderRadius } from '~/theme/spacing';
-import Image from '~/beinComponents/Image';
+import Image from '~/components/Image';
 import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useBaseHook } from '~/hooks';

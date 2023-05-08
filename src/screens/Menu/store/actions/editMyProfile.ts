@@ -8,16 +8,25 @@ import IMenuController from '../Interface';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const editMyProfile = (_set, get) => async ({
+  isVerified,
   data,
   callback,
 }: {
+  isVerified
   data: IUserEdit;
   editFieldToastMessage?: string;
   callback?: () => void;
 }) => {
   const { actions }: IMenuController = get();
   try {
-    const response = await groupApi.editMyProfile(data);
+    const payload = data;
+    if (!!isVerified) {
+      delete payload?.fullname;
+      delete payload?.gender;
+      delete payload?.birthday;
+    }
+
+    const response = await groupApi.editMyProfile(payload);
 
     useCommonController.getState().actions.setMyProfile(mapProfile(response.data));
 
