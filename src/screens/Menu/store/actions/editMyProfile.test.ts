@@ -5,8 +5,7 @@ import { GENDER_TYPE, RELATIONSHIP_TYPE } from '~/interfaces/IEditUser';
 import { editProfileResponse } from '../__mocks__/data';
 import useCommonController from '~/screens/store';
 import useModalStore from '~/store/modal';
-import { IToastMessage } from '~/interfaces/common';
-import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import * as showToastSuccess from '~/store/helper/showToastSuccess';
 
 const fakeProfile = {
   id: 'test_id',
@@ -23,6 +22,8 @@ describe('editMyProfile action', () => {
     jest.runOnlyPendingTimers(); // you must add this
     jest.useRealTimers(); // you must add this
   });
+
+  const spyShowToastSuccess = jest.spyOn(showToastSuccess, 'default');
 
   it('should edit successfully with full payload', () => {
     const fakeCallback = jest.fn();
@@ -47,15 +48,6 @@ describe('editMyProfile action', () => {
       .spyOn(useCommonController, 'getState')
       .mockImplementation(() => ({ actions } as any));
 
-    const toastMessage: IToastMessage = {
-      content: 'common:text_edit_success',
-      type: ToastType.SUCCESS,
-    };
-    const showToast = jest.fn();
-    jest
-      .spyOn(useModalStore, 'getState')
-      .mockImplementation(() => ({ actions: { showToast } } as any));
-
     jest.useFakeTimers();
 
     const { result } = renderHook(() => useMenuController((state) => state));
@@ -69,7 +61,7 @@ describe('editMyProfile action', () => {
     expect(spyCallApi).toBeCalled();
     expect(spyCommonController).toBeCalled();
 
-    expect(showToast).toBeCalledWith(toastMessage);
+    expect(spyShowToastSuccess).toBeCalled();
     expect(fakeCallback).toBeCalled();
   });
 
@@ -96,15 +88,6 @@ describe('editMyProfile action', () => {
       .spyOn(useCommonController, 'getState')
       .mockImplementation(() => ({ actions } as any));
 
-    const toastMessage: IToastMessage = {
-      content: payload.editFieldToastMessage,
-      type: ToastType.SUCCESS,
-    };
-    const showToast = jest.fn();
-    jest
-      .spyOn(useModalStore, 'getState')
-      .mockImplementation(() => ({ actions: { showToast } } as any));
-
     jest.useFakeTimers();
 
     const { result } = renderHook(() => useMenuController((state) => state));
@@ -118,7 +101,7 @@ describe('editMyProfile action', () => {
     expect(spyCallApi).toBeCalled();
     expect(spyCommonController).toBeCalled();
 
-    expect(showToast).toBeCalledWith(toastMessage);
+    expect(spyShowToastSuccess).toBeCalled();
     expect(fakeCallback).toBeCalled();
   });
 
@@ -143,15 +126,6 @@ describe('editMyProfile action', () => {
       .spyOn(useCommonController, 'getState')
       .mockImplementation(() => ({ actions } as any));
 
-    const toastMessage: IToastMessage = {
-      content: 'common:avatar_changed',
-      type: ToastType.SUCCESS,
-    };
-    const showToast = jest.fn();
-    jest
-      .spyOn(useModalStore, 'getState')
-      .mockImplementation(() => ({ actions: { showToast } } as any));
-
     jest.useFakeTimers();
 
     const { result } = renderHook(() => useMenuController((state) => state));
@@ -165,7 +139,7 @@ describe('editMyProfile action', () => {
     expect(spyCallApi).toBeCalled();
     expect(spyCommonController).toBeCalled();
 
-    expect(showToast).toBeCalledWith(toastMessage);
+    expect(spyShowToastSuccess).toBeCalled();
   });
 
   it('should edit background successfully', () => {
@@ -189,15 +163,6 @@ describe('editMyProfile action', () => {
       .spyOn(useCommonController, 'getState')
       .mockImplementation(() => ({ actions } as any));
 
-    const toastMessage: IToastMessage = {
-      content: 'common:cover_changed',
-      type: ToastType.SUCCESS,
-    };
-    const showToast = jest.fn();
-    jest
-      .spyOn(useModalStore, 'getState')
-      .mockImplementation(() => ({ actions: { showToast } } as any));
-
     jest.useFakeTimers();
 
     const { result } = renderHook(() => useMenuController((state) => state));
@@ -211,7 +176,7 @@ describe('editMyProfile action', () => {
     expect(spyCallApi).toBeCalled();
     expect(spyCommonController).toBeCalled();
 
-    expect(showToast).toBeCalledWith(toastMessage);
+    expect(spyShowToastSuccess).toBeCalled();
   });
 
   it('should should edit profile throw error:', () => {

@@ -3,6 +3,7 @@ import useModalStore from '~/store/modal';
 import { act, renderHook } from '~/test/testUtils';
 import usePostsStore, { IPostsState } from '../index';
 import { postCreatePost, responsePutEditPost } from '../__mocks__/data';
+import * as showToastSuccess from '~/store/helper/showToastSuccess';
 
 describe('removeAudiencesFromPost', () => {
   afterEach(() => {
@@ -28,9 +29,7 @@ describe('removeAudiencesFromPost', () => {
   it('should removeAudiencesFromPost success', () => {
     const response = responsePutEditPost;
 
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
+    const spyShowToastSuccess = jest.spyOn(showToastSuccess, 'default');
 
     const spy = jest.spyOn(streamApi, 'putEditPost').mockImplementation(
       () => Promise.resolve(response) as any,
@@ -49,9 +48,7 @@ describe('removeAudiencesFromPost', () => {
       jest.runAllTimers();
     });
 
-    expect(showToast).toBeCalledWith({
-      content: 'post:text_deleted_audiences',
-    });
+    expect(spyShowToastSuccess).toBeCalled();
   });
 
   it('should removeAudiencesFromPost failed', () => {
