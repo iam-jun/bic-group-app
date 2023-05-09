@@ -9,8 +9,8 @@ import MaintenanceSvg from '~/../assets/images/maintenance.svg';
 import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import { IRouteParams } from '~/interfaces/IRouter';
 import { useBaseHook } from '~/hooks';
-import MarkdownView from '~/beinComponents/MarkdownView';
 import { sizes } from '~/theme/dimension';
+import Markdown from '~/beinComponents/Markdown';
 
 const ScheduledMaintenance: FC<IRouteParams> = (props) => {
   const { t } = useBaseHook();
@@ -43,9 +43,7 @@ const ScheduledMaintenance: FC<IRouteParams> = (props) => {
         <Text.H3 useI18n style={styles.title}>
           notification:text_scheduled
         </Text.H3>
-        <MarkdownView>
-          {content}
-        </MarkdownView>
+        <Markdown value={content} />
         <Text.ParagraphS useI18n style={{ fontWeight: 'bold' }}>
           notification:text_bic_team
         </Text.ParagraphS>
