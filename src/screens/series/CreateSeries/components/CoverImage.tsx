@@ -10,7 +10,7 @@ import dimension, { scaleSize } from '~/theme/dimension';
 import Icon from '~/baseComponents/Icon';
 import { Button } from '~/baseComponents';
 import { checkPermission, PermissionTypes } from '~/utils/permission';
-import ImagePicker from '~/beinComponents/ImagePicker';
+import ImagePicker from '~/components/ImagePicker';
 import { IArticleCover } from '~/interfaces/IPost';
 import { IGetFile } from '~/store/uploader';
 

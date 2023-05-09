@@ -8,7 +8,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Button } from '~/baseComponents';
 import Divider from '~/beinComponents/Divider';
-import ImagePicker from '~/beinComponents/ImagePicker';
+import ImagePicker from '~/components/ImagePicker';
 import StickerView from '~/components/StickerView';
 import { useBaseHook } from '~/hooks';
 import { IFilePicked } from '~/interfaces/common';
