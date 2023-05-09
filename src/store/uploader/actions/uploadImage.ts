@@ -8,9 +8,6 @@ const uploadImage = (set, _get) => async (data: IUploadParam) => {
   const { uploadType, file } = data;
   const controller = new AbortController();
 
-  console.log('file 123: ', file)
-
-
   set((state: IUploaderState) => {
     state.uploadingFiles[file.name] = 0;
     state.abortController[file.name] = controller;

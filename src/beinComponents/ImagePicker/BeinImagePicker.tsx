@@ -12,7 +12,6 @@ const changeExtension = (fileName, newExtension) => {
 };
 
 const formatImage = (image: any) => {
-  console.log('image 123: ', image)
   const isIos = Platform.OS === 'ios';
   const isGif = image?.mime?.includes('gif') || image?.mime?.includes('GIF');
   const isHEIC = image?.mime?.includes('heic') || image?.mime?.includes('HEIC');
