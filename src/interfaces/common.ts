@@ -33,7 +33,6 @@ export interface IFilePicked {
   size: number;
   width?: number;
   height?: number;
-  sourceURL?: string;
   uri: string;
   [x: string]: any;
 }
