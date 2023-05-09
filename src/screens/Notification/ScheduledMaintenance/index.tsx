@@ -43,6 +43,9 @@ const ScheduledMaintenance: FC<IRouteParams> = (props) => {
         <Text.H3 useI18n style={styles.title}>
           notification:text_scheduled
         </Text.H3>
+        <Text.ParagraphS>
+          {' '}
+        </Text.ParagraphS>
         <Markdown value={content} />
         <Text.ParagraphS useI18n style={{ fontWeight: 'bold' }}>
           notification:text_bic_team
