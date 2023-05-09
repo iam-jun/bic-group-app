@@ -18,7 +18,7 @@ const AudienceItem: React.FC<AudienceItemProps> = ({
   const styles = createStyle();
 
   return (
-    <View style={styles.container}>
+    <View testID="audience_item" style={styles.container}>
       <AudienceContent
         shouldBeChecked={shouldBeChecked}
         onPress={onCheckboxPress}

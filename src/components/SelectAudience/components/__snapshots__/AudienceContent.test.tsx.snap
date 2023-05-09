@@ -1,0 +1,635 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AudienceContent component should be check 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "flex": 1,
+      "flexDirection": "row",
+      "opacity": 1,
+    }
+  }
+  testID="group_item.container"
+>
+  <View
+    style={
+      Array [
+        Object {
+          "borderRadius": 6,
+          "height": 40,
+          "width": 40,
+        },
+        undefined,
+      ]
+    }
+    testID="avatar"
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "borderRadius": 6,
+            "height": 40,
+            "width": 40,
+          },
+          Object {},
+        ]
+      }
+      testID="avatar_container"
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            Array [
+              Object {
+                "borderRadius": 6,
+                "height": 40,
+                "width": 40,
+              },
+              Object {
+                "borderColor": "#F2F5F8",
+                "borderWidth": 2,
+              },
+              Object {
+                "backgroundColor": "#FFFFFF",
+              },
+            ],
+          ]
+        }
+      >
+        <FastImageView
+          onFastImageError={[Function]}
+          resizeMode="cover"
+          source={
+            Object {
+              "uri": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/group/default-avatar.png",
+            }
+          }
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+          testID="avatar.image"
+        />
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#007AFF",
+            "borderRadius": 200,
+            "bottom": -2,
+            "height": 20,
+            "justifyContent": "center",
+            "position": "absolute",
+            "right": -2,
+            "width": 20,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            Object {
+              "disabled": true,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          hitSlop={
+            Object {
+              "bottom": 10,
+              "left": 10,
+              "right": 10,
+              "top": 10,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                undefined,
+                Object {
+                  "backgroundColor": undefined,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <View />
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "justifyContent": "center",
+        "paddingHorizontal": 12,
+      }
+    }
+  >
+    <Text
+      numberOfLines={1}
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#282E53",
+          },
+          Object {
+            "justifyContent": "center",
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      Right Thinking
+    </Text>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "alignSelf": "baseline",
+          "backgroundColor": "#EBF4FF",
+          "borderRadius": 100,
+          "flexDirection": "row",
+          "height": 24,
+          "justifyContent": "center",
+          "marginRight": 8,
+          "marginTop": 2,
+          "opacity": 1,
+          "paddingLeft": 4,
+          "paddingRight": 8,
+        }
+      }
+      testID="tag.item"
+    >
+      <Text
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 11,
+            },
+            Object {},
+            Array [
+              Object {
+                "color": "#007AFF",
+                "paddingLeft": 4,
+              },
+              undefined,
+            ],
+          ]
+        }
+        testID="tag.label"
+      >
+        Right Thinking
+      </Text>
+    </View>
+  </View>
+  <View>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      hitSlop={
+        Object {
+          "bottom": 10,
+          "left": 10,
+          "right": 10,
+          "top": 10,
+        }
+      }
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+            },
+            undefined,
+            Object {
+              "backgroundColor": undefined,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              undefined,
+              undefined,
+              undefined,
+            ]
+          }
+        >
+          <View />
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`AudienceContent component should be uncheck 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "flex": 1,
+      "flexDirection": "row",
+      "opacity": 1,
+    }
+  }
+  testID="group_item.container"
+>
+  <View
+    style={
+      Array [
+        Object {
+          "borderRadius": 6,
+          "height": 40,
+          "width": 40,
+        },
+        undefined,
+      ]
+    }
+    testID="avatar"
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "borderRadius": 6,
+            "height": 40,
+            "width": 40,
+          },
+          Object {},
+        ]
+      }
+      testID="avatar_container"
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            Array [
+              Object {
+                "borderRadius": 6,
+                "height": 40,
+                "width": 40,
+              },
+              Object {
+                "borderColor": "#F2F5F8",
+                "borderWidth": 2,
+              },
+              Object {
+                "backgroundColor": "#FFFFFF",
+              },
+            ],
+          ]
+        }
+      >
+        <FastImageView
+          onFastImageError={[Function]}
+          resizeMode="cover"
+          source={
+            Object {
+              "uri": "https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/group/default-avatar.png",
+            }
+          }
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+          testID="avatar.image"
+        />
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#007AFF",
+            "borderRadius": 200,
+            "bottom": -2,
+            "height": 20,
+            "justifyContent": "center",
+            "position": "absolute",
+            "right": -2,
+            "width": 20,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            Object {
+              "disabled": true,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          hitSlop={
+            Object {
+              "bottom": 10,
+              "left": 10,
+              "right": 10,
+              "top": 10,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                undefined,
+                Object {
+                  "backgroundColor": undefined,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <View />
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "justifyContent": "center",
+        "paddingHorizontal": 12,
+      }
+    }
+  >
+    <Text
+      numberOfLines={1}
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#282E53",
+          },
+          Object {
+            "justifyContent": "center",
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      Right Thinking
+    </Text>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "alignSelf": "baseline",
+          "backgroundColor": "#EBF4FF",
+          "borderRadius": 100,
+          "flexDirection": "row",
+          "height": 24,
+          "justifyContent": "center",
+          "marginRight": 8,
+          "marginTop": 2,
+          "opacity": 1,
+          "paddingLeft": 4,
+          "paddingRight": 8,
+        }
+      }
+      testID="tag.item"
+    >
+      <Text
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 11,
+            },
+            Object {},
+            Array [
+              Object {
+                "color": "#007AFF",
+                "paddingLeft": 4,
+              },
+              undefined,
+            ],
+          ]
+        }
+        testID="tag.label"
+      >
+        Right Thinking
+      </Text>
+    </View>
+  </View>
+  <View>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      hitSlop={
+        Object {
+          "bottom": 10,
+          "left": 10,
+          "right": 10,
+          "top": 10,
+        }
+      }
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+            },
+            undefined,
+            Object {
+              "backgroundColor": undefined,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              undefined,
+              undefined,
+              undefined,
+            ]
+          }
+        >
+          <View />
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

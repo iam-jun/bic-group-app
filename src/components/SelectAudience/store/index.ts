@@ -22,7 +22,7 @@ export interface ISelectAudienceState extends IBaseState {
   };
   search: {
     key: string,
-    data: undefined,
+    data: any[] | undefined,
     loading: boolean,
     hasNextPage: boolean,
     contentType: ContentType,
