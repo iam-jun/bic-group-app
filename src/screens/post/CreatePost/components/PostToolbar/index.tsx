@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import BottomSheet from '~/baseComponents/BottomSheet/index';
 import DocumentPicker from '~/beinComponents/DocumentPicker';
-import ImagePicker from '~/beinComponents/ImagePicker';
+import ImagePicker from '~/components/ImagePicker';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import Text from '~/baseComponents/Text';
 import appConfig from '~/configs/appConfig';
