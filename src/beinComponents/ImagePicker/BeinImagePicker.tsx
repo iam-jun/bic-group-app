@@ -31,7 +31,7 @@ const formatImage = (image: any) => {
     type: mimeType,
     mime: mimeType,
     size: image?.size,
-    uri: uri,
+    uri,
     width: image?.width,
     height: image?.height,
   };
