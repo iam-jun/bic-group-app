@@ -12,9 +12,7 @@ import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import useBaseHook from '~/hooks/baseHook';
 import { AppConfig } from '~/configs';
-import { formatBytes } from '~/utils/formatter';
 import { PermissionTypes, checkPermission } from '~/utils/permission';
-import { checkFileSelected } from '~/utils/images';
 
 interface Props {
   id: string;
@@ -86,22 +84,16 @@ const CoverHeader = ({
   const onEditCover = async () => {
     await checkPermission(PermissionTypes.photo, async (canOpenPicker: boolean) => {
       if (canOpenPicker) {
-        const image = await ImagePicker.openPickerSingle({
-          ...userProfileImageCropRatio.backgroundImgUrl,
-          cropping: true,
-          mediaType: 'photo',
-          forceJpg: false,
-        });
-        if (image?.size > AppConfig.userCoverImageMaxSize) {
-          const error = t('common:error:file:over_file_size').replace('{n}',
-            formatBytes(AppConfig.userAvatarImageMaxSize, 0));
-          showToast({ content: error, type: ToastType.ERROR });
-          return;
-        }
-        const isValidFileSelected = checkFileSelected(image);
-        if (isValidFileSelected) {
+        try {
+          const image = await ImagePicker.openPickerSinglePhotoWithCropping({
+            ...userProfileImageCropRatio.backgroundImgUrl,
+            exclusionList: ['gif', 'webp'],
+            maxSize: AppConfig.userCoverImageMaxSize,
+          });
           setSelectedCover(image);
           uploaderActions.uploadImage({ file: image, uploadType: ResourceUploadType.userCover });
+        } catch (error) {
+          showToast({ content: error?.message, type: ToastType.ERROR });
         }
       }
     });
@@ -110,22 +102,16 @@ const CoverHeader = ({
   const onEditAvatar = async () => {
     await checkPermission(PermissionTypes.photo, async (canOpenPicker: boolean) => {
       if (canOpenPicker) {
-        const image = await ImagePicker.openPickerSingle({
-          ...userProfileImageCropRatio.avatar,
-          cropping: true,
-          mediaType: 'photo',
-          forceJpg: false,
-        });
-        if (image?.size > AppConfig.userAvatarImageMaxSize) {
-          const error = t('common:error:file:over_file_size').replace('{n}',
-            formatBytes(AppConfig.userAvatarImageMaxSize, 0));
-          showToast({ content: error, type: ToastType.ERROR });
-          return;
-        }
-        const isValidFileSelected = checkFileSelected(image);
-        if (isValidFileSelected) {
+        try {
+          const image = await ImagePicker.openPickerSinglePhotoWithCropping({
+            ...userProfileImageCropRatio.avatar,
+            exclusionList: ['gif', 'webp'],
+            maxSize: AppConfig.userAvatarImageMaxSize,
+          });
           setSelectedAvatar(image);
           uploaderActions.uploadImage({ file: image, uploadType: ResourceUploadType.userAvatar });
+        } catch (error) {
+          showToast({ content: error?.message, type: ToastType.ERROR });
         }
       }
     });
