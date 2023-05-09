@@ -10,6 +10,7 @@ import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import { IRouteParams } from '~/interfaces/IRouter';
 import { useBaseHook } from '~/hooks';
 import MarkdownView from '~/beinComponents/MarkdownView';
+import { sizes } from '~/theme/dimension';
 
 const ScheduledMaintenance: FC<IRouteParams> = (props) => {
   const { t } = useBaseHook();
@@ -100,6 +101,7 @@ const createStyle = (theme: ExtendedTheme) => {
     title: {
       textAlign: 'center',
       marginBottom: spacing.margin.tiny,
+      fontSize: sizes.mdH3,
     },
     image: {
       alignItems: 'center',
