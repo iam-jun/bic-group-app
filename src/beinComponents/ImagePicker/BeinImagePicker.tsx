@@ -1,5 +1,9 @@
 import ImagePicker from 'react-native-image-crop-picker';
+import RNFetchBlob from 'rn-fetch-blob';
+import { t } from 'i18next';
+import { Platform } from 'react-native';
 import { IFilePicked } from '~/interfaces/common';
+import { formatBytes } from '~/utils/formatter';
 
 const formatImage = (image: any) => {
   const fileName = image?.path?.replace?.(
@@ -14,7 +18,6 @@ const formatImage = (image: any) => {
     uri: image?.path,
     width: image?.width,
     height: image?.height,
-    sourceURL: image?.sourceURL,
   };
 };
 
@@ -30,6 +33,58 @@ const openPickerSingle = async (option = {}) => {
     });
     if (image) {
       const result: IFilePicked = formatImage(image);
+      return Promise.resolve(result);
+    }
+    return Promise.reject(new Error('Image not found'));
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
+const openPickerSinglePhotoWithCropping = async (
+  option:
+    {
+      width?: number,
+      height?: number,
+      maxSize: number,
+      exclusionList: string[]
+    },
+) => {
+  try {
+    const image = await ImagePicker.openPicker({
+      mediaType: 'photo',
+    });
+    if (image) {
+      const {
+        width, height, maxSize, exclusionList,
+      } = option;
+
+      // Get original file size
+      let dataFromOriginalFile = null;
+      if (Platform.OS === 'ios') {
+        const { sourceURL } = image;
+        const filePath = sourceURL.replace('file://', '');
+        dataFromOriginalFile = await RNFetchBlob.fs.stat(filePath);
+      } else {
+        dataFromOriginalFile = image;
+      }
+
+      if (dataFromOriginalFile.size > maxSize) {
+        return Promise.reject(new Error(t('common:error:file:file_exceed_limit').replace('{n}', formatBytes(maxSize, 0))));
+      }
+      if (exclusionList.some((item) => dataFromOriginalFile?.path.toLowerCase().includes(item))
+        || exclusionList.some((item) => dataFromOriginalFile?.path.includes(item))) {
+        return Promise.reject(new Error(t('common:error:file:file_type_not_support')));
+      }
+
+      const croppedImage = await ImagePicker.openCropper({
+        mediaType: 'photo',
+        width,
+        height,
+        path: image.path,
+      });
+
+      const result: IFilePicked = formatImage(croppedImage);
       return Promise.resolve(result);
     }
     return Promise.reject(new Error('Image not found'));
@@ -62,6 +117,7 @@ const openPickerMultiple = async (option = {}) => {
 const BeinImagePicker = {
   openPickerSingle,
   openPickerMultiple,
+  openPickerSinglePhotoWithCropping,
 };
 
 export default BeinImagePicker;
