@@ -61,21 +61,3 @@ export const _openImagePicker = async ({
   // for testing
   return false;
 };
-
-const checkFileSelected = (file: IFilePicked) => {
-  if (Platform.OS === 'ios') {
-    if (file?.sourceURL?.includes('GIF') || file?.sourceURL?.includes('WEBP')) {
-      const error = t('common:error:file:file_type_not_support');
-      showToast({ content: error, type: ToastType.ERROR });
-      return false;
-    }
-  }
-
-  if (file?.size > AppConfig.groupImageMaxSize) {
-    const error = t('common:error:file:file_exceed_limit').replace('{n}', formatBytes(AppConfig.groupImageMaxSize, 0));
-    showToast({ content: error, type: ToastType.ERROR });
-    return false;
-  }
-
-  return true;
-};
