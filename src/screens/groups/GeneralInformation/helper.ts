@@ -4,8 +4,6 @@ import { IFilePicked } from '~/interfaces/common';
 import { groupProfileImageCropRatio } from '~/theme/dimension';
 import { checkPermission, PermissionTypes } from '~/utils/permission';
 import { AppConfig } from '~/configs';
-import { ToastType } from '~/baseComponents/Toast/BaseToast';
-import showToast from '~/store/helper/showToast';
 import useGeneralInformationStore from './store';
 import { FieldNameImageUpload } from '~/interfaces/IGroup';
 
@@ -53,7 +51,7 @@ export const _openImagePicker = async ({
           });
         })
         .catch((err) => {
-          showToast({ content: err?.message, type: ToastType.ERROR });
+          console.error(err);
         });
       return true;
     }
