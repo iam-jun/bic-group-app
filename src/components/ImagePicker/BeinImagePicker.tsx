@@ -4,6 +4,8 @@ import { t } from 'i18next';
 import { Platform } from 'react-native';
 import { IFilePicked } from '~/interfaces/common';
 import { formatBytes } from '~/utils/formatter';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import showToast from '~/store/helper/showToast';
 
 const formatImage = (image: any) => {
   const fileName = image?.path?.replace?.(
@@ -69,12 +71,17 @@ const openPickerSinglePhotoWithCropping = async (
         dataFromOriginalFile = image;
       }
 
-      if (dataFromOriginalFile.size > maxSize) {
-        return Promise.reject(new Error(t('common:error:file:file_exceed_limit').replace('{n}', formatBytes(maxSize, 0))));
+      let errorText = null;
+      if (dataFromOriginalFile?.size > maxSize) {
+        errorText = t('common:error:file:file_exceed_limit').replace('{n}', formatBytes(maxSize, 0));
       }
       if (exclusionList.some((item) => dataFromOriginalFile?.path.toLowerCase().includes(item))
         || exclusionList.some((item) => dataFromOriginalFile?.path.includes(item))) {
-        return Promise.reject(new Error(t('common:error:file:file_type_not_support')));
+        errorText = t('common:error:file:file_type_not_support');
+      }
+      if (errorText) {
+        showToast({ content: errorText, type: ToastType.ERROR });
+        return Promise.reject(new Error(errorText));
       }
 
       const croppedImage = await ImagePicker.openCropper({
