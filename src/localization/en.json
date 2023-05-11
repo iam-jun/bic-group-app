@@ -646,6 +646,7 @@
     "text_select_cover": "Select cover",
     "text_search_category_placeholder": "Select your options...",
     "text_edit_article_success": "Article updated successfully",
+    "text_article_saved_to_draft": "Article saved to Draft",
     "menu": {
       "edit": "Edit Article",
       "copy_link": "Copy Link",

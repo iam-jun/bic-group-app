@@ -17,13 +17,13 @@ import { rootNavigationRef } from '~/router/refs';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import showAlert from '~/store/helper/showAlert';
-import showToast from '~/store/helper/showToast';
 import { MAXIMUM_TAGS } from '../constanst';
 import {
   isEqualById, validateFiles, validateImages, validateVideo,
 } from '../helper';
 import useCreatePostStore from '../store';
 import useLinkPreview from './useLinkPreview';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 type SavePostParams = Partial<IPayloadPutEditPost> & {
   isToastAutoSave?: boolean;
@@ -296,8 +296,8 @@ export const useSavePost = () => {
       const payload: IPayloadPublishDraftPost = {
         draftPostId: id,
         replaceWithDetail: true,
-        onSuccess: () => {
-          showToast({ content: 'post:draft:text_draft_post_published' });
+        onSuccess: (res) => {
+          showToastSuccess(res);
         },
         isHandleSeriesTagsError: true,
       };

@@ -35,6 +35,7 @@ import useModalStore from '~/store/modal';
 import { PermissionKey } from '~/constants/permissionScheme';
 import { PostStatus, PostType } from '~/interfaces/IPost';
 import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 interface IHandleSaveOptions {
   isShowLoading?: boolean;
@@ -382,11 +383,12 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
 
     const payload: IPayloadPublishDraftArticle = {
       draftArticleId: data.id,
-      onSuccess: () => {
+      onSuccess: (res) => {
         goToArticleDetail();
         useScheduleArticlesStore
           .getState()
           .actions.getScheduleArticles({ isRefresh: true });
+        showToastSuccess(res);
       },
       onError: (error) => validateSeriesTagsActions.handleSeriesTagsError({
         error,

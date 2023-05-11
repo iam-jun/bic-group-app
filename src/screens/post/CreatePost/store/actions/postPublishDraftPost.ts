@@ -9,13 +9,13 @@ import useDraftPostStore from '~/screens/YourContent/components/Draft/DraftPost/
 import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
 import useHomeStore from '~/screens/Home/store';
 import usePostsStore from '~/store/entities/posts';
-import showToast from '~/store/helper/showToast';
 import showToastError from '~/store/helper/showToastError';
 import useTimelineStore from '~/store/timeline';
 import { ICreatePostState } from '..';
 import ApiErrorCode from '~/constants/apiErrorCode';
 import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
 import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftContents/store';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -40,14 +40,12 @@ export const postPublishDraftPost = (set, get) => async (payload: IPayloadPublis
       return;
     }
 
-    onSuccess?.();
+    onSuccess?.(res);
     const postData: IPost = res.data;
     usePostsStore.getState().actions.addToPosts({ data: postData });
 
     if (res.data?.status === PostStatus.PROCESSING) {
-      showToast({
-        content: 'post:draft:text_processing_publish',
-      });
+      showToastSuccess(res);
       navigation.goBack();
       usePostsInProgressStore.getState().actions.getPosts();
     } else if (replaceWithDetail) {

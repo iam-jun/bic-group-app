@@ -39,7 +39,7 @@ const publishDraftArticle = (set, get) => async (payload: IPayloadPublishDraftAr
       return;
     }
 
-    onSuccess?.();
+    onSuccess?.(response);
     set((state: IDraftArticleState) => {
       state.isPublishing = false;
     }, 'publishDraftArticle success');
