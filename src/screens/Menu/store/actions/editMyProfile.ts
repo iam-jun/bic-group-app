@@ -12,12 +12,10 @@ import IMenuController from '../Interface';
 const editMyProfile = (_set, get) => async ({
   isVerified,
   data,
-  editFieldToastMessage,
   callback,
 }: {
   isVerified
   data: IUserEdit;
-  editFieldToastMessage?: string;
   callback?: () => void;
 }) => {
   const { actions }: IMenuController = get();
@@ -33,23 +31,8 @@ const editMyProfile = (_set, get) => async ({
 
     useCommonController.getState().actions.setMyProfile(mapProfile(response.data));
 
-    // checking if uploading avatar/cover image
-    // to use different toast message content
-    const { avatarId, backgroundImgId } = data;
-    let toastContent: string;
-
-    if (avatarId) {
-      toastContent = 'common:avatar_changed';
-    } else if (backgroundImgId) {
-      toastContent = 'common:cover_changed';
-    } else {
-      // this field is used to indicate which parts of
-      // user profile have been updated
-      toastContent = editFieldToastMessage || 'common:text_edit_success';
-    }
-
     const toastMessage: IToastMessage = {
-      content: toastContent,
+      content: response?.meta?.message || 'common:text_edit_success',
       type: ToastType.SUCCESS,
     };
     showToast(toastMessage);
