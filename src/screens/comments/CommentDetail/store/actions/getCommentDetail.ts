@@ -18,9 +18,11 @@ const getCommentDetail = (_set, _get) => async (payload: IPayloadGetCommentsById
 
     if (isReported) {
       response = await getReportContent({ id: commentId, type: TargetType.COMMENT });
-      if (response) {
+      if (!isEmpty(response)) {
         const comment = response;
         useCommentsStore.getState().actions.addToComments([comment]);
+      } else {
+        usePostsStore.getState().actions.setCommentErrorCode(APIErrorCode.Post.COMMENT_IS_REPORTED_AND_DELETED);
       }
     } else {
       const responeCommentDetail = await streamApi.getCommentDetail(commentId, payload.params as any);
