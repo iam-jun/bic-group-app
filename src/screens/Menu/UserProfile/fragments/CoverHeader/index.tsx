@@ -93,7 +93,7 @@ const CoverHeader = ({
           setSelectedCover(image);
           uploaderActions.uploadImage({ file: image, uploadType: ResourceUploadType.userCover });
         } catch (error) {
-          showToast({ content: error?.message, type: ToastType.ERROR });
+          console.error(error);
         }
       }
     });
@@ -111,7 +111,7 @@ const CoverHeader = ({
           setSelectedAvatar(image);
           uploaderActions.uploadImage({ file: image, uploadType: ResourceUploadType.userAvatar });
         } catch (error) {
-          showToast({ content: error?.message, type: ToastType.ERROR });
+          console.error(error);
         }
       }
     });
