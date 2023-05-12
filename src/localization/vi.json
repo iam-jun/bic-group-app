@@ -1368,6 +1368,7 @@
     "unpinned_successfully": "Gỡ pin thành công",
     "there_is_no_groups": "Không có nhóm",
     "reorder_pinned": "Sắp xếp bài ghim",
-    "drag_and_drop_to_reorder_pinned": "Kéo thả để sắp xếp bài ghim"
+    "drag_and_drop_to_reorder_pinned": "Kéo thả để sắp xếp bài ghim",
+    "check_all": "Chọn tất cả"
   }
 }
