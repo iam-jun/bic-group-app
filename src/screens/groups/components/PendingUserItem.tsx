@@ -37,7 +37,7 @@ const PendingUserItem = ({
     user, updatedAt, noticeMessage, membershipAnswers = [],
   } = requestItem || {};
   const {
-    avatar, fullname, latestWork, city, isVerified,
+    avatar, fullname, latestWork, city, isVerified, email,
   } = user || {};
   const { titlePosition, company } = latestWork || {};
 
@@ -166,6 +166,10 @@ const PendingUserItem = ({
           {renderItem({
             icon: 'LocationDot',
             title: city,
+          })}
+          {renderItem({
+            icon: 'Envelope',
+            title: email,
           })}
         </View>
       </View>
