@@ -73,7 +73,7 @@ const CreateArticleCover: FC<CreateArticleCoverProps> = ({ articleId }) => {
   const renderError = (error: string) => (
     <Button style={[styles.cover, styles.errorContainer]} onPress={onPressSelect}>
       <Icon icon="Image" size={30} tintColor={theme.colors.neutral20} />
-      <Text.SubtitleM style={styles.textAddCover} useI18n>common:text_select_file</Text.SubtitleM>
+      <Text.SubtitleM style={styles.textAddCover} useI18n>common:text_add_cover</Text.SubtitleM>
       <Text.BodyXS style={styles.textError}>{error}</Text.BodyXS>
     </Button>
   );
@@ -85,7 +85,7 @@ const CreateArticleCover: FC<CreateArticleCoverProps> = ({ articleId }) => {
       return (
         <Button style={[styles.centerButtonContainer, styles.emptyCoverContainer]} onPress={onPressSelect}>
           <Icon icon="Image" size={30} tintColor={theme.colors.neutral20} />
-          <Text.SubtitleM style={styles.textAddCover} useI18n>common:text_select_file</Text.SubtitleM>
+          <Text.SubtitleM style={styles.textAddCover} useI18n>common:text_add_cover</Text.SubtitleM>
         </Button>
       );
     }
