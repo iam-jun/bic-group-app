@@ -314,6 +314,7 @@ const Notification = () => {
                 rootNavigation.navigate(articleStack.articleContentDetail, {
                   articleId: targetId,
                   is_reported: true,
+                  noti_id: item.id,
                 });
               } else {
                 rootNavigation.navigate(
