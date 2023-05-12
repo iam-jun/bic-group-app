@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { Button } from '~/baseComponents';
 import Icon from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
-import ImagePicker from '~/beinComponents/ImagePicker';
+import ImagePicker from '~/components/ImagePicker';
 import UploadingImage from '~/beinComponents/UploadingImage';
 import { ResourceUploadType } from '~/interfaces/IUpload';
 
