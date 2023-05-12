@@ -2,22 +2,40 @@ import ImagePicker from 'react-native-image-crop-picker';
 import RNFetchBlob from 'rn-fetch-blob';
 import { t } from 'i18next';
 import { Platform } from 'react-native';
+import uuid from 'react-native-uuid';
 import { IFilePicked } from '~/interfaces/common';
 import { formatBytes } from '~/utils/formatter';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import showToast from '~/store/helper/showToast';
 
+const changeExtension = (fileName, newExtension) => {
+  const parts = fileName.split('.');
+  parts[parts.length - 1] = newExtension;
+  const newFileName = parts.join('.');
+  return newFileName;
+};
+
 const formatImage = (image: any) => {
-  const fileName = image?.path?.replace?.(
+  const isIos = Platform.OS === 'ios';
+  const isGif = image?.mime?.includes('gif') || image?.mime?.includes('GIF');
+  const isHEIC = image?.mime?.includes('heic') || image?.mime?.includes('HEIC');
+  const isHEIF = image?.mime?.includes('heif') || image?.mime?.includes('HEIF');
+
+  const pathName = image?.path?.replace?.(
     /(.+)\/(.+)$/, '$2',
   ) || 'bein_image';
+
+  const fileName = (isIos && isGif) ? changeExtension(pathName, 'gif') : uuid.v4() + pathName;
+  const uri = (isIos && isGif) ? image?.sourceURL : image?.path;
+  const mimeType = (isHEIC || isHEIF) ? 'image/jpeg' : image?.mime;
+
   return {
     name: fileName,
     filename: fileName,
-    type: image?.mime,
-    mime: image?.mime,
+    type: mimeType,
+    mime: mimeType,
     size: image?.size,
-    uri: image?.path,
+    uri,
     width: image?.width,
     height: image?.height,
   };
@@ -30,7 +48,6 @@ const openPickerSingle = async (option = {}) => {
       mediaType: 'any',
       multiple: false,
       compressVideoPreset: 'Passthrough',
-      forceJpg: true,
       ...option,
     });
     if (image) {
@@ -107,7 +124,6 @@ const openPickerMultiple = async (option = {}) => {
       mediaType: 'any',
       multiple: true,
       compressVideoPreset: 'Passthrough',
-      forceJpg: true,
       ...option,
     });
     if (images?.length > 0) {

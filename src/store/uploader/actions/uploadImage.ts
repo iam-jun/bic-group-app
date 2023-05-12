@@ -11,6 +11,7 @@ const uploadImage = (set, _get) => async (data: IUploadParam) => {
   set((state: IUploaderState) => {
     state.uploadingFiles[file.name] = 0;
     state.abortController[file.name] = controller;
+    state.errors[file.name] = '';
   }, 'action uploadImage');
 
   const onUploadProgress = (progressEvent: any) => {
@@ -73,18 +74,13 @@ const uploadImage = (set, _get) => async (data: IUploadParam) => {
             state.uploadingFiles?.[file.name] && delete state.uploadingFiles?.[file.name];
           }, 'action uploadImage success');
         } else {
-          set((state: IUploaderState) => {
-            state.errors[file.name] = i18next.t('upload:text_upload_request_failed');
-            state.uploadingFiles?.[file.name] && delete state.uploadingFiles?.[file.name];
-          }, 'action uploadImage error');
+          // upload image failed
+          throw new Error(responseGetStatus?.data?.data?.errorMessage);
         }
       }
     }
   } catch (error) {
-    const fileType = i18next.t('file_type:file');
-    const errorUploadMessage = i18next.t('upload:text_upload_request_failed', {
-      file_type: fileType,
-    });
+    const errorUploadMessage = i18next.t('upload:text_upload_image_fail');
     const message = getErrorMessageFromResponse(error) || errorUploadMessage;
     set((state: IUploaderState) => {
       state.errors[file.name] = message;

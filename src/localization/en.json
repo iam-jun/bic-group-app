@@ -840,7 +840,10 @@
       "text_discard_change_audience": "Are you sure to change the communities / groups? This change will also effect on post's permission",
       "btn_save_change": "Save Changes",
       "btn_keep_edit": "Keep Editing",
-      "btn_keep_selecting": "Keep Selecting"
+      "btn_keep_selecting": "Keep Selecting",
+      "preview_image": "Preview",
+      "edit": "Edit",
+      "remove_all_image": "Remove all"
     },
     "draft": {
       "title_draft": "Draft",
@@ -1305,7 +1308,8 @@
     "text_file_over_size": "Your files are larger than 25MB",
     "text_file_over_length": "You cannot upload more than {{max_files}} files",
     "text_file_extension_not_supported": "Not Supported",
-    "text_file_remainning": "The maximum files is {{max_files}} and {{remaining_size}} is available to upload"
+    "text_file_remainning": "The maximum files is {{max_files}} and {{remaining_size}} is available to upload",
+    "text_upload_image_fail": "Failed to upload"
   },
   "file_type": {
     "image": "image",
