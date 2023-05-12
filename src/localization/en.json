@@ -10,7 +10,9 @@
       "short_hour": "h",
       "short_day": "d",
       "short_week": "w",
-      "short_year": "y"
+      "short_year": "y",
+      "minutes": "mins",
+      "hours": "hours"
     },
     "text_update_title": "New update",
     "text_update_content": "System optimization, faster, more convenient",
@@ -1115,7 +1117,10 @@
     "mark_as_read": "Mark as Read",
     "mark_as_unread": "Mark as Unread",
     "off_notification_from_group": "Turn off Notification",
-    "seen_all_notifications": "You have seen it all"
+    "seen_all_notifications": "You have seen it all",
+    "text_scheduled": "Scheduled Maintenance Downtime",
+    "content_scheduled_maintenance_downtime": "We’ll improve the platform to enhance your experience. During maintenance, it may be temporarily unavailable or have limited functionality.\n \nMaintenance will start at **(startAt)** in about **(duration)**.\n \nWe apologize for any inconvenience and appreciate your continued support.",
+    "text_bic_team": "BIC team"
   },
   "new_feature": {
     "title": "New feature",

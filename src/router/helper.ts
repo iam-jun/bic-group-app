@@ -19,6 +19,7 @@ import homeStack from './navigator/MainStack/stacks/homeStack/stack';
 import menuStack from './navigator/MainStack/stacks/menuStack/stack';
 import mainStack from './navigator/MainStack/stack';
 import { ContentType } from '~/interfaces/INotification';
+import notiStack from './navigator/MainStack/stacks/notiStack/stack';
 
 export const isNavigationRefReady: any = React.createRef();
 
@@ -162,6 +163,8 @@ export const getScreenAndParams = (data: {
   contentType: string;
   userId: string;
   seriesId: string;
+  duration: number;
+  startAt: string;
 }) => {
   if (isEmpty(data)) {
     return null;
@@ -179,7 +182,16 @@ export const getScreenAndParams = (data: {
     contentType = '',
     userId = '',
     seriesId = '',
+    duration = 0,
+    startAt = '',
   } = data || {};
+
+  if (duration) {
+    return {
+      screen: notiStack.notiMaintenancePage,
+      params: { maintenanceInfo: { startAt, duration } },
+    };
+  }
 
   if (type === undefined) {
     return null;
@@ -303,7 +315,6 @@ export const getScreenAndParams = (data: {
       break;
 
     case NOTIFICATION_TYPE.LEAVE_MULTIPLE_GROUP_TO_USER:
-    case NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME:
       return null;
     case NOTIFICATION_TYPE.APPROVED_KYC:
       return { screen: mainStack.userProfile, params: { userId } };
