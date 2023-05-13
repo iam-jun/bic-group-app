@@ -118,7 +118,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
     const result: any = [];
     data.forEach((item) => {
       result.push({
-        name: item.origin_name || item.name,
+        id: item.id,
         uri: item.url,
       });
     });
