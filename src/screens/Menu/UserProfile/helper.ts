@@ -26,7 +26,7 @@ export const getEndDateText = (
   : endDate
     ? formatDate(
       endDate,
-      'MMM D, YYYY',
+      'MMMM, YYYY',
     )
     : '');
 
