@@ -34,6 +34,7 @@ interface INotificationsState extends IBaseState, IFetchingState{
     savePushToken?: (token: string) => void;
     registerPushToken?: (payload?: any) => void;
     handleNotiBackground: (remoteMessage: any) => void;
+    getChangelogNotification: (notificationId: string) => void;
   }
 
 }

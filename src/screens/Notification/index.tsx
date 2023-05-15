@@ -378,6 +378,10 @@ const Notification = () => {
             case NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME:
               rootNavigation.navigate(notiStack.notiMaintenancePage, { maintenanceInfo: act?.maintenanceInfo });
               break;
+
+            case NOTIFICATION_TYPE.CHANGE_LOGS:
+              rootNavigation.navigate(notiStack.notiChangeLogsPage, { id: item.id });
+              break;
             default:
               console.warn(`Notification type ${type} have not implemented yet`);
               break;

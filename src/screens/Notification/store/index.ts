@@ -13,6 +13,7 @@ import registerPushToken from './actions/registerPushToken';
 import update from './actions/update';
 import INotificationsState from './Interface';
 import handleNotiBackground from './actions/handleNotiBackground';
+import getChangelogNotification from './actions/getChangelogNotification';
 
 const initState: INotificationsState = {
   loading: false,
@@ -55,6 +56,7 @@ const notificationStore = (set, get) => ({
     markAsReadAll: markAsReadAll(set, get),
     markAsSeenAll: markAsSeenAll(set, get),
     markAsUnRead: markAsUnRead(set, get),
+    getChangelogNotification: getChangelogNotification(set, get),
 
     attach: attach(set, get),
     update: update(set, get),
