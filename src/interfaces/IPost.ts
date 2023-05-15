@@ -633,3 +633,9 @@ export interface IErrorContent {
   message?: string;
   requireGroups?: IGroup[];
 }
+
+export interface IPayloadGetPublishContents {
+  isRefresh?: boolean;
+  offset?: number;
+  isProcessing?: boolean; 
+}

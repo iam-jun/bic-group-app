@@ -21,9 +21,11 @@ import Header from '~/beinComponents/Header';
 import ScheduledArticles from './components/ScheduledArticles';
 import ReportedContents from './components/ReportedContents';
 import Draft from './components/Draft';
+import Publish from './components/Publish';
 import useReportContentStore from '~/components/Report/store';
 import useYourContentStore from './store';
 import { homeHeaderTabHeight, homeHeaderContentContainerHeight } from '~/theme/dimension';
+import { ContentFeed } from '~/interfaces/IFeed';
 
 const HEADER_TAB = [
   {
@@ -36,6 +38,10 @@ const HEADER_TAB = [
   },
   {
     id: 'your-content-tab-3',
+    text: 'your_content:title_published',
+  },
+  {
+    id: 'your-content-tab-4',
     text: 'your_content:title_report_content',
   },
 ];
@@ -44,6 +50,13 @@ const HEADER_DRAFT_TAB = [
   { id: 'draft-tab-1', text: 'home:title_feed_content_all' },
   { id: 'draft-tab-2', text: 'post:draft:text_posts' },
   { id: 'draft-tab-3', text: 'post:draft:text_articles' },
+];
+
+const HEADER_PUBLISH_TAB = [
+  { id: ContentFeed.ALL, text: 'home:title_feed_content_all' },
+  { id: ContentFeed.POST, text: 'home:title_feed_content_posts' },
+  { id: ContentFeed.ARTICLE, text: 'home:title_feed_content_articles' },
+  { id: ContentFeed.SERIES, text: 'home:title_feed_content_series' },
 ];
 
 const DeviceHeight = Dimensions.get('window').height;
@@ -66,8 +79,12 @@ const YourContent: React.FC<YourContentProps> = ({ route }) => {
 
   const { clearReportedContents } = useReportContentStore((state) => state.actions);
   const { activeDraftTab } = useYourContentStore((state) => state);
+  const { activePublishTab } = useYourContentStore((state) => state);
   const actions = useYourContentStore((state) => state.actions);
   const reset = useYourContentStore((state) => state.reset);
+  const activePublishSubTab = HEADER_PUBLISH_TAB.findIndex(
+    (item) => item.id === activePublishTab,
+  );
 
   useEffect(() => () => {
     clearReportedContents();
@@ -81,6 +98,10 @@ const YourContent: React.FC<YourContentProps> = ({ route }) => {
   const onPressDraftTab = (item: any, index: number) => {
     actions.setActiveDraftTab(index);
   };
+
+  const onPressPublishTab = (item: any) => {
+    actions.setActivePublishTab(item.id);
+  }
 
   const handleScroll = throttle((offsetY: number) => {
     if (offsetY < 0) {
@@ -146,6 +167,14 @@ const YourContent: React.FC<YourContentProps> = ({ route }) => {
 
     if (activeTab === 2) {
       return (
+        <Publish
+          onScroll={onScrollHandler}
+        />
+      );
+    }
+
+     if (activeTab === 3) {
+      return (
         <ReportedContents
           onScroll={onScrollHandler}
         />
@@ -167,18 +196,35 @@ const YourContent: React.FC<YourContentProps> = ({ route }) => {
           data={HEADER_TAB}
           onPressTab={onPressTab}
           activeIndex={activeTab}
+          isScrollToIndex
         />
       </View>
       {activeTab === 0 && (
         <View style={styles.boxDraftTab}>
           <Tab
-            style={[styles.tabs, { marginLeft: -spacing.margin.small }]}
+            style={[styles.subTabs, { marginLeft: -spacing.margin.small }]}
             buttonProps={{
               size: 'medium', useI18n: true, style: styles.contentTab,
             }}
             data={HEADER_DRAFT_TAB}
             onPressTab={onPressDraftTab}
             activeIndex={activeDraftTab}
+            type="pill"
+            selectedTypePillTab="primary"
+            unselectedTypePillTab="neutral"
+          />
+        </View>
+      )}
+      {activeTab === 2 && (
+        <View style={styles.boxDraftTab}>
+          <Tab
+            style={[styles.subTabs, { marginLeft: -spacing.margin.small }]}
+            buttonProps={{
+              size: 'medium', useI18n: true, style: styles.contentTab,
+            }}
+            data={HEADER_PUBLISH_TAB}
+            onPressTab={onPressPublishTab}
+            activeIndex={activePublishSubTab}
             type="pill"
             selectedTypePillTab="primary"
             unselectedTypePillTab="neutral"
@@ -238,6 +284,10 @@ const createStyle = (theme: ExtendedTheme) => {
       marginHorizontal: spacing.margin.large,
     },
     tabs: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    subTabs: {
       flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
