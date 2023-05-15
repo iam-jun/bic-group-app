@@ -162,7 +162,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     <ScreenWrapper isFullView style={styles.container}>
       <View style={styles.container}>
         <Header
-          title="post:title_post_to"
+          title="post:title_publish_to"
           titleTextProps={{ useI18n: true }}
           buttonText="common:btn_next"
           buttonProps={{

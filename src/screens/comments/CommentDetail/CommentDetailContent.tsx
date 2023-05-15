@@ -149,6 +149,7 @@ const CommentDetailContent = (props: any) => {
       && (notFoundComment === undefined || notFoundComment < 0)
       && !isEmpty
       && !copyCommentError
+      && !isReported
     ) {
       showToast({
         content: 'error:not_found_desc',
@@ -329,6 +330,7 @@ const CommentDetailContent = (props: any) => {
   if (isEmpty) {
     return null;
   }
+
   return (
     <View style={{ flex: 1 }} testID="comment_detail_content">
       <BannerReport commentId={commentId} />

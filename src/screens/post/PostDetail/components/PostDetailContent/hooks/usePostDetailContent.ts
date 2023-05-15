@@ -170,9 +170,9 @@ const usePostDetailContent = ({
 
   useEffect(() => {
     if (deleted && isFocused) {
-      if (notificationId) {
+      if (notificationId && !isReported) {
         rootNavigation.goBack();
-      } else showNotice();
+      } else if (!isReported) showNotice();
     }
   }, [deleted, isFocused]);
 

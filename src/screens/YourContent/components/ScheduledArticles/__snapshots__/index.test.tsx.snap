@@ -585,7 +585,7 @@ exports[`ScheduledArticles component render correctly 1`] = `
                 ]
               }
             >
-              Audiences:
+              Communities / Groups:
             </Text>
             <View
               style={

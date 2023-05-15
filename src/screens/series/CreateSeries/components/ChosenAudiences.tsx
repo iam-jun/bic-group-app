@@ -26,7 +26,7 @@ const ChosenAudiences = ({ audiences, disabled, onPressAudiences }: Props) => {
       testID="create_post_chosen_audiences"
     >
       <Text.BodyM numberOfLines={2} color={theme.colors.neutral40} style={styles.textPostTo}>
-        {`${t('post:post_to')} `}
+        {`${t('post:publish_to')} `}
         <Text.BodyMMedium color={theme.colors.neutral60}>{audiences?.count || 0}</Text.BodyMMedium>
         {': '}
         <Text.BodyMMedium

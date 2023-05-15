@@ -9,7 +9,7 @@ const appConfig = {
   recordsPerPage: 25,
   maxFileSize: {
     video: 300 * 1024 * 1024, // kb => byte = 300Mb
-    image: 25 * 1024 * 1024, // kb => byte = 5Mb
+    image: 25 * 1024 * 1024, // kb => byte = 25Mb
 
   },
   searchTriggerTime: 200,
@@ -27,6 +27,7 @@ const appConfig = {
   shortPostContentLength: 400,
   articlesInSeriesLimit: 20,
   articlePhotoMaxSize: 25 * 1024 * 1024, // kb => byte = 25Mb
+  groupImageMaxSize: 25 * 1024 * 1024,
   userCoverImageMaxSize: 10 * 1024 * 1024,
   userAvatarImageMaxSize: 10 * 1024 * 1024,
   superUsers: [

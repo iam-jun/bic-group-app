@@ -72,7 +72,7 @@ const PostImportant: FC<PostImportantProps> = ({
     modalActions.showModal({
       isOpen: true,
       isFullScreen: true,
-      titleFullScreen: t('post:title_post_to'),
+      titleFullScreen: t('post:title_publish_to'),
       ContentComponent: <PostAudiencesModal
         data={listCommunity || []}
         onPressItemAudience={goToCommunity}

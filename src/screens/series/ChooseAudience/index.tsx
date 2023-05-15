@@ -118,7 +118,7 @@ const ChooseSeriesAudience = ({ route }: CreationSeriesProps) => {
   return (
     <View style={styles.container}>
       <Header
-        title={t('post:title_post_to')}
+        title={t('post:title_publish_to')}
         buttonProps={{
           disabled,
           loading,
