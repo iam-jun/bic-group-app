@@ -105,20 +105,20 @@
     "text_activated": "Hiện tại",
     "text_at": "tại",
     "text_to": "tới",
-    "permission_photo_title": "Cho phép Bein truy cập thư viện ảnh và video của bạn",
+    "permission_photo_title": "Cho phép BIC Group truy cập thư viện ảnh và video của bạn",
     "permission_photo_description": "Yêu cầu truy cập của bạn đã bị từ chối gần đây. Vui lòng cấp quyền truy cập từ Cài đặt bằng các bước sau:",
     "permission_photo_list": {
       "ios": {
         "step_1": "Mở Cài đặt",
-        "step_2": "Nhấn vào Quyền riêng tư",
-        "step_3": "Mở Ảnh",
+        "step_2": "Nhấn vào Quyền riêng tư & Bảo mật",
+        "step_3": "Chọn Ảnh ➝ BIC Group",
         "step_4": "Chọn Tùy chọn “Tất cả ảnh”"
       },
       "android": {
-        "step_1": "Đi tới Cài đặt",
-        "step_2": "Tìm Cài đặt ứng dụng",
-        "step_3": "Tìm biểu tượng Bein",
-        "step_4": "Bật quyền truy cập Ảnh"
+        "step_1": "Mở Cài đặt",
+        "step_2": "Chọn Cài đặt ứng dụng",
+        "step_3": "Chọn BIC Group",
+        "step_4": "Bật quyền truy cập Ảnh và Videos"
       }
     },
     "permission_add_photo_blocked": "Không thể lưu ảnh vào thư viện của bạn, vui lòng vào phần cài đặt và bật quyền lưu ảnh",
