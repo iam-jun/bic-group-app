@@ -4,7 +4,7 @@ import Md from './Md';
 
 import Header from '~/beinComponents/Header';
 import { fontFamilies } from '~/theme/fonts';
-import dimension, { sizes } from '~/theme/dimension';
+import { sizes } from '~/theme/dimension';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { isEqual } from 'lodash';
 import useModalStore from '~/store/modal';
