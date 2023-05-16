@@ -233,12 +233,12 @@ export const groupsApiConfig = {
 
   getUserInnerGroups: (
     groupId: string,
-    username: string,
+    userId: string,
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/inner-groups`,
     params: {
-      username,
+      userId,
     },
   }),
   getGroupMembers: (groupId: string, params: any): HttpApiRequestConfig => ({
@@ -706,10 +706,10 @@ const groupApi = {
       schemeData,
     );
   },
-  getUserInnerGroups: (groupId: string, username: string) => withHttpRequestPromise(
+  getUserInnerGroups: (groupId: string, userId: string) => withHttpRequestPromise(
     groupsApiConfig.getUserInnerGroups,
     groupId,
-    username,
+    userId,
   ),
   getGroupPosts: (param: IParamGetGroupPosts) => withHttpRequestPromise(
     groupsApiConfig.getGroupPosts, {
