@@ -26,7 +26,7 @@ interface Props {
 }
 
 const UserHeader = ({
-  id, fullname, username, screenId, latestWork, isCurrentUser, isVerified = true,
+  id, fullname, username, screenId, latestWork, isCurrentUser, isVerified,
 }:Props) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;

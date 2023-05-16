@@ -306,4 +306,9 @@ export const NOTIFICATION_TYPE = {
 
   // approved kyc
   APPROVED_KYC: 'approved_kyc',
+  // add content to series
+  ADD_CONTENT_TO_USER: 'add.content.to_user',
+
+  // add content to series in multiple group
+  ADD_CONTENT_TO_USER_IN_MULTIPLE_GROUPS: 'add.content.to_user.in_multiple_group',
 };

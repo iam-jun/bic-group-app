@@ -21,6 +21,7 @@ const Post = {
   CONTENT_GROUP_REQUIRED: 'content.group_join_required',
   POST_NO_READ_PERMISSION: 'post.no_read_permission',
   ARTICLE_NO_READ_PERMISSION: 'article.no_read_permission',
+  COMMENT_IS_REPORTED_AND_DELETED: 'comment.reported_and_deleted',
 };
 
 const Group = {

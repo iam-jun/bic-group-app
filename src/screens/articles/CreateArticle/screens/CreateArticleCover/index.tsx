@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { Button } from '~/baseComponents';
 import Icon from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
-import ImagePicker from '~/beinComponents/ImagePicker';
+import ImagePicker from '~/components/ImagePicker';
 import UploadingImage from '~/beinComponents/UploadingImage';
 import { ResourceUploadType } from '~/interfaces/IUpload';
 
@@ -73,7 +73,7 @@ const CreateArticleCover: FC<CreateArticleCoverProps> = ({ articleId }) => {
   const renderError = (error: string) => (
     <Button style={[styles.cover, styles.errorContainer]} onPress={onPressSelect}>
       <Icon icon="Image" size={30} tintColor={theme.colors.neutral20} />
-      <Text.SubtitleM style={styles.textAddCover} useI18n>common:text_select_file</Text.SubtitleM>
+      <Text.SubtitleM style={styles.textAddCover} useI18n>common:text_add_cover</Text.SubtitleM>
       <Text.BodyXS style={styles.textError}>{error}</Text.BodyXS>
     </Button>
   );
@@ -85,7 +85,7 @@ const CreateArticleCover: FC<CreateArticleCoverProps> = ({ articleId }) => {
       return (
         <Button style={[styles.centerButtonContainer, styles.emptyCoverContainer]} onPress={onPressSelect}>
           <Icon icon="Image" size={30} tintColor={theme.colors.neutral20} />
-          <Text.SubtitleM style={styles.textAddCover} useI18n>common:text_select_file</Text.SubtitleM>
+          <Text.SubtitleM style={styles.textAddCover} useI18n>common:text_add_cover</Text.SubtitleM>
         </Button>
       );
     }

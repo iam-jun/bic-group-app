@@ -21,11 +21,12 @@ import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { IRouteParams } from '~/interfaces/IRouter';
 import { getTitle, replacePostDetail } from './helper';
+import ContentUnavailable from '~/components/ContentUnavailable';
 
 const CommentDetail: FC<IRouteParams> = (props) => {
   const params = props?.route?.params;
   const {
-    postId, commentId, isReported, target = '',
+    postId, commentId, isReported, target = '', notiId = '',
   } = params || {};
 
   const { rootNavigation, goHome } = useRootNavigation();
@@ -117,6 +118,10 @@ const CommentDetail: FC<IRouteParams> = (props) => {
       </Text.SubtitleXS>
     );
   };
+
+  if (copyCommentError === APIErrorCode.Post.COMMENT_IS_REPORTED_AND_DELETED) {
+    return <ContentUnavailable showButton={!notiId} />;
+  }
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.neutral5} testID="comment_detail">

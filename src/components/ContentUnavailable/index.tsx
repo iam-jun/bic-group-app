@@ -10,7 +10,11 @@ import { useRootNavigation } from '~/hooks/navigation';
 import Header from '~/beinComponents/Header';
 import { Button } from '~/baseComponents';
 
-const ContentUnavailable = () => {
+interface Props {
+  showButton?: boolean;
+}
+
+const ContentUnavailable = ({ showButton = true }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const { t } = useBaseHook();
@@ -35,9 +39,14 @@ const ContentUnavailable = () => {
         <Text.BodyS style={styles.text} useI18n>
           common:content_unavailable:content
         </Text.BodyS>
-        <Button.Primary style={styles.button} onPress={onPressGoHome}>
-          {t('common:btn_back_to_home')}
-        </Button.Primary>
+        {
+          showButton
+          && (
+          <Button.Primary style={styles.button} onPress={onPressGoHome}>
+            {t('common:btn_back_to_home')}
+          </Button.Primary>
+          )
+        }
       </View>
     </View>
   );

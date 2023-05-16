@@ -26,6 +26,7 @@ import spacing from '~/theme/spacing';
 import useModalStore from '~/store/modal';
 import { ContentType } from '~/interfaces/INotification';
 import { useUserIdAuth } from '~/hooks/auth';
+import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 
 const Notification = () => {
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
@@ -127,6 +128,8 @@ const Notification = () => {
             case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR:
             case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR_AGGREGATED:
             case NOTIFICATION_TYPE.ADD_POST_TO_USER:
+            case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER:
+            case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER_IN_MULTIPLE_GROUPS:
             {
               if (target === TargetType.ARTICLE) {
                 rootNavigation.navigate(articleStack.articleDetail, { articleId: act.id });
@@ -311,6 +314,7 @@ const Notification = () => {
                 rootNavigation.navigate(articleStack.articleContentDetail, {
                   articleId: targetId,
                   is_reported: true,
+                  noti_id: item.id,
                 });
               } else {
                 rootNavigation.navigate(
@@ -369,6 +373,10 @@ const Notification = () => {
               break;
             case NOTIFICATION_TYPE.APPROVED_KYC:
               rootNavigation.navigate(mainStack.userProfile, { userId });
+              break;
+
+            case NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME:
+              rootNavigation.navigate(notiStack.notiMaintenancePage, { maintenanceInfo: act?.maintenanceInfo });
               break;
             default:
               console.warn(`Notification type ${type} have not implemented yet`);

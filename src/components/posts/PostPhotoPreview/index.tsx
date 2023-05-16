@@ -216,18 +216,18 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
             >
               {renderSmallImage(
                 1,
-                getWidthSmallImage(_width, data?.length, containerSmallImagesDirection),
+                getWidthSmallImage(_width, data?.length, containerSmallImagesDirection, containerImagesDirection),
                 data?.[1]?.url || data?.[1]?.name,
               )}
               {renderSmallImage(
                 2,
-                getWidthSmallImage(_width, data?.length, containerSmallImagesDirection),
+                getWidthSmallImage(_width, data?.length, containerSmallImagesDirection, containerImagesDirection),
                 data?.[2]?.url || data?.[2]?.name,
                 true,
               )}
               {renderSmallImage(
                 3,
-                getWidthSmallImage(_width, data?.length, containerSmallImagesDirection),
+                getWidthSmallImage(_width, data?.length, containerSmallImagesDirection, containerImagesDirection),
                 data?.[3]?.url || data?.[3]?.name,
                 true,
                 data?.length > 4,
@@ -299,15 +299,19 @@ const getHeighContainer = (
 const getWidthSmallImage = (
   widthContainer: number,
   numberOfImages: number,
-  flexDirection: 'row' | 'column',
+  containerSmallImagesDirection: 'row' | 'column',
+  containerImagesDirection: 'row' | 'column',
 ) => {
-  if (flexDirection === 'column') {
+  if (containerSmallImagesDirection === 'column') {
     if (numberOfImages === 2) {
       return (widthContainer - SPACING_IMAGE) / 2;
     }
     return (widthContainer - SPACING_IMAGE) / 3;
   }
   if (numberOfImages === 2) {
+    if (containerImagesDirection === 'row') {
+      return (widthContainer - SPACING_IMAGE) / 2;
+    }
     return widthContainer;
   }
   const numberOfHorizontalImages = numberOfImages === 3 ? 2 : 3;
