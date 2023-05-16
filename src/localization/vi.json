@@ -491,7 +491,7 @@
     "btn_unblock": "Mở khoá",
     "title_unblock_user_name": "Bỏ chặn {{name}}?",
     "text_unblock_user_name_result": "Bỏ chặn người dùng này sẽ cho phép họ tương tác lại với bạn như sau:",
-    "title_blocked_users_list_empty": "Danh sách người dùng bị chặn trống",
+    "title_blocked_users_list_empty": "Bạn chưa chặn ai",
     "text_blocked_users_list_empty": "Không tìm thấy người dùng",
     "text_blocked_at": "Đã chặn",
     "title_privacy": "Bảo mật",
@@ -900,9 +900,9 @@
     "no_group_found_desc": "Ooops, Group not found",
     "no_group_found_second_desc": "We couldn't find that group page.",
     "button_back_to_safety": "Back to Safety",
-    "no_profile_found_title": "No User Found",
-    "no_profile_found_desc": "User not found",
-    "no_profile_found_second_desc": "We cannot identify the person you are looking for."
+    "no_profile_found_title": "Không tìm thấy người dùng",
+    "no_profile_found_desc": "Không tìm thấy người dùng",
+    "no_profile_found_second_desc": "Chúng tôi không thể xác định được người mà bạn đang tìm kiếm."
   },
   "badge": {
     "scroll_bottom": "Xuống cuối trang"

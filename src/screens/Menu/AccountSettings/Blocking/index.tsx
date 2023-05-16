@@ -24,7 +24,7 @@ const Blocking = () => {
   } = useBlockingStore();
 
   useEffect(() => {
-    actions.getListBlockingUsers();
+    actions.getListBlockingUsers(true);
     return () => {
       reset();
     };
@@ -36,9 +36,10 @@ const Blocking = () => {
     }
     return (
       <EmptyScreen
-        icon="searchUsers"
-        title="settings:title_blocked_users_list_empty"
-        description="settings:text_blocked_users_list_empty"
+        icon="blockedUsersNotFound"
+        size={100}
+        iconStyle={styles.iconStyle}
+        description="settings:title_blocked_users_list_empty"
       />
     );
   };
@@ -123,5 +124,8 @@ const styles = StyleSheet.create({
     height: 100,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  iconStyle: {
+    marginBottom: spacing.margin.large,
   },
 });

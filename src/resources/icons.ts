@@ -42,6 +42,7 @@ import iconBeinChat from '../../assets/icons/icon_bein_chat.svg';
 import fileIcons from './fileIcons';
 import { fontAwesomeIcons } from '~/services/fontAwesomeIcon';
 import iconUpdateNewVersion from '../../assets/icons/icon_update_new_version.svg';
+import blockedUsersNotFound from '../../assets/icons/icon_blocked_user_empty.svg';
 
 const icons = {
   ...fileIcons,
@@ -72,6 +73,7 @@ const icons = {
   iconFlagUs,
   addUsers,
   searchUsers,
+  blockedUsersNotFound,
   iconMapPin,
   iconChat,
   iconPermissionGuide1Android,
