@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import {
   ActivityIndicator, FlatList, RefreshControl, StyleSheet, View,
 } from 'react-native';
@@ -15,9 +15,14 @@ import EmptyScreen from '~/components/EmptyScreen';
 import BlockedUserItem from './components/BlockedUserItem';
 import { IBlockingUser } from '~/interfaces/IBlocking';
 import useBlockingStore from '~/store/blocking';
+import { IRouteParams } from '~/interfaces/IRouter';
+import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 
-const Blocking = () => {
+const Blocking:FC<IRouteParams> = (props) => {
+  const { popScreen = 0 } = props?.route?.params || {};
+
   const theme: ExtendedTheme = useTheme();
+  const { rootNavigation } = useRootNavigation();
 
   const {
     list, loading, refreshing, hasNextPage, actions, reset,
@@ -29,6 +34,16 @@ const Blocking = () => {
       reset();
     };
   }, []);
+
+  const handleBack = () => {
+    if (popScreen) {
+      rootNavigation.pop(popScreen);
+      return;
+    }
+    rootNavigation.goBack();
+  };
+
+  useBackPressListener(handleBack);
 
   const renderListEmptyComponent = () => {
     if (hasNextPage) {
@@ -88,7 +103,7 @@ const Blocking = () => {
 
   return (
     <ScreenWrapper testID="blocking" isFullView>
-      <Header title={t('settings:title_blocking')} />
+      <Header title={t('settings:title_blocking')} onPressBack={handleBack} />
       <FlatList
         data={list}
         renderItem={renderItem}

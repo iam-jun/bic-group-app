@@ -47,7 +47,7 @@ const UserHeader = ({
 
   const blockUserSuccess = () => {
     setIsDisabled(true);
-    rootNavigation.navigate(mainStack.blocking);
+    rootNavigation.navigate(mainStack.blocking, { popScreen: 2 });
   };
 
   const onConfirmBlock = () => {
