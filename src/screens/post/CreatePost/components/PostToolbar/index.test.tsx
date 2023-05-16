@@ -6,7 +6,7 @@ import RNPermissions from 'react-native-permissions';
 import { fireEvent, renderHook, renderWithRedux } from '~/test/testUtils';
 import PostToolbar from '.';
 import useCreatePostStore from '../../store';
-import ImagePicker from '~/beinComponents/ImagePicker';
+import ImagePicker from '~/components/ImagePicker';
 import DocumentPicker from '~/beinComponents/DocumentPicker';
 
 describe('PostToolbar component', () => {

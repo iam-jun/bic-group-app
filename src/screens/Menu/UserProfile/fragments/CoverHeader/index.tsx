@@ -4,7 +4,7 @@ import { ResourceUploadType } from '~/interfaces/IUpload';
 import { scaleCoverHeight, userProfileImageCropRatio } from '~/theme/dimension';
 import AvatarImage from '../../components/AvatarImage';
 import CoverImage from '../../components/CoverImage';
-import ImagePicker from '~/beinComponents/ImagePicker';
+import ImagePicker from '~/components/ImagePicker';
 import useUploaderStore from '~/store/uploader';
 import { IFilePicked } from '~/interfaces/common';
 import useMenuController from '~/screens/Menu/store';

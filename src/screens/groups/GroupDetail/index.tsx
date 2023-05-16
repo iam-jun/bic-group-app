@@ -57,6 +57,7 @@ import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
 import usePinContentStore from '~/components/PinContent/store';
 import TermsView from '~/components/TermsModal';
 import MemberQuestionsModal from '~/components/MemberQuestionsModal';
+import FloatingCreatePost from '~/screens/Home/components/FloatingCreatePost';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -393,6 +394,7 @@ const GroupDetail = (props: any) => {
         <ContentSearch groupId={groupId} />
         <MemberQuestionsModal />
         <TermsView />
+        {isMember && <FloatingCreatePost />}
       </>
     );
   };

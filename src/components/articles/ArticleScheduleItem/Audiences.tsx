@@ -45,7 +45,7 @@ const Audiences: React.FC<IAudiences> = ({ audience }) => {
     modalActions.showModal({
       isOpen: true,
       isFullScreen: true,
-      titleFullScreen: t('post:title_post_to'),
+      titleFullScreen: t('post:title_publish_to'),
       ContentComponent: <PostAudiencesModal data={groups || []} onPressItemAudience={onPressAudience} />,
     });
   };

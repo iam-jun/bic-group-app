@@ -16,7 +16,7 @@ import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { useBaseHook } from '~/hooks';
 import { checkPermission, PermissionTypes } from '~/utils/permission';
-import ImagePicker from '~/beinComponents/ImagePicker';
+import ImagePicker from '~/components/ImagePicker';
 import { IGiphy } from '~/interfaces/IGiphy';
 import { formatTextWithEmoji } from '~/utils/emojis';
 import { getImagePastedFromClipboard } from '~/utils/images';
