@@ -74,7 +74,7 @@ const Publish: React.FC<PublishProps> = ({ onScroll }) => {
         if (hasNextPage) return null;
 
         return (
-            <View style={styles.boxEmpty} testID="schedule_article.empty_view">
+            <View style={styles.boxEmpty} testID="publish.empty_view">
                 <Image
                     resizeMode="contain"
                     source={images.img_empty_box}

@@ -46,6 +46,28 @@ describe('Your Content screen', () => {
     fireEvent.press(tabDraftArticle);
   });
 
+  it('should render Publish tab', () => {
+    const props = {
+      route: {
+        params: {
+          initTab: 2,
+        },
+      },
+    };
+
+    const wrapper = renderWithRedux(
+      <YourContent {...props} />,
+    );
+
+    const tabPulishContents = wrapper.queryByTestId('tab-button-home:title_feed_content_all-selected');
+    expect(tabPulishContents).toBeDefined();
+    fireEvent.press(tabPulishContents);
+
+    const tabDraftArticle = wrapper.queryByTestId('tab-button-your_content:title_schedule_article-notselected');
+    expect(tabDraftArticle).toBeDefined();
+    fireEvent.press(tabDraftArticle);
+  });
+
   it('should show header filter', () => {
     const wrapper = renderWithRedux(
       <YourContent />,
