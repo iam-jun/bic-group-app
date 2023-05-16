@@ -55,6 +55,7 @@ import { IMaintenanceState } from './maintenance';
 import { IPinContentState } from '~/components/PinContent/store';
 import { ITermState } from '~/components/TermsModal/store';
 import { IDraftContentsState } from '~/screens/YourContent/components/Draft/DraftContents/store';
+import { IPublishState } from '~/screens/YourContent/components/Publish/store'; 
 
 export interface BicStore {
   entities: {
@@ -173,6 +174,7 @@ export interface BicStore {
   YourContent: {
     yourContentStore: IYourContentState;
     scheduleArticleStore: IScheduleArticlesState;
+    publishStore: IPublishState;
   };
 
   // others
