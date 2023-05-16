@@ -76,7 +76,6 @@ const createStyles = (theme: ExtendedTheme) => {
       color: colors.neutral70,
       fontFamily: fontFamilies.BeVietnamProLight,
       fontSize: sizes.mdParagraph,
-      lineHeight: dimension.lineHeights.mdParagraph
     },
     headings: {
       heading1: {

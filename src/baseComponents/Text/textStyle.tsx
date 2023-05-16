@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { ExtendedTheme } from '@react-navigation/native';
 
-import dimension, { sizes } from '~/theme/dimension';
+import { sizes } from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';
 
 export const createTextStyle = (theme: ExtendedTheme) => {
@@ -12,19 +12,16 @@ export const createTextStyle = (theme: ExtendedTheme) => {
       fontFamily: fontFamilies.BeVietnamProSemiBold,
       fontSize: sizes.h1,
       color: colors.neutral80,
-      lineHeight: dimension.lineHeights.h1,
     },
     h2: {
       fontFamily: fontFamilies.BeVietnamProSemiBold,
       fontSize: sizes.h2,
       color: colors.neutral80,
-      lineHeight: dimension.lineHeights.h2,
     },
     h3: {
       fontFamily: fontFamilies.BeVietnamProSemiBold,
       fontSize: sizes.h3,
       color: colors.neutral80,
-      lineHeight: dimension.lineHeights.h3,
     },
     h4: {
       fontFamily: fontFamilies.BeVietnamProSemiBold,
@@ -65,7 +62,6 @@ export const createTextStyle = (theme: ExtendedTheme) => {
       fontFamily: fontFamilies.BeVietnamProLight,
       fontSize: sizes.bodyM,
       color: colors.neutral70,
-      lineHeight: dimension.lineHeights.bodyM,
     },
     bodyMMedium: {
       fontFamily: fontFamilies.BeVietnamProMedium,
@@ -76,7 +72,6 @@ export const createTextStyle = (theme: ExtendedTheme) => {
       fontFamily: fontFamilies.BeVietnamProLight,
       fontSize: sizes.bodyS,
       color: colors.neutral70,
-      lineHeight: dimension.lineHeights.bodyS,
     },
     bodySMedium: {
       fontFamily: fontFamilies.BeVietnamProMedium,
@@ -117,13 +112,11 @@ export const createTextStyle = (theme: ExtendedTheme) => {
       fontFamily: fontFamilies.BeVietnamProMedium,
       fontSize: sizes.buttonM,
       color: colors.neutral70,
-      lineHeight: dimension.lineHeights.buttonM,
     },
     buttonS: {
       fontFamily: fontFamilies.BeVietnamProMedium,
       fontSize: sizes.buttonS,
       color: colors.neutral70,
-      lineHeight: dimension.lineHeights.buttonS,
     },
     tabL: {
       fontFamily: fontFamilies.BeVietnamProMedium,
@@ -209,7 +202,6 @@ export const createTextStyle = (theme: ExtendedTheme) => {
       fontFamily: fontFamilies.BeVietnamProLight,
       fontSize: sizes.captionS,
       color: colors.neutral40,
-      lineHeight: dimension.lineHeights.captionS,
     },
     code: {
       fontFamily: fontFamilies.JetBrainsMono,
