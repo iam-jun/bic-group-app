@@ -162,6 +162,21 @@ const SignIn = () => {
     inputPasswordRef?.current?.focus();
   };
 
+  const handleCheckUser = (result: boolean, email: string) => {
+    if (result) {
+      modalActions.showModal({
+        isOpen: true,
+        titleFullScreen: 'groups:group_content:btn_your_groups',
+        ContentComponent: <RequestVerifyEmailModal email={email} />,
+      });
+    } else {
+      setError(EMAIL, {
+        type: 'validate',
+        message: t('auth:text_err_user_not_exist'),
+      });
+    }
+  };
+
   const handleError = (error: any) => {
     let errorMessage;
     switch (error?.code) {
@@ -175,11 +190,7 @@ const SignIn = () => {
       case authErrors.USER_NOT_FOUND_EXCEPTION:
         // eslint-disable-next-line no-case-declarations
         const email = getValues(EMAIL);
-        modalActions.showModal({
-          isOpen: true,
-          titleFullScreen: 'groups:group_content:btn_your_groups',
-          ContentComponent: <RequestVerifyEmailModal email={email} />,
-        });
+        authActions.checkIsUserNotVerified(email, (result: boolean) => { handleCheckUser(result, email); });
         break;
       default:
         errorMessage = error?.message || t('auth:text_err_id_password_not_matched');
