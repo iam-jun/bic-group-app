@@ -24,14 +24,14 @@ describe('helper in home store', () => {
   describe('isFilterWithThisAttributeFeed function', () => {
     it('given currentAttributeFeedFilter and arbitrary attributeFeed should return true if currentAttributeFeedFilter is expected attributeFeed', () => {
       expect(
-        isFilterWithThisAttributeFeed(AttributeFeed.MINE, AttributeFeed.MINE),
+        isFilterWithThisAttributeFeed(AttributeFeed.ALL, AttributeFeed.ALL),
       ).toBeTruthy();
     });
 
     it('given currentAttributeFeedFilter and arbitrary attributeFeed should return false if currentAttributeFeedFilter is not expected attributeFeed', () => {
       expect(
         isFilterWithThisAttributeFeed(
-          AttributeFeed.MINE,
+          AttributeFeed.ALL,
           AttributeFeed.IMPORTANT,
         ),
       ).toBeFalsy();

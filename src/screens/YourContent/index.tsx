@@ -101,7 +101,7 @@ const YourContent: React.FC<YourContentProps> = ({ route }) => {
 
   const onPressPublishTab = (item: any) => {
     actions.setActivePublishTab(item.id);
-  }
+  };
 
   const handleScroll = throttle((offsetY: number) => {
     if (offsetY < 0) {
@@ -173,7 +173,7 @@ const YourContent: React.FC<YourContentProps> = ({ route }) => {
       );
     }
 
-     if (activeTab === 3) {
+    if (activeTab === 3) {
       return (
         <ReportedContents
           onScroll={onScrollHandler}

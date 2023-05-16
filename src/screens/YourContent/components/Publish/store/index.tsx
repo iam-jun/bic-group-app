@@ -1,19 +1,19 @@
 import { createStore, resetStore } from '~/store/utils';
-import IBaseState, { IBaseListState, InitStateType } from '~/store/interfaces/IBaseState';
+import IBaseState, { IBaseListState } from '~/store/interfaces/IBaseState';
 import { IPost, IPayloadGetPublishContents } from '~/interfaces/IPost';
 import { ContentFeed } from '~/interfaces/IFeed';
 import getPublishContent from './actions/getPublishContent';
 
 const DEFAULT_DATA: IBaseListState<IPost> = {
-    ids: [],
-    loading: false,
-    refreshing: false,
-    hasNextPage: true,
+  ids: [],
+  loading: false,
+  refreshing: false,
+  hasNextPage: true,
 };
 
 const initData = Object.values(ContentFeed).reduce((acc, valueContentFeed) => {
-    const data = { [valueContentFeed]: DEFAULT_DATA };
-    return { ...acc, ...data };
+  const data = { [valueContentFeed]: DEFAULT_DATA };
+  return { ...acc, ...data };
 }, {});
 
 export interface IPublishState extends IBaseState {
@@ -25,17 +25,17 @@ export interface IPublishState extends IBaseState {
 }
 
 const initState = {
-    publishContents: initData,
+  publishContents: initData,
 };
 
 const publishStore = (set, get) => ({
-    ...initState,
+  ...initState,
 
-    actions: {
-        getPublishContent: getPublishContent(set, get),
-    },
+  actions: {
+    getPublishContent: getPublishContent(set, get),
+  },
 
-    reset: () => resetStore(initState, set),
+  reset: () => resetStore(initState, set),
 });
 
 const usePublishStore = createStore<IPublishState>(publishStore);

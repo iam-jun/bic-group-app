@@ -1,4 +1,5 @@
 import React from 'react';
+import { renderHook, act } from '@testing-library/react-native';
 import { mockArticle } from '~/test/mock_data/article';
 import usePublishStore, { IPublishState } from './store';
 import { IPost } from '~/interfaces/IPost';
@@ -6,7 +7,6 @@ import { renderWithRedux } from '~/test/testUtils';
 import Publish from './index';
 import { ContentFeed } from '~/interfaces/IFeed';
 import usePostsStore from '~/store/entities/posts';
-import { renderHook, act } from '@testing-library/react-native';
 
 describe('Publish component', () => {
   it('render correctly', () => {
@@ -23,8 +23,8 @@ describe('Publish component', () => {
 
     const onScroll = jest.fn();
 
-    const rendered = renderWithRedux(<Publish 
-        onScroll={onScroll}    
+    const rendered = renderWithRedux(<Publish
+      onScroll={onScroll}
     />);
     const contentView = rendered.getByTestId('publish.content');
 

@@ -1,8 +1,8 @@
 import streamApi from '~/api/StreamApi';
 import { act, renderHook } from '~/test/testUtils';
-import usePublishStore, { IPublishState } from '../index';
+import usePublishStore from '../index';
 import useYourContentStore from '~/screens/YourContent/store';
-import { mockArticle, responseGetScheduleArticles } from '~/test/mock_data/article';
+import { mockArticle } from '~/test/mock_data/article';
 import { ContentFeed } from '~/interfaces/IFeed';
 
 describe('action getPublishContent', () => {
@@ -46,9 +46,9 @@ describe('action getPublishContent', () => {
   });
 
   it('should call api getNewsfeed when isRefresh = true success', () => {
-    useYourContentStore.setState((state )=> {
-        state.activePublishTab = ContentFeed.ALL;
-        return state;
+    useYourContentStore.setState((state) => {
+      state.activePublishTab = ContentFeed.ALL;
+      return state;
     });
 
     const spy = jest.spyOn(streamApi, 'getNewsfeed').mockImplementation(
@@ -70,7 +70,7 @@ describe('action getPublishContent', () => {
     });
 
     expect(result.current.publishContents[ContentFeed.ALL].ids).toEqual(
-        [mockArticle.id]
+      [mockArticle.id],
     );
     expect(result.current.publishContents[ContentFeed.ALL].hasNextPage).toBe(false);
     expect(result.current.publishContents[ContentFeed.ALL].refreshing).toBe(false);
@@ -78,9 +78,9 @@ describe('action getPublishContent', () => {
   });
 
   it('should call api getNewsfeed when isRefresh = false success', () => {
-    useYourContentStore.setState((state )=> {
-        state.activePublishTab = ContentFeed.ALL;
-        return state;
+    useYourContentStore.setState((state) => {
+      state.activePublishTab = ContentFeed.ALL;
+      return state;
     });
     const spy = jest.spyOn(streamApi, 'getNewsfeed').mockImplementation(
       () => Promise.resolve(response) as any,
@@ -101,7 +101,7 @@ describe('action getPublishContent', () => {
     });
 
     expect(result.current.publishContents[ContentFeed.ALL].ids).toEqual(
-        [mockArticle.id]
+      [mockArticle.id],
     );
     expect(result.current.publishContents[ContentFeed.ALL].refreshing).toBe(false);
     expect(result.current.publishContents[ContentFeed.ALL].loading).toBe(false);

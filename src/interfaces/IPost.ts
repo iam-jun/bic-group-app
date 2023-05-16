@@ -637,5 +637,5 @@ export interface IErrorContent {
 export interface IPayloadGetPublishContents {
   isRefresh?: boolean;
   offset?: number;
-  isProcessing?: boolean; 
+  isProcessing?: boolean;
 }
