@@ -87,6 +87,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### android bundle_aab_production
+
+```sh
+[bundle exec] fastlane android bundle_aab_production
+```
+
+
+
 ----
 
 

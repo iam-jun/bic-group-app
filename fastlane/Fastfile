@@ -32,7 +32,7 @@ platform :android do
         notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
       end
     rescue => error
-      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, error, "#F64E60")
+      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, 'Build failed', "#F64E60")
     end
 
   end
@@ -68,7 +68,7 @@ platform :android do
           notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
         end
       rescue => error
-        notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, error, "#F64E60")
+        notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, 'Build failed', "#F64E60")
       end
 
     end
@@ -104,7 +104,7 @@ platform :android do
         notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
       end
     rescue => error
-      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, error, "#F64E60")
+      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, 'Build failed', "#F64E60")
     end
 
   end
@@ -326,7 +326,7 @@ platform :ios do
         notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
       end
     rescue => error
-      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, error, "#F64E60")
+      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, 'Build failed', "#F64E60")
     end
 
   end
@@ -362,7 +362,7 @@ platform :ios do
           notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
         end
       rescue => error
-        notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, error, "#F64E60")
+        notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, 'Build failed', "#F64E60")
       end
 
     end
@@ -398,13 +398,16 @@ platform :ios do
         notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
       end
     rescue => error
-      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, error, "#F64E60")
+      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, 'Build failed', "#F64E60")
     end
 
   end
 
   lane :deploy_staging do
     Dotenv.overload('../.env.base', '../.env.staging')
+
+    UI.message("#Badging app icon")
+    add_badge(custom: './fastlane/assets/badge_staging.png')
 
     match(
       type: "appstore",
@@ -452,6 +455,9 @@ platform :ios do
 
   lane :deploy_prerelease do
     Dotenv.overload('../.env.base', '../.env.prerelease')
+
+    UI.message("#Badging app icon")
+    add_badge(custom: './fastlane/assets/badge_release.png')
 
     match(
       type: "appstore",
