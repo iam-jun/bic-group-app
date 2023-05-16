@@ -2,7 +2,7 @@ export enum AttributeFeed {
   ALL = 'ALL',
   IMPORTANT = 'IMPORTANT',
   SAVED = 'SAVED',
-  MINE = 'MINE'
+  // MINE = 'MINE'
 }
 
 export enum ContentFeed {
