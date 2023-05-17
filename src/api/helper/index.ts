@@ -57,7 +57,7 @@ export const handleResponseError = async (axiosError: AxiosError): Promise<HttpA
     if (isRequestNotCancelled(axiosError)) {
       handleSystemIssue(axiosError);
     }
-    if (isRequestS3(axiosError)) {
+    if (shouldRetryS3(axiosError)) {
       // @ts-ignore
       axiosError.config.useRetry = false;
       axiosError.config.headers = { 'Content-Type': 'multipart/form-data' };
@@ -79,7 +79,8 @@ export const handleResponseError = async (axiosError: AxiosError): Promise<HttpA
 const isRequestHasResponse = (axiosError: AxiosError) => axiosError.response;
 const isRequestNotHasResponse = (axiosError: AxiosError) => !axiosError.response && axiosError.request;
 const isRequestNotCancelled = (axiosError: AxiosError) => axiosError.request.status !== 0;
-const isRequestS3 = (axiosError: AxiosError) => {
+
+const shouldRetryS3 = (axiosError: AxiosError) => {
   // @ts-ignore
   if (axiosError.config.provider.name === apiProviders.beinUploadS3.name && axiosError.config.useRetry) {
     return true;
@@ -143,13 +144,15 @@ const prepareRefreshTokenAndRetry = async (axiosError: AxiosError) => {
   return promiseHandleResponseErrorShouldRetry;
 };
 
-const retryS3 = async (axiosError: AxiosError) => {
-  const promiseHandleResponseErrorShouldRetry = createPromiseHandleResponseAndAddQueueRetry(axiosError);
-
-  handleUnauthorizedReqQueue(true);
-
-  return promiseHandleResponseErrorShouldRetry;
-};
+const retryS3 = async (axiosError: AxiosError) => new Promise(async (resolve, reject) => {
+  const requestConfig = { ...axiosError.config };
+  try {
+    const resp = await makeHttpRequest(requestConfig as any);
+    return resolve(resp);
+  } catch (e) {
+    return reject(e);
+  }
+});
 
 const createPromiseHandleResponseAndAddQueueRetry = (axiosError: AxiosError) => new Promise((resolve, reject) => {
   const requestConfig = { ...axiosError.config };
@@ -225,12 +228,8 @@ export const refreshTokenThenExecuteQueueRetry = async (oldBeinToken: string): P
     return;
   }
 
-  handleUnauthorizedReqQueue(isSuccess);
-
-  isRefreshingToken = false;
-};
-
-const handleUnauthorizedReqQueue = (isSuccess: boolean) => {
   unauthorizedReqQueue.forEach((callback) => callback(isSuccess));
   unauthorizedReqQueue = [];
+
+  isRefreshingToken = false;
 };
