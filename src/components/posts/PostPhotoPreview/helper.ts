@@ -16,8 +16,8 @@ const getHeighContainer = (
   isLongFirst,
 ) => {
   if (
-    (data?.length === 1 && !isVerticalFirst) ||
-    (data?.length === 1 && isVerticalFirst && !isLongFirst)
+    (data?.length === 1 && !isVerticalFirst)
+    || (data?.length === 1 && isVerticalFirst && !isLongFirst)
   ) {
     return dfSize / imageRatioFirst;
   }

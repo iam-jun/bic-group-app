@@ -245,4 +245,3 @@ const createStyle = () => StyleSheet.create({
 });
 
 export default PostPhotoPreview;
-                    
