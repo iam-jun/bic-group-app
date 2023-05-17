@@ -5,7 +5,6 @@ import {
   IParamDeleteReaction,
   ICommentData,
   IParamGetDraftContents,
-  IParamGetPostAudiences,
   IParamGetPostDetail,
   IParamGetReactionDetail,
   IParamPutReaction,
@@ -236,13 +235,6 @@ export const streamApiConfig = {
     method: 'put',
   }),
 
-  // todo move to group
-  getPostAudiences: (params: IParamGetPostAudiences): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${apiProviders.bein.url}/post-audiences/groups`,
-    provider: apiProviders.bein,
-    params,
-  }),
   getSearchMentionAudiences: (
     params: IParamSearchMentionAudiences,
   ): HttpApiRequestConfig => ({
@@ -695,9 +687,6 @@ const streamApi = {
       return Promise.reject(e);
     }
   },
-  getPostAudience: (params: IParamGetPostAudiences) => withHttpRequestPromise(
-    streamApiConfig.getPostAudiences, params,
-  ),
   getCommentDetail: (commentId: string, params: IRequestGetPostComment) => withHttpRequestPromise(
     streamApiConfig.getCommentDetail, commentId, params,
   ),
