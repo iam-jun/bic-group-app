@@ -380,6 +380,7 @@ const Notification = () => {
               break;
 
             case NOTIFICATION_TYPE.CHANGE_LOGS:
+              notiActions.resetChangelogNoti();
               rootNavigation.navigate(notiStack.notiChangeLogsPage, { id: item.id });
               break;
             default:

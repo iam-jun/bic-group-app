@@ -47,3 +47,8 @@ export enum ContentType {
   article = 'article',
   series = 'series',
 }
+
+export interface INotiChangeLogsInfo {
+  title: string;
+  content: string;
+}

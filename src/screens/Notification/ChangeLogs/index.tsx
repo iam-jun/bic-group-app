@@ -1,19 +1,24 @@
 import React, { FC, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Header from '~/beinComponents/Header';
-import Text from '~/baseComponents/Text';
 import { spacing } from '~/theme';
 import ChangeLogsSvg from '~/../assets/images/img_changelogs_notification.svg';
 import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import { IRouteParams } from '~/interfaces/IRouter';
-import { sizes } from '~/theme/dimension';
 import INotificationsState from '../store/Interface';
 import useNotificationStore from '../store';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import Markdown from '~/beinComponents/Markdown';
+import Text from '~/baseComponents/Text';
 
 const ChangeLogs: FC<IRouteParams> = (props) => {
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
+  const changleLogsNoti = useNotificationStore((state: INotificationsState) => state.changelogsInfo);
+  const loading = useNotificationStore((state: INotificationsState) => state.changelogsInfoLoading);
+
+  const { title = '', content = '' } = changleLogsNoti || {};
 
   const { params } = props.route;
   const { id = '' } = params || {};
@@ -36,21 +41,27 @@ const ChangeLogs: FC<IRouteParams> = (props) => {
         useI18n
         style={styles.header}
       />
-      <View style={styles.content}>
-        <View style={styles.image}>
-          <SVGIcon source={ChangeLogsSvg} size={120} />
-        </View>
-        <Text.H3 useI18n style={styles.title}>
-          notification:text_scheduled
-        </Text.H3>
-        <Text.ParagraphS>
-          {' '}
-        </Text.ParagraphS>
-        {/* <Markdown value={content} /> */}
-        <Text.ParagraphS useI18n style={{ fontWeight: 'bold' }}>
-          notification:text_bic_team
-        </Text.ParagraphS>
-      </View>
+      {!!loading
+        ? (
+          <View style={styles.center}>
+            <LoadingIndicator />
+          </View>
+        )
+        : !loading && !title
+          ? (
+            <View style={styles.center}>
+              <Text.ParagraphM useI18n>common:text_sorry_something_went_wrong</Text.ParagraphM>
+            </View>
+          )
+          : (
+            <ScrollView style={styles.content}>
+              <View style={styles.image}>
+                <SVGIcon source={ChangeLogsSvg} size={120} />
+              </View>
+              <Markdown value={title} />
+              <Markdown value={content} />
+            </ScrollView>
+          )}
     </View>
   );
 };
@@ -69,17 +80,17 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingVertical: 0,
     },
     content: {
-      flex: 1,
       paddingHorizontal: spacing.padding.large,
       paddingTop: spacing.padding.large,
     },
-    title: {
-      textAlign: 'center',
-      marginBottom: spacing.margin.tiny,
-      fontSize: sizes.mdH3,
-    },
     image: {
       alignItems: 'center',
+      paddingBottom: spacing.padding.extraLarge,
+    },
+    center: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
   });
 };

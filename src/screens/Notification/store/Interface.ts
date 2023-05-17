@@ -1,4 +1,4 @@
-import { IParamGetNotifications } from '~/interfaces/INotification';
+import { INotiChangeLogsInfo, IParamGetNotifications } from '~/interfaces/INotification';
 import IBaseState from '~/store/interfaces/IBaseState';
 import IFetchingState from '~/store/interfaces/IFetchingState';
 
@@ -18,6 +18,8 @@ interface INotificationsState extends IBaseState, IFetchingState{
   tabUnread?: INotificationTab,
   tabMention?:INotificationTab,
   tabImportant?: INotificationTab,
+  changelogsInfo?: INotiChangeLogsInfo,
+  changelogsInfoLoading?: boolean,
 
   actions?: {
     getTabData?: (payload?: IParamGetNotifications) => void,
@@ -35,6 +37,7 @@ interface INotificationsState extends IBaseState, IFetchingState{
     registerPushToken?: (payload?: any) => void;
     handleNotiBackground: (remoteMessage: any) => void;
     getChangelogNotification: (notificationId: string) => void;
+    resetChangelogNoti: () => void;
   }
 
 }

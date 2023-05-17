@@ -69,6 +69,12 @@ const notificationStore = (set, get) => ({
     },
     registerPushToken: registerPushToken(set, get),
     handleNotiBackground: handleNotiBackground(set, get),
+    resetChangelogNoti: () => {
+      set((state: INotificationsState) => {
+        state.changelogsInfoLoading = true;
+        state.changelogsInfo = { title: '', content: '' };
+      }, 'resetChangelogNoti');
+    },
   },
 
   reset: () => resetStore(initState, set),
