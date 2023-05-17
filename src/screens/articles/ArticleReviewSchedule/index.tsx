@@ -111,9 +111,15 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
 
     const result: any = [];
     listImage.forEach((item) => {
+      const { url } = item;
+
+      if (!url) return;
+
+      const paths = url.split('/');
+
       result.push({
-        uri: item.url,
-        name: item?.name || `${item?.id}.png`,
+        uri: url,
+        id: paths[paths.length - 1],
       });
     });
 

@@ -131,10 +131,19 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
       listImage = [{ ...coverMedia }];
     }
 
-    const result = listImage.map((item) => ({
-      uri: item.url,
-      name: item?.name || `${item?.id}.png`,
-    }));
+    const result = listImage.map((item) => {
+      const { url } = item;
+
+      if (!url) return;
+
+      const paths = url.split('/');
+
+      return ({
+        uri: url,
+        id: paths[paths.length - 1],
+      });
+    });
+
     setListImage(result);
   };
 
