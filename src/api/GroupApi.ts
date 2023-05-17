@@ -3,7 +3,6 @@ import { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
 import {
   IGetCommunityGroup,
   IGroupDetailEdit,
-  IParamGetGroupPosts,
   IParamsGetJoinedAllGroups,
   IParamsGetManagedCommunityAndGroup,
   IPayloadGroupSchemeAssignments,
@@ -15,7 +14,6 @@ import {
   MembershipAnswerRequestParam,
 } from '~/interfaces/ICommunity';
 import { withHttpRequestPromise } from '~/api/apiRequest';
-import appConfig from '~/configs/appConfig';
 import {
   IParamsSignUp, IParamValidateReferralCode, IUserEdit, IVerifyEmail,
 } from '~/interfaces/IAuth';
@@ -221,14 +219,6 @@ export const groupsApiConfig = {
     data: {
       ...schemeData,
     },
-  }),
-
-  // todo move to stream
-  getGroupPosts: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${apiProviders.beinFeed.url}feeds/timeline`,
-    provider: apiProviders.beinFeed,
-    params,
   }),
 
   getUserInnerGroups: (
@@ -714,13 +704,6 @@ const groupApi = {
     groupsApiConfig.getUserInnerGroups,
     groupId,
     userId,
-  ),
-  getGroupPosts: (param: IParamGetGroupPosts) => withHttpRequestPromise(
-    groupsApiConfig.getGroupPosts, {
-      offset: param?.offset || 0,
-      limit: param?.limit || appConfig.recordsPerPage,
-      ...param,
-    },
   ),
   getSearchAudiences: (params: {
     contentType: ContentType; key: string, offset?: number, limit?: number

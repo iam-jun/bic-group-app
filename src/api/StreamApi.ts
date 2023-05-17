@@ -544,6 +544,12 @@ export const streamApiConfig = {
     method: 'post',
     data: reorderedPinContent,
   }),
+  getGroupPosts: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${apiProviders.beinFeed.url}feeds/timeline`,
+    provider: apiProviders.beinFeed,
+    params,
+  }),
 };
 
 const streamApi = {
@@ -838,6 +844,13 @@ const streamApi = {
   getPinContentsGroup: (id: string) => withHttpRequestPromise(streamApiConfig.getPinContentsGroup, id),
   reorderPinContentGroup: (reorderedPinContent: string[], groupId: string) => withHttpRequestPromise(
     streamApiConfig.reorderPinContentGroup, reorderedPinContent, groupId,
+  ),
+  getGroupPosts: (param: IParamGetGroupPosts) => withHttpRequestPromise(
+    streamApiConfig.getGroupPosts, {
+      offset: param?.offset || 0,
+      limit: param?.limit || appConfig.recordsPerPage,
+      ...param,
+    },
   ),
 };
 

@@ -1,13 +1,13 @@
-import groupApi from '~/api/GroupApi';
 import { AttributeFeed, ContentFeed } from '~/interfaces/IFeed';
 import { responseTimeline } from '~/test/mock_data/timeline';
 import { act, renderHook, waitFor } from '~/test/testUtils';
 import useTimelineStore from '../index';
+import streamApi from '~/api/StreamApi';
 
 describe('getPosts in group/community', () => {
   it('should get posts success:', async () => {
     jest.useFakeTimers();
-    const spyApiGetGroupPosts = jest.spyOn(groupApi, 'getGroupPosts').mockImplementation(
+    const spyApiGetGroupPosts = jest.spyOn(streamApi, 'getGroupPosts').mockImplementation(
       () => Promise.resolve(responseTimeline) as any,
     );
 
@@ -35,7 +35,7 @@ describe('getPosts in group/community', () => {
 
   it('should refresh posts success:', async () => {
     jest.useFakeTimers();
-    const spyApiGetGroupPosts = jest.spyOn(groupApi, 'getGroupPosts').mockImplementation(
+    const spyApiGetGroupPosts = jest.spyOn(streamApi, 'getGroupPosts').mockImplementation(
       () => Promise.resolve(responseTimeline) as any,
     );
 
