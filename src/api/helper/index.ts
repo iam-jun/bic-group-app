@@ -144,14 +144,16 @@ const prepareRefreshTokenAndRetry = async (axiosError: AxiosError) => {
   return promiseHandleResponseErrorShouldRetry;
 };
 
-const retryS3 = async (axiosError: AxiosError) => new Promise(async (resolve, reject) => {
-  const requestConfig = { ...axiosError.config };
-  try {
-    const resp = await makeHttpRequest(requestConfig as any);
-    return resolve(resp);
-  } catch (e) {
-    return reject(e);
-  }
+const retryS3 = async (axiosError: AxiosError) => new Promise((resolve, reject) => {
+  (async () => {
+    try {
+      const requestConfig = { ...axiosError.config };
+      const resp = await makeHttpRequest(requestConfig as any);
+      return resolve(resp);
+    } catch (e) {
+      return reject(e);
+    }
+  })();
 });
 
 const createPromiseHandleResponseAndAddQueueRetry = (axiosError: AxiosError) => new Promise((resolve, reject) => {
