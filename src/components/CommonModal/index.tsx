@@ -27,6 +27,7 @@ const CommonModal = () => {
     props,
     useAppBottomSheet = true,
     closeOutSide = true,
+    animationType = 'slide',
   } = useModalStore((state) => state.modal) || {};
 
   useEffect(
@@ -47,7 +48,7 @@ const CommonModal = () => {
       <Modal
         visible={isOpen}
         transparent
-        animationType="slide"
+        animationType={animationType}
         onRequestClose={() => actions.hideModal()}
       >
         <View testID="common_modal.center" style={styles.fullScreenContainer}>
@@ -74,7 +75,7 @@ const CommonModal = () => {
       <Modal
         visible={isOpen}
         transparent
-        animationType="slide"
+        animationType={animationType}
         onRequestClose={() => {
           actions.hideModal();
         }}
