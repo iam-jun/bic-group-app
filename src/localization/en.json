@@ -149,20 +149,20 @@
     "text_request_other": "Requests",
     "text_admin": "Admin",
     "text_failed_to_upload": "Failed to upload",
-    "permission_photo_title": "Allow Bein to access your photo and video library",
+    "permission_photo_title": "Allow BIC Group to access your photo and video library",
     "permission_photo_description": "Your access request has been denied recently. Please grant access from Settings with following steps:",
     "permission_photo_list": {
       "ios": {
         "step_1": "Open Settings",
-        "step_2": "Tap Privacy",
-        "step_3": "Open Photos",
+        "step_2": "Select Privacy & Security",
+        "step_3": "Select Photos ➝ BIC Group",
         "step_4": "Choose Option “All Photos”"
       },
       "android": {
-        "step_1": "Go to Settings",
-        "step_2": "Find App Settings",
-        "step_3": "Find Icon Bein",
-        "step_4": "Turn on Permission for Photos"
+        "step_1": "Open Settings",
+        "step_2": "Select App Settings",
+        "step_3": "Select BIC Group",
+        "step_4": "Allow permission access to Photos & Videos"
       }
     },
     "permission_add_photo_blocked": "Cannot save photo to your library, please go to settings and enable the permission",
