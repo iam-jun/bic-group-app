@@ -33,9 +33,9 @@ export const userProfileImageCropRatio = {
 
 /* Size config used for Text */
 export const sizes = {
-  h1: 22,
-  h2: 18,
-  h3: 15,
+  h1: 28,
+  h2: 24,
+  h3: 20,
   h4: 17,
   h5: 15,
   h6: 13,
@@ -45,7 +45,7 @@ export const sizes = {
   subtitleXS: 11,
   bodyM: 14,
   bodyMMedium: 15,
-  bodyS: 12,
+  bodyS: 13,
   bodySMedium: 13,
   bodyXS: 11,
   bodyXSMedium: 11,
@@ -53,8 +53,8 @@ export const sizes = {
   paragraphM: 15,
   paragraphS: 13,
   buttonL: 15,
-  buttonM: 14,
-  buttonS: 12,
+  buttonM: 15,
+  buttonS: 13,
   tabL: 15,
   tabM: 14,
   tabS: 13,
@@ -71,21 +71,21 @@ export const sizes = {
   dropdownS: 13,
   numberM: 15,
   numberS: 13,
-  captionS: 12,
+  captionS: 11,
   code: 16,
   error: 16,
   mdH1: 22,
-  mdH2: 20,
-  mdH3: 18,
+  mdH2: 18,
+  mdH3: 15,
   mdH4: 16,
   mdParagraph: 14,
 };
 
 /* Line Height used for Text */
 export const lineHeights = {
-  h1: 28,
-  h2: 28,
-  h3: 24,
+  h1: 48,
+  h2: 42,
+  h3: 36,
   h4: 32,
   h5: 26,
   h6: 24,
@@ -93,7 +93,7 @@ export const lineHeights = {
   subtitleM: 24,
   subtitleS: 20,
   subtitleXS: 16,
-  bodyM: 24,
+  bodyM: 22,
   bodyMMedium: 24,
   bodyS: 20,
   bodySMedium: 20,
@@ -118,10 +118,9 @@ export const lineHeights = {
   dropdownS: 20,
   numberM: 22,
   numberS: 20,
-  captionS: 20,
+  captionS: 16,
   code: 24,
   error: 24,
-  mdParagraph: 24,
 };
 
 export const letterSpacing = {
