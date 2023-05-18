@@ -24,7 +24,7 @@ const getDataFeed = (set, get) => async (isRefresh?: boolean) => {
     offset,
     isImportant: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.IMPORTANT),
     isSaved: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.SAVED),
-    isMine: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.MINE),
+    // isMine: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.MINE),
     type: getParamsContentFeed(contentFilter),
   };
 
