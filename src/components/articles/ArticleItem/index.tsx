@@ -199,7 +199,9 @@ const ArticleItem: FC<ArticleItemProps> = ({
   );
 };
 
+export const COVER_ARTICLE_WIDTH = dimension.deviceWidth;
 const coverHeight = scaleCoverHeight();
+
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors, elevations } = theme;
   return StyleSheet.create({
@@ -209,7 +211,7 @@ const themeStyles = (theme: ExtendedTheme) => {
       ...elevations.e2,
     },
     cover: {
-      width: dimension.deviceWidth,
+      width: COVER_ARTICLE_WIDTH,
       height: coverHeight,
       marginTop: margin.base,
     },

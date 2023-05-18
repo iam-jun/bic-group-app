@@ -3,6 +3,7 @@ import { ICommentData, IPayloadAddToAllPost, IPost } from '~/interfaces/IPost';
 import { sortComments } from '~/helpers/post';
 import useCommentsStore from '~/store/entities/comments';
 import { IPostsState } from '../index';
+import { preloadImagesOnNewsFeed } from '~/components/Image/helper';
 
 const addToPosts = (_set, get) => (payload: IPayloadAddToAllPost) => {
   const { data, handleComment } = payload || {};
@@ -42,6 +43,10 @@ const addToPosts = (_set, get) => (payload: IPayloadAddToAllPost) => {
       newPosts[item.id] = item;
     }
   });
+
+  // preload Images
+  preloadImagesOnNewsFeed(postsToAdd);
+
   if (handleComment) {
     useCommentsStore.getState().actions.addToComments(newComments);
     useCommentsStore.getState().actions.addToCommentsByParentId(newCommentsByParentId);
