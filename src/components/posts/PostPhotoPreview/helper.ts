@@ -1,6 +1,7 @@
 import { dimension } from '~/theme';
 
 const ASPECT_RATIO = 0.9;
+const DOUBLE_RATIO = 0.5;
 const SQUARE_RATIO = 1;
 const SPACING_IMAGE = 4;
 
@@ -11,11 +12,16 @@ const getHeighContainer = (
   isVerticalFirst,
   isMessyOrientation,
   isBothSquare,
+  isOnlyOneLongImage,
+  isLongFirst,
 ) => {
-  if (data?.length === 1 && !isVerticalFirst) {
+  if (
+    (data?.length === 1 && !isVerticalFirst)
+    || (data?.length === 1 && isVerticalFirst && !isLongFirst)
+  ) {
     return dfSize / imageRatioFirst;
   }
-  if (data?.length === 1 && isVerticalFirst) {
+  if (isOnlyOneLongImage) {
     return dimension.deviceHeight * 0.7;
   }
   if (isMessyOrientation || isBothSquare) {
@@ -78,13 +84,14 @@ export const initLayoutImages = (images: any[], widthContainer: number) => {
   const isVerticalSecond = imageRatioSecond <= ASPECT_RATIO;
   const isSquareFirst = imageRatioFirst === SQUARE_RATIO;
   const isSquareSecond = imageRatioSecond === SQUARE_RATIO;
+  const isLongFirst = imageRatioFirst <= DOUBLE_RATIO;
 
   const isMessyOrientation
     = (isVerticalFirst !== isVerticalSecond
       || (!isVerticalFirst && isSquareSecond)
       || (isSquareFirst && !isVerticalSecond))
     && images?.length === 2;
-  const isOnlyOneImageVerticle = isVerticalFirst && images?.length === 1;
+  const isOnlyOneLongImage = isVerticalFirst && images?.length === 1 && isLongFirst;
   const isBothSquare = isSquareFirst && isSquareSecond && images?.length === 2;
 
   const dfSize = Math.min(widthContainer, dimension.maxNewsfeedWidth);
@@ -95,13 +102,15 @@ export const initLayoutImages = (images: any[], widthContainer: number) => {
     isVerticalFirst,
     isMessyOrientation,
     isBothSquare,
+    isOnlyOneLongImage,
+    isLongFirst,
   );
 
   const containerImagesDirection
     = isVerticalFirst || isMessyOrientation || isBothSquare ? 'row' : 'column';
   const containerSmallImagesDirection = isVerticalFirst ? 'column' : 'row';
 
-  const widthLargeImage = isOnlyOneImageVerticle
+  const widthLargeImage = isOnlyOneLongImage
     ? 0.78 * dfSize
     : getWidthLargeImage(dfSize, images?.length, containerImagesDirection);
   const widthSmallImage = getWidthSmallImage(
@@ -116,7 +125,7 @@ export const initLayoutImages = (images: any[], widthContainer: number) => {
     widthSmallImage,
     layoutWidth: dfSize,
     layoutHeight: heightContainer,
-    isOnlyOneImageVerticle,
+    isOnlyOneLongImage,
     containerImagesDirection,
     containerSmallImagesDirection,
     spacingImage: SPACING_IMAGE,

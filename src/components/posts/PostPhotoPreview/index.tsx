@@ -59,7 +59,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
     widthSmallImage,
     layoutWidth,
     layoutHeight,
-    isOnlyOneImageVerticle,
+    isOnlyOneLongImage,
     containerImagesDirection,
     containerSmallImagesDirection,
     spacingImage,
@@ -150,7 +150,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   };
 
   const renderBlurImageBackground = () => {
-    if (!isOnlyOneImageVerticle) return null;
+    if (!isOnlyOneLongImage) return null;
 
     return (
       <RNImage
