@@ -7,7 +7,6 @@ import { getMentionsFromContent } from '~/helpers/post';
 import { useBaseHook } from '~/hooks';
 import {
   IAudience,
-  IPayloadPublishDraftPost,
   IPayloadPutEditPost,
   IPostCreatePost,
   PostStatus,
@@ -17,7 +16,6 @@ import { rootNavigationRef } from '~/router/refs';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import showAlert from '~/store/helper/showAlert';
-import showToast from '~/store/helper/showToast';
 import { MAXIMUM_TAGS } from '../constanst';
 import {
   isEqualById, validateFiles, validateImages, validateVideo,
@@ -27,7 +25,6 @@ import useLinkPreview from './useLinkPreview';
 
 type SavePostParams = Partial<IPayloadPutEditPost> & {
   isToastAutoSave?: boolean;
-  isShowMessageSuccess?: boolean;
 };
 
 const navigation = withNavigation(rootNavigationRef);
@@ -194,10 +191,11 @@ export const useSavePost = () => {
     };
 
     const setting: any = {};
-    setting.isImportant = important?.active;
+    setting.isImportant = important?.active || false;
     setting.importantExpiredAt = important?.expiresTime || null;
     setting.canComment = canComment;
     setting.canReact = canReact;
+    setting.canShare = true;
 
     const newMentions = getMentionsFromContent(content, tempMentions);
 
@@ -211,8 +209,8 @@ export const useSavePost = () => {
       }
       : null;
 
-    const tagsIds = tags?.map?.((item) => item?.id);
-    const seriesIds = series?.map?.((item) => item?.id);
+    const tagsIds = tags?.map?.((item) => item?.id) || [];
+    const seriesIds = series?.map?.((item) => item?.id) || [];
 
     const data: IPostCreatePost = {
       audience,
@@ -261,8 +259,8 @@ export const useSavePost = () => {
       disableNavigate,
       replaceWithDetail = true,
       isToastAutoSave,
-      isShowMessageSuccess = true,
-      isShowLoading = true,
+      isPublish = true,
+      msgSuccess,
     } = params;
     const data = prepareData();
     const newPayload: IPayloadPutEditPost = {
@@ -271,8 +269,8 @@ export const useSavePost = () => {
       disableNavigate,
       replaceWithDetail,
       onRetry: () => savePost(params),
-      msgSuccess: isShowMessageSuccess && 'post:text_edit_post_success',
-      isShowLoading,
+      msgSuccess,
+      isPublish,
     };
     try {
       if (isToastAutoSave) {
@@ -286,32 +284,11 @@ export const useSavePost = () => {
     return true;
   };
 
-  const publishPost = async () => {
-    const isSuccess = await savePost({
-      disableNavigate: true,
-      isShowMessageSuccess: false,
-      isShowLoading: false,
-    });
-    if (isSuccess) {
-      const payload: IPayloadPublishDraftPost = {
-        draftPostId: id,
-        replaceWithDetail: true,
-        onSuccess: () => {
-          showToast({ content: 'post:draft:text_draft_post_published' });
-        },
-        isHandleSeriesTagsError: true,
-      };
-      createPostStoreActions.postPublishDraftPost(payload);
-    }
-  };
-
   useEffect(() => {
     if (isAutoSave && isChanged()) {
       savePost({
-        disableNavigate: true,
         isToastAutoSave: true,
-        isShowMessageSuccess: false,
-        isShowLoading: false,
+        isPublish: !isEditDraftPost,
       });
     }
   }, [
@@ -338,10 +315,8 @@ export const useSavePost = () => {
       clearTimeout(refTypingConstantly.current);
       refTypingConstantly.current = null;
       savePost({
-        disableNavigate: true,
         isToastAutoSave: true,
-        isShowMessageSuccess: false,
-        isShowLoading: false,
+        isPublish: !isEditDraftPost,
       });
     }, 500);
   };
@@ -350,10 +325,8 @@ export const useSavePost = () => {
     if (!refTypingConstantly.current) {
       refTypingConstantly.current = setTimeout(() => {
         savePost({
-          disableNavigate: true,
           isToastAutoSave: true,
-          isShowMessageSuccess: false,
-          isShowLoading: false,
+          isPublish: !isEditDraftPost,
         });
         refTypingConstantly.current = null;
       }, 5000);
@@ -413,7 +386,6 @@ export const useSavePost = () => {
     isEditPostHasChange,
     startAutoSave,
     savePost,
-    publishPost,
     saveSelectedTags,
     saveSelectedSeries,
     handleBackWhenSelectingTags,

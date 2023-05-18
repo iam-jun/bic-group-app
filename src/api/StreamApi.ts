@@ -8,7 +8,6 @@ import {
   IParamGetPostAudiences,
   IParamGetPostDetail,
   IParamGetReactionDetail,
-  IParamPutEditPost,
   IParamPutReaction,
   IParamSearchMentionAudiences,
   IPostCreatePost,
@@ -17,6 +16,7 @@ import {
   IRequestReplyComment,
   IRequestGetUsersInterestedPost,
   IParamsGetPostByParams,
+  IParamUpdatePost,
 } from '~/interfaces/IPost';
 import {
   IParamGetFeed,
@@ -125,6 +125,9 @@ export const streamApiConfig = {
     url: `${provider.url}posts`,
     method: 'post',
     data,
+    headers: {
+      'x-version': '2',
+    },
   }),
   putReaction: (params: IParamPutReaction): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -145,13 +148,28 @@ export const streamApiConfig = {
     method: 'put',
     data: param,
   }),
-  putEditPost: (param: IParamPutEditPost): HttpApiRequestConfig => {
+  putPublishPost: (param: IParamUpdatePost): HttpApiRequestConfig => {
+    const { postId, data } = param || {};
+    return {
+      ...defaultConfig,
+      url: `${provider.url}posts/${postId}/publish`,
+      method: 'put',
+      data,
+      headers: {
+        'x-version': '2',
+      },
+    };
+  },
+  putAutoSavePost: (param: IParamUpdatePost): HttpApiRequestConfig => {
     const { postId, data } = param || {};
     return {
       ...defaultConfig,
       url: `${provider.url}posts/${postId}`,
-      method: 'put',
+      method: 'patch',
       data,
+      headers: {
+        'x-version': '2',
+      },
     };
   },
   putEditComment: (id: string, data: ICommentData): HttpApiRequestConfig => ({
@@ -264,11 +282,6 @@ export const streamApiConfig = {
       limit: param?.limit || 20,
       latestId: param?.latestId,
     },
-  }),
-  postPublishDraftPost: (draftPostId: string): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}posts/${draftPostId}/publish`,
-    method: 'put',
   }),
   getCommentDetail: (
     commentId: string,
@@ -612,7 +625,8 @@ const streamApi = {
   putEditArticle: (articleId: string, param: IParamPutEditArticle) => withHttpRequestPromise(
     streamApiConfig.putEditArticle, articleId, param,
   ),
-  putEditPost: (param: IParamPutEditPost) => withHttpRequestPromise(streamApiConfig.putEditPost, param),
+  putPublishPost: (param: IParamUpdatePost) => withHttpRequestPromise(streamApiConfig.putPublishPost, param),
+  putAutoSavePost: (param: IParamUpdatePost) => withHttpRequestPromise(streamApiConfig.putAutoSavePost, param),
   putEditComment: (id: string, data: ICommentData) => withHttpRequestPromise(streamApiConfig.putEditComment, id, data),
   deletePost: (id: string) => withHttpRequestPromise(
     streamApiConfig.deletePost, id,
@@ -680,9 +694,6 @@ const streamApi = {
       return Promise.reject(e);
     }
   },
-  postPublishDraftPost: (draftPostId: string) => withHttpRequestPromise(
-    streamApiConfig.postPublishDraftPost, draftPostId,
-  ),
   getPostAudience: (params: IParamGetPostAudiences) => withHttpRequestPromise(
     streamApiConfig.getPostAudiences, params,
   ),
