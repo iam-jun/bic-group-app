@@ -15,6 +15,7 @@ interface EmptyScreenProps {
   size?: number;
   ButtonComponent?: any;
   source?: string;
+  iconStyle?: any;
 }
 
 const EmptyScreen = ({
@@ -24,12 +25,13 @@ const EmptyScreen = ({
   description,
   size = 150,
   ButtonComponent,
+  iconStyle,
 }: EmptyScreenProps) => {
   const theme: ExtendedTheme = useTheme();
 
   return (
     <View testID="empty_screen" style={styles.container}>
-      {!!icon && <Icon icon={icon} size={size} />}
+      {!!icon && <Icon icon={icon} size={size} style={iconStyle} />}
       {!!source && (
       <Image
         resizeMode="contain"

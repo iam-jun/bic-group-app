@@ -37,6 +37,7 @@ export interface Props {
     params?: IObject<unknown>,
   ) => void;
   setParams: (params: any) => void;
+  pop: (index: number) => void;
 }
 
 export const withNavigation = (navigationRef: RefObject<NavigationContainerRef<any>> | null | undefined): Props => {
@@ -111,6 +112,10 @@ export const withNavigation = (navigationRef: RefObject<NavigationContainerRef<a
     navigationRef?.current?.dispatch(StackActions.popToTop());
   };
 
+  const pop = (index: number) => {
+    navigationRef?.current?.dispatch(StackActions.pop(index));
+  };
+
   const nestedNavigate = (
     parentName: string,
     name: string,
@@ -138,6 +143,7 @@ export const withNavigation = (navigationRef: RefObject<NavigationContainerRef<a
     popToTop,
     nestedNavigate,
     setParams,
+    pop,
   };
 };
 

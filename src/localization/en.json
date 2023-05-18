@@ -530,7 +530,7 @@
     "btn_unblock": "Unblock",
     "title_unblock_user_name": "Unblock {{name}}?",
     "text_unblock_user_name_result": "Unblocking this user will allow them to interact with you again below:",
-    "title_blocked_users_list_empty": "Blocked users list is empty",
+    "title_blocked_users_list_empty": "You haven't blocked anyone",
     "text_blocked_users_list_empty": "User not found",
     "text_blocked_at": "Blocked at",
     "title_privacy": "Privacy",
@@ -937,7 +937,7 @@
     "no_group_found_desc": "Ooops, Group not found",
     "no_group_found_second_desc": "We couldn't find that group page.",
     "button_back_to_safety": "Back to Safety",
-    "no_profile_found_title": "No User Found",
+    "no_profile_found_title": "User not found",
     "no_profile_found_desc": "User not found",
     "no_profile_found_second_desc": "We cannot identify the person you are looking for."
   },
