@@ -162,7 +162,7 @@ export const useCreatePost = (params?: UseCreatePostParams) => {
 
     const initImportant = {
       active: (!!notExpired || isNever) && post?.setting?.isImportant,
-      expiresTime: !!notExpired ? post?.setting?.importantExpiredAt : null,
+      expiresTime: notExpired ? post?.setting?.importantExpiredAt : null,
     };
 
     const dataDefault = [

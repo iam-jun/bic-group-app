@@ -1,4 +1,4 @@
-import { isEmpty, isEqual } from 'lodash';
+import { cloneDeep, isEmpty, isEqual } from 'lodash';
 import { Keyboard } from 'react-native';
 import i18next from 'i18next';
 
@@ -43,7 +43,8 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
   const { rootNavigation } = useRootNavigation();
 
   let series: any = {};
-  if (!!seriesId) series = usePostsStore(useCallback(postsSelector.getPost(seriesId, {}), [seriesId]));
+  const seriesFromStore = usePostsStore(useCallback(postsSelector.getPost(seriesId, {}), [seriesId]));
+  if (seriesId) series = cloneDeep(seriesFromStore);
 
   const actions = useSeriesStore((state: ISeriesState) => state.actions);
 
@@ -66,7 +67,7 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
 
     const initData = {
       isImportant: (!!notExpired || isNever) && settings?.isImportant,
-      importantExpiredAt: !!notExpired ? settings?.importantExpiredAt : null,
+      importantExpiredAt: handleImportantExpiredAt({ notExpired, settings }),
       canShare: settings?.canShare,
       canReact: settings?.canReact,
       canComment: settings?.canComment,
@@ -106,7 +107,7 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
 
   const handleSave = () => {
     Keyboard.dismiss();
-    if (!!seriesId) {
+    if (seriesId) {
       actions.editSeries(
         seriesId,
         isFromDetail,
@@ -118,22 +119,9 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
     }
   };
 
-  const isHasChange = () => {
-    if (!!seriesId) {
-      const isTitleUpdated = series.title !== data.title && isNonEmptyString(data.title);
-      const isRequiredUnEmpty = isNonEmptyString(data.title) && !isEmpty(data.coverMedia);
-      const isSummaryUpdated = series.summary !== data.summary && isRequiredUnEmpty;
-      const isCoverMediaUpdated = (series.coverMedia?.id !== data.coverMedia?.id) && !isEmpty(data.coverMedia);
-      const isAudienceUpdated = !isEqual(getAudienceIdsFromAudienceObject(series.audience), data.audience)
-      && !(isEmpty(data.audience?.groupIds) && isEmpty(data.audience?.userIds));
-      const isSettingsUpdated = !isEqual(series.setting, data.setting);
+  const isHasChange = checkStatus({ seriesId, data, series });
 
-      return isTitleUpdated || isCoverMediaUpdated || isAudienceUpdated || isSummaryUpdated || isSettingsUpdated;
-    }
-    return isNonEmptyString(data.title) && !isEmpty(data.coverMedia);
-  };
-
-  const enableButtonSave = isHasChange();
+  const enableButtonSave = isHasChange;
 
   const handleBack = () => {
     if (enableButtonSave) {
@@ -176,6 +164,30 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
     handleBack,
     handlePressAudiences,
   };
+};
+
+const checkStatus = (params: { data: any, seriesId: string, series: any }) => {
+  const { data, seriesId, series } = params;
+  if (seriesId) {
+    const isTitleUpdated = series.title !== data.title && isNonEmptyString(data.title);
+    const isRequiredUnEmpty = isNonEmptyString(data.title) && !isEmpty(data.coverMedia);
+    const isSummaryUpdated = series.summary !== data.summary && isRequiredUnEmpty;
+    const isCoverMediaUpdated = (series.coverMedia?.id !== data.coverMedia?.id) && !isEmpty(data.coverMedia);
+    const isAudienceUpdated = !isEqual(getAudienceIdsFromAudienceObject(series.audience), data.audience)
+      && !(isEmpty(data.audience?.groupIds) && isEmpty(data.audience?.userIds));
+    const isSettingsUpdated = !isEqual(series.setting, data.setting);
+
+    return isTitleUpdated || isCoverMediaUpdated || isAudienceUpdated || isSummaryUpdated || isSettingsUpdated;
+  }
+  return isNonEmptyString(data.title) && !isEmpty(data.coverMedia);
+};
+
+const handleImportantExpiredAt = (params: { notExpired: boolean, settings: any }) => {
+  const { notExpired, settings } = params;
+  if (notExpired) {
+    return settings?.importantExpiredAt;
+  }
+  return null;
 };
 
 export default useSeriesCreation;

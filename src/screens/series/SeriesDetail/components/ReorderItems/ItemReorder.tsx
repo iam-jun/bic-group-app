@@ -38,7 +38,7 @@ const ItemReorder: FC<ItemReorderProps> = ({ index, item }) => {
         <Text.H4 color={colors.neutral20}>{formatNumberWithZeroPrefix(index + 1)}</Text.H4>
         <Text style={styles.slash}>/</Text>
         <View style={{ flex: 1 }}>
-          {!!titleItem ? (
+          {titleItem ? (
             <Text.BodyMMedium
               numberOfLines={1}
               color={colors.neutral80}

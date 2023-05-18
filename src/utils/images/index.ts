@@ -32,11 +32,7 @@ const downloadImageiOS = (photo: any) => {
   };
 
   const onCallback = (isGranted: boolean) => {
-    if (isGranted) {
-      onPermissionGranted();
-    } else {
-      onPermissionRefused();
-    }
+    _onCallback({ isGranted, onPermissionGranted, onPermissionRefused });
   };
 
   checkPermission(PermissionTypes.AddPhoto, onCallback, false);
@@ -69,11 +65,7 @@ const downloadImageAndroid = (photo: any) => {
   };
 
   const onCallback = (isGranted: boolean) => {
-    if (isGranted) {
-      onPermissionGranted();
-    } else {
-      onPermissionRefused();
-    }
+    _onCallback({ isGranted, onPermissionGranted, onPermissionRefused });
   };
 
   checkPermission(PermissionTypes.AddPhoto, onCallback, false);
@@ -121,4 +113,20 @@ export const getImagePastedFromClipboard = (files: any[]) => {
     return img;
   }
   return null;
+};
+
+const _onCallback = (
+  params:
+    {
+      isGranted: boolean,
+      onPermissionGranted: () => void,
+      onPermissionRefused: () => void
+    },
+) => {
+  const { isGranted, onPermissionGranted, onPermissionRefused } = params;
+  if (isGranted) {
+    onPermissionGranted();
+  } else {
+    onPermissionRefused();
+  }
 };

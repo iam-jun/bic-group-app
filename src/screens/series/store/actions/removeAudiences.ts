@@ -20,7 +20,7 @@ const removeAudiences = (_set, get) => async (id: string, listAudiences: string[
   try {
     const response = await streamApi.editSeries(id, payload);
     actions.getSeriesDetail(id);
-    if (!!response?.data) {
+    if (response?.data) {
       usePostsStore.getState().actions.addToPosts({ data: response.data } as IPayloadAddToAllPost);
       showToast({ content: 'series:text_deleted_audiences' });
     }

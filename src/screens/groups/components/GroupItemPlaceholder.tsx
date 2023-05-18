@@ -25,6 +25,8 @@ const GroupItemPlaceholder: FC<GroupItemPlaceholderProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
+  const renderContentLeft = (p: any) => <PlaceholderMedia style={[p.style, styles.avatar]} />;
+
   return (
     <View style={StyleSheet.flatten([styles.container, style])}>
       <Placeholder Animation={ShineOverlay} style={styles.header}>
@@ -37,7 +39,7 @@ const GroupItemPlaceholder: FC<GroupItemPlaceholderProps> = ({
       </Placeholder>
       <Placeholder
         Animation={ShineOverlay}
-        Left={(p) => <PlaceholderMedia style={[p.style, styles.avatar]} />}
+        Left={renderContentLeft}
         style={styles.infoContainer}
       >
         <PlaceholderLine

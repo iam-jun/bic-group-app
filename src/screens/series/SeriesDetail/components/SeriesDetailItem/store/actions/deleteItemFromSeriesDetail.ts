@@ -11,7 +11,7 @@ const deleteItemFromSeriesDetail = (_set, _get) => async (seriesId: string, item
       itemIds: [itemId],
     };
     const response = await streamApi.removeItemFromSeriesDetail(seriesId, body);
-    if (!!response) {
+    if (response) {
       useSeriesStore.getState().actions.getSeriesDetail(seriesId);
       showToast({ content: 'series:text_article_removed' });
     }

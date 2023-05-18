@@ -82,28 +82,36 @@ export function compareEmojis(emojiA, emojiB, searchedName) {
   const aPrefix = aName.startsWith(searchedName);
   const bPrefix = bName.startsWith(searchedName);
 
-  if (aPrefix && bPrefix) {
-    return doDefaultComparison(aName, bName);
-  } if (aPrefix) {
-    return -1;
-  } if (bPrefix) {
-    return 1;
-  }
+  checkLetter({
+    isCheckA: aPrefix,
+    isCheckB: bPrefix,
+    doDefaultComparison: () => doDefaultComparison(aName, bName),
+  });
 
   // Have the emojis that contain the search appear next
   const aIncludes = aName.includes(searchedName);
   const bIncludes = bName.includes(searchedName);
 
-  if (aIncludes && bIncludes) {
-    return doDefaultComparison(aName, bName);
-  } if (aIncludes) {
-    return -1;
-  } if (bIncludes) {
-    return 1;
-  }
+  checkLetter({
+    isCheckA: aIncludes,
+    isCheckB: bIncludes,
+    doDefaultComparison: () => doDefaultComparison(aName, bName),
+  });
 
   return doDefaultComparison(aName, bName);
 }
+
+const checkLetter = (params) => {
+  const { isCheckA, isCheckB, doDefaultComparison } = params;
+  /* eslint no-else-return: ["error", {allowElseIf: true}] */
+  if (isCheckA && isCheckB) {
+    return doDefaultComparison();
+  } else if (isCheckA) {
+    return -1;
+  } else if (isCheckB) {
+    return 1;
+  }
+};
 
 export const getCustomEmojisByName = (name) => {
   if (!custom_emojis[name]) { return null; }

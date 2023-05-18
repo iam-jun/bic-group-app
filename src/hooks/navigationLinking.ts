@@ -29,7 +29,7 @@ export const onReceiveURL = async ({ url, navigation, listener }: { url: string;
 
       case DeepLinkTypes.COMMENT_DETAIL:
         navigation?.navigate?.(mainStack.commentDetail, {
-          ...match.params,
+          ...match.params as Object,
           postId: match.postId,
         });
         break;
