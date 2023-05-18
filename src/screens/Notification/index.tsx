@@ -130,6 +130,8 @@ const Notification = () => {
             case NOTIFICATION_TYPE.ADD_POST_TO_USER:
             case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER:
             case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER_IN_MULTIPLE_GROUPS:
+            case NOTIFICATION_TYPE.SERIES_POST_ITEM_CHANGED:
+            case NOTIFICATION_TYPE.SERIES_ARTICLE_ITEM_CHANGED:
             {
               if (target === TargetType.ARTICLE) {
                 rootNavigation.navigate(articleStack.articleDetail, { articleId: act.id });
