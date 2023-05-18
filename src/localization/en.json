@@ -1439,6 +1439,7 @@
     "unpinned_successfully": "Unpinned successfully",
     "there_is_no_groups": "There is no groups",
     "reorder_pinned": "Reorder pinned",
-    "drag_and_drop_to_reorder_pinned": "Drag and drop to reorder pinned"
+    "drag_and_drop_to_reorder_pinned": "Drag and drop to reorder pinned",
+    "check_all": "Check all"
   }
 }

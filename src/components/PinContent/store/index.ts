@@ -49,6 +49,7 @@ export interface IPinContentState extends IBaseState {
     updatePinContent: (params: UpdatePinContentParams) => void;
     getPinnableAudiences: (postId: string) => void;
     togglePinAudience: (audienceId: string) => void;
+    pinOrUnpinAllPinAudience: (isPinned: boolean) => void;
     resetPinAudiences: () => void;
     getPinContentsGroup: (id: string) => void;
     initDataPinContentsGroup: (id: string) => void;
@@ -84,6 +85,14 @@ const usePinContent = (set, get): IPinContentState => ({
         state.pinAudiences[audienceId].group.isPinned = !currentPinStateGroup;
         state.pinAudiences[audienceId].error = '';
       }, 'togglePinAudience');
+    },
+    pinOrUnpinAllPinAudience: (isPinned: boolean) => {
+      set((state: IPinContentState) => {
+        Object.keys(state.pinAudiences).forEach((key) => {
+          state.pinAudiences[key].group.isPinned = isPinned;
+          state.pinAudiences[key].error = '';
+        });
+      }, 'checkOrUncheckAllPinAudience');
     },
     resetPinAudiences: () => {
       set((state: IPinContentState) => {
