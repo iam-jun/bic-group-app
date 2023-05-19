@@ -12,6 +12,7 @@ import useNotificationStore from '../store';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Markdown from '~/beinComponents/Markdown';
 import Text from '~/baseComponents/Text';
+import { sizes } from '~/theme/dimension';
 
 const ChangeLogs: FC<IRouteParams> = (props) => {
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
@@ -54,11 +55,16 @@ const ChangeLogs: FC<IRouteParams> = (props) => {
             </View>
           )
           : (
-            <ScrollView style={styles.content}>
+            <ScrollView
+              style={styles.content}
+              contentContainerStyle={styles.contentContainerStyle}
+            >
               <View style={styles.image}>
                 <SVGIcon source={ChangeLogsSvg} size={120} />
               </View>
-              <Markdown value={title} />
+              <Text.H3 useI18n style={styles.title}>
+                {title}
+              </Text.H3>
               <Markdown value={content} />
             </ScrollView>
           )}
@@ -80,6 +86,7 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingVertical: 0,
     },
     content: {
+      flex: 1,
       paddingHorizontal: spacing.padding.large,
       paddingTop: spacing.padding.large,
     },
@@ -91,6 +98,14 @@ const createStyle = (theme: ExtendedTheme) => {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
+    },
+    title: {
+      textAlign: 'center',
+      marginBottom: spacing.margin.tiny,
+      fontSize: sizes.mdH3,
+    },
+    contentContainerStyle: {
+      paddingBottom: spacing.padding.extraLarge,
     },
   });
 };
