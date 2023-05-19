@@ -1,6 +1,11 @@
 fastlane_require 'dotenv'
 
 platform :android do
+  before_all do
+      sh("git checkout -- .")
+      sh("git pull")
+    end
+
   lane :update_staging do |options|
     Dotenv.overload('../.env.base', '../.env.staging')
     disable_notice = options[:disable_notice]
@@ -288,6 +293,9 @@ end
 platform :ios do
   before_all do
     setup_circle_ci
+    app_store_connect_api_key(key_id: ENV['APPLE_KEY_ID'],issuer_id: ENV['APPLE_ISSUER_ID'],key_content: ENV['APPLE_KEY_CONTENT'])
+    sh("git checkout -- .")
+    sh("git pull")
   end
 
   lane :sync_profile do
@@ -446,7 +454,6 @@ platform :ios do
       app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.staging",
       ipa: "./fastlane/staging/#{ENV['SCHEME_NAME_IOS']}.ipa",
       changelog: "Staging version #{ENV['APP_VERSION']}",
-      api_key_path: "./fastlane/api_key_info.json",
     )
 
     update_staging({:download_destination => 'TestFlight'})
@@ -496,7 +503,6 @@ platform :ios do
       app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.prerelease",
       ipa: "./fastlane/prerelease/#{ENV['SCHEME_NAME_IOS']}.ipa",
       changelog: "Release version #{ENV['APP_VERSION']}",
-      api_key_path: "./fastlane/api_key_info.json",
     )
 
     update_prerelease({:download_destination => 'TestFlight'})
@@ -543,7 +549,6 @@ platform :ios do
       app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}",
       ipa: "./fastlane/production/#{ENV['SCHEME_NAME_IOS']}.ipa",
       changelog: "Production version #{ENV['APP_VERSION']}",
-      api_key_path: "./fastlane/api_key_info.json",
     )
 
     update_production({:download_destination => 'TestFlight'})
@@ -551,17 +556,14 @@ platform :ios do
   end
 
   lane :deploy_staging_ci do
-    app_store_connect_api_key(key_id: ENV['APPLE_KEY_ID'],issuer_id: ENV['APPLE_ISSUER_ID'],key_content: ENV['APPLE_KEY_CONTENT'])
     deploy_staging
   end
 
   lane :deploy_prerelease_ci do
-    app_store_connect_api_key(key_id: ENV['APPLE_KEY_ID'],issuer_id: ENV['APPLE_ISSUER_ID'],key_content: ENV['APPLE_KEY_CONTENT'])
     deploy_prerelease
   end
 
   lane :deploy_production_ci do
-    app_store_connect_api_key(key_id: ENV['APPLE_KEY_ID'],issuer_id: ENV['APPLE_ISSUER_ID'],key_content: ENV['APPLE_KEY_CONTENT'])
     deploy_production
   end
 
