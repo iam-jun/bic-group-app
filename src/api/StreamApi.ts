@@ -158,6 +158,9 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}comments/${id}`,
     method: 'put',
+    headers: {
+      'X-Version': '2',
+    },
     data,
   }),
   deletePost: (id: string): HttpApiRequestConfig => ({
@@ -169,6 +172,9 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}comments/${id}`,
     method: 'delete',
+    headers: {
+      'X-Version': '2',
+    },
   }),
   getCommentsByPostId: (
     params: IRequestGetPostComment,
@@ -192,6 +198,9 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}comments`,
     method: 'post',
+    headers: {
+      'X-Version': '2',
+    },
     data: {
       postId: params?.postId,
       content: params?.data?.content,
@@ -206,6 +215,9 @@ export const streamApiConfig = {
       ...defaultConfig,
       url: `${provider.url}comments/${parentCommentId}/reply`,
       method: 'post',
+      headers: {
+        'X-Version': '2',
+      },
       data: {
         postId,
         ...data,

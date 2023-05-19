@@ -30,9 +30,10 @@ const navigation = withNavigation(rootNavigationRef);
 export interface IUseEditComment {
   commentId: string;
   mentionInputRef: any;
+  postId: string;
 }
 
-const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
+const useEditComment = ({ commentId, mentionInputRef, postId }: IUseEditComment) => {
   const { t } = useBaseHook();
 
   const comment: ICommentData = useCommentsStore(useCallback(commentsSelector.getComment(commentId), [commentId]));
@@ -114,13 +115,14 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
       }
       if (oldImages?.[0]) {
         const {
-          name, origin_name, width, height, url,
+          id, name, origin_name, width, height, url,
         } = oldImages[0];
         const file: any = { width: width || 1, height: height || 1 };
         setSelectedImage({
           url,
           fileName: origin_name || name,
           file,
+          id,
         });
       }
       if (oldGiphy) {
@@ -231,7 +233,7 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
       let giphy;
       if (selectedImage) {
         const imageData: IActivityDataImage = {
-          id: uploadedFile?.result?.id,
+          id: uploadedFile?.result?.id || selectedImage?.id,
           name: selectedImage?.url || selectedImage?.fileName || '',
           origin_name: selectedImage?.fileName,
           width: selectedImage?.file?.width,
@@ -253,6 +255,7 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
         id: commentId,
         comment,
         data: newData,
+        postId,
       } as IPayloadPutEditComment;
       editController.editComment(payload);
     }

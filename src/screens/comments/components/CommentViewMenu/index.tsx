@@ -77,6 +77,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
         homeStack.editComment, {
           commentId,
           groupIds,
+          postId,
         },
       );
     }, 200);
