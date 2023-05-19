@@ -109,7 +109,7 @@
     "react-hook-form": "7.6.10",
     "react-i18next": "11.8.15",
     "react-modal": "3.14.3",
-    "react-native": "0.68.5",
+    "react-native": "0.68.7",
     "react-native-autogrow-textinput": "5.4.0",
     "react-native-code-push": "^8.0.1",
     "react-native-collapsible": "^1.6.0",
