@@ -34,6 +34,7 @@ const SelectedAudiences = () => {
 
     return (
       <Tag
+        testID={`tag_${item?.id || index}`}
         key={`tag_${item?.id || index}`}
         style={{
           marginTop: spacing.margin.small,

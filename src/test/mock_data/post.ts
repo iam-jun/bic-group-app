@@ -1,3 +1,4 @@
+import { GroupPrivacyType } from '~/constants/privacyTypes';
 import { PostStatus } from '~/interfaces/IPost';
 
 export const POST_DETAIL = {
@@ -944,3 +945,37 @@ export const mockMediaImages = [
     type: 'image',
   },
 ];
+
+export const mockViewContentJoinRequire = {
+  code: 'content.group_join_required',
+  meta: {
+    message: 'Join at least one group to keep reading',
+    errors: {
+      requireGroups: [
+        {
+          id: '813a618c-33d6-4c01-8b40-1b98f5d77805',
+          name: 'Noti Phase 3 - Request Join',
+          icon: 'https://media.beincom.app/image/variants/group/avatar/843fda0e-135c-4ba8-8e18-833864857fae',
+          communityId: '042506ae-f848-4d80-bf52-c22bdefd3d5f',
+          isCommunity: true,
+          privacy: 'PRIVATE' as GroupPrivacyType,
+          rootGroupId: '813a618c-33d6-4c01-8b40-1b98f5d77805',
+        },
+        {
+          id: '813a618c-33d6-4c01-8b40-1b98f5d77885',
+          name: 'Noti Phase 4 - Request Join',
+          icon: 'https://media.beincom.app/image/variants/group/avatar/843fda0e-135c-4ba8-8e18-833864857faef',
+          communityId: '042506ae-f848-4d80-bf52-c22bdefd3d5f',
+          isCommunity: false,
+          privacy: 'PRIVATE' as GroupPrivacyType,
+          rootGroupId: '813a618c-33d6-4c01-8b40-1b98f5d77805',
+        },
+      ],
+    },
+    stack: [
+      'ForbiddenException: Join at least one group to keep reading',
+      '    at ArticleController.get (/usr/src/app/src/modules/article/article.controller.ts:139:17)',
+      '    at processTicksAndRejections (node:internal/process/task_queues:96:5)',
+    ],
+  },
+};
