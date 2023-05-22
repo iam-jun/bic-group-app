@@ -172,9 +172,11 @@ const CommentInput: React.FC<CommentInputProps> = ({
   }, [uploadedFile]);
 
   useEffect(() => {
-    const errorMessage = getErrorMessageFromResponse(uploadError) || t('post:error_upload_photo_failed');
-    setError(errorMessage);
-    setUploading(false);
+    if (uploadError) {
+      const errorMessage = typeof uploadError === 'string' ? uploadError : t('post:error_upload_photo_failed');
+      setError(errorMessage);
+      setUploading(false);
+    }
   }, [uploadError]);
 
   useEffect(() => {
