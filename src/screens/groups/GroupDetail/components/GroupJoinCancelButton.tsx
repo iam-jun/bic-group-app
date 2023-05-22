@@ -46,7 +46,7 @@ const GroupJoinCancelButton = ({ style, community }: GroupJoinCancelButtonProps)
       });
       return;
     }
-    if (settings?.isActiveMembershipQuestions) {
+    if (settings?.isActiveMembershipQuestions && settings?.isJoinApproval) {
       const payload: MembershipQuestionsInfo = {
         groupId,
         name: '',

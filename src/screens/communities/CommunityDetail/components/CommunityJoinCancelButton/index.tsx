@@ -31,7 +31,7 @@ const CommunityJoinCancelButton = ({
   if (isMember) return null;
 
   const onPressJoin = () => {
-    if (settings?.isActiveMembershipQuestions) {
+    if (settings?.isActiveMembershipQuestions && settings?.isJoinApproval) {
       const payload: MembershipQuestionsInfo = {
         groupId: id,
         rootGroupId: groupId,
