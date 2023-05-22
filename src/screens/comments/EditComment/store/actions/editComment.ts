@@ -13,7 +13,9 @@ import showToastSuccess from '~/store/helper/showToastSuccess';
 const navigation = withNavigation(rootNavigationRef);
 
 const editComment = (_set, _get) => async (payload: IPayloadPutEditComment) => {
-  const { id, comment, data, postId } = payload;
+  const {
+    id, comment, data, postId,
+  } = payload;
 
   if (!id || !data || !comment) {
     console.error('\x1b[31m🐣️ edit comment: id or data not found\x1b[0m');
@@ -31,7 +33,7 @@ const editComment = (_set, _get) => async (payload: IPayloadPutEditComment) => {
     const response = await streamApi.putEditComment(
       id, data,
     );
-    
+
     useCommentDetailController.getState().actions.getCommentDetail({
       commentId: id,
       params: { postId },
