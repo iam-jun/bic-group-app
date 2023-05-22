@@ -3,7 +3,8 @@ fastlane_require 'dotenv'
 platform :android do
   before_all do
       sh("git checkout -- .")
-      sh("git pull")
+      branch = sh("git rev-parse --abbrev-ref HEAD").strip
+      sh("git pull origin #{branch}")
     end
 
   lane :update_staging do |options|
@@ -295,7 +296,8 @@ platform :ios do
     setup_circle_ci
     app_store_connect_api_key(key_id: ENV['APPLE_KEY_ID'],issuer_id: ENV['APPLE_ISSUER_ID'],key_content: ENV['APPLE_KEY_CONTENT'])
     sh("git checkout -- .")
-    sh("git pull")
+    branch = sh("git rev-parse --abbrev-ref HEAD").strip
+    sh("git pull origin #{branch}")
   end
 
   lane :sync_profile do
