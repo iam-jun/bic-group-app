@@ -130,8 +130,6 @@ const Notification = () => {
             case NOTIFICATION_TYPE.ADD_POST_TO_USER:
             case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER:
             case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER_IN_MULTIPLE_GROUPS:
-            case NOTIFICATION_TYPE.SERIES_POST_ITEM_CHANGED:
-            case NOTIFICATION_TYPE.SERIES_ARTICLE_ITEM_CHANGED:
             {
               if (target === TargetType.ARTICLE) {
                 rootNavigation.navigate(articleStack.articleDetail, { articleId: act.id });
@@ -379,6 +377,15 @@ const Notification = () => {
 
             case NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME:
               rootNavigation.navigate(notiStack.notiMaintenancePage, { maintenanceInfo: act?.maintenanceInfo });
+              break;
+            case NOTIFICATION_TYPE.SERIES_POST_ITEM_CHANGED:
+            case NOTIFICATION_TYPE.SERIES_ARTICLE_ITEM_CHANGED:
+              // eslint-disable-next-line no-case-declarations
+              const seriesList = act?.items || [];
+              if (seriesList?.length > 0) {
+                const seriesInfo = seriesList.find((series) => series?.state === 'add');
+                rootNavigation.navigate(seriesStack.seriesDetail, { seriesId: seriesInfo.id });
+              }
               break;
             default:
               console.warn(`Notification type ${type} have not implemented yet`);
