@@ -102,7 +102,7 @@ const createStyle = (theme: ExtendedTheme) => {
     title: {
       textAlign: 'center',
       marginBottom: spacing.margin.tiny,
-      fontSize: sizes.mdH3,
+      fontSize: sizes.mdH2,
     },
     image: {
       alignItems: 'center',
