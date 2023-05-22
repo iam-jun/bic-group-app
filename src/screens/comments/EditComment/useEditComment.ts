@@ -240,9 +240,13 @@ const useEditComment = ({ commentId, mentionInputRef, postId }: IUseEditComment)
         images.push(imageData);
       }
 
-      giphy = {
-        id: selectedGiphy?.id,
-      };
+      if (selectedGiphy) {
+        giphy = {
+          id: selectedGiphy?.id,
+        };
+      } else {
+        giphy = {};
+      }
 
       const newData: ICommentData = {
         content: text,
