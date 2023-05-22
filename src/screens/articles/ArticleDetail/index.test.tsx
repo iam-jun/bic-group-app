@@ -10,6 +10,7 @@ import ArticleDetail from './index';
 import * as useMounted from '~/hooks/mounted';
 import usePostsStore from '~/store/entities/posts';
 import { IPost } from '~/interfaces/IPost';
+import { mockViewContentJoinRequire } from '~/test/mock_data/post';
 
 describe('ArticleDetail screen', () => {
   const props = { route: { params: { articleId: mockArticle.id } } };
@@ -49,5 +50,49 @@ describe('ArticleDetail screen', () => {
 
     const view = wrapper.queryByTestId('article_detail');
     expect(view).not.toBeNull();
+  });
+
+  it('should render ContentNoPermission', () => {
+    const { result } = renderHook(() => usePostsStore());
+
+    act(() => {
+      result.current.actions.addToErrorContents(mockArticle.id, {
+        isError: true,
+        code: mockViewContentJoinRequire.code,
+        message: mockViewContentJoinRequire.meta.message,
+        requireGroups: mockViewContentJoinRequire.meta.errors.requireGroups,
+      });
+    });
+
+    const store = createTestStore({ ...initialState });
+    const wrapper = renderWithRedux(
+      <MockedNavigator component={() => <ArticleDetail {...props} />} />,
+      store,
+    );
+
+    const viewContentNoPermission = wrapper.getByTestId('content_no_permission');
+    expect(viewContentNoPermission).toBeDefined();
+  });
+
+  it('should render ContentUnavailable', () => {
+    const { result } = renderHook(() => usePostsStore());
+
+    act(() => {
+      result.current.actions.addToErrorContents(mockArticle.id, {
+        isError: true,
+        code: '',
+        message: '',
+        requireGroups: [],
+      });
+    });
+
+    const store = createTestStore({ ...initialState });
+    const wrapper = renderWithRedux(
+      <MockedNavigator component={() => <ArticleDetail {...props} />} />,
+      store,
+    );
+
+    const viewUnsupportFeature = wrapper.getByTestId('unsupport_feature');
+    expect(viewUnsupportFeature).toBeDefined();
   });
 });
