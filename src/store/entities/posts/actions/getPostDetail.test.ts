@@ -1,7 +1,7 @@
 import streamApi from '~/api/StreamApi';
 import useReportContentStore from '~/components/Report/store';
 import APIErrorCode from '~/constants/apiErrorCode';
-import { POST_DETAIL_4 } from '~/test/mock_data/post';
+import { mockViewContentJoinRequire, POST_DETAIL_4 } from '~/test/mock_data/post';
 import { responseGetReportContent } from '~/test/mock_data/reportedContents';
 import { act, renderHook, waitFor } from '~/test/testUtils';
 import usePostsStore from '../index';
@@ -108,6 +108,26 @@ describe('getPostDetail', () => {
     await waitFor(() => {
       expect(result.current.posts[POST_DETAIL_4.id]).toBeDefined();
       expect(result.current.posts[POST_DETAIL_4.id].deleted).toBeTruthy();
+    });
+  });
+
+  it('given a payload with postId that is restricted should get post detail error', async () => {
+    const spyApiGetPostDetail = jest
+      .spyOn(streamApi, 'getPostDetail')
+      .mockImplementation(() => Promise.reject(mockViewContentJoinRequire) as any);
+
+    const { result } = renderHook(() => usePostsStore((state) => state));
+
+    act(() => {
+      result.current.actions.getPostDetail({
+        postId: POST_DETAIL_4.id,
+      });
+    });
+
+    expect(spyApiGetPostDetail).toBeCalled();
+
+    await waitFor(() => {
+      expect(result.current.errorContents[POST_DETAIL_4.id]).toBeDefined();
     });
   });
 });
