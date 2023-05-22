@@ -240,6 +240,7 @@ const useEditComment = ({ commentId, mentionInputRef, postId }: IUseEditComment)
         images.push(imageData);
       }
       // if (selectedGiphy) { // update giphy null?
+      console.log('xoa x version id trong header sau khi done')
         giphy = {
           id: selectedGiphy?.id,
         };
