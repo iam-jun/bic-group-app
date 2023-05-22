@@ -85,6 +85,7 @@ export interface IPayloadShowModal {
   props?: BaseBottomSheetProps | any;
   useAppBottomSheet?: boolean;
   closeOutSide?: boolean;
+  animationType?: 'slide' | 'fade' | 'none';
 }
 
 export interface IReactionBottomSheet {
