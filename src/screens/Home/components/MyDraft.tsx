@@ -22,8 +22,8 @@ const MyDraft = () => {
     const getTotalDraft = async () => {
       try {
         const { data: totalNumber = 0 } = await streamApi.getTotalDraft() || {};
-        const totalText = totalNumber >= 100 ? '99+' : totalNumber > 0 ? totalNumber : '';
-        if (!!totalText) {
+        const totalText = handleTotalText(totalNumber);
+        if (totalText) {
           setBadge(totalText);
         }
         setLoading(false);
@@ -33,6 +33,16 @@ const MyDraft = () => {
     };
     getTotalDraft();
   }, []);
+
+  const handleTotalText = (totalNumber: any) => {
+    if (totalNumber >= 100) {
+      return '99+';
+    }
+    if (totalNumber > 0) {
+      return totalNumber;
+    }
+    return '';
+  };
 
   const goToDraftPost = () => {
     modalActions.hideModal();

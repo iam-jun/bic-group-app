@@ -1,7 +1,6 @@
 import React from 'react';
 import StorybookUIRoot from '../../../../.ondevice/Storybook';
 
-// export default StorybookUIRoot;
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 

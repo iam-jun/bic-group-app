@@ -17,18 +17,15 @@ export const getLanguages = (language: string[]) => {
   return userLanguageList?.join(', ');
 };
 
-export const getEndDateText = (
-  t: any,
-  currentlyWorkHere: boolean,
-  endDate: string,
-) => (currentlyWorkHere
-  ? t('common:text_present')
-  : endDate
-    ? formatDate(
-      endDate,
-      'MMM D, YYYY',
-    )
-    : '');
+export const getEndDateText = (t: any, currentlyWorkHere: boolean, endDate: string) => {
+  if (currentlyWorkHere) {
+    return t('common:text_present');
+  }
+  if (endDate) {
+    return formatDate(endDate, 'MMM D, YYYY');
+  }
+  return '';
+};
 
 export const formatPhoneNumber = (
   phone: string | null | undefined,

@@ -130,44 +130,23 @@ const Notification = () => {
             case NOTIFICATION_TYPE.ADD_POST_TO_USER:
             case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER:
             case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER_IN_MULTIPLE_GROUPS:
-            {
-              if (target === TargetType.ARTICLE) {
-                rootNavigation.navigate(articleStack.articleDetail, { articleId: act.id });
-              } else if (target === TargetType.SERIES) {
-                rootNavigation.navigate(seriesStack.seriesDetail, { seriesId: act.id });
-              } else {
-                rootNavigation.navigate(
-                  homeStack.postDetail, {
-                    post_id: act?.id,
-                    noti_id: item.id,
-                  },
-                );
-              }
+              navigatePostDetail({ item, act, target });
               break;
-            }
+
             case NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL: {
               rootNavigation.navigate(menuStack.yourContent, { initTab: 0 });
               break;
             }
+
             case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR:
             case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR_AGGREGATED:
             case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_POST:
             case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_POST_AGGREGATED:
             case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST:
-            case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST_AGGREGATED: {
-              if (target === TargetType.ARTICLE) {
-                rootNavigation.navigate(articleStack.articleDetail, { articleId: act.id, focusComment: true });
-              } else {
-                rootNavigation.navigate(
-                  homeStack.postDetail, {
-                    post_id: act?.id,
-                    noti_id: item.id,
-                    focus_comment: true,
-                  },
-                );
-              }
+            case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST_AGGREGATED:
+              navigatePostDetailWithFocusComment({ item, act, target });
               break;
-            }
+
             case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_COMMENT:
             case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_PARENT_COMMENT:
             case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_PARENT_COMMENT_AGGREGATED:
@@ -185,6 +164,7 @@ const Notification = () => {
               );
               break;
             }
+
             case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT:
             case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT_PUSH:
             case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT_AGGREGATED: {
@@ -199,98 +179,39 @@ const Notification = () => {
               );
               break;
             }
+
             case NOTIFICATION_TYPE.GROUP_ASSIGNED_ROLE_TO_USER:
             case NOTIFICATION_TYPE.GROUP_DEMOTED_ROLE_TO_USER:
-              if (act?.community?.id) {
-                rootNavigation.navigate(
-                  groupStack.communityMembers, {
-                    communityId: act.community.id,
-                    isMember: true,
-                  },
-                );
-              }
-              if (act?.group?.id) {
-                /**
-                 * Do community (root group) members đã đổi các endpoints
-                 * từ "communities" -> "groups" nên event noti đã chuyển sang phía group,
-                 * do đó cần check thêm isCommunity để navigate tới đúng screen
-                 */
-                const { isCommunity } = act.group;
-                if (isCommunity) {
-                  rootNavigation.navigate(
-                    groupStack.communityMembers, {
-                      communityId: act.group.communityId,
-                      isMember: true,
-                    },
-                  );
-                } else {
-                  rootNavigation.navigate(
-                    groupStack.groupMembers, {
-                      groupId: act.group.id,
-                      isMember: true,
-                    },
-                  );
-                }
-              }
+              navigateGroupMembers({ act });
               break;
+
             case NOTIFICATION_TYPE.GROUP_CHANGED_PRIVACY_TO_GROUP:
             case NOTIFICATION_TYPE.GROUP_REMOVED_FROM_GROUP_TO_USER:
             case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_APPROVED:
             case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_REJECTED:
             case NOTIFICATION_TYPE.GROUP_ADDED_TO_GROUP_TO_USER_IN_ONE_GROUP:
             case NOTIFICATION_TYPE.LEAVE_COMMUNITY_TO_USER:
-              if (act?.community?.id) {
-                rootNavigation.navigate(
-                  groupStack.communityDetail, {
-                    communityId: act.community.id,
-                  },
-                );
-              }
-              if (act?.group?.id) {
-                rootNavigation.navigate(
-                  groupStack.groupDetail, {
-                    groupId: act.group.id,
-                    communityId: act?.group?.communityId,
-                  },
-                );
-              }
+              navigateGroupDetail({ act });
               break;
+
             case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN:
-            case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN_AGGREGATED: {
-              const targetIndex = MEMBER_TABS.findIndex(
-                (item: {id: string, text: string}) => item.id === MEMBER_TAB_TYPES.MEMBER_REQUESTS,
-              );
-              if (act?.community?.id) {
-                rootNavigation.navigate(
-                  groupStack.communityMembers, {
-                    communityId: act.community.id,
-                    targetIndex,
-                    isMember: true,
-                  },
-                );
-              }
-              if (act?.group?.id) {
-                rootNavigation.navigate(
-                  groupStack.groupMembers, {
-                    groupId: act.group.id,
-                    targetIndex,
-                    isMember: true,
-                  },
-                );
-              }
+            case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN_AGGREGATED:
+              navigateGroupMembersWithTargetIndex({ act });
               break;
-            }
+
             case NOTIFICATION_TYPE.POST_SERIES_TO_USER_IN_ONE_GROUP:
             case NOTIFICATION_TYPE.POST_SERIES_TO_USER_IN_MULTIPLE_GROUPS:
             case NOTIFICATION_TYPE.ADD_ARTICLE_TO_USER: {
               rootNavigation.navigate(seriesStack.seriesDetail, { seriesId: act.id });
               break;
             }
+
             case NOTIFICATION_TYPE.POST_ARTICLE_TO_USER_IN_ONE_GROUP:
             case NOTIFICATION_TYPE.POST_ARTICLE_TO_USER_IN_MULTIPLE_GROUPS: {
               rootNavigation.navigate(articleStack.articleDetail, { articleId: act.id });
               break;
             }
+
             case NOTIFICATION_TYPE.REPORT_USER_TO_USER:
             case NOTIFICATION_TYPE.REPORT_USER_TO_USER_AGGREGATED:
             case NOTIFICATION_TYPE.CONTENT_REPORT_TO_USER:
@@ -298,36 +219,11 @@ const Notification = () => {
               rootNavigation.navigate(commonStack.unsupportFeature);
               break;
             }
-            case NOTIFICATION_TYPE.CONTENT_HIDE_TO_USER: {
-              const targetType = act?.report?.targetType;
-              const targetId = act?.report?.targetId;
 
-              if (targetType === TargetType.POST) {
-                rootNavigation.navigate(
-                  homeStack.postDetail, {
-                    post_id: targetId,
-                    noti_id: item.id,
-                    is_reported: true,
-                  },
-                );
-              } else if (targetType === TargetType.ARTICLE) {
-                rootNavigation.navigate(articleStack.articleContentDetail, {
-                  articleId: targetId,
-                  is_reported: true,
-                  noti_id: item.id,
-                });
-              } else {
-                rootNavigation.navigate(
-                  homeStack.commentDetail, {
-                    commentId: targetId,
-                    notiId: item.id,
-                    isReported: true,
-                    target: act?.contentType || '',
-                  },
-                );
-              }
+            case NOTIFICATION_TYPE.CONTENT_HIDE_TO_USER:
+              navigateByContentHideToUser({ act, item });
               break;
-            }
+
             case NOTIFICATION_TYPE.LEAVE_GROUP_TO_USER:
               if (!!act?.group?.[0]?.id) {
                 rootNavigation.navigate(
@@ -338,12 +234,14 @@ const Notification = () => {
                 );
               }
               break;
+
             case NOTIFICATION_TYPE.REMOVE_ARTICLE_TO_USER:
             case NOTIFICATION_TYPE.REMOVE_ARTICLE_TO_CREATOR:
               if (act?.item?.id) {
                 rootNavigation.navigate(articleStack.articleDetail, { articleId: act.item.id });
               }
               break;
+
             case NOTIFICATION_TYPE.REMOVE_POST_TO_USER:
             case NOTIFICATION_TYPE.REMOVE_POST_TO_CREATOR:
               rootNavigation.navigate(
@@ -353,24 +251,11 @@ const Notification = () => {
                 },
               );
               break;
+
             case NOTIFICATION_TYPE.DELETE_SERIES_TO_USER:
-              // eslint-disable-next-line no-case-declarations
-              const items = act?.items || [];
-              if (items?.length > 0) {
-                const content = items.find((item) => item?.actor?.id === userId);
-                if (content?.contentType === ContentType.post) {
-                  rootNavigation.navigate(
-                    homeStack.postDetail, {
-                      post_id: content.id,
-                      noti_id: item.id,
-                    },
-                  );
-                }
-                if (content?.contentType === ContentType.article) {
-                  rootNavigation.navigate(articleStack.articleDetail, { articleId: content.id });
-                }
-              }
+              navigatePostDetailWithContentType({ act, item });
               break;
+
             case NOTIFICATION_TYPE.APPROVED_KYC:
               rootNavigation.navigate(mainStack.userProfile, { userId });
               break;
@@ -378,6 +263,7 @@ const Notification = () => {
             case NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME:
               rootNavigation.navigate(notiStack.notiMaintenancePage, { maintenanceInfo: act?.maintenanceInfo });
               break;
+
             default:
               console.warn(`Notification type ${type} have not implemented yet`);
               break;
@@ -405,6 +291,142 @@ const Notification = () => {
     },
     [activeIndex],
   );
+
+  const navigatePostDetail = (params: { target: TargetType; act: any; item: any }) => {
+    const { target, act, item } = params;
+    if (target === TargetType.ARTICLE) {
+      rootNavigation.navigate(articleStack.articleDetail, { articleId: act.id });
+    } else if (target === TargetType.SERIES) {
+      rootNavigation.navigate(seriesStack.seriesDetail, { seriesId: act.id });
+    } else {
+      rootNavigation.navigate(homeStack.postDetail, {
+        post_id: act?.id,
+        noti_id: item.id,
+      });
+    }
+  };
+
+  const navigatePostDetailWithContentType = (params: { act: any; item: any }) => {
+    const { act, item } = params;
+    const items = act?.items || [];
+    if (items?.length > 0) {
+      const content = items.find((item) => item?.actor?.id === userId);
+      if (content?.contentType === ContentType.post) {
+        rootNavigation.navigate(homeStack.postDetail, {
+          post_id: content.id,
+          noti_id: item.id,
+        });
+      }
+      if (content?.contentType === ContentType.article) {
+        rootNavigation.navigate(articleStack.articleDetail, { articleId: content.id });
+      }
+    }
+  };
+
+  const navigatePostDetailWithFocusComment = (params: { target: TargetType; act: any; item: any }) => {
+    const { target, act, item } = params;
+    if (target === TargetType.ARTICLE) {
+      rootNavigation.navigate(articleStack.articleDetail, { articleId: act.id, focusComment: true });
+    } else {
+      rootNavigation.navigate(homeStack.postDetail, {
+        post_id: act?.id,
+        noti_id: item.id,
+        focus_comment: true,
+      });
+    }
+  };
+
+  const navigateGroupMembers = (params: { act: any }) => {
+    const { act } = params;
+    if (act?.community?.id) {
+      rootNavigation.navigate(groupStack.communityMembers, {
+        communityId: act.community.id,
+        isMember: true,
+      });
+    }
+    if (act?.group?.id) {
+      /**
+       * Do community (root group) members đã đổi các endpoints
+       * từ "communities" -> "groups" nên event noti đã chuyển sang phía group,
+       * do đó cần check thêm isCommunity để navigate tới đúng screen
+       */
+      const { isCommunity } = act.group;
+      if (isCommunity) {
+        rootNavigation.navigate(groupStack.communityMembers, {
+          communityId: act.group.communityId,
+          isMember: true,
+        });
+      } else {
+        rootNavigation.navigate(groupStack.groupMembers, {
+          groupId: act.group.id,
+          isMember: true,
+        });
+      }
+    }
+  };
+
+  const navigateGroupDetail = (params: { act: any }) => {
+    const { act } = params;
+    if (act?.community?.id) {
+      rootNavigation.navigate(groupStack.communityDetail, {
+        communityId: act.community.id,
+      });
+    }
+    if (act?.group?.id) {
+      rootNavigation.navigate(groupStack.groupDetail, {
+        groupId: act.group.id,
+        communityId: act?.group?.communityId,
+      });
+    }
+  };
+
+  const navigateGroupMembersWithTargetIndex = (params: { act: any }) => {
+    const { act } = params;
+    const targetIndex = MEMBER_TABS.findIndex(
+      (item: { id: string; text: string }) => item.id === MEMBER_TAB_TYPES.MEMBER_REQUESTS,
+    );
+    if (act?.community?.id) {
+      rootNavigation.navigate(groupStack.communityMembers, {
+        communityId: act.community.id,
+        targetIndex,
+        isMember: true,
+      });
+    }
+    if (act?.group?.id) {
+      rootNavigation.navigate(groupStack.groupMembers, {
+        groupId: act.group.id,
+        targetIndex,
+        isMember: true,
+      });
+    }
+  };
+
+  const navigateByContentHideToUser = (params: { act: any; item: any }) => {
+    const { act, item } = params;
+    const targetType = act?.report?.targetType;
+    const targetId = act?.report?.targetId;
+
+    if (targetType === TargetType.POST) {
+      rootNavigation.navigate(homeStack.postDetail, {
+        post_id: targetId,
+        noti_id: item.id,
+        is_reported: true,
+      });
+    } else if (targetType === TargetType.ARTICLE) {
+      rootNavigation.navigate(articleStack.articleContentDetail, {
+        articleId: targetId,
+        noti_id: item.id,
+        is_reported: true,
+      });
+    } else {
+      rootNavigation.navigate(homeStack.commentDetail, {
+        commentId: targetId,
+        notiId: item.id,
+        isReported: true,
+        target: act?.contentType || '',
+      });
+    }
+  };
 
   return (
     <ScreenWrapper testID="NotfiticationScreen" isFullView>
