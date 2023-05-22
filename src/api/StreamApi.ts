@@ -1,5 +1,5 @@
 import { Method } from 'axios';
-import { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
+import { apiProviders, apiVersionId, HttpApiRequestConfig } from '~/api/apiConfig';
 import { makeHttpRequest, withHttpRequestPromise } from '~/api/apiRequest';
 import {
   IParamDeleteReaction,
@@ -51,6 +51,9 @@ const defaultConfig = {
   provider,
   method: 'get' as Method,
   useRetry: true,
+  headers: {
+    'x-version-id': apiVersionId.content,
+  },
 };
 
 export const streamApiConfig = {
@@ -125,9 +128,7 @@ export const streamApiConfig = {
     url: `${provider.url}posts`,
     method: 'post',
     data,
-    headers: {
-      'x-version': '2',
-    },
+
   }),
   putReaction: (params: IParamPutReaction): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -155,9 +156,6 @@ export const streamApiConfig = {
       url: `${provider.url}posts/${postId}/publish`,
       method: 'put',
       data,
-      headers: {
-        'x-version': '2',
-      },
     };
   },
   putAutoSavePost: (param: IParamUpdatePost): HttpApiRequestConfig => {
@@ -167,9 +165,6 @@ export const streamApiConfig = {
       url: `${provider.url}posts/${postId}`,
       method: 'patch',
       data,
-      headers: {
-        'x-version': '2',
-      },
     };
   },
   putEditComment: (id: string, data: ICommentData): HttpApiRequestConfig => ({
