@@ -239,11 +239,11 @@ const useEditComment = ({ commentId, mentionInputRef, postId }: IUseEditComment)
         };
         images.push(imageData);
       }
-      if (selectedGiphy) {
+      // if (selectedGiphy) { // update giphy null?
         giphy = {
           id: selectedGiphy?.id,
         };
-      }
+      // }
       const newData: ICommentData = {
         content: text,
         media: { images },
