@@ -1,5 +1,4 @@
 import { IPayloadPutEditComment } from '~/interfaces/IPost';
-// import useCommentsStore from '~/store/entities/comments';
 import streamApi from '~/api/StreamApi';
 import { timeOut } from '~/utils/common';
 import { withNavigation } from '~/router/helper';
@@ -32,9 +31,6 @@ const editComment = (_set, _get) => async (payload: IPayloadPutEditComment) => {
     const response = await streamApi.putEditComment(
       id, data,
     );
-
-    // const newComment = response.data;
-    // useCommentsStore.getState().actions.addToComments(newComment);
     
     useCommentDetailController.getState().actions.getCommentDetail({
       commentId: id,

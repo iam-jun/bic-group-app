@@ -73,11 +73,9 @@ const useEditComment = ({ commentId, mentionInputRef, postId }: IUseEditComment)
 
   const isContentEmpty = !text?.trim?.()?.length;
   const isContentHasChange = !isContentEmpty && text?.trim?.() !== oldContent;
-  const isImageHasChange = oldImages?.[0]?.origin_name
-    ? selectedImage?.fileName !== oldImages[0].origin_name
-    : oldImages?.[0]?.name
-      ? (selectedImage?.fileName !== oldImages[0].name)
-      : disableImageOption;
+  const isImageHasChange = oldImages?.[0]?.id
+    ? selectedImage?.id !== oldImages[0].id
+    : disableImageOption;
   const isGifHasChange = oldGiphy?.id !== selectedGiphy?.id;
   const isEditHasChange = isImageHasChange || isGifHasChange || isContentHasChange;
 

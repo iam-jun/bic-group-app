@@ -159,7 +159,7 @@ export const streamApiConfig = {
     url: `${provider.url}comments/${id}`,
     method: 'put',
     headers: {
-      'X-Version': '2',
+      'X-Version-Id': '1.3.0',
     },
     data,
   }),
@@ -173,7 +173,7 @@ export const streamApiConfig = {
     url: `${provider.url}comments/${id}`,
     method: 'delete',
     headers: {
-      'X-Version': '2',
+      'X-Version-Id': '1.3.0',
     },
   }),
   getCommentsByPostId: (
@@ -199,7 +199,7 @@ export const streamApiConfig = {
     url: `${provider.url}comments`,
     method: 'post',
     headers: {
-      'X-Version': '2',
+      'X-Version-Id': '1.3.0',
     },
     data: {
       postId: params?.postId,
@@ -216,7 +216,7 @@ export const streamApiConfig = {
       url: `${provider.url}comments/${parentCommentId}/reply`,
       method: 'post',
       headers: {
-        'X-Version': '2',
+        'X-Version-Id': '1.3.0',
       },
       data: {
         postId,
