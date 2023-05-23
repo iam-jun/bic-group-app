@@ -50,6 +50,7 @@ const publishDraftArticle = (set, get) => async (payload: IPayloadPublishDraftAr
       showToast({
         content: 'post:draft:text_processing_publish',
       });
+      // navigation.goBack();
       usePostsInProgressStore.getState().actions.getPosts();
     } else if (replaceWithDetail) {
       navigation.replace(
