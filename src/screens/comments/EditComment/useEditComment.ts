@@ -1,11 +1,9 @@
 import {
-  MutableRefObject, useCallback, useEffect, useRef, useState,
+  useCallback, useEffect, useRef, useState,
 } from 'react';
 import { Keyboard } from 'react-native';
-
-import { t } from 'i18next';
 import { isEmpty } from 'lodash';
-import { PastedFile } from 'react-native-paste-image-input';
+
 import {
   IActivityDataImage, ICommentData, ICreatePostImage, IPayloadPutEditComment,
 } from '~/interfaces/IPost';
@@ -16,16 +14,16 @@ import useCommentInputStore from '../components/CommentInputView/store';
 import ICommentInputState from '../components/CommentInputView/store/Interface';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
+import { useBaseHook } from '~/hooks';
 import { checkPermission, PermissionTypes } from '~/utils/permission';
+import ImagePicker from '~/components/ImagePicker';
 import { IGiphy } from '~/interfaces/IGiphy';
 import { formatTextWithEmoji } from '~/utils/emojis';
+import { getImagePastedFromClipboard } from '~/utils/images';
 import useModalStore from '~/store/modal';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import useUploaderStore, { IGetFile } from '~/store/uploader';
 import showToastError from '~/store/helper/showToastError';
-import ImagePicker from '~/components/ImagePicker';
-import { ToastType } from '~/baseComponents/Toast/BaseToast';
-import { getImagePastedFromClipboard } from '~/utils/images';
-import { IToastMessage } from '~/interfaces/common';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -35,6 +33,8 @@ export interface IUseEditComment {
 }
 
 const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
+  const { t } = useBaseHook();
+
   const comment: ICommentData = useCommentsStore(useCallback(commentsSelector.getComment(commentId), [commentId]));
   const oldContent = comment?.content;
   const oldImages = comment?.media?.images;
@@ -43,7 +43,7 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
     url: comment?.giphyUrl,
   } : undefined;
 
-  const { editComment } = useEditCommentController((state) => state.actions);
+  const editController = useEditCommentController((state) => state.actions);
   const actions = useCommentInputStore((state: ICommentInputState) => state.actions);
   const createComment = useCommentInputStore((state: ICommentInputState) => state.createComment);
   const { loading } = createComment || {};
@@ -72,7 +72,11 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
 
   const isContentEmpty = !text?.trim?.()?.length;
   const isContentHasChange = !isContentEmpty && text?.trim?.() !== oldContent;
-  const isImageHasChange = checkImageHasChange({ oldImages, selectedImage, disableImageOption });
+  const isImageHasChange = oldImages?.[0]?.origin_name
+    ? selectedImage?.fileName !== oldImages[0].origin_name
+    : oldImages?.[0]?.name
+      ? (selectedImage?.fileName !== oldImages[0].name)
+      : disableImageOption;
   const isGifHasChange = oldGiphy?.id !== selectedGiphy?.id;
   const isEditHasChange = isImageHasChange || isGifHasChange || isContentHasChange;
 
@@ -103,19 +107,33 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
     }, [oldContent],
   );
 
-  useEffect(() => {
-    setStateByOldData({
-      oldContent,
-      oldImages,
-      oldGiphy,
-      setText,
-      setSelectedImage,
-      setSelectedGiphy,
-    });
-  }, []);
+  useEffect(
+    () => {
+      if (oldContent) {
+        setText(oldContent);
+      }
+      if (oldImages?.[0]) {
+        const {
+          name, origin_name, width, height, url,
+        } = oldImages[0];
+        const file: any = { width: width || 1, height: height || 1 };
+        setSelectedImage({
+          url,
+          fileName: origin_name || name,
+          file,
+        });
+      }
+      if (oldGiphy) {
+        setSelectedGiphy(oldGiphy);
+      }
+    }, [],
+  );
 
   useEffect(() => {
-    shouldShowToastError(uploadError);
+    if (uploadError) {
+      const content = typeof uploadError === 'string' ? uploadError : t('post:error_upload_photo_failed');
+      showToastError(content);
+    }
   }, [uploadError]);
 
   const clearState = () => {
@@ -125,9 +143,11 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
   };
 
   useEffect(() => {
-    shouldSetText({
-      text, setText, selectedEmoji, cursorPosition, setSelectedEmoji,
-    });
+    if (!!selectedEmoji) {
+      const completeStr = formatTextWithEmoji(text, selectedEmoji, cursorPosition.current);
+      setText(completeStr);
+      setSelectedEmoji('');
+    }
   }, [selectedEmoji]);
 
   const handleContentChange = (newContent: string) => {
@@ -136,9 +156,21 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
   };
 
   const handelSelectImage = () => {
-    checkPermission(PermissionTypes.photo, (canOpenPicker) => {
-      shouldImagePicker({ canOpenPicker, setSelectedImage, setSelectedGiphy });
-    });
+    checkPermission(
+      PermissionTypes.photo, (canOpenPicker) => {
+        if (canOpenPicker) {
+          ImagePicker.openPickerSingle().then((file) => {
+            if (!file) return;
+            const image: ICreatePostImage = {
+              fileName: file.filename,
+              file,
+            };
+            setSelectedImage(image);
+            setSelectedGiphy(undefined);
+          });
+        }
+      },
+    );
   };
 
   const handleUploadImageSuccess = (file: IGetFile) => {
@@ -153,14 +185,29 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
 
   // only support for iOS
   const onPasteImage = (_, files) => {
-    _onPasteImage({
-      files,
-      selectedImage,
-      selectedGiphy,
-      setSelectedImage,
-      getImagePastedFromClipboard,
-      showToast,
-    });
+    if (!isEmpty(selectedImage) || !isEmpty(selectedGiphy)) {
+      showToast({
+        content: t('upload:text_upload_error', {
+          file_type: t('file_type:image'),
+        }),
+        type: ToastType.ERROR,
+      });
+
+      return;
+    }
+    const img = getImagePastedFromClipboard(files);
+    if (img) {
+      setSelectedImage({
+        fileName: img.fileName,
+        file: {
+          name: img.fileName,
+          filename: img.fileName,
+          type: img.type,
+          size: img.fileSize,
+          uri: img.uri,
+        },
+      } as any);
+    }
   };
 
   const handleSelectGiphy = useCallback((gif: IGiphy) => {
@@ -179,15 +226,36 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
 
   const handleSave = () => {
     Keyboard.dismiss();
-    shouldEditComment({
-      commentId,
-      comment,
-      selectedImage,
-      selectedGiphy,
-      uploadedFile,
-      editComment,
-      text,
-    });
+    if (commentId && comment) {
+      const images = [];
+      let giphy;
+      if (selectedImage) {
+        const imageData: IActivityDataImage = {
+          id: uploadedFile?.result?.id,
+          name: selectedImage?.url || selectedImage?.fileName || '',
+          origin_name: selectedImage?.fileName,
+          width: selectedImage?.file?.width,
+          height: selectedImage?.file?.height,
+        };
+        images.push(imageData);
+      }
+      if (selectedGiphy) {
+        giphy = {
+          id: selectedGiphy?.id,
+        };
+      }
+      const newData: ICommentData = {
+        content: text,
+        media: { images },
+        giphy,
+      };
+      const payload = {
+        id: commentId,
+        comment,
+        data: newData,
+      } as IPayloadPutEditComment;
+      editController.editComment(payload);
+    }
   };
 
   const handleBack = () => {
@@ -226,173 +294,6 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
     handleSave,
     handleBack,
   };
-};
-
-const checkImageHasChange = (params: {
-  oldImages: any[];
-  selectedImage: ICreatePostImage;
-  disableImageOption: boolean;
-}) => {
-  const { oldImages, selectedImage, disableImageOption } = params;
-  /* eslint no-else-return: ["error", {allowElseIf: true}] */
-  if (oldImages?.[0]?.origin_name) {
-    return selectedImage?.fileName !== oldImages[0].origin_name;
-  } else if (oldImages?.[0]?.name) {
-    return selectedImage?.fileName !== oldImages[0].name;
-  }
-  return disableImageOption;
-};
-
-const setStateByOldData = (params: {
-  oldContent: any;
-  oldImages: any;
-  oldGiphy: any;
-  setText: (value: string) => void;
-  setSelectedImage: (image: ICreatePostImage) => void;
-  setSelectedGiphy: (giphy: IGiphy) => void;
-}) => {
-  const {
-    oldContent, oldImages, oldGiphy, setText, setSelectedImage, setSelectedGiphy,
-  } = params;
-  if (oldContent) {
-    setText(oldContent);
-  }
-  if (oldImages?.[0]) {
-    const {
-      name, origin_name, width, height, url,
-    } = oldImages[0];
-    const file: any = { width: width || 1, height: height || 1 };
-    setSelectedImage({
-      url,
-      fileName: origin_name || name,
-      file,
-    });
-  }
-  if (oldGiphy) {
-    setSelectedGiphy(oldGiphy);
-  }
-};
-
-const shouldShowToastError = (uploadError: string) => {
-  if (uploadError) {
-    const content = typeof uploadError === 'string' ? uploadError : t('post:error_upload_photo_failed');
-    showToastError(content);
-  }
-};
-
-const shouldImagePicker = (params: {
-  canOpenPicker: boolean;
-  setSelectedImage: (image: ICreatePostImage) => void;
-  setSelectedGiphy: (giphy: IGiphy) => void;
-}) => {
-  const { canOpenPicker, setSelectedImage, setSelectedGiphy } = params;
-  if (canOpenPicker) {
-    ImagePicker.openPickerSingle().then((file) => {
-      if (!file) return;
-      const image: ICreatePostImage = {
-        fileName: file.filename,
-        file,
-      };
-      setSelectedImage(image);
-      setSelectedGiphy(undefined);
-    });
-  }
-};
-
-const _onPasteImage = (params: {
-  files: any[];
-  selectedImage: ICreatePostImage;
-  selectedGiphy: IGiphy;
-  setSelectedImage: (image: ICreatePostImage) => void;
-  getImagePastedFromClipboard: (files: any) => PastedFile;
-  showToast: (payload: IToastMessage) => void;
-}) => {
-  const {
-    files, selectedImage, selectedGiphy, setSelectedImage, getImagePastedFromClipboard, showToast,
-  } = params;
-  if (!isEmpty(selectedImage) || !isEmpty(selectedGiphy)) {
-    showToast({
-      content: t('upload:text_upload_error', {
-        file_type: t('file_type:image'),
-      }),
-      type: ToastType.ERROR,
-    });
-    return;
-  }
-  const img = getImagePastedFromClipboard(files);
-  if (img) {
-    setSelectedImage({
-      fileName: img.fileName,
-      file: {
-        name: img.fileName,
-        filename: img.fileName,
-        type: img.type,
-        size: img.fileSize,
-        uri: img.uri,
-      },
-    });
-  }
-};
-
-const shouldEditComment = (params: {
-  commentId: string;
-  comment: any;
-  selectedImage: ICreatePostImage;
-  selectedGiphy: IGiphy;
-  uploadedFile: IGetFile;
-  text: string;
-  editComment: (payload: IPayloadPutEditComment) => void;
-}) => {
-  const {
-    commentId, comment, selectedImage, selectedGiphy, uploadedFile, text, editComment,
-  } = params;
-  if (commentId && comment) {
-    const images = [];
-    let giphy;
-    if (selectedImage) {
-      const imageData: IActivityDataImage = {
-        id: uploadedFile?.result?.id,
-        name: selectedImage?.url || selectedImage?.fileName || '',
-        origin_name: selectedImage?.fileName,
-        width: selectedImage?.file?.width,
-        height: selectedImage?.file?.height,
-      };
-      images.push(imageData);
-    }
-    if (selectedGiphy) {
-      giphy = {
-        id: selectedGiphy?.id,
-      };
-    }
-    const newData: ICommentData = {
-      content: text,
-      media: { images },
-      giphy,
-    };
-    const payload = {
-      id: commentId,
-      comment,
-      data: newData,
-    } as IPayloadPutEditComment;
-    editComment(payload);
-  }
-};
-
-const shouldSetText = (params: {
-  text: string;
-  selectedEmoji: any;
-  cursorPosition: MutableRefObject<number>;
-  setText: (value: string) => void;
-  setSelectedEmoji: (value: string) => void;
-}) => {
-  const {
-    text, selectedEmoji, cursorPosition, setText, setSelectedEmoji,
-  } = params;
-  if (!!selectedEmoji) {
-    const completeStr = formatTextWithEmoji(text, selectedEmoji, cursorPosition.current);
-    setText(completeStr);
-    setSelectedEmoji('');
-  }
 };
 
 export default useEditComment;

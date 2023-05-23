@@ -2,9 +2,7 @@ import { cloneDeep, isEmpty } from 'lodash';
 import streamApi from '~/api/StreamApi';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import APIErrorCode from '~/constants/apiErrorCode';
-import {
-  IPayloadCreateComment, IReaction, ICommentData, IPost,
-} from '~/interfaces/IPost';
+import { IPayloadCreateComment, IReaction } from '~/interfaces/IPost';
 import useCommentDetailController from '~/screens/comments/CommentDetail/store';
 import { getMentionsFromContent } from '~/helpers/post';
 import useCommentsStore from '~/store/entities/comments';
@@ -39,7 +37,7 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
     return;
   }
 
-  const { createComment, actions }: ICommentInputState = get() || {};
+  const { createComment, actions }:ICommentInputState = get() || {};
   try {
     usePostsStore.getState().actions.putMarkSeenPost({ postId });
     if (!!createComment?.loading) {
@@ -51,9 +49,27 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
 
     // update comments or child comments
     // retrying doesn't need this step
-    updateComments({ preComment, parentCommentId, postId });
-
-    handleScroll({ parentCommentId, isCommentLevel1Screen });
+    if (preComment) {
+      if (!parentCommentId) {
+        useCommentsStore.getState().actions.addToCommentsByParentIdWithComments({
+          id: postId,
+          commentIds: [preComment.localId.toString()],
+          isMerge: true,
+        });
+        useCommentsStore.getState().actions.addToComments({ ...preComment, id: preComment.localId.toString() });
+      } else {
+        useCommentsStore.getState().actions.addChildCommentToComment({
+          commentId: parentCommentId,
+          childComments: new Array(preComment),
+          shouldAddChildrenCount: true,
+        });
+      }
+    }
+    if (!isCommentLevel1Screen) {
+      usePostsStore.getState().actions.setScrollToLatestItem({ parentCommentId });
+    } else {
+      usePostsStore.getState().actions.setScrollCommentsPosition({ position: 'bottom' });
+    }
 
     usePostsStore.getState().actions.setPostDetailReplyingComment();
 
@@ -64,8 +80,21 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
       tempMentions,
     );
 
-    const resComment = await handleResComment({ commentData, parentCommentId, postId });
-
+    let resComment;
+    if (parentCommentId) {
+      const response = await streamApi.postReplyComment({
+        postId,
+        parentCommentId,
+        data: commentData,
+      });
+      resComment = response?.data;
+    } else {
+      const response = await streamApi.postNewComment({
+        postId,
+        data: commentData,
+      });
+      resComment = response?.data;
+    }
     onSuccess?.(); // clear content in text input
     if (!!viewMore && !!parentCommentId) {
       useCommentDetailController.getState().actions.getCommentDetail({ commentId: parentCommentId });
@@ -78,8 +107,14 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
     const newAllPosts = cloneDeep(allPosts);
     const post = newAllPosts[postId] || {};
     post.commentsCount = (post.commentsCount || 0) + 1;
-    post.comments = shouldUpdatePostComments({ parentCommentId, post });
-
+    if (!parentCommentId) {
+      const postComments = post?.comments || { meta: { total: 0 } };
+      postComments.meta = {
+        ...postComments?.meta,
+        total: (postComments?.meta?.total || 0) + 1,
+      };
+      post.comments = postComments;
+    }
     newAllPosts[postId] = post;
     usePostsStore.getState().actions.setPosts(newAllPosts);
 
@@ -100,133 +135,49 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
     console.error(
       'create comment err:', JSON.stringify(e),
     );
-    shouldUpdateCreatedComment({ preComment, parentCommentId, postId });
+    if (preComment && !parentCommentId) {
+      // retrying doesn't need to update status because status = 'failed' already
+      useCommentsStore.getState().actions.updateCreatedComment({
+        status: 'failed',
+        localId: preComment?.localId,
+        postId,
+        resultComment: {} as IReaction,
+        parentCommentId,
+      });
+    }
     actions.setCreateComment({ loading: false });
-    handleError({
-      e, preComment, parentCommentId, postId,
-    });
-  }
-};
-
-const updateComments = (params: {
-  preComment: ICommentData;
-  parentCommentId: string;
-  postId: string;
-}) => {
-  const { preComment, parentCommentId, postId } = params;
-  if (preComment) {
-    if (!parentCommentId) {
-      useCommentsStore.getState().actions.addToCommentsByParentIdWithComments({
-        id: postId,
-        commentIds: [preComment.localId.toString()],
-        isMerge: true,
-      });
-      useCommentsStore.getState().actions.addToComments({ ...preComment, id: preComment.localId.toString() });
-    } else {
-      useCommentsStore.getState().actions.addChildCommentToComment({
-        commentId: parentCommentId,
-        childComments: new Array(preComment),
-        shouldAddChildrenCount: true,
-      });
-    }
-  }
-};
-
-const handleScroll = (params: { isCommentLevel1Screen: boolean; parentCommentId: string }) => {
-  const { isCommentLevel1Screen, parentCommentId } = params;
-  if (!isCommentLevel1Screen) {
-    usePostsStore.getState().actions.setScrollToLatestItem({ parentCommentId });
-  } else {
-    usePostsStore.getState().actions.setScrollCommentsPosition({ position: 'bottom' });
-  }
-};
-
-const handleResComment = async (params: { parentCommentId: string; commentData: ICommentData; postId: string }) => {
-  const { parentCommentId, commentData, postId } = params;
-  let resComment = null;
-  if (parentCommentId) {
-    const response = await streamApi.postReplyComment({
-      postId,
-      parentCommentId,
-      data: commentData,
-    });
-    resComment = response?.data;
-  } else {
-    const response = await streamApi.postNewComment({
-      postId,
-      data: commentData,
-    });
-    resComment = response?.data;
-  }
-  return resComment;
-};
-
-const shouldUpdatePostComments = (params: { parentCommentId: string, post: IPost }) => {
-  const { parentCommentId, post } = params;
-  if (!parentCommentId) {
-    const postComments = post?.comments || { meta: { total: 0 } };
-    postComments.meta = {
-      ...postComments?.meta,
-      total: (postComments?.meta?.total || 0) + 1,
-    };
-    return postComments;
-  }
-  return post.comments;
-};
-
-const handleError = (params: {
-  parentCommentId: string;
-  e: any;
-  preComment: ICommentData;
-  postId: string;
-}) => {
-  const {
-    parentCommentId, e, preComment, postId,
-  } = params;
-  if (!!parentCommentId && e?.code === APIErrorCode.Post.COMMENT_DELETED) {
-    usePostsStore.getState().actions.setCommentErrorCode(APIErrorCode.Post.COMMENT_DELETED);
-    useCommentsStore.getState().actions.removeChildComment({
-      localId: preComment?.localId?.toString(),
-      postId,
-      parentCommentId,
-    });
-
-    showToast({ content: 'post:text_comment_deleted' });
-  } else if (e?.code === APIErrorCode.Post.POST_DELETED || e?.code === APIErrorCode.Post.VALIDATION_ERROR) {
-    if (e?.code === APIErrorCode.Post.POST_DELETED) {
-      usePostsStore.getState().actions.setCommentErrorCode(APIErrorCode.Post.POST_DELETED);
-    }
-    if (parentCommentId) {
+    if (!!parentCommentId && e?.code === APIErrorCode.Post.COMMENT_DELETED) {
+      usePostsStore.getState().actions.setCommentErrorCode(APIErrorCode.Post.COMMENT_DELETED);
       useCommentsStore.getState().actions.removeChildComment({
         localId: preComment?.localId?.toString(),
         postId,
         parentCommentId,
       });
-    } else {
-      useCommentsStore.getState().actions.removeCommentDeleted({
-        postId,
-        localId: preComment?.localId?.toString(),
-      });
-    }
-    showToast({
-      content: e?.code === APIErrorCode.Post.POST_DELETED ? 'post:text_post_deleted' : e?.meta?.message,
-    });
-  } else {
-    showToastError(e);
-  }
-};
 
-const shouldUpdateCreatedComment = (params: {preComment: ICommentData, parentCommentId: string, postId: string }) => {
-  const { preComment, parentCommentId, postId } = params;
-  if (preComment && !parentCommentId) {
-    // retrying doesn't need to update status because status = 'failed' already
-    useCommentsStore.getState().actions.updateCreatedComment({
-      status: 'failed',
-      localId: preComment?.localId,
-      postId,
-      resultComment: {} as IReaction,
-      parentCommentId,
-    });
+      showToast({ content: 'post:text_comment_deleted' });
+    } else if (e?.code === APIErrorCode.Post.POST_DELETED
+      || e?.code === APIErrorCode.Post.VALIDATION_ERROR) {
+      if (e?.code === APIErrorCode.Post.POST_DELETED) {
+        usePostsStore.getState().actions.setCommentErrorCode(APIErrorCode.Post.POST_DELETED);
+      }
+      if (parentCommentId) {
+        useCommentsStore.getState().actions.removeChildComment({
+          localId: preComment?.localId?.toString(),
+          postId,
+          parentCommentId,
+        });
+      } else {
+        useCommentsStore.getState().actions.removeCommentDeleted({
+          postId,
+          localId: preComment?.localId?.toString(),
+        });
+      }
+      showToast({
+        content: e?.code === APIErrorCode.Post.POST_DELETED ? 'post:text_post_deleted' : e?.meta?.message,
+      });
+    } else {
+      showToastError(e);
+    }
   }
 };
 
