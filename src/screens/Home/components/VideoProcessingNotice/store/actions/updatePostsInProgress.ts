@@ -19,7 +19,7 @@ const updatePostsInProgress = (set, get) => async (
       updateData(set, get)(type, postId, postData);
     } else {
       const { type, postId } = payload || {};
-      if (postId) {
+      if (!!postId) {
         usePostsStore.getState().actions.getPostDetail({ postId });
         updateData(set, get)(type, postId);
       }

@@ -38,7 +38,7 @@ const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
   const comment: ICommentData = useCommentsStore(useCallback(commentsSelector.getComment(commentId), [commentId]));
   const oldContent = comment?.content;
   const oldImages = comment?.media?.images;
-  const oldGiphy = comment?.giphyId ? {
+  const oldGiphy = !!comment?.giphyId ? {
     id: comment?.giphyId,
     url: comment?.giphyUrl,
   } : undefined;
@@ -388,7 +388,7 @@ const shouldSetText = (params: {
   const {
     text, selectedEmoji, cursorPosition, setText, setSelectedEmoji,
   } = params;
-  if (selectedEmoji) {
+  if (!!selectedEmoji) {
     const completeStr = formatTextWithEmoji(text, selectedEmoji, cursorPosition.current);
     setText(completeStr);
     setSelectedEmoji('');

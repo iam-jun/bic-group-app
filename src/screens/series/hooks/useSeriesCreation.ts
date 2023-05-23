@@ -44,7 +44,7 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
 
   let series: any = {};
   const seriesFromStore = usePostsStore(useCallback(postsSelector.getPost(seriesId, {}), [seriesId]));
-  if (seriesId) series = cloneDeep(seriesFromStore);
+  if (!!seriesId) series = cloneDeep(seriesFromStore);
 
   const actions = useSeriesStore((state: ISeriesState) => state.actions);
 
@@ -107,7 +107,7 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
 
   const handleSave = () => {
     Keyboard.dismiss();
-    if (seriesId) {
+    if (!!seriesId) {
       actions.editSeries(
         seriesId,
         isFromDetail,
@@ -168,7 +168,7 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
 
 const checkStatus = (params: { data: any, seriesId: string, series: any }) => {
   const { data, seriesId, series } = params;
-  if (seriesId) {
+  if (!!seriesId) {
     const isTitleUpdated = series.title !== data.title && isNonEmptyString(data.title);
     const isRequiredUnEmpty = isNonEmptyString(data.title) && !isEmpty(data.coverMedia);
     const isSummaryUpdated = series.summary !== data.summary && isRequiredUnEmpty;
@@ -184,7 +184,7 @@ const checkStatus = (params: { data: any, seriesId: string, series: any }) => {
 
 const handleImportantExpiredAt = (params: { notExpired: boolean, settings: any }) => {
   const { notExpired, settings } = params;
-  if (notExpired) {
+  if (!!notExpired) {
     return settings?.importantExpiredAt;
   }
   return null;

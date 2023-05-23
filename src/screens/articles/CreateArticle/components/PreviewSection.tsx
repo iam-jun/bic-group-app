@@ -30,9 +30,9 @@ const PreviewSection: FC<PreviewSectionProps> = ({
         {optional && <Text.H4 style={styles.textOptional} color={colors.neutral20}>{`(${t('common:text_optional')})`}</Text.H4>}
       </View>
       <View style={styles.content}>
-        {content || <Text.BodyM color={colors.neutral20}>{placeholder}</Text.BodyM>}
+        {!!content ? content : <Text.BodyM color={colors.neutral20}>{placeholder}</Text.BodyM>}
       </View>
-      <EditAction type={content ? 'edit' : 'add'} onPress={onPress} disabled={disabled} />
+      <EditAction type={!!content ? 'edit' : 'add'} onPress={onPress} disabled={disabled} />
     </View>
   );
 };

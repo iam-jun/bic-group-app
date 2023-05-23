@@ -62,9 +62,9 @@ const ConfirmUser : FC<IRouteParams> = (props) => {
 
   const handleContent = () => {
     /* eslint no-else-return: ["error", {allowElseIf: true}] */
-    if (loading) {
+    if (!!loading) {
       return renderContent(LoadingImage, 'common:text_loading');
-    } else if (linkExpired) {
+    } else if (!!linkExpired) {
       return renderContent(EmailExpired, 'auth:verify_email_expired');
     }
     return renderContent(EmailVerified, 'auth:verify_email_success', renderButton());

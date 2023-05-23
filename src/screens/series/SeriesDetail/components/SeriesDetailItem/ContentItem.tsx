@@ -74,7 +74,7 @@ const ContentItem: FC<ContentItemProps> = ({
             </View>
           </Button>
         </View>
-        {coverUrlItem ? <Image style={styles.img} source={coverUrlItem} />
+        {!!coverUrlItem ? <Image style={styles.img} source={coverUrlItem} />
           : <Image style={styles.img} source={images.no_image_avalable} />}
       </View>
       {!!summaryItem && (

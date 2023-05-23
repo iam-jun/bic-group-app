@@ -42,7 +42,7 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
   const { createComment, actions }: ICommentInputState = get() || {};
   try {
     usePostsStore.getState().actions.putMarkSeenPost({ postId });
-    if (createComment?.loading) {
+    if (!!createComment?.loading) {
       console.error('\x1b[31m🐣️ saga postCreateNewComment: creating\x1b[0m');
       return;
     }

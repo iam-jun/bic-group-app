@@ -8,13 +8,13 @@ const removeCommentDeleted = (_set, get) => (payload: IRemoveComment) => {
 
   const { comments, commentsByParentId, actions }: ICommentsState = get();
   const post = usePostsStore.getState()?.posts?.[postId] || {};
-  if (commentId) {
+  if (!!commentId) {
     const comment = comments[commentId];
     post.commentsCount = Math.max((post.commentsCount || 0) - 1 - comment.totalReply, 0);
     const newPostCommentParents = commentsByParentId[postId]?.filter?.((cmtId: string) => cmtId !== commentId);
     actions.setCommentsByParentId({ ...commentsByParentId, [postId]: newPostCommentParents });
   }
-  if (localId) {
+  if (!!localId) {
     post.commentsCount = Math.max((post.commentsCount || 0) - 1, 0);
     const newPostCommentParents = commentsByParentId[postId]?.filter?.((cmtId: string) => cmtId !== localId && !!cmtId);
     actions.setCommentsByParentId({ ...commentsByParentId, [postId]: newPostCommentParents });

@@ -23,7 +23,7 @@ const editMyProfile = (_set, get) => async ({
   const { actions }: IMenuController = get();
   try {
     const payload = data;
-    if (isVerified) {
+    if (!!isVerified) {
       delete payload?.fullname;
       delete payload?.gender;
       delete payload?.birthday;

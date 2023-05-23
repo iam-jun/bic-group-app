@@ -284,7 +284,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
             onLongPressReaction={onLongPressReaction}
           />
           <View style={styles.buttonContainer}>
-            {setting?.canReact ? (
+            {!!setting?.canReact ? (
               <>
                 <ButtonWrapper onPress={onPressReact} testID="comment_view.react">
                   <Text.BodySMedium useI18n color={colors.neutral40}>

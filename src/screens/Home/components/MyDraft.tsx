@@ -23,7 +23,7 @@ const MyDraft = () => {
       try {
         const { data: totalNumber = 0 } = await streamApi.getTotalDraft() || {};
         const totalText = handleTotalText(totalNumber);
-        if (totalText) {
+        if (!!totalText) {
           setBadge(totalText);
         }
         setLoading(false);

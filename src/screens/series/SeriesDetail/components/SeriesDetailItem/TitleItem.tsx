@@ -38,7 +38,7 @@ const TitleItem: FC<TitleItemProps> = ({
         <Text.H1 color={colors.neutral20}>{formatNumberWithZeroPrefix(index)}</Text.H1>
         <View style={styles.slash} />
         <View style={{ flex: 1 }}>
-          {titleItem ? <Text.H3 numberOfLines={1} color={colors.neutral80}>{ titleItem }</Text.H3>
+          {!!titleItem ? <Text.H3 numberOfLines={1} color={colors.neutral80}>{ titleItem }</Text.H3>
             : (
               <RNText
                 numberOfLines={1}

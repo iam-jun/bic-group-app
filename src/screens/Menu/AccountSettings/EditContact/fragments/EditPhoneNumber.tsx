@@ -88,7 +88,7 @@ const EditPhoneNumber = ({
   const validateInputs = async () => trigger('phoneNumber');
 
   useEffect(() => {
-    if (editContactError) {
+    if (!!editContactError) {
       setError('phoneNumber', {
         type: 'validate',
         message: editContactError,

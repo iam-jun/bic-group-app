@@ -181,7 +181,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
 
     const initData = {
       isImportant: (!!notExpired || isNever) && settings?.isImportant,
-      importantExpiredAt: notExpired ? settings?.importantExpiredAt : null,
+      importantExpiredAt: !!notExpired ? settings?.importantExpiredAt : null,
       canShare: settings?.canShare,
       canReact: settings?.canReact,
       canComment: settings?.canComment,
