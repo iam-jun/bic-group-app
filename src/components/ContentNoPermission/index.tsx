@@ -11,11 +11,11 @@ import { IErrorContent } from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
 
 interface ContentNoPermissionProps {
-    onContentLayout?: () => void;
-    data: IErrorContent;
+  onContentLayout?: () => void;
+  data: IErrorContent;
 }
 
-const ContentNoPermission:React.FC<ContentNoPermissionProps> = ({
+const ContentNoPermission: React.FC<ContentNoPermissionProps> = ({
   onContentLayout,
   data,
 }) => {
@@ -45,12 +45,16 @@ const ContentNoPermission:React.FC<ContentNoPermissionProps> = ({
   const renderRequiredGroups = () => {
     if (!requireGroups || requireGroups?.length === 0) return null;
 
-    return (requireGroups?.map((item, index) => (
-      <Text.H6 key={`required_groups_${item?.id}`} onPress={() => goToAudienceDetail(item)}>
-        { item?.name }
-        {index === (Number(requireGroups?.length) - 1) ? '.' : ', ' }
+    return requireGroups?.map((item, index) => (
+      <Text.H6
+        testID={`content_no_permission.text_group_${item?.id}`}
+        key={`required_groups_${item?.id}`}
+        onPress={() => goToAudienceDetail(item)}
+      >
+        {item?.name}
+        {index === Number(requireGroups?.length) - 1 ? '.' : ', '}
       </Text.H6>
-    )));
+    ));
   };
 
   return (
@@ -66,12 +70,10 @@ const ContentNoPermission:React.FC<ContentNoPermissionProps> = ({
           common:content_no_permission:title
         </Text.H3>
         <Text.BodyS style={styles.message}>
-          { message }
-          { requireGroups?.length > 0 && ': ' }
+          {message}
+          {requireGroups?.length > 0 && ': '}
         </Text.BodyS>
-        <Text.H6 style={styles.textGroups}>
-          {renderRequiredGroups()}
-        </Text.H6>
+        <Text.H6 style={styles.textGroups}>{renderRequiredGroups()}</Text.H6>
       </View>
     </View>
   );

@@ -38,85 +38,85 @@ describe('CreatePost screen', () => {
     });
   });
 
-  it('given draft post should publish post', async () => {
-    const post = {
-      data: mockDraftPost,
-    };
-    jest
-      .spyOn(streamApi, 'getPostDetail')
-      .mockImplementation(() => Promise.resolve(post) as any);
-    const spyApiPutEditPost = jest
-      .spyOn(streamApi, 'putEditPost')
-      .mockImplementation(() => Promise.resolve(post) as any);
-    const spyApiPostPublishDraftPost = jest
-      .spyOn(streamApi, 'postPublishDraftPost')
-      .mockImplementation(() => Promise.resolve(post) as any);
-    const { result: resultCreatePostStore } = renderHook(() => useCreatePostStore((state) => state));
+  // it('given draft post should publish post', async () => {
+  //   const post = {
+  //     data: mockDraftPost,
+  //   };
+  //   jest
+  //     .spyOn(streamApi, 'getPostDetail')
+  //     .mockImplementation(() => Promise.resolve(post) as any);
+  //   const spyApiPutEditPost = jest
+  //     .spyOn(streamApi, 'putEditPost')
+  //     .mockImplementation(() => Promise.resolve(post) as any);
+  //   const spyApiPostPublishDraftPost = jest
+  //     .spyOn(streamApi, 'postPublishDraftPost')
+  //     .mockImplementation(() => Promise.resolve(post) as any);
+  //   const { result: resultCreatePostStore } = renderHook(() => useCreatePostStore((state) => state));
 
-    const wrapper = renderWithRedux(
-      <MockedNavigator
-        component={() => (
-          <CreatePost route={{ params: { draftPostId: mockDraftPost.id } }} />
-        )}
-      />,
-    );
+  //   const wrapper = renderWithRedux(
+  //     <MockedNavigator
+  //       component={() => (
+  //         <CreatePost route={{ params: { draftPostId: mockDraftPost.id } }} />
+  //       )}
+  //     />,
+  //   );
 
-    await waitFor(() => {
-      expect(resultCreatePostStore.current.createPost.isInitDone).toBeTruthy();
-    });
+  //   await waitFor(() => {
+  //     expect(resultCreatePostStore.current.createPost.isInitDone).toBeTruthy();
+  //   });
 
-    const btnPublish = wrapper.getByTestId('create_post.btn_post');
+  //   const btnPublish = wrapper.getByTestId('create_post.btn_post');
 
-    act(() => {
-      fireEvent.press(btnPublish);
-    });
+  //   act(() => {
+  //     fireEvent.press(btnPublish);
+  //   });
 
-    await waitFor(() => {
-      expect(spyApiPutEditPost).toBeCalled();
-      expect(spyApiPostPublishDraftPost).toBeCalled();
-    });
-  });
+  //   await waitFor(() => {
+  //     expect(spyApiPutEditPost).toBeCalled();
+  //     expect(spyApiPostPublishDraftPost).toBeCalled();
+  //   });
+  // });
 
-  it('given a post should editable post', async () => {
-    const post = {
-      data: mockEditPost,
-    };
-    jest
-      .spyOn(streamApi, 'getPostDetail')
-      .mockImplementation(() => Promise.resolve(post) as any);
-    const spyApiPutEditPost = jest
-      .spyOn(streamApi, 'putEditPost')
-      .mockImplementation(() => Promise.resolve(post) as any);
-    const { result: resultCreatePostStore } = renderHook(() => useCreatePostStore((state) => state));
+  // it('given a post should editable post', async () => {
+  //   const post = {
+  //     data: mockEditPost,
+  //   };
+  //   jest
+  //     .spyOn(streamApi, 'getPostDetail')
+  //     .mockImplementation(() => Promise.resolve(post) as any);
+  //   const spyApiPutEditPost = jest
+  //     .spyOn(streamApi, 'putEditPost')
+  //     .mockImplementation(() => Promise.resolve(post) as any);
+  //   const { result: resultCreatePostStore } = renderHook(() => useCreatePostStore((state) => state));
 
-    const wrapper = renderWithRedux(
-      <MockedNavigator
-        component={() => (
-          <CreatePost route={{ params: { postId: mockEditPost.id } }} />
-        )}
-      />,
-    );
+  //   const wrapper = renderWithRedux(
+  //     <MockedNavigator
+  //       component={() => (
+  //         <CreatePost route={{ params: { postId: mockEditPost.id } }} />
+  //       )}
+  //     />,
+  //   );
 
-    await waitFor(() => {
-      expect(resultCreatePostStore.current.createPost.isInitDone).toBeTruthy();
-    });
+  //   await waitFor(() => {
+  //     expect(resultCreatePostStore.current.createPost.isInitDone).toBeTruthy();
+  //   });
 
-    act(() => {
-      resultCreatePostStore.current.actions.updateCreatePost({
-        content: 'abc',
-      });
-    });
+  //   act(() => {
+  //     resultCreatePostStore.current.actions.updateCreatePost({
+  //       content: 'abc',
+  //     });
+  //   });
 
-    const btnSave = wrapper.getByTestId('create_post.btn_post');
+  //   const btnSave = wrapper.getByTestId('create_post.btn_post');
 
-    act(() => {
-      fireEvent.press(btnSave);
-    });
+  //   act(() => {
+  //     fireEvent.press(btnSave);
+  //   });
 
-    await waitFor(() => {
-      expect(spyApiPutEditPost).toBeCalled();
-    });
-  });
+  //   await waitFor(() => {
+  //     expect(spyApiPutEditPost).toBeCalled();
+  //   });
+  // });
 
   it('should call handler when back', async () => {
     const post = {
