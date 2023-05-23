@@ -64,16 +64,18 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   const isSquareFirst = imageRatioFirst === SQUARE_RATIO;
   const isSquareSecond = imageRatioSecond === SQUARE_RATIO;
 
-  const isMessyOrientation
-    = (isVerticalFirst !== isVerticalSecond
-      || (!isVerticalFirst && isSquareSecond)
-      || (isSquareFirst && !isVerticalSecond))
-    && data?.length === 2;
+  const isMessyOrientation = checkIsMessyOrientation({
+    isVerticalFirst,
+    isVerticalSecond,
+    data,
+    isSquareFirst,
+    isSquareSecond,
+  });
   const isOnlyOneImageVerticle = isVerticalFirst && data?.length === 1;
   const isBothSquare = isSquareFirst && isSquareSecond && data?.length === 2;
 
   const dfSize = Math.min(width, dimension.maxNewsfeedWidth);
-  const _width = data?.length === 1 ? dfSize : dfSize;
+  const _width = dfSize;
   const _height = getHeighContainer(
     dfSize,
     data,
@@ -83,8 +85,11 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
     isBothSquare,
   );
 
-  const containerImagesDirection
-    = isVerticalFirst || isMessyOrientation || isBothSquare ? 'row' : 'column';
+  const containerImagesDirection = handleContainerImagesDirection({
+    isBothSquare,
+    isMessyOrientation,
+    isVerticalFirst,
+  });
 
   const containerSmallImagesDirection = isVerticalFirst ? 'column' : 'row';
 
@@ -330,4 +335,37 @@ const getWidthLargeImage = (
     return (widthContainer - SPACING_IMAGE) / 2;
   }
   return (widthContainer - SPACING_IMAGE) * (2 / 3);
+};
+
+const handleContainerImagesDirection = (params: {
+  isVerticalFirst: boolean;
+  isMessyOrientation: boolean;
+  isBothSquare: boolean;
+}) => {
+  const { isVerticalFirst, isMessyOrientation, isBothSquare } = params;
+  if (isVerticalFirst || isMessyOrientation || isBothSquare) {
+    return 'row';
+  }
+  return 'column';
+};
+
+const checkIsMessyOrientation = (params: {
+  isVerticalFirst: boolean;
+  isVerticalSecond: boolean;
+  isSquareFirst: boolean;
+  isSquareSecond: boolean;
+  data: IActivityDataImage[];
+}) => {
+  const {
+    isVerticalFirst, isSquareFirst, isSquareSecond, isVerticalSecond, data,
+  } = params;
+  if (
+    (isVerticalFirst !== isVerticalSecond
+      || (!isVerticalFirst && isSquareSecond)
+      || (isSquareFirst && !isVerticalSecond))
+    && data?.length === 2
+  ) {
+    return true;
+  }
+  return false;
 };

@@ -363,7 +363,7 @@ const navigatePostDetailWithFocusComment = ({ postId, target }) => {
 };
 
 const navigateGroupMembers = ({ groupId, communityId }) => {
-  if (!!communityId) {
+  if (communityId) {
     return {
       screen: 'community-members',
       params: {
@@ -371,7 +371,7 @@ const navigateGroupMembers = ({ groupId, communityId }) => {
       },
     };
   }
-  if (!!groupId) {
+  if (groupId) {
     return {
       screen: 'group-members',
       params: {
@@ -382,7 +382,7 @@ const navigateGroupMembers = ({ groupId, communityId }) => {
 };
 
 const navigateGroupDetail = ({ groupId, communityId }) => {
-  if (!!groupId) {
+  if (groupId) {
     return {
       screen: 'group-detail',
       params: {
@@ -391,7 +391,7 @@ const navigateGroupDetail = ({ groupId, communityId }) => {
       },
     };
   }
-  if (!!communityId) {
+  if (communityId) {
     return {
       screen: 'community-detail',
       params: {

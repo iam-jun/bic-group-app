@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Linking } from 'react-native';
 import groupApi from '~/api/GroupApi';
 import APIErrorCode from '~/constants/apiErrorCode';
 import { useRootNavigation } from '~/hooks/navigation';
 import { linkingConfig, PREFIX_DEEPLINK_GROUP, PREFIX_URL } from '~/router/config';
-import { hideSplashScreen } from '~/router/helper';
+import { hideSplashScreen, Props as IRootNavigation } from '~/router/helper';
 import authStacks from '~/router/navigator/AuthStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
 import useAuthController from '~/screens/auth/store';
@@ -12,7 +13,15 @@ import showToastError from '~/store/helper/showToastError';
 import getEnv from '~/utils/env';
 import { DeepLinkTypes, matchDeepLink, openInAppBrowser } from '~/utils/link';
 
-export const onReceiveURL = async ({ url, navigation, listener }: { url: string; navigation: any; listener?: any }) => {
+export const onReceiveURL = async ({
+  url,
+  navigation,
+  listener,
+}: {
+  url: string;
+  navigation: IRootNavigation;
+  listener?: any;
+}) => {
   const match = matchDeepLink(url);
 
   const userId = useAuthController?.getState?.().authUser?.userId;
@@ -69,18 +78,9 @@ export const onReceiveURL = async ({ url, navigation, listener }: { url: string;
         await navigateFromReferralLink({ match, navigation, userId });
         break;
       case DeepLinkTypes.USER_PROFILE:
-        if (userId) {
-          navigation?.navigate?.(mainStack.userProfile, {
-            userId: match.userName,
-            params: {
-              type: 'username',
-            },
-          });
-          break;
-        }
-
-        navigation?.navigate?.(authStacks.signIn);
-        useAppStore.getState().actions.setRedirectUrl(url);
+        navigateFromUserProfile({
+          match, navigation, userId, url,
+        });
         break;
       case DeepLinkTypes.APP:
         break;
@@ -99,7 +99,7 @@ export const onReceiveURL = async ({ url, navigation, listener }: { url: string;
 };
 
 const getLinkingCustomConfig = (
-  config: any, navigation: any,
+  config: any, navigation: IRootNavigation,
 ) => ({
   ...config,
   subscribe(listener: any) {
@@ -119,7 +119,7 @@ const useNavigationLinkingConfig = () => {
   return getLinkingCustomConfig(linkingConfig, rootNavigation);
 };
 
-const navigateFromReferralLink = async (payload: { match: any; navigation: any; userId: string }) => {
+const navigateFromReferralLink = async (payload: { match: any; navigation: IRootNavigation; userId: any }) => {
   const { match, navigation, userId } = payload || {};
   const { referralCode } = match || {};
   let responseValidate = null;
@@ -143,9 +143,9 @@ const navigateFromReferralLink = async (payload: { match: any; navigation: any; 
 };
 
 const navigateWithValidReferralCode = async (payload: {
-  userId: string;
+  userId: any;
   responseValidate: any;
-  navigation: any;
+  navigation: IRootNavigation;
   referralCode: string;
 }) => {
   const {
@@ -172,6 +172,7 @@ const navigateWithValidReferralCode = async (payload: {
       }
     }
   } else {
+    // @ts-ignore
     navigation?.replaceListScreenByNewScreen?.(getListScreenToReplace(), {
       name: authStacks.signUp,
       params: { isValidLink: true, referralCode },
@@ -179,12 +180,13 @@ const navigateWithValidReferralCode = async (payload: {
   }
 };
 
-const navigateWithInvalidReferralCode = async (payload: { userId: string; navigation: any }) => {
+const navigateWithInvalidReferralCode = async (payload: { userId: any; navigation: IRootNavigation }) => {
   const { userId, navigation } = payload;
   if (userId) {
     await hideSplashScreen();
     navigation?.navigate?.('home');
   } else {
+    // @ts-ignore
     navigation?.replaceListScreenByNewScreen?.(getListScreenToReplace(), {
       name: authStacks.signUp,
       params: { isValidLink: false },
@@ -195,6 +197,23 @@ const navigateWithInvalidReferralCode = async (payload: { userId: string; naviga
 const getListScreenToReplace = () => {
   const listScreen = Object.values(authStacks).filter((screen) => screen !== authStacks.signUp);
   return listScreen;
+};
+
+const navigateFromUserProfile = (params: { userId: any; navigation: IRootNavigation; match: any; url: string }) => {
+  const {
+    userId, navigation, match, url,
+  } = params;
+  if (userId) {
+    navigation?.navigate?.(mainStack.userProfile, {
+      userId: match.userName,
+      params: {
+        type: 'username',
+      },
+    });
+    return;
+  }
+  navigation?.navigate?.(authStacks.signIn);
+  useAppStore.getState().actions.setRedirectUrl(url);
 };
 
 export default useNavigationLinkingConfig;

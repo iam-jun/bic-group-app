@@ -29,9 +29,7 @@ const SeriesFooter: FC<SeriesFooterProps> = ({ series }) => {
     onLongPressReaction,
   } = useContentActions({ postId: id, ownerReactions, reactionsCount });
 
-  const labelButtonComment = `${commentsCount ? `${commentsCount} ` : ''}${t(
-    'post:button_comment',
-  )}`;
+  const labelButtonComment = commentsCount ? `${commentsCount} ${t('post:button_comment')}` : t('post:button_comment');
 
   return (
     <View>
