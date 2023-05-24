@@ -262,4 +262,81 @@ describe('PinContent screen', () => {
       expect(result.current.pinAudiences[groupId].error).toBeDefined();
     });
   });
+
+  it('should pin all audiences success', async () => {
+    jest
+      .spyOn(streamApi, 'getPinnableAudiences')
+      .mockImplementation(() => Promise.resolve(pinnableAudiencesResponse));
+    const { result } = renderHook(() => usePinContentStore((state) => state));
+
+    const wrapper = renderWithRedux(
+      <MockedNavigator
+        component={() => (
+          <PinContent route={{ params: { postId: '123' } }} />
+        )}
+      />,
+    );
+
+    await waitFor(() => {
+      expect(result.current.prevAudiences.length).toBe(
+        pinnableAudiencesResponse.data.groups.length,
+      );
+    });
+
+    const pinOrUnpinBtn = wrapper.getByTestId(
+      'pin_content.pin_or_unpin_all_audience_checkbox',
+    );
+
+    act(() => {
+      fireEvent.press(pinOrUnpinBtn);
+    });
+
+    await waitFor(() => {
+      Object.keys(result.current.pinAudiences).forEach((key) => {
+        expect(result.current.pinAudiences[key].group.isPinned).toBe(true);
+        expect(result.current.pinAudiences[key].error).toBeFalsy();
+      });
+    });
+  });
+
+  it('should unpin all audiences success', async () => {
+    const res = { ...pinnableAudiencesResponse };
+    res.data.groups = res.data.groups.map((group) => ({
+      ...group,
+      isPinned: true,
+    }));
+    jest
+      .spyOn(streamApi, 'getPinnableAudiences')
+      .mockImplementation(() => Promise.resolve(res));
+    const { result } = renderHook(() => usePinContentStore((state) => state));
+
+    const wrapper = renderWithRedux(
+      <MockedNavigator
+        component={() => (
+          <PinContent route={{ params: { postId: '123' } }} />
+        )}
+      />,
+    );
+
+    await waitFor(() => {
+      expect(result.current.prevAudiences.length).toBe(
+        res.data.groups.length,
+      );
+    });
+
+    const pinOrUnpinBtn = wrapper.getByTestId(
+      'pin_content.pin_or_unpin_all_audience_checkbox',
+    );
+
+    act(() => {
+      fireEvent.press(pinOrUnpinBtn);
+    });
+
+    await waitFor(() => {
+      Object.keys(result.current.pinAudiences).forEach((key) => {
+        expect(result.current.pinAudiences[key].group.isPinned).toBeFalsy();
+        expect(result.current.pinAudiences[key].error).toBeFalsy();
+      });
+    });
+  });
 });
