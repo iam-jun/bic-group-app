@@ -1,9 +1,10 @@
 import { isArray, isEmpty } from 'lodash';
+import FastImage from 'react-native-fast-image';
 import { ICommentData, IPayloadAddToAllPost, IPost } from '~/interfaces/IPost';
 import { sortComments } from '~/helpers/post';
 import useCommentsStore from '~/store/entities/comments';
 import { IPostsState } from '../index';
-import { preloadImagesOnNewsFeed } from '~/components/Image/helper';
+import { getImageUrlsForPreloadImagesOnNewsFeed } from '~/components/Image/helper';
 
 const addToPosts = (_set, get) => (payload: IPayloadAddToAllPost) => {
   const { data, handleComment } = payload || {};
@@ -45,7 +46,8 @@ const addToPosts = (_set, get) => (payload: IPayloadAddToAllPost) => {
   });
 
   // preload Images
-  preloadImagesOnNewsFeed(postsToAdd);
+  const urlPreloadImages = getImageUrlsForPreloadImagesOnNewsFeed(postsToAdd);
+  FastImage.preload(urlPreloadImages);
 
   if (handleComment) {
     useCommentsStore.getState().actions.addToComments(newComments);

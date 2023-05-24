@@ -1,7 +1,6 @@
 import _, { isArray } from 'lodash';
 import { StyleProp } from 'react-native';
 import type { Source, ImageStyle } from 'react-native-fast-image';
-import FastImage from 'react-native-fast-image';
 import { IPost, PostType } from '~/interfaces/IPost';
 import { COVER_ARTICLE_WIDTH } from '../articles/ArticleItem';
 import { WIDTH_CONTAINER_PHOTO_PREVIEW_DEFAULT } from '../posts/PostPhotoPreview';
@@ -48,7 +47,7 @@ export const getWidthStyle = (style: StyleProp<ImageStyle>): number | undefined 
   return styleObj.width;
 };
 
-export const preloadImagesOnNewsFeed = (postData: IPost[] | IPost) => {
+export const getImageUrlsForPreloadImagesOnNewsFeed = (postData: IPost[] | IPost) => {
   const urlPreloadImages = [];
   let posts: IPost[] = [];
 
@@ -94,5 +93,5 @@ export const preloadImagesOnNewsFeed = (postData: IPost[] | IPost) => {
     }
   });
 
-  FastImage.preload(urlPreloadImages);
+  return urlPreloadImages;
 };
