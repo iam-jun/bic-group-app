@@ -33,7 +33,7 @@ const getPosts = (set, get) => async (id: string, isRefresh = false) => {
       limit: 10,
       isImportant: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.IMPORTANT),
       isSaved: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.SAVED),
-      isMine: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.MINE),
+      // isMine: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.MINE),
       type: getParamsContentFeed(contentFilter),
     };
     const response = await groupApi.getGroupPosts(params);

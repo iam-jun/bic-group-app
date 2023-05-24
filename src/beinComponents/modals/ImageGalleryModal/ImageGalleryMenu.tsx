@@ -33,7 +33,6 @@ const ImageGalleryMenu: ForwardRefRenderFunction<any, ImageGalleryMenuProps> = (
     modalizeRef.current?.close();
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onPressDownload = () => {
     closeModal();
     downloadImage(photo);
@@ -64,13 +63,13 @@ const ImageGalleryMenu: ForwardRefRenderFunction<any, ImageGalleryMenuProps> = (
   if (!photo) return null;
 
   const defaultData = [
-    // {
-    //   id: 1,
-    //   testID: 'photomenu.download',
-    //   leftIcon: 'ArrowDownToLine',
-    //   title: i18next.t('common:text_download'),
-    //   onPress: onPressDownload,
-    // },
+    {
+      id: 1,
+      testID: 'photomenu.download',
+      leftIcon: 'ArrowDownToLine',
+      title: i18next.t('common:text_download'),
+      onPress: onPressDownload,
+    },
     {
       id: 2,
       testID: 'photomenu.copy',

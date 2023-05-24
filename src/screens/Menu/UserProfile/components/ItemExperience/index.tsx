@@ -82,7 +82,7 @@ const ItemExperience: FC<ItemExperienceProps> = ({
       <InfoItem title="settings:title_location" value={location} />
       <InfoItem
         title="common:text_start_date"
-        value={formatDate(startDate, 'MMM D, YYYY')}
+        value={formatDate(startDate, 'MMMM, YYYY')}
       />
       <InfoItem
         title="common:text_end_date"

@@ -11,5 +11,5 @@ export const HEADER_ATTRIBUTE_FEED_FILTER = [
   { id: AttributeFeed.ALL, text: 'home:title_feed_attritube_all' },
   { id: AttributeFeed.IMPORTANT, text: 'home:title_feed_attritube_important' },
   { id: AttributeFeed.SAVED, text: 'home:title_feed_attritube_saved' },
-  { id: AttributeFeed.MINE, text: 'home:title_feed_attritube_mine' },
+  // { id: AttributeFeed.MINE, text: 'home:title_feed_attritube_mine' },
 ];
