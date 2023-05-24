@@ -44,7 +44,7 @@ const addToPosts = (_set, get) => (payload: IPayloadAddToAllPost) => {
       newPosts[item.id] = item;
     }
   });
-  console.log(FastImage);
+
   // preload Images
   const urlPreloadImages = getImageUrlsForPreloadImagesOnNewsFeed(postsToAdd);
   FastImage.preload(urlPreloadImages);
