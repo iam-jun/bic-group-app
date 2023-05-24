@@ -1,13 +1,13 @@
-import groupApi from '~/api/GroupApi';
 import { IGetUserProfile } from '~/interfaces/IAuth';
 import { updateUserFromSharedPreferences } from '~/services/sharePreferences';
 import showToastError from '~/store/helper/showToastError';
 import { mapProfile } from '~/helpers/common';
 import { ICommonController } from '..';
+import userApi from '~/api/UserApi';
 
 const getMyProfile = (set, _get) => async ({ userId, params }: IGetUserProfile) => {
   try {
-    const response = await groupApi.getUserProfile(userId, params);
+    const response = await userApi.getUserProfile(userId, params);
 
     await updateUserFromSharedPreferences({
       id: response?.data?.chatUserId,

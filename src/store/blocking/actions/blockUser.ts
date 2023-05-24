@@ -1,10 +1,10 @@
-import groupApi from '~/api/GroupApi';
+import userApi from '~/api/UserApi';
 import showToastError from '~/store/helper/showToastError';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const blockUser = () => async (blockedUserId: string, callback?: () => void) => {
   try {
-    const response = await groupApi.blockUser(blockedUserId);
+    const response = await userApi.blockUser(blockedUserId);
     if (callback) {
       callback();
       /**

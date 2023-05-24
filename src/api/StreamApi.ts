@@ -9,7 +9,6 @@ import {
   IParamGetPostDetail,
   IParamGetReactionDetail,
   IParamPutReaction,
-  IParamSearchMentionAudiences,
   IPostCreatePost,
   IRequestGetPostComment,
   IRequestPostComment,
@@ -242,17 +241,6 @@ export const streamApiConfig = {
     url: `${apiProviders.bein.url}/post-audiences/groups`,
     provider: apiProviders.bein,
     params,
-  }),
-  getSearchMentionAudiences: (
-    params: IParamSearchMentionAudiences,
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${apiProviders.bein.url}users/mentionable`,
-    provider: apiProviders.bein,
-    params: {
-      ...params,
-      key: params.key ? params.key : undefined,
-    },
   }),
 
   deleteReaction: (data: IParamDeleteReaction): HttpApiRequestConfig => ({
@@ -637,9 +625,6 @@ const streamApi = {
   postReplyComment: (params: IRequestReplyComment) => withHttpRequestPromise(streamApiConfig.postReplyComment, params),
   putMarkAsRead: (postId: string) => withHttpRequestPromise(streamApiConfig.putMarkAsRead, postId),
   putMarkSeenContent: (id: string) => withHttpRequestPromise(streamApiConfig.putMarkSeenContent, id),
-  getSearchMentionAudiences: (params: IParamSearchMentionAudiences) => withHttpRequestPromise(
-    streamApiConfig.getSearchMentionAudiences, params,
-  ),
   deleteReaction: (param: IParamDeleteReaction) => withHttpRequestPromise(streamApiConfig.deleteReaction, param),
   getReactionDetail: async (param: IParamGetReactionDetail) => {
     const { reactionName, targetId, target } = param;

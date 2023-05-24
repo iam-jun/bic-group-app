@@ -17,9 +17,8 @@ import {
 import { withHttpRequestPromise } from '~/api/apiRequest';
 import appConfig from '~/configs/appConfig';
 import {
-  IParamsSignUp, IParamValidateReferralCode, IUserEdit, IVerifyEmail,
+  IParamsSignUp, IParamValidateReferralCode,
 } from '~/interfaces/IAuth';
-import { IAddWorkExperienceReq } from '~/interfaces/IWorkExperienceRequest';
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 import { IParamsReportMember } from '~/interfaces/IReport';
 import { ContentType } from '~/components/SelectAudience';
@@ -32,11 +31,6 @@ const defaultConfig = {
 };
 
 export const groupsApiConfig = {
-  blockUser: (blockedUserId: string): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}users/${blockedUserId}/block`,
-    method: 'post',
-  }),
   getCommunityCUDTagPermission: (communityId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}me/permissions/can-cud-tags/community/${communityId}`,
@@ -60,11 +54,6 @@ export const groupsApiConfig = {
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
-  getUserProfile: (userId: string, params?: any): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}users/${userId}/profile`,
-    params,
-  }),
   getLanguages: (): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}languages`,
@@ -76,46 +65,6 @@ export const groupsApiConfig = {
   getCity: (): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}cities?country_code=84`,
-  }),
-  editMyProfile: (data: IUserEdit): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}me/profile`,
-    method: 'put',
-    data: {
-      ...data,
-    },
-  }),
-  getMyWorkExperience: (): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}users/work-experience`,
-  }),
-  addWorkExperience: (data: IAddWorkExperienceReq): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}users/work-experience`,
-    method: 'post',
-    useRetry: false,
-    data,
-  }),
-  editWorkExperience: (
-    id: string,
-    data: IAddWorkExperienceReq,
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}users/work-experience/${id}`,
-    method: 'put',
-    useRetry: false,
-    data,
-  }),
-  deleteWorkExperience: (id: string): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}users/work-experience/${id}`,
-    method: 'delete',
-    useRetry: false,
-  }),
-  // get others work experience data
-  getWorkExperience: (id: string): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}users/${id}/work-experience`,
   }),
   getMyPermissions: (): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -387,19 +336,6 @@ export const groupsApiConfig = {
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
-  getListBlockingUsers: (): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}me/blockings`,
-  }),
-  getListRelationship: (): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}me/blocking-relationships`,
-  }),
-  unblockUser: (userId: string): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}users/${userId}/unblock`,
-    method: 'post',
-  }),
   searchJoinedCommunities: (
     params: IParamGetCommunities,
   ): HttpApiRequestConfig => ({
@@ -512,11 +448,6 @@ export const groupsApiConfig = {
     method: 'post',
     data: { ...params },
   }),
-  resendVerificationEmail: (params: IVerifyEmail): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}auth/resend-confirmation-code?email=${params.email}&redirect_page=${params.redirectPage}`,
-    method: 'post',
-  }),
   validateReferralCode: (param: IParamValidateReferralCode): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}public/referral/verify`,
@@ -539,7 +470,6 @@ export const groupsApiConfig = {
 };
 
 const groupApi = {
-  blockUser: (blockedUserId: string) => withHttpRequestPromise(groupsApiConfig.blockUser, blockedUserId),
   getCommunityCUDTagPermission: (communityId: string) => withHttpRequestPromise(
     groupsApiConfig.getCommunityCUDTagPermission, communityId,
   ),
@@ -552,9 +482,6 @@ const groupApi = {
   getUsers: async (params: IParamsGetUsers) => withHttpRequestPromise(
     groupsApiConfig.getUsers, params,
   ),
-  getUserProfile: (userId: string, params?: any) => withHttpRequestPromise(
-    groupsApiConfig.getUserProfile, userId, params,
-  ),
   getLanguages: () => withHttpRequestPromise(
     groupsApiConfig.getLanguages,
   ),
@@ -563,20 +490,6 @@ const groupApi = {
   ),
   getCity: () => withHttpRequestPromise(
     groupsApiConfig.getCity,
-  ),
-  editMyProfile: (data: IUserEdit) => withHttpRequestPromise(groupsApiConfig.editMyProfile, data),
-  getMyWorkExperience: () => withHttpRequestPromise(groupsApiConfig.getMyWorkExperience),
-  addWorkExperience: (data: IAddWorkExperienceReq) => withHttpRequestPromise(
-    groupsApiConfig.addWorkExperience, data,
-  ),
-  editWorkExperience: (id: string, data: IAddWorkExperienceReq) => withHttpRequestPromise(
-    groupsApiConfig.editWorkExperience, id, data,
-  ),
-  deleteWorkExperience: (id: string) => withHttpRequestPromise(
-    groupsApiConfig.deleteWorkExperience, id,
-  ),
-  getWorkExperience: (id: string) => withHttpRequestPromise(
-    groupsApiConfig.getWorkExperience, id,
   ),
   getMyPermissions: () => withHttpRequestPromise(groupsApiConfig.getMyPermissions),
   getCommunityStructureMoveTargets: (
@@ -777,9 +690,6 @@ const groupApi = {
   getDiscoverCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(
     groupsApiConfig.getDiscoverCommunities, params,
   ),
-  getListBlockingUsers: () => withHttpRequestPromise(groupsApiConfig.getListBlockingUsers),
-  getListRelationship: () => withHttpRequestPromise(groupsApiConfig.getListRelationship),
-  unblockUser: (userId: string) => withHttpRequestPromise(groupsApiConfig.unblockUser, userId),
   searchJoinedCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(
     groupsApiConfig.searchJoinedCommunities, params,
   ),
@@ -832,9 +742,6 @@ const groupApi = {
     groupsApiConfig.reportMemberByUserId,
     userId,
     params,
-  ),
-  resendVerificationEmail: (params: IVerifyEmail) => withHttpRequestPromise(
-    groupsApiConfig.resendVerificationEmail, params,
   ),
   // eslint-disable-next-line max-len
   validateReferralCode: (param: IParamValidateReferralCode) => withHttpRequestPromise(groupsApiConfig.validateReferralCode, param),

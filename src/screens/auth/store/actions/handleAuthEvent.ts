@@ -1,7 +1,6 @@
 import { HubCapsule } from '@aws-amplify/core/src/Hub';
 import { Auth } from 'aws-amplify';
 import { makeHttpRequest } from '~/api/apiRequest';
-import { groupsApiConfig } from '~/api/GroupApi';
 import { IObject } from '~/interfaces/common';
 import { IUserResponse } from '~/interfaces/IAuth';
 import { withNavigation } from '~/router/helper';
@@ -13,12 +12,13 @@ import { getUserFromSharedPreferences, saveUserToSharedPreferences } from '~/ser
 import useModalStore from '~/store/modal';
 import { mapProfile } from '~/helpers/common';
 import { timeOut } from '~/utils/common';
+import { userApiConfig } from '~/api/UserApi';
 
 const navigation = withNavigation(rootNavigationRef);
 
 const getUserProfile = async (username, token) => {
   try {
-    const requestConfig = groupsApiConfig.getUserProfile(username, { type: 'username' });
+    const requestConfig = userApiConfig.getUserProfile(username, { type: 'username' });
     requestConfig.headers = { ...requestConfig.headers, Authorization: token };
     const response = await makeHttpRequest(requestConfig);
     return response?.data?.data || {};

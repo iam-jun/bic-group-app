@@ -1,4 +1,4 @@
-import groupApi from '~/api/GroupApi';
+import userApi from '~/api/UserApi';
 import showToastError from '~/store/helper/showToastError';
 
 // This sprint 36: not have paging, only get list only 1 time
@@ -18,7 +18,7 @@ const getListBlockingUsers
         'getListBlockingUsersFetching',
       );
 
-      const response = await groupApi.getListBlockingUsers();
+      const response = await userApi.getListBlockingUsers();
 
       if (response && response?.data) {
         const { data } = response;

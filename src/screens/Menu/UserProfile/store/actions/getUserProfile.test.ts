@@ -1,9 +1,9 @@
-import groupApi from '~/api/GroupApi';
 import { IGetUserProfile } from '~/interfaces/IAuth';
 import { mapProfile } from '~/helpers/common';
 import { act, renderHook } from '~/test/testUtils';
 import useUserProfileStore from '../index';
 import { responseGetUserProfile } from '../__mocks__/data';
+import userApi from '~/api/UserApi';
 
 describe('getUserProfile', () => {
   const payload: IGetUserProfile = {
@@ -14,7 +14,7 @@ describe('getUserProfile', () => {
 
   it('should getUserProfile success:', () => {
     const spy = jest
-      .spyOn(groupApi, 'getUserProfile')
+      .spyOn(userApi, 'getUserProfile')
       .mockImplementation(() => Promise.resolve(responseGetUserProfile) as any);
 
     jest.useFakeTimers();
@@ -34,7 +34,7 @@ describe('getUserProfile', () => {
   it('should getUserProfile throw error', () => {
     const error = 'internal error';
 
-    const spy = jest.spyOn(groupApi, 'getUserProfile').mockImplementation(() => Promise.reject(error) as any);
+    const spy = jest.spyOn(userApi, 'getUserProfile').mockImplementation(() => Promise.reject(error) as any);
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useUserProfileStore((state) => state));
