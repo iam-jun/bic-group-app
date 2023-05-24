@@ -23,6 +23,7 @@ const CommunityJoinCancelButton = ({
     groupId,
     name,
     settings,
+    affectedSettings,
   } = community;
   const actions = useCommunityController((state) => state.actions);
   const membershipQuestionActions = useMemberQuestionsStore((state) => state.actions);
@@ -31,7 +32,7 @@ const CommunityJoinCancelButton = ({
   if (isMember) return null;
 
   const onPressJoin = () => {
-    if (settings?.isActiveMembershipQuestions && settings?.isJoinApproval) {
+    if (affectedSettings?.isActiveMembershipQuestions) {
       const payload: MembershipQuestionsInfo = {
         groupId: id,
         rootGroupId: groupId,
@@ -44,7 +45,7 @@ const CommunityJoinCancelButton = ({
       return;
     }
 
-    if (settings?.isActiveGroupTerms) {
+    if (affectedSettings?.isActiveGroupTerms) {
       const payload = {
         groupId: id, rootGroupId: groupId, name, type: 'community', isActive: true,
       } as any;
