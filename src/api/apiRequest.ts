@@ -87,6 +87,7 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig): Promise<Axi
     case apiProviders.beinFeed.name:
     case apiProviders.beinNotification.name:
     case apiProviders.beinUpload.name:
+    case apiProviders.beinUser.name:
       requestConfig.headers = beinHeaders;
       break;
     case apiProviders.beinUploadS3.name:

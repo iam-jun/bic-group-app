@@ -1,8 +1,8 @@
-import groupApi from '~/api/GroupApi';
 import { act, renderHook } from '~/test/testUtils';
 import useVerifyEmailController from '../index';
 import { authErrors } from '~/constants/authConstants';
 import useModalStore from '~/store/modal';
+import userApi from '~/api/UserApi';
 
 describe('resendVerifyEmail', () => {
   it('should call api resend verify email success', () => {
@@ -11,7 +11,7 @@ describe('resendVerifyEmail', () => {
       data: {},
       meta: {},
     };
-    const spy = jest.spyOn(groupApi, 'resendVerificationEmail').mockImplementation(
+    const spy = jest.spyOn(userApi, 'resendVerificationEmail').mockImplementation(
       () => Promise.resolve(response) as any,
     );
 
@@ -36,7 +36,7 @@ describe('resendVerifyEmail', () => {
       code: authErrors.LIMIT_EXCEEDED_EXCEPTION,
       data: {},
     };
-    const spy = jest.spyOn(groupApi, 'resendVerificationEmail').mockImplementation(
+    const spy = jest.spyOn(userApi, 'resendVerificationEmail').mockImplementation(
       () => Promise.reject(response) as any,
     );
 
@@ -65,7 +65,7 @@ describe('resendVerifyEmail', () => {
       code: 500,
       data: {},
     };
-    const spy = jest.spyOn(groupApi, 'resendVerificationEmail').mockImplementation(
+    const spy = jest.spyOn(userApi, 'resendVerificationEmail').mockImplementation(
       () => Promise.reject(response) as any,
     );
 
