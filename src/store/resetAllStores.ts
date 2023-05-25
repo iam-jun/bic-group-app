@@ -64,6 +64,7 @@ import useMaintenanceStore from './maintenance';
 import usePinContentStore from '~/components/PinContent/store';
 import useTermStore from '~/components/TermsModal/store';
 import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftContents/store';
+import usePublishStore from '~/screens/YourContent/components/Publish/store';
 
 export const excludedStore = [
   useAuthController,
@@ -145,6 +146,7 @@ const stores = [
   usePinContentStore,
   useTermStore,
   useDraftContentsStore,
+  usePublishStore,
 ];
 
 export const resetAllStores = () => {

@@ -119,4 +119,7 @@ export const editProfileResponse = {
       },
     ],
   },
+  meta: {
+    message: 'Updated user successfully',
+  },
 };

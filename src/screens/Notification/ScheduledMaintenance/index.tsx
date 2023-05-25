@@ -75,8 +75,9 @@ const getTextDurations = (duration: number, t: any) => {
   if (hoursDuration <= 1) {
     textDuration = `${duration} ${t?.('common:time:minutes')}`;
   }
-  if (hoursDuration > 1 && minutesDuration > 0) {
-    textDuration = `${Math.floor(hoursDuration) + 1} ${t?.('common:time:hours')}`;
+  if (hoursDuration > 1) {
+    const plusHour = minutesDuration > 0 ? 1 : 0;
+    textDuration = `${Math.floor(hoursDuration) + plusHour} ${t?.('common:time:hours')}`;
   }
   return textDuration;
 };

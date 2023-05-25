@@ -22,6 +22,8 @@ import Checkbox from '~/baseComponents/Checkbox';
 import Divider from '~/beinComponents/Divider';
 import useBlockingStore from '~/store/blocking';
 import { Button } from '~/baseComponents';
+import mainStack from '~/router/navigator/MainStack/stack';
+import { useRootNavigation } from '~/hooks/navigation';
 
 const screenHeight = Dimensions.get('window').height;
 const modalHeight = 0.35 * screenHeight;
@@ -46,6 +48,7 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
   const theme = useTheme();
   const { colors } = theme;
   const { targetId, targetType, dataReportMember } = props || {};
+  const { rootNavigation } = useRootNavigation();
 
   const [shouldBlockUserInfo, setShouldBlockUserInfo] = useState(false);
   const [reasonState, setReasonState] = useState<any>(null);
@@ -104,12 +107,16 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
     }
   };
 
+  const handleblockUserSuccess = () => {
+    rootNavigation.navigate(mainStack.blocking, { popScreen: 1 });
+  };
+
   const onSubmit = async () => {
     if (shouldReportMember) {
       reportMember();
 
       if (shouldBlockUserInfo) {
-        await blockUser(targetId);
+        await blockUser(targetId, handleblockUserSuccess);
         dataReportMember?.communityId && await getListRelationship(true);
       }
     } else {

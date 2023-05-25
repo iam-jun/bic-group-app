@@ -11,12 +11,18 @@ import showAlert from '~/store/helper/showAlert';
 
 const downloadImageiOS = (photo: any) => {
   const onPermissionGranted = async () => {
-    await CameraRoll.save(photo?.url, { type: 'photo' });
-    const toastMessage: IToastMessage = {
-      content: i18next.t('common:text_downloaded'),
-    };
+    try {
+      const imgExtension = getFileExtensionFromUrl(photo?.url);
+      const isWebp = !imgExtension || imgExtension === '.webp';
+      await CameraRoll.save(createLinkImageDownload(photo?.url), { type: 'photo', isWebp });
+      const toastMessage: IToastMessage = {
+        content: i18next.t('common:text_downloaded'),
+      };
 
-    showToast(toastMessage);
+      showToast(toastMessage);
+    } catch (error) {
+      console.error('downloadImageiOS error: ', error);
+    }
   };
 
   const onPermissionRefused = () => {
@@ -45,8 +51,11 @@ const downloadImageiOS = (photo: any) => {
 const downloadImageAndroid = (photo: any) => {
   const onPermissionGranted = async () => {
     try {
-      const path = `${RNFetchBlob.fs.dirs.PictureDir}/${photo?.name}`;
-      await RNFetchBlob.config({ path }).fetch('GET', photo?.url);
+      const imgExtension = getFileExtensionFromUrl(photo?.url);
+      const isWebp = !imgExtension || imgExtension === '.webp';
+      const pathExtension = isWebp ? '.webp' : imgExtension;
+      const path = `${RNFetchBlob.fs.dirs.PictureDir}/${photo?.id}${pathExtension}`;
+      await RNFetchBlob.config({ path }).fetch('GET', createLinkImageDownload(photo?.url));
       await RNFetchBlob.fs.scanFile([{ path }]);
       const toastMessage: IToastMessage = {
         content: i18next.t('common:text_downloaded'),
@@ -121,4 +130,16 @@ export const getImagePastedFromClipboard = (files: any[]) => {
     return img;
   }
   return null;
+};
+
+export const createLinkImageDownload = (imgUrl: string) => {
+  if (!imgUrl) return;
+  const char = imgUrl.includes('?') ? '&' : '?';
+  return `${imgUrl}${char}download=true`;
+};
+
+export const getFileExtensionFromUrl = (url: string) => {
+  const regExtension = /\.\w{3,4}($|\?)/gmi;
+  const extension = regExtension.exec(url);
+  return extension ? extension[0] : null;
 };

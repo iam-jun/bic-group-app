@@ -67,6 +67,7 @@ export const checkPermission = async (
           isOpen: true,
           closeOutSide: false,
           useAppBottomSheet: false,
+          animationType: 'fade',
           ContentComponent: (
             <PermissionsPopupContent
               title={i18next.t('common:permission_photo_title')}
