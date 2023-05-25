@@ -1,3 +1,4 @@
+import FastImage from 'react-native-fast-image';
 import {
   POST_DETAIL_4, POST_DETAIL_5,
 } from '~/test/mock_data/post';
@@ -6,6 +7,9 @@ import useCommentsStore from '../../comments';
 import usePostsStore from '../index';
 
 describe('addToPosts', () => {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  jest.spyOn(FastImage, 'preload').mockImplementation(() => {});
+
   it('given a post array should add to postsStore', () => {
     const { result } = renderHook(() => usePostsStore((state) => state));
     const { result: resultCommentsStore } = renderHook(() => useCommentsStore((state) => state));
