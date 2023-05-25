@@ -57,6 +57,12 @@ export const handleResponseError = async (axiosError: AxiosError): Promise<HttpA
     if (isRequestNotCancelled(axiosError)) {
       handleSystemIssue(axiosError);
     }
+    if (shouldRetryS3(axiosError)) {
+      // @ts-ignore
+      axiosError.config.useRetry = false;
+      axiosError.config.headers = { 'Content-Type': 'multipart/form-data' };
+      return retryS3(axiosError);
+    }
     return {
       code: axiosError.request.status,
       data: null,
@@ -73,6 +79,13 @@ export const handleResponseError = async (axiosError: AxiosError): Promise<HttpA
 const isRequestHasResponse = (axiosError: AxiosError) => axiosError.response;
 const isRequestNotHasResponse = (axiosError: AxiosError) => !axiosError.response && axiosError.request;
 const isRequestNotCancelled = (axiosError: AxiosError) => axiosError.request.status !== 0;
+
+const shouldRetryS3 = (axiosError: AxiosError) => {
+  // @ts-ignore
+  if (axiosError.config.provider.name === apiProviders.beinUploadS3.name && axiosError.config.useRetry) {
+    return true;
+  }
+};
 
 const shouldRetryTokenExpireRequest = (axiosError: AxiosError) => {
   const responseTokenExpired = axiosError.response.status === 401
@@ -131,6 +144,18 @@ const prepareRefreshTokenAndRetry = async (axiosError: AxiosError) => {
 
   return promiseHandleResponseErrorShouldRetry;
 };
+
+const retryS3 = async (axiosError: AxiosError) => new Promise((resolve, reject) => {
+  (async () => {
+    try {
+      const requestConfig = { ...axiosError.config };
+      const resp = await makeHttpRequest(requestConfig as any);
+      return resolve(resp);
+    } catch (e) {
+      return reject(e);
+    }
+  })();
+});
 
 const createPromiseHandleResponseAndAddQueueRetry = (axiosError: AxiosError) => new Promise((resolve, reject) => {
   const requestConfig = { ...axiosError.config };
