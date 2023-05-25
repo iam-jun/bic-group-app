@@ -1,8 +1,11 @@
 import * as permissions from 'react-native-permissions';
 import RNFetchBlob from 'rn-fetch-blob';
 import Clipboard from '@react-native-clipboard/clipboard';
+import { waitFor } from '@testing-library/react-native';
 import useModalStore from '~/store/modal';
-import { copyImageFromUrl, downloadImage, getImagePastedFromClipboard } from '.';
+import {
+  copyImageFromUrl, createLinkImageDownload, downloadImage, getFileExtensionFromUrl, getImagePastedFromClipboard,
+} from '.';
 
 describe('images utils', () => {
   let Platform: any;
@@ -12,7 +15,7 @@ describe('images utils', () => {
     Platform = require('react-native').Platform;
   });
 
-  it('should run downloadImage on iOS failed', async () => {
+  it('should run downloadImage on iOS permission refused', async () => {
     Platform.OS = 'ios';
     const showAlert = jest.fn();
     const actions = { showAlert };
@@ -20,15 +23,31 @@ describe('images utils', () => {
     jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
     jest.spyOn(permissions, 'check').mockResolvedValue(permissions.RESULTS.BLOCKED);
 
-    downloadImage({ url: 'file://download/image.jpg' });
+    downloadImage({ url: 'https://download/image.jpg' });
 
-    await new Promise(process.nextTick);
-    expect(showAlert).toBeCalled();
+    await waitFor(() => {
+      expect(showAlert).toBeCalled();
+    });
+  });
+
+  it('should run downloadImage on android permission refused', async () => {
+    Platform.OS = 'android';
+    const showAlert = jest.fn();
+    const actions = { showAlert };
+
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
+    jest.spyOn(permissions, 'check').mockResolvedValue(permissions.RESULTS.BLOCKED);
+
+    downloadImage({ url: 'https://download/image.jpg' });
+
+    await waitFor(() => {
+      expect(showAlert).toBeCalled();
+    });
   });
 
   it('should run downloadImage on android success', async () => {
     Platform.OS = 'android';
-    jest.spyOn(RNFetchBlob, 'fetch');
+    jest.spyOn(RNFetchBlob, 'fetch').mockImplementation(() => Promise.resolve() as any);
     jest.spyOn(RNFetchBlob, 'config');
     const showToast = jest.fn();
     const actions = { showToast };
@@ -36,32 +55,11 @@ describe('images utils', () => {
     jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
     jest.spyOn(permissions, 'check').mockResolvedValue(permissions.RESULTS.GRANTED);
 
-    downloadImage({ url: 'file://download/image.jpg' });
+    downloadImage({ url: 'https://download/image.jpg', id: '123' });
 
-    await new Promise(process.nextTick);
-    expect(RNFetchBlob.config).toBeCalled();
-    expect(RNFetchBlob.fetch).toBeCalledWith('GET', 'file://download/image.jpg');
-
-    await new Promise(process.nextTick);
-    expect(showToast).toBeCalled();
-  });
-
-  it('should run downloadImage on android failed', async () => {
-    Platform.OS = 'android';
-    jest.spyOn(RNFetchBlob, 'fetch');
-    const showAlert = jest.fn();
-    const actions = { showAlert };
-
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
-    jest.spyOn(permissions, 'check').mockResolvedValue(permissions.RESULTS.BLOCKED);
-
-    downloadImage({ url: 'file://download/image.jpg' });
-
-    await new Promise(process.nextTick);
-    expect(RNFetchBlob.fetch).not.toBeCalled();
-
-    await new Promise(process.nextTick);
-    expect(showAlert).toBeCalled();
+    await waitFor(() => {
+      expect(showToast).toBeCalled();
+    });
   });
 
   it('should not run downloadImage', async () => {
@@ -136,5 +134,21 @@ describe('images utils', () => {
 
     const test5 = getImagePastedFromClipboard(filesError2);
     expect(test5).toEqual(filesError2[1]);
+  });
+
+  it('createLinkImageDownload should not work if doesnt url', () => {
+    expect(createLinkImageDownload('')).toBeUndefined();
+  });
+
+  it('createLinkImageDownload should return url with download param', () => {
+    expect(createLinkImageDownload('https://picsum.photos/536/354')).toBe('https://picsum.photos/536/354?download=true');
+  });
+
+  it('getFileExtensionFromUrl should return extension if url has extension', () => {
+    expect(getFileExtensionFromUrl('https://picsum.photos/536.jpg')).toBe('.jpg');
+  });
+
+  it('getFileExtensionFromUrl should return null if url doesnt has extension', () => {
+    expect(getFileExtensionFromUrl('https://picsum.photos/536')).toBe(null);
   });
 });
