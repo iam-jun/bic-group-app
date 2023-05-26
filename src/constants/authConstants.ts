@@ -13,6 +13,7 @@ export const authErrors = {
 
 export const authErrorMessage = {
   USER_IS_DISABLED: 'User is disabled.',
+  USER_NOT_EXIST: 'Incorrect username or password.',
 };
 
 export const forgotPasswordStages = {

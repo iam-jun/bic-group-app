@@ -536,6 +536,10 @@ export const groupsApiConfig = {
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/membership-questions`,
   }),
+  getUserNotFoundInfo: (email: string) : HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}/public/users/${email}/verify`,
+  }),
 };
 
 const groupApi = {
@@ -841,6 +845,7 @@ const groupApi = {
   signUp: (params: IParamsSignUp) => withHttpRequestPromise(groupsApiConfig.signUp, params),
   getGroupTerms: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getGroupTerms, groupId),
   getMembershipQuestions: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getMembershipQuestions, groupId),
+  getUserNotFoundInfo: (email: string) => withHttpRequestPromise(groupsApiConfig.getUserNotFoundInfo, email),
 };
 
 export default groupApi;
