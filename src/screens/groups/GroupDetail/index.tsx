@@ -227,7 +227,7 @@ const GroupDetail = (props: any) => {
 
   const alertLeaveGroup = useLeaveGroup({
     groupId,
-    username: user?.username,
+    userId: user?.userId,
     privacy,
   });
 

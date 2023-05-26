@@ -12,12 +12,12 @@ describe('Group functions helper', () => {
     jest.spyOn(groupApi, 'getUserInnerGroups').mockImplementation(() => Promise.resolve({
       data: {
         current_group: {},
-        inner_groups: [{ name: 'group_"1"' }],
+        inner_groups: [{ userId: 'test' }],
       },
     }));
     const result = await handleLeaveInnerGroups(
       '1',
-      'username',
+      'userId',
       mainCallback,
     );
     expect(result).toBeTruthy();
@@ -30,7 +30,7 @@ describe('Group functions helper', () => {
       .mockImplementation(() => Promise.reject(error) as any);
     const result = await handleLeaveInnerGroups(
       '1',
-      'username',
+      'userId',
       mainCallback,
     );
     expect(result).toBeFalsy();
