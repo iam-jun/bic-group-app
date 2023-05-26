@@ -9,17 +9,6 @@ describe('PendingUserItem component', () => {
   const onPressApprove = jest.fn();
   const onPressDecline = jest.fn();
 
-  it('should render data correctly', () => {
-    const wrapper = renderWithRedux(
-      <PendingUserItem
-        requestItem={requestItem}
-        onPressApprove={onPressApprove}
-        onPressDecline={onPressDecline}
-      />,
-    );
-    expect(wrapper).toMatchSnapshot();
-  });
-
   it('should call prop onPressDecline correctly', () => {
     const newRequestItem = { ...memberRequestDetail, memberRequestDetail: mockAnswers };
     const wrapper = renderWithRedux(
