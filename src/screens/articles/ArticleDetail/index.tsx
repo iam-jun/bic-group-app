@@ -56,7 +56,9 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const { putMarkSeenPost } = usePostsStore((state: IPostsState) => state.actions);
   const { isError, code } = errorContent || {};
 
-  const { audience, setting, reported, deleted } = data || {};
+  const {
+    audience, setting, reported, deleted,
+  } = data || {};
 
   const {
     onLayout,
