@@ -23,12 +23,12 @@ jobs:
       - run:
           name: Import environment variables from Doppler
           command: |
-             echo -e $STG_ENV > .env.staging
-             echo APP_VERSION=${STG_APP_VERSION} >> .env.staging
-             echo UPDATE_DESC=${STG_UPDATE_DESC} >> .env.staging
-             echo REMOTE_CONFIG_CACHE_TIME=${STG_REMOTE_CONFIG_CACHE_TIME} >> .env.staging
-             echo NOTICE_WEBHOOK=${NOTICE_WEBHOOK} >> .env.staging
-             echo -e $STG_FASTLANE_ENV > fastlane/.env
+            echo -e $STG_ENV > .env.staging
+            echo APP_VERSION=${STG_APP_VERSION} >> .env.staging
+            echo UPDATE_DESC=${STG_UPDATE_DESC} >> .env.staging
+            echo REMOTE_CONFIG_CACHE_TIME=${STG_REMOTE_CONFIG_CACHE_TIME} >> .env.staging
+            echo NOTICE_WEBHOOK=${NOTICE_WEBHOOK} >> .env.staging
+            echo -e $STG_FASTLANE_ENV > fastlane/.env
       - run:
           name: Install NPM
           command: npm install --legacy-peer-deps
@@ -116,6 +116,7 @@ jobs:
             echo REMOTE_CONFIG_CACHE_TIME=${STG_REMOTE_CONFIG_CACHE_TIME} >> .env.staging
             echo NOTICE_WEBHOOK=${NOTICE_WEBHOOK} >> .env.staging
             echo -e $STG_FASTLANE_ENV > fastlane/.env
+            echo $MOBILE_APP_SECRET_MATCH_GIT_PRIVATE_KEY | base64 --decode >> fastlane/.env
             echo $API_KEY | base64 --decode >  fastlane/api_key_info.json
             echo $STG_GOOGLE_SERVICES_PLIST_IOS | base64 --decode > ios/Firebase/GoogleService-Info-Staging.plist
       - run:
@@ -133,6 +134,9 @@ jobs:
       - run:
           name: Install Pod
           command: cd ios && pod install
+      - run:
+          name: Install Imagemagick
+          command: brew install imagemagick
       - run:
           name: Fastlane Build, Deploy to TestFlight and Update CodePush
           command: bundle exec fastlane ios $STG_FASTLANE_LANE_IOS
@@ -153,6 +157,7 @@ jobs:
             echo REMOTE_CONFIG_CACHE_TIME=${REL_REMOTE_CONFIG_CACHE_TIME} >> .env.prerelease
             echo NOTICE_WEBHOOK=${NOTICE_WEBHOOK} >> .env.prerelease
             echo -e $REL_FASTLANE_ENV > fastlane/.env
+            echo $MOBILE_APP_SECRET_MATCH_GIT_PRIVATE_KEY | base64 --decode >> fastlane/.env
             echo $API_KEY | base64 --decode >  fastlane/api_key_info.json
             echo $REL_GOOGLE_SERVICES_PLIST_IOS | base64 --decode > ios/Firebase/GoogleService-Info-Prerelease.plist
       - run:
@@ -170,6 +175,9 @@ jobs:
       - run:
           name: Install Pod
           command: cd ios && pod install
+      - run:
+          name: Install Imagemagick
+          command: brew install imagemagick
       - run:
           name: Fastlane Build, Deploy to TestFlight and Update CodePush
           command: bundle exec fastlane ios $REL_FASTLANE_LANE_IOS
@@ -191,6 +199,7 @@ jobs:
             echo REMOTE_CONFIG_CACHE_TIME=${PRO_REMOTE_CONFIG_CACHE_TIME} >> .env.production
             echo NOTICE_WEBHOOK=${NOTICE_WEBHOOK} >> .env.production
             echo -e $PRO_FASTLANE_ENV > fastlane/.env
+            echo $MOBILE_APP_SECRET_MATCH_GIT_PRIVATE_KEY | base64 --decode >> fastlane/.env
             echo $API_KEY | base64 --decode >  fastlane/api_key_info.json
             echo $PRO_GOOGLE_SERVICES_PLIST_IOS | base64 --decode > ios/Firebase/GoogleService-Info-Production.plist
       - run:
@@ -208,6 +217,9 @@ jobs:
       - run:
           name: Install Pod
           command: cd ios && pod install
+      - run:
+          name: Install Imagemagick
+          command: brew install imagemagick
       - run:
           name: Fastlane Build, Deploy to TestFlight and Update CodePush
           command: bundle exec fastlane ios $PRO_FASTLANE_LANE_IOS
