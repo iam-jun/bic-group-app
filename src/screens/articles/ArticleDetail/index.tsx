@@ -56,7 +56,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const { putMarkSeenPost } = usePostsStore((state: IPostsState) => state.actions);
   const { isError, code } = errorContent || {};
 
-  const { audience, setting, reported } = data || {};
+  const { audience, setting, reported, deleted } = data || {};
 
   const {
     onLayout,
@@ -82,12 +82,12 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   }, [isMounted]);
 
   useEffect(() => {
-    if (reported && isFocused) {
+    if ((reported || deleted) && isFocused) {
       setTimeout(() => {
         rootNavigation.goBack();
       }, 200);
     }
-  }, [reported, isFocused]);
+  }, [reported, isFocused, deleted]);
 
   const onRefresh = () => {
     setRefreshing(false);
