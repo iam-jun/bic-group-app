@@ -15,9 +15,21 @@ const changeExtension = (fileName, newExtension) => {
   return newFileName;
 };
 
+const getMimeType = (image, isIos, isGif, isHEIC, isHEIF) => {
+  if (isIos && isGif) {
+    return 'image/gif';
+  }
+  if (isHEIC || isHEIF) {
+    return 'image/jpeg';
+  }
+
+  return image?.mime;
+};
+
 const formatImage = (image: any) => {
   const isIos = Platform.OS === 'ios';
-  const isGif = image?.mime?.includes('gif') || image?.mime?.includes('GIF');
+  const isGif = image?.mime?.includes('gif') || image?.mime?.includes('GIF') 
+    || image?.filename?.includes('gif') || image?.filename?.includes('GIF');
   const isHEIC = image?.mime?.includes('heic') || image?.mime?.includes('HEIC');
   const isHEIF = image?.mime?.includes('heif') || image?.mime?.includes('HEIF');
 
@@ -27,7 +39,7 @@ const formatImage = (image: any) => {
 
   const fileName = (isIos && isGif) ? changeExtension(pathName, 'gif') : uuid.v4() + pathName;
   const uri = (isIos && isGif) ? image?.sourceURL : image?.path;
-  const mimeType = (isHEIC || isHEIF) ? 'image/jpeg' : image?.mime;
+  const mimeType = getMimeType(image, isIos, isGif, isHEIC, isHEIF);
 
   return {
     name: fileName,
