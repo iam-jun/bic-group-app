@@ -39,7 +39,7 @@ const GroupItemPlaceholder: FC<GroupItemPlaceholderProps> = ({
       </Placeholder>
       <Placeholder
         Animation={ShineOverlay}
-        Left={renderContentLeft}
+        Left={(p) => renderContentLeft(p)}
         style={styles.infoContainer}
       >
         <PlaceholderLine
