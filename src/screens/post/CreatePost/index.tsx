@@ -78,7 +78,6 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     disableButtonPost,
     isEditPostHasChange,
     savePost,
-    publishPost,
     disableButtonsCreatePostFooter,
     audienceListWithNoPermission,
   } = useCreatePostData;
@@ -173,12 +172,9 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     savePost({
       disableNavigate: false,
       replaceWithDetail: screenParams.replaceWithDetail,
+      msgSuccess: isCreatingNewPost ? 'post:draft:text_draft_post_published' : 'post:text_edit_post_success',
+      isPublish: true,
     });
-  };
-
-  const onPublishPost = () => {
-    Keyboard.dismiss();
-    publishPost();
   };
 
   const onPressSettings = () => {
@@ -223,7 +219,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
         buttonText={isCreatingNewPost ? 'common:btn_publish' : 'post:save'}
         buttonProps={buttonPostProps}
         onPressBack={onPressBack}
-        onPressButton={isCreatingNewPost ? onPublishPost : onSavePost}
+        onPressButton={onSavePost}
         style={styles.headerStyle}
       />
       <View style={styles.flex1}>

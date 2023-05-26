@@ -197,6 +197,7 @@ export interface ICreatePostImage {
   fileName?: string;
   file?: IFilePicked;
   url?: string;
+  id?: string;
 }
 
 export interface ICreatePostSettings {
@@ -291,19 +292,24 @@ export interface IPayloadCreateComment {
 
 export interface IPayloadPutEditPost {
   id: string;
-  data: IPostCreatePost;
+  data?: IPostCreatePost;
   replaceWithDetail?: boolean;
   onRetry?: () => void;
   msgSuccess?: string;
   msgError?: string;
   disableNavigate?: boolean;
-  isShowLoading?: boolean;
+  onError?: () => void;
+  isPublish?: boolean;
+  createFromGroupId?: string;
+  isHandleSeriesTagsError?: boolean;
+  isRefresh?: boolean;
 }
 
 export interface IPayloadPutEditComment {
   id: string;
   comment: ICommentData;
   data: ICommentData;
+  postId: string;
 }
 
 export interface IPayloadDeletePost {
@@ -327,6 +333,10 @@ export interface IParamGetPostDetail {
 }
 
 export interface IParamPutEditPost {
+  postId: string;
+  data: IPostCreatePost;
+}
+export interface IParamUpdatePost {
   postId: string;
   data: IPostCreatePost;
 }

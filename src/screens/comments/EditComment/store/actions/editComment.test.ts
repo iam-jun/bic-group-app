@@ -24,6 +24,7 @@ describe('editComment actions', () => {
       id: mockId,
       comment: mockComment,
       data: mockDataEdit,
+      postId: '123',
     };
     const spyCallApi = jest
       .spyOn(streamApi, 'putEditComment')
@@ -60,6 +61,7 @@ describe('editComment actions', () => {
       id: '',
       comment: mockComment,
       data: mockDataEdit,
+      postId: '123',
     };
     const spyCallApi = jest
       .spyOn(streamApi, 'putEditComment')
@@ -78,6 +80,7 @@ describe('editComment actions', () => {
       id: mockId,
       comment: null,
       data: mockDataEdit,
+      postId: '123',
     };
     const spyCallApi = jest
       .spyOn(streamApi, 'putEditComment')
@@ -96,6 +99,7 @@ describe('editComment actions', () => {
       id: mockId,
       comment: mockComment,
       data: null,
+      postId: '123',
     };
     const spyCallApi = jest
       .spyOn(streamApi, 'putEditComment')
@@ -115,6 +119,7 @@ describe('editComment actions', () => {
       id: mockId,
       comment: mockComment,
       data: mockDataEdit,
+      postId: '123',
     };
     const spyCallApi = jest
       .spyOn(streamApi, 'putEditComment')

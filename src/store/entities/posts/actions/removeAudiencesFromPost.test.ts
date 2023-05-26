@@ -14,7 +14,7 @@ describe('removeAudiencesFromPost', () => {
   it('should dont call api putEditPost when id or listAudiences empty', () => {
     const response = responsePutEditPost;
 
-    const spy = jest.spyOn(streamApi, 'putEditPost').mockImplementation(
+    const spy = jest.spyOn(streamApi, 'putPublishPost').mockImplementation(
       () => Promise.resolve(response) as any,
     );
 
@@ -31,7 +31,7 @@ describe('removeAudiencesFromPost', () => {
 
     const spyShowToastSuccess = jest.spyOn(showToastSuccess, 'default');
 
-    const spy = jest.spyOn(streamApi, 'putEditPost').mockImplementation(
+    const spy = jest.spyOn(streamApi, 'putPublishPost').mockImplementation(
       () => Promise.resolve(response) as any,
     );
 
@@ -58,7 +58,7 @@ describe('removeAudiencesFromPost', () => {
     const actions = { showToast };
     jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
-    const spy = jest.spyOn(streamApi, 'putEditPost').mockImplementation(
+    const spy = jest.spyOn(streamApi, 'putPublishPost').mockImplementation(
       () => Promise.reject(error) as any,
     );
 

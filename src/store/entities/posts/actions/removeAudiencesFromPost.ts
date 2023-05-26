@@ -17,7 +17,7 @@ const removeAudiencesFromPost = () => async (payload: IPayloadRemoveAudiencesOfP
         groupIds: listAudiences,
       },
     };
-    const response = await streamApi.putEditPost({
+    const response = await streamApi.putPublishPost({
       postId: id,
       data,
     });

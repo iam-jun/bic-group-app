@@ -11,7 +11,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 
 import {
   IPayloadGetDraftContents,
-  IPayloadPublishDraftPost,
+  IPayloadPutEditPost,
   IPost,
   PostStatus,
 } from '~/interfaces/IPost';
@@ -27,8 +27,8 @@ import { PostBody, PostHeader, PostImportant } from '~/components/posts';
 import useModalStore from '~/store/modal';
 import showToastError from '~/store/helper/showToastError';
 import showToastSuccess from '~/store/helper/showToastSuccess';
-import useCreatePostStore from '~/screens/post/CreatePost/store';
 import useDraftContentsStore from '../../DraftContents/store';
+import usePostsStore from '~/store/entities/posts';
 
 export interface PostDraftViewProps {
   data: IPost;
@@ -53,7 +53,7 @@ const PostDraftView: FC<PostDraftViewProps> = ({
 
   const userId = useUserIdAuth();
 
-  const createPostStoreActions = useCreatePostStore((state) => state.actions);
+  const postsStoreActions = usePostsStore((state) => state.actions);
 
   const { actions } = useDraftPostStore();
   const actionsDraftContentsStore = useDraftContentsStore((state) => state.actions);
@@ -86,11 +86,15 @@ const PostDraftView: FC<PostDraftViewProps> = ({
   const onPressPublish = () => {
     if (id) {
       setPublishing(true);
-      const payload: IPayloadPublishDraftPost = {
-        draftPostId: id,
+      const payload: IPayloadPutEditPost = {
+        id,
+        disableNavigate: true,
+        msgSuccess: 'post:draft:text_draft_post_published',
+        isPublish: true,
         onError: () => setPublishing(false),
+        isHandleSeriesTagsError: false,
       };
-      createPostStoreActions.postPublishDraftPost(payload);
+      postsStoreActions.putEditPost(payload);
     }
   };
 

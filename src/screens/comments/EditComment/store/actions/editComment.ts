@@ -1,5 +1,4 @@
 import { IPayloadPutEditComment } from '~/interfaces/IPost';
-import useCommentsStore from '~/store/entities/comments';
 import streamApi from '~/api/StreamApi';
 import { timeOut } from '~/utils/common';
 import { withNavigation } from '~/router/helper';
@@ -9,11 +8,14 @@ import showToastSuccess from '~/store/helper/showToastSuccess';
 import showToastError from '~/store/helper/showToastError';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import { getMentionsFromContent } from '~/helpers/post';
+import useCommentDetailController from '~/screens/comments/CommentDetail/store';
 
 const navigation = withNavigation(rootNavigationRef);
 
 const editComment = (_set, _get) => async (payload: IPayloadPutEditComment) => {
-  const { id, comment, data } = payload;
+  const {
+    id, comment, data, postId,
+  } = payload;
 
   if (!id || !data || !comment) {
     console.error('\x1b[31m🐣️ edit comment: id or data not found\x1b[0m');
@@ -32,8 +34,10 @@ const editComment = (_set, _get) => async (payload: IPayloadPutEditComment) => {
       id, data,
     );
 
-    const newComment = response.data;
-    useCommentsStore.getState().actions.addToComments(newComment);
+    useCommentDetailController.getState().actions.getCommentDetail({
+      commentId: id,
+      params: { postId },
+    });
 
     showToastSuccess(response);
     timeOut(500);

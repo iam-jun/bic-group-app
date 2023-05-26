@@ -72,6 +72,7 @@ const deleteComment = (_set, _get) => async (
     // }
     usePostsStore.getState().actions.setPosts({ ...newAllPosts, [postId]: post });
 
+    // show toast success
     showToastSuccess(response);
   } catch (e) {
     showToastError(e);
