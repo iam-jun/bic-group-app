@@ -10,6 +10,13 @@ const apiUrls = {
   MAINTENANCE: `${getEnv('BEIN_API')}/v1/maintenance-info`,
 };
 
+export const apiVersionId = {
+  content: '1.3.0',
+  group: undefined,
+  user: undefined,
+  notification: undefined,
+};
+
 export const apiProviders = {
   bein: {
     url: apiUrls.GROUP,

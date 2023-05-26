@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable unused-imports/no-unused-imports */
 import streamApi from '~/api/StreamApi';
 import { PostStatus } from '~/interfaces/IPost';
@@ -25,8 +26,8 @@ describe('useCreatePost hook', () => {
       .spyOn(streamApi, 'getPostDetail')
       .mockImplementation(() => Promise.resolve(post) as any);
     jest
-      .spyOn(streamApi, 'putEditPost')
-      .mockImplementation(() => Promise.resolve(postEdited) as any);
+      .spyOn(streamApi, 'putAutoSavePost')
+      .mockImplementation(() => Promise.resolve() as any);
     const { result: resultCreatePostStore } = renderHook(() => useCreatePostStore((state) => state));
     const { result: resultCreatePost } = renderHook(() => useCreatePost({
       screenParams: { postId: mockEditPost.id },
