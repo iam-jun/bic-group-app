@@ -45,11 +45,8 @@ describe('CreatePost screen', () => {
     jest
       .spyOn(streamApi, 'getPostDetail')
       .mockImplementation(() => Promise.resolve(post) as any);
-    const spyApiPutEditPost = jest
-      .spyOn(streamApi, 'putEditPost')
-      .mockImplementation(() => Promise.resolve(post) as any);
-    const spyApiPostPublishDraftPost = jest
-      .spyOn(streamApi, 'postPublishDraftPost')
+    const spyApiPutPublishPost = jest
+      .spyOn(streamApi, 'putPublishPost')
       .mockImplementation(() => Promise.resolve(post) as any);
     const { result: resultCreatePostStore } = renderHook(() => useCreatePostStore((state) => state));
 
@@ -72,8 +69,7 @@ describe('CreatePost screen', () => {
     });
 
     await waitFor(() => {
-      expect(spyApiPutEditPost).toBeCalled();
-      expect(spyApiPostPublishDraftPost).toBeCalled();
+      expect(spyApiPutPublishPost).toBeCalled();
     });
   });
 
@@ -84,8 +80,8 @@ describe('CreatePost screen', () => {
     jest
       .spyOn(streamApi, 'getPostDetail')
       .mockImplementation(() => Promise.resolve(post) as any);
-    const spyApiPutEditPost = jest
-      .spyOn(streamApi, 'putEditPost')
+    const spyApiPutPublishPost = jest
+      .spyOn(streamApi, 'putPublishPost')
       .mockImplementation(() => Promise.resolve(post) as any);
     const { result: resultCreatePostStore } = renderHook(() => useCreatePostStore((state) => state));
 
@@ -114,7 +110,7 @@ describe('CreatePost screen', () => {
     });
 
     await waitFor(() => {
-      expect(spyApiPutEditPost).toBeCalled();
+      expect(spyApiPutPublishPost).toBeCalled();
     });
   });
 
