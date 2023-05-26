@@ -105,20 +105,20 @@
     "text_activated": "Hiện tại",
     "text_at": "tại",
     "text_to": "tới",
-    "permission_photo_title": "Cho phép Bein truy cập thư viện ảnh và video của bạn",
+    "permission_photo_title": "Cho phép BIC Group truy cập thư viện ảnh và video của bạn",
     "permission_photo_description": "Yêu cầu truy cập của bạn đã bị từ chối gần đây. Vui lòng cấp quyền truy cập từ Cài đặt bằng các bước sau:",
     "permission_photo_list": {
       "ios": {
         "step_1": "Mở Cài đặt",
-        "step_2": "Nhấn vào Quyền riêng tư",
-        "step_3": "Mở Ảnh",
+        "step_2": "Nhấn vào Quyền riêng tư & Bảo mật",
+        "step_3": "Chọn Ảnh ➝ BIC Group",
         "step_4": "Chọn Tùy chọn “Tất cả ảnh”"
       },
       "android": {
-        "step_1": "Đi tới Cài đặt",
-        "step_2": "Tìm Cài đặt ứng dụng",
-        "step_3": "Tìm biểu tượng Bein",
-        "step_4": "Bật quyền truy cập Ảnh"
+        "step_1": "Mở Cài đặt",
+        "step_2": "Chọn Cài đặt ứng dụng",
+        "step_3": "Chọn BIC Group",
+        "step_4": "Bật quyền truy cập Ảnh và Videos"
       }
     },
     "permission_add_photo_blocked": "Không thể lưu ảnh vào thư viện của bạn, vui lòng vào phần cài đặt và bật quyền lưu ảnh",
@@ -491,7 +491,7 @@
     "btn_unblock": "Mở khoá",
     "title_unblock_user_name": "Bỏ chặn {{name}}?",
     "text_unblock_user_name_result": "Bỏ chặn người dùng này sẽ cho phép họ tương tác lại với bạn như sau:",
-    "title_blocked_users_list_empty": "Danh sách người dùng bị chặn trống",
+    "title_blocked_users_list_empty": "Bạn chưa chặn ai",
     "text_blocked_users_list_empty": "Không tìm thấy người dùng",
     "text_blocked_at": "Đã chặn",
     "title_privacy": "Bảo mật",
@@ -582,9 +582,11 @@
   "your_content": {
     "title_draft": "Nháp",
     "title_schedule_article": "Bài báo đã lên lịch",
+    "title_published": "Nội dung đã đăng",
     "title_report_content": "Nội dung được báo cáo",
     "text_empty": "Không có nội dung",
-    "text_no_reported_content": "Không có nội dung!"
+    "text_no_reported_content": "Không có nội dung!",
+    "text_no_publish_content": "Không có nội dung nào được đăng!"
   },
   "article": {
     "title": {
@@ -900,9 +902,9 @@
     "no_group_found_desc": "Ooops, Group not found",
     "no_group_found_second_desc": "We couldn't find that group page.",
     "button_back_to_safety": "Back to Safety",
-    "no_profile_found_title": "No User Found",
-    "no_profile_found_desc": "User not found",
-    "no_profile_found_second_desc": "We cannot identify the person you are looking for."
+    "no_profile_found_title": "Không tìm thấy người dùng",
+    "no_profile_found_desc": "Không tìm thấy người dùng",
+    "no_profile_found_second_desc": "Chúng tôi không thể xác định được người mà bạn đang tìm kiếm."
   },
   "badge": {
     "scroll_bottom": "Xuống cuối trang"
@@ -1380,6 +1382,7 @@
     "unpinned_successfully": "Gỡ pin thành công",
     "there_is_no_groups": "Không có nhóm",
     "reorder_pinned": "Sắp xếp bài ghim",
-    "drag_and_drop_to_reorder_pinned": "Kéo thả để sắp xếp bài ghim"
+    "drag_and_drop_to_reorder_pinned": "Kéo thả để sắp xếp bài ghim",
+    "check_all": "Chọn tất cả"
   }
 }

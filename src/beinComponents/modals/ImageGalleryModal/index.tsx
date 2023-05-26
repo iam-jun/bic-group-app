@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FC, useState, useRef } from 'react';
 import {
   StyleSheet,
@@ -16,7 +17,6 @@ import { debounce } from 'lodash';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icon from '~/baseComponents/Icon';
 import { ImageGalleryModalProps } from '~/beinComponents/modals/ImageGalleryModal/IImageGalleryModalProps';
-import Text from '~/baseComponents/Text';
 import Image from '~/components/Image';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
@@ -152,22 +152,23 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
     </Button>
   );
 
+  // eslint-disable-next-line arrow-body-style
   const renderFooter = () => {
-    let fileName = imageUrls?.[activeIndex]?.name?.toUpperCase?.();
-    if (!fileName && alwaysShowFileName) {
-      fileName = imageUrls?.[activeIndex]?.url
-        ?.replace?.(/(.+)\/(.+)$/, '$2')
-        ?.toUpperCase?.();
-    }
+    // let fileName = imageUrls?.[activeIndex]?.name?.toUpperCase?.();
+    // if (!fileName && alwaysShowFileName) {
+    //   fileName = imageUrls?.[activeIndex]?.url
+    //     ?.replace?.(/(.+)\/(.+)$/, '$2')
+    //     ?.toUpperCase?.();
+    // }
 
     return (
       <View style={styles.footerContainer}>
         <View style={styles.fileNameContainer}>
-          {(!!fileName && isShowImgName) && (
+          {/* {(!!fileName && isShowImgName) && (
             <Text.H6 color={colors.white} numberOfLines={1}>
               {fileName}
             </Text.H6>
-          )}
+          )} */}
         </View>
         <FlatList
           ref={footerListRef}
@@ -275,13 +276,13 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
 };
 
 const getImageUrls = (source: any) => {
-  const result: { url: string; name: string }[] = [];
+  const result: { url: string; id: string }[] = [];
   if (source?.length > 0) {
     source?.forEach?.((item: any) => {
-      result.push({ url: item?.uri || item, name: item?.name });
+      result.push({ url: item?.uri || item, id: item?.id });
     });
   } else {
-    result.push({ url: source?.uri || source, name: source?.name });
+    result.push({ url: source?.uri || source, id: source?.id });
   }
   return result;
 };

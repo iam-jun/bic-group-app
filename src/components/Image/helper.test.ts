@@ -1,5 +1,8 @@
 import { isEmpty, isEqual } from 'lodash';
-import { formatSource, getImageSizeSupported, getWidthStyle } from './helper';
+import { PostType } from '~/interfaces/IPost';
+import {
+  formatSource, getImageSizeSupported, getImageUrlsForPreloadImagesOnNewsFeed, getWidthStyle,
+} from './helper';
 
 describe('helper of Image component', () => {
   describe('formatSource function', () => {
@@ -45,6 +48,78 @@ describe('helper of Image component', () => {
 
     it('given style as an object should return width', () => {
       expect(getWidthStyle({ width: 64 })).toBe(64);
+    });
+  });
+
+  describe('getImageUrlsForPreloadImagesOnNewsFeed function', () => {
+    it('given an array articles and series that dont have cover in each item should return an empty array imgs', () => {
+      const fakeData = [{
+        type: PostType.ARTICLE,
+      }, {
+        type: PostType.SERIES,
+      }];
+
+      expect(getImageUrlsForPreloadImagesOnNewsFeed(fakeData).length).toBe(0);
+    });
+
+    it('given an array articles and series that have cover in each item should return an array imgs', () => {
+      const fakeData = [{
+        type: PostType.ARTICLE,
+        coverMedia: {
+          url: 'https://img.xyz',
+        },
+      }, {
+        type: PostType.SERIES,
+        coverMedia: {
+          url: 'https://img.xyz',
+        },
+      }];
+
+      expect(getImageUrlsForPreloadImagesOnNewsFeed(fakeData).length).toBe(2);
+    });
+
+    it('given an array posts should return an array imgs', () => {
+      const fakeData = [{
+        type: PostType.POST,
+        media: {
+          images: [
+            {
+              height: 1080,
+              width: 1920,
+              url: 'https://img.xyz',
+            },
+            {
+              height: 1018,
+              width: 1900,
+              url: 'https://img.xyz',
+            },
+            {
+              height: 1080,
+              width: 1920,
+              url: 'https://img.xyz',
+            },
+            {
+              height: 1920,
+              width: 1440,
+              url: 'https://img.xyz',
+            },
+          ],
+        },
+      }];
+
+      expect(getImageUrlsForPreloadImagesOnNewsFeed(fakeData).length).toBe(4);
+    });
+
+    it('given an array posts but dont have imgs should return an empty array imgs', () => {
+      const fakeData = {
+        type: PostType.POST,
+        media: {
+          images: [
+          ],
+        },
+      };
+
+      expect(getImageUrlsForPreloadImagesOnNewsFeed(fakeData).length).toBe(0);
     });
   });
 });

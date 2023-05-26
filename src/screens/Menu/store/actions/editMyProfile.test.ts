@@ -31,7 +31,6 @@ describe('editMyProfile action', () => {
         id: fakeProfile.id,
         fullname: fakeProfile.fullname,
       },
-      editFieldToastMessage: null,
       callback: fakeCallback,
     };
 
@@ -48,7 +47,7 @@ describe('editMyProfile action', () => {
       .mockImplementation(() => ({ actions } as any));
 
     const toastMessage: IToastMessage = {
-      content: 'common:text_edit_success',
+      content: editProfileResponse.meta.message,
       type: ToastType.SUCCESS,
     };
     const showToast = jest.fn();
@@ -71,147 +70,6 @@ describe('editMyProfile action', () => {
 
     expect(showToast).toBeCalledWith(toastMessage);
     expect(fakeCallback).toBeCalled();
-  });
-
-  it('should edit successfully with full editFieldToastMessage = text', () => {
-    const fakeCallback = jest.fn();
-    const payload = {
-      data: {
-        id: fakeProfile.id,
-        fullname: fakeProfile.fullname,
-      },
-      editFieldToastMessage: 'toast test',
-      callback: fakeCallback,
-    };
-
-    const spyCallApi = jest
-      .spyOn(groupApi, 'editMyProfile')
-      .mockImplementation(() => Promise.resolve(editProfileResponse) as any);
-
-    const setMyProfile = jest.fn();
-    const actions = {
-      setMyProfile,
-    };
-    const spyCommonController = jest
-      .spyOn(useCommonController, 'getState')
-      .mockImplementation(() => ({ actions } as any));
-
-    const toastMessage: IToastMessage = {
-      content: payload.editFieldToastMessage,
-      type: ToastType.SUCCESS,
-    };
-    const showToast = jest.fn();
-    jest
-      .spyOn(useModalStore, 'getState')
-      .mockImplementation(() => ({ actions: { showToast } } as any));
-
-    jest.useFakeTimers();
-
-    const { result } = renderHook(() => useMenuController((state) => state));
-    act(() => {
-      result.current.actions.editMyProfile(payload);
-    });
-
-    act(() => {
-      jest.runAllTimers();
-    });
-    expect(spyCallApi).toBeCalled();
-    expect(spyCommonController).toBeCalled();
-
-    expect(showToast).toBeCalledWith(toastMessage);
-    expect(fakeCallback).toBeCalled();
-  });
-
-  it('should edit avatar successfully', () => {
-    const payload = {
-      data: {
-        id: fakeProfile.id,
-        fullname: fakeProfile.fullname,
-        avatar: 'fakeLink',
-      },
-    };
-
-    const spyCallApi = jest
-      .spyOn(groupApi, 'editMyProfile')
-      .mockImplementation(() => Promise.resolve(editProfileResponse) as any);
-
-    const setMyProfile = jest.fn();
-    const actions = {
-      setMyProfile,
-    };
-    const spyCommonController = jest
-      .spyOn(useCommonController, 'getState')
-      .mockImplementation(() => ({ actions } as any));
-
-    const toastMessage: IToastMessage = {
-      content: 'common:avatar_changed',
-      type: ToastType.SUCCESS,
-    };
-    const showToast = jest.fn();
-    jest
-      .spyOn(useModalStore, 'getState')
-      .mockImplementation(() => ({ actions: { showToast } } as any));
-
-    jest.useFakeTimers();
-
-    const { result } = renderHook(() => useMenuController((state) => state));
-    act(() => {
-      result.current.actions.editMyProfile(payload);
-    });
-
-    act(() => {
-      jest.runAllTimers();
-    });
-    expect(spyCallApi).toBeCalled();
-    expect(spyCommonController).toBeCalled();
-
-    expect(showToast).toBeCalledWith(toastMessage);
-  });
-
-  it('should edit background successfully', () => {
-    const payload = {
-      data: {
-        id: fakeProfile.id,
-        fullname: fakeProfile.fullname,
-        backgroundImgUrl: 'fakeLink',
-      },
-    };
-
-    const spyCallApi = jest
-      .spyOn(groupApi, 'editMyProfile')
-      .mockImplementation(() => Promise.resolve(editProfileResponse) as any);
-
-    const setMyProfile = jest.fn();
-    const actions = {
-      setMyProfile,
-    };
-    const spyCommonController = jest
-      .spyOn(useCommonController, 'getState')
-      .mockImplementation(() => ({ actions } as any));
-
-    const toastMessage: IToastMessage = {
-      content: 'common:cover_changed',
-      type: ToastType.SUCCESS,
-    };
-    const showToast = jest.fn();
-    jest
-      .spyOn(useModalStore, 'getState')
-      .mockImplementation(() => ({ actions: { showToast } } as any));
-
-    jest.useFakeTimers();
-
-    const { result } = renderHook(() => useMenuController((state) => state));
-    act(() => {
-      result.current.actions.editMyProfile(payload);
-    });
-
-    act(() => {
-      jest.runAllTimers();
-    });
-    expect(spyCallApi).toBeCalled();
-    expect(spyCommonController).toBeCalled();
-
-    expect(showToast).toBeCalledWith(toastMessage);
   });
 
   it('should should edit profile throw error:', () => {

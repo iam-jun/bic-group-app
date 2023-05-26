@@ -66,6 +66,8 @@ const PinContent: FC<PinContentProps> = (props) => {
 
   const canPin = !isLoadingPinnableAudiences && !isEmpty(pinAudiences);
 
+  const isPinnedAll = Object.values(pinAudiences).every(({ group }) => group.isPinned);
+
   const onPinUnpinSuccess = (res) => {
     showToastSuccess(res);
     rootNavigation.goBack();
@@ -118,6 +120,29 @@ const PinContent: FC<PinContentProps> = (props) => {
   const onChangePin = (audience: AudiencePermitPin) => () => {
     actionsPinContentStore.togglePinAudience(audience.group.id);
   };
+
+  const onPinOrUnpinAll = (isPinned: boolean) => () => {
+    actionsPinContentStore.pinOrUnpinAllPinAudience(isPinned);
+  };
+
+  const renderPinOrUnpinAll = () => (
+    <View
+      testID="pin_content.pin_or_unpin_all_audience_container"
+      style={styles.pinUnpinAllContainer}
+    >
+      <View style={styles.row}>
+        <Checkbox
+          testID="pin_content.pin_or_unpin_all_audience_checkbox"
+          isChecked={isPinnedAll}
+          onPress={onPinOrUnpinAll(!isPinnedAll)}
+        />
+        <ViewSpacing width={spacing.margin.small} />
+        <Text.LabelM style={styles.textGroupName} color={colors.neutral60} useI18n>
+          pin:check_all
+        </Text.LabelM>
+      </View>
+    </View>
+  );
 
   const renderItem = (value: [string, AudiencePermitPin]) => {
     const [id, audience] = value;
@@ -192,6 +217,7 @@ const PinContent: FC<PinContentProps> = (props) => {
         <ScrollView style={styles.scrollView} alwaysBounceVertical={false}>
           {isLoadingPinnableAudiences && renderLoadingPinnableAudiences()}
           {isEmptyPinnableAudiences && renderEmptyPinnableAudiences()}
+          {Object.keys(pinAudiences).length > 1 && renderPinOrUnpinAll()}
           {Object.entries(pinAudiences).map((value) => renderItem(value))}
           <ViewSpacing height={spacing.padding.large + insets.bottom} />
         </ScrollView>
@@ -225,6 +251,12 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     itemContainer: {
       marginTop: spacing.margin.base,
+    },
+    pinUnpinAllContainer: {
+      marginTop: spacing.margin.base,
+      paddingBottom: spacing.margin.base,
+      borderBottomColor: colors.neutral5,
+      borderBottomWidth: 1,
     },
     row: {
       flexDirection: 'row',

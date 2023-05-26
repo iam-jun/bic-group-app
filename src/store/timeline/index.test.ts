@@ -38,13 +38,13 @@ describe('useTimelineStore in group/community', () => {
 
     act(() => {
       result.current.actions.initDataTimeline('123');
-      result.current.actions.setAttributeFilter('123', AttributeFeed.MINE);
+      result.current.actions.setAttributeFilter('123', AttributeFeed.IMPORTANT);
     });
 
     expect(result.current.timelines['123']).toBeDefined();
 
     const { attributeFilter } = result.current.timelines['123'];
-    expect(attributeFilter).toBe(AttributeFeed.MINE);
+    expect(attributeFilter).toBe(AttributeFeed.IMPORTANT);
   });
 
   it('given group id should resetTimeline', () => {

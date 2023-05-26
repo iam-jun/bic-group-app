@@ -1,0 +1,55 @@
+diff --git a/node_modules/@react-native-camera-roll/camera-roll/ios/RNCCameraRoll.mm b/node_modules/@react-native-camera-roll/camera-roll/ios/RNCCameraRoll.mm
+index baa2b15..7633c6e 100644
+--- a/node_modules/@react-native-camera-roll/camera-roll/ios/RNCCameraRoll.mm
++++ b/node_modules/@react-native-camera-roll/camera-roll/ios/RNCCameraRoll.mm
+@@ -175,7 +175,7 @@ static void requestPhotoLibraryAccess(RCTPromiseRejectBlock reject, PhotosAuthor
+         assetRequest = request;
+       } else {
+         NSData *data = [NSData dataWithContentsOfURL:inputURI];
+-        if ([[inputURI.pathExtension lowercaseString] isEqualToString:@"webp"]) {
++          if ([[inputURI.pathExtension lowercaseString] isEqualToString:@"webp"] || [options[@"isWebp"]  isEqual: @YES]) {
+           UIImage *webpImage;
+ 
+           #ifdef SD_WEB_IMAGE_WEBP_CODER_AVAILABLE 
+diff --git a/node_modules/@react-native-camera-roll/camera-roll/lib/typescript/CameraRoll.d.ts b/node_modules/@react-native-camera-roll/camera-roll/lib/typescript/CameraRoll.d.ts
+index 9d9bb56..bca5abc 100644
+--- a/node_modules/@react-native-camera-roll/camera-roll/lib/typescript/CameraRoll.d.ts
++++ b/node_modules/@react-native-camera-roll/camera-roll/lib/typescript/CameraRoll.d.ts
+@@ -86,6 +86,7 @@ export declare type PhotoIdentifiersPage = {
+ export declare type SaveToCameraRollOptions = {
+     type?: 'photo' | 'video' | 'auto';
+     album?: string;
++    isWebp?: boolean;
+ };
+ export declare type GetAlbumsParams = {
+     assetType?: AssetType;
+diff --git a/node_modules/@react-native-camera-roll/camera-roll/src/CameraRoll.ts b/node_modules/@react-native-camera-roll/camera-roll/src/CameraRoll.ts
+index 14765d7..56df9ca 100644
+--- a/node_modules/@react-native-camera-roll/camera-roll/src/CameraRoll.ts
++++ b/node_modules/@react-native-camera-roll/camera-roll/src/CameraRoll.ts
+@@ -140,6 +140,7 @@ export type PhotoIdentifiersPage = {
+ export type SaveToCameraRollOptions = {
+   type?: 'photo' | 'video' | 'auto';
+   album?: string;
++  isWebp?: boolean;
+ };
+ 
+ export type GetAlbumsParams = {
+@@ -178,7 +179,7 @@ export class CameraRoll {
+     options: SaveToCameraRollOptions = {},
+   ): Promise<string> {
+     let {type = 'auto'} = options;
+-    const {album = ''} = options;
++    const {album = '', isWebp = false} = options;
+     if (tag === '') throw new Error('tag must be a valid string');
+ 
+     if (type === 'auto') {
+@@ -187,7 +188,7 @@ export class CameraRoll {
+         type = 'video';
+       else type = 'photo';
+     }
+-    return RNCCameraRoll.saveToCameraRoll(tag, {type, album});
++    return RNCCameraRoll.saveToCameraRoll(tag, {type, album, isWebp});
+   }
+ 
+   static saveToCameraRoll(
