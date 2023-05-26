@@ -314,4 +314,8 @@ export const NOTIFICATION_TYPE = {
 
   // changelogs
   CHANGE_LOGS: 'changelogs',
+
+  // remove content from series
+  SERIES_POST_ITEM_CHANGED: 'series_post_item_changed',
+  SERIES_ARTICLE_ITEM_CHANGED: 'series_article_item_changed',
 };

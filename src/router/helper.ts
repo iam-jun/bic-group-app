@@ -328,6 +328,9 @@ export const getScreenAndParams = (data: {
       return { screen: mainStack.userProfile, params: { userId } };
     case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER:
     case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER_IN_MULTIPLE_GROUPS:
+    case NOTIFICATION_TYPE.SERIES_POST_ITEM_CHANGED:
+    case NOTIFICATION_TYPE.SERIES_ARTICLE_ITEM_CHANGED:
+
       return {
         screen: seriesStack.seriesDetail,
         params: {

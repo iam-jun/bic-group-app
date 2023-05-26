@@ -378,6 +378,15 @@ const Notification = () => {
             case NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME:
               rootNavigation.navigate(notiStack.notiMaintenancePage, { maintenanceInfo: act?.maintenanceInfo });
               break;
+            case NOTIFICATION_TYPE.SERIES_POST_ITEM_CHANGED:
+            case NOTIFICATION_TYPE.SERIES_ARTICLE_ITEM_CHANGED:
+              // eslint-disable-next-line no-case-declarations
+              const seriesList = act?.items || [];
+              if (seriesList?.length > 0) {
+                const seriesInfo = seriesList.find((series) => series?.state === 'add');
+                rootNavigation.navigate(seriesStack.seriesDetail, { seriesId: seriesInfo.id });
+              }
+              break;
 
             case NOTIFICATION_TYPE.CHANGE_LOGS:
               notiActions.resetChangelogNoti();
