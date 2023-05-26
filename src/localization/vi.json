@@ -10,7 +10,9 @@
       "short_hour": "giờ",
       "short_day": "ngày",
       "short_week": "tuần",
-      "short_year": "năm"
+      "short_year": "năm",
+      "minutes": "phút",
+      "hours": "giờ"
     },
     "text_update_title": "Đã có bản cập nhật mới",
     "text_update_content": "System optimization, faster, more convenient",
@@ -79,7 +81,9 @@
     "text_chosen": "Đang Chọn",
     "error": {
       "file": {
-        "over_file_size": "Dung lượng file tối đa {n}"
+        "over_file_size": "Dung lượng file tối đa {n}",
+        "file_exceed_limit": "Tệp vượt quá giới hạn {n}",
+        "file_type_not_support": "Định dạng tệp không được hỗ trợ"
       }
     },
     "message_add_member_success_group": "Thêm thành viên thành công",
@@ -101,20 +105,20 @@
     "text_activated": "Hiện tại",
     "text_at": "tại",
     "text_to": "tới",
-    "permission_photo_title": "Cho phép Bein truy cập thư viện ảnh và video của bạn",
+    "permission_photo_title": "Cho phép BIC Group truy cập thư viện ảnh và video của bạn",
     "permission_photo_description": "Yêu cầu truy cập của bạn đã bị từ chối gần đây. Vui lòng cấp quyền truy cập từ Cài đặt bằng các bước sau:",
     "permission_photo_list": {
       "ios": {
         "step_1": "Mở Cài đặt",
-        "step_2": "Nhấn vào Quyền riêng tư",
-        "step_3": "Mở Ảnh",
+        "step_2": "Nhấn vào Quyền riêng tư & Bảo mật",
+        "step_3": "Chọn Ảnh ➝ BIC Group",
         "step_4": "Chọn Tùy chọn “Tất cả ảnh”"
       },
       "android": {
-        "step_1": "Đi tới Cài đặt",
-        "step_2": "Tìm Cài đặt ứng dụng",
-        "step_3": "Tìm biểu tượng Bein",
-        "step_4": "Bật quyền truy cập Ảnh"
+        "step_1": "Mở Cài đặt",
+        "step_2": "Chọn Cài đặt ứng dụng",
+        "step_3": "Chọn BIC Group",
+        "step_4": "Bật quyền truy cập Ảnh và Videos"
       }
     },
     "permission_add_photo_blocked": "Không thể lưu ảnh vào thư viện của bạn, vui lòng vào phần cài đặt và bật quyền lưu ảnh",
@@ -163,13 +167,13 @@
     "text_year": "{{number}} năm",
     "text_never": "Không bao giờ",
     "text_custom": "Tùy chỉnh",
-    "text_add_cover": "Thêm ảnh bìa",
+    "text_add_cover": "+ Thêm ảnh bìa",
     "text_optional": "tuỳ chọn",
     "articles": "Bài viết",
     "last_updated": "Cập nhật",
-    "audiences": "Đối tượng",
-    "text_other_audience_one": "+ {{count}} đối tượng",
-    "text_other_audience_other": "+ {{count}} đối tượng",
+    "audiences": "Cộng đồng / Nhóm",
+    "text_other_audience_one": "+ {{count}} cộng đồng / nhóm",
+    "text_other_audience_other": "+ {{count}} cộng đồng / nhóm",
     "text_save_fail": "Lưu thất bại.",
     "text_unsave_fail": "Bỏ lưu thất bại.",
     "copy_photo": "Sao chép ảnh",
@@ -487,7 +491,7 @@
     "btn_unblock": "Mở khoá",
     "title_unblock_user_name": "Bỏ chặn {{name}}?",
     "text_unblock_user_name_result": "Bỏ chặn người dùng này sẽ cho phép họ tương tác lại với bạn như sau:",
-    "title_blocked_users_list_empty": "Danh sách người dùng bị chặn trống",
+    "title_blocked_users_list_empty": "Bạn chưa chặn ai",
     "text_blocked_users_list_empty": "Không tìm thấy người dùng",
     "text_blocked_at": "Đã chặn",
     "title_privacy": "Bảo mật",
@@ -578,9 +582,11 @@
   "your_content": {
     "title_draft": "Nháp",
     "title_schedule_article": "Bài báo đã lên lịch",
+    "title_published": "Nội dung đã đăng",
     "title_report_content": "Nội dung được báo cáo",
     "text_empty": "Không có nội dung",
-    "text_no_reported_content": "Không có nội dung!"
+    "text_no_reported_content": "Không có nội dung!",
+    "text_no_publish_content": "Không có nội dung nào được đăng!"
   },
   "article": {
     "title": {
@@ -599,7 +605,7 @@
     "text_option_edit_summary": "Mô Tả",
     "text_option_edit_cover": "Ảnh Bìa",
     "text_option_edit_category": "Danh Mục",
-    "text_option_edit_audience": "Đối Tượng",
+    "text_option_edit_audience": "Cộng đồng / Nhóm",
     "text_option_edit_series": "Series",
     "text_option_edit_tags": "Thẻ",
     "text_option_edit_content": "Nội Dung",
@@ -617,11 +623,11 @@
     },
     "text_saved": "Đã lưu bài viết",
     "text_unsaved": "Đã bỏ lưu bài viết",
-    "remove_audiences_contains_series_title": "Xoá đối tượng",
+    "remove_audiences_contains_series_title": "Xoá cộng đồng / nhóm",
     "remove_audiences_contains_series_content": "Các series sau sẽ bị xóa khỏi bài viết này: ${series}. Vẫn tiếp tục?",
     "remove_series_title": "Xoá Series",
     "remove_series_content": "Bạn không có quyền tạo bài viết tại series: ${series}. Vẫn tiếp tục?",
-    "content_delete_audiences": "Bạn chỉ có thể xóa đối tượng khỏi bài viết của mình ngoại trừ những đối tượng bên dưới. Bạn chắc chắn chứ?",
+    "content_delete_audiences": "Bạn chỉ có thể xóa cộng đồng / nhóm khỏi bài viết của mình ngoại trừ những cộng đồng / nhóm bên dưới. Bạn chắc chắn chứ?",
     "search_article_placeholder": "Tìm kiếm bài viết...",
     "modal_add_link": {
       "title": "Tạo liên kết",
@@ -633,9 +639,9 @@
       "link_placeholder": "Nhập URL của video:"
     },
     "modal_invalid_series_tags": {
-      "title": "Xung đột đối tượng",
-      "title_remove_audience": "Xoá đối tượng",
-      "content_header": "Các thông tin dưới đây sẽ bị xoá khi đối tượng bài viết bị xoá:",
+      "title": "Xung đột cộng đồng / nhóm",
+      "title_remove_audience": "Xoá cộng đồng / nhóm",
+      "content_header": "Các thông tin dưới đây sẽ bị xoá khi cộng đồng / nhóm bài viết bị xoá:",
       "content_confirm": "Bạn có chắc muốn xoá?"
     },
     "tags_maximum_message_info": "Chỉ có thể chọn tối đa 5 tags",
@@ -644,7 +650,7 @@
     "text_description_require_max_length": "Tối đa 255 ký tự",
     "text_add_summary": "Thêm mô tả",
     "text_add_category": "Thêm danh mục",
-    "text_add_audience": "Thêm đối tượng",
+    "text_add_audience": "Thêm cộng đồng / nhóm",
     "text_add_series": "Thêm series",
     "text_add_tag": "Thêm thẻ",
     "text_add_content": "Thêm nội dung",
@@ -665,8 +671,9 @@
     "title_edit_post": "Sửa bài viết",
     "title_edit_comment": "Sửa bình luận",
     "title_edit_images": "Sửa ảnh",
-    "title_post_to": "Đăng tới",
-    "mention_title": "Có thể nhắc đến những người là đối tượng của bài viết",
+    "title_publish_to": "Đăng tới...",
+    "title_published_to": "Đăng tới...",
+    "mention_title": "Có thể nhắc đến những người thuộc cộng đồng / nhóm của bài viết",
     "mention_empty_content": "Không tìm thấy",
     "label_seen_by": "Quan tâm bởi ",
     "button_like": "Thích",
@@ -696,9 +703,9 @@
     "title_delete_article": "Xoá Bài Viết",
     "content_delete_article": "Bạn có muốn xóa bài viết này?",
     "title_delete_audiences_of_post": "Bạn Không Thể Xóa Bài Đăng Này",
-    "content_delete_audiences_of_post": "Bạn không thể xóa bài đăng này khỏi những đối tượng dưới đây. Bạn có muốn tiếp tục?",
-    "content_not_able_delete_of_post": "Bạn không thể xóa bài đăng này khỏi những đối tượng dưới đây.",
-    "text_deleted_audiences": "Bài đăng của bạn đã được xoá khỏi các nhóm đối tượng.",
+    "content_delete_audiences_of_post": "Bạn không thể xóa bài đăng này khỏi những cộng đồng / nhóm dưới đây. Bạn có muốn tiếp tục?",
+    "content_not_able_delete_of_post": "Bạn không thể xóa bài đăng này khỏi những cộng đồng / nhóm dưới đây.",
+    "text_deleted_audiences": "Bài đăng của bạn đã được xoá khỏi các cộng đồng / nhóm.",
     "alert_title_back_edit_post": "Huỷ sửa bài viết",
     "alert_content_back_edit_post": "Nếu huỷ, bạn sẽ mất những nội dung đã chỉnh sửa trên bài viết.",
     "alert_title_back_create_post": "Huỷ đăng bài",
@@ -712,7 +719,7 @@
     "create_new_post": "Viết về ngày hôm nay của bạn...",
     "post_button": "Tạo",
     "send_to": "Tới",
-    "post_to": "Đăng tới",
+    "publish_to": "Đăng tới",
     "save": "Lưu",
     "to": "đến",
     "and": "và",
@@ -732,8 +739,8 @@
     "expiring_time": "Thời gian kết thúc",
     "expire_time_desc": "Bài viết này sẽ ở trên đầu bản tin cho đến khi hết thời hạn đã cài đặt.",
     "search_results": "Kết quả tìm kiếm",
-    "search_audiences_placeholder": "Tìm kiếm đối tượng...",
-    "text_chosen_audience": "Đối tượng đã chọn",
+    "search_audiences_placeholder": "Tìm kiếm cộng đồng / nhóm...",
+    "text_chosen_audience": "Cộng đồng / nhóm đã chọn",
     "text_select_all_audience": "Chọn tất cả",
     "group_manage": "Nhóm của bạn",
     "people_search": "Người dùng",
@@ -794,14 +801,17 @@
     },
     "create_post": {
       "title_discard_changes": "Huỷ thay đổi",
-      "title_audience_changed": "Đối tượng đã thay đổi",
-      "title_discard_audience": "Bỏ chọn đối tượng",
-      "text_discard_audience": "Nếu huỷ bỏ, bạn sẽ mất những đối tượng bài viết đã chọn",
+      "title_audience_changed": "Cộng đồng / Nhóm đã thay đổi",
+      "title_discard_audience": "Bỏ chọn cộng đồng / nhóm",
+      "text_discard_audience": "Nếu huỷ bỏ, bạn sẽ mất những cộng đồng / nhóm đã chọn",
       "text_discard_change": "Bạn có chắc muốn huỷ những thay đổi?",
-      "text_discard_change_audience": "Bạn có chắc muốn đổi đối tượng? Thay đổi này đồng thời sẽ ảnh hưởng tới quyền của bài viết",
+      "text_discard_change_audience": "Bạn có chắc muốn đổi cộng đồng / nhóm? Thay đổi này đồng thời sẽ ảnh hưởng tới quyền của bài viết",
       "btn_save_change": "Lưu thay đổi",
       "btn_keep_edit": "Tiếp tục sửa",
-      "btn_keep_selecting": "Tiếp tục chọn"
+      "btn_keep_selecting": "Tiếp tục chọn",
+      "preview_image": "Xem trước",
+      "edit": "Chỉnh sửa",
+      "remove_all_image": "Xóa tất cả"
     },
     "draft": {
       "title_draft": "Nháp",
@@ -893,9 +903,9 @@
     "no_group_found_desc": "Ooops, Group not found",
     "no_group_found_second_desc": "We couldn't find that group page.",
     "button_back_to_safety": "Back to Safety",
-    "no_profile_found_title": "No User Found",
-    "no_profile_found_desc": "User not found",
-    "no_profile_found_second_desc": "We cannot identify the person you are looking for."
+    "no_profile_found_title": "Không tìm thấy người dùng",
+    "no_profile_found_desc": "Không tìm thấy người dùng",
+    "no_profile_found_second_desc": "Chúng tôi không thể xác định được người mà bạn đang tìm kiếm."
   },
   "badge": {
     "scroll_bottom": "Xuống cuối trang"
@@ -1053,7 +1063,10 @@
     "mark_as_read": "Đánh dấu là đã đọc",
     "mark_as_unread": "Đánh dấu là chưa đọc",
     "off_notification_from_group": "Tắt nhận thông báo cho nhóm này",
-    "seen_all_notifications": "Bạn đã đọc hết thông báo"
+    "seen_all_notifications": "Bạn đã đọc hết thông báo",
+    "text_scheduled": "Scheduled Maintenance Downtime",
+    "content_scheduled_maintenance_downtime": "Chúng tôi sẽ cải thiện nền tảng để nâng cao trải nghiệm của bạn. Trong quá trình bảo trì, các tính năng có thể không khả dụng hoặc bị hạn chế.\n \nThời gian bảo trì bắt đầu lúc **(startAt)** trong khoảng **(duration)**.\n \nChúng tôi xin lỗi vì bất kỳ sự bất tiện nào và đánh giá cao sự hỗ trợ liên tục của bạn.",
+    "text_bic_team": "BIC team"
   },
   "new_feature": {
     "title": "New feature",
@@ -1246,7 +1259,8 @@
     "text_file_over_size": "Tổng kích thước các tệp của bạn lớn hơn 25MB",
     "text_file_over_length": "Bạn không thể tải lên hơn {{max_files}} tệp",
     "text_file_extension_not_supported": "Không được hỗ trợ",
-    "text_file_remainning": "Tổng tệp có thể thêm là {{max_files}} và dung lượng còn lại là {{remaining_size}}"
+    "text_file_remainning": "Tổng tệp có thể thêm là {{max_files}} và dung lượng còn lại là {{remaining_size}}",
+    "text_upload_image_fail": "Không thể tải lên hình ảnh"
   },
   "file_type": {
     "image": "hình ảnh",
@@ -1293,12 +1307,12 @@
     "content_delete_series": "Bạn có muốn xóa series này không?",
     "text_delete_series_success": "Series đã được xoá",
     "title_delete_audiences_of_series": "Bạn Không Thể Xóa Series Này",
-    "content_delete_audiences_of_series": "Bạn không thể xóa series này khỏi những đối tượng dưới đây. Bạn có muốn tiếp tục?",
-    "content_not_able_delete_of_series": "Bạn không thể xóa series này khỏi những đối tượng dưới đây.",
-    "text_deleted_audiences": "Series của bạn đã được xoá khỏi các nhóm đối tượng.",
+    "content_delete_audiences_of_series": "Bạn không thể xóa series này khỏi những cộng đồng / nhóm dưới đây. Bạn có muốn tiếp tục?",
+    "content_not_able_delete_of_series": "Bạn không thể xóa series này khỏi những cộng đồng / nhóm dưới đây.",
+    "text_deleted_audiences": "Series của bạn đã được xoá khỏi các cộng đồng / nhóm.",
     "text_edit_series_success": "Chỉnh sửa series thành công.",
     "text_edit_series_failed": "Đăng series thất bại",
-    "title_edit_audience_failed": "Thay đổi đối tượng?",
+    "title_edit_audience_failed": "Thay đổi cộng đồng / nhóm?",
     "content_edit_audience_failed": "Bạn không có quyền xóa bài đăng của chính mình trong các nhóm:",
     "text_saved": "Đã lưu series",
     "text_unsaved": "Đã bỏ lưu series",
@@ -1369,6 +1383,7 @@
     "unpinned_successfully": "Gỡ pin thành công",
     "there_is_no_groups": "Không có nhóm",
     "reorder_pinned": "Sắp xếp bài ghim",
-    "drag_and_drop_to_reorder_pinned": "Kéo thả để sắp xếp bài ghim"
+    "drag_and_drop_to_reorder_pinned": "Kéo thả để sắp xếp bài ghim",
+    "check_all": "Chọn tất cả"
   }
 }

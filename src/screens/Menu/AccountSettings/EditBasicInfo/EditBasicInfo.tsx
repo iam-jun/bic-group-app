@@ -206,6 +206,7 @@ const EditBasicInfo = () => {
           onConfirm={onSetBirthday}
           placeholder="DD/MM/YYYY"
           disabled={isVerified}
+          timeZoneOffsetInMinutes={0}
         />
         {
         isVerified && (

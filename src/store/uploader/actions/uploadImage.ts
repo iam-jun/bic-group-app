@@ -11,6 +11,7 @@ const uploadImage = (set, _get) => async (data: IUploadParam) => {
   set((state: IUploaderState) => {
     state.uploadingFiles[file.name] = 0;
     state.abortController[file.name] = controller;
+    state.errors[file.name] = '';
   }, 'action uploadImage');
 
   const onUploadProgress = (progressEvent: any) => {
@@ -37,7 +38,7 @@ const uploadImage = (set, _get) => async (data: IUploadParam) => {
 
     if (createIdResponse?.data?.data?.presignedPost?.url) {
       // step 2: upload image to s3
-      const responseUploadImg = await uploadApi.uploadImageToS3(
+      const responseUploadImg: any = await uploadApi.uploadImageToS3(
         {
           presignedPostFields: {
             ...createIdResponse?.data?.data?.presignedPost?.fields,
@@ -48,6 +49,7 @@ const uploadImage = (set, _get) => async (data: IUploadParam) => {
         onUploadProgress,
       );
 
+      /* eslint no-else-return: ["error", {allowElseIf: true}] */
       if (responseUploadImg.status === 204) {
         // step 3: get image status
         const responseGetStatus = await uploadApi.getImageStatus(createIdResponse?.data?.data?.id);
@@ -73,23 +75,21 @@ const uploadImage = (set, _get) => async (data: IUploadParam) => {
             state.uploadingFiles?.[file.name] && delete state.uploadingFiles?.[file.name];
           }, 'action uploadImage success');
         } else {
-          set((state: IUploaderState) => {
-            state.errors[file.name] = i18next.t('upload:text_upload_request_failed');
-            state.uploadingFiles?.[file.name] && delete state.uploadingFiles?.[file.name];
-          }, 'action uploadImage error');
+          // upload image failed
+          throw new Error(responseGetStatus?.data?.data?.errorMessage);
         }
+      } else if (responseUploadImg.code === 0) {
+        throw new Error(responseUploadImg.meta.message);
       }
     }
   } catch (error) {
-    const fileType = i18next.t('file_type:file');
-    const errorUploadMessage = i18next.t('upload:text_upload_request_failed', {
-      file_type: fileType,
-    });
+    const errorUploadMessage = i18next.t('upload:text_upload_image_fail');
     const message = getErrorMessageFromResponse(error) || errorUploadMessage;
     set((state: IUploaderState) => {
       state.errors[file.name] = message;
       state.uploadingFiles?.[file.name] && delete state.uploadingFiles?.[file.name];
     }, 'action uploadImage error');
+    throw error;
   }
 };
 

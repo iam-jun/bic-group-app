@@ -1,6 +1,11 @@
-import _ from 'lodash';
+import _, { isArray } from 'lodash';
 import { StyleProp } from 'react-native';
 import type { Source, ImageStyle } from 'react-native-fast-image';
+import { IPost, PostType } from '~/interfaces/IPost';
+import { COVER_ARTICLE_WIDTH } from '../articles/ArticleItem';
+import { WIDTH_CONTAINER_PHOTO_PREVIEW_DEFAULT } from '../posts/PostPhotoPreview';
+import { initLayoutImages } from '../posts/PostPhotoPreview/helper';
+import { THUMBNAIL_SERIES_SIZE } from '../series/SeriesContent/TitleSection';
 import { BeinImageSizes } from './constants';
 
 export const formatSource = (source: any, width?: number): Source => {
@@ -40,4 +45,53 @@ export const getWidthStyle = (style: StyleProp<ImageStyle>): number | undefined 
     ...(typeof cur === 'object' ? cur : {}),
   }), {} as any);
   return styleObj.width;
+};
+
+export const getImageUrlsForPreloadImagesOnNewsFeed = (postData: IPost[] | IPost) => {
+  const urlPreloadImages = [];
+  let posts: IPost[] = [];
+
+  if (isArray(postData)) {
+    posts = posts.concat(postData);
+  } else {
+    posts.push(postData);
+  }
+
+  posts.forEach((post) => {
+    if (post.type === PostType.ARTICLE || post.type === PostType.SERIES) {
+      const { coverMedia } = post;
+
+      if (!coverMedia) return;
+
+      const widthCover = post.type === PostType.ARTICLE ? COVER_ARTICLE_WIDTH : THUMBNAIL_SERIES_SIZE;
+
+      urlPreloadImages.push(formatSource(coverMedia.url, widthCover));
+
+      return;
+    }
+
+    const { media } = post;
+    const { images } = media || {};
+
+    if (!images || images.length === 0) {
+      return;
+    }
+
+    const { widthLargeImage, widthSmallImage } = initLayoutImages(images, WIDTH_CONTAINER_PHOTO_PREVIEW_DEFAULT);
+
+    // first image
+    urlPreloadImages.push(formatSource(images[0].url, widthLargeImage));
+    // others image
+    if (images.length >= 2) {
+      urlPreloadImages.push(formatSource(images[1].url, widthSmallImage));
+    }
+    if (images.length >= 3) {
+      urlPreloadImages.push(formatSource(images[2].url, widthSmallImage));
+    }
+    if (images.length >= 4) {
+      urlPreloadImages.push(formatSource(images[3].url, widthSmallImage));
+    }
+  });
+
+  return urlPreloadImages;
 };

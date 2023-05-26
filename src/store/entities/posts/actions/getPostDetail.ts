@@ -44,11 +44,13 @@ const getPostDetail = (_set, get) => async (payload: IPayloadGetPostDetail) => {
       const responeReportContent = await streamApi.getReportContent(
         paramGetReportContent,
       );
-      if (responeReportContent?.data) {
+      if (responeReportContent?.data?.list?.length > 0) {
         response = responeReportContent.data.list;
         useReportContentStore
           .getState()
           .actions.addToReportDetailsPost(response);
+      } else {
+        actions.deletePostLocal(postId);
       }
     } else {
       const responePostDetail = await streamApi.getPostDetail(params);

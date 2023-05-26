@@ -48,6 +48,7 @@ const UserProfile = (props: any) => {
     gender,
     birthday,
     latestWork,
+    isVerified,
   } = userProfileData || {};
 
   const myProfileData = useCommonController((state) => state.myProfile);
@@ -130,6 +131,7 @@ const UserProfile = (props: any) => {
             username={username}
             latestWork={latestWork}
             isCurrentUser={isCurrentUser}
+            isVerified={isVerified}
           />
           <Divider color={colors.gray5} size={spacing.padding.large} />
           <BasicInfo

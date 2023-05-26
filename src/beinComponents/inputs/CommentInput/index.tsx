@@ -22,7 +22,7 @@ import PasteInput from 'react-native-paste-image-input';
 import Button from '~/beinComponents/Button';
 import Icon from '~/baseComponents/Icon';
 import Image from '~/components/Image';
-import ImagePicker from '~/beinComponents/ImagePicker';
+import ImagePicker from '~/components/ImagePicker';
 import CommentInputFooter from '~/beinComponents/inputs/CommentInput/CommentInputFooter';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
@@ -39,7 +39,6 @@ import { checkPermission, PermissionTypes } from '~/utils/permission';
 import { formatTextWithEmoji } from '~/utils/emojis';
 import { IGiphy } from '~/interfaces/IGiphy';
 import useUploaderStore from '~/store/uploader';
-import { getErrorMessageFromResponse } from '~/utils/link';
 import { getImagePastedFromClipboard } from '~/utils/images';
 
 export interface ICommentInputSendParam {
@@ -172,9 +171,11 @@ const CommentInput: React.FC<CommentInputProps> = ({
   }, [uploadedFile]);
 
   useEffect(() => {
-    const errorMessage = getErrorMessageFromResponse(uploadError) || t('post:error_upload_photo_failed');
-    setError(errorMessage);
-    setUploading(false);
+    if (uploadError) {
+      const errorMessage = typeof uploadError === 'string' ? uploadError : t('post:error_upload_photo_failed');
+      setError(errorMessage);
+      setUploading(false);
+    }
   }, [uploadError]);
 
   useEffect(() => {

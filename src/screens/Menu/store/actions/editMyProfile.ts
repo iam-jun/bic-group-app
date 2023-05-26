@@ -14,7 +14,6 @@ const editMyProfile = (_set, get) => async ({
 }: {
   isVerified
   data: IUserEdit;
-  editFieldToastMessage?: string;
   callback?: () => void;
 }) => {
   const { actions }: IMenuController = get();

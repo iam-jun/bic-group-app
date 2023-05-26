@@ -44,7 +44,7 @@ exports[`InvalidSeriesTagsContentModal component should renders correctly 1`] = 
             ]
           }
         >
-          The following information will be removed when removed audiences:
+          The following information will be removed when removed communities / groups:
         </Text>
         <View
           style={
@@ -173,7 +173,7 @@ exports[`InvalidSeriesTagsContentModal component should renders correctly 1`] = 
             ]
           }
         >
-          Are you sure you want to remove audience?
+          Are you sure you want to remove communities / groups?
         </Text>
       </View>
     </View>

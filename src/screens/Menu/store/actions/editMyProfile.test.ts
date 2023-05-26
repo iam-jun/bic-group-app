@@ -32,7 +32,6 @@ describe('editMyProfile action', () => {
         id: fakeProfile.id,
         fullname: fakeProfile.fullname,
       },
-      editFieldToastMessage: null,
       callback: fakeCallback,
     };
 

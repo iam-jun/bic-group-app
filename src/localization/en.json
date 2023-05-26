@@ -10,7 +10,9 @@
       "short_hour": "h",
       "short_day": "d",
       "short_week": "w",
-      "short_year": "y"
+      "short_year": "y",
+      "minutes": "mins",
+      "hours": "hours"
     },
     "text_update_title": "New update",
     "text_update_content": "System optimization, faster, more convenient",
@@ -87,7 +89,9 @@
     "label_confirm_send_video": "Send this video?",
     "error": {
       "file": {
-        "over_file_size": "Your file must be less than {n}"
+        "over_file_size": "Your file must be less than {n}",
+        "file_exceed_limit": "File exceeds {n} limit",
+        "file_type_not_support": "File format is not supported"
       }
     },
     "label_discard_changes": "Discard Changes",
@@ -145,20 +149,20 @@
     "text_request_other": "Requests",
     "text_admin": "Admin",
     "text_failed_to_upload": "Failed to upload",
-    "permission_photo_title": "Allow Bein to access your photo and video library",
+    "permission_photo_title": "Allow BIC Group to access your photo and video library",
     "permission_photo_description": "Your access request has been denied recently. Please grant access from Settings with following steps:",
     "permission_photo_list": {
       "ios": {
         "step_1": "Open Settings",
-        "step_2": "Tap Privacy",
-        "step_3": "Open Photos",
+        "step_2": "Select Privacy & Security",
+        "step_3": "Select Photos ➝ BIC Group",
         "step_4": "Choose Option “All Photos”"
       },
       "android": {
-        "step_1": "Go to Settings",
-        "step_2": "Find App Settings",
-        "step_3": "Find Icon Bein",
-        "step_4": "Turn on Permission for Photos"
+        "step_1": "Open Settings",
+        "step_2": "Select App Settings",
+        "step_3": "Select BIC Group",
+        "step_4": "Allow permission access to Photos & Videos"
       }
     },
     "permission_add_photo_blocked": "Cannot save photo to your library, please go to settings and enable the permission",
@@ -193,11 +197,11 @@
     "text_year": "{{number}} year",
     "text_never": "Never",
     "text_custom": "Custom",
-    "text_add_cover": "Add a cover",
+    "text_add_cover": "+ Add cover",
     "text_optional": "optional",
     "articles": "Articles",
     "last_updated": "Last updated",
-    "audiences": "Audiences",
+    "audiences": "Communities / Groups",
     "text_other_audience_one": "+ {{count}} other",
     "text_other_audience_other": "+ {{count}} others",
     "text_save_fail": "Save fail.",
@@ -526,7 +530,7 @@
     "btn_unblock": "Unblock",
     "title_unblock_user_name": "Unblock {{name}}?",
     "text_unblock_user_name_result": "Unblocking this user will allow them to interact with you again below:",
-    "title_blocked_users_list_empty": "Blocked users list is empty",
+    "title_blocked_users_list_empty": "You haven't blocked anyone",
     "text_blocked_users_list_empty": "User not found",
     "text_blocked_at": "Blocked at",
     "title_privacy": "Privacy",
@@ -617,9 +621,11 @@
   "your_content": {
     "title_draft": "Drafted",
     "title_schedule_article": "Scheduled",
+    "title_published": "Published",
     "title_report_content": "Reported",
     "text_empty": "There are no scheduled content yet!",
-    "text_no_reported_content": "There are no reported content now!"
+    "text_no_reported_content": "There are no reported content now!",
+    "text_no_publish_content": "There are no publish content now!"
   },
   "article": {
     "title": {
@@ -638,7 +644,7 @@
     "text_option_edit_summary": "Description",
     "text_option_edit_cover": "Cover",
     "text_option_edit_category": "Topics",
-    "text_option_edit_audience": "Audiences",
+    "text_option_edit_audience": "Communities / Groups",
     "text_option_edit_series": "Series",
     "text_option_edit_tags": "Tags",
     "text_option_edit_content": "Content",
@@ -656,11 +662,11 @@
     },
     "text_saved": "Article saved.",
     "text_unsaved": "Article unsaved.",
-    "remove_audiences_contains_series_title": "Remove Audience",
+    "remove_audiences_contains_series_title": "Remove Communities / Groups",
     "remove_audiences_contains_series_content": "The following series were removed from this article: ${series}. Process anyway?",
     "remove_series_title": "Remove Series",
     "remove_series_content": "You don't have create article permission at series: ${series}. Do you want to remove series?",
-    "content_delete_audiences": "You can only remove audiences from your article excepting these audiences below. Are you sure do this?",
+    "content_delete_audiences": "You can only remove communities / groups from your article excepting these communities / groups below. Are you sure do this?",
     "search_article_placeholder": "Search article...",
     "modal_add_link": {
       "title": "Create a link",
@@ -672,10 +678,10 @@
       "link_placeholder": "Enter the URL of the embed:"
     },
     "modal_invalid_series_tags": {
-      "title": "Audience Conflict",
-      "title_remove_audience": "Remove Audience",
-      "content_header": "The following information will be removed when removed audiences:",
-      "content_confirm": "Are you sure you want to remove audience?"
+      "title": "Communities / Groups Conflict",
+      "title_remove_audience": "Remove Communities / Groups",
+      "content_header": "The following information will be removed when removed communities / groups:",
+      "content_confirm": "Are you sure you want to remove communities / groups?"
     },
     "tags_maximum_message_info": "Maxium input 5 Tags",
     "text_add_title": "Add title",
@@ -683,7 +689,7 @@
     "text_description_require_max_length": "Maximum 255 characters",
     "text_add_summary": "Add description",
     "text_add_category": "Add topic",
-    "text_add_audience": "Add audience",
+    "text_add_audience": "Add communities / groups",
     "text_add_series": "Add series",
     "text_add_tag": "Add tag",
     "text_add_content": "Add content",
@@ -704,8 +710,9 @@
     "title_edit_post": "Edit Post",
     "title_edit_comment": "Edit comment",
     "title_edit_images": "Edit images",
-    "title_post_to": "Post to",
-    "mention_title": "Can only mention people in your selected audiences",
+    "title_publish_to": "Publish to...",
+    "title_published_to": "Published to...",
+    "mention_title": "Can only mention people in your selected communities / groups",
     "mention_empty_content": "No people found",
     "label_seen_by": "Interested by ",
     "button_like": "Like",
@@ -735,9 +742,9 @@
     "title_delete_article": "Delete Article",
     "content_delete_article": "Do you want to delete this article?",
     "title_delete_audiences_of_post": "You Cannot Delete This Post",
-    "content_delete_audiences_of_post": "You can only remove audiences from your post excepting these audiences below. Are you sure do this?",
-    "content_not_able_delete_of_post": "You don't have permission to delete this post because of not allowance from these audiences below.",
-    "text_deleted_audiences": "Your post has been removed audiences.",
+    "content_delete_audiences_of_post": "You can only remove communities / groups from your post excepting these communities / groups below. Are you sure do this?",
+    "content_not_able_delete_of_post": "You don't have permission to delete this post because of not allowance from these communities / groups below.",
+    "text_deleted_audiences": "Your post has been removed from communities / groups.",
     "alert_title_back_edit_post": "Discard changes",
     "alert_content_back_edit_post": "If you discard now, you’ll lose any changes you’ve made to this post.",
     "alert_title_back_create_post": "Discard new post",
@@ -750,7 +757,7 @@
     "create_new_post": "Write your today discoveries...",
     "post_button": "Post",
     "send_to": "Send to",
-    "post_to": "Post to",
+    "publish_to": "Publish to",
     "save": "Save",
     "and": "and",
     "to": "to",
@@ -770,8 +777,8 @@
     "expiring_time": "Expiring Time",
     "expire_time_desc": "This post stay on top of feed until expire time.",
     "search_results": "Search results",
-    "search_audiences_placeholder": "Search Audience...",
-    "text_chosen_audience": "Chosen audience",
+    "search_audiences_placeholder": "Search Communities / Groups...",
+    "text_chosen_audience": "Chosen communities / groups",
     "text_select_all_audience": "Select all",
     "group_manage": "Your Groups",
     "people_search": "People",
@@ -831,14 +838,17 @@
     },
     "create_post": {
       "title_discard_changes": "Discard Changes",
-      "title_audience_changed": "Audience has changed",
-      "title_discard_audience": "Discard Audiences",
+      "title_audience_changed": "Communities / Groups has changed",
+      "title_discard_audience": "Discard Communities / Groups",
       "text_discard_audience": "If you discard now, you’ll lose all your selection.",
       "text_discard_change": "Are you sure to want to discard changes?",
-      "text_discard_change_audience": "Are you sure to change the audience? This change will also effect on post's permission",
+      "text_discard_change_audience": "Are you sure to change the communities / groups? This change will also effect on post's permission",
       "btn_save_change": "Save Changes",
       "btn_keep_edit": "Keep Editing",
-      "btn_keep_selecting": "Keep Selecting"
+      "btn_keep_selecting": "Keep Selecting",
+      "preview_image": "Preview",
+      "edit": "Edit",
+      "remove_all_image": "Remove all"
     },
     "draft": {
       "title_draft": "Draft",
@@ -930,7 +940,7 @@
     "no_group_found_desc": "Ooops, Group not found",
     "no_group_found_second_desc": "We couldn't find that group page.",
     "button_back_to_safety": "Back to Safety",
-    "no_profile_found_title": "No User Found",
+    "no_profile_found_title": "User not found",
     "no_profile_found_desc": "User not found",
     "no_profile_found_second_desc": "We cannot identify the person you are looking for."
   },
@@ -1110,7 +1120,10 @@
     "mark_as_read": "Mark as Read",
     "mark_as_unread": "Mark as Unread",
     "off_notification_from_group": "Turn off Notification",
-    "seen_all_notifications": "You have seen it all"
+    "seen_all_notifications": "You have seen it all",
+    "text_scheduled": "Scheduled Maintenance Downtime",
+    "content_scheduled_maintenance_downtime": "We’ll improve the platform to enhance your experience. During maintenance, it may be temporarily unavailable or have limited functionality.\n \nMaintenance will start at **(startAt)** in about **(duration)**.\n \nWe apologize for any inconvenience and appreciate your continued support.",
+    "text_bic_team": "BIC team"
   },
   "new_feature": {
     "title": "New feature",
@@ -1303,7 +1316,8 @@
     "text_file_over_size": "Your files are larger than 25MB",
     "text_file_over_length": "You cannot upload more than {{max_files}} files",
     "text_file_extension_not_supported": "Not Supported",
-    "text_file_remainning": "The maximum files is {{max_files}} and {{remaining_size}} is available to upload"
+    "text_file_remainning": "The maximum files is {{max_files}} and {{remaining_size}} is available to upload",
+    "text_upload_image_fail": "Failed to upload"
   },
   "file_type": {
     "image": "image",
@@ -1351,12 +1365,12 @@
     "content_delete_series": "Do you want to delete this series?",
     "text_delete_series_success": "Series deleted",
     "title_delete_audiences_of_series": "You Cannot Delete This Series",
-    "content_delete_audiences_of_series": "You can only remove audiences from your series excepting these audiences below. Are you sure do this?",
-    "content_not_able_delete_of_series": "You don't have permission to delete this series because of not allowance from these audiences below.",
-    "text_deleted_audiences": "Your series has been removed audiences.",
+    "content_delete_audiences_of_series": "You can only remove communities / groups from your series excepting these communities / groups below. Are you sure do this?",
+    "content_not_able_delete_of_series": "You don't have permission to delete this series because of not allowance from these communities / groups below.",
+    "text_deleted_audiences": "Your series has been removed communities / groups.",
     "text_edit_series_success": "Series updated.",
     "text_edit_series_failed": "Series was failed to publish",
-    "title_edit_audience_failed": "Audience Change?",
+    "title_edit_audience_failed": "Communities / Groups Change?",
     "content_edit_audience_failed": "You don't have delete own post permission at group:",
     "text_saved": "Series saved.",
     "text_unsaved": "Series unsaved.",
@@ -1428,6 +1442,7 @@
     "unpinned_successfully": "Unpinned successfully",
     "there_is_no_groups": "There is no groups",
     "reorder_pinned": "Reorder pinned",
-    "drag_and_drop_to_reorder_pinned": "Drag and drop to reorder pinned"
+    "drag_and_drop_to_reorder_pinned": "Drag and drop to reorder pinned",
+    "check_all": "Check all"
   }
 }

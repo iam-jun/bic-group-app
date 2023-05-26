@@ -18,6 +18,7 @@ messaging().setBackgroundMessageHandler(async (remoteMessage) => {
 });
 
 messaging().subscribeToTopic('maintenance_channel')
+  // eslint-disable-next-line no-console
   .then(() => console.log('Subscribed to topic maintenance_channel'))
   .catch((error) => {
     console.warn(

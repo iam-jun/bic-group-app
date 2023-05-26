@@ -87,7 +87,6 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig): Promise<Axi
     case apiProviders.beinFeed.name:
     case apiProviders.beinNotification.name:
     case apiProviders.beinUpload.name:
-    case apiProviders.beinMaintenance.name:
       requestConfig.headers = beinHeaders;
       break;
     case apiProviders.beinUploadS3.name:
@@ -95,6 +94,8 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig): Promise<Axi
         ...commonHeaders,
         ...requestConfig.headers,
       };
+      break;
+    case apiProviders.beinMaintenance.name:
       break;
     default:
       return Promise.resolve(null);

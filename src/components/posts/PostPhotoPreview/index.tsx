@@ -1,7 +1,6 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC, useState } from 'react';
 import {
-  Dimensions,
   StyleProp,
   StyleSheet,
   View,
@@ -16,12 +15,8 @@ import UploadingImage from '~/beinComponents/UploadingImage';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { ResourceUploadType } from '~/interfaces/IUpload';
 import { IActivityDataImage } from '~/interfaces/IPost';
-import dimension from '~/theme/dimension';
-
-const DeviceWidth = Dimensions.get('window').width;
-const DeviceHeight = Dimensions.get('window').height;
-const ASPECT_RATIO = 0.9;
-const SQUARE_RATIO = 1;
+import { initLayoutImages } from './helper';
+import { dimension } from '~/theme';
 
 export interface PostPhotoPreviewProps {
   style?: StyleProp<ViewStyle>;
@@ -35,10 +30,12 @@ export interface PostPhotoPreviewProps {
   onPressMarkSeenPost?: () => void;
 }
 
+export const WIDTH_CONTAINER_PHOTO_PREVIEW_DEFAULT = dimension.deviceWidth;
+
 const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   style,
   data = [],
-  width = DeviceWidth,
+  width = WIDTH_CONTAINER_PHOTO_PREVIEW_DEFAULT,
   disabled = false,
   enableGalleryModal = false,
   uploadType,
@@ -57,47 +54,32 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
     return null;
   }
 
-  const imageRatioFirst = (data?.[0]?.width || 1) / (data?.[0]?.height || 1);
-  const imageRatioSecond = (data?.[1]?.width || 1) / (data?.[1]?.height || 1);
-  const isVerticalFirst = imageRatioFirst <= ASPECT_RATIO;
-  const isVerticalSecond = imageRatioSecond <= ASPECT_RATIO;
-  const isSquareFirst = imageRatioFirst === SQUARE_RATIO;
-  const isSquareSecond = imageRatioSecond === SQUARE_RATIO;
-
-  const isMessyOrientation
-    = (isVerticalFirst !== isVerticalSecond
-      || (!isVerticalFirst && isSquareSecond)
-      || (isSquareFirst && !isVerticalSecond))
-    && data?.length === 2;
-  const isOnlyOneImageVerticle = isVerticalFirst && data?.length === 1;
-  const isBothSquare = isSquareFirst && isSquareSecond && data?.length === 2;
-
-  const dfSize = Math.min(width, dimension.maxNewsfeedWidth);
-  const _width = data?.length === 1 ? dfSize : dfSize;
-  const _height = getHeighContainer(
-    dfSize,
-    data,
-    imageRatioFirst,
-    isVerticalFirst,
-    isMessyOrientation,
-    isBothSquare,
-  );
-
-  const containerImagesDirection
-    = isVerticalFirst || isMessyOrientation || isBothSquare ? 'row' : 'column';
-
-  const containerSmallImagesDirection = isVerticalFirst ? 'column' : 'row';
-
-  const containerStyle: any = {
-    flexDirection: containerImagesDirection,
-    width: _width,
-    height: _height,
-  };
+  const {
+    widthLargeImage,
+    widthSmallImage,
+    layoutWidth,
+    layoutHeight,
+    isOnlyOneLongImage,
+    containerImagesDirection,
+    containerSmallImagesDirection,
+    spacingImage,
+  } = initLayoutImages(data, width) || {};
 
   const wrapperStyle: any = {
-    width: dfSize,
+    width: layoutWidth,
     alignItems: 'center',
     backgroundColor: data?.length === 1 ? colors.gray40 : colors.white,
+  };
+
+  const containerImagesStyle: any = {
+    flexDirection: containerImagesDirection,
+    width: layoutWidth,
+    height: layoutHeight,
+  };
+
+  const containerSmallImagesStyle = {
+    flex: 1,
+    flexDirection: containerSmallImagesDirection,
   };
 
   const _onPress = (e: any, indexImg: number) => {
@@ -118,7 +100,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
     const result: any = [];
     data.forEach((item) => {
       result.push({
-        name: item.origin_name || item.name,
+        id: item.id,
         uri: item.url,
       });
     });
@@ -146,9 +128,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
 
     return (
       <>
-        {separate && (
-        <ViewSpacing width={SPACING_IMAGE} height={SPACING_IMAGE} />
-        )}
+        {separate && <ViewSpacing width={spacingImage} height={spacingImage} />}
         <Button
           style={styles.flex1}
           disabled={disabled}
@@ -170,7 +150,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   };
 
   const renderBlurImageBackground = () => {
-    if (!isOnlyOneImageVerticle) return null;
+    if (!isOnlyOneLongImage) return null;
 
     return (
       <RNImage
@@ -183,7 +163,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
 
   return (
     <View testID="post_photo_preview" style={[wrapperStyle, style]}>
-      <View style={[styles.container, containerStyle]}>
+      <View style={[styles.container, containerImagesStyle]}>
         <View style={{ flex: data?.length === 2 ? 1 : 2 }}>
           <Button
             disabled={disabled}
@@ -195,11 +175,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
             <UploadingImage
               style={styles.image}
               uploadType={uploadType}
-              width={
-                isOnlyOneImageVerticle
-                  ? 0.78 * _width
-                  : getWidthLargeImage(_width, data?.length, containerImagesDirection)
-              }
+              width={widthLargeImage}
               height="100%"
               url={data[0].url || data[0].name}
             />
@@ -207,27 +183,24 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
         </View>
         {data?.length > 1 && (
           <>
-            <ViewSpacing width={SPACING_IMAGE} height={SPACING_IMAGE} />
+            <ViewSpacing width={spacingImage} height={spacingImage} />
             <View
-              style={{
-                flex: 1,
-                flexDirection: containerSmallImagesDirection,
-              }}
+              style={containerSmallImagesStyle}
             >
               {renderSmallImage(
                 1,
-                getWidthSmallImage(_width, data?.length, containerSmallImagesDirection),
+                widthSmallImage,
                 data?.[1]?.url || data?.[1]?.name,
               )}
               {renderSmallImage(
                 2,
-                getWidthSmallImage(_width, data?.length, containerSmallImagesDirection),
+                widthSmallImage,
                 data?.[2]?.url || data?.[2]?.name,
                 true,
               )}
               {renderSmallImage(
                 3,
-                getWidthSmallImage(_width, data?.length, containerSmallImagesDirection),
+                widthSmallImage,
                 data?.[3]?.url || data?.[3]?.name,
                 true,
                 data?.length > 4,
@@ -251,8 +224,6 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   );
 };
 
-const SPACING_IMAGE = 4;
-
 const createStyle = () => StyleSheet.create({
   container: {},
   image: { borderRadius: 0 },
@@ -274,56 +245,3 @@ const createStyle = () => StyleSheet.create({
 });
 
 export default PostPhotoPreview;
-
-const getHeighContainer = (
-  dfSize,
-  data,
-  imageRatioFirst,
-  isVerticalFirst,
-  isMessyOrientation,
-  isBothSquare,
-) => {
-  if (data?.length === 1 && !isVerticalFirst) {
-    return dfSize / imageRatioFirst;
-  }
-  if (data?.length === 1 && isVerticalFirst) {
-    return DeviceHeight * 0.7;
-  }
-  if (isMessyOrientation || isBothSquare) {
-    return dfSize / 2;
-  }
-
-  return dfSize;
-};
-
-const getWidthSmallImage = (
-  widthContainer: number,
-  numberOfImages: number,
-  flexDirection: 'row' | 'column',
-) => {
-  if (flexDirection === 'column') {
-    if (numberOfImages === 2) {
-      return (widthContainer - SPACING_IMAGE) / 2;
-    }
-    return (widthContainer - SPACING_IMAGE) / 3;
-  }
-  if (numberOfImages === 2) {
-    return widthContainer;
-  }
-  const numberOfHorizontalImages = numberOfImages === 3 ? 2 : 3;
-  return (widthContainer - SPACING_IMAGE * (numberOfHorizontalImages - 1)) / numberOfHorizontalImages;
-};
-
-const getWidthLargeImage = (
-  widthContainer: number,
-  numberOfImages: number,
-  flexDirection: 'row' | 'column',
-) => {
-  if (flexDirection === 'column' || (flexDirection === 'row' && numberOfImages === 1)) {
-    return widthContainer;
-  }
-  if (numberOfImages === 2) {
-    return (widthContainer - SPACING_IMAGE) / 2;
-  }
-  return (widthContainer - SPACING_IMAGE) * (2 / 3);
-};

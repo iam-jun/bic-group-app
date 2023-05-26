@@ -19,6 +19,7 @@ import homeStack from './navigator/MainStack/stacks/homeStack/stack';
 import menuStack from './navigator/MainStack/stacks/menuStack/stack';
 import mainStack from './navigator/MainStack/stack';
 import { ContentType } from '~/interfaces/INotification';
+import notiStack from './navigator/MainStack/stacks/notiStack/stack';
 
 export const isNavigationRefReady: any = React.createRef();
 
@@ -36,6 +37,7 @@ export interface Props {
     params?: IObject<unknown>,
   ) => void;
   setParams: (params: any) => void;
+  pop: (index: number) => void;
 }
 
 export const withNavigation = (navigationRef: RefObject<NavigationContainerRef<any>> | null | undefined): Props => {
@@ -110,6 +112,10 @@ export const withNavigation = (navigationRef: RefObject<NavigationContainerRef<a
     navigationRef?.current?.dispatch(StackActions.popToTop());
   };
 
+  const pop = (index: number) => {
+    navigationRef?.current?.dispatch(StackActions.pop(index));
+  };
+
   const nestedNavigate = (
     parentName: string,
     name: string,
@@ -137,6 +143,7 @@ export const withNavigation = (navigationRef: RefObject<NavigationContainerRef<a
     popToTop,
     nestedNavigate,
     setParams,
+    pop,
   };
 };
 
@@ -161,6 +168,9 @@ export const getScreenAndParams = (data: {
   contentId: string;
   contentType: string;
   userId: string;
+  seriesId: string;
+  duration: number;
+  startAt: string;
 }) => {
   if (isEmpty(data)) {
     return null;
@@ -177,7 +187,17 @@ export const getScreenAndParams = (data: {
     contentId = null,
     contentType = '',
     userId = '',
+    seriesId = '',
+    duration = 0,
+    startAt = '',
   } = data || {};
+
+  if (duration) {
+    return {
+      screen: notiStack.notiMaintenancePage,
+      params: { maintenanceInfo: { startAt, duration } },
+    };
+  }
 
   if (type === undefined) {
     return null;
@@ -301,10 +321,17 @@ export const getScreenAndParams = (data: {
       break;
 
     case NOTIFICATION_TYPE.LEAVE_MULTIPLE_GROUP_TO_USER:
-    case NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME:
       return null;
     case NOTIFICATION_TYPE.APPROVED_KYC:
       return { screen: mainStack.userProfile, params: { userId } };
+    case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER:
+    case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER_IN_MULTIPLE_GROUPS:
+      return {
+        screen: seriesStack.seriesDetail,
+        params: {
+          seriesId,
+        },
+      };
     default:
       console.warn(`Notification type ${type} have not implemented yet`);
       return { screen: homeStack.postDetail, params: { post_id: postId } };

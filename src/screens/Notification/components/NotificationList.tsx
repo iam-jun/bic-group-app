@@ -3,18 +3,19 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import {
   ActivityIndicator,
   Dimensions,
-  FlatList,
   Platform,
   RefreshControl,
   StyleSheet,
   View,
 } from 'react-native';
+import Animated from 'react-native-reanimated';
+import { FlashList } from '@shopify/flash-list';
+import { FlashListProps } from '@shopify/flash-list/src/FlashListProps';
+
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Divider from '~/beinComponents/Divider';
 import NotificationItem from '~/beinComponents/list/items/NotificationItem';
 import Text from '~/baseComponents/Text';
-import { useTabPressListener } from '~/hooks/navigation';
-import { ITabTypes } from '~/interfaces/IRouter';
 import i18n from '~/localization';
 import NoNotificationFound from '~/screens/Notification/components/NoNotificationFound';
 
@@ -22,6 +23,8 @@ import spacing from '~/theme/spacing';
 import INotificationsState from '../store/Interface';
 import useNotificationStore from '../store';
 import notiSelector from '../store/selectors';
+import { useTabPressListener } from '~/hooks/navigation';
+import { ITabTypes } from '~/interfaces/IRouter';
 
 const { width: screenWidth } = Dimensions.get('window');
 export interface Props {
@@ -31,6 +34,12 @@ export interface Props {
   onPressItemOption: (item: any) => void;
   onItemPress: (item: any) => void;
 }
+
+const ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT = 100;
+
+const AnimatedFlashList = Animated.createAnimatedComponent<
+  React.ComponentType<FlashListProps<any>>
+>(FlashList as any);
 
 const NotificationList = ({
   type,
@@ -128,31 +137,36 @@ const NotificationList = ({
 
   const renderUnReadNotificationsEmpty = () => <NoNotificationFound />;
 
-  const keyExtractor = (item: any) => item?.id;
+  const keyExtractor = (item: any) => `noti_id_${item}`;
 
   return (
     <View testID="notification_screen.container" style={styles.container}>
-      {!loadingNotifications ? (
-        <FlatList
+      {!loadingNotifications && notificationList?.length > 0 ? (
+        <AnimatedFlashList
           ref={listRef}
-          style={styles.list}
-          contentContainerStyle={styles.listContainer}
-          keyExtractor={keyExtractor}
+          // @ts-ignore
+          testID="notification_list.list"
           renderItem={renderItem}
-          ItemSeparatorComponent={() => (
-            <Divider size={1} color={theme.colors.neutral5} />
-          )}
+          keyExtractor={keyExtractor}
+          estimatedItemSize={ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT}
+          refreshing
           refreshControl={(
             <RefreshControl
+              testID="notification_list.refresh_control"
               refreshing={refreshing}
               onRefresh={refreshListNotification}
               tintColor={theme.colors.gray40}
             />
-      )}
+          )}
+          showsHorizontalScrollIndicator={false}
           data={notificationList}
           ListEmptyComponent={renderUnReadNotificationsEmpty}
           onEndReached={loadMoreNotifications}
           ListFooterComponent={renderListFooter}
+          ItemSeparatorComponent={() => (
+            <Divider size={1} color={theme.colors.neutral5} />
+          )}
+          contentContainerStyle={styles.listContainer}
         />
       ) : (
         <ActivityIndicator testID="notification_screen.loading" color={theme.colors.gray20} />

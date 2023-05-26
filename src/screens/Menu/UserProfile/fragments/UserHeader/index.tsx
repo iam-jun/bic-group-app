@@ -11,6 +11,8 @@ import BlockUserInfo from '~/components/BlockUserInfo';
 import useBlockingStore from '~/store/blocking';
 import VerifiedView from '~/components/VerifiedView';
 import useTooltip from '../../../../../components/Tooltip.tsx/stores';
+import { useRootNavigation } from '~/hooks/navigation';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 interface Props {
   id: string;
@@ -26,11 +28,12 @@ interface Props {
 }
 
 const UserHeader = ({
-  id, fullname, username, screenId, latestWork, isCurrentUser, isVerified = true,
+  id, fullname, username, screenId, latestWork, isCurrentUser, isVerified,
 }:Props) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
+  const { rootNavigation } = useRootNavigation();
 
   const { showModal, hideModal } = useModalStore((state) => state.actions);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -42,12 +45,13 @@ const UserHeader = ({
     tooltipActions.setUpScreenTooltip(screenId);
   }, [screenId]);
 
-  const disableButtonBlockUser = () => {
+  const blockUserSuccess = () => {
     setIsDisabled(true);
+    rootNavigation.navigate(mainStack.blocking, { popScreen: 2 });
   };
 
   const onConfirmBlock = () => {
-    actions.blockUser(id, disableButtonBlockUser);
+    actions.blockUser(id, blockUserSuccess);
     onCancelBlock();
   };
 

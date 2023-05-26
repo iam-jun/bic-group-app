@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash';
 import streamApi from '~/api/StreamApi';
 import { getReportContent } from '~/helpers/common';
 import { IParamGetArticleDetail, IPayloadGetArticleDetail } from '~/interfaces/IArticle';
@@ -20,6 +21,13 @@ const getArticleDetail = (set, get) => async (payload: IPayloadGetArticleDetail)
 
     if (isReported) {
       response = await getReportContent({ id, type: TargetType.ARTICLE });
+      if (isEmpty(response)) {
+        set((state) => {
+          delete state.requestings[id];
+          state.errors[id] = true;
+        }, 'getArticlesReportedError');
+        return;
+      }
     } else {
       const params = {
         withComment: !isAdmin,

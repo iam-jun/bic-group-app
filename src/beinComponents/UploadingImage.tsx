@@ -2,10 +2,10 @@ import React, {
   FC, useCallback, useEffect, useState,
 } from 'react';
 import {
-  StyleProp, StyleSheet, View, ViewStyle,
+  StyleProp, StyleSheet, View, ViewStyle, Image as RNImage,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import Button from '~/beinComponents/Button';
+import Button from '~/baseComponents/Button';
 import Icon from '~/baseComponents/Icon';
 import Image from '~/components/Image';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
@@ -21,6 +21,7 @@ import { formatBytes } from '~/utils/formatter';
 
 export interface UploadingImageProps {
   style?: StyleProp<ViewStyle>;
+  styleError?: StyleProp<ViewStyle>;
   uploadType: ResourceUploadType;
   file?: IFilePicked;
   fileName?: string;
@@ -31,10 +32,12 @@ export interface UploadingImageProps {
   onPressRemove?: () => void;
   onError?: (error) => void;
   renderError?: any;
+  showThumbnail?: boolean;
 }
 
 const UploadingImage: FC<UploadingImageProps> = ({
   style,
+  styleError,
   uploadType,
   file,
   fileName,
@@ -45,6 +48,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
   onPressRemove,
   onError,
   renderError,
+  showThumbnail = false,
 }: UploadingImageProps) => {
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
@@ -53,6 +57,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
   const actions = useUploaderStore((state) => state.actions);
   const uploadError = useUploaderStore(useCallback((state) => state.errors[fileName], [fileName]));
   const uploadedFile = useUploaderStore(useCallback((state) => state.uploadedFiles[fileName], [fileName]));
+  const uploadingFile = useUploaderStore(useCallback((state) => state.uploadingFiles[fileName], [fileName]));
 
   const [imageUrl, setImageUrl] = useState<string>(url);
   const [error, setError] = useState('');
@@ -108,6 +113,14 @@ const UploadingImage: FC<UploadingImageProps> = ({
     setImageUrl(url);
   }, [url]);
 
+  const _onPressRemove = () => {
+    // cancle upload image if uploading
+    if (uploadingFile) {
+      actions.cancel(file);
+    }
+    onPressRemove();
+  };
+
   const renderRemove = () => {
     if (!onPressRemove) {
       return null;
@@ -116,10 +129,53 @@ const UploadingImage: FC<UploadingImageProps> = ({
       <Button
         testID="upload_image.button_close"
         style={styles.icRemove}
-        onPress={onPressRemove}
+        onPress={_onPressRemove}
       >
-        <Icon size={12} icon="iconCloseSmall" />
+        <Icon size={14} icon="iconCloseSmall" tintColor={colors.neutral40} />
       </Button>
+    );
+  };
+
+  const renderThumbnail = () => {
+    const backgroundColor = showThumbnail ? colors.white : colors.neutral1;
+
+    if (!showThumbnail) return <View style={[styles.mask, { backgroundColor, zIndex: 0 }]} />;
+
+    return (
+      <View style={styles.boxThumbnail}>
+        <RNImage source={{ uri: file?.uri }} style={styles.thumbnailLoading} />
+        <View style={[styles.mask, { backgroundColor }]} />
+      </View>
+    );
+  };
+
+  const renderLoading = () => (
+    <View style={styles.contentContainer}>
+      {renderThumbnail()}
+      <LoadingIndicator size="large" color={colors.purple50} />
+    </View>
+  );
+
+  const renderErrorContent = () => {
+    if (uploadingFile) {
+      return (
+        <LoadingIndicator size="large" color={colors.purple50} />
+      );
+    }
+
+    return (
+      <>
+        <Icon icon="CircleExclamation" tintColor={colors.red40} size={30} />
+        <Text.BodyM style={styles.textError}>{error}</Text.BodyM>
+        <Button.Primary
+          type="ghost"
+          style={styles.btnRetry}
+          onPress={() => upload()}
+          useI18n
+        >
+          common:text_retry
+        </Button.Primary>
+      </>
     );
   };
 
@@ -128,14 +184,9 @@ const UploadingImage: FC<UploadingImageProps> = ({
       return renderError(error);
     }
     return (
-      <View style={styles.errorContainer}>
-        <Icon icon="Image" tintColor={colors.red60} />
-        <Text.H6 style={styles.textError}>{error}</Text.H6>
-        <Button onPress={() => upload()}>
-          <Text.H6 style={styles.textRetry} useI18n>
-            common:text_retry
-          </Text.H6>
-        </Button>
+      <View style={[styles.errorContainer, { width, height }, styleError]}>
+        {renderThumbnail()}
+        {renderErrorContent()}
         {renderRemove()}
       </View>
     );
@@ -147,12 +198,8 @@ const UploadingImage: FC<UploadingImageProps> = ({
       testID="upload_image"
     >
       {!!imageUrl ? (
-        <Image source={imageUrl} style={{ height: '100%', width: imgWidthStyle }} />
-      ) : (
-        <View style={styles.contentContainer}>
-          <LoadingIndicator size="large" />
-        </View>
-      )}
+        <Image source={imageUrl} style={[styles.image, { width: imgWidthStyle }]} />
+      ) : renderLoading()}
       {renderRemove()}
     </View>
   );
@@ -162,8 +209,7 @@ const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {
-      backgroundColor: colors.neutral1,
-      borderRadius: spacing.borderRadius.small,
+      borderRadius: spacing.borderRadius.large,
       overflow: 'hidden',
     },
     contentContainer: {
@@ -173,21 +219,20 @@ const createStyle = (theme: ExtendedTheme) => {
       alignItems: 'center',
     },
     errorContainer: {
-      height: 134,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: colors.neutral1,
-      marginBottom: spacing.margin.large,
+      borderRadius: spacing.borderRadius.large,
+      overflow: 'hidden',
     },
     image: { width: '100%', height: '100%' },
     icRemove: {
       position: 'absolute',
       top: spacing.margin.small,
       right: spacing.margin.small,
-      width: 16,
-      height: 16,
-      borderRadius: 8,
-      backgroundColor: colors.white,
+      width: 24,
+      height: 24,
+      borderRadius: 12,
+      backgroundColor: colors.neutral2,
       justifyContent: 'center',
       alignItems: 'center',
       shadowColor: colors.neutral80,
@@ -196,14 +241,33 @@ const createStyle = (theme: ExtendedTheme) => {
       shadowRadius: 4.65,
       elevation: 8,
     },
+    btnRetry: {
+      marginTop: spacing.margin.small,
+      backgroundColor: colors.purple2,
+    },
     textError: {
       marginHorizontal: spacing.margin.extraLarge,
       marginTop: spacing.margin.small,
-      color: colors.red60,
+      color: colors.red40,
+      textAlign: 'center',
     },
-    textRetry: {
-      color: colors.purple60,
-      marginTop: spacing.margin.small,
+    boxThumbnail: {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+    },
+    thumbnailLoading: {
+      position: 'absolute',
+      top: 0,
+      width: '100%',
+      height: '100%',
+    },
+    mask: {
+      position: 'absolute',
+      top: 0,
+      width: '100%',
+      height: '100%',
+      opacity: 0.8,
     },
   });
 };

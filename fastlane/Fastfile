@@ -1,6 +1,12 @@
 fastlane_require 'dotenv'
 
 platform :android do
+  before_all do
+      sh("git checkout -- .")
+      branch = sh("git rev-parse --abbrev-ref HEAD").strip
+      sh("git pull origin #{branch}")
+    end
+
   lane :update_staging do |options|
     Dotenv.overload('../.env.base', '../.env.staging')
     disable_notice = options[:disable_notice]
@@ -32,7 +38,7 @@ platform :android do
         notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
       end
     rescue => error
-      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, error, "#F64E60")
+      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, 'Build failed', "#F64E60")
     end
 
   end
@@ -68,7 +74,7 @@ platform :android do
           notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
         end
       rescue => error
-        notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, error, "#F64E60")
+        notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, 'Build failed', "#F64E60")
       end
 
     end
@@ -104,7 +110,7 @@ platform :android do
         notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
       end
     rescue => error
-      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, error, "#F64E60")
+      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, 'Build failed', "#F64E60")
     end
 
   end
@@ -288,6 +294,10 @@ end
 platform :ios do
   before_all do
     setup_circle_ci
+    app_store_connect_api_key(key_id: ENV['APPLE_KEY_ID'],issuer_id: ENV['APPLE_ISSUER_ID'],key_content: ENV['APPLE_KEY_CONTENT'])
+    sh("git checkout -- .")
+    branch = sh("git rev-parse --abbrev-ref HEAD").strip
+    sh("git pull origin #{branch}")
   end
 
   lane :sync_profile do
@@ -326,7 +336,7 @@ platform :ios do
         notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
       end
     rescue => error
-      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, error, "#F64E60")
+      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, 'Build failed', "#F64E60")
     end
 
   end
@@ -362,7 +372,7 @@ platform :ios do
           notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
         end
       rescue => error
-        notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, error, "#F64E60")
+        notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, 'Build failed', "#F64E60")
       end
 
     end
@@ -398,13 +408,16 @@ platform :ios do
         notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
       end
     rescue => error
-      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, error, "#F64E60")
+      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, 'Build failed', "#F64E60")
     end
 
   end
 
   lane :deploy_staging do
     Dotenv.overload('../.env.base', '../.env.staging')
+
+    UI.message("#Badging app icon")
+    add_badge(custom: './fastlane/assets/badge_staging.png')
 
     match(
       type: "appstore",
@@ -443,7 +456,6 @@ platform :ios do
       app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.staging",
       ipa: "./fastlane/staging/#{ENV['SCHEME_NAME_IOS']}.ipa",
       changelog: "Staging version #{ENV['APP_VERSION']}",
-      api_key_path: "./fastlane/api_key_info.json",
     )
 
     update_staging({:download_destination => 'TestFlight'})
@@ -452,6 +464,9 @@ platform :ios do
 
   lane :deploy_prerelease do
     Dotenv.overload('../.env.base', '../.env.prerelease')
+
+    UI.message("#Badging app icon")
+    add_badge(custom: './fastlane/assets/badge_release.png')
 
     match(
       type: "appstore",
@@ -490,7 +505,6 @@ platform :ios do
       app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.prerelease",
       ipa: "./fastlane/prerelease/#{ENV['SCHEME_NAME_IOS']}.ipa",
       changelog: "Release version #{ENV['APP_VERSION']}",
-      api_key_path: "./fastlane/api_key_info.json",
     )
 
     update_prerelease({:download_destination => 'TestFlight'})
@@ -537,7 +551,6 @@ platform :ios do
       app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}",
       ipa: "./fastlane/production/#{ENV['SCHEME_NAME_IOS']}.ipa",
       changelog: "Production version #{ENV['APP_VERSION']}",
-      api_key_path: "./fastlane/api_key_info.json",
     )
 
     update_production({:download_destination => 'TestFlight'})
@@ -545,17 +558,14 @@ platform :ios do
   end
 
   lane :deploy_staging_ci do
-    app_store_connect_api_key(key_id: ENV['APPLE_KEY_ID'],issuer_id: ENV['APPLE_ISSUER_ID'],key_content: ENV['APPLE_KEY_CONTENT'])
     deploy_staging
   end
 
   lane :deploy_prerelease_ci do
-    app_store_connect_api_key(key_id: ENV['APPLE_KEY_ID'],issuer_id: ENV['APPLE_ISSUER_ID'],key_content: ENV['APPLE_KEY_CONTENT'])
     deploy_prerelease
   end
 
   lane :deploy_production_ci do
-    app_store_connect_api_key(key_id: ENV['APPLE_KEY_ID'],issuer_id: ENV['APPLE_ISSUER_ID'],key_content: ENV['APPLE_KEY_CONTENT'])
     deploy_production
   end
 

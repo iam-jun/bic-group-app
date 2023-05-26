@@ -93,7 +93,7 @@ const TitleSection: FC<TitleSectionProps> = ({
   );
 };
 
-const IMG_SIZE = 90;
+export const THUMBNAIL_SERIES_SIZE = 90;
 
 const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
@@ -103,12 +103,12 @@ const createStyle = (theme: ExtendedTheme) => {
       flexDirection: 'row',
       backgroundColor: colors.purple2,
       borderRadius: borderRadius.large,
-      height: IMG_SIZE,
+      height: THUMBNAIL_SERIES_SIZE,
     },
     img: {
       borderRadius: borderRadius.large,
-      height: IMG_SIZE,
-      width: IMG_SIZE,
+      height: THUMBNAIL_SERIES_SIZE,
+      width: THUMBNAIL_SERIES_SIZE,
     },
     mask: {
       borderRadius: borderRadius.large,

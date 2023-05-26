@@ -25,7 +25,7 @@ import APIErrorCode from '~/constants/apiErrorCode';
 const HEADER_HEIGHT = 244;
 
 const ArticleContentDetail: FC<IRouteParams> = (props) => {
-  const { articleId: id, is_reported: isReported } = props?.route?.params || {};
+  const { articleId: id, is_reported: isReported, noti_id: notiId } = props?.route?.params || {};
   const theme: ExtendedTheme = useTheme();
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets);
@@ -131,10 +131,19 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
       listImage = [{ ...coverMedia }];
     }
 
-    const result = listImage.map((item) => ({
-      uri: item.url,
-      name: item?.name || `${item?.id}.png`,
-    }));
+    const result = listImage.map((item) => {
+      const { url } = item;
+
+      if (!url) return;
+
+      const paths = url.split('/');
+
+      return ({
+        uri: url,
+        id: paths[paths.length - 1],
+      });
+    });
+
     setListImage(result);
   };
 
@@ -180,7 +189,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
     code !== APIErrorCode.Post.CONTENT_GROUP_REQUIRED
     || code !== APIErrorCode.Post.ARTICLE_NO_READ_PERMISSION
   )) {
-    return <ContentUnavailable />;
+    return <ContentUnavailable showButton={!notiId} />;
   }
 
   return (

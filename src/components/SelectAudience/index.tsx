@@ -108,12 +108,12 @@ const SelectAudience = ({ contentType }: SelectAudienceProps) => {
       <SearchInput
         size="large"
         style={styles.searchInput}
-        testID="post_select_audience.search"
         placeholder={t('post:search_audiences_placeholder')}
         onChangeText={onChangeTextSearch}
       />
       <SelectedAudiences />
       <FlatList
+        testID="select_audience.list"
         data={data}
         style={styles.list}
         renderItem={renderItem}
