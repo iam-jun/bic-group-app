@@ -197,6 +197,7 @@ export interface ICreatePostImage {
   fileName?: string;
   file?: IFilePicked;
   url?: string;
+  id?: string;
 }
 
 export interface ICreatePostSettings {
@@ -308,6 +309,7 @@ export interface IPayloadPutEditComment {
   id: string;
   comment: ICommentData;
   data: ICommentData;
+  postId: string;
 }
 
 export interface IPayloadDeletePost {

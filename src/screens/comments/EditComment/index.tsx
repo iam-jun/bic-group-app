@@ -47,6 +47,7 @@ export interface EditCommentProps {
     params?: {
       commentId?: string;
       groupIds?: string;
+      postId?: string;
     };
   };
 }
@@ -61,7 +62,7 @@ const EditComment: FC<EditCommentProps> = ({ route }: EditCommentProps) => {
   const giphyViewRef = useRef<any>();
   const cursorPosition = useRef(0);
 
-  const { commentId, groupIds } = route?.params || {};
+  const { commentId, groupIds, postId } = route?.params || {};
   const {
     contentLoading,
     selectedImage,
@@ -80,7 +81,7 @@ const EditComment: FC<EditCommentProps> = ({ route }: EditCommentProps) => {
     handleSelectEmoij,
     handleSave,
     handleBack,
-  } = useEditComment({ commentId, mentionInputRef });
+  } = useEditComment({ commentId, mentionInputRef, postId });
 
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
