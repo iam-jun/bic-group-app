@@ -1,0 +1,4 @@
+android/app/*
+android/ios/*
+node_modules/*
+

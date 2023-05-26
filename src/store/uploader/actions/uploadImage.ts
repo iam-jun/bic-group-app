@@ -38,7 +38,7 @@ const uploadImage = (set, _get) => async (data: IUploadParam) => {
 
     if (createIdResponse?.data?.data?.presignedPost?.url) {
       // step 2: upload image to s3
-      const responseUploadImg = await uploadApi.uploadImageToS3(
+      const responseUploadImg: any = await uploadApi.uploadImageToS3(
         {
           presignedPostFields: {
             ...createIdResponse?.data?.data?.presignedPost?.fields,
@@ -49,6 +49,7 @@ const uploadImage = (set, _get) => async (data: IUploadParam) => {
         onUploadProgress,
       );
 
+      /* eslint no-else-return: ["error", {allowElseIf: true}] */
       if (responseUploadImg.status === 204) {
         // step 3: get image status
         const responseGetStatus = await uploadApi.getImageStatus(createIdResponse?.data?.data?.id);
@@ -77,6 +78,8 @@ const uploadImage = (set, _get) => async (data: IUploadParam) => {
           // upload image failed
           throw new Error(responseGetStatus?.data?.data?.errorMessage);
         }
+      } else if (responseUploadImg.code === 0) {
+        throw new Error(responseUploadImg.meta.message);
       }
     }
   } catch (error) {
@@ -86,6 +89,7 @@ const uploadImage = (set, _get) => async (data: IUploadParam) => {
       state.errors[file.name] = message;
       state.uploadingFiles?.[file.name] && delete state.uploadingFiles?.[file.name];
     }, 'action uploadImage error');
+    throw error;
   }
 };
 
