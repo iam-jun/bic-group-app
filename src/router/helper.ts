@@ -171,6 +171,7 @@ export const getScreenAndParams = (data: {
   seriesId: string;
   duration: number;
   startAt: string;
+  notificationId: string;
 }) => {
   if (isEmpty(data)) {
     return null;
@@ -190,6 +191,7 @@ export const getScreenAndParams = (data: {
     seriesId = '',
     duration = 0,
     startAt = '',
+    notificationId = '',
   } = data || {};
 
   if (duration) {
@@ -332,6 +334,9 @@ export const getScreenAndParams = (data: {
           seriesId,
         },
       };
+
+    case NOTIFICATION_TYPE.CHANGE_LOGS:
+      return { screen: notiStack.notiChangeLogsPage, params: { id: notificationId } };
     default:
       console.warn(`Notification type ${type} have not implemented yet`);
       return { screen: homeStack.postDetail, params: { post_id: postId } };

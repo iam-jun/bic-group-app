@@ -62,6 +62,10 @@ export const notificationApiConfig = {
     url: `${provider.url}notifications/${id}/mark-unread`,
     method: 'put',
   }),
+  getChangelogNotification: (id: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}notifications/${id}?type=changelogs`,
+  }),
 };
 
 const notificationApi = {
@@ -85,6 +89,7 @@ const notificationApi = {
   markAsUnRead: (activityId: string) => withHttpRequestPromise(
     notificationApiConfig.putMarkAsUnReadById, activityId,
   ),
+  getChangelogNotification: (id: string) => withHttpRequestPromise(notificationApiConfig.getChangelogNotification, id),
 };
 
 export default notificationApi;
