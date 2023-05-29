@@ -1,9 +1,7 @@
 import streamApi from '~/api/StreamApi';
-import { IPayloadAddToAllPost } from '~/interfaces/IPost';
 import { withNavigation } from '~/router/helper';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { rootNavigationRef } from '~/router/refs';
-import usePostsStore from '~/store/entities/posts';
 import { ISeriesState } from '..';
 import i18n from '~/localization';
 import showToast from '~/store/helper/showToast';
@@ -23,12 +21,14 @@ const editSeries = (set, get) => async (
     state.loading = true;
   }, 'editSeries');
   try {
-    const response = await streamApi.editSeries(id, data);
+    await streamApi.editSeries(id, data);
+
     actions.getSeriesDetail(id);
+
     set((state: ISeriesState) => {
       state.loading = false;
     }, 'editSeriesSuccess');
-    usePostsStore.getState().actions.addToPosts({ data: response.data } as IPayloadAddToAllPost);
+
     showToast({ content: 'series:text_edit_series_success' });
 
     if (shouldReplaceWithDetail) {

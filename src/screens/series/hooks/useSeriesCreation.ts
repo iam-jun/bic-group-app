@@ -109,7 +109,7 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
     if (!!seriesId) {
       actions.editSeries(
         seriesId,
-        isFromDetail,
+        !isFromDetail,
         () => handleSave(),
         (listIdAudiences: string[]) => handleEditAudienceError?.(listIdAudiences, series.audience?.groups || []),
       );
@@ -126,7 +126,7 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
       const isCoverMediaUpdated = (series.coverMedia?.id !== data.coverMedia?.id) && !isEmpty(data.coverMedia);
       const isAudienceUpdated = !isEqual(getAudienceIdsFromAudienceObject(series.audience), data.audience)
       && !(isEmpty(data.audience?.groupIds) && isEmpty(data.audience?.userIds));
-      const isSettingsUpdated = !isEqual(series.setting, data.setting);
+      const isSettingsUpdated = !isEqual(initSettings(series.setting), data.setting);
 
       return isTitleUpdated || isCoverMediaUpdated || isAudienceUpdated || isSummaryUpdated || isSettingsUpdated;
     }
