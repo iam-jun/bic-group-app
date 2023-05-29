@@ -42,8 +42,7 @@ const getNames = (
 const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: IUseSeriesCreation) => {
   const { rootNavigation } = useRootNavigation();
 
-  let series: any = {};
-  if (!!seriesId) series = usePostsStore(useCallback(postsSelector.getPost(seriesId, {}), [seriesId]));
+  const series = usePostsStore(useCallback(postsSelector.getPost(seriesId, {}), [seriesId]));
 
   const actions = useSeriesStore((state: ISeriesState) => state.actions);
 
