@@ -131,7 +131,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
     !isHidden && (
       <>
         <View style={styles.boxInterested}>
-          <ArticleReadingTime countWords={733} />
+          <ArticleReadingTime numberWords={733} />
           <ContentInterestedUserCount
             id={id}
             testIDPrefix="article_item"

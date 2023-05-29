@@ -23,7 +23,7 @@ export const isEmptyContent = (content: string | null) => {
   );
 };
 
-export const countWordsFromContent = (str: string) => {
+export const countWords = (str: string) => {
   str = str.trim();
 
   if (str === '') return 0;
@@ -39,7 +39,17 @@ export const getTextFromContent = (node: any) => {
   if (isText(node)) {
     return node?.text;
   }
-  return node?.children?.map((item) => getTextFromContent(item)).join('');
+  return node?.children?.map((item) => getTextFromContent(item)).join(' ');
 };
 
 export const isText = (value: any) => isPlainObject(value) && typeof value?.text === 'string';
+
+export const countWordsFromContent = (content: any) => {
+  const contentParse = content ? JSON.parse(content) : [];
+  const textContent = getTextFromContent({
+    type: 'content',
+    children: contentParse,
+  });
+
+  return countWords(textContent);
+};

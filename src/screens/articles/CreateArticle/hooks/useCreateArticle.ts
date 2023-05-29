@@ -19,6 +19,7 @@ import { withNavigation } from '~/router/helper';
 import {
   getAudienceIdsFromAudienceObject,
   isEmptyContent,
+  countWordsFromContent,
 } from '~/screens/articles/CreateArticle/helper';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import { getMentionsFromContent } from '~/helpers/post';
@@ -101,6 +102,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
 
   // auto save for draft article, so no need to check if content is empty
   const isDraftContentUpdated = article.content !== data.content;
+  const canAutoSave = isDraft && isDraftContentUpdated;
 
   const isHasChange = () => {
     // self check at src/screens/articles/CreateArticle/screens/CreateArticleContent/index.tsx
@@ -206,6 +208,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
       publishedAt,
       setting,
     } = article;
+    console.log('init data number words')
 
     const audienceIds: IEditArticleAudience
       = getAudienceIdsFromAudienceObject(audienceObject);
@@ -249,6 +252,8 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
 
   const handleContentChange = (newContent: string) => {
     actions.setContent(newContent);
+    console.log('set number words')
+    // !canAutoSave && actions.setNumberWords(getNumberWords(newContent));
   };
 
   const handleTitleChange = (newTitle: string) => {
@@ -305,7 +310,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
 
   useEffect(() => {
     // only auto save for draft article
-    if (isDraft && isDraftContentUpdated) {
+    if (canAutoSave) {
       debounceStopTyping();
       debounceTypingConstantly();
     }
@@ -341,6 +346,15 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     // useCreateArticle hook is still not updated at that time
     // so handleSave will hold the old data instead of the new data
     const dataUpdate = useCreateArticleStore.getState().data;
+
+    // clear code
+    const dataUpdateLatest = {
+      ...dataUpdate,
+      numberWord: !canAutoSave ? countWordsFromContent(dataUpdate?.content) : undefined,
+    };
+    //
+
+
     const putEditArticleParams = {
       articleId,
       data: dataUpdate,
@@ -349,6 +363,10 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
       isShowLoading,
       onSuccess,
     } as IPayloadPutEditArticle;
+
+    console.log('count words: ', countWordsFromContent(dataUpdate?.content))
+    console.log('dataUpdateLatest: ', dataUpdateLatest)
+    console.log('canAutoSave: ', canAutoSave)
 
     if (shouldValidateSeriesTags) {
       const onSuccess = () => actions.putEditArticle(putEditArticleParams);

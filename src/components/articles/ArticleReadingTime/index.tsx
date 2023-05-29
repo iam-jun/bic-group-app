@@ -8,14 +8,14 @@ import Text from '~/baseComponents/Text';
 import { estimateReadingTimeArticle } from './helpter';
 
 interface ArticleReadingTimeProps {
-    countWords: number;
+    numberWords: number;
 }
 
-const ArticleReadingTime: React.FC<ArticleReadingTimeProps> = ({ countWords }) => {
+const ArticleReadingTime: React.FC<ArticleReadingTimeProps> = ({ numberWords }) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const { t } = useBaseHook();
-  const readingTime = estimateReadingTimeArticle(countWords);
+  const readingTime = estimateReadingTimeArticle(numberWords);
 
   return (
     <View style={styles.container} testID="article_reading_time.content">
