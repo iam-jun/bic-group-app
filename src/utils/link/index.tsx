@@ -96,21 +96,15 @@ export const getGroupLink = ({
   communityId: string; groupId: string; params?: any
 }) => `${PREFIX_URL}${getEnv('SELF_DOMAIN')}/communities/${communityId}/groups/${groupId}${formatParams(params)}`;
 
-export const getChatDomain = () => (
-  chatSchemes.PREFIX_HTTPS
-    + getHostNameFromUri(
-      getEnv('BEIN_CHAT_DEEPLINK'),
-      true,
-    )
-);
+export const getChatDomain = () => `${chatSchemes.PREFIX_HTTPS}${chatSchemes.CHAT_DOMAIN}/`;
 
 export const formatChannelLink = (
   teamId: string, channel: string,
-) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/channels/${channel}`;
+) => `${chatSchemes.FULL_DEEPLINK}${teamId}/channels/${channel}`;
 
 export const formatDMLink = (
   teamId: string, username: string,
-) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/messages/@${username}`;
+) => `${chatSchemes.FULL_DEEPLINK}${teamId}/messages/@${username}`;
 
 export const getHostNameFromUri = (url: string, subDomain = false) => {
   if (!url) return '';
