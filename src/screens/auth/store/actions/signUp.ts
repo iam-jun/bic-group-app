@@ -1,4 +1,4 @@
-import groupApi from '~/api/GroupApi';
+import userApi from '~/api/UserApi';
 import { IPayloadSignUp } from '~/interfaces/IAuth';
 import { IAuthState } from '~/screens/auth/store';
 
@@ -23,7 +23,7 @@ const signUp
         },
       };
 
-      const response = await groupApi.signUp(params);
+      const response = await userApi.signUp(params);
       if (response && response?.data) {
         callbackSuccess();
       }

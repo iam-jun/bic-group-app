@@ -1,7 +1,7 @@
 import { Method } from 'axios';
 import { HttpApiRequestConfig, apiProviders } from './apiConfig';
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
-import { IUserEdit, IVerifyEmail } from '~/interfaces/IAuth';
+import { IParamsSignUp, IUserEdit, IVerifyEmail } from '~/interfaces/IAuth';
 import { IAddWorkExperienceReq } from '~/interfaces/IWorkExperienceRequest';
 import { IParamSearchMentionAudiences } from '~/interfaces/IPost';
 import { withHttpRequestPromise } from './apiRequest';
@@ -100,6 +100,12 @@ export const userApiConfig = {
       key: params.key ? params.key : undefined,
     },
   }),
+  signUp: (params: IParamsSignUp): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}auth/signup/referral`,
+    method: 'post',
+    data: { ...params },
+  }),
 };
 
 const userApi = {
@@ -133,6 +139,7 @@ const userApi = {
   getSearchMentionAudiences: (params: IParamSearchMentionAudiences) => withHttpRequestPromise(
     userApiConfig.getSearchMentionAudiences, params,
   ),
+  signUp: (params: IParamsSignUp) => withHttpRequestPromise(userApiConfig.signUp, params),
 };
 
 export default userApi;
