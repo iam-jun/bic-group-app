@@ -8,11 +8,11 @@ import useModalStore from '~/store/modal';
 
 interface IUseLeaveGroup {
   groupId: string;
-  username: string;
+  userId: string;
   privacy: GroupPrivacyType;
 }
 
-const useLeaveGroup = ({ groupId, username, privacy }: IUseLeaveGroup) => {
+const useLeaveGroup = ({ groupId, userId, privacy }: IUseLeaveGroup) => {
   const actions = useGroupDetailStore((state) => state.actions);
   const { showAlert } = useModalStore((state) => state.actions);
 
@@ -45,7 +45,7 @@ const useLeaveGroup = ({ groupId, username, privacy }: IUseLeaveGroup) => {
   };
 
   const alertLeaveGroup = () => {
-    handleLeaveInnerGroups(groupId, username, getInnerGroupsText);
+    handleLeaveInnerGroups(groupId, userId, getInnerGroupsText);
   };
 
   return alertLeaveGroup;

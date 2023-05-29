@@ -6,14 +6,14 @@ import showToastError from '~/store/helper/showToastError';
 
 export const handleLeaveInnerGroups = async (
   groupId: string,
-  username: string,
+  userId: string,
   callback: (innerGroups: any) => void,
 ) => {
   let testingFlag = false; // for testing purpose
 
   // Get inner groups info (if any) when user leave/being removed from a group
   try {
-    const resp = await groupApi.getUserInnerGroups(groupId, username);
+    const resp = await groupApi.getUserInnerGroups(groupId, userId);
     const innerGroups = resp?.data?.innerGroups?.map?.(
       (group: IGroup) => group.name,
     );
