@@ -233,12 +233,12 @@ export const groupsApiConfig = {
 
   getUserInnerGroups: (
     groupId: string,
-    username: string,
+    userId: string,
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/inner-groups`,
     params: {
-      username,
+      userId,
     },
   }),
   getGroupMembers: (groupId: string, params: any): HttpApiRequestConfig => ({
@@ -536,6 +536,10 @@ export const groupsApiConfig = {
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/membership-questions`,
   }),
+  getUserNotFoundInfo: (email: string) : HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}/public/users/${email}/verify`,
+  }),
 };
 
 const groupApi = {
@@ -706,10 +710,10 @@ const groupApi = {
       schemeData,
     );
   },
-  getUserInnerGroups: (groupId: string, username: string) => withHttpRequestPromise(
+  getUserInnerGroups: (groupId: string, userId: string) => withHttpRequestPromise(
     groupsApiConfig.getUserInnerGroups,
     groupId,
-    username,
+    userId,
   ),
   getGroupPosts: (param: IParamGetGroupPosts) => withHttpRequestPromise(
     groupsApiConfig.getGroupPosts, {
@@ -841,6 +845,7 @@ const groupApi = {
   signUp: (params: IParamsSignUp) => withHttpRequestPromise(groupsApiConfig.signUp, params),
   getGroupTerms: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getGroupTerms, groupId),
   getMembershipQuestions: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getMembershipQuestions, groupId),
+  getUserNotFoundInfo: (email: string) => withHttpRequestPromise(groupsApiConfig.getUserNotFoundInfo, email),
 };
 
 export default groupApi;
