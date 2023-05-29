@@ -16,17 +16,24 @@ import { useUserIdAuth } from '~/hooks/auth';
 import useHomeStore from '~/screens/Home/store';
 import NoUserFound from '~/screens/Menu/components/NoUserFound';
 import spacing from '~/theme/spacing';
-import { BasicInfo, Contact, Experiences } from './fragments';
 import CoverHeader from './fragments/CoverHeader';
 import UserHeader from './fragments/UserHeader';
 import useUserProfileStore from './store';
 import useCommonController from '~/screens/store';
-import Tooltip from '../../../components/Tooltip.tsx';
+import Tab from '~/baseComponents/Tab';
+import UserInfo from './fragments/UserInfo';
+import BadgeCollection from './fragments/BadgeCollection';
+// import Tooltip from '../../../components/Tooltip.tsx';
 
 const screenId = 'userProfile';
 
+export const USER_TABS = [
+  { id: '1', text: 'user:user_tab_types:title_about' },
+  { id: '2', text: 'user:user_tab_types:title_badge_collection' },
+];
+
 const UserProfile = (props: any) => {
-  const { userId, params } = props?.route?.params || {};
+  const { userId, params, targetIndex = 0 } = props?.route?.params || {};
 
   const userProfileData = useUserProfileStore((state) => state.data);
   const loading = useUserProfileStore((state) => state.loading);
@@ -57,6 +64,7 @@ const UserProfile = (props: any) => {
   const [avatarState, setAvatarState] = useState<string>(avatar);
   const [bgImgState, setBgImgState] = useState<string>(backgroundImgUrl);
   const [isChangeImg, setIsChangeImg] = useState<string>('');
+  const [selectedIndex, setSelectedIndex] = useState<number>(targetIndex || 0);
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -98,6 +106,10 @@ const UserProfile = (props: any) => {
     setIsChangeImg(fieldName);
   };
 
+  const onPressTab = (item: any, index: number) => {
+    setSelectedIndex(index);
+  };
+
   const renderLoading = () => (
     <View testID="user_profile.loading" style={styles.loadingProfile}>
       <ActivityIndicator size="large" />
@@ -107,16 +119,27 @@ const UserProfile = (props: any) => {
   if (error) return <NoUserFound />;
   // TODO: to handle more error cases in the future
 
+  const renderContent = () => {
+    if (selectedIndex === 0) {
+      return <UserInfo isCurrentUser={isCurrentUser} />;
+    }
+
+    if (selectedIndex === 1) {
+      return (
+        <BadgeCollection />
+      );
+    }
+
+    return null;
+  };
+
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
       <Header />
       {loading ? (
         renderLoading()
       ) : (
-        <ScrollView
-          style={styles.container}
-          showsVerticalScrollIndicator={false}
-        >
+        <>
           <CoverHeader
             id={id}
             isCurrentUser={isCurrentUser}
@@ -134,25 +157,28 @@ const UserProfile = (props: any) => {
             isVerified={isVerified}
           />
           <Divider color={colors.gray5} size={spacing.padding.large} />
-          <BasicInfo
-            fullname={fullname}
-            gender={gender}
-            birthday={birthday}
-            language={language}
-            relationship={relationshipStatus}
-            isCurrentUser={isCurrentUser}
-          />
-          <Divider color={colors.gray5} size={spacing.padding.large} />
-          <Contact
-            email={email}
-            phone={phone}
-            city={city}
-            countryCode={countryCode}
-            isCurrentUser={isCurrentUser}
-          />
-          <Experiences isCurrentUser={isCurrentUser} />
-          <Tooltip screenId={screenId} />
-        </ScrollView>
+          <ScrollView
+            style={styles.container}
+            showsVerticalScrollIndicator={false}
+            scrollEventThrottle={16}
+          >
+            {isCurrentUser ? (
+              <>
+                <View style={styles.tabContainer}>
+                  <Tab
+                    buttonProps={{ size: 'large', type: 'primary', useI18n: true }}
+                    data={USER_TABS}
+                    onPressTab={onPressTab}
+                    activeIndex={selectedIndex}
+                  />
+                </View>
+                <Divider color={colors.gray5} size={spacing.padding.large} />
+              </>
+            ) : null}
+            {renderContent()}
+            {/* <Tooltip screenId={screenId} /> */}
+          </ScrollView>
+        </>
       )}
     </ScreenWrapper>
   );
@@ -169,6 +195,10 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     loadingProfile: {
       marginTop: spacing.margin.extraLarge,
+    },
+    tabContainer: {
+      backgroundColor: colors.white,
+      marginTop: spacing.margin.large,
     },
   });
 };

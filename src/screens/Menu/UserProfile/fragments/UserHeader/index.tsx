@@ -13,6 +13,7 @@ import VerifiedView from '~/components/VerifiedView';
 import useTooltip from '../../../../../components/Tooltip.tsx/stores';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
+import UserBadge from '../../components/UserBadge';
 
 interface Props {
   id: string;
@@ -102,6 +103,8 @@ const UserHeader = ({
       <View style={styles.row} onLayout={onLayoutFullnameContainer}>
         <Text.H4 testID="user_profile.fullname" numberOfLines={1}>
           {fullname}
+          {' '}
+          test ne test nua ne hehehehehehe
         </Text.H4>
         <VerifiedView isVerified={isVerified} screenId={screenId} onPress={onShowTooltip} />
       </View>
@@ -115,6 +118,7 @@ const UserHeader = ({
         </Text.BodyS>
       )}
       <WorkInfo style={styles.subtitle} latestWork={latestWork} />
+      <UserBadge style={styles.userBadge} />
       {!isCurrentUser && (
         <Button.Neutral
           testID="user_header.btn_block"
@@ -152,6 +156,9 @@ const createStyle = (_theme: ExtendedTheme) => StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  userBadge: {
+    paddingTop: spacing.padding.small,
   },
 });
 

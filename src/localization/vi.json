@@ -1385,5 +1385,11 @@
     "reorder_pinned": "Sắp xếp bài ghim",
     "drag_and_drop_to_reorder_pinned": "Kéo thả để sắp xếp bài ghim",
     "check_all": "Chọn tất cả"
+  },
+  "user": {
+    "user_tab_types": {
+      "title_about": "Giới thiệu",
+      "title_badge_collection": "Bộ sưu tập huy hiệu"
+    }
   }
 }

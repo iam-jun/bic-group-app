@@ -1444,5 +1444,11 @@
     "reorder_pinned": "Reorder pinned",
     "drag_and_drop_to_reorder_pinned": "Drag and drop to reorder pinned",
     "check_all": "Check all"
+  },
+  "user": {
+    "user_tab_types": {
+      "title_about": "About",
+      "title_badge_collection": "Badge Collection"
+    }
   }
 }
