@@ -31,18 +31,15 @@ export const countWordsFromContent = (str: string) => {
   const words = str.split(/\s+/);
 
   return words.length;
-}
+};
 
 export const getTextFromContent = (node: any) => {
   if (!node) return '';
 
   if (isText(node)) {
     return node?.text;
-  } else {
-    return node?.children?.map((item) => getTextFromContent(item)).join('');
   }
+  return node?.children?.map((item) => getTextFromContent(item)).join('');
 };
 
-export const isText = (value: any) => {
-  return isPlainObject(value) && typeof value?.text === 'string';
-}
+export const isText = (value: any) => isPlainObject(value) && typeof value?.text === 'string';
