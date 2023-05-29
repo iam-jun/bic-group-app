@@ -661,7 +661,10 @@
     "successful_schedule": "Đặt lịch thành công",
     "text_delete_article_success": "Bài viết của bạn đã được xoá",
     "paste_image_error": "Tải lên không thành công. Vui lòng tải lên hình ảnh bằng thanh công cụ.",
-    "text_selecting_will_be_added_to": "Bài viết của bạn sẽ được thêm vào"
+    "text_selecting_will_be_added_to": "Bài viết của bạn sẽ được thêm vào",
+    "reading_time": "Thời gian đọc",
+    "about_time": "khoảng",
+    "minute": "phút"
   },
   "post": {
     "news_feed": "News Feed",

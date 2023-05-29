@@ -10,6 +10,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { ButtonMarkAsRead, PostImportant } from '~/components/posts';
 import ArticleHeader from '../ArticleHeader';
 import ArticleFooter from '../ArticleFooter';
+import ArticleReadingTime from '../ArticleReadingTime';
 import { ContentFooterLite, ContentInterestedUserCount } from '~/components/ContentView';
 import { Button, PlaceHolderRemoveContent } from '~/baseComponents';
 import { IPost } from '~/interfaces/IPost';
@@ -63,6 +64,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
     reported,
     deleted = false,
     isHidden,
+    // countWords,
   } = data || {};
 
   const {
@@ -128,11 +130,14 @@ const ArticleItem: FC<ArticleItemProps> = ({
   const renderInterestedBy = () => (
     !isHidden && (
       <>
-        <ContentInterestedUserCount
-          id={id}
-          testIDPrefix="article_item"
-          interestedUserCount={totalUsersSeen}
-        />
+        <View style={styles.boxInterested}>
+          <ArticleReadingTime countWords={733} />
+          <ContentInterestedUserCount
+            id={id}
+            testIDPrefix="article_item"
+            interestedUserCount={totalUsersSeen}
+          />
+        </View>
         <Divider style={styles.divider} />
       </>
     )
@@ -226,9 +231,14 @@ const themeStyles = (theme: ExtendedTheme) => {
       paddingTop: 0,
     },
     divider: {
-      marginTop: spacing.margin.base,
+      marginTop: spacing.margin.small,
       marginBottom: spacing.margin.small,
       marginHorizontal: spacing.margin.large,
+    },
+    boxInterested: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
     },
   });
 };

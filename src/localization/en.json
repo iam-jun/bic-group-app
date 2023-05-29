@@ -700,7 +700,10 @@
     "successful_schedule": "Successful Schedule",
     "text_delete_article_success": "Your article has been deleted",
     "paste_image_error": "Upload failed. Please upload images using the toolbar.",
-    "text_selecting_will_be_added_to": "Your article will be added to"
+    "text_selecting_will_be_added_to": "Your article will be added to",
+    "reading_time": "Reading time",
+    "about_time": "about",
+    "minute": "min"
   },
   "post": {
     "news_feed": "News Feed",
