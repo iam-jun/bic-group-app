@@ -8,11 +8,6 @@ $FirebaseSDKVersion = '10.5.0'
 platform :ios, '12.0'
 install! 'cocoapods', :deterministic_uuids => false
 
-project 'bic_group',
-  'DebugStaging' => :debug,
-  'ReleaseStaging' => :release,
-  'ReleaseDevelopment' => :release
-
 target 'bic_group' do
   use_expo_modules!
   post_integrate do |installer|
@@ -22,8 +17,16 @@ target 'bic_group' do
       Pod::UI.warn e
     end
   end
-  project 'bic_group'
+  
   config = use_native_modules!
+  
+  project 'bic_group',
+    'Debug' => :debug,
+    'DebugDevelopment' => :debug,
+    'DebugStaging' => :debug,
+    'Release' => :release,
+    'ReleaseDevelopment' => :release,
+    'ReleaseStaging' => :release
 
   # Flags change depending on the env values.
   flags = get_default_flags()
@@ -57,7 +60,7 @@ target 'bic_group' do
   # you should disable the next line.
   # use_flipper!()
 
-  use_flipper!()
+  use_flipper!({'Flipper' => '0.126.0', configurations: ['Debug', 'DebugDevelopment', 'DebugStaging']}) # Add the Build Configuration name (not scheme name)
 
   post_install do |installer|
     react_native_post_install(installer)

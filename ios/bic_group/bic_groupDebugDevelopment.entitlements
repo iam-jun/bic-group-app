@@ -12,7 +12,7 @@
 	</array>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.beincom</string>
+		<string>group.com.beincom.development</string>
 	</array>
 </dict>
 </plist>

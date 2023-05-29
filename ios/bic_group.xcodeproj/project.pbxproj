@@ -62,12 +62,15 @@
 		69166FDA80424E02B9F2BD79 /* SVN-PoppinsMediumItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-PoppinsMediumItalic.otf"; path = "../assets/fonts/SVN-PoppinsMediumItalic.otf"; sourceTree = "<group>"; };
 		6F7261AA00F9B75BE7814A39 /* Pods-bic_group-bic_groupTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bic_group-bic_groupTests.release.xcconfig"; path = "Target Support Files/Pods-bic_group-bic_groupTests/Pods-bic_group-bic_groupTests.release.xcconfig"; sourceTree = "<group>"; };
 		7FE824E103E77F00A2729C95 /* Pods-bic_group.releasedevelopment.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bic_group.releasedevelopment.xcconfig"; path = "Target Support Files/Pods-bic_group/Pods-bic_group.releasedevelopment.xcconfig"; sourceTree = "<group>"; };
+		804693C72A251CE200C631A6 /* bic_groupDebugDevelopment.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = bic_groupDebugDevelopment.entitlements; path = bic_group/bic_groupDebugDevelopment.entitlements; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = bic_group/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8490B9868C1A4DC8B87C4917 /* SegoeUI-Semibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SegoeUI-Semibold.ttf"; path = "../assets/fonts/SegoeUI-Semibold.ttf"; sourceTree = "<group>"; };
 		852F5EC3476F03D174A5734B /* Pods-bic_group-bic_groupTests.releaseprerelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bic_group-bic_groupTests.releaseprerelease.xcconfig"; path = "Target Support Files/Pods-bic_group-bic_groupTests/Pods-bic_group-bic_groupTests.releaseprerelease.xcconfig"; sourceTree = "<group>"; };
 		8B3AF1F8686D7EBA06926910 /* Pods-bic_group.debugstaging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bic_group.debugstaging.xcconfig"; path = "Target Support Files/Pods-bic_group/Pods-bic_group.debugstaging.xcconfig"; sourceTree = "<group>"; };
 		95C17F198DC5EDC116749D05 /* Pods-bic_group.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bic_group.release.xcconfig"; path = "Target Support Files/Pods-bic_group/Pods-bic_group.release.xcconfig"; sourceTree = "<group>"; };
 		A21B018C25F64F3A93A19904 /* SegoeUI-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SegoeUI-Italic.ttf"; path = "../assets/fonts/SegoeUI-Italic.ttf"; sourceTree = "<group>"; };
+		A60EB5478C85EBD273AE44AF /* Pods-bic_group-bic_groupTests.debugdevelopment.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bic_group-bic_groupTests.debugdevelopment.xcconfig"; path = "Target Support Files/Pods-bic_group-bic_groupTests/Pods-bic_group-bic_groupTests.debugdevelopment.xcconfig"; sourceTree = "<group>"; };
+		B870D55EFE7BF0ED3EC6B196 /* Pods-bic_group.debugdevelopment.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bic_group.debugdevelopment.xcconfig"; path = "Target Support Files/Pods-bic_group/Pods-bic_group.debugdevelopment.xcconfig"; sourceTree = "<group>"; };
 		C0F89AD9EDCD46149CE6908E /* BeVietnamPro-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "BeVietnamPro-SemiBold.ttf"; path = "../assets/fonts/BeVietnamPro-SemiBold.ttf"; sourceTree = "<group>"; };
 		C8FC3B75F2D94B5993703EBE /* SVN-PoppinsSemiBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-PoppinsSemiBoldItalic.otf"; path = "../assets/fonts/SVN-PoppinsSemiBoldItalic.otf"; sourceTree = "<group>"; };
 		C97CA8B3CD2DE03AC4A30DF8 /* Pods-bic_group.releasestaging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bic_group.releasestaging.xcconfig"; path = "Target Support Files/Pods-bic_group/Pods-bic_group.releasestaging.xcconfig"; sourceTree = "<group>"; };
@@ -139,6 +142,7 @@
 		13B07FAE1A68108700A75B9A /* bic_group */ = {
 			isa = PBXGroup;
 			children = (
+				804693C72A251CE200C631A6 /* bic_groupDebugDevelopment.entitlements */,
 				E3C7251E29DC38F6007F3B9D /* bic_groupDebugPrerelease.entitlements */,
 				E3C7251D29DC374A007F3B9D /* bic_groupReleasePrerelease.entitlements */,
 				E37C6482291281430020F879 /* bic_groupDebug.entitlements */,
@@ -173,6 +177,8 @@
 				4B775C791E959D023175F995 /* Pods-bic_group.releaseprerelease.xcconfig */,
 				5E2A3AE9ADDC1DCD5075A031 /* Pods-bic_group-bic_groupTests.debugprerelease.xcconfig */,
 				852F5EC3476F03D174A5734B /* Pods-bic_group-bic_groupTests.releaseprerelease.xcconfig */,
+				B870D55EFE7BF0ED3EC6B196 /* Pods-bic_group.debugdevelopment.xcconfig */,
+				A60EB5478C85EBD273AE44AF /* Pods-bic_group-bic_groupTests.debugdevelopment.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -404,7 +410,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PATH_TO_GOOGLE_PLISTS=\"${PROJECT_DIR}/Firebase\"\n\ncase \"${CONFIGURATION}\" in\n\n   \"Debug\" | \"ReleaseDevelopment\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-Development.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n   \"DebugStaging\" | \"ReleaseStaging\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-Staging.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n  \"DebugPrerelease\" | \"ReleasePrerelease\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-Prerelease.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n   \"Release\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-Production.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n    *)\n        ;;\nesac\n";
+			shellScript = "PATH_TO_GOOGLE_PLISTS=\"${PROJECT_DIR}/Firebase\"\n\ncase \"${CONFIGURATION}\" in\n\n   \"DebugDevelopment\" | \"ReleaseDevelopment\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-Development.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n   \"DebugStaging\" | \"ReleaseStaging\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-Staging.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n  \"DebugPrerelease\" | \"ReleasePrerelease\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-Prerelease.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n   \"Debug\" | \"Release\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-Production.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n    *)\n        ;;\nesac\n";
 		};
 		2CEB1C36EC24644620021457 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -657,9 +663,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
-				BEIN_APP_NAME = "BIC Group Development";
+				BEIN_APP_NAME = "BIC Group";
 				CLANG_ENABLE_MODULES = YES;
-				CODEPUSH_KEY = 7dyJcdB8mq1olhp57D2oUN77kIVW7btaRsqbO;
+				CODEPUSH_KEY = WFkCTIUyt86FxN7FgknQdT733kFM2ZhnCGDQ6;
 				CODE_SIGN_ENTITLEMENTS = bic_group/bic_groupDebug.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -683,8 +689,8 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.beincom.group.development;
 				PRODUCT_NAME = bic_group;
-				PROVISIONING_PROFILE_SPECIFIER = "match Development com.beincom.group.development";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.beincom.group.development";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.beincom.group";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.beincom.group";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1110,6 +1116,139 @@
 			};
 			name = ReleaseDevelopment;
 		};
+		804693C42A251CAC00C631A6 /* DebugDevelopment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					/usr/lib/swift,
+					"$(inherited)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SDKROOT)/usr/lib/swift\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
+					"\"$(inherited)\"",
+				);
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = DebugDevelopment;
+		};
+		804693C52A251CAC00C631A6 /* DebugDevelopment */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B870D55EFE7BF0ED3EC6B196 /* Pods-bic_group.debugdevelopment.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				BEIN_APP_NAME = "BIC Group Development";
+				CLANG_ENABLE_MODULES = YES;
+				CODEPUSH_KEY = 7dyJcdB8mq1olhp57D2oUN77kIVW7btaRsqbO;
+				CODE_SIGN_ENTITLEMENTS = bic_group/bic_groupDebugDevelopment.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 44S5N8GAPS;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 44S5N8GAPS;
+				ENABLE_BITCODE = NO;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				INFOPLIST_FILE = bic_group/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = com.beincom.group.development;
+				PRODUCT_NAME = bic_group;
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.beincom.group.development";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.beincom.group.development";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = DebugDevelopment;
+		};
+		804693C62A251CAC00C631A6 /* DebugDevelopment */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A60EB5478C85EBD273AE44AF /* Pods-bic_group-bic_groupTests.debugdevelopment.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = bic_groupTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+					"$(inherited)",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/bic_group.app/bic_group";
+			};
+			name = DebugDevelopment;
+		};
 		83CBBA201A601CBA00E9B192 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1497,6 +1636,7 @@
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
 				1B2505F326DCBA58000174A9 /* DebugStaging */,
+				804693C62A251CAC00C631A6 /* DebugDevelopment */,
 				E3C7251C29DC3520007F3B9D /* DebugPrerelease */,
 				00E356F71AD99517003FC87E /* Release */,
 				1B98C1FA26DBA7260013DEA6 /* ReleaseStaging */,
@@ -1511,6 +1651,7 @@
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
 				1B2505F226DCBA58000174A9 /* DebugStaging */,
+				804693C52A251CAC00C631A6 /* DebugDevelopment */,
 				E3C7251B29DC3520007F3B9D /* DebugPrerelease */,
 				13B07F951A680F5B00A75B9A /* Release */,
 				1B98C1F926DBA7260013DEA6 /* ReleaseStaging */,
@@ -1525,6 +1666,7 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				1B2505F126DCBA58000174A9 /* DebugStaging */,
+				804693C42A251CAC00C631A6 /* DebugDevelopment */,
 				E3C7251A29DC3520007F3B9D /* DebugPrerelease */,
 				83CBBA211A601CBA00E9B192 /* Release */,
 				1B98C1F826DBA7260013DEA6 /* ReleaseStaging */,
