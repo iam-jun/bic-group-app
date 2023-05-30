@@ -26,7 +26,7 @@ const usePostDetailContent = ({
   isReported,
 }) => {
   const { t } = useBaseHook();
-  const { rootNavigation } = useRootNavigation();
+  const { rootNavigation, goHome } = useRootNavigation();
 
   const isInternetReachable = useNetworkStore(
     networkSelectors.getIsInternetReachable,
@@ -169,11 +169,13 @@ const usePostDetailContent = ({
   }, [postId, userId, internetReachableRef]);
 
   useEffect(() => {
-    if (deleted && isFocused) {
-      if (!isReported) {
+    if (deleted && isFocused && !isReported) {
+      if (notificationId) {
         setTimeout(() => {
           rootNavigation.goBack();
         }, 200);
+      } else {
+        goHome();
       }
     }
   }, [deleted, isFocused]);
