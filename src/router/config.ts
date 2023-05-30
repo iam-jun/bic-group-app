@@ -2,7 +2,7 @@ import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack
 import getEnv from '~/utils/env';
 import homeStack from './navigator/MainStack/stacks/homeStack/stack';
 
-export const PREFIX_DEEPLINK_GROUP = `${getEnv('SCHEME_NAME')}://`;
+export const PREFIX_DEEPLINK_GROUP = `${getEnv('URL_SCHEME')}://`;
 
 // added www because related to performance, auth,...
 export const PREFIX_URL = 'https://www.';

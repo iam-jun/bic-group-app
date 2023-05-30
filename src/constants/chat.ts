@@ -1,6 +1,6 @@
 import getEnv from '~/utils/env';
 
-const PREFIX_DEEPLINK = `${getEnv('BEIN_CHAT_DEEPLINK')}://`;
+const PREFIX_DEEPLINK = `${getEnv('CHAT_URL_SCHEME')}://`;
 const CHAT_DOMAIN = `chat.${getEnv('SELF_DOMAIN')}`;
 const FULL_DEEPLINK = `${PREFIX_DEEPLINK}chat.${getEnv('SELF_DOMAIN')}/`;
 

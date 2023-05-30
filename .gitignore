@@ -87,3 +87,6 @@ coverage
 .tmp
 /ios/I/
 test-report.xml
+
+# react-native-config codegen
+ios/tmp.xcconfig
