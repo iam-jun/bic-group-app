@@ -64,7 +64,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
     reported,
     deleted = false,
     isHidden,
-    // countWords,
+    wordCount,
   } = data || {};
 
   const {
@@ -131,7 +131,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
     !isHidden && (
       <>
         <View style={styles.boxInterested}>
-          <ArticleReadingTime numberWords={733} />
+          <ArticleReadingTime numberWords={wordCount} />
           <ContentInterestedUserCount
             id={id}
             testIDPrefix="article_item"

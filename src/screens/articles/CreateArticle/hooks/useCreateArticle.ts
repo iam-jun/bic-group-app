@@ -207,8 +207,8 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
       status,
       publishedAt,
       setting,
+      wordCount,
     } = article;
-    console.log('init data number words')
 
     const audienceIds: IEditArticleAudience
       = getAudienceIdsFromAudienceObject(audienceObject);
@@ -225,6 +225,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
       series,
       tags,
       setting: initSettings(setting),
+      wordCount,
     };
     actions.setData(data);
     const isDraft = [
@@ -252,8 +253,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
 
   const handleContentChange = (newContent: string) => {
     actions.setContent(newContent);
-    console.log('set number words')
-    // !canAutoSave && actions.setNumberWords(getNumberWords(newContent));
+    actions.setWordCount(countWordsFromContent(newContent));
   };
 
   const handleTitleChange = (newTitle: string) => {
@@ -346,15 +346,6 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     // useCreateArticle hook is still not updated at that time
     // so handleSave will hold the old data instead of the new data
     const dataUpdate = useCreateArticleStore.getState().data;
-
-    // clear code
-    const dataUpdateLatest = {
-      ...dataUpdate,
-      numberWord: !canAutoSave ? countWordsFromContent(dataUpdate?.content) : undefined,
-    };
-    //
-
-
     const putEditArticleParams = {
       articleId,
       data: dataUpdate,
@@ -363,10 +354,6 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
       isShowLoading,
       onSuccess,
     } as IPayloadPutEditArticle;
-
-    console.log('count words: ', countWordsFromContent(dataUpdate?.content))
-    console.log('dataUpdateLatest: ', dataUpdateLatest)
-    console.log('canAutoSave: ', canAutoSave)
 
     if (shouldValidateSeriesTags) {
       const onSuccess = () => actions.putEditArticle(putEditArticleParams);
