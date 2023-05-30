@@ -83,6 +83,12 @@ const handleAuthEvent = (set, get) => async (data: HubCapsule) => {
 
       mixPanelManager.updateUser(userResponse.email);
 
+      mixPanelManager.trackEvent('Signed In', {
+        email: userResponse.email,
+        full_name: userResponse.name,
+        username: userResponse.username,
+      });
+
       navigation.replace(rootSwitch.mainStack);
       authActions.setSignInLoading(false);
       await timeOut(500);
