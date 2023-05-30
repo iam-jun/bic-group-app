@@ -25,14 +25,15 @@ const editSeries = (set, get) => async (
     const {
       title, summary, audience, setting, coverMedia,
     } = data || {};
+    const coverMediaUpdate = coverMedia?.id && {
+      id: coverMedia?.id,
+    };
     const dataUpdate: IPostCreateSeries = {
       title,
       summary,
       audience,
       setting,
-      coverMedia: {
-        id: coverMedia?.id,
-      },
+      coverMedia: coverMediaUpdate,
     };
     await streamApi.editSeries(id, dataUpdate);
 
