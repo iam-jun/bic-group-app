@@ -6,6 +6,7 @@ import { ISeriesState } from '..';
 import i18n from '~/localization';
 import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import { IPostCreateSeries } from '~/interfaces/ISeries';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -21,7 +22,19 @@ const editSeries = (set, get) => async (
     state.loading = true;
   }, 'editSeries');
   try {
-    await streamApi.editSeries(id, data);
+    const {
+      title, summary, audience, setting, coverMedia,
+    } = data || {};
+    const dataUpdate: IPostCreateSeries = {
+      title,
+      summary,
+      audience,
+      setting,
+      coverMedia: {
+        id: coverMedia?.id,
+      },
+    };
+    await streamApi.editSeries(id, dataUpdate);
 
     actions.getSeriesDetail(id);
 
