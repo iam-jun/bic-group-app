@@ -10,10 +10,12 @@ const getOwnedBadges = (set, _get) => async () => {
 
     const response = await groupApi.getOwnedBadges();
     const { ownedBadges = [], showingBadges = [] } = response?.data || {};
+    const choosingBadges = showingBadges?.length > 0 ? showingBadges : [undefined, undefined, undefined];
 
     set((state: IUserBadgesState) => {
       state.ownBadges = ownedBadges;
       state.showingBadges = showingBadges;
+      state.choosingBadges = choosingBadges;
       state.loading = false;
     }, 'getMyOwnedBadgesSuccess');
   } catch (error) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   View, StyleSheet, FlatList,
 } from 'react-native';
@@ -8,26 +8,35 @@ import { spacing } from '~/theme';
 import EditButton from '../../components/EditButton';
 import ShowingBadges from './ShowingBadges';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import Grid from './test';
+import Grid from './Grid';
 import useUserBadge from './store';
 import images from '~/resources/images';
 import Image from '~/components/Image';
+import { IUserBadge } from '~/interfaces/IEditUser';
 
 const BadgeCollection = () => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-
-  const [isEditing, setEditing] = useState<boolean>(false);
+  const styles = themeStyles(theme);
 
   const actions = useUserBadge((state) => state.actions);
   const ownBadges = useUserBadge((state) => state.ownBadges);
+  const isEditing = useUserBadge((state) => state.isEditing);
+  const choosingBadges = useUserBadge((state) => state.choosingBadges);
+
+  const disabled = checkIsDisabled(choosingBadges);
 
   useEffect(() => {
     actions.getOwnedBadges();
   }, []);
 
   const editBadge = () => {
-    setEditing(true);
+    actions.setIsEditing(true);
+  };
+
+  const onPress = (item: IUserBadge) => {
+    if (!isEditing) return;
+    actions.fillChoosingBadges(item);
   };
 
   const renderEmptyComponent = () => (
@@ -55,7 +64,11 @@ const BadgeCollection = () => {
       >
         {sectionItem?.name}
       </Text.SubtitleM>
-      <Grid data={sectionItem.badges} />
+      <Grid
+        data={sectionItem.badges}
+        disabled={disabled}
+        onPress={onPress}
+      />
     </View>
   );
 
@@ -86,10 +99,10 @@ const BadgeCollection = () => {
         </Text.BodyS>
         <ShowingBadges />
         <Text.H4 color={colors.neutral40} useI18n>
-          user:owned_badges:description
+          user:owned_badges:title
         </Text.H4>
         <Text.BodyS color={colors.neutral40} useI18n>
-          user:owned_badges:title
+          user:owned_badges:description
         </Text.BodyS>
       </View>
       <ViewSpacing height={spacing.margin.large} />
@@ -105,7 +118,13 @@ const BadgeCollection = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const checkIsDisabled = (badges: IUserBadge[]) => {
+  let result = true;
+  badges.forEach((badge) => { if (!badge?.id) { result = false; } });
+  return result;
+};
+
+const themeStyles = (_theme: ExtendedTheme) => StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: spacing.padding.large,

@@ -8,6 +8,7 @@ import {
   ActivityIndicator, ScrollView, StyleSheet, View,
 } from 'react-native';
 
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
@@ -23,6 +24,9 @@ import useCommonController from '~/screens/store';
 import Tab from '~/baseComponents/Tab';
 import UserInfo from './fragments/UserInfo';
 import BadgeCollection from './fragments/BadgeCollection';
+import Button from '~/baseComponents/Button';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
+import useUserBadge from './fragments/BadgeCollection/store';
 // import Tooltip from '../../../components/Tooltip.tsx';
 
 const screenId = 'userProfile';
@@ -40,20 +44,15 @@ const UserProfile = (props: any) => {
   const error = useUserProfileStore((state) => state.error);
   const userProfileActions = useUserProfileStore((state) => state.actions);
   const reset = useUserProfileStore((state) => state.reset);
+  const badgeActions = useUserBadge((state) => state.actions);
+  const isEditingBadge = useUserBadge((state) => state.isEditing);
+  const resetUserBadge = useUserBadge((state) => state.reset);
 
   const {
     fullname,
     avatar,
     backgroundImgUrl,
     username,
-    email,
-    city,
-    language,
-    phone,
-    countryCode,
-    relationshipStatus,
-    gender,
-    birthday,
     latestWork,
     isVerified,
   } = userProfileData || {};
@@ -79,7 +78,7 @@ const UserProfile = (props: any) => {
   useEffect(() => {
     isFocused && userProfileActions.getUserProfile({ userId, params });
     userId && userProfileActions.getWorkExperience(userId);
-
+    resetUserBadge();
     return () => reset();
   }, [isFocused, userId]);
 
@@ -108,6 +107,14 @@ const UserProfile = (props: any) => {
 
   const onPressTab = (item: any, index: number) => {
     setSelectedIndex(index);
+  };
+
+  const onCancel = () => {
+    resetUserBadge();
+  };
+
+  const onSave = () => {
+    badgeActions.editShowingBadges();
   };
 
   const renderLoading = () => (
@@ -180,6 +187,26 @@ const UserProfile = (props: any) => {
           </ScrollView>
         </>
       )}
+      {isCurrentUser && isEditingBadge && selectedIndex === 1 ? (
+        <View style={styles.bottomButton}>
+          <Button.Neutral
+            useI18n
+            testID="badge_collection.btn_cancel"
+            type="ghost"
+            onPress={onCancel}
+          >
+            common:btn_cancel
+          </Button.Neutral>
+          <ViewSpacing width={spacing.margin.large} />
+          <Button.Primary
+            useI18n
+            testID="badge_collection.btn_save"
+            onPress={onSave}
+          >
+            common:btn_save
+          </Button.Primary>
+        </View>
+      ) : null}
     </ScreenWrapper>
   );
 };
@@ -188,6 +215,7 @@ export default UserProfile;
 
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
+  const insets = useSafeAreaInsets();
 
   return StyleSheet.create({
     container: {
@@ -199,6 +227,22 @@ const themeStyles = (theme: ExtendedTheme) => {
     tabContainer: {
       backgroundColor: colors.white,
       marginTop: spacing.margin.large,
+    },
+    bottomButton: {
+      backgroundColor: colors.white,
+      paddingTop: spacing.padding.base,
+      paddingRight: spacing.padding.large,
+      paddingBottom: insets.bottom || spacing.padding.large,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      position: 'absolute',
+      zIndex: 1,
+      bottom: 0,
+      right: 0,
+      left: 0,
+      borderTopWidth: 1,
+      borderTopColor: colors.neutral5,
     },
   });
 };
