@@ -35,7 +35,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const id = params?.articleId;
   const focusComment = params?.focusComment;
   const isFocused = useIsFocused();
-  const { rootNavigation } = useRootNavigation();
+  const { rootNavigation, goHome } = useRootNavigation();
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -84,12 +84,18 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   }, [isMounted]);
 
   useEffect(() => {
-    if ((reported || deleted) && isFocused) {
+    if (reported && isFocused) {
       setTimeout(() => {
         rootNavigation.goBack();
       }, 200);
     }
-  }, [reported, isFocused, deleted]);
+  }, [reported, isFocused]);
+
+  useEffect(() => {
+    if (deleted && isFocused) {
+      goHome();
+    }
+  }, [deleted, isFocused]);
 
   const onRefresh = () => {
     setRefreshing(false);

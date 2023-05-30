@@ -32,7 +32,7 @@ const SeriesDetail = ({ route }: any) => {
   const userId = useUserIdAuth();
   const { t } = useBaseHook();
   const isFocused = useIsFocused();
-  const { rootNavigation } = useRootNavigation();
+  const { goHome } = useRootNavigation();
 
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const { showAlert } = useModalStore((state) => state.actions);
@@ -55,9 +55,7 @@ const SeriesDetail = ({ route }: any) => {
 
   useEffect(() => {
     if (deleted && isFocused) {
-      setTimeout(() => {
-        rootNavigation.goBack();
-      }, 200);
+      goHome();
     }
   }, [deleted, isFocused]);
 
