@@ -537,6 +537,16 @@ export const groupsApiConfig = {
     provider: apiProviders.bein,
     params,
   }),
+  getOwnedBadges: () : HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}/me/owned-badges`,
+  }),
+  putShowingBadges: (badgeIds: string[]) : HttpApiRequestConfig => ({
+    ...defaultConfig,
+    method: 'put',
+    url: `${provider.url}/me/showing-badges`,
+    data: { badgeIds },
+  }),
 };
 
 const groupApi = {
@@ -839,6 +849,8 @@ const groupApi = {
   getPostAudience: (params: IParamGetPostAudiences) => withHttpRequestPromise(
     groupsApiConfig.getPostAudiences, params,
   ),
+  getOwnedBadges: () => withHttpRequestPromise(groupsApiConfig.getOwnedBadges),
+  putShowingBadges: (badgeIds: string[]) => withHttpRequestPromise(groupsApiConfig.putShowingBadges, badgeIds),
 };
 
 export default groupApi;

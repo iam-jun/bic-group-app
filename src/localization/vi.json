@@ -1390,6 +1390,18 @@
     "user_tab_types": {
       "title_about": "Giới thiệu",
       "title_badge_collection": "Bộ sưu tập huy hiệu"
+    },
+    "empty_badge_collection": {
+      "title": "Bạn chưa có huy hiệu nào",
+      "description": "Vui lòng tham gia cộng đồng hoặc nhóm để nhận huy hiệu!"
+    },
+    "showing_badges": {
+      "title": "Huy hiệu đang hiển thị",
+      "description": "Huy hiệu bạn chọn hiển thị trên hồ sơ của mình"
+    },
+    "owned_badges": {
+      "title": "Danh sách huy hiệu",
+      "description": "Huy hiệu bạn nhận được từ các cộng đồng bạn đã tham gia"
     }
   }
 }

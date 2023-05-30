@@ -21,6 +21,10 @@ const Grid = ({ data }: {data: any[]}) => {
 
   const isSelected = false;
 
+  if (data.length === 0) {
+    return null;
+  }
+
   const renderGridItem = ({ item, index }: any) =>
     // Render each grid item here
     (
@@ -56,18 +60,12 @@ const Grid = ({ data }: {data: any[]}) => {
       paddingBottom: 10,
     }}
     >
-
-      <View style={{
-        // paddingLeft,
-      }}
-      >
-        <FlatList
-          data={data}
-          renderItem={renderGridItem}
-          keyExtractor={(item, index) => index.toString()}
-          numColumns={numColumns}
-        />
-      </View>
+      <FlatList
+        data={data}
+        renderItem={renderGridItem}
+        keyExtractor={(item, index) => index.toString()}
+        numColumns={numColumns}
+      />
     </View>
   );
 };

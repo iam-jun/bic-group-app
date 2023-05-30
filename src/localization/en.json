@@ -1449,6 +1449,18 @@
     "user_tab_types": {
       "title_about": "About",
       "title_badge_collection": "Badge Collection"
+    },
+    "empty_badge_collection": {
+      "title": "You don't have any badges yet",
+      "description": "Please join communities or groups to get badges!"
+    },
+    "showing_badges": {
+      "title": "Showing Badges",
+      "description": "The badges you choose to show on your profile"
+    },
+    "owned_badges": {
+      "title": "Badges List",
+      "description": "Badges you received from the communities you joined"
     }
   }
 }
