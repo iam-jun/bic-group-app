@@ -16,12 +16,12 @@
     <uses-permission android:name="${beinChatId}.WRITE_DATABASE" />
 
     <permission
-        android:name="@string/provider_read_permission"
+        android:name="${applicationId}.READ_DATABASE"
         android:label="Read Database"
         android:protectionLevel="signature" />
 
     <permission
-        android:name="@string/provider_write_permission"
+        android:name="${applicationId}.WRITE_DATABASE"
         android:label="Write Database"
         android:protectionLevel="signature" />
 
@@ -80,11 +80,11 @@
         </activity>
         <provider
             android:name="com.poppop.RNReactNativeSharedGroupPreferences.SharedProvider"
-            android:authorities="@string/provider_authorities"
+            android:authorities="${applicationId}.SharedProvider"
             android:enabled="true"
             android:exported="true"
-            android:readPermission="@string/provider_read_permission"
-            android:writePermission="@string/provider_write_permission" />
+            android:readPermission="${applicationId}.READ_DATABASE"
+            android:writePermission="${applicationId}.WRITE_DATABASE" />
     </application>
     <queries>
         <intent>

@@ -1,6 +1,7 @@
 apply plugin: "com.android.application"
 apply plugin: 'com.google.gms.google-services'
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 import com.android.build.OutputFile
 import org.apache.tools.ant.taskdefs.condition.Os
@@ -151,7 +152,7 @@ android {
                 }
             }
         }
-        applicationId "com.beincom.group"
+        applicationId project.env.get("BUNDLE_IDENTIFIER")
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 14
@@ -161,7 +162,13 @@ android {
         missingDimensionStrategy 'react-native-camera', 'general'
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
-        resValue "string", "build_config_package", "com.beincom.group"
+        resValue "string", "build_config_package", project.env.get("BUNDLE_IDENTIFIER")
+        resValue "string", "app_name", project.env.get("BUNDLE_DISPLAY_NAME")
+        resValue "string", "CodePushDeploymentKey", project.env.get("CODEPUSH_KEY")
+        manifestPlaceholders.beinChatId = project.env.get("APP_CHAT_PACKAGE_NAME_ANDROID")
+        manifestPlaceholders.selfHost = project.env.get("SELF_DOMAIN")
+        manifestPlaceholders.scheme = project.env.get("URL_SCHEME")
+        manifestPlaceholders.chatScheme = project.env.get("CHAT_URL_SCHEME")
 
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
 
@@ -273,61 +280,19 @@ android {
      productFlavors {
         development {
             dimension "version"
-            applicationIdSuffix ".development"
             versionNameSuffix "-dev"
-            resValue "string", "app_name", "BIC Group Development"
-            resValue "string", "facebook_app_id", "362084341568821"
-            manifestPlaceholders.beinChatId = "com.beincom.chat.development"
-            manifestPlaceholders.selfHost = "www.beincom.io"
-            manifestPlaceholders.scheme = "bicdev"
-            manifestPlaceholders.chatScheme = "bicchatdev"
-            resValue "string", "provider_authorities", "com.beincom.group.development.SharedProvider"
-            resValue "string", "provider_read_permission", "com.beincom.group.development.READ_DATABASE"
-            resValue "string", "provider_write_permission", "com.beincom.group.development.WRITE_DATABASE"
-            resValue "string", "CodePushDeploymentKey", ""
         }
         staging {
             dimension "version"
-            applicationIdSuffix ".staging"
-            versionNameSuffix ""
-            resValue "string", "app_name", "BIC Group Staging"
-            resValue "string", "facebook_app_id", "362084341568821"
-            manifestPlaceholders.beinChatId = "com.beincom.chat.staging"
-            manifestPlaceholders.selfHost = "www.beincom.app"
-            manifestPlaceholders.scheme = "bicstaging"
-            manifestPlaceholders.chatScheme = "bicchatstaging"
-            resValue "string", "provider_authorities", "com.beincom.group.staging.SharedProvider"
-            resValue "string", "provider_read_permission", "com.beincom.group.staging.READ_DATABASE"
-            resValue "string", "provider_write_permission", "com.beincom.group.staging.WRITE_DATABASE"
-            resValue "string", "CodePushDeploymentKey", "n47pDS6lrKq_xZaIXdD8fRWeIEBJelpxBS_4u"
+            versionNameSuffix "-staging"
         }
         prerelease {
              dimension "version"
-             applicationIdSuffix ".prerelease"
-             versionNameSuffix ""
-             resValue "string", "app_name", "BIC Group Release"
-             resValue "string", "facebook_app_id", "362084341568821"
-             manifestPlaceholders.beinChatId = "com.beincom.chat.prerelease"
-             manifestPlaceholders.selfHost = "www.beincom.biz"
-             manifestPlaceholders.scheme = "bicprerelease"
-             manifestPlaceholders.chatScheme = "bicchatprerelease"
-             resValue "string", "provider_authorities", "com.beincom.group.prerelease.SharedProvider"
-             resValue "string", "provider_read_permission", "com.beincom.group.prerelease.READ_DATABASE"
-             resValue "string", "provider_write_permission", "com.beincom.group.prerelease.WRITE_DATABASE"
-             resValue "string", "CodePushDeploymentKey", "GNX4ZW1YN1C8S1lfDQUjjjsmHsgMee96U-2Kc"
+             versionNameSuffix "-prerelease"
         }
         production {
             dimension "version"
-            resValue "string", "app_name", "BIC Group"
-            resValue "string", "facebook_app_id", "362084341568821"
-            manifestPlaceholders.beinChatId = "com.beincom.chat"
-            manifestPlaceholders.selfHost = "www.beincom.com"
-            manifestPlaceholders.scheme = "bic"
-            manifestPlaceholders.chatScheme = "bicchat"
-            resValue "string", "provider_authorities", "com.beincom.group.SharedProvider"
-            resValue "string", "provider_read_permission", "com.beincom.group.READ_DATABASE"
-            resValue "string", "provider_write_permission", "com.beincom.group.WRITE_DATABASE"
-            resValue "string", "CodePushDeploymentKey", "cUer65Va2Lji3WV_-QRJUaedmsssBh-R41wCv"
+            versionNameSuffix ""
         }
     }
     buildTypes {
@@ -433,7 +398,6 @@ task copyDownloadableDepsToLibs(type: Copy) {
     into 'libs'
 }
 
-apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 
 def isNewArchitectureEnabled() {
