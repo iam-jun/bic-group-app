@@ -57,7 +57,7 @@ const getCommentsByPostId = (_set, _get) => async (payload: IPayloadGetCommentsB
     }
   } catch (e) {
     console.error(
-      '\x1b[31m🐣️ saga getCommentsByPostId error: ', e, '\x1b[0m',
+      '\x1b[31m🐣️ getCommentsByPostId error: ', e, '\x1b[0m',
     );
     callbackLoading?.(false);
     showToastError(e);

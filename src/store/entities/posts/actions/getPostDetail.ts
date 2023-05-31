@@ -54,8 +54,16 @@ const getPostDetail = (_set, get) => async (payload: IPayloadGetPostDetail) => {
       }
     } else {
       const responePostDetail = await streamApi.getPostDetail(params);
+      const responseComments = await streamApi.getCommentsByPostId({ postId, order: 'DESC' });
+      const { list, meta } = responseComments?.data || {};
       if (responePostDetail?.data) {
-        response = responePostDetail.data;
+        response = {
+          ...responePostDetail.data,
+          comments: {
+            list: list || [],
+            meta,
+          },
+        }
       }
     }
 

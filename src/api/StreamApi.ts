@@ -662,13 +662,7 @@ const streamApi = {
   },
 
   getPostDetail: (params: IParamGetPostDetail) => {
-    const requestParams = {
-      commentLimit: 10,
-      withComment: true,
-      childCommentLimit: 10,
-      ...params,
-    };
-    return withHttpRequestPromise(streamApiConfig.getPostDetail, requestParams);
+    return withHttpRequestPromise(streamApiConfig.getPostDetail, params);
   },
   getDraftContents: async (param: IParamGetDraftContents) => {
     try {
