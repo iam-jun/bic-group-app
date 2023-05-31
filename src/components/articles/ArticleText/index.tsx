@@ -14,7 +14,7 @@ const ArticleText: FC<ArticleTextComponentProps> = ({ text, type }) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
   const { colors } = theme;
-  const textVariant = type === 'title' ? 'h1' : 'paragraphM';
+  const textVariant = type === 'title' ? 'h3' : 'paragraphM';
 
   const lstText = getTextHighlight(text);
 
