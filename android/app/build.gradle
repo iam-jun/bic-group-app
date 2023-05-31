@@ -1,7 +1,19 @@
 apply plugin: "com.android.application"
 apply plugin: 'com.google.gms.google-services'
-apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
+project.ext.envConfigFiles = [
+        developmentdebug: ".env",
+        developmentrelease: ".env",
+        stagingdebug: ".env.staging",
+        stagingrelease: ".env.staging",
+        prereleasedebug: ".env.prerelease",
+        prereleaserelease: ".env.prerelease",
+        productiondebug: ".env.production",
+        productionrelease: ".env.production",
+]
+
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 import com.android.build.OutputFile
 import org.apache.tools.ant.taskdefs.condition.Os
@@ -283,15 +295,19 @@ android {
 
     productFlavors {
         development {
-            versionNameSuffix "-dev"
+            dimension "version"
+            versionNameSuffix ""
         }
         staging {
-            versionNameSuffix "-staging"
+            dimension "version"
+            versionNameSuffix ""
         }
         prerelease {
-             versionNameSuffix "-prerelease"
+            dimension "version"
+            versionNameSuffix ""
         }
         production {
+            dimension "version"
             versionNameSuffix ""
         }
     }
@@ -369,16 +385,6 @@ dependencies {
 }
 
 
-project.ext.envConfigFiles = [
-        developmentdebug: ".env",
-        developmentrelease: ".env",
-        stagingdebug: ".env.staging",
-        stagingrelease: ".env.staging",
-        prereleasedebug: ".env.prerelease",
-        prereleaserelease: ".env.prerelease",
-        productiondebug: ".env.production",
-        productionrelease: ".env.production",
-]
 
 if (isNewArchitectureEnabled()) {
     // If new architecture is enabled, we let you build RN from source
