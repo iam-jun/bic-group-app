@@ -148,7 +148,11 @@ const UserProfile = (props: any) => {
       {loading ? (
         renderLoading()
       ) : (
-        <>
+        <ScrollView
+          style={styles.container}
+          showsVerticalScrollIndicator={false}
+          scrollEventThrottle={16}
+        >
           <CoverHeader
             id={id}
             isCurrentUser={isCurrentUser}
@@ -166,27 +170,22 @@ const UserProfile = (props: any) => {
             showingBadges={showingBadges}
           />
           <Divider color={colors.gray5} size={spacing.padding.large} />
-          <ScrollView
-            style={styles.container}
-            showsVerticalScrollIndicator={false}
-            scrollEventThrottle={16}
-          >
-            {isCurrentUser ? (
-              <>
-                <View style={styles.tabContainer}>
-                  <Tab
-                    buttonProps={{ size: 'large', type: 'primary', useI18n: true }}
-                    data={USER_TABS}
-                    onPressTab={onPressTab}
-                    activeIndex={selectedIndex}
-                  />
-                </View>
-                <Divider color={colors.gray5} size={spacing.padding.large} />
-              </>
-            ) : null}
-            {renderContent()}
-          </ScrollView>
-        </>
+          {isCurrentUser ? (
+            <>
+              <View style={styles.tabContainer}>
+                <Tab
+                  buttonProps={{ size: 'large', type: 'primary', useI18n: true }}
+                  data={USER_TABS}
+                  onPressTab={onPressTab}
+                  activeIndex={selectedIndex}
+                />
+              </View>
+              <Divider color={colors.gray5} size={spacing.padding.large} />
+            </>
+          ) : null}
+
+          {renderContent()}
+        </ScrollView>
       )}
       {isCurrentUser && isEditingBadge && selectedIndex === 1 ? (
         <View style={styles.bottomButton}>
@@ -213,11 +212,14 @@ const UserProfile = (props: any) => {
   );
 };
 
-const checkEqual = (array1: IUserBadge[], array2: IUserBadge[]): boolean => {
-  if (array1?.length !== array2?.length) return false;
+const checkEqual = (choosingArr: IUserBadge[], choseArr: IUserBadge[]): boolean => {
+  if (choseArr?.length === 0) {
+    const index = choosingArr.findIndex((item) => item?.id);
+    return index === -1;
+  }
   let result = true;
-  for (let index = 0; index < array1.length; index++) {
-    if (array1?.[index]?.id !== array2?.[index]?.id) {
+  for (let index = 0; index < choosingArr.length; index++) {
+    if (choosingArr?.[index]?.id !== choseArr?.[index]?.id) {
       result = false;
       break;
     }
@@ -234,6 +236,7 @@ const themeStyles = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       backgroundColor: colors.white,
+      flex: 1,
     },
     loadingProfile: {
       marginTop: spacing.margin.extraLarge,

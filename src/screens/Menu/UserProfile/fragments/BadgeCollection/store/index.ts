@@ -5,6 +5,8 @@ import { ICommunityBadges, IUserBadge } from '~/interfaces/IEditUser';
 import getOwnedBadges from './actions/getOwnedBadges';
 import editShowingBadges from './actions/editShowingBadges';
 
+export const MAX_BADGES = 3;
+
 export interface IUserBadgesState extends IBaseState {
   isEditing: boolean;
   loading: boolean;
@@ -52,8 +54,17 @@ const userBadge = (set, get) => ({
       }, 'setChoosingBadges');
     },
     setShowingBadges: (badges: IUserBadge[]) => {
+      const choosingBadges = [];
+      for (let index = 0; index < MAX_BADGES; index++) {
+        if (!badges?.[index]) {
+          choosingBadges.push(undefined);
+        } else {
+          choosingBadges.push(badges[index]);
+        }
+      }
       set((state: IUserBadgesState) => {
         state.showingBadges = badges;
+        state.choosingBadges = choosingBadges;
       }, 'setShowingBadges');
     },
     fillChoosingBadges: (badge: IUserBadge) => {

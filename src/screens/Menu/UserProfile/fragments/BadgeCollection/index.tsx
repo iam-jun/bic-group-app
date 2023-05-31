@@ -14,6 +14,8 @@ import images from '~/resources/images';
 import Image from '~/components/Image';
 import { IUserBadge } from '~/interfaces/IEditUser';
 
+const SCROLL_MAX_HEIGHT = 400;
+
 const BadgeCollection = () => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -113,6 +115,7 @@ const BadgeCollection = () => {
         renderItem={renderItem}
         ListFooterComponent={() => <ViewSpacing height={100} />}
         ListEmptyComponent={renderEmptyComponent}
+        style={{ maxHeight: SCROLL_MAX_HEIGHT }}
       />
     </View>
   );

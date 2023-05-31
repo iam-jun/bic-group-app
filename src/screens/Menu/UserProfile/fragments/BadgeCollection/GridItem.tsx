@@ -44,7 +44,7 @@ const GridItem = ({
   const isSelected = checkIsSelected(choosingBadges, item);
 
   const onPressItem = () => {
-    onPress(item);
+    !isSelected && onPress(item);
   };
 
   return (
@@ -59,7 +59,6 @@ const GridItem = ({
     >
       <TouchableOpacity
         style={[styles.container,
-          isSelected ? styles.selected : styles.default,
         ]}
         disabled={disabled}
         onPress={onPressItem}
@@ -67,6 +66,8 @@ const GridItem = ({
       >
         <Avatar.Medium
           isRounded
+          borderWidth={isSelected ? 2 : 1}
+          borderColor={isSelected ? colors.purple50 : colors.neutral5}
           source={{ uri: item?.iconUrl }}
         />
         {isSelected
@@ -106,10 +107,6 @@ const themeStyles = (theme: ExtendedTheme) => {
       zIndex: 1,
       right: 0,
     },
-    default: {
-      borderWidth: 1,
-      borderColor: colors.neutral5,
-    },
     disabled: {
       backgroundColor: colors.white,
       width: '100%',
@@ -123,10 +120,6 @@ const themeStyles = (theme: ExtendedTheme) => {
       borderRadius: borderRadius.pill,
       opacity: 0.5,
       overflow: 'hidden',
-    },
-    selected: {
-      borderWidth: 2,
-      borderColor: colors.purple50,
     },
     tooltipStyle: {
       backgroundColor: colors.neutral80,

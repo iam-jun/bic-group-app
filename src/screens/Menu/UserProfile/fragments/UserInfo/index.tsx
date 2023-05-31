@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import BasicInfo from '../BasicInfo';
 import { spacing } from '~/theme';
@@ -28,10 +28,7 @@ const UserInfo = ({ isCurrentUser }: {isCurrentUser: boolean}) => {
   } = userProfileData || {};
 
   return (
-    <ScrollView
-      style={styles.container}
-      showsVerticalScrollIndicator={false}
-    >
+    <>
       <BasicInfo
         fullname={fullname}
         gender={gender}
@@ -49,7 +46,7 @@ const UserInfo = ({ isCurrentUser }: {isCurrentUser: boolean}) => {
         isCurrentUser={isCurrentUser}
       />
       <Experiences isCurrentUser={isCurrentUser} />
-    </ScrollView>
+    </>
   );
 };
 
