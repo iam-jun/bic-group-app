@@ -21,12 +21,18 @@ const Grid = ({ data, disabled = false, onPress }:Props) => {
     return null;
   }
 
-  const renderGridItem = ({ item }: any) => (
-    <GridItem item={item} disabled={disabled} onPress={onPress} />
+  const renderGridItem = ({ item, index }: any) => (
+    <GridItem
+      item={item}
+      numColumns={numColumns}
+      index={index}
+      disabled={disabled}
+      onPress={onPress}
+    />
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, data?.length > numColumns ? {} : styles.containerLeft]}>
       <FlatList
         data={data}
         renderItem={renderGridItem}
@@ -44,6 +50,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     paddingBottom: 10,
+  },
+  containerLeft: {
+    alignItems: 'flex-start',
   },
 });
 

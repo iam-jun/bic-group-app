@@ -82,10 +82,6 @@ const UserHeader = ({
     return 'block_user:text_block_user';
   };
 
-  const onShowTooltip = () => {
-    // tooltipActions.showTooltip(screenId);
-  };
-
   return (
     <View
       testID="user_profile"
@@ -95,7 +91,7 @@ const UserHeader = ({
         <Text.H4 testID="user_profile.fullname" numberOfLines={1}>
           {fullname}
         </Text.H4>
-        <VerifiedView isVerified={isVerified} onPress={onShowTooltip} />
+        <VerifiedView isVerified={isVerified} disabled={false} />
       </View>
       {!!username && (
         <Text.BodyS
@@ -145,6 +141,7 @@ const createStyle = (_theme: ExtendedTheme) => StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: spacing.padding.large,
   },
   userBadge: {
     paddingTop: spacing.padding.small,

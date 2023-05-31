@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import Tooltip from 'react-native-walkthrough-tooltip';
+
 import { Avatar } from '~/baseComponents';
 import Icon from '~/baseComponents/Icon';
-// import Tooltip from '~/baseComponents/Tooltip/index';
 import spacing, { borderRadius } from '~/theme/spacing';
 import { IUserBadge } from '~/interfaces/IEditUser';
 import Text from '~/baseComponents/Text';
@@ -12,12 +13,14 @@ import useUserBadge from './store';
 
 interface Props {
     item: IUserBadge;
+    numColumns: number;
+    index: number;
     disabled?: boolean;
     onPress: (item: IUserBadge) => void;
 }
 
 const GridItem = ({
-  item, disabled = false, onPress,
+  item, numColumns, index, disabled = false, onPress,
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -25,6 +28,19 @@ const GridItem = ({
   const choosingBadges = useUserBadge((state) => state.choosingBadges);
 
   const [isVisible, setIsVisible] = useState(false);
+  const [currentPlacement, setCurrentPlacement] = useState<string>('top');
+
+  useEffect(() => {
+    if (numColumns > 0) {
+      const surplus = (index + 1) % numColumns;
+      if (surplus === 0) {
+        setCurrentPlacement('left');
+      } else if (surplus === 1) {
+        setCurrentPlacement('right');
+      }
+    }
+  }, [numColumns, index]);
+
   const isSelected = checkIsSelected(choosingBadges, item);
 
   const onPressItem = () => {
@@ -35,8 +51,9 @@ const GridItem = ({
     <Tooltip
       isVisible={isVisible}
       content={<Text.BodyS color={colors.white}>{item?.name || ''}</Text.BodyS>}
-      placement="top"
+      placement={currentPlacement as any}
       backgroundColor="transparent"
+      contentStyle={styles.tooltipStyle}
       disableShadow
       onClose={() => { setIsVisible(false); }}
     >
@@ -110,6 +127,12 @@ const themeStyles = (theme: ExtendedTheme) => {
     selected: {
       borderWidth: 2,
       borderColor: colors.purple50,
+    },
+    tooltipStyle: {
+      backgroundColor: colors.neutral80,
+      borderRadius: spacing.padding.small,
+      paddingVertical: spacing.padding.small,
+      paddingHorizontal: spacing.padding.large,
     },
   });
 };
