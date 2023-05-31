@@ -7,6 +7,7 @@ import i18n from '~/localization';
 import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import { IPostCreateSeries } from '~/interfaces/ISeries';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -35,7 +36,7 @@ const editSeries = (set, get) => async (
       setting,
       coverMedia: coverMediaUpdate,
     };
-    await streamApi.editSeries(id, dataUpdate);
+    const response = await streamApi.editSeries(id, dataUpdate);
 
     actions.getSeriesDetail(id);
 
@@ -43,7 +44,7 @@ const editSeries = (set, get) => async (
       state.loading = false;
     }, 'editSeriesSuccess');
 
-    showToast({ content: 'series:text_edit_series_success' });
+    showToastSuccess(response);
 
     if (shouldReplaceWithDetail) {
       navigation.replace(seriesStack.seriesDetail, { seriesId: id });
