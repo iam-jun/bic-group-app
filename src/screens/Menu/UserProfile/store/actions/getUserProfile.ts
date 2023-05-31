@@ -3,6 +3,7 @@ import { IGetUserProfile } from '~/interfaces/IAuth';
 import { mapProfile } from '~/helpers/common';
 import { IUserProfileState } from '../../store';
 import useCommonController from '~/screens/store';
+import useUserBadge from '../../fragments/BadgeCollection/store';
 
 const getUserProfile
   = (set) => async ({ userId, params, silentLoading }: IGetUserProfile) => {
@@ -25,6 +26,7 @@ const getUserProfile
       if (myId === userId) {
         useCommonController.getState().actions.setMyProfile(userProfile);
       }
+      useUserBadge.getState().actions.setShowingBadges(userProfile?.showingBadges);
     } catch (err) {
       console.error('getUserProfile error:', err);
 

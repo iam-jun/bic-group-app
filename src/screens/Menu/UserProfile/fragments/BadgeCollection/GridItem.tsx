@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import Tooltip from 'react-native-walkthrough-tooltip';
 import { Avatar } from '~/baseComponents';
 import Icon from '~/baseComponents/Icon';
-import Tooltip from '~/baseComponents/Tooltip';
+// import Tooltip from '~/baseComponents/Tooltip/index';
 import spacing, { borderRadius } from '~/theme/spacing';
 import { IUserBadge } from '~/interfaces/IEditUser';
 import Text from '~/baseComponents/Text';
@@ -33,9 +34,10 @@ const GridItem = ({
   return (
     <Tooltip
       isVisible={isVisible}
-      content={<Text.BodyS color={colors.neutral40}>{item?.name || ''}</Text.BodyS>}
+      content={<Text.BodyS color={colors.white}>{item?.name || ''}</Text.BodyS>}
       placement="top"
       backgroundColor="transparent"
+      disableShadow
       onClose={() => { setIsVisible(false); }}
     >
       <TouchableOpacity

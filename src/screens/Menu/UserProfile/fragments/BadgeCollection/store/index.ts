@@ -19,6 +19,7 @@ export interface IUserBadgesState extends IBaseState {
     setShowingBadges: (badges: IUserBadge[]) => void;
     fillChoosingBadges: (badge: IUserBadge) => void;
     removeChoosingBadges: (index: number) => void;
+    cancleSaveBadges: () => void;
     getOwnedBadges: () => void;
     editShowingBadges: () => void;
   };
@@ -80,6 +81,15 @@ const userBadge = (set, get) => ({
       set((state: IUserBadgesState) => {
         state.choosingBadges = newBadges;
       }, `removeChoosingBadges_index_${index}`);
+    },
+    cancleSaveBadges: () => {
+      const { showingBadges } = get();
+      const choosingBadges = showingBadges?.length > 0 ? showingBadges : [undefined, undefined, undefined];
+
+      set((state: IUserBadgesState) => {
+        state.choosingBadges = choosingBadges;
+        state.isEditing = false;
+      }, 'cancleSaveBadges');
     },
     getOwnedBadges: getOwnedBadges(set, get),
     editShowingBadges: editShowingBadges(set, get),

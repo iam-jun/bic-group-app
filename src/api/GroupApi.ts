@@ -61,7 +61,7 @@ export const groupsApiConfig = {
   }),
   getUserProfile: (userId: string, params?: any): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}users/${userId}/profile`,
+    url: `${apiProviders.beinUser.url}users/${userId}/profile`,
     params,
   }),
   getLanguages: (): HttpApiRequestConfig => ({

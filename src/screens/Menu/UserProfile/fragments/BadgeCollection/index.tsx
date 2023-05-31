@@ -119,8 +119,14 @@ const BadgeCollection = () => {
 };
 
 const checkIsDisabled = (badges: IUserBadge[]) => {
+  if (badges.length < 3) return false;
   let result = true;
-  badges.forEach((badge) => { if (!badge?.id) { result = false; } });
+  badges.forEach((badge) => {
+    if (!badge?.id) {
+      result = false;
+    }
+  });
+
   return result;
 };
 

@@ -18,7 +18,6 @@ import useHomeStore from '~/screens/Home/store';
 import NoUserFound from '~/screens/Menu/components/NoUserFound';
 import spacing from '~/theme/spacing';
 import CoverHeader from './fragments/CoverHeader';
-import UserHeader from './fragments/UserHeader';
 import useUserProfileStore from './store';
 import useCommonController from '~/screens/store';
 import Tab from '~/baseComponents/Tab';
@@ -27,9 +26,8 @@ import BadgeCollection from './fragments/BadgeCollection';
 import Button from '~/baseComponents/Button';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import useUserBadge from './fragments/BadgeCollection/store';
-// import Tooltip from '../../../components/Tooltip.tsx';
-
-const screenId = 'userProfile';
+import UserHeader from './fragments/UserHeader';
+import { IUserBadge } from '~/interfaces/IEditUser';
 
 export const USER_TABS = [
   { id: '1', text: 'user:user_tab_types:title_about' },
@@ -47,6 +45,8 @@ const UserProfile = (props: any) => {
   const badgeActions = useUserBadge((state) => state.actions);
   const isEditingBadge = useUserBadge((state) => state.isEditing);
   const resetUserBadge = useUserBadge((state) => state.reset);
+  const showingBadges = useUserBadge((state) => state.showingBadges);
+  const choosingBadges = useUserBadge((state) => state.choosingBadges);
 
   const {
     fullname,
@@ -74,6 +74,8 @@ const UserProfile = (props: any) => {
   const isCurrentUser = userId === currentUserId || userId === currentUsername;
 
   const homeActions = useHomeStore((state) => state.actions);
+
+  const isDisable = checkEqual(choosingBadges, showingBadges);
 
   useEffect(() => {
     isFocused && userProfileActions.getUserProfile({ userId, params });
@@ -110,7 +112,7 @@ const UserProfile = (props: any) => {
   };
 
   const onCancel = () => {
-    resetUserBadge();
+    badgeActions.cancleSaveBadges();
   };
 
   const onSave = () => {
@@ -155,13 +157,13 @@ const UserProfile = (props: any) => {
             uploadCallback={uploadCallback}
           />
           <UserHeader
-            screenId={screenId}
             id={userId}
             fullname={fullname}
             username={username}
             latestWork={latestWork}
             isCurrentUser={isCurrentUser}
             isVerified={isVerified}
+            showingBadges={showingBadges}
           />
           <Divider color={colors.gray5} size={spacing.padding.large} />
           <ScrollView
@@ -183,7 +185,6 @@ const UserProfile = (props: any) => {
               </>
             ) : null}
             {renderContent()}
-            {/* <Tooltip screenId={screenId} /> */}
           </ScrollView>
         </>
       )}
@@ -201,6 +202,7 @@ const UserProfile = (props: any) => {
           <Button.Primary
             useI18n
             testID="badge_collection.btn_save"
+            disabled={isDisable}
             onPress={onSave}
           >
             common:btn_save
@@ -209,6 +211,18 @@ const UserProfile = (props: any) => {
       ) : null}
     </ScreenWrapper>
   );
+};
+
+const checkEqual = (array1: IUserBadge[], array2: IUserBadge[]): boolean => {
+  if (array1?.length !== array2?.length) return false;
+  let result = true;
+  for (let index = 0; index < array1.length; index++) {
+    if (array1?.[index]?.id !== array2?.[index]?.id) {
+      result = false;
+      break;
+    }
+  }
+  return result;
 };
 
 export default UserProfile;
