@@ -26,7 +26,7 @@ const getUserProfile
       if (myId === userId) {
         useCommonController.getState().actions.setMyProfile(userProfile);
       }
-      useUserBadge.getState().actions.setShowingBadges(userProfile?.showingBadges);
+      useUserBadge.getState().actions.setShowingBadges(userProfile?.showingBadges, myId === userId);
     } catch (err) {
       console.error('getUserProfile error:', err);
 

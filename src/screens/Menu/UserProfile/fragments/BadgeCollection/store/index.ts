@@ -18,7 +18,7 @@ export interface IUserBadgesState extends IBaseState {
   actions: {
     setIsEditing: (isEditing: boolean) => void;
     setChoosingBadges: (badges: string[])=> void;
-    setShowingBadges: (badges: IUserBadge[]) => void;
+    setShowingBadges: (badges: IUserBadge[], isCurrentUser: boolean) => void;
     fillChoosingBadges: (badge: IUserBadge) => void;
     removeChoosingBadges: (index: number) => void;
     cancleSaveBadges: () => void;
@@ -53,7 +53,13 @@ const userBadge = (set, get) => ({
         state.choosingBadges = badges;
       }, 'setChoosingBadges');
     },
-    setShowingBadges: (badges: IUserBadge[]) => {
+    setShowingBadges: (badges: IUserBadge[], isCurrentUser: boolean) => {
+      if (!isCurrentUser) {
+        set((state: IUserBadgesState) => {
+          state.showingBadges = badges;
+        }, 'setShowingBadgesNotCurrentUser');
+        return;
+      }
       const choosingBadges = [];
       for (let index = 0; index < MAX_BADGES; index++) {
         if (!badges?.[index]) {
