@@ -28,10 +28,11 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import useUserBadge from './fragments/BadgeCollection/store';
 import UserHeader from './fragments/UserHeader';
 import { IUserBadge } from '~/interfaces/IEditUser';
+import { USER_TABS_TYPES } from './constants';
 
 export const USER_TABS = [
-  { id: '1', text: 'user:user_tab_types:title_about' },
-  { id: '2', text: 'user:user_tab_types:title_badge_collection' },
+  { id: USER_TABS_TYPES.USER_ABOUT, text: 'user:user_tab_types:title_about' },
+  { id: USER_TABS_TYPES.USER_BADGE_COLLECTION, text: 'user:user_tab_types:title_badge_collection' },
 ];
 
 const UserProfile = (props: any) => {
