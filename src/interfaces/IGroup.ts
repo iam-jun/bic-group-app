@@ -4,6 +4,7 @@ import { ResourceUploadType } from './IUpload';
 import { RoleType } from '~/constants/permissionScheme';
 import { IObject } from '~/interfaces/common';
 import { ICommunity, MembershipAnswer } from './ICommunity';
+import { PostType } from './IPost';
 
 export interface IRole {
   id?: string;
@@ -130,12 +131,16 @@ export interface IParamGetGroupPosts {
   groupId: string;
   order?: 'ASC' | 'DESC';
   limit?: number;
-  offset?: number;
+  after?: string | null;
   idGte?: number;
   idLte?: number;
   idGt?: number;
   idLt?: number;
   ranking?: 'IMPORTANT' | string;
+  isImportant?: boolean;
+  isSaved?: boolean;
+  isMine?: boolean;
+  type?: PostType | undefined;
 }
 
 export interface IParamGetGroupMembers {
@@ -215,7 +220,7 @@ export interface IJoiningMember {
   updatedAt: string;
   user: IJoiningUserInfo;
   noticeMessage?: string;
-  membershipAnswers: MembershipAnswer[],
+  membershipAnswers: MembershipAnswer[];
 }
 
 export interface IJoiningUserInfo {

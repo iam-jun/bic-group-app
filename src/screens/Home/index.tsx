@@ -62,7 +62,7 @@ const Home = () => {
   } = useHomeStore();
   const dataFiltered = feed[contentFilter][attributeFilter];
   const {
-    data: homePosts, canLoadMore, refreshing,
+    data: homePosts, hasNextPage, refreshing,
   } = dataFiltered;
 
   const currentUserId = useUserIdAuth();
@@ -123,7 +123,7 @@ const Home = () => {
       && token
       && (!homePosts || homePosts?.length === 0)
       && !refreshing
-      && canLoadMore
+      && hasNextPage
       ) {
         getData(true);
         postContainingVideoInProgressActions.getPosts();
@@ -201,7 +201,7 @@ const Home = () => {
         key={`${contentFilter}_${attributeFilter}`}
         data={homePosts}
         refreshing={refreshing}
-        canLoadMore={canLoadMore}
+        canLoadMore={hasNextPage}
         onEndReach={onEndReach}
         onRefresh={onRefresh}
         onScrollY={onScrollY}

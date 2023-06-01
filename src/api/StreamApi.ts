@@ -68,7 +68,7 @@ export const streamApiConfig = {
     params: {
       order: param?.order || 'DESC',
       limit: param?.limit,
-      offset: param?.offset,
+      after: param?.after,
       idGte: param?.idGte,
       idLte: param?.idLte,
       idGt: param?.idGt,

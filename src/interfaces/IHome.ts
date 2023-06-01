@@ -29,7 +29,7 @@ export interface IPayloadSetNewsfeedSearchRecentKeywords {
 export interface IParamGetFeed {
   order?: 'ASC' | 'DESC';
   limit?: number;
-  offset?: number;
+  after?: string | null;
   idGte?: number;
   idLte?: number;
   idGt?: number;

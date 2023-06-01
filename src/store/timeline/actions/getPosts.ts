@@ -1,19 +1,18 @@
 import groupApi from '~/api/GroupApi';
-import { IPost } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
-import { IBaseListState } from '~/store/interfaces/IBaseState';
-import { ITimelineState } from '..';
+import { IDataFilterTimelines, ITimelineState } from '..';
 import {
   getParamsContentFeed,
   isFilterWithThisAttributeFeed,
 } from '~/screens/Home/store/helper';
 import { timeOut } from '~/utils/common';
 import { AttributeFeed } from '~/interfaces/IFeed';
+import { IParamGetGroupPosts } from '~/interfaces/IGroup';
 
 const getPosts = (set, get) => async (id: string, isRefresh = false) => {
   const { timelines }: ITimelineState = get();
   const { contentFilter, attributeFilter, data } = timelines[id] || {};
-  const currentPosts: IBaseListState<IPost> = data[contentFilter][attributeFilter];
+  const currentPosts: IDataFilterTimelines = data[contentFilter][attributeFilter];
 
   if (currentPosts.loading) return;
 
@@ -26,10 +25,10 @@ const getPosts = (set, get) => async (id: string, isRefresh = false) => {
   }, `getPosts community/group Id: ${id}, isRefresh: ${isRefresh} `);
 
   try {
-    const offset = isRefresh ? 0 : currentPosts.ids?.length;
-    const params = {
+    const endCursor = isRefresh ? null : currentPosts.endCursor;
+    const params: IParamGetGroupPosts = {
       groupId: id,
-      offset,
+      after: endCursor,
       limit: 10,
       isImportant: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.IMPORTANT),
       isSaved: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.SAVED),
@@ -51,6 +50,7 @@ const getPosts = (set, get) => async (id: string, isRefresh = false) => {
         refreshing: false,
         ids: ids.concat(newIds),
         hasNextPage: response.data?.meta?.hasNextPage,
+        endCursor: response.data?.meta?.endCursor,
       };
     }, `getPostsSuccess community/group Id: ${id}`);
   } catch (error) {
@@ -61,6 +61,7 @@ const getPosts = (set, get) => async (id: string, isRefresh = false) => {
         refreshing: false,
         hasNextPage: false,
         error,
+        endCursor: null,
       };
     }, `getPostsError community/group Id: ${id}`);
   }

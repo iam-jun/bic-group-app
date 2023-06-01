@@ -717,7 +717,7 @@ const groupApi = {
   ),
   getGroupPosts: (param: IParamGetGroupPosts) => withHttpRequestPromise(
     groupsApiConfig.getGroupPosts, {
-      offset: param?.offset || 0,
+      after: param?.after || null,
       limit: param?.limit || appConfig.recordsPerPage,
       ...param,
     },
