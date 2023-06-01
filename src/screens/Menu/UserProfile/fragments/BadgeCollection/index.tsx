@@ -85,16 +85,14 @@ const BadgeCollection = () => {
           <Text.H4 color={colors.neutral40} useI18n>
             user:showing_badges:title
           </Text.H4>
-          {!isEditing
-            ? (
-              <EditButton
-                isCurrentUser
-                onPress={editBadge}
-                icon="PenToSquareSolid"
-                testID="badge_collection.edit_btn"
-              />
-            )
-            : null}
+          {Boolean(!isEditing) && (
+          <EditButton
+            isCurrentUser
+            onPress={editBadge}
+            icon="PenToSquareSolid"
+            testID="badge_collection.edit_btn"
+          />
+          )}
         </View>
         <Text.BodyS color={colors.neutral40} useI18n>
           user:showing_badges:description

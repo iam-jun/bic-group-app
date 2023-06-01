@@ -1,5 +1,4 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import BasicInfo from '../BasicInfo';
 import { spacing } from '~/theme';
@@ -11,7 +10,6 @@ import useUserProfileStore from '../../store';
 const UserInfo = ({ isCurrentUser }: {isCurrentUser: boolean}) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = themeStyles(theme);
 
   const userProfileData = useUserProfileStore((state) => state.data);
 
@@ -48,16 +46,6 @@ const UserInfo = ({ isCurrentUser }: {isCurrentUser: boolean}) => {
       <Experiences isCurrentUser={isCurrentUser} />
     </>
   );
-};
-
-const themeStyles = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-
-  return StyleSheet.create({
-    container: {
-      backgroundColor: colors.white,
-    },
-  });
 };
 
 export default UserInfo;

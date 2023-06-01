@@ -41,16 +41,14 @@ const ShowingBadges = () => {
             isRounded
             source={{ uri: iconUrl }}
           />
-          {isEditing
-            ? (
-              <Button
-                style={styles.iconClose}
-                onPress={() => { removeBadge(index); }}
-              >
-                <Icon size={10} icon="iconCloseSmall" />
-              </Button>
-            )
-            : null}
+          {Boolean(isEditing) && (
+          <Button
+            style={styles.iconClose}
+            onPress={() => { removeBadge(index); }}
+          >
+            <Icon size={10} icon="iconCloseSmall" />
+          </Button>
+          )}
         </View>
       );
     } return renderEmptyItem(index);

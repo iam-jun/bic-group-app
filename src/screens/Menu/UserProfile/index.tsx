@@ -171,7 +171,7 @@ const UserProfile = (props: any) => {
             showingBadges={showingBadges}
           />
           <Divider color={colors.gray5} size={spacing.padding.large} />
-          {isCurrentUser ? (
+          {Boolean(isCurrentUser) && (
             <>
               <View style={styles.tabContainer}>
                 <Tab
@@ -183,12 +183,12 @@ const UserProfile = (props: any) => {
               </View>
               <Divider color={colors.gray5} size={spacing.padding.large} />
             </>
-          ) : null}
+          )}
 
           {renderContent()}
         </ScrollView>
       )}
-      {isCurrentUser && isEditingBadge && selectedIndex === 1 ? (
+      {isCurrentUser && isEditingBadge && selectedIndex === 1 && (
         <View style={styles.bottomButton}>
           <Button.Neutral
             useI18n
@@ -208,7 +208,7 @@ const UserProfile = (props: any) => {
             common:btn_save
           </Button.Primary>
         </View>
-      ) : null}
+      )}
     </ScreenWrapper>
   );
 };

@@ -19,6 +19,8 @@ const UserBadge = ({ showingBadges = [], style }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
+  if (showingBadges.length === 0) return null;
+
   const renderItem = (item: any, index: number) => {
     if (!item?.id) return null;
     return (
@@ -28,12 +30,11 @@ const UserBadge = ({ showingBadges = [], style }: Props) => {
           isRounded
           source={{ uri: item.iconUrl }}
         />
-        {index < showingBadges.length - 1 ? <ViewSpacing width={spacing.margin.small} /> : null}
+        {Boolean(index < showingBadges.length - 1) && <ViewSpacing width={spacing.margin.small} />}
       </>
     );
   };
 
-  if (showingBadges.length === 0) return null;
   const badgesView = showingBadges.map((item, index) => renderItem(item, index));
   return (
     <View style={[styles.container, style]} testID="badges.view">

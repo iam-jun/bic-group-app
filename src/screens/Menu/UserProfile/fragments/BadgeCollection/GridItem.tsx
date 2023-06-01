@@ -70,14 +70,12 @@ const GridItem = ({
           borderColor={isSelected ? colors.purple50 : colors.neutral5}
           source={{ uri: item?.iconUrl }}
         />
-        {isSelected
-          ? (
-            <View style={styles.iconChose}>
-              <Icon size={10} icon="Check" tintColor={colors.white} />
-            </View>
-          )
-          : null}
-        {!isSelected && disabled ? <View style={styles.disabled} /> : null}
+        {Boolean(isSelected) && (
+        <View style={styles.iconChose}>
+          <Icon size={10} icon="Check" tintColor={colors.white} />
+        </View>
+        )}
+        {Boolean(!isSelected) && Boolean(disabled) && <View style={styles.disabled} />}
       </TouchableOpacity>
     </Tooltip>
   );
