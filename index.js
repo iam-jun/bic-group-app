@@ -27,6 +27,7 @@ messaging().subscribeToTopic('maintenance_channel')
   });
 
 messaging().subscribeToTopic('changelogs_channel')
+  // eslint-disable-next-line no-console
   .then(() => console.log('Subscribed to topic changelogs_channel'))
   .catch((error) => {
     console.warn(
