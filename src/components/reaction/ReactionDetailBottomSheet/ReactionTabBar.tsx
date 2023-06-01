@@ -8,16 +8,18 @@ import {
 } from 'react-native';
 
 import NodeEmoji from 'node-emoji';
-import { blacklistReactions, ReactionType } from '~/constants/reactions';
+import { ReactionType } from '~/constants/reactions';
 
 import Button from '~/beinComponents/Button';
 import Text from '~/baseComponents/Text';
 import { ANIMATED_EMOJI, STATIC_EMOJI } from '~/resources/emoji';
 import { spacing } from '~/theme';
+import { IReactionCounts, MapReactionsCountCallback } from '~/interfaces/IPost';
+import { mapReactionsCount } from '~/helpers/post';
 
 export interface ReactionTabBarProps {
   initReaction?: ReactionType;
-  reactionsCount: any;
+  reactionsCount: IReactionCounts;
   onChangeTab?: (item: any, index: number) => void;
 }
 
@@ -77,27 +79,17 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
   useEffect(
     () => {
       if (reactionsCount) {
-        const reaactionCountMap = new Map();
         const newData: any = [];
-        Object.values(reactionsCount || {})?.forEach((reaction: any) => {
-          const key = Object.keys(reaction || {})?.[0];
-          if (key) {
-            reaactionCountMap.set(
-              key, reaction?.[key],
-            );
-          }
-        });
 
-        // eslint-disable-next-line no-restricted-syntax
-        for (const [key, value] of reaactionCountMap) {
-          const reactionType = key as ReactionType;
-          if (!blacklistReactions?.[reactionType] && value > 0) {
-            newData.push({
-              reactionType,
-              count: value,
-            });
-          }
-        }
+        const mapReactionsCountCallback: MapReactionsCountCallback = (reactionName, value) => {
+          newData.push({
+            reactionType: reactionName,
+            count: value,
+          });
+        };
+
+        mapReactionsCount(reactionsCount, mapReactionsCountCallback);
+
         setData(newData);
       } else {
       // reset

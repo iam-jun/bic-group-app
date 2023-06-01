@@ -62,13 +62,12 @@ const removeReactionLocal
     const { actions } = get();
 
     const post2 = usePostsStore.getState()?.posts?.[id] || {};
-    const cOwnerReactions2 = post2.ownerReactions || [];
-    const cReactionCounts2 = post2.reactionsCount || {};
-    let newOwnerReactions2 = [];
-    const newReactionCounts2: any = { ...cReactionCounts2 };
+    const { ownerReactions = [], reactionsCount = [] } = post2;
+    let newOwnerReactions2 = [...ownerReactions];
+    let newReactionCounts2 = [...reactionsCount];
 
     if (preRemove) {
-      newOwnerReactions2 = cOwnerReactions2?.map?.((or: IReaction) => {
+      newOwnerReactions2 = ownerReactions?.map?.((or: IReaction) => {
         if (or?.reactionName === reactionId) {
           return {
             ...or,
@@ -78,22 +77,21 @@ const removeReactionLocal
         return or;
       });
     } else {
-      newOwnerReactions2 = cOwnerReactions2?.filter?.(
+      newOwnerReactions2 = ownerReactions?.filter?.(
         (or: IReaction) => or?.reactionName !== reactionId,
       );
 
-      Object.keys(cReactionCounts2)?.forEach?.((k) => {
-        const _reactionId = Object.keys(cReactionCounts2?.[k])?.[0];
-        const _reactionCount = cReactionCounts2?.[k]?.[_reactionId] || 0;
+      newReactionCounts2 = reactionsCount.map((item) => {
+        const reactionName = Object.keys(item)[0];
+        const value = item[reactionName];
 
-        if (reactionId !== _reactionId) {
-          newReactionCounts2[k] = { [_reactionId]: _reactionCount };
-        } else {
-          newReactionCounts2[k] = {
-            [_reactionId]: Math.max(0, _reactionCount - 1),
+        if (reactionName === reactionId) {
+          return {
+            [reactionName]: Math.max(0, value - 1),
           };
         }
-      });
+        return item;
+      }).filter((item) => !!item && !!Object.values(item)[0]);
     }
 
     actions.onUpdateReactionOfPostById(

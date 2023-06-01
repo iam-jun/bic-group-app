@@ -15,7 +15,7 @@ const putReactionToPost = (_set, get) => async (
   const { actions } = get();
   try {
     const post1 = usePostsStore.getState()?.posts?.[id] || {};
-    const cReactionCounts1 = post1.reactionsCount || {};
+    const cReactionCounts1 = post1.reactionsCount || [];
     const cOwnReaction1 = post1.ownerReactions || [];
 
     const added = cOwnReaction1?.find((item: IReaction) => item?.reactionName === reactionId)?.id || '';
@@ -25,27 +25,22 @@ const putReactionToPost = (_set, get) => async (
       const newOwnReaction1: IOwnReaction = [...cOwnReaction1];
       newOwnReaction1.push({ reactionName: reactionId, loading: true } as IReaction);
 
-      const _cReactionCounts = { ...cReactionCounts1 };
+      const newReactionCounts = cReactionCounts1.map((item) => {
+        const reactionName = Object.keys(item)[0];
 
-      const _reactionsCountArray: any = Object.values(_cReactionCounts || {})?.map((reaction: any) => {
-        const key = Object.keys(reaction || {})?.[0];
-        if (key === reactionId) {
-          reaction[key] += 1;
+        if (reactionName === reactionId) {
           isAdded = true;
+          return {
+            [reactionName]: item[reactionName] + 1,
+          };
         }
-        return reaction;
+
+        return item;
       });
 
       if (!isAdded) {
-        _reactionsCountArray.push({ [reactionId]: 1 });
+        newReactionCounts.push({ [reactionId]: 1 });
       }
-
-      const newReactionCounts: any = {};
-      _reactionsCountArray.forEach((
-        item: any, index: number,
-      ) => {
-        newReactionCounts[index.toString()] = item;
-      });
 
       actions.onUpdateReactionOfPostById(
         id, newOwnReaction1, newReactionCounts,
@@ -62,7 +57,7 @@ const putReactionToPost = (_set, get) => async (
       // calculate wrong value when receive socket msg
       if (response?.data) {
         const post2 = usePostsStore.getState()?.posts?.[id] || {};
-        const cReactionCounts2 = post2.reactionsCount || {};
+        const cReactionCounts2 = post2.reactionsCount || [];
         const cOwnReaction2 = post2.ownerReactions || [];
         const newOwnReaction2: IOwnReaction = [...cOwnReaction2];
 
@@ -84,9 +79,9 @@ const putReactionToPost = (_set, get) => async (
         }
 
         actions.onUpdateReactionOfPostById(
-          id, [...newOwnReaction2], {
+          id, [...newOwnReaction2], [
             ...cReactionCounts2,
-          },
+          ],
         );
       }
     }
