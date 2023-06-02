@@ -4,7 +4,6 @@ import { IPayloadPutEditComment } from '~/interfaces/IPost';
 import streamApi from '~/api/StreamApi';
 import { mockComment, mockResponseEditComment } from '~/test/mock_data/comment';
 import useCommentInputStore from '~/screens/comments/components/CommentInputView/store';
-import useCommentsStore from '~/store/entities/comments';
 import useModalStore from '~/store/modal';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
