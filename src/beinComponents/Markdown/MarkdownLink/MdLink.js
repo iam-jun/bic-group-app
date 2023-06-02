@@ -1,5 +1,3 @@
-import Clipboard from '@react-native-clipboard/clipboard';
-
 import PropTypes from 'prop-types';
 import React, { Children, PureComponent } from 'react';
 import { Alert, Text } from 'react-native';
@@ -7,13 +5,8 @@ import urlParse from 'url-parse';
 import { preventDoubleTap } from '../utils/utils';
 import {
   normalizeProtocol,
-  matchDeepLink,
-  PERMALINK_GENERIC_TEAM_NAME_REDIRECT,
 } from '../utils/url';
 import {
-  DeepLinkTypes,
-  CURRENT_SERVER,
-  mmConfig,
   ExperimentalNormalizeMarkdownLinks,
 } from '../utils/config';
 import { openUrl } from '~/utils/link';
@@ -41,9 +34,8 @@ export default class MdLink extends PureComponent {
 
   handlePress = preventDoubleTap(async () => {
     const {
-      actions, currentTeamName, href, serverURL, siteURL,
+      href,
     } = this.props;
-    // const {handleSelectChannelByName, showPermalink} = actions;
     const url = normalizeProtocol(href);
 
     if (!url) {
@@ -54,44 +46,6 @@ export default class MdLink extends PureComponent {
       Alert.alert('Error', 'Unable to open the link.');
     };
     openUrl(url, onError);
-
-    // let serverUrl = serverURL;
-    // if (!serverUrl) {
-    //   serverUrl = CURRENT_SERVER;
-    // }
-    //
-    // const match = matchDeepLink(url, serverURL, siteURL);
-    //
-    // if (match) {
-    //   switch (match.type) {
-    //     case DeepLinkTypes.CHANNEL:
-    //       await handleSelectChannelByName(
-    //         match.channelName,
-    //         match.teamName,
-    //         errorBadChannel,
-    //         intl,
-    //       );
-    //       await dismissAllModals();
-    //       await popToRoot();
-    //       break;
-    //     case DeepLinkTypes.PERMALINK: {
-    //       const teamName =
-    //         match.teamName === PERMALINK_GENERIC_TEAM_NAME_REDIRECT
-    //           ? currentTeamName
-    //           : match.teamName;
-    //       showPermalink(intl, teamName, match.postId);
-    //       break;
-    //     }
-    //     case DeepLinkTypes.PLUGIN:
-    //       showModal('PluginInternal', match.id, {link: url});
-    //       break;
-    //   }
-    // } else {
-    //   const onError = () => {
-    //     Alert.alert('Error', 'Unable to open the link.');
-    //   };
-    //   openUrl(url, onError);
-    // }
   });
 
   parseLinkLiteral = (literal) => {

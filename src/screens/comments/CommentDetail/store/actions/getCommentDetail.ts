@@ -29,23 +29,7 @@ const getCommentDetail = (_set, _get) => async (payload: IPayloadGetCommentsById
       if (responeCommentDetail?.data) {
         response = responeCommentDetail.data;
         const { actor, list } = response || {};
-        if (!!actor && list?.length > 0) {
-          const comment = list[0];
-          const sortedComments = sortComments(comment?.child?.list || []);
-          useCommentsStore.getState().actions.addToComments([...sortedComments, comment]);
-
-          const post = usePostsStore.getState().posts?.[comment?.postId] || {};
-          if (isEmpty(post) && comment?.postId) {
-            post.id = comment.postId;
-            post.actor = actor;
-            usePostsStore.getState().actions.addToPosts({ data: post } as IPayloadAddToAllPost);
-          }
-          useCommentsStore.getState().actions.addToCommentsByParentIdWithComments({
-            id: comment?.postId,
-            commentIds: [comment.id],
-            isMerge: true,
-          });
-        }
+        shouldAddToComments({ actor, list });
       }
     }
 
@@ -64,6 +48,27 @@ const getCommentDetail = (_set, _get) => async (payload: IPayloadGetCommentsById
       showToastError(e);
     }
     callbackLoading?.(false);
+  }
+};
+
+const shouldAddToComments = (params: { actor: any; list: any }) => {
+  const { actor, list } = params || {};
+  if (!!actor && list?.length > 0) {
+    const comment = list[0];
+    const sortedComments = sortComments(comment?.child?.list || []);
+    useCommentsStore.getState().actions.addToComments([...sortedComments, comment]);
+
+    const post = usePostsStore.getState().posts?.[comment?.postId] || {};
+    if (isEmpty(post) && comment?.postId) {
+      post.id = comment.postId;
+      post.actor = actor;
+      usePostsStore.getState().actions.addToPosts({ data: post } as IPayloadAddToAllPost);
+    }
+    useCommentsStore.getState().actions.addToCommentsByParentIdWithComments({
+      id: comment?.postId,
+      commentIds: [comment.id],
+      isMerge: true,
+    });
   }
 };
 

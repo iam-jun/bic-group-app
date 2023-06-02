@@ -36,11 +36,20 @@ const MemberRequestList = ({
 }: MemberRequestListProps) => {
   const theme: ExtendedTheme = useTheme();
 
-  const {
-    loading, ids, canLoadMore,
-  } = type === 'group'
-    ? useGroupMemberStore((state) => state.groupMemberRequests)
-    : useCommunityMemberStore((state) => state.communityMemberRequests);
+  let loading: boolean;
+  let ids: string[];
+  let canLoadMore: boolean;
+  const groupMemberRequests = useGroupMemberStore((state) => state.groupMemberRequests);
+  const communityMemberRequests = useCommunityMemberStore((state) => state.communityMemberRequests);
+  if (type === 'group') {
+    loading = groupMemberRequests.loading;
+    ids = groupMemberRequests.ids;
+    canLoadMore = groupMemberRequests.canLoadMore;
+  } else {
+    loading = communityMemberRequests.loading;
+    ids = communityMemberRequests.ids;
+    canLoadMore = communityMemberRequests.canLoadMore;
+  }
 
   const onPressAddMemmbers = () => {
     onPressAdd?.();
@@ -89,6 +98,8 @@ const MemberRequestList = ({
     )
   );
 
+  const renderItemSeparatorComponent = () => <Divider size={spacing.padding.large} />;
+
   return (
     <FlatList
       testID="member_request_list"
@@ -102,7 +113,7 @@ const MemberRequestList = ({
       showsVerticalScrollIndicator={false}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.1}
-      ItemSeparatorComponent={() => <Divider size={spacing.padding.large} />}
+      ItemSeparatorComponent={renderItemSeparatorComponent}
       refreshControl={(
         <RefreshControl
           refreshing={loading}

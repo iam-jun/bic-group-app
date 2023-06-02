@@ -96,8 +96,10 @@ const getAudiences = (aud: IAudience[]) => {
   result = aud[0]?.name || '';
   const left = total - 1;
   if (result?.length > limitLength) {
-    result = `${result.substr(
-      0, limitLength,
+    // convert substr to substring
+    const newLimitLength = limitLength + 1;
+    result = `${result.substring(
+      0, newLimitLength <= 0 ? 1 : newLimitLength,
     )}...`;
   } else if (left > 0) {
     result = `${result}, ...`;

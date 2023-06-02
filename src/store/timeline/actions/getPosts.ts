@@ -1,4 +1,3 @@
-import groupApi from '~/api/GroupApi';
 import usePostsStore from '~/store/entities/posts';
 import { IDataFilterTimelines, ITimelineState } from '..';
 import {
@@ -8,6 +7,7 @@ import {
 import { timeOut } from '~/utils/common';
 import { AttributeFeed } from '~/interfaces/IFeed';
 import { IParamGetGroupPosts } from '~/interfaces/IGroup';
+import streamApi from '~/api/StreamApi';
 
 const getPosts = (set, get) => async (id: string, isRefresh = false) => {
   const { timelines }: ITimelineState = get();
@@ -35,7 +35,7 @@ const getPosts = (set, get) => async (id: string, isRefresh = false) => {
       // isMine: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.MINE),
       type: getParamsContentFeed(contentFilter),
     };
-    const response = await groupApi.getGroupPosts(params);
+    const response = await streamApi.getGroupPosts(params);
     await timeOut(200);
     const result = response.data?.list || [];
     usePostsStore.getState().actions.addToPosts({ data: result, handleComment: true });

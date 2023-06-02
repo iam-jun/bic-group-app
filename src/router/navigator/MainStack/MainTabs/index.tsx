@@ -89,11 +89,13 @@ const MainTabs = () => {
     myPermissionActions.getMyPermissions();
   };
 
+  const handleTabBar = (props) => <BottomTabBar {...props} />;
+
   return (
     <BottomTab.Navigator
       backBehavior={backBehavior}
       screenOptions={{ headerShown: false }}
-      tabBar={(props) => <BottomTabBar {...props} />}
+      tabBar={handleTabBar}
     >
       {Object.entries(screens).map(([name, component]) => (
         <BottomTab.Screen

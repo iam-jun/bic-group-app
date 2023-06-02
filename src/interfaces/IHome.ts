@@ -37,7 +37,7 @@ export interface IParamGetFeed {
   isImportant?: boolean;
   isSaved?: boolean;
   isMine?: boolean;
-  type?: PostType | undefined;
+  type: PostType | undefined;
 }
 
 export interface IParamGetSearchPost {

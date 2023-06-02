@@ -1,6 +1,6 @@
 import streamApi from '~/api/StreamApi';
 import { IParamsGetArticleScheduleContent, IPayloadGetArticleScheduleContent } from '~/interfaces/IArticle';
-import { PostStatus } from '~/interfaces/IPost';
+import { IPost, PostStatus } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import showToastError from '~/store/helper/showToastError';
 import { IArticleScheduleContentState } from '..';
@@ -32,9 +32,7 @@ const getArticleScheduleContent = (set, get) => async (payload: IPayloadGetArtic
       const response = await streamApi.getArticleScheduleContent(params);
 
       const listArticleScheduleContent = response?.data?.list;
-      const newArticles = isRefresh
-        ? listArticleScheduleContent || []
-        : articles.concat(listArticleScheduleContent || []);
+      const newArticles = handleNewArticles({ isRefresh, listArticleScheduleContent, articles });
 
       set((state: IArticleScheduleContentState) => {
         state.articles = newArticles;
@@ -55,6 +53,14 @@ const getArticleScheduleContent = (set, get) => async (payload: IPayloadGetArtic
     }, 'getArticleScheduleContentFailed');
     showToastError(error);
   }
+};
+
+const handleNewArticles = (params: { isRefresh: boolean; listArticleScheduleContent: any; articles: IPost[] }) => {
+  const { isRefresh, listArticleScheduleContent, articles } = params;
+  if (isRefresh) {
+    return listArticleScheduleContent || [];
+  }
+  return articles.concat(listArticleScheduleContent || []);
 };
 
 export default getArticleScheduleContent;

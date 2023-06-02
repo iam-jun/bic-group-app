@@ -60,6 +60,16 @@ const ConfirmUser : FC<IRouteParams> = (props) => {
     }
   };
 
+  const handleContent = () => {
+    /* eslint no-else-return: ["error", {allowElseIf: true}] */
+    if (!!loading) {
+      return renderContent(LoadingImage, 'common:text_loading');
+    } else if (!!linkExpired) {
+      return renderContent(EmailExpired, 'auth:verify_email_expired');
+    }
+    return renderContent(EmailVerified, 'auth:verify_email_success', renderButton());
+  };
+
   const renderContent = (icon: any, title:string, ButtonComponent?: any) => (
     <View testID="confirm_user" style={styles.container}>
       <SVGIcon
@@ -97,11 +107,7 @@ const ConfirmUser : FC<IRouteParams> = (props) => {
        && (
        <Header icon="Xmark" hideBack onPressIcon={onPress} />
        )}
-      {!!loading
-        ? renderContent(LoadingImage, 'common:text_loading')
-        : !!linkExpired
-          ? renderContent(EmailExpired, 'auth:verify_email_expired')
-          : renderContent(EmailVerified, 'auth:verify_email_success', renderButton())}
+      {handleContent()}
     </ScreenWrapper>
   );
 };

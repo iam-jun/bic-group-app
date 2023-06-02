@@ -71,9 +71,6 @@ const Emoji: FC<EmojiProps> = ({
 
   if (EmojiIndicesByAlias.has(emojiName)) {
     const emoji = Emojis[EmojiIndicesByAlias.get(emojiName)!];
-    // if (emoji.category === 'custom') {
-    //   return renderImageEmoji(emoji.fileName);
-    // }
     return renderUnicodeEmoji(emoji.image);
   }
 

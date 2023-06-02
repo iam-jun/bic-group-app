@@ -18,7 +18,6 @@ import {
   preventDoubleTap,
 } from '~/beinComponents/Markdown/utils/utils';
 
-// import {DeviceTypes} from '@constants';
 import Icon from '~/baseComponents/Icon';
 import TableDetail from '~/beinComponents/Markdown/MarkdownTable/TableDetail';
 

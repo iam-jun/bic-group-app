@@ -33,14 +33,12 @@ const Checkbox = ({
   useI18n,
   onPress,
 }: CheckboxProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
   const { colors } = theme;
 
   const [checked, setChecked] = useState(isChecked);
-  const currentState = disabled || (indeterminate
-    ? 'indeterminate' : checked
-      ? 'selected' : 'unselect');
+  const currentState = getCurrentState(disabled, indeterminate, checked);
 
   useEffect(() => {
     setChecked(isChecked);
@@ -119,6 +117,16 @@ const Checkbox = ({
 };
 
 export default Checkbox;
+
+const getCurrentState = (disabled: string, indeterminate: boolean, checked:boolean) => {
+  if (disabled) {
+    return disabled;
+  }
+  if (indeterminate) {
+    return 'indeterminate';
+  }
+  return checked ? 'selected' : 'unselect';
+};
 
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;

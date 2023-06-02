@@ -468,5 +468,4 @@ const createStyle = (theme: ExtendedTheme) => {
 };
 
 const CommentView = React.memo(_CommentView);
-// CommentView.whyDidYouRender = true;
 export default CommentView;
