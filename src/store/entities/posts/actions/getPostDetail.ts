@@ -26,7 +26,7 @@ const getPostDetail = (_set, get) => async (payload: IPayloadGetPostDetail) => {
     callbackLoading?.(true, false);
     actions.setIsLoadingGetPostDetail(true);
 
-    const response = callApi({ isReported, postId, restParams });
+    const response = await callApi({ isReported, postId, restParams });
 
     actions.addToPosts({
       data: response || {},
