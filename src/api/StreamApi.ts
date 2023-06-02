@@ -655,9 +655,7 @@ const streamApi = {
     }
   },
 
-  getPostDetail: (params: IParamGetPostDetail) => {
-    return withHttpRequestPromise(streamApiConfig.getPostDetail, params);
-  },
+  getPostDetail: (params: IParamGetPostDetail) => withHttpRequestPromise(streamApiConfig.getPostDetail, params),
   getDraftContents: async (param: IParamGetDraftContents) => {
     try {
       const response: any = await makeHttpRequest(

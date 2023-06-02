@@ -29,7 +29,7 @@ const getCommentsByPostId = (_set, _get) => async (payload: IPayloadGetCommentsB
       useCommentsStore.getState().actions.addChildCommentToComment({
         commentId,
         childComments: list.reverse(),
-        meta : !!startCursor ? {
+        meta: !!startCursor ? {
           hasPreviousPage: meta?.hasPreviousPage,
           startCursor: meta?.startCursor,
         } : {

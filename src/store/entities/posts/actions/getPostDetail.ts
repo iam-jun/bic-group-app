@@ -63,7 +63,7 @@ const getPostDetail = (_set, get) => async (payload: IPayloadGetPostDetail) => {
             list: list || [],
             meta,
           },
-        }
+        };
       }
     }
 

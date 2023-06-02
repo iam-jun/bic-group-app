@@ -311,7 +311,6 @@ export interface IPayloadPutEditComment {
   id: string;
   comment: ICommentData;
   data: ICommentData;
-  postId: string;
 }
 
 export interface IPayloadDeletePost {

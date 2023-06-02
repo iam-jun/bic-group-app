@@ -14,7 +14,7 @@ const navigation = withNavigation(rootNavigationRef);
 
 const editComment = (_set, _get) => async (payload: IPayloadPutEditComment) => {
   const {
-    id, comment, data, postId,
+    id, comment, data,
   } = payload;
 
   if (!id || !data || !comment) {
