@@ -123,10 +123,6 @@ export const selectEmojisBySection = (recentEmojis = []) => {
 };
 
 export const searchEmojis = (fuse: any, searchTerm: string) => {
-  // if (!searchTerm) {
-  //   return cancelSearch();
-  // }
-
   const searchTermLowerCase = searchTerm.toLowerCase();
 
   if (!searchTerm) {

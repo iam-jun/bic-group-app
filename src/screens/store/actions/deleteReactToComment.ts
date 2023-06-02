@@ -18,8 +18,6 @@ const deleteReactToComment = (_set, get) => async (
   try {
     const rId = ownerReactions?.find((item: IReaction) => item?.reactionName === reactionId)?.id || '';
     if (rId) {
-      // yield addReactionLoadingLocal(id, reactionId, comment);
-
       await streamApi.deleteReaction({
         reactionId: rId,
         target: TargetType.COMMENT,
@@ -41,34 +39,6 @@ const deleteReactToComment = (_set, get) => async (
     showToastError(e);
   }
 };
-
-// function* addReactionLoadingLocal(
-//   id: string,
-//   reactionId: string,
-//   comment: ICommentData,
-// ): any {
-//   const cComment1 = yield select(s =>
-//     get(s, postKeySelector.commentById(id)),
-//   ) || {};
-//   const cReactionCount1 = cComment1.reactionsCount || {};
-//   const cOwnReactions1 = cComment1.ownerReactions || [];
-
-//   const newOwnReaction1: IOwnReaction = [...cOwnReactions1];
-//   if (newOwnReaction1?.length > 0) {
-//     newOwnReaction1.forEach((item: IReaction, index: number) => {
-//       if (item?.reactionName === reactionId) {
-//         item.loading = true;
-//         newOwnReaction1[index] = {...item};
-//       }
-//     });
-//   }
-//   yield onUpdateReactionOfCommentById(
-//     id,
-//     newOwnReaction1,
-//     {...cReactionCount1},
-//     comment,
-//   );
-// }
 
 const removeReactionLocal = (get) => (
   id: string,

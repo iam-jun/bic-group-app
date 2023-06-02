@@ -136,8 +136,8 @@ export class ConvertHelper {
 
     if (ConvertHelper._isArray(obj)) {
       output = [];
-      for (let i = 0; i < obj.length; i++) {
-        output.push(ConvertHelper._processKeys(convert, obj[i], options));
+      for (const element of obj) {
+        output.push(ConvertHelper._processKeys(convert, element, options));
       }
     } else {
       output = {};

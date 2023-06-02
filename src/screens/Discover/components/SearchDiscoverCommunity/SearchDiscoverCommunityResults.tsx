@@ -148,6 +148,8 @@ const SearchDiscoverCommunityResults = ({
     return null;
   };
 
+  const renderItemSeparatorComponent = () => <ViewSpacing height={4} />;
+
   return (
     <FlatList
       testID="community_search_results.list"
@@ -161,7 +163,7 @@ const SearchDiscoverCommunityResults = ({
       showsVerticalScrollIndicator={false}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.1}
-      ItemSeparatorComponent={() => <ViewSpacing height={4} />}
+      ItemSeparatorComponent={renderItemSeparatorComponent}
     />
   );
 };

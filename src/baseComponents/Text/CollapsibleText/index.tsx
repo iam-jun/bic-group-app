@@ -67,7 +67,10 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   const [contentShowAll, setContentShowAll] = useState(false);
 
   const shortContent = useMemo(() => getShortContent(content, limitLength, shortLength), [content]);
-  const _content = !shortContent ? content : contentShowAll ? content : shortContent;
+  let _content = shortContent;
+  if (!shortContent || contentShowAll) {
+    _content = content;
+  }
   const escapeMarkDownContent = useMemo(() => escapeMarkDown(content), [content]);
 
   const textTestID = parentCommentId

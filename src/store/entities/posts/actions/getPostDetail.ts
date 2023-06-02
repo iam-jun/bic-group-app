@@ -25,47 +25,8 @@ const getPostDetail = (_set, get) => async (payload: IPayloadGetPostDetail) => {
   try {
     callbackLoading?.(true, false);
     actions.setIsLoadingGetPostDetail(true);
-    const params: IParamGetPostDetail = {
-      postId,
-      // is_draft
-      ...restParams,
-    };
 
-    let response = null;
-
-    if (isReported) {
-      const paramGetReportContent: IParamGetReportContent = {
-        order: 'ASC',
-        offset: 0,
-        limit: mockReportReason.length,
-        targetIds: [postId],
-        targetType: TargetType.POST,
-      };
-      const responeReportContent = await streamApi.getReportContent(
-        paramGetReportContent,
-      );
-      if (responeReportContent?.data?.list?.length > 0) {
-        response = responeReportContent.data.list;
-        useReportContentStore
-          .getState()
-          .actions.addToReportDetailsPost(response);
-      } else {
-        actions.deletePostLocal(postId);
-      }
-    } else {
-      const responePostDetail = await streamApi.getPostDetail(params);
-      const responseComments = await streamApi.getCommentsByPostId({ postId, order: 'DESC' });
-      const { list, meta } = responseComments?.data || {};
-      if (responePostDetail?.data && responseComments?.data) {
-        response = {
-          ...responePostDetail.data,
-          comments: {
-            list: list || [],
-            meta,
-          },
-        };
-      }
-    }
+    const response = callApi({ isReported, postId, restParams });
 
     actions.addToPosts({
       data: response || {},
@@ -100,6 +61,50 @@ const getPostDetail = (_set, get) => async (payload: IPayloadGetPostDetail) => {
     } else {
       callbackLoading?.(false, false);
       showToastError(e);
+    }
+  }
+};
+
+const callApi = async (params: { isReported: boolean, postId: string, restParams: any }) => {
+  const { isReported, postId, restParams } = params;
+  let response = null;
+  if (isReported) {
+    const paramGetReportContent: IParamGetReportContent = {
+      order: 'ASC',
+      offset: 0,
+      limit: mockReportReason.length,
+      targetIds: [postId],
+      targetType: TargetType.POST,
+    };
+    const responeReportContent = await streamApi.getReportContent(
+      paramGetReportContent,
+    );
+    if (responeReportContent?.data) {
+      response = responeReportContent.data.list;
+      useReportContentStore
+        .getState()
+        .actions.addToReportDetailsPost(response);
+      return response;
+    }
+  } else {
+    const params: IParamGetPostDetail = {
+      postId,
+      ...restParams,
+    };
+
+    const responePostDetail = await streamApi.getPostDetail(params);
+    const responseComments = await streamApi.getCommentsByPostId({ postId, order: 'DESC' });
+    const { list, meta } = responseComments?.data || {};
+    if (responePostDetail?.data && responseComments?.data) {
+      response = {
+        ...responePostDetail.data,
+        comments: {
+          list: list || [],
+          meta,
+        },
+      };
+
+      return response;
     }
   }
 };

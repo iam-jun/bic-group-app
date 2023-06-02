@@ -256,8 +256,6 @@ const themeStyles = (theme: ExtendedTheme) => {
   });
 };
 
-// export default ArticleDetail;
-
 const ArticleDetail = memo(_ArticleDetail);
 ArticleDetail.whyDidYouRender = true;
 export default ArticleDetail;

@@ -67,8 +67,8 @@ const Tag: React.FC<TagProps> = ({
       testID={testID || 'tag.item'}
       disabled={disabled}
       style={[styles.container, style,
-        !!avatar ? styles.buttonAvatar : {},
-        !!icon ? styles.buttonIcon : styles.buttonWithoutIcon,
+        avatar ? styles.buttonAvatar : {},
+        icon ? styles.buttonIcon : styles.buttonWithoutIcon,
       ]}
       onPress={() => { onActionPress?.(); }}
       {...buttonProps}

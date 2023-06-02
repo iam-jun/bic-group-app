@@ -19,7 +19,7 @@ const Divider: React.FC<DividerProps> = ({
   margin = 0,
   style = {},
 }: DividerProps) => {
-  const { colors }: ExtendedTheme = useTheme() as ExtendedTheme;
+  const { colors }: ExtendedTheme = useTheme();
   return (
     <View
       testID={testID || 'divider'}

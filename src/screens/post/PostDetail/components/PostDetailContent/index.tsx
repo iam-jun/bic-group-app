@@ -82,11 +82,13 @@ const _PostDetailContent = (props) => {
     postId, comments, sectionData, focusComment, listRef, commentInputRef,
   });
 
-  const headerTitle = isReported
-    ? t('report:title')
-    : actor?.fullname
-      ? t('post:title_post_detail_of', { name: actor?.fullname })
-      : t('post:title_post_detail');
+  const headerTitle = () => {
+    if (isReported) return t('report:title');
+    if (actor?.fullname) {
+      return t('post:title_post_detail_of', { name: actor?.fullname });
+    }
+    return t('post:title_post_detail');
+  };
 
   const onPressBack = () => {
     const newCommentInput = commentInputRef?.current?.getText?.() || '';
@@ -243,7 +245,7 @@ const _PostDetailContent = (props) => {
   return (
     <View style={styles.flex1} testID="post_detail_content">
       {!isReported && !deleted
-      && <Header title={headerTitle} onPressBack={onPressBack} />}
+      && <Header title={headerTitle()} onPressBack={onPressBack} />}
       {renderContent()}
     </View>
   );
@@ -269,5 +271,4 @@ const createStyle = (theme: ExtendedTheme) => {
 };
 
 const PostDetailContent = memo(_PostDetailContent);
-// PostDetailContent.whyDidYouRender = true;
 export default PostDetailContent;

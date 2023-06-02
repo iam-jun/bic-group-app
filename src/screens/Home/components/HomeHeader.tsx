@@ -40,7 +40,8 @@ const HomeHeader: FC<HomeHeaderProps> = ({
   onPressSearch,
   onPressChat,
 }: HomeHeaderProps) => {
-  const _yShared = yShared || useSharedValue(0);
+  const ySharedByHook = useSharedValue(0);
+  const _yShared = yShared || ySharedByHook;
   const showShared = useSharedValue(1);
 
   const insets: EdgeInsets = useSafeAreaInsets();
@@ -122,7 +123,7 @@ const HomeHeader: FC<HomeHeaderProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
-  const { colors, elevations } = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       backgroundColor: colors.neutral,

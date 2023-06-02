@@ -64,6 +64,8 @@ const PostAudiencesModal: FC<PostAudiencesModalProps> = ({
     />
   );
 
+  const renderListHeaderComponent = () => <ViewSpacing height={spacing.margin.small} />;
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -72,9 +74,7 @@ const PostAudiencesModal: FC<PostAudiencesModalProps> = ({
         renderItem={renderItem}
         initialNumToRender={20}
         keyExtractor={(item, index) => `audience_${item?.id || index}`}
-        ListHeaderComponent={() => (
-          <ViewSpacing height={spacing.margin.small} />
-        )}
+        ListHeaderComponent={renderListHeaderComponent}
       />
     </View>
   );
