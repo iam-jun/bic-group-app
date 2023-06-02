@@ -34,10 +34,7 @@ const editComment = (_set, _get) => async (payload: IPayloadPutEditComment) => {
       id, data,
     );
 
-    useCommentDetailController.getState().actions.getCommentDetail({
-      commentId: id,
-      params: { postId },
-    });
+    useCommentDetailController.getState().actions.getCommentDetail({ commentId: id });
 
     showToastSuccess(response);
     timeOut(500);

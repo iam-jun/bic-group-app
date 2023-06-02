@@ -194,8 +194,8 @@ export const streamApiConfig = {
       offset: params?.offset || 0,
       idGte: params?.idGte,
       idLte: params?.idLte,
-      idLt: params?.idLt,
-      idGt: params?.idGt,
+      after: params?.endCursor,
+      before: params?.startCursor,
       postId: params?.postId,
       parentId: params?.parentId,
       childLimit: params?.childLimit || 1,
@@ -285,10 +285,7 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}comments/${commentId}`,
     params: {
-      limit: params?.limit || 1,
-      offset: params?.offset || 0,
-      postId: params?.postId || '',
-      childLimit: params?.childLimit || 1,
+      limit: 1,
       targetChildLimit: params?.targetChildLimit || 10,
     },
   }),
@@ -320,10 +317,7 @@ export const streamApiConfig = {
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}articles/${id}`,
-    params: {
-      ...params,
-      childCommentLimit: params?.childCommentLimit || 10,
-    },
+    params,
   }),
   getArticleDetailByAdmin: (
     id: string, params?: IParamGetArticleDetail,

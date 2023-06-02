@@ -60,7 +60,8 @@ const _PostDetailContent = (props) => {
 
   const {
     refreshing, isEmptyContent, actor, setting, deleted, createdAt,
-    commentLeft, groupIds, comments, sectionData, audience, errorContent, onRefresh, onPressMarkSeenPost,
+    commentLeft, commentEndCursor, groupIds, comments, sectionData, audience, errorContent,
+    onRefresh, onPressMarkSeenPost,
   } = usePostDetailContent({
     postId, notificationId, HeaderImageComponent, isReported,
   });
@@ -211,7 +212,7 @@ const _PostDetailContent = (props) => {
               <PostDetailContentHeader
                 id={postId}
                 commentLeft={commentLeft}
-                idLessThan={comments?.[0]?.id}
+                endCursor={commentEndCursor}
                 onContentLayout={props?.onContentLayout}
                 onPressComment={onPressComment}
               />

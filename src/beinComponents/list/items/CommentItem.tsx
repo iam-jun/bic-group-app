@@ -69,7 +69,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
 
   const childCommentCount = commentData?.totalReply || 0;
 
-  const idLessThan = commentData?.child?.list?.[0]?.id;
+  const endCursor = commentData?.child?.meta?.endCursor;
   const showLoadPrevious = onPressLoadMore
     ? childCommentCount - 1 > 0
     : commentData?.child?.meta?.hasNextPage || false;
@@ -92,7 +92,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
           title={t('post:text_load_previous_replies')}
           postId={postId}
           commentId={commentData?.id}
-          idLessThan={idLessThan}
+          endCursor={endCursor}
           onPress={!!onPressLoadMore ? _onPressLoadMore : undefined}
         />
       )}

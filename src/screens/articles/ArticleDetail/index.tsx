@@ -46,10 +46,10 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
 
   const [refreshing, setRefreshing] = useState(false);
   const data = usePostsStore(useCallback(postsSelector.getPost(id, {}), [id]));
+  const commentEndCursor = usePostsStore(useCallback(postsSelector.getCommentEndCursor(id), [id]));
   const errorContent = usePostsStore(useCallback(postsSelector.getErrorContent(id), [id]));
 
   const comments = useCommentsStore(useCallback(commentsSelector.getCommentsByParentId(id), [id]));
-  const firstCommentId = comments[0]?.id || '';
   const sectionData = useMemo(() => getSectionData(comments), [comments]);
 
   const { actions } = useArticlesStore((state: IArticlesState) => state);
@@ -163,7 +163,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     <ArticleView
       id={id}
       article={data}
-      firstCommentId={firstCommentId}
+      endCursor={commentEndCursor}
     />
   );
 

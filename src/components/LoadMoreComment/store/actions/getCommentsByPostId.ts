@@ -14,7 +14,7 @@ const getCommentsByPostId = (_set, _get) => async (payload: IPayloadGetCommentsB
   } = payload || {};
   if (!params) return;
 
-  const { postId, parentId: commentId, idGt } = params;
+  const { postId, parentId: commentId, startCursor } = params;
 
   try {
     callbackLoading?.(true);
@@ -29,10 +29,14 @@ const getCommentsByPostId = (_set, _get) => async (payload: IPayloadGetCommentsB
       useCommentsStore.getState().actions.addChildCommentToComment({
         commentId,
         childComments: list.reverse(),
-        meta: !!idGt
-          ? { hasPreviousPage: meta?.hasPreviousPage }
-          : { hasNextPage: meta?.hasNextPage },
-        isAddFirst: !idGt,
+        meta : !!startCursor ? {
+          hasPreviousPage: meta?.hasPreviousPage,
+          startCursor: meta?.startCursor,
+        } : {
+          hasNextPage: meta?.hasNextPage,
+          endCursor: meta?.endCursor,
+        },
+        isAddFirst: !startCursor,
       });
     } else {
       // get comment of post
@@ -47,6 +51,7 @@ const getCommentsByPostId = (_set, _get) => async (payload: IPayloadGetCommentsB
       const newAllPosts = { ...allPosts };
       const post = newAllPosts[postId] || {};
       post.comments.meta.hasNextPage = meta?.hasNextPage;
+      post.comments.meta.endCursor = meta?.endCursor;
       newAllPosts[postId] = { ...post };
 
       useCommentsStore.getState().actions.addToComments(newAllComments);
