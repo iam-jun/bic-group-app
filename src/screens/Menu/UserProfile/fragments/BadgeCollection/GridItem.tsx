@@ -12,11 +12,11 @@ import Text from '~/baseComponents/Text';
 import useUserBadge from './store';
 
 interface Props {
-    item: IUserBadge;
-    numColumns: number;
-    index: number;
-    disabled?: boolean;
-    onPress: (item: IUserBadge) => void;
+  item: IUserBadge;
+  numColumns: number;
+  index: number;
+  disabled?: boolean;
+  onPress: (item: IUserBadge, isSelected: boolean) => void;
 }
 
 const GridItem = ({
@@ -44,8 +44,15 @@ const GridItem = ({
   const isSelected = checkIsSelected(choosingBadges, item);
 
   const onPressItem = () => {
-    !isSelected && onPress(item);
+    onPress(item, isSelected);
   };
+
+  const onLongPress = () => {
+    if (disabled) return;
+    setIsVisible(true);
+  };
+
+  const shouldDisable = disabled && !isSelected;
 
   return (
     <Tooltip
@@ -60,9 +67,9 @@ const GridItem = ({
       <TouchableOpacity
         style={[styles.container,
         ]}
-        disabled={disabled}
+        disabled={shouldDisable}
         onPress={onPressItem}
-        onLongPress={() => { setIsVisible(true); }}
+        onLongPress={onLongPress}
       >
         <Avatar.Medium
           isRounded

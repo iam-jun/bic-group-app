@@ -36,9 +36,14 @@ const BadgeCollection = () => {
     actions.setIsEditing(true);
   };
 
-  const onPress = (item: IUserBadge) => {
+  const onPress = (item: IUserBadge, isSelected: boolean) => {
     if (!isEditing) return;
-    actions.fillChoosingBadges(item);
+    if (!isSelected) {
+      actions.fillChoosingBadges(item);
+    } else {
+      const index = choosingBadges.findIndex((badge) => badge?.id === item?.id);
+      actions.removeChoosingBadges(index);
+    }
   };
 
   const renderEmptyComponent = () => (

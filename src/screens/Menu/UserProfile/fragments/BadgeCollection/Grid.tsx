@@ -11,7 +11,7 @@ const itemWidth = 48; // Constant item width
 interface Props {
     data: IUserBadge[];
     disabled?: boolean;
-    onPress: (item: IUserBadge) => void;
+    onPress: (item: IUserBadge, isSelected: boolean) => void;
 }
 
 const Grid = ({ data, disabled = false, onPress }:Props) => {
