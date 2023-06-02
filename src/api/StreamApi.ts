@@ -63,7 +63,7 @@ export const streamApiConfig = {
   }),
   getNewsfeed: (param: IParamGetFeed): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}feeds/newsfeed`,
+    url: `${provider.url}newsfeed`,
     params: {
       order: param?.order || 'DESC',
       limit: param?.limit,
