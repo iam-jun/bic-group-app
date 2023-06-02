@@ -127,8 +127,7 @@ export interface IGroupDetail {
   joinStatus: number;
 }
 
-export interface IParamGetGroupPosts {
-  groupId: string;
+export interface IParamGetTimeline {
   order?: 'ASC' | 'DESC';
   limit?: number;
   after?: string | null;

@@ -6,7 +6,7 @@ import {
 } from '~/screens/Home/store/helper';
 import { timeOut } from '~/utils/common';
 import { AttributeFeed } from '~/interfaces/IFeed';
-import { IParamGetGroupPosts } from '~/interfaces/IGroup';
+import { IParamGetTimeline } from '~/interfaces/IGroup';
 import streamApi from '~/api/StreamApi';
 
 const getPosts = (set, get) => async (id: string, isRefresh = false) => {
@@ -26,8 +26,7 @@ const getPosts = (set, get) => async (id: string, isRefresh = false) => {
 
   try {
     const endCursor = isRefresh ? null : currentPosts.endCursor;
-    const params: IParamGetGroupPosts = {
-      groupId: id,
+    const params: IParamGetTimeline = {
       after: endCursor,
       limit: 10,
       isImportant: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.IMPORTANT),
@@ -35,7 +34,7 @@ const getPosts = (set, get) => async (id: string, isRefresh = false) => {
       // isMine: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.MINE),
       type: getParamsContentFeed(contentFilter),
     };
-    const response = await streamApi.getGroupPosts(params);
+    const response = await streamApi.getTimelinePosts(id, params);
     await timeOut(200);
     const result = response.data?.list || [];
     usePostsStore.getState().actions.addToPosts({ data: result, handleComment: true });

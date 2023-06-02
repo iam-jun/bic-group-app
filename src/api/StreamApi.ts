@@ -23,7 +23,7 @@ import {
   IParamGetSearchPost,
   IParamPostNewRecentSearchKeyword, IRecentSearchTarget,
 } from '~/interfaces/IHome';
-import { IParamGetGroupPosts } from '~/interfaces/IGroup';
+import { IParamGetTimeline } from '~/interfaces/IGroup';
 import {
   IGetSearchArticleInSeries,
   IGetSearchTags,
@@ -56,7 +56,7 @@ const defaultConfig = {
 };
 
 export const streamApiConfig = {
-  getGiphyAPIKey: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
+  getGiphyAPIKey: (params?: IParamGetTimeline): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}authorization/giphy-key`,
     params,
@@ -536,9 +536,9 @@ export const streamApiConfig = {
     method: 'post',
     data: reorderedPinContent,
   }),
-  getGroupPosts: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
+  getTimelinePosts: (groupId: string, params?: IParamGetTimeline): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${apiProviders.beinFeed.url}feeds/timeline`,
+    url: `${apiProviders.beinFeed.url}timeline/${groupId}`,
     provider: apiProviders.beinFeed,
     params,
   }),
@@ -834,9 +834,9 @@ const streamApi = {
   reorderPinContentGroup: (reorderedPinContent: string[], groupId: string) => withHttpRequestPromise(
     streamApiConfig.reorderPinContentGroup, reorderedPinContent, groupId,
   ),
-  getGroupPosts: (param: IParamGetGroupPosts) => withHttpRequestPromise(
-    streamApiConfig.getGroupPosts, {
-      offset: param?.offset || 0,
+  getTimelinePosts: (groupId: string, param: IParamGetTimeline) => withHttpRequestPromise(
+    streamApiConfig.getTimelinePosts, groupId, {
+      after: param?.after || null,
       limit: param?.limit || appConfig.recordsPerPage,
       ...param,
     },
