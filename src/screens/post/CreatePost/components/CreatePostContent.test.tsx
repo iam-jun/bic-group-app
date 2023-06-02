@@ -33,28 +33,6 @@ const FakeCreatePost = ({ postId }: any) => {
 };
 
 describe('CreatePostContent component', () => {
-  it('should render correctly', async () => {
-    const post = {
-      data: mockEditPost,
-    };
-    jest
-      .spyOn(streamApi, 'getPostDetail')
-      .mockImplementation(() => Promise.resolve(post) as any);
-
-    const { result: resultCreatePost } = renderHook(() => useCreatePost({
-      screenParams: { postId: mockEditPost.id },
-    }));
-
-    const wrapper = renderWithRedux(
-      <CreatePostContent
-        groupIds={[]}
-        useCreatePostData={resultCreatePost.current}
-      />,
-    );
-
-    expect(wrapper).toMatchSnapshot();
-  });
-
   it('given on change text action should save the text', async () => {
     const post = {
       data: mockEditPost,

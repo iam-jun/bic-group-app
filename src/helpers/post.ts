@@ -223,3 +223,11 @@ export const getRootGroupIdFromGroupItem = (group: any) => {
 
   return level === 0 ? id : parents?.[0] || '';
 };
+
+export const getNewPosts = (params: { isRefresh: boolean; response: any; list: IPost[] }) => {
+  const { isRefresh, response, list } = params;
+  if (isRefresh) {
+    return response?.data || [];
+  }
+  return list.concat(response?.data || []);
+};

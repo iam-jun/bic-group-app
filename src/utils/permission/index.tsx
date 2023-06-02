@@ -60,7 +60,6 @@ export const checkPermission = async (
         } else {
           callback(false);
         }
-        return false;
       }
 
       if (isShowAlertFailed) {
@@ -90,7 +89,6 @@ export const checkPermission = async (
       '>>>>>>>CHECK PERMISSION ERROR>>>>>', error,
     );
     callback(false);
-    return false;
   }
   return false;
 };

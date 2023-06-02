@@ -33,23 +33,7 @@ const getGroupMembers = (set, get) => async (payload: IGroupGetMembers) => {
       return;
     }
 
-    let newDataCount = 0;
-    let newDataObj = {};
-    const members = response.data;
-    Object.keys(members)?.forEach?.((role: string) => {
-      newDataCount += members[role]?.data?.length || 0;
-      newDataObj = {
-        ...newDataObj,
-        [role]: {
-          name: members[role]?.name,
-          userCount: members[role]?.userCount,
-          data:
-            isRefreshing || !groupMembers?.[role]?.data
-              ? [...(members[role]?.data || [])]
-              : [...(groupMembers?.[role]?.data || []), ...(members[role]?.data || [])],
-        },
-      };
-    });
+    const { newDataCount, newDataObj } = handleNewData({ isRefreshing, response, groupMembers });
 
     const newData = {
       loading: false,
@@ -70,6 +54,28 @@ const getGroupMembers = (set, get) => async (payload: IGroupGetMembers) => {
     }, 'getGroupMembersFailed');
     showToastError(e);
   }
+};
+
+const handleNewData = (params: { isRefreshing: boolean; response: any; groupMembers: IGroupMemberState['groupMembers'] }) => {
+  const { isRefreshing, response, groupMembers } = params;
+  let newDataCount = 0;
+  let newDataObj = {};
+  const members = response.data;
+  Object.keys(members)?.forEach?.((role: string) => {
+    newDataCount += members[role]?.data?.length || 0;
+    newDataObj = {
+      ...newDataObj,
+      [role]: {
+        name: members[role]?.name,
+        userCount: members[role]?.userCount,
+        data:
+          isRefreshing || !groupMembers?.[role]?.data
+            ? [...(members[role]?.data || [])]
+            : [...(groupMembers?.[role]?.data || []), ...(members[role]?.data || [])],
+      },
+    };
+  });
+  return { newDataCount, newDataObj };
 };
 
 export default getGroupMembers;
