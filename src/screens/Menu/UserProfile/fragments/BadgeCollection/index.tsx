@@ -114,6 +114,7 @@ const BadgeCollection = () => {
 
       <FlatList
         data={ownBadges}
+        nestedScrollEnabled
         keyExtractor={(item) => item?.id}
         renderItem={renderItem}
         ListFooterComponent={() => <ViewSpacing height={100} />}

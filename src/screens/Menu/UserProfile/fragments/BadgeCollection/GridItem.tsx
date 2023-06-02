@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View, StyleSheet, TouchableOpacity, Platform, StatusBar,
+} from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Tooltip from 'react-native-walkthrough-tooltip';
@@ -62,6 +64,7 @@ const GridItem = ({
       backgroundColor="transparent"
       contentStyle={styles.tooltipStyle}
       disableShadow
+      topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
       onClose={() => { setIsVisible(false); }}
     >
       <TouchableOpacity

@@ -1,4 +1,6 @@
 import {
+  Platform,
+  StatusBar,
   StyleSheet, TouchableOpacity,
 } from 'react-native';
 import React, { useRef, useState } from 'react';
@@ -56,6 +58,7 @@ const VerifiedView = ({
           </Text.BodyS>
   )}
         backgroundColor="transparent"
+        topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
         onClose={() => { setIsVisible(false); }}
       >
         <TouchableOpacity
