@@ -273,5 +273,4 @@ export const getStyleSheetFromTheme = ((theme) => {
 });
 
 const EmojiPicker = React.memo(_EmojiPicker);
-// EmojiPicker.whyDidYouRender = true;
 export default EmojiPicker;

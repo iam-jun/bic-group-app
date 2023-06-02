@@ -10,7 +10,6 @@ import { IMarkdownAudience } from '~/interfaces/IPost';
 import { fontFamilies } from '~/theme/fonts';
 import useMentionInputStore from '../inputs/MentionInput/store';
 import IMentionInputState from '../inputs/MentionInput/store/Interface';
-import { useKeySelector } from '~/hooks/selector';
 
 interface Props {
   mentions?: any;

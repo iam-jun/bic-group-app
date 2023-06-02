@@ -24,14 +24,15 @@ const Toggle = ({
   size = 'small',
   onValueChanged,
 }: ToggleProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
   const { colors } = theme;
 
   const [checked, setChecked] = useState(isChecked);
 
   const currentCheckedStatus = disableBuiltInState ? isChecked : checked;
-  const currentState = disabled ? 'disabled' : (currentCheckedStatus ? 'selected' : 'unselect');
+  const enableState = currentCheckedStatus ? 'selected' : 'unselect';
+  const currentState = disabled ? 'disabled' : enableState;
 
   useEffect(() => {
     setChecked(isChecked);

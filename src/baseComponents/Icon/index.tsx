@@ -73,17 +73,15 @@ const Icon: React.FC<IconProps> = ({
   const styles = StyleSheet.create(createStyles(theme));
   tintColor = tintColor || colors.neutral80;
 
-  let _tintColor: string|undefined = disabled
-    ? isButton
-      ? colors.purple60
-      : colors.gray30
-    : tintColor;
+  let _tintColor: string|undefined = tintColor || colors.neutral80;
+  if (disabled) {
+    _tintColor = isButton ? colors.purple60 : colors.gray30;
+  }
 
   const _icon = typeof icon === 'string' ? icons[icon] : icon;
   const _style: StyleProp<ViewStyle> = {};
 
-  let IconComponent; let type; let name; let
-    source;
+  let IconComponent; let type; let name; let source;
 
   const hasFontAwesomeIcon = !!fontAwesomeIcons[`${icon || _icon}`];
   const hasFontAwesomeIconValue = !!fontAwesomeIconValues[icons[icon]];
