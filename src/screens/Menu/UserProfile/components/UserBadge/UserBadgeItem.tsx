@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  TouchableOpacity, StyleSheet, Platform, StatusBar,
+} from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Tooltip from 'react-native-walkthrough-tooltip';
 
@@ -36,6 +38,7 @@ const UserBadgeItem = ({
       backgroundColor="transparent"
       contentStyle={styles.tooltipStyle}
       disableShadow
+      topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
       onClose={() => { setIsVisible(false); }}
     >
       <TouchableOpacity

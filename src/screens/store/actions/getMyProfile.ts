@@ -19,11 +19,8 @@ const getMyProfile = (set, _get) => async ({ userId, params }: IGetUserProfile) 
       avatar,
     });
 
-    set((state: ICommonController) => {
-      state.myProfile = mapProfile(response.data);
-    }, 'getMyProfileSuccess');
+    const newShowingBadges = [];
     if (showingBadges?.length < MAX_BADGES) {
-      const newShowingBadges = [];
       for (let index = 0; index < MAX_BADGES; index++) {
         if (showingBadges?.[index]) {
           newShowingBadges.push(showingBadges[index]);
@@ -33,6 +30,9 @@ const getMyProfile = (set, _get) => async ({ userId, params }: IGetUserProfile) 
       }
       useUserBadge.getState().actions.setShowingBadges(newShowingBadges, true);
     }
+    set((state: ICommonController) => {
+      state.myProfile = { ...mapProfile(response.data), showingBadges: newShowingBadges };
+    }, 'getMyProfileSuccess');
   } catch (error) {
     console.error('getMyProfile error:', error);
     showToastError(error);
