@@ -717,6 +717,7 @@
     "label_seen_by": "Interested by ",
     "button_like": "Like",
     "button_reply": "Reply",
+    "button_reply_count": "{{count}} replies",
     "button_react": "React",
     "button_comment": "Comment",
     "button_image": "Image",

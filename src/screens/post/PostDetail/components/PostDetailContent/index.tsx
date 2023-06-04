@@ -76,8 +76,8 @@ const _PostDetailContent = (props) => {
     onPressComment,
     onScrollToIndexFailed,
     onPressReplySectionHeader,
-    onPressLoadMoreCommentLevel2,
-    onPressReplyCommentItem,
+    // onPressLoadMoreCommentLevel2,
+    // onPressReplyCommentItem,
   } = usePostDetailContentHandler({
     postId, comments, sectionData, focusComment, listRef, commentInputRef,
   });
@@ -140,30 +140,31 @@ const _PostDetailContent = (props) => {
         audience={audience}
         index={index}
         isReplyingComment={false}
+        showLoadMore={false}
         onPressReply={onPressReplySectionHeader}
-        onPressLoadMore={onPressLoadMoreCommentLevel2}
+        // onPressLoadMore={onPressLoadMoreCommentLevel2}
         onPressMarkSeenPost={onPressMarkSeenPost}
       />
     );
   };
 
-  const renderCommentItem = (data: any) => {
-    const { item, index, section } = data || {};
-    return (
-      <CommentItem
-        index={index}
-        postId={postId}
-        section={section}
-        commentData={item}
-        groupIds={groupIds}
-        audience={audience}
-        isReplyingComment={false}
-        commentParent={section?.comment}
-        onPressReply={onPressReplyCommentItem}
-        onPressMarkSeenPost={onPressMarkSeenPost}
-      />
-    );
-  };
+  // const renderCommentItem = (data: any) => {
+  //   const { item, index, section } = data || {};
+  //   return (
+  //     <CommentItem
+  //       index={index}
+  //       postId={postId}
+  //       section={section}
+  //       commentData={item}
+  //       groupIds={groupIds}
+  //       audience={audience}
+  //       isReplyingComment={false}
+  //       commentParent={section?.comment}
+  //       onPressReply={onPressReplyCommentItem}
+  //       onPressMarkSeenPost={onPressMarkSeenPost}
+  //     />
+  //   );
+  // };
 
   const renderCommentInputView = () => {
     if (setting?.canComment && !isReported) {
@@ -208,7 +209,8 @@ const _PostDetailContent = (props) => {
           <SectionList
             ref={listRef}
             sections={sectionData}
-            renderItem={renderCommentItem}
+            // renderItem={renderCommentItem}
+            renderItem={() => <View />}
             renderSectionHeader={renderSectionHeader}
             ListHeaderComponent={(
               <PostDetailContentHeader

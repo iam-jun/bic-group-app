@@ -62,8 +62,8 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     onLayout,
     onScrollToIndexFailed,
     onPressReplySectionHeader,
-    onPressLoadMoreCommentLevel2,
-    onPressReplyCommentItem,
+    // onPressLoadMoreCommentLevel2,
+    // onPressReplyCommentItem,
   } = usePostDetailContentHandler({
     postId: id, comments, sectionData, focusComment, listRef, commentInputRef,
   });
@@ -98,20 +98,20 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     putMarkSeenPost({ postId: id });
   }, [id]);
 
-  const renderCommentItem = (data: any) => (
-    <CommentItem
-      postId={id}
-      index={data?.index}
-      section={data?.section}
-      isReplyingComment={false}
-      commentData={data?.item}
-      groupIds={data?.groupIds}
-      audience={audience}
-      commentParent={data?.section?.comment}
-      onPressReply={onPressReplyCommentItem}
-      onPressMarkSeenPost={onPressMarkSeenPost}
-    />
-  );
+  // const renderCommentItem = (data: any) => (
+  //   <CommentItem
+  //     postId={id}
+  //     index={data?.index}
+  //     section={data?.section}
+  //     isReplyingComment={false}
+  //     commentData={data?.item}
+  //     groupIds={data?.groupIds}
+  //     audience={audience}
+  //     commentParent={data?.section?.comment}
+  //     onPressReply={onPressReplyCommentItem}
+  //     onPressMarkSeenPost={onPressMarkSeenPost}
+  //   />
+  // );
 
   const renderSeparator = () => <View />;
 
@@ -129,9 +129,10 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
         groupIds={groupIds}
         audience={audience}
         isReplyingComment={false}
+        showLoadMore={false}
         commentData={data?.comment}
         onPressReply={onPressReplySectionHeader}
-        onPressLoadMore={onPressLoadMoreCommentLevel2}
+        // onPressLoadMore={onPressLoadMoreCommentLevel2}
         onPressMarkSeenPost={onPressMarkSeenPost}
       />
     );
@@ -222,7 +223,8 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
           ListHeaderComponent={ListHeaderComponent}
           onLayout={onLayout}
           onContentSizeChange={onLayout}
-          renderItem={renderCommentItem}
+          // renderItem={renderCommentItem}
+          renderItem={() => <View />}
           ListFooterComponent={renderFooter}
           renderSectionHeader={renderSectionHeader}
           ItemSeparatorComponent={renderSeparator}

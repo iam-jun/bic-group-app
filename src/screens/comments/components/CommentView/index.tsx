@@ -100,6 +100,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
     edited,
     mentions,
     reported,
+    totalReply,
   } = _commentData;
   const giphy
     = _commentData.giphy
@@ -115,6 +116,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
   } = actor || {};
 
   const isActor = currentUserId === actor?.id;
+  const isShowReply = !totalReply && totalReply === 0
 
   const [commentStatus, setCommentStatus] = useState(
     commentData?.status || null,
@@ -296,7 +298,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
             ) : null}
             <ButtonWrapper onPress={_onPressReply} testID="comment_view.reply">
               <Text.BodySMedium useI18n color={colors.neutral40}>
-                post:button_reply
+                { isShowReply ? 'post:button_reply' : `${t('post:button_reply_count', { count: totalReply })}` }
               </Text.BodySMedium>
             </ButtonWrapper>
             <ViewSpacing width={16} />
