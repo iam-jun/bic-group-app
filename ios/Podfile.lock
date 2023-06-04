@@ -711,6 +711,10 @@ PODS:
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
   - Sentry/HybridSDK (7.31.5)
+  - Smartlook (1.8.9)
+  - smartlook-react-native-bridge (1.2.8):
+    - React
+    - Smartlook (~> 1.8.6)
   - SocketRocket (0.6.0)
   - SSZipArchive (2.2.3)
   - Swime (3.0.6)
@@ -834,6 +838,7 @@ DEPENDENCIES:
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - smartlook-react-native-bridge (from `../node_modules/smartlook-react-native-wrapper`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -874,6 +879,7 @@ SPEC REPOS:
     - SDWebImage
     - SDWebImageWebPCoder
     - Sentry
+    - Smartlook
     - SocketRocket
     - SSZipArchive
     - Swime
@@ -1051,6 +1057,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
+  smartlook-react-native-bridge:
+    :path: "../node_modules/smartlook-react-native-wrapper"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -1176,6 +1184,8 @@ SPEC CHECKSUMS:
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   Sentry: 4c9babff9034785067c896fd580b1f7de44da020
+  Smartlook: 9a49d32502f9c659045c1a599aad495c2a0b9480
+  smartlook-react-native-bridge: 64fcd1c83495e1895ca14d2df9ccdf1b7b8a9f3c
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
   Swime: d7b2c277503b6cea317774aedc2dce05613f8b0b

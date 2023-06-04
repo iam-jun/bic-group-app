@@ -159,6 +159,7 @@
     "reselect": "4.0.0",
     "rn-fetch-blob": "^0.12.0",
     "rn-placeholder": "3.0.3",
+    "smartlook-react-native-wrapper": "^1.2.8",
     "socket.io-client": "4.4.0",
     "url-parse": "^1.5.10",
     "zustand": "^4.0.0"
