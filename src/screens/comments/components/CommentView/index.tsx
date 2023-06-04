@@ -116,7 +116,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
   } = actor || {};
 
   const isActor = currentUserId === actor?.id;
-  const isShowReply = !totalReply && totalReply === 0
+  const isShowReply = !totalReply && totalReply === 0;
 
   const [commentStatus, setCommentStatus] = useState(
     commentData?.status || null,
