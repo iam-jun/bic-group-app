@@ -15,15 +15,12 @@ const deleteReactToComment
     } = payload;
     const { actions } = get();
     try {
-      const rId
+      const reaction
         = ownerReactions?.find(
           (item: IReaction) => item?.reactionName === reactionId,
-        )?.id || '';
-      if (rId) {
-        // yield addReactionLoadingLocal(id, reactionId, comment);
-
+        );
+      if (reaction) {
         await streamApi.deleteReaction({
-          reactionId: rId,
           target: TargetType.COMMENT,
           targetId: id,
           reactionName: reactionId,

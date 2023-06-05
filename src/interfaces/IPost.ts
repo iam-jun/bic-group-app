@@ -464,7 +464,6 @@ export interface IParamPutReaction {
 
 export interface IParamDeleteReaction {
   target: TargetType;
-  reactionId: string;
   targetId: string;
   reactionName: string;
 }

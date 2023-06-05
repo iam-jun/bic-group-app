@@ -12,14 +12,13 @@ const deleteReactToPost
     const post1 = usePostsStore.getState()?.posts?.[id] || {};
     try {
       const cOwnReaction1 = post1.ownerReactions || [];
-      const rId
+      const reaction
         = cOwnReaction1?.find(
           (item: IReaction) => item?.reactionName === reactionId,
-        )?.id || '';
-      if (rId) {
+        );
+      if (reaction) {
         removeReactionLocal(get)(id, reactionId, true);
         const response = await streamApi.deleteReaction({
-          reactionId: rId,
           target: TargetType.POST,
           targetId: id,
           reactionName: reactionId,
