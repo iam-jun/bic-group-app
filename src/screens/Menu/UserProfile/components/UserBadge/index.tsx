@@ -28,7 +28,7 @@ const UserBadge = ({
   if (showingBadges.length === 0 || !Boolean(showingBadges?.[0]?.id)) return null;
 
   const renderItem = ({ item, index }: any) => {
-    if (!item?.id && isInMenuTab) {
+    if (!item?.id) {
       return (
         <TouchableOpacity
           key={`badge_showing_item_empty_${index}`}
@@ -52,7 +52,7 @@ const UserBadge = ({
     );
   };
 
-  const shouldShowFooter = Boolean(showingBadges?.[2]?.id) && isInMenuTab;
+  const shouldShowFooter = Boolean(showingBadges?.[2]?.id);
 
   const renderFooter = () => {
     if (!shouldShowFooter) return null;

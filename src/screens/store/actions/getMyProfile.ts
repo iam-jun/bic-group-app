@@ -31,7 +31,10 @@ const getMyProfile = (set, _get) => async ({ userId, params }: IGetUserProfile) 
       useUserBadge.getState().actions.setShowingBadges(newShowingBadges, true);
     }
     set((state: ICommonController) => {
-      state.myProfile = { ...mapProfile(response.data), showingBadges: newShowingBadges };
+      state.myProfile = {
+        ...mapProfile(response.data),
+        showingBadges: newShowingBadges.length > 0 ? newShowingBadges : showingBadges,
+      };
     }, 'getMyProfileSuccess');
   } catch (error) {
     console.error('getMyProfile error:', error);

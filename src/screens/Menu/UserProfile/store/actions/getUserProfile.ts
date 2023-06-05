@@ -3,7 +3,7 @@ import { IGetUserProfile } from '~/interfaces/IAuth';
 import { mapProfile } from '~/helpers/common';
 import { IUserProfileState } from '../../store';
 import useCommonController from '~/screens/store';
-import useUserBadge from '../../fragments/BadgeCollection/store';
+import useUserBadge, { MAX_BADGES } from '../../fragments/BadgeCollection/store';
 
 const getUserProfile
   = (set) => async ({ userId, params, silentLoading }: IGetUserProfile) => {
@@ -23,10 +23,28 @@ const getUserProfile
         state.loading = false;
         state.data = userProfile;
       }, 'getUserProfileSuccess');
+      const showingBadges = response.data?.showingBadges || [];
       if (myId === userId) {
-        useCommonController.getState().actions.setMyProfile(userProfile);
+        const newShowingBadges = [];
+        if (showingBadges?.length < MAX_BADGES) {
+          for (let index = 0; index < MAX_BADGES; index++) {
+            if (showingBadges?.[index]) {
+              newShowingBadges.push(showingBadges[index]);
+            } else {
+              newShowingBadges.push(undefined);
+            }
+          }
+        }
+        useUserBadge.getState().actions.setShowingBadges(
+          newShowingBadges.length > 0 ? newShowingBadges : showingBadges, true,
+        );
+        useCommonController.getState().actions.setMyProfile({
+          ...userProfile,
+          showingBadges: newShowingBadges.length > 0 ? newShowingBadges : showingBadges,
+        });
+      } else {
+        useUserBadge.getState().actions.setShowingBadges(showingBadges, false);
       }
-      useUserBadge.getState().actions.setShowingBadges(userProfile?.showingBadges, myId === userId);
     } catch (err) {
       console.error('getUserProfile error:', err);
 

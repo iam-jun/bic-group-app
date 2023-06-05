@@ -21,7 +21,7 @@ const getOwnedBadges = (set, _get) => async () => {
 
     set((state: IUserBadgesState) => {
       state.ownBadges = ownedBadges;
-      state.showingBadges = showingBadges;
+      state.showingBadges = choosingBadges;
       state.choosingBadges = choosingBadges;
       state.loading = false;
     }, 'getMyOwnedBadgesSuccess');
