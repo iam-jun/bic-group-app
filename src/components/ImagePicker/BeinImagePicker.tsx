@@ -77,8 +77,8 @@ const openPickerSinglePhotoWithCropping = async (
     {
       width?: number,
       height?: number,
-      maxSize: number,
-      exclusionList: string[]
+      maxSize?: number,
+      exclusionList?: string[]
     },
 ) => {
   try {
@@ -87,7 +87,7 @@ const openPickerSinglePhotoWithCropping = async (
     });
     if (image) {
       const {
-        width, height, maxSize, exclusionList,
+        width, height, maxSize = 0, exclusionList = [],
       } = option;
 
       // Get original file size
@@ -101,11 +101,14 @@ const openPickerSinglePhotoWithCropping = async (
       }
 
       let errorText = null;
-      if (dataFromOriginalFile?.size > maxSize) {
+      if (maxSize && dataFromOriginalFile?.size > maxSize) {
         errorText = t('common:error:file:file_exceed_limit').replace('{n}', formatBytes(maxSize, 0));
       }
-      if (exclusionList.some((item) => dataFromOriginalFile?.path.toLowerCase().includes(item))
-        || exclusionList.some((item) => dataFromOriginalFile?.path.includes(item))) {
+      if (
+        exclusionList.length > 0
+        && (exclusionList.some((item) => dataFromOriginalFile?.path.toLowerCase().includes(item))
+          || exclusionList.some((item) => dataFromOriginalFile?.path.includes(item)))
+      ) {
         errorText = t('common:error:file:file_type_not_support');
       }
       if (errorText) {
