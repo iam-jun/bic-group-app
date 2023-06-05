@@ -36,7 +36,7 @@ export interface IPostsState extends IBaseState {
     addToPosts: (payload: IPayloadAddToAllPost) => void;
     deletePost: (payload: IPayloadDeletePost) => void;
     deletePostLocal: (id: string) => void;
-    putEditPost: (payload: IPayloadPutEditPost) => void;
+    putEditPost: (payload: IPayloadPutEditPost) => Promise<void>;
     putMarkSeenPost: (payload: IPayloadPutMarkSeenPost) => void;
     removeAudiencesFromPost: (payload: IPayloadRemoveAudiencesOfPost) => void;
     setPostDetailReplyingComment: (payload?: IPayloadReplying) => void;

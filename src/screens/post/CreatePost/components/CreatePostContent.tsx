@@ -185,6 +185,24 @@ const Content = ({ groupIds, useCreatePostData }: Props) => {
     setInputHeight(height);
   };
 
+  const renderContentByVideo = () => {
+    /* eslint no-else-return: ["error", {allowElseIf: true}] */
+    if (video && video?.thumbnails?.length > 0) {
+      return <PostVideoPlayer data={video} postId={id || ''} onPressClose={onRemoveVideo} />;
+    } else if (video) {
+      return (
+        <UploadingFile
+          uploadType={ResourceUploadType.postVideo}
+          file={video as IFilePicked}
+          onClose={onRemoveVideo}
+          onError={() => onUploadError('video')}
+          onSuccess={handleUploadVideoSuccess}
+        />
+      );
+    }
+    return null;
+  };
+
   const remainingSize = appConfig.totalFileSize - totalSize;
 
   return (
@@ -239,21 +257,7 @@ const Content = ({ groupIds, useCreatePostData }: Props) => {
             )}
             <View onLayout={onLayoutPhotoPreview}>
               <PostSelectImage />
-              {video && video?.thumbnails?.length > 0 ? (
-                <PostVideoPlayer
-                  data={video}
-                  postId={id || ''}
-                  onPressClose={onRemoveVideo}
-                />
-              ) : video ? (
-                <UploadingFile
-                  uploadType={ResourceUploadType.postVideo}
-                  file={video as IFilePicked}
-                  onClose={onRemoveVideo}
-                  onError={() => onUploadError('video')}
-                  onSuccess={handleUploadVideoSuccess}
-                />
-              ) : null}
+              {renderContentByVideo()}
             </View>
             <Button activeOpacity={1}>
               <FilesView

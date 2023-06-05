@@ -21,15 +21,8 @@ export default class MarkdownBlockQuote extends PureComponent {
   render() {
     const styles = createStyles(this.props.theme);
 
-    let icon;
-    if (!this.props.continue) {
-      // todo update icon
-      icon = <Icon icon="ArrowRight" size={20} />;
-    }
-
     return (
       <View style={styles.container} testID="markdown_block_quote">
-        {/* <View style={styles.icon}>{icon}</View> */}
         <View style={styles.childContainer}>{this.props.children}</View>
       </View>
     );

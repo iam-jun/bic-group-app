@@ -61,6 +61,10 @@ const MemberSearchResult = ({
     return null;
   };
 
+  const renderItemSeparatorComponent = () => (
+    <ViewSpacing height={8} />
+  );
+
   return (
     <FlatList
       testID="flatlist"
@@ -84,7 +88,7 @@ const MemberSearchResult = ({
           />
         ) : undefined
       }
-      ItemSeparatorComponent={() => <ViewSpacing height={8} />}
+      ItemSeparatorComponent={renderItemSeparatorComponent}
     />
   );
 };

@@ -19,6 +19,6 @@ export const checkChangeAudiences = (
   a1?.map?.((a: any) => ids1.push(a?.id));
   a2?.map?.((a: any) => ids2.push(a?.id));
   return !isEqual(
-    ids1.sort(compare), ids2.sort(compare),
+    [...ids1].sort(compare), [...ids2].sort(compare),
   );
 };

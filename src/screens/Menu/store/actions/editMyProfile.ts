@@ -42,13 +42,10 @@ const editMyProfile = (_set, get) => async ({
     console.error('editMyProfile error:', error);
 
     const errorMessage: string = error?.meta?.message;
-    switch (errorMessage) {
-      case 'This phone number is used':
-        actions.setEditContactError(i18next.t('settings:text_phone_number_is_used'));
-        break;
-
-      default:
-        showToastError(error);
+    if (errorMessage === 'This phone number is used') {
+      actions.setEditContactError(i18next.t('settings:text_phone_number_is_used'));
+    } else {
+      showToastError(error);
     }
   }
 };

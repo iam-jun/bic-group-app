@@ -21,38 +21,34 @@ const EmbedVideo: FC<Props> = ({ src, shouldPlay }) => {
 
   const data = parseVideoUrl(src);
 
-  switch (data.provider) {
-    case 'youtube': {
-      return (
-        <YoutubePlayer
-          height={400}
-          videoId={data.id}
+  if (data.provider === 'youtube') {
+    return (
+      <YoutubePlayer
+        height={400}
+        videoId={data.id}
           // autoplay
-          play={shouldPlay}
-          forceAndroidAutoplay={shouldPlay}
-        />
-      );
-    }
-
-    default: {
-      const autoPlayUrl = shouldPlay ? getAutoplayUrl(src) : src;
-      return (
-        <WebView
-          source={{ uri: autoPlayUrl }}
-          cacheEnabled
-          scalesPageToFit
-          javaScriptEnabled
-          allowsFullscreenVideo
-          mediaPlaybackRequiresUserAction={false}
-          injectedJavaScript={script}
-          onMessage={() => {
-            // injectedJavaScript not work without onMessage
-          }}
-          style={{ width: '100%', height: 400 }}
-        />
-      );
-    }
+        play={shouldPlay}
+        forceAndroidAutoplay={shouldPlay}
+      />
+    );
   }
+
+  const autoPlayUrl = shouldPlay ? getAutoplayUrl(src) : src;
+  return (
+    <WebView
+      source={{ uri: autoPlayUrl }}
+      cacheEnabled
+      scalesPageToFit
+      javaScriptEnabled
+      allowsFullscreenVideo
+      mediaPlaybackRequiresUserAction={false}
+      injectedJavaScript={script}
+      onMessage={() => {
+        // injectedJavaScript not work without onMessage
+      }}
+      style={{ width: '100%', height: 400 }}
+    />
+  );
 };
 
 export default EmbedVideo;

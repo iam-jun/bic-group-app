@@ -1,19 +1,18 @@
-import groupApi from '~/api/GroupApi';
-import { IPost } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
-import { IBaseListState } from '~/store/interfaces/IBaseState';
-import { ITimelineState } from '..';
+import { IDataFilterTimelines, ITimelineState } from '..';
 import {
   getParamsContentFeed,
   isFilterWithThisAttributeFeed,
 } from '~/screens/Home/store/helper';
 import { timeOut } from '~/utils/common';
 import { AttributeFeed } from '~/interfaces/IFeed';
+import { IParamGetTimeline } from '~/interfaces/IGroup';
+import streamApi from '~/api/StreamApi';
 
 const getPosts = (set, get) => async (id: string, isRefresh = false) => {
   const { timelines }: ITimelineState = get();
   const { contentFilter, attributeFilter, data } = timelines[id] || {};
-  const currentPosts: IBaseListState<IPost> = data[contentFilter][attributeFilter];
+  const currentPosts: IDataFilterTimelines = data[contentFilter][attributeFilter];
 
   if (currentPosts.loading) return;
 
@@ -26,17 +25,16 @@ const getPosts = (set, get) => async (id: string, isRefresh = false) => {
   }, `getPosts community/group Id: ${id}, isRefresh: ${isRefresh} `);
 
   try {
-    const offset = isRefresh ? 0 : currentPosts.ids?.length;
-    const params = {
-      groupId: id,
-      offset,
+    const endCursor = isRefresh ? null : currentPosts.endCursor;
+    const params: IParamGetTimeline = {
+      after: endCursor,
       limit: 10,
       isImportant: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.IMPORTANT),
       isSaved: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.SAVED),
       // isMine: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.MINE),
       type: getParamsContentFeed(contentFilter),
     };
-    const response = await groupApi.getGroupPosts(params);
+    const response = await streamApi.getTimelinePosts(id, params);
     await timeOut(200);
     const result = response.data?.list || [];
     usePostsStore.getState().actions.addToPosts({ data: result, handleComment: true });
@@ -51,6 +49,7 @@ const getPosts = (set, get) => async (id: string, isRefresh = false) => {
         refreshing: false,
         ids: ids.concat(newIds),
         hasNextPage: response.data?.meta?.hasNextPage,
+        endCursor: response.data?.meta?.endCursor,
       };
     }, `getPostsSuccess community/group Id: ${id}`);
   } catch (error) {
@@ -61,6 +60,7 @@ const getPosts = (set, get) => async (id: string, isRefresh = false) => {
         refreshing: false,
         hasNextPage: false,
         error,
+        endCursor: null,
       };
     }, `getPostsError community/group Id: ${id}`);
   }

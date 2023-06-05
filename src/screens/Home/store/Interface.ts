@@ -1,11 +1,11 @@
 import { AttributeFeed, ContentFeed } from '~/interfaces/IFeed';
 import IBaseState from '~/store/interfaces/IBaseState';
+import { Pagination } from '~/store/interfaces/IFetchingState';
 
-export interface IHomeFeed {
+export interface IHomeFeed extends Pagination {
   isLoading: boolean;
   refreshing: boolean;
   data: string[];
-  canLoadMore: boolean;
 }
 
 export type IFeed = {

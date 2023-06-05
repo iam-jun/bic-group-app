@@ -97,7 +97,7 @@ const FileVideo: FC<VideoPlayerProps> = ({
   };
 
   const resetVideoPosition = async () => {
-    if (!!video.current) {
+    if (video.current) {
       await video.current.setStatusAsync({
         positionMillis: 0, shouldPlay: false, isLooping: false,
       });

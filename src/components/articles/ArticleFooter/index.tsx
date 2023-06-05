@@ -2,13 +2,13 @@ import React, { FC } from 'react';
 import { Omit, StyleSheet, View } from 'react-native';
 import ReactionView from '~/beinComponents/ReactionView';
 import ContentFooter, { ContentFooterProps } from '~/components/ContentView/ContentFooter';
-import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import useContentActions from '~/hooks/useContentActions';
 import { TargetType } from '~/interfaces/IPost';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import { padding } from '~/theme/spacing';
 import { ArticleReactionsProps } from '../ArticleReactions';
+import { handleLabelButtonComment } from '~/utils/common';
 
 export interface ArticleFooterProps extends Omit<ContentFooterProps, 'labelButtonComment'>, Omit<ArticleReactionsProps, 'onAddReaction'> {
   articleId: string;
@@ -22,11 +22,8 @@ const ArticleFooter: FC<ArticleFooterProps> = ({
   ownerReactions, reactionsCount, commentsCount, onPressComment, ...props
 }) => {
   const { rootNavigation } = useRootNavigation();
-  const { t } = useBaseHook();
 
-  const labelButtonComment = `${commentsCount ? `${commentsCount} ` : ''}${t(
-    'post:button_comment',
-  )}`;
+  const labelButtonComment = handleLabelButtonComment(commentsCount);
 
   const { onAddReaction, onRemoveReaction, onLongPressReaction } = useContentActions({
     postId: articleId,
