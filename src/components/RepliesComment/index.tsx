@@ -15,39 +15,39 @@ interface RepliesCommentProps {
 }
 
 const RepliesComment: React.FC<RepliesCommentProps> = ({
-    onPress,
-    commentData,
+  onPress,
+  commentData,
 }) => {
-    const { t } = useBaseHook();
-    const theme: ExtendedTheme = useTheme();
-    const { colors } = theme;
+  const { t } = useBaseHook();
+  const theme: ExtendedTheme = useTheme();
+  const { colors } = theme;
 
-    const comment = useCommentsStore(useCallback(commentsSelector.getComment(commentData?.id), [commentData?.id]));
-    const _commentData = comment || commentData || {};
-    const { totalReply } = _commentData;
-    const isNotShowReply = !totalReply || totalReply === 0;
+  const comment = useCommentsStore(useCallback(commentsSelector.getComment(commentData?.id), [commentData?.id]));
+  const _commentData = comment || commentData || {};
+  const { totalReply } = _commentData;
+  const isNotShowReply = !totalReply || totalReply === 0;
 
-    if (isNotShowReply) return null;
+  if (isNotShowReply) return null;
 
-    return (
-        <View style={styles.container}>
-            <Button
-                onPress={onPress}
-                testID="replies_comment.count_reply"
-            >
-                <Text.BodySMedium color={colors.purple50}>
-                    { `${t('post:button_reply_count', { count: totalReply })}` }
-                </Text.BodySMedium>
-            </Button>
-        </View>
-    );
+  return (
+    <View style={styles.container}>
+      <Button
+        onPress={onPress}
+        testID="replies_comment.count_reply"
+      >
+        <Text.BodySMedium color={colors.purple50}>
+          { `${t('post:button_reply_count', { count: totalReply })}` }
+        </Text.BodySMedium>
+      </Button>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        marginLeft: 48,
-        marginTop: spacing.margin.base,
-    },
+  container: {
+    marginLeft: 48,
+    marginTop: spacing.margin.base,
+  },
 });
 
 export default RepliesComment;
