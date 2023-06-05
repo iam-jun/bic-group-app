@@ -58,12 +58,14 @@ import usePinContentStore from '~/components/PinContent/store';
 import TermsView from '~/components/TermsModal';
 import MemberQuestionsModal from '~/components/MemberQuestionsModal';
 import FloatingCreatePost from '~/screens/Home/components/FloatingCreatePost';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
   const { groupId, onGoBack, communityId: paramCommunityId } = params || {};
 
   const theme: ExtendedTheme = useTheme();
+  const { colors } = theme;
   const styles = themeStyles(theme);
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
@@ -225,7 +227,7 @@ const GroupDetail = (props: any) => {
 
   const alertLeaveGroup = useLeaveGroup({
     groupId,
-    username: user?.username,
+    userId: user?.userId,
     privacy,
   });
 
@@ -351,7 +353,7 @@ const GroupDetail = (props: any) => {
     if (isLoadingGroupDetailError) return <NotFound testID="no_group_found" onGoBack={onGoBackOnNotFound} />;
 
     return (
-      <>
+      <ScreenWrapper isFullView backgroundColor={colors.gray5}>
         <Header
           headerRef={headerRef}
           title={name}
@@ -395,7 +397,7 @@ const GroupDetail = (props: any) => {
         <MemberQuestionsModal />
         <TermsView />
         {isMember && <FloatingCreatePost />}
-      </>
+      </ScreenWrapper>
     );
   };
 

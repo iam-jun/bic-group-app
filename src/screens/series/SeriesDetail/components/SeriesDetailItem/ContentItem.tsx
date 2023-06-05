@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Avatar, Button } from '~/baseComponents';
@@ -41,7 +41,7 @@ const ContentItem: FC<ContentItemProps> = ({
 
   const theme = useTheme();
   const { colors } = theme;
-  const styles = createStyle(theme);
+  const styles = createStyle();
   const { rootNavigation } = useRootNavigation();
 
   const onPressActor = () => {
@@ -88,47 +88,43 @@ const ContentItem: FC<ContentItemProps> = ({
   );
 };
 
-const createStyle = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-
-  return StyleSheet.create({
-    row: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'flex-start',
-    },
-    actor: {
-      flex: 1,
-      flexDirection: 'row',
-      marginRight: spacing.margin.small,
-    },
-    img: {
-      width: 120,
-      height: 80,
-      borderRadius: borderRadius.small,
-    },
-    summaryView: {
-      marginTop: spacing.margin.large,
-    },
-    avatarContainer: {
-      flex: 1,
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    avatar: {
-      alignSelf: 'flex-start',
-    },
-    fullnameContainer: {
-      flex: 1,
-    },
-    deactivatedView: {
-      marginTop: spacing.margin.tiny,
-    },
-    fullnameVerifiedContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-  });
-};
+const createStyle = () => StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+  actor: {
+    flex: 1,
+    flexDirection: 'row',
+    marginRight: spacing.margin.small,
+  },
+  img: {
+    width: 120,
+    height: 80,
+    borderRadius: borderRadius.small,
+  },
+  summaryView: {
+    marginTop: spacing.margin.large,
+  },
+  avatarContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  avatar: {
+    alignSelf: 'flex-start',
+  },
+  fullnameContainer: {
+    flex: 1,
+  },
+  deactivatedView: {
+    marginTop: spacing.margin.tiny,
+  },
+  fullnameVerifiedContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+});
 
 export default ContentItem;

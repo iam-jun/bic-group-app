@@ -1,14 +1,12 @@
 import { Method } from 'axios';
-import { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
+import { apiProviders, apiVersionId, HttpApiRequestConfig } from '~/api/apiConfig';
 import { makeHttpRequest, withHttpRequestPromise } from '~/api/apiRequest';
 import {
   IParamDeleteReaction,
   ICommentData,
   IParamGetDraftContents,
-  IParamGetPostAudiences,
   IParamGetPostDetail,
   IParamGetReactionDetail,
-  IParamPutEditPost,
   IParamPutReaction,
   IParamSearchMentionAudiences,
   IPostCreatePost,
@@ -17,6 +15,7 @@ import {
   IRequestReplyComment,
   IRequestGetUsersInterestedPost,
   IParamsGetPostByParams,
+  IParamUpdatePost,
 } from '~/interfaces/IPost';
 import {
   IParamGetFeed,
@@ -51,6 +50,9 @@ const defaultConfig = {
   provider,
   method: 'get' as Method,
   useRetry: true,
+  headers: {
+    'x-version-id': apiVersionId.content,
+  },
 };
 
 export const streamApiConfig = {
@@ -125,6 +127,7 @@ export const streamApiConfig = {
     url: `${provider.url}posts`,
     method: 'post',
     data,
+
   }),
   putReaction: (params: IParamPutReaction): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -145,12 +148,21 @@ export const streamApiConfig = {
     method: 'put',
     data: param,
   }),
-  putEditPost: (param: IParamPutEditPost): HttpApiRequestConfig => {
+  putPublishPost: (param: IParamUpdatePost): HttpApiRequestConfig => {
+    const { postId, data } = param || {};
+    return {
+      ...defaultConfig,
+      url: `${provider.url}posts/${postId}/publish`,
+      method: 'put',
+      data,
+    };
+  },
+  putAutoSavePost: (param: IParamUpdatePost): HttpApiRequestConfig => {
     const { postId, data } = param || {};
     return {
       ...defaultConfig,
       url: `${provider.url}posts/${postId}`,
-      method: 'put',
+      method: 'patch',
       data,
     };
   },
@@ -223,13 +235,6 @@ export const streamApiConfig = {
     method: 'put',
   }),
 
-  // todo move to group
-  getPostAudiences: (params: IParamGetPostAudiences): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${apiProviders.bein.url}/post-audiences/groups`,
-    provider: apiProviders.bein,
-    params,
-  }),
   getSearchMentionAudiences: (
     params: IParamSearchMentionAudiences,
   ): HttpApiRequestConfig => ({
@@ -264,11 +269,6 @@ export const streamApiConfig = {
       limit: param?.limit || 20,
       latestId: param?.latestId,
     },
-  }),
-  postPublishDraftPost: (draftPostId: string): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}posts/${draftPostId}/publish`,
-    method: 'put',
   }),
   getCommentDetail: (
     commentId: string,
@@ -536,6 +536,12 @@ export const streamApiConfig = {
     method: 'post',
     data: reorderedPinContent,
   }),
+  getGroupPosts: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${apiProviders.beinFeed.url}feeds/timeline`,
+    provider: apiProviders.beinFeed,
+    params,
+  }),
 };
 
 const streamApi = {
@@ -612,7 +618,8 @@ const streamApi = {
   putEditArticle: (articleId: string, param: IParamPutEditArticle) => withHttpRequestPromise(
     streamApiConfig.putEditArticle, articleId, param,
   ),
-  putEditPost: (param: IParamPutEditPost) => withHttpRequestPromise(streamApiConfig.putEditPost, param),
+  putPublishPost: (param: IParamUpdatePost) => withHttpRequestPromise(streamApiConfig.putPublishPost, param),
+  putAutoSavePost: (param: IParamUpdatePost) => withHttpRequestPromise(streamApiConfig.putAutoSavePost, param),
   putEditComment: (id: string, data: ICommentData) => withHttpRequestPromise(streamApiConfig.putEditComment, id, data),
   deletePost: (id: string) => withHttpRequestPromise(
     streamApiConfig.deletePost, id,
@@ -680,12 +687,6 @@ const streamApi = {
       return Promise.reject(e);
     }
   },
-  postPublishDraftPost: (draftPostId: string) => withHttpRequestPromise(
-    streamApiConfig.postPublishDraftPost, draftPostId,
-  ),
-  getPostAudience: (params: IParamGetPostAudiences) => withHttpRequestPromise(
-    streamApiConfig.getPostAudiences, params,
-  ),
   getCommentDetail: (commentId: string, params: IRequestGetPostComment) => withHttpRequestPromise(
     streamApiConfig.getCommentDetail, commentId, params,
   ),
@@ -832,6 +833,13 @@ const streamApi = {
   getPinContentsGroup: (id: string) => withHttpRequestPromise(streamApiConfig.getPinContentsGroup, id),
   reorderPinContentGroup: (reorderedPinContent: string[], groupId: string) => withHttpRequestPromise(
     streamApiConfig.reorderPinContentGroup, reorderedPinContent, groupId,
+  ),
+  getGroupPosts: (param: IParamGetGroupPosts) => withHttpRequestPromise(
+    streamApiConfig.getGroupPosts, {
+      offset: param?.offset || 0,
+      limit: param?.limit || appConfig.recordsPerPage,
+      ...param,
+    },
   ),
 };
 

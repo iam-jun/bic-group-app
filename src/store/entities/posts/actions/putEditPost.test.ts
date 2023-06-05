@@ -1,29 +1,14 @@
-import i18n from 'i18next';
 import streamApi from '~/api/StreamApi';
-import { IPayloadPutEditPost } from '~/interfaces/IPost';
+import { IPayloadPutEditPost, PostStatus } from '~/interfaces/IPost';
 import useModalStore from '~/store/modal';
-import { act, renderHook } from '~/test/testUtils';
+import { act, renderHook, waitFor } from '~/test/testUtils';
 import usePostsStore, { IPostsState } from '../index';
 import { postCreatePost, responsePutEditPost } from '../__mocks__/data';
-import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import groupApi from '~/api/GroupApi';
+import APIErrorCode from '~/constants/apiErrorCode';
+import useValidateSeriesTagsStore from '~/components/ValidateSeriesTags/store';
 
 describe('putEditPost', () => {
-  afterEach(() => {
-    jest.runOnlyPendingTimers(); // you must add this
-    jest.useRealTimers(); // you must add this
-  });
-
-  const onRetry = jest.fn();
-  const payload: IPayloadPutEditPost = {
-    id: responsePutEditPost.data.id,
-    data: postCreatePost as any,
-    replaceWithDetail: true,
-    onRetry,
-    msgSuccess: 'post:text_edit_post_success',
-    msgError: 'post:text_edit_post_failed',
-    disableNavigate: false,
-  };
-
   it('should not Id', () => {
     const payload: IPayloadPutEditPost = {
       id: null,
@@ -40,55 +25,116 @@ describe('putEditPost', () => {
     expect(error).toBeCalled();
   });
 
-  it('should put edit Post success:', () => {
-    const response = responsePutEditPost;
+  it('should auto save post', () => {
+    const payload: IPayloadPutEditPost = {
+      id: responsePutEditPost.data.id,
+      data: postCreatePost as any,
+      isPublish: false,
+    };
+    const spyApiPutAutoSavePost = jest.spyOn(streamApi, 'putAutoSavePost').mockImplementation(() => Promise.resolve() as any);
 
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
-
-    const spy = jest.spyOn(streamApi, 'putEditPost').mockImplementation(() => Promise.resolve(response) as any);
-
-    jest.useFakeTimers();
     const { result } = renderHook(() => usePostsStore((state: IPostsState) => state));
+
     act(() => {
       result.current.actions.putEditPost(payload);
     });
-    expect(spy).toBeCalled();
+
+    expect(spyApiPutAutoSavePost).toBeCalled();
+  });
+
+  it('should call onError when publishing post doesnt have response', async () => {
+    const payload: IPayloadPutEditPost = {
+      id: responsePutEditPost.data.id,
+      data: postCreatePost as any,
+      isPublish: true,
+      onError: jest.fn(),
+    };
+    const spyApiPutPublishPost = jest.spyOn(streamApi, 'putPublishPost').mockImplementation(() => Promise.resolve() as any);
+    const { result } = renderHook(() => usePostsStore((state: IPostsState) => state));
+
     act(() => {
-      jest.runAllTimers();
+      result.current.actions.putEditPost(payload);
     });
 
-    expect(showToast).toBeCalledWith({
-      content: i18n.t(payload.msgSuccess),
-      type: ToastType.SUCCESS,
+    expect(spyApiPutPublishPost).toBeCalled();
+    await waitFor(() => {
+      expect(payload.onError).toBeCalled();
     });
   });
 
-  it('should put edit Post throw error:', () => {
-    const error = 'error';
+  it('should publishing post success but post is in processing', async () => {
+    const res = { ...responsePutEditPost };
+    res.data.status = PostStatus.PROCESSING;
+    const payload: IPayloadPutEditPost = {
+      id: responsePutEditPost.data.id,
+      data: postCreatePost as any,
+      isPublish: true,
+      isRefresh: true,
+      createFromGroupId: '123',
+      msgSuccess: 'success',
+    };
+    const spyApiPutPublishPost = jest.spyOn(streamApi, 'putPublishPost').mockImplementation(() => Promise.resolve(res) as any);
+    jest.spyOn(streamApi, 'getDraftContents').mockImplementation(() => Promise.resolve() as any);
+    jest.spyOn(groupApi, 'getGroupPosts').mockImplementation(() => Promise.resolve({}) as any);
 
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
-
-    const spy = jest.spyOn(streamApi, 'putEditPost').mockImplementation(() => Promise.reject(error) as any);
-
-    jest.useFakeTimers();
     const { result } = renderHook(() => usePostsStore((state: IPostsState) => state));
+
     act(() => {
-      try {
-        result.current.actions.putEditPost(payload);
-      } catch (e) {
-        expect(e).toBeInstanceOf(TypeError);
-        expect(e).toBe(error);
-      }
-    });
-    expect(spy).toBeCalled();
-    act(() => {
-      jest.runAllTimers();
+      result.current.actions.putEditPost(payload);
     });
 
-    expect(showToast).toBeCalled();
+    expect(spyApiPutPublishPost).toBeCalled();
+    await waitFor(() => {
+      expect(useModalStore.getState().toast?.content).toBe('post:draft:text_processing_publish');
+    });
+  });
+
+  it('should publish post failed and call handleSeriesTagsError', async () => {
+    const payload: IPayloadPutEditPost = {
+      id: responsePutEditPost.data.id,
+      data: postCreatePost as any,
+      isPublish: true,
+      onError: jest.fn(),
+      isHandleSeriesTagsError: true,
+    };
+    const mockActionValidateSeriesTags = {
+      actions: {
+        handleSeriesTagsError: jest.fn(),
+      },
+    };
+    const spyApiPutPublishPost = jest.spyOn(streamApi, 'putPublishPost').mockImplementation(() => Promise.reject({ code: APIErrorCode.Post.POST_INVALID_PARAM }) as any);
+    jest.spyOn(useValidateSeriesTagsStore, 'getState').mockImplementation(() => mockActionValidateSeriesTags as any);
+    const { result } = renderHook(() => usePostsStore((state: IPostsState) => state));
+
+    act(() => {
+      result.current.actions.putEditPost(payload);
+    });
+
+    expect(spyApiPutPublishPost).toBeCalled();
+    await waitFor(() => {
+      expect(mockActionValidateSeriesTags.actions.handleSeriesTagsError).toBeCalled();
+    });
+  });
+
+  it('should publish post failed and show toast error', async () => {
+    const payload: IPayloadPutEditPost = {
+      id: responsePutEditPost.data.id,
+      data: postCreatePost as any,
+      isPublish: true,
+      onError: jest.fn(),
+      onRetry: jest.fn(),
+      msgError: 'error',
+    };
+    const spyApiPutPublishPost = jest.spyOn(streamApi, 'putPublishPost').mockImplementation(() => Promise.reject({ code: 'error' }) as any);
+    const { result } = renderHook(() => usePostsStore((state: IPostsState) => state));
+
+    act(() => {
+      result.current.actions.putEditPost(payload);
+    });
+
+    expect(spyApiPutPublishPost).toBeCalled();
+    await waitFor(() => {
+      expect(useModalStore.getState().toast?.content).toBe('error');
+    });
   });
 });

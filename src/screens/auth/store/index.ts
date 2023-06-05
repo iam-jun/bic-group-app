@@ -12,6 +12,7 @@ import { InitStateType, IBaseState } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
 import signUp from './actions/signUp';
 import resendVerifyEmail from './actions/resendVerifyEmail';
+import checkIsUserNotVerified from './actions/checkIsUserNotVerified';
 
 export interface IAuthState extends IBaseState {
   authUser?: any;
@@ -45,6 +46,7 @@ export interface IAuthState extends IBaseState {
     ) => void;
     handleAuthEvent: (data: HubCapsule) => void;
     announceSessionExpire: () => void;
+    checkIsUserNotVerified: (email: string, callback: (isExists: boolean) => void) => void;
   };
 }
 
@@ -114,6 +116,7 @@ const authController = (set, get) => ({
     handleAuthEvent: handleAuthEvent(set, get),
     resendVerifyEmail: resendVerifyEmail(),
     announceSessionExpire: announceSessionExpire(set, get),
+    checkIsUserNotVerified: checkIsUserNotVerified(set, get),
   },
 
   reset: () => resetStore(initialState, set),

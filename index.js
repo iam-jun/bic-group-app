@@ -26,6 +26,14 @@ messaging().subscribeToTopic('maintenance_channel')
     );
   });
 
+messaging().subscribeToTopic('changelogs_channel')
+  .then(() => console.log('Subscribed to topic changelogs_channel'))
+  .catch((error) => {
+    console.warn(
+      'Subscribed topic changelogs_channel error: ', error,
+    );
+  });
+
 AppRegistry.registerComponent(
   appName, () => gestureHandlerRootHOC(App),
 );
