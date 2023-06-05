@@ -42,6 +42,7 @@ const UserBadgeItem = ({
       onClose={() => { setIsVisible(false); }}
     >
       <TouchableOpacity
+        testID="user_badge_item"
         onPress={() => {
           setIsVisible(true);
         }}

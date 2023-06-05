@@ -74,7 +74,7 @@ const MenuHeader = () => {
       <TouchableOpacity
         testID="menu_header.avatar"
         activeOpacity={1}
-        style={[styles.avatar, { bottom: showingBadges?.length > 0 ? 40 : 0 }]}
+        style={[styles.avatar, { bottom: Boolean(showingBadges?.[0]) ? 40 : 0 }]}
         onPress={() => goToProfile()}
       >
         <Avatar.Large source={avatar} isRounded showBorder borderWidth={2} />

@@ -31,6 +31,7 @@ const UserBadge = ({
     if (!item?.id) {
       return (
         <TouchableOpacity
+          testID="user_badge_item.empty"
           key={`badge_showing_item_empty_${index}`}
           style={styles.emptyItem}
           onPress={onPress}
@@ -58,7 +59,7 @@ const UserBadge = ({
     if (!shouldShowFooter) return null;
     return (
       <Button.Secondary
-        testID="badge_showing.button_edit"
+        testID="user_badge_item.button_edit"
         type="ghost"
         icon="PenToSquare"
         size="small"

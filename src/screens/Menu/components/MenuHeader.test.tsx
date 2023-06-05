@@ -26,7 +26,7 @@ describe('MenuHeader component', () => {
 
     const fullNameTextComponent = rendered.getByTestId('menu_header.full_name.text');
     expect(fullNameTextComponent).toBeDefined();
-    expect(fullNameTextComponent.props?.children?.[0]).toEqual(`${fakeDataUserProfile.fullname} `);
+    expect(fullNameTextComponent.props?.children?.[0]).toEqual(`${fakeDataUserProfile.fullname}`);
 
     const userNameComponent = rendered.getByTestId('menu_header.user_name');
     expect(userNameComponent).toBeDefined();
@@ -52,7 +52,8 @@ describe('MenuHeader component', () => {
     const itemComponent = rendered.getByTestId('menu_header.full_name');
     expect(itemComponent).toBeDefined();
     fireEvent.press(itemComponent);
-    expect(navigate).toHaveBeenCalledWith(mainStack.userProfile, { userId: fakeDataUserProfile.id });
+    expect(navigate).toHaveBeenCalledWith(mainStack.userProfile,
+      { userId: fakeDataUserProfile.id, targetIndex: 0 });
   });
 
   it('should navigate to user profile screen when click username', () => {
@@ -69,7 +70,8 @@ describe('MenuHeader component', () => {
     const itemComponent = rendered.getByTestId('menu_header.user_name');
     expect(itemComponent).toBeDefined();
     fireEvent.press(itemComponent);
-    expect(navigate).toHaveBeenCalledWith(mainStack.userProfile, { userId: fakeDataUserProfile.id });
+    expect(navigate).toHaveBeenCalledWith(mainStack.userProfile,
+      { userId: fakeDataUserProfile.id, targetIndex: 0 });
   });
 
   it('should navigate to user profile screen when click avatar', () => {
@@ -86,6 +88,7 @@ describe('MenuHeader component', () => {
     const itemComponent = rendered.getByTestId('menu_header.avatar');
     expect(itemComponent).toBeDefined();
     fireEvent.press(itemComponent);
-    expect(navigate).toHaveBeenCalledWith(mainStack.userProfile, { userId: fakeDataUserProfile.id });
+    expect(navigate).toHaveBeenCalledWith(mainStack.userProfile,
+      { userId: fakeDataUserProfile.id, targetIndex: 0 });
   });
 });
