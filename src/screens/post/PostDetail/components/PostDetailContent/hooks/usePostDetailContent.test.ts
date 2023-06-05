@@ -73,7 +73,6 @@ describe('usePostDetailContent', () => {
       .mockImplementation(() => Promise.resolve(responsePutMarkSeenPost) as any);
 
     const stateData = { ...initialState };
-    // stateData.post.commentErrorCode = APIErrorCode.Post.POST_DELETED;
     const store = createTestStore(stateData);
     const wrapper = getHookReduxWrapper(store);
     const { result } = renderHook(() => usePostDetailContent(props), { wrapper });

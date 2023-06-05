@@ -15,7 +15,7 @@ interface Props {
 }
 
 const InfoItem = ({ style, title, value }: Props) => {
-  const { colors }: ExtendedTheme = useTheme() as ExtendedTheme;
+  const { colors }: ExtendedTheme = useTheme();
 
   let _value = value;
   if (isEmpty(value)) _value = 'settings:text_not_set';

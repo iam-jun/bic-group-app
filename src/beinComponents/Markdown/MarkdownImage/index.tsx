@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import React from 'react'
-import { Button, VideoPlayer } from '~/baseComponents';
+import { Button } from '~/baseComponents';
 import Image from '~/components/Image';
 import MarkdownLink from '../MarkdownLink';
 import { margin } from '~/theme/spacing';
@@ -24,8 +24,7 @@ const MarkdownImage = ({ src, alt, linkDestination, disableImage }: any) => {
      * we must treat alt props as mediaType
      */
     const mediaType = alt;
-    switch (mediaType) {
-      case 'video':
+    if (mediaType ==='video' ) {
         return (
           <View style={styles.containner}>
             <Image style={styles.image} source={{ uri: src }} />

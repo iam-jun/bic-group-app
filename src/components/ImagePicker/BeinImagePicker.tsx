@@ -29,6 +29,7 @@ const getMimeType = (image, isIos, isGif, isHEIC, isHEIF) => {
 const formatImage = (image: any) => {
   const isIos = Platform.OS === 'ios';
   const isGif = image?.mime?.includes('gif') || image?.mime?.includes('GIF')
+  const isGif = image?.mime?.includes('gif') || image?.mime?.includes('GIF') 
     || image?.filename?.includes('gif') || image?.filename?.includes('GIF');
   const isHEIC = image?.mime?.includes('heic') || image?.mime?.includes('HEIC');
   const isHEIF = image?.mime?.includes('heif') || image?.mime?.includes('HEIF');

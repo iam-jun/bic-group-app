@@ -418,5 +418,4 @@ const createStyle = (theme: ExtendedTheme, insets: any) => {
 };
 
 const NewsfeedList = memo(_NewsfeedList);
-// NewsfeedList.whyDidYouRender = true;
 export default NewsfeedList;

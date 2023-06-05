@@ -35,28 +35,6 @@ const deleteReactToPost
     }
   };
 
-// function* addReactionLoadingLocal(
-//   id: string,
-//   reactionId: string,
-//   ownerReaction: IOwnReaction,
-//   reactionsCount: IReactionCounts,
-// ): any {
-//   const newOwnReaction1: IOwnReaction = [...ownerReaction];
-
-//   if (newOwnReaction1?.length > 0) {
-//     newOwnReaction1.forEach((ownReaction, index) => {
-//       if (ownReaction?.reactionName === reactionId) {
-//         ownReaction.loading = true;
-//         newOwnReaction1[index] = {...ownReaction};
-//       }
-//     });
-//   }
-
-//   yield onUpdateReactionOfPostById(id, newOwnReaction1, {
-//     ...reactionsCount,
-//   });
-// }
-
 const removeReactionLocal
   = (get) => (id: string, reactionId: string, preRemove: boolean) => {
     const { actions } = get();

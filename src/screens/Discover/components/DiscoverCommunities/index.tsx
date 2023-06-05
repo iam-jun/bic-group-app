@@ -38,8 +38,8 @@ const ItemDiscoverCommunities: FC<ItemDiscoverCommunitiesProps> = ({
   handleCancel,
 }) => {
   const item = useCommunitiesStore((state) => state.data[id]);
-  const isActiveGroupTerms = item?.settings?.isActiveGroupTerms || false;
-  const isActiveMembershipQuestions = item?.settings?.isActiveMembershipQuestions || false;
+  const isActiveGroupTerms = item?.affectedSettings?.isActiveGroupTerms || false;
+  const isActiveMembershipQuestions = item?.affectedSettings?.isActiveMembershipQuestions || false;
 
   const rootGroupId = item?.groupId || '';
 

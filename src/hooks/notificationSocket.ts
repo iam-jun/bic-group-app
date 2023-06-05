@@ -66,10 +66,6 @@ const useNotificationSocket = () => {
     const msgData = ConvertHelper.camelizeKeys(parseSafe(msg), {
       excludeValueOfKey: ['reactions_count'],
     });
-    // console.log(
-    //   `\x1b[34m🐣️ notificationSocket handleInternalEvent`,
-    //   `${JSON.stringify(msgData, undefined, 2)}\x1b[0m`,
-    // );
     const data: any = msgData || {};
     if (
       data?.event === notificationEvent.REACT

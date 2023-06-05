@@ -2,14 +2,12 @@ import {
   ICreatePostSeries,
   ICreatePostTags,
   ILinkPreviewCreatePost,
-  IPayloadPublishDraftPost,
   IPostCreatePost,
 } from '~/interfaces/IPost';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
 import createNewPost from './actions/createNewPost';
 import getPostDetail from './actions/getPostDetail';
-import postPublishDraftPost from './actions/postPublishDraftPost';
 
 export type CreatePost = {
   id?: string;
@@ -21,6 +19,7 @@ export type CreatePost = {
   };
   canComment: boolean;
   canReact: boolean;
+  canShare: boolean;
   images: any[];
   video: any;
   files: any[];
@@ -74,7 +73,6 @@ export interface ICreatePostState extends IBaseState {
     removeSeriesTempData: (series: ICreatePostSeries) => void;
     clearSeriesTempData: () => void;
     removeSeries: (series: ICreatePostSeries) => void;
-    postPublishDraftPost: (payload: IPayloadPublishDraftPost) => void;
   };
 }
 
@@ -91,6 +89,7 @@ const initialState: InitStateType<ICreatePostState> = {
     },
     canComment: true,
     canReact: true,
+    canShare: true,
     images: [],
     video: undefined,
     files: [],
@@ -229,7 +228,6 @@ const createPostStore = (
         state.createPost.series = newSelecting;
       }, 'removeSeries');
     },
-    postPublishDraftPost: postPublishDraftPost(set, get),
   },
 
   reset: () => resetStore(initialState, set),

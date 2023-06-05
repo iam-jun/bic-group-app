@@ -134,6 +134,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     );
   };
 
+  // update setting post from option Edit Post Settings on menu post
   const handlePutUpdateSettings = () => {
     const {
       id, content, media, setting, audience, mentions,
@@ -171,6 +172,8 @@ export const usePostSettings = (params?: IUsePostSettings) => {
       msgSuccess: 'post:text_update_post_setting_success',
       msgError: 'post:text_update_post_setting_failed',
       onRetry: () => putEditPost(payload),
+      isHandleSeriesTagsError: false,
+      isRefresh: false,
     };
     putEditPost(payload);
     rootNavigation.goBack();

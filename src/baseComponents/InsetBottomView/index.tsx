@@ -15,7 +15,7 @@ const InsetBottomView = () => {
   }, [keyboardShown]);
 
   const show = () => {
-    showValue.value = withTiming(defaultPaddingBottom, undefined);
+    showValue.value = withTiming(defaultPaddingBottom);
   };
 
   const hide = () => {

@@ -29,7 +29,7 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
   highEmphasis = false,
   ...props
 }: ButtonSecondaryProps) => {
-  const { colors }: ExtendedTheme = useTheme() as ExtendedTheme;
+  const { colors }: ExtendedTheme = useTheme();
 
   let _colorHover = colorHover || colors.purple5;
   let _backgroundColor = color || colors.white;

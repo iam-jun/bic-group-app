@@ -54,8 +54,7 @@ const BannerImportant = ({
     textColor,
     backgroundColor,
     iconColor,
-  } = isImportant ? (markedAsRead ? importantStyles.inactive : importantStyles.active)
-    : importantStyles.inactive;
+  } = getStyles(importantStyles, isImportant, markedAsRead);
 
   const renderImportant = () => {
     if (!isImportant || (isExpired && !isImportant)) {
@@ -85,6 +84,16 @@ const BannerImportant = ({
       {renderImportant()}
     </Button>
   );
+};
+
+const getStyles = (styles: {active: any, inactive: any}, isImportant:boolean, markedAsRead: boolean) => {
+  if (isImportant) {
+    if (markedAsRead) {
+      return styles.inactive;
+    }
+    return styles.active;
+  }
+  return styles.inactive;
 };
 
 export default BannerImportant;
