@@ -112,8 +112,8 @@ const DiscoverGroups = ({ route }: any) => {
       community: { ...communityDetail },
     };
 
-    const isActiveGroupTerms = currentItem?.settings?.isActiveGroupTerms || false;
-    const isActiveMembershipQuestions = currentItem?.settings?.isActiveMembershipQuestions || false;
+    const isActiveGroupTerms = currentItem?.affectedSettings?.isActiveGroupTerms || false;
+    const isActiveMembershipQuestions = currentItem?.affectedSettings?.isActiveMembershipQuestions || false;
 
     const data: HandleJoinGroupData = { isActiveGroupTerms, groupId: item, isActiveMembershipQuestions };
 
