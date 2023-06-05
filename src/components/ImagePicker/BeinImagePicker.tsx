@@ -116,12 +116,17 @@ const openPickerSinglePhotoWithCropping = async (
         return Promise.reject(new Error(errorText));
       }
 
-      const croppedImage = await ImagePicker.openCropper({
-        mediaType: 'photo',
-        width,
-        height,
-        path: image.path,
-      });
+      let croppedImage = null;
+      if (Platform.OS === 'android' && dataFromOriginalFile?.path.toLowerCase().includes('gif')) {
+        croppedImage = dataFromOriginalFile;
+      } else {
+        croppedImage = await ImagePicker.openCropper({
+          mediaType: 'photo',
+          width,
+          height,
+          path: dataFromOriginalFile.path,
+        });
+      }
 
       const result: IFilePicked = formatImage(croppedImage);
       return Promise.resolve(result);
