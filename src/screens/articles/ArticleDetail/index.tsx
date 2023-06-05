@@ -35,7 +35,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const id = params?.articleId;
   const focusComment = params?.focusComment;
   const isFocused = useIsFocused();
-  const { rootNavigation } = useRootNavigation();
+  const { rootNavigation, goHome } = useRootNavigation();
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -56,7 +56,9 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const { putMarkSeenPost } = usePostsStore((state: IPostsState) => state.actions);
   const { isError, code } = errorContent || {};
 
-  const { audience, setting, reported } = data || {};
+  const {
+    audience, setting, reported, deleted,
+  } = data || {};
 
   const {
     onLayout,
@@ -88,6 +90,12 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
       }, 200);
     }
   }, [reported, isFocused]);
+
+  useEffect(() => {
+    if (deleted && isFocused) {
+      goHome();
+    }
+  }, [deleted, isFocused]);
 
   const onRefresh = () => {
     setRefreshing(false);
