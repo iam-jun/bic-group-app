@@ -76,7 +76,7 @@ const _PostDetailContent = (props) => {
     onPressComment,
     onScrollToIndexFailed,
     onPressReplySectionHeader,
-    // onPressLoadMoreCommentLevel2,
+    onPressLoadMoreCommentLevel2,
     // onPressReplyCommentItem,
   } = usePostDetailContentHandler({
     postId, comments, sectionData, focusComment, listRef, commentInputRef,
@@ -142,7 +142,7 @@ const _PostDetailContent = (props) => {
         isReplyingComment={false}
         showLoadMore={false}
         onPressReply={onPressReplySectionHeader}
-        // onPressLoadMore={onPressLoadMoreCommentLevel2}
+        onPressLoadMore={onPressLoadMoreCommentLevel2}
         onPressMarkSeenPost={onPressMarkSeenPost}
       />
     );

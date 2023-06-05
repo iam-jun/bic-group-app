@@ -62,7 +62,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     onLayout,
     onScrollToIndexFailed,
     onPressReplySectionHeader,
-    // onPressLoadMoreCommentLevel2,
+    onPressLoadMoreCommentLevel2,
     // onPressReplyCommentItem,
   } = usePostDetailContentHandler({
     postId: id, comments, sectionData, focusComment, listRef, commentInputRef,
@@ -132,7 +132,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
         showLoadMore={false}
         commentData={data?.comment}
         onPressReply={onPressReplySectionHeader}
-        // onPressLoadMore={onPressLoadMoreCommentLevel2}
+        onPressLoadMore={onPressLoadMoreCommentLevel2}
         onPressMarkSeenPost={onPressMarkSeenPost}
       />
     );

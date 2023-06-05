@@ -6,6 +6,7 @@ import { useBaseHook } from '~/hooks';
 import { ICommentData, IPostAudience } from '~/interfaces/IPost';
 import CommentView from '~/screens/comments/components/CommentView';
 import LoadMoreComment from '~/components/LoadMoreComment';
+import RepliesComment from '~/components/RepliesComment';
 import spacing from '~/theme/spacing';
 import usePostsStore from '~/store/entities/posts';
 
@@ -87,6 +88,10 @@ const CommentItem: React.FC<CommentItemProps> = ({
         onPressReply={_onPressReply}
         contentBackgroundColor={contentBackgroundColor}
         onPressMarkSeenPost={onPressMarkSeenPost}
+      />
+      <RepliesComment
+        onPress={_onPressLoadMore}
+        commentData={commentData}
       />
       {(showLoadPrevious && showLoadMore) && (
         <LoadMoreComment
