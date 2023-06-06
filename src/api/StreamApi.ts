@@ -444,9 +444,9 @@ export const streamApiConfig = {
     url: `${provider.url}tags`,
     params,
   }),
-  validateSeriesTagsOfArticle: (params: IParamsValidateSeriesTags): HttpApiRequestConfig => ({
+  validateSeriesTags: (params: IParamsValidateSeriesTags): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}articles/validate-series-tags`,
+    url: `${provider.url}content/validate-series-tags`,
     method: 'post',
     data: { ...params },
   }),
@@ -770,8 +770,8 @@ const streamApi = {
   searchTagsInAudiences: (params?: IGetSearchTags) => withHttpRequestPromise(
     streamApiConfig.searchTagsInAudiences, params,
   ),
-  validateSeriesTagsOfArticle: (params: IParamsValidateSeriesTags) => withHttpRequestPromise(
-    streamApiConfig.validateSeriesTagsOfArticle, params,
+  validateSeriesTags: (params: IParamsValidateSeriesTags) => withHttpRequestPromise(
+    streamApiConfig.validateSeriesTags, params,
   ),
   getTags: (params: IParamGetCommunityTags) => withHttpRequestPromise(
     streamApiConfig.getTags, params,

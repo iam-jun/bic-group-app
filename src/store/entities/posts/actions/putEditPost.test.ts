@@ -101,7 +101,7 @@ describe('putEditPost', () => {
         handleSeriesTagsError: jest.fn(),
       },
     };
-    const spyApiPutPublishPost = jest.spyOn(streamApi, 'putPublishPost').mockImplementation(() => Promise.reject({ code: APIErrorCode.Post.POST_INVALID_PARAM }) as any);
+    const spyApiPutPublishPost = jest.spyOn(streamApi, 'putPublishPost').mockImplementation(() => Promise.reject({ code: APIErrorCode.Post.TAG_SERIES_INVALID }) as any);
     jest.spyOn(useValidateSeriesTagsStore, 'getState').mockImplementation(() => mockActionValidateSeriesTags as any);
     const { result } = renderHook(() => usePostsStore((state: IPostsState) => state));
 
