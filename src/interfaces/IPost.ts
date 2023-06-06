@@ -252,9 +252,9 @@ export interface IArticleCover {
 
 export type IOwnReaction = Array<IReaction>;
 
-export type IReactionCounts = {
-  [x: string]: { [reactionKind: string]: number };
-};
+export type IReactionCounts = { [reactionKind: string]: number }[];
+
+export type MapReactionsCountCallback = (reactionName: string, value: number) => void;
 
 export interface IAllPosts {
   [id: string]: IPost;
@@ -460,7 +460,6 @@ export interface IParamPutReaction {
 
 export interface IParamDeleteReaction {
   target: TargetType;
-  reactionId: string;
   targetId: string;
   reactionName: string;
 }

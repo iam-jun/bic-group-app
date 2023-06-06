@@ -6,7 +6,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { Keyboard } from 'react-native';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { generateLink, LinkGeneratorTypes } from '~/utils/link';
-import { IPost, IReaction } from '~/interfaces/IPost';
+import { IPost } from '~/interfaces/IPost';
 import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
 import { Button } from '~/baseComponents';
 import { useRootNavigation } from './navigation';
@@ -89,7 +89,7 @@ const usePostMenu = (
 
   const onPressViewReactions = () => {
     modalActions.hideBottomList();
-    const firstReact = Object.values(reactionsCount)[0] as IReaction;
+    const firstReact = reactionsCount[0];
     if (!!firstReact && !isEmpty(firstReact)) {
       const initReaction = Object.keys(firstReact)[0];
       const payload: IPayloadReactionDetailBottomSheet = {
