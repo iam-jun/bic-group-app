@@ -4,7 +4,7 @@ import usePostsStore from '~/store/entities/posts';
 import showToastError from '~/store/helper/showToastError';
 import showToast from '~/store/helper/showToast';
 
-const deleteSeries = (_set, _get) => async (id: string, callbackError: any) => {
+const deleteSeries = (_set, _get) => async (id: string, callbackError?: any) => {
   if (!id) return;
 
   try {
@@ -19,8 +19,8 @@ const deleteSeries = (_set, _get) => async (id: string, callbackError: any) => {
       showToast({ content: 'series:text_delete_series_success' });
     }
   } catch (error) {
-    if (error?.meta?.errors?.groupsDenied) {
-      callbackError?.(error.meta.errors.groupsDenied);
+    if (error?.meta?.errors?.groupsDenied && !!callbackError) {
+      callbackError(error.meta.errors.groupsDenied);
     } else showToastError(error);
     console.error('delete series error', error);
   }

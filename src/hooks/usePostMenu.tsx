@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import i18next from 'i18next';
 import { isEmpty } from 'lodash';
@@ -123,7 +124,7 @@ const usePostMenu = (
       confirmBtnProps: { type: 'ghost' },
       onConfirm: () => deletePost({
         id: postId,
-        callbackError: handleDeletePostError,
+        // callbackError: handleDeletePostError,
       }),
     });
   };
