@@ -55,6 +55,9 @@ const usePostDetailContent = ({
   const commentLeft = usePostsStore(
     useCallback(postsSelector.getCommentOnlyCount(postId), [postId]),
   );
+  const commentEndCursor = usePostsStore(
+    useCallback(postsSelector.getCommentEndCursor(postId), [postId]),
+  );
   const setting = usePostsStore(
     useCallback(postsSelector.getSetting(postId), [postId]),
   );
@@ -202,6 +205,7 @@ const usePostDetailContent = ({
     createdAt,
     audience,
     commentLeft,
+    commentEndCursor,
     groupIds,
     comments,
     sectionData,

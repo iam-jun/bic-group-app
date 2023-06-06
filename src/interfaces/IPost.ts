@@ -228,6 +228,8 @@ export interface IPostComments {
     limit?: number;
     hasPreviousPage?: boolean;
     hasNextPage?: boolean;
+    endCursor?: string;
+    startCursor?: string;
   };
 }
 
@@ -309,7 +311,6 @@ export interface IPayloadPutEditComment {
   id: string;
   comment: ICommentData;
   data: ICommentData;
-  postId: string;
 }
 
 export interface IPayloadDeletePost {
@@ -324,11 +325,6 @@ export interface IPayloadRemoveAudiencesOfPost {
 
 export interface IParamGetPostDetail {
   postId: string;
-  commentOrder?: 'ASC' | 'DESC';
-  commentLimit?: number;
-  childCommentOrder?: number;
-  childCommentLimit?: number;
-  withComment?: boolean;
   offset?: number;
 }
 
@@ -366,8 +362,8 @@ export interface IRequestGetPostComment {
   offset?: number;
   idGte?: string;
   idLte?: string;
-  idLt?: string;
-  idGt?: string;
+  endCursor?: string;
+  startCursor?: string;
   postId: string;
   parentId?: string;
   childLimit?: number;

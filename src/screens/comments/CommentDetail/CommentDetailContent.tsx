@@ -288,14 +288,13 @@ const CommentDetailContent = (props: any) => {
 
   const renderFooter = () => {
     if (viewMore) {
-      const commentLength = newCommentData?.child?.list?.length || 0;
-      const lastItem = newCommentData?.child?.list?.[commentLength - 1];
+      const startCursor = newCommentData?.child?.meta?.startCursor;
       const _parentId = parentId || commentId;
       return (
         <LoadMoreComment
           title="post:text_load_more_replies"
           postId={id}
-          idGreaterThan={lastItem?.id}
+          startCursor={startCursor}
           commentId={_parentId}
         />
       );

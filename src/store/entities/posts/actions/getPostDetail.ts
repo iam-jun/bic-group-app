@@ -26,7 +26,7 @@ const getPostDetail = (_set, get) => async (payload: IPayloadGetPostDetail) => {
     callbackLoading?.(true, false);
     actions.setIsLoadingGetPostDetail(true);
 
-    const response = callApi({ isReported, postId, restParams });
+    const response = await callApi({ isReported, postId, restParams });
 
     actions.addToPosts({
       data: response || {},
@@ -89,12 +89,21 @@ const callApi = async (params: { isReported: boolean, postId: string, restParams
   } else {
     const params: IParamGetPostDetail = {
       postId,
-      // is_draft
       ...restParams,
     };
+
     const responePostDetail = await streamApi.getPostDetail(params);
-    if (responePostDetail?.data) {
-      response = responePostDetail.data;
+    const responseComments = await streamApi.getCommentsByPostId({ postId, order: 'DESC' });
+    const { list, meta } = responseComments?.data || {};
+    if (responePostDetail?.data && responseComments?.data) {
+      response = {
+        ...responePostDetail.data,
+        comments: {
+          list: list || [],
+          meta,
+        },
+      };
+
       return response;
     }
   }
