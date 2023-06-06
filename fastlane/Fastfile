@@ -440,10 +440,10 @@ platform :ios do
 
     build_app(
       workspace: "./ios/bic_group.xcworkspace",
-      scheme: "#{ENV['SCHEME_NAME_IOS']}",
+      scheme: "#{ENV['SCHEME_BUILD_IOS']}",
       configuration: "ReleaseStaging",
       output_directory:"./fastlane/staging/",
-      output_name: "#{ENV['SCHEME_NAME_IOS']}.ipa",
+      output_name: "#{ENV['SCHEME_BUILD_IOS']}.ipa",
       export_method: "app-store",
       silent: true,
       clean: true,
@@ -451,7 +451,7 @@ platform :ios do
 
     upload_to_testflight(
       app_identifier: "#{ENV['APP_ID']}",
-      ipa: "./fastlane/staging/#{ENV['SCHEME_NAME_IOS']}.ipa",
+      ipa: "./fastlane/staging/#{ENV['SCHEME_BUILD_IOS']}.ipa",
       changelog: "Staging version #{ENV['APP_VERSION']}",
     )
 
@@ -489,10 +489,10 @@ platform :ios do
 
     build_app(
       workspace: "./ios/bic_group.xcworkspace",
-      scheme: "#{ENV['SCHEME_NAME_IOS']}",
+      scheme: "#{ENV['SCHEME_BUILD_IOS']}",
       configuration: "ReleasePrerelease",
       output_directory:"./fastlane/prerelease/",
-      output_name: "#{ENV['SCHEME_NAME_IOS']}.ipa",
+      output_name: "#{ENV['SCHEME_BUILD_IOS']}.ipa",
       export_method: "app-store",
       silent: true,
       clean: true,
@@ -500,7 +500,7 @@ platform :ios do
 
     upload_to_testflight(
       app_identifier: "#{ENV['APP_ID']}.prerelease",
-      ipa: "./fastlane/prerelease/#{ENV['SCHEME_NAME_IOS']}.ipa",
+      ipa: "./fastlane/prerelease/#{ENV['SCHEME_BUILD_IOS']}.ipa",
       changelog: "Release version #{ENV['APP_VERSION']}",
     )
 
@@ -535,10 +535,10 @@ platform :ios do
 
     build_app(
       workspace: "./ios/bic_group.xcworkspace",
-      scheme: "#{ENV['SCHEME_NAME_IOS']}",
+      scheme: "#{ENV['SCHEME_BUILD_IOS']}",
       configuration: "Release",
       output_directory:"./fastlane/production/",
-      output_name: "#{ENV['SCHEME_NAME_IOS']}.ipa",
+      output_name: "#{ENV['SCHEME_BUILD_IOS']}.ipa",
       export_method: "app-store",
       silent: true,
       clean: true,
@@ -546,7 +546,7 @@ platform :ios do
 
     upload_to_testflight(
       app_identifier: "#{ENV['APP_ID']}",
-      ipa: "./fastlane/production/#{ENV['SCHEME_NAME_IOS']}.ipa",
+      ipa: "./fastlane/production/#{ENV['SCHEME_BUILD_IOS']}.ipa",
       changelog: "Production version #{ENV['APP_VERSION']}",
     )
 
