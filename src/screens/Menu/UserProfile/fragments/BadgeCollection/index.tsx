@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {
-  View, StyleSheet, FlatList,
+  View, StyleSheet, FlatList, DeviceEventEmitter,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/baseComponents/Text';
@@ -26,7 +26,7 @@ const BadgeCollection = () => {
   const isEditing = useUserBadge((state) => state.isEditing);
   const choosingBadges = useUserBadge((state) => state.choosingBadges);
 
-  const disabled = checkIsDisabled(choosingBadges);
+  const disabled = checkIsDisabled(choosingBadges) && isEditing;
 
   useEffect(() => {
     actions.getOwnedBadges();
@@ -44,6 +44,12 @@ const BadgeCollection = () => {
       const index = choosingBadges.findIndex((badge) => badge?.id === item?.id);
       actions.removeChoosingBadges(index);
     }
+  };
+
+  const handleScroll = () => {
+    DeviceEventEmitter.emit(
+      'off-tooltip',
+    );
   };
 
   const renderEmptyComponent = () => (
@@ -120,6 +126,7 @@ const BadgeCollection = () => {
         ListFooterComponent={() => <ViewSpacing height={100} />}
         ListEmptyComponent={renderEmptyComponent}
         style={{ maxHeight: SCROLL_MAX_HEIGHT }}
+        onScroll={handleScroll}
       />
     </View>
   );
