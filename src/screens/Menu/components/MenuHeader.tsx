@@ -65,6 +65,7 @@ const MenuHeader = () => {
           </Text.BodyS>
           <UserBadge
             isInMenuTab
+            isCurrentUser
             showingBadges={showingBadges}
             style={styles.userBadge}
             onPress={() => goToProfile(1)}
