@@ -98,6 +98,7 @@ describe('UserBadge component', () => {
     }];
     const onPress = jest.fn();
     const rendered = render(<UserBadge
+      isCurrentUser
       showingBadges={showingBadges}
       onPress={onPress}
     />);
@@ -111,6 +112,8 @@ describe('UserBadge component', () => {
 
     const btnEdit = rendered.getAllByTestId('user_badge_item.button_edit');
     expect(btnEdit).toBeDefined();
+
+    fireEvent.press(btnEdit[0]);
 
     expect(onPress).toHaveBeenCalled();
   });

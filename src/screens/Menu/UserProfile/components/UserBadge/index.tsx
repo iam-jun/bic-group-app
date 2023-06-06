@@ -16,11 +16,12 @@ interface Props {
   style?: StyleProp<ViewStyle>;
   showingBadges?: IUserBadge[];
   isInMenuTab?: boolean;
+  isCurrentUser?: boolean;
   onPress?: () => void;
 }
 
 const UserBadge = ({
-  showingBadges = [], style, isInMenuTab = false, onPress,
+  showingBadges = [], style, isInMenuTab = false, isCurrentUser, onPress,
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -53,7 +54,7 @@ const UserBadge = ({
     );
   };
 
-  const shouldShowFooter = Boolean(showingBadges?.[2]?.id);
+  const shouldShowFooter = Boolean(showingBadges?.[2]?.id) && isCurrentUser;
 
   const renderFooter = () => {
     if (!shouldShowFooter) return null;
