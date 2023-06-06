@@ -435,11 +435,11 @@ platform :ios do
 
     increment_build_number(
       build_number: latest_testflight_build_number(app_identifier: "#{ENV['APP_ID']}") + 1,
-      xcodeproj: "./ios/#{ENV['SCHEME_NAME']}.xcodeproj"
+      xcodeproj: "./ios/bic_group.xcodeproj"
     )
 
     build_app(
-      workspace: "./ios/#{ENV['SCHEME_NAME']}.xcworkspace",
+      workspace: "./ios/bic_group.xcworkspace",
       scheme: "#{ENV['SCHEME_NAME_IOS']}",
       configuration: "ReleaseStaging",
       output_directory:"./fastlane/staging/",
@@ -484,11 +484,11 @@ platform :ios do
 
     increment_build_number(
       build_number: latest_testflight_build_number(app_identifier: "#{ENV['APP_ID']}.prerelease") + 1,
-      xcodeproj: "./ios/#{ENV['SCHEME_NAME']}.xcodeproj"
+      xcodeproj: "./ios/bic_group.xcodeproj"
     )
 
     build_app(
-      workspace: "./ios/#{ENV['SCHEME_NAME']}.xcworkspace",
+      workspace: "./ios/bic_group.xcworkspace",
       scheme: "#{ENV['SCHEME_NAME_IOS']}",
       configuration: "ReleasePrerelease",
       output_directory:"./fastlane/prerelease/",
@@ -530,11 +530,11 @@ platform :ios do
 
     increment_build_number(
       build_number: latest_testflight_build_number(app_identifier: "#{ENV['APP_ID']}") + 1,
-      xcodeproj: "./ios/#{ENV['SCHEME_NAME']}.xcodeproj"
+      xcodeproj: "./ios/bic_group.xcodeproj"
     )
 
     build_app(
-      workspace: "./ios/#{ENV['SCHEME_NAME']}.xcworkspace",
+      workspace: "./ios/bic_group.xcworkspace",
       scheme: "#{ENV['SCHEME_NAME_IOS']}",
       configuration: "Release",
       output_directory:"./fastlane/production/",
