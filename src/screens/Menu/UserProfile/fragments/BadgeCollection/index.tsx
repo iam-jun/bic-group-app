@@ -3,6 +3,7 @@ import {
   View, StyleSheet, FlatList, DeviceEventEmitter,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { throttle } from 'lodash';
 import Text from '~/baseComponents/Text';
 import { spacing } from '~/theme';
 import EditButton from '../../components/EditButton';
@@ -46,11 +47,13 @@ const BadgeCollection = () => {
     }
   };
 
-  const handleScroll = () => {
-    DeviceEventEmitter.emit(
-      'off-tooltip',
-    );
-  };
+  const handleScroll = throttle(
+    () => {
+      DeviceEventEmitter.emit(
+        'off-tooltip',
+      );
+    }, 100,
+  );
 
   const renderEmptyComponent = () => (
     <View testID="badge_collection.empty" style={styles.boxEmpty}>

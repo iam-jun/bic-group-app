@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { throttle } from 'lodash';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
@@ -120,11 +121,13 @@ const UserProfile = (props: any) => {
     badgeActions.editShowingBadges();
   };
 
-  const handleScroll = () => {
-    DeviceEventEmitter.emit(
-      'off-tooltip',
-    );
-  };
+  const handleScroll = throttle(
+    () => {
+      DeviceEventEmitter.emit(
+        'off-tooltip',
+      );
+    }, 100,
+  );
 
   const renderLoading = () => (
     <View testID="user_profile.loading" style={styles.loadingProfile}>
