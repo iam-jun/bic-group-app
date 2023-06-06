@@ -166,7 +166,7 @@ android {
                 }
             }
         }
-        applicationId project.env.get("BUNDLE_IDENTIFIER")
+        applicationId project.env.get("APP_ID")
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 14
@@ -177,8 +177,7 @@ android {
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         resValue "string", "build_config_package", "com.beincom.group"
-        resValue "string", "app_name", project.env.get("BUNDLE_DISPLAY_NAME")
-        resValue "string", "CodePushDeploymentKey", project.env.get("CODEPUSH_KEY")
+        resValue "string", "app_name", project.env.get("APP_NAME")
         manifestPlaceholders.beinChatId = project.env.get("APP_CHAT_PACKAGE_NAME_ANDROID")
         manifestPlaceholders.selfHost = project.env.get("SELF_DOMAIN")
         manifestPlaceholders.scheme = project.env.get("URL_SCHEME")
@@ -297,18 +296,22 @@ android {
         development {
             dimension "version"
             versionNameSuffix ""
+            resValue "string", "CodePushDeploymentKey", ""
         }
         staging {
             dimension "version"
             versionNameSuffix ""
+            resValue "string", "CodePushDeploymentKey", "n47pDS6lrKq_xZaIXdD8fRWeIEBJelpxBS_4u"
         }
         prerelease {
             dimension "version"
             versionNameSuffix ""
+            resValue "string", "CodePushDeploymentKey", "GNX4ZW1YN1C8S1lfDQUjjjsmHsgMee96U-2Kc"
         }
         production {
             dimension "version"
             versionNameSuffix ""
+            resValue "string", "CodePushDeploymentKey", "cUer65Va2Lji3WV_-QRJUaedmsssBh-R41wCv"
         }
     }
     buildTypes {

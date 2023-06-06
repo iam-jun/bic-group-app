@@ -64,7 +64,7 @@ Used by parameter api_key_path of 1 function in **Fastfile**: `upload_to_testfli
 
 ```
     upload_to_testflight(
-      app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}",
+      app_identifier: "#{ENV['APP_ID']}",
       ipa: "./fastlane/production/#{ENV['SCHEME_NAME_IOS']}.ipa",
       changelog: "Production version #{ENV['APP_VERSION']}",
       api_key_path: "./fastlane/api_key_info.json",

@@ -418,7 +418,7 @@ platform :ios do
 
     match(
       type: "appstore",
-      app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}",
+      app_identifier: "#{ENV['APP_ID']}",
       storage_mode: "git",
       team_id: "44S5N8GAPS",
       team_name: "UFUTURE CORPORATION",
@@ -434,7 +434,7 @@ platform :ios do
     git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
 
     increment_build_number(
-      build_number: latest_testflight_build_number(app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}") + 1,
+      build_number: latest_testflight_build_number(app_identifier: "#{ENV['APP_ID']}") + 1,
       xcodeproj: "./ios/#{ENV['SCHEME_NAME']}.xcodeproj"
     )
 
@@ -450,7 +450,7 @@ platform :ios do
     )
 
     upload_to_testflight(
-      app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}",
+      app_identifier: "#{ENV['APP_ID']}",
       ipa: "./fastlane/staging/#{ENV['SCHEME_NAME_IOS']}.ipa",
       changelog: "Staging version #{ENV['APP_VERSION']}",
     )
@@ -467,7 +467,7 @@ platform :ios do
 
     match(
       type: "appstore",
-      app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.prerelease",
+      app_identifier: "#{ENV['APP_ID']}.prerelease",
       storage_mode: "git",
       team_id: "44S5N8GAPS",
       team_name: "UFUTURE CORPORATION",
@@ -483,7 +483,7 @@ platform :ios do
     git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
 
     increment_build_number(
-      build_number: latest_testflight_build_number(app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.prerelease") + 1,
+      build_number: latest_testflight_build_number(app_identifier: "#{ENV['APP_ID']}.prerelease") + 1,
       xcodeproj: "./ios/#{ENV['SCHEME_NAME']}.xcodeproj"
     )
 
@@ -499,7 +499,7 @@ platform :ios do
     )
 
     upload_to_testflight(
-      app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.prerelease",
+      app_identifier: "#{ENV['APP_ID']}.prerelease",
       ipa: "./fastlane/prerelease/#{ENV['SCHEME_NAME_IOS']}.ipa",
       changelog: "Release version #{ENV['APP_VERSION']}",
     )
@@ -513,7 +513,7 @@ platform :ios do
 
     match(
       type: "appstore",
-      app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}",
+      app_identifier: "#{ENV['APP_ID']}",
       storage_mode: "git",
       team_id: "44S5N8GAPS",
       team_name: "UFUTURE CORPORATION",
@@ -529,7 +529,7 @@ platform :ios do
     git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
 
     increment_build_number(
-      build_number: latest_testflight_build_number(app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}") + 1,
+      build_number: latest_testflight_build_number(app_identifier: "#{ENV['APP_ID']}") + 1,
       xcodeproj: "./ios/#{ENV['SCHEME_NAME']}.xcodeproj"
     )
 
@@ -545,7 +545,7 @@ platform :ios do
     )
 
     upload_to_testflight(
-      app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}",
+      app_identifier: "#{ENV['APP_ID']}",
       ipa: "./fastlane/production/#{ENV['SCHEME_NAME_IOS']}.ipa",
       changelog: "Production version #{ENV['APP_VERSION']}",
     )
