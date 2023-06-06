@@ -17,16 +17,18 @@ target 'bic_group' do
       Pod::UI.warn e
     end
   end
-  
+
   config = use_native_modules!
-  
+
   project 'bic_group',
     'Debug' => :debug,
     'DebugDevelopment' => :debug,
     'DebugStaging' => :debug,
+    'DebugPrerelease' => :debug,
     'Release' => :release,
     'ReleaseDevelopment' => :release,
-    'ReleaseStaging' => :release
+    'ReleaseStaging' => :release,
+    'ReleasePrerelease' => :release
 
   # Flags change depending on the env values.
   flags = get_default_flags()
@@ -46,7 +48,7 @@ target 'bic_group' do
   pod 'FirebaseCore', :modular_headers => true
   #pod 'FirebaseCoreInternal', :modular_headers => true
   pod 'GoogleUtilities', :modular_headers => true
-  
+
   target 'bic_groupTests' do
     inherit! :complete
     # Pods for testing
@@ -60,7 +62,7 @@ target 'bic_group' do
   # you should disable the next line.
   # use_flipper!()
 
-  use_flipper!({'Flipper' => '0.126.0', configurations: ['Debug', 'DebugDevelopment', 'DebugStaging']}) # Add the Build Configuration name (not scheme name)
+  use_flipper!({'Flipper' => '0.126.0', configurations: ['Debug', 'DebugDevelopment', 'DebugStaging', 'DebugPrerelease']}) # Add the Build Configuration name (not scheme name)
 
   post_install do |installer|
     react_native_post_install(installer)
