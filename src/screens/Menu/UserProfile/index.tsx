@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
-  ActivityIndicator, ScrollView, StyleSheet, View,
+  ActivityIndicator, DeviceEventEmitter, ScrollView, StyleSheet, View,
 } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -120,6 +120,12 @@ const UserProfile = (props: any) => {
     badgeActions.editShowingBadges();
   };
 
+  const handleScroll = () => {
+    DeviceEventEmitter.emit(
+      'off-tooltip',
+    );
+  };
+
   const renderLoading = () => (
     <View testID="user_profile.loading" style={styles.loadingProfile}>
       <ActivityIndicator size="large" />
@@ -153,6 +159,7 @@ const UserProfile = (props: any) => {
           style={styles.container}
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={16}
+          onScroll={handleScroll}
         >
           <CoverHeader
             id={id}

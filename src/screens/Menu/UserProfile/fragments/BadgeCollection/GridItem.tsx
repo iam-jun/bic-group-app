@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  View, StyleSheet, TouchableOpacity, Platform, StatusBar,
+  View, StyleSheet, TouchableOpacity, Platform, StatusBar, DeviceEventEmitter,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -43,6 +43,18 @@ const GridItem = ({
     }
   }, [numColumns, index]);
 
+  useEffect(
+    () => {
+      const listener = DeviceEventEmitter.addListener(
+        'off-tooltip',
+        () => { setIsVisible(false); },
+      );
+      return () => {
+        listener?.remove?.();
+      };
+    }, [],
+  );
+
   const isSelected = checkIsSelected(choosingBadges, item);
 
   const onPressItem = () => {
@@ -52,6 +64,10 @@ const GridItem = ({
   const onLongPress = () => {
     if (disabled) return;
     setIsVisible(true);
+  };
+
+  const onClose = () => {
+    setIsVisible(false);
   };
 
   const shouldDisable = disabled && !isSelected;
@@ -65,7 +81,7 @@ const GridItem = ({
       contentStyle={styles.tooltipStyle}
       disableShadow
       topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
-      onClose={() => { setIsVisible(false); }}
+      onClose={onClose}
     >
       <TouchableOpacity
         style={[styles.container,

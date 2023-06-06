@@ -16,7 +16,9 @@ interface Props {
   onPress: (item: IUserBadge, isSelected: boolean) => void;
 }
 
-const Grid = ({ data, disabled = false, onPress }:Props) => {
+const Grid = ({
+  data, disabled = false, onPress,
+}:Props) => {
   const numColumns = Math.floor((dimension.deviceWidth - CONTAINER_PADDING * 2) / (ITEM_WIDTH + ITEM_MARGIN * 2));
   const CONTAINER_PADDING_PLUS = (
     dimension.deviceWidth
