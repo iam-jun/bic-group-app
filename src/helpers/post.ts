@@ -131,7 +131,7 @@ export const getTotalReactions = (reactionsCount: IReactionCounts, type: 'emoji'
 };
 
 export const mapReactionsCount = (reactionsCount: IReactionCounts, callback: MapReactionsCountCallback) => {
-  reactionsCount?.forEach((item) => {
+  reactionsCount?.length > 0 && reactionsCount?.forEach?.((item) => {
     const keysItem = Object.keys(item);
 
     if (keysItem.length === 0) return;
