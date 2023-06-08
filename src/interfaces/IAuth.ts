@@ -1,6 +1,7 @@
 import { ISignUpResult } from 'amazon-cognito-identity-js';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { GENDER_TYPE, RELATIONSHIP_TYPE } from './IEditUser';
+import { IUserBadge } from '~/interfaces/IEditUser';
 
 export enum FieldNameType {
   EMAIL = 'email',
@@ -120,6 +121,7 @@ export interface IUserProfile {
   };
   chatUserId?: string;
   isVerified?: boolean;
+  showingBadges?: IUserBadge[];
 }
 
 export interface IGetUserProfile {

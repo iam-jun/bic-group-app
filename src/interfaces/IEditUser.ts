@@ -40,3 +40,20 @@ export interface IOptionItem {
   type: string;
   title: string;
 }
+
+export interface IUserBadge {
+  id: string;
+  name: string;
+  iconUrl: string;
+  community?: {
+    id: string;
+    name: string;
+  }
+}
+
+export interface ICommunityBadges{
+  id: string;
+  name: string;
+  icon?: string;
+  badges: IUserBadge[];
+}

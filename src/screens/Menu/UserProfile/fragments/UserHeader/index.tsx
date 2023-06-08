@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { spacing } from '~/theme';
@@ -10,25 +10,32 @@ import useModalStore from '~/store/modal';
 import BlockUserInfo from '~/components/BlockUserInfo';
 import useBlockingStore from '~/store/blocking';
 import VerifiedView from '~/components/VerifiedView';
-import useTooltip from '../../../../../components/Tooltip.tsx/stores';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
+import UserBadge from '../../components/UserBadge';
+import { IUserBadge } from '~/interfaces/IEditUser';
 
 interface Props {
   id: string;
   fullname: string;
   username: string;
-  screenId: string;
   latestWork?: {
     titlePosition: string;
     company: string;
   };
   isCurrentUser: boolean;
   isVerified?:boolean;
+  showingBadges?: IUserBadge[];
 }
 
 const UserHeader = ({
-  id, fullname, username, screenId, latestWork, isCurrentUser, isVerified,
+  id,
+  fullname,
+  username,
+  latestWork,
+  isCurrentUser,
+  isVerified,
+  showingBadges = [],
 }:Props) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -39,11 +46,6 @@ const UserHeader = ({
   const [isDisabled, setIsDisabled] = useState(false);
 
   const actions = useBlockingStore((state) => state.actions);
-  const tooltipActions = useTooltip((state) => state.actions);
-
-  useEffect(() => {
-    tooltipActions.setUpScreenTooltip(screenId);
-  }, [screenId]);
 
   const blockUserSuccess = () => {
     setIsDisabled(true);
@@ -80,30 +82,16 @@ const UserHeader = ({
     return 'block_user:text_block_user';
   };
 
-  const onShowTooltip = () => {
-    tooltipActions.showTooltip(screenId);
-  };
-
-  const onLayoutUserHeader = (event: any) => {
-    tooltipActions.setViewPosition(screenId, { y: event.nativeEvent?.layout?.y || 0 });
-  };
-
-  const onLayoutFullnameContainer = (event: any) => {
-    // eslint-disable-next-line no-unsafe-optional-chaining
-    tooltipActions.setViewPosition(screenId, { x: event.nativeEvent?.layout?.x + event.nativeEvent?.layout?.width });
-  };
-
   return (
     <View
       testID="user_profile"
       style={styles.headerName}
-      onLayout={onLayoutUserHeader}
     >
-      <View style={styles.row} onLayout={onLayoutFullnameContainer}>
+      <View style={styles.row}>
         <Text.H4 testID="user_profile.fullname" numberOfLines={1}>
           {fullname}
         </Text.H4>
-        <VerifiedView isVerified={isVerified} screenId={screenId} onPress={onShowTooltip} />
+        <VerifiedView isVerified={isVerified} disabled={false} />
       </View>
       {!!username && (
         <Text.BodyS
@@ -115,6 +103,7 @@ const UserHeader = ({
         </Text.BodyS>
       )}
       <WorkInfo style={styles.subtitle} latestWork={latestWork} />
+      <UserBadge showingBadges={showingBadges} style={styles.userBadge} />
       {!isCurrentUser && (
         <Button.Neutral
           testID="user_header.btn_block"
@@ -152,6 +141,10 @@ const createStyle = (_theme: ExtendedTheme) => StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: spacing.padding.large,
+  },
+  userBadge: {
+    paddingTop: spacing.padding.small,
   },
 });
 

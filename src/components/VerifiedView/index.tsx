@@ -1,63 +1,96 @@
 import {
-  StyleSheet, StyleProp, ViewStyle, TouchableOpacity,
+  Platform,
+  StatusBar,
+  StyleSheet, TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, { useRef, useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import Tooltip from 'react-native-walkthrough-tooltip';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { spacing } from '~/theme';
 import Icon from '~/baseComponents/Icon';
-import useTooltip from '~/components/Tooltip.tsx/stores';
+import Text from '~/baseComponents/Text';
+import spacing from '~/theme/spacing';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 interface Props {
   isVerified: boolean;
-  screenId?: string;
   size?: number;
-  style?: StyleProp<ViewStyle>;
-  onPress?: ()=>void;
-  onLayout?: (e: any) => void;
+  disabled?: boolean;
+  placement?: 'top' | 'bottom' | 'left' | 'right';
 }
 
 const VerifiedView = ({
   isVerified,
-  screenId,
   size = 14,
-  style = {},
-  onPress, onLayout,
+  disabled = true,
+  placement = 'top',
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const { colors } = theme;
-  const tooltipActions = useTooltip((state) => state.actions);
+  const containerRef = useRef(null);
+
+  const [isVisible, setIsVisible] = useState(false);
 
   if (!isVerified) return null;
 
-  const _onLayout = (event: any) => {
-    if (onPress && !onLayout) {
-      tooltipActions.setViewPosition(screenId, { width: event?.nativeEvent?.layout?.width || 0 });
-    }
-    onLayout?.(event);
-  };
-
   return (
-    <TouchableOpacity
-      style={[styles.container, style]}
-      disabled={!onPress}
-      onPress={onPress}
-      onLayout={_onLayout}
-    >
-      <Icon
-        testID="avatar.badge"
-        size={size}
-        tintColor={colors.green50}
-        icon="BadgeCheck"
-      />
-    </TouchableOpacity>
+    <>
+      <ViewSpacing width={spacing.margin.xSmall} />
+      <Tooltip
+        isVisible={isVisible}
+        disableShadow
+        displayInsets={{
+          top: spacing.margin.large,
+          bottom: spacing.margin.large,
+          left: spacing.margin.large,
+          right: spacing.margin.large,
+        }}
+        placement={placement}
+        contentStyle={styles.tooltipStyle}
+        content={(
+          <Text.BodyS
+            useI18n
+            testID="user_profile.tooltip"
+            color={colors.white}
+          >
+            settings:toast_profile_is_verified
+          </Text.BodyS>
+  )}
+        backgroundColor="transparent"
+        topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
+        onClose={() => { setIsVisible(false); }}
+      >
+        <TouchableOpacity
+          ref={containerRef}
+          disabled={disabled}
+          onPress={() => { setIsVisible(true); }}
+        >
+          <Icon
+            testID="avatar.badge"
+            size={size}
+            tintColor={colors.green50}
+            icon="BadgeCheck"
+          />
+        </TouchableOpacity>
+      </Tooltip>
+    </>
   );
 };
 
 export default VerifiedView;
 
-const themeStyles = (_theme: ExtendedTheme) => StyleSheet.create({
-  container: {
-    marginLeft: spacing.margin.xSmall,
-  },
-});
+const themeStyles = (theme: ExtendedTheme) => {
+  const { colors } = theme;
+  return StyleSheet.create({
+    container: {
+      marginLeft: spacing.margin.xSmall,
+    },
+    tooltipStyle: {
+      backgroundColor: colors.neutral80,
+      borderRadius: spacing.padding.small,
+      paddingVertical: spacing.padding.small,
+      paddingHorizontal: spacing.padding.large,
+    },
+  });
+};
