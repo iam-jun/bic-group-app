@@ -3,8 +3,8 @@ import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import * as navigationHook from '~/hooks/navigation';
 
 import ItemExperience from './index';
-import groupApi from '~/api/GroupApi';
 import { responseDeleteWorkExperience } from '../../store/__mocks__/data';
+import userApi from '~/api/UserApi';
 
 describe('ItemExperience component', () => {
   const item = {
@@ -20,7 +20,7 @@ describe('ItemExperience component', () => {
 
   it('renders correctly', () => {
     const spyApiDeleteWorkExperience = jest
-      .spyOn(groupApi, 'deleteWorkExperience')
+      .spyOn(userApi, 'deleteWorkExperience')
       .mockImplementation(() => Promise.resolve(responseDeleteWorkExperience) as any);
 
     const navigate = jest.fn();

@@ -1,9 +1,9 @@
-import groupApi from '~/api/GroupApi';
 import { IGetUserProfile } from '~/interfaces/IAuth';
 import { mapProfile } from '~/helpers/common';
 import { IUserProfileState } from '../../store';
 import useCommonController from '~/screens/store';
 import useUserBadge, { MAX_BADGES } from '../../fragments/BadgeCollection/store';
+import userApi from '~/api/UserApi';
 
 const getUserProfile
   = (set) => async ({ userId, params, silentLoading }: IGetUserProfile) => {
@@ -16,7 +16,7 @@ const getUserProfile
 
       const myId = useCommonController.getState().myProfile?.id || '';
 
-      const response = await groupApi.getUserProfile(userId, params);
+      const response = await userApi.getUserProfile(userId, params);
       const userProfile = mapProfile(response.data);
 
       set((state: IUserProfileState) => {

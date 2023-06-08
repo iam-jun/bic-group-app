@@ -1,14 +1,14 @@
-import groupApi from '~/api/GroupApi';
 import { IGetUserProfile } from '~/interfaces/IAuth';
 import { updateUserFromSharedPreferences } from '~/services/sharePreferences';
 import showToastError from '~/store/helper/showToastError';
 import { mapProfile } from '~/helpers/common';
 import { ICommonController } from '..';
 import useUserBadge, { MAX_BADGES } from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
+import userApi from '~/api/UserApi';
 
 const getMyProfile = (set, _get) => async ({ userId, params }: IGetUserProfile) => {
   try {
-    const response = await groupApi.getUserProfile(userId, params);
+    const response = await userApi.getUserProfile(userId, params);
     const {
       showingBadges, chatUserId, fullname, avatar,
     } = response.data || {};
