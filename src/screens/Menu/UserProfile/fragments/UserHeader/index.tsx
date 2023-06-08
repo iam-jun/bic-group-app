@@ -26,6 +26,7 @@ interface Props {
   isCurrentUser: boolean;
   isVerified?:boolean;
   showingBadges?: IUserBadge[];
+  handleEditBadge?: () => void;
 }
 
 const UserHeader = ({
@@ -36,6 +37,7 @@ const UserHeader = ({
   isCurrentUser,
   isVerified,
   showingBadges = [],
+  handleEditBadge,
 }:Props) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -103,7 +105,12 @@ const UserHeader = ({
         </Text.BodyS>
       )}
       <WorkInfo style={styles.subtitle} latestWork={latestWork} />
-      <UserBadge showingBadges={showingBadges} style={styles.userBadge} />
+      <UserBadge
+        isCurrentUser={isCurrentUser}
+        showingBadges={showingBadges}
+        style={styles.userBadge}
+        onPress={handleEditBadge}
+      />
       {!isCurrentUser && (
         <Button.Neutral
           testID="user_header.btn_block"

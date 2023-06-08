@@ -13,6 +13,7 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import useCommonController from '~/screens/store';
 import InlineText from './InlineText';
+import UserBadge from '../UserProfile/components/UserBadge';
 
 const PADDING_INFO = spacing.padding.large * 2 + dimension.avatarSizes.large;
 
@@ -24,26 +25,24 @@ const MenuHeader = () => {
   const { rootNavigation } = useRootNavigation();
 
   const {
-    id, fullname, avatar, username, isVerified = true,
+    id, fullname, avatar, username, isVerified = true, showingBadges = [],
   } = useCommonController((state) => state.myProfile) || {};
 
-  const goToProfile = () => {
+  const goToProfile = (targetIndex = 0) => {
     rootNavigation.navigate(
-      mainStack.userProfile, { userId: id },
+      mainStack.userProfile, { userId: id, targetIndex },
     );
   };
 
   return (
     <View style={styles.container} testID="menu_header">
       <View style={styles.statusBar} />
-      <View
-        style={styles.infoContainer}
-      >
+      <View style={styles.infoContainer}>
         <TouchableOpacity
           testID="menu_header.full_name"
           activeOpacity={1}
           style={styles.nameContainer}
-          onPress={goToProfile}
+          onPress={() => goToProfile()}
         >
           <InlineText
             testID="menu_header.full_name.text"
@@ -55,7 +54,7 @@ const MenuHeader = () => {
           testID="menu_header.user_name"
           activeOpacity={1}
           style={styles.usernameContainer}
-          onPress={goToProfile}
+          onPress={() => goToProfile()}
         >
           <Text.BodyS
             testID="menu_header.user_name.text"
@@ -64,13 +63,20 @@ const MenuHeader = () => {
             @
             {username}
           </Text.BodyS>
+          <UserBadge
+            isInMenuTab
+            isCurrentUser
+            showingBadges={showingBadges}
+            style={styles.userBadge}
+            onPress={() => goToProfile(1)}
+          />
         </TouchableOpacity>
       </View>
       <TouchableOpacity
         testID="menu_header.avatar"
         activeOpacity={1}
-        style={styles.avatar}
-        onPress={goToProfile}
+        style={[styles.avatar, { bottom: Boolean(showingBadges?.[0]) ? 40 : 0 }]}
+        onPress={() => goToProfile()}
       >
         <Avatar.Large source={avatar} isRounded showBorder borderWidth={2} />
       </TouchableOpacity>
@@ -111,6 +117,9 @@ const createStyle = (theme: ExtendedTheme) => {
       position: 'absolute',
       bottom: 0,
       left: spacing.margin.large,
+    },
+    userBadge: {
+      paddingTop: spacing.padding.small,
     },
   });
 };

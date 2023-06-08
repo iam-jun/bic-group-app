@@ -1,63 +1,104 @@
 import {
-  StyleProp, StyleSheet, View, ViewStyle,
+  FlatList,
+  StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle,
 } from 'react-native';
 import React from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Avatar from '~/baseComponents/Avatar';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { IUserBadge } from '~/interfaces/IEditUser';
+import UserBadgeItem from './UserBadgeItem';
 import spacing from '~/theme/spacing';
+import Icon from '~/baseComponents/Icon';
+import Button from '~/baseComponents/Button';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
   showingBadges?: IUserBadge[];
+  isInMenuTab?: boolean;
+  isCurrentUser?: boolean;
+  onPress?: () => void;
 }
 
-const UserBadge = ({ showingBadges = [], style }: Props) => {
+const UserBadge = ({
+  showingBadges = [], style, isInMenuTab = false, isCurrentUser, onPress,
+}: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
-  if (showingBadges.length === 0) return null;
+  if (showingBadges.length === 0 || !Boolean(showingBadges?.[0]?.id)) return null;
 
-  const renderItem = (item: any, index: number) => {
-    if (!item?.id) return null;
+  const renderItem = ({ item, index }: any) => {
+    if (!item?.id) {
+      return (
+        <TouchableOpacity
+          testID="user_badge_item.empty"
+          key={`badge_showing_item_empty_${index}`}
+          style={styles.emptyItem}
+          onPress={onPress}
+        >
+          <Icon
+            size={28}
+            icon="CirclePlus"
+            tintColor={theme.colors.neutral20}
+          />
+        </TouchableOpacity>
+      );
+    }
     return (
-      <>
-        <Avatar.Small
-          key={`badge_tooltip_avatar_${item.id}`}
-          isRounded
-          source={{ uri: item.iconUrl }}
-        />
-        {Boolean(index < showingBadges.length - 1) && <ViewSpacing width={spacing.margin.small} />}
-      </>
+      <UserBadgeItem
+        key={`badge_showing_item_${item?.id}`}
+        data={item}
+        placement={isInMenuTab ? 'bottom' : 'top'}
+      />
     );
   };
 
-  const badgesView = showingBadges.map((item, index) => renderItem(item, index));
+  const shouldShowFooter = Boolean(showingBadges?.[2]?.id) && isCurrentUser;
+
+  const renderFooter = () => {
+    if (!shouldShowFooter) return null;
+    return (
+      <Button.Secondary
+        testID="user_badge_item.button_edit"
+        type="ghost"
+        icon="PenToSquare"
+        size="small"
+        onPress={onPress}
+      />
+    );
+  };
+
   return (
     <View style={[styles.container, style]} testID="badges.view">
-      {badgesView}
+      <FlatList
+        data={showingBadges}
+        horizontal
+        keyExtractor={(item, index) => `badge_showing_${item?.id}_${index}`}
+        renderItem={renderItem}
+        ListFooterComponent={renderFooter}
+        ListFooterComponentStyle={styles.buttonEdit}
+        ItemSeparatorComponent={() => <ViewSpacing width={spacing.margin.small} />}
+        contentContainerStyle={styles.contentContainerStyle}
+      />
     </View>
   );
 };
 
-const themeStyles = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-
-  return StyleSheet.create({
-    container: {
-      alignItems: 'center',
-      flexDirection: 'row',
-    },
-    tooltipStyle: {
-      backgroundColor: colors.neutral80,
-      borderRadius: spacing.padding.tiny,
-      paddingVertical: spacing.padding.tiny,
-      paddingHorizontal: spacing.padding.xSmall,
-    },
-  });
-};
+const themeStyles = (_theme: ExtendedTheme) => StyleSheet.create({
+  container: {
+    height: 40,
+  },
+  buttonEdit: {
+    marginLeft: spacing.margin.small,
+  },
+  emptyItem: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  contentContainerStyle: {
+    alignItems: 'center',
+  },
+});
 
 export default UserBadge;

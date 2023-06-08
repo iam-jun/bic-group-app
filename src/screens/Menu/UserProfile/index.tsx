@@ -179,6 +179,7 @@ const UserProfile = (props: any) => {
             isCurrentUser={isCurrentUser}
             isVerified={isVerified}
             showingBadges={showingBadges}
+            handleEditBadge={() => setSelectedIndex(1)}
           />
           <Divider color={colors.gray5} size={spacing.padding.large} />
           {Boolean(isCurrentUser) && (
