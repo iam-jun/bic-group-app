@@ -391,6 +391,7 @@ const CommentLevel1 = ({
         groupIds={groupIds}
         audience={audience}
         index={0}
+        showRepliesComment={false}
         onPressMarkSeenPost={onPressMarkSeenPost}
       />
     </View>
