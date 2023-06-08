@@ -20,6 +20,7 @@ export interface CommentItemProps {
   commentParent?: ICommentData;
   contentBackgroundColor?: string;
   isReplyingComment?: boolean;
+  showRepliesComment?: boolean;
   showLoadMore?: boolean;
   onPressLoadMore?: (data: any) => void;
   onPressMarkSeenPost?: ()=> void;
@@ -36,6 +37,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   commentParent,
   contentBackgroundColor,
   isReplyingComment = true,
+  showRepliesComment = true,
   showLoadMore = true,
   onPressReply,
   onPressLoadMore,
@@ -89,10 +91,12 @@ const CommentItem: React.FC<CommentItemProps> = ({
         contentBackgroundColor={contentBackgroundColor}
         onPressMarkSeenPost={onPressMarkSeenPost}
       />
-      <RepliesComment
-        onPress={_onPressLoadMore}
-        commentData={commentData}
-      />
+      {showRepliesComment && (
+        <RepliesComment
+          onPress={_onPressLoadMore}
+          commentData={commentData}
+        />
+      )}
       {(showLoadPrevious && showLoadMore) && (
         <LoadMoreComment
           style={styles.childLoadMore}
