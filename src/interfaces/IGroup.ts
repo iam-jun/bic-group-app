@@ -1,5 +1,5 @@
 import { GroupPrivacyType } from '~/constants/privacyTypes';
-import { IFilePicked } from './common';
+import { IFilePicked, IGroupSettings } from './common';
 import { ResourceUploadType } from './IUpload';
 import { RoleType } from '~/constants/permissionScheme';
 import { IObject } from '~/interfaces/common';
@@ -93,11 +93,8 @@ export interface IGroup {
   collapsed?: boolean;
   path?: string;
   treeData?: IGroup;
-  settings?: {
-    isJoinApproval?: boolean;
-    isActiveGroupTerms?: boolean;
-    isActiveMembershipQuestions?: boolean;
-  };
+  settings?: IGroupSettings;
+  affectedSettings?: IGroupSettings;
 }
 
 export interface IParsedGroup extends IGroup {

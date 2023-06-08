@@ -68,22 +68,22 @@ const SearchDiscoverCommunityResults = ({
 
   const onJoin = (item: any) => {
     const {
-      id, name, settings, groupId,
+      id, name, groupId, affectedSettings,
     } = item;
-    if (settings?.isActiveMembershipQuestions) {
+    if (affectedSettings?.isActiveMembershipQuestions) {
       const payload: MembershipQuestionsInfo = {
         groupId: id,
         rootGroupId: groupId,
         name,
         type: 'community',
         isActive: true,
-        isActiveGroupTerms: settings?.isActiveGroupTerms,
+        isActiveGroupTerms: affectedSettings?.isActiveGroupTerms,
       };
       membershipQuestionActions.setMembershipQuestionsInfo(payload);
       return;
     }
 
-    if (settings?.isActiveGroupTerms) {
+    if (affectedSettings?.isActiveGroupTerms) {
       const payload = {
         groupId: id,
         rootGroupId: groupId,

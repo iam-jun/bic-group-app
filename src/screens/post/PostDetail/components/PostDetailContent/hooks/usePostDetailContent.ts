@@ -27,7 +27,7 @@ const usePostDetailContent = ({
   isReported,
 }) => {
   const { t } = useBaseHook();
-  const { rootNavigation } = useRootNavigation();
+  const { rootNavigation, goHome } = useRootNavigation();
 
   const isInternetReachable = useNetworkStore(
     networkSelectors.getIsInternetReachable,
@@ -169,13 +169,13 @@ const usePostDetailContent = ({
   }, [postId, userId, internetReachableRef]);
 
   useEffect(() => {
-    shouldGoBackOrShowNotice({
+    shouldGoBackWhenDeletedPost({
       deleted,
       isFocused,
-      notificationId,
       isReported,
-      showNotice,
       rootNavigation,
+      notificationId,
+      goHome,
     });
   }, [deleted, isFocused]);
 
@@ -251,21 +251,25 @@ const shouldGoBack = (params: { reported: boolean; isFocused: boolean; rootNavig
   }
 };
 
-const shouldGoBackOrShowNotice = (params: {
+const shouldGoBackWhenDeletedPost = (params: {
   deleted: boolean;
   isFocused: boolean;
-  notificationId: string;
   isReported: boolean;
   rootNavigation: IRootNavigation;
-  showNotice: () => void;
+  notificationId: string;
+  goHome: () => void;
 }) => {
   const {
-    deleted, isFocused, notificationId, isReported, rootNavigation, showNotice,
+    deleted, isFocused, isReported, rootNavigation, notificationId, goHome,
   } = params;
-  if (deleted && isFocused) {
-    if (notificationId && !isReported) {
-      rootNavigation.goBack();
-    } else if (!isReported) showNotice();
+  if (deleted && isFocused && !isReported) {
+    if (notificationId) {
+      setTimeout(() => {
+        rootNavigation.goBack();
+      }, 200);
+    } else {
+      goHome();
+    }
   }
 };
 
