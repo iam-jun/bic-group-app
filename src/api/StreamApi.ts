@@ -157,6 +157,15 @@ export const streamApiConfig = {
       data,
     };
   },
+  putEditPost: (param: IParamUpdatePost): HttpApiRequestConfig => {
+    const { postId, data } = param || {};
+    return {
+      ...defaultConfig,
+      url: `${provider.url}posts/${postId}`,
+      method: 'put',
+      data,
+    };
+  },
   putAutoSavePost: (param: IParamUpdatePost): HttpApiRequestConfig => {
     const { postId, data } = param || {};
     return {
@@ -613,6 +622,7 @@ const streamApi = {
     streamApiConfig.putEditArticle, articleId, param,
   ),
   putPublishPost: (param: IParamUpdatePost) => withHttpRequestPromise(streamApiConfig.putPublishPost, param),
+  putEditPost: (param: IParamUpdatePost) => withHttpRequestPromise(streamApiConfig.putEditPost, param),
   putAutoSavePost: (param: IParamUpdatePost) => withHttpRequestPromise(streamApiConfig.putAutoSavePost, param),
   putEditComment: (id: string, data: ICommentData) => withHttpRequestPromise(streamApiConfig.putEditComment, id, data),
   deletePost: (id: string) => withHttpRequestPromise(

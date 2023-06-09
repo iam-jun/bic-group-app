@@ -88,7 +88,6 @@ const PostDraftView: FC<PostDraftViewProps> = ({
       const payload: IPayloadPutEditPost = {
         id,
         disableNavigate: true,
-        msgSuccess: 'post:draft:text_draft_post_published',
         isPublish: true,
         onError: () => setPublishing(false),
         isHandleSeriesTagsError: false,

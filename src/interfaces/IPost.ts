@@ -305,6 +305,7 @@ export interface IPayloadPutEditPost {
   createFromGroupId?: string;
   isHandleSeriesTagsError?: boolean;
   isRefresh?: boolean;
+  isCreatingNewPost?: boolean;
 }
 
 export interface IPayloadPutEditComment {
