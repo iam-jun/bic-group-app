@@ -8,6 +8,7 @@ import { rootNavigationRef } from '~/router/refs';
 import { rootSwitch } from '~/router/stack';
 import { IAuthState } from '~/screens/auth/store';
 import useCommonController from '~/screens/store';
+import mixPanelManager from '~/services/mixpanel';
 import { getUserFromSharedPreferences, saveUserToSharedPreferences } from '~/services/sharePreferences';
 import useModalStore from '~/store/modal';
 import { mapProfile } from '~/helpers/common';
@@ -79,6 +80,14 @@ const handleAuthEvent = (set, get) => async (data: HubCapsule) => {
       await saveUserToSharedPreferences(payload);
 
       authActions.setAuthUser(userResponse);
+
+      mixPanelManager.updateUser(userResponse.email);
+
+      mixPanelManager.trackEvent('Signed In', {
+        email: userResponse.email,
+        full_name: userResponse.name,
+        username: userResponse.username,
+      });
 
       navigation.replace(rootSwitch.mainStack);
       authActions.setSignInLoading(false);

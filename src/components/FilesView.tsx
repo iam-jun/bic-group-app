@@ -34,12 +34,13 @@ const FilesView = ({
   onRemoveFile,
   ...props
 }: Props) => {
-  if (isEmpty(files)) return null;
-
   const theme: ExtendedTheme = useTheme();
   const { t } = useBaseHook();
-  const styles = themeStyles(theme);
   const [collapsed, setCollaped] = useState(true);
+
+  if (isEmpty(files)) return null;
+
+  const styles = themeStyles(theme);
   const topData = files.slice(0, 5);
 
   const bottomData = files.length > 5 ? files.slice(

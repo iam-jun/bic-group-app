@@ -102,15 +102,15 @@ const FilterToolbar: FC<FilterToolbarProps> = ({ groupId = '' }) => {
   };
 
   const onResetFilterDate = () => {
-    onSelectDate(undefined, undefined);
+    onSelectDate();
   };
 
   const onResetFilterCreatedBy = () => {
-    onSelectCreatedBy(undefined);
+    onSelectCreatedBy();
   };
 
   const onResetFilterPostType = () => {
-    onSelectPostType(undefined);
+    onSelectPostType();
   };
 
   const renderFilterPostTypeOption = () => {

@@ -311,4 +311,14 @@ export const NOTIFICATION_TYPE = {
 
   // add content to series in multiple group
   ADD_CONTENT_TO_USER_IN_MULTIPLE_GROUPS: 'add.content.to_user.in_multiple_group',
+
+  // changelogs
+  CHANGE_LOGS: 'changelogs',
+
+  // remove content from series
+  SERIES_POST_ITEM_CHANGED: 'series_post_item_changed',
+  SERIES_ARTICLE_ITEM_CHANGED: 'series_article_item_changed',
+
+  // Group badge
+  CHANGE_USER_BADGE_COLLECTION: 'change.user_badge_collection',
 };

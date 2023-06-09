@@ -16,6 +16,7 @@ import showToastError from '~/store/helper/showToastError';
 import useModalStore from '~/store/modal';
 import { FieldNameType } from '~/interfaces/IAuth';
 import FormInput from '~/screens/auth/components/FormInput';
+import useAuthController, { IAuthState } from '~/screens/auth/store';
 
 interface Props {
   useFormData: IObject<any>;
@@ -34,6 +35,7 @@ const EmailInputView: React.FC<Props> = ({ useFormData }) => {
   const errorRequest = useForgotPasswordStore((state: IForgotPasswordState) => state.errorRequest);
   const loadingRequest = useForgotPasswordStore((state: IForgotPasswordState) => state.loadingRequest);
   const modalActions = useModalStore((state) => state.actions);
+  const authActions = useAuthController((state: IAuthState) => state.actions);
 
   const {
     getValues,
@@ -70,14 +72,25 @@ const EmailInputView: React.FC<Props> = ({ useFormData }) => {
   };
   const disableRequest = checkDisableRequest();
 
-  const handleError = (error: any) => {
-    if (error?.code === authErrors.USER_NOT_FOUND_EXCEPTION) {
-      const email = getValues(EMAIL);
+  const handleCheckUser = (result: boolean, email: string) => {
+    if (result) {
       modalActions.showModal({
         isOpen: true,
         titleFullScreen: 'groups:group_content:btn_your_groups',
         ContentComponent: <RequestVerifyEmailModal email={email} isFromSignIn={false} />,
       });
+    } else {
+      setError(EMAIL, {
+        type: 'validate',
+        message: t('auth:text_err_user_not_exist'),
+      });
+    }
+  };
+
+  const handleError = (error: any) => {
+    if (error?.code === authErrors.USER_NOT_FOUND_EXCEPTION) {
+      const email = getValues(EMAIL);
+      authActions.checkIsUserNotVerified(email, (result: boolean) => { handleCheckUser(result, email); });
     } else if (
       error?.code === authErrors.NOT_AUTHORIZED_EXCEPTION
       && error?.message === authErrorMessage.USER_IS_DISABLED

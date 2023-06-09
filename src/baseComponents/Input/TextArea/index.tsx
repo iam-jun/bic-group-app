@@ -25,7 +25,7 @@ export interface TextAreaProps extends RNTextInputProps {
   outlineColor?: string;
   onFocus?: () => void;
   onBlur?: () => void;
-  onChangeText?: ((text: string) => void) | undefined;
+  onChangeText?: ((text: string) => void);
   showCountLength?: boolean;
 }
 

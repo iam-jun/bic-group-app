@@ -115,14 +115,10 @@ const YourContent: React.FC<YourContentProps> = ({ route }) => {
     const isUp5Percent
       = ((prevOffsetYShared.value - offsetY) * 100) / DeviceHeight >= 5;
 
-    if (isDown5Percent) {
-      hide();
-    } else if (isDown && offsetY > 92) {
+    if (isDown5Percent || (isDown && offsetY > 92)) {
       hide();
     }
-    if (isUp5Percent) {
-      show();
-    } else if (isUp && offsetY < 50) {
+    if (isUp5Percent || (isUp && offsetY < 50)) {
       show();
     }
 

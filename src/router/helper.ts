@@ -20,6 +20,9 @@ import menuStack from './navigator/MainStack/stacks/menuStack/stack';
 import mainStack from './navigator/MainStack/stack';
 import { ContentType } from '~/interfaces/INotification';
 import notiStack from './navigator/MainStack/stacks/notiStack/stack';
+import { USER_TABS } from '~/screens/Menu/UserProfile';
+import { USER_TABS_TYPES } from '~/screens/Menu/UserProfile/constants';
+import useAuthController from '~/screens/auth/store';
 
 export const isNavigationRefReady: any = React.createRef();
 
@@ -171,6 +174,7 @@ export const getScreenAndParams = (data: {
   seriesId: string;
   duration: number;
   startAt: string;
+  notificationId: string;
 }) => {
   if (isEmpty(data)) {
     return null;
@@ -190,6 +194,7 @@ export const getScreenAndParams = (data: {
     seriesId = '',
     duration = 0,
     startAt = '',
+    notificationId = '',
   } = data || {};
 
   if (duration) {
@@ -326,12 +331,27 @@ export const getScreenAndParams = (data: {
       return { screen: mainStack.userProfile, params: { userId } };
     case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER:
     case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER_IN_MULTIPLE_GROUPS:
+    case NOTIFICATION_TYPE.SERIES_POST_ITEM_CHANGED:
+    case NOTIFICATION_TYPE.SERIES_ARTICLE_ITEM_CHANGED:
+
       return {
         screen: seriesStack.seriesDetail,
         params: {
           seriesId,
         },
       };
+
+    case NOTIFICATION_TYPE.CHANGE_LOGS:
+      return { screen: notiStack.notiChangeLogsPage, params: { id: notificationId } };
+
+    case NOTIFICATION_TYPE.CHANGE_USER_BADGE_COLLECTION: {
+      const { userId } = useAuthController.getState().authUser;
+      const targetIndex = USER_TABS.findIndex(
+        (item: { id: string; text: string }) => item.id === USER_TABS_TYPES.USER_BADGE_COLLECTION,
+      );
+      return { screen: mainStack.userProfile, params: { userId, targetIndex } };
+    }
+
     default:
       console.warn(`Notification type ${type} have not implemented yet`);
       return { screen: homeStack.postDetail, params: { post_id: postId } };

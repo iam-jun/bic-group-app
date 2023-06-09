@@ -33,7 +33,7 @@ export default class MdCodeBlock extends React.PureComponent {
   };
 
   handlePress = preventDoubleTap(() => {
-    const { language, content } = this.props;
+    const { language, } = this.props;
     const languageDisplayName = getDisplayNameForLanguage(language);
     let title;
     if (languageDisplayName) {
@@ -52,21 +52,6 @@ export default class MdCodeBlock extends React.PureComponent {
 
   handleLongPress = async () => {
     Clipboard.setString(this.props.content);
-    // const {formatMessage} = this.context.intl;
-    //
-    // const config = mattermostManaged.getCachedConfig();
-    //
-    // if (config?.copyAndPasteProtection !== 'true') {
-    //   const cancelText = formatMessage({id: 'mobile.post.cancel', defaultMessage: 'Cancel'});
-    //   const actionText = formatMessage({id: 'mobile.markdown.code.copy_code', defaultMessage: 'Copy Code'});
-    //   BottomSheet.showBottomSheetWithOptions({
-    //     options: [actionText, cancelText],
-    //   }, (value) => {
-    //     if (value !== 1) {
-    //       this.handleCopyCode();
-    //     }
-    //   });
-    // }
   };
 
   trimContent = (content) => {

@@ -102,7 +102,7 @@ const useCreateArticle = (set, get) => ({
     },
     setData: (data?: IEditArticleData) => {
       set((state: ICreateArticleState) => {
-        state.data = data || (initialState.data as IEditArticleData);
+        state.data = data || (initialState.data);
       }, 'setData');
     },
     setTitle: (title: string) => {

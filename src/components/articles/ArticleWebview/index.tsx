@@ -21,7 +21,6 @@ export enum EventType {
 }
 
 const ARTICLE_EDITOR_URL = `https://${getEnv('SELF_DOMAIN')}/article/webview/v1`;
-// const ARTICLE_EDITOR_URL = 'http://10.1.1.170:8088/article/webview';
 
 export interface ArticleWebviewRef {
   injectJavaScript: (script: any) => void,
@@ -79,7 +78,6 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
   };
 
   const _onInitializeEnd = () => {
-    // _webViewRef.current?.requestFocus();
     onInitializeEnd?.();
   };
 

@@ -128,7 +128,6 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   const renderBadge = () => {
     if (!badge) return null;
 
-    // todo update in specific case
     const badgeContainerSize = avatarSize / 2;
     const badgeSize = badgeContainerSize * 0.45;
 

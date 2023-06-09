@@ -81,7 +81,6 @@ const useChatSocket = () => {
         initChat();
       }
       chatSocketClient.setEventCallback((evt: any) => handleChatEvent(myProfile.chatUserId, evt));
-      // chatSocketClient.setErrorCallback(async (evt: any) => {}); //error callback not work on iOS
       chatSocketClient.setCloseCallback(() => {
         if (!isConnectedRef.current) {
           console.log('\x1b[31m🐣️ useChatSocket network error, skipped!\x1b[0m');

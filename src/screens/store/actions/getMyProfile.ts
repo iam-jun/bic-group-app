@@ -3,20 +3,38 @@ import { updateUserFromSharedPreferences } from '~/services/sharePreferences';
 import showToastError from '~/store/helper/showToastError';
 import { mapProfile } from '~/helpers/common';
 import { ICommonController } from '..';
+import useUserBadge, { MAX_BADGES } from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
 import userApi from '~/api/UserApi';
 
 const getMyProfile = (set, _get) => async ({ userId, params }: IGetUserProfile) => {
   try {
     const response = await userApi.getUserProfile(userId, params);
+    const {
+      showingBadges, chatUserId, fullname, avatar,
+    } = response.data || {};
 
     await updateUserFromSharedPreferences({
-      id: response?.data?.chatUserId,
-      name: response?.data?.fullname,
-      avatar: response?.data?.avatar,
+      id: chatUserId,
+      name: fullname,
+      avatar,
     });
 
+    const newShowingBadges = [];
+    if (showingBadges?.length < MAX_BADGES) {
+      for (let index = 0; index < MAX_BADGES; index++) {
+        if (showingBadges?.[index]) {
+          newShowingBadges.push(showingBadges[index]);
+        } else {
+          newShowingBadges.push(undefined);
+        }
+      }
+      useUserBadge.getState().actions.setShowingBadges(newShowingBadges, true);
+    }
     set((state: ICommonController) => {
-      state.myProfile = mapProfile(response.data);
+      state.myProfile = {
+        ...mapProfile(response.data),
+        showingBadges: newShowingBadges.length > 0 ? newShowingBadges : showingBadges,
+      };
     }, 'getMyProfileSuccess');
   } catch (error) {
     console.error('getMyProfile error:', error);

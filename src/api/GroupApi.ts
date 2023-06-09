@@ -3,7 +3,6 @@ import { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
 import {
   IGetCommunityGroup,
   IGroupDetailEdit,
-  IParamGetGroupPosts,
   IParamsGetJoinedAllGroups,
   IParamsGetManagedCommunityAndGroup,
   IPayloadGroupSchemeAssignments,
@@ -15,7 +14,6 @@ import {
   MembershipAnswerRequestParam,
 } from '~/interfaces/ICommunity';
 import { withHttpRequestPromise } from '~/api/apiRequest';
-import appConfig from '~/configs/appConfig';
 import {
   IParamValidateReferralCode,
 } from '~/interfaces/IAuth';
@@ -172,22 +170,14 @@ export const groupsApiConfig = {
     },
   }),
 
-  // todo move to stream
-  getGroupPosts: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${apiProviders.beinFeed.url}feeds/timeline`,
-    provider: apiProviders.beinFeed,
-    params,
-  }),
-
   getUserInnerGroups: (
     groupId: string,
-    username: string,
+    userId: string,
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/inner-groups`,
     params: {
-      username,
+      userId,
     },
   }),
   getGroupMembers: (groupId: string, params: any): HttpApiRequestConfig => ({
@@ -461,6 +451,20 @@ export const groupsApiConfig = {
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/membership-questions`,
   }),
+  getUserNotFoundInfo: (email: string) : HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}/public/users/${email}/verify`,
+  }),
+  getOwnedBadges: () : HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}/me/owned-badges`,
+  }),
+  putShowingBadges: (badgeIds: string[]) : HttpApiRequestConfig => ({
+    ...defaultConfig,
+    method: 'put',
+    url: `${provider.url}/me/showing-badges`,
+    data: { badgeIds },
+  }),
 };
 
 const groupApi = {
@@ -613,17 +617,10 @@ const groupApi = {
       schemeData,
     );
   },
-  getUserInnerGroups: (groupId: string, username: string) => withHttpRequestPromise(
+  getUserInnerGroups: (groupId: string, userId: string) => withHttpRequestPromise(
     groupsApiConfig.getUserInnerGroups,
     groupId,
-    username,
-  ),
-  getGroupPosts: (param: IParamGetGroupPosts) => withHttpRequestPromise(
-    groupsApiConfig.getGroupPosts, {
-      offset: param?.offset || 0,
-      limit: param?.limit || appConfig.recordsPerPage,
-      ...param,
-    },
+    userId,
   ),
   getSearchAudiences: (params: {
     contentType: ContentType; key: string, offset?: number, limit?: number
@@ -741,6 +738,9 @@ const groupApi = {
   validateReferralCode: (param: IParamValidateReferralCode) => withHttpRequestPromise(groupsApiConfig.validateReferralCode, param),
   getGroupTerms: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getGroupTerms, groupId),
   getMembershipQuestions: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getMembershipQuestions, groupId),
+  getUserNotFoundInfo: (email: string) => withHttpRequestPromise(groupsApiConfig.getUserNotFoundInfo, email),
+  getOwnedBadges: () => withHttpRequestPromise(groupsApiConfig.getOwnedBadges),
+  putShowingBadges: (badgeIds: string[]) => withHttpRequestPromise(groupsApiConfig.putShowingBadges, badgeIds),
 };
 
 export default groupApi;

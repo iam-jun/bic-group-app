@@ -15,8 +15,6 @@ import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import { ISelectAudienceParams } from '~/screens/post/PostSelectAudience/SelectAudienceHelper';
 import spacing from '~/theme/spacing';
-import useDraftPostStore from '../../YourContent/components/Draft/DraftPost/store';
-import IDraftPostState from '../../YourContent/components/Draft/DraftPost/store/Interface';
 import useCommonController from '~/screens/store';
 
 export interface HeaderCreatePostProps {
@@ -38,12 +36,6 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   const userId = useUserIdAuth();
   const actions = useCommonController((state) => state.actions);
   const { avatar } = useCommonController((state) => state.myProfile);
-
-  const draftPost = useDraftPostStore((state:IDraftPostState) => state.posts) || [];
-  let draftCount: number | string = draftPost?.length || 0;
-  if (draftCount > 9) {
-    draftCount = '9+';
-  }
 
   useEffect(
     () => {

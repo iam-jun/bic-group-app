@@ -261,6 +261,7 @@
     "text_resend_otp_fail": "Resend OTP fail. Please try again!",
     "text_err_id_password_not_matched": "Email hoặc mật khẩu không chính xác",
     "text_err_user_deactivated": "Tài khoản này đã bị vô hiệu hoá",
+    "text_err_user_not_exist": "Tài khoản này khôgn tồn tại",
     "text_err_password_blank": "Yêu cầu điền mật khẩu!",
     "text_err_new_password_blank": "Yêu cầu điền mật khẩu mới!",
     "text_err_password_format_todo_revert": "Mật khẩu từ 8 ký tự, ít nhất 1 ký tự viết hoa, 1 ký tự viết thường, 1 số và 1 ký tự đặc biệt!",
@@ -1384,5 +1385,23 @@
     "reorder_pinned": "Sắp xếp bài ghim",
     "drag_and_drop_to_reorder_pinned": "Kéo thả để sắp xếp bài ghim",
     "check_all": "Chọn tất cả"
+  },
+  "user": {
+    "user_tab_types": {
+      "title_about": "Giới thiệu",
+      "title_badge_collection": "Bộ sưu tập huy hiệu"
+    },
+    "empty_badge_collection": {
+      "title": "Bạn chưa có huy hiệu nào",
+      "description": "Vui lòng tham gia cộng đồng hoặc nhóm để nhận huy hiệu!"
+    },
+    "showing_badges": {
+      "title": "Huy hiệu đang hiển thị",
+      "description": "Huy hiệu bạn chọn hiển thị trên hồ sơ của mình"
+    },
+    "owned_badges": {
+      "title": "Danh sách huy hiệu",
+      "description": "Huy hiệu bạn nhận được từ các cộng đồng bạn đã tham gia"
+    }
   }
 }

@@ -79,7 +79,7 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
       if (reactionsCount) {
         const reaactionCountMap = new Map();
         const newData: any = [];
-        Object.values(reactionsCount || {})?.forEach((reaction: any) => {
+        Object.values(reactionsCount)?.forEach((reaction: any) => {
           const key = Object.keys(reaction || {})?.[0];
           if (key) {
             reaactionCountMap.set(
