@@ -472,9 +472,6 @@ jobs:
 
 workflows:
   version: 2
-  Develop:
-    jobs:
-
   Staging:
     jobs:
       - ios-stg-update-approval:
