@@ -136,6 +136,7 @@ const DiscoverCommunities = () => {
       return;
     }
     communityController.joinCommunity({
+      rootGroupId: data.rootGroupId,
       communityId: data.id,
       communityName: data.name,
     });

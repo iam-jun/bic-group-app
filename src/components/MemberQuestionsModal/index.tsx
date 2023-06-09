@@ -94,6 +94,7 @@ const MemberQuestionsModal = () => {
 
     if (type === 'community') {
       comActions.joinCommunity({
+        rootGroupId,
         communityId: groupId,
         communityName: name,
         membershipAnswers: newAnswers,
