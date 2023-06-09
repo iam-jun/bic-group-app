@@ -7,12 +7,13 @@ import showToastError from '~/store/helper/showToastError';
 import useManagedStore from '~/screens/communities/Communities/components/Managed/store';
 import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import { IRequestLeaveCommunity } from '~/interfaces/ICommunity';
 
-const leaveCommunity = (_set, _get) => async (
-  communityId: string,
-) => {
+const leaveCommunity = (_set, _get) => async (payload: IRequestLeaveCommunity) => {
   try {
-    await groupApi.leaveCommunity(communityId);
+    const { communityId, rootGroupId } = payload;
+
+    await groupApi.leaveCommunity(rootGroupId);
 
     useCommunitiesStore.getState().actions.getCommunity(communityId);
 

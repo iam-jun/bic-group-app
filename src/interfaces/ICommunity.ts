@@ -149,3 +149,8 @@ export interface IRequestJoinCommunity {
   communityName: string,
   membershipAnswers?: MembershipAnswerRequest[],
 }
+
+export interface IRequestLeaveCommunity {
+  rootGroupId: string,
+  communityId: string,
+}
