@@ -1,7 +1,7 @@
 import { orderBy, isEmpty } from 'lodash';
 import { PixelRatio } from 'react-native';
 import {
-  ICommentData, IPost, IPostAudience, IPostCommunities,
+  ICommentData, IPost, IPostAudience, IPostCommunities, IReactionCounts, MapReactionsCountCallback,
 } from '~/interfaces/IPost';
 import { dimension } from '~/theme';
 import appConfig from '~/configs/appConfig';
@@ -114,20 +114,34 @@ export const getSectionData = (listComment: ICommentData[]) => {
   return result?.length > 0 ? result : defaultList;
 };
 
-export const validateReactionCount = (reactionsCount: any) => {
+export const isReactableNewReaction = (reactionsCount: IReactionCounts) => {
   const count = getTotalReactions(reactionsCount, 'emoji');
   return count < appConfig.limitReactionCount;
 };
 
-export const getTotalReactions = (reactionsCount: any, type: 'emoji' | 'user') => {
+export const getTotalReactions = (reactionsCount: IReactionCounts, type: 'emoji' | 'user') => {
   let total = 0;
-  Object.values(reactionsCount || {})?.forEach((reaction: any) => {
-    const key = Object.keys(reaction || {})?.[0];
-    if (!!key && !!reaction?.[key] && !blacklistReactions?.[key]) {
-      total += type === 'emoji' ? 1 : (reaction?.[key] || 0);
+
+  const mapReactionsCountCallback: MapReactionsCountCallback = (_reactionName, value) => {
+    total += type === 'emoji' ? 1 : value;
+  };
+  mapReactionsCount(reactionsCount, mapReactionsCountCallback);
+
+  return total;
+};
+
+export const mapReactionsCount = (reactionsCount: IReactionCounts, callback: MapReactionsCountCallback) => {
+  reactionsCount?.length > 0 && reactionsCount?.forEach?.((item) => {
+    const keysItem = Object.keys(item);
+
+    if (keysItem.length === 0) return;
+
+    const reactionName = keysItem[0];
+
+    if (!blacklistReactions?.[reactionName] && item[reactionName] > 0) {
+      callback?.(reactionName, item[reactionName]);
     }
   });
-  return total;
 };
 
 export const getAudiencesText = (
@@ -190,7 +204,7 @@ export const getPostMenus = (data: any[], isActor?: boolean, reactionsCount?: an
   data.forEach((item: any) => {
     const requireNothing = !item.requireIsActor && !item?.requireReactionCounts;
     const requireActor = item.requireIsActor && isActor;
-    const hasReaction = reactionsCount && Object.keys(reactionsCount)?.[0];
+    const hasReaction = reactionsCount && reactionsCount.length > 0;
     const requireReactionCounts = item?.requireReactionCounts && reactionsCount && hasReaction;
     const notShowForActor = item?.notShowForActor;
 
@@ -222,4 +236,12 @@ export const getRootGroupIdFromGroupItem = (group: any) => {
   if (rootGroupId) return rootGroupId;
 
   return level === 0 ? id : parents?.[0] || '';
+};
+
+export const getNewPosts = (params: { isRefresh: boolean; response: any; list: IPost[] }) => {
+  const { isRefresh, response, list } = params;
+  if (isRefresh) {
+    return response?.data || [];
+  }
+  return list.concat(response?.data || []);
 };

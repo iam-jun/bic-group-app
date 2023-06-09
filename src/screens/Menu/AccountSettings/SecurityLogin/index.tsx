@@ -17,9 +17,8 @@ const SecurityLogin = () => {
   const { rootNavigation } = useRootNavigation();
 
   const onSecurityLoginPress = (item: ISetting) => {
-    switch (item.type) {
-      case 'changePassword':
-        return rootNavigation.navigate(menuStack.changePassword);
+    if (item.type === 'changePassword') {
+      return rootNavigation.navigate(menuStack.changePassword);
     }
   };
 

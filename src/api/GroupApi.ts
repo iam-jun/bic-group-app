@@ -3,7 +3,6 @@ import { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
 import {
   IGetCommunityGroup,
   IGroupDetailEdit,
-  IParamGetGroupPosts,
   IParamsGetJoinedAllGroups,
   IParamsGetManagedCommunityAndGroup,
   IPayloadGroupSchemeAssignments,
@@ -15,7 +14,6 @@ import {
   MembershipAnswerRequestParam,
 } from '~/interfaces/ICommunity';
 import { withHttpRequestPromise } from '~/api/apiRequest';
-import appConfig from '~/configs/appConfig';
 import {
   IParamsSignUp, IParamValidateReferralCode, IUserEdit, IVerifyEmail,
 } from '~/interfaces/IAuth';
@@ -23,6 +21,7 @@ import { IAddWorkExperienceReq } from '~/interfaces/IWorkExperienceRequest';
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 import { IParamsReportMember } from '~/interfaces/IReport';
 import { ContentType } from '~/components/SelectAudience';
+import { IParamGetPostAudiences } from '~/interfaces/IPost';
 
 const provider = apiProviders.bein;
 const defaultConfig = {
@@ -221,14 +220,6 @@ export const groupsApiConfig = {
     data: {
       ...schemeData,
     },
-  }),
-
-  // todo move to stream
-  getGroupPosts: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${apiProviders.beinFeed.url}feeds/timeline`,
-    provider: apiProviders.beinFeed,
-    params,
   }),
 
   getUserInnerGroups: (
@@ -540,6 +531,12 @@ export const groupsApiConfig = {
     ...defaultConfig,
     url: `${provider.url}/public/users/${email}/verify`,
   }),
+  getPostAudiences: (params: IParamGetPostAudiences): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${apiProviders.bein.url}/post-audiences/groups`,
+    provider: apiProviders.bein,
+    params,
+  }),
 };
 
 const groupApi = {
@@ -715,13 +712,6 @@ const groupApi = {
     groupId,
     userId,
   ),
-  getGroupPosts: (param: IParamGetGroupPosts) => withHttpRequestPromise(
-    groupsApiConfig.getGroupPosts, {
-      offset: param?.offset || 0,
-      limit: param?.limit || appConfig.recordsPerPage,
-      ...param,
-    },
-  ),
   getSearchAudiences: (params: {
     contentType: ContentType; key: string, offset?: number, limit?: number
   }) => withHttpRequestPromise(
@@ -846,6 +836,9 @@ const groupApi = {
   getGroupTerms: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getGroupTerms, groupId),
   getMembershipQuestions: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getMembershipQuestions, groupId),
   getUserNotFoundInfo: (email: string) => withHttpRequestPromise(groupsApiConfig.getUserNotFoundInfo, email),
+  getPostAudience: (params: IParamGetPostAudiences) => withHttpRequestPromise(
+    groupsApiConfig.getPostAudiences, params,
+  ),
 };
 
 export default groupApi;

@@ -1,3 +1,4 @@
+import { t } from 'i18next';
 import { linkRegex } from '~/constants/commonRegex';
 
 export function timeOut(ms = 100) {
@@ -89,4 +90,11 @@ const nonAccentVietnamese = (str: string) => {
     /\u02C6|\u0306|\u031B/g, '',
   ); // Â, Ê, Ă, Ơ, Ư
   return text;
+};
+
+export const handleLabelButtonComment = (commentsCount: number) => {
+  if (commentsCount) {
+    return `${commentsCount} ${t('post:button_comment')}`;
+  }
+  return t('post:button_comment');
 };

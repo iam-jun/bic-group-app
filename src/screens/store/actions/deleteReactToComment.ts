@@ -8,39 +8,36 @@ import useCommentsStore from '~/store/entities/comments';
 import streamApi from '~/api/StreamApi';
 import showToastError from '~/store/helper/showToastError';
 
-const deleteReactToComment = (_set, get) => async (
-  payload: IPayloadReactToComment,
-) => {
-  const {
-    id, comment, reactionId, reactionsCount, ownerReactions,
-  } = payload;
-  const { actions } = get();
-  try {
-    const rId = ownerReactions?.find((item: IReaction) => item?.reactionName === reactionId)?.id || '';
-    if (rId) {
-      // yield addReactionLoadingLocal(id, reactionId, comment);
+const deleteReactToComment
+  = (_set, get) => async (payload: IPayloadReactToComment) => {
+    const {
+      id, comment, reactionId, reactionsCount, ownerReactions,
+    } = payload;
+    const { actions } = get();
+    try {
+      const reaction
+        = ownerReactions?.find(
+          (item: IReaction) => item?.reactionName === reactionId,
+        );
+      if (reaction) {
+        await streamApi.deleteReaction({
+          target: TargetType.COMMENT,
+          targetId: id,
+          reactionName: reactionId,
+        });
 
-      await streamApi.deleteReaction({
-        reactionId: rId,
-        target: TargetType.COMMENT,
-        targetId: id,
-        reactionName: reactionId,
-      });
-
-      removeReactionLocal(get)(
-        id, reactionId, comment,
+        removeReactionLocal(get)(id, reactionId, comment);
+      }
+    } catch (e) {
+      actions.onUpdateReactionOfCommentById(
+        id,
+        ownerReactions,
+        reactionsCount,
+        comment,
       );
+      showToastError(e);
     }
-  } catch (e) {
-    actions.onUpdateReactionOfCommentById(
-      id,
-      ownerReactions,
-      reactionsCount,
-      comment,
-    );
-    showToastError(e);
-  }
-};
+  };
 
 // function* addReactionLoadingLocal(
 //   id: string,
@@ -70,41 +67,41 @@ const deleteReactToComment = (_set, get) => async (
 //   );
 // }
 
-const removeReactionLocal = (get) => (
-  id: string,
-  reactionId: string,
-  comment: ICommentData,
-) => {
-  const { actions } = get();
+const removeReactionLocal
+  = (get) => (id: string, reactionId: string, comment: ICommentData) => {
+    const { actions } = get();
 
-  const cmt = useCommentsStore.getState().comments?.[id];
-  const reactionsCount = cmt.reactionsCount || {};
-  const ownerReactions = cmt.ownerReactions || [];
+    const cmt = useCommentsStore.getState().comments?.[id];
+    const { reactionsCount = [], ownerReactions = [] } = cmt;
 
-  const newOwnerReactions = ownerReactions.filter?.((or: IReaction) => or?.reactionName !== reactionId);
+    const newOwnerReactions = ownerReactions.filter?.(
+      (or: IReaction) => or?.reactionName !== reactionId,
+    );
+    const newReactionCounts = reactionsCount
+      .map((item) => {
+        const keysItem = Object.keys(item);
 
-  const newReactionCounts = reactionsCount;
-  Object.keys(reactionsCount)?.forEach?.((k) => {
-    const _reactionId = Object.keys(reactionsCount?.[k])?.[0];
-    const nextKey = `${Object.keys(reactionsCount).length}`;
-    const _reactionCount = reactionsCount?.[k]?.[_reactionId] || 0;
-    if (reactionId !== _reactionId) {
-      newReactionCounts[nextKey] = { [_reactionId]: _reactionCount };
-    } else {
-      newReactionCounts[nextKey] = {
-        [_reactionId]: Math.max(
-          0, _reactionCount - 1,
-        ),
-      };
-    }
-  });
+        if (keysItem.length === 0) return null;
 
-  actions.onUpdateReactionOfCommentById(
-    id,
-    newOwnerReactions,
-    newReactionCounts,
-    comment,
-  );
-};
+        const reactionName = keysItem[0];
+        const value = item[reactionName];
+
+        if (reactionName === reactionId) {
+          return {
+            [reactionName]: Math.max(0, value - 1),
+          };
+        }
+
+        return item;
+      })
+      .filter((item) => !!item && !!Object.values(item)[0]);
+
+    actions.onUpdateReactionOfCommentById(
+      id,
+      newOwnerReactions,
+      newReactionCounts,
+      comment,
+    );
+  };
 
 export default deleteReactToComment;

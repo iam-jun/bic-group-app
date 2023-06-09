@@ -32,7 +32,7 @@ const ContentInterestedUserCount: FC<ContentInterestedUserCountProps> = ({
   const { colors } = theme;
   const labelColorInterested = labelColor || colors.neutral40;
   const peopleCount = formatLargeNumber(interestedUserCount);
-  const testID = `${testIDPrefix ? `${testIDPrefix}.` : ''}content_interested_user_count`;
+  const testID = testIDPrefix ? `${testIDPrefix}.content_interested_user_count` : 'content_interested_user_count';
   const modalActions = useModalStore((state) => state.actions);
 
   const onPressInterestedBy = () => {

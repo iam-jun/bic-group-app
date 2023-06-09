@@ -5,7 +5,6 @@ import useModalStore from '~/store/modal';
 import { act, renderHook, waitFor } from '~/test/testUtils';
 import usePostsStore, { IPostsState } from '../index';
 import { postCreatePost, responsePutEditPost } from '../__mocks__/data';
-import groupApi from '~/api/GroupApi';
 import APIErrorCode from '~/constants/apiErrorCode';
 import useValidateSeriesTagsStore from '~/components/ValidateSeriesTags/store';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
@@ -76,7 +75,7 @@ describe('putEditPost', () => {
     };
     const spyApiPutPublishPost = jest.spyOn(streamApi, 'putPublishPost').mockImplementation(() => Promise.resolve(res) as any);
     jest.spyOn(streamApi, 'getDraftContents').mockImplementation(() => Promise.resolve() as any);
-    jest.spyOn(groupApi, 'getGroupPosts').mockImplementation(() => Promise.resolve() as any);
+    jest.spyOn(streamApi, 'getTimelinePosts').mockImplementation(() => Promise.resolve({}) as any);
     jest.spyOn(FastImage, 'preload').mockImplementation(() => undefined);
 
     const { result } = renderHook(() => usePostsStore((state: IPostsState) => state));
@@ -104,7 +103,7 @@ describe('putEditPost', () => {
         handleSeriesTagsError: jest.fn(),
       },
     };
-    const spyApiPutPublishPost = jest.spyOn(streamApi, 'putPublishPost').mockImplementation(() => Promise.reject({ code: APIErrorCode.Post.POST_INVALID_PARAM }) as any);
+    const spyApiPutPublishPost = jest.spyOn(streamApi, 'putPublishPost').mockImplementation(() => Promise.reject({ code: APIErrorCode.Post.TAG_SERIES_INVALID }) as any);
     jest.spyOn(useValidateSeriesTagsStore, 'getState').mockImplementation(() => mockActionValidateSeriesTags as any);
     const { result } = renderHook(() => usePostsStore((state: IPostsState) => state));
 

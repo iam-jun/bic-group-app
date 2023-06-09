@@ -60,7 +60,8 @@ const _PostDetailContent = (props) => {
 
   const {
     refreshing, isEmptyContent, actor, setting, deleted, createdAt,
-    commentLeft, groupIds, comments, sectionData, audience, errorContent, onRefresh, onPressMarkSeenPost,
+    commentLeft, commentEndCursor, groupIds, comments, sectionData, audience, errorContent,
+    onRefresh, onPressMarkSeenPost,
   } = usePostDetailContent({
     postId, notificationId, HeaderImageComponent, isReported,
   });
@@ -76,16 +77,18 @@ const _PostDetailContent = (props) => {
     onScrollToIndexFailed,
     onPressReplySectionHeader,
     onPressLoadMoreCommentLevel2,
-    onPressReplyCommentItem,
+    // onPressReplyCommentItem,
   } = usePostDetailContentHandler({
     postId, comments, sectionData, focusComment, listRef, commentInputRef,
   });
 
-  const headerTitle = isReported
-    ? t('report:title')
-    : actor?.fullname
-      ? t('post:title_post_detail_of', { name: actor?.fullname })
-      : t('post:title_post_detail');
+  const headerTitle = () => {
+    if (isReported) return t('report:title');
+    if (actor?.fullname) {
+      return t('post:title_post_detail_of', { name: actor?.fullname });
+    }
+    return t('post:title_post_detail');
+  };
 
   const onPressBack = () => {
     const newCommentInput = commentInputRef?.current?.getText?.() || '';
@@ -137,6 +140,7 @@ const _PostDetailContent = (props) => {
         audience={audience}
         index={index}
         isReplyingComment={false}
+        showLoadMore={false}
         onPressReply={onPressReplySectionHeader}
         onPressLoadMore={onPressLoadMoreCommentLevel2}
         onPressMarkSeenPost={onPressMarkSeenPost}
@@ -144,23 +148,23 @@ const _PostDetailContent = (props) => {
     );
   };
 
-  const renderCommentItem = (data: any) => {
-    const { item, index, section } = data || {};
-    return (
-      <CommentItem
-        index={index}
-        postId={postId}
-        section={section}
-        commentData={item}
-        groupIds={groupIds}
-        audience={audience}
-        isReplyingComment={false}
-        commentParent={section?.comment}
-        onPressReply={onPressReplyCommentItem}
-        onPressMarkSeenPost={onPressMarkSeenPost}
-      />
-    );
-  };
+  // const renderCommentItem = (data: any) => {
+  //   const { item, index, section } = data || {};
+  //   return (
+  //     <CommentItem
+  //       index={index}
+  //       postId={postId}
+  //       section={section}
+  //       commentData={item}
+  //       groupIds={groupIds}
+  //       audience={audience}
+  //       isReplyingComment={false}
+  //       commentParent={section?.comment}
+  //       onPressReply={onPressReplyCommentItem}
+  //       onPressMarkSeenPost={onPressMarkSeenPost}
+  //     />
+  //   );
+  // };
 
   const renderCommentInputView = () => {
     if (setting?.canComment && !isReported) {
@@ -205,13 +209,14 @@ const _PostDetailContent = (props) => {
           <SectionList
             ref={listRef}
             sections={sectionData}
-            renderItem={renderCommentItem}
+            // renderItem={renderCommentItem}
+            renderItem={() => <View />}
             renderSectionHeader={renderSectionHeader}
             ListHeaderComponent={(
               <PostDetailContentHeader
                 id={postId}
                 commentLeft={commentLeft}
-                idLessThan={comments?.[0]?.id}
+                endCursor={commentEndCursor}
                 onContentLayout={props?.onContentLayout}
                 onPressComment={onPressComment}
               />
@@ -242,7 +247,7 @@ const _PostDetailContent = (props) => {
   return (
     <View style={styles.flex1} testID="post_detail_content">
       {!isReported && !deleted
-      && <Header title={headerTitle} onPressBack={onPressBack} />}
+      && <Header title={headerTitle()} onPressBack={onPressBack} />}
       {renderContent()}
     </View>
   );
@@ -268,5 +273,4 @@ const createStyle = (theme: ExtendedTheme) => {
 };
 
 const PostDetailContent = memo(_PostDetailContent);
-// PostDetailContent.whyDidYouRender = true;
 export default PostDetailContent;

@@ -55,16 +55,6 @@ const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, ...props }) => {
           {textButton}
         </Button.Secondary>
       );
-    case GroupJoinStatus.MEMBER:
-      return (
-        <Button.Secondary
-          type="ghost"
-          useI18n
-          {...props}
-        >
-          {textButton}
-        </Button.Secondary>
-      );
     default:
       return (
         <Button.Secondary

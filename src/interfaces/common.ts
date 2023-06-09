@@ -111,3 +111,9 @@ export enum SortOder {
   ASC = 'ASC',
   DESC = 'DESC'
 }
+
+export interface IGroupSettings {
+  isJoinApproval?: boolean;
+  isActiveGroupTerms?: boolean;
+  isActiveMembershipQuestions?: boolean;
+}

@@ -87,7 +87,6 @@ const CoverHeader = ({
         try {
           const image = await ImagePicker.openPickerSinglePhotoWithCropping({
             ...userProfileImageCropRatio.backgroundImgUrl,
-            exclusionList: ['gif', 'webp'],
             maxSize: AppConfig.userCoverImageMaxSize,
           });
           setSelectedCover(image);
@@ -105,7 +104,6 @@ const CoverHeader = ({
         try {
           const image = await ImagePicker.openPickerSinglePhotoWithCropping({
             ...userProfileImageCropRatio.avatar,
-            exclusionList: ['gif', 'webp'],
             maxSize: AppConfig.userAvatarImageMaxSize,
           });
           setSelectedAvatar(image);

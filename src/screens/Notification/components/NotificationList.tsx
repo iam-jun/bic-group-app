@@ -139,6 +139,8 @@ const NotificationList = ({
 
   const keyExtractor = (item: any) => `noti_id_${item}`;
 
+  const renderItemSeparatorComponent = () => <Divider size={1} color={theme.colors.neutral5} />;
+
   return (
     <View testID="notification_screen.container" style={styles.container}>
       {!loadingNotifications && notificationList?.length > 0 ? (
@@ -163,9 +165,7 @@ const NotificationList = ({
           ListEmptyComponent={renderUnReadNotificationsEmpty}
           onEndReached={loadMoreNotifications}
           ListFooterComponent={renderListFooter}
-          ItemSeparatorComponent={() => (
-            <Divider size={1} color={theme.colors.neutral5} />
-          )}
+          ItemSeparatorComponent={renderItemSeparatorComponent}
           contentContainerStyle={styles.listContainer}
         />
       ) : (

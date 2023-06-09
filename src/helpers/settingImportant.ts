@@ -95,17 +95,15 @@ export const handleChangeDatePickerImportant = (
   if (date) {
     const newImportant = { ...sImportant };
     let expiresTime = '';
-    if (date) {
-      const time = sImportant.expiresTime
-        ? new Date(sImportant.expiresTime)
-        : new Date();
-      date.setHours(
-        time.getHours(), time.getMinutes(), 0, 0,
-      );
-      expiresTime = date.toISOString();
-      if (date.getTime() < getMinDateImportant().getTime()) {
-        expiresTime = getMinDateImportant().toISOString();
-      }
+    const time = sImportant.expiresTime
+      ? new Date(sImportant.expiresTime)
+      : new Date();
+    date.setHours(
+      time.getHours(), time.getMinutes(), 0, 0,
+    );
+    expiresTime = date.toISOString();
+    if (date.getTime() < getMinDateImportant().getTime()) {
+      expiresTime = getMinDateImportant().toISOString();
     }
     newImportant.expiresTime = expiresTime;
     setImportant(newImportant);

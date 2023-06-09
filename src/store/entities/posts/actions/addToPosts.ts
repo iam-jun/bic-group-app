@@ -8,17 +8,13 @@ import { getImageUrlsForPreloadImagesOnNewsFeed } from '~/components/Image/helpe
 
 const addToPosts = (_set, get) => (payload: IPayloadAddToAllPost) => {
   const { data, handleComment } = payload || {};
-  const { posts, actions }:IPostsState = get();
+  const { posts, actions }: IPostsState = get();
   const newPosts = { ...posts };
   const newCommentsByParentId: any = {};
   let newComments: ICommentData[] = [];
 
   let postsToAdd: IPost[] = [];
-  if (isArray(data) && data.length > 0) {
-    postsToAdd = postsToAdd.concat(data);
-  } else {
-    postsToAdd = new Array(data) as IPost[];
-  }
+  postsToAdd = updatePostsToAdd({ data });
 
   postsToAdd.forEach((item: IPost) => {
     if (item?.id) {
@@ -55,6 +51,17 @@ const addToPosts = (_set, get) => (payload: IPayloadAddToAllPost) => {
   }
 
   actions.setPosts(newPosts);
+};
+
+const updatePostsToAdd = (params: { data: IPayloadAddToAllPost['data'] }) => {
+  const { data } = params;
+  let result = [];
+  if (isArray(data) && data.length > 0) {
+    result = [].concat(data);
+  } else {
+    result = new Array(data) as IPost[];
+  }
+  return result;
 };
 
 export default addToPosts;

@@ -8,6 +8,7 @@ import {
 } from 'react-native-gesture-handler';
 import Animated, {
   runOnJS,
+  SharedValue,
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
@@ -147,11 +148,9 @@ const SlideUpModal: React.FC<SheetProps> = ({
       } else if (shouldMinimise) {
         runOnJS(hide)();
       } else {
-        const newHeight = position.value === 'expanded'
-          ? -expandHeight
-          : position.value === 'maximised'
-            ? -maxHeight
-            : -minHeight;
+        const newHeight = handleNewHeight({
+          position, expandHeight, maxHeight, minHeight,
+        });
 
         modalHeight.value = withSpring(
           newHeight, springConfig,
@@ -221,6 +220,24 @@ const createStyles = (theme: ExtendedTheme) => {
       backgroundColor: colors.gray5,
     },
   });
+};
+
+const handleNewHeight = (params: {
+  position: SharedValue<SheetPositions>;
+  expandHeight: number;
+  maxHeight: number;
+  minHeight: number;
+}) => {
+  const {
+    position, expandHeight, maxHeight, minHeight,
+  } = params;
+  /* eslint no-else-return: ["error", {allowElseIf: true}] */
+  if (position.value === 'expanded') {
+    return -expandHeight;
+  } else if (position.value === 'maximised') {
+    return -maxHeight;
+  }
+  return -minHeight;
 };
 
 export default SlideUpModal;

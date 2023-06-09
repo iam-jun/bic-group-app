@@ -24,7 +24,7 @@ const ButtonDanger: React.FC<ButtonDangerProps> = ({
   disabled,
   ...props
 }: ButtonDangerProps) => {
-  const { colors }: ExtendedTheme = useTheme() as ExtendedTheme;
+  const { colors }: ExtendedTheme = useTheme();
 
   const underlayColor = colors.neutral5;
   let backgroundColor = colors.red1;

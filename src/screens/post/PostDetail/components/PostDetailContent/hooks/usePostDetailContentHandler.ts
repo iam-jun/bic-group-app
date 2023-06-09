@@ -79,7 +79,6 @@ const usePostDetailContentHandler = ({
     if (countRetryScrollToBottom.current < 20) {
       setTimeout(() => {
         scrollTo(-1, -1);
-        // scrollTo(Math.min(9, sectionData.length - 1), -1);
       }, 100);
     }
   };

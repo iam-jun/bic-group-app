@@ -22,7 +22,7 @@ describe('ArticleFooter Component', () => {
       <ArticleFooter
         articleId={article.id}
         hideReaction
-        reactionsCount={{}}
+        reactionsCount={[]}
         ownerReactions={[]}
       />, store,
     );

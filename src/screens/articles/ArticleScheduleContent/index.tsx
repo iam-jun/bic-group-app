@@ -97,6 +97,8 @@ const ArticleScheduleContent: FC<IRouteParams> = (props) => {
     );
   };
 
+  const renderViewSpacing = () => <ViewSpacing height={spacing.margin.large} />;
+
   return (
     <ScreenWrapper testID="article_schedule_content" isFullView style={styles.container}>
       <Header title={t('settings:title_schedule_content')} />
@@ -105,10 +107,10 @@ const ArticleScheduleContent: FC<IRouteParams> = (props) => {
         style={styles.listContainer}
         data={articles}
         renderItem={renderItem}
-        ListHeaderComponent={() => <ViewSpacing height={spacing.margin.large} />}
+        ListHeaderComponent={renderViewSpacing}
         ListFooterComponent={renderFooter}
         ListEmptyComponent={renderEmpty}
-        ItemSeparatorComponent={() => <ViewSpacing height={spacing.margin.large} />}
+        ItemSeparatorComponent={renderViewSpacing}
         onEndReached={onLoadMore}
         onEndReachedThreshold={0.2}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.gray40} />}

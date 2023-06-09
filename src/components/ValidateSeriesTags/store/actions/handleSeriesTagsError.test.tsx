@@ -13,7 +13,7 @@ import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 describe('handleSeriesTagsError', () => {
   it('should remove series/tags error on post', async () => {
     const errorMock = {
-      code: ApiErrorCode.Post.ARTICLE_INVALID_PARAM,
+      code: ApiErrorCode.Post.TAG_SERIES_INVALID,
       meta: {
         errors: {
           seriesNames: ['abc', 'xyz'],
@@ -61,7 +61,7 @@ describe('handleSeriesTagsError', () => {
 
   it('should remove series/tags error on article', async () => {
     const errorMock = {
-      code: ApiErrorCode.Post.ARTICLE_INVALID_PARAM,
+      code: ApiErrorCode.Post.TAG_SERIES_INVALID,
       meta: {
         errors: {
           seriesNames: ['abc', 'xyz'],

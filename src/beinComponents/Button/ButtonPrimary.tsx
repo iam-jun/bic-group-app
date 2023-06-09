@@ -35,7 +35,7 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
   disabled,
   ...props
 }: ButtonPrimaryProps) => {
-  const { colors }: ExtendedTheme = useTheme() as ExtendedTheme;
+  const { colors }: ExtendedTheme = useTheme();
 
   const _colorHover = colorHover || colors.neutral80;
   let _backgroundColor = color || colors.purple50;

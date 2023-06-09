@@ -1,5 +1,3 @@
-import { isEmpty } from 'lodash';
-
 import {
   IOwnReaction,
   IPayloadReactToComment,
@@ -22,7 +20,7 @@ const putReactionToComment = (_set, get) => async (payload: IPayloadReactToComme
   const { actions } = get();
   try {
     const cComment1 = useCommentsStore.getState().comments?.[id] || comment;
-    const cReactionCount1 = cComment1.reactionsCount || {};
+    const cReactionCount1 = cComment1.reactionsCount || [];
     const cOwnReaction1 = cComment1.ownerReactions || [];
 
     const added = cOwnReaction1?.find((item: IReaction) => item?.reactionName === reactionId)?.id || '';
@@ -33,30 +31,22 @@ const putReactionToComment = (_set, get) => async (payload: IPayloadReactToComme
       const newOwnReaction1: IOwnReaction = [...cOwnReaction1];
       newOwnReaction1.push({ reactionName: reactionId, loading: true } as IReaction);
 
-      const newReactionCounts1 = { ...cReactionCount1 };
-      Object.keys(newReactionCounts1 || {}).forEach((key) => {
-        const _reactionName = Object.keys((newReactionCounts1[key] as any) || {})?.[0];
-        if (_reactionName === reactionId) {
+      const newReactionCounts1 = cReactionCount1.map((item) => {
+        const reactionName = Object.keys(item)[0];
+        if (reactionName === reactionId) {
           isAdded = true;
-          newReactionCounts1[key][reactionId] = (newReactionCounts1[key][reactionId] || 0) + 1;
+          return {
+            [reactionName]: item[reactionName] + 1,
+          };
         }
+        return item;
       });
 
       if (!isAdded) {
-        const lastKey = !isEmpty(newReactionCounts1)
-          ? Object.keys(newReactionCounts1).pop()
-          : '0';
-
-        if (typeof lastKey === 'string') {
-          const key = (parseInt(
-            lastKey, 10,
-          ) + 1).toString();
-          if (key) {
-            const newData = { [reactionId]: 1 };
-            newReactionCounts1[key] = { ...newData };
-          }
-        }
+        const newData = { [reactionId]: 1 };
+        newReactionCounts1.push(newData);
       }
+
       actions.onUpdateReactionOfCommentById(
         id,
         newOwnReaction1,
@@ -73,7 +63,7 @@ const putReactionToComment = (_set, get) => async (payload: IPayloadReactToComme
 
       if (response?.data) {
         const cComment2 = useCommentsStore.getState().comments?.[id] || comment;
-        const cReactionsCount2 = cComment2.reactionsCount || {};
+        const cReactionsCount2 = cComment2.reactionsCount || [];
         const cOwnReactions2 = cComment2.ownerReactions || [];
         const newOwnReaction2: IOwnReaction = [...cOwnReactions2];
 
@@ -97,9 +87,9 @@ const putReactionToComment = (_set, get) => async (payload: IPayloadReactToComme
         actions.onUpdateReactionOfCommentById(
           id,
           [...newOwnReaction2],
-          {
+          [
             ...cReactionsCount2,
-          },
+          ],
           comment,
         );
       }

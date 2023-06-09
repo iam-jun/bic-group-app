@@ -92,7 +92,7 @@ const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
     useCreatePostStore.getState().actions.setLoadingCreatePost(false);
 
     const errorCode = error?.code;
-    if (errorCode === ApiErrorCode.Post.POST_INVALID_PARAM && isHandleSeriesTagsError) {
+    if (errorCode === ApiErrorCode.Post.TAG_SERIES_INVALID && isHandleSeriesTagsError) {
       useValidateSeriesTags.getState().actions.handleSeriesTagsError({ error, postType: PostType.POST });
     } else {
       const btnRetry = onRetry && {

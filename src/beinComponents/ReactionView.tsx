@@ -7,13 +7,14 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Reaction from '~/baseComponents/Reaction';
 import Button from '~/beinComponents/Button';
 
-import { blacklistReactions, ReactionType } from '~/constants/reactions';
-import { IOwnReaction, IReactionCounts } from '~/interfaces/IPost';
+import { ReactionType } from '~/constants/reactions';
+import { IOwnReaction, IReactionCounts, MapReactionsCountCallback } from '~/interfaces/IPost';
 import commonActions, { IAction } from '~/constants/commonActions';
 import appConfig from '~/configs/appConfig';
 import spacing from '~/theme/spacing';
 import Icon from '../baseComponents/Icon';
 import useEmojiPickerStore from '~/baseComponents/EmojiPicker/store';
+import { mapReactionsCount } from '~/helpers/post';
 
 export interface ReactionViewProps {
   style?: StyleProp<ViewStyle>;
@@ -61,7 +62,6 @@ const ReactionView: FC<ReactionViewProps> = ({
    */
   const renderReactions = () => {
     const _ownReactions: any = {};
-    const reactionMap = new Map();
 
     if (ownerReactions?.length > 0) {
       ownerReactions.forEach((ownReaction) => {
@@ -70,34 +70,27 @@ const ReactionView: FC<ReactionViewProps> = ({
         }
       });
     }
-    Object.values(reactionsCount || {})?.forEach((reaction: any) => {
-      const key = Object.keys(reaction || {})?.[0];
-      if (key) {
-        reactionMap.set(key, reaction?.[key]);
-      }
-    });
 
     const rendered: React.ReactNode[] = [];
 
-    reactionMap.forEach((value, key) => {
-      const react = key as ReactionType;
-      if (!blacklistReactions?.[react] && reactionMap.get(key) > 0) {
-        rendered.push(
-          <Reaction
-            testId={`reaction.button.${key}`}
-            key={`${key}`}
-            style={styles.reactionItem}
-            value={reactionMap.get(key)}
-            icon={key}
-            onLongPress={() => _onLongPressItem(react)}
-            loading={!!_ownReactions?.[react]?.loading}
-            selected={!!_ownReactions?.[react]}
-            onActionPress={(action) => onActionReaction(react, action)}
-            disabled={!hasReactPermission}
-          />,
-        );
-      }
-    });
+    const mapReactionsCountCallback: MapReactionsCountCallback = (reactionName, value) => {
+      rendered.push(
+        <Reaction
+          testId={`reaction.button.${reactionName}`}
+          key={`${reactionName}`}
+          style={styles.reactionItem}
+          value={value}
+          icon={reactionName}
+          onLongPress={() => _onLongPressItem(reactionName)}
+          loading={!!_ownReactions?.[reactionName]?.loading}
+          selected={!!_ownReactions?.[reactionName]}
+          onActionPress={(action) => onActionReaction(reactionName, action)}
+          disabled={!hasReactPermission}
+        />,
+      );
+    };
+
+    mapReactionsCount(reactionsCount, mapReactionsCountCallback);
 
     return rendered;
   };
@@ -115,7 +108,7 @@ const ReactionView: FC<ReactionViewProps> = ({
         ]}
         testID="reaction_view"
       >
-        {renderReactions()}
+        {renderedReactions}
         {!!onPressSelectReaction
           && showSelectReactionWhenEmpty
           && renderedReactions.length < appConfig.limitReactionCount && (

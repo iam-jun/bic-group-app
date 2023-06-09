@@ -42,8 +42,7 @@ const getNames = (
 const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: IUseSeriesCreation) => {
   const { rootNavigation } = useRootNavigation();
 
-  let series: any = {};
-  if (!!seriesId) series = usePostsStore(useCallback(postsSelector.getPost(seriesId, {}), [seriesId]));
+  const series = usePostsStore(useCallback(postsSelector.getPost(seriesId, {}), [seriesId]));
 
   const actions = useSeriesStore((state: ISeriesState) => state.actions);
 
@@ -59,21 +58,6 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
 
   const audiencesWithNoPermission = getAudienceListWithNoPermission(dataGroups, PermissionKey.EDIT_OWN_CONTENT_SETTING);
   const disableSeriesSettings = audiencesWithNoPermission.length === dataGroups.length;
-
-  const initSettings = (settings) => {
-    const notExpired = new Date().getTime() < new Date(settings?.importantExpiredAt).getTime();
-    const isNever = settings?.isImportant && !settings?.importantExpiredAt;
-
-    const initData = {
-      isImportant: (!!notExpired || isNever) && settings?.isImportant,
-      importantExpiredAt: !!notExpired ? settings?.importantExpiredAt : null,
-      canShare: settings?.canShare,
-      canReact: settings?.canReact,
-      canComment: settings?.canComment,
-    };
-
-    return initData;
-  };
 
   useEffect(() => {
     if (!isEmpty(series)) {
@@ -109,7 +93,7 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
     if (!!seriesId) {
       actions.editSeries(
         seriesId,
-        isFromDetail,
+        !isFromDetail,
         () => handleSave(),
         (listIdAudiences: string[]) => handleEditAudienceError?.(listIdAudiences, series.audience?.groups || []),
       );
@@ -118,22 +102,9 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
     }
   };
 
-  const isHasChange = () => {
-    if (!!seriesId) {
-      const isTitleUpdated = series.title !== data.title && isNonEmptyString(data.title);
-      const isRequiredUnEmpty = isNonEmptyString(data.title) && !isEmpty(data.coverMedia);
-      const isSummaryUpdated = series.summary !== data.summary && isRequiredUnEmpty;
-      const isCoverMediaUpdated = (series.coverMedia?.id !== data.coverMedia?.id) && !isEmpty(data.coverMedia);
-      const isAudienceUpdated = !isEqual(getAudienceIdsFromAudienceObject(series.audience), data.audience)
-      && !(isEmpty(data.audience?.groupIds) && isEmpty(data.audience?.userIds));
-      const isSettingsUpdated = !isEqual(series.setting, data.setting);
+  const isHasChange = checkStatus({ seriesId, data, series });
 
-      return isTitleUpdated || isCoverMediaUpdated || isAudienceUpdated || isSummaryUpdated || isSettingsUpdated;
-    }
-    return isNonEmptyString(data.title) && !isEmpty(data.coverMedia);
-  };
-
-  const enableButtonSave = isHasChange();
+  const enableButtonSave = isHasChange;
 
   const handleBack = () => {
     if (enableButtonSave) {
@@ -176,6 +147,45 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
     handleBack,
     handlePressAudiences,
   };
+};
+
+const checkStatus = (params: { data: any, seriesId: string, series: any }) => {
+  const { data, seriesId, series } = params;
+  if (!!seriesId) {
+    const isTitleUpdated = series.title !== data.title && isNonEmptyString(data.title);
+    const isRequiredUnEmpty = isNonEmptyString(data.title) && !isEmpty(data.coverMedia);
+    const isSummaryUpdated = series.summary !== data.summary && isRequiredUnEmpty;
+    const isCoverMediaUpdated = (series.coverMedia?.id !== data.coverMedia?.id) && !isEmpty(data.coverMedia);
+    const isAudienceUpdated = !isEqual(getAudienceIdsFromAudienceObject(series.audience), data.audience)
+      && !(isEmpty(data.audience?.groupIds) && isEmpty(data.audience?.userIds));
+    const isSettingsUpdated = !isEqual(initSettings(series.setting), data.setting);
+
+    return isTitleUpdated || isCoverMediaUpdated || isAudienceUpdated || isSummaryUpdated || isSettingsUpdated;
+  }
+  return isNonEmptyString(data.title) && !isEmpty(data.coverMedia);
+};
+
+const handleImportantExpiredAt = (params: { notExpired: boolean, settings: any }) => {
+  const { notExpired, settings } = params;
+  if (!!notExpired) {
+    return settings?.importantExpiredAt;
+  }
+  return null;
+};
+
+const initSettings = (settings) => {
+  const notExpired = new Date().getTime() < new Date(settings?.importantExpiredAt).getTime();
+  const isNever = settings?.isImportant && !settings?.importantExpiredAt;
+
+  const initData = {
+    isImportant: (!!notExpired || isNever) && settings?.isImportant,
+    importantExpiredAt: handleImportantExpiredAt({ notExpired, settings }),
+    canShare: settings?.canShare,
+    canReact: settings?.canReact,
+    canComment: settings?.canComment,
+  };
+
+  return initData;
 };
 
 export default useSeriesCreation;
