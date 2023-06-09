@@ -1,12 +1,12 @@
 import { act, renderHook } from '~/test/testUtils';
 import useMenuController from '../index';
-import groupApi from '~/api/GroupApi';
 import { GENDER_TYPE, RELATIONSHIP_TYPE } from '~/interfaces/IEditUser';
 import { editProfileResponse } from '../__mocks__/data';
 import useCommonController from '~/screens/store';
 import useModalStore from '~/store/modal';
 import { IToastMessage } from '~/interfaces/common';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import userApi from '~/api/UserApi';
 
 const fakeProfile = {
   id: 'test_id',
@@ -35,7 +35,7 @@ describe('editMyProfile action', () => {
     };
 
     const spyCallApi = jest
-      .spyOn(groupApi, 'editMyProfile')
+      .spyOn(userApi, 'editMyProfile')
       .mockImplementation(() => Promise.resolve(editProfileResponse) as any);
 
     const setMyProfile = jest.fn();
@@ -89,7 +89,7 @@ describe('editMyProfile action', () => {
       .mockImplementation(() => ({ actions } as any));
 
     const spy = jest
-      .spyOn(groupApi, 'editMyProfile')
+      .spyOn(userApi, 'editMyProfile')
       .mockImplementation(() => Promise.reject(error) as any);
 
     jest.useFakeTimers();
@@ -131,7 +131,7 @@ describe('editMyProfile action', () => {
     });
 
     const spy = jest
-      .spyOn(groupApi, 'editMyProfile')
+      .spyOn(userApi, 'editMyProfile')
       .mockImplementation(() => Promise.reject(error) as any);
 
     jest.useFakeTimers();

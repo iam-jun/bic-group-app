@@ -75,8 +75,8 @@ export const sizes = {
   code: 16,
   error: 16,
   mdH1: 22,
-  mdH2: 20,
-  mdH3: 18,
+  mdH2: 18,
+  mdH3: 15,
   mdH4: 16,
   mdParagraph: 14,
 };

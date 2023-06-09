@@ -1,9 +1,9 @@
-import groupApi from '~/api/GroupApi';
 import { responseUnblockUser } from '~/test/mock_data/blocking';
 import { act, renderHook } from '~/test/testUtils';
 import useBlockingStore from '../index';
 import * as showToastError from '~/store/helper/showToastError';
 import * as showToastSuccess from '~/store/helper/showToastSuccess';
+import userApi from '~/api/UserApi';
 
 describe('unblockUser', () => {
   const userId = 'test';
@@ -11,7 +11,7 @@ describe('unblockUser', () => {
   it('should unblockUser success:', () => {
     const spyShowToastSuccess = jest.spyOn(showToastSuccess, 'default');
     const spy = jest
-      .spyOn(groupApi, 'unblockUser')
+      .spyOn(userApi, 'unblockUser')
       .mockImplementation(() => Promise.resolve(responseUnblockUser) as any);
 
     jest.useFakeTimers();
@@ -30,7 +30,7 @@ describe('unblockUser', () => {
   it('should unblockUser throw error', () => {
     const spyShowToastError = jest.spyOn(showToastError, 'default');
     const error = 'internal error';
-    const spy = jest.spyOn(groupApi, 'unblockUser').mockImplementation(() => Promise.reject(error) as any);
+    const spy = jest.spyOn(userApi, 'unblockUser').mockImplementation(() => Promise.reject(error) as any);
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useBlockingStore((state) => state));

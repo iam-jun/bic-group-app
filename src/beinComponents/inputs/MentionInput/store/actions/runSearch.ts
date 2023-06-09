@@ -1,6 +1,6 @@
-import streamApi from '~/api/StreamApi';
 import { getMatchTermForAtMention } from '../../helper';
 import IMentionInputState from '../Interface';
+import userApi from '~/api/UserApi';
 
 const SEARCH_LIMIT = 10;
 
@@ -28,7 +28,7 @@ const runSearch = (set, get) => async (groupIds: string, payload: string, ignore
     }, 'runSearch');
 
     try {
-      const response = await streamApi.getSearchMentionAudiences({
+      const response = await userApi.getSearchMentionAudiences({
         groupIds,
         key: _matchTerm,
         limit: SEARCH_LIMIT,

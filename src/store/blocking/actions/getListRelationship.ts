@@ -1,4 +1,4 @@
-import groupApi from '~/api/GroupApi';
+import userApi from '~/api/UserApi';
 import showToastError from '~/store/helper/showToastError';
 
 const getListRelationship
@@ -16,7 +16,7 @@ const getListRelationship
         'getListRelationshipFetching',
       );
 
-      const response = await groupApi.getListRelationship();
+      const response = await userApi.getListRelationship();
 
       if (response && response?.data) {
         const { data } = response;

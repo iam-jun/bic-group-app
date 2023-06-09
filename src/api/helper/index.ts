@@ -132,6 +132,7 @@ const prepareRefreshTokenAndRetry = async (axiosError: AxiosError) => {
     case apiProviders.beinNotification.name:
     case apiProviders.beinUpload.name:
     case apiProviders.beinMaintenance.name:
+    case apiProviders.beinUser:
       if (!axiosError.config.headers?.Authorization) {
         return Promise.reject(axiosError);
       }

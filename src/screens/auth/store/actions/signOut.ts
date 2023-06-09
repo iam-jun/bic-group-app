@@ -7,6 +7,7 @@ import { rootNavigationRef } from '~/router/refs';
 import { rootSwitch } from '~/router/stack';
 import { IAuthState } from '~/screens/auth/store';
 import { deleteTokenMessage } from '~/services/firebase';
+import mixPanelManager from '~/services/mixpanel';
 import { getUserFromSharedPreferences, isAppInstalled, saveUserToSharedPreferences } from '~/services/sharePreferences';
 import showToastError from '~/store/helper/showToastError';
 import useModalStore from '~/store/modal';
@@ -75,6 +76,8 @@ const signOut = (set, get) => async () => {
     resetAuthStore();
 
     useModalStore.getState().actions.setLoadingModal(false);
+
+    mixPanelManager.resetUser();
 
     navigation.replace(rootSwitch.authStack);
   } catch (err) {

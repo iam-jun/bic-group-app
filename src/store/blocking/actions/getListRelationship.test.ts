@@ -1,8 +1,8 @@
-import groupApi from '~/api/GroupApi';
 import { responseGetListRelationship } from '~/test/mock_data/blocking';
 import { act, renderHook } from '~/test/testUtils';
 import useBlockingStore from '../index';
 import * as showToastError from '~/store/helper/showToastError';
+import userApi from '~/api/UserApi';
 
 describe('getListRelationship', () => {
   afterEach(() => {
@@ -12,7 +12,7 @@ describe('getListRelationship', () => {
 
   it('should getListRelationship success:', () => {
     const spy = jest
-      .spyOn(groupApi, 'getListRelationship')
+      .spyOn(userApi, 'getListRelationship')
       .mockImplementation(() => Promise.resolve(responseGetListRelationship) as any);
 
     jest.useFakeTimers();
@@ -31,7 +31,7 @@ describe('getListRelationship', () => {
   it('should getListRelationship throw error', () => {
     const spyShowToastError = jest.spyOn(showToastError, 'default');
     const error = 'internal error';
-    const spy = jest.spyOn(groupApi, 'getListRelationship').mockImplementation(() => Promise.reject(error) as any);
+    const spy = jest.spyOn(userApi, 'getListRelationship').mockImplementation(() => Promise.reject(error) as any);
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useBlockingStore((state) => state));

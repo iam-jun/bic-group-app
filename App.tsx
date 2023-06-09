@@ -7,6 +7,8 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import i18Next from '~/localization';
 import Root from '~/Root';
+import mixPanelManager from '~/services/mixpanel';
+import { initSmartlook } from '~/services/smartlook';
 import useCodePushStore from '~/store/codePush';
 import rootSaga from '~/storeRedux/sagas';
 import Store from './src/storeRedux';
@@ -26,6 +28,8 @@ i18Next.options.resources;
 
 initSentry();
 initFatalErrorHandler();
+initSmartlook();
+mixPanelManager.init();
 
 const App = () => {
   const codePushActions = useCodePushStore((state) => state.actions);

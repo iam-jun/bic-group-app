@@ -1,14 +1,14 @@
-import groupApi from '~/api/GroupApi';
 import { act, renderHook } from '~/test/testUtils';
 import useUserProfileStore from '../index';
 import { responseGetWorkExperience } from '../__mocks__/data';
+import userApi from '~/api/UserApi';
 
 describe('getWorkExperience', () => {
   const userId = 'test';
 
   it('should getWorkExperience success:', () => {
     const spy = jest
-      .spyOn(groupApi, 'getWorkExperience')
+      .spyOn(userApi, 'getWorkExperience')
       .mockImplementation(() => Promise.resolve(responseGetWorkExperience) as any);
 
     jest.useFakeTimers();
@@ -27,7 +27,7 @@ describe('getWorkExperience', () => {
   it('should getWorkExperience throw error', () => {
     const error = 'internal error';
 
-    const spy = jest.spyOn(groupApi, 'getWorkExperience').mockImplementation(() => Promise.reject(error) as any);
+    const spy = jest.spyOn(userApi, 'getWorkExperience').mockImplementation(() => Promise.reject(error) as any);
 
     const errorLog = jest.spyOn(console, 'error').mockImplementation(() => undefined);
 

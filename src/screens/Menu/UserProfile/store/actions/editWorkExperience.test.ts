@@ -1,8 +1,8 @@
-import groupApi from '~/api/GroupApi';
 import useModalStore from '~/store/modal';
 import { act, renderHook } from '~/test/testUtils';
 import useUserProfileStore from '../index';
 import { responseEditWorkExperience } from '../__mocks__/data';
+import userApi from '~/api/UserApi';
 
 describe('editWorkExperience', () => {
   const id = 'test';
@@ -18,7 +18,7 @@ describe('editWorkExperience', () => {
 
   it('should editWorkExperience success:', () => {
     const spy = jest
-      .spyOn(groupApi, 'editWorkExperience')
+      .spyOn(userApi, 'editWorkExperience')
       .mockImplementation(() => Promise.resolve(responseEditWorkExperience) as any);
 
     jest.useFakeTimers();
@@ -35,7 +35,7 @@ describe('editWorkExperience', () => {
   it('should editWorkExperience throw error', () => {
     const error = 'internal error';
 
-    const spy = jest.spyOn(groupApi, 'editWorkExperience').mockImplementation(() => Promise.reject(error) as any);
+    const spy = jest.spyOn(userApi, 'editWorkExperience').mockImplementation(() => Promise.reject(error) as any);
 
     const showToast = jest.fn();
     const actions = { showToast };
