@@ -3,6 +3,7 @@ import useModalStore from '~/store/modal';
 import { listArticle, mockSeries } from '~/test/mock_data/series';
 import { act, renderHook } from '~/test/testUtils';
 import useSeriesDetailArticleItemStore from '../index';
+import * as showToastSuccess from '~/store/helper/showToastSuccess';
 
 describe('deleteItemFromSeriesDetail', () => {
   afterEach(() => {
@@ -46,9 +47,7 @@ describe('deleteItemFromSeriesDetail', () => {
       () => Promise.resolve(getSeriesDetailResponse) as any,
     );
 
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
+    const spyShowToastSuccess = jest.spyOn(showToastSuccess, 'default');
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useSeriesDetailArticleItemStore((state) => state));
@@ -63,7 +62,7 @@ describe('deleteItemFromSeriesDetail', () => {
     });
 
     expect(spyApiGetSeriesDetail).toBeCalled();
-    expect(showToast).toBeCalledWith({ content: 'series:text_article_removed' });
+    expect(spyShowToastSuccess).toBeCalled();
   });
 
   it('should delete aritcle throw error and should show toast', () => {

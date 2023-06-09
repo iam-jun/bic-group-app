@@ -516,7 +516,7 @@ export interface IPayloadGetDraftContents {
 export interface IPayloadPublishDraftPost {
   draftPostId: string;
   replaceWithDetail?: boolean;
-  onSuccess?: () => void;
+  onSuccess?: (payload?: any) => void;
   onError?: () => void;
   refreshDraftPosts?: boolean;
   createFromGroupId?: string;

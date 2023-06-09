@@ -2,12 +2,10 @@ import i18next from 'i18next';
 import { IUserEdit } from '~/interfaces/IAuth';
 import groupApi from '~/api/GroupApi';
 import showToastError from '~/store/helper/showToastError';
-import { IToastMessage } from '~/interfaces/common';
 import useCommonController from '~/screens/store';
 import { mapProfile } from '~/helpers/common';
-import showToast from '~/store/helper/showToast';
-import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import IMenuController from '../Interface';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const editMyProfile = (_set, get) => async ({
   isVerified,
@@ -31,11 +29,7 @@ const editMyProfile = (_set, get) => async ({
 
     useCommonController.getState().actions.setMyProfile(mapProfile(response.data));
 
-    const toastMessage: IToastMessage = {
-      content: response?.meta?.message || 'common:text_edit_success',
-      type: ToastType.SUCCESS,
-    };
-    showToast(toastMessage);
+    showToastSuccess(response);
 
     if (callback) callback();
   } catch (error) {

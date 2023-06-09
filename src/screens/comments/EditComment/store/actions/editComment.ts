@@ -4,11 +4,11 @@ import { timeOut } from '~/utils/common';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import useCommentInputStore from '~/screens/comments/components/CommentInputView/store';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 import showToastError from '~/store/helper/showToastError';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import { getMentionsFromContent } from '~/helpers/post';
 import useCommentDetailController from '~/screens/comments/CommentDetail/store';
-import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const navigation = withNavigation(rootNavigationRef);
 

@@ -1,8 +1,8 @@
 import streamApi from '~/api/StreamApi';
 import { IPayloadAddToAllPost } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
-import showToastError from '~/store/helper/showToastError';
 import showToastSuccess from '~/store/helper/showToastSuccess';
+import showToastError from '~/store/helper/showToastError';
 
 const deleteSeries = (_set, _get) => async (id: string, callbackError?: any) => {
   if (!id) return;

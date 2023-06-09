@@ -4,6 +4,7 @@ import useModalStore from '~/store/modal';
 import { mockSeries, mockSeriesRequest } from '~/test/mock_data/series';
 import { act, renderHook } from '~/test/testUtils';
 import useSeriesStore, { ISeriesState } from '../index';
+import * as showToastSuccess from '~/store/helper/showToastSuccess';
 
 describe('deleteSeries', () => {
   it('should do nothing if id undefined', () => {
@@ -48,9 +49,7 @@ describe('deleteSeries', () => {
       },
     } as any));
 
-    const showToast = jest.fn();
-    const toastActions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions: toastActions } as any));
+    const spyShowToastSuccess = jest.spyOn(showToastSuccess, 'default');
 
     const deletedSeries = {
       ...mockSeries,
@@ -70,7 +69,7 @@ describe('deleteSeries', () => {
     });
 
     expect(addToPosts).toBeCalledWith({ data: deletedSeries });
-    expect(showToast).toBeCalledWith({ content: 'series:text_delete_series_success' });
+    expect(spyShowToastSuccess).toBeCalled();
   });
 
   it('should delete series throw error and should show toast', () => {

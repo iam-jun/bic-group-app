@@ -59,7 +59,7 @@ const editSeries = (set, get) => async (
       callbackError?.(error.meta.errors.groupsDenied);
     } else {
       showToast({
-        content: 'series:text_edit_series_failed',
+        content: error?.meta?.message || 'series:text_edit_series_failed',
         type: ToastType.ERROR,
         buttonText: i18n.t('common:text_retry'),
         onButtonPress: onRetry,

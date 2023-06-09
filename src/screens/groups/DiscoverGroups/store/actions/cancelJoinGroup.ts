@@ -1,13 +1,11 @@
-import i18next from 'i18next';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import IDiscoverGroupsState from '../Interface';
 import groupApi from '~/api/GroupApi';
-import { IToastMessage } from '~/interfaces/common';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 import showToastError from '~/store/helper/showToastError';
 import approveDeclineCode from '~/constants/approveDeclineCode';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
-import showToast from '~/store/helper/showToast';
 
 const cancelJoinGroup = (set, get) => async (groupId: string) => {
   try {
@@ -15,9 +13,7 @@ const cancelJoinGroup = (set, get) => async (groupId: string) => {
     const currentRequestState = currentState.items[groupId]?.joinStatus || 0;
     if (currentRequestState === GroupJoinStatus.MEMBER) return;
 
-    const groupName = currentState.items[groupId]?.name;
-
-    await groupApi.cancelJoinGroup(groupId);
+    const response = await groupApi.cancelJoinGroup(groupId);
     useGroupDetailStore.getState().actions.getGroupDetail({ groupId });
 
     // Change button join status for Discover groups screen
@@ -28,11 +24,7 @@ const cancelJoinGroup = (set, get) => async (groupId: string) => {
       };
     }, 'cancelJoinGroupSuccess');
 
-    const toastMessage: IToastMessage = {
-      content: `${i18next.t('groups:text_cancel_join_group')} ${groupName}`,
-    };
-
-    showToast(toastMessage);
+    showToastSuccess(response);
   } catch (error) {
     console.error('cancelJoinGroup error', error);
 
