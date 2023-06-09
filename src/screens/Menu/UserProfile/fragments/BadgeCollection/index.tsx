@@ -14,6 +14,7 @@ import useUserBadge from './store';
 import images from '~/resources/images';
 import Image from '~/components/Image';
 import { IUserBadge } from '~/interfaces/IEditUser';
+import useBaseHook from '~/hooks/baseHook';
 
 const SCROLL_MAX_HEIGHT = 400;
 
@@ -21,11 +22,15 @@ const BadgeCollection = () => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = themeStyles(theme);
+  const { t } = useBaseHook();
 
   const actions = useUserBadge((state) => state.actions);
   const ownBadges = useUserBadge((state) => state.ownBadges);
   const isEditing = useUserBadge((state) => state.isEditing);
   const choosingBadges = useUserBadge((state) => state.choosingBadges);
+  const totalBadges = useUserBadge((state) => state.totalBadges);
+
+  const totalBadgesText = t('user:owned_badges:total_badges').replace('(total)', totalBadges);
 
   const disabled = checkIsDisabled(choosingBadges) && isEditing;
 
@@ -79,6 +84,7 @@ const BadgeCollection = () => {
         color={colors.neutral40}
       >
         {sectionItem?.name}
+        <Text.BadgeS color={colors.neutral40}>{` (${sectionItem?.badges?.length})`}</Text.BadgeS>
       </Text.SubtitleM>
       <Grid
         data={sectionItem.badges}
@@ -94,7 +100,6 @@ const BadgeCollection = () => {
         paddingHorizontal: spacing.padding.large,
       }}
       >
-
         <View style={styles.row}>
           <Text.H4 color={colors.neutral40} useI18n>
             user:showing_badges:title
@@ -112,8 +117,11 @@ const BadgeCollection = () => {
           user:showing_badges:description
         </Text.BodyS>
         <ShowingBadges />
-        <Text.H4 color={colors.neutral40} useI18n>
-          user:owned_badges:title
+        <Text.H4 color={colors.neutral40}>
+          {t('user:owned_badges:title')}
+          <Text.BadgeS color={colors.neutral40}>
+            {` ${totalBadgesText}`}
+          </Text.BadgeS>
         </Text.H4>
         <Text.BodyS color={colors.neutral40} useI18n>
           user:owned_badges:description
