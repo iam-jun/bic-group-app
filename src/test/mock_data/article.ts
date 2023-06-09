@@ -31,11 +31,11 @@ export const mockArticle = {
   mentions: {},
   commentsCount: 0,
   totalUsersSeen: 2,
-  reactionsCount: {
-    0: {
+  reactionsCount: [
+    {
       bic_heart_gift: 1,
     },
-  },
+  ],
   createdAt: '2022-11-14T08:39:47.609Z',
   updatedAt: '2022-11-15T10:11:01.630Z',
   createdBy: 'a0143446-0e51-4903-b280-8c794d470903',

@@ -28,11 +28,13 @@ const ArticlePlaceholder: FC<ArticlePlaceholderProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
+  const renderContentLeft = (p: any, style: StyleProp<ViewStyle>) => <PlaceholderMedia style={[p.style, style]} />;
+
   return (
     <View testID={testID} style={[styles.container, style]}>
       <Placeholder
         Animation={ShineOverlay}
-        Left={(p) => <PlaceholderMedia style={[p.style, styles.avatar]} />}
+        Left={(p) => renderContentLeft(p, styles.avatar)}
         style={styles.infoContainer}
       >
         <PlaceholderLine
@@ -94,7 +96,7 @@ const ArticlePlaceholder: FC<ArticlePlaceholderProps> = ({
           <Placeholder
             Animation={ShineOverlay}
             style={styles.buttonContent}
-            Left={(p) => <PlaceholderMedia style={[p.style, styles.icon]} />}
+            Left={(p) => renderContentLeft(p, styles.icon)}
           >
             <PlaceholderLine style={styles.margin0} height={14} />
           </Placeholder>
@@ -104,7 +106,7 @@ const ArticlePlaceholder: FC<ArticlePlaceholderProps> = ({
           <Placeholder
             Animation={ShineOverlay}
             style={styles.buttonContent}
-            Left={(p) => <PlaceholderMedia style={[p.style, styles.icon]} />}
+            Left={(p) => renderContentLeft(p, styles.icon)}
           >
             <PlaceholderLine style={styles.margin0} height={14} />
           </Placeholder>

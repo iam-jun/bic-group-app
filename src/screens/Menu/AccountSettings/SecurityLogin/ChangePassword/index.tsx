@@ -170,7 +170,7 @@ const ChangePassword = () => {
                 if (!/(?=.*?[a-z])/.test(value)) {
                   return t('auth:text_err_password_required_lower_case');
                 }
-                if (!/(?=.*?[0-9])/.test(value)) {
+                if (!/(?=.*?\d)/.test(value)) {
                   return t('auth:text_err_password_required_number');
                 }
                 if (!/(?=.*?[^\w\s])/.test(value)) {
@@ -208,16 +208,6 @@ const ChangePassword = () => {
         >
           {t('common:text_save')}
         </Button.Primary>
-        {/* <View style={styles.forgotPasswordContainer}> */}
-        {/*  <TouchableOpacity onPress={handleForgotPassword}> */}
-        {/*    <Text.H6 */}
-        {/*      testID="change_password.forgot_password" */}
-        {/*      style={styles.forgotPasswordText} */}
-        {/*    > */}
-        {/*      {t('auth:btn_forgot_password')} */}
-        {/*    </Text.H6> */}
-        {/*  </TouchableOpacity> */}
-        {/* </View> */}
       </View>
     </ScreenWrapper>
   );

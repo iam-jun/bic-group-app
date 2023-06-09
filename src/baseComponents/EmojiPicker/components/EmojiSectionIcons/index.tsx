@@ -49,7 +49,7 @@ const EmojiSectionIcons = ({ visible, onPress }: Props) => {
 
               return (
                 <Icon
-                  key={`emoji-secion-icon-${index}`}
+                  key={`emoji-secion-icon-${section.id}`}
                   testID={`emoji_section_icons.icon_${index}`}
                   style={styles.icon}
                   icon={section.icon}

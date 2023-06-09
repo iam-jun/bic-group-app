@@ -150,6 +150,10 @@ const Managed = () => {
     actions.getManaged(true);
   }, []);
 
+  const renderItemSeparatorComponent = () => <Divider color="transparent" size={spacing.padding.large} />;
+
+  const renderListEmptyComponent = <ListEmptyAll />;
+
   return (
     <SectionList
       sections={data}
@@ -157,9 +161,7 @@ const Managed = () => {
       renderItem={renderItem}
       renderSectionHeader={renderSectionHeader}
       renderSectionFooter={renderSectionFooter}
-      ItemSeparatorComponent={() => (
-        <Divider color="transparent" size={spacing.padding.large} />
-      )}
+      ItemSeparatorComponent={renderItemSeparatorComponent}
       ListFooterComponent={renderListFooter}
       onEndReached={onLoadMore}
       refreshControl={(
@@ -169,7 +171,7 @@ const Managed = () => {
           tintColor={theme.colors.gray40}
         />
       )}
-      ListEmptyComponent={() => <ListEmptyAll />}
+      ListEmptyComponent={renderListEmptyComponent}
     />
   );
 };

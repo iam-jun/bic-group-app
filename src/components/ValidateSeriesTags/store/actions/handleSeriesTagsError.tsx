@@ -71,12 +71,7 @@ const handleSeriesTagsError
   = (_set, _get) => (params: HandleSeriesTagsErrorParams) => {
     const { error } = params || {};
     const errorCode = error?.code;
-    if (
-      [
-        ApiErrorCode.Post.ARTICLE_INVALID_PARAM,
-        ApiErrorCode.Post.POST_INVALID_PARAM,
-      ].includes(errorCode)
-    ) {
+    if (ApiErrorCode.Post.TAG_SERIES_INVALID === errorCode) {
       handleValidateSeriesTagsError(params);
     } else {
       showToastError(error);

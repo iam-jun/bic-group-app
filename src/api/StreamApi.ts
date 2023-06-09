@@ -5,7 +5,6 @@ import {
   IParamDeleteReaction,
   ICommentData,
   IParamGetDraftContents,
-  IParamGetPostAudiences,
   IParamGetPostDetail,
   IParamGetReactionDetail,
   IParamPutReaction,
@@ -24,7 +23,7 @@ import {
   IParamGetSearchPost,
   IParamPostNewRecentSearchKeyword, IRecentSearchTarget,
 } from '~/interfaces/IHome';
-import { IParamGetGroupPosts } from '~/interfaces/IGroup';
+import { IParamGetTimeline } from '~/interfaces/IGroup';
 import {
   IGetSearchArticleInSeries,
   IGetSearchTags,
@@ -57,18 +56,18 @@ const defaultConfig = {
 };
 
 export const streamApiConfig = {
-  getGiphyAPIKey: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
+  getGiphyAPIKey: (params?: IParamGetTimeline): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}authorization/giphy-key`,
     params,
   }),
   getNewsfeed: (param: IParamGetFeed): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}feeds/newsfeed`,
+    url: `${provider.url}newsfeed`,
     params: {
       order: param?.order || 'DESC',
       limit: param?.limit,
-      offset: param?.offset,
+      after: param?.after,
       idGte: param?.idGte,
       idLte: param?.idLte,
       idGt: param?.idGt,
@@ -194,8 +193,8 @@ export const streamApiConfig = {
       offset: params?.offset || 0,
       idGte: params?.idGte,
       idLte: params?.idLte,
-      idLt: params?.idLt,
-      idGt: params?.idGt,
+      after: params?.endCursor,
+      before: params?.startCursor,
       postId: params?.postId,
       parentId: params?.parentId,
       childLimit: params?.childLimit || 1,
@@ -236,13 +235,6 @@ export const streamApiConfig = {
     method: 'put',
   }),
 
-  // todo move to group
-  getPostAudiences: (params: IParamGetPostAudiences): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${apiProviders.bein.url}/post-audiences/groups`,
-    provider: apiProviders.bein,
-    params,
-  }),
   getSearchMentionAudiences: (
     params: IParamSearchMentionAudiences,
   ): HttpApiRequestConfig => ({
@@ -285,10 +277,7 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}comments/${commentId}`,
     params: {
-      limit: params?.limit || 1,
-      offset: params?.offset || 0,
-      postId: params?.postId || '',
-      childLimit: params?.childLimit || 1,
+      limit: 1,
       targetChildLimit: params?.targetChildLimit || 10,
     },
   }),
@@ -320,10 +309,7 @@ export const streamApiConfig = {
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}articles/${id}`,
-    params: {
-      ...params,
-      childCommentLimit: params?.childCommentLimit || 10,
-    },
+    params,
   }),
   getArticleDetailByAdmin: (
     id: string, params?: IParamGetArticleDetail,
@@ -458,9 +444,9 @@ export const streamApiConfig = {
     url: `${provider.url}tags`,
     params,
   }),
-  validateSeriesTagsOfArticle: (params: IParamsValidateSeriesTags): HttpApiRequestConfig => ({
+  validateSeriesTags: (params: IParamsValidateSeriesTags): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}articles/validate-series-tags`,
+    url: `${provider.url}content/validate-series-tags`,
     method: 'post',
     data: { ...params },
   }),
@@ -543,6 +529,12 @@ export const streamApiConfig = {
     url: `${provider.url}content/group/${groupId}/reorder`,
     method: 'post',
     data: reorderedPinContent,
+  }),
+  getTimelinePosts: (groupId: string, params?: IParamGetTimeline): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${apiProviders.beinFeed.url}timeline/${groupId}`,
+    provider: apiProviders.beinFeed,
+    params,
   }),
 };
 
@@ -661,15 +653,7 @@ const streamApi = {
     }
   },
 
-  getPostDetail: (params: IParamGetPostDetail) => {
-    const requestParams = {
-      commentLimit: 10,
-      withComment: true,
-      childCommentLimit: 10,
-      ...params,
-    };
-    return withHttpRequestPromise(streamApiConfig.getPostDetail, requestParams);
-  },
+  getPostDetail: (params: IParamGetPostDetail) => withHttpRequestPromise(streamApiConfig.getPostDetail, params),
   getDraftContents: async (param: IParamGetDraftContents) => {
     try {
       const response: any = await makeHttpRequest(
@@ -689,9 +673,6 @@ const streamApi = {
       return Promise.reject(e);
     }
   },
-  getPostAudience: (params: IParamGetPostAudiences) => withHttpRequestPromise(
-    streamApiConfig.getPostAudiences, params,
-  ),
   getCommentDetail: (commentId: string, params: IRequestGetPostComment) => withHttpRequestPromise(
     streamApiConfig.getCommentDetail, commentId, params,
   ),
@@ -773,8 +754,8 @@ const streamApi = {
   searchTagsInAudiences: (params?: IGetSearchTags) => withHttpRequestPromise(
     streamApiConfig.searchTagsInAudiences, params,
   ),
-  validateSeriesTagsOfArticle: (params: IParamsValidateSeriesTags) => withHttpRequestPromise(
-    streamApiConfig.validateSeriesTagsOfArticle, params,
+  validateSeriesTags: (params: IParamsValidateSeriesTags) => withHttpRequestPromise(
+    streamApiConfig.validateSeriesTags, params,
   ),
   getTags: (params: IParamGetCommunityTags) => withHttpRequestPromise(
     streamApiConfig.getTags, params,
@@ -822,6 +803,13 @@ const streamApi = {
   getPinContentsGroup: (id: string) => withHttpRequestPromise(streamApiConfig.getPinContentsGroup, id),
   reorderPinContentGroup: (reorderedPinContent: string[], groupId: string) => withHttpRequestPromise(
     streamApiConfig.reorderPinContentGroup, reorderedPinContent, groupId,
+  ),
+  getTimelinePosts: (groupId: string, param: IParamGetTimeline) => withHttpRequestPromise(
+    streamApiConfig.getTimelinePosts, groupId, {
+      after: param?.after || null,
+      limit: param?.limit || appConfig.recordsPerPage,
+      ...param,
+    },
   ),
 };
 

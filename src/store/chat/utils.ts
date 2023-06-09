@@ -4,7 +4,7 @@ export const handlePostedEvent = (payload: any, unreadChannels:any, userId: stri
   const mentions = parseSafe(payload.data.mentions);
   const post = parseSafe(payload.data.post);
 
-  if (mentions.includes(userId) && !post.root_id) {
+  if (mentions?.includes(userId) && !post.root_id) {
     const id = payload.broadcast.channel_id;
     let channel = unreadChannels[id];
     if (!channel) {

@@ -38,7 +38,6 @@ export const _openImagePicker = async ({
       ImagePicker.openPickerSinglePhotoWithCropping({
         ...groupProfileImageCropRatio[fieldName],
         maxSize: AppConfig.groupImageMaxSize,
-        exclusionList: ['gif', 'webp'],
       })
         .then((file) => {
           uploadFile({

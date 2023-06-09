@@ -24,7 +24,7 @@ const GroupJoinCancelButton = ({ style, community }: GroupJoinCancelButtonProps)
   const {
     privacy,
     id: groupId,
-    settings,
+    affectedSettings,
   } = infoDetail || {};
   const joinStatusCommunity = community?.joinStatus;
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
@@ -46,20 +46,20 @@ const GroupJoinCancelButton = ({ style, community }: GroupJoinCancelButtonProps)
       });
       return;
     }
-    if (settings?.isActiveMembershipQuestions) {
+    if (affectedSettings?.isActiveMembershipQuestions) {
       const payload: MembershipQuestionsInfo = {
         groupId,
         name: '',
         rootGroupId: groupId,
         type: 'group',
         isActive: true,
-        isActiveGroupTerms: settings?.isActiveGroupTerms,
+        isActiveGroupTerms: affectedSettings?.isActiveGroupTerms,
       };
       membershipQuestionActions.setMembershipQuestionsInfo(payload);
       return;
     }
 
-    if (settings.isActiveGroupTerms) {
+    if (affectedSettings?.isActiveGroupTerms) {
       const payload = {
         groupId, rootGroupId: groupId, name: '', type: 'group', isActive: true,
       } as any;

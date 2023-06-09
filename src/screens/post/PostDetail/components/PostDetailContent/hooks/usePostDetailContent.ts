@@ -1,7 +1,7 @@
 import { useIsFocused } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
 import {
-  useCallback, useEffect, useMemo, useRef, useState,
+  MutableRefObject, useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
 import Text from '~/baseComponents/Text';
 import APIErrorCode from '~/constants/apiErrorCode';
@@ -18,6 +18,7 @@ import postsSelector from '~/store/entities/posts/selectors';
 import useNetworkStore from '~/store/network';
 import networkSelectors from '~/store/network/selectors';
 import useModalStore from '~/store/modal';
+import { Props as IRootNavigation } from '~/router/helper';
 
 const usePostDetailContent = ({
   postId,
@@ -26,7 +27,7 @@ const usePostDetailContent = ({
   isReported,
 }) => {
   const { t } = useBaseHook();
-  const { rootNavigation } = useRootNavigation();
+  const { rootNavigation, goHome } = useRootNavigation();
 
   const isInternetReachable = useNetworkStore(
     networkSelectors.getIsInternetReachable,
@@ -53,6 +54,9 @@ const usePostDetailContent = ({
   );
   const commentLeft = usePostsStore(
     useCallback(postsSelector.getCommentOnlyCount(postId), [postId]),
+  );
+  const commentEndCursor = usePostsStore(
+    useCallback(postsSelector.getCommentEndCursor(postId), [postId]),
   );
   const setting = usePostsStore(
     useCallback(postsSelector.getSetting(postId), [postId]),
@@ -141,17 +145,13 @@ const usePostDetailContent = ({
 
   useEffect(
     () => () => {
-      if (commentError === APIErrorCode.Post.POST_DELETED) {
-        deletePostLocal(postId);
-      }
+      shouldDeletePostLocal({ commentError, postId, deletePostLocal });
     },
     [commentError],
   );
 
   useEffect(() => {
-    if (!userId) {
-      rootNavigation.replace(rootSwitch.authStack);
-    }
+    shouldReplace({ userId, rootNavigation });
   }, [isFocused, userId]);
 
   useEffect(() => {
@@ -159,34 +159,31 @@ const usePostDetailContent = ({
   }, [isInternetReachable]);
 
   useEffect(() => {
-    if (postId && userId && internetReachableRef.current) {
-      getPostDetail((loading, success) => {
-        if (!loading && !success && internetReachableRef.current) {
-          showNotice();
-        }
-      });
-    }
+    shouldGetPostDetail({
+      userId,
+      postId,
+      internetReachableRef,
+      getPostDetail,
+      showNotice,
+    });
   }, [postId, userId, internetReachableRef]);
 
   useEffect(() => {
-    if (deleted && isFocused) {
-      if (notificationId && !isReported) {
-        rootNavigation.goBack();
-      } else if (!isReported) showNotice();
-    }
+    shouldGoBackWhenDeletedPost({
+      deleted,
+      isFocused,
+      isReported,
+      rootNavigation,
+      notificationId,
+      goHome,
+    });
   }, [deleted, isFocused]);
 
   useEffect(() => {
-    if (reported && isFocused) {
-      setTimeout(() => {
-        rootNavigation.goBack();
-      }, 200);
-    }
+    shouldGoBack({ reported, isFocused, rootNavigation });
   }, [reported, isFocused]);
 
-  const getPostDetail = (
-    callbackLoading?: (loading: boolean, success: boolean) => void,
-  ) => {
+  const getPostDetail = (callbackLoading?: (loading: boolean, success: boolean) => void) => {
     if (userId && postId) {
       const payload: IPayloadGetPostDetail = {
         postId,
@@ -208,6 +205,7 @@ const usePostDetailContent = ({
     createdAt,
     audience,
     commentLeft,
+    commentEndCursor,
     groupIds,
     comments,
     sectionData,
@@ -216,6 +214,74 @@ const usePostDetailContent = ({
     onRefresh,
     onPressMarkSeenPost,
   };
+};
+
+const shouldReplace = (params: { userId: string; rootNavigation: IRootNavigation }) => {
+  const { userId, rootNavigation } = params;
+  if (!userId) {
+    rootNavigation.replace(rootSwitch.authStack);
+  }
+};
+
+const shouldGetPostDetail = (params: {
+  postId: string;
+  userId: string;
+  internetReachableRef: MutableRefObject<boolean>;
+  getPostDetail: (callbackLoading?: (loading: boolean, success: boolean) => void) => void;
+  showNotice: () => void;
+}) => {
+  const {
+    postId, userId, internetReachableRef, getPostDetail, showNotice,
+  } = params;
+  if (postId && userId && internetReachableRef.current) {
+    getPostDetail((loading, success) => {
+      if (!loading && !success && internetReachableRef.current) {
+        showNotice();
+      }
+    });
+  }
+};
+
+const shouldGoBack = (params: { reported: boolean; isFocused: boolean; rootNavigation: IRootNavigation }) => {
+  const { reported, isFocused, rootNavigation } = params;
+  if (reported && isFocused) {
+    setTimeout(() => {
+      rootNavigation.goBack();
+    }, 200);
+  }
+};
+
+const shouldGoBackWhenDeletedPost = (params: {
+  deleted: boolean;
+  isFocused: boolean;
+  isReported: boolean;
+  rootNavigation: IRootNavigation;
+  notificationId: string;
+  goHome: () => void;
+}) => {
+  const {
+    deleted, isFocused, isReported, rootNavigation, notificationId, goHome,
+  } = params;
+  if (deleted && isFocused && !isReported) {
+    if (notificationId) {
+      setTimeout(() => {
+        rootNavigation.goBack();
+      }, 200);
+    } else {
+      goHome();
+    }
+  }
+};
+
+const shouldDeletePostLocal = (params: {
+  commentError: string;
+  deletePostLocal: (postId: string) => void;
+  postId: string;
+}) => {
+  const { commentError, deletePostLocal, postId } = params;
+  if (commentError === APIErrorCode.Post.POST_DELETED) {
+    deletePostLocal(postId);
+  }
 };
 
 export default usePostDetailContent;

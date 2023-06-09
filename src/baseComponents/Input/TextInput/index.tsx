@@ -38,7 +38,7 @@ export interface TextInputProps extends RNTextInputProps {
   helperAction?: string;
   placeholder?: string;
   error?: boolean;
-  keyboardType?: KeyboardTypeOptions | undefined;
+  keyboardType?: KeyboardTypeOptions;
   value?: string;
   textInputRef?: React.Ref<RNTextInput>;
   textColor?: string;
@@ -52,7 +52,7 @@ export interface TextInputProps extends RNTextInputProps {
 
   onFocus?: () => void;
   onBlur?: () => void;
-  onChangeText?: ((text: string) => void) | undefined;
+  onChangeText?: ((text: string) => void);
   helperActionOnPress?: () => void;
 }
 
@@ -145,20 +145,20 @@ const TextInput: React.FC<TextInputProps> = ({
   const getBorderColor = () => {
     if (error) return colors.red40;
     if (!editable) return colors.neutral5;
-    if (isFocus) return !!activeOutlineColor ? activeOutlineColor : colors.purple50;
-    return !!outlineColor ? outlineColor : colors.neutral5;
+    if (isFocus) return activeOutlineColor || colors.purple50;
+    return outlineColor || colors.neutral5;
   };
 
   return (
     <View testID="text_input" style={[styles.container, style]}>
-      {!!label && (
+      {label ? (
         <View style={styles.labelStyle}>
           <Text.LabelM color={colors.neutral80} {...labelProps}>{label}</Text.LabelM>
         </View>
-      )}
-      <View style={[!!horizontal ? { flex: 1 } : {}]}>
+      ) : null}
+      <View style={[horizontal ? { flex: 1 } : {}]}>
         <View style={[styles.row]}>
-          {!!leftIcon && (
+          {leftIcon ? (
             <View style={styles.leftIconStyle}>
               <Icon
                 testID="text_input.left_icon"
@@ -168,7 +168,7 @@ const TextInput: React.FC<TextInputProps> = ({
                 {...leftIconProps}
               />
             </View>
-          )}
+          ) : null}
           <View
             style={[
               styles.inputRow,
@@ -197,17 +197,17 @@ const TextInput: React.FC<TextInputProps> = ({
                 editable={editable}
                 {...props}
               />
-              {!!RightComponent && (
+              {RightComponent ? (
                 <View style={styles.rightComponentStyle}>
                   {RightComponent}
                 </View>
-              )}
+              ) : null}
             </View>
           </View>
         </View>
-        {!!helperText && (
+        {helperText ? (
           <View style={[styles.helperContainer, helperStyle]}>
-            {!!error && (
+            {error ? (
               <Icon
                 testID="text_input.error_icon"
                 icon="CircleExclamation"
@@ -215,7 +215,7 @@ const TextInput: React.FC<TextInputProps> = ({
                 tintColor={colors.red40}
                 style={styles.errorIconStyle}
               />
-            )}
+            ) : null}
             <View style={styles.helperTextStyle}>
               <Text.BodyXS testID="text_input.text_helper" {..._textHelperProps}>
                 {helperText}
@@ -223,7 +223,7 @@ const TextInput: React.FC<TextInputProps> = ({
               </Text.BodyXS>
             </View>
           </View>
-        )}
+        ) : null}
       </View>
     </View>
   );
@@ -245,8 +245,8 @@ const themeStyles = (
     },
     inputRow: {
       flexDirection: 'row',
-      borderTopLeftRadius: !!leftIcon ? 0 : spacing.borderRadius.base,
-      borderBottomLeftRadius: !!leftIcon ? 0 : spacing.borderRadius.base,
+      borderTopLeftRadius: leftIcon ? 0 : spacing.borderRadius.base,
+      borderBottomLeftRadius: leftIcon ? 0 : spacing.borderRadius.base,
       borderTopRightRadius: spacing.borderRadius.base,
       borderBottomRightRadius: spacing.borderRadius.base,
       borderWidth: 1,
@@ -266,7 +266,7 @@ const themeStyles = (
       flex: 1,
     },
     labelStyle: {
-      marginRight: !!horizontal ? spacing.margin.big : 0,
+      marginRight: horizontal ? spacing.margin.big : 0,
       marginBottom: !horizontal ? spacing.margin.small : 0,
       maxWidth: horizontal ? dimension.deviceWidth / 3 : dimension.deviceWidth,
     },

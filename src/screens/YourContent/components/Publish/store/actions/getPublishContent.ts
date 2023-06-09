@@ -1,17 +1,17 @@
 import streamApi from '~/api/StreamApi';
-import { IPost, IPayloadGetPublishContents } from '~/interfaces/IPost';
+import { IPayloadGetPublishContents } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
-import { IPublishState } from '../index';
+import { IPublishedContentFilter, IPublishState } from '../index';
 import { getParamsContentFeed } from '~/screens/Home/store/helper';
 import useYourContentStore from '~/screens/YourContent/store';
-import { IBaseListState } from '~/store/interfaces/IBaseState';
 import showToastError from '~/store/helper/showToastError';
+import { IParamGetFeed } from '~/interfaces/IHome';
 
 const getPublishContent = (set, get) => async (payload: IPayloadGetPublishContents) => {
   const { isRefresh } = payload;
   const { publishContents }: IPublishState = get();
   const { activePublishTab } = useYourContentStore.getState();
-  const currentContents: IBaseListState<IPost> = publishContents[activePublishTab];
+  const currentContents: IPublishedContentFilter = publishContents[activePublishTab];
 
   if (currentContents.loading) return;
 
@@ -30,9 +30,9 @@ const getPublishContent = (set, get) => async (payload: IPayloadGetPublishConten
   }, 'action getPublishContent');
 
   try {
-    const offset = isRefresh ? 0 : currentContents.ids?.length || 0;
-    const params = {
-      offset,
+    const endCursor = isRefresh ? null : currentContents.endCursor;
+    const params: IParamGetFeed = {
+      after: endCursor,
       isImportant: false,
       isSaved: false,
       isMine: true,
@@ -53,6 +53,7 @@ const getPublishContent = (set, get) => async (payload: IPayloadGetPublishConten
         refreshing: false,
         ids: ids.concat(newIds),
         hasNextPage: response?.meta?.hasNextPage || false,
+        endCursor: response?.meta?.endCursor || null,
       };
     }, 'action getPublishContent Success');
   } catch (e) {
@@ -62,6 +63,7 @@ const getPublishContent = (set, get) => async (payload: IPayloadGetPublishConten
         loading: false,
         refreshing: false,
         hasNextPage: false,
+        endCursor: null,
       };
     }, 'action getPublishContent Failed');
     console.error('\x1b[31m🐣️ action getPublishContent error: ', e, '\x1b[0m');

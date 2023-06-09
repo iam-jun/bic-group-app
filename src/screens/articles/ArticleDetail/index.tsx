@@ -35,7 +35,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const id = params?.articleId;
   const focusComment = params?.focusComment;
   const isFocused = useIsFocused();
-  const { rootNavigation } = useRootNavigation();
+  const { rootNavigation, goHome } = useRootNavigation();
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -46,24 +46,26 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
 
   const [refreshing, setRefreshing] = useState(false);
   const data = usePostsStore(useCallback(postsSelector.getPost(id, {}), [id]));
+  const commentEndCursor = usePostsStore(useCallback(postsSelector.getCommentEndCursor(id), [id]));
   const errorContent = usePostsStore(useCallback(postsSelector.getErrorContent(id), [id]));
 
   const comments = useCommentsStore(useCallback(commentsSelector.getCommentsByParentId(id), [id]));
-  const firstCommentId = comments[0]?.id || '';
   const sectionData = useMemo(() => getSectionData(comments), [comments]);
 
   const { actions } = useArticlesStore((state: IArticlesState) => state);
   const { putMarkSeenPost } = usePostsStore((state: IPostsState) => state.actions);
   const { isError, code } = errorContent || {};
 
-  const { audience, setting, reported } = data || {};
+  const {
+    audience, setting, reported, deleted,
+  } = data || {};
 
   const {
     onLayout,
     onScrollToIndexFailed,
     onPressReplySectionHeader,
     onPressLoadMoreCommentLevel2,
-    onPressReplyCommentItem,
+    // onPressReplyCommentItem,
   } = usePostDetailContentHandler({
     postId: id, comments, sectionData, focusComment, listRef, commentInputRef,
   });
@@ -89,6 +91,12 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     }
   }, [reported, isFocused]);
 
+  useEffect(() => {
+    if (deleted && isFocused) {
+      goHome();
+    }
+  }, [deleted, isFocused]);
+
   const onRefresh = () => {
     setRefreshing(false);
     actions.getArticleDetail({ articleId: id });
@@ -98,20 +106,20 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     putMarkSeenPost({ postId: id });
   }, [id]);
 
-  const renderCommentItem = (data: any) => (
-    <CommentItem
-      postId={id}
-      index={data?.index}
-      section={data?.section}
-      isReplyingComment={false}
-      commentData={data?.item}
-      groupIds={data?.groupIds}
-      audience={audience}
-      commentParent={data?.section?.comment}
-      onPressReply={onPressReplyCommentItem}
-      onPressMarkSeenPost={onPressMarkSeenPost}
-    />
-  );
+  // const renderCommentItem = (data: any) => (
+  //   <CommentItem
+  //     postId={id}
+  //     index={data?.index}
+  //     section={data?.section}
+  //     isReplyingComment={false}
+  //     commentData={data?.item}
+  //     groupIds={data?.groupIds}
+  //     audience={audience}
+  //     commentParent={data?.section?.comment}
+  //     onPressReply={onPressReplyCommentItem}
+  //     onPressMarkSeenPost={onPressMarkSeenPost}
+  //   />
+  // );
 
   const renderSeparator = () => <View />;
 
@@ -129,6 +137,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
         groupIds={groupIds}
         audience={audience}
         isReplyingComment={false}
+        showLoadMore={false}
         commentData={data?.comment}
         onPressReply={onPressReplySectionHeader}
         onPressLoadMore={onPressLoadMoreCommentLevel2}
@@ -163,7 +172,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     <ArticleView
       id={id}
       article={data}
-      firstCommentId={firstCommentId}
+      endCursor={commentEndCursor}
     />
   );
 
@@ -222,7 +231,8 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
           ListHeaderComponent={ListHeaderComponent}
           onLayout={onLayout}
           onContentSizeChange={onLayout}
-          renderItem={renderCommentItem}
+          // renderItem={renderCommentItem}
+          renderItem={() => <View />}
           ListFooterComponent={renderFooter}
           renderSectionHeader={renderSectionHeader}
           ItemSeparatorComponent={renderSeparator}
@@ -255,8 +265,6 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
   });
 };
-
-// export default ArticleDetail;
 
 const ArticleDetail = memo(_ArticleDetail);
 ArticleDetail.whyDidYouRender = true;

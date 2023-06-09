@@ -1,10 +1,11 @@
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { ExtendedTheme, useTheme, useIsFocused } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import { isEmpty } from 'lodash';
 import { Button } from '~/baseComponents';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
+import { useRootNavigation } from '~/hooks/navigation';
 import { useUserIdAuth } from '~/hooks/auth';
 import { IAudienceGroup } from '~/interfaces/IPost';
 import AlertDeleteAudiencesConfirmContent from '~/components/posts/AlertDeleteAudiences';
@@ -30,11 +31,15 @@ const SeriesDetail = ({ route }: any) => {
   const styles = createStyle(theme);
   const userId = useUserIdAuth();
   const { t } = useBaseHook();
+  const isFocused = useIsFocused();
+  const { goHome } = useRootNavigation();
 
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const { showAlert } = useModalStore((state) => state.actions);
 
-  const series = usePostsStore(useCallback(postsSelector.getPost(seriesId, {}), [seriesId]));
+  const series = usePostsStore(
+    useCallback(postsSelector.getPost(seriesId, {}), [seriesId]),
+  );
 
   const {
     actor, id, deleted, audience, items = [],
@@ -47,8 +52,16 @@ const SeriesDetail = ({ route }: any) => {
   const isActor = actor?.id == userId;
 
   useEffect(() => {
-    if (isMounted) { actions.getSeriesDetail(seriesId); }
+    if (isMounted) {
+      actions.getSeriesDetail(seriesId);
+    }
   }, [isMounted, seriesId]);
+
+  useEffect(() => {
+    if (deleted && isFocused) {
+      goHome();
+    }
+  }, [deleted, isFocused]);
 
   const onPressSearch = () => {
     setIsOpenSearch(true);
@@ -58,7 +71,9 @@ const SeriesDetail = ({ route }: any) => {
     setIsOpenSearch(false);
   };
 
-  const { shouldHavePermissionOnSomeAudience } = useMyPermissionsStore((state) => state.actions);
+  const { shouldHavePermissionOnSomeAudience } = useMyPermissionsStore(
+    (state) => state.actions,
+  );
 
   const canDeleteOwnPost = shouldHavePermissionOnSomeAudience(
     audience?.groups,
@@ -108,10 +123,18 @@ const SeriesDetail = ({ route }: any) => {
   };
 
   const handleConfirmDelete = () => {
-    actions.deleteSeries(id, handleError);
+    actions.deleteSeries(
+      id,
+      //  handleError
+    );
   };
 
-  const { showMenu } = useSeriesMenu(series, isActor, true, handleConfirmDelete);
+  const { showMenu } = useSeriesMenu(
+    series,
+    isActor,
+    true,
+    handleConfirmDelete,
+  );
 
   if (deleted) {
     return (
@@ -158,8 +181,7 @@ const SeriesDetail = ({ route }: any) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.container}
       />
-      {isActor
-        && (
+      {isActor && (
         <AddArticles
           seriesId={id}
           audience={audience}
@@ -168,7 +190,7 @@ const SeriesDetail = ({ route }: any) => {
           onClose={onCloseSearch}
           placeholder={t('article:search_article_placeholder')}
         />
-        )}
+      )}
     </View>
   );
 };
