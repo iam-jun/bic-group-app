@@ -36,6 +36,9 @@ const BadgeCollection = ({ showSearchBox }: Props) => {
   const dataSearch = useUserBadge((state) => state.dataSearch);
   const isEditing = useUserBadge((state) => state.isEditing);
   const choosingBadges = useUserBadge((state) => state.choosingBadges);
+  const totalBadges = useUserBadge((state) => state.totalBadges);
+
+  const totalBadgesText = t('user:owned_badges:total_badges').replace('(total)', totalBadges);
 
   const loadingSearch = useUserBadge((state) => state.loadingSearch);
 
