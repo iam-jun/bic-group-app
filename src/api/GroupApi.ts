@@ -15,7 +15,7 @@ import {
 } from '~/interfaces/ICommunity';
 import { withHttpRequestPromise } from '~/api/apiRequest';
 import {
-  IParamsSignUp, IParamValidateReferralCode,
+  IParamValidateReferralCode,
 } from '~/interfaces/IAuth';
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 import { IParamsReportMember } from '~/interfaces/IReport';
@@ -443,12 +443,6 @@ export const groupsApiConfig = {
     url: `${provider.url}public/referral/verify`,
     params: { ...param },
   }),
-  signUp: (params: IParamsSignUp): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}auth/signup/referral`,
-    method: 'post',
-    data: { ...params },
-  }),
   getGroupTerms: (groupId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/terms`,
@@ -742,7 +736,6 @@ const groupApi = {
   ),
   // eslint-disable-next-line max-len
   validateReferralCode: (param: IParamValidateReferralCode) => withHttpRequestPromise(groupsApiConfig.validateReferralCode, param),
-  signUp: (params: IParamsSignUp) => withHttpRequestPromise(groupsApiConfig.signUp, params),
   getGroupTerms: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getGroupTerms, groupId),
   getMembershipQuestions: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getMembershipQuestions, groupId),
   getUserNotFoundInfo: (email: string) => withHttpRequestPromise(groupsApiConfig.getUserNotFoundInfo, email),
