@@ -60,6 +60,7 @@ const SearchBadgeModal = ({
     >
       <View style={styles.screenContainer}>
         <Header
+          title={t('user:edit_showing_badges_title')}
           buttonProps={{ disabled: isDisable, loading: loadingEditing }}
           buttonText={t('common:btn_save')}
           onPressBack={onClose}
