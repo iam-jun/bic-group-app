@@ -1,11 +1,11 @@
-import groupApi from '~/api/GroupApi';
+import userApi from '~/api/UserApi';
 import { IVerifyEmail } from '~/interfaces/IAuth';
 
 const resendVerifyEmail
   = () => async (payload: IVerifyEmail, callbackError: (error: any) => void, callbackSuccess: () => void) => {
     try {
       const newParams = { ...payload, email: encodeURIComponent(payload.email) } as IVerifyEmail;
-      const response = await groupApi.resendVerificationEmail(newParams);
+      const response = await userApi.resendVerificationEmail(newParams);
       if (response && response?.data) {
         callbackSuccess();
       }

@@ -20,9 +20,7 @@ const NotFound = () => {
   let imgSize = dimensions.width - 2 * imgPadding;
   if (imgSize > imgMaxWidth) imgSize = imgMaxWidth;
 
-  const onPressGoBack = () => {
-    // alert('Pressed "Go back"');
-  };
+  const onPressGoBack = () => null;
 
   return (
     <ScreenWrapper isFullView style={styles.container}>

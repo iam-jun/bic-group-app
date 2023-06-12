@@ -68,22 +68,22 @@ const SearchDiscoverCommunityResults = ({
 
   const onJoin = (item: any) => {
     const {
-      id, name, settings, groupId,
+      id, name, groupId, affectedSettings,
     } = item;
-    if (settings?.isActiveMembershipQuestions) {
+    if (affectedSettings?.isActiveMembershipQuestions) {
       const payload: MembershipQuestionsInfo = {
         groupId: id,
         rootGroupId: groupId,
         name,
         type: 'community',
         isActive: true,
-        isActiveGroupTerms: settings?.isActiveGroupTerms,
+        isActiveGroupTerms: affectedSettings?.isActiveGroupTerms,
       };
       membershipQuestionActions.setMembershipQuestionsInfo(payload);
       return;
     }
 
-    if (settings?.isActiveGroupTerms) {
+    if (affectedSettings?.isActiveGroupTerms) {
       const payload = {
         groupId: id,
         rootGroupId: groupId,
@@ -148,6 +148,8 @@ const SearchDiscoverCommunityResults = ({
     return null;
   };
 
+  const renderItemSeparatorComponent = () => <ViewSpacing height={4} />;
+
   return (
     <FlatList
       testID="community_search_results.list"
@@ -161,7 +163,7 @@ const SearchDiscoverCommunityResults = ({
       showsVerticalScrollIndicator={false}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.1}
-      ItemSeparatorComponent={() => <ViewSpacing height={4} />}
+      ItemSeparatorComponent={renderItemSeparatorComponent}
     />
   );
 };

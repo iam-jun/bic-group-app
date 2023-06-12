@@ -1,5 +1,5 @@
 import { CommunityPrivacyType } from '~/constants/privacyTypes';
-import { IObject } from '~/interfaces/common';
+import { IGroupSettings, IObject } from '~/interfaces/common';
 import { IJoiningMember } from '~/interfaces/IGroup';
 
 export interface ICommunity {
@@ -17,11 +17,8 @@ export interface ICommunity {
   joinStatus?: number;
   members?: IPreviewMember[];
   teamName?: string;
-  settings?: {
-    isJoinApproval?: boolean;
-    isActiveGroupTerms?: boolean;
-    isActiveMembershipQuestions?: boolean;
-  }
+  settings?: IGroupSettings;
+  affectedSettings?: IGroupSettings;
 }
 
 export interface IParamGetCommunities {

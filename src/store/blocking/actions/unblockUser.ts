@@ -1,4 +1,4 @@
-import groupApi from '~/api/GroupApi';
+import userApi from '~/api/UserApi';
 import { IBlockingUser } from '~/interfaces/IBlocking';
 import showToastError from '~/store/helper/showToastError';
 import showToastSuccess from '~/store/helper/showToastSuccess';
@@ -7,7 +7,7 @@ const unblockUser = (set, get) => async (userId: string) => {
   try {
     const { list } = get();
 
-    const response = await groupApi.unblockUser(userId);
+    const response = await userApi.unblockUser(userId);
     if (response && response?.data) {
       const newList = list.filter((item: IBlockingUser) => item.id !== userId);
       set(

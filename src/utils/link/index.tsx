@@ -168,7 +168,7 @@ const getURLParams = (params: string) => {
     }, {});
 
   // need to convert to camelCase since the input params are in snake_case
-  return ConvertHelper.camelizeKeys(newParams) as Object;
+  return ConvertHelper.camelizeKeys(newParams);
 };
 
 export const matchDeepLink = (url: string) => {

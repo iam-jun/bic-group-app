@@ -23,7 +23,7 @@ const getArticleTopicDetail = (set, get) => async (payload: IPayloadGetArticleTo
 
       const offset = isRefresh ? 0 : listArticle?.length || 0;
       const response = await streamApi.getArticleTopicDetail({ offset, id });
-      const newArticles = isRefresh ? response?.data || [] : listArticle?.concat(response?.data || []);
+      const newArticles = handleNewArticles({ isRefresh, response, listArticle });
 
       set((state: ITopicState) => {
         state.articles.data = newArticles;
@@ -42,6 +42,14 @@ const getArticleTopicDetail = (set, get) => async (payload: IPayloadGetArticleTo
     }, 'getArticleTopicDetailError');
     console.error('\x1b[31m🐣️ action getArticleTopicDetail error: ', e, '\x1b[0m');
   }
+};
+
+const handleNewArticles = (params: { isRefresh: boolean, response: any, listArticle: any }) => {
+  const { isRefresh, response, listArticle } = params;
+  if (isRefresh) {
+    return response?.data || [];
+  }
+  return listArticle?.concat(response?.data || []);
 };
 
 export default getArticleTopicDetail;

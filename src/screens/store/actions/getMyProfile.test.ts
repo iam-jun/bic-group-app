@@ -1,8 +1,8 @@
 import { USER_PROFILE } from '../../../test/mock_data/menu';
-import groupApi from '~/api/GroupApi';
 import { renderHook, act } from '~/test/testUtils';
 import useCommonController from '../index';
 import useModalStore from '~/store/modal';
+import userApi from '~/api/UserApi';
 
 describe('getMyProfile', () => {
   const userId = 'userId';
@@ -12,7 +12,7 @@ describe('getMyProfile', () => {
       data: USER_PROFILE,
     };
 
-    const spy = jest.spyOn(groupApi, 'getUserProfile').mockImplementation(
+    const spy = jest.spyOn(userApi, 'getUserProfile').mockImplementation(
       () => Promise.resolve(response),
     );
 
@@ -37,7 +37,7 @@ describe('getMyProfile', () => {
         message: 'Error message',
       },
     };
-    const spy = jest.spyOn(groupApi, 'getUserProfile').mockImplementation(
+    const spy = jest.spyOn(userApi, 'getUserProfile').mockImplementation(
       () => Promise.reject(error) as any,
     );
     const showToast = jest.fn();

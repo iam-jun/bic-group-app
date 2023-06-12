@@ -67,7 +67,9 @@ const LoggerView = () => {
   };
 
   useEffect(() => {
-    checkAuthSessions();
+    (async () => {
+      await checkAuthSessions();
+    })();
   }, []);
 
   useEffect(
@@ -262,7 +264,6 @@ const LoggerView = () => {
           <ScrollView>
             <View style={styles.body}>
               {renderSettingItem(LogType.API, 'API Request')}
-              {/* {renderSettingItem(LogType.ZUSTAND, 'Zustand')} */}
               {renderSettingItem('auto-scroll', 'Auto scroll to top')}
             </View>
             <View style={styles.appInfo}>
@@ -276,6 +277,8 @@ const LoggerView = () => {
       </View>
     </Modal>
   );
+
+  const renderItemSeparatorComponent = () => <ViewSpacing height={16} />;
 
   const renderModal = () => {
     if (!visible) return null;
@@ -305,7 +308,7 @@ const LoggerView = () => {
             // contentContainerStyle={{
             //   flexGrow: 1,
             // }}
-            ItemSeparatorComponent={() => <ViewSpacing height={16} />}
+            ItemSeparatorComponent={renderItemSeparatorComponent}
             keyExtractor={(item, index) => `debug-logger-item-${index}`}
           />
         </View>
@@ -328,7 +331,6 @@ const LoggerView = () => {
     },
     onEnd: (_) => {
       translateX.value = withSpring(defaultX);
-      // translateY.value = withSpring(0);
     },
   });
 

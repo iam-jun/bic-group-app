@@ -5,11 +5,9 @@ import {
   IParamDeleteReaction,
   ICommentData,
   IParamGetDraftContents,
-  IParamGetPostAudiences,
   IParamGetPostDetail,
   IParamGetReactionDetail,
   IParamPutReaction,
-  IParamSearchMentionAudiences,
   IPostCreatePost,
   IRequestGetPostComment,
   IRequestPostComment,
@@ -234,25 +232,6 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}content/seen/${id}`,
     method: 'put',
-  }),
-
-  // todo move to group
-  getPostAudiences: (params: IParamGetPostAudiences): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${apiProviders.bein.url}/post-audiences/groups`,
-    provider: apiProviders.bein,
-    params,
-  }),
-  getSearchMentionAudiences: (
-    params: IParamSearchMentionAudiences,
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${apiProviders.bein.url}users/mentionable`,
-    provider: apiProviders.bein,
-    params: {
-      ...params,
-      key: params.key ? params.key : undefined,
-    },
   }),
 
   deleteReaction: (data: IParamDeleteReaction): HttpApiRequestConfig => ({
@@ -544,6 +523,12 @@ export const streamApiConfig = {
     method: 'post',
     data: reorderedPinContent,
   }),
+  getGroupPosts: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${apiProviders.beinFeed.url}feeds/timeline`,
+    provider: apiProviders.beinFeed,
+    params,
+  }),
 };
 
 const streamApi = {
@@ -637,9 +622,6 @@ const streamApi = {
   postReplyComment: (params: IRequestReplyComment) => withHttpRequestPromise(streamApiConfig.postReplyComment, params),
   putMarkAsRead: (postId: string) => withHttpRequestPromise(streamApiConfig.putMarkAsRead, postId),
   putMarkSeenContent: (id: string) => withHttpRequestPromise(streamApiConfig.putMarkSeenContent, id),
-  getSearchMentionAudiences: (params: IParamSearchMentionAudiences) => withHttpRequestPromise(
-    streamApiConfig.getSearchMentionAudiences, params,
-  ),
   deleteReaction: (param: IParamDeleteReaction) => withHttpRequestPromise(streamApiConfig.deleteReaction, param),
   getReactionDetail: async (param: IParamGetReactionDetail) => {
     const { reactionName, targetId, target } = param;
@@ -689,9 +671,6 @@ const streamApi = {
       return Promise.reject(e);
     }
   },
-  getPostAudience: (params: IParamGetPostAudiences) => withHttpRequestPromise(
-    streamApiConfig.getPostAudiences, params,
-  ),
   getCommentDetail: (commentId: string, params: IRequestGetPostComment) => withHttpRequestPromise(
     streamApiConfig.getCommentDetail, commentId, params,
   ),
@@ -838,6 +817,13 @@ const streamApi = {
   getPinContentsGroup: (id: string) => withHttpRequestPromise(streamApiConfig.getPinContentsGroup, id),
   reorderPinContentGroup: (reorderedPinContent: string[], groupId: string) => withHttpRequestPromise(
     streamApiConfig.reorderPinContentGroup, reorderedPinContent, groupId,
+  ),
+  getGroupPosts: (param: IParamGetGroupPosts) => withHttpRequestPromise(
+    streamApiConfig.getGroupPosts, {
+      offset: param?.offset || 0,
+      limit: param?.limit || appConfig.recordsPerPage,
+      ...param,
+    },
   ),
 };
 

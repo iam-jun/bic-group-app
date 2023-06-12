@@ -1,6 +1,5 @@
 import i18next from 'i18next';
 import { IUserEdit } from '~/interfaces/IAuth';
-import groupApi from '~/api/GroupApi';
 import showToastError from '~/store/helper/showToastError';
 import { IToastMessage } from '~/interfaces/common';
 import useCommonController from '~/screens/store';
@@ -8,6 +7,7 @@ import { mapProfile } from '~/helpers/common';
 import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import IMenuController from '../Interface';
+import userApi from '~/api/UserApi';
 
 const editMyProfile = (_set, get) => async ({
   isVerified,
@@ -27,7 +27,7 @@ const editMyProfile = (_set, get) => async ({
       delete payload?.birthday;
     }
 
-    const response = await groupApi.editMyProfile(payload);
+    const response = await userApi.editMyProfile(payload);
 
     useCommonController.getState().actions.setMyProfile(mapProfile(response.data));
 
@@ -42,13 +42,10 @@ const editMyProfile = (_set, get) => async ({
     console.error('editMyProfile error:', error);
 
     const errorMessage: string = error?.meta?.message;
-    switch (errorMessage) {
-      case 'This phone number is used':
-        actions.setEditContactError(i18next.t('settings:text_phone_number_is_used'));
-        break;
-
-      default:
-        showToastError(error);
+    if (errorMessage === 'This phone number is used') {
+      actions.setEditContactError(i18next.t('settings:text_phone_number_is_used'));
+    } else {
+      showToastError(error);
     }
   }
 };

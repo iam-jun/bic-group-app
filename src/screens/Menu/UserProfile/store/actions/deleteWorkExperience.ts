@@ -1,7 +1,7 @@
-import groupApi from '~/api/GroupApi';
 import { mapWorkExperience } from '../../../store/helpler';
 import showToastError from '~/store/helper/showToastError';
 import { IUserProfileState } from '../../store';
+import userApi from '~/api/UserApi';
 
 const deleteWorkExperience = (set, get) => async (
   id: string,
@@ -9,7 +9,7 @@ const deleteWorkExperience = (set, get) => async (
 ) => {
   try {
     const userProfileStore: IUserProfileState = get();
-    const response = await groupApi.deleteWorkExperience(id);
+    const response = await userApi.deleteWorkExperience(id);
 
     if (response?.data) {
       set((state: IUserProfileState) => {

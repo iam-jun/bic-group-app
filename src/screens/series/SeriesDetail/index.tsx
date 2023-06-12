@@ -1,10 +1,11 @@
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { ExtendedTheme, useTheme, useIsFocused } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import { isEmpty } from 'lodash';
 import { Button } from '~/baseComponents';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
+import { useRootNavigation } from '~/hooks/navigation';
 import { useUserIdAuth } from '~/hooks/auth';
 import { IAudienceGroup } from '~/interfaces/IPost';
 import AlertDeleteAudiencesConfirmContent from '~/components/posts/AlertDeleteAudiences';
@@ -30,6 +31,8 @@ const SeriesDetail = ({ route }: any) => {
   const styles = createStyle(theme);
   const userId = useUserIdAuth();
   const { t } = useBaseHook();
+  const isFocused = useIsFocused();
+  const { goHome } = useRootNavigation();
 
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const { showAlert } = useModalStore((state) => state.actions);
@@ -49,6 +52,12 @@ const SeriesDetail = ({ route }: any) => {
   useEffect(() => {
     if (isMounted) { actions.getSeriesDetail(seriesId); }
   }, [isMounted, seriesId]);
+
+  useEffect(() => {
+    if (deleted && isFocused) {
+      goHome();
+    }
+  }, [deleted, isFocused]);
 
   const onPressSearch = () => {
     setIsOpenSearch(true);
