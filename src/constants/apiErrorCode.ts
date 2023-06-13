@@ -15,6 +15,7 @@ const Post = {
   POST_DELETED: 'content.not_found',
   VALIDATION_ERROR: 'api.validation_error', // invalid input send to backend
   TAG_SERIES_INVALID: 'tag_series_invalid', // invalid series or tags
+  ARTICLE_INVALID_PARAM: 'app.article.invalid_parameter', // invalid series or tags of article
   CONTENT_NO_PIN_PERMISSION: 'content.no_pin_permission',
   CONTENT_AUDIENCE_NO_BELONG: 'content.audience_no_belong',
   CONTENT_GROUP_REQUIRED: 'content.group_join_required',
