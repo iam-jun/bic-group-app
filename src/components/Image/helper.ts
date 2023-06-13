@@ -1,4 +1,4 @@
-import _, { isArray } from 'lodash';
+import _, { isArray, isEmpty } from 'lodash';
 import { StyleProp } from 'react-native';
 import type { Source, ImageStyle } from 'react-native-fast-image';
 import { IPost, PostType } from '~/interfaces/IPost';
@@ -47,8 +47,21 @@ export const getWidthStyle = (style: StyleProp<ImageStyle>): number | undefined 
   return styleObj.width;
 };
 
+export const buildPreloadImagesArray = () => {
+  const preloadImagesArray = [];
+
+  return (source?: Source) => {
+    if (!isEmpty(source)) {
+      preloadImagesArray.push(source);
+    }
+
+    return preloadImagesArray;
+  };
+};
+
 export const getImageUrlsForPreloadImagesOnNewsFeed = (postData: IPost[] | IPost) => {
-  const urlPreloadImages = [];
+  let preloadImages = [];
+  const pushImageSource = buildPreloadImagesArray();
   let posts: IPost[] = [];
 
   if (isArray(postData)) {
@@ -65,7 +78,7 @@ export const getImageUrlsForPreloadImagesOnNewsFeed = (postData: IPost[] | IPost
 
       const widthCover = post.type === PostType.ARTICLE ? COVER_ARTICLE_WIDTH : THUMBNAIL_SERIES_SIZE;
 
-      urlPreloadImages.push(formatSource(coverMedia.url, widthCover));
+      preloadImages = pushImageSource(formatSource(coverMedia.url, widthCover));
 
       return;
     }
@@ -80,18 +93,18 @@ export const getImageUrlsForPreloadImagesOnNewsFeed = (postData: IPost[] | IPost
     const { widthLargeImage, widthSmallImage } = initLayoutImages(images, WIDTH_CONTAINER_PHOTO_PREVIEW_DEFAULT);
 
     // first image
-    urlPreloadImages.push(formatSource(images[0].url, widthLargeImage));
+    preloadImages = pushImageSource(formatSource(images[0].url, widthLargeImage));
     // others image
     if (images.length >= 2) {
-      urlPreloadImages.push(formatSource(images[1].url, widthSmallImage));
+      preloadImages = pushImageSource(formatSource(images[1].url, widthSmallImage));
     }
     if (images.length >= 3) {
-      urlPreloadImages.push(formatSource(images[2].url, widthSmallImage));
+      preloadImages = pushImageSource(formatSource(images[2].url, widthSmallImage));
     }
     if (images.length >= 4) {
-      urlPreloadImages.push(formatSource(images[3].url, widthSmallImage));
+      preloadImages = pushImageSource(formatSource(images[3].url, widthSmallImage));
     }
   });
 
-  return urlPreloadImages;
+  return preloadImages;
 };
