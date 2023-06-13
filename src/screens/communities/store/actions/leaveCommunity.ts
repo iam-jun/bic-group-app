@@ -7,6 +7,7 @@ import showToastError from '~/store/helper/showToastError';
 import useManagedStore from '~/screens/communities/Communities/components/Managed/store';
 import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import useMyPermissionsStore from '~/store/permissions';
 
 const leaveCommunity = (_set, _get) => async (
   communityId: string,
@@ -22,6 +23,9 @@ const leaveCommunity = (_set, _get) => async (
     // refresh joined communities
     useMenuController.getState().actions.getJoinedCommunities();
     useYourCommunitiesStore.getState().actions.getYourCommunities(true);
+
+    // refresh permissions
+    useMyPermissionsStore.getState().actions.getMyPermissions();
 
     const toastMessage: IToastMessage = {
       content: 'communities:modal_confirm_leave_community:success_message',

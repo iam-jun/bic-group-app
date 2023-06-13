@@ -27,7 +27,7 @@ type SavePostParams = Partial<IPayloadPutEditPost> & {
   isToastAutoSave?: boolean;
 };
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = withNavigation?.(rootNavigationRef);
 
 export const useSavePost = () => {
   const { t } = useBaseHook();

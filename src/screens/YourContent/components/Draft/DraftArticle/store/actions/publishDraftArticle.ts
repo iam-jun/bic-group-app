@@ -14,7 +14,7 @@ import { IDraftArticleState } from '..';
 import showToast from '~/store/helper/showToast';
 import useDraftContentsStore from '../../../DraftContents/store';
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = withNavigation?.(rootNavigationRef);
 
 const publishDraftArticle = (set, get) => async (payload: IPayloadPublishDraftArticle) => {
   const {

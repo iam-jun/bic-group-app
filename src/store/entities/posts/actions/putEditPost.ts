@@ -19,7 +19,7 @@ import useDraftPostStore from '~/screens/YourContent/components/Draft/DraftPost/
 import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftContents/store';
 import useHomeStore from '~/screens/Home/store';
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = withNavigation?.(rootNavigationRef);
 
 const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
   const {

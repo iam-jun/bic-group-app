@@ -9,7 +9,7 @@ import i18n from '~/localization';
 import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = withNavigation?.(rootNavigationRef);
 
 const editSeries = (set, get) => async (
   id: string,

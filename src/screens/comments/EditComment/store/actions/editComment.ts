@@ -10,7 +10,7 @@ import { getMentionsFromContent } from '~/helpers/post';
 import useCommentDetailController from '~/screens/comments/CommentDetail/store';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = withNavigation?.(rootNavigationRef);
 
 const editComment = (_set, _get) => async (payload: IPayloadPutEditComment) => {
   const {

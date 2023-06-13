@@ -11,6 +11,7 @@ import useManagedStore from '~/screens/communities/Communities/components/Manage
 import useGroupDetailStore from '../index';
 import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import useMyPermissionsStore from '~/store/permissions';
 
 const rootNavigation = withNavigation(rootNavigationRef);
 
@@ -31,6 +32,9 @@ const leaveGroup = () => async (groupId: string, privacy: GroupPrivacyType) => {
     // refresh list in screen Your Groups & Managed
     useYourGroupsStore.getState().actions.getYourGroups(true);
     useManagedStore.getState().actions.getManaged(true);
+
+    // refresh permissions
+    useMyPermissionsStore.getState().actions.getMyPermissions();
 
     const toastMessage: IToastMessage = {
       content: 'groups:modal_confirm_leave_group:success_message',

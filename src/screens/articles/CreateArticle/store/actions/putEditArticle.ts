@@ -10,7 +10,7 @@ import showToastSuccess from '~/store/helper/showToastSuccess';
 import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
 import { PostType } from '~/interfaces/IPost';
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = withNavigation?.(rootNavigationRef);
 
 const putEditArticle = (set, _get) => async (params: IPayloadPutEditArticle) => {
   const {

@@ -344,3 +344,11 @@ jest.doMock('expo-av', () => ({
 global.ReanimatedDataMock = {
   now: () => 0,
 };
+
+jest.mock('mixpanel-react-native', () => ({
+  __esModule: true,
+  default: () => jest.fn(),
+  Mixpanel: jest.fn(() => ({
+    init: jest.fn(),
+  })),
+}));
