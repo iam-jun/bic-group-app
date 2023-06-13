@@ -42,8 +42,8 @@ const addToPosts = (_set, get) => (payload: IPayloadAddToAllPost) => {
   });
 
   // preload Images
-  const urlPreloadImages = getImageUrlsForPreloadImagesOnNewsFeed(postsToAdd);
-  FastImage.preload(urlPreloadImages);
+  const preloadImages = getImageUrlsForPreloadImagesOnNewsFeed(postsToAdd);
+  FastImage.preload(preloadImages);
 
   if (handleComment) {
     useCommentsStore.getState().actions.addToComments(newComments);
