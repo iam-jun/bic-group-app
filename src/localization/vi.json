@@ -1325,7 +1325,8 @@
     "text_remove_article": "Bạn muốn xoá bài báo này?",
     "text_remove_post": "Bạn muốn xoá bài viết này?",
     "text_article_removed": "Bài viết đã được xoá",
-    "text_no_content": "Không có nội dung"
+    "text_no_content": "Không có nội dung",
+    "this_content_is_in_the_following_series": "Nội dung này trong các series dưới đây"
   },
   "tags": {
     "create_tag": "Tạo thẻ",

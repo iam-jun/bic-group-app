@@ -4,7 +4,6 @@ import useModalStore from '~/store/modal';
 import { act, renderHook, waitFor } from '~/test/testUtils';
 import usePostsStore, { IPostsState } from '../index';
 import { postCreatePost, responsePutEditPost } from '../__mocks__/data';
-import groupApi from '~/api/GroupApi';
 import APIErrorCode from '~/constants/apiErrorCode';
 import useValidateSeriesTagsStore from '~/components/ValidateSeriesTags/store';
 
@@ -75,7 +74,7 @@ describe('putEditPost', () => {
     };
     const spyApiPutPublishPost = jest.spyOn(streamApi, 'putPublishPost').mockImplementation(() => Promise.resolve(res) as any);
     jest.spyOn(streamApi, 'getDraftContents').mockImplementation(() => Promise.resolve() as any);
-    jest.spyOn(groupApi, 'getGroupPosts').mockImplementation(() => Promise.resolve({}) as any);
+    jest.spyOn(streamApi, 'getGroupPosts').mockImplementation(() => Promise.resolve({}) as any);
 
     const { result } = renderHook(() => usePostsStore((state: IPostsState) => state));
 

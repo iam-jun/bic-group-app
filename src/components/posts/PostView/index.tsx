@@ -24,6 +24,7 @@ import { PlaceHolderRemoveContent } from '~/baseComponents';
 import Divider from '~/beinComponents/Divider';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
+import RelatedContentsInSeries from '~/components/RelatedContentsInSeries';
 
 export interface PostViewProps {
   style?: any;
@@ -143,6 +144,7 @@ const _PostView: FC<PostViewProps> = ({
             isActor={actor?.id == userId}
           />
         )}
+        {isPostDetail && <RelatedContentsInSeries postId={postId} />}
       </>
     );
   };

@@ -529,6 +529,13 @@ export const streamApiConfig = {
     provider: apiProviders.beinFeed,
     params,
   }),
+  getContentsInSeries: (seriesIds: string[]): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}series/items`,
+    params: {
+      seriesIds,
+    },
+  }),
 };
 
 const streamApi = {
@@ -824,6 +831,9 @@ const streamApi = {
       limit: param?.limit || appConfig.recordsPerPage,
       ...param,
     },
+  ),
+  getContentsInSeries: (seriesIds: string[]) => withHttpRequestPromise(
+    streamApiConfig.getContentsInSeries, seriesIds,
   ),
 };
 
