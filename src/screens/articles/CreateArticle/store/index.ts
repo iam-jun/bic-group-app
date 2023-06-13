@@ -79,7 +79,7 @@ const initialState: InitStateType<ICreateArticleState> = {
     },
     coverMedia: {},
     setting: {
-      canShare: true,
+      // canShare: true,
       canReact: true,
       canComment: true,
       isImportant: false,
