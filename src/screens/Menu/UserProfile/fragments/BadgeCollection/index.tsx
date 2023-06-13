@@ -19,6 +19,7 @@ import { fontFamilies } from '~/theme/fonts';
 import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Grid from './Grid';
+import BadgeNew from './BadgeNew';
 
 interface Props {
   showSearchBox?: boolean;
@@ -111,6 +112,10 @@ const BadgeCollection = ({ showSearchBox }: Props) => {
       >
         {sectionItem?.name}
         <Text.BadgeS color={colors.neutral40}>{` (${sectionItem?.badges?.length})`}</Text.BadgeS>
+        {'      '}
+        {Boolean(sectionItem?.isNew) && (
+        <BadgeNew />
+        ) }
       </Text.SubtitleM>
       <Grid
         data={sectionItem.badges}

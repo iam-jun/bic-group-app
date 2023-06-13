@@ -31,7 +31,7 @@ const Grid = ({
 
   const renderGridItem = ({ item, index }: any) => (
     <GridItem
-      item={item}
+      id={item.id}
       numColumns={numColumns}
       index={index}
       disabled={disabled}

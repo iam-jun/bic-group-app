@@ -239,7 +239,8 @@
     "text_pull_to_refresh": "Please pull down to refresh the page or try again later",
     "text_answer_title": "Membership questions",
     "text_answer_input_placeholder": "Write your answer",
-    "text_send_request_join_successfully": "Sent request successfully"
+    "text_send_request_join_successfully": "Sent request successfully",
+    "text_new": "New"
   },
   "auth": {
     "text_kickout_title": "Notice",

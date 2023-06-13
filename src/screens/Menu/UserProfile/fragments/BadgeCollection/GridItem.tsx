@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   View, StyleSheet, TouchableOpacity, Platform, StatusBar, DeviceEventEmitter,
 } from 'react-native';
@@ -12,9 +12,10 @@ import spacing, { borderRadius } from '~/theme/spacing';
 import { IUserBadge } from '~/interfaces/IEditUser';
 import Text from '~/baseComponents/Text';
 import useUserBadge from './store';
+import BadgeNew from './BadgeNew';
 
 interface Props {
-  item: IUserBadge;
+  id: string;
   numColumns: number;
   index: number;
   disabled?: boolean;
@@ -22,12 +23,14 @@ interface Props {
 }
 
 const GridItem = ({
-  item, numColumns, index, disabled = false, onPress,
+  id, numColumns, index, disabled = false, onPress,
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = themeStyles(theme);
   const choosingBadges = useUserBadge((state) => state.choosingBadges);
+  const actions = useUserBadge((state) => state.actions);
+  const item = useUserBadge(useCallback((state) => state.badges?.[id], [id]));
 
   const [isVisible, setIsVisible] = useState(false);
   const [currentPlacement, setCurrentPlacement] = useState<string>('top');
@@ -59,11 +62,13 @@ const GridItem = ({
 
   const onPressItem = () => {
     onPress(item, isSelected);
+    actions.markNewBadge(id);
   };
 
   const onLongPress = () => {
     if (disabled) return;
     setIsVisible(true);
+    actions.markNewBadge(id);
   };
 
   const onClose = () => {
@@ -90,6 +95,8 @@ const GridItem = ({
         onPress={onPressItem}
         onLongPress={onLongPress}
       >
+        {Boolean(item?.isNew) && !Boolean(isSelected) && (
+        <BadgeNew style={styles.badgeNewStyle} />)}
         <Avatar.Medium
           isRounded
           borderWidth={isSelected ? 2 : 1}
@@ -150,6 +157,11 @@ const themeStyles = (theme: ExtendedTheme) => {
       borderRadius: spacing.padding.small,
       paddingVertical: spacing.padding.small,
       paddingHorizontal: spacing.padding.large,
+    },
+    badgeNewStyle: {
+      position: 'absolute',
+      zIndex: 2,
+      right: 0,
     },
   });
 };

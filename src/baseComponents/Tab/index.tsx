@@ -13,9 +13,10 @@ interface TabProps {
   buttonProps?: PillTabButtonProps;
   style?: StyleProp<ViewStyle>;
   isScrollToIndex?: boolean;
-  onPressTab?: (item: any, index: number) => void;
   selectedTypePillTab?: PillTabButtonProps['type'];
   unselectedTypePillTab?: PillTabButtonProps['type'];
+  renderCustomTab?: (item: any, index: number) => void;
+  onPressTab?: (item: any, index: number) => void;
 }
 
 const Tab = ({
@@ -25,9 +26,10 @@ const Tab = ({
   buttonProps,
   style,
   isScrollToIndex,
-  onPressTab,
   selectedTypePillTab,
   unselectedTypePillTab,
+  renderCustomTab,
+  onPressTab,
 }: TabProps) => {
   const scrollViewRef = useRef<ScrollView>();
   const TabButtonComponent = type === 'normal' ? TabButton : PillTabButton;
@@ -43,7 +45,7 @@ const Tab = ({
     const isSelected = index === activeIndex;
     const isMixTypePillTab = type === 'pill' && selectedTypePillTab && unselectedTypePillTab;
     const mixTypePillTab = isMixTypePillTab ? { type: isSelected ? selectedTypePillTab : unselectedTypePillTab } : {};
-
+    if (renderCustomTab) return renderCustomTab(item, index);
     return (
       <TabButtonComponent
         useI18n

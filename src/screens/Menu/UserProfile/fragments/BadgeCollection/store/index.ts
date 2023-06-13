@@ -5,6 +5,7 @@ import { ICommunityBadges, IUserBadge } from '~/interfaces/IEditUser';
 import getOwnedBadges from './actions/getOwnedBadges';
 import editShowingBadges from './actions/editShowingBadges';
 import searchBadges from './actions/searchBadges';
+import markNewBadge from './actions/markNewBadge';
 
 export const MAX_BADGES = 3;
 
@@ -13,11 +14,13 @@ export interface IUserBadgesState extends IBaseState {
   loading: boolean;
   loadingEditing: boolean;
   loadingSearch: boolean;
+  hasNewBadge: boolean;
   ownBadges: ICommunityBadges[];
   dataSearch: ICommunityBadges[];
   showingBadges: IUserBadge[];
   choosingBadges: IUserBadge[];
   totalBadges: number;
+  badges: {[key: string]: IUserBadge},
   error: any;
   actions: {
     setIsEditing: (isEditing: boolean) => void;
@@ -29,6 +32,7 @@ export interface IUserBadgesState extends IBaseState {
     getOwnedBadges: () => void;
     editShowingBadges: () => void;
     searchBadges: (textSearch: string) => void;
+    markNewBadge: (id: string) => void;
   };
 }
 
@@ -37,10 +41,12 @@ const initState: InitStateType<IUserBadgesState> = {
   loading: true,
   loadingEditing: false,
   loadingSearch: false,
+  hasNewBadge: false,
   ownBadges: [],
   dataSearch: [],
   showingBadges: [],
   choosingBadges: [undefined, undefined, undefined],
+  badges: {},
   error: null,
   totalBadges: 0,
 };
@@ -120,6 +126,7 @@ const userBadge = (set, get) => ({
     getOwnedBadges: getOwnedBadges(set, get),
     editShowingBadges: editShowingBadges(set, get),
     searchBadges: searchBadges(set, get),
+    markNewBadge: markNewBadge(set, get),
   },
   reset: () => resetStore(initState, set),
 });
