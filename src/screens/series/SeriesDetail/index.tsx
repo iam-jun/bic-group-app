@@ -80,6 +80,7 @@ const SeriesDetail = ({ route }: any) => {
     PermissionKey.CRUD_POST_ARTICLE,
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleError = (listIdAudiences: string[]) => {
     if (listIdAudiences?.length <= 0 || audience?.groups?.length <= 0) {
       return;
