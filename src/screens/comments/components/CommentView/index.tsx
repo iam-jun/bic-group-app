@@ -384,7 +384,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
                           style={styles.userBadge}
                           customStyleBadgeItem={styles.badgeItem}
                         />
-                      )} 
+                      )}
                     </ButtonWrapper>
                   </View>
                 </View>
