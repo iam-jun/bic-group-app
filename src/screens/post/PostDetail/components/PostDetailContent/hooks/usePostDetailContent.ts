@@ -122,14 +122,7 @@ const usePostDetailContent = ({
   };
 
   const onRefresh = () => {
-    if (
-      commentError === APIErrorCode.Post.POST_DELETED
-      || commentError === APIErrorCode.Post.POST_PRIVACY
-    ) {
-      showNotice(true);
-    } else {
-      getPostDetail((loading) => setRefreshing(loading));
-    }
+    getPostDetail((loading) => setRefreshing(loading));
   };
 
   const onPressMarkSeenPost = useCallback(() => {
