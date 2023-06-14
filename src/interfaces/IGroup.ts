@@ -94,6 +94,7 @@ export interface IGroup {
   treeData?: IGroup;
   settings?: IGroupSettings;
   affectedSettings?: IGroupSettings;
+  isInDefaultGroupSet?: boolean;
 }
 
 export interface IParsedGroup extends IGroup {

@@ -35,6 +35,9 @@ const MembershipApproval: FC<Props> = (props) => {
   const isInvitedOnly = data?.affectedSettings?.isInvitedOnly;
   const isPrivatePrivacy = privacy === CommunityPrivacyType.PRIVATE || privacy === GroupPrivacyType.PRIVATE;
   const isSecretPrivacy = privacy === GroupPrivacyType.SECRET;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const isInDefaultGroupSet = data?.isInDefaultGroupSet;
 
   const [isCheckedToggle, setIsCheckedToggle] = useState<boolean>(isJoinApproval || false);
   const [isVisibleTooltip, setIsVisibleTooltip] = useState<boolean>(false);
@@ -76,7 +79,9 @@ const MembershipApproval: FC<Props> = (props) => {
 
   const renderContentTooltip = () => (
     <Text.BodyM useI18n color={colors.white}>
-      settings:membership_policy_settings:tooltip:private
+      {isInDefaultGroupSet
+        ? 'settings:membership_policy_settings:tooltip:default_group_set_toggle'
+        : 'settings:membership_policy_settings:tooltip:private'}
     </Text.BodyM>
   );
 
@@ -86,7 +91,8 @@ const MembershipApproval: FC<Props> = (props) => {
     return null;
   }
 
-  const position = isPrivatePrivacy ? 'absolute' : 'relative';
+  const isDisabled = isPrivatePrivacy || isInDefaultGroupSet;
+  const position = isDisabled ? 'absolute' : 'relative';
 
   return (
     <View style={styles.container} testID="membership_approval">
@@ -104,9 +110,10 @@ const MembershipApproval: FC<Props> = (props) => {
           style={[styles.toggle, { position }]}
           isChecked={isCheckedToggle}
           onValueChanged={onPressToggle}
-          disabled={isPrivatePrivacy}
+          disableBuiltInState
+          disabled={isDisabled}
         />
-        {!!isPrivatePrivacy && (
+        {!!isDisabled && (
           <Tooltip
             arrowSize={styles.arrowSize}
             isVisible={isVisibleTooltip}

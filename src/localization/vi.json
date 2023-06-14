@@ -516,7 +516,9 @@
       },
       "tooltip": {
         "private": "Không thể tắt vì quyền riêng tư nhóm của bạn là Riêng tư",
-        "secret": "Không thể chọn tùy chọn này vì quyền riêng tư nhóm của bạn là Bí mật"
+        "secret": "Không thể chọn tùy chọn này vì quyền riêng tư nhóm của bạn là Bí mật",
+        "default_group_set_toggle": "Không thể bật vì nhóm của bạn nằm trong nhóm mặc định",
+        "default_group_set_radio": "Không thể chọn tùy chọn này vì nhóm của bạn nằm trong nhóm mặc định"
       }
     }
   },

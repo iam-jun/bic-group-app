@@ -52,7 +52,7 @@ const Toggle = ({
       rectangleColor: colors.blue50,
     },
     disabled: {
-      rectangleColor: colors.blue20,
+      rectangleColor: enableState === 'selected' ? colors.blue20 : colors.gray20,
     },
 
     // based on prop `size`
@@ -75,7 +75,7 @@ const Toggle = ({
     width: rectangleWidth,
     height: rectangleHeight,
     backgroundColor: rectangleColor,
-    alignItems: currentCheckedStatus || disabled ? 'flex-end' : 'flex-start',
+    alignItems: currentCheckedStatus || (disabled && enableState === 'selected') ? 'flex-end' : 'flex-start',
   };
 
   const circleStyle: StyleProp<ViewStyle> = {

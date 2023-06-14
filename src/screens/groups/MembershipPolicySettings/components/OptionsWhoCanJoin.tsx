@@ -44,6 +44,9 @@ const OptionsWhoCanJoin: FC<Props> = (props) => {
 
   const isInvitedOnly = data?.affectedSettings?.isInvitedOnly;
   const isSecretPrivacy = data?.privacy === GroupPrivacyType.SECRET;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const isInDefaultGroupSet = data?.isInDefaultGroupSet;
 
   const [selectedOption, setSelectedOption] = useState<IOption>(
     isInvitedOnly ? OPTIONS[IdType.ONLY_INVITED_PEOPLE] : OPTIONS[IdType.ANYONE],
@@ -67,13 +70,16 @@ const OptionsWhoCanJoin: FC<Props> = (props) => {
 
   const renderContentTooltip = () => (
     <Text.BodyM useI18n color={colors.white}>
-      settings:membership_policy_settings:tooltip:secret
+      {isInDefaultGroupSet
+        ? 'settings:membership_policy_settings:tooltip:default_group_set_radio'
+        : 'settings:membership_policy_settings:tooltip:secret'}
     </Text.BodyM>
   );
 
   const renderOptions = () => OPTIONS.map((option) => {
     const isChecked = selectedOption?.id === option.id;
-    const isDisabled = isSecretPrivacy && isInvitedOnly && !isChecked;
+    const isDisabled = (isSecretPrivacy && !isChecked) || (isInDefaultGroupSet && !isChecked);
+
     const backgroundColor = isChecked ? colors.neutral2 : colors.white;
     const titleColor = isDisabled ? colors.neutral30 : colors.neutral80;
     const descriptionColor = isDisabled ? colors.neutral30 : colors.neutral40;
