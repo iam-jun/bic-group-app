@@ -80,7 +80,7 @@ const createStyles = (theme: ExtendedTheme) => {
       backgroundColor: colors.white,
       borderWidth: 1,
       borderRadius: borderRadius.large,
-      borderColor: colors.purple5,
+      borderColor: colors.purple50,
       flex: 1,
     },
     content: {

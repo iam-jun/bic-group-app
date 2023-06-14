@@ -83,12 +83,6 @@ const createStyles = (theme: ExtendedTheme) => {
     boxPadding: {
       height: spacing.padding.large,
       backgroundColor: colors.white,
-      borderBottomWidth: 1,
-      borderLeftWidth: 1,
-      borderRightWidth: 1,
-      borderBottomLeftRadius: borderRadius.large,
-      borderBottomRightRadius: borderRadius.large,
-      borderColor: colors.purple5,
       marginBottom: -1.5,
       marginLeft: -1,
     },
