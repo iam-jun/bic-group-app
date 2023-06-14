@@ -100,6 +100,7 @@ export interface IEditArticleData {
   mentions?: any;
   linkPreview?: ILinkPreview;
   tags?: IEditArticleTags[];
+  wordCount?: number;
 }
 
 export interface ICategory {

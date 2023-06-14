@@ -1,4 +1,4 @@
-import groupApi from '~/api/GroupApi';
+import userApi from '~/api/UserApi';
 import { IVerifyEmail } from '~/interfaces/IAuth';
 import useAuthController from '~/screens/auth/store';
 import { responseResendVerifyEmail } from '~/test/mock_data/auth';
@@ -14,7 +14,7 @@ describe('resendVerifyEmail', () => {
 
   it('should call api success', () => {
     const spy = jest
-      .spyOn(groupApi, 'resendVerificationEmail')
+      .spyOn(userApi, 'resendVerificationEmail')
       .mockImplementation(() => Promise.resolve(responseResendVerifyEmail) as any);
 
     jest.useFakeTimers();
@@ -32,7 +32,7 @@ describe('resendVerifyEmail', () => {
 
   it('should call api error', () => {
     const error = 'internal error';
-    const spy = jest.spyOn(groupApi, 'resendVerificationEmail').mockImplementation(() => Promise.reject(error) as any);
+    const spy = jest.spyOn(userApi, 'resendVerificationEmail').mockImplementation(() => Promise.reject(error) as any);
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useAuthController((state) => state));

@@ -56,6 +56,7 @@ import { IPinContentState } from '~/components/PinContent/store';
 import { ITermState } from '~/components/TermsModal/store';
 import { IDraftContentsState } from '~/screens/YourContent/components/Draft/DraftContents/store';
 import { IPublishState } from '~/screens/YourContent/components/Publish/store';
+import { IUserBadgesState } from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
 
 export interface BicStore {
   entities: {
@@ -152,6 +153,7 @@ export interface BicStore {
         blockingStore: IBlockingState;
       };
     };
+    userBadge: IUserBadgesState;
   };
 
   Notifications: {

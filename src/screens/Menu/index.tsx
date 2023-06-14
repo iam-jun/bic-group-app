@@ -18,9 +18,6 @@ import { useRootNavigation } from '~/hooks/navigation';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import useMenuController from './store';
 import useCommonController from '../store';
-import Tooltip from '../../components/Tooltip.tsx';
-
-const screenId = 'menu';
 
 const Menu = (): React.ReactElement => {
   const { rootNavigation } = useRootNavigation();
@@ -46,7 +43,7 @@ const Menu = (): React.ReactElement => {
 
   return (
     <ScreenWrapper testID="MenuScreen" style={styles.container} isFullView>
-      <MenuHeader screenId={screenId} />
+      <MenuHeader />
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={(
@@ -69,7 +66,6 @@ const Menu = (): React.ReactElement => {
         <MenuShortcut />
         <MenuSettings />
       </ScrollView>
-      <Tooltip isDown screenId={screenId} />
     </ScreenWrapper>
   );
 };

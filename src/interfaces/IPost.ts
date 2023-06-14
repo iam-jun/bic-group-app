@@ -70,6 +70,7 @@ export interface IPost {
   isReported?: boolean;
   isHidden?: boolean;
   publishedAt?: string;
+  wordCount?: number;
 }
 
 export interface IPostAudience {

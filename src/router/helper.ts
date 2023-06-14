@@ -20,6 +20,9 @@ import menuStack from './navigator/MainStack/stacks/menuStack/stack';
 import mainStack from './navigator/MainStack/stack';
 import { ContentType } from '~/interfaces/INotification';
 import notiStack from './navigator/MainStack/stacks/notiStack/stack';
+import { USER_TABS } from '~/screens/Menu/UserProfile';
+import { USER_TABS_TYPES } from '~/screens/Menu/UserProfile/constants';
+import useAuthController from '~/screens/auth/store';
 
 export const isNavigationRefReady: any = React.createRef();
 
@@ -340,6 +343,15 @@ export const getScreenAndParams = (data: {
 
     case NOTIFICATION_TYPE.CHANGE_LOGS:
       return { screen: notiStack.notiChangeLogsPage, params: { id: notificationId } };
+
+    case NOTIFICATION_TYPE.CHANGE_USER_BADGE_COLLECTION: {
+      const { userId } = useAuthController.getState().authUser;
+      const targetIndex = USER_TABS.findIndex(
+        (item: { id: string; text: string }) => item.id === USER_TABS_TYPES.USER_BADGE_COLLECTION,
+      );
+      return { screen: mainStack.userProfile, params: { userId, targetIndex } };
+    }
+
     default:
       console.warn(`Notification type ${type} have not implemented yet`);
       return { screen: homeStack.postDetail, params: { post_id: postId } };
