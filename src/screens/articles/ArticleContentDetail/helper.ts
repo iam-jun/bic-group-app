@@ -18,7 +18,7 @@ export enum EventType {
   ON_PRESS_LINK = 'onPressLink',
 }
 
-const rootNavigation = withNavigation(rootNavigationRef);
+const rootNavigation = withNavigation?.(rootNavigationRef);
 
 export const handleMessage = (data: {
   message: any;

@@ -148,3 +148,10 @@ export interface IRequestJoinCommunity {
   communityName: string,
   membershipAnswers?: MembershipAnswerRequest[],
 }
+
+export interface IRequestUpdateCommunityJoinSetting {
+  communityId: string,
+  groupId: string,
+  isJoinApproval?: boolean
+  isInvitedOnly?: boolean
+}

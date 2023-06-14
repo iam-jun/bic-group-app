@@ -8,7 +8,7 @@ import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 
 export const useRootNavigation = () => {
-  const rootNavigation = withNavigation(rootNavigationRef);
+  const rootNavigation = withNavigation?.(rootNavigationRef);
 
   const goHome = () => {
     rootNavigation.popToTop();

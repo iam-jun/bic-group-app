@@ -118,7 +118,6 @@ const _GroupMembers = ({ route }: any) => {
           groupId={groupId}
           canAddMember={canAddMember}
           canApproveRejectJoiningRequests={canApproveRejectJoiningRequests}
-          canEditJoinSetting={canEditJoinSetting}
           onPressAdd={onPressAdd}
         />
       );

@@ -20,6 +20,7 @@ import {
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 import { IParamsReportMember } from '~/interfaces/IReport';
 import { ContentType } from '~/components/SelectAudience';
+import { IGroupSettings } from '~/interfaces/common';
 
 const provider = apiProviders.bein;
 const defaultConfig = {
@@ -33,11 +34,11 @@ export const groupsApiConfig = {
     ...defaultConfig,
     url: `${provider.url}me/permissions/can-cud-tags/community/${communityId}`,
   }),
-  updateGroupJoinSetting: (groupId: string, isJoinApproval: boolean): HttpApiRequestConfig => ({
+  updateGroupJoinSetting: (groupId: string, settings: IGroupSettings): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/settings`,
     method: 'put',
-    data: { isJoinApproval },
+    data: { ...settings },
   }),
   getLinkPreview: (link: string): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -471,8 +472,8 @@ const groupApi = {
   getCommunityCUDTagPermission: (communityId: string) => withHttpRequestPromise(
     groupsApiConfig.getCommunityCUDTagPermission, communityId,
   ),
-  updateGroupJoinSetting: (groupId: string, isJoinApproval: boolean) => withHttpRequestPromise(
-    groupsApiConfig.updateGroupJoinSetting, groupId, isJoinApproval,
+  updateGroupJoinSetting: (groupId: string, settings: IGroupSettings) => withHttpRequestPromise(
+    groupsApiConfig.updateGroupJoinSetting, groupId, settings,
   ),
   getLinkPreview: (link: string) => withHttpRequestPromise(
     groupsApiConfig.getLinkPreview, link,

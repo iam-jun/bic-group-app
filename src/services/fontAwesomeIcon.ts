@@ -216,6 +216,10 @@ import { faUserLargeSlash as faUserLargeSlashSolid } from '@fortawesome/pro-soli
 import { faChevronDown } from '@fortawesome/pro-regular-svg-icons/faChevronDown';
 import { faChevronUp } from '@fortawesome/pro-regular-svg-icons/faChevronUp';
 import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons';
+import { faMemoCircleInfo as faMemoCircleInfoSolid } from '@fortawesome/pro-solid-svg-icons/faMemoCircleInfo';
+import { faChevronRight } from '@fortawesome/pro-regular-svg-icons/faChevronRight';
+import { faUsersMedical as faUsersMedicalSolid } from '@fortawesome/pro-solid-svg-icons/faUsersMedical';
+import { faSquareList as faSquareListSolid } from '@fortawesome/pro-solid-svg-icons/faSquareList';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -452,6 +456,10 @@ export const initFontAwesomeIcon = () => {
     faChevronDown,
     faChevronUp,
     faBadgeCheck,
+    faMemoCircleInfoSolid,
+    faChevronRight,
+    faUsersMedicalSolid,
+    faSquareListSolid,
   );
 };
 
@@ -673,6 +681,10 @@ export const fontAwesomeIcons = {
   ChevronDown: 'fa-regular fa-chevron-down',
   ChevronUp: 'fa-regular fa-chevron-up',
   BadgeCheck: 'fa-solid fa-badge-check',
+  MemoCircleInfoSolid: 'fa-solid fa-memo-circle-info',
+  ChevronRight: 'fa-regular fa-chevron-right',
+  UsersMedicalSolid: 'fa-solid fa-users-medical',
+  SquareListSolid: 'fa-solid fa-square-list',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

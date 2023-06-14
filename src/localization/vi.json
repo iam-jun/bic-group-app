@@ -497,7 +497,28 @@
     "text_blocked_at": "Đã chặn",
     "title_privacy": "Bảo mật",
     "toast_profile_is_verified": "Hồ sơ này đã được xác minh",
-    "text_profile_is_verified": "Thông tin của bạn đã được xác minh và không thể chỉnh sửa"
+    "text_profile_is_verified": "Thông tin của bạn đã được xác minh và không thể chỉnh sửa",
+    "membership_policy_settings": {
+      "title": "Cài đặt chính sách thành viên",
+      "description": "Thiết lập ai có thể tham gia và liệu họ có cần được phê duyệt để trở thành thành viên hay không",
+      "who_can_join_this_group": "Ai có thể tham gia nhóm này?",
+      "anyone": "bất kỳ ai",
+      "anyone_description": "Bất kỳ ai cũng có thể tham gia hoặc yêu cầu tham gia nhóm này",
+      "only_invited_people": "Chỉ những người được mời",
+      "only_invited_people_description": "Chỉ những người nhận được lời mời",
+      "membership_approval": "Phê duyệt tư cách thành viên",
+      "membership_approval_description": "Mọi người phải yêu cầu phê duyệt để tham gia nhóm này",
+      "alert_turn_off_membership_approval": {
+        "title": "Tắt phê duyệt thành viên?",
+        "description": "Tất cả các yêu cầu đang chờ xử lý sẽ được phê duyệt tự động.",
+        "cancel": "Huỷ",
+        "turn_off": "Tắt"
+      },
+      "tooltip": {
+        "private": "Không thể tắt vì quyền riêng tư nhóm của bạn là Riêng tư",
+        "secret": "Không thể chọn tùy chọn này vì quyền riêng tư nhóm của bạn là Bí mật"
+      }
+    }
   },
   "languages": {
     "title_en": "English",

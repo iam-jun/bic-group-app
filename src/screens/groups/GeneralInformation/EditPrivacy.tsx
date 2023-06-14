@@ -52,7 +52,11 @@ const EditPrivacy = (props: any) => {
       groupActions.editGroupDetail(data, editFieldName, onNavigateBack);
     } else {
       if (shouldSelectPrivatePrivacy) {
-        controller.updateCommunityJoinSetting(id, rootGroupId, joinSettingState);
+        controller.updateCommunityJoinSetting({
+          communityId: id,
+          groupId: rootGroupId,
+          isJoinApproval: joinSettingState,
+        });
       }
       controller.editCommunityDetail(data, editFieldName, onNavigateBack);
     }

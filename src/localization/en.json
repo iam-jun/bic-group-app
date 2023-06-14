@@ -536,7 +536,28 @@
     "text_blocked_at": "Blocked at",
     "title_privacy": "Privacy",
     "toast_profile_is_verified": "This profile is verified",
-    "text_profile_is_verified": "Your information has been verified and can’t be edited"
+    "text_profile_is_verified": "Your information has been verified and can’t be edited",
+    "membership_policy_settings": {
+      "title": "Membership Policy Settings",
+      "description": "Set up who can join and whether they need to be approved to be a member",
+      "who_can_join_this_group": "Who can join this group?",
+      "anyone": "Anyone",
+      "anyone_description": "Anyone can join or ask to join this group",
+      "only_invited_people": "Only invited people",
+      "only_invited_people_description": "Only those who receive the invitation",
+      "membership_approval": "Membership Approval",
+      "membership_approval_description": "People must ask for approval to join this group",
+      "alert_turn_off_membership_approval": {
+        "title": "Turn off membership approval?",
+        "description": "All pending request will be approved automatically.",
+        "cancel": "Cancel",
+        "turn_off": "Turn off"
+      },
+      "tooltip": {
+        "private": "Can’t be turned off because your group privacy is Private",
+        "secret": "Can’t select this option because your group privacy is Secret"
+      }
+    }
   },
   "languages": {
     "title_en": "English",

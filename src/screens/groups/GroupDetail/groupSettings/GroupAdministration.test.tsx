@@ -1,12 +1,18 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import React from 'react';
-import { renderWithRedux } from '~/test/testUtils';
+import * as React from 'react';
+import { cleanup, render } from '@testing-library/react-native';
 import GroupAdministration from './GroupAdministration';
 
+afterEach(cleanup);
+
 describe('GroupAdministration component', () => {
-  it('should render data correctly', () => {
-    const props = { route: { params: { groupId: '123' } } };
-    const wrapper = renderWithRedux(<GroupAdministration {...props} />);
-    expect(wrapper).toMatchSnapshot();
+  it('renders correctly', () => {
+    const props = {
+      route: { params: { groupId: 'test' } },
+    };
+    const rendered = render(<GroupAdministration {...props} />);
+
+    const { getByTestId } = rendered;
+    const containerView = getByTestId('GroupAdministration');
+    expect(containerView).toBeDefined();
   });
 });

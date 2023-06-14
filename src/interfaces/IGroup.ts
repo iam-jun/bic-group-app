@@ -296,3 +296,9 @@ export interface IPayloadDeclineSingleGroupMemberRequest {
   requestId: string;
   fullName: string;
 }
+
+export interface IPayloadUpdateGroupJoinSetting {
+  groupId: string;
+  isJoinApproval?: boolean;
+  isInvitedOnly?: boolean;
+}

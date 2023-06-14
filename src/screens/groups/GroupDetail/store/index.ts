@@ -11,7 +11,7 @@ export interface IGroupDetailState extends IBaseState {
   loadingGroupDetail: boolean;
   actions: {
     leaveGroup: (groupId: string, privacy: GroupPrivacyType) => void;
-    getGroupDetail: (payload: { groupId: string }) => void;
+    getGroupDetail: (payload: { groupId: string }) => Promise<void>;
     setGroupDetail: (payload: IGroupDetail | null) => void;
   };
 }

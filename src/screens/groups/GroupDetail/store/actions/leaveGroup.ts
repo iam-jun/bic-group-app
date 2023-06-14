@@ -13,7 +13,7 @@ import showToast from '~/store/helper/showToast';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import useMyPermissionsStore from '~/store/permissions';
 
-const rootNavigation = withNavigation(rootNavigationRef);
+const rootNavigation = withNavigation?.(rootNavigationRef);
 
 const leaveGroup = () => async (groupId: string, privacy: GroupPrivacyType) => {
   try {

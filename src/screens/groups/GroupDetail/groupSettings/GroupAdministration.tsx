@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import {
+  View, StyleSheet, StyleProp, ViewStyle,
+} from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { useRootNavigation } from '~/hooks/navigation';
@@ -22,31 +24,27 @@ const GroupAdministration = (props: any) => {
   const { groupId } = params || {};
 
   const theme: ExtendedTheme = useTheme();
-  const styles = themeStyles();
+  const styles = themeStyles(theme);
   const { rootNavigation } = useRootNavigation();
   const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
   const { group } = groups[currentGroupId] || {};
   const { name } = group || {};
 
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
-  const canEditProfileInfo = shouldHavePermission(
-    groupId,
-    [
-      PermissionKey.EDIT_INFO,
-      PermissionKey.EDIT_PRIVACY,
-    ],
-  );
+  const canEditProfileInfo = shouldHavePermission(groupId, [PermissionKey.EDIT_INFO, PermissionKey.EDIT_PRIVACY]);
+
+  const canEditJoinSetting = shouldHavePermission(groupId, PermissionKey.EDIT_JOIN_SETTING);
 
   const goToGeneralInfo = () => {
-    rootNavigation.navigate(
-      groupStack.generalInfo, { id: groupId },
-    );
+    rootNavigation.navigate(groupStack.generalInfo, { id: groupId });
+  };
+
+  const goToMembershipPolicySettings = () => {
+    rootNavigation.navigate(groupStack.membershipPolicySettings, { id: groupId });
   };
 
   const goToScheduleContent = () => {
-    rootNavigation.navigate(
-      articleStack.articleScheduleContent, { groupId },
-    );
+    rootNavigation.navigate(articleStack.articleScheduleContent, { groupId });
   };
 
   const renderItem = (
@@ -55,84 +53,86 @@ const GroupAdministration = (props: any) => {
     onPress?: () => void,
     notificationsBadgeNumber?: number,
     testID?: string,
+    style?: StyleProp<ViewStyle>,
   ) => (
-    <MenuItem
-      testID={testID}
-      title={title}
-      icon={icon}
-      iconProps={{ icon, tintColor: theme.colors.purple50 }}
-      notificationsBadgeNumber={notificationsBadgeNumber}
-      notificationsBadgeProps={{ maxNumber: 99, variant: 'alert' }}
-      rightSubIcon="AngleRightSolid"
-      onPress={onPress}
-    />
-  );
-
-  const renderGroupModerating = () => (
-    <Text.H5
-      style={styles.headerTitle}
-      color={theme.colors.neutral80}
-      variant="bodyM"
-      useI18n
-    >
-      settings:title_group_moderating
-    </Text.H5>
+    <View style={style}>
+      <MenuItem
+        testID={testID}
+        title={title}
+        icon={icon}
+        iconProps={styles.iconProps}
+        notificationsBadgeNumber={notificationsBadgeNumber}
+        notificationsBadgeProps={{ maxNumber: 99, variant: 'alert' }}
+        rightSubIcon="ChevronRight"
+        onPress={onPress}
+        style={styles.menuItemChild}
+      />
+    </View>
   );
 
   const renderGroupSettings = () => (
     <>
-      <Text.H5
-        style={styles.headerTitle}
-        color={theme.colors.neutral80}
-        variant="bodyM"
-        useI18n
-      >
+      <Text.H4 style={styles.headerTitle} color={theme.colors.neutral80} useI18n>
         settings:title_group_settings
-      </Text.H5>
-      {canEditProfileInfo
+      </Text.H4>
+      {!!canEditProfileInfo
         && renderItem(
-          'Gear',
+          'MemoCircleInfoSolid',
           'settings:title_profile_info',
           goToGeneralInfo,
           undefined,
           'group_administration.profile_info',
+          styles.firstMenuItem,
+        )}
+      {!!canEditJoinSetting
+        && renderItem(
+          'UsersMedicalSolid',
+          'settings:membership_policy_settings:title',
+          goToMembershipPolicySettings,
+          undefined,
+          'group_administration.membership_policy_settings',
+          styles.menuItem,
         )}
       {renderItem(
-        'BallotCheck',
+        'SquareListSolid',
         'settings:title_schedule_content',
         goToScheduleContent,
         undefined,
         'group_administration.schedule_content',
+        styles.menuItem,
       )}
     </>
   );
 
   return (
     <ScreenWrapper testID="GroupAdministration" isFullView>
-      <Header
-        title={name}
-        titleTextProps={{ color: theme.colors.neutral80 }}
-      />
-      <Divider style={styles.divider} />
-      <View style={styles.container}>
-        {renderGroupModerating()}
-        {renderGroupSettings()}
-      </View>
+      <Header title={name} titleTextProps={{ color: theme.colors.neutral80 }} />
+      <Divider size={spacing.margin.large} />
+      <View style={styles.container}>{renderGroupSettings()}</View>
     </ScreenWrapper>
   );
 };
 
 export default GroupAdministration;
 
-const themeStyles = () => StyleSheet.create({
+const themeStyles = (theme: ExtendedTheme) => StyleSheet.create({
   container: {
-    paddingTop: spacing.padding.large,
+    paddingTop: spacing.margin.xTiny + spacing.margin.base,
   },
   headerTitle: {
     marginHorizontal: spacing.margin.large,
-    marginVertical: spacing.margin.base,
   },
-  divider: {
-    height: 5,
+  iconProps: {
+    tintColor: theme.colors.neutral20,
+    size: 18,
+  },
+  firstMenuItem: {
+    marginTop: spacing.margin.xSmall + spacing.margin.large,
+  },
+  menuItem: {
+    marginTop: spacing.margin.big,
+  },
+  menuItemChild: {
+    paddingVertical: 0,
   },
 });
