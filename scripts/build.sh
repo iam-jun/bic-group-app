@@ -29,6 +29,7 @@ function ipa() {
 }
 
 function setup() {
+    npm run clone-build-resources
     npm run prepare_resources $2
     npm run clean || exit 1
     npm install
