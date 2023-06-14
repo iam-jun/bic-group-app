@@ -17,7 +17,9 @@ export enum EventType {
     ON_LOAD_END = 'onLoadEnd', // must post content to editor after editor is mounted
     ON_INITIALIZE_END='onInitializeEnd', // after editor initiated content
     ON_SCROLL = 'onScroll',
-    ON_IMAGE_ERROR = 'onImageError'
+    ON_IMAGE_ERROR = 'onImageError',
+    ON_PRESS_IMAGE = 'onPressImage',
+    ON_NAVIGATE_ARTICLE = 'onNavigateArticle'
 }
 
 const ARTICLE_EDITOR_URL = `https://${getEnv('SELF_DOMAIN')}/article/webview/v1`;

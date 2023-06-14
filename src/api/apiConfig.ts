@@ -12,7 +12,7 @@ const apiUrls = {
 };
 
 export const apiVersionId = {
-  content: '1.5.0',
+  content: '1.3.0',
   group: undefined,
   user: undefined,
   notification: undefined,

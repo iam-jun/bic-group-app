@@ -535,6 +535,10 @@ export const streamApiConfig = {
     params: {
       seriesIds,
     },
+    // TODO: remove this headers
+    headers: {
+      'x-version-id': '1.5.0',
+    },
   }),
 };
 

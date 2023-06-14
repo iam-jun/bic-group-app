@@ -7,6 +7,8 @@ import Icon from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
 import { Button } from '~/baseComponents';
 import { goToContentInseries } from '../helper';
+import { escapeMarkDown } from '~/utils/formatter';
+import { getTitlePostItemInSeries } from '~/helpers/common';
 
 type ContentItemProps = {
     item: IPost;
@@ -15,6 +17,8 @@ type ContentItemProps = {
 
 const ContentItem: FC<ContentItemProps> = ({ item, isPrev }) => {
   const { title } = item;
+  const escapeMarkDownTitle = escapeMarkDown(title);
+  const titlePost = getTitlePostItemInSeries(escapeMarkDownTitle);
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
@@ -27,7 +31,7 @@ const ContentItem: FC<ContentItemProps> = ({ item, isPrev }) => {
     <Button onPress={goToContent} style={styles.container}>
       {isPrev && <Icon style={styles.iconPrev} tintColor={colors.neutral40} size={14} icon="ArrowLeft" />}
       <View style={styles.containerTitle}>
-        <Text.BodyM style={[styles.textTitle, !isPrev && { textAlign: 'right' }]} numberOfLines={2}>{title}</Text.BodyM>
+        <Text.BodyM style={[styles.textTitle, !isPrev && { textAlign: 'right' }]} numberOfLines={2}>{titlePost}</Text.BodyM>
       </View>
       {!isPrev && <Icon style={styles.iconNext} tintColor={colors.neutral40} size={14} icon="ArrowRight" />}
     </Button>

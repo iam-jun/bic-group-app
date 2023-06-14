@@ -9,7 +9,10 @@ import Header from '~/beinComponents/Header';
 import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { ArticleFooter } from '~/components/articles';
-import ArticleWebview, { ArticleWebviewRef } from '~/components/articles/ArticleWebview';
+import ArticleWebview, {
+  ArticleWebviewRef,
+  EventType,
+} from '~/components/articles/ArticleWebview';
 import ContentUnavailable from '~/components/ContentUnavailable';
 import ContentNoPermission from '~/components/ContentNoPermission';
 import BannerReport from '~/components/Report/BannerReport';
@@ -21,11 +24,18 @@ import { parseSafe } from '~/utils/common';
 import useArticlesStore, { IArticlesState } from '../ArticleDetail/store';
 import { getListImage, handleMessage } from './helper';
 import APIErrorCode from '~/constants/apiErrorCode';
+import { IPost } from '~/interfaces/IPost';
+import { goToContentInseries } from '~/components/RelatedContentsInSeries/helper';
+import useRelatedContentsInSeriesStore from '~/components/RelatedContentsInSeries/store';
 
 const HEADER_HEIGHT = 244;
 
 const ArticleContentDetail: FC<IRouteParams> = (props) => {
-  const { articleId: id, is_reported: isReported, noti_id: notiId } = props?.route?.params || {};
+  const {
+    articleId: id,
+    is_reported: isReported,
+    noti_id: notiId,
+  } = props?.route?.params || {};
   const theme: ExtendedTheme = useTheme();
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets);
@@ -38,20 +48,39 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
   const errorContent = usePostsStore(postsSelector.getErrorContent(id));
   const { actions } = useArticlesStore((state: IArticlesState) => state);
 
+  const relatedContentsInSeries = useRelatedContentsInSeriesStore((state) => state.data);
+  const relatedContentsInSeriesStoreActions = useRelatedContentsInSeriesStore((state) => state.actions);
+  const resetRelatedContentsInSeriesStore = useRelatedContentsInSeriesStore((state) => state.reset);
+
   const [galleryVisible, setGalleryVisible] = useState(false);
   const [listImage, setListImage] = useState([]);
   const [initIndex, setInitIndex] = useState(0);
 
   const {
-    content, title, summary, coverMedia, createdAt, audience,
-    series, categories, actor, setting, reactionsCount, commentsCount, ownerReactions, tags,
+    content,
+    title,
+    summary,
+    coverMedia,
+    createdAt,
+    audience,
+    series,
+    categories,
+    actor,
+    setting,
+    reactionsCount,
+    commentsCount,
+    ownerReactions,
+    tags,
   } = data;
 
   const { isError, code } = errorContent || {};
 
+  const seriesIds = series?.map((item) => item.id) || [];
+
   const initScript = {
     type: 'initView',
     payload: {
+      id,
       title,
       summary,
       coverUrl: coverMedia?.url,
@@ -62,6 +91,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
       contentState: parseSafe(content),
       actor,
       tags,
+      seriesWithItems: relatedContentsInSeries,
     },
   };
 
@@ -78,13 +108,20 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
     }
   }, [id]);
 
+  useEffect(() => {
+    if (series && seriesIds.length > 0) {
+      relatedContentsInSeriesStoreActions.getContentsInSeries(seriesIds);
+    }
+    return resetRelatedContentsInSeriesStore;
+  }, [series]);
+
   /**
    * API feed does not return series, so must await
    * getArticleDetail response then init webview again
    */
   useEffect(() => {
     if (isMounted) injectJavaScript(initScript);
-  }, [series, isMounted]);
+  }, [series, isMounted, relatedContentsInSeries]);
 
   /**
    * Webview init content only one time, if we want update new content, we must set null for web init again
@@ -107,7 +144,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
     }
   }, [content]);
 
-  const onScroll = (event: {offsetY: number}) => {
+  const onScroll = (event: { offsetY: number }) => {
     const offsetY = event?.offsetY;
 
     headerRef?.current?.setScrollY?.(offsetY);
@@ -138,19 +175,33 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
 
       const paths = url.split('/');
 
-      return ({
+      return {
         uri: url,
         id: paths[paths.length - 1],
-      });
+      };
     });
 
     setListImage(result);
   };
 
+  const onNavigateArticle = (payload: IPost) => {
+    goToContentInseries(payload);
+  };
+
   const onMessage = (message: any) => {
-    handleMessage({
-      message, listImage, setInitIndex, setGalleryVisible,
-    });
+    switch (message?.type) {
+      case EventType.ON_PRESS_IMAGE:
+        handleMessage({
+          message,
+          listImage,
+          setInitIndex,
+          setGalleryVisible,
+        });
+        break;
+      case EventType.ON_NAVIGATE_ARTICLE:
+        onNavigateArticle(message?.payload);
+        break;
+    }
   };
 
   const renderTitle = () => {
@@ -178,22 +229,28 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
     );
   };
 
-  if (isError && (
-    code === APIErrorCode.Post.CONTENT_GROUP_REQUIRED
-    || code === APIErrorCode.Post.ARTICLE_NO_READ_PERMISSION
-  )) {
+  if (
+    isError
+    && (code === APIErrorCode.Post.CONTENT_GROUP_REQUIRED
+      || code === APIErrorCode.Post.ARTICLE_NO_READ_PERMISSION)
+  ) {
     return <ContentNoPermission data={errorContent} />;
   }
 
-  if (isError && (
-    code !== APIErrorCode.Post.CONTENT_GROUP_REQUIRED
-    || code !== APIErrorCode.Post.ARTICLE_NO_READ_PERMISSION
-  )) {
+  if (
+    isError
+    && (code !== APIErrorCode.Post.CONTENT_GROUP_REQUIRED
+      || code !== APIErrorCode.Post.ARTICLE_NO_READ_PERMISSION)
+  ) {
     return <ContentUnavailable showButton={!notiId} />;
   }
 
   return (
-    <ScreenWrapper testID="article_content_detail" isFullView style={styles.container}>
+    <ScreenWrapper
+      testID="article_content_detail"
+      isFullView
+      style={styles.container}
+    >
       <Header
         headerRef={headerRef}
         title={renderTitle()}
