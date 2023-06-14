@@ -33,6 +33,7 @@ function setup() {
     npm run prepare_resources $2
     npm run clean || exit 1
     npm install
+    cd ios && pod install && cd ..
 }
 
 case $1 in
