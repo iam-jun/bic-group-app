@@ -1,4 +1,4 @@
-import groupApi from '~/api/GroupApi';
+import userApi from '~/api/UserApi';
 import { IPayloadSignUp } from '~/interfaces/IAuth';
 import useAuthController from '~/screens/auth/store';
 import { responseSignUp } from '~/test/mock_data/auth';
@@ -16,7 +16,7 @@ describe('signUp', () => {
   const callbackError = jest.fn();
 
   it('should call api success', () => {
-    const spy = jest.spyOn(groupApi, 'signUp').mockImplementation(() => Promise.resolve(responseSignUp) as any);
+    const spy = jest.spyOn(userApi, 'signUp').mockImplementation(() => Promise.resolve(responseSignUp) as any);
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useAuthController((state) => state));
@@ -33,7 +33,7 @@ describe('signUp', () => {
 
   it('should call api error', () => {
     const error = 'internal error';
-    const spy = jest.spyOn(groupApi, 'signUp').mockImplementation(() => Promise.reject(error) as any);
+    const spy = jest.spyOn(userApi, 'signUp').mockImplementation(() => Promise.reject(error) as any);
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useAuthController((state) => state));

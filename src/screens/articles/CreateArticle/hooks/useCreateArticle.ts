@@ -19,6 +19,7 @@ import { withNavigation } from '~/router/helper';
 import {
   getAudienceIdsFromAudienceObject,
   isEmptyContent,
+  countWordsFromContent,
 } from '~/screens/articles/CreateArticle/helper';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import { getMentionsFromContent } from '~/helpers/post';
@@ -102,6 +103,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
 
   // auto save for draft article, so no need to check if content is empty
   const isDraftContentUpdated = article.content !== data.content;
+  const canAutoSave = isDraft && isDraftContentUpdated;
 
   const isHasChange = () => {
     // self check at src/screens/articles/CreateArticle/screens/CreateArticleContent/index.tsx
@@ -206,6 +208,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
       status,
       publishedAt,
       setting,
+      wordCount,
     } = article;
 
     const audienceIds: IEditArticleAudience
@@ -223,6 +226,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
       series,
       tags,
       setting: initSettings(setting),
+      wordCount,
     };
     actions.setData(data);
     const isDraft = [
@@ -250,6 +254,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
 
   const handleContentChange = (newContent: string) => {
     actions.setContent(newContent);
+    actions.setWordCount(countWordsFromContent(newContent));
   };
 
   const handleTitleChange = (newTitle: string) => {
@@ -306,7 +311,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
 
   useEffect(() => {
     // only auto save for draft article
-    if (isDraft && isDraftContentUpdated) {
+    if (canAutoSave) {
       debounceStopTyping();
       debounceTypingConstantly();
     }

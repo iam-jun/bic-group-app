@@ -17,7 +17,6 @@ describe('UserHeader component', () => {
         username={username}
         latestWork={latestWork}
         isCurrentUser
-        screenId="test"
       />,
     );
     const { getByTestId } = rendered;
@@ -45,7 +44,6 @@ describe('UserHeader component', () => {
         username={username}
         latestWork={latestWork}
         isCurrentUser={false}
-        screenId="test"
       />,
     );
     const { getByTestId } = rendered;

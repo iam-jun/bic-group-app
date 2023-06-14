@@ -43,7 +43,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
   const [initIndex, setInitIndex] = useState(0);
 
   const {
-    content, title, summary, coverMedia, createdAt, audience,
+    content, title, summary, coverMedia, createdAt, audience, wordCount,
     series, categories, actor, setting, reactionsCount, commentsCount, ownerReactions, tags,
   } = data;
 
@@ -62,6 +62,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
       contentState: parseSafe(content),
       actor,
       tags,
+      wordCount,
     },
   };
 

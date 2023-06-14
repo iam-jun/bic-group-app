@@ -1,9 +1,9 @@
-import groupApi from '~/api/GroupApi';
 import { responseBlockUser } from '~/test/mock_data/blocking';
 import { act, renderHook } from '~/test/testUtils';
 import useBlockingStore from '../index';
 import * as showToastError from '~/store/helper/showToastError';
 import * as showToastSuccess from '~/store/helper/showToastSuccess';
+import userApi from '~/api/UserApi';
 
 describe('blockUser', () => {
   afterEach(() => {
@@ -16,7 +16,7 @@ describe('blockUser', () => {
   it('should blockUser success:', () => {
     const spyShowToastSuccess = jest.spyOn(showToastSuccess, 'default');
     const callback = jest.fn();
-    const spy = jest.spyOn(groupApi, 'blockUser').mockImplementation(() => Promise.resolve(responseBlockUser) as any);
+    const spy = jest.spyOn(userApi, 'blockUser').mockImplementation(() => Promise.resolve(responseBlockUser) as any);
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useBlockingStore((state) => state));
@@ -34,7 +34,7 @@ describe('blockUser', () => {
   it('should blockUser throw error', () => {
     const spyShowToastError = jest.spyOn(showToastError, 'default');
     const error = 'internal error';
-    const spy = jest.spyOn(groupApi, 'blockUser').mockImplementation(() => Promise.reject(error) as any);
+    const spy = jest.spyOn(userApi, 'blockUser').mockImplementation(() => Promise.reject(error) as any);
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useBlockingStore((state) => state));

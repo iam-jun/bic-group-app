@@ -27,6 +27,8 @@ import useModalStore from '~/store/modal';
 import { ContentType } from '~/interfaces/INotification';
 import { useUserIdAuth } from '~/hooks/auth';
 import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
+import { USER_TABS } from '../Menu/UserProfile';
+import { USER_TABS_TYPES } from '../Menu/UserProfile/constants';
 
 const Notification = () => {
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
@@ -392,6 +394,15 @@ const Notification = () => {
               notiActions.resetChangelogNoti();
               rootNavigation.navigate(notiStack.notiChangeLogsPage, { id: item.id });
               break;
+
+            case NOTIFICATION_TYPE.CHANGE_USER_BADGE_COLLECTION: {
+              const targetIndex = USER_TABS.findIndex(
+                (item: { id: string; text: string }) => item.id === USER_TABS_TYPES.USER_BADGE_COLLECTION,
+              );
+              rootNavigation.navigate(mainStack.userProfile, { userId, targetIndex });
+              break;
+            }
+
             default:
               console.warn(`Notification type ${type} have not implemented yet`);
               break;
