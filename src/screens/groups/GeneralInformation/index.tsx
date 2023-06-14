@@ -39,7 +39,6 @@ const GeneralInformation = (props: any) => {
   let organizationDescription: string;
   let organizationPrivacy: any;
   let canEditPrivacy: boolean;
-  let isJoinApproval: boolean;
   let rootGroupId: string;
   if (type === 'group') {
     const groupDetail = useGroupsStore(groupsSelector.getGroup(id, {}));
@@ -52,7 +51,6 @@ const GeneralInformation = (props: any) => {
     organizationName = group?.name || '';
     organizationDescription = group?.description || '';
     organizationPrivacy = group?.privacy || '';
-    isJoinApproval = group?.settings?.isJoinApproval;
   } else {
     const communityDetail = useCommunitiesStore((state: ICommunitiesState) => state.data[id]);
     rootGroupId = communityDetail?.groupId;
@@ -63,7 +61,6 @@ const GeneralInformation = (props: any) => {
     organizationName = communityDetail?.name || '';
     organizationDescription = communityDetail?.description || '';
     organizationPrivacy = communityDetail?.privacy || '';
-    isJoinApproval = communityDetail?.settings?.isJoinApproval;
   }
 
   useEffect(
@@ -124,7 +121,6 @@ const GeneralInformation = (props: any) => {
           name={organizationName}
           privacy={organizationPrivacy}
           description={organizationDescription}
-          isJoinApproval={isJoinApproval}
           rootGroupId={rootGroupId}
         />
       </ScrollView>
