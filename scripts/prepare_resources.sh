@@ -39,24 +39,24 @@ function copy_file_to_folder() {
 echo "Preparing resources"
 
 # Android
-copy_file_to_folder "./build_resources/group-staging-android-google-services.json" "./android/app/src/staging" "google-services.json"
-copy_file_to_folder "./build_resources/group-production-android-google-services.json" "./android/app/src/production" "google-services.json"
-copy_file_to_folder "./build_resources/group-prerelease-android-google-services.json" "./android/app/src/prerelease" "google-services.json"
-copy_file_to_folder "./build_resources/staging.keystore" "./android/app"
-copy_file_to_folder "./build_resources/prerelease.keystore" "./android/app"
-copy_file_to_folder "./build_resources/production.keystore" "./android/app"
-copy_file_to_folder "./build_resources/google-drive.json" "./fastlane"
+copy_file_to_folder "./bic-mobile-secret/group/group-staging-android-google-services.json" "./android/app/src/staging" "google-services.json"
+copy_file_to_folder "./bic-mobile-secret/group/group-production-android-google-services.json" "./android/app/src/production" "google-services.json"
+copy_file_to_folder "./bic-mobile-secret/group/group-prerelease-android-google-services.json" "./android/app/src/prerelease" "google-services.json"
+copy_file_to_folder "./bic-mobile-secret/shared/staging.keystore" "./android/app"
+copy_file_to_folder "./bic-mobile-secret/shared/prerelease.keystore" "./android/app"
+copy_file_to_folder "./bic-mobile-secret/shared/production.keystore" "./android/app"
+copy_file_to_folder "./bic-mobile-secret/shared/google-drive.json" "./fastlane"
 
 # iOS
 # these files are used for build with scheme stg/pre/pro
 # don't know why when build with fastlane, app ios can receive notification ?!?
-copy_file_to_folder "./build_resources/group-staging-ios-google-services.plist" "./ios/Firebase" "GoogleService-Info-Staging.plist"
-copy_file_to_folder "./build_resources/group-prerelease-ios-google-services.plist" "./ios/Firebase" "GoogleService-Info-Prerelease.plist"
-copy_file_to_folder "./build_resources/group-production-ios-google-services.plist" "./ios/Firebase" "GoogleService-Info-Production.plist"
-copy_file_to_folder "./build_resources/api_key_info.json" "./fastlane"
+copy_file_to_folder "./bic-mobile-secret/group/group-staging-ios-google-services.plist" "./ios/Firebase" "GoogleService-Info-Staging.plist"
+copy_file_to_folder "./bic-mobile-secret/group/group-prerelease-ios-google-services.plist" "./ios/Firebase" "GoogleService-Info-Prerelease.plist"
+copy_file_to_folder "./bic-mobile-secret/group/group-production-ios-google-services.plist" "./ios/Firebase" "GoogleService-Info-Production.plist"
+copy_file_to_folder "./bic-mobile-secret/shared/api_key_info.json" "./fastlane"
 
 # .env
-copy_file_to_folder "./build_resources/.env.staging" "."
-copy_file_to_folder "./build_resources/.env.prerelease" "."
-copy_file_to_folder "./build_resources/.env.production" "."
-copy_file_to_folder "./build_resources/fastlane.env" "./fastlane" ".env"
+copy_file_to_folder "./bic-mobile-build-resources/group/.env.staging" "."
+copy_file_to_folder "./bic-mobile-build-resources/group/.env.prerelease" "."
+copy_file_to_folder "./bic-mobile-build-resources/group/.env.production" "."
+copy_file_to_folder "./bic-mobile-build-resources/group/fastlane.env" "./fastlane" ".env"
