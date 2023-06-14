@@ -1,7 +1,7 @@
 import { Method } from 'axios';
 import { makeHttpRequest, withHttpRequestPromise } from '~/api/apiRequest';
 import { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
-import { IParamGetNotifications } from '~/interfaces/INotification';
+import { IEditNotificationSetting, IParamGetNotifications } from '~/interfaces/INotification';
 
 const LIMIT = 20;
 
@@ -66,6 +66,16 @@ export const notificationApiConfig = {
     ...defaultConfig,
     url: `${provider.url}notifications/${id}?type=changelogs`,
   }),
+  getConfigSettings: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings`,
+  }),
+  updateSettings: (params: IEditNotificationSetting): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings`,
+    method: 'patch',
+    data: params,
+  }),
 };
 
 const notificationApi = {
@@ -90,6 +100,10 @@ const notificationApi = {
     notificationApiConfig.putMarkAsUnReadById, activityId,
   ),
   getChangelogNotification: (id: string) => withHttpRequestPromise(notificationApiConfig.getChangelogNotification, id),
+  getConfigSettings: () => withHttpRequestPromise(notificationApiConfig.getConfigSettings),
+  updateSettings: (params: IEditNotificationSetting) => withHttpRequestPromise(
+    notificationApiConfig.updateSettings, params,
+  ),
 };
 
 export default notificationApi;

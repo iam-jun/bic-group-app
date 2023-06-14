@@ -88,6 +88,11 @@ const Notification = () => {
     notiActions.markAsReadAll('ALL');
   };
 
+  const goToNotiSettings = () => {
+    modalActions.hideBottomList();
+    rootNavigation.navigate(notiStack.notiSettings);
+  };
+
   const onPressMenu = () => {
     const menuData: any[] = [{
       id: 1,
@@ -100,9 +105,9 @@ const Notification = () => {
       id: 2,
       testID: 'notifications.notification_settings',
       leftIcon: 'Gear',
-      title: i18next.t('notification:notification_settings'),
+      title: i18next.t('notification:notification_settings:title'),
       requireIsActor: true,
-      upcoming: true,
+      onPress: goToNotiSettings,
     }];
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore

@@ -24,6 +24,7 @@ import { POLICY_URL } from '~/constants/url';
 import AccordionMenu from './AccordionMenu';
 import { ISettings, SettingsAndPrivacyType } from '~/interfaces/IMenu';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
+import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 
 const REPORT_URL = 'https://report.beincom.com/';
 
@@ -76,6 +77,9 @@ const MenuSettings = () => {
       case SettingsAndPrivacyType.BLOCKING:
         rootNavigation.navigate(menuStack.blocking);
         break;
+      case SettingsAndPrivacyType.NOTIFICATIONS:
+        rootNavigation.navigate(notiStack.notiSettings);
+        break;
       default:
         break;
     }
@@ -98,6 +102,12 @@ const MenuSettings = () => {
           title: 'settings:title_blocking',
           icon: 'UserSlashSolid',
           onPress: () => onPressSettingsAndPrivacy(SettingsAndPrivacyType.BLOCKING),
+        },
+        {
+          type: SettingsAndPrivacyType.NOTIFICATIONS,
+          title: 'tabs:notification',
+          icon: 'BellSolid',
+          onPress: () => onPressSettingsAndPrivacy(SettingsAndPrivacyType.NOTIFICATIONS),
         },
         /**
          * Temporarily hidden language in task BEIN-13338
