@@ -41,6 +41,7 @@ buck-out/
 \.buckd/
 *.keystore
 !debug.keystore
+build_resources
 
 # fastlane
 #
@@ -87,3 +88,8 @@ coverage
 .tmp
 /ios/I/
 test-report.xml
+
+ios/tmp.xcconfig
+
+bic-mobile-secret
+bic-mobile-build-resources
