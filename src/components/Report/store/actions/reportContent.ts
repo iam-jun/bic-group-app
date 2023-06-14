@@ -2,9 +2,9 @@ import StreamApi from '~/api/StreamApi';
 import usePostsStore from '~/store/entities/posts';
 import useCommentsStore from '~/store/entities/comments';
 import { IPayloadAddToAllPost, ICommentData } from '~/interfaces/IPost';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 import showToastError from '~/store/helper/showToastError';
 import { IPayloadReportContent, TargetType } from '~/interfaces/IReport';
-import showToast from '~/store/helper/showToast';
 
 const reportContent = () => async (payload: IPayloadReportContent) => {
   const {
@@ -19,7 +19,7 @@ const reportContent = () => async (payload: IPayloadReportContent) => {
   const { parentCommentId } = dataComment || {};
 
   try {
-    await StreamApi.reportContent({
+    const response = await StreamApi.reportContent({
       targetId,
       groupIds,
       targetType,
@@ -43,7 +43,7 @@ const reportContent = () => async (payload: IPayloadReportContent) => {
         break;
     }
 
-    showToast({ content: 'common:text_report_sent' });
+    showToastSuccess(response);
   } catch (e) {
     console.error('\x1b[31m🐣️ action reportContent error: ', e, '\x1b[0m');
     showToastError(e);

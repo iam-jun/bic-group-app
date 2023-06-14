@@ -7,7 +7,7 @@ import streamApi from '~/api/StreamApi';
 describe('getPosts in group/community', () => {
   it('should get posts success:', async () => {
     jest.useFakeTimers();
-    const spyApiGetGroupPosts = jest.spyOn(streamApi, 'getGroupPosts').mockImplementation(
+    const spyApiGetGroupPosts = jest.spyOn(streamApi, 'getTimelinePosts').mockImplementation(
       () => Promise.resolve(responseTimeline) as any,
     );
 
@@ -35,7 +35,7 @@ describe('getPosts in group/community', () => {
 
   it('should refresh posts success:', async () => {
     jest.useFakeTimers();
-    const spyApiGetGroupPosts = jest.spyOn(streamApi, 'getGroupPosts').mockImplementation(
+    const spyApiGetGroupPosts = jest.spyOn(streamApi, 'getTimelinePosts').mockImplementation(
       () => Promise.resolve(responseTimeline) as any,
     );
 

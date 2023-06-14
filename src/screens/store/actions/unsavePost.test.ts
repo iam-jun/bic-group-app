@@ -1,8 +1,9 @@
 import streamApi from '~/api/StreamApi';
 import { PostType } from '~/interfaces/IPost';
-import useModalStore from '~/store/modal';
 import { renderHook, act } from '~/test/testUtils';
 import useCommonController from '../index';
+import * as showToastError from '~/store/helper/showToastError';
+import * as showToastSuccess from '~/store/helper/showToastSuccess';
 
 describe('unsave post', () => {
   afterEach(() => {
@@ -10,14 +11,13 @@ describe('unsave post', () => {
     jest.useRealTimers(); // you must add this
   });
 
+  const spyShowToastSuccess = jest.spyOn(showToastSuccess, 'default');
+  const spyShowToastError = jest.spyOn(showToastError, 'default');
+
   it('should call API success to save POST', () => {
     const spy = jest.spyOn(streamApi, 'postUnsaveContent').mockImplementation(
       () => Promise.resolve({}),
     );
-
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useCommonController((state) => state));
@@ -31,19 +31,13 @@ describe('unsave post', () => {
       jest.runAllTimers();
     });
 
-    expect(showToast).toBeCalledWith({
-      content: 'post:text_unsaved',
-    });
+    expect(spyShowToastSuccess).toBeCalled();
   });
 
   it('should call API success to save ARTICLE', () => {
     const spy = jest.spyOn(streamApi, 'postUnsaveContent').mockImplementation(
       () => Promise.resolve({}),
     );
-
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useCommonController((state) => state));
@@ -57,19 +51,13 @@ describe('unsave post', () => {
       jest.runAllTimers();
     });
 
-    expect(showToast).toBeCalledWith({
-      content: 'article:text_unsaved',
-    });
+    expect(spyShowToastSuccess).toBeCalled();
   });
 
   it('should call API success to save SERIES', () => {
     const spy = jest.spyOn(streamApi, 'postUnsaveContent').mockImplementation(
       () => Promise.resolve({}),
     );
-
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useCommonController((state) => state));
@@ -83,9 +71,7 @@ describe('unsave post', () => {
       jest.runAllTimers();
     });
 
-    expect(showToast).toBeCalledWith({
-      content: 'series:text_unsaved',
-    });
+    expect(spyShowToastSuccess).toBeCalled();
   });
 
   it('should call API and throws an error', () => {
@@ -93,10 +79,6 @@ describe('unsave post', () => {
     const spy = jest.spyOn(streamApi, 'postUnsaveContent').mockImplementation(
       () => Promise.reject(error) as any,
     );
-
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useCommonController((state) => state));
@@ -115,8 +97,6 @@ describe('unsave post', () => {
       jest.runAllTimers();
     });
 
-    expect(showToast).toBeCalledWith({
-      content: 'common:text_unsave_fail',
-    });
+    expect(spyShowToastError).toBeCalled();
   });
 });
