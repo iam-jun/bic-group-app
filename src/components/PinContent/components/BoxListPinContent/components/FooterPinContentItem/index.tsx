@@ -3,8 +3,8 @@ import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { IReactionCounts } from '~/interfaces/IPost';
 import Icon from '~/baseComponents/Icon';
+import { IconType } from '~/resources/icons';
 import Text from '~/baseComponents/Text';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { spacing } from '~/theme';
 import { formatLargeNumber } from '~/utils/formatter';
 import { getTotalReactions } from '~/helpers/post';
@@ -26,51 +26,43 @@ const FooterPinContentItem: React.FC<FooterPinContentItemProps> = ({
     const { colors } = theme;
     const styles = createStyles(theme);
     const numberOfReactions = formatLargeNumber(getTotalReactions(reactionsCount, 'user'));
-    const labelReactionCount = numberOfReactions ? ` ${numberOfReactions}` : '';
+    const labelReactionCount = numberOfReactions ? `${numberOfReactions}` : '';
     const numberOfComment = formatLargeNumber(commentsCount);
-    const commentCountLabel = numberOfComment ? ` ${numberOfComment}` : '';
+    const commentCountLabel = numberOfComment ? `${numberOfComment}` : '';
 
-    const renderReactLabel = () => {
-        if (!canReact) return null;
-
+    const renderItem = (icon: IconType, label: string, isMargin?: boolean) => {
         return (
-            <View style={styles.boxItem}>
+            <View style={[styles.boxItem, isMargin && styles.marginRightLarge]}>
                 <Icon 
-                    icon={'iconReact'}
+                    icon={icon}
                     size={18}
                     tintColor={colors.neutral40}
                 />
-                <Text.BodyMMedium color={colors.neutral60}>
-                    { labelReactionCount }
+                <Text.BodyMMedium color={colors.neutral60} style={styles.labelItem}>
+                    { label }
                 </Text.BodyMMedium>
             </View>
         );
     }
 
-    const renderCommnentLabel = () => {
+    const renderReactItem = () => {
+        if (!canReact) return null;
+
+        return renderItem('iconReact', labelReactionCount, true);
+    }
+
+    const renderCommnentItem = () => {
         if (!canComment) return null;
 
-        return (
-            <View style={styles.boxItem}>
-                <Icon 
-                    icon={'MessageDots'}
-                    size={18}
-                    tintColor={colors.neutral40}
-                />
-                <Text.BodyMMedium color={colors.neutral60}>
-                    { commentCountLabel }
-                </Text.BodyMMedium>
-            </View>
-        );
+        return renderItem('MessageDots', commentCountLabel, false);
     }
 
     if (!canReact && !canComment) return null;
 
     return (
         <View style={styles.container} testID='footer_pin_content_item.view'>
-            {renderReactLabel()}
-            <ViewSpacing width={spacing.margin.large} />
-            {renderCommnentLabel()}
+            {renderReactItem()}
+            {renderCommnentItem()}
         </View>
     );
 };
@@ -80,18 +72,22 @@ const createStyles = (theme: ExtendedTheme) => {
 
     return StyleSheet.create({
         container: {
+            height: 46,
             flexDirection: 'row',
             alignItems: 'center',
             borderTopWidth: 1,
             borderTopColor: colors.neutral5,
-            // paddingVertical: spacing.padding.base,
             paddingHorizontal: spacing.padding.large,
-            height: 46,
         },
         boxItem: {
             flexDirection: 'row',
             alignItems: 'center',
-            // paddingVertical: spacing.padding.xTiny,
+        },
+        labelItem: {
+            marginLeft: spacing.margin.tiny,
+        },
+        marginRightLarge: {
+            marginRight: spacing.margin.large,
         },
     });
 }
