@@ -30,9 +30,17 @@ const FooterPinContentItem: React.FC<FooterPinContentItemProps> = ({
     const numberOfComment = formatLargeNumber(commentsCount);
     const commentCountLabel = numberOfComment ? `${numberOfComment}` : '';
 
-    const renderItem = (icon: IconType, label: string, isMargin?: boolean) => {
+    const renderItem = (
+        icon: IconType,
+        label: string,
+        isMargin?: boolean,
+        testID?: string,
+    ) => {
         return (
-            <View style={[styles.boxItem, isMargin && styles.marginRightLarge]}>
+            <View
+                testID={testID}
+                style={[styles.boxItem, isMargin && styles.marginRightLarge]}
+            >
                 <Icon 
                     icon={icon}
                     size={18}
@@ -48,13 +56,23 @@ const FooterPinContentItem: React.FC<FooterPinContentItemProps> = ({
     const renderReactItem = () => {
         if (!canReact) return null;
 
-        return renderItem('iconReact', labelReactionCount, true);
+        return renderItem(
+            'iconReact',
+            labelReactionCount,
+            true,
+            'footer_pin_content_item.react',
+        );
     }
 
     const renderCommnentItem = () => {
         if (!canComment) return null;
 
-        return renderItem('MessageDots', commentCountLabel, false);
+        return renderItem(
+            'MessageDots',
+            commentCountLabel,
+            false,
+            'footer_pin_content_item.comment',
+        );
     }
 
     if (!canReact && !canComment) return null;
