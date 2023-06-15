@@ -5,6 +5,7 @@ import { rootNavigationRef } from '~/router/refs';
 import useHomeStore from '~/screens/Home/store';
 import showToastError from '~/store/helper/showToastError';
 import { ISeriesState } from '..';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const navigation = routerHelper.withNavigation(rootNavigationRef);
 
@@ -25,6 +26,7 @@ const postCreateNewSeries = (set, get) => async () => {
 
     navigation.replace(seriesStack.seriesDetail, { seriesId: id });
     useHomeStore.getState().actions.refreshHome();
+    showToastSuccess(response);
   } catch (error) {
     set((state: ISeriesState) => {
       state.loading = false;

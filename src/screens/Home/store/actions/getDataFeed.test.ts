@@ -22,7 +22,7 @@ describe('getDataFeed in feed', () => {
       const { attributeFilter, contentFilter, feed } = result.current;
       expect(attributeFilter).toBe(AttributeFeed.ALL);
       expect(contentFilter).toBe(ContentFeed.ALL);
-      expect(feed.ALL.ALL.canLoadMore).toBe(mockDataFeedResponse.meta.hasNextPage);
+      expect(feed.ALL.ALL.hasNextPage).toBe(mockDataFeedResponse.meta.hasNextPage);
       expect(feed.ALL.ALL.isLoading).toBe(false);
       expect(feed.ALL.ALL.data.length).toBe(mockDataFeedResponse.list.length);
     });
@@ -61,7 +61,7 @@ describe('getDataFeed in feed', () => {
       const { attributeFilter, contentFilter, feed } = result.current;
       expect(attributeFilter).toBe(AttributeFeed.ALL);
       expect(contentFilter).toBe(ContentFeed.ALL);
-      expect(feed.ALL.ALL.canLoadMore).toBe(mockDataFeedResponse.meta.hasNextPage);
+      expect(feed.ALL.ALL.hasNextPage).toBe(mockDataFeedResponse.meta.hasNextPage);
       expect(feed.ALL.ALL.isLoading).toBe(false);
       expect(feed.ALL.ALL.refreshing).toBe(false);
       expect(feed.ALL.ALL.data.length).toBe(mockDataFeedResponse.list.length);

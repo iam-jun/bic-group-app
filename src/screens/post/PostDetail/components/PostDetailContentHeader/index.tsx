@@ -13,7 +13,7 @@ const PostDetailContentHeader = ({
   onPressComment,
   onContentLayout,
   commentLeft,
-  idLessThan,
+  endCursor,
 }: any) => {
   const postData = usePostsStore(useCallback(postsSelector.getPost(id, {}), [id]));
   const isHidden = usePostsStore(useCallback(postsSelector.getIsHidden(id), [id]));
@@ -42,7 +42,7 @@ const PostDetailContentHeader = ({
         <LoadMoreComment
           title="post:text_load_more_comments"
           postId={id}
-          idLessThan={idLessThan}
+          endCursor={endCursor}
         />
       )}
     </>

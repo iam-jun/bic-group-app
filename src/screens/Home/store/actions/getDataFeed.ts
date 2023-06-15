@@ -6,7 +6,7 @@ import usePostsStore from '~/store/entities/posts';
 import {
   getParamsContentFeed, isFilterWithThisAttributeFeed,
 } from '../helper';
-import IHomeState from '../Interface';
+import IHomeState, { IHomeFeed } from '../Interface';
 
 const getDataFeed = (set, get) => async (isRefresh?: boolean) => {
   const { contentFilter, attributeFilter } = get();
@@ -18,10 +18,10 @@ const getDataFeed = (set, get) => async (isRefresh?: boolean) => {
     };
   });
   const currentState: IHomeState = get();
-  const currentList = currentState.feed[contentFilter][attributeFilter].data;
-  const offset = isRefresh ? 0 : currentList.length || 0;
+  const { data: currentList, endCursor: currentEndCursor } = currentState.feed[contentFilter][attributeFilter];
+  const endCursor = isRefresh ? null : currentEndCursor;
   const requestParams: IParamGetFeed = {
-    offset,
+    after: endCursor,
     isImportant: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.IMPORTANT),
     isSaved: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.SAVED),
     // isMine: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.MINE),
@@ -45,8 +45,9 @@ const getDataFeed = (set, get) => async (isRefresh?: boolean) => {
           refreshing: false,
           isLoading: false,
           data: newList,
-          canLoadMore: response?.meta?.hasNextPage || false,
-        };
+          hasNextPage: response?.meta?.hasNextPage || false,
+          endCursor: response?.meta?.endCursor || null,
+        } as IHomeFeed;
       }, 'getDataFeed');
     })
     .catch(() => {
@@ -55,8 +56,9 @@ const getDataFeed = (set, get) => async (isRefresh?: boolean) => {
           ...state.feed[contentFilter][attributeFilter],
           refreshing: false,
           isLoading: false,
-          canLoadMore: false,
-        };
+          hasNextPage: false,
+          endCursor: null,
+        } as IHomeFeed;
       }, 'getTabData');
     });
 };

@@ -10,7 +10,7 @@ import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { spacing } from '~/theme';
 import { formatLargeNumber } from '~/utils/formatter';
-import { getTotalReactions, validateReactionCount } from '~/helpers/post';
+import { getTotalReactions, isReactableNewReaction } from '~/helpers/post';
 import useModalStore from '~/store/modal';
 
 export interface ContentFooterProps {
@@ -45,7 +45,7 @@ const ContentFooter: FC<ContentFooterProps> = ({
   const { t } = useBaseHook();
   const modalActions = useModalStore((state) => state.actions);
 
-  const validReactionCount = validateReactionCount(reactionsCount);
+  const canReactNewReaction = isReactableNewReaction(reactionsCount);
   const numberOfReactions = formatLargeNumber(getTotalReactions(reactionsCount, 'user'));
   const labelReactionCount = `${
     numberOfReactions ? `${numberOfReactions} ` : ''
@@ -89,7 +89,7 @@ const ContentFooter: FC<ContentFooterProps> = ({
   );
 
   const renderReactButtonItem = () => {
-    if (!validReactionCount || !canReact) return null;
+    if (!canReactNewReaction || !canReact) return null;
 
     return (
       <>

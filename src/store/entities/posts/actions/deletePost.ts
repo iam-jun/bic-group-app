@@ -15,16 +15,14 @@ const deletePost = (_set, get) => async (payload: IPayloadDeletePost) => {
 
   try {
     const response = await streamApi.deletePost(id);
-    if (response?.data) {
-      const { posts, actions }: IPostsState = get();
-      const deletedPost = {
-        ...posts[id],
-        deleted: true,
-      };
-      actions.addToPosts({ data: deletedPost } as IPayloadAddToAllPost);
-      await timeOut(500);
-      showToastSuccess(response);
-    }
+    const { posts, actions }: IPostsState = get();
+    const deletedPost = {
+      ...posts[id],
+      deleted: true,
+    };
+    actions.addToPosts({ data: deletedPost } as IPayloadAddToAllPost);
+    await timeOut(500);
+    showToastSuccess(response);
   } catch (error) {
     if (error?.meta?.errors?.groupsDenied && !!callbackError) {
       callbackError(error.meta.errors.groupsDenied);

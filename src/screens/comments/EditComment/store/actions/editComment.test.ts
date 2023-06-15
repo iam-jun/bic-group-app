@@ -4,9 +4,9 @@ import { IPayloadPutEditComment } from '~/interfaces/IPost';
 import streamApi from '~/api/StreamApi';
 import { mockComment, mockResponseEditComment } from '~/test/mock_data/comment';
 import useCommentInputStore from '~/screens/comments/components/CommentInputView/store';
-import useCommentsStore from '~/store/entities/comments';
 import useModalStore from '~/store/modal';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import * as showToastSuccess from '~/store/helper/showToastSuccess';
 
 describe('editComment actions', () => {
   const mockId = 'b2e43944-a8fb-4743-bd5d-c820864e1add';
@@ -23,7 +23,6 @@ describe('editComment actions', () => {
       id: mockId,
       comment: mockComment,
       data: mockDataEdit,
-      postId: '123',
     };
     const spyCallApi = jest
       .spyOn(streamApi, 'putEditComment')
@@ -32,11 +31,7 @@ describe('editComment actions', () => {
     const setCreateComment = jest.fn();
     jest.spyOn(useCommentInputStore, 'getState').mockImplementation(() => ({ actions: { setCreateComment } } as any));
 
-    const addToComments = jest.fn();
-    jest.spyOn(useCommentsStore, 'getState').mockImplementation(() => ({ actions: { addToComments } } as any));
-
-    const showToast = jest.fn();
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions: { showToast } } as any));
+    const spyShowToastSuccess = jest.spyOn(showToastSuccess, 'default');
 
     jest.useFakeTimers();
 
@@ -51,8 +46,7 @@ describe('editComment actions', () => {
     });
 
     expect(spyCallApi).toBeCalled();
-    expect(addToComments).toBeCalledWith(response.data);
-    expect(showToast).toHaveBeenCalledWith({ content: 'post:edit_comment_success' });
+    expect(spyShowToastSuccess).toBeCalled();
     expect(setCreateComment).toBeCalledTimes(2);
   });
 
@@ -61,7 +55,6 @@ describe('editComment actions', () => {
       id: '',
       comment: mockComment,
       data: mockDataEdit,
-      postId: '123',
     };
     const spyCallApi = jest
       .spyOn(streamApi, 'putEditComment')
@@ -80,7 +73,6 @@ describe('editComment actions', () => {
       id: mockId,
       comment: null,
       data: mockDataEdit,
-      postId: '123',
     };
     const spyCallApi = jest
       .spyOn(streamApi, 'putEditComment')
@@ -99,7 +91,6 @@ describe('editComment actions', () => {
       id: mockId,
       comment: mockComment,
       data: null,
-      postId: '123',
     };
     const spyCallApi = jest
       .spyOn(streamApi, 'putEditComment')
@@ -119,7 +110,6 @@ describe('editComment actions', () => {
       id: mockId,
       comment: mockComment,
       data: mockDataEdit,
-      postId: '123',
     };
     const spyCallApi = jest
       .spyOn(streamApi, 'putEditComment')
