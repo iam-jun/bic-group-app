@@ -1,6 +1,6 @@
 import { t } from 'i18next';
 import React, { FC, useState } from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
@@ -10,6 +10,7 @@ import Text from '~/baseComponents/Text';
 import { Radio } from '~/baseComponents';
 import { Props, topAdjustment } from './MembershipApproval';
 import { GroupPrivacyType } from '~/constants/privacyTypes';
+import { dimension } from '~/theme';
 
 interface IOption {
   id: number;
@@ -176,7 +177,7 @@ const createStyles = (theme: ExtendedTheme) => {
       width: 200,
     },
     btnFake: {
-      width: Dimensions.get('window').width - 2 * spacing.padding.large,
+      width: dimension.deviceWidth - 2 * spacing.padding.large,
     },
     arrowSize: {
       width: 12,

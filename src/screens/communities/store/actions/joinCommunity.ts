@@ -48,17 +48,18 @@ const joinCommunity
       showToast(toastMessage);
     } catch (error) {
       console.error('joinCommunity catch', error);
-      if (error?.code === APIErrorCode.Group.MISSIING_MEMBERSHIP_ANSWERS) {
-        setTimeout(
-          () => {
-            useModalStore.getState().actions.showAlert({
-              cancelBtn: false,
-              confirmLabel: i18next.t('common:text_ok'),
-              title: i18next.t('common:text_sorry_something_went_wrong'),
-              content: i18next.t('common:text_pull_to_refresh'),
-            });
-          }, 500,
-        );
+      if (
+        error?.code === APIErrorCode.Group.MISSIING_MEMBERSHIP_ANSWERS
+        || error?.code === APIErrorCode.Common.UNAUTHORIZED
+      ) {
+        setTimeout(() => {
+          useModalStore.getState().actions.showAlert({
+            cancelBtn: false,
+            confirmLabel: i18next.t('common:text_got_it'),
+            title: i18next.t('common:text_sorry_something_went_wrong'),
+            content: i18next.t('common:text_pull_to_refresh'),
+          });
+        }, 500);
         return;
       }
       showToastError(error);

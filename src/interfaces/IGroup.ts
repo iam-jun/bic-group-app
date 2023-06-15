@@ -4,6 +4,7 @@ import { ResourceUploadType } from './IUpload';
 import { RoleType } from '~/constants/permissionScheme';
 import { IObject } from '~/interfaces/common';
 import { ICommunity, MembershipAnswer } from './ICommunity';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 
 export interface IRole {
   id?: string;
@@ -121,7 +122,7 @@ export interface IGroupDetailEdit {
 
 export interface IGroupDetail {
   group: IGroup;
-  joinStatus: number;
+  joinStatus: GroupJoinStatus;
 }
 
 export interface IParamGetGroupPosts {

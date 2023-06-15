@@ -44,6 +44,7 @@
     "btn_create": "Create",
     "btn_join": "Join",
     "btn_view": "View",
+    "btn_only_invited_people_can_join": "Only invited people can join",
     "btn_leave": "Leave",
     "btn_stay_here": "Stay here",
     "btn_stay_on_this_page": "Stay on this page",
@@ -236,7 +237,7 @@
     "text_group_terms": "Group Terms & Conditions",
     "text_community_terms": "Community Terms & Conditions",
     "text_sorry_something_went_wrong": "Sorry, something went wrong",
-    "text_pull_to_refresh": "Please pull down to refresh the page or try again later",
+    "text_pull_to_refresh": "Please pull down to refresh the page and try again",
     "text_answer_title": "Membership questions",
     "text_answer_input_placeholder": "Write your answer",
     "text_send_request_join_successfully": "Sent request successfully"

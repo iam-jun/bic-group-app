@@ -1,10 +1,11 @@
 import {
-  StyleProp, ViewStyle, StyleSheet, ScrollView, Dimensions,
+  StyleProp, ViewStyle, StyleSheet, ScrollView,
 } from 'react-native';
 import React, { useRef } from 'react';
 
 import PillTabButton, { PillTabButtonProps } from './PillTabButton';
 import TabButton from './TabButton';
+import { dimension } from '~/theme';
 
 interface TabProps {
   data: { id?: string; text?: string; [x: string | number]: any }[];
@@ -35,7 +36,7 @@ const Tab = ({
   const onPress = (item: any, index: number) => {
     onPressTab?.(item, index);
     if (isScrollToIndex) {
-      scrollViewRef?.current?.scrollTo({ x: Dimensions.get('window').width * index, animated: true });
+      scrollViewRef?.current?.scrollTo({ x: dimension.deviceWidth * index, animated: true });
     }
   };
 

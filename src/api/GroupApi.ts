@@ -1,5 +1,5 @@
 import { Method } from 'axios';
-import { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
+import { apiProviders, apiVersionId, HttpApiRequestConfig } from '~/api/apiConfig';
 import {
   IGetCommunityGroup,
   IGroupDetailEdit,
@@ -27,6 +27,9 @@ const defaultConfig = {
   provider,
   method: 'get' as Method,
   useRetry: true,
+  headers: {
+    'x-version-id': apiVersionId.group,
+  },
 };
 
 export const groupsApiConfig = {
