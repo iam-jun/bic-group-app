@@ -198,7 +198,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
           setGalleryVisible,
         });
         break;
-      case EventType.ON_NAVIGATE_ARTICLE:
+      case EventType.ON_NAVIGATE:
         onNavigateArticle(message?.payload);
         break;
     }

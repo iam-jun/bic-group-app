@@ -85,8 +85,8 @@ const RelatedContentsInSeries: FC<RelatedContentsInSeriesProps> = ({ postId }) =
             series:this_content_is_in_the_following_series
           </Text.H4>
         </View>
-        {data.map((item) => (
-          <SeriesItem key={item.id} postId={postId} series={item} />
+        {data.map((item, index) => (
+          <SeriesItem key={item.id} postId={postId} series={item} isDefaultExpand={index === 0} />
         ))}
       </View>
     </View>
@@ -98,11 +98,13 @@ const createStyle = (theme: ExtendedTheme) => {
 
   return StyleSheet.create({
     container: {
-      paddingHorizontal: spacing.padding.large,
+      borderTopColor: colors.neutral5,
+      borderBottomColor: colors.neutral5,
+      borderTopWidth: 1,
+      borderBottomWidth: 1,
     },
     contentContainer: {
-      borderTopColor: colors.neutral5,
-      borderTopWidth: 1,
+      paddingHorizontal: spacing.padding.large,
     },
     titleContainer: {
       paddingVertical: spacing.padding.base,

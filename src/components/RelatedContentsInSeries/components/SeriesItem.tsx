@@ -11,19 +11,20 @@ import { getPrevAndNextContentInSeries } from '../helper';
 
 type SeriesItemProps = {
     postId: string;
-    series: IPost
+    series: IPost;
+    isDefaultExpand: boolean;
 }
 
-const SeriesItem: FC<SeriesItemProps> = ({ postId, series }) => {
+const SeriesItem: FC<SeriesItemProps> = ({ postId, series, isDefaultExpand = false }) => {
   const { title } = series;
   const theme = useTheme();
   const styles = createStyle(theme);
 
-  const [isExpand, setIsExpand] = useState(false);
+  const [isExpand, setIsExpand] = useState(isDefaultExpand);
 
   const { prevContent, nextContent } = getPrevAndNextContentInSeries(postId, series) || {};
 
-  if (!prevContent || !nextContent) return null;
+  if (!prevContent && !nextContent) return null;
 
   return (
     <View>
@@ -32,15 +33,15 @@ const SeriesItem: FC<SeriesItemProps> = ({ postId, series }) => {
           <View style={styles.containerTitle}>
             <Text.BodyMMedium numberOfLines={2}>{title}</Text.BodyMMedium>
           </View>
-          <Icon tintColor={theme.colors.neutral40} size={14} icon={isExpand ? 'ChevronUp' : 'ChevronDown'} />
+          <Icon tintColor={theme.colors.neutral40} size={14} icon={isExpand ? 'CaretDownSolid' : 'CaretRightSolid'} />
         </View>
       </TouchableWithoutFeedback>
       {
         isExpand && (
         <Animated.View entering={FadeInUp}>
           <View>
-            <ContentItem item={prevContent} isPrev />
-            <ContentItem item={nextContent} isPrev={false} />
+            {!!prevContent && <ContentItem item={prevContent} isPrev />}
+            {!!nextContent && <ContentItem item={nextContent} isPrev={false} />}
           </View>
         </Animated.View>
         )

@@ -7,7 +7,10 @@ import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 
 const navigation = withNavigation(rootNavigationRef);
 
-export const getPrevAndNextContentInSeries = (postId: string, series: IPost) => {
+export const getPrevAndNextContentInSeries = (
+  postId: string,
+  series: IPost,
+) => {
   const seriesDefault: IPost = { ...series, title: 'Series Index' };
   const { items } = series;
 
@@ -17,8 +20,14 @@ export const getPrevAndNextContentInSeries = (postId: string, series: IPost) => 
 
   const indexContent = items.findIndex((item) => item.id === postId);
 
-  const prevContent = indexContent === 0 ? seriesDefault : items[indexContent - 1];
-  const nextContent = indexContent === (items.length - 1) ? seriesDefault : items[indexContent + 1];
+  const prevContent
+    = indexContent === 0 ? seriesDefault : items[indexContent - 1];
+  const nextContent
+    = items.length === 1
+      ? null
+      : indexContent === items.length - 1
+        ? seriesDefault
+        : items[indexContent + 1];
 
   return {
     prevContent,
