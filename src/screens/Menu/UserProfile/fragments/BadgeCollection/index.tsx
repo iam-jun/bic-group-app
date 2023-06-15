@@ -45,8 +45,10 @@ const BadgeCollection = ({ showSearchBox }: Props) => {
   const disabled = checkIsDisabled(choosingBadges) && isEditing && Boolean(showSearchBox);
 
   useEffect(() => {
-    actions.getOwnedBadges();
-  }, []);
+    if (!showSearchBox) {
+      actions.getOwnedBadges();
+    }
+  }, [showSearchBox]);
 
   const editBadge = () => {
     actions.setIsEditing(true);
@@ -120,6 +122,7 @@ const BadgeCollection = ({ showSearchBox }: Props) => {
       <Grid
         data={sectionItem.badges}
         disabled={disabled}
+        shouldHideBadgeNew={Boolean(sectionItem?.isNew)}
         onPress={onPress}
       />
     </View>

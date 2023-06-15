@@ -1,17 +1,21 @@
+import { cloneDeep } from 'lodash';
 import groupApi from '~/api/GroupApi';
 import { IUserBadgesState } from '../index';
 
 const markNewBadge = (set, get) => async (id: string) => {
   try {
     const { badges = {} }:IUserBadgesState = get();
+    if (!Boolean(badges?.[id]?.isNew)) return;
+    const newBadges = cloneDeep(badges);
+
     await groupApi.markNewBadge([id]);
 
-    if (badges?.[id]) {
-      badges[id].isNew = false;
+    if (newBadges?.[id]) {
+      newBadges[id].isNew = false;
     }
 
     set((state: IUserBadgesState) => {
-      state.badges = badges;
+      state.badges = { ...newBadges };
     }, 'markNewBadgesSuccess');
   } catch (error) {
     console.error('markNewBadge error:', error);

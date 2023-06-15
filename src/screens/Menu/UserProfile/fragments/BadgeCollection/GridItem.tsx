@@ -19,11 +19,15 @@ interface Props {
   numColumns: number;
   index: number;
   disabled?: boolean;
+  shouldHideBadgeNew?: boolean;
   onPress: (item: IUserBadge, isSelected: boolean) => void;
 }
 
 const GridItem = ({
-  id, numColumns, index, disabled = false, onPress,
+  id, numColumns, index,
+  disabled = false,
+  shouldHideBadgeNew = false,
+  onPress,
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -95,7 +99,7 @@ const GridItem = ({
         onPress={onPressItem}
         onLongPress={onLongPress}
       >
-        {Boolean(item?.isNew) && !Boolean(isSelected) && (
+        {Boolean(item?.isNew) && !Boolean(isSelected) && !Boolean(shouldHideBadgeNew) && (
         <BadgeNew style={styles.badgeNewStyle} />)}
         <Avatar.Medium
           isRounded

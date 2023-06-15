@@ -13,11 +13,12 @@ const CONTAINER_PADDING = 10; // Constant container padding
 interface Props {
   data: IUserBadge[];
   disabled?: boolean;
+  shouldHideBadgeNew?: boolean;
   onPress: (item: IUserBadge, isSelected: boolean) => void;
 }
 
 const Grid = ({
-  data, disabled = false, onPress,
+  data, disabled = false, shouldHideBadgeNew = false, onPress,
 }:Props) => {
   const numColumns = Math.floor((dimension.deviceWidth - CONTAINER_PADDING * 2) / (ITEM_WIDTH + ITEM_MARGIN * 2));
   const CONTAINER_PADDING_PLUS = (
@@ -35,6 +36,7 @@ const Grid = ({
       numColumns={numColumns}
       index={index}
       disabled={disabled}
+      shouldHideBadgeNew={shouldHideBadgeNew}
       onPress={onPress}
     />
   );

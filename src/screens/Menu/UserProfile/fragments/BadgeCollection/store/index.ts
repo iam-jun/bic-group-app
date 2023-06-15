@@ -6,6 +6,7 @@ import getOwnedBadges from './actions/getOwnedBadges';
 import editShowingBadges from './actions/editShowingBadges';
 import searchBadges from './actions/searchBadges';
 import markNewBadge from './actions/markNewBadge';
+import markNewBadgeInCommunity from './actions/markNewBadgeInCommunity';
 
 export const MAX_BADGES = 3;
 
@@ -33,6 +34,7 @@ export interface IUserBadgesState extends IBaseState {
     editShowingBadges: () => void;
     searchBadges: (textSearch: string) => void;
     markNewBadge: (id: string) => void;
+    markNewBadgeInCommunity: (badges: IUserBadge[]) => void;
   };
 }
 
@@ -127,6 +129,7 @@ const userBadge = (set, get) => ({
     editShowingBadges: editShowingBadges(set, get),
     searchBadges: searchBadges(set, get),
     markNewBadge: markNewBadge(set, get),
+    markNewBadgeInCommunity: markNewBadgeInCommunity(set, get),
   },
   reset: () => resetStore(initState, set),
 });
