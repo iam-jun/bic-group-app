@@ -10,16 +10,20 @@ import {
   toggleImportant,
 } from '~/helpers/settingImportant';
 import { useRootNavigation } from '~/hooks/navigation';
+import useSeriesCreation from '../hooks/useSeriesCreation';
 
 export interface IUseSeriesSettings {
     seriesId?: string;
-    listAudiencesWithoutPermission?: any[];
 }
 
 const useSeriesSettings = (params?: IUseSeriesSettings) => {
-  const { listAudiencesWithoutPermission } = params || {};
+  const { seriesId } = params || {};
 
   const { rootNavigation } = useRootNavigation();
+
+  const {
+    audiencesWithNoPermission: listAudiencesWithoutPermission,
+  } = useSeriesCreation({ seriesId });
 
   const { setting } = useSeriesStore((state) => state.data);
   const { isImportant, importantExpiredAt } = setting || {};
@@ -52,11 +56,17 @@ const useSeriesSettings = (params?: IUseSeriesSettings) => {
   }, [sImportant]);
 
   const handleSaveSettings = () => {
-    actions.setSettings({
-      isImportant: sImportant.active,
-      importantExpiredAt: sImportant.expiresTime,
-    });
-    rootNavigation.goBack();
+    // update setting on editing series
+    if (seriesId) {
+      // do something
+    } else {
+      // update setting on creating series
+      actions.setSettings({
+        isImportant: sImportant.active,
+        importantExpiredAt: sImportant.expiresTime,
+      });
+      rootNavigation.goBack();
+    }
   };
 
   const handleToggleImportant = () => {

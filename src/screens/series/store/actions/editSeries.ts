@@ -23,7 +23,9 @@ const editSeries = (set, get) => async (
     state.loading = true;
   }, 'editSeries');
   try {
-    const response = await streamApi.editSeries(id, data);
+    const updateData = { ...data };
+    delete updateData.setting;
+    const response = await streamApi.editSeries(id, updateData);
     actions.getSeriesDetail(id);
     set((state: ISeriesState) => {
       state.loading = false;

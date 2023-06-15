@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   View, StyleSheet, ScrollView, FlatList,
 } from 'react-native';
@@ -16,6 +16,8 @@ import useSeriesSettings from './useSeriesSettings';
 import { useRootNavigation } from '~/hooks/navigation';
 import useModalStore from '~/store/modal';
 import { useBaseHook } from '~/hooks';
+import useSeriesCreation from '../hooks/useSeriesCreation';
+import useSeriesStore, { ISeriesState } from '../store';
 
 interface SeriesSettingsProps {
     route?: {
@@ -24,7 +26,7 @@ interface SeriesSettingsProps {
 }
 
 const SeriesSettings = ({ route }: SeriesSettingsProps) => {
-  const { seriesId, listAudiencesWithoutPermission } = route.params || {};
+  const { seriesId, isFromSeriesMenuSettings } = route.params || {};
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
@@ -34,6 +36,11 @@ const SeriesSettings = ({ route }: SeriesSettingsProps) => {
   const expireTimeSheetRef = useRef<any>();
 
   const { showAlert } = useModalStore((state) => state.actions);
+
+  const resetStore = useSeriesStore((state:ISeriesState) => state.reset);
+  const {
+    audiencesWithNoPermission: listAudiencesWithoutPermission,
+  } = useSeriesCreation({ seriesId });
 
   const {
     sImportant,
@@ -47,7 +54,7 @@ const SeriesSettings = ({ route }: SeriesSettingsProps) => {
     handleSaveSettings,
     getMinDate,
     getMaxDate,
-  } = useSeriesSettings({ seriesId, listAudiencesWithoutPermission });
+  } = useSeriesSettings({ seriesId });
 
   const handleBack = () => {
     if (disableButtonSave) {
@@ -117,6 +124,12 @@ const SeriesSettings = ({ route }: SeriesSettingsProps) => {
       renderItem={renderExpireTimeItem}
     />
   );
+
+  useEffect(() => () => {
+    if (isFromSeriesMenuSettings) {
+      resetStore();
+    }
+  }, []);
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.neutral1}>

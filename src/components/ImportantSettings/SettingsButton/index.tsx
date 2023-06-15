@@ -66,7 +66,6 @@ const SettingsButton: React.FC<SettingsButtonProps> = ({
     } else {
       rootNavigation.navigate(seriesStack.seriesSettings, {
         seriesId,
-        listAudiencesWithoutPermission: audiencesWithNoPermissionSeries,
       });
     }
   };

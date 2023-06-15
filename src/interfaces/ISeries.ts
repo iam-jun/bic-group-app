@@ -54,4 +54,5 @@ export type IRemoveItemInSeries = IReorderItems;
 export interface ISeriesSettingsParams {
   seriesId?: string;
   listAudiencesWithoutPermission?: IAudience[];
+  isFromSeriesMenuSettings?: boolean;
 }
