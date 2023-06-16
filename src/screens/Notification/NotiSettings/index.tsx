@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   ActivityIndicator, StyleSheet, View,
 } from 'react-native';
@@ -36,10 +36,6 @@ const NotificationSettings = () => {
     email = undefined,
   } = useNotiSettingsStore((state) => state.data);
   const loading = useNotiSettingsStore((state) => state.loading);
-
-  useEffect(() => {
-    actions.getConfigSettings();
-  }, []);
 
   const onRefresh = () => {
     actions.getConfigSettings();

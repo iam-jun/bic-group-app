@@ -36,7 +36,7 @@ const NotiSettingItem = ({
     return null;
   }
   const { title, enable, subtitle = '' } = item;
-  const disable = Boolean(isDisable) && !Boolean(onPressToggle);
+  const disable = Boolean(isDisable);
 
   return (
     <TouchableOpacity

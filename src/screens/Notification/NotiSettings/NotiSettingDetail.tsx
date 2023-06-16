@@ -133,12 +133,14 @@ const NotiSettingDetail: FC<IRouteParams> = (props) => {
       <>
         <NotiSettingItem
           item={inAppItem}
+          isDisable={!Boolean(enable)}
           isDisableToggle={!enable}
           iconName="Grid2"
           onPressToggle={(isChecked: boolean) => handlePressItemInApp({ isChecked, item, index })}
         />
         <NotiSettingItem
           item={pushItem}
+          isDisable={!Boolean(enable)}
           isDisableToggle={!enable}
           iconName="Window"
           onPressToggle={(isChecked: boolean) => handlePressItemPush({ isChecked, item, index })}

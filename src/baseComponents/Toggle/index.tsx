@@ -52,7 +52,7 @@ const Toggle = ({
       rectangleColor: colors.blue50,
     },
     disabled: {
-      rectangleColor: enableState === 'selected' ? colors.blue20 : colors.gray20,
+      rectangleColor: enableState === 'selected' ? colors.blue20 : colors.gray5,
     },
 
     // based on prop `size`
