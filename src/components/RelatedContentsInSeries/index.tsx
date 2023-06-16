@@ -9,49 +9,6 @@ import useRelatedContentsInSeriesStore from './store';
 import postsSelector from '~/store/entities/posts/selectors';
 import usePostsStore from '~/store/entities/posts';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const fakeData = [
-  {
-    id: 1,
-    title: 'Toàn tập USD Coin (USDC) Toàn tập USD Coin (USDC) ',
-    items: [
-      {
-        id: 'd735217e-1ed6-40de-8e2a-50a380d86060',
-        title: 'BUSD- "Người chơi" nổi bật trong thị trường stable coin ',
-        type: PostType.POST,
-      },
-      {
-        id: 3,
-        title: 'article 2',
-        type: PostType.ARTICLE,
-      },
-      {
-        id: 'd0cbc635-a92c-4783-872d-c248f5b5630c',
-        title: 'article 3',
-        type: PostType.ARTICLE,
-      },
-    ],
-  },
-  {
-    id: 5,
-    title: 'Toàn tập USD Coin (USDC) Toàn tập USD Coin (USDC)',
-    items: [
-      {
-        id: 6,
-        title: 'article 1',
-      },
-      {
-        id: 4,
-        title: 'BUSD- "Người chơi" nổi bật trong thị trường stable coin',
-      },
-      {
-        id: 8,
-        title: 'article 3',
-      },
-    ],
-  },
-];
-
 type RelatedContentsInSeriesProps = {
     postId: string;
 }
