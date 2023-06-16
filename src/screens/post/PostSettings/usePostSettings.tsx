@@ -169,11 +169,10 @@ export const usePostSettings = (params?: IUsePostSettings) => {
       id,
       data,
       disableNavigate: true,
-      msgSuccess: 'post:text_update_post_setting_success',
-      msgError: 'post:text_update_post_setting_failed',
       onRetry: () => putEditPost(payload),
       isHandleSeriesTagsError: false,
       isRefresh: false,
+      isCreatingNewPost: false,
     };
     putEditPost(payload);
     rootNavigation.goBack();

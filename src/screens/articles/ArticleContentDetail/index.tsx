@@ -57,20 +57,8 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
   const [initIndex, setInitIndex] = useState(0);
 
   const {
-    content,
-    title,
-    summary,
-    coverMedia,
-    createdAt,
-    audience,
-    series,
-    categories,
-    actor,
-    setting,
-    reactionsCount,
-    commentsCount,
-    ownerReactions,
-    tags,
+    content, title, summary, coverMedia, createdAt, audience, wordCount,
+    series, categories, actor, setting, reactionsCount, commentsCount, ownerReactions, tags,
   } = data;
 
   const { isError, code } = errorContent || {};
@@ -92,6 +80,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
       actor,
       tags,
       seriesWithItems: relatedContentsInSeries,
+      wordCount,
     },
   };
 

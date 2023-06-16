@@ -70,6 +70,7 @@ export interface IPost {
   isReported?: boolean;
   isHidden?: boolean;
   publishedAt?: string;
+  wordCount?: number;
 }
 
 export interface IPostAudience {
@@ -228,6 +229,8 @@ export interface IPostComments {
     limit?: number;
     hasPreviousPage?: boolean;
     hasNextPage?: boolean;
+    endCursor?: string;
+    startCursor?: string;
   };
 }
 
@@ -250,9 +253,9 @@ export interface IArticleCover {
 
 export type IOwnReaction = Array<IReaction>;
 
-export type IReactionCounts = {
-  [x: string]: { [reactionKind: string]: number };
-};
+export type IReactionCounts = { [reactionKind: string]: number }[];
+
+export type MapReactionsCountCallback = (reactionName: string, value: number) => void;
 
 export interface IAllPosts {
   [id: string]: IPost;
@@ -303,13 +306,13 @@ export interface IPayloadPutEditPost {
   createFromGroupId?: string;
   isHandleSeriesTagsError?: boolean;
   isRefresh?: boolean;
+  isCreatingNewPost?: boolean;
 }
 
 export interface IPayloadPutEditComment {
   id: string;
   comment: ICommentData;
   data: ICommentData;
-  postId: string;
 }
 
 export interface IPayloadDeletePost {
@@ -324,11 +327,6 @@ export interface IPayloadRemoveAudiencesOfPost {
 
 export interface IParamGetPostDetail {
   postId: string;
-  commentOrder?: 'ASC' | 'DESC';
-  commentLimit?: number;
-  childCommentOrder?: number;
-  childCommentLimit?: number;
-  withComment?: boolean;
   offset?: number;
 }
 
@@ -366,8 +364,8 @@ export interface IRequestGetPostComment {
   offset?: number;
   idGte?: string;
   idLte?: string;
-  idLt?: string;
-  idGt?: string;
+  endCursor?: string;
+  startCursor?: string;
   postId: string;
   parentId?: string;
   childLimit?: number;
@@ -464,7 +462,6 @@ export interface IParamPutReaction {
 
 export interface IParamDeleteReaction {
   target: TargetType;
-  reactionId: string;
   targetId: string;
   reactionName: string;
 }
@@ -520,7 +517,7 @@ export interface IPayloadGetDraftContents {
 export interface IPayloadPublishDraftPost {
   draftPostId: string;
   replaceWithDetail?: boolean;
-  onSuccess?: () => void;
+  onSuccess?: (payload?: any) => void;
   onError?: () => void;
   refreshDraftPosts?: boolean;
   createFromGroupId?: string;

@@ -32,6 +32,7 @@ import postsSelector from '~/store/entities/posts/selectors';
 import { ArticleBoxScheduleTime } from '~/components/articles';
 import CreateBannerImportant from '~/components/ImportantSettings/CreateBannerImportant';
 import { PostType } from '~/interfaces/IPost';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 enum SectionName {
   Title,
@@ -152,6 +153,7 @@ const CreateArticle: FC<CreateArticleProps> = ({
     // For editing draft article, navigating back needs to refresh data
     draftActions.getDraftArticles({ isRefresh: true });
     rootNavigation.goBack();
+    showToastSuccess(null, 'article:text_article_saved_to_draft');
   };
 
   const onPressPublish = () => {

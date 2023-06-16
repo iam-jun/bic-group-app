@@ -614,6 +614,7 @@
     "text_select_cover": "Chọn ảnh bìa",
     "text_search_category_placeholder": "Tìm lựa chọn của bạn...",
     "text_edit_article_success": "Cập nhật bài viết thành công",
+    "text_article_saved_to_draft": "Đã lưu bài viết vào Bản nháp",
     "menu": {
       "edit": "Chỉnh sửa bài viết",
       "copy_link": "Sao chép đường dẫn",
@@ -662,7 +663,10 @@
     "successful_schedule": "Đặt lịch thành công",
     "text_delete_article_success": "Bài viết của bạn đã được xoá",
     "paste_image_error": "Tải lên không thành công. Vui lòng tải lên hình ảnh bằng thanh công cụ.",
-    "text_selecting_will_be_added_to": "Bài viết của bạn sẽ được thêm vào"
+    "text_selecting_will_be_added_to": "Bài viết của bạn sẽ được thêm vào",
+    "reading_time": "Thời gian đọc",
+    "about_time": "khoảng",
+    "minute": "phút"
   },
   "post": {
     "news_feed": "News Feed",
@@ -678,6 +682,7 @@
     "label_seen_by": "Quan tâm bởi ",
     "button_like": "Thích",
     "button_reply": "Trả lời",
+    "button_reply_count": "{{count}} trả lời",
     "button_react": "Tương tác",
     "button_comment": "Bình luận",
     "button_image": "Ảnh",

@@ -481,7 +481,7 @@ export const responseGetReportContent = {
         updatedAt: '2023-01-10T10:41:19.538Z',
         createdBy: '51cdc6ae-aa95-4228-b8c4-46a242781603',
         media: { videos: [], images: [], files: [] },
-        reactionsCount: { 0: { bic_clapping_hands: 1 } },
+        reactionsCount: [{ bic_clapping_hands: 1 }],
         mentions: [],
         reportDetails: [
           { total: 1, reasonType: 'violent_or_porn', description: 'Violent, pornographic, or sexually explicit' },

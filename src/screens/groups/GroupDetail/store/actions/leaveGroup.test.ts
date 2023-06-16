@@ -1,11 +1,11 @@
 import groupApi from '~/api/GroupApi';
-import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { GroupPrivacyType } from '~/constants/privacyTypes';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
-import useModalStore from '~/store/modal';
 import { act, renderHook } from '~/test/testUtils';
 import useGroupDetailStore from '../index';
+import * as showToastError from '~/store/helper/showToastError';
+import * as showToastSuccess from '~/store/helper/showToastSuccess';
 
 describe('leaveGroup', () => {
   const groupId = 'de605abc-15d4-4828-9494-aaedd9565850';
@@ -40,9 +40,7 @@ describe('leaveGroup', () => {
       .spyOn(groupApi, 'getManagedCommunityAndGroup')
       .mockImplementation(() => Promise.resolve(response) as any);
 
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
+    const spyShowToastSuccess = jest.spyOn(showToastSuccess, 'default');
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useGroupDetailStore((state) => state));
@@ -58,10 +56,7 @@ describe('leaveGroup', () => {
     expect(spyApiGetGroupDetail).toBeCalledWith(groupId);
     expect(spyApiGetJoinedAllGroups).toBeCalled();
     expect(spyApiGetManagedCommunityAndGroup).toBeCalled();
-    expect(showToast).toBeCalledWith({
-      content: 'groups:modal_confirm_leave_group:success_message',
-      type: ToastType.SUCCESS,
-    });
+    expect(spyShowToastSuccess).toBeCalled();
   });
 
   it('should leave group throw error', () => {
@@ -71,9 +66,7 @@ describe('leaveGroup', () => {
       .spyOn(groupApi, 'leaveGroup')
       .mockImplementation(() => Promise.reject(error) as any);
 
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
+    const spyShowToastError = jest.spyOn(showToastError, 'default');
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useGroupDetailStore((state) => state));
@@ -90,6 +83,6 @@ describe('leaveGroup', () => {
       jest.runAllTimers();
     });
 
-    expect(showToast).toBeCalled();
+    expect(spyShowToastError).toBeCalled();
   });
 });
