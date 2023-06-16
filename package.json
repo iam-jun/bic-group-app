@@ -5,8 +5,8 @@
   "scripts": {
     "clone-build-resources": "rm -rf bic-mobile-build-resources && git clone git@github.com:beincom/bic-mobile-build-resources.git && rm -rf bic-mobile-build-resources/.git",
     "clone-secret": "rm -rf bic-mobile-secret && git clone git@github.com:beincom/bic-mobile-secret.git && rm -rf bic-mobile-secret/.git",
-    "clone-prepare-resources": "npm run clone-build-resources && npm run clone-secret && npm run prepare_resources",
-    "prepare-resources": "./scripts/prepare_resources.sh",
+    "clone-prepare-resources": "npm run clone-build-resources && npm run clone-secret && npm run prepare-resources",
+    "prepare-resources": "./scripts/prepare-resources.sh",
     "build-android-staging": "./scripts/build.sh apk staging",
     "build-android-prerelease": "./scripts/build.sh apk prerelease",
     "build-android-production": "./scripts/build.sh apk production",
