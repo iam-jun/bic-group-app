@@ -1,10 +1,9 @@
-import i18next from 'i18next';
 import { act, renderHook } from '~/test/testUtils';
 import groupApi from '~/api/GroupApi';
 import useCommunityMemberStore from '../index';
 import { IPayloadDeclineAllCommunityMemberRequests } from '~/interfaces/ICommunity';
-import useModalStore from '~/store/modal';
-import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import * as showToastError from '~/store/helper/showToastError';
+import * as showToastSuccess from '~/store/helper/showToastSuccess';
 
 describe('declineAllCommunityMemberRequests', () => {
   afterEach(() => {
@@ -22,9 +21,7 @@ describe('declineAllCommunityMemberRequests', () => {
     const spy = jest.spyOn(groupApi, 'declineAllGroupMemberRequests').mockImplementation(
       () => Promise.reject(error) as any,
     );
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
+    const spyShowToastError = jest.spyOn(showToastError, 'default');
 
     jest.useFakeTimers();
 
@@ -44,10 +41,7 @@ describe('declineAllCommunityMemberRequests', () => {
       jest.runAllTimers();
     });
 
-    expect(showToast).toBeCalledWith({
-      content: 'common:text_error_message',
-      type: ToastType.ERROR,
-    });
+    expect(spyShowToastError).toBeCalled();
   });
 
   it('should not call api declineAllGroupMemberRequests when payload of action is empty', () => {
@@ -82,9 +76,7 @@ describe('declineAllCommunityMemberRequests', () => {
     const spy = jest.spyOn(groupApi, 'declineAllGroupMemberRequests').mockImplementation(
       () => Promise.resolve(response) as any,
     );
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
+    const spyShowToastSuccess = jest.spyOn(showToastSuccess, 'default');
 
     jest.useFakeTimers();
 
@@ -99,8 +91,6 @@ describe('declineAllCommunityMemberRequests', () => {
       jest.runAllTimers();
     });
 
-    expect(showToast).toBeCalledWith({
-      content: `${i18next.t('groups:text_declined_all')}`.replace('{0}', payload.total.toString()),
-    });
+    expect(spyShowToastSuccess).toBeCalled();
   });
 });

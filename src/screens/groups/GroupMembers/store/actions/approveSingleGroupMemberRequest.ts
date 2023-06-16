@@ -1,24 +1,22 @@
-import i18next from 'i18next';
 import approveDeclineCode from '~/constants/approveDeclineCode';
-import { IToastMessage } from '~/interfaces/common';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import showToastError from '~/store/helper/showToastError';
-import showToast from '~/store/helper/showToast';
 import groupApi from '~/api/GroupApi';
 import { IPayloadApproveSingleGroupMemberRequest } from '~/interfaces/IGroup';
 import { IGroupMemberState } from '..';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const approveSingleGroupMemberRequest = (get) => async (
   payload: IPayloadApproveSingleGroupMemberRequest,
 ) => {
-  const { groupId, requestId, fullName } = payload || {};
+  const { groupId, requestId } = payload || {};
   const { groupMemberRequests, actions }: IGroupMemberState = get();
   const { total, ids, items } = groupMemberRequests || {};
 
   try {
     if (!groupId || !requestId) return;
 
-    await groupApi.approveSingleGroupMemberRequest(groupId, requestId);
+    const response = await groupApi.approveSingleGroupMemberRequest(groupId, requestId);
 
     // Update data state
     const requestItems = { ...items };
@@ -29,11 +27,7 @@ const approveSingleGroupMemberRequest = (get) => async (
       items: requestItems,
     });
 
-    const toastMessage: IToastMessage = {
-      // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
-      content: `${i18next.t('groups:text_approved_user')} ${fullName}`,
-    };
-    showToast(toastMessage);
+    showToastSuccess(response);
     // to update userCount
     useGroupDetailStore.getState().actions.getGroupDetail({ groupId });
   } catch (e) {

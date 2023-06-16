@@ -1,17 +1,25 @@
 import {
-  ICategory, IEditArticleAudience, IEditArticleData, IParamGetArticleDetail,
+  IEditArticleAudience,
+  IEditArticleData,
+  IParamGetArticleDetail,
 } from './IArticle';
 import { IArticleCover, IAudience } from './IPost';
 
 export interface IPostCreateSeries {
   title?: string;
   summary?: string;
-  categories?: ICategory[];
   audience?: IEditArticleAudience;
   coverMedia?: IArticleCover;
+  setting?: {
+    canShare?: boolean;
+    canReact?: boolean;
+    canComment?: boolean;
+    isImportant?: boolean;
+    importantExpiredAt?: string;
+  };
 }
 
-export type ISeriesData = IEditArticleData
+export type ISeriesData = IEditArticleData;
 
 export interface CreationSeriesProps {
   route?: {
@@ -25,7 +33,7 @@ export interface CreationSeriesProps {
   };
 }
 
-export type IParamGetSeriesDetail= IParamGetArticleDetail;
+export type IParamGetSeriesDetail = IParamGetArticleDetail;
 
 export interface IGetSeries {
   order?: 'ASC' | 'DESC';
@@ -45,7 +53,7 @@ export interface IGetSeries {
 }
 
 export interface IReorderItems {
-  itemIds: string[]
+  itemIds: string[];
 }
 
 export type IAddArticleInSeries = IReorderItems;

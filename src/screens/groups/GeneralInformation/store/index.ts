@@ -10,7 +10,7 @@ export interface IGeneralInformationState extends IBaseState {
   actions: {
     setLoadingAvatar: (payload: boolean) => void;
     setLoadingCover: (payload: boolean) => void;
-    editGroupDetail: (data: IGroupDetailEdit, editFieldName?: string, callback?: () => void) => Promise<void>;
+    editGroupDetail: (data: IGroupDetailEdit, callback?: () => void) => Promise<void>;
     uploadImage: (payload: IGroupImageUpload) => void;
   };
 }

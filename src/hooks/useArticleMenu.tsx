@@ -104,7 +104,6 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
         .getState()
         .actions.deleteArticle(
           articleId,
-          'article:text_delete_article_success',
         ),
     });
   };

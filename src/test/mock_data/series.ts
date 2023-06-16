@@ -17,7 +17,7 @@ export const mockSeries = {
   },
   commentsCount: 0,
   totalUsersSeen: 1,
-  reactionsCount: {},
+  reactionsCount: [],
   createdAt: '2022-11-01T09:49:21.220Z',
   updatedAt: '2022-11-01T09:52:42.984Z',
   createdBy: '6235bc91-2255-4f4b-bcfa-bebcd24e27ac',

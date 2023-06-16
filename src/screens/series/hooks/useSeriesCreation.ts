@@ -77,22 +77,6 @@ const useSeriesCreation = ({
   const disableSeriesSettings
     = audiencesWithNoPermission.length === dataGroups.length;
 
-  const initSettings = (settings) => {
-    const notExpired
-      = new Date().getTime() < new Date(settings?.importantExpiredAt).getTime();
-    const isNever = settings?.isImportant && !settings?.importantExpiredAt;
-
-    const initData = {
-      isImportant: (!!notExpired || isNever) && settings?.isImportant,
-      importantExpiredAt: handleImportantExpiredAt({ notExpired, settings }),
-      canShare: settings?.canShare,
-      canReact: settings?.canReact,
-      canComment: settings?.canComment,
-    };
-
-    return initData;
-  };
-
   useEffect(() => {
     if (!isEmpty(seriesFromStore) && !isInitDone) {
       const newSelectingGroups = {};
@@ -128,7 +112,7 @@ const useSeriesCreation = ({
     if (!!seriesId) {
       actions.editSeries(
         seriesId,
-        isFromDetail,
+        !isFromDetail,
         () => handleSave(),
         (listIdAudiences: string[]) => handleEditAudienceError?.(
           listIdAudiences,
@@ -207,7 +191,7 @@ const checkStatus = (params: { data: any; seriesId: string; series: any }) => {
         data.audience,
       )
       && !(isEmpty(data.audience?.groupIds) && isEmpty(data.audience?.userIds));
-    // const isSettingsUpdated = !isEqual(series.setting, data.setting);
+    // const isSettingsUpdated = !isEqual(initSettings(series.setting), data.setting);
 
     return (
       isTitleUpdated
@@ -229,6 +213,21 @@ const handleImportantExpiredAt = (params: {
     return settings?.importantExpiredAt;
   }
   return null;
+};
+
+const initSettings = (settings) => {
+  const notExpired = new Date().getTime() < new Date(settings?.importantExpiredAt).getTime();
+  const isNever = settings?.isImportant && !settings?.importantExpiredAt;
+
+  const initData = {
+    isImportant: (!!notExpired || isNever) && settings?.isImportant,
+    importantExpiredAt: handleImportantExpiredAt({ notExpired, settings }),
+    canShare: settings?.canShare,
+    canReact: settings?.canReact,
+    canComment: settings?.canComment,
+  };
+
+  return initData;
 };
 
 export default useSeriesCreation;

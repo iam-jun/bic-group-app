@@ -1,8 +1,8 @@
 import groupApi from '~/api/GroupApi';
-import { ToastType } from '~/baseComponents/Toast/BaseToast';
-import useModalStore from '~/store/modal';
 import { act, renderHook } from '~/test/testUtils';
 import useCommunityMemberStore from '../index';
+import * as showToastError from '~/store/helper/showToastError';
+import * as showToastSuccess from '~/store/helper/showToastSuccess';
 
 describe('removeCommunityMember', () => {
   const communityId = 'de605abc-15d4-4828-9494-aaedd9565850';
@@ -22,9 +22,7 @@ describe('removeCommunityMember', () => {
 
     const spyGetCommunityDetail = jest.spyOn(groupApi, 'getCommunityDetail');
 
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
+    const spyShowToastSuccess = jest.spyOn(showToastSuccess, 'default');
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useCommunityMemberStore((state) => state));
@@ -37,10 +35,7 @@ describe('removeCommunityMember', () => {
     });
 
     expect(spyGetCommunityDetail).toBeCalledWith(communityId);
-    expect(showToast).toBeCalledWith({
-      content: response.meta.message,
-      type: ToastType.SUCCESS,
-    });
+    expect(spyShowToastSuccess).toBeCalled();
   });
 
   it('should remove community member throw error', () => {
@@ -52,9 +47,7 @@ describe('removeCommunityMember', () => {
 
     const spy = jest.spyOn(groupApi, 'removeGroupMembers').mockImplementation(() => Promise.reject(error) as any);
 
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
+    const spyShowToastError = jest.spyOn(showToastError, 'default');
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useCommunityMemberStore((state) => state));
@@ -71,9 +64,6 @@ describe('removeCommunityMember', () => {
       jest.runAllTimers();
     });
 
-    expect(showToast).toBeCalledWith({
-      content: error.meta.message,
-      type: ToastType.ERROR,
-    });
+    expect(spyShowToastError).toBeCalled();
   });
 });
