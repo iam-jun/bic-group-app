@@ -198,7 +198,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
       return;
     }
 
-    rootNavigation.navigate(homeStack.postSettings);
+    rootNavigation.navigate(homeStack.postSettings, { postId });
   };
 
   const onPressTags = () => {

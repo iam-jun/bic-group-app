@@ -39,6 +39,11 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
 
   const groupAudience = audience?.groups || [];
 
+  const audienceListCannotEditSettings = getAudienceListWithNoPermission(
+    groupAudience,
+    PermissionKey.EDIT_OWN_CONTENT_SETTING,
+  );
+
   const audienceListCannotPinContent = getAudienceListWithNoPermission(
     groupAudience,
     [
@@ -123,6 +128,11 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
     rootNavigation?.navigate?.(homeStack.pinContent, { postId: articleId });
   };
 
+  const onPressEditSettings = () => {
+    modalActions.hideBottomList();
+    rootNavigation?.navigate?.(articleStack.createArticleSettings, { articleId, isFromArticleMenuSettings: true });
+  };
+
   const defaultData = [
     {
       id: 1,
@@ -134,6 +144,15 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
     },
     {
       id: 2,
+      testID: 'article_view_menu.edit_settings',
+      leftIcon: 'Sliders',
+      title: i18next.t('common:edit_settings'),
+      requireIsActor: false,
+      shouldBeHidden: audienceListCannotEditSettings.length > 0,
+      onPress: onPressEditSettings,
+    },
+    {
+      id: 3,
       testID: 'article_view_menu.save',
       leftIcon: isSaved ? 'BookmarkSlash' : 'Bookmark',
       title: i18next.t(`article:menu:${isSaved ? 'unsave' : 'save'}`),
@@ -141,7 +160,7 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       onPress: onPressSave,
     },
     {
-      id: 3,
+      id: 4,
       testID: 'article_view_menu.copy',
       leftIcon: 'LinkHorizontal',
       title: i18next.t('article:menu:copy_link'),
@@ -149,7 +168,7 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       onPress: onPressCopyLink,
     },
     {
-      id: 4,
+      id: 5,
       testID: 'post_view_menu.view_series',
       leftIcon: 'RectangleHistory',
       title: i18next.t('common:btn_view_series'),
@@ -157,7 +176,7 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       onPress: onPressViewSeries,
     },
     {
-      id: 5,
+      id: 6,
       testID: 'article_view_menu.pin',
       leftIcon: 'Thumbtack',
       title: i18next.t('common:pin_unpin'),
@@ -167,7 +186,7 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       onPress: onPressPin,
     },
     {
-      id: 6,
+      id: 7,
       testID: 'article_view_menu.delete',
       leftIcon: 'TrashCan',
       title: i18next.t('article:menu:delete'),
@@ -175,7 +194,7 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       onPress: onDelete,
     },
     {
-      id: 7,
+      id: 8,
       testID: 'article_view_menu.report',
       leftIcon: 'Flag',
       title: i18next.t('common:btn_report_content'),
@@ -184,7 +203,7 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       onPress: onPressReport,
     },
     {
-      id: 7,
+      id: 9,
       testID: 'article_view_menu.report_this_member',
       leftIcon: 'UserXmark',
       title: i18next.t('groups:member_menu:label_report_member'),

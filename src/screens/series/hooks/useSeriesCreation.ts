@@ -75,7 +75,7 @@ const useSeriesCreation = ({
     PermissionKey.EDIT_OWN_CONTENT_SETTING,
   );
   const disableSeriesSettings
-    = audiencesWithNoPermission.length === dataGroups.length;
+    = audiencesWithNoPermission.length > 0;
 
   useEffect(() => {
     if (!isEmpty(seriesFromStore) && !isInitDone) {
@@ -222,7 +222,7 @@ const initSettings = (settings) => {
   const initData = {
     isImportant: (!!notExpired || isNever) && settings?.isImportant,
     importantExpiredAt: handleImportantExpiredAt({ notExpired, settings }),
-    canShare: settings?.canShare,
+    // canShare: settings?.canShare,
     canReact: settings?.canReact,
     canComment: settings?.canComment,
   };

@@ -70,7 +70,7 @@ const usePostMenu = (
 
   const onPressEditSettings = () => {
     modalActions.hideBottomList();
-    rootNavigation?.navigate?.(homeStack.postSettings, { postId });
+    rootNavigation?.navigate?.(homeStack.postSettings, { postId, isFromPostMenuSettings: true });
   };
 
   const onPressSave = () => {

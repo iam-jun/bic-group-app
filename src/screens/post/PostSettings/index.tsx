@@ -9,38 +9,33 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/baseComponents/Text';
 import Toggle from '~/baseComponents/Toggle';
 import MarkImportant from '~/components/ImportantSettings/MarkImportant';
-import { useRootNavigation } from '~/hooks/navigation';
-import { useBaseHook } from '~/hooks';
+import { useBackPressListener } from '~/hooks/navigation';
 import { usePostSettings } from '~/screens/post/PostSettings/usePostSettings';
-import { IPostSettingsParams } from '~/interfaces/IPost';
+import { IPostSettingsScreenParams } from '~/interfaces/IPost';
 import spacing from '~/theme/spacing';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import images from '~/resources/images';
 import { timeSuggest } from '~/constants/importantTimeSuggest';
-import useModalStore from '~/store/modal';
 import useCreatePost from '../CreatePost/hooks/useCreatePost';
 import useCreatePostStore from '../CreatePost/store';
 
 export interface PostSettingsProps {
   route?: {
-    params?: IPostSettingsParams;
+    params?: IPostSettingsScreenParams;
   };
 }
 
 const PostSettings = ({ route }: PostSettingsProps) => {
-  const { t } = useBaseHook();
-  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
 
   const audienceSheetRef = useRef<any>();
   const expireTimeSheetRef = useRef<any>();
-  const { showAlert } = useModalStore((state) => state.actions);
 
   const screenParams = route?.params || {};
-  const { postId } = screenParams;
+  const { postId, isFromPostMenuSettings } = screenParams;
 
   // in case of going directly to PostSetting from post's menu
   // we have postId, and useCreatePost will init create post store
@@ -54,7 +49,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
     () => () => {
       // in case of going directly to PostSetting from post's menu
       // when navigate back, need to clear create post store
-      if (postId) {
+      if (isFromPostMenuSettings) {
         resetCreatePostStore();
       }
     }, [],
@@ -63,6 +58,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
   const {
     sImportant,
     disableButtonSave,
+    loading,
     showWarning,
     sCanComment,
     sCanReact,
@@ -76,22 +72,12 @@ const PostSettings = ({ route }: PostSettingsProps) => {
     handleChangeSuggestDate,
     getMinDate,
     getMaxDate,
+    handleBack,
   } = usePostSettings({ postId, listAudiencesWithoutPermission });
 
-  const onPressBack = () => {
-    if (disableButtonSave) {
-      rootNavigation.goBack();
-    } else {
-      showAlert({
-        title: t('discard_alert:title'),
-        content: t('discard_alert:content'),
-        cancelBtn: true,
-        cancelLabel: t('common:btn_discard'),
-        confirmLabel: t('common:btn_stay_here'),
-        onCancel: () => rootNavigation.goBack(),
-      });
-    }
-  };
+  const disabled = disableButtonSave || loading;
+
+  useBackPressListener(handleBack);
 
   const onPressAudiences = () => {
     audienceSheetRef.current?.open?.();
@@ -194,11 +180,12 @@ const PostSettings = ({ route }: PostSettingsProps) => {
         titleTextProps={{ useI18n: true }}
         title={!!postId ? 'post:post_menu_edit_settings' : 'common:settings'}
         buttonText="post:save"
-        onPressBack={onPressBack}
+        onPressBack={handleBack}
         onPressButton={handlePressSave}
         buttonVariant="Secondary"
         buttonProps={{
-          disabled: disableButtonSave,
+          disabled,
+          loading,
           useI18n: true,
           testID: 'post_settings.btn_save',
         }}

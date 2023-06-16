@@ -216,6 +216,16 @@ export interface IPostSetting {
   importantExpiredAt?: string | null;
 }
 
+export interface IPutEditSettingsParams {
+  id: string;
+  setting: IPostSetting;
+  onPreLoad?: () => void;
+  onSuccess?: () => void;
+  onFailed?: (error: any) => void;
+}
+
+export type PutEditSettingsApiParams = Pick<IPutEditSettingsParams, 'id' | 'setting'>
+
 export interface IPostMedia {
   images?: any[];
   videos?: any[];
@@ -247,7 +257,7 @@ export interface IArticleCover {
   status?: string;
   size?: number;
   mimeType?: string;
-  thumbnails?: any,
+  thumbnails?: any;
   createdAt?: string;
 }
 
@@ -255,7 +265,10 @@ export type IOwnReaction = Array<IReaction>;
 
 export type IReactionCounts = { [reactionKind: string]: number }[];
 
-export type MapReactionsCountCallback = (reactionName: string, value: number) => void;
+export type MapReactionsCountCallback = (
+  reactionName: string,
+  value: number
+) => void;
 
 export interface IAllPosts {
   [id: string]: IPost;
@@ -482,8 +495,9 @@ export interface ICreatePostParams {
   initAutoSaveDraft?: boolean;
 }
 
-export interface IPostSettingsParams extends ICreatePostParams {
+export interface IPostSettingsScreenParams {
   postId?: string;
+  isFromPostMenuSettings?: boolean;
 }
 
 export interface IPayloadReplying {

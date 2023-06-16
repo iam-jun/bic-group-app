@@ -6,6 +6,7 @@ import {
   IPost,
   IPostCreatePost,
   IPostSetting,
+  IPutEditSettingsParams,
 } from '~/interfaces/IPost';
 import usePostsStore, { IPostsState } from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
@@ -20,6 +21,8 @@ import {
   handleChangeDatePickerImportant,
   toggleImportant,
 } from '~/helpers/settingImportant';
+import showAlert from '~/store/helper/showAlert';
+import { useBaseHook } from '~/hooks';
 
 export interface IUsePostSettings {
   postId?: string;
@@ -29,11 +32,11 @@ export interface IUsePostSettings {
 export const usePostSettings = (params?: IUsePostSettings) => {
   const { postId, listAudiencesWithoutPermission } = params || {};
 
+  const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
 
-  const putUpdateSettings = !!postId;
-
   const initPostData: IPost = usePostsStore(postsSelector.getPost(postId));
+  const postsStoreActions = usePostsStore((state) => state.actions);
 
   const {
     important, canReact, canComment,
@@ -42,6 +45,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
 
   const { putEditPost } = usePostsStore((state: IPostsState) => state.actions);
 
+  const [loading, setLoading] = useState(false);
   const [disableButtonSave, setDisableButtonSave] = useState<boolean>(true);
   const [showWarning, setShowWarning] = useState<boolean>(false);
   const [showCustomExpire, setCustomExpire] = useState<boolean>(false);
@@ -135,6 +139,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
   };
 
   // update setting post from option Edit Post Settings on menu post
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handlePutUpdateSettings = () => {
     const {
       id, content, media, setting, audience, mentions,
@@ -188,33 +193,78 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     );
   };
 
-  const handlePressSave = () => {
-    if (putUpdateSettings) {
-      handlePutUpdateSettings();
-      return 'putUpdateSettings';
-    }
+  const updateStore = () => {
     const isExpired = isPostExpired(sImportant?.expiresTime) || sImportant.neverExpires;
-
     const dataDefault = [
       !isExpired,
       !sCanComment,
       !sCanReact,
     ];
-
     const newCount = dataDefault.filter((i) => !!i);
+
     createPostStoreActions.updateCreatePost({
       important: { active: sImportant.active, expiresTime: sImportant.expiresTime },
       canComment: sCanComment,
       canReact: sCanReact,
       count: newCount?.length || 0,
     });
-    rootNavigation.goBack();
-    return 'setCreatePostSettings';
+  };
+
+  const handlePressSave = () => {
+    if (!postId) return;
+
+    const newSetting: IPostSetting = {};
+    newSetting.isImportant = sImportant?.active;
+    newSetting.importantExpiredAt = sImportant?.active
+      ? sImportant?.expiresTime
+      : null;
+    newSetting.canComment = sCanComment;
+    newSetting.canReact = sCanReact;
+
+    const onPreLoad = () => {
+      setLoading(true);
+    };
+
+    const onSuccess = () => {
+      setLoading(false);
+      updateStore();
+      postsStoreActions.getPostDetail({ postId });
+      rootNavigation.goBack();
+    };
+
+    const onFailed = () => {
+      setLoading(false);
+    };
+
+    const params: IPutEditSettingsParams = {
+      id: postId,
+      setting: newSetting,
+      onPreLoad,
+      onSuccess,
+      onFailed,
+    };
+    postsStoreActions.putEditSettings(params);
+  };
+
+  const handleBack = () => {
+    if (disableButtonSave) {
+      rootNavigation.goBack();
+    } else {
+      showAlert({
+        title: t('discard_alert:title'),
+        content: t('discard_alert:content'),
+        cancelBtn: true,
+        cancelLabel: t('common:btn_discard'),
+        confirmLabel: t('common:btn_stay_here'),
+        onCancel: () => rootNavigation.goBack(),
+      });
+    }
   };
 
   return {
     sImportant,
     disableButtonSave,
+    loading,
     showWarning,
     sCanComment,
     sCanReact,
@@ -225,9 +275,9 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     handleToggleCanReact,
     handleChangeDatePicker,
     handleChangeTimePicker,
-    handlePutUpdateSettings,
     handleChangeSuggestDate,
     getMinDate,
     getMaxDate,
+    handleBack,
   };
 };

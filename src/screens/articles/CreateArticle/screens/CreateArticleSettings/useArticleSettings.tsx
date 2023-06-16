@@ -9,19 +9,32 @@ import {
   handleChangeSuggestDateImportant,
   toggleImportant,
 } from '~/helpers/settingImportant';
+import useCreateArticle from '../../hooks/useCreateArticle';
+import { useBaseHook } from '~/hooks';
+import { useRootNavigation } from '~/hooks/navigation';
+import showAlert from '~/store/helper/showAlert';
 
 export interface IUseArticleSettings {
   articleId?: string;
-  listAudiencesWithoutPermission?: any[];
 }
 
 const useArticleSettings = (params?: IUseArticleSettings) => {
-  const { listAudiencesWithoutPermission } = params || {};
+  const { articleId } = params || {};
 
+  const { t } = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
+
+  const {
+    audiencesWithNoPermission: listAudiencesWithoutPermission,
+  } = useCreateArticle({ articleId });
+
+  const loading = useCreateArticleStore((state) => state.loading);
   const { setting } = useCreateArticleStore((state) => state.data);
   const { isImportant, importantExpiredAt } = setting || {};
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const actions = useCreateArticleStore((state) => state.actions);
 
+  const [disableButtonSave, setDisableButtonSave] = useState<boolean>(true);
   const [showWarning, setShowWarning] = useState<boolean>(false);
   const [showCustomExpire, setCustomExpire] = useState<boolean>(false);
   const [sImportant, setImportant] = useState<IActivityImportant>({
@@ -30,10 +43,9 @@ const useArticleSettings = (params?: IUseArticleSettings) => {
     chosenSuggestedTime: '',
     neverExpires: isImportant && !importantExpiredAt,
   });
+  const isImportantChanged = isImportant !== sImportant.active || importantExpiredAt !== sImportant.expiresTime;
 
   useEffect(() => {
-    const isImportantChanged = isImportant !== sImportant.active || importantExpiredAt !== sImportant.expiresTime;
-
     if (isImportantChanged) {
       setImportant({
         ...sImportant,
@@ -45,11 +57,21 @@ const useArticleSettings = (params?: IUseArticleSettings) => {
   }, [isImportant, importantExpiredAt]);
 
   useEffect(() => {
-    actions.setSettings({
-      isImportant: sImportant.active,
-      importantExpiredAt: sImportant.expiresTime,
-    });
+    setDisableButtonSave(!isImportantChanged);
   }, [sImportant]);
+
+  const handleSaveSettings = () => {
+    if (articleId) {
+      // do something
+    }
+  };
+
+  // useEffect(() => {
+  //   actions.setSettings({
+  //     isImportant: sImportant.active,
+  //     importantExpiredAt: sImportant.expiresTime,
+  //   });
+  // }, [sImportant]);
 
   const handleToggleImportant = () => {
     toggleImportant(
@@ -85,6 +107,21 @@ const useArticleSettings = (params?: IUseArticleSettings) => {
     );
   };
 
+  const handleBack = () => {
+    if (disableButtonSave) {
+      rootNavigation.goBack();
+    } else {
+      showAlert({
+        title: t('discard_alert:title'),
+        content: t('discard_alert:content'),
+        cancelBtn: true,
+        cancelLabel: t('common:btn_discard'),
+        confirmLabel: t('common:btn_stay_here'),
+        onCancel: () => rootNavigation.goBack(),
+      });
+    }
+  };
+
   return {
     sImportant,
     showWarning,
@@ -95,6 +132,10 @@ const useArticleSettings = (params?: IUseArticleSettings) => {
     handleChangeDatePicker,
     handleChangeTimePicker,
     handleChangeSuggestDate,
+    handleSaveSettings,
+    disableButtonSave,
+    loading,
+    handleBack,
   };
 };
 

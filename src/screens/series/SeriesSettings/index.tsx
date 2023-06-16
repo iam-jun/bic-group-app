@@ -11,31 +11,26 @@ import BottomSheet from '~/baseComponents/BottomSheet';
 import { timeSuggest } from '~/constants/importantTimeSuggest';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import images from '~/resources/images';
-import { ISeriesSettingsParams } from '~/interfaces/ISeries';
+import { ISeriesSettingsScreenParams } from '~/interfaces/ISeries';
 import useSeriesSettings from './useSeriesSettings';
-import { useRootNavigation } from '~/hooks/navigation';
-import useModalStore from '~/store/modal';
-import { useBaseHook } from '~/hooks';
 import useSeriesCreation from '../hooks/useSeriesCreation';
 import useSeriesStore, { ISeriesState } from '../store';
+import { useBackPressListener } from '~/hooks/navigation';
 
 interface SeriesSettingsProps {
     route?: {
-        params?: ISeriesSettingsParams;
+        params?: ISeriesSettingsScreenParams;
     };
 }
 
 const SeriesSettings = ({ route }: SeriesSettingsProps) => {
   const { seriesId, isFromSeriesMenuSettings } = route.params || {};
-  const { rootNavigation } = useRootNavigation();
-  const { t } = useBaseHook();
+
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
   const audienceSheetRef = useRef<any>();
   const expireTimeSheetRef = useRef<any>();
-
-  const { showAlert } = useModalStore((state) => state.actions);
 
   const resetStore = useSeriesStore((state:ISeriesState) => state.reset);
   const {
@@ -47,6 +42,7 @@ const SeriesSettings = ({ route }: SeriesSettingsProps) => {
     showWarning,
     showCustomExpire,
     disableButtonSave,
+    loading,
     handleToggleImportant,
     handleChangeDatePicker,
     handleChangeTimePicker,
@@ -54,22 +50,12 @@ const SeriesSettings = ({ route }: SeriesSettingsProps) => {
     handleSaveSettings,
     getMinDate,
     getMaxDate,
+    handleBack,
   } = useSeriesSettings({ seriesId });
 
-  const handleBack = () => {
-    if (disableButtonSave) {
-      rootNavigation.goBack();
-    } else {
-      showAlert({
-        title: t('discard_alert:title'),
-        content: t('discard_alert:content'),
-        cancelBtn: true,
-        cancelLabel: t('common:btn_discard'),
-        confirmLabel: t('common:btn_stay_here'),
-        onCancel: () => rootNavigation.goBack(),
-      });
-    }
-  };
+  const disabled = disableButtonSave || loading;
+
+  useBackPressListener(handleBack);
 
   const onPressAudiences = () => {
     audienceSheetRef.current?.open?.();
@@ -136,7 +122,7 @@ const SeriesSettings = ({ route }: SeriesSettingsProps) => {
       <Header
         useI18n
         title="common:settings"
-        buttonProps={{ disabled: disableButtonSave, style: styles.btnSave }}
+        buttonProps={{ disabled, loading, style: styles.btnSave }}
         buttonText="common:btn_save"
         onPressButton={handleSaveSettings}
         onPressBack={handleBack}
