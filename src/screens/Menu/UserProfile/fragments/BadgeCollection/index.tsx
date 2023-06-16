@@ -6,8 +6,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { throttle } from 'lodash';
 import Text from '~/baseComponents/Text';
 import { dimension, spacing } from '~/theme';
-import EditButton from '../../components/EditButton';
-import ShowingBadges from './ShowingBadges';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import useUserBadge from './store';
 import images from '~/resources/images';
@@ -20,6 +18,7 @@ import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Grid from './Grid';
 import BadgeNew from './BadgeNew';
+import BadgeCollectionHeader from './BadgeCollectionHeader';
 
 interface Props {
   showSearchBox?: boolean;
@@ -37,16 +36,10 @@ const BadgeCollection = ({ showSearchBox }: Props) => {
   const dataSearch = useUserBadge((state) => state.dataSearch);
   const isEditing = useUserBadge((state) => state.isEditing);
   const choosingBadges = useUserBadge((state) => state.choosingBadges);
-  const totalBadges = useUserBadge((state) => state.totalBadges);
 
-  const totalBadgesText = t('user:owned_badges:total_badges').replace('(total)', totalBadges);
   const loadingSearch = useUserBadge((state) => state.loadingSearch);
 
   const disabled = checkIsDisabled(choosingBadges) && isEditing && Boolean(showSearchBox);
-
-  const editBadge = () => {
-    actions.setIsEditing(true);
-  };
 
   const onPress = (item: IUserBadge, isSelected: boolean) => {
     if (!isEditing) return;
@@ -125,37 +118,7 @@ const BadgeCollection = ({ showSearchBox }: Props) => {
 
   return (
     <View style={styles.container}>
-      <View style={{
-        paddingHorizontal: spacing.padding.large,
-      }}
-      >
-        <View style={styles.row}>
-          <Text.H4 color={colors.neutral40} useI18n>
-            user:showing_badges:title
-          </Text.H4>
-          {Boolean(!isEditing) && (
-            <EditButton
-              isCurrentUser
-              onPress={editBadge}
-              icon="PenToSquareSolid"
-              testID="badge_collection.edit_btn"
-            />
-          )}
-        </View>
-        <Text.BodyS color={colors.neutral40} useI18n>
-          user:showing_badges:description
-        </Text.BodyS>
-        <ShowingBadges isShowEditButton={showSearchBox} />
-        <Text.H4 color={colors.neutral40}>
-          {t('user:owned_badges:title')}
-          <Text.BadgeS color={colors.neutral40}>
-            {` ${totalBadgesText}`}
-          </Text.BadgeS>
-        </Text.H4>
-        <Text.BodyS color={colors.neutral40} useI18n>
-          user:owned_badges:description
-        </Text.BodyS>
-      </View>
+      <BadgeCollectionHeader />
       {Boolean(showSearchBox)
        && (
        <SearchInput

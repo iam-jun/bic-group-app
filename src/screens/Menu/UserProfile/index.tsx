@@ -5,11 +5,18 @@ import {
 } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
-  ActivityIndicator, DeviceEventEmitter, ScrollView, StyleSheet, View,
+  ActivityIndicator, DeviceEventEmitter, StyleSheet, View,
 } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { throttle } from 'lodash';
+import Animated, {
+  interpolate, runOnJS,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
@@ -31,6 +38,8 @@ import SearchBadgeModal from './fragments/SearchBadgeModal';
 import { useBaseHook } from '~/hooks';
 import TabButton from '~/baseComponents/Tab/TabButton';
 import Text from '~/baseComponents/Text';
+import BadgeCollectionHeader from './fragments/BadgeCollection/BadgeCollectionHeader';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 export const USER_TABS = [
   { id: USER_TABS_TYPES.USER_ABOUT, text: 'user:user_tab_types:title_about' },
@@ -47,6 +56,7 @@ const UserProfile = (props: any) => {
   const reset = useUserProfileStore((state) => state.reset);
   const resetUserBadge = useUserBadge((state) => state.reset);
   const showingBadges = useUserBadge((state) => state.showingBadges);
+  const showValue = useSharedValue(0);
 
   const {
     fullname,
@@ -117,13 +127,31 @@ const UserProfile = (props: any) => {
     setSelectedIndex(index);
   };
 
-  const handleScroll = throttle(
-    () => {
+  const scrollWrapper = throttle(
+    (offsetY: number) => {
+      if (offsetY < 0) {
+        return;
+      }
       DeviceEventEmitter.emit(
         'off-tooltip',
       );
-    }, 100,
+      if (offsetY > 400 && showValue.value === 0) {
+        showValue.value = withTiming(1, { duration: 500 });
+      } else if (offsetY < 400 && showValue.value === 1) {
+        showValue.value = withTiming(0, { duration: 500 });
+      }
+    }, 300,
   );
+
+  const handleScroll = useAnimatedScrollHandler((event: any) => {
+    const offsetY = event?.contentOffset?.y;
+    runOnJS(scrollWrapper)(offsetY);
+  });
+
+  const headerAnimated = useAnimatedStyle(() => ({
+    zIndex: showValue.value ? 1 : -1,
+    opacity: interpolate(showValue.value, [0, 1], [0, 1]),
+  }));
 
   const renderLoading = () => (
     <View testID="user_profile.loading" style={styles.loadingProfile}>
@@ -173,10 +201,18 @@ const UserProfile = (props: any) => {
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
       <Header />
+      {Boolean(isCurrentUser) && Boolean(selectedIndex === 1)
+      && (
+      <Animated.View style={[styles.badgesHeader, headerAnimated]}>
+        <Header removeBorderAndShadow />
+        <ViewSpacing height={spacing.padding.large} />
+        <BadgeCollectionHeader />
+      </Animated.View>
+      )}
       {loading ? (
         renderLoading()
       ) : (
-        <ScrollView
+        <Animated.ScrollView
           style={styles.container}
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={16}
@@ -213,7 +249,7 @@ const UserProfile = (props: any) => {
           )}
 
           {renderContent()}
-        </ScrollView>
+        </Animated.ScrollView>
       )}
       <SearchBadgeModal showSearchBox />
     </ScreenWrapper>
@@ -259,6 +295,13 @@ const themeStyles = (theme: ExtendedTheme) => {
       width: spacing.padding.xSmall,
       height: spacing.padding.xSmall,
       borderRadius: borderRadius.pill,
+    },
+    badgesHeader: {
+      top: 0,
+      position: 'absolute',
+      backgroundColor: colors.white,
+      width: '100%',
+      paddingBottom: spacing.padding.large,
     },
   });
 };
