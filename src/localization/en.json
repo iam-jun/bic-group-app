@@ -1385,7 +1385,8 @@
     "text_remove_post": "Do you want to remove this post?",
     "text_article_removed": "Remove successful",
     "text_no_content": "No content",
-    "this_content_is_in_the_following_series": "This content is in the following Series"
+    "this_content_is_in_the_following_series": "This content is in the following Series",
+    "text_untitled": "Untitled"
   },
   "tags": {
     "create_tag": "Create Tag",

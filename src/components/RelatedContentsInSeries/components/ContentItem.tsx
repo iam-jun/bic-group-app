@@ -33,7 +33,7 @@ const ContentItem: FC<ContentItemProps> = ({ item, isPrev }) => {
     <Button onPress={goToContent} style={styles.container}>
       {isPrev && <Icon style={styles.iconPrev} tintColor={colors.neutral40} size={14} icon="ArrowLeft" />}
       <View style={styles.containerTitle}>
-        <Text.BodyM style={[styles.textTitle, !isPrev && { textAlign: 'right' }]} numberOfLines={2}>{!!titlePost ? titlePost : t('series:text_no_content')}</Text.BodyM>
+        <Text.BodyM style={[styles.textTitle, !isPrev && { textAlign: 'right' }]} numberOfLines={2}>{!!titlePost ? titlePost : t('series:text_untitled')}</Text.BodyM>
       </View>
       {!isPrev && <Icon style={styles.iconNext} tintColor={colors.neutral40} size={14} icon="ArrowRight" />}
     </Button>
