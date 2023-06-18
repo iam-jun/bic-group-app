@@ -4,7 +4,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { spacing } from '~/theme';
 import Text from '~/baseComponents/Text';
 import SeriesItem from './components/SeriesItem';
-import { IPost, PostType } from '~/interfaces/IPost';
+import { IPost } from '~/interfaces/IPost';
 import useRelatedContentsInSeriesStore from './store';
 import postsSelector from '~/store/entities/posts/selectors';
 import usePostsStore from '~/store/entities/posts';
