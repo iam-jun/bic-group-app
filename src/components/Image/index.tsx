@@ -28,21 +28,23 @@ const Image: React.FC<ImageProps> = ({
   const widthStyle = getWidthStyle(style);
   const widthImg = width || widthStyle;
   const convertedWidthImg = usePixelWidth ? PixelRatio.getPixelSizeForLayoutSize(widthImg) : widthImg;
-  const formattedSource = formatSource(source || placeholderSource, convertedWidthImg);
-  const [_source, setSource] = useState(formattedSource);
+
+  const _source = source || placeholderSource;
+  const formattedSource = formatSource(_source, convertedWidthImg);
+  const [sourceByFormat, setSourceByFormat] = useState(formattedSource);
 
   useEffect(() => {
-    setSource(formatSource(source || placeholderSource, convertedWidthImg));
+    setSourceByFormat(formattedSource);
   }, [source]);
 
   const _onError = () => {
-    setSource(formatSource(placeholderSource, convertedWidthImg));
+    setSourceByFormat(formattedSource);
   };
 
   return (
     <FastImage
       {...props}
-      source={_source}
+      source={sourceByFormat}
       onError={_onError}
       style={[style, !!width && { width }]}
     />
