@@ -1,15 +1,10 @@
 import { useEffect, useState } from 'react';
 import {
   IActivityImportant,
-  IAudienceUser,
-  IPayloadPutEditPost,
-  IPost,
-  IPostCreatePost,
   IPostSetting,
   IPutEditSettingsParams,
 } from '~/interfaces/IPost';
-import usePostsStore, { IPostsState } from '~/store/entities/posts';
-import postsSelector from '~/store/entities/posts/selectors';
+import usePostsStore from '~/store/entities/posts';
 import { useRootNavigation } from '~/hooks/navigation';
 import { isPostExpired } from '~/helpers/post';
 import useCreatePostStore from '../CreatePost/store';
@@ -35,15 +30,12 @@ export const usePostSettings = (params?: IUsePostSettings) => {
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
 
-  const initPostData: IPost = usePostsStore(postsSelector.getPost(postId));
   const postsStoreActions = usePostsStore((state) => state.actions);
 
   const {
     important, canReact, canComment,
   } = useCreatePostStore((state) => state.createPost);
   const createPostStoreActions = useCreatePostStore((state) => state.actions);
-
-  const { putEditPost } = usePostsStore((state: IPostsState) => state.actions);
 
   const [loading, setLoading] = useState(false);
   const [disableButtonSave, setDisableButtonSave] = useState<boolean>(true);
@@ -136,52 +128,6 @@ export const usePostSettings = (params?: IUsePostSettings) => {
       sImportant,
       setImportant,
     );
-  };
-
-  // update setting post from option Edit Post Settings on menu post
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handlePutUpdateSettings = () => {
-    const {
-      id, content, media, setting, audience, mentions,
-    } = initPostData || {};
-    if (!id) {
-      console.error('\x1b[31m🐣️ usePostSettings update: id not found\x1b[0m');
-      return 'doNothing';
-    }
-
-    const userIds: string[] = [];
-    const groupIds: string[] = [];
-    const audienceIds = { groupIds, userIds };
-    audience?.users?.map?.((u: IAudienceUser) => !!u?.id && userIds.push(u.id || ''));
-    audience?.groups?.map?.((u: IAudienceUser) => !!u?.id && groupIds.push(u.id || ''));
-
-    const newSettings: IPostSetting = { ...setting };
-    newSettings.isImportant = sImportant?.active;
-    newSettings.importantExpiredAt = sImportant?.active
-      ? sImportant?.expiresTime
-      : null;
-    newSettings.canComment = sCanComment;
-    newSettings.canReact = sCanReact;
-
-    const data: IPostCreatePost = {
-      content,
-      media,
-      setting: newSettings,
-      audience: audienceIds,
-      mentions,
-    };
-    const payload: IPayloadPutEditPost = {
-      id,
-      data,
-      disableNavigate: true,
-      onRetry: () => putEditPost(payload),
-      isHandleSeriesTagsError: false,
-      isRefresh: false,
-      isCreatingNewPost: false,
-    };
-    putEditPost(payload);
-    rootNavigation.goBack();
-    return 'dispatchPutEditPost';
   };
 
   const handleChangeSuggestDate = (chooseDate: any) => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { IActivityImportant } from '~/interfaces/IPost';
+import { IActivityImportant, IPostSetting, IPutEditSettingsParams } from '~/interfaces/IPost';
 import useSeriesStore from '../store';
 import {
   getMinDateImportant as getMinDate,
@@ -13,6 +13,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import useSeriesCreation from '../hooks/useSeriesCreation';
 import showAlert from '~/store/helper/showAlert';
 import { useBaseHook } from '~/hooks';
+import usePostsStore from '~/store/entities/posts';
 
 export interface IUseSeriesSettings {
     seriesId?: string;
@@ -24,13 +25,17 @@ const useSeriesSettings = (params?: IUseSeriesSettings) => {
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
 
+  const postsStoreActions = usePostsStore((state) => state.actions);
+
   const {
     audiencesWithNoPermission: listAudiencesWithoutPermission,
   } = useSeriesCreation({ seriesId });
 
-  const loading = useSeriesStore((state) => state.loading);
+  const [loading, setLoading] = useState(false);
   const { setting } = useSeriesStore((state) => state.data);
-  const { isImportant, importantExpiredAt } = setting || {};
+  const {
+    isImportant, importantExpiredAt, canReact, canComment,
+  } = setting || {};
   const actions = useSeriesStore((state) => state.actions);
 
   const [disableButtonSave, setDisableButtonSave] = useState<boolean>(true);
@@ -59,16 +64,55 @@ const useSeriesSettings = (params?: IUseSeriesSettings) => {
     setDisableButtonSave(!isImportantChanged);
   }, [sImportant]);
 
+  const updateStore = () => {
+    actions.setSettings({
+      isImportant: sImportant.active,
+      importantExpiredAt: sImportant.expiresTime,
+      canReact,
+      canComment,
+    });
+  };
+
+  const editSettingsOnExistedSeries = () => {
+    const newSetting: IPostSetting = {
+      isImportant: sImportant.active,
+      importantExpiredAt: sImportant.expiresTime,
+      canReact,
+      canComment,
+    };
+
+    const onPreLoad = () => {
+      setLoading(true);
+    };
+
+    const onSuccess = () => {
+      setLoading(false);
+      updateStore();
+      actions.getSeriesDetail(seriesId);
+      rootNavigation.goBack();
+    };
+
+    const onFailed = () => {
+      setLoading(false);
+    };
+
+    const params: IPutEditSettingsParams = {
+      id: seriesId,
+      setting: newSetting,
+      onPreLoad,
+      onSuccess,
+      onFailed,
+    };
+    postsStoreActions.putEditSettings(params);
+  };
+
   const handleSaveSettings = () => {
-    // update setting on editing series
+    // update settings on editing series, or from menu edit settings
     if (seriesId) {
-      // do something
+      editSettingsOnExistedSeries();
     } else {
-      // update setting on creating series
-      actions.setSettings({
-        isImportant: sImportant.active,
-        importantExpiredAt: sImportant.expiresTime,
-      });
+      // update settings on creating series
+      updateStore();
       rootNavigation.goBack();
     }
   };
