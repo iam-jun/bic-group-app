@@ -26,9 +26,9 @@ const FooterPinContentItem: React.FC<FooterPinContentItemProps> = ({
   const { colors } = theme;
   const styles = createStyles(theme);
   const numberOfReactions = formatLargeNumber(getTotalReactions(reactionsCount, 'user'));
-  const labelReactionCount = numberOfReactions ? `${numberOfReactions}` : '';
+  const reactionCountLabel = numberOfReactions ? `${numberOfReactions}` : '0';
   const numberOfComment = formatLargeNumber(commentsCount);
-  const commentCountLabel = numberOfComment ? `${numberOfComment}` : '';
+  const commentCountLabel = numberOfComment ? `${numberOfComment}` : '0';
 
   const renderItem = (
     icon: IconType,
@@ -56,7 +56,7 @@ const FooterPinContentItem: React.FC<FooterPinContentItemProps> = ({
 
     return renderItem(
       'iconReact',
-      labelReactionCount,
+      reactionCountLabel,
       true,
       'footer_pin_content_item.react',
     );
