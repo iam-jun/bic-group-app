@@ -219,6 +219,7 @@ export interface IPostSetting {
 export interface IPutEditSettingsParams {
   id: string;
   setting: IPostSetting;
+  audiences?: any[];
   onPreLoad?: () => void;
   onSuccess?: () => void;
   onFailed?: (error: any) => void;

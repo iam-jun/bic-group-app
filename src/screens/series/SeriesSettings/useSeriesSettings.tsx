@@ -31,13 +31,14 @@ const useSeriesSettings = (params?: IUseSeriesSettings) => {
     audiencesWithNoPermission: listAudiencesWithoutPermission,
   } = useSeriesCreation({ seriesId });
 
-  const [loading, setLoading] = useState(false);
   const { setting } = useSeriesStore((state) => state.data);
   const {
     isImportant, importantExpiredAt, canReact, canComment,
   } = setting || {};
+  const chooseGroups = useSeriesStore((state) => state.groups);
   const actions = useSeriesStore((state) => state.actions);
 
+  const [loading, setLoading] = useState(false);
   const [disableButtonSave, setDisableButtonSave] = useState<boolean>(true);
   const [showWarning, setShowWarning] = useState<boolean>(false);
   const [showCustomExpire, setCustomExpire] = useState<boolean>(false);
@@ -99,6 +100,7 @@ const useSeriesSettings = (params?: IUseSeriesSettings) => {
     const params: IPutEditSettingsParams = {
       id: seriesId,
       setting: newSetting,
+      audiences: chooseGroups,
       onPreLoad,
       onSuccess,
       onFailed,

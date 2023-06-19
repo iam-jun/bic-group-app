@@ -12,7 +12,7 @@ import { useBackPressListener } from '~/hooks/navigation';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import { timeSuggest } from '~/constants/importantTimeSuggest';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import MarkImportant from '~/components/ImportantSettings/MarkImportant';
+import MarkImportant from '~/components/ContentSettings/MarkImportant';
 import images from '~/resources/images';
 import useCreateArticleStore from '../../store';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';

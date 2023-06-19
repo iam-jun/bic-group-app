@@ -8,7 +8,7 @@ import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/baseComponents/Text';
 import Toggle from '~/baseComponents/Toggle';
-import MarkImportant from '~/components/ImportantSettings/MarkImportant';
+import MarkImportant from '~/components/ContentSettings/MarkImportant';
 import { useBackPressListener } from '~/hooks/navigation';
 import { usePostSettings } from '~/screens/post/PostSettings/usePostSettings';
 import { IPostSettingsScreenParams } from '~/interfaces/IPost';

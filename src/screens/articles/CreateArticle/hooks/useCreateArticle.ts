@@ -95,7 +95,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     chooseAudiences,
     PermissionKey.EDIT_OWN_CONTENT_SETTING,
   );
-  const disableArticleSettings = audiencesWithNoPermission.length > 0;
+  const disableArticleSettings = chooseAudiences.length === 0 || audiencesWithNoPermission.length > 0;
 
   const { t } = useBaseHook();
 

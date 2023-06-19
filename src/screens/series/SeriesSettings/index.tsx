@@ -6,7 +6,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import spacing from '~/theme/spacing';
-import MarkImportant from '~/components/ImportantSettings/MarkImportant';
+import MarkImportant from '~/components/ContentSettings/MarkImportant';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import { timeSuggest } from '~/constants/importantTimeSuggest';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';

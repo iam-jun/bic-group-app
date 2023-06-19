@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { IActivityImportant } from '~/interfaces/IPost';
+import { IActivityImportant, IPostSetting, IPutEditSettingsParams } from '~/interfaces/IPost';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import {
   getMinDateImportant as getMinDate,
@@ -13,6 +13,8 @@ import useCreateArticle from '../../hooks/useCreateArticle';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import showAlert from '~/store/helper/showAlert';
+import useArticlesStore from '~/screens/articles/ArticleDetail/store';
+import usePostsStore from '~/store/entities/posts';
 
 export interface IUseArticleSettings {
   articleId?: string;
@@ -28,12 +30,16 @@ const useArticleSettings = (params?: IUseArticleSettings) => {
     audiencesWithNoPermission: listAudiencesWithoutPermission,
   } = useCreateArticle({ articleId });
 
-  const loading = useCreateArticleStore((state) => state.loading);
-  const { setting } = useCreateArticleStore((state) => state.data);
-  const { isImportant, importantExpiredAt } = setting || {};
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const actions = useCreateArticleStore((state) => state.actions);
+  const postsStoreActions = usePostsStore((state) => state.actions);
 
+  const { setting } = useCreateArticleStore((state) => state.data);
+  const chooseAudiences = useCreateArticleStore((state) => state.chooseAudiences);
+  const {
+    isImportant, importantExpiredAt, canComment, canReact,
+  } = setting || {};
+  const articlesStoreActions = useArticlesStore((state) => state.actions);
+
+  const [loading, setLoading] = useState(false);
   const [disableButtonSave, setDisableButtonSave] = useState<boolean>(true);
   const [showWarning, setShowWarning] = useState<boolean>(false);
   const [showCustomExpire, setCustomExpire] = useState<boolean>(false);
@@ -43,6 +49,7 @@ const useArticleSettings = (params?: IUseArticleSettings) => {
     chosenSuggestedTime: '',
     neverExpires: isImportant && !importantExpiredAt,
   });
+
   const isImportantChanged = isImportant !== sImportant.active || importantExpiredAt !== sImportant.expiresTime;
 
   useEffect(() => {
@@ -60,9 +67,42 @@ const useArticleSettings = (params?: IUseArticleSettings) => {
     setDisableButtonSave(!isImportantChanged);
   }, [sImportant]);
 
+  const editSettingsOnExistedArticle = () => {
+    const newSetting: IPostSetting = {
+      isImportant: sImportant.active,
+      importantExpiredAt: sImportant.expiresTime,
+      canReact,
+      canComment,
+    };
+
+    const onPreLoad = () => {
+      setLoading(true);
+    };
+
+    const onSuccess = () => {
+      setLoading(false);
+      articlesStoreActions.getArticleDetail({ articleId });
+      rootNavigation.goBack();
+    };
+
+    const onFailed = () => {
+      setLoading(false);
+    };
+
+    const params: IPutEditSettingsParams = {
+      id: articleId,
+      setting: newSetting,
+      audiences: chooseAudiences,
+      onPreLoad,
+      onSuccess,
+      onFailed,
+    };
+    postsStoreActions.putEditSettings(params);
+  };
+
   const handleSaveSettings = () => {
     if (articleId) {
-      // do something
+      editSettingsOnExistedArticle();
     }
   };
 

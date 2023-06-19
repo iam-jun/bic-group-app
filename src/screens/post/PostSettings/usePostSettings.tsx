@@ -33,7 +33,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
   const postsStoreActions = usePostsStore((state) => state.actions);
 
   const {
-    important, canReact, canComment,
+    important, canReact, canComment, chosenAudiences,
   } = useCreatePostStore((state) => state.createPost);
   const createPostStoreActions = useCreatePostStore((state) => state.actions);
 
@@ -185,6 +185,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     const params: IPutEditSettingsParams = {
       id: postId,
       setting: newSetting,
+      audiences: chosenAudiences,
       onPreLoad,
       onSuccess,
       onFailed,
