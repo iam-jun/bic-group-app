@@ -7,7 +7,7 @@ import ShowingBadges from './ShowingBadges';
 import Text from '~/baseComponents/Text';
 import useUserBadge from './store';
 
-const BadgeCollectionHeader = ({ style }: {style?: any}) => {
+const BadgeCollectionHeader = ({ style, isShowEditButton }: {style?: any, isShowEditButton?:boolean}) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const { colors } = theme;
@@ -40,7 +40,7 @@ const BadgeCollectionHeader = ({ style }: {style?: any}) => {
       <Text.BodyS color={colors.neutral40} useI18n>
         user:showing_badges:description
       </Text.BodyS>
-      <ShowingBadges />
+      <ShowingBadges isShowEditButton={isShowEditButton} />
       <Text.H4 color={colors.neutral40} useI18n>
         user:owned_badges:title
       </Text.H4>

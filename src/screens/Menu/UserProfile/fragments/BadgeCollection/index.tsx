@@ -118,7 +118,7 @@ const BadgeCollection = ({ showSearchBox }: Props) => {
 
   return (
     <View style={styles.container}>
-      <BadgeCollectionHeader />
+      <BadgeCollectionHeader isShowEditButton={showSearchBox} />
       {Boolean(showSearchBox)
        && (
        <SearchInput
