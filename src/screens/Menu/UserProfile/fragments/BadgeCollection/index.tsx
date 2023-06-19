@@ -115,6 +115,7 @@ const BadgeCollection = ({ showSearchBox }: Props) => {
       </Text.SubtitleM>
       <Grid
         data={sectionItem.badges}
+        isNew={Boolean(sectionItem?.isNew)}
         disabled={disabled}
         shouldHideBadgeNew={Boolean(sectionItem?.isNew)}
         onPress={onPress}

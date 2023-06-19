@@ -2,10 +2,8 @@ import groupApi from '~/api/GroupApi';
 import { IUserBadgesState, MAX_BADGES } from '../index';
 import useCommonController from '~/screens/store';
 
-const getOwnedBadges = (set, get) => async () => {
+const getOwnedBadges = (set, _get) => async () => {
   try {
-    const { actions }:IUserBadgesState = get();
-
     set((state: IUserBadgesState) => {
       state.loading = true;
       state.error = null;
@@ -26,9 +24,6 @@ const getOwnedBadges = (set, get) => async () => {
         }
       });
       newComBadges.push({ ...comBadges, isNew: isAllNew });
-      if (isAllNew) {
-        actions.markNewBadgeInCommunity(badges);
-      }
     });
 
     const choosingBadges = [];
