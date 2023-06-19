@@ -136,9 +136,9 @@ const UserProfile = (props: any) => {
         'off-tooltip',
       );
       if (offsetY > 400 && showValue.value === 0) {
-        showValue.value = withTiming(1, { duration: 500 });
+        showValue.value = withTiming(1, { duration: 100 });
       } else if (offsetY < 400 && showValue.value === 1) {
-        showValue.value = withTiming(0, { duration: 500 });
+        showValue.value = withTiming(0, { duration: 100 });
       }
     }, 300,
   );
@@ -204,7 +204,7 @@ const UserProfile = (props: any) => {
       {Boolean(isCurrentUser) && Boolean(selectedIndex === 1)
       && (
       <Animated.View style={[styles.badgesHeader, headerAnimated]}>
-        <Header removeBorderAndShadow />
+        <Header />
         <ViewSpacing height={spacing.padding.large} />
         <BadgeCollectionHeader />
       </Animated.View>
@@ -302,6 +302,7 @@ const themeStyles = (theme: ExtendedTheme) => {
       backgroundColor: colors.white,
       width: '100%',
       paddingBottom: spacing.padding.large,
+      zIndex: 2,
     },
   });
 };
