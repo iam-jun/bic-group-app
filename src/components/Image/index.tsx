@@ -6,7 +6,7 @@ import FastImage, { FastImageProps } from 'react-native-fast-image';
 import { PixelRatio } from 'react-native';
 import { formatSource, getWidthStyle } from './helper';
 
-const MAX_RETRY = 0;
+const MAX_RETRY = 1;
 
 export interface ImageProps extends Omit<FastImageProps, 'source'> {
   source?: any;
