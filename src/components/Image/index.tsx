@@ -6,6 +6,8 @@ import FastImage, { FastImageProps } from 'react-native-fast-image';
 import { PixelRatio } from 'react-native';
 import { formatSource, getWidthStyle } from './helper';
 
+const MAX_RETRY = 0;
+
 export interface ImageProps extends Omit<FastImageProps, 'source'> {
   source?: any;
   placeholderSource?: any;
@@ -28,27 +30,30 @@ const Image: React.FC<ImageProps> = ({
   const widthStyle = getWidthStyle(style);
   const widthImg = width || widthStyle;
   const convertedWidthImg = usePixelWidth ? PixelRatio.getPixelSizeForLayoutSize(widthImg) : widthImg;
+  const formattedSource = formatSource(source || placeholderSource, convertedWidthImg);
+  const [_source, setSource] = useState(formattedSource);
 
-  const _source = source || placeholderSource;
-  const formattedSource = formatSource(_source, convertedWidthImg);
-  const [sourceByFormat, setSourceByFormat] = useState(formattedSource);
+  const [errorCount, setErrorCount] = useState(0);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    setSourceByFormat(formattedSource);
+    setSource(formatSource(source || placeholderSource, convertedWidthImg));
   }, [source]);
 
   const _onError = () => {
-    setSourceByFormat(formattedSource);
+    if (errorCount < MAX_RETRY) {
+      setErrorCount(errorCount + 1);
+      setVisible(false);
+      setVisible(true);
+    } else {
+      setSource(formatSource(placeholderSource, convertedWidthImg));
+    }
   };
 
-  return (
-    <FastImage
-      {...props}
-      source={sourceByFormat}
-      onError={_onError}
-      style={[style, !!width && { width }]}
-    />
-  );
+  if (visible) {
+    return <FastImage {...props} source={_source} onError={_onError} style={[style, !!width && { width }]} />;
+  }
+  return null;
 };
 
 export default Image;
