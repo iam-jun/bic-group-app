@@ -14,12 +14,19 @@ import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import showToast from '~/store/helper/showToast';
 
 export enum EventType {
-    ON_LOAD_END = 'onLoadEnd', // must post content to editor after editor is mounted
-    ON_INITIALIZE_END='onInitializeEnd', // after editor initiated content
-    ON_SCROLL = 'onScroll',
-    ON_IMAGE_ERROR = 'onImageError',
-    ON_PRESS_IMAGE = 'onPressImage',
-    ON_NAVIGATE = 'onNavigate'
+  ON_PRESS_ACTOR = 'onPressActor',
+  ON_PRESS_MENTION = 'onPressMention',
+  ON_PRESS_SERIES = 'onPressSeries',
+  ON_PRESS_AUDIENCE = 'onPressAudience',
+  ON_PRESS_TOPIC = 'onPressTopic',
+  ON_PRESS_TAG = 'onPressTag',
+  ON_PRESS_IMAGE = 'onPressImage',
+  ON_PRESS_LINK = 'onPressLink',
+  ON_LOAD_END = 'onLoadEnd', // must post content to editor after editor is mounted
+  ON_INITIALIZE_END = 'onInitializeEnd', // after editor initiated content
+  ON_SCROLL = 'onScroll',
+  ON_IMAGE_ERROR = 'onImageError',
+  ON_NAVIGATE = 'onNavigate',
 }
 
 const ARTICLE_EDITOR_URL = `https://${getEnv('SELF_DOMAIN')}/article/webview/v1`;

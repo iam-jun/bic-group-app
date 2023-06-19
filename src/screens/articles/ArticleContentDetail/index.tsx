@@ -11,7 +11,6 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { ArticleFooter } from '~/components/articles';
 import ArticleWebview, {
   ArticleWebviewRef,
-  EventType,
 } from '~/components/articles/ArticleWebview';
 import ContentUnavailable from '~/components/ContentUnavailable';
 import ContentNoPermission from '~/components/ContentNoPermission';
@@ -24,8 +23,6 @@ import { parseSafe } from '~/utils/common';
 import useArticlesStore, { IArticlesState } from '../ArticleDetail/store';
 import { getListImage, handleMessage } from './helper';
 import APIErrorCode from '~/constants/apiErrorCode';
-import { IPost } from '~/interfaces/IPost';
-import { goToContentInseries } from '~/components/RelatedContentsInSeries/helper';
 import useRelatedContentsInSeriesStore from '~/components/RelatedContentsInSeries/store';
 
 const HEADER_HEIGHT = 244;
@@ -173,24 +170,10 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
     setListImage(result);
   };
 
-  const onNavigateArticle = (payload: IPost) => {
-    goToContentInseries(payload);
-  };
-
   const onMessage = (message: any) => {
-    switch (message?.type) {
-      case EventType.ON_PRESS_IMAGE:
-        handleMessage({
-          message,
-          listImage,
-          setInitIndex,
-          setGalleryVisible,
-        });
-        break;
-      case EventType.ON_NAVIGATE:
-        onNavigateArticle(message?.payload);
-        break;
-    }
+    handleMessage({
+      message, listImage, setInitIndex, setGalleryVisible,
+    });
   };
 
   const renderTitle = () => {

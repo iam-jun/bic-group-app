@@ -1,4 +1,5 @@
-import { EventType, handleMessage, onPressImages } from './helper';
+import { EventType } from '~/components/articles/ArticleWebview';
+import { handleMessage, onPressImages } from './helper';
 import * as link from '~/utils/link';
 
 describe('ArticleContentDetail helper', () => {
