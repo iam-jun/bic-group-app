@@ -114,7 +114,7 @@ const BadgeCollection = ({ showSearchBox }: Props) => {
       >
         {sectionItem?.name}
         <Text.BadgeS color={colors.neutral40}>{` (${sectionItem?.badges?.length})`}</Text.BadgeS>
-        {'      '}
+        {' '}
         {Boolean(sectionItem?.isNew) && (
         <BadgeNew />
         ) }
@@ -213,7 +213,7 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     header: {
       marginBottom: spacing.margin.large,
-      paddingHorizontal: spacing.margin.large,
+      marginHorizontal: spacing.margin.large,
     },
     boxEmpty: {
       alignItems: 'center',
