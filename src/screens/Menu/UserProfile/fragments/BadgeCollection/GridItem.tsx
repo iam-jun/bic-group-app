@@ -37,18 +37,6 @@ const GridItem = ({
   const item = useUserBadge(useCallback((state) => state.badges?.[id], [id]));
 
   const [isVisible, setIsVisible] = useState(false);
-  const [currentPlacement, setCurrentPlacement] = useState<string>('top');
-
-  useEffect(() => {
-    if (numColumns > 0) {
-      const surplus = (index + 1) % numColumns;
-      if (surplus === 0) {
-        setCurrentPlacement('left');
-      } else if (surplus === 1) {
-        setCurrentPlacement('right');
-      }
-    }
-  }, [numColumns, index]);
 
   useEffect(
     () => {
@@ -71,8 +59,8 @@ const GridItem = ({
 
   const onLongPress = () => {
     if (disabled) return;
-    setIsVisible(true);
     actions.markNewBadge(id);
+    setIsVisible(true);
   };
 
   const onClose = () => {
@@ -85,7 +73,7 @@ const GridItem = ({
     <Tooltip
       isVisible={isVisible}
       content={<Text.BodyS color={colors.white}>{item?.name || ''}</Text.BodyS>}
-      placement={currentPlacement as any}
+      placement="top"
       backgroundColor="transparent"
       contentStyle={styles.tooltipStyle}
       disableShadow
@@ -99,8 +87,6 @@ const GridItem = ({
         onPress={onPressItem}
         onLongPress={onLongPress}
       >
-        {Boolean(item?.isNew) && !Boolean(isSelected) && !Boolean(shouldHideBadgeNew) && (
-        <BadgeNew style={styles.badgeNewStyle} />)}
         <Avatar.Medium
           isRounded
           borderWidth={isSelected ? 2 : 1}
@@ -113,6 +99,11 @@ const GridItem = ({
         </View>
         )}
         {Boolean(!isSelected) && Boolean(disabled) && <View style={styles.disabled} />}
+        {Boolean(item?.isNew) && !Boolean(isSelected) && !Boolean(shouldHideBadgeNew) && (
+          <View style={styles.badgeNewStyle}>
+            <BadgeNew />
+          </View>
+        )}
       </TouchableOpacity>
     </Tooltip>
   );

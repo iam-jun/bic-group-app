@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   View, StyleSheet, DeviceEventEmitter, FlatList,
 } from 'react-native';
@@ -43,12 +43,6 @@ const BadgeCollection = ({ showSearchBox }: Props) => {
   const loadingSearch = useUserBadge((state) => state.loadingSearch);
 
   const disabled = checkIsDisabled(choosingBadges) && isEditing && Boolean(showSearchBox);
-
-  useEffect(() => {
-    if (!showSearchBox) {
-      actions.getOwnedBadges();
-    }
-  }, [showSearchBox]);
 
   const editBadge = () => {
     actions.setIsEditing(true);

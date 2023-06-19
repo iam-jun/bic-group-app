@@ -76,18 +76,28 @@ const UserProfile = (props: any) => {
 
   const homeActions = useHomeStore((state) => state.actions);
   const hasNewBadge = useUserBadge((state) => state.hasNewBadge);
+  const userBadgeActions = useUserBadge((state) => state.actions);
 
   useEffect(() => {
     isFocused && userProfileActions.getUserProfile({ userId, params });
     userId && userProfileActions.getWorkExperience(userId);
-    resetUserBadge();
-    return () => reset();
+    if (userId === currentUserId) {
+      userBadgeActions.getOwnedBadges();
+    }
+    return () => {
+      resetUserBadge();
+      reset();
+    };
   }, [isFocused, userId]);
 
   useEffect(() => {
     setAvatarState(userProfileData?.avatar);
     setBgImgState(userProfileData?.backgroundImgUrl);
   }, [userProfileData]);
+
+  useEffect(() => {
+    useUserBadge.getState().actions.getOwnedBadges();
+  }, [isCurrentUser]);
 
   useEffect(() => {
     if (
