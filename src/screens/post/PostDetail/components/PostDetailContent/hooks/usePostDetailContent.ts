@@ -55,6 +55,9 @@ const usePostDetailContent = ({
   const commentLeft = usePostsStore(
     useCallback(postsSelector.getCommentOnlyCount(postId), [postId]),
   );
+  const commentEndCursor = usePostsStore(
+    useCallback(postsSelector.getCommentEndCursor(postId), [postId]),
+  );
   const setting = usePostsStore(
     useCallback(postsSelector.getSetting(postId), [postId]),
   );
@@ -119,14 +122,7 @@ const usePostDetailContent = ({
   };
 
   const onRefresh = () => {
-    if (
-      commentError === APIErrorCode.Post.POST_DELETED
-      || commentError === APIErrorCode.Post.POST_PRIVACY
-    ) {
-      showNotice(true);
-    } else {
-      getPostDetail((loading) => setRefreshing(loading));
-    }
+    getPostDetail((loading) => setRefreshing(loading));
   };
 
   const onPressMarkSeenPost = useCallback(() => {
@@ -202,6 +198,7 @@ const usePostDetailContent = ({
     createdAt,
     audience,
     commentLeft,
+    commentEndCursor,
     groupIds,
     comments,
     sectionData,

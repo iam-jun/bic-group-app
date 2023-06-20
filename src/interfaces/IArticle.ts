@@ -38,7 +38,7 @@ export interface IPayloadPublishDraftArticle {
   draftArticleId: string;
   replaceWithDetail?: boolean;
   refreshDraftArticles?: boolean;
-  onSuccess?: () => void;
+  onSuccess?: (payload?: any) => void;
   onError?: (error) => void;
 }
 
@@ -100,6 +100,7 @@ export interface IEditArticleData {
   mentions?: any;
   linkPreview?: ILinkPreview;
   tags?: IEditArticleTags[];
+  wordCount?: number;
 }
 
 export interface ICategory {

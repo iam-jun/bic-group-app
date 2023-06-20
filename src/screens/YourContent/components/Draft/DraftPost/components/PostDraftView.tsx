@@ -26,6 +26,7 @@ import useDraftPostStore from '../store';
 import { PostBody, PostHeader, PostImportant } from '~/components/posts';
 import useModalStore from '~/store/modal';
 import showToastError from '~/store/helper/showToastError';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 import useDraftContentsStore from '../../DraftContents/store';
 import usePostsStore from '~/store/entities/posts';
 
@@ -88,7 +89,6 @@ const PostDraftView: FC<PostDraftViewProps> = ({
       const payload: IPayloadPutEditPost = {
         id,
         disableNavigate: true,
-        msgSuccess: 'post:draft:text_draft_post_published',
         isPublish: true,
         onError: () => setPublishing(false),
         isHandleSeriesTagsError: false,
@@ -115,7 +115,7 @@ const PostDraftView: FC<PostDraftViewProps> = ({
         )
         .then((response) => {
           if (response?.data) {
-            modalActions.showToast({ content: 'post:draft:text_draft_deleted' });
+            showToastSuccess(response);
             refreshDraftPosts();
           }
         })

@@ -125,7 +125,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         content: content?.trim(),
         media: { images },
         postId,
-        reactionsCount: {},
+        reactionsCount: [],
         ownerReactions: {},
         child: {},
         createdAt: new Date().toISOString(),

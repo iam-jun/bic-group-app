@@ -11,8 +11,8 @@ import useHomeStore from '~/screens/Home/store';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
 import { IDraftArticleState } from '..';
-import showToast from '~/store/helper/showToast';
 import useDraftContentsStore from '../../../DraftContents/store';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -39,7 +39,7 @@ const publishDraftArticle = (set, get) => async (payload: IPayloadPublishDraftAr
       return;
     }
 
-    onSuccess?.();
+    onSuccess?.(response);
     set((state: IDraftArticleState) => {
       state.isPublishing = false;
     }, 'publishDraftArticle success');
@@ -47,9 +47,7 @@ const publishDraftArticle = (set, get) => async (payload: IPayloadPublishDraftAr
     usePostsStore.getState().actions.addToPosts({ data: contentData } as IPayloadAddToAllPost);
 
     if (response.data?.status === PostStatus.PROCESSING) {
-      showToast({
-        content: 'post:draft:text_processing_publish',
-      });
+      showToastSuccess(response);
       // navigation.goBack();
       usePostsInProgressStore.getState().actions.getPosts();
     } else if (replaceWithDetail) {

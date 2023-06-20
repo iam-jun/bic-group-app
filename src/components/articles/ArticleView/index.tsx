@@ -13,13 +13,13 @@ import { spacing } from '~/theme';
 export interface ArticleViewProps {
     id: string;
     article: any;
-    firstCommentId: string;
+    endCursor: string;
 }
 
 const ArticleView: FC<ArticleViewProps> = ({
   id,
   article,
-  firstCommentId,
+  endCursor,
 }) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -38,7 +38,7 @@ const ArticleView: FC<ArticleViewProps> = ({
           testID="article_view.load_more_comment"
           title="post:text_load_more_comments"
           postId={id}
-          idLessThan={firstCommentId}
+          endCursor={endCursor}
         />
       )}
     </>

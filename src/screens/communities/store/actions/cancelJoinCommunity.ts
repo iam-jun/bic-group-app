@@ -1,31 +1,23 @@
-import i18next from 'i18next';
 import approveDeclineCode from '~/constants/approveDeclineCode';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
-import { IToastMessage } from '~/interfaces/common';
 import useCommunitiesStore from '~/store/entities/communities';
 import groupApi from '~/api/GroupApi';
 import { ICommunity } from '~/interfaces/ICommunity';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 import showToastError from '~/store/helper/showToastError';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
-import showToast from '~/store/helper/showToast';
 
 const cancelJoinCommunity
-  = (_set, _get) => async (communityId: string, communityName: string) => {
+  = (_set, _get) => async (communityId: string, _communityName: string) => {
     try {
-      await groupApi.cancelJoinCommunity(communityId);
+      const response = await groupApi.cancelJoinCommunity(communityId);
 
       useCommunitiesStore.getState().actions.updateCommunity(
         communityId,
         { joinStatus: GroupJoinStatus.VISITOR } as ICommunity,
       );
 
-      const toastMessage: IToastMessage = {
-        content: `${i18next.t(
-          'groups:text_cancel_join_community',
-        )} ${communityName}`,
-      };
-
-      showToast(toastMessage);
+      showToastSuccess(response);
     } catch (error: any) {
       console.error('cancelJoinCommunity catch', error);
 
