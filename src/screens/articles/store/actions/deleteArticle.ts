@@ -15,17 +15,15 @@ const deleteArticle = (_set, _get) => async (id: string) => {
   try {
     const response = await streamApi.deleteArticle(id);
 
-    if (response.data) {
-      const post = usePostsStore.getState()?.posts?.[id] || {};
-      const deletedPost = {
-        ...post,
-        deleted: true,
-      };
-      usePostsStore.getState().actions.addToPosts({ data: deletedPost } as IPayloadAddToAllPost);
-      useDraftArticleStore.getState().actions.getDraftArticles({ isRefresh: true });
-      useDraftContentsStore.getState().actions.getDraftContents({ isRefresh: true });
-      showToastSuccess(response);
-    }
+    const post = usePostsStore.getState()?.posts?.[id] || {};
+    const deletedPost = {
+      ...post,
+      deleted: true,
+    };
+    usePostsStore.getState().actions.addToPosts({ data: deletedPost } as IPayloadAddToAllPost);
+    useDraftArticleStore.getState().actions.getDraftArticles({ isRefresh: true });
+    useDraftContentsStore.getState().actions.getDraftContents({ isRefresh: true });
+    showToastSuccess(response);
   } catch (error) {
     console.error('deleteArticle error:', error);
     showToastError(error);
