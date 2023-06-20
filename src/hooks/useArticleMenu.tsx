@@ -3,6 +3,7 @@ import i18next from 'i18next';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { Keyboard } from 'react-native';
 
+import { isEmpty } from 'lodash';
 import useArticleController from '~/screens/articles/store';
 import { IPost } from '~/interfaces/IPost';
 import { useRootNavigation } from './navigation';
@@ -20,6 +21,7 @@ import { onPressReportThisMember } from '~/helpers/blocking';
 import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
+import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
 
 const useArticleMenu = (data: IPost, isActor: boolean) => {
   const { rootNavigation } = useRootNavigation();
@@ -133,6 +135,20 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
     rootNavigation?.navigate?.(articleStack.createArticleSettings, { articleId, isFromArticleMenuSettings: true });
   };
 
+  const onPressViewReactions = () => {
+    modalActions.hideBottomList();
+    const firstReact = reactionsCount[0];
+    if (!!firstReact && !isEmpty(firstReact)) {
+      const initReaction = Object.keys(firstReact)[0];
+      const payload: IPayloadReactionDetailBottomSheet = {
+        reactionsCount,
+        initReaction,
+        getDataParam: { target: 'POST', targetId: articleId },
+      };
+      modalActions.showReactionDetailBottomSheet(payload);
+    }
+  };
+
   const defaultData = [
     {
       id: 1,
@@ -169,6 +185,15 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
     },
     {
       id: 5,
+      testID: 'article_view_menu.insights',
+      leftIcon: 'iconReact',
+      title: i18next.t('post:post_menu_view_reactions'),
+      requireIsActor: false,
+      requireReactionCounts: true,
+      onPress: onPressViewReactions,
+    },
+    {
+      id: 6,
       testID: 'post_view_menu.view_series',
       leftIcon: 'RectangleHistory',
       title: i18next.t('common:btn_view_series'),
@@ -176,7 +201,7 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       onPress: onPressViewSeries,
     },
     {
-      id: 6,
+      id: 7,
       testID: 'article_view_menu.pin',
       leftIcon: 'Thumbtack',
       title: i18next.t('common:pin_unpin'),
@@ -186,7 +211,7 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       onPress: onPressPin,
     },
     {
-      id: 7,
+      id: 8,
       testID: 'article_view_menu.delete',
       leftIcon: 'TrashCan',
       title: i18next.t('article:menu:delete'),
@@ -194,7 +219,7 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       onPress: onDelete,
     },
     {
-      id: 8,
+      id: 9,
       testID: 'article_view_menu.report',
       leftIcon: 'Flag',
       title: i18next.t('common:btn_report_content'),
@@ -203,7 +228,7 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       onPress: onPressReport,
     },
     {
-      id: 9,
+      id: 10,
       testID: 'article_view_menu.report_this_member',
       leftIcon: 'UserXmark',
       title: i18next.t('groups:member_menu:label_report_member'),
