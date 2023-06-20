@@ -541,13 +541,13 @@
     "membership_policy_settings": {
       "title": "Membership Policy Settings",
       "description": "Set up who can join and whether they need to be approved to be a member",
-      "who_can_join_this_group": "Who can join this group?",
+      "who_can_join_this_group": "Who can join this {{type}}?",
       "anyone": "Anyone",
-      "anyone_description": "Anyone can join or ask to join this group",
+      "anyone_description": "Anyone can join or ask to join this {{type}}",
       "only_invited_people": "Only invited people",
       "only_invited_people_description": "Only those who receive the invitation",
       "membership_approval": "Membership Approval",
-      "membership_approval_description": "People must ask for approval to join this group",
+      "membership_approval_description": "People must ask for approval to join this {{type}}",
       "alert_turn_off_membership_approval": {
         "title": "Turn off membership approval?",
         "description": "All pending request will be approved automatically.",
@@ -555,11 +555,13 @@
         "turn_off": "Turn off"
       },
       "tooltip": {
-        "private": "Can’t be turned off because your group privacy is Private",
+        "private": "Can’t be turned off because your {{type}} privacy is Private",
         "secret": "Can’t select this option because your group privacy is Secret",
         "default_group_set_toggle": "Can’t be turned on because your group is in the default group set",
         "default_group_set_radio": "Can’t select this option because your group is in the default group set"
-      }
+      },
+      "community": "community",
+      "group": "group"
     }
   },
   "languages": {

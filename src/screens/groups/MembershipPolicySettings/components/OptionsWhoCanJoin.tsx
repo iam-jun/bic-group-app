@@ -11,6 +11,7 @@ import { Radio } from '~/baseComponents';
 import { Props, topAdjustment } from './MembershipApproval';
 import { GroupPrivacyType } from '~/constants/privacyTypes';
 import { dimension } from '~/theme';
+import { checkTypeByRootGroup } from '../helper';
 
 interface IOption {
   id: number;
@@ -23,25 +24,28 @@ export enum IdType {
   ONLY_INVITED_PEOPLE = 1,
 }
 
-export const OPTIONS: IOption[] = [
-  {
-    id: IdType.ANYONE,
-    title: t('settings:membership_policy_settings:anyone'),
-    description: t('settings:membership_policy_settings:anyone_description'),
-  },
-  {
-    id: IdType.ONLY_INVITED_PEOPLE,
-    title: t('settings:membership_policy_settings:only_invited_people'),
-    description: t('settings:membership_policy_settings:only_invited_people_description'),
-  },
-];
-
 const OptionsWhoCanJoin: FC<Props> = (props) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyles(theme);
 
   const { data, updateJoinSetting } = props || {};
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const typeByRootGroup = checkTypeByRootGroup(data);
+
+  const OPTIONS: IOption[] = [
+    {
+      id: IdType.ANYONE,
+      title: t('settings:membership_policy_settings:anyone'),
+      description: t('settings:membership_policy_settings:anyone_description', { type: typeByRootGroup }),
+    },
+    {
+      id: IdType.ONLY_INVITED_PEOPLE,
+      title: t('settings:membership_policy_settings:only_invited_people'),
+      description: t('settings:membership_policy_settings:only_invited_people_description'),
+    },
+  ];
 
   const isInvitedOnly = data?.affectedSettings?.isInvitedOnly;
   const isSecretPrivacy = data?.privacy === GroupPrivacyType.SECRET;
@@ -136,7 +140,7 @@ const OptionsWhoCanJoin: FC<Props> = (props) => {
   return (
     <View style={styles.container} testID="options_who_can_join">
       <Text.BodyMMedium color={colors.neutral80}>
-        {t('settings:membership_policy_settings:who_can_join_this_group')}
+        {t('settings:membership_policy_settings:who_can_join_this_group', { type: typeByRootGroup })}
       </Text.BodyMMedium>
       {renderOptions()}
     </View>

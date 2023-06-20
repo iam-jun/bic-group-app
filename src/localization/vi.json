@@ -502,13 +502,13 @@
     "membership_policy_settings": {
       "title": "Cài đặt chính sách thành viên",
       "description": "Thiết lập ai có thể tham gia và liệu họ có cần được phê duyệt để trở thành thành viên hay không",
-      "who_can_join_this_group": "Ai có thể tham gia nhóm này?",
+      "who_can_join_this_group": "Ai có thể tham gia {{type}} này?",
       "anyone": "bất kỳ ai",
-      "anyone_description": "Bất kỳ ai cũng có thể tham gia hoặc yêu cầu tham gia nhóm này",
+      "anyone_description": "Bất kỳ ai cũng có thể tham gia hoặc yêu cầu tham gia {{type}} này",
       "only_invited_people": "Chỉ những người được mời",
       "only_invited_people_description": "Chỉ những người nhận được lời mời",
       "membership_approval": "Phê duyệt tư cách thành viên",
-      "membership_approval_description": "Mọi người phải yêu cầu phê duyệt để tham gia nhóm này",
+      "membership_approval_description": "Mọi người phải yêu cầu phê duyệt để tham gia {{type}} này",
       "alert_turn_off_membership_approval": {
         "title": "Tắt phê duyệt thành viên?",
         "description": "Tất cả các yêu cầu đang chờ xử lý sẽ được phê duyệt tự động.",
@@ -516,11 +516,13 @@
         "turn_off": "Tắt"
       },
       "tooltip": {
-        "private": "Không thể tắt vì quyền riêng tư nhóm của bạn là Riêng tư",
+        "private": "Không thể tắt vì quyền riêng tư {{type}} của bạn là Riêng tư",
         "secret": "Không thể chọn tùy chọn này vì quyền riêng tư nhóm của bạn là Bí mật",
         "default_group_set_toggle": "Không thể bật vì nhóm của bạn nằm trong nhóm mặc định",
         "default_group_set_radio": "Không thể chọn tùy chọn này vì nhóm của bạn nằm trong nhóm mặc định"
-      }
+      },
+      "community": "cộng đồng",
+      "group": "nhóm"
     }
   },
   "languages": {

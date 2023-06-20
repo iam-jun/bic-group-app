@@ -15,6 +15,7 @@ import { ICommunity } from '~/interfaces/ICommunity';
 import { CommunityPrivacyType, GroupPrivacyType } from '~/constants/privacyTypes';
 import showAlert from '~/store/helper/showAlert';
 import { IGroupSettings } from '~/interfaces/common';
+import { checkTypeByRootGroup } from '../helper';
 
 export const topAdjustment = Platform.OS === 'android' ? -StatusBar.currentHeight + 3 : 0;
 
@@ -29,6 +30,9 @@ const MembershipApproval: FC<Props> = (props) => {
   const styles = createStyles(theme);
 
   const { data, updateJoinSetting } = props || {};
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const typeByRootGroup = checkTypeByRootGroup(data);
 
   const privacy = data?.privacy;
   const isJoinApproval = data?.affectedSettings?.isJoinApproval;
@@ -81,7 +85,7 @@ const MembershipApproval: FC<Props> = (props) => {
     <Text.BodyM useI18n color={colors.white}>
       {isInDefaultGroupSet
         ? 'settings:membership_policy_settings:tooltip:default_group_set_toggle'
-        : 'settings:membership_policy_settings:tooltip:private'}
+        : t('settings:membership_policy_settings:tooltip:private', { type: typeByRootGroup })}
     </Text.BodyM>
   );
 
@@ -101,7 +105,7 @@ const MembershipApproval: FC<Props> = (props) => {
           {t('settings:membership_policy_settings:membership_approval')}
         </Text.SubtitleM>
         <Text.BodyS color={colors.neutral40}>
-          {t('settings:membership_policy_settings:membership_approval_description')}
+          {t('settings:membership_policy_settings:membership_approval_description', { type: typeByRootGroup })}
         </Text.BodyS>
       </View>
       <View>
