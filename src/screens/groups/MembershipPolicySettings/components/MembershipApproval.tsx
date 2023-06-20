@@ -85,7 +85,7 @@ const MembershipApproval: FC<Props> = (props) => {
     </Text.BodyM>
   );
 
-  const isRenderNull = isSecretPrivacy || (isPrivatePrivacy && isInvitedOnly);
+  const isRenderNull = isSecretPrivacy || (isPrivatePrivacy && isInvitedOnly) || isInvitedOnly;
 
   if (isRenderNull) {
     return null;
