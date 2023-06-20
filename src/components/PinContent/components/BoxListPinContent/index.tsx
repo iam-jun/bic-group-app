@@ -117,7 +117,7 @@ const createStyles = (theme: ExtendedTheme) => {
     },
     containerItem: {
       marginBottom: spacing.padding.large,
-      height: 280,
+      height: 304,
       width: MaxWidthItem,
     },
   });
