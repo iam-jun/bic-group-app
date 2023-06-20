@@ -96,10 +96,6 @@ const UserProfile = (props: any) => {
   }, [userProfileData]);
 
   useEffect(() => {
-    useUserBadge.getState().actions.getOwnedBadges();
-  }, [isCurrentUser]);
-
-  useEffect(() => {
     if (
       userId?.toString?.() === currentUserId?.toString?.()
       || userId?.toString?.() === currentUsername?.toString?.()
