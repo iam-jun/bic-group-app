@@ -45,6 +45,7 @@ import { PlaceHolderRemoveContent } from '~/baseComponents';
 import useModalStore from '~/store/modal';
 import DeactivatedView from '~/components/DeactivatedView';
 import VerifiedView from '~/components/VerifiedView';
+import UserBadge from '~/screens/Menu/UserProfile/components/UserBadge';
 
 export interface CommentViewProps {
   postId: string;
@@ -111,7 +112,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
       : null);
 
   const {
-    fullname, avatar, isDeactivated, isVerified,
+    fullname, avatar, isDeactivated, isVerified, showingBadges = [],
   } = actor || {};
 
   const isActor = currentUserId === actor?.id;
@@ -376,6 +377,14 @@ const _CommentView: React.FC<CommentViewProps> = ({
                       </Text.H5>
                       <VerifiedView isVerified={isVerified} />
                       {isDeactivated && <DeactivatedView style={styles.deactivatedView} />}
+                      {!isDeactivated && (
+                        <UserBadge
+                          isCurrentUser={false}
+                          showingBadges={showingBadges}
+                          style={styles.userBadge}
+                          customStyleBadgeItem={styles.badgeItem}
+                        />
+                      )}
                     </ButtonWrapper>
                   </View>
                 </View>
@@ -463,6 +472,15 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     fullname: {
       flexShrink: 1,
+    },
+    userBadge: {
+      marginLeft: spacing.margin.small,
+      height: '100%',
+    },
+    badgeItem: {
+      width: 20,
+      height: 20,
+      marginRight: -spacing.margin.xSmall,
     },
   });
 };

@@ -23,6 +23,7 @@ import postsSelector from '~/store/entities/posts/selectors';
 import useModalStore from '~/store/modal';
 import DeactivatedView from '~/components/DeactivatedView';
 import VerifiedView from '~/components/VerifiedView';
+import UserBadge from '~/screens/Menu/UserProfile/components/UserBadge';
 
 export interface ContentHeaderProps {
   style?: StyleProp<ViewStyle>;
@@ -62,7 +63,7 @@ const ContentHeader: FC<ContentHeaderProps> = ({
   const textAudiences = getAudiencesText(audience, t);
 
   const {
-    avatar, fullname: actorName, isDeactivated, isVerified,
+    avatar, fullname: actorName, isDeactivated, isVerified, showingBadges = [],
   } = actor || {};
 
   const onPressActor = () => {
@@ -139,6 +140,14 @@ const ContentHeader: FC<ContentHeaderProps> = ({
           </Text.SubtitleM>
           <VerifiedView size={12} isVerified={isVerified} />
           {isDeactivated && <DeactivatedView style={styles.deactivatedView} />}
+          {!isDeactivated && (
+            <UserBadge
+              isCurrentUser={false}
+              showingBadges={showingBadges}
+              style={styles.userBadge}
+              customStyleBadgeItem={styles.badgeItem}
+            />
+          )}
         </Button>
         <View style={styles.textToAudience}>
           <Text.BodyS color={colors.neutral40} useI18n style={styles.textTo}>
@@ -204,6 +213,15 @@ const styles = StyleSheet.create({
   },
   deactivatedView: {
     marginLeft: spacing.margin.tiny,
+  },
+  userBadge: {
+    marginLeft: spacing.margin.small,
+    height: '100%',
+  },
+  badgeItem: {
+    width: 20,
+    height: 20,
+    marginRight: -spacing.margin.xSmall,
   },
 });
 

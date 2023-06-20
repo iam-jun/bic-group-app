@@ -42,7 +42,7 @@ const CommentDetailContent = (props: any) => {
   const styles = createStyle(theme);
 
   const { t } = useBaseHook();
-  const { rootNavigation, goHome } = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
 
   const commentDetailController = useCommentDetailController(
     (state) => state.actions,
@@ -155,7 +155,11 @@ const CommentDetailContent = (props: any) => {
         content: 'error:not_found_desc',
         type: ToastType.ERROR,
       });
-      goHome();
+      if (rootNavigation.canGoBack) {
+        setTimeout(() => {
+          rootNavigation.goBack();
+        }, 200);
+      }
     }
   }, [notFoundComment, loading, isEmpty, copyCommentError]);
 
