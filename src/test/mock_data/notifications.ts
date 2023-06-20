@@ -516,7 +516,7 @@ export const NOTI_HIDE_POST = {
   mentions: {},
   commentsCount: 1,
   totalUsersSeen: 3,
-  reactionsCount: {},
+  reactionsCount: [],
   markedReadPost: true,
   isSaved: false,
   createdAt: '2023-01-09T04:19:28.654Z',
@@ -602,7 +602,7 @@ export const NOTI_HIDE_COMMENT = {
     images: [],
     files: [],
   },
-  reactionsCount: {},
+  reactionsCount: [],
   mentions: [],
   reportDetails: [
     {

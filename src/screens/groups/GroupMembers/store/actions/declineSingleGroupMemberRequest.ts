@@ -1,23 +1,21 @@
-import i18next from 'i18next';
 import approveDeclineCode from '~/constants/approveDeclineCode';
-import { IToastMessage } from '~/interfaces/common';
 import { IPayloadDeclineSingleGroupMemberRequest } from '~/interfaces/IGroup';
 import showToastError from '~/store/helper/showToastError';
-import showToast from '~/store/helper/showToast';
 import groupApi from '~/api/GroupApi';
 import { IGroupMemberState } from '..';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const declineSingleGroupMemberRequest = (get) => async (
   payload: IPayloadDeclineSingleGroupMemberRequest,
 ) => {
-  const { groupId, requestId, fullName } = payload || {};
+  const { groupId, requestId } = payload || {};
   const { groupMemberRequests, actions }: IGroupMemberState = get();
   const { total, ids, items } = groupMemberRequests || {};
 
   try {
     if (!groupId || !requestId) return;
 
-    await groupApi.declineSingleGroupMemberRequest(groupId, requestId);
+    const response = await groupApi.declineSingleGroupMemberRequest(groupId, requestId);
 
     // Update data state
     const requestItems = { ...items };
@@ -28,11 +26,7 @@ const declineSingleGroupMemberRequest = (get) => async (
       items: requestItems,
     });
 
-    const toastMessage: IToastMessage = {
-      // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
-      content: `${i18next.t('groups:text_declined_user')} ${fullName}`,
-    };
-    showToast(toastMessage);
+    showToastSuccess(response);
   } catch (e) {
     console.error('declineSingleGroupMemberRequest: ', e);
 

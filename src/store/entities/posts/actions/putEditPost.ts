@@ -18,12 +18,13 @@ import useTimelineStore from '~/store/timeline';
 import useDraftPostStore from '~/screens/YourContent/components/Draft/DraftPost/store';
 import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftContents/store';
 import useHomeStore from '~/screens/Home/store';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const navigation = withNavigation(rootNavigationRef);
 
 const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
   const {
-    id, data, replaceWithDetail = true, onRetry, msgSuccess, msgError, disableNavigate,
+    id, data, replaceWithDetail = true, onRetry, disableNavigate, isCreatingNewPost = true,
     onError, isPublish = true, createFromGroupId, isHandleSeriesTagsError = true, isRefresh = true,
   } = payload || {};
 
@@ -48,7 +49,12 @@ const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
 
     useCreatePostStore.getState().actions.setLoadingCreatePost(true);
 
-    const response = await streamApi.putPublishPost(params);
+    let response = null;
+    if (isCreatingNewPost) {
+      response = await streamApi.putPublishPost(params);
+    } else {
+      response = await streamApi.putEditPost(params);
+    }
 
     useCreatePostStore.getState().actions.setLoadingCreatePost(false);
 
@@ -60,16 +66,9 @@ const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
     const post = response.data;
     actions.addToPosts({ data: post } as IPayloadAddToAllPost);
 
-    if (msgSuccess) {
-      showToast({
-        content: msgSuccess,
-      });
-    }
+    showToastSuccess(response);
 
     if (post.status === PostStatus.PROCESSING) {
-      showToast({
-        content: 'post:draft:text_processing_publish',
-      });
       usePostsInProgressStore.getState().actions.getPosts();
       if (!disableNavigate) { navigation.goBack(); }
     } else if (!disableNavigate) {
@@ -93,7 +92,7 @@ const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
     useCreatePostStore.getState().actions.setLoadingCreatePost(false);
 
     const errorCode = error?.code;
-    if (errorCode === ApiErrorCode.Post.POST_INVALID_PARAM && isHandleSeriesTagsError) {
+    if (errorCode === ApiErrorCode.Post.TAG_SERIES_INVALID && isHandleSeriesTagsError) {
       useValidateSeriesTags.getState().actions.handleSeriesTagsError({ error, postType: PostType.POST });
     } else {
       const btnRetry = onRetry && {
@@ -101,7 +100,7 @@ const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
         onButtonPress: onRetry,
       };
       const toast: IToastMessage = {
-        content: error?.meta?.message || msgError || 'post:text_edit_post_failed',
+        content: error?.meta?.message,
         type: ToastType.ERROR,
         ...btnRetry,
       };

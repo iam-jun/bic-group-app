@@ -9,7 +9,7 @@ const validateSeriesTags = (set, _get) => async (
     set((state: IValidateSeriesTags) => {
       state.isValidating = true;
     }, 'validateSeriesTags fetching');
-    const response = await streamApi.validateSeriesTagsOfArticle(data);
+    const response = await streamApi.validateSeriesTags(data);
     onSuccess?.(response);
     set((state: IValidateSeriesTags) => {
       state.isValidating = false;

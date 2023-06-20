@@ -41,6 +41,7 @@ buck-out/
 \.buckd/
 *.keystore
 !debug.keystore
+build_resources
 
 # fastlane
 #
@@ -88,5 +89,7 @@ coverage
 /ios/I/
 test-report.xml
 
-# react-native-config codegen
 ios/tmp.xcconfig
+
+bic-mobile-secret
+bic-mobile-build-resources

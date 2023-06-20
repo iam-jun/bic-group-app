@@ -6,6 +6,7 @@ import { useBaseHook } from '~/hooks';
 import { ICommentData, IPostAudience } from '~/interfaces/IPost';
 import CommentView from '~/screens/comments/components/CommentView';
 import LoadMoreComment from '~/components/LoadMoreComment';
+import RepliesComment from '~/components/RepliesComment';
 import spacing from '~/theme/spacing';
 import usePostsStore from '~/store/entities/posts';
 
@@ -19,6 +20,8 @@ export interface CommentItemProps {
   commentParent?: ICommentData;
   contentBackgroundColor?: string;
   isReplyingComment?: boolean;
+  showRepliesComment?: boolean;
+  showLoadMore?: boolean;
   onPressLoadMore?: (data: any) => void;
   onPressMarkSeenPost?: ()=> void;
   onPressReply?: (data: ICommentData, section?: any, index?: number) => void;
@@ -34,6 +37,8 @@ const CommentItem: React.FC<CommentItemProps> = ({
   commentParent,
   contentBackgroundColor,
   isReplyingComment = true,
+  showRepliesComment = true,
+  showLoadMore = true,
   onPressReply,
   onPressLoadMore,
   onPressMarkSeenPost,
@@ -69,7 +74,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
 
   const childCommentCount = commentData?.totalReply || 0;
 
-  const idLessThan = commentData?.child?.list?.[0]?.id;
+  const endCursor = commentData?.child?.meta?.endCursor;
   const showLoadPrevious = onPressLoadMore
     ? childCommentCount - 1 > 0
     : commentData?.child?.meta?.hasNextPage || false;
@@ -86,13 +91,19 @@ const CommentItem: React.FC<CommentItemProps> = ({
         contentBackgroundColor={contentBackgroundColor}
         onPressMarkSeenPost={onPressMarkSeenPost}
       />
-      {showLoadPrevious && (
+      {showRepliesComment && (
+        <RepliesComment
+          onPress={_onPressLoadMore}
+          commentData={commentData}
+        />
+      )}
+      {(showLoadPrevious && showLoadMore) && (
         <LoadMoreComment
           style={styles.childLoadMore}
           title={t('post:text_load_previous_replies')}
           postId={postId}
           commentId={commentData?.id}
-          idLessThan={idLessThan}
+          endCursor={endCursor}
           onPress={!!onPressLoadMore ? _onPressLoadMore : undefined}
         />
       )}
