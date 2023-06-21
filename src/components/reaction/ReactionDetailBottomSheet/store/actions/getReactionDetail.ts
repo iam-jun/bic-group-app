@@ -11,6 +11,7 @@ const getReactionDetail = (set, _get) => async (params: IParamGetReactionDetail)
       fullname: item?.actor?.fullname,
       username: item?.actor?.username,
       isDeactivated: item?.actor?.isDeactivated,
+      showingBadges: item?.actor?.showingBadges,
       reactionId: item?.id,
     }));
     set((state) => {

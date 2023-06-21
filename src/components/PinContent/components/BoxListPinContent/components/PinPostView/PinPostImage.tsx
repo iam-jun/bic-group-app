@@ -3,7 +3,7 @@ import { Image as RNImage, View, StyleSheet } from 'react-native';
 import UploadingImage from '~/beinComponents/UploadingImage';
 import { ResourceUploadType } from '~/interfaces/IUpload';
 import { IActivityDataImage } from '~/interfaces/IPost';
-import { borderRadius } from '~/theme/spacing';
+import spacing from '~/theme/spacing';
 
 const ASPECT_RATIO = 0.9;
 
@@ -40,10 +40,7 @@ const PinPostImage: React.FC<PinPostImageProps> = ({
     <View style={styles.container}>
       {renderBlurImageBackground()}
       <UploadingImage
-        style={[
-          styles.image,
-          !isVerticalFirst && styles.borderRadiusBottom,
-        ]}
+        style={styles.image}
         uploadType={uploadType}
         width={isVerticalFirst ? '46%' : '100%'}
         height="100%"
@@ -56,22 +53,19 @@ const PinPostImage: React.FC<PinPostImageProps> = ({
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+    marginBottom: spacing.margin.small,
   },
   image: {
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
-  },
-  borderRadiusBottom: {
-    borderBottomLeftRadius: borderRadius.large,
-    borderBottomRightRadius: borderRadius.large,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
   },
   blurImageBg: {
     position: 'absolute',
     top: 0,
     width: '100%',
     height: '100%',
-    borderBottomLeftRadius: borderRadius.large,
-    borderBottomRightRadius: borderRadius.large,
   },
 });
 
