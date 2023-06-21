@@ -1,6 +1,6 @@
-import groupApi from '~/api/GroupApi';
 import showToastError from '~/store/helper/showToastError';
 import { IUserAddWorkExperience } from '~/interfaces/IAuth';
+import userApi from '~/api/UserApi';
 
 const addWorkExperience = () => async (
   payload: IUserAddWorkExperience,
@@ -17,7 +17,7 @@ const addWorkExperience = () => async (
       endDate,
     } = payload;
 
-    await groupApi.addWorkExperience({
+    await userApi.addWorkExperience({
       company,
       titlePosition,
       location,

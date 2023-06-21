@@ -50,6 +50,7 @@ export interface ICreateArticleState extends IBaseState {
     ) => void;
     setChooseAudiences: (audiences: IAudience[]) => void;
     setSettings: (setting: IPostSetting) => void;
+    setWordCount: (wordCount: number) => void;
     scheduleArticle: () => void;
     putEditArticle: (params: IPayloadPutEditArticle) => void;
     createArticle: () => void;
@@ -79,13 +80,14 @@ const initialState: InitStateType<ICreateArticleState> = {
     },
     coverMedia: {},
     setting: {
-      canShare: true,
+      // canShare: true,
       canReact: true,
       canComment: true,
       isImportant: false,
       importantExpiredAt: null,
     },
     mentions: {},
+    wordCount: 0,
   },
   isDraft: false,
   chooseAudiences: [],
@@ -247,6 +249,11 @@ const useCreateArticle = (set, get) => ({
           ...setting,
         };
       }, 'setSettings CreateArticle');
+    },
+    setWordCount: (wordCount: number) => {
+      set((state: ICreateArticleState) => {
+        state.data.wordCount = wordCount;
+      }, 'setWordCount CreateArticle');
     },
     scheduleArticle: scheduleArticle(set, get),
     putEditArticle: putEditArticle(set, get),

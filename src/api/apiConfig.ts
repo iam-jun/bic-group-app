@@ -8,10 +8,11 @@ const apiUrls = {
   NOTIFICATION: `${getEnv('BEIN_API')}/v1/notification/`,
   UPLOAD: `${getEnv('BEIN_API')}/v1/upload/`,
   MAINTENANCE: `${getEnv('BEIN_API')}/v1/maintenance-info`,
+  USER: `${getEnv('BEIN_API')}/v1/user/`,
 };
 
 export const apiVersionId = {
-  content: '1.3.0',
+  content: '1.4.0',
   group: undefined,
   user: undefined,
   notification: undefined,
@@ -41,6 +42,10 @@ export const apiProviders = {
   beinMaintenance: {
     url: apiUrls.MAINTENANCE,
     name: 'BeinMaintenance',
+  },
+  beinUser: {
+    url: apiUrls.USER,
+    name: 'BeinUser',
   },
 };
 

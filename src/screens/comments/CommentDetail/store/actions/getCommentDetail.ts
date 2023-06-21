@@ -28,7 +28,8 @@ const getCommentDetail = (_set, _get) => async (payload: IPayloadGetCommentsById
       const responeCommentDetail = await streamApi.getCommentDetail(commentId, payload.params as any);
       if (responeCommentDetail?.data) {
         response = responeCommentDetail.data;
-        const { actor, list } = response || {};
+        const list = response?.list || [];
+        const { actor } = list[0] || {};
         shouldAddToComments({ actor, list });
       }
     }
@@ -53,6 +54,7 @@ const getCommentDetail = (_set, _get) => async (payload: IPayloadGetCommentsById
 
 const shouldAddToComments = (params: { actor: any; list: any }) => {
   const { actor, list } = params || {};
+
   if (!!actor && list?.length > 0) {
     const comment = list[0];
     const sortedComments = sortComments(comment?.child?.list || []);

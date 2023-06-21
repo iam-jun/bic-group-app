@@ -30,16 +30,21 @@ const getArticleDetail = (set, get) => async (payload: IPayloadGetArticleDetail)
       }
     } else {
       const params = {
-        withComment: !isAdmin,
-        ...(!isAdmin && { commentLimit: 10 }),
+        withComment: false,
       } as IParamGetArticleDetail;
 
       const responeArticleDetail = isAdmin
         ? await streamApi.getArticleDetailByAdmin(id, params)
-        : await streamApi.getArticleDetail(id, params);
-
-      if (responeArticleDetail?.data) {
-        response = responeArticleDetail.data;
+        : await streamApi.getArticleDetail(id);
+      const responseComments = await streamApi.getCommentsByPostId({ postId: id, order: 'DESC' });
+      if (responeArticleDetail?.data && responseComments?.data) {
+        response = {
+          ...responeArticleDetail.data,
+          comments: {
+            list: responseComments.data?.list,
+            meta: responseComments.data?.meta,
+          },
+        };
       }
     }
 

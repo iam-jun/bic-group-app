@@ -4,8 +4,8 @@ import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import Menu from './index';
 import * as navigationHook from '~/hooks/navigation';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
-import groupApi from '~/api/GroupApi';
 import { responseGetUserProfile } from './UserProfile/store/__mocks__/data';
+import userApi from '~/api/UserApi';
 
 describe('Menu screen', () => {
   it('should render correctly', () => {
@@ -16,7 +16,7 @@ describe('Menu screen', () => {
       .mockImplementation(() => ({ rootNavigation } as any));
 
     jest
-      .spyOn(groupApi, 'getUserProfile')
+      .spyOn(userApi, 'getUserProfile')
       .mockImplementation(() => Promise.resolve(responseGetUserProfile) as any);
 
     const rendered = renderWithRedux(<Menu />);

@@ -614,6 +614,7 @@
     "text_select_cover": "Chọn ảnh bìa",
     "text_search_category_placeholder": "Tìm lựa chọn của bạn...",
     "text_edit_article_success": "Cập nhật bài viết thành công",
+    "text_article_saved_to_draft": "Đã lưu bài viết vào Bản nháp",
     "menu": {
       "edit": "Chỉnh sửa bài viết",
       "copy_link": "Sao chép đường dẫn",
@@ -662,7 +663,10 @@
     "successful_schedule": "Đặt lịch thành công",
     "text_delete_article_success": "Bài viết của bạn đã được xoá",
     "paste_image_error": "Tải lên không thành công. Vui lòng tải lên hình ảnh bằng thanh công cụ.",
-    "text_selecting_will_be_added_to": "Bài viết của bạn sẽ được thêm vào"
+    "text_selecting_will_be_added_to": "Bài viết của bạn sẽ được thêm vào",
+    "reading_time": "Thời gian đọc",
+    "about_time": "khoảng",
+    "minute": "phút"
   },
   "post": {
     "news_feed": "News Feed",
@@ -678,6 +682,7 @@
     "label_seen_by": "Quan tâm bởi ",
     "button_like": "Thích",
     "button_reply": "Trả lời",
+    "button_reply_count": "{{count}} trả lời",
     "button_react": "Tương tác",
     "button_comment": "Bình luận",
     "button_image": "Ảnh",
@@ -1385,5 +1390,23 @@
     "reorder_pinned": "Sắp xếp bài ghim",
     "drag_and_drop_to_reorder_pinned": "Kéo thả để sắp xếp bài ghim",
     "check_all": "Chọn tất cả"
+  },
+  "user": {
+    "user_tab_types": {
+      "title_about": "Giới thiệu",
+      "title_badge_collection": "Bộ sưu tập huy hiệu"
+    },
+    "empty_badge_collection": {
+      "title": "Bạn chưa có huy hiệu nào",
+      "description": "Vui lòng tham gia cộng đồng hoặc nhóm để nhận huy hiệu!"
+    },
+    "showing_badges": {
+      "title": "Huy hiệu đang hiển thị",
+      "description": "Huy hiệu bạn chọn hiển thị trên hồ sơ của mình"
+    },
+    "owned_badges": {
+      "title": "Danh sách huy hiệu",
+      "description": "Huy hiệu bạn nhận được từ các cộng đồng bạn đã tham gia"
+    }
   }
 }

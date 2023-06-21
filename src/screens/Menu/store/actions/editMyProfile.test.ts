@@ -1,12 +1,11 @@
 import { act, renderHook } from '~/test/testUtils';
 import useMenuController from '../index';
-import groupApi from '~/api/GroupApi';
 import { GENDER_TYPE, RELATIONSHIP_TYPE } from '~/interfaces/IEditUser';
 import { editProfileResponse } from '../__mocks__/data';
 import useCommonController from '~/screens/store';
 import useModalStore from '~/store/modal';
-import { IToastMessage } from '~/interfaces/common';
-import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import * as showToastSuccess from '~/store/helper/showToastSuccess';
+import userApi from '~/api/UserApi';
 
 const fakeProfile = {
   id: 'test_id',
@@ -24,6 +23,8 @@ describe('editMyProfile action', () => {
     jest.useRealTimers(); // you must add this
   });
 
+  const spyShowToastSuccess = jest.spyOn(showToastSuccess, 'default');
+
   it('should edit successfully with full payload', () => {
     const fakeCallback = jest.fn();
     const payload = {
@@ -35,7 +36,7 @@ describe('editMyProfile action', () => {
     };
 
     const spyCallApi = jest
-      .spyOn(groupApi, 'editMyProfile')
+      .spyOn(userApi, 'editMyProfile')
       .mockImplementation(() => Promise.resolve(editProfileResponse) as any);
 
     const setMyProfile = jest.fn();
@@ -45,15 +46,6 @@ describe('editMyProfile action', () => {
     const spyCommonController = jest
       .spyOn(useCommonController, 'getState')
       .mockImplementation(() => ({ actions } as any));
-
-    const toastMessage: IToastMessage = {
-      content: editProfileResponse.meta.message,
-      type: ToastType.SUCCESS,
-    };
-    const showToast = jest.fn();
-    jest
-      .spyOn(useModalStore, 'getState')
-      .mockImplementation(() => ({ actions: { showToast } } as any));
 
     jest.useFakeTimers();
 
@@ -68,8 +60,122 @@ describe('editMyProfile action', () => {
     expect(spyCallApi).toBeCalled();
     expect(spyCommonController).toBeCalled();
 
-    expect(showToast).toBeCalledWith(toastMessage);
+    expect(spyShowToastSuccess).toBeCalled();
     expect(fakeCallback).toBeCalled();
+  });
+
+  it('should edit successfully with full editFieldToastMessage = text', () => {
+    const fakeCallback = jest.fn();
+    const payload = {
+      data: {
+        id: fakeProfile.id,
+        fullname: fakeProfile.fullname,
+      },
+      editFieldToastMessage: 'toast test',
+      callback: fakeCallback,
+    };
+
+    const spyCallApi = jest
+      .spyOn(userApi, 'editMyProfile')
+      .mockImplementation(() => Promise.resolve(editProfileResponse) as any);
+
+    const setMyProfile = jest.fn();
+    const actions = {
+      setMyProfile,
+    };
+    const spyCommonController = jest
+      .spyOn(useCommonController, 'getState')
+      .mockImplementation(() => ({ actions } as any));
+
+    jest.useFakeTimers();
+
+    const { result } = renderHook(() => useMenuController((state) => state));
+    act(() => {
+      result.current.actions.editMyProfile(payload);
+    });
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    expect(spyCallApi).toBeCalled();
+    expect(spyCommonController).toBeCalled();
+
+    expect(spyShowToastSuccess).toBeCalled();
+    expect(fakeCallback).toBeCalled();
+  });
+
+  it('should edit avatar successfully', () => {
+    const payload = {
+      data: {
+        id: fakeProfile.id,
+        fullname: fakeProfile.fullname,
+        avatar: 'fakeLink',
+      },
+    };
+
+    const spyCallApi = jest
+      .spyOn(userApi, 'editMyProfile')
+      .mockImplementation(() => Promise.resolve(editProfileResponse) as any);
+
+    const setMyProfile = jest.fn();
+    const actions = {
+      setMyProfile,
+    };
+    const spyCommonController = jest
+      .spyOn(useCommonController, 'getState')
+      .mockImplementation(() => ({ actions } as any));
+
+    jest.useFakeTimers();
+
+    const { result } = renderHook(() => useMenuController((state) => state));
+    act(() => {
+      result.current.actions.editMyProfile(payload);
+    });
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    expect(spyCallApi).toBeCalled();
+    expect(spyCommonController).toBeCalled();
+
+    expect(spyShowToastSuccess).toBeCalled();
+  });
+
+  it('should edit background successfully', () => {
+    const payload = {
+      data: {
+        id: fakeProfile.id,
+        fullname: fakeProfile.fullname,
+        backgroundImgUrl: 'fakeLink',
+      },
+    };
+
+    const spyCallApi = jest
+      .spyOn(userApi, 'editMyProfile')
+      .mockImplementation(() => Promise.resolve(editProfileResponse) as any);
+
+    const setMyProfile = jest.fn();
+    const actions = {
+      setMyProfile,
+    };
+    const spyCommonController = jest
+      .spyOn(useCommonController, 'getState')
+      .mockImplementation(() => ({ actions } as any));
+
+    jest.useFakeTimers();
+
+    const { result } = renderHook(() => useMenuController((state) => state));
+    act(() => {
+      result.current.actions.editMyProfile(payload);
+    });
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    expect(spyCallApi).toBeCalled();
+    expect(spyCommonController).toBeCalled();
+
+    expect(spyShowToastSuccess).toBeCalled();
   });
 
   it('should should edit profile throw error:', () => {
@@ -89,7 +195,7 @@ describe('editMyProfile action', () => {
       .mockImplementation(() => ({ actions } as any));
 
     const spy = jest
-      .spyOn(groupApi, 'editMyProfile')
+      .spyOn(userApi, 'editMyProfile')
       .mockImplementation(() => Promise.reject(error) as any);
 
     jest.useFakeTimers();
@@ -131,7 +237,7 @@ describe('editMyProfile action', () => {
     });
 
     const spy = jest
-      .spyOn(groupApi, 'editMyProfile')
+      .spyOn(userApi, 'editMyProfile')
       .mockImplementation(() => Promise.reject(error) as any);
 
     jest.useFakeTimers();

@@ -16,7 +16,6 @@ interface IMenuController extends IBaseState{
     editMyProfile: (payload: {
       isVerified?: boolean;
       data: IUserEdit;
-      editFieldToastMessage?: string;
       callback?: () => void;
   }) => void;
     setSelectedWorkItem: (payload: IUserWorkExperience | null) => void;

@@ -653,6 +653,7 @@
     "text_select_cover": "Select cover",
     "text_search_category_placeholder": "Select your options...",
     "text_edit_article_success": "Article updated successfully",
+    "text_article_saved_to_draft": "Article saved to Draft",
     "menu": {
       "edit": "Edit Article",
       "copy_link": "Copy Link",
@@ -701,7 +702,10 @@
     "successful_schedule": "Successful Schedule",
     "text_delete_article_success": "Your article has been deleted",
     "paste_image_error": "Upload failed. Please upload images using the toolbar.",
-    "text_selecting_will_be_added_to": "Your article will be added to"
+    "text_selecting_will_be_added_to": "Your article will be added to",
+    "reading_time": "Reading time",
+    "about_time": "about",
+    "minute": "min"
   },
   "post": {
     "news_feed": "News Feed",
@@ -717,6 +721,7 @@
     "label_seen_by": "Interested by ",
     "button_like": "Like",
     "button_reply": "Reply",
+    "button_reply_count": "{{count}} Replies",
     "button_react": "React",
     "button_comment": "Comment",
     "button_image": "Image",
@@ -1444,5 +1449,23 @@
     "reorder_pinned": "Reorder pinned",
     "drag_and_drop_to_reorder_pinned": "Drag and drop to reorder pinned",
     "check_all": "Check all"
+  },
+  "user": {
+    "user_tab_types": {
+      "title_about": "About",
+      "title_badge_collection": "Badge Collection"
+    },
+    "empty_badge_collection": {
+      "title": "You don't have any badges yet",
+      "description": "Please join communities or groups to get badges!"
+    },
+    "showing_badges": {
+      "title": "Showing Badges",
+      "description": "The badges you choose to show on your profile"
+    },
+    "owned_badges": {
+      "title": "Badges List",
+      "description": "Badges you received from the communities you joined"
+    }
   }
 }

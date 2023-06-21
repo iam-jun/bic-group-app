@@ -14,6 +14,7 @@ const postsSelector = {
   getReactionCounts: (id: string) => (state: IPostsState) => state?.posts?.[id]?.reactionsCount,
   getCommentsCount: (id: string) => (state: IPostsState) => state?.posts?.[id]?.commentsCount,
   getCommentOnlyCount: (id: string) => (state: IPostsState) => state?.posts?.[id]?.comments?.meta?.hasNextPage,
+  getCommentEndCursor: (id: string) => (state: IPostsState) => state?.posts?.[id]?.comments?.meta?.endCursor,
   getCommentList: (id: string) => (state: IPostsState) => state?.posts?.[id]?.comments?.list,
   getStatus: (id: string) => (state: IPostsState) => state?.posts?.[id]?.status,
   getDeleted: (id: string) => (state: IPostsState) => state?.posts?.[id]?.deleted,

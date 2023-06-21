@@ -1,5 +1,5 @@
 import { Auth } from 'aws-amplify';
-import { groupsApiConfig } from '~/api/GroupApi';
+import { userApiConfig } from '~/api/UserApi';
 import useAuthController from '~/screens/auth/store';
 import { amplifyUser, authUser } from '~/test/mock_data/auth';
 import { act, renderHook } from '~/test/testUtils';
@@ -11,7 +11,7 @@ describe('handleAuthEvent', () => {
     jest.useFakeTimers();
 
     const response = { data: { data: { id: 'test' } } };
-    jest.spyOn(groupsApiConfig, 'getUserProfile').mockImplementation(
+    jest.spyOn(userApiConfig, 'getUserProfile').mockImplementation(
       () => Promise.resolve(response) as any,
     );
 

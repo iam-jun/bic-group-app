@@ -23,7 +23,7 @@ describe('ArticleView Component', () => {
       <ArticleView
         id={article.id}
         article={article}
-        firstCommentId=""
+        endCursor="123"
       />, store,
     );
     expect(rendered).toMatchSnapshot();
@@ -44,7 +44,7 @@ describe('ArticleView Component', () => {
       <ArticleView
         id={article.id}
         article={article}
-        firstCommentId=""
+        endCursor="123"
       />, store,
     );
 
@@ -67,7 +67,7 @@ describe('ArticleView Component', () => {
       <ArticleView
         id={article.id}
         article={article}
-        firstCommentId=""
+        endCursor="123"
       />, store,
     );
 

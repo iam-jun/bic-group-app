@@ -8,8 +8,8 @@ import {
 } from '~/test/testUtils';
 import RequestVerifyEmailModal from './RequestVerifyEmailModal';
 import useVerifyEmailController from './store';
-import groupApi from '~/api/GroupApi';
 import useModalStore from '~/store/modal';
+import userApi from '~/api/UserApi';
 
 describe('RequestVerifyEmailModal Component', () => {
   const email = 'test@evol.vn';
@@ -47,7 +47,7 @@ describe('RequestVerifyEmailModal Component', () => {
       data: {},
       meta: {},
     };
-    const spy = jest.spyOn(groupApi, 'resendVerificationEmail').mockImplementation(
+    const spy = jest.spyOn(userApi, 'resendVerificationEmail').mockImplementation(
       () => Promise.resolve(response) as any,
     );
 

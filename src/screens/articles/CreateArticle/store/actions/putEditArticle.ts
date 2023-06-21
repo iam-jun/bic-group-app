@@ -12,7 +12,7 @@ import { PostType } from '~/interfaces/IPost';
 
 const navigation = withNavigation(rootNavigationRef);
 
-const putEditArticle = (set, _get) => async (params: IPayloadPutEditArticle) => {
+const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
   const {
     articleId, data, isNavigateBack = true, isShowToast = true, isShowLoading = true, onSuccess,
   } = params || {};
@@ -23,6 +23,7 @@ const putEditArticle = (set, _get) => async (params: IPayloadPutEditArticle) => 
   }
 
   try {
+    const { isDraft } = get();
     const categories = data?.categories?.map?.((category) => category?.id);
     const series = data?.series?.map?.((item) => item?.id);
     const tags = data?.tags?.map?.((item) => item?.id);
@@ -49,7 +50,7 @@ const putEditArticle = (set, _get) => async (params: IPayloadPutEditArticle) => 
       state.loading = false;
     }, 'putEditArticleSuccess');
 
-    if (isShowToast) {
+    if (!isDraft && isShowToast) {
       showToastSuccess(response, 'article:text_edit_article_success');
     }
     onSuccess?.();

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ExtendedTheme, useTheme, useIsFocused } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
@@ -37,7 +38,9 @@ const SeriesDetail = ({ route }: any) => {
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const { showAlert } = useModalStore((state) => state.actions);
 
-  const series = usePostsStore(useCallback(postsSelector.getPost(seriesId, {}), [seriesId]));
+  const series = usePostsStore(
+    useCallback(postsSelector.getPost(seriesId, {}), [seriesId]),
+  );
 
   const {
     actor, id, deleted, audience, items = [],
@@ -50,7 +53,9 @@ const SeriesDetail = ({ route }: any) => {
   const isActor = actor?.id == userId;
 
   useEffect(() => {
-    if (isMounted) { actions.getSeriesDetail(seriesId); }
+    if (isMounted) {
+      actions.getSeriesDetail(seriesId);
+    }
   }, [isMounted, seriesId]);
 
   useEffect(() => {
@@ -67,13 +72,16 @@ const SeriesDetail = ({ route }: any) => {
     setIsOpenSearch(false);
   };
 
-  const { shouldHavePermissionOnSomeAudience } = useMyPermissionsStore((state) => state.actions);
+  const { shouldHavePermissionOnSomeAudience } = useMyPermissionsStore(
+    (state) => state.actions,
+  );
 
   const canDeleteOwnPost = shouldHavePermissionOnSomeAudience(
     audience?.groups,
     PermissionKey.CRUD_POST_ARTICLE,
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleError = (listIdAudiences: string[]) => {
     if (listIdAudiences?.length <= 0 || audience?.groups?.length <= 0) {
       return;
@@ -117,10 +125,18 @@ const SeriesDetail = ({ route }: any) => {
   };
 
   const handleConfirmDelete = () => {
-    actions.deleteSeries(id, handleError);
+    actions.deleteSeries(
+      id,
+      //  handleError
+    );
   };
 
-  const { showMenu } = useSeriesMenu(series, isActor, true, handleConfirmDelete);
+  const { showMenu } = useSeriesMenu(
+    series,
+    isActor,
+    true,
+    handleConfirmDelete,
+  );
 
   if (deleted) {
     return (
@@ -167,8 +183,7 @@ const SeriesDetail = ({ route }: any) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.container}
       />
-      {isActor
-        && (
+      {isActor && (
         <AddArticles
           seriesId={id}
           audience={audience}
@@ -177,7 +192,7 @@ const SeriesDetail = ({ route }: any) => {
           onClose={onCloseSearch}
           placeholder={t('article:search_article_placeholder')}
         />
-        )}
+      )}
     </View>
   );
 };
