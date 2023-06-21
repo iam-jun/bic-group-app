@@ -65,9 +65,9 @@ const MembershipApproval: FC<Props> = (props) => {
       title: t('settings:membership_policy_settings:alert_turn_off_membership_approval:title'),
       content: t('settings:membership_policy_settings:alert_turn_off_membership_approval:description'),
       cancelBtn: true,
-      cancelLabel: t('settings:membership_policy_settings:alert_turn_off_membership_approval:turn_off'),
-      onCancel: _onPressTurnOff,
-      confirmLabel: t('common:btn_cancel'),
+      cancelLabel: t('common:btn_cancel'),
+      onConfirm: _onPressTurnOff,
+      confirmLabel: t('settings:membership_policy_settings:alert_turn_off_membership_approval:turn_off'),
     };
     showAlert(alertPayload);
   };
