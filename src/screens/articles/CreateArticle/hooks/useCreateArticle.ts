@@ -36,6 +36,7 @@ import useModalStore from '~/store/modal';
 import { PermissionKey } from '~/constants/permissionScheme';
 import { PostStatus, PostType } from '~/interfaces/IPost';
 import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 interface IHandleSaveOptions {
   isShowLoading?: boolean;
@@ -74,7 +75,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     (state) => state.actions,
   );
 
-  const { showToast, showAlert } = useModalStore((state) => state.actions);
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const [isShowToastAutoSave, setShowToastAutoSave] = useState<boolean>(false);
 
@@ -184,7 +185,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     const initData = {
       isImportant: (!!notExpired || isNever) && settings?.isImportant,
       importantExpiredAt: !!notExpired ? settings?.importantExpiredAt : null,
-      canShare: settings?.canShare,
+      // canShare: settings?.canShare,
       canReact: settings?.canReact,
       canComment: settings?.canComment,
     };
@@ -387,12 +388,12 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
 
     const payload: IPayloadPublishDraftArticle = {
       draftArticleId: data.id,
-      onSuccess: () => {
-        showToast({ content: 'post:draft:text_draft_article_published' });
+      onSuccess: (res) => {
         goToArticleDetail();
         useScheduleArticlesStore
           .getState()
           .actions.getScheduleArticles({ isRefresh: true });
+        showToastSuccess(res);
       },
       onError: (error) => validateSeriesTagsActions.handleSeriesTagsError({
         error,

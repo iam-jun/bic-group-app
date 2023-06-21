@@ -17,9 +17,7 @@ interface ICommunityController {
     joinCommunity: (payload: IRequestJoinCommunity) => void;
     cancelJoinCommunity: (id: string, name: string) => void;
     updateCommunityJoinSetting: (payload: IRequestUpdateCommunityJoinSetting) => void;
-    editCommunityDetail: (
-      data: IGroupDetailEdit, editFieldName?: string, callback?: () => void
-    ) => Promise<void>;
+    editCommunityDetail: (data: IGroupDetailEdit, callback?: () => void) => Promise<void>;
     assignCommunityAdmin: (id: string, userId: string) => void;
     revokeCommunityAdmin: (id: string, userId: string) => void;
   }

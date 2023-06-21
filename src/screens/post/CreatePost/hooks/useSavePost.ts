@@ -260,7 +260,7 @@ export const useSavePost = () => {
       replaceWithDetail = true,
       isToastAutoSave,
       isPublish = true,
-      msgSuccess,
+      isCreatingNewPost,
     } = params;
     const data = prepareData();
     const newPayload: IPayloadPutEditPost = {
@@ -269,8 +269,8 @@ export const useSavePost = () => {
       disableNavigate,
       replaceWithDetail,
       onRetry: () => savePost(params),
-      msgSuccess,
       isPublish,
+      isCreatingNewPost,
     };
     try {
       if (isToastAutoSave) {

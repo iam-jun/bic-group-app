@@ -1,7 +1,6 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import i18next from 'i18next';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -39,12 +38,11 @@ const EditPrivacy = (props: any) => {
 
   const onPressSave = () => {
     const data = { id, rootGroupId, privacy: selectedPrivacy };
-    const editFieldName = i18next.t('common:text_privacy');
 
     if (type === 'group') {
-      groupActions.editGroupDetail(data, editFieldName, onNavigateBack);
+      groupActions.editGroupDetail(data, onNavigateBack);
     } else {
-      controller.editCommunityDetail(data, editFieldName, onNavigateBack);
+      controller.editCommunityDetail(data, onNavigateBack);
     }
   };
 

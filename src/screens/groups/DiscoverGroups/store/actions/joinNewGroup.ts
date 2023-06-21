@@ -2,9 +2,8 @@ import i18next from 'i18next';
 import groupApi from '~/api/GroupApi';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import IDiscoverGroupsState from '../Interface';
-import { IToastMessage } from '~/interfaces/common';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
-import showToast from '~/store/helper/showToast';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 import showToastError from '~/store/helper/showToastError';
 import APIErrorCode from '~/constants/apiErrorCode';
 import useModalStore from '~/store/modal';
@@ -26,15 +25,13 @@ const joinNewGroup = (set, get) => async (groupId: string, answers?: MembershipA
       ...currentState.items[groupId],
       joinStatus,
     };
+
     set((state:IDiscoverGroupsState) => {
       state.items[groupId] = { ...currentItem };
     }, 'joinNewGroupSuccess');
     useGroupDetailStore.getState().actions.getGroupDetail({ groupId });
 
-    const toastMessage: IToastMessage = {
-      content: response?.meta?.message || 'common:text_success_message',
-    };
-    showToast(toastMessage);
+    showToastSuccess(response);
   } catch (error) {
     if (error?.code === APIErrorCode.Group.MISSIING_MEMBERSHIP_ANSWERS) {
       setTimeout(

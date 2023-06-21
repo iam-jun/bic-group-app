@@ -1,8 +1,6 @@
-import i18next from 'i18next';
-import { IToastMessage } from '~/interfaces/common';
 import useCommunitiesStore from '~/store/entities/communities';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 import showToastError from '~/store/helper/showToastError';
-import showToast from '~/store/helper/showToast';
 import { ICommunityMemberState } from '../index';
 import groupApi from '~/api/GroupApi';
 import { IPayloadApproveAllCommunityMemberRequest } from '~/interfaces/ICommunity';
@@ -10,7 +8,7 @@ import { IPayloadApproveAllCommunityMemberRequest } from '~/interfaces/ICommunit
 const approveAllCommunityMemberRequests = (get) => async (
   payload: IPayloadApproveAllCommunityMemberRequest,
 ) => {
-  const { communityId, groupId, total } = payload || {};
+  const { communityId, groupId } = payload || {};
   const { actions }: ICommunityMemberState = get();
   const { actions: communitiesActions } = useCommunitiesStore.getState();
 
@@ -21,16 +19,12 @@ const approveAllCommunityMemberRequests = (get) => async (
     // to show Empty screen component
     actions.setCommunityMemberRequests({ loading: false });
 
-    await groupApi.approveAllGroupMemberRequests(groupId);
+    const response = await groupApi.approveAllGroupMemberRequests(groupId);
 
     // to update userCount
     communitiesActions.getCommunity(communityId);
 
-    const toastMessage: IToastMessage = {
-      // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
-      content: `${i18next.t('groups:text_approved_all')}`.replace('{0}', total.toString()),
-    };
-    showToast(toastMessage);
+    showToastSuccess(response);
   } catch (e) {
     console.error('approveAllCommunityMemberRequest: ', e);
     showToastError(e);

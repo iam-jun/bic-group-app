@@ -1,4 +1,3 @@
-import i18next from 'i18next';
 import { IGroupImageUpload, FieldNameImageUpload } from '~/interfaces/IGroup';
 import useCommunityController from '~/screens/communities/store';
 import showToastError from '~/store/helper/showToastError';
@@ -28,13 +27,11 @@ const uploadImage = (_set, get) => async (payload: IGroupImageUpload) => {
     const idFile = uploadedFiles[file.filename]?.id;
 
     const editData = { id, rootGroupId, [fieldName]: idFile };
-    const editFieldName
-      = fieldName === FieldNameImageUpload.ICON ? i18next.t('common:text_avatar') : i18next.t('common:text_cover');
 
     if (destination === 'group') {
-      await editGroupDetail(editData, editFieldName);
+      await editGroupDetail(editData);
     } else {
-      await actions.editCommunityDetail(editData, editFieldName);
+      await actions.editCommunityDetail(editData);
     }
 
     updateLoadingImageState({

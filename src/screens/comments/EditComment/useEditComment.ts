@@ -30,10 +30,9 @@ const navigation = withNavigation?.(rootNavigationRef);
 export interface IUseEditComment {
   commentId: string;
   mentionInputRef: any;
-  postId: string;
 }
 
-const useEditComment = ({ commentId, mentionInputRef, postId }: IUseEditComment) => {
+const useEditComment = ({ commentId, mentionInputRef }: IUseEditComment) => {
   const { t } = useBaseHook();
 
   const comment: ICommentData = useCommentsStore(useCallback(commentsSelector.getComment(commentId), [commentId]));
@@ -257,7 +256,6 @@ const useEditComment = ({ commentId, mentionInputRef, postId }: IUseEditComment)
         id: commentId,
         comment,
         data: newData,
-        postId,
       } as IPayloadPutEditComment;
       editController.editComment(payload);
     }

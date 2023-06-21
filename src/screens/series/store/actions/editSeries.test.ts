@@ -4,6 +4,7 @@ import useModalStore from '~/store/modal';
 import { mockSeries, mockSeriesRequest } from '~/test/mock_data/series';
 import { act, renderHook } from '~/test/testUtils';
 import useSeriesStore, { ISeriesState } from '../index';
+import * as showToastSuccess from '~/store/helper/showToastSuccess';
 
 describe('editSeries', () => {
   it('should do nothing if id undefined', () => {
@@ -40,9 +41,7 @@ describe('editSeries', () => {
     };
     const spyPostStore = jest.spyOn(usePostsStore, 'getState').mockImplementation(() => ({ actions } as any));
 
-    const showToast = jest.fn();
-    const toastActions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions: toastActions } as any));
+    const spyShowToastSuccess = jest.spyOn(showToastSuccess, 'default');
 
     useSeriesStore.setState((state: ISeriesState) => {
       state.data = mockSeriesRequest as any;
@@ -66,7 +65,7 @@ describe('editSeries', () => {
     expect(result.current.loading).toBe(false);
     expect(spyPostStore).toBeCalled();
     expect(addToPosts).toBeCalledWith({ data: mockSeries });
-    expect(showToast).toBeCalledWith({ content: 'series:text_edit_series_success' });
+    expect(spyShowToastSuccess).toBeCalled();
   });
 
   it('should put edit series throw error and should show toast', () => {

@@ -1,8 +1,8 @@
 import { IPayloadAddToAllPost, IPayloadRemoveAudiencesOfPost } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import streamApi from '~/api/StreamApi';
-import showToast from '~/store/helper/showToast';
 import showToastError from '~/store/helper/showToastError';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const removeAudiencesFromPost = () => async (payload: IPayloadRemoveAudiencesOfPost) => {
   const { id, listAudiences } = payload || {};
@@ -24,7 +24,7 @@ const removeAudiencesFromPost = () => async (payload: IPayloadRemoveAudiencesOfP
     if (response?.data) {
       const post = response?.data;
       usePostsStore.getState().actions.addToPosts({ data: post } as IPayloadAddToAllPost);
-      showToast({ content: 'post:text_deleted_audiences' });
+      showToastSuccess(response);
     }
   } catch (e) {
     console.error('\x1b[31m🐣️ action removeAudiencesFromPost error: ', e, '\x1b[0m');
