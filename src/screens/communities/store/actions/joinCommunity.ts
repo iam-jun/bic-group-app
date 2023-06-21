@@ -12,10 +12,10 @@ import showToastSuccess from '~/store/helper/showToastSuccess';
 const joinCommunity
   = (_set, _get) => async (payload: IRequestJoinCommunity) => {
     const {
-      communityId, membershipAnswers = [],
+      rootGroupId, communityId, membershipAnswers = [],
     } = payload;
     try {
-      const response = await groupApi.joinCommunity(communityId, { membershipAnswers });
+      const response = await groupApi.joinCommunity(rootGroupId, { membershipAnswers });
       const joinStatus = response?.data?.joinStatus;
       const hasRequested = joinStatus === GroupJoinStatus.REQUESTED;
       const userCount = useCommunitiesStore.getState().data?.[communityId]?.userCount || 0;
@@ -33,7 +33,7 @@ const joinCommunity
       console.error('joinCommunity catch', error);
       if (
         error?.code === APIErrorCode.Group.MISSIING_MEMBERSHIP_ANSWERS
-        || error?.code === APIErrorCode.Common.UNAUTHORIZED
+        || error?.code === APIErrorCode.Common.FORBIDDEN
       ) {
         setTimeout(() => {
           useModalStore.getState().actions.showAlert({

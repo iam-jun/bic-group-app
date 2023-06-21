@@ -374,9 +374,9 @@ export const groupsApiConfig = {
     url: `${provider.url}communities/${communityId}/groups/discover`,
     params,
   }),
-  joinCommunity: (communityId: string, params?: MembershipAnswerRequestParam): HttpApiRequestConfig => ({
+  joinCommunity: (rootGroupId: string, params?: MembershipAnswerRequestParam): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/join`,
+    url: `${provider.url}groups/${rootGroupId}/join`,
     method: 'post',
     data: { ...params },
   }),
@@ -385,9 +385,9 @@ export const groupsApiConfig = {
     url: `${provider.url}communities/${communityId}/cancel-joining-request`,
     method: 'put',
   }),
-  leaveCommunity: (communityId: string): HttpApiRequestConfig => ({
+  leaveCommunity: (rootGroupId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/leave`,
+    url: `${provider.url}groups/${rootGroupId}/leave`,
     method: 'post',
   }),
   getCommunities: (params?: IParamGetCommunities): HttpApiRequestConfig => ({
@@ -703,13 +703,13 @@ const groupApi = {
     communityId,
     params,
   ),
-  joinCommunity: (communityId: string, params?: MembershipAnswerRequestParam) => withHttpRequestPromise(
-    groupsApiConfig.joinCommunity, communityId, params,
+  joinCommunity: (rootGroupId: string, params?: MembershipAnswerRequestParam) => withHttpRequestPromise(
+    groupsApiConfig.joinCommunity, rootGroupId, params,
   ),
   cancelJoinCommunity: (communityId: string) => withHttpRequestPromise(
     groupsApiConfig.cancelJoinCommunity, communityId,
   ),
-  leaveCommunity: (communityId: string) => withHttpRequestPromise(groupsApiConfig.leaveCommunity, communityId),
+  leaveCommunity: (rootGroupId: string) => withHttpRequestPromise(groupsApiConfig.leaveCommunity, rootGroupId),
   getCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getCommunities, params),
   getJoinedAllGroups: (params: IParamsGetJoinedAllGroups) => withHttpRequestPromise(
     groupsApiConfig.getJoinedAllGroups, params,

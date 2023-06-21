@@ -145,6 +145,7 @@ export interface MembershipAnswerRequestParam {
 }
 
 export interface IRequestJoinCommunity {
+  rootGroupId: string,
   communityId: string,
   communityName: string,
   membershipAnswers?: MembershipAnswerRequest[],
@@ -155,4 +156,8 @@ export interface IRequestUpdateCommunityJoinSetting {
   groupId: string,
   isJoinApproval?: boolean
   isInvitedOnly?: boolean
+}
+export interface IRequestLeaveCommunity {
+  rootGroupId: string,
+  communityId: string,
 }
