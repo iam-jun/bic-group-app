@@ -28,6 +28,7 @@ const getOwnedBadges = (set, _get) => async () => {
 
     set((state: IUserBadgesState) => {
       state.ownBadges = ownedBadges;
+      state.dataSearch = ownedBadges;
       state.showingBadges = choosingBadges;
       state.choosingBadges = choosingBadges;
       state.loading = false;

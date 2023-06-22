@@ -24,12 +24,10 @@ import useCommonController from '~/screens/store';
 import Tab from '~/baseComponents/Tab';
 import UserInfo from './fragments/UserInfo';
 import BadgeCollection from './fragments/BadgeCollection';
-import Button from '~/baseComponents/Button';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
 import useUserBadge from './fragments/BadgeCollection/store';
 import UserHeader from './fragments/UserHeader';
-import { IUserBadge } from '~/interfaces/IEditUser';
 import { USER_TABS_TYPES } from './constants';
+import SearchBadgeModal from './fragments/SearchBadgeModal';
 
 export const USER_TABS = [
   { id: USER_TABS_TYPES.USER_ABOUT, text: 'user:user_tab_types:title_about' },
@@ -44,11 +42,8 @@ const UserProfile = (props: any) => {
   const error = useUserProfileStore((state) => state.error);
   const userProfileActions = useUserProfileStore((state) => state.actions);
   const reset = useUserProfileStore((state) => state.reset);
-  const badgeActions = useUserBadge((state) => state.actions);
-  const isEditingBadge = useUserBadge((state) => state.isEditing);
   const resetUserBadge = useUserBadge((state) => state.reset);
   const showingBadges = useUserBadge((state) => state.showingBadges);
-  const choosingBadges = useUserBadge((state) => state.choosingBadges);
 
   const {
     fullname,
@@ -76,8 +71,6 @@ const UserProfile = (props: any) => {
   const isCurrentUser = userId === currentUserId || userId === currentUsername;
 
   const homeActions = useHomeStore((state) => state.actions);
-
-  const isDisable = checkEqual(choosingBadges, showingBadges);
 
   useEffect(() => {
     isFocused && userProfileActions.getUserProfile({ userId, params });
@@ -111,14 +104,6 @@ const UserProfile = (props: any) => {
 
   const onPressTab = (item: any, index: number) => {
     setSelectedIndex(index);
-  };
-
-  const onCancel = () => {
-    badgeActions.cancleSaveBadges();
-  };
-
-  const onSave = () => {
-    badgeActions.editShowingBadges();
   };
 
   const handleScroll = throttle(
@@ -199,44 +184,9 @@ const UserProfile = (props: any) => {
           {renderContent()}
         </ScrollView>
       )}
-      {isCurrentUser && isEditingBadge && selectedIndex === 1 && (
-        <View style={styles.bottomButton}>
-          <Button.Neutral
-            useI18n
-            testID="badge_collection.btn_cancel"
-            type="ghost"
-            onPress={onCancel}
-          >
-            common:btn_cancel
-          </Button.Neutral>
-          <ViewSpacing width={spacing.margin.large} />
-          <Button.Primary
-            useI18n
-            testID="badge_collection.btn_save"
-            disabled={isDisable}
-            onPress={onSave}
-          >
-            common:btn_save
-          </Button.Primary>
-        </View>
-      )}
+      <SearchBadgeModal showSearchBox />
     </ScreenWrapper>
   );
-};
-
-const checkEqual = (choosingArr: IUserBadge[], choseArr: IUserBadge[]): boolean => {
-  if (choseArr?.length === 0) {
-    const index = choosingArr.findIndex((item) => item?.id);
-    return index === -1;
-  }
-  let result = true;
-  for (let index = 0; index < choosingArr.length; index++) {
-    if (choosingArr?.[index]?.id !== choseArr?.[index]?.id) {
-      result = false;
-      break;
-    }
-  }
-  return result;
 };
 
 export default UserProfile;

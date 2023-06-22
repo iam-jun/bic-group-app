@@ -108,7 +108,7 @@
     "message_add_member_success_group": "Added members to group successfully",
     "message_remove_member_success": "{n} has been removed from this group",
     "title_mention_all": "All members in this group",
-    "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
+    "text_search_no_results": "Sorry, we couldn’t find anything\nrelated to your search.",
     "title_page_not_found": "Page Not Found",
     "text_edit_success": "Profile updated successfully",
     "text_edit_fail": "Failed to update profile!",
@@ -1466,7 +1466,9 @@
     "owned_badges": {
       "title": "Badges List",
       "description": "Badges you received from the communities you joined",
-      "total_badges": "((total) badges)"
-    }
+      "total_badges": "((total) badges)",
+      "search_placeholder": "Search for badges name"
+    },
+    "edit_showing_badges_title": "Edit Showing Badges"
   }
 }

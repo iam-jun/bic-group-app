@@ -1,38 +1,47 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  View, StyleSheet, FlatList, DeviceEventEmitter,
+  View, StyleSheet, DeviceEventEmitter, FlatList,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { throttle } from 'lodash';
 import Text from '~/baseComponents/Text';
-import { spacing } from '~/theme';
+import { dimension, spacing } from '~/theme';
 import EditButton from '../../components/EditButton';
 import ShowingBadges from './ShowingBadges';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import Grid from './Grid';
 import useUserBadge from './store';
 import images from '~/resources/images';
 import Image from '~/components/Image';
 import { IUserBadge } from '~/interfaces/IEditUser';
+import { SearchInput } from '~/baseComponents/Input';
 import useBaseHook from '~/hooks/baseHook';
+import { fontFamilies } from '~/theme/fonts';
+import NoSearchResultsFound from '~/components/NoSearchResultsFound';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import Grid from './Grid';
 
-const SCROLL_MAX_HEIGHT = 400;
+interface Props {
+  showSearchBox?: boolean;
+}
 
-const BadgeCollection = () => {
+const BadgeCollection = ({ showSearchBox }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = themeStyles(theme);
   const { t } = useBaseHook();
 
+  const [searchText, setSearchText] = useState('');
+
   const actions = useUserBadge((state) => state.actions);
-  const ownBadges = useUserBadge((state) => state.ownBadges);
+  const dataSearch = useUserBadge((state) => state.dataSearch);
   const isEditing = useUserBadge((state) => state.isEditing);
   const choosingBadges = useUserBadge((state) => state.choosingBadges);
   const totalBadges = useUserBadge((state) => state.totalBadges);
 
   const totalBadgesText = t('user:owned_badges:total_badges').replace('(total)', totalBadges);
+  const loadingSearch = useUserBadge((state) => state.loadingSearch);
 
-  const disabled = checkIsDisabled(choosingBadges) && isEditing;
+  const disabled = checkIsDisabled(choosingBadges) && isEditing && Boolean(showSearchBox);
 
   useEffect(() => {
     actions.getOwnedBadges();
@@ -52,6 +61,17 @@ const BadgeCollection = () => {
     }
   };
 
+  const onChangeText = (text: string) => {
+    setSearchText(text);
+    if (!text || text?.trim?.()?.length === 0) {
+      actions.searchBadges('');
+    }
+  };
+
+  const searchBadges = () => {
+    actions.searchBadges(searchText);
+  };
+
   const handleScroll = throttle(
     () => {
       DeviceEventEmitter.emit(
@@ -60,22 +80,28 @@ const BadgeCollection = () => {
     }, 100,
   );
 
-  const renderEmptyComponent = () => (
-    <View testID="badge_collection.empty" style={styles.boxEmpty}>
-      <Image
-        resizeMode="contain"
-        source={images.img_empty_box}
-        style={styles.imgEmpty}
-      />
-      <Text.H3 color={theme.colors.neutral60} useI18n>
-        user:empty_badge_collection:title
-      </Text.H3>
-      <ViewSpacing height={spacing.margin.tiny} />
-      <Text.BodyS color={theme.colors.neutral40} useI18n>
-        user:empty_badge_collection:description
-      </Text.BodyS>
-    </View>
-  );
+  const renderEmptyComponent = () => {
+    if (loadingSearch) {
+      return <LoadingIndicator style={{ margin: spacing.margin.small }} />;
+    }
+    if (!loadingSearch && dataSearch.length === 0) return <NoSearchResultsFound />;
+    return (
+      <View testID="badge_collection.empty" style={styles.boxEmpty}>
+        <Image
+          resizeMode="contain"
+          source={images.img_empty_box}
+          style={styles.imgEmpty}
+        />
+        <Text.H3 color={theme.colors.neutral60} useI18n>
+          user:empty_badge_collection:title
+        </Text.H3>
+        <ViewSpacing height={spacing.margin.tiny} />
+        <Text.BodyS color={theme.colors.neutral40} useI18n>
+          user:empty_badge_collection:description
+        </Text.BodyS>
+      </View>
+    );
+  };
 
   const renderItem = ({ item: sectionItem }: any) => (
     <View>
@@ -105,18 +131,18 @@ const BadgeCollection = () => {
             user:showing_badges:title
           </Text.H4>
           {Boolean(!isEditing) && (
-          <EditButton
-            isCurrentUser
-            onPress={editBadge}
-            icon="PenToSquareSolid"
-            testID="badge_collection.edit_btn"
-          />
+            <EditButton
+              isCurrentUser
+              onPress={editBadge}
+              icon="PenToSquareSolid"
+              testID="badge_collection.edit_btn"
+            />
           )}
         </View>
         <Text.BodyS color={colors.neutral40} useI18n>
           user:showing_badges:description
         </Text.BodyS>
-        <ShowingBadges />
+        <ShowingBadges isShowEditButton={showSearchBox} />
         <Text.H4 color={colors.neutral40}>
           {t('user:owned_badges:title')}
           <Text.BadgeS color={colors.neutral40}>
@@ -127,16 +153,26 @@ const BadgeCollection = () => {
           user:owned_badges:description
         </Text.BodyS>
       </View>
+      {Boolean(showSearchBox)
+       && (
+       <SearchInput
+         style={styles.textInput}
+         autoComplete="off"
+         placeholder={t('user:owned_badges:search_placeholder')}
+         placeholderTextColor={theme.colors.gray40}
+         selectionColor={theme.colors.gray50}
+         onChangeText={onChangeText}
+         onEndEditing={searchBadges}
+       />
+       )}
       <ViewSpacing height={spacing.margin.large} />
-
       <FlatList
-        data={ownBadges}
+        data={dataSearch}
         nestedScrollEnabled
         keyExtractor={(item) => item?.id}
         renderItem={renderItem}
         ListFooterComponent={() => <ViewSpacing height={100} />}
         ListEmptyComponent={renderEmptyComponent}
-        style={{ maxHeight: SCROLL_MAX_HEIGHT }}
         onScroll={handleScroll}
       />
     </View>
@@ -155,30 +191,40 @@ const checkIsDisabled = (badges: IUserBadge[]) => {
   return result;
 };
 
-const themeStyles = (_theme: ExtendedTheme) => StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: spacing.padding.large,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  header: {
-    marginBottom: spacing.margin.large,
-    paddingHorizontal: spacing.margin.large,
-  },
-  boxEmpty: {
-    alignItems: 'center',
-    paddingTop: 32,
-    paddingBottom: 48,
-  },
-  imgEmpty: {
-    width: 100,
-    aspectRatio: 1,
-    marginBottom: spacing.margin.base,
-  },
-});
+const themeStyles = (theme: ExtendedTheme) => {
+  const { colors } = theme;
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      paddingTop: spacing.padding.large,
+    },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    header: {
+      marginBottom: spacing.margin.large,
+      paddingHorizontal: spacing.margin.large,
+    },
+    boxEmpty: {
+      alignItems: 'center',
+      paddingTop: 32,
+      paddingBottom: 48,
+    },
+    imgEmpty: {
+      width: 100,
+      aspectRatio: 1,
+      marginBottom: spacing.margin.base,
+    },
+    textInput: {
+      fontFamily: fontFamilies.BeVietnamProLight,
+      fontSize: dimension.sizes.bodyM,
+      color: colors.neutral80,
+      marginHorizontal: spacing.margin.large,
+      marginTop: spacing.margin.small,
+    },
+  });
+};
 
 export default BadgeCollection;
