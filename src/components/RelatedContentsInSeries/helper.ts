@@ -5,8 +5,6 @@ import { rootNavigationRef } from '~/router/refs';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 
-const navigation = withNavigation(rootNavigationRef);
-
 export const getPrevAndNextContentInSeries = (
   postId: string,
   series: IPost,
@@ -36,19 +34,27 @@ export const getPrevAndNextContentInSeries = (
 };
 
 export const goToContentInseries = (content: IPost) => {
+  const navigation = withNavigation(rootNavigationRef);
+
   if (!content) return;
 
   const { type, id } = content;
 
   if (type === PostType.POST) {
     navigation.replace(homeStack.postDetail, { post_id: id });
+    // for unit test
+    return homeStack.postDetail;
   }
 
   if (type === PostType.ARTICLE) {
     navigation.replace(articleStack.articleContentDetail, { articleId: id });
+    // for unit test
+    return articleStack.articleContentDetail;
   }
 
   if (type === PostType.SERIES) {
     navigation.replace(seriesStack.seriesDetail, { seriesId: id });
+    // for unit test
+    return seriesStack.seriesDetail;
   }
 };
