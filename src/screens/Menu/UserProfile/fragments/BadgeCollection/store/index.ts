@@ -14,6 +14,7 @@ export interface IUserBadgesState extends IBaseState {
   ownBadges: ICommunityBadges[];
   showingBadges: IUserBadge[];
   choosingBadges: IUserBadge[];
+  totalBadges: number;
   error: any;
   actions: {
     setIsEditing: (isEditing: boolean) => void;
@@ -35,6 +36,7 @@ const initState: InitStateType<IUserBadgesState> = {
   showingBadges: [],
   choosingBadges: [undefined, undefined, undefined],
   error: null,
+  totalBadges: 0,
 };
 
 const userBadge = (set, get) => ({

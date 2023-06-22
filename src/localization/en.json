@@ -1465,7 +1465,8 @@
     },
     "owned_badges": {
       "title": "Badges List",
-      "description": "Badges you received from the communities you joined"
+      "description": "Badges you received from the communities you joined",
+      "total_badges": "((total) badges)"
     }
   }
 }

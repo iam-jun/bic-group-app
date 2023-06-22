@@ -1406,7 +1406,8 @@
     },
     "owned_badges": {
       "title": "Danh sách huy hiệu",
-      "description": "Huy hiệu bạn nhận được từ các cộng đồng bạn đã tham gia"
+      "description": "Huy hiệu bạn nhận được từ các cộng đồng bạn đã tham gia",
+      "total_badges": "((total) huy hiệu)"
     }
   }
 }
