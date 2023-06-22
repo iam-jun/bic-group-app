@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   View, StyleSheet, DeviceEventEmitter, FlatList,
 } from 'react-native';
@@ -19,6 +19,7 @@ import { fontFamilies } from '~/theme/fonts';
 import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Grid from './Grid';
+import BadgeNew from './BadgeNew';
 
 interface Props {
   showSearchBox?: boolean;
@@ -42,10 +43,6 @@ const BadgeCollection = ({ showSearchBox }: Props) => {
   const loadingSearch = useUserBadge((state) => state.loadingSearch);
 
   const disabled = checkIsDisabled(choosingBadges) && isEditing && Boolean(showSearchBox);
-
-  useEffect(() => {
-    actions.getOwnedBadges();
-  }, []);
 
   const editBadge = () => {
     actions.setIsEditing(true);
@@ -111,10 +108,16 @@ const BadgeCollection = ({ showSearchBox }: Props) => {
       >
         {sectionItem?.name}
         <Text.BadgeS color={colors.neutral40}>{` (${sectionItem?.badges?.length})`}</Text.BadgeS>
+        {' '}
+        {Boolean(sectionItem?.isNew) && (
+        <BadgeNew />
+        ) }
       </Text.SubtitleM>
       <Grid
         data={sectionItem.badges}
+        isNew={Boolean(sectionItem?.isNew)}
         disabled={disabled}
+        shouldHideBadgeNew={Boolean(sectionItem?.isNew)}
         onPress={onPress}
       />
     </View>
@@ -205,7 +208,7 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     header: {
       marginBottom: spacing.margin.large,
-      paddingHorizontal: spacing.margin.large,
+      marginHorizontal: spacing.margin.large,
     },
     boxEmpty: {
       alignItems: 'center',

@@ -36,6 +36,7 @@ const editShowingBadges = (set, get) => async () => {
       state.loadingEditing = false;
       state.isEditing = false;
       state.showingBadges = showingBadges;
+      state.choosingBadges = showingBadges;
       state.dataSearch = ownBadges;
     }, 'editShowingBadgesSuccess');
 
