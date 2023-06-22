@@ -13,6 +13,7 @@ import { IUserBadge } from '~/interfaces/IEditUser';
 import Text from '~/baseComponents/Text';
 import useUserBadge from './store';
 import BadgeNew from './BadgeNew';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 interface Props {
   id: string;
@@ -72,7 +73,13 @@ const GridItem = ({
   return (
     <Tooltip
       isVisible={isVisible}
-      content={<Text.BodyS color={colors.white}>{item?.name || ''}</Text.BodyS>}
+      content={(
+        <View style={styles.row}>
+          <ViewSpacing width={spacing.margin.small} />
+          <Text.BodyS color={colors.white}>{item?.name || ''}</Text.BodyS>
+          <ViewSpacing width={spacing.margin.small} />
+        </View>
+      )}
       placement="top"
       backgroundColor="transparent"
       contentStyle={styles.tooltipStyle}
@@ -158,6 +165,7 @@ const themeStyles = (theme: ExtendedTheme) => {
       zIndex: 2,
       right: 0,
     },
+    row: { flexDirection: 'row' },
   });
 };
 
