@@ -1,5 +1,6 @@
 import groupApi from '~/api/GroupApi';
 import { IUserBadgesState, MAX_BADGES } from '../index';
+import useCommonController from '~/screens/store';
 
 const getOwnedBadges = (set, _get) => async () => {
   try {
@@ -7,6 +8,7 @@ const getOwnedBadges = (set, _get) => async () => {
       state.loading = true;
       state.error = null;
     }, 'getMyOwnedBadgesLoading');
+    const userProfileData = useCommonController.getState().myProfile;
 
     const response = await groupApi.getOwnedBadges();
     const { ownedBadges = [], showingBadges = [] } = response?.data || {};
@@ -18,6 +20,11 @@ const getOwnedBadges = (set, _get) => async () => {
         choosingBadges.push(showingBadges[index]);
       }
     }
+
+    useCommonController.getState().actions.setMyProfile({
+      ...userProfileData,
+      showingBadges: choosingBadges,
+    });
 
     set((state: IUserBadgesState) => {
       state.ownBadges = ownedBadges;
