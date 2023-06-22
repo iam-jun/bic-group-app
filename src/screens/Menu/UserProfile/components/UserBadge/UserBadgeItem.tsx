@@ -15,18 +15,21 @@ interface Props {
   data: IUserBadge;
   placement?: 'top' | 'bottom' | 'left' | 'right';
   customStyleBadgeItem?: StyleProp<ImageStyle>;
+  isTopAdjustment?: boolean;
 }
 
 const UserBadgeItem = ({
   data,
   placement = 'top',
   customStyleBadgeItem,
+  isTopAdjustment = true,
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const { colors } = theme;
 
   const [isVisible, setIsVisible] = useState(false);
+  const isSetTopAdjustment = isTopAdjustment && Platform.OS === 'android';
 
   if (!data?.id) return null;
   return (
@@ -42,7 +45,7 @@ const UserBadgeItem = ({
       backgroundColor="transparent"
       contentStyle={styles.tooltipStyle}
       disableShadow
-      topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
+      topAdjustment={isSetTopAdjustment ? -StatusBar.currentHeight : 0}
       onClose={() => { setIsVisible(false); }}
     >
       <TouchableOpacity
