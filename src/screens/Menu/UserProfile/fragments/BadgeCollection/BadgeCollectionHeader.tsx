@@ -6,23 +6,29 @@ import EditButton from '../../components/EditButton';
 import ShowingBadges from './ShowingBadges';
 import Text from '~/baseComponents/Text';
 import useUserBadge from './store';
+import useBaseHook from '~/hooks/baseHook';
 
-const BadgeCollectionHeader = ({ style, isShowEditButton }: {style?: any, isShowEditButton?:boolean}) => {
+const BadgeCollectionHeader = ({ isShowEditButton }: {style?: any, isShowEditButton?:boolean}) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const { colors } = theme;
 
+  const { t } = useBaseHook();
+
   const isEditing = useUserBadge((state) => state.isEditing);
   const actions = useUserBadge((state) => state.actions);
+  const totalBadges = useUserBadge((state) => state.totalBadges);
 
   const editBadge = () => {
     actions.setIsEditing(true);
   };
 
+  const totalBadgesText = t('user:owned_badges:total_badges').replace('(total)', totalBadges);
+
   return (
-    <View style={[{
+    <View style={{
       paddingHorizontal: spacing.padding.large,
-    }, style]}
+    }}
     >
       <View style={styles.row}>
         <Text.H4 color={colors.neutral40} useI18n>
@@ -41,8 +47,11 @@ const BadgeCollectionHeader = ({ style, isShowEditButton }: {style?: any, isShow
         user:showing_badges:description
       </Text.BodyS>
       <ShowingBadges isShowEditButton={isShowEditButton} />
-      <Text.H4 color={colors.neutral40} useI18n>
-        user:owned_badges:title
+      <Text.H4 color={colors.neutral40}>
+        {t('user:owned_badges:title')}
+        <Text.BadgeS color={colors.neutral40}>
+          {` ${totalBadgesText}`}
+        </Text.BadgeS>
       </Text.H4>
       <Text.BodyS color={colors.neutral40} useI18n>
         user:owned_badges:description
