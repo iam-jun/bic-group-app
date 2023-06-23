@@ -2,7 +2,7 @@ import * as React from 'react';
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
 
 import { cloneDeep } from 'lodash';
-import OptionsWhoCanJoin, { IdType, OPTIONS } from './OptionsWhoCanJoin';
+import OptionsWhoCanJoin, { IdType } from './OptionsWhoCanJoin';
 import { groupDetailData } from '~/test/mock_data/communities';
 import { GroupPrivacyType } from '~/constants/privacyTypes';
 
@@ -24,7 +24,7 @@ describe('OptionsWhoCanJoin component', () => {
     const containerView = getByTestId('options_who_can_join');
     expect(containerView).toBeDefined();
 
-    const radio = getByTestId(`options_who_can_join.raido_${OPTIONS[IdType.ONLY_INVITED_PEOPLE].id}`);
+    const radio = getByTestId(`options_who_can_join.raido_${IdType.ONLY_INVITED_PEOPLE}`);
     fireEvent.press(radio);
     expect(propsClone.updateJoinSetting).toHaveBeenCalled();
   });

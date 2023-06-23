@@ -1,4 +1,3 @@
-import i18next from 'i18next';
 import groupApi from '~/api/GroupApi';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import IDiscoverGroupsState from '../Interface';
@@ -6,8 +5,8 @@ import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 import showToastError from '~/store/helper/showToastError';
 import APIErrorCode from '~/constants/apiErrorCode';
-import useModalStore from '~/store/modal';
 import { MembershipAnswerRequest } from '~/interfaces/ICommunity';
+import { showAlertRefreshPage } from '~/helpers/common';
 
 const joinNewGroup = (set, get) => async (groupId: string, answers?: MembershipAnswerRequest[]) => {
   try {
@@ -33,17 +32,11 @@ const joinNewGroup = (set, get) => async (groupId: string, answers?: MembershipA
 
     showToastSuccess(response);
   } catch (error) {
-    if (error?.code === APIErrorCode.Group.MISSIING_MEMBERSHIP_ANSWERS) {
-      setTimeout(
-        () => {
-          useModalStore.getState().actions.showAlert({
-            cancelBtn: false,
-            confirmLabel: i18next.t('common:text_ok'),
-            title: i18next.t('common:text_sorry_something_went_wrong'),
-            content: i18next.t('common:text_pull_to_refresh'),
-          });
-        }, 500,
-      );
+    if (
+      error?.code === APIErrorCode.Group.MISSIING_MEMBERSHIP_ANSWERS
+      || error?.code === APIErrorCode.Common.FORBIDDEN
+    ) {
+      showAlertRefreshPage();
       return;
     }
     console.error('joinNewGroup catch', error);
