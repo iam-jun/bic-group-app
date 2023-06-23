@@ -1408,5 +1408,8 @@
       "title": "Danh sách huy hiệu",
       "description": "Huy hiệu bạn nhận được từ các cộng đồng bạn đã tham gia"
     }
+  },
+  "quiz": {
+    "generate_quiz": "Tạo Quiz"
   }
 }

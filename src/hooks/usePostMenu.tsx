@@ -47,6 +47,11 @@ const usePostMenu = (
 
   const groupAudience = audience?.groups || [];
 
+  const audienceListWithNoPermissionQuiz = getAudienceListWithNoPermission(
+    groupAudience,
+    PermissionKey.CUD_QUIZ,
+  );
+
   const audienceListWithNoPermission = getAudienceListWithNoPermission(
     groupAudience,
     PermissionKey.EDIT_OWN_CONTENT_SETTING,
@@ -157,6 +162,11 @@ const usePostMenu = (
     rootNavigation?.navigate?.(homeStack.pinContent, { postId });
   };
 
+  const onPressCUDQuiz = () => {
+    modalActions.hideBottomList();
+    // do something
+  };
+
   const defaultData = [
     {
       id: 1,
@@ -193,6 +203,15 @@ const usePostMenu = (
     },
     {
       id: 5,
+      testID: 'post_view_menu.quiz',
+      leftIcon: 'BallotCheck',
+      title: i18next.t('quiz:generate_quiz'),
+      requireIsActor: false,
+      shouldBeHidden: audienceListWithNoPermissionQuiz.length > 0,
+      onPress: onPressCUDQuiz,
+    },
+    {
+      id: 6,
       testID: 'post_view_menu.insights',
       leftIcon: 'iconReact',
       title: i18next.t('post:post_menu_view_reactions'),
@@ -201,7 +220,7 @@ const usePostMenu = (
       onPress: onPressViewReactions,
     },
     {
-      id: 6,
+      id: 7,
       testID: 'post_view_menu.view_series',
       leftIcon: 'RectangleHistory',
       title: i18next.t('common:btn_view_series'),
@@ -209,7 +228,7 @@ const usePostMenu = (
       onPress: onPressViewSeries,
     },
     {
-      id: 7,
+      id: 8,
       testID: 'post_view_menu.pin',
       leftIcon: 'Thumbtack',
       title: i18next.t('common:pin_unpin'),
@@ -219,7 +238,7 @@ const usePostMenu = (
       onPress: onPressPin,
     },
     {
-      id: 8,
+      id: 9,
       testID: 'post_view_menu.delete',
       leftIcon: 'TrashCan',
       title: i18next.t('post:post_menu_delete'),
@@ -227,7 +246,7 @@ const usePostMenu = (
       onPress: onPressDelete,
     },
     {
-      id: 9,
+      id: 10,
       testID: 'post_view_menu.report',
       leftIcon: 'Flag',
       title: i18next.t('common:btn_report_content'),
@@ -236,7 +255,7 @@ const usePostMenu = (
       onPress: onPressReport,
     },
     {
-      id: 9,
+      id: 11,
       testID: 'post_view_menu.report_this_member',
       leftIcon: 'UserXmark',
       title: i18next.t('groups:member_menu:label_report_member'),

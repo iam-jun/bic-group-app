@@ -1467,5 +1467,8 @@
       "title": "Badges List",
       "description": "Badges you received from the communities you joined"
     }
+  },
+  "quiz": {
+    "generate_quiz": "Generate Quiz"
   }
 }
