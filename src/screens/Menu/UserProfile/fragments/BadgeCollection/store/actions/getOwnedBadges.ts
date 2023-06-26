@@ -35,6 +35,11 @@ const getOwnedBadges = (set, _get) => async () => {
       }
     }
 
+    useCommonController.getState().actions.setMyProfile({
+      ...userProfileData,
+      showingBadges: choosingBadges,
+    });
+
     let totalBadges = 0;
     ownedBadges.forEach((community) => {
       totalBadges += (community?.badges?.length || 0);
