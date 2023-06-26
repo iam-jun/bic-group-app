@@ -22,6 +22,7 @@ import { PermissionKey } from '~/constants/permissionScheme';
 import useModalStore from '~/store/modal';
 import usePostsStore, { IPostsState } from '~/store/entities/posts';
 import { onPressReportThisMember } from '~/helpers/blocking';
+import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 
 const usePostMenu = (
   data: IPost,
@@ -164,7 +165,7 @@ const usePostMenu = (
 
   const onPressCUDQuiz = () => {
     modalActions.hideBottomList();
-    // do something
+    rootNavigation?.navigate?.(quizStack.generateQuiz);
   };
 
   const defaultData = [

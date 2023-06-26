@@ -205,9 +205,9 @@ const TextInput: React.FC<TextInputProps> = ({
             </View>
           </View>
         </View>
-        {helperText ? (
+        {!!helperText ? (
           <View style={[styles.helperContainer, helperStyle]}>
-            {error ? (
+            {!!error ? (
               <Icon
                 testID="text_input.error_icon"
                 icon="CircleExclamation"
