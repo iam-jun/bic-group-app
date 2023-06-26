@@ -40,11 +40,9 @@ const Grid = ({
     return null;
   }
 
-  const renderGridItem = ({ item, index }: any) => (
+  const renderGridItem = ({ item }: any) => (
     <GridItem
       id={item.id}
-      numColumns={numColumns}
-      index={index}
       disabled={disabled}
       shouldHideBadgeNew={shouldHideBadgeNew}
       onPress={onPress}

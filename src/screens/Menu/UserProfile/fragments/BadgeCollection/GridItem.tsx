@@ -17,15 +17,13 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 interface Props {
   id: string;
-  numColumns: number;
-  index: number;
   disabled?: boolean;
   shouldHideBadgeNew?: boolean;
   onPress: (item: IUserBadge, isSelected: boolean) => void;
 }
 
 const GridItem = ({
-  id, numColumns, index,
+  id,
   disabled = false,
   shouldHideBadgeNew = false,
   onPress,
