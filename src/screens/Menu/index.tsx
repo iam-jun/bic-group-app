@@ -18,6 +18,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import useMenuController from './store';
 import useCommonController from '../store';
+import useUserBadge from './UserProfile/fragments/BadgeCollection/store';
 
 const Menu = (): React.ReactElement => {
   const { rootNavigation } = useRootNavigation();
@@ -27,13 +28,17 @@ const Menu = (): React.ReactElement => {
 
   const currentUserId = useUserIdAuth();
   const actions = useCommonController((state) => state.actions);
+  const userBadgeActions = useUserBadge((state) => state.actions);
 
   const getJoinedCommunities = useMenuController((state) => state.actions.getJoinedCommunities);
   const loading = useMenuController((state) => state.loading);
 
   useEffect(
     () => {
-      if (currentUserId) actions.getMyProfile({ userId: currentUserId });
+      if (currentUserId) {
+        actions.getMyProfile({ userId: currentUserId });
+        userBadgeActions.getOwnedBadges();
+      }
     }, [],
   );
 

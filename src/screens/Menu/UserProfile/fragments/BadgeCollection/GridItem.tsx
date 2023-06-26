@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   View, StyleSheet, TouchableOpacity, Platform, StatusBar, DeviceEventEmitter,
 } from 'react-native';
@@ -12,36 +12,32 @@ import spacing, { borderRadius } from '~/theme/spacing';
 import { IUserBadge } from '~/interfaces/IEditUser';
 import Text from '~/baseComponents/Text';
 import useUserBadge from './store';
+import BadgeNew from './BadgeNew';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 interface Props {
-  item: IUserBadge;
+  id: string;
   numColumns: number;
   index: number;
   disabled?: boolean;
+  shouldHideBadgeNew?: boolean;
   onPress: (item: IUserBadge, isSelected: boolean) => void;
 }
 
 const GridItem = ({
-  item, numColumns, index, disabled = false, onPress,
+  id, numColumns, index,
+  disabled = false,
+  shouldHideBadgeNew = false,
+  onPress,
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = themeStyles(theme);
   const choosingBadges = useUserBadge((state) => state.choosingBadges);
+  const actions = useUserBadge((state) => state.actions);
+  const item = useUserBadge(useCallback((state) => state.badges?.[id], [id]));
 
   const [isVisible, setIsVisible] = useState(false);
-  const [currentPlacement, setCurrentPlacement] = useState<string>('top');
-
-  useEffect(() => {
-    if (numColumns > 0) {
-      const surplus = (index + 1) % numColumns;
-      if (surplus === 0) {
-        setCurrentPlacement('left');
-      } else if (surplus === 1) {
-        setCurrentPlacement('right');
-      }
-    }
-  }, [numColumns, index]);
 
   useEffect(
     () => {
@@ -59,10 +55,12 @@ const GridItem = ({
 
   const onPressItem = () => {
     onPress(item, isSelected);
+    actions.markNewBadge(id);
   };
 
   const onLongPress = () => {
     if (disabled) return;
+    actions.markNewBadge(id);
     setIsVisible(true);
   };
 
@@ -75,8 +73,14 @@ const GridItem = ({
   return (
     <Tooltip
       isVisible={isVisible}
-      content={<Text.BodyS color={colors.white}>{item?.name || ''}</Text.BodyS>}
-      placement={currentPlacement as any}
+      content={(
+        <View style={styles.row}>
+          <ViewSpacing width={spacing.margin.small} />
+          <Text.BodyS color={colors.white}>{item?.name || ''}</Text.BodyS>
+          <ViewSpacing width={spacing.margin.small} />
+        </View>
+      )}
+      placement="top"
       backgroundColor="transparent"
       contentStyle={styles.tooltipStyle}
       disableShadow
@@ -102,6 +106,11 @@ const GridItem = ({
         </View>
         )}
         {Boolean(!isSelected) && Boolean(disabled) && <View style={styles.disabled} />}
+        {Boolean(item?.isNew) && !Boolean(isSelected) && !Boolean(shouldHideBadgeNew) && (
+          <View style={styles.badgeNewStyle}>
+            <BadgeNew />
+          </View>
+        )}
       </TouchableOpacity>
     </Tooltip>
   );
@@ -151,6 +160,12 @@ const themeStyles = (theme: ExtendedTheme) => {
       paddingVertical: spacing.padding.small,
       paddingHorizontal: spacing.padding.large,
     },
+    badgeNewStyle: {
+      position: 'absolute',
+      zIndex: 2,
+      right: 0,
+    },
+    row: { flexDirection: 'row' },
   });
 };
 

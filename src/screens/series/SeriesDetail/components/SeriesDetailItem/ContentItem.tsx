@@ -65,7 +65,7 @@ const ContentItem: FC<ContentItemProps> = ({
             <ViewSpacing width={spacing.margin.small} />
             <View style={styles.fullnameContainer}>
               <View style={styles.fullnameVerifiedContainer}>
-                <Text.BodyXSMedium color={colorFullName} numberOfLines={1}>
+                <Text.BodyXSMedium color={colorFullName} numberOfLines={1} style={styles.fullnameContainer}>
                   {fullname}
                 </Text.BodyXSMedium>
                 <VerifiedView size={12} isVerified={isVerified} />

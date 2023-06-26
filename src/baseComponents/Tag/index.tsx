@@ -21,13 +21,14 @@ export interface TagProps {
   label: string;
   icon?: any;
   disabled?: boolean;
-  onActionPress?: () => void;
-  onPressIcon?: () => void;
   style?: StyleProp<ViewStyle>;
   textProps?: TextProps;
   textStyle?: StyleProp<TextStyle>;
   buttonProps?: ButtonProps;
   testID?: string;
+  RightComponent?: React.ReactNode | React.ReactElement;
+  onActionPress?: () => void;
+  onPressIcon?: () => void;
 }
 
 const Tag: React.FC<TagProps> = ({
@@ -37,13 +38,14 @@ const Tag: React.FC<TagProps> = ({
   label,
   icon,
   disabled,
-  onActionPress,
-  onPressIcon,
   style,
   textProps,
   textStyle,
   buttonProps,
   testID,
+  RightComponent,
+  onActionPress,
+  onPressIcon,
 }: TagProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(
@@ -90,6 +92,7 @@ const Tag: React.FC<TagProps> = ({
           onPress={onPressIcon}
         />
       )}
+      {RightComponent}
     </Button>
   );
 };
