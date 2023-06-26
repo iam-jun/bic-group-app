@@ -68,6 +68,7 @@ const MenuHeader = () => {
             isCurrentUser
             showingBadges={showingBadges}
             style={styles.userBadge}
+            placement="bottom"
             onPress={() => goToProfile(1)}
           />
         </TouchableOpacity>
