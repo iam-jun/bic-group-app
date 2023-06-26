@@ -89,6 +89,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
             actorCount={actorCount}
           />
           <NotificationContent
+            isRead={isRead}
             description={extra?.description || ''}
             content={extra?.content || ''}
             updatedAt={updatedAt}
@@ -96,6 +97,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         </View>
       ) : (
         <NotificationContent
+          isRead={isRead}
           description={extra?.description || ''}
           content={extra?.content || ''}
           updatedAt={updatedAt}
@@ -130,7 +132,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',
-    padding: spacing.padding.large,
+    paddingHorizontal: spacing.padding.large,
+    paddingVertical: spacing.padding.base,
     width: screenWidth,
   },
   flex1: {
