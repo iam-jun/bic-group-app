@@ -5,7 +5,7 @@ import { rootNavigationRef } from '~/router/refs';
 import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
 import useArticlesStore from '~/screens/articles/ArticleDetail/store';
 import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
-import showToastError from '~/store/helper/showToastError';
+// import showToastError from '~/store/helper/showToastError';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
 import { PostType } from '~/interfaces/IPost';
@@ -27,21 +27,22 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
     const categories = data?.categories?.map?.((category) => category?.id);
     const series = data?.series?.map?.((item) => item?.id);
     const tags = data?.tags?.map?.((item) => item?.id);
+    const coverMedia = { id: data?.coverMedia?.id };
 
     const params = {
-      ...data, categories, series, tags,
+      ...data, categories, series, tags, coverMedia,
     } as any;
     delete params.id;
 
     const response = await streamApi.putEditArticle(articleId, params);
 
-    if (!response?.data) {
-      showToastError(response);
-      set((state: ICreateArticleState) => {
-        state.loading = false;
-      }, 'putEditArticleError');
-      return;
-    }
+    // if (!response?.data) {
+    //   showToastError(response);
+    //   set((state: ICreateArticleState) => {
+    //     state.loading = false;
+    //   }, 'putEditArticleError');
+    //   return;
+    // }
 
     useArticlesStore.getState().actions.getArticleDetail({ articleId });
     onSuccess?.();
