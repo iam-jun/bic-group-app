@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
-import { FormGenerateQuiz } from '../hooks/useGenerateQuiz';
 import { TextInput, TextArea } from '~/baseComponents/Input';
 import { useBaseHook } from '~/hooks';
+import { FormGenerateQuiz } from '~/interfaces/IQuiz';
 import { spacing } from '~/theme';
 
 type TitleDescriptionSectionProps = {

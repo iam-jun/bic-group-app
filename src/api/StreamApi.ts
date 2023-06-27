@@ -41,6 +41,7 @@ import {
 } from '~/interfaces/ISeries';
 import { IParamGetReportContent, IParamsReportContent } from '~/interfaces/IReport';
 import { CreateTag, EditTag, IParamGetCommunityTags } from '~/interfaces/ITag';
+import { GenerateQuizParams } from '~/interfaces/IQuiz';
 
 const DEFAULT_LIMIT = 10;
 
@@ -532,6 +533,12 @@ export const streamApiConfig = {
     provider: apiProviders.beinFeed,
     params,
   }),
+  generateQuiz: (params: GenerateQuizParams): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes`,
+    method: 'post',
+    data: params,
+  }),
 };
 
 const streamApi = {
@@ -804,6 +811,9 @@ const streamApi = {
       limit: param?.limit || appConfig.recordsPerPage,
       ...param,
     },
+  ),
+  generateQuiz: (params: GenerateQuizParams) => withHttpRequestPromise(
+    streamApiConfig.generateQuiz, params,
   ),
 };
 

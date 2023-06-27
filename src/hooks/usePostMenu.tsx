@@ -165,7 +165,7 @@ const usePostMenu = (
 
   const onPressCUDQuiz = () => {
     modalActions.hideBottomList();
-    rootNavigation?.navigate?.(quizStack.generateQuiz);
+    rootNavigation?.navigate?.(quizStack.submitFormQuiz, { postId });
   };
 
   const defaultData = [
@@ -206,7 +206,7 @@ const usePostMenu = (
       id: 5,
       testID: 'post_view_menu.quiz',
       leftIcon: 'BallotCheck',
-      title: i18next.t('quiz:generate_quiz'),
+      title: i18next.t('quiz:create_quiz'),
       requireIsActor: false,
       shouldBeHidden: audienceListWithNoPermissionQuiz.length > 0,
       onPress: onPressCUDQuiz,

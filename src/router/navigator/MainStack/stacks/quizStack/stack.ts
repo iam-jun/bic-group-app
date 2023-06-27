@@ -1,5 +1,5 @@
 const quizStack = {
-  generateQuiz: 'generate-quiz',
+  submitFormQuiz: 'submit-form-quiz',
 };
 
 export default quizStack;

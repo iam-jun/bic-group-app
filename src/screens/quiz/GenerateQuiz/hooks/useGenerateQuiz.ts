@@ -1,40 +1,67 @@
 import { useForm } from 'react-hook-form';
 import { Keyboard } from 'react-native';
+import { PermissionKey } from '~/constants/permissionScheme';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 import showAlert from '~/store/helper/showAlert';
+import useMyPermissionsStore from '~/store/permissions';
+import { showAlertAudienceListWithNoPermissionQuiz } from '../helper';
+import { FormGenerateQuiz } from '~/interfaces/IQuiz';
 
-export type FormGenerateQuiz = {
-    title: string
-    description?: string
-    question: number | null
-    answer: number | null
-    questionDisplay?: number | null
-    answerDisplay?: number | null
-}
-const useGenerateQuiz = () => {
+const useGenerateQuiz = (postId: string) => {
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
   const {
-    control, watch, handleSubmit, formState: { isValid, isDirty }, trigger,
+    control,
+    watch,
+    handleSubmit,
+    formState: { isValid, isDirty },
+    trigger,
   } = useForm<FormGenerateQuiz>({
     defaultValues: {
       title: '',
       description: '',
-      question: null,
-      answer: null,
-      questionDisplay: null,
-      answerDisplay: null,
+      numberOfQuestions: null,
+      numberOfAnswers: null,
+      numberOfQuestionsDisplay: null,
+      numberOfAnswersDisplay: null,
     },
     mode: 'onChange',
     reValidateMode: 'onChange',
   });
 
+  const post = usePostsStore(postsSelector.getPost(postId, {}));
+
+  const { audience } = post;
+  const groupAudience = audience?.groups || [];
+
+  const loadingGetPermissions = useMyPermissionsStore((state) => state.loading);
+  const { getMyPermissions, getAudienceListWithNoPermission }
+    = useMyPermissionsStore((state) => state.actions);
+
   const enabledBtnNext = isValid;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const checkPermissions = async (data: FormGenerateQuiz) => {
+    await getMyPermissions();
+    const audienceListWithNoPermissionQuiz = getAudienceListWithNoPermission(
+      groupAudience,
+      PermissionKey.CUD_QUIZ,
+    );
+
+    if (audienceListWithNoPermissionQuiz.length > 0) {
+      showAlertAudienceListWithNoPermissionQuiz(
+        audienceListWithNoPermissionQuiz,
+      );
+    } else {
+      // do next
+    }
+  };
+
   const onNext = handleSubmit((data) => {
-    // do something
+    checkPermissions(data);
   });
 
   const handleBack = () => {
@@ -59,6 +86,7 @@ const useGenerateQuiz = () => {
     control,
     watch,
     enabledBtnNext,
+    loadingGetPermissions,
     onNext,
     trigger,
     handleBack,

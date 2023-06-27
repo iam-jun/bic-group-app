@@ -5,13 +5,13 @@ import {
 } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
 import { isEmpty } from 'lodash';
-import { FormGenerateQuiz } from '../hooks/useGenerateQuiz';
 import { TextInput } from '~/baseComponents/Input';
 import { useBaseHook } from '~/hooks';
 import { spacing } from '~/theme';
 import Text from '~/baseComponents/Text';
 import { MAX_ANSWERS, MAX_QUESTIONS } from './QuestionAnswerSection';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import { FormGenerateQuiz } from '~/interfaces/IQuiz';
 
 type QuestionAnswerDisplaySectionProps = {
     control: Control<FormGenerateQuiz>;
@@ -24,17 +24,17 @@ const QuestionAnswerDisplaySection: FC<QuestionAnswerDisplaySectionProps> = ({ c
   const theme = useTheme();
   const styles = createStyle(theme);
 
-  const question = watch('question');
-  const answer = watch('answer');
+  const question = watch('numberOfQuestions');
+  const answer = watch('numberOfAnswers');
 
   useEffect(() => {
     // revalidate
-    trigger('questionDisplay');
+    trigger('numberOfQuestionsDisplay');
   }, [question]);
 
   useEffect(() => {
     // revalidate
-    trigger('answerDisplay');
+    trigger('numberOfAnswersDisplay');
   }, [answer]);
 
   const renderInputQuestion = ({ field: { onChange, value }, fieldState: { error } }: any) => (
@@ -77,13 +77,13 @@ const QuestionAnswerDisplaySection: FC<QuestionAnswerDisplaySectionProps> = ({ c
     <View style={styles.container}>
       <Text.ParagraphL useI18n style={styles.textTitle}>quiz:title_describe_question_answer_display</Text.ParagraphL>
       <Controller
-        name="questionDisplay"
+        name="numberOfQuestionsDisplay"
         control={control}
         rules={{ required: false, validate: validateInputQuestion }}
         render={renderInputQuestion}
       />
       <Controller
-        name="answerDisplay"
+        name="numberOfAnswersDisplay"
         control={control}
         rules={{ required: false, validate: validateInputAnswer }}
         render={renderInputAnswer}

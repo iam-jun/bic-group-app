@@ -1410,7 +1410,7 @@
     }
   },
   "quiz": {
-    "generate_quiz": "Tạo Quiz",
+    "create_quiz": "Tạo Quiz",
     "input_title": "Tiêu đề",
     "input_title_placeholder": "Nhập tiêu đề quiz",
     "input_description": "Mô tả",

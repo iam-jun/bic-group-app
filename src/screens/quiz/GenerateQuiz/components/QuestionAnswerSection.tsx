@@ -2,12 +2,12 @@ import React, { FC } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { Control, Controller } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
-import { FormGenerateQuiz } from '../hooks/useGenerateQuiz';
 import { TextInput } from '~/baseComponents/Input';
 import { useBaseHook } from '~/hooks';
 import { spacing } from '~/theme';
 import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import { FormGenerateQuiz } from '~/interfaces/IQuiz';
 
 type QuestionAnswerSectionProps = {
     control: Control<FormGenerateQuiz>;
@@ -61,13 +61,13 @@ const QuestionAnswerSection: FC<QuestionAnswerSectionProps> = ({ control }) => {
     <View style={styles.container}>
       <Text.ParagraphL useI18n style={styles.textTitle}>quiz:enter_number_of_questions_answers_quiz</Text.ParagraphL>
       <Controller
-        name="question"
+        name="numberOfQuestions"
         control={control}
         rules={{ required: t('quiz:question_is_required'), validate: validateInputQuestion }}
         render={renderInputQuestion}
       />
       <Controller
-        name="answer"
+        name="numberOfAnswers"
         control={control}
         rules={{ required: t('quiz:answer_is_required'), validate: validateInputAnswer }}
         render={renderInputAnswer}

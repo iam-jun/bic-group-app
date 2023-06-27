@@ -1469,7 +1469,7 @@
     }
   },
   "quiz": {
-    "generate_quiz": "Generate Quiz",
+    "create_quiz": "Create Quiz",
     "input_title": "Title",
     "input_title_placeholder": "Enter title of quiz",
     "input_description": "Description",

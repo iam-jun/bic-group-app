@@ -1,7 +1,7 @@
-import GenerateQuiz from '~/screens/quiz/GenerateQuiz';
+import { SubmitFormQuiz } from '~/screens/quiz';
 
 const quizScreens = {
-  'generate-quiz': GenerateQuiz,
+  'submit-form-quiz': SubmitFormQuiz,
 };
 
 export default quizScreens;
