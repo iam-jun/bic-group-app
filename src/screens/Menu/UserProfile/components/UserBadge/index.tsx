@@ -40,19 +40,20 @@ const UserBadge = ({
   const styles = themeStyles(theme);
   const { colors } = theme;
 
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisibleIndex, setIsVisibleIndex] = useState(-1);
 
   if (showingBadges.length === 0 || !Boolean(showingBadges?.[0]?.id)) return null;
 
-  const openTooltip = () => {
-    setIsVisible(true);
+  const openTooltip = (index: number) => {
+    setIsVisibleIndex(index);
   };
 
   const renderItem = ({ item, index }: any) => {
     if (!item?.id) {
       return (
         <Tooltip
-          isVisible={isVisible}
+          isVisible={Boolean(isVisibleIndex === index)}
+          key={`badge_showing_item_empty_tooltip_${index}`}
           content={(
             <Text.SubtitleS color={colors.white} useI18n>user:badge_tooltip_placeholder</Text.SubtitleS>
           )}
@@ -61,13 +62,12 @@ const UserBadge = ({
           contentStyle={styles.tooltipStyle}
           disableShadow
           topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
-          onClose={() => { setIsVisible(false); }}
+          onClose={() => { setIsVisibleIndex(-1); }}
         >
           <TouchableOpacity
             testID="user_badge_item.empty"
-            key={`badge_showing_item_empty_${index}`}
             style={styles.emptyItem}
-            onLongPress={openTooltip}
+            onLongPress={() => { openTooltip(index); }}
             onPress={onPress}
           >
             <Icon
