@@ -6,7 +6,6 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { isEqual } from 'lodash';
 import ReactionView from '~/beinComponents/ReactionView';
-import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import {
   IPost, TargetType,
@@ -65,7 +64,7 @@ const _PostView: FC<PostViewProps> = ({
   const styles = createStyle(theme);
 
   const {
-    id: postId, actor, content, highlight, setting, deleted, markedReadPost,
+    id: postId, content, highlight, setting, deleted, markedReadPost,
     ownerReactions, reactionsCount, totalUsersSeen, communities, reported,
   } = data;
 
@@ -74,8 +73,6 @@ const _PostView: FC<PostViewProps> = ({
   } = setting || {};
 
   const isEmpty = useMemo(() => isEmptyPost(data), [data]);
-
-  const userId = useUserIdAuth();
 
   const {
     onAddReaction, onRemoveReaction, onLongPressReaction, onPressMarkSeenPost,
@@ -140,7 +137,6 @@ const _PostView: FC<PostViewProps> = ({
             markedReadPost={markedReadPost}
             isImportant={isImportant}
             expireTime={importantExpiredAt}
-            isActor={actor?.id == userId}
           />
         )}
       </>

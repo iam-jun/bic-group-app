@@ -235,7 +235,7 @@ export const streamApiConfig = {
   },
   putMarkAsRead: (postId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}posts/${postId}/mark-as-read`,
+    url: `${provider.url}content/${postId}/mark-as-read`,
     method: 'put',
   }),
   putMarkSeenContent: (id: string): HttpApiRequestConfig => ({
