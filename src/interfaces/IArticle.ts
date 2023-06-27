@@ -38,6 +38,7 @@ export interface IPayloadPublishDraftArticle {
   draftArticleId: string;
   replaceWithDetail?: boolean;
   refreshDraftArticles?: boolean;
+  data?: IEditArticleData;
   onSuccess?: (payload?: any) => void;
   onError?: (error) => void;
 }
