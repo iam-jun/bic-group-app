@@ -228,12 +228,13 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
         imageWidth={dimension.deviceWidth}
         imageHeight={dimension.deviceHeight}
         onClick={() => setIsFocus(false)}
+        maxScale={3}
       >
         <Image
           resizeMode="contain"
           style={{
-            width: dimension.deviceWidth,
-            height: dimension.deviceHeight,
+            width: '100%',
+            height: '100%',
           }}
           source={{ uri: imageUrls?.[activeIndex]?.url }}
         />
@@ -344,10 +345,8 @@ const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
       backgroundColor: 'rgba(41, 39, 42, 0.2)',
     },
     focusScreenContainer: {
-      position: 'absolute',
-      width: '100%',
-      height: '100%',
       backgroundColor: colors.gray40,
+      ...StyleSheet.absoluteFillObject,
     },
   });
 };

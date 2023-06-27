@@ -469,6 +469,14 @@ export const groupsApiConfig = {
     url: `${provider.url}/me/showing-badges`,
     data: { badgeIds },
   }),
+  markNewBadge: (badgeIds: string[]) : HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/owned-badges/new-label`,
+    method: 'delete',
+    data: {
+      badgeIds,
+    },
+  }),
 };
 
 const groupApi = {
@@ -745,6 +753,7 @@ const groupApi = {
   getUserNotFoundInfo: (email: string) => withHttpRequestPromise(groupsApiConfig.getUserNotFoundInfo, email),
   getOwnedBadges: () => withHttpRequestPromise(groupsApiConfig.getOwnedBadges),
   putShowingBadges: (badgeIds: string[]) => withHttpRequestPromise(groupsApiConfig.putShowingBadges, badgeIds),
+  markNewBadge: (badgeIds: string[]) => withHttpRequestPromise(groupsApiConfig.markNewBadge, badgeIds),
 };
 
 export default groupApi;

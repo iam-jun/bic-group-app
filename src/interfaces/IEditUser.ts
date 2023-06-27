@@ -45,6 +45,7 @@ export interface IUserBadge {
   id: string;
   name: string;
   iconUrl: string;
+  isNew?: boolean;
   community?: {
     id: string;
     name: string;
@@ -55,5 +56,6 @@ export interface ICommunityBadges{
   id: string;
   name: string;
   icon?: string;
+  isNew?: boolean;
   badges: IUserBadge[];
 }

@@ -7,7 +7,6 @@ import PinPostFile from './PinPostFile';
 import PinPostVideo from './PinPostVideo';
 import PinPostContent from './PinPostContent';
 import { dimension, spacing } from '~/theme';
-import { borderRadius } from '~/theme/spacing';
 import { ResourceUploadType } from '~/interfaces/IUpload';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 
@@ -83,12 +82,6 @@ const createStyles = (theme: ExtendedTheme) => {
     boxPadding: {
       height: spacing.padding.large,
       backgroundColor: colors.white,
-      borderBottomWidth: 1,
-      borderLeftWidth: 1,
-      borderRightWidth: 1,
-      borderBottomLeftRadius: borderRadius.large,
-      borderBottomRightRadius: borderRadius.large,
-      borderColor: colors.purple5,
       marginBottom: -1.5,
       marginLeft: -1,
     },
