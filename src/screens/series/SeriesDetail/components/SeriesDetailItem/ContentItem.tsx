@@ -65,7 +65,11 @@ const ContentItem: FC<ContentItemProps> = ({
             <ViewSpacing width={spacing.margin.small} />
             <View style={styles.fullnameContainer}>
               <View style={styles.fullnameVerifiedContainer}>
-                <Text.BodyXSMedium color={colorFullName} numberOfLines={1} style={styles.fullnameContainer}>
+                <Text.BodyXSMedium
+                  color={colorFullName}
+                  numberOfLines={1}
+                  style={styles.fullNameStyle}
+                >
                   {fullname}
                 </Text.BodyXSMedium>
                 <VerifiedView size={12} isVerified={isVerified} />
@@ -124,6 +128,10 @@ const createStyle = () => StyleSheet.create({
   fullnameVerifiedContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingRight: spacing.margin.xTiny,
+  },
+  fullNameStyle: {
+    flexShrink: 1,
   },
 });
 
