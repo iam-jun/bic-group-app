@@ -613,7 +613,7 @@ const streamApi = {
   putReaction: (param: IParamPutReaction) => withHttpRequestPromise(streamApiConfig.putReaction, param),
   createArticle: () => withHttpRequestPromise(streamApiConfig.createArticle),
   publishDraftArticle: (draftArticleId: string, param?: IParamPutEditArticle) => withHttpRequestPromise(
-    streamApiConfig.publishDraftArticle, draftArticleId,
+    streamApiConfig.publishDraftArticle, draftArticleId, param,
   ),
   putEditArticle: (articleId: string, param: IParamPutEditArticle) => withHttpRequestPromise(
     streamApiConfig.putEditArticle, articleId, param,

@@ -33,7 +33,7 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
       ...data, categories, series, tags, coverMedia,
     } as any;
     delete params.id;
-    
+
     let response = null;
     if (isDraft) {
       response = await streamApi.putAutoSaveArticle(articleId, params);
