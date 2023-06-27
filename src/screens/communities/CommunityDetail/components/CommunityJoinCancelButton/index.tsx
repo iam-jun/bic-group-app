@@ -55,7 +55,7 @@ const CommunityJoinCancelButton = ({
   };
 
   const onPressCancelRequest = () => {
-    actions.cancelJoinCommunity(id, name);
+    actions.cancelJoinCommunity(groupId);
   };
 
   return (

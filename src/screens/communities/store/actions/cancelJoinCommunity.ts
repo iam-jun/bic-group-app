@@ -8,12 +8,12 @@ import showToastError from '~/store/helper/showToastError';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 const cancelJoinCommunity
-  = (_set, _get) => async (communityId: string, _communityName: string) => {
+  = (_set, _get) => async (rootGroupId: string) => {
     try {
-      const response = await groupApi.cancelJoinCommunity(communityId);
+      const response = await groupApi.cancelJoinCommunity(rootGroupId);
 
       useCommunitiesStore.getState().actions.updateCommunity(
-        communityId,
+        rootGroupId,
         { joinStatus: GroupJoinStatus.VISITOR } as ICommunity,
       );
 
@@ -24,7 +24,7 @@ const cancelJoinCommunity
       if (error?.code === approveDeclineCode.APPROVED
         || error?.code === approveDeclineCode.DECLINED) {
         // Also update join button status in discover communities and in search resutls
-        useCommunitiesStore.getState().actions.getCommunity(communityId);
+        useCommunitiesStore.getState().actions.getCommunity(rootGroupId);
 
         // This toast just shows info message, not really an error
         return showToastError(error, ToastType.NEUTRAL);

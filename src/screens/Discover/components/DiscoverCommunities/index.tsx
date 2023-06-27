@@ -29,7 +29,7 @@ type HandleJoinCommunityData = {
 type ItemDiscoverCommunitiesProps = {
   id: string;
   handleJoin: (data: HandleJoinCommunityData) => void;
-  handleCancel: (id: string, name: string) => void;
+  handleCancel: (id: string) => void;
 };
 
 const ItemDiscoverCommunities: FC<ItemDiscoverCommunitiesProps> = ({
@@ -142,8 +142,8 @@ const DiscoverCommunities = () => {
     });
   };
 
-  const handleCancel = (id: string, name: string) => {
-    communityController.cancelJoinCommunity(id, name);
+  const handleCancel = (id: string) => {
+    communityController.cancelJoinCommunity(id);
   };
 
   const renderItem: ListRenderItem<string> = ({ item }) => (

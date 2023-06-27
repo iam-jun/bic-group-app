@@ -380,9 +380,9 @@ export const groupsApiConfig = {
     method: 'post',
     data: { ...params },
   }),
-  cancelJoinCommunity: (communityId: string): HttpApiRequestConfig => ({
+  cancelJoinCommunity: (rootGroupId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/cancel-joining-request`,
+    url: `${provider.url}groups/${rootGroupId}/cancel-joining-request`,
     method: 'put',
   }),
   leaveCommunity: (rootGroupId: string): HttpApiRequestConfig => ({
@@ -714,8 +714,8 @@ const groupApi = {
   joinCommunity: (rootGroupId: string, params?: MembershipAnswerRequestParam) => withHttpRequestPromise(
     groupsApiConfig.joinCommunity, rootGroupId, params,
   ),
-  cancelJoinCommunity: (communityId: string) => withHttpRequestPromise(
-    groupsApiConfig.cancelJoinCommunity, communityId,
+  cancelJoinCommunity: (rootGroupId: string) => withHttpRequestPromise(
+    groupsApiConfig.cancelJoinCommunity, rootGroupId,
   ),
   leaveCommunity: (rootGroupId: string) => withHttpRequestPromise(groupsApiConfig.leaveCommunity, rootGroupId),
   getCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getCommunities, params),

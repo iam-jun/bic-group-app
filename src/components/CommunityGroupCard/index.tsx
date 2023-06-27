@@ -22,7 +22,7 @@ type CommunityGroupCardProps = {
   testID?: string;
   shouldShowAlertJoinTheCommunityFirst?: boolean;
   onJoin?: (id: string, name: string, isGroup?: boolean)=>void;
-  onCancel?: (id: string, name: string, isGroup?: boolean)=>void;
+  onCancel?: (id: string, isGroup?: boolean)=>void;
 };
 
 const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
@@ -40,6 +40,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
 
   const {
     id,
+    groupId,
     name,
     icon,
     userCount,
@@ -95,7 +96,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
 
   const handleCancel = () => {
     if (!!onCancel) {
-      onCancel(id, name, isGroup(item));
+      onCancel(groupId, isGroup(item));
     }
   };
 

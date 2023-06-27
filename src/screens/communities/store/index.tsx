@@ -19,7 +19,7 @@ interface ICommunityController {
   actions: {
     leaveCommunity: (payload: IRequestLeaveCommunity) => void;
     joinCommunity: (payload: IRequestJoinCommunity) => void;
-    cancelJoinCommunity: (id: string, name: string) => void;
+    cancelJoinCommunity: (rootGroupId: string) => void;
     updateCommunityJoinSetting: (payload: IRequestUpdateCommunityJoinSetting) => void;
     editCommunityDetail: (data: IGroupDetailEdit, callback?: () => void) => Promise<void>;
     assignCommunityAdmin: (id: string, userId: string) => void;
