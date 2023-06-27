@@ -40,7 +40,7 @@ const NotiSettingItem = ({
 
   return (
     <TouchableOpacity
-      activeOpacity={0.5}
+      activeOpacity={1}
       style={[styles.container, styles.row]}
       disabled={disable || isDisableToggle}
       onPress={() => onPress?.(item)}

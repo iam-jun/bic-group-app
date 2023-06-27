@@ -2,11 +2,17 @@ import notificationApi from '~/api/NotificationApi';
 import { INotiSettingsStore } from '../index';
 import { INotiSettings } from '~/interfaces/INotification';
 
-const getConfigSettings = (set, _get) => async () => {
+const getConfigSettings = (set, _get) => async (isRefreshing?: boolean) => {
   try {
-    set((state: INotiSettingsStore) => {
-      state.loading = true;
-    }, 'getConfigSettingsLoading');
+    if (Boolean(isRefreshing)) {
+      set((state: INotiSettingsStore) => {
+        state.isRefreshing = true;
+      }, 'refreshConfigSettings');
+    } else {
+      set((state: INotiSettingsStore) => {
+        state.loading = true;
+      }, 'getConfigSettingsLoading');
+    }
 
     const response = await notificationApi.getConfigSettings();
     if (response?.data?.length > 0) {
@@ -17,6 +23,7 @@ const getConfigSettings = (set, _get) => async () => {
       set((state: INotiSettingsStore) => {
         state.data = newData;
         state.loading = false;
+        state.isRefreshing = false;
       }, 'getConfigSettingsSuccess');
     }
   } catch (err) {
@@ -25,6 +32,7 @@ const getConfigSettings = (set, _get) => async () => {
     );
     set((state: INotiSettingsStore) => {
       state.loading = false;
+      state.isRefreshing = false;
     }, 'getConfigSettingsError');
   }
 };

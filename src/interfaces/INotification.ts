@@ -66,9 +66,9 @@ export interface IEditNotificationSetting {
 
 export interface INotiSettings {
   name: string;
-  enable: boolean;
-  order: number;
-  title: string;
+  enable?: boolean;
+  order?: number;
+  title?: string;
   subtitle?: string;
   child?: INotiSettings[];
   channels?: INotiChannel;

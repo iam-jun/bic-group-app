@@ -1,9 +1,10 @@
 import React from 'react';
 import {
-  ActivityIndicator, StyleSheet, View,
+  ActivityIndicator, RefreshControl, StyleSheet, View,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
+import Animated from 'react-native-reanimated';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -36,9 +37,10 @@ const NotificationSettings = () => {
     email = undefined,
   } = useNotiSettingsStore((state) => state.data);
   const loading = useNotiSettingsStore((state) => state.loading);
+  const isRefreshing = useNotiSettingsStore((state) => state.isRefreshing);
 
   const onRefresh = () => {
-    actions.getConfigSettings();
+    actions.getConfigSettings(true);
   };
 
   const onPressToggle = (isChecked: boolean) => {
@@ -129,9 +131,21 @@ const NotificationSettings = () => {
       backgroundColor={colors.gray5}
     >
       <Header title={t('notification:notification_settings:title')} />
-      <ViewSpacing height={spacing.padding.large} />
-      {Boolean(generic) && !Boolean(loading)
-        ? renderContainer() : renderEmpty()}
+      <Animated.ScrollView
+        style={styles.flex1}
+        showsVerticalScrollIndicator={false}
+        scrollEventThrottle={16}
+        refreshControl={(
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={onRefresh}
+          />
+        )}
+      >
+        <ViewSpacing height={spacing.padding.large} />
+        {Boolean(generic) && !Boolean(loading)
+          ? renderContainer() : renderEmpty()}
+      </Animated.ScrollView>
     </ScreenWrapper>
   );
 };
