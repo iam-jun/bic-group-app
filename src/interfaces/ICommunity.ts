@@ -161,3 +161,8 @@ export interface IRequestLeaveCommunity {
   rootGroupId: string,
   communityId: string,
 }
+
+export interface IRequestCancelJoinCommunity {
+  rootGroupId: string,
+  communityId: string,
+}

@@ -2,6 +2,7 @@ import {
   IRequestJoinCommunity,
   IRequestUpdateCommunityJoinSetting,
   IRequestLeaveCommunity,
+  IRequestCancelJoinCommunity,
 } from '~/interfaces/ICommunity';
 import { IGroupDetailEdit } from '~/interfaces/IGroup';
 import {
@@ -19,7 +20,7 @@ interface ICommunityController {
   actions: {
     leaveCommunity: (payload: IRequestLeaveCommunity) => void;
     joinCommunity: (payload: IRequestJoinCommunity) => void;
-    cancelJoinCommunity: (rootGroupId: string) => void;
+    cancelJoinCommunity: (payload: IRequestCancelJoinCommunity) => void;
     updateCommunityJoinSetting: (payload: IRequestUpdateCommunityJoinSetting) => void;
     editCommunityDetail: (data: IGroupDetailEdit, callback?: () => void) => Promise<void>;
     assignCommunityAdmin: (id: string, userId: string) => void;

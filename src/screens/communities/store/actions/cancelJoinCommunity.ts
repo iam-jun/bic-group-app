@@ -2,18 +2,19 @@ import approveDeclineCode from '~/constants/approveDeclineCode';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import useCommunitiesStore from '~/store/entities/communities';
 import groupApi from '~/api/GroupApi';
-import { ICommunity } from '~/interfaces/ICommunity';
+import { ICommunity, IRequestCancelJoinCommunity } from '~/interfaces/ICommunity';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 import showToastError from '~/store/helper/showToastError';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 const cancelJoinCommunity
-  = (_set, _get) => async (rootGroupId: string) => {
+  = (_set, _get) => async (payload: IRequestCancelJoinCommunity) => {
+    const { communityId, rootGroupId } = payload;
     try {
       const response = await groupApi.cancelJoinCommunity(rootGroupId);
 
       useCommunitiesStore.getState().actions.updateCommunity(
-        rootGroupId,
+        communityId,
         { joinStatus: GroupJoinStatus.VISITOR } as ICommunity,
       );
 
