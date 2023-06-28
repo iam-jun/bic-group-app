@@ -119,6 +119,10 @@ const UserProfile = (props: any) => {
     }
   }, [myProfileData]);
 
+  const handleEditBadge = () => {
+    userBadgeActions.setIsEditing(true);
+  };
+
   const uploadCallback = (fieldName: string) => {
     setIsChangeImg(fieldName);
   };
@@ -233,7 +237,7 @@ const UserProfile = (props: any) => {
             isCurrentUser={isCurrentUser}
             isVerified={isVerified}
             showingBadges={showingBadges}
-            handleEditBadge={() => setSelectedIndex(1)}
+            handleEditBadge={handleEditBadge}
           />
           <Divider color={colors.gray5} size={spacing.padding.large} />
           {Boolean(isCurrentUser) && (
