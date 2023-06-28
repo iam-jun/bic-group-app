@@ -48,6 +48,7 @@ export const checkPermission = async (
   isShowAlertFailed = true,
 ) : Promise<boolean> => {
   const permissions = RequestPermissionType[type][Platform.OS];
+  let canOpenPicker = false;
 
   try {
     const result = await check(permissions);
@@ -56,13 +57,11 @@ export const checkPermission = async (
       if (result === RESULTS.DENIED) {
         const request = await requestPermission(type);
         if (request === RESULTS.GRANTED || request === RESULTS.LIMITED) {
-          callback(true);
-        } else {
-          callback(false);
+          canOpenPicker = true;
         }
       }
 
-      if (isShowAlertFailed) {
+      if (result === RESULTS.BLOCKED && isShowAlertFailed) {
         const payload: IPayloadShowModal = {
           isOpen: true,
           closeOutSide: false,
@@ -79,16 +78,16 @@ export const checkPermission = async (
         };
         useModalStore.getState().actions.showModal(payload);
       }
-
-      callback(false);
     } else {
-      callback(true);
+      canOpenPicker = true;
     }
+    callback(canOpenPicker);
   } catch (error) {
     console.error(
       '>>>>>>>CHECK PERMISSION ERROR>>>>>', error,
     );
-    callback(false);
+    canOpenPicker = false;
+    callback(canOpenPicker);
   }
   return false;
 };
