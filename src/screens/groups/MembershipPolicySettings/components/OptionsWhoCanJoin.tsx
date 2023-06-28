@@ -1,5 +1,5 @@
 import { t } from 'i18next';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
@@ -53,11 +53,17 @@ const OptionsWhoCanJoin: FC<Props> = (props) => {
   // @ts-ignore
   const isInDefaultGroupSet = data?.isInDefaultGroupSet;
 
-  const [selectedOption, setSelectedOption] = useState<IOption>(
-    isInvitedOnly ? OPTIONS[IdType.ONLY_INVITED_PEOPLE] : OPTIONS[IdType.ANYONE],
-  );
+  const [selectedOption, setSelectedOption] = useState(null);
   const [isVisibleTooltip, setIsVisibleTooltip] = useState<boolean>(false);
   const [heightView, setHeightView] = useState<number>(0);
+
+  useEffect(() => {
+    if (isInvitedOnly) {
+      setSelectedOption(OPTIONS[IdType.ONLY_INVITED_PEOPLE]);
+    } else {
+      setSelectedOption(OPTIONS[IdType.ANYONE]);
+    }
+  }, [isInvitedOnly]);
 
   const onPress = (option: IOption) => {
     if (option.id === selectedOption.id) return;
