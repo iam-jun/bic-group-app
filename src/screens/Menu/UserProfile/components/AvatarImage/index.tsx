@@ -2,7 +2,6 @@ import { StyleSheet, View } from 'react-native';
 
 import React from 'react';
 import Avatar from '~/baseComponents/Avatar';
-import images from '~/resources/images';
 import EditButton from '../EditButton';
 
 interface Props {
@@ -20,7 +19,7 @@ const AvatarImage = ({
     <View testID="user_profile.avatar_image" style={styles.container}>
       <View>
         <Avatar.XLarge
-          source={avatar || images.img_user_avatar_default}
+          source={avatar}
           isRounded
           showBorder
         />
