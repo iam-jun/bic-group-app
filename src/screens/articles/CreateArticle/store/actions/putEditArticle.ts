@@ -5,7 +5,6 @@ import { rootNavigationRef } from '~/router/refs';
 import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
 import useArticlesStore from '~/screens/articles/ArticleDetail/store';
 import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
-// import showToastError from '~/store/helper/showToastError';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
 import { PostType } from '~/interfaces/IPost';

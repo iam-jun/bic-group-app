@@ -646,6 +646,7 @@
       "content_confirm": "Bạn có chắc muốn xoá?"
     },
     "tags_maximum_message_info": "Chỉ có thể chọn tối đa 5 tags",
+    "series_maximum_message_info": "Chỉ có thể chọn tối đa 3 Series",
     "text_add_title": "Thêm tiêu đề",
     "text_title_require_max_length": "Tối đa 64 ký tự",
     "text_description_require_max_length": "Tối đa 255 ký tự",

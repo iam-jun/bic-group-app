@@ -685,6 +685,7 @@
       "content_confirm": "Are you sure you want to remove communities / groups?"
     },
     "tags_maximum_message_info": "Maxium input 5 Tags",
+    "series_maximum_message_info": "Maxium input 3 Series",
     "text_add_title": "Add title",
     "text_title_require_max_length": "Maximum 64 characters",
     "text_description_require_max_length": "Maximum 255 characters",
