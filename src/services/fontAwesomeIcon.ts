@@ -216,6 +216,7 @@ import { faUserLargeSlash as faUserLargeSlashSolid } from '@fortawesome/pro-soli
 import { faChevronDown } from '@fortawesome/pro-regular-svg-icons/faChevronDown';
 import { faChevronUp } from '@fortawesome/pro-regular-svg-icons/faChevronUp';
 import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons';
+import { faRotate as faRotateSolid } from '@fortawesome/pro-solid-svg-icons/faRotate';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -452,6 +453,7 @@ export const initFontAwesomeIcon = () => {
     faChevronDown,
     faChevronUp,
     faBadgeCheck,
+    faRotateSolid,
   );
 };
 
@@ -673,6 +675,7 @@ export const fontAwesomeIcons = {
   ChevronDown: 'fa-regular fa-chevron-down',
   ChevronUp: 'fa-regular fa-chevron-up',
   BadgeCheck: 'fa-solid fa-badge-check',
+  RotateSolid: 'fa-solid fa-rotate',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

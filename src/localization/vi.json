@@ -1430,6 +1430,9 @@
     "title_describe_question_answer_display": "Nhập số lượng câu hỏi và câu trả lời hiển thị cho người dùng trên mỗi câu hỏi trong bài quiz",
     "cannot_exceed_the_number_of_questions_above": "Không thể lớn hơn số câu hỏi ở trên",
     "cannot_exceed_the_number_of_answers_above": "Không thể lớn hơn số câu trả lời ở trên",
-    "title_check_generate_random_quiz": "Bạn có muốn tạo câu hỏi và câu trả lời ngẫu nhiên không?"
+    "title_check_generate_random_quiz": "Bạn có muốn tạo câu hỏi và câu trả lời ngẫu nhiên không?",
+    "the_question": "Câu hỏi",
+    "question": "Câu hỏi",
+    "successfully_created_a_quiz": "Tạo quiz thành công"
   }
 }

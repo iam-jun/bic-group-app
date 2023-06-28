@@ -7,8 +7,9 @@ import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import showAlert from '~/store/helper/showAlert';
 import useMyPermissionsStore from '~/store/permissions';
-import { showAlertAudienceListWithNoPermissionQuiz } from '../helper';
+import { buildGenerateQuizParams, showAlertAudienceListWithNoPermissionQuiz } from '../helper';
 import { FormGenerateQuiz } from '~/interfaces/IQuiz';
+import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 
 const useGenerateQuiz = (postId: string) => {
   const { t } = useBaseHook();
@@ -23,8 +24,8 @@ const useGenerateQuiz = (postId: string) => {
     defaultValues: {
       title: '',
       description: '',
-      numberOfQuestions: null,
-      numberOfAnswers: null,
+      numberOfQuestions: '10', // use string instead of number for display in input text
+      numberOfAnswers: '4', // use string instead of number for display in input text
       numberOfQuestionsDisplay: null,
       numberOfAnswersDisplay: null,
     },
@@ -43,7 +44,6 @@ const useGenerateQuiz = (postId: string) => {
 
   const enabledBtnNext = isValid;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const checkPermissions = async (data: FormGenerateQuiz) => {
     await getMyPermissions();
     const audienceListWithNoPermissionQuiz = getAudienceListWithNoPermission(
@@ -56,7 +56,8 @@ const useGenerateQuiz = (postId: string) => {
         audienceListWithNoPermissionQuiz,
       );
     } else {
-      // do next
+      const params = buildGenerateQuizParams(data, postId);
+      rootNavigation.navigate(quizStack.composeQuiz, params);
     }
   };
 

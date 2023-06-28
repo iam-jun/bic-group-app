@@ -1,2 +1,2 @@
-export { SubmitFormQuiz } from './GenerateQuiz';
-export { ComposeQuiz } from './GenerateQuiz';
+export { default as SubmitFormQuiz } from './SubmitFormQuiz';
+export { default as ComposeQuiz } from './ComposeQuiz';

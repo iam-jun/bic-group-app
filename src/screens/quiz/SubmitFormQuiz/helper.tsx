@@ -5,6 +5,7 @@ import { IAudience } from '~/interfaces/IPost';
 import Text from '~/baseComponents/Text';
 import showAlert from '~/store/helper/showAlert';
 import { spacing } from '~/theme';
+import { FormGenerateQuiz, GenerateQuizParams } from '~/interfaces/IQuiz';
 
 export const showAlertAudienceListWithNoPermissionQuiz = (audiences: IAudience[]) => {
   const lstAudienceNamesNotPermit = audiences
@@ -23,6 +24,32 @@ export const showAlertAudienceListWithNoPermissionQuiz = (audiences: IAudience[]
     cancelBtn: true,
   };
   showAlert(alertPayload);
+};
+
+export const buildGenerateQuizParams = (data: FormGenerateQuiz, contentId: string): GenerateQuizParams => {
+  const {
+    title,
+    description,
+    numberOfQuestions,
+    numberOfAnswers,
+    numberOfQuestionsDisplay,
+    numberOfAnswersDisplay,
+  } = data;
+  const params: GenerateQuizParams = {
+    title: title.trim(),
+    description: description.trim(),
+    numberOfQuestions: Number(numberOfQuestions),
+    numberOfAnswers: Number(numberOfAnswers),
+    numberOfQuestionsDisplay: !!numberOfQuestionsDisplay
+      ? Number(numberOfQuestionsDisplay)
+      : undefined,
+    numberOfAnswersDisplay: !!numberOfAnswersDisplay
+      ? Number(numberOfAnswersDisplay)
+      : undefined,
+    contentId,
+    isRandom: true,
+  };
+  return params;
 };
 
 const styles = StyleSheet.create({

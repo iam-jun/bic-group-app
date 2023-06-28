@@ -41,7 +41,7 @@ import {
 } from '~/interfaces/ISeries';
 import { IParamGetReportContent, IParamsReportContent } from '~/interfaces/IReport';
 import { CreateTag, EditTag, IParamGetCommunityTags } from '~/interfaces/ITag';
-import { GenerateQuizParams } from '~/interfaces/IQuiz';
+import { EditQuizParams, GenerateQuizParams, RegenerateQuizParams } from '~/interfaces/IQuiz';
 
 const DEFAULT_LIMIT = 10;
 
@@ -539,6 +539,18 @@ export const streamApiConfig = {
     method: 'post',
     data: params,
   }),
+  regenerateQuiz: (idQuiz: string, params?: RegenerateQuizParams): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${idQuiz}/generate`,
+    method: 'put',
+    data: params,
+  }),
+  editQuiz: (idQuiz: string, params: EditQuizParams): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${idQuiz}`,
+    method: 'put',
+    data: params,
+  }),
 };
 
 const streamApi = {
@@ -814,6 +826,12 @@ const streamApi = {
   ),
   generateQuiz: (params: GenerateQuizParams) => withHttpRequestPromise(
     streamApiConfig.generateQuiz, params,
+  ),
+  regenerateQuiz: (idQuiz: string, params?: RegenerateQuizParams) => withHttpRequestPromise(
+    streamApiConfig.regenerateQuiz, idQuiz, params,
+  ),
+  editQuiz: (idQuiz: string, params: EditQuizParams) => withHttpRequestPromise(
+    streamApiConfig.editQuiz, idQuiz, params,
   ),
 };
 

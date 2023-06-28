@@ -1489,6 +1489,9 @@
     "title_describe_question_answer_display": "Enter the number of questions and answer options that will be displayed to the user for each question during the quiz",
     "cannot_exceed_the_number_of_questions_above": "This number cannot exceed the number of questions above",
     "cannot_exceed_the_number_of_answers_above": "This number cannot exceed the number of answers above",
-    "title_check_generate_random_quiz": "Do you want to randomize the questions and answers or not?"
+    "title_check_generate_random_quiz": "Do you want to randomize the questions and answers or not?",
+    "the_question": "The question",
+    "question": "Question",
+    "successfully_created_a_quiz": "Successfully created a quiz"
   }
 }

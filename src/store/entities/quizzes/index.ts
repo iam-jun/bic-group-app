@@ -1,7 +1,11 @@
-import { GenerateQuizParams, IQuiz } from '~/interfaces/IQuiz';
+import {
+  EditQuizActionsParams, GenerateQuizParams, IQuiz, RegenerateQuizParams,
+} from '~/interfaces/IQuiz';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
 import generateQuiz from './actions/generateQuiz';
+import regenerateQuiz from './actions/regenerateQuiz';
+import editQuiz from './actions/editQuiz';
 
 export interface IQuizzesState extends IBaseState {
     loading: boolean;
@@ -11,6 +15,8 @@ export interface IQuizzesState extends IBaseState {
     }
     actions: {
         generateQuiz: (params: GenerateQuizParams) => void;
+        regenerateQuiz: (idQuiz: string, params?: RegenerateQuizParams) => void;
+        editQuiz: (params: EditQuizActionsParams) => void;
         addOrUpdateQuiz: (quiz: IQuiz) => void;
         removeQuiz: (contentId: string) => void;
     }
@@ -26,6 +32,8 @@ const quizzesStore = (set, get): IQuizzesState => ({
   ...initState,
   actions: {
     generateQuiz: generateQuiz(set, get),
+    regenerateQuiz: regenerateQuiz(set, get),
+    editQuiz: editQuiz(set, get),
     addOrUpdateQuiz: (quiz: IQuiz) => {
       const { contentId } = quiz;
       set((state: IQuizzesState) => {
