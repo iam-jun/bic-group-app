@@ -4,6 +4,7 @@ import { ExtendedTheme, useRoute, useTheme } from '@react-navigation/native';
 import { useRootNavigation } from '~/hooks/navigation';
 import { Button } from '~/baseComponents';
 import HeaderPinContentItem from '../HeaderPinContentItem';
+import FooterPinContentItem from '../FooterPinContentItem';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import spacing, { borderRadius } from '~/theme/spacing';
 import { IPost } from '~/interfaces/IPost';
@@ -33,7 +34,10 @@ const PinArticleView: React.FC<PinArticleViewProps> = ({
   const { name } = useRoute();
   const isReorderScreen = name === homeStack.reorderedPinContent;
 
-  const { title, summary } = data || {};
+  const {
+    title, summary, reactionsCount, commentsCount, setting,
+  } = data || {};
+  const { canComment, canReact } = setting || {};
 
   const goToDetail = () => {
     rootNavigation.navigate(articleStack.articleContentDetail, { articleId: data?.id });
@@ -53,6 +57,15 @@ const PinArticleView: React.FC<PinArticleViewProps> = ({
     </View>
   );
 
+  const renderFooter = () => (
+    <FooterPinContentItem
+      reactionsCount={reactionsCount}
+      commentsCount={commentsCount}
+      canComment={canComment}
+      canReact={canReact}
+    />
+  );
+
   return (
     <Button
       style={[styles.container, isActiveAnimation && elevations.e2]}
@@ -61,6 +74,7 @@ const PinArticleView: React.FC<PinArticleViewProps> = ({
     >
       <HeaderPinContentItem data={data} isAdmin={isAdmin} id={id} />
       {renderContent()}
+      {renderFooter()}
       {isReorderScreen && <Draggable />}
     </Button>
   );
@@ -74,7 +88,7 @@ const createStyles = (theme: ExtendedTheme) => {
       backgroundColor: colors.white,
       borderWidth: 1,
       borderRadius: borderRadius.large,
-      borderColor: colors.purple5,
+      borderColor: colors.purple50,
       flex: 1,
     },
     content: {
@@ -82,8 +96,7 @@ const createStyles = (theme: ExtendedTheme) => {
       backgroundColor: colors.purple2,
       paddingHorizontal: spacing.padding.large,
       paddingVertical: spacing.padding.base,
-      borderBottomLeftRadius: borderRadius.large,
-      borderBottomRightRadius: borderRadius.large,
+      marginBottom: spacing.margin.small,
     },
     boxSummary: {
       flex: 1,

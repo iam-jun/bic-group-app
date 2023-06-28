@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View, FlatList, StyleSheet,
 } from 'react-native';
 import dimension from '~/theme/dimension';
 import { IUserBadge } from '~/interfaces/IEditUser';
 import GridItem from './GridItem';
+import useUserBadge from './store';
 
 const ITEM_WIDTH = 48; // Constant item width
 const ITEM_MARGIN = 6; // Constant item margin
@@ -12,12 +13,14 @@ const CONTAINER_PADDING = 10; // Constant container padding
 
 interface Props {
   data: IUserBadge[];
+  isNew?: boolean;
   disabled?: boolean;
+  shouldHideBadgeNew?: boolean;
   onPress: (item: IUserBadge, isSelected: boolean) => void;
 }
 
 const Grid = ({
-  data, disabled = false, onPress,
+  data, isNew = false, disabled = false, shouldHideBadgeNew = false, onPress,
 }:Props) => {
   const numColumns = Math.floor((dimension.deviceWidth - CONTAINER_PADDING * 2) / (ITEM_WIDTH + ITEM_MARGIN * 2));
   const CONTAINER_PADDING_PLUS = (
@@ -25,16 +28,23 @@ const Grid = ({
     - numColumns * (ITEM_WIDTH + ITEM_MARGIN * 2)
     - CONTAINER_PADDING * 2) / 2;
 
+  const actions = useUserBadge((state) => state.actions);
+
+  useEffect(() => {
+    if (Boolean(isNew)) {
+      actions.markNewBadgeInCommunity(data);
+    }
+  }, [isNew, data]);
+
   if (data.length === 0) {
     return null;
   }
 
-  const renderGridItem = ({ item, index }: any) => (
+  const renderGridItem = ({ item }: any) => (
     <GridItem
-      item={item}
-      numColumns={numColumns}
-      index={index}
+      id={item.id}
       disabled={disabled}
+      shouldHideBadgeNew={shouldHideBadgeNew}
       onPress={onPress}
     />
   );

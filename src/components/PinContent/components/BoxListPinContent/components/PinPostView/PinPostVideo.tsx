@@ -3,7 +3,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { Image, View, StyleSheet } from 'react-native';
 import Icon from '~/baseComponents/Icon';
 import { getThumbnailImageLink } from '~/helpers/post';
-import { borderRadius } from '~/theme/spacing';
+import spacing from '~/theme/spacing';
 
 const ASPECT_RATIO = 0.9;
 
@@ -53,7 +53,6 @@ const PinPostVideo: React.FC<PinPostVideoProps> = ({
         style={[
           styles.posterVideo,
           isVertical && styles.widthVerticle,
-          !isVertical && styles.borderRadiusBottom,
         ]}
       />
       {renderPlayButton()}
@@ -65,6 +64,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    marginBottom: spacing.margin.small,
   },
   posterVideo: {
     width: '100%',
@@ -73,17 +73,11 @@ const styles = StyleSheet.create({
   widthVerticle: {
     width: '46%',
   },
-  borderRadiusBottom: {
-    borderBottomLeftRadius: borderRadius.large,
-    borderBottomRightRadius: borderRadius.large,
-  },
   blurImageBg: {
     position: 'absolute',
     top: 0,
     width: '100%',
     height: '100%',
-    borderBottomLeftRadius: borderRadius.large,
-    borderBottomRightRadius: borderRadius.large,
   },
   boxButtonPlay: {
     zIndex: 2,

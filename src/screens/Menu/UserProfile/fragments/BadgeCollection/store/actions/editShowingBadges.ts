@@ -9,7 +9,7 @@ import { IUserProfile } from '~/interfaces/IAuth';
 
 const editShowingBadges = (set, get) => async () => {
   try {
-    const { choosingBadges = [] }:IUserBadgesState = get();
+    const { choosingBadges = [], ownBadges }:IUserBadgesState = get();
     const ids = [];
     const showingBadges = [];
 
@@ -36,6 +36,8 @@ const editShowingBadges = (set, get) => async () => {
       state.loadingEditing = false;
       state.isEditing = false;
       state.showingBadges = showingBadges;
+      state.choosingBadges = showingBadges;
+      state.dataSearch = ownBadges;
     }, 'editShowingBadgesSuccess');
 
     const { myProfile } = useCommonController.getState();
