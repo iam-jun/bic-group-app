@@ -1,5 +1,4 @@
 import approveDeclineCode from '~/constants/approveDeclineCode';
-import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import useCommunitiesStore from '~/store/entities/communities';
 import groupApi from '~/api/GroupApi';
 import { ICommunity, IRequestCancelJoinCommunity } from '~/interfaces/ICommunity';
@@ -15,7 +14,7 @@ const cancelJoinCommunity
 
       useCommunitiesStore.getState().actions.updateCommunity(
         communityId,
-        { joinStatus: GroupJoinStatus.VISITOR } as ICommunity,
+        { joinStatus: response?.data?.joinStatus } as ICommunity,
       );
 
       showToastSuccess(response);
