@@ -47,7 +47,7 @@ const ComputeLayout = ({ offsets, onReady }: ComputeLayoutsProps) => {
       { offsets.map((_, index) => (
         <View
           key={`compute.${index}`}
-          style={[styles.item, { opacity: 0 }]}
+          style={styles.item}
           onLayout={(e) => { onLayout(e, index); }}
         >
           <ShowingBadgesItem index={index} />
@@ -66,12 +66,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   item: {
-    marginHorizontal: 8,
-    borderRadius: 8,
+    marginHorizontal: spacing.margin.small,
     width: BADGE_WIDTH,
     height: BADGE_WIDTH,
     alignItems: 'center',
     justifyContent: 'center',
+    opacity: 0,
   },
 });
 
