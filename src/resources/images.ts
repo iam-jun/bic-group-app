@@ -20,6 +20,7 @@ const images = {
   logo_beincomm_reverse: require('../../assets/images/logo_beincomm_reverse.png'),
   img_thumbnail_default: require('../../assets/images/img_thumbnail_default.png'),
   no_image_avalable: require('../../assets/images/no_image_avalable.png'),
+  img_thumbnail_take_part_in_a_quiz: require('../../assets/images/img_thumbnail_take_part_in_a_quiz.png'),
 };
 
 export default images;

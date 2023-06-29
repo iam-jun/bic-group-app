@@ -6,6 +6,7 @@ import { ITag } from './ITag';
 import { IReportDetail } from './IReport';
 import { IGroup } from './IGroup';
 import { IUserBadge } from '~/interfaces/IEditUser';
+import { QuizPost } from './IQuiz';
 
 export enum PostType {
   POST = 'POST',
@@ -72,6 +73,7 @@ export interface IPost {
   isHidden?: boolean;
   publishedAt?: string;
   wordCount?: number;
+  quiz?: QuizPost;
 }
 
 export interface IPostAudience {

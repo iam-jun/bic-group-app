@@ -25,6 +25,7 @@ import useCommunitiesStore from '~/store/entities/communities';
 import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import TagsView from '~/components/TagsView';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import TakePartInAQuiz from '~/components/quiz/TakePartInAQuiz';
 
 export interface PostBodyProps {
   data: IPost;
@@ -44,7 +45,7 @@ const _PostBody: FC<PostBodyProps> = ({
   const { rootNavigation } = useRootNavigation();
 
   const {
-    id: postId, mentions, status, media, content: postContent, highlight, linkPreview, totalUsersSeen, tags,
+    id: postId, mentions, status, media, content: postContent, highlight, linkPreview, totalUsersSeen, tags, quiz,
   } = data;
 
   const { images, videos, files } = media || {};
@@ -170,6 +171,7 @@ const _PostBody: FC<PostBodyProps> = ({
           collapsible={!isPostDetail}
         />
         {showLinkPreviewer && <LinkPreview data={linkPreview} />}
+        {!!quiz && <TakePartInAQuiz quiz={quiz} />}
       </>
     </View>
   );
