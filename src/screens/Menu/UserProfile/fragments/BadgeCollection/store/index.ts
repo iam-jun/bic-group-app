@@ -20,6 +20,7 @@ export interface IUserBadgesState extends IBaseState {
   dataSearch: ICommunityBadges[];
   showingBadges: IUserBadge[];
   choosingBadges: IUserBadge[];
+  choosingBadgesOrder: number[];
   totalBadges: number;
   badges: {[key: string]: IUserBadge},
   error: any;
@@ -30,6 +31,8 @@ export interface IUserBadgesState extends IBaseState {
     fillChoosingBadges: (badge: IUserBadge) => void;
     removeChoosingBadges: (index: number) => void;
     cancleSaveBadges: () => void;
+    reorderChoosingBadgesOrder: (from: number, to: number) => void;
+    resetChoosingBadgesOrder: () => void;
     getOwnedBadges: () => void;
     editShowingBadges: () => void;
     searchBadges: (textSearch: string) => void;
@@ -51,6 +54,7 @@ const initState: InitStateType<IUserBadgesState> = {
   badges: {},
   error: null,
   totalBadges: 0,
+  choosingBadgesOrder: [0, 1, 2],
 };
 
 const userBadge = (set, get) => ({
@@ -90,18 +94,26 @@ const userBadge = (set, get) => ({
       }, 'setShowingBadges');
     },
     fillChoosingBadges: (badge: IUserBadge) => {
-      const badges = get().choosingBadges;
-      const index = badges.findIndex((b) => !b);
-      if (index === -1) return;
+      const { choosingBadges, choosingBadgesOrder } = get();
+      let needFillOrder = -1;
+      for (let index = 0; index < choosingBadgesOrder.length; index++) {
+        const order = choosingBadgesOrder[index];
+        if (!choosingBadges[order]) {
+          needFillOrder = order;
+          break;
+        }
+      }
+
+      if (needFillOrder === -1) return;
       const newBadges = [];
-      badges.forEach((item, i) => {
-        if (i === index) newBadges.push(badge);
+      choosingBadges.forEach((item, i) => {
+        if (i === needFillOrder) newBadges.push(badge);
         else newBadges.push(item);
       });
 
       set((state: IUserBadgesState) => {
         state.choosingBadges = newBadges;
-      }, `fillChoosingBadges_index_${index}`);
+      }, `fillChoosingBadges_index_${needFillOrder}`);
     },
     removeChoosingBadges: (index: number) => {
       const badges = get().choosingBadges;
@@ -112,7 +124,7 @@ const userBadge = (set, get) => ({
       });
 
       set((state: IUserBadgesState) => {
-        state.choosingBadges = newBadges;
+        state.choosingBadges = [...newBadges];
       }, `removeChoosingBadges_index_${index}`);
     },
     cancleSaveBadges: () => {
@@ -124,6 +136,20 @@ const userBadge = (set, get) => ({
         state.isEditing = false;
         state.dataSearch = ownBadges;
       }, 'cancleSaveBadges');
+    },
+    reorderChoosingBadgesOrder: (from: number, to: number) => {
+      const { choosingBadgesOrder } = get();
+      const newBadges = [...choosingBadgesOrder];
+      const badge = newBadges.splice(from, 1);
+      newBadges.splice(to, 0, badge[0]);
+      set((state: IUserBadgesState) => {
+        state.choosingBadgesOrder = newBadges;
+      }, 'reorderChoosingBadgesOrder');
+    },
+    resetChoosingBadgesOrder: () => {
+      set((state: IUserBadgesState) => {
+        state.choosingBadgesOrder = initState.choosingBadgesOrder;
+      }, 'resetChoosingBadgesOrder');
     },
     getOwnedBadges: getOwnedBadges(set, get),
     editShowingBadges: editShowingBadges(set, get),
