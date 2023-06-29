@@ -40,6 +40,8 @@ export interface IQuiz extends GenerateQuizParams {
   updatedAt?: string;
 }
 
+export type QuizPost = Pick<IQuiz, 'id' | 'title' | 'description' | 'status' | 'createdAt' | 'updatedAt'>
+
 export type EditQuizParams = Partial<Omit<IQuiz, 'id'>>;
 
 export type EditQuizActionsParams = {

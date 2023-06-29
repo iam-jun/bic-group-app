@@ -215,6 +215,7 @@ import { faRectangleHistory } from '@fortawesome/pro-regular-svg-icons/faRectang
 import { faUserLargeSlash as faUserLargeSlashSolid } from '@fortawesome/pro-solid-svg-icons/faUserLargeSlash';
 import { faChevronDown } from '@fortawesome/pro-regular-svg-icons/faChevronDown';
 import { faChevronUp } from '@fortawesome/pro-regular-svg-icons/faChevronUp';
+import { faChevronRight } from '@fortawesome/pro-regular-svg-icons/faChevronRight';
 import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons';
 import { faRotate as faRotateSolid } from '@fortawesome/pro-solid-svg-icons/faRotate';
 
@@ -454,6 +455,7 @@ export const initFontAwesomeIcon = () => {
     faChevronUp,
     faBadgeCheck,
     faRotateSolid,
+    faChevronRight,
   );
 };
 
@@ -676,6 +678,7 @@ export const fontAwesomeIcons = {
   ChevronUp: 'fa-regular fa-chevron-up',
   BadgeCheck: 'fa-solid fa-badge-check',
   RotateSolid: 'fa-solid fa-rotate',
+  ChevronRight: 'fa-regular fa-chevron-right',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(
