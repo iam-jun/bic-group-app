@@ -538,12 +538,14 @@ export const streamApiConfig = {
     url: `${provider.url}quizzes`,
     method: 'post',
     data: params,
+    timeout: 1000 * 60 * 5, // 5 minutes
   }),
   regenerateQuiz: (idQuiz: string, params?: RegenerateQuizParams): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}quizzes/${idQuiz}/generate`,
     method: 'put',
     data: params,
+    timeout: 1000 * 60 * 5, // 5 minutes
   }),
   editQuiz: (idQuiz: string, params: EditQuizParams): HttpApiRequestConfig => ({
     ...defaultConfig,
