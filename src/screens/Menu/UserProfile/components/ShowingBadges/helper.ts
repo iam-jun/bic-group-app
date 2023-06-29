@@ -10,6 +10,7 @@ type SharedValues<T extends Record<string, string | number | boolean>> = {
 };
 export type Offset = SharedValues<{
   order: number;
+  initOrder: number;
   currentOrder: number;
   width: number;
   height: number;
