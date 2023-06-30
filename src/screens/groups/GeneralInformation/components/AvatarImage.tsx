@@ -36,7 +36,8 @@ const AvatarImage = ({
           <Image
             testID="avatar.image"
             style={styles.avatar}
-            source={avatar || images.img_user_avatar_default}
+            source={avatar}
+            placeholderSource={images.img_user_avatar_default}
             usePixelWidth
           />
         ) : (

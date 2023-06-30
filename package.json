@@ -75,6 +75,7 @@
     "@react-native-community/netinfo": "6.0.4",
     "@react-native-community/slider": "^4.3.0",
     "@react-native-firebase/app": "17.0.0",
+    "@react-native-firebase/analytics": "17.0.0",
     "@react-native-firebase/messaging": "17.0.0",
     "@react-native-firebase/remote-config": "17.0.0",
     "@react-navigation/bottom-tabs": "^6.3.2",

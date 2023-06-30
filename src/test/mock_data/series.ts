@@ -333,3 +333,36 @@ export const searchSeriesRequestParams = {
   groupIds: ['e4b06eda-94d6-42d0-8829-d5380bc8f95b',
     'e4b8bf37-a218-4f73-bdfd-60b6b329852b'],
 };
+
+export const seriesWithItemsResponse = {
+  code: 'api.ok',
+  data: {
+    series: [
+      {
+        id: '69a74407-023f-468e-a463-4bc1ebcd4bf7',
+        title: 'Navigate next or previous content in a series 01',
+        type: 'SERIES',
+        items: [
+          {
+            id: 'b7a13ec4-e1f5-48fe-bd9f-2953b0d44e78',
+            title: 'Article 05 - Vị trí số 4 của series 01, 02, 03',
+            type: 'ARTICLE',
+          },
+          {
+            id: 'c46bb2fb-61d6-4981-bde0-d54d12ea7e13',
+            title: 'Article 06 - Vị trí số 5 của series 01+02, không thuộc series 03',
+            type: 'ARTICLE',
+          },
+          {
+            id: '087c8e1f-86a1-4e87-a2f2-e8fcf015b52e',
+            title: '许诺',
+            type: 'ARTICLE',
+          },
+        ],
+      },
+    ],
+  },
+  meta: {
+    message: 'OK',
+  },
+};
