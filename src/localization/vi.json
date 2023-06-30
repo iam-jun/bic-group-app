@@ -1067,6 +1067,7 @@
     "content_scheduled_maintenance_downtime": "Chúng tôi sẽ cải thiện nền tảng để nâng cao trải nghiệm của bạn. Trong quá trình bảo trì, các tính năng có thể không khả dụng hoặc bị hạn chế.\n \nThời gian bảo trì bắt đầu lúc **(startAt)** trong khoảng **(duration)**.\n \nChúng tôi xin lỗi vì bất kỳ sự bất tiện nào và đánh giá cao sự hỗ trợ liên tục của bạn.",
     "text_bic_team": "BIC team",
     "text_remove_notification": "Xóa thông báo này",
+    "text_remove_notification_success": "Đã xóa thông báo thành công",
     "notification_settings": {
       "title": "Cài đặt thông báo",
       "description": "Chúng tôi vẫn có thể gửi cho bạn thông báo quan trọng về tài khoản của bạn ngoài cài đặt của bạn",

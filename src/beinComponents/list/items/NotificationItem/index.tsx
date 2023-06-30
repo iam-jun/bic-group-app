@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { isEmpty } from 'lodash';
 import { useTheme, ExtendedTheme } from '@react-navigation/native';
+import Animated, { FadeOutDown } from 'react-native-reanimated';
 import Icon from '~/baseComponents/Icon';
 
 import NotificationAvatar from './NotificationAvatar';
@@ -57,10 +58,10 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   if (!id || isEmpty(itemValue)) return null;
 
   const {
-    isRead, updatedAt, extra, actorCount,
+    isRead, updatedAt, extra, actorCount, deleted,
   }: any = itemValue || {};
 
-  if (isEmpty(itemValue)) return null;
+  if (isEmpty(itemValue) || Boolean(deleted)) return null;
 
   const checkShowAvatar = () => {
     if (!extra?.type) return false;
@@ -70,60 +71,62 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   const showAvatar = checkShowAvatar();
 
   return (
-    <ButtonWrapper
-      testID={testID}
-      onPress={() => {
-        onPress && onPress(itemValue);
-      }}
-      style={[
-        styles.container,
-        {
-          backgroundColor: isRead ? theme.colors.white : theme.colors.purple1,
-        },
-      ]}
-    >
-      {showAvatar ? (
-        <View style={styles.flex1}>
-          <NotificationAvatar
-            actors={extra.actors}
-            actorCount={actorCount}
-          />
+    <Animated.View exiting={FadeOutDown}>
+      <ButtonWrapper
+        testID={testID}
+        onPress={() => {
+          onPress && onPress(itemValue);
+        }}
+        style={[
+          styles.container,
+          {
+            backgroundColor: isRead ? theme.colors.white : theme.colors.purple1,
+          },
+        ]}
+      >
+        {showAvatar ? (
+          <View style={styles.flex1}>
+            <NotificationAvatar
+              actors={extra.actors}
+              actorCount={actorCount}
+            />
+            <NotificationContent
+              isRead={isRead}
+              description={extra?.description || ''}
+              content={extra?.content || ''}
+              updatedAt={updatedAt}
+            />
+          </View>
+        ) : (
           <NotificationContent
             isRead={isRead}
             description={extra?.description || ''}
             content={extra?.content || ''}
             updatedAt={updatedAt}
+            type={extra.type}
           />
-        </View>
-      ) : (
-        <NotificationContent
-          isRead={isRead}
-          description={extra?.description || ''}
-          content={extra?.content || ''}
-          updatedAt={updatedAt}
-          type={extra.type}
-        />
-      )}
-      <ButtonWrapper
-        testID="notification.menu_button"
-        style={styles.icon}
-        activeOpacity={0.2}
-        onPress={(e: any) => onPressOption && onPressOption({ e, item: itemValue })}
-        hitSlop={{
-          bottom: 20,
-          left: 20,
-          right: 20,
-          top: 20,
-        }}
-      >
-        <Icon
-          icon="menu"
-          size={20}
-          tintColor={colors.neutral40}
-          testID="notification.menu_button.icon"
-        />
+        )}
+        <ButtonWrapper
+          testID="notification.menu_button"
+          style={styles.icon}
+          activeOpacity={0.2}
+          onPress={(e: any) => onPressOption && onPressOption({ e, item: itemValue })}
+          hitSlop={{
+            bottom: 20,
+            left: 20,
+            right: 20,
+            top: 20,
+          }}
+        >
+          <Icon
+            icon="menu"
+            size={20}
+            tintColor={colors.neutral40}
+            testID="notification.menu_button.icon"
+          />
+        </ButtonWrapper>
       </ButtonWrapper>
-    </ButtonWrapper>
+    </Animated.View>
   );
 };
 

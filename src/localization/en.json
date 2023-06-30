@@ -1124,6 +1124,7 @@
     "content_scheduled_maintenance_downtime": "We’ll improve the platform to enhance your experience. During maintenance, it may be temporarily unavailable or have limited functionality.\n \nMaintenance will start at **(startAt)** in about **(duration)**.\n \nWe apologize for any inconvenience and appreciate your continued support.",
     "text_bic_team": "BIC team",
     "text_remove_notification": "Remove this notification",
+    "text_remove_notification_success": "Notification removed successfully",
     "notification_settings": {
       "title": "Notification Settings",
       "description": "We may still send you important notification about your account outside of your settings",
