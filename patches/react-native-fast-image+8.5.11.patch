@@ -1,11 +1,37 @@
 diff --git a/node_modules/react-native-fast-image/android/build.gradle b/node_modules/react-native-fast-image/android/build.gradle
-index 5b21cd5..79ae370 100644
+index 5b21cd5..23b4162 100644
 --- a/node_modules/react-native-fast-image/android/build.gradle
 +++ b/node_modules/react-native-fast-image/android/build.gradle
 @@ -65,4 +65,6 @@ dependencies {
      implementation "com.github.bumptech.glide:glide:${glideVersion}"
      implementation "com.github.bumptech.glide:okhttp3-integration:${glideVersion}"
-     annotationProcessor "com.github.bumptech.glide:compiler:${glideVersion}" 
+     annotationProcessor "com.github.bumptech.glide:compiler:${glideVersion}"
 +    //support animated png/webp
 +    implementation 'com.github.penfeizhou.android.animation:glide-plugin:2.17.0'
  }
+diff --git a/node_modules/react-native-fast-image/dist/index.cjs.js b/node_modules/react-native-fast-image/dist/index.cjs.js
+index 2a49562..a5ea25a 100644
+--- a/node_modules/react-native-fast-image/dist/index.cjs.js
++++ b/node_modules/react-native-fast-image/dist/index.cjs.js
+@@ -93,7 +93,7 @@ FastImage.resizeMode = resizeMode;
+ FastImage.cacheControl = cacheControl;
+ FastImage.priority = priority;
+ 
+-FastImage.preload = sources => FastImageViewNativeModule.preload(sources);
++FastImage.preload = sources => FastImageViewNativeModule?.preload?.(sources);
+ 
+ FastImage.clearMemoryCache = () => FastImageViewNativeModule.clearMemoryCache();
+ 
+diff --git a/node_modules/react-native-fast-image/dist/index.js b/node_modules/react-native-fast-image/dist/index.js
+index 1fc0e9d..33c1ee6 100644
+--- a/node_modules/react-native-fast-image/dist/index.js
++++ b/node_modules/react-native-fast-image/dist/index.js
+@@ -86,7 +86,7 @@ FastImage.resizeMode = resizeMode;
+ FastImage.cacheControl = cacheControl;
+ FastImage.priority = priority;
+ 
+-FastImage.preload = sources => FastImageViewNativeModule.preload(sources);
++FastImage.preload = sources => FastImageViewNativeModule?.preload?.(sources);
+ 
+ FastImage.clearMemoryCache = () => FastImageViewNativeModule.clearMemoryCache();
+ 

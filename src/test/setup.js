@@ -344,3 +344,27 @@ jest.doMock('expo-av', () => ({
 global.ReanimatedDataMock = {
   now: () => 0,
 };
+
+jest.mock('~/router/helper', () => ({
+  __esModule: true,
+  default: {
+    withNavigation: jest.fn().mockReturnValue({
+      navigate: jest.fn(),
+      replace: jest.fn(),
+    }),
+  },
+  withNavigation: jest.fn().mockReturnValue({
+    navigate: jest.fn(),
+    replace: jest.fn(),
+  }),
+}));
+
+jest.mock('mixpanel-react-native', () => ({
+  __esModule: true,
+  default: () => jest.fn(),
+  Mixpanel: jest.fn(() => ({
+    init: jest.fn(),
+    getPeople: () => ({ set: jest.fn() }),
+    reset: jest.fn(),
+  })),
+}));
