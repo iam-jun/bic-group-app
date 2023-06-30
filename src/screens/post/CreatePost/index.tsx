@@ -91,7 +91,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   }
     = disableButtonsCreatePostFooter;
 
-  const isCreatingNewPost = !screenParams?.postId || screenParams?.draftPostId;
+  const isCreatingNewPost = checkIsCreatingNewPost(screenParams);
 
   const buttonPostProps = {
     loading,
@@ -172,8 +172,8 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     savePost({
       disableNavigate: false,
       replaceWithDetail: screenParams.replaceWithDetail,
-      msgSuccess: isCreatingNewPost ? 'post:draft:text_draft_post_published' : 'post:text_edit_post_success',
       isPublish: true,
+      isCreatingNewPost,
     });
   };
 
@@ -284,3 +284,10 @@ const themeStyles = (theme: ExtendedTheme) => {
 };
 
 export default CreatePost;
+
+const checkIsCreatingNewPost = (screenParams: ICreatePostParams) => {
+  if (!screenParams?.postId || screenParams?.draftPostId) {
+    return true;
+  }
+  return false;
+};

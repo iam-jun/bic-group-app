@@ -23,8 +23,8 @@ export interface LoadMoreCommentProps {
   title: string;
   postId: string;
   commentId?: string;
-  idLessThan?: string;
-  idGreaterThan?: string;
+  endCursor?: string;
+  startCursor?: string;
   onPress?: () => void;
 }
 
@@ -34,8 +34,8 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
   title,
   postId,
   commentId,
-  idLessThan,
-  idGreaterThan,
+  endCursor,
+  startCursor,
   onPress,
 }: LoadMoreCommentProps) => {
   const [loadingMore, setLoadingMore] = useState(false);
@@ -82,7 +82,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
         onPress();
         return;
       }
-      if (idLessThan || idGreaterThan) {
+      if (endCursor || startCursor) {
         setLoadingMore(true);
         setTimeout(
           () => {
@@ -90,8 +90,8 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
               params: {
                 postId,
                 order: 'DESC',
-                idLt: idLessThan,
-                idGt: idGreaterThan,
+                endCursor,
+                startCursor,
                 parentId: commentId,
               },
               callbackLoading: (loading) => setLoadingMore(loading),
@@ -99,7 +99,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
           }, 150,
         );
       }
-    }, [commentId, idLessThan, idGreaterThan],
+    }, [commentId, endCursor, startCursor],
   );
 
   return (

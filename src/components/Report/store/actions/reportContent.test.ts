@@ -2,8 +2,8 @@ import StreamApi from '~/api/StreamApi';
 import { act, renderHook } from '~/test/testUtils';
 import useReportContentStore from '../index';
 import { TargetType, ReportTo } from '~/interfaces/IReport';
-import useModalStore from '~/store/modal';
-import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import * as showToastError from '~/store/helper/showToastError';
+import * as showToastSuccess from '~/store/helper/showToastSuccess';
 
 describe('reportContent', () => {
   afterEach(() => {
@@ -38,6 +38,8 @@ describe('reportContent', () => {
     targetType: TargetType.CHILD_COMMENT,
   };
 
+  const spyShowToastSuccess = jest.spyOn(showToastSuccess, 'default');
+
   it('should call api reportContent success and show toast success', () => {
     const response = {
       code: 201,
@@ -48,9 +50,6 @@ describe('reportContent', () => {
     const spy = jest.spyOn(StreamApi, 'reportContent').mockImplementation(
       () => Promise.resolve(response) as any,
     );
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useReportContentStore((state) => state));
@@ -63,9 +62,7 @@ describe('reportContent', () => {
       jest.runAllTimers();
     });
 
-    expect(showToast).toBeCalledWith({
-      content: 'common:text_report_sent',
-    });
+    expect(spyShowToastSuccess).toBeCalled();
   });
 
   it('should call api reportContent success with type COMMNENT', () => {
@@ -78,9 +75,6 @@ describe('reportContent', () => {
     const spy = jest.spyOn(StreamApi, 'reportContent').mockImplementation(
       () => Promise.resolve(response) as any,
     );
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useReportContentStore((state) => state));
@@ -93,9 +87,7 @@ describe('reportContent', () => {
       jest.runAllTimers();
     });
 
-    expect(showToast).toBeCalledWith({
-      content: 'common:text_report_sent',
-    });
+    expect(spyShowToastSuccess).toBeCalled();
   });
 
   it('should call api reportContent success with type CHILD COMMNENT', () => {
@@ -108,9 +100,6 @@ describe('reportContent', () => {
     const spy = jest.spyOn(StreamApi, 'reportContent').mockImplementation(
       () => Promise.resolve(response) as any,
     );
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useReportContentStore((state) => state));
@@ -123,9 +112,7 @@ describe('reportContent', () => {
       jest.runAllTimers();
     });
 
-    expect(showToast).toBeCalledWith({
-      content: 'common:text_report_sent',
-    });
+    expect(spyShowToastSuccess).toBeCalled();
   });
 
   it('should call api reportContent error and throw error', () => {
@@ -138,9 +125,7 @@ describe('reportContent', () => {
     const spy = jest.spyOn(StreamApi, 'reportContent').mockImplementation(
       () => Promise.reject(error) as any,
     );
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
+    const spyShowToastError = jest.spyOn(showToastError, 'default');
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useReportContentStore((state) => state));
@@ -153,9 +138,6 @@ describe('reportContent', () => {
       jest.runAllTimers();
     });
 
-    expect(showToast).toBeCalledWith({
-      content: 'common:text_error_message',
-      type: ToastType.ERROR,
-    });
+    expect(spyShowToastError).toBeCalled();
   });
 });

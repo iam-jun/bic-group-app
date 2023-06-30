@@ -87,6 +87,8 @@ const UserInterestedPost: FC<UserInterestedPostProps> = ({ postId }) => {
         subTitle={`@${item?.item?.username}`}
         subTitleProps={{ variant: 'bodyS' }}
         isVerified={item?.item?.isVerified}
+        showingBadges={item?.item?.showingBadges}
+        isTopAdjustmentBadges={false}
       />
     );
   };

@@ -4,7 +4,7 @@ import IBaseState from '~/store/interfaces/IBaseState';
 
 export interface IArticleController extends IBaseState {
   actions: {
-    deleteArticle: (id: string, successMessage?: string) => void;
+    deleteArticle: (id: string) => void;
   }
 }
 

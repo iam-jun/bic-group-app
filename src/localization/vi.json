@@ -209,7 +209,8 @@
     "text_pull_to_refresh": "Vui lòng kéo xuống để làm mới trang hoặc thử lại sau",
     "text_answer_title": "Câu hỏi dành cho thành viên",
     "text_answer_input_placeholder": "Viết câu trả lời của bạn",
-    "text_send_request_join_successfully": "Gửi yêu cầu thành công"
+    "text_send_request_join_successfully": "Gửi yêu cầu thành công",
+    "text_new": "Mới"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -614,6 +615,7 @@
     "text_select_cover": "Chọn ảnh bìa",
     "text_search_category_placeholder": "Tìm lựa chọn của bạn...",
     "text_edit_article_success": "Cập nhật bài viết thành công",
+    "text_article_saved_to_draft": "Đã lưu bài viết vào Bản nháp",
     "menu": {
       "edit": "Chỉnh sửa bài viết",
       "copy_link": "Sao chép đường dẫn",
@@ -662,7 +664,10 @@
     "successful_schedule": "Đặt lịch thành công",
     "text_delete_article_success": "Bài viết của bạn đã được xoá",
     "paste_image_error": "Tải lên không thành công. Vui lòng tải lên hình ảnh bằng thanh công cụ.",
-    "text_selecting_will_be_added_to": "Bài viết của bạn sẽ được thêm vào"
+    "text_selecting_will_be_added_to": "Bài viết của bạn sẽ được thêm vào",
+    "reading_time": "Thời gian đọc",
+    "about_time": "khoảng",
+    "minute": "phút"
   },
   "post": {
     "news_feed": "News Feed",
@@ -678,6 +683,7 @@
     "label_seen_by": "Quan tâm bởi ",
     "button_like": "Thích",
     "button_reply": "Trả lời",
+    "button_reply_count": "{{count}} trả lời",
     "button_react": "Tương tác",
     "button_comment": "Bình luận",
     "button_image": "Ảnh",
@@ -1333,7 +1339,9 @@
     "text_remove_article": "Bạn muốn xoá bài báo này?",
     "text_remove_post": "Bạn muốn xoá bài viết này?",
     "text_article_removed": "Bài viết đã được xoá",
-    "text_no_content": "Không có nội dung"
+    "text_no_content": "Không có nội dung",
+    "this_content_is_in_the_following_series": "Nội dung này trong các series dưới đây",
+    "text_untitled": "Không có tiêu đề"
   },
   "tags": {
     "create_tag": "Tạo thẻ",
@@ -1409,7 +1417,10 @@
     },
     "owned_badges": {
       "title": "Danh sách huy hiệu",
-      "description": "Huy hiệu bạn nhận được từ các cộng đồng bạn đã tham gia"
-    }
+      "description": "Huy hiệu bạn nhận được từ các cộng đồng bạn đã tham gia",
+      "total_badges": "((total) huy hiệu)",
+      "search_placeholder": "Tìm huy hiệu theo tên"
+    },
+    "edit_showing_badges_title": "Chỉnh sửa huy hiệu đang hiển thị"
   }
 }

@@ -40,7 +40,7 @@ describe('useHomeStore hook', () => {
     result.current.actions.setDataFeed(feedData);
     const feed = result.current.feed[ContentFeed.ALL][AttributeFeed.ALL];
     expect(feed.data.length).toBe(feedData.data.length);
-    expect(feed.canLoadMore).toBe(feedData.canLoadMore);
+    expect(feed.hasNextPage).toBe(feedData.canLoadMore);
     expect(feed.isLoading).toBe(feedData.isLoading);
     expect(feed.refreshing).toBe(feedData.refreshing);
   });
@@ -51,7 +51,7 @@ describe('useHomeStore hook', () => {
     result.current.actions.setDataFeed(feedData, ContentFeed.ARTICLE, AttributeFeed.ALL);
     const feed = result.current.feed[ContentFeed.ARTICLE][AttributeFeed.ALL];
     expect(feed.data.length).toBe(feedData.data.length);
-    expect(feed.canLoadMore).toBe(feedData.canLoadMore);
+    expect(feed.hasNextPage).toBe(feedData.canLoadMore);
     expect(feed.isLoading).toBe(feedData.isLoading);
     expect(feed.refreshing).toBe(feedData.refreshing);
   });
@@ -71,7 +71,7 @@ describe('useHomeStore hook', () => {
     const feed = result.current.feed[ContentFeed.ALL][AttributeFeed.ALL];
 
     expect(feed.data.length).toBe(2);
-    expect(feed.canLoadMore).toBe(true);
+    expect(feed.hasNextPage).toBe(true);
     expect(feed.isLoading).toBe(false);
     expect(feed.refreshing).toBe(false);
   });

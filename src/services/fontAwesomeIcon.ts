@@ -220,6 +220,8 @@ import { faAt } from '@fortawesome/pro-regular-svg-icons/faAt';
 import { faThumbsUp } from '@fortawesome/pro-regular-svg-icons/faThumbsUp';
 import { faGrid2 } from '@fortawesome/pro-regular-svg-icons/faGrid2';
 import { faWindow } from '@fortawesome/pro-regular-svg-icons/faWindow';
+import { faCaretDown as faCaretDownSolid } from '@fortawesome/pro-solid-svg-icons/faCaretDown';
+import { faCaretRight as faCaretRightSolid } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -461,6 +463,8 @@ export const initFontAwesomeIcon = () => {
     faThumbsUp,
     faGrid2,
     faWindow,
+    faCaretDownSolid,
+    faCaretRightSolid,
   );
 };
 
@@ -687,6 +691,8 @@ export const fontAwesomeIcons = {
   ThumbsUp: 'fa-regular fa-thumbs-up',
   Grid2: 'fa-regular fa-grid-2',
   Window: 'fa-regular fa-window',
+  CaretDownSolid: 'fa-solid fa-caret-down',
+  CaretRightSolid: 'fa-solid fa-caret-right',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

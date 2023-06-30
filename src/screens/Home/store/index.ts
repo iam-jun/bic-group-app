@@ -7,7 +7,8 @@ const DEFAULT_DATA: IHomeFeed = {
   isLoading: false,
   refreshing: false,
   data: [],
-  canLoadMore: true,
+  hasNextPage: true,
+  endCursor: null,
 };
 
 const initFeed = Object.values(ContentFeed).reduce((acc, valueContentFeed) => {

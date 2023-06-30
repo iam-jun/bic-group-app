@@ -19,6 +19,7 @@ import { withNavigation } from '~/router/helper';
 import {
   getAudienceIdsFromAudienceObject,
   isEmptyContent,
+  countWordsFromContent,
 } from '~/screens/articles/CreateArticle/helper';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import { getMentionsFromContent } from '~/helpers/post';
@@ -35,6 +36,7 @@ import useModalStore from '~/store/modal';
 import { PermissionKey } from '~/constants/permissionScheme';
 import { PostStatus, PostType } from '~/interfaces/IPost';
 import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 interface IHandleSaveOptions {
   isShowLoading?: boolean;
@@ -73,7 +75,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     (state) => state.actions,
   );
 
-  const { showToast, showAlert } = useModalStore((state) => state.actions);
+  const { showAlert } = useModalStore((state) => state.actions);
 
   const [isShowToastAutoSave, setShowToastAutoSave] = useState<boolean>(false);
 
@@ -101,6 +103,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
 
   // auto save for draft article, so no need to check if content is empty
   const isDraftContentUpdated = article.content !== data.content;
+  const canAutoSave = isDraft && isDraftContentUpdated;
 
   const isHasChange = () => {
     // self check at src/screens/articles/CreateArticle/screens/CreateArticleContent/index.tsx
@@ -182,7 +185,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     const initData = {
       isImportant: (!!notExpired || isNever) && settings?.isImportant,
       importantExpiredAt: !!notExpired ? settings?.importantExpiredAt : null,
-      canShare: settings?.canShare,
+      // canShare: settings?.canShare,
       canReact: settings?.canReact,
       canComment: settings?.canComment,
     };
@@ -205,6 +208,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
       status,
       publishedAt,
       setting,
+      wordCount,
     } = article;
 
     const audienceIds: IEditArticleAudience
@@ -222,6 +226,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
       series,
       tags,
       setting: initSettings(setting),
+      wordCount,
     };
     actions.setData(data);
     const isDraft = [
@@ -249,6 +254,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
 
   const handleContentChange = (newContent: string) => {
     actions.setContent(newContent);
+    actions.setWordCount(countWordsFromContent(newContent));
   };
 
   const handleTitleChange = (newTitle: string) => {
@@ -305,7 +311,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
 
   useEffect(() => {
     // only auto save for draft article
-    if (isDraft && isDraftContentUpdated) {
+    if (canAutoSave) {
       debounceStopTyping();
       debounceTypingConstantly();
     }
@@ -382,12 +388,12 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
 
     const payload: IPayloadPublishDraftArticle = {
       draftArticleId: data.id,
-      onSuccess: () => {
-        showToast({ content: 'post:draft:text_draft_article_published' });
+      onSuccess: (res) => {
         goToArticleDetail();
         useScheduleArticlesStore
           .getState()
           .actions.getScheduleArticles({ isRefresh: true });
+        showToastSuccess(res);
       },
       onError: (error) => validateSeriesTagsActions.handleSeriesTagsError({
         error,
