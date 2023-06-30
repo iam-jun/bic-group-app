@@ -7,7 +7,9 @@ import usePostsStore from '~/store/entities/posts';
 import { IArticlesState } from '..';
 
 const getArticleDetail = (set, get) => async (payload: IPayloadGetArticleDetail) => {
-  const { articleId: id, isReported, isAdmin, isDraft = false } = payload || {};
+  const {
+    articleId: id, isReported, isAdmin, isDraft = false,
+  } = payload || {};
   const { requestings }: IArticlesState = get();
 
   if (requestings[id]) return;
