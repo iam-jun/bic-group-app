@@ -55,7 +55,11 @@ const UserBadge = ({
           isVisible={Boolean(isVisibleIndex === index)}
           key={`badge_showing_item_empty_tooltip_${index}`}
           content={(
-            <Text.SubtitleS color={colors.white} useI18n>user:badge_tooltip_placeholder</Text.SubtitleS>
+            <View style={styles.row}>
+              <ViewSpacing width={spacing.margin.small} />
+              <Text.SubtitleS color={colors.white} useI18n>user:badge_tooltip_placeholder</Text.SubtitleS>
+              <ViewSpacing width={spacing.margin.small} />
+            </View>
           )}
           placement={placement}
           backgroundColor="transparent"
@@ -142,6 +146,7 @@ const themeStyles = (theme: ExtendedTheme) => {
       paddingVertical: spacing.padding.tiny,
       paddingHorizontal: spacing.padding.xSmall,
     },
+    row: { flexDirection: 'row' },
   });
 };
 
