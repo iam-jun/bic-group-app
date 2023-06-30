@@ -40,7 +40,13 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
       response = await streamApi.putEditArticle(articleId, params);
     }
 
-    useArticlesStore.getState().actions.getArticleDetail({ articleId });
+    // after edit article success, get article detail again with isDraft
+    // if isDraft, get article detail without comments
+    useArticlesStore.getState().actions.getArticleDetail({ articleId, isDraft });
+    useScheduleArticlesStore.getState().actions.getScheduleArticles({
+      isRefresh: true,
+      isShowToast: false,
+    });
 
     set((state: ICreateArticleState) => {
       state.loading = false;
@@ -50,7 +56,6 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
       showToastSuccess(response, 'article:text_edit_article_success');
     }
     onSuccess?.();
-    useScheduleArticlesStore.getState().actions.getScheduleArticles({ isRefresh: true });
     if (isNavigateBack) {
       navigation.goBack();
     }
