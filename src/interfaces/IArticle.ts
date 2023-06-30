@@ -150,6 +150,7 @@ export interface IPayloadGetScheduleArticles {
   isRefresh?: boolean;
   offset?: number;
   isProcessing?: boolean;
+  isShowToast?: boolean;
 }
 
 export interface IPayloadGetArticleScheduleContent {
@@ -169,4 +170,5 @@ export interface IPayloadGetArticleDetail {
   articleId: string;
   isReported?: boolean;
   isAdmin?: boolean;
+  isDraft?: boolean;
 }
