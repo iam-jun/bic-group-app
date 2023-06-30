@@ -22,6 +22,7 @@ const Post = {
   POST_NO_READ_PERMISSION: 'post.no_read_permission',
   ARTICLE_NO_READ_PERMISSION: 'article.no_read_permission',
   COMMENT_IS_REPORTED_AND_DELETED: 'comment.reported_and_deleted',
+  QUIZ_NO_CRUD_PERMISSION_AT_GROUP: 'quiz.no_crud_permission_at_group',
 };
 
 const Group = {

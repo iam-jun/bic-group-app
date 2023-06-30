@@ -1,3 +1,5 @@
+import { IAudienceGroup } from './IPost';
+
 export enum QuizStatus {
   PENDING = 'PENDING',
   DRAFT = 'DRAFT',
@@ -47,5 +49,6 @@ export type EditQuizParams = Partial<Omit<IQuiz, 'id'>>;
 export type EditQuizActionsParams = {
   idQuiz: string;
   params: EditQuizParams;
+  audiences?: IAudienceGroup[];
   onSuccess?: (response: IQuiz) => void;
 };
