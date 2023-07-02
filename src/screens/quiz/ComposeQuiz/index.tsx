@@ -24,6 +24,8 @@ import { useRootNavigation } from '~/hooks/navigation';
 import TitleDescriptionComposeQuiz from './components/TitleDescriptionComposeQuiz';
 import QuestionComposeQuiz from './components/QuestionComposeQuiz';
 import showToast from '~/store/helper/showToast';
+import postsSelector from '~/store/entities/posts/selectors';
+import usePostsStore from '~/store/entities/posts';
 
 type ComposeQuizProps = {
   route?: {
@@ -41,6 +43,10 @@ const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
+
+  const post = usePostsStore(postsSelector.getPost(contentId, {}));
+  const { audience } = post;
+  const { groups = [] } = audience || {};
 
   const isGenerating = useQuizzesStore((state) => state.isGenerating);
   const loading = useQuizzesStore((state) => state.loading);
@@ -108,6 +114,7 @@ const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
       params: {
         status: QuizStatus.PUBLISHED,
       },
+      audiences: groups,
       onSuccess,
     };
     actionsQuizzesStore.editQuiz(editQuizActionsParams);

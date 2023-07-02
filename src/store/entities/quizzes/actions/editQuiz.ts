@@ -3,9 +3,13 @@ import streamApi from '~/api/StreamApi';
 import showToastError from '~/store/helper/showToastError';
 import usePostsStore from '../../posts';
 import { EditQuizActionsParams } from '~/interfaces/IQuiz';
+import APIErrorCode from '~/constants/apiErrorCode';
+import { showAlertAudienceListWithNoPermissionQuiz } from '~/screens/quiz/SubmitFormQuiz/helper';
 
 const editQuiz = (set, get) => async (editQuizActionsParams: EditQuizActionsParams) => {
-  const { idQuiz, params, onSuccess } = editQuizActionsParams;
+  const {
+    idQuiz, params, audiences = [], onSuccess,
+  } = editQuizActionsParams;
   try {
     const { actions }: IQuizzesState = get();
     set((state: IQuizzesState) => {
@@ -31,7 +35,19 @@ const editQuiz = (set, get) => async (editQuizActionsParams: EditQuizActionsPara
     set((state: IQuizzesState) => {
       state.loading = false;
     }, 'editQuiz');
-    showToastError(error);
+
+    const errorCode = error?.code;
+    if (errorCode === APIErrorCode.Post.QUIZ_NO_CRUD_PERMISSION_AT_GROUP) {
+      const deniedGroups = error?.meta?.errors?.groupsDenied || [];
+
+      const lstAudiencesNotPermit = audiences
+        .filter((audience) => deniedGroups.some((grIds) => grIds === audience?.id));
+      showAlertAudienceListWithNoPermissionQuiz(
+        lstAudiencesNotPermit,
+      );
+    } else {
+      showToastError(error);
+    }
   }
 };
 
