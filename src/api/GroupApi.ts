@@ -451,10 +451,6 @@ export const groupsApiConfig = {
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/membership-questions`,
   }),
-  getUserNotFoundInfo: (email: string) : HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}/public/users/${email}/verify`,
-  }),
   getOwnedBadges: () : HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}/me/owned-badges`,
@@ -746,7 +742,6 @@ const groupApi = {
   validateReferralCode: (param: IParamValidateReferralCode) => withHttpRequestPromise(groupsApiConfig.validateReferralCode, param),
   getGroupTerms: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getGroupTerms, groupId),
   getMembershipQuestions: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getMembershipQuestions, groupId),
-  getUserNotFoundInfo: (email: string) => withHttpRequestPromise(groupsApiConfig.getUserNotFoundInfo, email),
   getOwnedBadges: () => withHttpRequestPromise(groupsApiConfig.getOwnedBadges),
   putShowingBadges: (badgeIds: string[]) => withHttpRequestPromise(groupsApiConfig.putShowingBadges, badgeIds),
   markNewBadge: (badgeIds: string[]) => withHttpRequestPromise(groupsApiConfig.markNewBadge, badgeIds),
