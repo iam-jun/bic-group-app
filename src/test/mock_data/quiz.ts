@@ -123,3 +123,236 @@ export const postWithQuiz = {
     message: 'OK',
   },
 };
+
+export const mockGenerateQuizResponse = {
+  code: 'api.ok',
+  data: {
+    id: '47279515-8d41-41e8-935c-d3d07293489b',
+    contentId: '2f1bb8bb-84ac-46ed-9a0e-c254487e3520',
+    status: 'DRAFT',
+    title: 'hu',
+    description: null,
+    numberOfQuestions: 10,
+    numberOfQuestionsDisplay: 10,
+    numberOfAnswers: 4,
+    numberOfAnswersDisplay: 4,
+    isRandom: true,
+    questions: [
+      {
+        question: 'Con mèo biết làm gì?',
+        answers: [
+          {
+            answer: 'Biết bơi',
+            isCorrect: false,
+          },
+          {
+            answer: 'Biết sửa cơ điện',
+            isCorrect: false,
+          },
+          {
+            answer: 'Biết trèo cây',
+            isCorrect: true,
+          },
+          {
+            answer: 'Biết lái ô tô',
+            isCorrect: false,
+          },
+        ],
+      },
+      {
+        question: 'Mèo là động vật thuộc họ nào?',
+        answers: [
+          {
+            answer: 'Họ mèo',
+            isCorrect: true,
+          },
+          {
+            answer: 'Họ chó',
+            isCorrect: false,
+          },
+          {
+            answer: 'Họ báo',
+            isCorrect: false,
+          },
+          {
+            answer: 'Họ chuột',
+            isCorrect: false,
+          },
+        ],
+      },
+      {
+        question: 'Mèo có bao nhiêu chân?',
+        answers: [
+          {
+            answer: '2 chân',
+            isCorrect: false,
+          },
+          {
+            answer: '3 chân',
+            isCorrect: false,
+          },
+          {
+            answer: '4 chân',
+            isCorrect: true,
+          },
+          {
+            answer: '5 chân',
+            isCorrect: false,
+          },
+        ],
+      },
+      {
+        question: 'Cây cau là loại cây gì?',
+        answers: [
+          {
+            answer: 'Cây cỏ',
+            isCorrect: false,
+          },
+          {
+            answer: 'Cây hoa',
+            isCorrect: false,
+          },
+          {
+            answer: 'Cây thân gỗ',
+            isCorrect: true,
+          },
+          {
+            answer: 'Cây xương rồng',
+            isCorrect: false,
+          },
+        ],
+      },
+      {
+        question: 'Con mèo có móng vuốt dài hay ngắn?',
+        answers: [
+          {
+            answer: 'Dài',
+            isCorrect: true,
+          },
+          {
+            answer: 'Ngắn',
+            isCorrect: false,
+          },
+          {
+            answer: 'Không có móng vuốt',
+            isCorrect: false,
+          },
+          {
+            answer: 'Móng vuốt giống chó',
+            isCorrect: false,
+          },
+        ],
+      },
+      {
+        question: 'Còn gọi mèo là gì?',
+        answers: [
+          {
+            answer: 'Mèu',
+            isCorrect: false,
+          },
+          {
+            answer: 'Mỡ',
+            isCorrect: false,
+          },
+          {
+            answer: 'Móc',
+            isCorrect: false,
+          },
+          {
+            answer: 'Miu',
+            isCorrect: true,
+          },
+        ],
+      },
+      {
+        question: 'Mèo có ai thức ăn yêu thích?',
+        answers: [
+          {
+            answer: 'Rau củ',
+            isCorrect: false,
+          },
+          {
+            answer: 'Hamburger',
+            isCorrect: false,
+          },
+          {
+            answer: 'Cà phê',
+            isCorrect: false,
+          },
+          {
+            answer: 'Cá',
+            isCorrect: true,
+          },
+        ],
+      },
+      {
+        question: 'Mèo là động vật hoang dã hay nuôi trong nhà?',
+        answers: [
+          {
+            answer: 'Hoang dã',
+            isCorrect: false,
+          },
+          {
+            answer: 'Nhà',
+            isCorrect: false,
+          },
+          {
+            answer: 'Đều được',
+            isCorrect: true,
+          },
+          {
+            answer: 'Không thể xác định',
+            isCorrect: false,
+          },
+        ],
+      },
+      {
+        question: 'Mèo có màu lông gì?',
+        answers: [
+          {
+            answer: 'Màu trắng',
+            isCorrect: false,
+          },
+          {
+            answer: 'Màu đen',
+            isCorrect: false,
+          },
+          {
+            answer: 'Màu nâu',
+            isCorrect: false,
+          },
+          {
+            answer: 'Tất cả các màu trên',
+            isCorrect: true,
+          },
+        ],
+      },
+      {
+        question: 'Con mèo có khả năng nào sau đây?',
+        answers: [
+          {
+            answer: 'Bay',
+            isCorrect: false,
+          },
+          {
+            answer: 'Biết nói',
+            isCorrect: false,
+          },
+          {
+            answer: 'Nhảy cao',
+            isCorrect: true,
+          },
+          {
+            answer: 'Đói mãi không no',
+            isCorrect: false,
+          },
+        ],
+      },
+    ],
+    createdAt: '2023-07-02T16:50:29.182Z',
+    updatedAt: '2023-07-02T16:50:54.127Z',
+  },
+  meta: {
+    message: 'Created quiz successfully',
+  },
+};
