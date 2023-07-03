@@ -1,42 +1,42 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   View, StyleSheet, FlatList, ScrollView,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import { IArticleSettingsParams } from '~/interfaces/IArticle';
+import { IArticleSettingsScreenParams } from '~/interfaces/IArticle';
 import Header from '~/beinComponents/Header';
-import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
 import useArticleSettings from '~/screens/articles/CreateArticle/screens/CreateArticleSettings/useArticleSettings';
 import spacing from '~/theme/spacing';
 import { useBackPressListener } from '~/hooks/navigation';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import { timeSuggest } from '~/constants/importantTimeSuggest';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import MarkImportant from '~/components/ImportantSettings/MarkImportant';
+import MarkImportant from '~/components/ContentSettings/MarkImportant';
 import images from '~/resources/images';
+import useCreateArticleStore from '../../store';
+import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
+import useCreateArticle from '../../hooks/useCreateArticle';
 
 interface CreateArticleSettingsProps {
-    route?: {
-        params?: IArticleSettingsParams;
-    };
+  route?: {
+    params?: IArticleSettingsScreenParams;
+  };
 }
 
 const CreateArticleSettings = ({ route }: CreateArticleSettingsProps) => {
-  const { articleId } = route?.params || {};
+  const { articleId, isFromArticleMenuSettings } = route?.params || {};
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
   const audienceSheetRef = useRef<any>();
   const expireTimeSheetRef = useRef<any>();
 
-  const {
-    handleBack,
-    handleSave,
-    enableButtonSave,
-    loading,
-    audiencesWithNoPermission: listAudiencesWithoutPermission,
-  } = useCreateArticle({ articleId });
+  const resetEditArticleStore = useCreateArticleStore((state) => state.reset);
+  const resetMentionInputStore = useMentionInputStore((state) => state.reset);
+
+  const { audiencesWithNoPermission: listAudiencesWithoutPermission }
+    = useCreateArticle({ articleId });
 
   const {
     sImportant,
@@ -48,9 +48,13 @@ const CreateArticleSettings = ({ route }: CreateArticleSettingsProps) => {
     handleChangeSuggestDate,
     getMinDate,
     getMaxDate,
-  } = useArticleSettings({ articleId, listAudiencesWithoutPermission });
+    disableButtonSave,
+    loading,
+    handleSaveSettings,
+    handleBack,
+  } = useArticleSettings({ articleId });
 
-  const disabled = !enableButtonSave || loading;
+  const disabled = disableButtonSave || loading;
 
   useBackPressListener(handleBack);
 
@@ -68,21 +72,28 @@ const CreateArticleSettings = ({ route }: CreateArticleSettingsProps) => {
   };
 
   const renderItem = ({
-    item, titleProps, onPress = undefined, showAvatar = true,
-  }:
-    {item: any, titleProps?: any, showAvatar?:boolean, onPress?: any}) => (
-      <PrimaryItem
-        title={item?.name || item.title}
-        showAvatar={showAvatar}
-        avatar={showAvatar ? (item?.icon || images.img_user_avatar_default) : null}
-        titleProps={titleProps}
-        onPress={onPress}
-      />
+    item,
+    titleProps,
+    onPress = undefined,
+    showAvatar = true,
+  }: {
+    item: any;
+    titleProps?: any;
+    showAvatar?: boolean;
+    onPress?: any;
+  }) => (
+    <PrimaryItem
+      title={item?.name || item.title}
+      showAvatar={showAvatar}
+      avatar={showAvatar ? item?.icon || images.img_user_avatar_default : null}
+      titleProps={titleProps}
+      onPress={onPress}
+    />
   );
 
-  const renderAudienceItem = ({ item }: {item:any}) => renderItem({ item, titleProps: { variant: 'subtitleM' } });
+  const renderAudienceItem = ({ item }: { item: any }) => renderItem({ item, titleProps: { variant: 'subtitleM' } });
 
-  const renderExpireTimeItem = ({ item }: {item:any}) => renderItem({
+  const renderExpireTimeItem = ({ item }: { item: any }) => renderItem({
     item,
     showAvatar: false,
     titleProps: { variant: 'bodyM', color: colors.neutral60 },
@@ -109,6 +120,16 @@ const CreateArticleSettings = ({ route }: CreateArticleSettingsProps) => {
     />
   );
 
+  useEffect(
+    () => () => {
+      if (isFromArticleMenuSettings) {
+        resetEditArticleStore();
+        resetMentionInputStore();
+      }
+    },
+    [],
+  );
+
   return (
     <ScreenWrapper isFullView backgroundColor={colors.neutral1}>
       <Header
@@ -116,7 +137,7 @@ const CreateArticleSettings = ({ route }: CreateArticleSettingsProps) => {
         title="common:settings"
         buttonProps={{ disabled, loading, style: styles.btnSave }}
         buttonText="common:btn_save"
-        onPressButton={handleSave}
+        onPressButton={handleSaveSettings}
         onPressBack={handleBack}
         removeBorderAndShadow
         style={styles.header}

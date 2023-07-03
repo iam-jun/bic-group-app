@@ -58,8 +58,8 @@ export const useSavePost = () => {
     video: selectingVideo,
     files: selectingFiles,
     important,
-    canComment,
-    canReact,
+    // canComment,
+    // canReact,
     chosenAudiences,
     tags,
     series,
@@ -124,14 +124,15 @@ export const useSavePost = () => {
     return hasChange.length > 0;
   };
 
-  const isSettingsHasChange
-    = post?.setting?.isImportant !== important?.active
-    || post?.setting?.importantExpiredAt !== important?.expiresTime
-    || post?.setting?.canComment !== canComment
-    || post?.setting?.canReact !== canReact;
+  // const isSettingsHasChange
+  //   = post?.setting?.isImportant !== important?.active
+  //   || post?.setting?.importantExpiredAt !== important?.expiresTime
+  //   || post?.setting?.canComment !== canComment
+  //   || post?.setting?.canReact !== canReact;
 
   const isEditPostHasChange
-    = content !== post?.content || isChanged() || isSettingsHasChange;
+    = content !== post?.content || isChanged();
+    // || isSettingsHasChange;
 
   const isSelectedTagsHasChange = !isEqualById(
     tempSelectedTags,
@@ -190,12 +191,12 @@ export const useSavePost = () => {
       files,
     };
 
-    const setting: any = {};
-    setting.isImportant = important?.active || false;
-    setting.importantExpiredAt = important?.expiresTime || null;
-    setting.canComment = canComment;
-    setting.canReact = canReact;
-    setting.canShare = true;
+    // const setting: any = {};
+    // setting.isImportant = important?.active || false;
+    // setting.importantExpiredAt = important?.expiresTime || null;
+    // setting.canComment = canComment;
+    // setting.canReact = canReact;
+    // setting.canShare = true;
 
     const newMentions = getMentionsFromContent(content, tempMentions);
 
@@ -216,7 +217,7 @@ export const useSavePost = () => {
       audience,
       content,
       media,
-      setting,
+      // setting,
       mentions: newMentions,
       linkPreview,
       tags: tagsIds,
