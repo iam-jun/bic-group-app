@@ -220,8 +220,7 @@ export const getScreenAndParams = (data: {
     case NOTIFICATION_TYPE.POST_IMPORTANT_TO_MENTIONED_USER_IN_POST_IN_MULTIPLE_GROUPS:
     case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR:
     case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR_AGGREGATED:
-      navigatePostDetail({ postId, target });
-      break;
+      return navigatePostDetail({ postId, target });
 
     case NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL:
       return {
