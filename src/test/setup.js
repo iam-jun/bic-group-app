@@ -325,7 +325,7 @@ jest.mock('react-hook-form', () => ({
       value: defaultValue,
     },
   }),
-  Controller: ({ children }) => [children],
+  // Controller: ({ children }) => [children],
   useSubscribe: () => ({
     r: { current: { subject: { subscribe: () => jest.fn() } } },
   }),
@@ -351,20 +351,12 @@ jest.mock('~/router/helper', () => ({
     withNavigation: jest.fn().mockReturnValue({
       navigate: jest.fn(),
       replace: jest.fn(),
+      goBack: jest.fn(),
     }),
   },
   withNavigation: jest.fn().mockReturnValue({
     navigate: jest.fn(),
     replace: jest.fn(),
+    goBack: jest.fn(),
   }),
-}));
-
-jest.mock('mixpanel-react-native', () => ({
-  __esModule: true,
-  default: () => jest.fn(),
-  Mixpanel: jest.fn(() => ({
-    init: jest.fn(),
-    getPeople: () => ({ set: jest.fn() }),
-    reset: jest.fn(),
-  })),
 }));
