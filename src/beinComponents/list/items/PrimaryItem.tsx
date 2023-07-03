@@ -36,6 +36,7 @@ export interface PrimaryItemProps {
   isDeactivated?: boolean;
   isVerified?: boolean;
   showingBadges?: IUserBadge[];
+  isTopAdjustmentBadges?: boolean;
   checkboxProps?: CheckboxProps;
   toggleChecked?: boolean;
   menuIconTestID?: string;
@@ -67,6 +68,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   isDeactivated = false,
   isVerified = false,
   showingBadges = [],
+  isTopAdjustmentBadges,
   checkboxProps,
   onPress,
   toggleChecked,
@@ -128,6 +130,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
                   showingBadges={showingBadges}
                   style={styles.userBadge}
                   customStyleBadgeItem={styles.badgeItem}
+                  isTopAdjustment={isTopAdjustmentBadges}
                 />
               )}
             </View>

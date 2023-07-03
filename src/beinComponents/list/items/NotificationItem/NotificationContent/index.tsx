@@ -7,6 +7,7 @@ import TimeView from '~/beinComponents/TimeView';
 import spacing from '~/theme/spacing';
 import Icon from '~/baseComponents/Icon';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
+import Markdown from '~/beinComponents/Markdown';
 
 const LIST_NOTI_SHOW_ICON = [
   {
@@ -60,11 +61,10 @@ const NotificationContent = ({
         </MarkdownView>
       </View>
       {!!content && (
-        <MarkdownView
-          testID="notification_content.content"
-        >
-          {content}
-        </MarkdownView>
+      <Markdown
+        testID="notification_content.content"
+        value={content}
+      />
       )}
       <TimeView
         testID="notification_content.time_view"

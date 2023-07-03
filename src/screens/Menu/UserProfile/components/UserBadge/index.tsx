@@ -24,6 +24,7 @@ interface Props {
   isInMenuTab?: boolean;
   isCurrentUser?: boolean;
   placement?: 'top' | 'bottom' | 'left' | 'right';
+  isTopAdjustment?: boolean;
   onPress?: () => void;
 }
 
@@ -34,6 +35,7 @@ const UserBadge = ({
   isInMenuTab = false,
   isCurrentUser,
   placement = 'top',
+  isTopAdjustment,
   onPress,
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
@@ -89,6 +91,7 @@ const UserBadge = ({
         data={item}
         placement={isInMenuTab ? 'bottom' : 'top'}
         customStyleBadgeItem={customStyleBadgeItem}
+        isTopAdjustment={isTopAdjustment}
       />
     );
   };
