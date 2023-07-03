@@ -325,7 +325,7 @@ jest.mock('react-hook-form', () => ({
       value: defaultValue,
     },
   }),
-  Controller: ({ children }) => [children],
+  // Controller: ({ children }) => [children],
   useSubscribe: () => ({
     r: { current: { subject: { subscribe: () => jest.fn() } } },
   }),
@@ -344,3 +344,19 @@ jest.doMock('expo-av', () => ({
 global.ReanimatedDataMock = {
   now: () => 0,
 };
+
+jest.mock('~/router/helper', () => ({
+  __esModule: true,
+  default: {
+    withNavigation: jest.fn().mockReturnValue({
+      navigate: jest.fn(),
+      replace: jest.fn(),
+      goBack: jest.fn(),
+    }),
+  },
+  withNavigation: jest.fn().mockReturnValue({
+    navigate: jest.fn(),
+    replace: jest.fn(),
+    goBack: jest.fn(),
+  }),
+}));

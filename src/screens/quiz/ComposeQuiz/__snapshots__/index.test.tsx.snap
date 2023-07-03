@@ -1,0 +1,4177 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ComposeQuiz should generate quiz success 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#FFFFFF",
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "zIndex": 2,
+      }
+    }
+    testID="header"
+  >
+    <View
+      animatedStyle={
+        Object {
+          "value": Object {},
+        }
+      }
+      collapsable={false}
+      style={
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "elevation": 2,
+          "flexDirection": "row",
+          "minHeight": 44,
+          "paddingTop": 0,
+          "paddingVertical": 4,
+          "shadowColor": "rgba(0, 0, 0, 1)",
+          "shadowOffset": Object {
+            "height": 2,
+            "width": 0,
+          },
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
+        }
+      }
+      testID="header.content"
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#FFFFFF",
+            "flex": 1,
+            "flexDirection": "row",
+            "overflow": "hidden",
+            "paddingLeft": 8,
+            "paddingRight": 8,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 20,
+              "left": 20,
+              "right": 20,
+              "top": 20,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="header.back.button"
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                Object {
+                  "alignItems": "center",
+                  "height": 44,
+                  "justifyContent": "center",
+                  "padding": 12,
+                  "width": 44,
+                },
+                Object {
+                  "backgroundColor": undefined,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <View
+                testID="header.back"
+              />
+            </View>
+          </View>
+        </View>
+        <View
+          animatedStyle={
+            Object {
+              "value": Object {},
+            }
+          }
+          collapsable={false}
+          style={
+            Object {
+              "flex": 1,
+              "justifyContent": "center",
+              "paddingVertical": 8,
+            }
+          }
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": true,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={false}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <Text
+              numberOfLines={1}
+              style={
+                Array [
+                  Object {
+                    "color": "#181C32",
+                    "fontFamily": "BeVietnamPro-SemiBold",
+                    "fontSize": 15,
+                  },
+                  Object {},
+                  Object {
+                    "marginRight": 8,
+                  },
+                ]
+              }
+              testID="header.text"
+            >
+              The question
+            </Text>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "marginRight": 16,
+            }
+          }
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+            testID="button_wrapper"
+          >
+            <View
+              accessibilityState={
+                Object {
+                  "disabled": true,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              hitSlop={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    },
+                    undefined,
+                    Object {
+                      "backgroundColor": undefined,
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      undefined,
+                      undefined,
+                      undefined,
+                    ]
+                  }
+                >
+                  <View />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "borderRadius": 8,
+              },
+              Object {
+                "marginRight": 8,
+              },
+            ]
+          }
+          testID="header.button"
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "borderRadius": 8,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "paddingVertical": 4,
+                },
+                undefined,
+                Object {
+                  "backgroundColor": "#7335C0",
+                  "height": 36,
+                  "paddingHorizontal": 12,
+                },
+              ]
+            }
+            testID="button.content"
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Array [
+                    Object {
+                      "textAlign": "center",
+                    },
+                    undefined,
+                  ],
+                ]
+              }
+              testID="button.text"
+            >
+              Create
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "height": 0,
+            "position": "absolute",
+            "top": 0,
+            "width": "100%",
+          }
+        }
+      />
+    </View>
+  </View>
+  <RCTScrollView
+    ListHeaderComponent={[Function]}
+    contentContainerStyle={
+      Object {
+        "paddingBottom": 16,
+        "paddingHorizontal": 16,
+        "paddingTop": 16,
+      }
+    }
+    data={
+      Array [
+        Object {
+          "answers": Array [
+            Object {
+              "answer": "Biết bơi",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Biết sửa cơ điện",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Biết trèo cây",
+              "isCorrect": true,
+            },
+            Object {
+              "answer": "Biết lái ô tô",
+              "isCorrect": false,
+            },
+          ],
+          "question": "Con mèo biết làm gì?",
+        },
+        Object {
+          "answers": Array [
+            Object {
+              "answer": "Họ mèo",
+              "isCorrect": true,
+            },
+            Object {
+              "answer": "Họ chó",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Họ báo",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Họ chuột",
+              "isCorrect": false,
+            },
+          ],
+          "question": "Mèo là động vật thuộc họ nào?",
+        },
+        Object {
+          "answers": Array [
+            Object {
+              "answer": "2 chân",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "3 chân",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "4 chân",
+              "isCorrect": true,
+            },
+            Object {
+              "answer": "5 chân",
+              "isCorrect": false,
+            },
+          ],
+          "question": "Mèo có bao nhiêu chân?",
+        },
+        Object {
+          "answers": Array [
+            Object {
+              "answer": "Cây cỏ",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Cây hoa",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Cây thân gỗ",
+              "isCorrect": true,
+            },
+            Object {
+              "answer": "Cây xương rồng",
+              "isCorrect": false,
+            },
+          ],
+          "question": "Cây cau là loại cây gì?",
+        },
+        Object {
+          "answers": Array [
+            Object {
+              "answer": "Dài",
+              "isCorrect": true,
+            },
+            Object {
+              "answer": "Ngắn",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Không có móng vuốt",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Móng vuốt giống chó",
+              "isCorrect": false,
+            },
+          ],
+          "question": "Con mèo có móng vuốt dài hay ngắn?",
+        },
+        Object {
+          "answers": Array [
+            Object {
+              "answer": "Mèu",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Mỡ",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Móc",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Miu",
+              "isCorrect": true,
+            },
+          ],
+          "question": "Còn gọi mèo là gì?",
+        },
+        Object {
+          "answers": Array [
+            Object {
+              "answer": "Rau củ",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Hamburger",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Cà phê",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Cá",
+              "isCorrect": true,
+            },
+          ],
+          "question": "Mèo có ai thức ăn yêu thích?",
+        },
+        Object {
+          "answers": Array [
+            Object {
+              "answer": "Hoang dã",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Nhà",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Đều được",
+              "isCorrect": true,
+            },
+            Object {
+              "answer": "Không thể xác định",
+              "isCorrect": false,
+            },
+          ],
+          "question": "Mèo là động vật hoang dã hay nuôi trong nhà?",
+        },
+        Object {
+          "answers": Array [
+            Object {
+              "answer": "Màu trắng",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Màu đen",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Màu nâu",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Tất cả các màu trên",
+              "isCorrect": true,
+            },
+          ],
+          "question": "Mèo có màu lông gì?",
+        },
+        Object {
+          "answers": Array [
+            Object {
+              "answer": "Bay",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Biết nói",
+              "isCorrect": false,
+            },
+            Object {
+              "answer": "Nhảy cao",
+              "isCorrect": true,
+            },
+            Object {
+              "answer": "Đói mãi không no",
+              "isCorrect": false,
+            },
+          ],
+          "question": "Con mèo có khả năng nào sau đây?",
+        },
+      ]
+    }
+    getItem={[Function]}
+    getItemCount={[Function]}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    stickyHeaderIndices={Array []}
+    viewabilityConfigCallbackPairs={Array []}
+  >
+    <View>
+      <View
+        onLayout={[Function]}
+      >
+        <View>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 17,
+                },
+                Object {
+                  "color": "#181C32",
+                },
+                Object {
+                  "marginBottom": 8,
+                },
+              ]
+            }
+          >
+            hu
+          </Text>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            Object {
+              "borderTopColor": "#E3E6F2",
+              "borderTopWidth": 1,
+              "paddingBottom": 8,
+              "paddingTop": 24,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+                "marginBottom": 16,
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#181C32",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Question 1
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#282E53",
+                  },
+                  Object {
+                    "marginBottom": 8,
+                  },
+                ]
+              }
+            >
+              Con mèo biết làm gì?
+            </Text>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    A
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Biết bơi
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    B
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Biết sửa cơ điện
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#EFFDF4",
+                      "borderRadius": 6,
+                      "height": 28,
+                      "justifyContent": "center",
+                      "marginRight": 8,
+                      "width": 28,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 13,
+                        },
+                        Object {
+                          "color": "#13B055",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    C
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 15,
+                        },
+                        Object {
+                          "color": "#13B055",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Biết trèo cây
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    D
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Biết lái ô tô
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            Object {
+              "borderTopColor": "#E3E6F2",
+              "borderTopWidth": 1,
+              "paddingBottom": 8,
+              "paddingTop": 24,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+                "marginBottom": 16,
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#181C32",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Question 2
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#282E53",
+                  },
+                  Object {
+                    "marginBottom": 8,
+                  },
+                ]
+              }
+            >
+              Mèo là động vật thuộc họ nào?
+            </Text>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#EFFDF4",
+                      "borderRadius": 6,
+                      "height": 28,
+                      "justifyContent": "center",
+                      "marginRight": 8,
+                      "width": 28,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 13,
+                        },
+                        Object {
+                          "color": "#13B055",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    A
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 15,
+                        },
+                        Object {
+                          "color": "#13B055",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Họ mèo
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    B
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Họ chó
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    C
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Họ báo
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    D
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Họ chuột
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            Object {
+              "borderTopColor": "#E3E6F2",
+              "borderTopWidth": 1,
+              "paddingBottom": 8,
+              "paddingTop": 24,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+                "marginBottom": 16,
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#181C32",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Question 3
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#282E53",
+                  },
+                  Object {
+                    "marginBottom": 8,
+                  },
+                ]
+              }
+            >
+              Mèo có bao nhiêu chân?
+            </Text>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    A
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    2 chân
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    B
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    3 chân
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#EFFDF4",
+                      "borderRadius": 6,
+                      "height": 28,
+                      "justifyContent": "center",
+                      "marginRight": 8,
+                      "width": 28,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 13,
+                        },
+                        Object {
+                          "color": "#13B055",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    C
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 15,
+                        },
+                        Object {
+                          "color": "#13B055",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    4 chân
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    D
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    5 chân
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            Object {
+              "borderTopColor": "#E3E6F2",
+              "borderTopWidth": 1,
+              "paddingBottom": 8,
+              "paddingTop": 24,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+                "marginBottom": 16,
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#181C32",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Question 4
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#282E53",
+                  },
+                  Object {
+                    "marginBottom": 8,
+                  },
+                ]
+              }
+            >
+              Cây cau là loại cây gì?
+            </Text>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    A
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Cây cỏ
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    B
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Cây hoa
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#EFFDF4",
+                      "borderRadius": 6,
+                      "height": 28,
+                      "justifyContent": "center",
+                      "marginRight": 8,
+                      "width": 28,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 13,
+                        },
+                        Object {
+                          "color": "#13B055",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    C
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 15,
+                        },
+                        Object {
+                          "color": "#13B055",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Cây thân gỗ
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    D
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Cây xương rồng
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            Object {
+              "borderTopColor": "#E3E6F2",
+              "borderTopWidth": 1,
+              "paddingBottom": 8,
+              "paddingTop": 24,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+                "marginBottom": 16,
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#181C32",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Question 5
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#282E53",
+                  },
+                  Object {
+                    "marginBottom": 8,
+                  },
+                ]
+              }
+            >
+              Con mèo có móng vuốt dài hay ngắn?
+            </Text>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#EFFDF4",
+                      "borderRadius": 6,
+                      "height": 28,
+                      "justifyContent": "center",
+                      "marginRight": 8,
+                      "width": 28,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 13,
+                        },
+                        Object {
+                          "color": "#13B055",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    A
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 15,
+                        },
+                        Object {
+                          "color": "#13B055",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Dài
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    B
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Ngắn
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    C
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Không có móng vuốt
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    D
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Móng vuốt giống chó
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            Object {
+              "borderTopColor": "#E3E6F2",
+              "borderTopWidth": 1,
+              "paddingBottom": 8,
+              "paddingTop": 24,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+                "marginBottom": 16,
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#181C32",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Question 6
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#282E53",
+                  },
+                  Object {
+                    "marginBottom": 8,
+                  },
+                ]
+              }
+            >
+              Còn gọi mèo là gì?
+            </Text>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    A
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Mèu
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    B
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Mỡ
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    C
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Móc
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#EFFDF4",
+                      "borderRadius": 6,
+                      "height": 28,
+                      "justifyContent": "center",
+                      "marginRight": 8,
+                      "width": 28,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 13,
+                        },
+                        Object {
+                          "color": "#13B055",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    D
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 15,
+                        },
+                        Object {
+                          "color": "#13B055",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Miu
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            Object {
+              "borderTopColor": "#E3E6F2",
+              "borderTopWidth": 1,
+              "paddingBottom": 8,
+              "paddingTop": 24,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+                "marginBottom": 16,
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#181C32",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Question 7
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#282E53",
+                  },
+                  Object {
+                    "marginBottom": 8,
+                  },
+                ]
+              }
+            >
+              Mèo có ai thức ăn yêu thích?
+            </Text>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    A
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Rau củ
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    B
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Hamburger
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    C
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Cà phê
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#EFFDF4",
+                      "borderRadius": 6,
+                      "height": 28,
+                      "justifyContent": "center",
+                      "marginRight": 8,
+                      "width": 28,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 13,
+                        },
+                        Object {
+                          "color": "#13B055",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    D
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 15,
+                        },
+                        Object {
+                          "color": "#13B055",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Cá
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            Object {
+              "borderTopColor": "#E3E6F2",
+              "borderTopWidth": 1,
+              "paddingBottom": 8,
+              "paddingTop": 24,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+                "marginBottom": 16,
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#181C32",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Question 8
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#282E53",
+                  },
+                  Object {
+                    "marginBottom": 8,
+                  },
+                ]
+              }
+            >
+              Mèo là động vật hoang dã hay nuôi trong nhà?
+            </Text>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    A
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Hoang dã
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    B
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Nhà
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#EFFDF4",
+                      "borderRadius": 6,
+                      "height": 28,
+                      "justifyContent": "center",
+                      "marginRight": 8,
+                      "width": 28,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 13,
+                        },
+                        Object {
+                          "color": "#13B055",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    C
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 15,
+                        },
+                        Object {
+                          "color": "#13B055",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Đều được
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    D
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Không thể xác định
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            Object {
+              "borderTopColor": "#E3E6F2",
+              "borderTopWidth": 1,
+              "paddingBottom": 8,
+              "paddingTop": 24,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+                "marginBottom": 16,
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#181C32",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Question 9
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#282E53",
+                  },
+                  Object {
+                    "marginBottom": 8,
+                  },
+                ]
+              }
+            >
+              Mèo có màu lông gì?
+            </Text>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    A
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Màu trắng
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    B
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Màu đen
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    C
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Màu nâu
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#EFFDF4",
+                      "borderRadius": 6,
+                      "height": 28,
+                      "justifyContent": "center",
+                      "marginRight": 8,
+                      "width": 28,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 13,
+                        },
+                        Object {
+                          "color": "#13B055",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    D
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 15,
+                        },
+                        Object {
+                          "color": "#13B055",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Tất cả các màu trên
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            Object {
+              "borderTopColor": "#E3E6F2",
+              "borderTopWidth": 1,
+              "paddingBottom": 8,
+              "paddingTop": 24,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+                "marginBottom": 16,
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#181C32",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Question 10
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#282E53",
+                  },
+                  Object {
+                    "marginBottom": 8,
+                  },
+                ]
+              }
+            >
+              Con mèo có khả năng nào sau đây?
+            </Text>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    A
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Bay
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    B
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Biết nói
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#EFFDF4",
+                      "borderRadius": 6,
+                      "height": 28,
+                      "justifyContent": "center",
+                      "marginRight": 8,
+                      "width": 28,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 13,
+                        },
+                        Object {
+                          "color": "#13B055",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    C
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 15,
+                        },
+                        Object {
+                          "color": "#13B055",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Nhảy cao
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "marginVertical": 8,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#EFFDF4",
+                        "borderRadius": 6,
+                        "height": 28,
+                        "justifyContent": "center",
+                        "marginRight": 8,
+                        "width": 28,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "justifyContent": "flex-start",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    D
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Đói mãi không no
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;
