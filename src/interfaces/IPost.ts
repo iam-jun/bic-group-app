@@ -5,6 +5,7 @@ import { IGiphy } from './IGiphy';
 import { ITag } from './ITag';
 import { IReportDetail } from './IReport';
 import { IGroup } from './IGroup';
+import { IUserBadge } from '~/interfaces/IEditUser';
 
 export enum PostType {
   POST = 'POST',
@@ -99,6 +100,7 @@ export interface IAudienceUser {
   avatar?: string;
   isDeactivated?: boolean;
   isVerified?: boolean;
+  showingBadges?: IUserBadge[];
 }
 
 export interface IAudienceGroup {

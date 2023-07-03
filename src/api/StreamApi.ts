@@ -539,6 +539,13 @@ export const streamApiConfig = {
     method: 'put',
     data: { ...setting },
   }),
+  getContentsInSeries: (seriesIds: string[]): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}series/items`,
+    params: {
+      seriesIds,
+    },
+  }),
 };
 
 const streamApi = {
@@ -814,6 +821,9 @@ const streamApi = {
   ),
   putEditSettings: (params: PutEditSettingsApiParams) => withHttpRequestPromise(
     streamApiConfig.putEditSettings, params,
+  ),
+  getContentsInSeries: (seriesIds: string[]) => withHttpRequestPromise(
+    streamApiConfig.getContentsInSeries, seriesIds,
   ),
 };
 

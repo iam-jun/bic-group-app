@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { ImageStyle } from 'react-native-fast-image';
 
 import { IUserBadge } from '~/interfaces/IEditUser';
 import UserBadgeItem from './UserBadgeItem';
@@ -14,14 +15,22 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
+  customStyleBadgeItem?: StyleProp<ImageStyle>;
   showingBadges?: IUserBadge[];
   isInMenuTab?: boolean;
   isCurrentUser?: boolean;
+  isTopAdjustment?: boolean;
   onPress?: () => void;
 }
 
 const UserBadge = ({
-  showingBadges = [], style, isInMenuTab = false, isCurrentUser, onPress,
+  showingBadges = [],
+  style,
+  customStyleBadgeItem,
+  isInMenuTab = false,
+  isCurrentUser,
+  isTopAdjustment,
+  onPress,
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -50,6 +59,8 @@ const UserBadge = ({
         key={`badge_showing_item_${item?.id}`}
         data={item}
         placement={isInMenuTab ? 'bottom' : 'top'}
+        customStyleBadgeItem={customStyleBadgeItem}
+        isTopAdjustment={isTopAdjustment}
       />
     );
   };

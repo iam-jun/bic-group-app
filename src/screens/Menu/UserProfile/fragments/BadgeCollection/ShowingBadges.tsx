@@ -11,7 +11,11 @@ import useUserBadge from './store';
 
 const BADGE_WIDTH = 48;
 
-const ShowingBadges = () => {
+ interface ShowingBadgesProps {
+  isShowEditButton?: boolean;
+}
+
+const ShowingBadges = ({ isShowEditButton }: ShowingBadgesProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = themeStyles(theme);
@@ -41,7 +45,7 @@ const ShowingBadges = () => {
             isRounded
             source={{ uri: iconUrl }}
           />
-          {Boolean(isEditing) && (
+          {Boolean(isEditing) && Boolean(isShowEditButton) && (
           <Button
             style={styles.iconClose}
             onPress={() => { removeBadge(index); }}
