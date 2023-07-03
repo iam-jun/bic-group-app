@@ -48,6 +48,7 @@ const SearchBadgeModal = ({
   const onClose = () => {
     setIsOpen(false);
     actions.cancleSaveBadges();
+    actions.resetChoosingBadgesOrder();
   };
 
   const onPressSave = () => {

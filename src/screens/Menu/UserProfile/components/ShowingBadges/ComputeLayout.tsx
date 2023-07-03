@@ -48,7 +48,7 @@ const ComputeLayout = ({ offsets, onReady }: ComputeLayoutsProps) => {
         <View
           key={`compute.${index}`}
           style={styles.item}
-          onLayout={(e) => { onLayout(e, index); }}
+          onLayout={(e) => onLayout(e, index)}
         >
           <ShowingBadgesItem index={index} />
         </View>

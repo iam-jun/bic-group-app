@@ -31,7 +31,7 @@ export interface IUserBadgesState extends IBaseState {
     fillChoosingBadges: (badge: IUserBadge) => void;
     removeChoosingBadges: (index: number) => void;
     cancleSaveBadges: () => void;
-    reorderChoosingBadgesOrder: (from: number, to: number) => void;
+    reorderChoosingBadgesOrder: (value: number, newIndex: number) => void;
     resetChoosingBadgesOrder: () => void;
     getOwnedBadges: () => void;
     editShowingBadges: () => void;
@@ -137,11 +137,14 @@ const userBadge = (set, get) => ({
         state.dataSearch = ownBadges;
       }, 'cancleSaveBadges');
     },
-    reorderChoosingBadgesOrder: (from: number, to: number) => {
+    reorderChoosingBadgesOrder: (value: number, newIndex: number) => {
       const { choosingBadgesOrder } = get();
       const newBadges = [...choosingBadgesOrder];
-      const badge = newBadges.splice(from, 1);
-      newBadges.splice(to, 0, badge[0]);
+      const currentIndex = newBadges.indexOf(value);
+      if (currentIndex === -1) return;
+
+      const badge = newBadges.splice(currentIndex, 1);
+      newBadges.splice(newIndex, 0, badge[0]);
       set((state: IUserBadgesState) => {
         state.choosingBadgesOrder = newBadges;
       }, 'reorderChoosingBadgesOrder');
