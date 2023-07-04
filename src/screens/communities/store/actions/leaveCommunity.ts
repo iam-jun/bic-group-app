@@ -5,6 +5,7 @@ import useYourCommunitiesStore from '../../Communities/components/YourCommunitie
 import showToastSuccess from '~/store/helper/showToastSuccess';
 import showToastError from '~/store/helper/showToastError';
 import useManagedStore from '~/screens/communities/Communities/components/Managed/store';
+import useMyPermissionsStore from '~/store/permissions';
 import { IRequestLeaveCommunity } from '~/interfaces/ICommunity';
 
 const leaveCommunity = (_set, _get) => async (payload: IRequestLeaveCommunity) => {
@@ -21,6 +22,9 @@ const leaveCommunity = (_set, _get) => async (payload: IRequestLeaveCommunity) =
     // refresh joined communities
     useMenuController.getState().actions.getJoinedCommunities();
     useYourCommunitiesStore.getState().actions.getYourCommunities(true);
+
+    // refresh permissions
+    useMyPermissionsStore.getState().actions.getMyPermissions();
 
     showToastSuccess(response);
   } catch (err) {

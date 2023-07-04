@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
 import {
-  Dimensions, Keyboard, Platform, StyleSheet,
+  Keyboard, Platform, StyleSheet,
 } from 'react-native';
 import Animated, {
   Extrapolate, interpolate, useAnimatedStyle, useSharedValue, withTiming,
 } from 'react-native-reanimated';
 import images from '~/resources/images';
+import { dimension } from '~/theme';
 
 const LOGO_SIZE = 96;
 const LOGO_SMALL_SIZE = 40;
 
-const screenWidth = Dimensions.get('window').width;
+const screenWidth = dimension.deviceWidth;
 const MARGIN_LEFT_LOGO = -(screenWidth / 2 - 24 * 2);
 
 const LogoImage = () => {

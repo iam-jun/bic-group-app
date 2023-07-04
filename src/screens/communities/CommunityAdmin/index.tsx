@@ -1,4 +1,6 @@
-import { StyleSheet, View } from 'react-native';
+import {
+  StyleProp, StyleSheet, View, ViewStyle,
+} from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
@@ -15,13 +17,15 @@ import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communi
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import { ITypeGroup } from '~/interfaces/common';
+import { IconType } from '~/resources/icons';
 
 const CommunityAdmin = (props: any) => {
   const { params } = props.route;
   const communityId = params?.communityId;
 
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyles();
+  const styles = createStyles(theme);
   const { rootNavigation } = useRootNavigation();
   const community = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
   const { name = '', groupId } = community || {};
@@ -35,6 +39,8 @@ const CommunityAdmin = (props: any) => {
     ],
   );
 
+  const canEditJoinSetting = shouldHavePermission(groupId, PermissionKey.EDIT_JOIN_SETTING);
+
   const onPressGeneralInfo = () => {
     rootNavigation.navigate(
       groupStack.generalInfo, {
@@ -44,67 +50,73 @@ const CommunityAdmin = (props: any) => {
     );
   };
 
+  const onPressMembershipPolicySettings = () => {
+    rootNavigation.navigate(groupStack.membershipPolicySettings, { id: communityId, type: ITypeGroup.COMMUNITY });
+  };
+
   const onPressScheduleContent = () => {
     rootNavigation.navigate(
       articleStack.articleScheduleContent, { groupId },
     );
   };
 
-  const renderModerating = () => null;
-  // return (
-  //   <>
-  //     <Text.BodyM
-  //       style={styles.headerTitle}
-  //       color={theme.colors.neutral80}
-  //       variant="bodyM"
-  //       useI18n
-  //     >
-  //       settings:title_community_moderating
-  //     </Text.BodyM>
-  //     <MenuItem
-  //       testID="community_admin.pending_posts"
-  //       title="settings:title_pending_posts"
-  //       icon="FileExclamation"
-  //       iconProps={{
-  //         icon: 'FileExclamation',
-  //         tintColor: theme.colors.purple50,
-  //       }}
-  //       notificationsBadgeNumber={999}
-  //       notificationsBadgeProps={{ maxNumber: 99, variant: 'alert' }}
-  //       rightSubIcon="AngleRightSolid"
-  //       onPress={displayNewFeature}
-  //     />
-  //   </>
-  // );
+  const renderMenuItem = (props: {
+    testID: string;
+    title: string;
+    icon: IconType;
+    rightSubIcon: IconType;
+    onPress: () => void;
+    style: StyleProp<ViewStyle>;
+  }) => {
+    const {
+      testID, title, icon, rightSubIcon, onPress, style,
+    } = props;
+    return (
+      <View style={style}>
+        <MenuItem
+          testID={testID}
+          title={title}
+          icon={icon}
+          iconProps={styles.iconProps}
+          rightSubIcon={rightSubIcon}
+          onPress={onPress}
+          style={styles.menuItemChild}
+        />
+      </View>
+    );
+  };
 
   const renderSettings = () => (
     <>
-      <Text.BodyM
-        style={styles.headerTitle}
-        color={theme.colors.neutral80}
-        variant="bodyM"
-        useI18n
-      >
+      <Text.H4 style={styles.headerTitle} color={theme.colors.neutral80} useI18n>
         settings:title_community_settings
-      </Text.BodyM>
-      {!!canEditProfileInfo && (
-        <MenuItem
-          testID="community_admin.profile_info"
-          title="settings:title_profile_info"
-          icon="Gear"
-          iconProps={{ icon: 'Gear', tintColor: theme.colors.purple50 }}
-          rightSubIcon="AngleRightSolid"
-          onPress={onPressGeneralInfo}
-        />
-      )}
-      <MenuItem
-        testID="community_admin.schedule_content"
-        title="settings:title_schedule_content"
-        icon="BallotCheck"
-        iconProps={{ icon: 'BallotCheck', tintColor: theme.colors.purple50 }}
-        rightSubIcon="AngleRightSolid"
-        onPress={onPressScheduleContent}
-      />
+      </Text.H4>
+      {!!canEditProfileInfo
+        && renderMenuItem({
+          testID: 'community_admin.profile_info',
+          title: 'settings:title_profile_info',
+          icon: 'MemoCircleInfoSolid',
+          rightSubIcon: 'ChevronRight',
+          onPress: onPressGeneralInfo,
+          style: styles.firstMenuItem,
+        })}
+      {!!canEditJoinSetting
+        && renderMenuItem({
+          testID: 'community_admin.membership_policy_settings',
+          title: 'settings:membership_policy_settings:title',
+          icon: 'UsersMedicalSolid',
+          rightSubIcon: 'ChevronRight',
+          onPress: onPressMembershipPolicySettings,
+          style: styles.menuItem,
+        })}
+      {renderMenuItem({
+        testID: 'community_admin.schedule_content',
+        title: 'settings:title_schedule_content',
+        icon: 'SquareListSolid',
+        rightSubIcon: 'ChevronRight',
+        onPress: onPressScheduleContent,
+        style: styles.menuItem,
+      })}
     </>
   );
 
@@ -114,22 +126,33 @@ const CommunityAdmin = (props: any) => {
         title={name}
         titleTextProps={{ color: theme.colors.neutral80 }}
       />
-      <Divider size={4} />
+      <Divider size={spacing.margin.large} />
       <View style={styles.container}>
-        {renderModerating()}
         {renderSettings()}
       </View>
     </ScreenWrapper>
   );
 };
 
-const createStyles = () => StyleSheet.create({
+const createStyles = (theme: ExtendedTheme) => StyleSheet.create({
   container: {
-    paddingTop: spacing.padding.large,
+    paddingTop: spacing.margin.xTiny + spacing.margin.base,
   },
   headerTitle: {
     marginHorizontal: spacing.margin.large,
-    marginVertical: spacing.margin.base,
+  },
+  iconProps: {
+    tintColor: theme.colors.neutral20,
+    size: 18,
+  },
+  firstMenuItem: {
+    marginTop: spacing.margin.xSmall + spacing.margin.large,
+  },
+  menuItem: {
+    marginTop: spacing.margin.big,
+  },
+  menuItemChild: {
+    paddingVertical: 0,
   },
 });
 

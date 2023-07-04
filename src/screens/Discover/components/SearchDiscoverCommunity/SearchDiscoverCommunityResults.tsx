@@ -102,8 +102,8 @@ const SearchDiscoverCommunityResults = ({
   };
 
   const onCancel = (item: any) => {
-    const { id, name } = item;
-    communityController.cancelJoinCommunity(id, name);
+    const { groupId, id } = item;
+    communityController.cancelJoinCommunity({ communityId: id, rootGroupId: groupId });
   };
 
   const renderItem: ListRenderItem<string> = ({ item }) => (

@@ -47,7 +47,7 @@ interface IHandleSaveOptions {
   titleAlert?: string;
 }
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = withNavigation?.(rootNavigationRef);
 
 export interface IUseEditArticle {
   articleId: string;

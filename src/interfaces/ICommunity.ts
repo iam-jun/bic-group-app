@@ -1,3 +1,4 @@
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { CommunityPrivacyType } from '~/constants/privacyTypes';
 import { IGroupSettings, IObject } from '~/interfaces/common';
 import { IJoiningMember } from '~/interfaces/IGroup';
@@ -14,7 +15,7 @@ export interface ICommunity {
   createdAt: string;
   updatedAt: string;
   userCount: number;
-  joinStatus?: number;
+  joinStatus?: GroupJoinStatus;
   members?: IPreviewMember[];
   teamName?: string;
   settings?: IGroupSettings;
@@ -150,7 +151,18 @@ export interface IRequestJoinCommunity {
   membershipAnswers?: MembershipAnswerRequest[],
 }
 
+export interface IRequestUpdateCommunityJoinSetting {
+  communityId: string,
+  groupId: string,
+  isJoinApproval?: boolean
+  isInvitedOnly?: boolean
+}
 export interface IRequestLeaveCommunity {
+  rootGroupId: string,
+  communityId: string,
+}
+
+export interface IRequestCancelJoinCommunity {
   rootGroupId: string,
   communityId: string,
 }

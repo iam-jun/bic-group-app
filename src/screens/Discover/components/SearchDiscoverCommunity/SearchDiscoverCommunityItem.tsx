@@ -7,6 +7,7 @@ import { CommunityPrivacyDetail } from '~/constants/privacyTypes';
 import { margin, padding } from '~/theme/spacing';
 import { Avatar, Button } from '~/baseComponents';
 import ButtonCommunityGroupCard from '~/components/CommunityGroupCard/ButtonCommunityGroupCard';
+import { dimension } from '~/theme';
 
 interface SearchDiscoverCommunityItemProps {
   testID: string,
@@ -47,6 +48,7 @@ const SearchDiscoverCommunityItem = ({
             <Text.BodyXS useI18n color={colors.blue50}>common:text_community</Text.BodyXS>
           </View>
           <ButtonCommunityGroupCard
+            style={styles.btn}
             joinStatus={joinStatus}
             size="small"
             onView={_onView}
@@ -90,6 +92,9 @@ const createStyles = (theme: ExtendedTheme) => {
     iconSmall: {
       marginRight: margin.tiny,
       height: 16,
+    },
+    btn: {
+      maxWidth: dimension.deviceWidth / 2,
     },
   });
 };
