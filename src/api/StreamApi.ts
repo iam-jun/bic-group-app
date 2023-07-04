@@ -15,6 +15,7 @@ import {
   IRequestGetUsersInterestedPost,
   IParamsGetPostByParams,
   IParamUpdatePost,
+  PutEditSettingsApiParams,
 } from '~/interfaces/IPost';
 import {
   IParamGetFeed,
@@ -234,7 +235,7 @@ export const streamApiConfig = {
   },
   putMarkAsRead: (postId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}posts/${postId}/mark-as-read`,
+    url: `${provider.url}content/${postId}/mark-as-read`,
     method: 'put',
   }),
   putMarkSeenContent: (id: string): HttpApiRequestConfig => ({
@@ -532,6 +533,19 @@ export const streamApiConfig = {
     provider: apiProviders.beinFeed,
     params,
   }),
+  putEditSettings: ({ id, setting }: PutEditSettingsApiParams): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}content/${id}/setting`,
+    method: 'put',
+    data: { ...setting },
+  }),
+  getContentsInSeries: (seriesIds: string[]): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}series/items`,
+    params: {
+      seriesIds,
+    },
+  }),
 };
 
 const streamApi = {
@@ -804,6 +818,12 @@ const streamApi = {
       limit: param?.limit || appConfig.recordsPerPage,
       ...param,
     },
+  ),
+  putEditSettings: (params: PutEditSettingsApiParams) => withHttpRequestPromise(
+    streamApiConfig.putEditSettings, params,
+  ),
+  getContentsInSeries: (seriesIds: string[]) => withHttpRequestPromise(
+    streamApiConfig.getContentsInSeries, seriesIds,
   ),
 };
 

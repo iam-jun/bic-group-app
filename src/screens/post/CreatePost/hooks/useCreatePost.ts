@@ -82,7 +82,7 @@ export const useCreatePost = (params?: UseCreatePostParams) => {
     PermissionKey.EDIT_OWN_CONTENT_SETTING,
   );
   const shouldDisablePostSettings
-    = audienceListWithNoPermission.length === chosenAudiences.length;
+    = audienceListWithNoPermission.length > 0;
 
   const shouldDisableButtonsCreatePostFooter = () => {
     const buttonsDisabled = {

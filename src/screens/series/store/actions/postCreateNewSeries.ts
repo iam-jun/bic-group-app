@@ -32,6 +32,7 @@ const postCreateNewSeries = (set, get) => async () => {
       state.loading = false;
     }, 'postCreateNewSeriesError');
     showToastError(error);
+    // TODO: handle error settings
   }
 };
 

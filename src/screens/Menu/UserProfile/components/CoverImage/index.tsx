@@ -19,7 +19,8 @@ const CoverImage = ({
     <Image
       width={dimension.deviceWidth}
       style={{ height: (coverHeight * 2) / 3 }}
-      source={bgImg || images.img_cover_default}
+      source={bgImg}
+      placeholderSource={images.img_cover_default}
       usePixelWidth
     />
     <EditButton

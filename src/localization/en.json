@@ -241,6 +241,7 @@
     "text_answer_title": "Membership questions",
     "text_answer_input_placeholder": "Write your answer",
     "text_send_request_join_successfully": "Sent request successfully",
+    "edit_settings": "Edit Settings",
     "text_new": "New"
   },
   "auth": {
@@ -1416,7 +1417,9 @@
     "text_remove_article": "Do you want to remove this article?",
     "text_remove_post": "Do you want to remove this post?",
     "text_article_removed": "Remove successful",
-    "text_no_content": "No content"
+    "text_no_content": "No content",
+    "this_content_is_in_the_following_series": "This content is in the following Series",
+    "text_untitled": "Untitled"
   },
   "tags": {
     "create_tag": "Create Tag",

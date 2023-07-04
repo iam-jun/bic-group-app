@@ -47,7 +47,7 @@ const usePostMenu = (
 
   const groupAudience = audience?.groups || [];
 
-  const audienceListWithNoPermission = getAudienceListWithNoPermission(
+  const audienceListCannotEditSettings = getAudienceListWithNoPermission(
     groupAudience,
     PermissionKey.EDIT_OWN_CONTENT_SETTING,
   );
@@ -70,7 +70,7 @@ const usePostMenu = (
 
   const onPressEditSettings = () => {
     modalActions.hideBottomList();
-    rootNavigation?.navigate?.(homeStack.postSettings, { postId });
+    rootNavigation?.navigate?.(homeStack.postSettings, { postId, isFromPostMenuSettings: true });
   };
 
   const onPressSave = () => {
@@ -170,9 +170,9 @@ const usePostMenu = (
       id: 2,
       testID: 'post_view_menu.edit_settings',
       leftIcon: 'Sliders',
-      title: i18next.t('post:post_menu_edit_settings'),
-      requireIsActor: true,
-      shouldBeHidden: audienceListWithNoPermission.length > 0,
+      title: i18next.t('common:edit_settings'),
+      requireIsActor: false,
+      shouldBeHidden: audienceListCannotEditSettings.length > 0,
       onPress: onPressEditSettings,
     },
     {
