@@ -95,6 +95,7 @@ const SearchDiscoverCommunityResults = ({
       return;
     }
     communityController.joinCommunity({
+      rootGroupId: groupId,
       communityId: id,
       communityName: name,
     });

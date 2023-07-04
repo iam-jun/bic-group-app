@@ -144,7 +144,13 @@ export interface MembershipAnswerRequestParam {
 }
 
 export interface IRequestJoinCommunity {
+  rootGroupId: string,
   communityId: string,
   communityName: string,
   membershipAnswers?: MembershipAnswerRequest[],
+}
+
+export interface IRequestLeaveCommunity {
+  rootGroupId: string,
+  communityId: string,
 }
