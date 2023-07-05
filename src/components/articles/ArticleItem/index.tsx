@@ -31,12 +31,14 @@ export interface ArticleItemProps {
   data: IPost;
   isLite?: boolean;
   shouldHideBannerImportant?: boolean;
+  onPressComment?: () => void;
 }
 
 const ArticleItem: FC<ArticleItemProps> = ({
   data = {},
   isLite,
   shouldHideBannerImportant,
+  onPressComment,
 }: ArticleItemProps) => {
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
@@ -152,6 +154,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
         commentsCount={commentsCount}
         reactionsCount={reactionsCount}
         ownerReactions={ownerReactions}
+        onPressComment={onPressComment}
       />
 
     )

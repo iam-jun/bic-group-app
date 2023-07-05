@@ -234,7 +234,7 @@ export const getScreenAndParams = (data: {
     case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_POST_AGGREGATED:
     case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST:
     case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST_AGGREGATED:
-      navigatePostDetailWithFocusComment({ postId, target });
+      navigatePostDetailWithFocusComment({ postId, target, commentId });
       break;
 
     case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_COMMENT:
@@ -244,15 +244,6 @@ export const getScreenAndParams = (data: {
     case NOTIFICATION_TYPE.COMMENT_TO_PARENT_COMMENT_CREATOR_AGGREGATED:
     case NOTIFICATION_TYPE.REACTION_TO_COMMENT_CREATOR:
     case NOTIFICATION_TYPE.REACTION_TO_COMMENT_CREATOR_AGGREGATED:
-      return {
-        screen: 'comment-detail',
-        params: {
-          postId,
-          commentId,
-          target: target === TargetType.COMMENT_ARTICLE ? TargetType.ARTICLE : TargetType.POST,
-        },
-      };
-
     case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT:
     case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT_PUSH:
     case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT_AGGREGATED:
@@ -375,16 +366,16 @@ const navigatePostDetail = ({ postId, target }) => {
   };
 };
 
-const navigatePostDetailWithFocusComment = ({ postId, target }) => {
+const navigatePostDetailWithFocusComment = ({ postId, target, commentId }) => {
   if (target === TargetType.COMMENT_ARTICLE || target === TargetType.ARTICLE) {
     return {
       screen: articleStack.articleDetail,
-      params: { articleId: postId, focusComment: true },
+      params: { articleId: postId, commentId },
     };
   }
   return {
     screen: homeStack.postDetail,
-    params: { post_id: postId, focus_comment: true },
+    params: { post_id: postId, comment_id: commentId },
   };
 };
 

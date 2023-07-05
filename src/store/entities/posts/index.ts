@@ -24,7 +24,7 @@ export interface IPostsState extends IBaseState {
   isLoadingGetPostDetail: boolean;
   posts: { [id: string]: IPost };
   replyingComment: any,
-  scrollToLatestItem: any,
+  scrollToLatestItem: boolean,
   scrollToCommentsPosition: any,
   commentErrorCode: any,
   errorContents: { [id: string]: IErrorContent }
@@ -40,10 +40,11 @@ export interface IPostsState extends IBaseState {
     putMarkSeenPost: (payload: IPayloadPutMarkSeenPost) => void;
     removeAudiencesFromPost: (payload: IPayloadRemoveAudiencesOfPost) => void;
     setPostDetailReplyingComment: (payload?: IPayloadReplying) => void;
-    setScrollToLatestItem: (payload: null | { parentCommentId?: string | number }) => void;
+    setScrollToLatestItem: (payload: boolean) => void;
     setScrollCommentsPosition: (payload: null | { position?: string }) => void;
     setCommentErrorCode: (payload: boolean | string) => void;
     addToErrorContents: (id: string, payload: IErrorContent) => void;
+    clearComments: (id: string) => void;
   };
 }
 
@@ -51,7 +52,7 @@ const initState: InitStateType<IPostsState> = {
   isLoadingGetPostDetail: false,
   posts: {},
   replyingComment: {},
-  scrollToLatestItem: null,
+  scrollToLatestItem: false,
   scrollToCommentsPosition: null,
   commentErrorCode: '',
   errorContents: {},
@@ -83,7 +84,7 @@ const postsStore = (set, get) => ({
         state.replyingComment = payload;
       }, 'setPostDetailReplyingComment');
     },
-    setScrollToLatestItem: (payload: null | { parentCommentId?: string | number }) => {
+    setScrollToLatestItem: (payload: boolean) => {
       set((state: IPostsState) => {
         state.scrollToLatestItem = payload;
       }, 'setScrollToLatestItem');
@@ -102,6 +103,12 @@ const postsStore = (set, get) => ({
       set((state: IPostsState) => {
         state.errorContents[id] = payload;
       }, 'addToErrorContents');
+    },
+    clearComments: (id) => {
+      set((state: IPostsState) => {
+        state.posts[id].comments.list = [];
+        state.posts[id].comments.meta = {};
+      }, 'clearComments');
     },
   },
 

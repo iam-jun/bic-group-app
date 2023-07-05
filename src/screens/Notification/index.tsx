@@ -158,35 +158,27 @@ const Notification = () => {
             case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST:
             case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST_AGGREGATED: {
               if (target === TargetType.ARTICLE) {
-                rootNavigation.navigate(articleStack.articleDetail, { articleId: act.id, focusComment: true });
+                rootNavigation.navigate(articleStack.articleDetail, {
+                  articleId: act.id,
+                  commentId: act?.comment?.id,
+                });
               } else {
-                rootNavigation.navigate(
-                  homeStack.postDetail, {
-                    post_id: act?.id,
-                    noti_id: item.id,
-                    focus_comment: true,
-                  },
-                );
+                rootNavigation.navigate(homeStack.postDetail, {
+                  post_id: act?.id,
+                  noti_id: item.id,
+                  comment_id: act?.comment?.id,
+                });
               }
               break;
             }
+
             case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_COMMENT:
             case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_PARENT_COMMENT:
             case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_PARENT_COMMENT_AGGREGATED:
             case NOTIFICATION_TYPE.COMMENT_TO_PARENT_COMMENT_CREATOR:
             case NOTIFICATION_TYPE.COMMENT_TO_PARENT_COMMENT_CREATOR_AGGREGATED:
             case NOTIFICATION_TYPE.REACTION_TO_COMMENT_CREATOR:
-            case NOTIFICATION_TYPE.REACTION_TO_COMMENT_CREATOR_AGGREGATED: {
-              rootNavigation.navigate(
-                homeStack.commentDetail, {
-                  postId: act?.id,
-                  commentId: act?.comment?.id,
-                  notiId: item.id,
-                  target: act?.contentType || '',
-                },
-              );
-              break;
-            }
+            case NOTIFICATION_TYPE.REACTION_TO_COMMENT_CREATOR_AGGREGATED:
             case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT:
             case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT_PUSH:
             case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT_AGGREGATED: {
@@ -201,6 +193,7 @@ const Notification = () => {
               );
               break;
             }
+
             case NOTIFICATION_TYPE.GROUP_ASSIGNED_ROLE_TO_USER:
             case NOTIFICATION_TYPE.GROUP_DEMOTED_ROLE_TO_USER:
               if (act?.community?.id) {
