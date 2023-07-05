@@ -83,6 +83,14 @@ const CommentDetailContent = (props: any) => {
     comments = useCommentsStore(commentsSelector.getCommentsByParentId(id));
   }
 
+  const { reset: resetCommentsStore } = useCommentsStore((state) => state);
+
+  useEffect(() => () => {
+    if (notiId) {
+      resetCommentsStore();
+    }
+  }, []);
+
   const {
     childrenComments = [],
     newCommentData,
