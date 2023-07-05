@@ -5,6 +5,13 @@ import useUserBadge from './store';
 import { mockOwnedBadges } from '~/test/mock_data/userProfile';
 
 describe('BadgeCollectionHeader component', () => {
+  let Platform: any;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    Platform = require('react-native').Platform;
+  });
+
   const choosingBadges = [
     {
       id: 'a8cbf951-a51e-49ea-9aa5-1c1c3914567',
@@ -25,6 +32,7 @@ describe('BadgeCollectionHeader component', () => {
 
   const totalBadges = 10;
   it('should render correctly without props', () => {
+    Platform.OS = 'android';
     const setIsEditing = jest.fn();
     const fillChoosingBadges = jest.fn();
     const removeChoosingBadges = jest.fn();

@@ -77,6 +77,7 @@ const UserBadge = ({
       <FlatList
         data={showingBadges}
         horizontal
+        scrollEnabled={false}
         keyExtractor={(item, index) => `badge_showing_${item?.id}_${index}`}
         renderItem={renderItem}
         ListFooterComponent={renderFooter}
