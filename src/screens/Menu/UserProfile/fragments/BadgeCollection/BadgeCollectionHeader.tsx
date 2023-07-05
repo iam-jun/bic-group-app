@@ -3,10 +3,10 @@ import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { spacing } from '~/theme';
 import EditButton from '../../components/EditButton';
-import ShowingBadges from './ShowingBadges';
 import Text from '~/baseComponents/Text';
 import useUserBadge from './store';
 import useBaseHook from '~/hooks/baseHook';
+import ShowingBadges from '../../components/ShowingBadges/ShowingBadges';
 
 const BadgeCollectionHeader = ({ isShowEditButton }: {style?: any, isShowEditButton?:boolean}) => {
   const theme: ExtendedTheme = useTheme();
