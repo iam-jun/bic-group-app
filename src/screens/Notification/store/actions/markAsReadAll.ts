@@ -3,7 +3,6 @@ import notificationApi from '~/api/NotificationApi';
 
 import INotificationsState from '../Interface';
 import showToastError from '~/store/helper/showToastError';
-import showToast from '~/store/helper/showToast';
 
 const markAsReadAll = (set, get) => async (tabId: string) => {
   try {
@@ -27,10 +26,6 @@ const markAsReadAll = (set, get) => async (tabId: string) => {
       state.unseenNumber = 0;
       state.notificationList = { ...state.notificationList, ...notifications };
     }, 'markAsReadAllNotificationSuccess');
-
-    showToast({
-      content: 'notification:mark_all_as_read_success',
-    });
   } catch (err) {
     console.error(
       '\x1b[33m', 'notification markAsReadAll error', err, '\x1b[0m',
