@@ -111,7 +111,7 @@ const NotificationSettings = () => {
       <NotiSettingItem
         isDisable={!Boolean(generic?.enable)}
         item={reaction}
-        iconName="ThumbsUp"
+        iconName="FaceSmile"
         onPress={handlePressItem}
       />
       <ViewSpacing height={spacing.padding.large} />
