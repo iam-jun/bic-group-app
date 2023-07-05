@@ -126,7 +126,7 @@
     "react-native-autogrow-textinput": "5.4.0",
     "react-native-code-push": "^7.0.5",
     "react-native-collapsible": "^1.6.0",
-    "react-native-config": "1.4.5",
+    "react-native-config": "^1.5.1",
     "react-native-device-info": "8.4.4",
     "react-native-document-picker": "8.1.0",
     "react-native-draggable-flatlist": "^4.0.1",

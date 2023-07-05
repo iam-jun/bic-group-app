@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>$(BEIN_APP_NAME)</string>
+	<string>$(APP_NAME)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -26,10 +26,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>bic</string>
+			<string>$(APP_ID)</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>bic</string>
+				<string>$(URL_SCHEME)</string>
 			</array>
 		</dict>
 	</array>
@@ -41,7 +41,7 @@
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-		<string>bicchat</string>
+		<string>$(CHAT_URL_SCHEME)</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
