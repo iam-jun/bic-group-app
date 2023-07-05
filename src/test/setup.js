@@ -340,17 +340,27 @@ jest.doMock('expo-av', () => ({
   ResizeMode: { CONTAIN: 'CONTAIN' },
 }));
 
+jest.mock('mixpanel-react-native', () => ({
+  __esModule: true,
+  default: () => jest.fn(),
+  Mixpanel: jest.fn(() => ({
+    init: jest.fn(),
+    getPeople: () => ({ set: jest.fn() }),
+    reset: jest.fn(),
+  })),
+}));
+
 // Fix case - TypeError: Cannot read properties of undefined (reading 'now')
 global.ReanimatedDataMock = {
   now: () => 0,
 };
 
-jest.mock('react-native-fast-image', () => ({
-  __esModule: true,
-  default: {
-    preload: jest.fn(),
-  },
-}));
+// jest.mock('react-native-fast-image', () => ({
+//   __esModule: true,
+//   default: {
+//     preload: jest.fn(),
+//   },
+// }));
 
 jest.mock('~/router/helper', () => ({
   __esModule: true,

@@ -20,7 +20,11 @@ interface Props {
 }
 
 const Grid = ({
-  data, isNew = false, disabled = false, shouldHideBadgeNew = false, onPress,
+  data,
+  isNew = false,
+  disabled = false,
+  shouldHideBadgeNew = false,
+  onPress,
 }:Props) => {
   const numColumns = Math.floor((dimension.deviceWidth - CONTAINER_PADDING * 2) / (ITEM_WIDTH + ITEM_MARGIN * 2));
   const CONTAINER_PADDING_PLUS = (
@@ -57,9 +61,10 @@ const Grid = ({
       }]}
     >
       <FlatList
+        testID="badge_collection.list_badges"
         data={data}
         renderItem={renderGridItem}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item) => `badge_collection.${item.id}`}
         numColumns={numColumns}
       />
     </View>
