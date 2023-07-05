@@ -553,6 +553,13 @@ export const streamApiConfig = {
     method: 'put',
     data: params,
   }),
+  getContentsInSeries: (seriesIds: string[]): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}series/items`,
+    params: {
+      seriesIds,
+    },
+  }),
 };
 
 const streamApi = {
@@ -834,6 +841,9 @@ const streamApi = {
   ),
   editQuiz: (idQuiz: string, params: EditQuizParams) => withHttpRequestPromise(
     streamApiConfig.editQuiz, idQuiz, params,
+  ),
+  getContentsInSeries: (seriesIds: string[]) => withHttpRequestPromise(
+    streamApiConfig.getContentsInSeries, seriesIds,
   ),
 };
 

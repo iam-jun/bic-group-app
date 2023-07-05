@@ -5,11 +5,18 @@ import {
 } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
-  ActivityIndicator, DeviceEventEmitter, ScrollView, StyleSheet, View,
+  ActivityIndicator, DeviceEventEmitter, StyleSheet, View,
 } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { throttle } from 'lodash';
+import Animated, {
+  interpolate, runOnJS,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
@@ -17,19 +24,22 @@ import Divider from '~/beinComponents/Divider';
 import { useUserIdAuth } from '~/hooks/auth';
 import useHomeStore from '~/screens/Home/store';
 import NoUserFound from '~/screens/Menu/components/NoUserFound';
-import spacing from '~/theme/spacing';
+import spacing, { borderRadius } from '~/theme/spacing';
 import CoverHeader from './fragments/CoverHeader';
 import useUserProfileStore from './store';
 import useCommonController from '~/screens/store';
 import Tab from '~/baseComponents/Tab';
 import UserInfo from './fragments/UserInfo';
 import BadgeCollection from './fragments/BadgeCollection';
-import Button from '~/baseComponents/Button';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
 import useUserBadge from './fragments/BadgeCollection/store';
 import UserHeader from './fragments/UserHeader';
-import { IUserBadge } from '~/interfaces/IEditUser';
 import { USER_TABS_TYPES } from './constants';
+import SearchBadgeModal from './fragments/SearchBadgeModal';
+import { useBaseHook } from '~/hooks';
+import TabButton from '~/baseComponents/Tab/TabButton';
+import Text from '~/baseComponents/Text';
+import BadgeCollectionHeader from './fragments/BadgeCollection/BadgeCollectionHeader';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 export const USER_TABS = [
   { id: USER_TABS_TYPES.USER_ABOUT, text: 'user:user_tab_types:title_about' },
@@ -44,11 +54,9 @@ const UserProfile = (props: any) => {
   const error = useUserProfileStore((state) => state.error);
   const userProfileActions = useUserProfileStore((state) => state.actions);
   const reset = useUserProfileStore((state) => state.reset);
-  const badgeActions = useUserBadge((state) => state.actions);
-  const isEditingBadge = useUserBadge((state) => state.isEditing);
   const resetUserBadge = useUserBadge((state) => state.reset);
   const showingBadges = useUserBadge((state) => state.showingBadges);
-  const choosingBadges = useUserBadge((state) => state.choosingBadges);
+  const showValue = useSharedValue(0);
 
   const {
     fullname,
@@ -70,20 +78,26 @@ const UserProfile = (props: any) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = themeStyles(theme);
+  const { t } = useBaseHook();
 
   const currentUserId = useUserIdAuth();
   const isFocused = useIsFocused();
   const isCurrentUser = userId === currentUserId || userId === currentUsername;
 
   const homeActions = useHomeStore((state) => state.actions);
-
-  const isDisable = checkEqual(choosingBadges, showingBadges);
+  const hasNewBadge = useUserBadge((state) => state.hasNewBadge);
+  const userBadgeActions = useUserBadge((state) => state.actions);
 
   useEffect(() => {
     isFocused && userProfileActions.getUserProfile({ userId, params });
     userId && userProfileActions.getWorkExperience(userId);
-    resetUserBadge();
-    return () => reset();
+    if (userId === currentUserId) {
+      userBadgeActions.getOwnedBadges();
+    }
+    return () => {
+      resetUserBadge();
+      reset();
+    };
   }, [isFocused, userId]);
 
   useEffect(() => {
@@ -109,25 +123,35 @@ const UserProfile = (props: any) => {
     setIsChangeImg(fieldName);
   };
 
-  const onPressTab = (item: any, index: number) => {
+  const onPressTab = (index: number) => {
     setSelectedIndex(index);
   };
 
-  const onCancel = () => {
-    badgeActions.cancleSaveBadges();
-  };
-
-  const onSave = () => {
-    badgeActions.editShowingBadges();
-  };
-
-  const handleScroll = throttle(
-    () => {
+  const scrollWrapper = throttle(
+    (offsetY: number) => {
+      if (offsetY < 0) {
+        return;
+      }
       DeviceEventEmitter.emit(
         'off-tooltip',
       );
-    }, 100,
+      if (offsetY > 400 && showValue.value === 0) {
+        showValue.value = withTiming(1, { duration: 100 });
+      } else if (offsetY < 400 && showValue.value === 1) {
+        showValue.value = withTiming(0, { duration: 100 });
+      }
+    }, 300,
   );
+
+  const handleScroll = useAnimatedScrollHandler((event: any) => {
+    const offsetY = event?.contentOffset?.y;
+    runOnJS(scrollWrapper)(offsetY);
+  });
+
+  const headerAnimated = useAnimatedStyle(() => ({
+    zIndex: showValue.value ? 1 : -1,
+    opacity: interpolate(showValue.value, [0, 1], [0, 1]),
+  }));
 
   const renderLoading = () => (
     <View testID="user_profile.loading" style={styles.loadingProfile}>
@@ -152,13 +176,43 @@ const UserProfile = (props: any) => {
     return null;
   };
 
+  const renderTabContainer = (text: string, index: number) => (
+    <Text.TabM
+      color={Boolean(selectedIndex === index) ? colors.purple50 : colors.neutral40}
+    >
+      {t(text)}
+      {'    '}
+      {Boolean(hasNewBadge) && Boolean(index === 1) && (
+        <View style={styles.dot} />
+      ) }
+    </Text.TabM>
+  );
+
+  const renderCustomTab = (item: any, index) => (
+    <TabButton
+      key={`tab-button-${item?.id || item?.text}`}
+      size="large"
+      isSelected={selectedIndex === index}
+      ContentComponent={renderTabContainer(item?.text, index)}
+      onPress={() => onPressTab(index)}
+    />
+  );
+
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
       <Header />
+      {Boolean(isCurrentUser) && Boolean(selectedIndex === 1)
+      && (
+      <Animated.View style={[styles.badgesHeader, headerAnimated]}>
+        <Header />
+        <ViewSpacing height={spacing.padding.large} />
+        <BadgeCollectionHeader />
+      </Animated.View>
+      )}
       {loading ? (
         renderLoading()
       ) : (
-        <ScrollView
+        <Animated.ScrollView
           style={styles.container}
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={16}
@@ -186,10 +240,8 @@ const UserProfile = (props: any) => {
             <>
               <View style={styles.tabContainer}>
                 <Tab
-                  buttonProps={{ size: 'large', type: 'primary', useI18n: true }}
                   data={USER_TABS}
-                  onPressTab={onPressTab}
-                  activeIndex={selectedIndex}
+                  renderCustomTab={renderCustomTab}
                 />
               </View>
               <Divider color={colors.gray5} size={spacing.padding.large} />
@@ -197,46 +249,11 @@ const UserProfile = (props: any) => {
           )}
 
           {renderContent()}
-        </ScrollView>
+        </Animated.ScrollView>
       )}
-      {isCurrentUser && isEditingBadge && selectedIndex === 1 && (
-        <View style={styles.bottomButton}>
-          <Button.Neutral
-            useI18n
-            testID="badge_collection.btn_cancel"
-            type="ghost"
-            onPress={onCancel}
-          >
-            common:btn_cancel
-          </Button.Neutral>
-          <ViewSpacing width={spacing.margin.large} />
-          <Button.Primary
-            useI18n
-            testID="badge_collection.btn_save"
-            disabled={isDisable}
-            onPress={onSave}
-          >
-            common:btn_save
-          </Button.Primary>
-        </View>
-      )}
+      <SearchBadgeModal showSearchBox />
     </ScreenWrapper>
   );
-};
-
-const checkEqual = (choosingArr: IUserBadge[], choseArr: IUserBadge[]): boolean => {
-  if (choseArr?.length === 0) {
-    const index = choosingArr.findIndex((item) => item?.id);
-    return index === -1;
-  }
-  let result = true;
-  for (let index = 0; index < choosingArr.length; index++) {
-    if (choosingArr?.[index]?.id !== choseArr?.[index]?.id) {
-      result = false;
-      break;
-    }
-  }
-  return result;
 };
 
 export default UserProfile;
@@ -272,6 +289,20 @@ const themeStyles = (theme: ExtendedTheme) => {
       left: 0,
       borderTopWidth: 1,
       borderTopColor: colors.neutral5,
+    },
+    dot: {
+      backgroundColor: colors.red40,
+      width: spacing.padding.xSmall,
+      height: spacing.padding.xSmall,
+      borderRadius: borderRadius.pill,
+    },
+    badgesHeader: {
+      top: 0,
+      position: 'absolute',
+      backgroundColor: colors.white,
+      width: '100%',
+      paddingBottom: spacing.padding.large,
+      zIndex: 2,
     },
   });
 };

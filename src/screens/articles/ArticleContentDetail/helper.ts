@@ -4,19 +4,10 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import topicStack from '~/router/navigator/MainStack/stacks/topic/stack';
 import useCommunitiesStore from '~/store/entities/communities';
 import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
-import { IMentionUser } from '~/interfaces/IPost';
+import { IMentionUser, IPost } from '~/interfaces/IPost';
 import { openUrl } from '~/utils/link';
-
-export enum EventType {
-  ON_PRESS_ACTOR = 'onPressActor',
-  ON_PRESS_MENTION = 'onPressMention',
-  ON_PRESS_SERIES = 'onPressSeries',
-  ON_PRESS_AUDIENCE = 'onPressAudience',
-  ON_PRESS_TOPIC = 'onPressTopic',
-  ON_PRESS_TAG = 'onPressTag',
-  ON_PRESS_IMAGE = 'onPressImage',
-  ON_PRESS_LINK = 'onPressLink',
-}
+import { goToContentInseries } from '~/components/RelatedContentsInSeries/helper';
+import { EventType } from '~/components/articles/ArticleWebview';
 
 const rootNavigation = withNavigation(rootNavigationRef);
 
@@ -45,10 +36,15 @@ export const handleMessage = (data: {
       return onPressTags(payload);
     case EventType.ON_PRESS_IMAGE:
       return onPressImages({
-        payload, listImage, setInitIndex, setGalleryVisible,
+        payload,
+        listImage,
+        setInitIndex,
+        setGalleryVisible,
       });
     case EventType.ON_PRESS_LINK:
       return onPressLink(payload);
+    case EventType.ON_NAVIGATE:
+      return onNavigateArticle(payload);
     default:
       return console.warn('Article webview onMessage unhandled', message);
   }
@@ -61,7 +57,10 @@ export const onPressAudiences = (payload: any) => {
   if (isCommunity && communityId) {
     rootNavigation.navigate(mainStack.communityDetail, { communityId });
   } else {
-    rootNavigation.navigate(mainStack.groupDetail, { groupId: id, communityId });
+    rootNavigation.navigate(mainStack.groupDetail, {
+      groupId: id,
+      communityId,
+    });
   }
 };
 
@@ -81,7 +80,10 @@ export const onPressTags = (payload: any) => {
   if (!payload) return;
 
   const communityId = useCommunitiesStore.getState().currentCommunityId;
-  rootNavigation.navigate(tagsStack.tagDetail, { tagData: payload, communityId });
+  rootNavigation.navigate(tagsStack.tagDetail, {
+    tagData: payload,
+    communityId,
+  });
 };
 
 export const onPressLink = (payload: any) => {
@@ -90,7 +92,12 @@ export const onPressLink = (payload: any) => {
   openUrl(payload.url);
 };
 
-export const onPressImages = (data: { payload: any; listImage; setInitIndex; setGalleryVisible }) => {
+export const onPressImages = (data: {
+  payload: any;
+  listImage;
+  setInitIndex;
+  setGalleryVisible;
+}) => {
   const {
     payload, listImage, setInitIndex, setGalleryVisible,
   } = data;
@@ -125,4 +132,8 @@ export const getListImage = (node: any) => {
   }
   // Node is text node, no children, or children is not an array
   return [];
+};
+
+const onNavigateArticle = (payload: IPost) => {
+  goToContentInseries(payload);
 };

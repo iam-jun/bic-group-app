@@ -1,5 +1,6 @@
 import groupApi from '~/api/GroupApi';
 import { IUserBadgesState, MAX_BADGES } from '../index';
+import useCommonController from '~/screens/store';
 
 const getOwnedBadges = (set, _get) => async () => {
   try {
@@ -7,9 +8,24 @@ const getOwnedBadges = (set, _get) => async () => {
       state.loading = true;
       state.error = null;
     }, 'getMyOwnedBadgesLoading');
+    const userProfileData = useCommonController.getState().myProfile;
 
     const response = await groupApi.getOwnedBadges();
-    const { ownedBadges = [], showingBadges = [] } = response?.data || {};
+    const { ownedBadges = [], showingBadges = [], hasNew = false } = response?.data || {};
+    const newBadges = {};
+    const newComBadges = [];
+    ownedBadges.forEach((comBadges) => {
+      const { badges } = comBadges;
+      let isAllNew = true;
+      badges.forEach((badge) => {
+        newBadges[badge.id] = { ...badge, community: { id: comBadges.id, name: comBadges.name } };
+        if (!Boolean(badge?.isNew)) {
+          isAllNew = false;
+        }
+      });
+      newComBadges.push({ ...comBadges, isNew: isAllNew });
+    });
+
     const choosingBadges = [];
     for (let index = 0; index < MAX_BADGES; index++) {
       if (!showingBadges?.[index]) {
@@ -19,11 +35,25 @@ const getOwnedBadges = (set, _get) => async () => {
       }
     }
 
+    useCommonController.getState().actions.setMyProfile({
+      ...userProfileData,
+      showingBadges: choosingBadges,
+    });
+
+    let totalBadges = 0;
+    ownedBadges.forEach((community) => {
+      totalBadges += (community?.badges?.length || 0);
+    });
+
     set((state: IUserBadgesState) => {
-      state.ownBadges = ownedBadges;
+      state.ownBadges = newComBadges;
+      state.dataSearch = newComBadges;
       state.showingBadges = choosingBadges;
       state.choosingBadges = choosingBadges;
+      state.hasNewBadge = hasNew;
       state.loading = false;
+      state.totalBadges = totalBadges;
+      state.badges = newBadges;
     }, 'getMyOwnedBadgesSuccess');
   } catch (error) {
     console.error('getOwnedBadges error:', error);

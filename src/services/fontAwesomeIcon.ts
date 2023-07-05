@@ -218,6 +218,8 @@ import { faChevronUp } from '@fortawesome/pro-regular-svg-icons/faChevronUp';
 import { faChevronRight } from '@fortawesome/pro-regular-svg-icons/faChevronRight';
 import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons';
 import { faRotate as faRotateSolid } from '@fortawesome/pro-solid-svg-icons/faRotate';
+import { faCaretDown as faCaretDownSolid } from '@fortawesome/pro-solid-svg-icons/faCaretDown';
+import { faCaretRight as faCaretRightSolid } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -456,6 +458,8 @@ export const initFontAwesomeIcon = () => {
     faBadgeCheck,
     faRotateSolid,
     faChevronRight,
+    faCaretDownSolid,
+    faCaretRightSolid,
   );
 };
 
@@ -679,6 +683,8 @@ export const fontAwesomeIcons = {
   BadgeCheck: 'fa-solid fa-badge-check',
   RotateSolid: 'fa-solid fa-rotate',
   ChevronRight: 'fa-regular fa-chevron-right',
+  CaretDownSolid: 'fa-solid fa-caret-down',
+  CaretRightSolid: 'fa-solid fa-caret-right',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

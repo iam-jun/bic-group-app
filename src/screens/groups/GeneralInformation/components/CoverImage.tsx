@@ -39,7 +39,8 @@ const CoverImage = ({
           <Image
             testID="cover.image"
             style={styles.cover}
-            source={backgroundUrl || images.img_cover_default}
+            source={backgroundUrl}
+            placeholderSource={images.img_cover_default}
             usePixelWidth
           />
         ) : (

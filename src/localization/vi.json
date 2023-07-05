@@ -209,7 +209,8 @@
     "text_pull_to_refresh": "Vui lòng kéo xuống để làm mới trang hoặc thử lại sau",
     "text_answer_title": "Câu hỏi dành cho thành viên",
     "text_answer_input_placeholder": "Viết câu trả lời của bạn",
-    "text_send_request_join_successfully": "Gửi yêu cầu thành công"
+    "text_send_request_join_successfully": "Gửi yêu cầu thành công",
+    "text_new": "Mới"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -1330,7 +1331,9 @@
     "text_remove_article": "Bạn muốn xoá bài báo này?",
     "text_remove_post": "Bạn muốn xoá bài viết này?",
     "text_article_removed": "Bài viết đã được xoá",
-    "text_no_content": "Không có nội dung"
+    "text_no_content": "Không có nội dung",
+    "this_content_is_in_the_following_series": "Nội dung này trong các series dưới đây",
+    "text_untitled": "Không có tiêu đề"
   },
   "tags": {
     "create_tag": "Tạo thẻ",
@@ -1406,8 +1409,11 @@
     },
     "owned_badges": {
       "title": "Danh sách huy hiệu",
-      "description": "Huy hiệu bạn nhận được từ các cộng đồng bạn đã tham gia"
-    }
+      "description": "Huy hiệu bạn nhận được từ các cộng đồng bạn đã tham gia",
+      "total_badges": "((total) huy hiệu)",
+      "search_placeholder": "Tìm huy hiệu theo tên"
+    },
+    "edit_showing_badges_title": "Chỉnh sửa huy hiệu đang hiển thị"
   },
   "quiz": {
     "create_quiz": "Tạo Quiz",

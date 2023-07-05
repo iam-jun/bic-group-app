@@ -11,6 +11,7 @@ import { spacing } from '~/theme';
 export interface TabButtonProps {
   testID?: string;
   children?: string;
+  ContentComponent?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
   isSelected?: boolean;
   size?: 'large' | 'medium' | 'small';
@@ -33,6 +34,7 @@ const TabButton = ({
   size = 'medium',
   useI18n,
   disabled,
+  ContentComponent,
   onPress,
 }: TabButtonProps) => {
   const theme = useTheme();
@@ -47,6 +49,7 @@ const TabButton = ({
       disabled={!isInternetReachable || disabled}
       onPress={onPress}
     >
+      {ContentComponent || (
       <Text
         variant={textVariant[size]}
         color={isSelected ? colors.purple50 : colors.neutral40}
@@ -54,6 +57,7 @@ const TabButton = ({
       >
         {children}
       </Text>
+      )}
     </TouchableOpacity>
   );
 };
