@@ -147,11 +147,16 @@ const Home = () => {
   useEffect(
     () => {
       if (currentUserId) commonActions.getMyProfile({ userId: currentUserId });
+    }, [],
+  );
+
+  useEffect(
+    () => {
       if (redirectUrl) {
         openUrl(redirectUrl);
         appActions.setRedirectUrl('');
       }
-    }, [],
+    }, [redirectUrl],
   );
 
   const handleBackPress = () => {
