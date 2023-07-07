@@ -65,6 +65,16 @@ export const onReceiveURL = async ({
         break;
       }
 
+      case DeepLinkTypes.DISCOVER_COMMUNITIES: {
+        const navigateToDiscoverCommunities = () => navigation?.navigate?.(
+          mainStack.discover,
+        );
+        redirectToScreenWithSignIn({
+          userId, url, navigateCallback: navigateToDiscoverCommunities,
+        });
+        break;
+      }
+
       case DeepLinkTypes.GROUP_DETAIL: {
         const navigateToGroupDetail = () => navigation?.navigate?.(mainStack.groupDetail, {
           communityId: match.communityId,
