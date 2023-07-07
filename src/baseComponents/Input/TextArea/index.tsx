@@ -17,6 +17,7 @@ import dimension from '~/theme/dimension';
 export interface TextAreaProps extends RNTextInputProps {
   maxLength?:number,
   style?: StyleProp<ViewStyle>;
+  inputStyleContainer?: StyleProp<ViewStyle>;
   inputStyle?: StyleProp<ViewStyle>;
   label?: string,
   placeholder?: string;
@@ -35,6 +36,7 @@ const TextArea : React.FC<TextAreaProps> = ({
   value = '',
   label,
   style,
+  inputStyleContainer,
   inputStyle,
   activeOutlineColor,
   outlineColor,
@@ -79,14 +81,14 @@ const TextArea : React.FC<TextAreaProps> = ({
         style={[styles.textInputView, {
           borderColor: isFocus ? activeOutlineColor || colors.purple50
             : outlineColor || colors.neutral5,
-        }, inputStyle]}
+        }, inputStyleContainer]}
       >
         <RNTextInput
           value={text}
           maxLength={maxLength}
           testID="text_input.text_area.input"
           placeholderTextColor={colors.neutral20}
-          style={styles.textInput}
+          style={[styles.textInput, inputStyle]}
           multiline
           textAlignVertical="top"
           onChangeText={_onChangeText}
