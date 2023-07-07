@@ -589,7 +589,8 @@
     "title_quiz": "Quiz",
     "text_empty": "Không có nội dung",
     "text_no_reported_content": "Không có nội dung!",
-    "text_no_publish_content": "Không có nội dung nào được đăng!"
+    "text_no_publish_content": "Không có nội dung nào được đăng!",
+    "text_no_quiz_content": "Không có Quiz!"
   },
   "article": {
     "title": {

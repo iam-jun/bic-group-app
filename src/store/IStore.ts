@@ -57,6 +57,7 @@ import { ITermState } from '~/components/TermsModal/store';
 import { IDraftContentsState } from '~/screens/YourContent/components/Draft/DraftContents/store';
 import { IPublishState } from '~/screens/YourContent/components/Publish/store';
 import { IUserBadgesState } from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
+import { IDraftQuizState } from '~/screens/YourContent/components/Quiz/store';
 
 export interface BicStore {
   entities: {
@@ -177,6 +178,7 @@ export interface BicStore {
     yourContentStore: IYourContentState;
     scheduleArticleStore: IScheduleArticlesState;
     publishStore: IPublishState;
+    draftQuiz: IDraftQuizState;
   };
 
   // others

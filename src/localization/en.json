@@ -628,7 +628,8 @@
     "title_quiz": "Quiz",
     "text_empty": "There are no scheduled content yet!",
     "text_no_reported_content": "There are no reported content now!",
-    "text_no_publish_content": "There are no publish content now!"
+    "text_no_publish_content": "There are no publish content now!",
+    "text_no_quiz_content": "There are no quiz now!"
   },
   "article": {
     "title": {

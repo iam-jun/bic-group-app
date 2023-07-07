@@ -6,6 +6,13 @@ export enum QuizStatus {
   PUBLISHED = 'PUBLISHED',
 }
 
+export enum GenStatus {
+  PENDING = 'PENDING',
+  PROCESSING = 'PROCESSING',
+  PROCESSED = 'PROCESSED',
+  FAILED = 'FAILED',
+}
+
 export type FormGenerateQuiz = {
   title: string;
   description?: string;
@@ -38,11 +45,12 @@ export interface IQuiz extends GenerateQuizParams {
   id: string;
   questions: QuestionItem[];
   status: QuizStatus;
+  genStatus: GenStatus;
   createdAt?: string;
   updatedAt?: string;
 }
 
-export type QuizPost = Pick<IQuiz, 'id' | 'title' | 'description' | 'status' | 'createdAt' | 'updatedAt'>
+export type QuizPost = Pick<IQuiz, 'id' | 'title' | 'description' | 'status' | 'createdAt' | 'updatedAt' | 'genStatus'>
 
 export type EditQuizParams = Partial<Omit<IQuiz, 'id'>>;
 
@@ -51,4 +59,9 @@ export type EditQuizActionsParams = {
   params: EditQuizParams;
   audiences?: IAudienceGroup[];
   onSuccess?: (response: IQuiz) => void;
+};
+
+export interface IParamsGetDraftQuiz {
+  limit?: number;
+  endCursor?: string;
 };
