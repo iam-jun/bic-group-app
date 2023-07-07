@@ -17,11 +17,8 @@ import {
   QuestionItem,
   QuizStatus,
 } from '~/interfaces/IQuiz';
-import { Button } from '~/baseComponents';
 import useQuizzesStore from '~/store/entities/quizzes';
-import Icon from '~/baseComponents/Icon';
 import { useRootNavigation } from '~/hooks/navigation';
-import TitleDescriptionComposeQuiz from './components/TitleDescriptionComposeQuiz';
 import QuestionComposeQuiz from './components/QuestionComposeQuiz';
 import showToast from '~/store/helper/showToast';
 import postsSelector from '~/store/entities/posts/selectors';
@@ -55,10 +52,9 @@ const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
   const actionsQuizzesStore = useQuizzesStore((state) => state.actions);
 
   const {
-    questions = [], id, title, description,
+    questions = [], id,
   } = quiz || {};
 
-  const disabledBtnRegenerate = isGenerating || loading;
   const disabledBtnSave = isGenerating || loading || isEmpty(quiz);
 
   const generateQuiz = () => {
@@ -77,22 +73,14 @@ const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
     generateQuiz();
   }, []);
 
-  const renderCustomComponent = () => (
-    <View style={styles.btnRegenerateQuiz}>
-      <Button disabled={disabledBtnRegenerate} onPress={generateQuiz}>
-        <Icon icon="RotateSolid" size={18} tintColor={colors.neutral80} />
-      </Button>
-    </View>
-  );
-
   const renderItem: ListRenderItem<QuestionItem> = ({ item, index }) => (
-    <QuestionComposeQuiz questionItem={item} index={index} />
+    <QuestionComposeQuiz contentId={contentId} questionItem={item} index={index} />
   );
 
-  const keyExtractor = (_, index) => `question_${index}`;
+  const keyExtractor = (question) => `question_${question.id}`;
 
-  const renderListHeaderComponent = () => (
-    <TitleDescriptionComposeQuiz title={title} description={description} />
+  const renderItemSeparatorComponent = () => (
+    <View style={styles.line} />
   );
 
   const onPressBack = () => {
@@ -124,7 +112,7 @@ const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
     <View style={styles.container}>
       <Header
         useI18n
-        title="quiz:the_question"
+        title="quiz:quiz_review"
         buttonProps={{
           disabled: disabledBtnSave,
           loading,
@@ -133,7 +121,6 @@ const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
         buttonText="common:btn_create"
         onPressButton={onSave}
         onPressBack={onPressBack}
-        renderCustomComponent={renderCustomComponent}
       />
       {isGenerating && (
         <View style={styles.containerLoadingView}>
@@ -145,8 +132,8 @@ const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
           data={questions}
           keyExtractor={keyExtractor}
           renderItem={renderItem}
-          ListHeaderComponent={renderListHeaderComponent}
           contentContainerStyle={styles.containerContent}
+          ItemSeparatorComponent={renderItemSeparatorComponent}
         />
       )}
     </View>
@@ -164,7 +151,6 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     containerContent: {
       paddingHorizontal: spacing.padding.large,
-      paddingTop: spacing.padding.large,
       paddingBottom: spacing.padding.large + insets.bottom,
     },
     btnSave: {
@@ -177,6 +163,10 @@ const createStyle = (theme: ExtendedTheme) => {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    line: {
+      borderTopColor: colors.neutral5,
+      borderTopWidth: 1,
     },
   });
 };

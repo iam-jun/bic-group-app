@@ -7,12 +7,10 @@ import { spacing } from '~/theme';
 import { mapIndexToAlphabet } from '../../helper';
 
 type QuestionContentProps = {
-  index: number;
   questionItem: QuestionItem;
 };
 
 const QuestionContent: FC<QuestionContentProps> = ({
-  index: indexQuestion,
   questionItem,
 }) => {
   const { question, answers } = questionItem;
@@ -21,9 +19,9 @@ const QuestionContent: FC<QuestionContentProps> = ({
   const styles = createStyle(theme);
 
   const renderAnswerItem = (item: AnswerItem, index: number) => {
-    const { answer, isCorrect } = item;
+    const { answer, isCorrect, id } = item;
     return (
-      <View key={`${indexQuestion}_answer_${index}`}>
+      <View key={`answer_${id}`}>
         {isCorrect ? (
           <View style={styles.container}>
             <View style={styles.square}>

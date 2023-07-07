@@ -28,6 +28,7 @@ export const customBackHandlerRoutes = [
   homeStack.pinContent,
   homeStack.reorderedPinContent,
   quizStack.submitFormQuiz,
+  quizStack.editQuestion,
 ];
 
 export const EVENT_NAVIGATION_BACK_PRESSED = 'navigation-back-pressed';
