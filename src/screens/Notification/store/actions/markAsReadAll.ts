@@ -6,7 +6,7 @@ import showToastError from '~/store/helper/showToastError';
 
 const markAsReadAll = (set, get) => async (tabId: string) => {
   try {
-    const response = await notificationApi.markAsReadAll(tabId);
+    await notificationApi.markAsReadAll(tabId);
     const data: INotificationsState = get();
 
     // get all notifications from store
