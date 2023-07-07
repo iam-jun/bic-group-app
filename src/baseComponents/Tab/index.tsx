@@ -68,6 +68,8 @@ const Tab = ({
       alwaysBounceHorizontal={false}
       showsHorizontalScrollIndicator={false}
       ref={scrollViewRef}
+      showsVerticalScrollIndicator={false}
+      directionalLockEnabled
     >
       {data?.map?.(renderItem)}
     </ScrollView>
