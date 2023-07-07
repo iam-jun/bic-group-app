@@ -10,7 +10,6 @@ describe('ButtonMarkAsRead', () => {
       <ButtonMarkAsRead
         postId="1"
         markedReadPost={false}
-        isActor={false}
         isImportant
         expireTime="2032-05-04T08:30:00.000Z"
         style={{ backgroundColor: 'tomato' }}
@@ -26,7 +25,6 @@ describe('ButtonMarkAsRead', () => {
       <ButtonMarkAsRead
         postId="1"
         markedReadPost={false}
-        isActor
         isImportant
         expireTime="2032-05-04T08:30:00.000Z"
       />,
@@ -40,7 +38,6 @@ describe('ButtonMarkAsRead', () => {
       <ButtonMarkAsRead
         postId="1"
         markedReadPost
-        isActor={false}
         isImportant
         expireTime="2032-05-04T08:30:00.000Z"
       />,
@@ -54,7 +51,6 @@ describe('ButtonMarkAsRead', () => {
       <ButtonMarkAsRead
         postId="1"
         markedReadPost={false}
-        isActor={false}
         isImportant={false}
         expireTime="2032-05-04T08:30:00.000Z"
       />,
@@ -68,7 +64,6 @@ describe('ButtonMarkAsRead', () => {
       <ButtonMarkAsRead
         postId="1"
         markedReadPost={false}
-        isActor={false}
         isImportant={false}
         expireTime=""
       />,

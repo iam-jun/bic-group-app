@@ -36,7 +36,7 @@ import Maintenance from '~/screens/Maintenance';
 SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
-const rootNavigation = withNavigation(rootNavigationRef);
+const rootNavigation = withNavigation?.(rootNavigationRef);
 
 const RootNavigator = (): React.ReactElement => {
   const theme = useTheme();

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { IActivityImportant } from '~/interfaces/IPost';
+import { IActivityImportant, IPostSetting, IPutEditSettingsParams } from '~/interfaces/IPost';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import {
   getMinDateImportant as getMinDate,
@@ -9,19 +9,38 @@ import {
   handleChangeSuggestDateImportant,
   toggleImportant,
 } from '~/helpers/settingImportant';
+import useCreateArticle from '../../hooks/useCreateArticle';
+import { useBaseHook } from '~/hooks';
+import { useRootNavigation } from '~/hooks/navigation';
+import showAlert from '~/store/helper/showAlert';
+import useArticlesStore from '~/screens/articles/ArticleDetail/store';
+import usePostsStore from '~/store/entities/posts';
 
 export interface IUseArticleSettings {
   articleId?: string;
-  listAudiencesWithoutPermission?: any[];
 }
 
 const useArticleSettings = (params?: IUseArticleSettings) => {
-  const { listAudiencesWithoutPermission } = params || {};
+  const { articleId } = params || {};
+
+  const { t } = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
+
+  const {
+    audiencesWithNoPermission: listAudiencesWithoutPermission,
+  } = useCreateArticle({ articleId });
+
+  const postsStoreActions = usePostsStore((state) => state.actions);
 
   const { setting } = useCreateArticleStore((state) => state.data);
-  const { isImportant, importantExpiredAt } = setting || {};
-  const actions = useCreateArticleStore((state) => state.actions);
+  const chooseAudiences = useCreateArticleStore((state) => state.chooseAudiences);
+  const {
+    isImportant, importantExpiredAt, canComment, canReact,
+  } = setting || {};
+  const articlesStoreActions = useArticlesStore((state) => state.actions);
 
+  const [loading, setLoading] = useState(false);
+  const [disableButtonSave, setDisableButtonSave] = useState<boolean>(true);
   const [showWarning, setShowWarning] = useState<boolean>(false);
   const [showCustomExpire, setCustomExpire] = useState<boolean>(false);
   const [sImportant, setImportant] = useState<IActivityImportant>({
@@ -31,9 +50,9 @@ const useArticleSettings = (params?: IUseArticleSettings) => {
     neverExpires: isImportant && !importantExpiredAt,
   });
 
-  useEffect(() => {
-    const isImportantChanged = isImportant !== sImportant.active || importantExpiredAt !== sImportant.expiresTime;
+  const isImportantChanged = isImportant !== sImportant.active || importantExpiredAt !== sImportant.expiresTime;
 
+  useEffect(() => {
     if (isImportantChanged) {
       setImportant({
         ...sImportant,
@@ -45,11 +64,54 @@ const useArticleSettings = (params?: IUseArticleSettings) => {
   }, [isImportant, importantExpiredAt]);
 
   useEffect(() => {
-    actions.setSettings({
+    setDisableButtonSave(!isImportantChanged);
+  }, [sImportant]);
+
+  const editSettingsOnExistedArticle = () => {
+    const newSetting: IPostSetting = {
       isImportant: sImportant.active,
       importantExpiredAt: sImportant.expiresTime,
-    });
-  }, [sImportant]);
+      canReact,
+      canComment,
+    };
+
+    const onPreLoad = () => {
+      setLoading(true);
+    };
+
+    const onSuccess = () => {
+      setLoading(false);
+      articlesStoreActions.getArticleDetail({ articleId });
+      rootNavigation.goBack();
+    };
+
+    const onFailed = () => {
+      setLoading(false);
+    };
+
+    const params: IPutEditSettingsParams = {
+      id: articleId,
+      setting: newSetting,
+      audiences: chooseAudiences,
+      onPreLoad,
+      onSuccess,
+      onFailed,
+    };
+    postsStoreActions.putEditSettings(params);
+  };
+
+  const handleSaveSettings = () => {
+    if (articleId) {
+      editSettingsOnExistedArticle();
+    }
+  };
+
+  // useEffect(() => {
+  //   actions.setSettings({
+  //     isImportant: sImportant.active,
+  //     importantExpiredAt: sImportant.expiresTime,
+  //   });
+  // }, [sImportant]);
 
   const handleToggleImportant = () => {
     toggleImportant(
@@ -85,6 +147,21 @@ const useArticleSettings = (params?: IUseArticleSettings) => {
     );
   };
 
+  const handleBack = () => {
+    if (disableButtonSave) {
+      rootNavigation.goBack();
+    } else {
+      showAlert({
+        title: t('discard_alert:title'),
+        content: t('discard_alert:content'),
+        cancelBtn: true,
+        cancelLabel: t('common:btn_discard'),
+        confirmLabel: t('common:btn_stay_here'),
+        onCancel: () => rootNavigation.goBack(),
+      });
+    }
+  };
+
   return {
     sImportant,
     showWarning,
@@ -95,6 +172,10 @@ const useArticleSettings = (params?: IUseArticleSettings) => {
     handleChangeDatePicker,
     handleChangeTimePicker,
     handleChangeSuggestDate,
+    handleSaveSettings,
+    disableButtonSave,
+    loading,
+    handleBack,
   };
 };
 

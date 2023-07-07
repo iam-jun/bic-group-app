@@ -1,3 +1,4 @@
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { CommunityPrivacyType, GroupPrivacyType } from '~/constants/privacyTypes';
 
 export const communities = [
@@ -34,7 +35,7 @@ export const communities = [
     createdAt: '2022-04-26T08:29:58.579Z',
     updatedAt: '2022-04-26T08:29:58.579Z',
     userCount: 0,
-    joinStatus: 0,
+    joinStatus: GroupJoinStatus.UNABLE_TO_JOIN,
     settings: {
       isActiveGroupTerms: false,
     },
@@ -55,7 +56,7 @@ export const communityDetailData = {
   createdAt: '2022-04-26T08:29:58.579Z',
   updatedAt: '2022-04-26T08:29:58.579Z',
   userCount: 5,
-  joinStatus: 2,
+  joinStatus: GroupJoinStatus.MEMBER,
 };
 
 export const groupDetailData = {
@@ -84,7 +85,7 @@ export const groupDetailData = {
     totalPendingMembers: 0,
     userCount: 7,
     teamName: '27505c',
-    joinStatus: 1,
+    joinStatus: GroupJoinStatus.VISITOR,
     members: [
       {
         id: '2cff4f3e-2cad-4d35-a3b0-35f483a22136',
@@ -132,7 +133,7 @@ export const groupDetailData = {
   },
   teamName: '27505c',
   userCount: 7,
-  joinStatus: 1,
+  joinStatus: GroupJoinStatus.VISITOR,
   totalPendingMembers: 0,
 };
 
@@ -243,7 +244,7 @@ export const listDiscoverCommunities = [
     createdAt: '2022-04-26T08:29:58.579Z',
     updatedAt: '2022-04-26T08:29:58.579Z',
     userCount: 5,
-    joinStatus: 2,
+    joinStatus: GroupJoinStatus.MEMBER,
   },
   {
     id: '2',
@@ -259,7 +260,7 @@ export const listDiscoverCommunities = [
     createdAt: '2022-04-26T08:29:58.579Z',
     updatedAt: '2022-04-26T08:29:58.579Z',
     userCount: 5,
-    joinStatus: 2,
+    joinStatus: GroupJoinStatus.MEMBER,
   },
   {
     id: '3',
@@ -275,7 +276,7 @@ export const listDiscoverCommunities = [
     createdAt: '2022-04-26T08:29:58.579Z',
     updatedAt: '2022-04-26T08:29:58.579Z',
     userCount: 5,
-    joinStatus: 2,
+    joinStatus: GroupJoinStatus.MEMBER,
   },
   {
     id: '4',
@@ -291,7 +292,7 @@ export const listDiscoverCommunities = [
     createdAt: '2022-04-26T08:29:58.579Z',
     updatedAt: '2022-04-26T08:29:58.579Z',
     userCount: 5,
-    joinStatus: 2,
+    joinStatus: GroupJoinStatus.MEMBER,
   },
   {
     id: '5',
@@ -307,7 +308,7 @@ export const listDiscoverCommunities = [
     createdAt: '2022-04-26T08:29:58.579Z',
     updatedAt: '2022-04-26T08:29:58.579Z',
     userCount: 5,
-    joinStatus: 2,
+    joinStatus: GroupJoinStatus.MEMBER,
   },
 
 ];

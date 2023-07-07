@@ -8,9 +8,10 @@ import showToastError from '~/store/helper/showToastError';
 import useYourGroupsStore from '~/screens/communities/Communities/components/YourGroups/store';
 import useManagedStore from '~/screens/communities/Communities/components/Managed/store';
 import useGroupDetailStore from '../index';
+import useMyPermissionsStore from '~/store/permissions';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 
-const rootNavigation = withNavigation(rootNavigationRef);
+const rootNavigation = withNavigation?.(rootNavigationRef);
 
 const leaveGroup = () => async (groupId: string, privacy: GroupPrivacyType) => {
   try {
@@ -29,6 +30,9 @@ const leaveGroup = () => async (groupId: string, privacy: GroupPrivacyType) => {
     // refresh list in screen Your Groups & Managed
     useYourGroupsStore.getState().actions.getYourGroups(true);
     useManagedStore.getState().actions.getManaged(true);
+
+    // refresh permissions
+    useMyPermissionsStore.getState().actions.getMyPermissions();
 
     showToastSuccess(response);
   } catch (err) {

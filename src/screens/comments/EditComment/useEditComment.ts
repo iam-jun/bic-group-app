@@ -25,7 +25,7 @@ import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import useUploaderStore, { IGetFile } from '~/store/uploader';
 import showToastError from '~/store/helper/showToastError';
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = withNavigation?.(rootNavigationRef);
 
 export interface IUseEditComment {
   commentId: string;

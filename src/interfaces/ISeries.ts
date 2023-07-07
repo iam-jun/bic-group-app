@@ -59,7 +59,8 @@ export interface IReorderItems {
 export type IAddArticleInSeries = IReorderItems;
 export type IRemoveItemInSeries = IReorderItems;
 
-export interface ISeriesSettingsParams {
+export interface ISeriesSettingsScreenParams {
   seriesId?: string;
   listAudiencesWithoutPermission?: IAudience[];
+  isFromSeriesMenuSettings?: boolean;
 }
