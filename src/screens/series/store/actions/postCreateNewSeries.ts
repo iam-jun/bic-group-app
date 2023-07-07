@@ -7,7 +7,7 @@ import showToastError from '~/store/helper/showToastError';
 import { ISeriesState } from '..';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 
-const navigation = routerHelper.withNavigation(rootNavigationRef);
+const navigation = routerHelper?.withNavigation?.(rootNavigationRef);
 
 const postCreateNewSeries = (set, get) => async () => {
   const { data, actions }: ISeriesState = get() || {};
@@ -32,6 +32,7 @@ const postCreateNewSeries = (set, get) => async () => {
       state.loading = false;
     }, 'postCreateNewSeriesError');
     showToastError(error);
+    // TODO: handle error settings
   }
 };
 

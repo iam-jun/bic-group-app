@@ -199,9 +199,9 @@ const navigateWithValidReferralCode = async (payload: {
     userId, responseValidate, navigation, referralCode,
   } = payload;
   if (userId) {
-    const { id: communityId } = responseValidate?.data || {};
+    const { groupId: rootGroupId, id: communityId } = responseValidate?.data || {};
     try {
-      const responseJoinCommunity = await groupApi.joinCommunity(communityId);
+      const responseJoinCommunity = await groupApi.joinCommunity(rootGroupId);
       if (responseJoinCommunity && responseJoinCommunity?.data) {
         navigation?.navigate?.(mainStack.communityDetail, { communityId });
       }

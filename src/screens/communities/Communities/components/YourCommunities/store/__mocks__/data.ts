@@ -1,3 +1,5 @@
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
+
 export const responseDiscoverCommunity = {
   code: 'api.ok',
   meta: {
@@ -22,7 +24,7 @@ export const responseDiscoverCommunity = {
       isJoinApproval: false,
     },
     userCount: 2,
-    joinStatus: 1,
+    joinStatus: GroupJoinStatus.VISITOR,
   },
   {
     id: '10bc9ac0-c9af-4e79-8f59-d7c54a499bc1',
@@ -39,7 +41,7 @@ export const responseDiscoverCommunity = {
       isJoinApproval: false,
     },
     userCount: 3,
-    joinStatus: 1,
+    joinStatus: GroupJoinStatus.VISITOR,
   },
   {
     id: '3226fbf9-bb03-48c7-bd64-bd522f549c56',
@@ -56,7 +58,7 @@ export const responseDiscoverCommunity = {
       isJoinApproval: false,
     },
     userCount: 2,
-    joinStatus: 1,
+    joinStatus: GroupJoinStatus.VISITOR,
   },
   ],
 };

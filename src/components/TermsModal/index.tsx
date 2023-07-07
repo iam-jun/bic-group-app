@@ -93,6 +93,7 @@ const TermsView = () => {
   const onSubmit = () => {
     if (type === 'community') {
       comActions.joinCommunity({
+        rootGroupId,
         communityId: groupId,
         communityName: name,
         membershipAnswers: answers,

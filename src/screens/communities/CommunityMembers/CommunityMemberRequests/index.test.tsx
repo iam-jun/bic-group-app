@@ -11,30 +11,26 @@ describe('CommunityMemberRequests', () => {
   } as ICommunity;
   const onPressAdd = jest.fn();
 
-  it('should render correctly when canApproveRejectJoiningRequests = true & canEditJoinSetting = true', () => {
+  it('should render correctly when canApproveRejectJoiningRequests = true', () => {
     const { getByTestId } = render(
       <CommunityMemberRequests
         community={community}
         canAddMember
         canApproveRejectJoiningRequests
-        canEditJoinSetting
         onPressAdd={onPressAdd}
       />,
     );
 
     const memberList = getByTestId('member_request_list');
-    const joinSetting = getByTestId('join_request_setting');
     expect(memberList).toBeDefined();
-    expect(joinSetting).toBeDefined();
   });
 
-  it('should render correctly when canApproveRejectJoiningRequests = false & canEditJoinSetting = false', () => {
+  it('should render correctly when canApproveRejectJoiningRequests = false', () => {
     const { queryByTestId } = render(
       <CommunityMemberRequests
         community={community}
         canAddMember
         canApproveRejectJoiningRequests={false}
-        canEditJoinSetting={false}
         onPressAdd={onPressAdd}
       />,
     );
@@ -74,7 +70,6 @@ describe('CommunityMemberRequests', () => {
         community={community}
         canAddMember
         canApproveRejectJoiningRequests
-        canEditJoinSetting
         onPressAdd={onPressAdd}
       />,
     );
@@ -113,7 +108,6 @@ describe('CommunityMemberRequests', () => {
         community={community}
         canAddMember
         canApproveRejectJoiningRequests
-        canEditJoinSetting
         onPressAdd={onPressAdd}
       />,
     );

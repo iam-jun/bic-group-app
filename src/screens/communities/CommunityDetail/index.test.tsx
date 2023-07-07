@@ -7,6 +7,7 @@ import CommunityDetail from './index';
 import { communityDetailData } from '~/test/mock_data/communities';
 import useCommunitiesStore from '~/store/entities/communities';
 import { CommunityPrivacyType } from '~/constants/privacyTypes';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 
 describe('CommunityDetail', () => {
   const component = () => (
@@ -28,7 +29,7 @@ describe('CommunityDetail', () => {
       state.data = {
         [communityDetailData.id]: {
           ...communityDetailData,
-          joinStatus: 1,
+          joinStatus: GroupJoinStatus.VISITOR,
           privacy: CommunityPrivacyType.PRIVATE,
         },
       };
@@ -69,7 +70,7 @@ describe('CommunityDetail', () => {
       state.data = {
         [communityDetailData.id]: {
           ...communityDetailData,
-          joinStatus: 1,
+          joinStatus: GroupJoinStatus.VISITOR,
           privacy: CommunityPrivacyType.OPEN,
         },
       };
@@ -90,7 +91,7 @@ describe('CommunityDetail', () => {
       state.data = {
         [communityDetailData.id]: {
           ...communityDetailData,
-          joinStatus: 1,
+          joinStatus: GroupJoinStatus.VISITOR,
           privacy: CommunityPrivacyType.PRIVATE,
         },
       };

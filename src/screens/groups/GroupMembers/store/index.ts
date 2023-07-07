@@ -7,6 +7,7 @@ import {
   IPayloadApproveSingleGroupMemberRequest,
   IPayloadDeclineAllGroupMemberRequests,
   IPayloadDeclineSingleGroupMemberRequest,
+  IPayloadUpdateGroupJoinSetting,
 } from '~/interfaces/IGroup';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
@@ -58,7 +59,7 @@ export interface IGroupMemberState extends IBaseState {
     }) => void;
     getGroupMembers: (payload: IGroupGetMembers) => void;
     clearGroupMembers: () => void;
-    updateGroupJoinSetting: (payload: { groupId: string; isJoinApproval: boolean }) => void;
+    updateGroupJoinSetting: (payload: IPayloadUpdateGroupJoinSetting) => void;
 
     setGroupMemberRequests: (payload: IPayloadSetGroupMemberRequests) => void;
     resetGroupMemberRequests: () => void;

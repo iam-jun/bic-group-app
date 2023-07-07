@@ -1,6 +1,7 @@
 import { GroupPrivacyType } from '~/constants/privacyTypes';
 import { IGroupDetail } from '~/interfaces/IGroup';
 import { POST_DETAIL } from './post';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 
 export const groupDetailData: IGroupDetail = {
   group: {
@@ -22,7 +23,7 @@ export const groupDetailData: IGroupDetail = {
     deletedAt: null,
     userCount: 25,
   },
-  joinStatus: 2,
+  joinStatus: GroupJoinStatus.MEMBER,
 };
 
 export const adminDetail = {
@@ -156,7 +157,7 @@ export const discoverGroup = {
   updatedAt: '2022-01-10T17:47:44.883Z',
   deletedAt: null,
   userCount: 7,
-  joinStatus: 1,
+  joinStatus: GroupJoinStatus.VISITOR,
 };
 
 /**

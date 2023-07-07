@@ -15,6 +15,7 @@ import CommunityMembers from '~/screens/communities/CommunityMembers';
 import CommunityAdmin from '~/screens/communities/CommunityAdmin';
 import EditName from '~/screens/groups/GeneralInformation/EditName';
 import EditPrivacy from '~/screens/groups/GeneralInformation/EditPrivacy';
+import MembershipPolicySettings from '~/screens/groups/MembershipPolicySettings';
 
 const groupScreens = {
   // community
@@ -36,6 +37,7 @@ const groupScreens = {
   'edit-description': EditDescription,
   'edit-privacy': EditPrivacy,
   'add-members': AddMembersToGroup,
+  'membership-policy-settings': MembershipPolicySettings,
 
   // group structure removed
   // permission scheme removed

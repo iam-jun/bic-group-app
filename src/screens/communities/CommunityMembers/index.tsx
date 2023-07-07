@@ -99,7 +99,6 @@ const CommunityMembers = ({ route }: any) => {
           community={community}
           canAddMember={false}
           canApproveRejectJoiningRequests={canApproveRejectJoiningRequests}
-          canEditJoinSetting={canEditJoinSetting}
         />
       );
     }

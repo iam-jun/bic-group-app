@@ -12,7 +12,7 @@ import GroupJoinStatus from '~/constants/GroupJoinStatus';
 interface JoinCancelButtonProps {
   style?: StyleProp<ViewStyle>;
   type: 'community' | 'group';
-  joinStatus: number;
+  joinStatus: GroupJoinStatus;
   privacy: GroupPrivacyType | CommunityPrivacyType;
   onPressJoin: () => void;
   onPressCancelRequest: () => void;
@@ -24,27 +24,33 @@ const JoinCancelButton = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
-  const hasRequested = joinStatus === GroupJoinStatus.REQUESTED;
+  const isRequested = joinStatus === GroupJoinStatus.REQUESTED;
+  const isInvitedOnly = joinStatus === GroupJoinStatus.INVITED_ONLY;
+
+  const renderButton = () => {
+    if (isInvitedOnly) {
+      return (
+        <Button.Secondary testID="join_cancel_button.invited_only" disabled useI18n>
+          common:btn_only_invited_people_can_join
+        </Button.Secondary>
+      );
+    } if (isRequested) {
+      return (
+        <Button.Neutral testID="join_cancel_button.cancel" onPress={onPressCancelRequest} useI18n>
+          common:btn_cancel_request
+        </Button.Neutral>
+      );
+    }
+    return (
+      <Button.Secondary testID="join_cancel_button.join" onPress={onPressJoin} useI18n>
+        {`communities:text_join_${type}_button`}
+      </Button.Secondary>
+    );
+  };
 
   return (
     <View style={[styles.buttonView, style]} testID="join_cancel_button">
-      {hasRequested ? (
-        <Button.Neutral
-          testID="join_cancel_button.cancel"
-          onPress={onPressCancelRequest}
-          useI18n
-        >
-          common:btn_cancel_request
-        </Button.Neutral>
-      ) : (
-        <Button.Secondary
-          testID="join_cancel_button.join"
-          onPress={onPressJoin}
-          useI18n
-        >
-          {`communities:text_join_${type}_button`}
-        </Button.Secondary>
-      )}
+      {renderButton()}
     </View>
   );
 };

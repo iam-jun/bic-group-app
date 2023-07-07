@@ -47,7 +47,7 @@ interface IHandleSaveOptions {
   titleAlert?: string;
 }
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = withNavigation?.(rootNavigationRef);
 
 export interface IUseEditArticle {
   articleId: string;
@@ -95,7 +95,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     chooseAudiences,
     PermissionKey.EDIT_OWN_CONTENT_SETTING,
   );
-  const disableArticleSettings = audiencesWithNoPermission.length === chooseAudiences?.length;
+  const disableArticleSettings = chooseAudiences.length === 0 || audiencesWithNoPermission.length > 0;
 
   const { t } = useBaseHook();
 
@@ -117,7 +117,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     const isCoverMediaUpdated = article.coverMedia?.id !== data.coverMedia?.id;
     const isSeriesUpdated = !isEqual(article?.series, data.series);
     const isTagsUpdated = !isEqual(article?.tags, data.tags);
-    const isSettingsUpdated = !isEqual(article?.setting, data.setting);
+    // const isSettingsUpdated = !isEqual(article?.setting, data.setting);
 
     return (
       isTitleUpdated
@@ -126,7 +126,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
       || isCoverMediaUpdated
       || isSeriesUpdated
       || isTagsUpdated
-      || isSettingsUpdated
+      // || isSettingsUpdated
     );
   };
 
@@ -147,7 +147,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
       && !isEmpty(data.coverMedia);
     const isSeriesUpdated = !isEqual(article?.series, data.series);
     const isTagsUpdated = !isEqual(article?.tags, data.tags);
-    const isSettingsUpdated = !isEqual(article?.setting, data.setting);
+    // const isSettingsUpdated = !isEqual(article?.setting, data.setting);
 
     return (
       isTitleUpdated
@@ -156,7 +156,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
       || isCoverMediaUpdated
       || isSeriesUpdated
       || isTagsUpdated
-      || isSettingsUpdated
+      // || isSettingsUpdated
     );
   };
 
