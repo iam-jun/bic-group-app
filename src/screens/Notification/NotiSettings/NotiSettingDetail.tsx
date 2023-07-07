@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { RefreshControl, StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import Animated from 'react-native-reanimated';
 
 import { debounce } from 'lodash';
 import Header from '~/beinComponents/Header';
@@ -14,10 +15,16 @@ import Text from '~/baseComponents/Text';
 import NotiSettingItem from '../components/NotiSettingItem';
 import { IEditNotificationSetting, INotiChannel, INotiSettings } from '~/interfaces/INotification';
 
-interface HandleToggleProps {
+interface IHandleToggleProps {
   isChecked: boolean;
-   item: INotiSettings;
-    index: number;
+  item: INotiSettings;
+  index: number;
+}
+
+interface IHandleUpdateSettings {
+  payload: INotiSettings;
+  oldPayload: INotiSettings;
+  index: number;
 }
 
 const icons = {
@@ -35,43 +42,56 @@ const NotiSettingDetail: FC<IRouteParams> = (props) => {
 
   const data = useNotiSettingsStore((state) => state.data?.[name]);
   const actions = useNotiSettingsStore((state) => state.actions);
+  const isRefreshing = useNotiSettingsStore((state) => state.isRefreshing);
 
   const {
     title = '', subtitle = '', enable, child = [], channels = undefined,
   } = data;
 
-  const handleUpdateSettings = (payload: INotiSettings, index: number) => {
-    let newPayload: IEditNotificationSetting = {
+  const onRefresh = () => {
+    actions.getConfigSettings(true);
+  };
+
+  const handleUpdateSettings = ({ payload, oldPayload, index }:IHandleUpdateSettings) => {
+    let payloadUpdateStore: IEditNotificationSetting = {
       name: payload.name,
     };
-    if (payload?.enable !== undefined) {
-      newPayload = { ...newPayload, enable: payload.enable };
+    if (oldPayload?.enable !== undefined) {
+      payloadUpdateStore = { ...payloadUpdateStore, enable: oldPayload.enable };
     }
-    if (payload?.channels !== undefined) {
-      newPayload = { ...newPayload, channels: payload.channels };
+    if (oldPayload?.channels !== undefined) {
+      payloadUpdateStore = { ...payloadUpdateStore, channels: oldPayload.channels };
     }
 
     if (index !== -1) {
       const newChild = child?.map((item: INotiSettings, i: number) => {
         if (i === index) {
-          return payload;
+          return oldPayload;
         }
         return item;
       });
       const newData = { ...data, child: newChild };
-      actions.updateSettings(newPayload, newData);
+      actions.updateSettings(payload, newData);
     } else {
-      actions.updateSettings(newPayload, payload);
+      actions.updateSettings(payload, payloadUpdateStore);
     }
   };
 
-  const onPressToggle = ({ index, item, isChecked }:HandleToggleProps) => {
+  const onPressToggle = ({ index, item, isChecked }:IHandleToggleProps) => {
     const payload = { ...item, enable: isChecked };
-    handleUpdateSettings(payload, index);
+    const oldPayload = { ...item, enable: isChecked };
+    handleUpdateSettings({ payload, oldPayload, index });
   };
 
-  const handlePressItemInApp = debounce(({ index, item, isChecked }:HandleToggleProps) => {
+  const handlePressItemInApp = debounce(({ index, item, isChecked }:IHandleToggleProps) => {
     const payload = {
+      name: item.name,
+      channels:
+        {
+          inApp: isChecked,
+        },
+    };
+    const oldPayload = {
       ...item,
       channels:
         {
@@ -79,11 +99,19 @@ const NotiSettingDetail: FC<IRouteParams> = (props) => {
           push: item?.channels?.push,
         },
     };
-    handleUpdateSettings(payload, index);
+
+    handleUpdateSettings({ payload, oldPayload, index });
   }, 100);
 
-  const handlePressItemPush = debounce(({ index, item, isChecked }:HandleToggleProps) => {
+  const handlePressItemPush = debounce(({ index, item, isChecked }:IHandleToggleProps) => {
     const payload = {
+      name: item.name,
+      channels:
+        {
+          push: isChecked,
+        },
+    };
+    const oldPayload = {
       ...item,
       channels:
         {
@@ -91,7 +119,7 @@ const NotiSettingDetail: FC<IRouteParams> = (props) => {
           inApp: item?.channels?.inApp,
         },
     };
-    handleUpdateSettings(payload, index);
+    handleUpdateSettings({ payload, oldPayload, index });
   }, 100);
 
   if (!Boolean(data)) return null;
@@ -134,14 +162,14 @@ const NotiSettingDetail: FC<IRouteParams> = (props) => {
         <NotiSettingItem
           item={inAppItem}
           isDisable={!Boolean(enable)}
-          isDisableToggle={!enable}
+          isDisableToggle={!Boolean(enable)}
           iconName="Grid2"
           onPressToggle={(isChecked: boolean) => handlePressItemInApp({ isChecked, item, index })}
         />
         <NotiSettingItem
           item={pushItem}
           isDisable={!Boolean(enable)}
-          isDisableToggle={!enable}
+          isDisableToggle={!Boolean(enable)}
           iconName="Window"
           onPressToggle={(isChecked: boolean) => handlePressItemPush({ isChecked, item, index })}
         />
@@ -159,6 +187,8 @@ const NotiSettingDetail: FC<IRouteParams> = (props) => {
           item={item}
           iconName={iconName}
           isShowSubTitle
+          isDisable={!Boolean(enable)}
+          isDisableToggle={!Boolean(enable)}
           onPressToggle={(isChecked: boolean) => onPressToggle({ isChecked, item, index })}
         />
       );
@@ -182,14 +212,26 @@ const NotiSettingDetail: FC<IRouteParams> = (props) => {
       {Boolean(title)
       && <Header title={title} />}
       <ViewSpacing height={spacing.padding.large} />
-      {renderHeader()}
-      <NotiSettingItem
-        item={defaultItem}
-        iconName="Bell"
-        onPressToggle={(isChecked: boolean) => onPressToggle({ isChecked, item: data, index: -1 })}
-      />
-      {child?.length > 0 && child.map((item: INotiSettings, index: number) => renderChild(item, index))}
-      {Boolean(channels) && renderChildContent(channels, data, -1)}
+      <Animated.ScrollView
+        style={styles.flex1}
+        showsVerticalScrollIndicator={false}
+        scrollEventThrottle={16}
+        refreshControl={(
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={onRefresh}
+          />
+          )}
+      >
+        {renderHeader()}
+        <NotiSettingItem
+          item={defaultItem}
+          iconName="Bell"
+          onPressToggle={(isChecked: boolean) => onPressToggle({ isChecked, item: data, index: -1 })}
+        />
+        {child?.length > 0 && child.map((item: INotiSettings, index: number) => renderChild(item, index))}
+        {Boolean(channels) && renderChildContent(channels, data, -1)}
+      </Animated.ScrollView>
     </ScreenWrapper>
   );
 };

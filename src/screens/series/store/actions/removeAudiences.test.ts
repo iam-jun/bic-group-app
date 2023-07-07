@@ -4,6 +4,7 @@ import useModalStore from '~/store/modal';
 import { mockSeries, mockSeriesRequest, mockSeriesResponseRemovedAudiences } from '~/test/mock_data/series';
 import { act, renderHook } from '~/test/testUtils';
 import useSeriesStore, { ISeriesState } from '../index';
+import * as showToastSuccess from '~/store/helper/showToastSuccess';
 
 describe('removeAudiences', () => {
   afterEach(() => {
@@ -47,9 +48,7 @@ describe('removeAudiences', () => {
     };
     jest.spyOn(usePostsStore, 'getState').mockImplementation(() => ({ actions } as any));
 
-    const showToast = jest.fn();
-    const toastActions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions: toastActions } as any));
+    const spyShowToastSuccess = jest.spyOn(showToastSuccess, 'default');
 
     useSeriesStore.setState((state: ISeriesState) => {
       state.data = mockSeriesRequest as any;
@@ -70,7 +69,7 @@ describe('removeAudiences', () => {
 
     expect(spyApiGetSeriesDetail).toBeCalled();
     expect(addToPosts).toBeCalledWith({ data: mockSeriesResponseRemovedAudiences });
-    expect(showToast).toBeCalledWith({ content: 'series:text_deleted_audiences' });
+    expect(spyShowToastSuccess).toBeCalled();
   });
 
   it('should remove audiences from series throw error', () => {

@@ -4,6 +4,7 @@ import { mockArticle } from '~/test/mock_data/article';
 import { mockSeries } from '~/test/mock_data/series';
 import { act, renderHook } from '~/test/testUtils';
 import useAddArticlesStore from '../index';
+import * as showToastSuccess from '~/store/helper/showToastSuccess';
 
 describe('addArticles in series', () => {
   const seriesId = mockSeries.id;
@@ -20,9 +21,7 @@ describe('addArticles in series', () => {
       () => Promise.resolve(response) as any,
     );
 
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
+    const spyShowToastSuccess = jest.spyOn(showToastSuccess, 'default');
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useAddArticlesStore((state) => state));
@@ -40,7 +39,7 @@ describe('addArticles in series', () => {
     const expectSelectingArticles = { [article.id]: { ...article } };
 
     expect(JSON.stringify(result.current.selectingArticles)).toBe(JSON.stringify(expectSelectingArticles));
-    expect(showToast).toBeCalledWith({ content: 'series:text_add_articles_success' });
+    expect(spyShowToastSuccess).toBeCalled();
   });
 
   it('should do nothing when seriesId is empty:', () => {

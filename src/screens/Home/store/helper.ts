@@ -19,5 +19,5 @@ export const isFilterWithThisAttributeFeed = (
   attributeFeed: AttributeFeed,
 ) => {
   if (currentAttributeFeedFilter === attributeFeed) return true;
-  return false;
+  return undefined;
 };

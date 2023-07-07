@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import {
-  TouchableOpacity, StyleSheet, Platform, StatusBar,
+  TouchableOpacity, StyleSheet, Platform, StatusBar, StyleProp,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Tooltip from 'react-native-walkthrough-tooltip';
+import { ImageStyle } from 'react-native-fast-image';
 
 import { Avatar } from '~/baseComponents';
 import { IUserBadge } from '~/interfaces/IEditUser';
@@ -13,16 +14,22 @@ import Text from '~/baseComponents/Text';
 interface Props {
   data: IUserBadge;
   placement?: 'top' | 'bottom' | 'left' | 'right';
+  customStyleBadgeItem?: StyleProp<ImageStyle>;
+  isTopAdjustment?: boolean;
 }
 
 const UserBadgeItem = ({
-  data, placement = 'top',
+  data,
+  placement = 'top',
+  customStyleBadgeItem,
+  isTopAdjustment = true,
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const { colors } = theme;
 
   const [isVisible, setIsVisible] = useState(false);
+  const isSetTopAdjustment = isTopAdjustment && Platform.OS === 'android';
 
   if (!data?.id) return null;
   return (
@@ -38,7 +45,7 @@ const UserBadgeItem = ({
       backgroundColor="transparent"
       contentStyle={styles.tooltipStyle}
       disableShadow
-      topAdjustment={Platform.OS === 'android' ? -StatusBar.currentHeight : 0}
+      topAdjustment={isSetTopAdjustment ? -StatusBar.currentHeight : 0}
       onClose={() => { setIsVisible(false); }}
     >
       <TouchableOpacity
@@ -51,6 +58,7 @@ const UserBadgeItem = ({
           key={`badge_tooltip_avatar_${data.id}`}
           isRounded
           source={{ uri: data.iconUrl }}
+          customStyle={customStyleBadgeItem}
         />
       </TouchableOpacity>
     </Tooltip>

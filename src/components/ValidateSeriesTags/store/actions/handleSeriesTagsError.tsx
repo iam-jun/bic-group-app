@@ -74,7 +74,7 @@ const handleSeriesTagsError
     if (
       [
         ApiErrorCode.Post.ARTICLE_INVALID_PARAM,
-        ApiErrorCode.Post.POST_INVALID_PARAM,
+        ApiErrorCode.Post.TAG_SERIES_INVALID,
       ].includes(errorCode)
     ) {
       handleValidateSeriesTagsError(params);

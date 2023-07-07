@@ -1,8 +1,8 @@
 import groupApi from '~/api/GroupApi';
-import { ToastType } from '~/baseComponents/Toast/BaseToast';
-import useModalStore from '~/store/modal';
 import { act, renderHook } from '~/test/testUtils';
 import useCommunityController from '../index';
+import * as showToastError from '~/store/helper/showToastError';
+import * as showToastSuccess from '~/store/helper/showToastSuccess';
 
 describe('leaveCommunity', () => {
   const communityId = '879c8129-0840-437f-8f23-a7585dc6ba22';
@@ -26,9 +26,7 @@ describe('leaveCommunity', () => {
       .spyOn(groupApi, 'getJoinedCommunities')
       .mockImplementation(() => Promise.resolve(response) as any);
 
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
+    const spyShowToastSuccess = jest.spyOn(showToastSuccess, 'default');
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useCommunityController((state) => state));
@@ -42,10 +40,7 @@ describe('leaveCommunity', () => {
 
     expect(spyApiGetManagedCommunityAndGroup).toBeCalled();
     expect(spyApiGetJoinedCommunities).toBeCalled();
-    expect(showToast).toBeCalledWith({
-      content: 'communities:modal_confirm_leave_community:success_message',
-      type: ToastType.SUCCESS,
-    });
+    expect(spyShowToastSuccess).toBeCalled();
   });
 
   it('should leave community throw error', () => {
@@ -55,9 +50,7 @@ describe('leaveCommunity', () => {
       .spyOn(groupApi, 'leaveCommunity')
       .mockImplementation(() => Promise.reject(error) as any);
 
-    const showToast = jest.fn();
-    const actions = { showToast };
-    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
+    const spyShowToastError = jest.spyOn(showToastError, 'default');
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useCommunityController((state) => state));
@@ -74,6 +67,6 @@ describe('leaveCommunity', () => {
       jest.runAllTimers();
     });
 
-    expect(showToast).toBeCalled();
+    expect(spyShowToastError).toBeCalled();
   });
 });

@@ -16,6 +16,7 @@ import images from '~/resources/images';
 import { spacing } from '~/theme';
 import useMentionInputStore from '../store';
 import IMentionInputState, { ICursorPositionChange } from '../store/Interface';
+import VerifiedView from '~/components/VerifiedView';
 
 interface MentionBarProps {
   testID?: string;
@@ -100,6 +101,7 @@ const MentionBar: FC<MentionBarProps> = ({
       size="medium"
       label={item?.fullname}
       avatar={item?.avatar || images.img_user_avatar_default}
+      RightComponent={<VerifiedView size={12} isVerified={Boolean(item?.isVerified)} />}
       onActionPress={() => { onPressItem(item); }}
     />
   );

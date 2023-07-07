@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import MarkdownView from '~/beinComponents/MarkdownView';
 import TimeView from '~/beinComponents/TimeView';
 import spacing from '~/theme/spacing';
 import Icon from '~/baseComponents/Icon';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
+import Markdown from '~/beinComponents/Markdown';
 
 const LIST_NOTI_SHOW_ICON = [
   {
@@ -58,16 +58,18 @@ const NotificationContent = ({
         style={styles.icon}
       />
       )}
-        <MarkdownView testID="notification_content.description">
-          {description}
-        </MarkdownView>
+        { Boolean(description) && (
+        <Markdown
+          testID="notification_content.description"
+          value={description}
+        />
+        )}
       </View>
       {!!content && (
-        <MarkdownView
-          testID="notification_content.content"
-        >
-          {content}
-        </MarkdownView>
+      <Markdown
+        testID="notification_content.content"
+        value={content}
+      />
       )}
       <View style={[styles.row, styles.timeCreated]}>
         {

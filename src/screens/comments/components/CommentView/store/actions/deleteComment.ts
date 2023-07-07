@@ -1,6 +1,5 @@
 import { cloneDeep } from 'lodash';
 import streamApi from '~/api/StreamApi';
-import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import {
   ICommentData,
   IPayloadDeleteComment,
@@ -8,8 +7,8 @@ import {
 } from '~/interfaces/IPost';
 import useCommentsStore from '~/store/entities/comments';
 import usePostsStore from '~/store/entities/posts';
-import showToast from '~/store/helper/showToast';
 import showToastSuccess from '~/store/helper/showToastSuccess';
+import showToastError from '~/store/helper/showToastError';
 
 const deleteComment = (_set, _get) => async (
   payload: IPayloadDeleteComment,
@@ -23,6 +22,7 @@ const deleteComment = (_set, _get) => async (
   const comment: ICommentData = allComments?.[commentId] || {};
   try {
     const response = await streamApi.deleteComment(commentId);
+
     // update allCommentsByParentId
     const allCommentsByParentIds = useCommentsStore.getState().commentsByParentId || {};
     let commentsOfPost = allCommentsByParentIds[postId] || [];
@@ -75,10 +75,7 @@ const deleteComment = (_set, _get) => async (
     // show toast success
     showToastSuccess(response);
   } catch (e) {
-    showToast({
-      content: 'post:comment:text_delete_comment_error',
-      type: ToastType.ERROR,
-    });
+    showToastError(e);
   }
 };
 

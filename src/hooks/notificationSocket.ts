@@ -18,6 +18,7 @@ import INotificationsState from '~/screens/Notification/store/Interface';
 import useNotificationStore from '~/screens/Notification/store';
 import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
 import useNotiSettingsStore from '~/screens/Notification/NotiSettings/store';
+import useUserBadge from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
 
 const useNotificationSocket = () => {
   const token = useAuthController(getAuthToken);
@@ -26,6 +27,7 @@ const useNotificationSocket = () => {
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
   const postActions = usePostsInProgressStore((state) => state.actions);
   const notiSettingsActions = useNotiSettingsStore((state) => state.actions);
+  const userBadgeActions = useUserBadge((state) => state.actions);
 
   const handleNotification = (data: any) => {
     switch (data.action) {
@@ -37,6 +39,9 @@ const useNotificationSocket = () => {
             === NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL
         ) {
           postActions.updatePosts(data);
+        }
+        if (data?.extra?.type === NOTIFICATION_TYPE.CHANGE_USER_BADGE_COLLECTION) {
+          userBadgeActions.getOwnedBadges();
         }
         return notiActions.attach(data);
       case notificationActions.DETACH:
