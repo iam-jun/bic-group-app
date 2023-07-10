@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FC } from 'react';
 import { Button } from '~/baseComponents';
 import { ContentHeader } from '~/components/ContentView';
@@ -85,7 +86,10 @@ const SeriesHeader: FC<SeriesHeaderProps> = ({ series, disabled }) => {
   };
 
   const handleConfirmDelete = () => {
-    actions.deleteSeries(id, handleError);
+    actions.deleteSeries(
+      id,
+      // handleError
+    );
   };
 
   const { showMenu } = useSeriesMenu(series, actor?.id == userId, false, handleConfirmDelete);

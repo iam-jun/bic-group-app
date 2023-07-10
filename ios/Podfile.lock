@@ -44,6 +44,8 @@ PODS:
     - ReactCommon/turbomodule/core (= 0.68.5)
   - Firebase (10.5.0):
     - Firebase/Core (= 10.5.0)
+  - Firebase/Analytics (10.5.0):
+    - Firebase/Core
   - Firebase/Core (10.5.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (~> 10.5.0)
@@ -636,6 +638,10 @@ PODS:
     - React-Core
     - SDWebImage (~> 5.11.1)
     - SDWebImageWebPCoder (~> 0.8.4)
+  - RNFBAnalytics (17.0.0):
+    - Firebase/Analytics (= 10.5.0)
+    - React-Core
+    - RNFBApp
   - RNFBApp (17.0.0):
     - Firebase/CoreOnly (= 10.5.0)
     - React-Core
@@ -824,6 +830,7 @@ DEPENDENCIES:
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFastImage (from `../node_modules/react-native-fast-image`)
+  - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - "RNFBRemoteConfig (from `../node_modules/@react-native-firebase/remote-config`)"
@@ -1029,6 +1036,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-device-info"
   RNFastImage:
     :path: "../node_modules/react-native-fast-image"
+  RNFBAnalytics:
+    :path: "../node_modules/@react-native-firebase/analytics"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBMessaging:
@@ -1167,6 +1176,7 @@ SPEC CHECKSUMS:
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
   RNDeviceInfo: 98cc93d4b3b09b33e784b751f04d414065a61fd4
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
+  RNFBAnalytics: 732b17c217cb96ee9d556b65d4e0f4bb0e3f23a7
   RNFBApp: ffc07093abc13579d2c6d9b1d30329881a860d68
   RNFBMessaging: 3ecfc67d5f14a51d48aac55c5f7c15b29e4f5fe8
   RNFBRemoteConfig: 5b047d4de8a7789f3a87d85304e62ec12d6a7f7d

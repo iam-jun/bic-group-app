@@ -51,14 +51,14 @@ export const POST_DETAIL = {
     },
   },
   commentsCount: 5,
-  reactionsCount: {
-    0: {
+  reactionsCount: [
+    {
       wink: 1,
     },
-    1: {
+    {
       thinking_face: 1,
     },
-  },
+  ],
   createdAt: '2022-04-20T09:55:55.599Z',
   createdBy: '33',
   audience: {
@@ -211,7 +211,7 @@ export const POST_DETAIL_2 = {
   },
   mentions: [],
   commentsCount: 0,
-  reactionsCount: {},
+  reactionsCount: [],
   createdAt: '2022-04-20T10:06:45.649Z',
   createdBy: 33,
   audience: {
@@ -711,7 +711,7 @@ export const POST_DETAIL_3 = {
   },
   mentions: [],
   commentsCount: 0,
-  reactionsCount: {},
+  reactionsCount: [],
   createdAt: '2022-04-20T10:06:45.649Z',
   createdBy: 33,
   comments: {
@@ -791,14 +791,14 @@ export const COMMENT_HAS_REACTION = {
       createdAt: '2022-04-20T08:54:31.210Z',
     },
   ],
-  reactionsCount: {
-    0: {
+  reactionsCount: [
+    {
       wink: 1,
     },
-    1: {
+    {
       thinking_face: 1,
     },
-  },
+  ],
 };
 
 export const SEEN_POST = {

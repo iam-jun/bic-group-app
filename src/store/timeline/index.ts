@@ -5,18 +5,21 @@ import getPosts from './actions/getPosts';
 import { IPost } from '~/interfaces/IPost';
 import IBaseState, { IBaseListState } from '../interfaces/IBaseState';
 import { ContentFeed, AttributeFeed } from '~/interfaces/IFeed';
+import { Pagination } from '../interfaces/IFetchingState';
 
-const DEFAULT_DATA: IBaseListState<IPost> = {
+const DEFAULT_DATA: IDataFilterTimelines = {
   ids: [],
   loading: false,
   refreshing: false,
   hasNextPage: true,
+  endCursor: null,
 };
 
+export type IDataFilterTimelines = IBaseListState<IPost> & Pagination;
 export interface ITimelines {
   contentFilter: ContentFeed;
   attributeFilter: AttributeFeed;
-  data: { [T in ContentFeed]: { [S in AttributeFeed]: IBaseListState<IPost> } };
+  data: { [T in ContentFeed]: { [S in AttributeFeed]: IDataFilterTimelines } };
 }
 
 export interface ITimelineState extends IBaseState {

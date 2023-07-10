@@ -3,11 +3,12 @@ import { IPayloadAddToAllPost, PostType } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import useHomeStore from '~/screens/Home/store';
 import { AttributeFeed, ContentFeed } from '~/interfaces/IFeed';
-import showToast from '~/store/helper/showToast';
+import showToastSuccess from '~/store/helper/showToastSuccess';
+import showToastError from '~/store/helper/showToastError';
 
 const unsavePost = (_set, _get) => async (id: string, type: PostType) => {
   try {
-    await streamApi.postUnsaveContent(id);
+    const repsonse = await streamApi.postUnsaveContent(id);
     const post = usePostsStore.getState()?.posts?.[id] || {};
     const newPost = {
       ...post,
@@ -31,10 +32,10 @@ const unsavePost = (_set, _get) => async (id: string, type: PostType) => {
         break;
     }
 
-    showToast({ content: `${type.toLowerCase()}:text_unsaved` });
+    showToastSuccess(repsonse);
   } catch (error) {
     console.error('unsavePost error:', error);
-    showToast({ content: 'common:text_unsave_fail' });
+    showToastError(error);
   }
 };
 

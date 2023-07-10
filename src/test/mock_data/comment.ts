@@ -66,17 +66,17 @@ export const mockComment = {
   ],
   parentId: '00000000-0000-0000-0000-000000000000',
   postId: 'fc99d017-ed67-49bc-8a01-c98d8c80900a',
-  reactionsCount: {
-    0: {
+  reactionsCount: [
+    {
       bic_flying_rocket: 1,
     },
-    1: {
+    {
       bic_direct_hit: 1,
     },
-    2: {
+    {
       stuck_out_tongue_winking_eye: 1,
     },
-  },
+  ],
   totalReply: 0,
   updatedAt: '2023-03-09T02:54:48.011Z',
 };

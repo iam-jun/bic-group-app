@@ -42,7 +42,7 @@ const CommentDetailContent = (props: any) => {
   const styles = createStyle(theme);
 
   const { t } = useBaseHook();
-  const { rootNavigation, goHome } = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
 
   const commentDetailController = useCommentDetailController(
     (state) => state.actions,
@@ -155,7 +155,11 @@ const CommentDetailContent = (props: any) => {
         content: 'error:not_found_desc',
         type: ToastType.ERROR,
       });
-      goHome();
+      if (rootNavigation.canGoBack) {
+        setTimeout(() => {
+          rootNavigation.goBack();
+        }, 200);
+      }
     }
   }, [notFoundComment, loading, isEmpty, copyCommentError]);
 
@@ -288,14 +292,13 @@ const CommentDetailContent = (props: any) => {
 
   const renderFooter = () => {
     if (viewMore) {
-      const commentLength = newCommentData?.child?.list?.length || 0;
-      const lastItem = newCommentData?.child?.list?.[commentLength - 1];
+      const startCursor = newCommentData?.child?.meta?.startCursor;
       const _parentId = parentId || commentId;
       return (
         <LoadMoreComment
           title="post:text_load_more_replies"
           postId={id}
-          idGreaterThan={lastItem?.id}
+          startCursor={startCursor}
           commentId={_parentId}
         />
       );
@@ -392,6 +395,7 @@ const CommentLevel1 = ({
         groupIds={groupIds}
         audience={audience}
         index={0}
+        showRepliesComment={false}
         onPressMarkSeenPost={onPressMarkSeenPost}
       />
     </View>

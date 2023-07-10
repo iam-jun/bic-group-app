@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
+import moment from 'moment';
 import Header from '~/beinComponents/Header';
 import Text from '~/baseComponents/Text';
 import { spacing } from '~/theme';
@@ -16,7 +17,7 @@ const ScheduledMaintenance: FC<IRouteParams> = (props) => {
   const { t } = useBaseHook();
 
   const { params } = props.route;
-  const { duration = 0, startAt = '' } = params?.maintenanceInfo || {};
+  const { duration = 0, startAt = 0 } = params?.maintenanceInfo || {};
   const textDuration = getTextDurations(duration, t);
   const textDate = getTextDate(startAt);
 
@@ -55,17 +56,12 @@ const ScheduledMaintenance: FC<IRouteParams> = (props) => {
   );
 };
 
-const getTextDate = (inputDate: string) => {
-  const dateObj = new Date(inputDate);
-  const offset = 7 * 60;
+const getTextDate = (inputDate: number) => {
+  const hourStartAt = moment(inputDate).format('HH:mm');
+  const dateStartAt = moment(inputDate).format('DD/MM/YYYY');
+  const utcStartAt = moment(inputDate).format('Z').slice(1, 3);
 
-  const hours = (dateObj.getUTCHours() + offset / 60).toString().padStart(2, '0');
-  const minutes = dateObj.getUTCMinutes().toString().padStart(2, '0');
-  const day = dateObj.getUTCDate().toString().padStart(2, '0');
-  const month = (dateObj.getUTCMonth() + 1).toString().padStart(2, '0');
-  const year = dateObj.getUTCFullYear();
-
-  return `${hours}:${minutes} (UTC+7) ${day}/${month}/${year}`;
+  return `${hourStartAt} (UTC+${utcStartAt}) ${dateStartAt}`;
 };
 
 const getTextDurations = (duration: number, t: any) => {

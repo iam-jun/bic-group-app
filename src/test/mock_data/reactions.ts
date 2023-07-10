@@ -29,23 +29,23 @@ export const listUserReact = [
   },
 ];
 
-export const reactionsCount = {
-  0: {
+export const reactionsCount = [
+  {
     comment_count: 11,
   },
-  1: {
+  {
     grinning_face_with_star_eyes: 2,
   },
-  2: {
+  {
     kissing_closed_eyes: 2,
   },
-  3: {
+  {
     kissing_smiling_eyes: 2,
   },
-  4: {
+  {
     sweat_smile: 3,
   },
-};
+];
 
 export const mockListUser = [
   {

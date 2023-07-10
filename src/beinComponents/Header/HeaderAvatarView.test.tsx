@@ -85,7 +85,7 @@ describe('Header Avatar View component', () => {
     );
     const avatarComponent = rendered.getByTestId('avatar.image');
     expect(avatarComponent).toBeDefined();
-    expect(avatarComponent.props.source).toMatchObject({ uri: urlAvatar });
+    expect(avatarComponent.props.source).toMatchObject({ uri: `${urlAvatar}?width=128` });
   });
 
   it('renders correctly with props Container Style', () => {

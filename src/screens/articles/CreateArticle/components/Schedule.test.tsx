@@ -34,7 +34,7 @@ describe('Schedule', () => {
   });
 
   it('should validate series vs tags', async () => {
-    const spyApiValidateSeriesTagsOfArticle = jest.spyOn(streamApi, 'validateSeriesTagsOfArticle').mockImplementation(
+    const spyApiValidateSeriesTags = jest.spyOn(streamApi, 'validateSeriesTags').mockImplementation(
       () => Promise.resolve() as any,
     );
 
@@ -62,11 +62,11 @@ describe('Schedule', () => {
     });
 
     expect(useValidateSeriesTags.getState().isValidating).toBe(true);
-    expect(spyApiValidateSeriesTagsOfArticle).toBeCalled();
+    expect(spyApiValidateSeriesTags).toBeCalled();
   });
 
   it('validate series vs tags fail', async () => {
-    const spyApiValidateSeriesTagsOfArticle = jest.spyOn(streamApi, 'validateSeriesTagsOfArticle').mockImplementation(
+    const spyApiValidateSeriesTags = jest.spyOn(streamApi, 'validateSeriesTags').mockImplementation(
       () => Promise.reject() as any,
     );
 
@@ -93,6 +93,6 @@ describe('Schedule', () => {
       fireEvent.press(btn);
     });
 
-    expect(spyApiValidateSeriesTagsOfArticle).toBeCalled();
+    expect(spyApiValidateSeriesTags).toBeCalled();
   });
 });

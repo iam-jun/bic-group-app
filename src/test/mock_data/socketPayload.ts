@@ -20,9 +20,9 @@ const actorNotIsCreator = {
 // User react to their post
 export const UPDATE_REACTION_TO_POST_DATA_1 = {
   ...POST_DETAIL_3,
-  reactionsCount: {
-    0: { thumbsup: 1 },
-  },
+  reactionsCount: [
+    { thumbsup: 1 },
+  ],
   reactionsOfActor: [
     {
       id: 1508,
@@ -42,9 +42,9 @@ export const UPDATE_REACTION_TO_POST_DATA_1 = {
 // Other users react to the user's post
 export const UPDATE_REACTION_TO_POST_DATA_2 = {
   ...POST_DETAIL_3,
-  reactionsCount: {
-    0: { thumbsup: 1 },
-  },
+  reactionsCount: [
+    { thumbsup: 1 },
+  ],
   reactionsOfActor: [
     {
       id: 1508,
@@ -67,7 +67,7 @@ export const UPDATE_REACTION_TO_COMMENT_DATA_1 = {
   actor: actorIsCreator,
   content: 'Important post',
   mentions: [],
-  reactionsCount: {},
+  reactionsCount: [],
   reactionsOfActor: {},
   audience: {
     groups: [
@@ -93,11 +93,11 @@ export const UPDATE_REACTION_TO_COMMENT_DATA_1 = {
     },
     media: {},
     mentions: [],
-    reactionsCount: {
-      0: {
+    reactionsCount: [
+      {
         thumbsup: 1,
       },
-    },
+    ],
     reactionsOfActor: [
       {
         id: 1508,
@@ -147,7 +147,7 @@ export const UPDATE_REACTION_TO_CHILD_COMMENT_DATA_1 = {
   actor: actorIsCreator,
   content: 'Important post',
   mentions: [],
-  reactionsCount: {},
+  reactionsCount: [],
   reactionsOfActor: {},
   audience: {
     groups: [
@@ -179,11 +179,11 @@ export const UPDATE_REACTION_TO_CHILD_COMMENT_DATA_1 = {
         createdAt: '2022-05-25T08:17:59.366Z',
         updatedAt: '2022-05-25T08:17:59.366Z',
       },
-      reactionsCount: {
-        0: {
+      reactionsCount: [
+        {
           thumbsup: 1,
         },
-      },
+      ],
       reactionsOfActor: [
         {
           id: 1508,

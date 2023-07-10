@@ -4,6 +4,9 @@ import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { ICommunityBadges, IUserBadge } from '~/interfaces/IEditUser';
 import getOwnedBadges from './actions/getOwnedBadges';
 import editShowingBadges from './actions/editShowingBadges';
+import searchBadges from './actions/searchBadges';
+import markNewBadge from './actions/markNewBadge';
+import markNewBadgeInCommunity from './actions/markNewBadgeInCommunity';
 
 export const MAX_BADGES = 3;
 
@@ -11,9 +14,14 @@ export interface IUserBadgesState extends IBaseState {
   isEditing: boolean;
   loading: boolean;
   loadingEditing: boolean;
+  loadingSearch: boolean;
+  hasNewBadge: boolean;
   ownBadges: ICommunityBadges[];
+  dataSearch: ICommunityBadges[];
   showingBadges: IUserBadge[];
   choosingBadges: IUserBadge[];
+  totalBadges: number;
+  badges: {[key: string]: IUserBadge},
   error: any;
   actions: {
     setIsEditing: (isEditing: boolean) => void;
@@ -24,6 +32,9 @@ export interface IUserBadgesState extends IBaseState {
     cancleSaveBadges: () => void;
     getOwnedBadges: () => void;
     editShowingBadges: () => void;
+    searchBadges: (textSearch: string) => void;
+    markNewBadge: (id: string) => void;
+    markNewBadgeInCommunity: (badges: IUserBadge[]) => void;
   };
 }
 
@@ -31,10 +42,15 @@ const initState: InitStateType<IUserBadgesState> = {
   isEditing: false,
   loading: true,
   loadingEditing: false,
+  loadingSearch: false,
+  hasNewBadge: false,
   ownBadges: [],
+  dataSearch: [],
   showingBadges: [],
   choosingBadges: [undefined, undefined, undefined],
+  badges: {},
   error: null,
+  totalBadges: 0,
 };
 
 const userBadge = (set, get) => ({
@@ -100,16 +116,20 @@ const userBadge = (set, get) => ({
       }, `removeChoosingBadges_index_${index}`);
     },
     cancleSaveBadges: () => {
-      const { showingBadges } = get();
+      const { showingBadges, ownBadges } = get();
       const choosingBadges = showingBadges?.length > 0 ? showingBadges : [undefined, undefined, undefined];
 
       set((state: IUserBadgesState) => {
         state.choosingBadges = choosingBadges;
         state.isEditing = false;
+        state.dataSearch = ownBadges;
       }, 'cancleSaveBadges');
     },
     getOwnedBadges: getOwnedBadges(set, get),
     editShowingBadges: editShowingBadges(set, get),
+    searchBadges: searchBadges(set, get),
+    markNewBadge: markNewBadge(set, get),
+    markNewBadgeInCommunity: markNewBadgeInCommunity(set, get),
   },
   reset: () => resetStore(initState, set),
 });

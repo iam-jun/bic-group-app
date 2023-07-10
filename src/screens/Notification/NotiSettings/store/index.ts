@@ -10,9 +10,10 @@ export interface INotiSettingsStore extends IBaseState {
   data: { [name: string]: INotiSettings };
   loading: boolean;
   loadingUpdate: boolean;
+  isRefreshing: boolean;
 
   actions: {
-   getConfigSettings: () =>void;
+   getConfigSettings: (isRefreshing?: boolean) =>void;
    updateSettings: (
     params: IEditNotificationSetting,
     dataUpdateStore: INotiSettings) => void;
@@ -23,6 +24,7 @@ const initialState = {
   data: {},
   loading: true,
   loadingUpdate: false,
+  isRefreshing: false,
 };
 
 const notiSettingsStore = (set, get) => ({

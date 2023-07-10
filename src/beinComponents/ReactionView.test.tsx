@@ -200,7 +200,7 @@ describe('ReactionView component', () => {
 
 const ownReactionsEmpty: any = [];
 
-const reactionCountsEmpty = {};
+const reactionCountsEmpty = [];
 
 const ownReactions = [
   {
@@ -212,17 +212,17 @@ const ownReactions = [
   },
 ] as IOwnReaction;
 
-const reactionCounts = {
-  0: {
+const reactionCounts = [
+  {
     grinning: 1,
   },
-  1: {
+  {
     grinning_face_with_star_eyes: 1,
   },
-  2: {
+  {
     kissing_smiling_eyes: 1,
   },
-  3: {
+  {
     sweat_smile: 2,
   },
-};
+];

@@ -6,6 +6,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+import { IUserBadge } from '~/interfaces/IEditUser';
 import Text, { TextProps } from '~/baseComponents/Text';
 import Icon, { IconProps } from '~/baseComponents/Icon';
 import Checkbox, { CheckboxProps } from '~/baseComponents/Checkbox';
@@ -16,6 +17,7 @@ import { AvatarProps } from '~/baseComponents/Avatar/AvatarComponent';
 import spacing from '~/theme/spacing';
 import DeactivatedView from '~/components/DeactivatedView';
 import VerifiedView from '~/components/VerifiedView';
+import UserBadge from '~/screens/Menu/UserProfile/components/UserBadge';
 
 type ItemIconProps = Omit<IconProps, 'icon'>
 export interface PrimaryItemProps {
@@ -33,6 +35,8 @@ export interface PrimaryItemProps {
   isChecked?: boolean;
   isDeactivated?: boolean;
   isVerified?: boolean;
+  showingBadges?: IUserBadge[];
+  isTopAdjustmentBadges?: boolean;
   checkboxProps?: CheckboxProps;
   toggleChecked?: boolean;
   menuIconTestID?: string;
@@ -63,6 +67,8 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   isChecked,
   isDeactivated = false,
   isVerified = false,
+  showingBadges = [],
+  isTopAdjustmentBadges,
   checkboxProps,
   onPress,
   toggleChecked,
@@ -118,6 +124,15 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
               </Text>
               <VerifiedView size={12} isVerified={isVerified} />
               {isDeactivated && <DeactivatedView style={styles.deactivatedView} />}
+              {!isDeactivated && (
+                <UserBadge
+                  isCurrentUser={false}
+                  showingBadges={showingBadges}
+                  style={styles.userBadge}
+                  customStyleBadgeItem={styles.badgeItem}
+                  isTopAdjustment={isTopAdjustmentBadges}
+                />
+              )}
             </View>
           )}
           {!!subTitle && (
@@ -184,6 +199,15 @@ const styles = StyleSheet.create({
   },
   title: {
     flexShrink: 1,
+  },
+  userBadge: {
+    marginLeft: spacing.margin.small,
+    height: '100%',
+  },
+  badgeItem: {
+    width: 20,
+    height: 20,
+    marginRight: -spacing.margin.xSmall,
   },
 });
 

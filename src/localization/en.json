@@ -108,7 +108,7 @@
     "message_add_member_success_group": "Added members to group successfully",
     "message_remove_member_success": "{n} has been removed from this group",
     "title_mention_all": "All members in this group",
-    "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
+    "text_search_no_results": "Sorry, we couldn’t find anything\nrelated to your search.",
     "title_page_not_found": "Page Not Found",
     "text_edit_success": "Profile updated successfully",
     "text_edit_fail": "Failed to update profile!",
@@ -239,7 +239,8 @@
     "text_pull_to_refresh": "Please pull down to refresh the page or try again later",
     "text_answer_title": "Membership questions",
     "text_answer_input_placeholder": "Write your answer",
-    "text_send_request_join_successfully": "Sent request successfully"
+    "text_send_request_join_successfully": "Sent request successfully",
+    "text_new": "New"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -653,6 +654,7 @@
     "text_select_cover": "Select cover",
     "text_search_category_placeholder": "Select your options...",
     "text_edit_article_success": "Article updated successfully",
+    "text_article_saved_to_draft": "Article saved to Draft",
     "menu": {
       "edit": "Edit Article",
       "copy_link": "Copy Link",
@@ -701,7 +703,10 @@
     "successful_schedule": "Successful Schedule",
     "text_delete_article_success": "Your article has been deleted",
     "paste_image_error": "Upload failed. Please upload images using the toolbar.",
-    "text_selecting_will_be_added_to": "Your article will be added to"
+    "text_selecting_will_be_added_to": "Your article will be added to",
+    "reading_time": "Reading time",
+    "about_time": "about",
+    "minute": "min"
   },
   "post": {
     "news_feed": "News Feed",
@@ -717,6 +722,7 @@
     "label_seen_by": "Interested by ",
     "button_like": "Like",
     "button_reply": "Reply",
+    "button_reply_count": "{{count}} Replies",
     "button_react": "React",
     "button_comment": "Comment",
     "button_image": "Image",
@@ -1394,7 +1400,9 @@
     "text_remove_article": "Do you want to remove this article?",
     "text_remove_post": "Do you want to remove this post?",
     "text_article_removed": "Remove successful",
-    "text_no_content": "No content"
+    "text_no_content": "No content",
+    "this_content_is_in_the_following_series": "This content is in the following Series",
+    "text_untitled": "Untitled"
   },
   "tags": {
     "create_tag": "Create Tag",
@@ -1470,7 +1478,10 @@
     },
     "owned_badges": {
       "title": "Badges List",
-      "description": "Badges you received from the communities you joined"
-    }
+      "description": "Badges you received from the communities you joined",
+      "total_badges": "((total) badges)",
+      "search_placeholder": "Search for badges name"
+    },
+    "edit_showing_badges_title": "Edit Showing Badges"
   }
 }
