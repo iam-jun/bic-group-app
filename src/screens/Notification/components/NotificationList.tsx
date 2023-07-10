@@ -108,6 +108,17 @@ const NotificationList = ({
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
+  const renderEmpty = () => {
+    if (loadingNotifications) {
+      return (
+        <View style={styles.listFooter}>
+          <ActivityIndicator color={theme.colors.gray20} />
+        </View>
+      );
+    }
+    return <NoNotificationFound />;
+  };
+
   const renderListFooter = () => {
     if (notificationList?.length > 0) {
       return (
@@ -120,12 +131,6 @@ const NotificationList = ({
               {i18n.t('notification:no_more_notification')}
             </Text.BodyS>
           )}
-        </View>
-      );
-    } if (loadingNotifications) {
-      return (
-        <View style={styles.listFooter}>
-          <ActivityIndicator color={theme.colors.gray20} />
         </View>
       );
     }
@@ -141,38 +146,37 @@ const NotificationList = ({
     />
   );
 
-  const renderUnReadNotificationsEmpty = () => <NoNotificationFound />;
-
   const keyExtractor = (item: any) => `noti_id_${item}`;
 
   const renderItemSeparatorComponent = () => <Divider size={1} color={theme.colors.neutral5} />;
 
   return (
     <View testID="notification_screen.container" style={styles.container}>
-      <AnimatedFlashList
-        ref={listRef}
+      {notificationList?.length > 0 ? (
+        <AnimatedFlashList
+          ref={listRef}
           // @ts-ignore
-        testID="notification_list.list"
-        renderItem={renderItem}
-        keyExtractor={keyExtractor}
-        estimatedItemSize={ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT}
-        refreshing
-        refreshControl={(
-          <RefreshControl
-            testID="notification_list.refresh_control"
-            refreshing={refreshing}
-            onRefresh={refreshListNotification}
-            tintColor={theme.colors.gray40}
-          />
+          testID="notification_list.list"
+          renderItem={renderItem}
+          keyExtractor={keyExtractor}
+          estimatedItemSize={ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT}
+          refreshing
+          refreshControl={(
+            <RefreshControl
+              testID="notification_list.refresh_control"
+              refreshing={refreshing}
+              onRefresh={refreshListNotification}
+              tintColor={theme.colors.gray40}
+            />
           )}
-        showsHorizontalScrollIndicator={false}
-        data={notificationList}
-        ListEmptyComponent={renderUnReadNotificationsEmpty}
-        onEndReached={loadMoreNotifications}
-        ListFooterComponent={renderListFooter}
-        ItemSeparatorComponent={renderItemSeparatorComponent}
-        contentContainerStyle={styles.listContainer}
-      />
+          showsHorizontalScrollIndicator={false}
+          data={notificationList}
+          onEndReached={loadMoreNotifications}
+          ListFooterComponent={renderListFooter}
+          ItemSeparatorComponent={renderItemSeparatorComponent}
+          contentContainerStyle={styles.listContainer}
+        />
+      ) : renderEmpty() }
     </View>
   );
 };
