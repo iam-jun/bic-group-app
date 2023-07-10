@@ -11,11 +11,12 @@ const loadMore = (set, get) => async (payload?: IParamGetNotifications) => {
     const data: INotificationsState = get();
     // get all notifications from store
     const notifications = data[keyValue].data;
+    const offset = notifications?.length > 0 ? notifications.length : 0;
 
     const response = await
     notificationApi.getNotificationList(
       {
-        offset: (notifications?.length || 0) + 1,
+        offset,
         ...payload,
       },
     );
