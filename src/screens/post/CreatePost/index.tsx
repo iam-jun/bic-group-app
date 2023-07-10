@@ -20,15 +20,12 @@ import spacing from '~/theme/spacing';
 import CreatePostChosenAudiences from '../../../components/posts/CreatePostChosenAudiences';
 import CreatePostContent from './components/CreatePostContent';
 import CreatePostFooter from './components/CreatePostFooter';
-import CreateBannerImportant from '~/components/ImportantSettings/CreateBannerImportant';
+import CreateBannerImportant from '~/components/ContentSettings/CreateBannerImportant';
 import { handleBack } from './handler';
 import useDraftPostStore from '../../YourContent/components/Draft/DraftPost/store';
 import useCommentInputStore from '../../comments/components/CommentInputView/store';
 import ICommentInputState from '../../comments/components/CommentInputView/store/Interface';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
-import { useBaseHook } from '~/hooks';
-import Text from '~/baseComponents/Text';
-import useModalStore from '~/store/modal';
 import useCreatePost from './hooks/useCreatePost';
 import useCreatePostStore from './store';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
@@ -48,11 +45,9 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     (state: ICommentInputState) => state.actions,
   );
 
-  const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
-  const { showAlert } = useModalStore((state) => state.actions);
 
   const [postId, setPostId] = useState(
     screenParams?.postId || screenParams?.draftPostId,
@@ -79,7 +74,6 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     isEditPostHasChange,
     savePost,
     disableButtonsCreatePostFooter,
-    audienceListWithNoPermission,
   } = useCreatePostData;
 
   const {
@@ -178,27 +172,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   };
 
   const onPressSettings = () => {
-    if (audienceListWithNoPermission.length > 0) {
-      const audienceListNames = audienceListWithNoPermission
-        .map((audience) => audience.name)
-        .join(', ');
-      const alertPayload = {
-        title: t('post:post_setting_permissions_alert:title'),
-        children: (
-          <Text.BodyM style={styles.childrenText}>
-            {t('post:post_setting_permissions_alert:description_1')}
-            <Text.BodyMMedium>{audienceListNames}</Text.BodyMMedium>
-            {t('post:post_setting_permissions_alert:description_2')}
-          </Text.BodyM>
-        ),
-        onConfirm: null,
-        cancelBtn: true,
-      };
-      showAlert(alertPayload);
-      return;
-    }
-
-    rootNavigation.navigate(homeStack.postSettings);
+    rootNavigation.navigate(homeStack.postSettings, { postId });
   };
 
   const onPressTags = () => {

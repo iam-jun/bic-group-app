@@ -26,6 +26,8 @@ const getTextButton = (
       return 'common:btn_join';
     case GroupJoinStatus.MEMBER:
       return 'common:btn_view';
+    case GroupJoinStatus.INVITED_ONLY:
+      return 'common:btn_only_invited_people_can_join';
     default:
       return 'common:btn_view';
   }
@@ -49,6 +51,16 @@ const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, ...props }) => {
     case GroupJoinStatus.VISITOR:
       return (
         <Button.Secondary
+          useI18n
+          {...props}
+        >
+          {textButton}
+        </Button.Secondary>
+      );
+    case GroupJoinStatus.INVITED_ONLY:
+      return (
+        <Button.Secondary
+          disabled
           useI18n
           {...props}
         >
@@ -89,6 +101,8 @@ ButtonCommunityGroupCardProps
         break;
       case GroupJoinStatus.MEMBER:
         onPressView();
+        break;
+      case GroupJoinStatus.INVITED_ONLY:
         break;
       default:
         onPressView();

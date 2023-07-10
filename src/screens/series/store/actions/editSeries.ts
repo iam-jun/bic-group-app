@@ -9,7 +9,7 @@ import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import { IPostCreateSeries } from '~/interfaces/ISeries';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = withNavigation?.(rootNavigationRef);
 
 const editSeries = (set, get) => async (
   id: string,
@@ -24,7 +24,7 @@ const editSeries = (set, get) => async (
   }, 'editSeries');
   try {
     const {
-      title, summary, audience, setting, coverMedia,
+      title, summary, audience, coverMedia,
     } = data || {};
     const coverMediaUpdate = coverMedia?.id && {
       id: coverMedia?.id,
@@ -33,7 +33,6 @@ const editSeries = (set, get) => async (
       title,
       summary,
       audience,
-      setting,
       coverMedia: coverMediaUpdate,
     };
     const response = await streamApi.editSeries(id, dataUpdate);

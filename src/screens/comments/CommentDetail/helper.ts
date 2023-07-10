@@ -13,7 +13,7 @@ export const getTitle = (type: PostType) => {
 };
 
 export const replacePostDetail = (type: PostType, postId: string) => {
-  const rootNavigation = withNavigation(rootNavigationRef);
+  const rootNavigation = withNavigation?.(rootNavigationRef);
   if (type === PostType.ARTICLE) {
     rootNavigation.replace(articleStack.articleDetail, {
       articleId: postId || 0,

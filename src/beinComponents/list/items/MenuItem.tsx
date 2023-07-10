@@ -76,9 +76,9 @@ const MenuItem: React.FC<MenuItemProps> = ({
         <View style={[styles.container, style]}>
           {icon && <Icon icon={icon} size={24} {...iconProps} />}
           <View style={styles.titleContainer}>
-            <Text.ButtonM testID="menu_item.title" useI18n>
+            <Text.BodyM testID="menu_item.title" useI18n>
               {title}
-            </Text.ButtonM>
+            </Text.BodyM>
             {!!subTitle && (
               <Text.BodyS
                 testID="menu_item.sub_title"
@@ -109,6 +109,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
               <Icon
                 testID="menu_item.right_sub_icon"
                 icon={rightSubIcon}
+                size={18}
                 style={styles.rightSubIcon}
               />
             )}
@@ -148,7 +149,7 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     titleContainer: {
       flex: 1,
-      marginLeft: spacing.margin.large,
+      marginLeft: spacing.margin.small,
     },
     rightComponent: {
       flexDirection: 'row',

@@ -7,7 +7,7 @@ import { rootNavigationRef } from '~/router/refs';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 import showToastError from '~/store/helper/showToastError';
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = withNavigation?.(rootNavigationRef);
 
 export const editTag = (set, get) => async (tag: EditTag) => {
   try {

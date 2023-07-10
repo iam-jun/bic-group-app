@@ -4,6 +4,7 @@ import { communityDetailData } from '~/test/mock_data/communities';
 
 import { createTestStore, renderWithRedux } from '~/test/testUtils';
 import PrivateWelcome from '.';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 
 describe('PrivateWelcome component', () => {
   const onScroll = jest.fn();
@@ -29,7 +30,7 @@ describe('PrivateWelcome component', () => {
   it('renders JoinCancelButton component correctly', () => {
     const newCommunityDetailData = {
       ...communityDetailData,
-      joinStatus: 3,
+      joinStatus: GroupJoinStatus.REQUESTED,
     };
 
     const wrapper = renderWithRedux(

@@ -12,7 +12,6 @@ import {
 } from '~/constants/privacyTypes';
 import InfoCard from '~/components/InfoCard';
 import Divider from '~/beinComponents/Divider';
-import { CheckBox } from '~/baseComponents';
 
 interface Props {
   id: string;
@@ -21,7 +20,6 @@ interface Props {
   privacy: CommunityPrivacyType | GroupPrivacyType;
   canEditPrivacy: boolean;
   canEditInfo: boolean;
-  isJoinApproval: boolean;
   type: 'community' | 'group';
   rootGroupId: string;
 }
@@ -33,7 +31,6 @@ const InfoView = ({
   privacy,
   canEditInfo,
   canEditPrivacy,
-  isJoinApproval,
   type,
   rootGroupId,
 }: Props) => {
@@ -49,8 +46,6 @@ const InfoView = ({
   || privacy === GroupPrivacyType.PRIVATE;
 
   const isSecretPrivacy = privacy === GroupPrivacyType.SECRET;
-
-  const privateCheckboxType = isJoinApproval ? 'disabled-auto-selected' : 'disabled';
 
   const onPressEditDescription = () => {
     rootNavigation.navigate(
@@ -71,7 +66,7 @@ const InfoView = ({
   const onPressEditPrivacy = () => {
     rootNavigation.navigate(
       groupStack.editPrivacy, {
-        id, privacy, type, isJoinApproval, rootGroupId,
+        id, privacy, type, rootGroupId,
       },
     );
   };
@@ -110,7 +105,7 @@ const InfoView = ({
 
       {isPrivatePrivacy && (
         <View style={styles.privacyBannerView} testID="info_view.private_banner_view">
-          <CheckBox size="small" disabled={privateCheckboxType} />
+          <Icon icon="CircleInfo" tintColor={colors.neutral20} size={18} />
           <Text.BodyS style={styles.bannerText} color={colors.neutral40} useI18n>
             {`settings:text_private_${type}_banner_message`}
           </Text.BodyS>

@@ -39,6 +39,11 @@ const useSeriesMenu = (
 
   const groupAudience = audience?.groups || [];
 
+  const audienceListCannotEditSettings = getAudienceListWithNoPermission(
+    groupAudience,
+    PermissionKey.EDIT_OWN_CONTENT_SETTING,
+  );
+
   const audienceListCannotPinContent = getAudienceListWithNoPermission(
     groupAudience,
     [
@@ -96,6 +101,11 @@ const useSeriesMenu = (
     rootNavigation?.navigate?.(homeStack.pinContent, { postId: seriesId });
   };
 
+  const onPressEditSettings = () => {
+    modalActions.hideBottomList();
+    rootNavigation?.navigate?.(seriesStack.seriesSettings, { seriesId, isFromSeriesMenuSettings: true });
+  };
+
   const defaultData = [
     {
       id: 1,
@@ -107,6 +117,15 @@ const useSeriesMenu = (
     },
     {
       id: 2,
+      testID: 'series_menu.edit_settings',
+      leftIcon: 'Sliders',
+      title: i18next.t('common:edit_settings'),
+      requireIsActor: false,
+      shouldBeHidden: audienceListCannotEditSettings.length > 0,
+      onPress: onPressEditSettings,
+    },
+    {
+      id: 3,
       testID: 'series_menu.copy',
       leftIcon: 'LinkHorizontal',
       title: i18next.t('post:post_menu_copy'),
@@ -114,7 +133,7 @@ const useSeriesMenu = (
       onPress: onPressCopyLink,
     },
     {
-      id: 3,
+      id: 4,
       testID: 'series_menu.save',
       leftIcon: isSaved ? 'BookmarkSlash' : 'Bookmark',
       title: i18next.t(
@@ -124,7 +143,7 @@ const useSeriesMenu = (
       onPress: onPressSave,
     },
     {
-      id: 4,
+      id: 5,
       testID: 'series_menu.pin',
       leftIcon: 'Thumbtack',
       title: i18next.t('common:pin_unpin'),
@@ -134,7 +153,7 @@ const useSeriesMenu = (
       onPress: onPressPin,
     },
     {
-      id: 5,
+      id: 6,
       testID: 'series_menu.delete',
       leftIcon: 'TrashCan',
       title: i18next.t('series:menu_text_delete_series'),
@@ -142,7 +161,7 @@ const useSeriesMenu = (
       onPress: onPressDelete,
     },
     {
-      id: 5,
+      id: 7,
       testID: 'series_menu.report_this_member',
       leftIcon: 'UserXmark',
       title: i18next.t('groups:member_menu:label_report_member'),

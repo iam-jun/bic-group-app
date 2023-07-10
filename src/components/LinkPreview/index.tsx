@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import {
-  Dimensions, StyleSheet, TouchableOpacity, View,
+  StyleSheet, TouchableOpacity, View,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
@@ -13,8 +13,9 @@ import images from '~/resources/images';
 import Icon from '~/baseComponents/Icon';
 import { ILinkPreview, ILinkPreviewCreatePost } from '~/interfaces/IPost';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import { dimension } from '~/theme';
 
-const WIDTH_THUMBNAIL = (Dimensions.get('window').width - spacing.margin.large * 2) / 3.5;
+const WIDTH_THUMBNAIL = (dimension.deviceWidth - spacing.margin.large * 2) / 3.5;
 
 type LinkPreviewProps = {
   data: ILinkPreviewCreatePost | ILinkPreview;

@@ -1,3 +1,5 @@
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
+
 export const mockDiscoverCommunityResponse = {
   code: 'api.ok',
   meta: {
@@ -31,7 +33,7 @@ export const mockDiscoverCommunityResponse = {
           avatar: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/608635c7-af37-4db3-91c5-b48ed5ac6864.jpg',
         },
       ],
-      joinStatus: 1,
+      joinStatus: GroupJoinStatus.VISITOR,
     },
     {
       id: 'b5e5612c-e253-4b5a-8a5f-9eb5f350c43b',
@@ -56,7 +58,7 @@ export const mockDiscoverCommunityResponse = {
           avatar: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/42053054-e3ea-4453-8e05-2f2e7e3d6611.png',
         },
       ],
-      joinStatus: 2,
+      joinStatus: GroupJoinStatus.MEMBER,
     },
     {
       id: '8841299c-6e51-486f-b5da-a4cc0d84706b',
@@ -81,7 +83,7 @@ export const mockDiscoverCommunityResponse = {
           avatar: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/42053054-e3ea-4453-8e05-2f2e7e3d6611.png',
         },
       ],
-      joinStatus: 3,
+      joinStatus: GroupJoinStatus.REQUESTED,
     },
   ],
 };
