@@ -76,6 +76,32 @@ export const notificationApiConfig = {
     method: 'patch',
     data: params,
   }),
+  getCommunitySettings: (communityId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/advanced/${communityId}`,
+  }),
+  getGroupSettings: (communityId: string, groupId: string, groupIds: string[]): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/advanced/${communityId}/${groupId}`,
+    method: 'post',
+    data: { groupIds },
+  }),
+  updateCommunitySettings: (communityId: string, params: IEditNotificationSetting): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/advanced/${communityId}`,
+    method: 'patch',
+    data: params,
+  }),
+  updateGroupSettings: (
+    communityId: string,
+    groupId: string,
+    params: IEditNotificationSetting,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/advanced/${communityId}/${groupId}`,
+    method: 'patch',
+    data: params,
+  }),
 };
 
 const notificationApi = {
@@ -103,6 +129,22 @@ const notificationApi = {
   getConfigSettings: () => withHttpRequestPromise(notificationApiConfig.getConfigSettings),
   updateSettings: (params: IEditNotificationSetting) => withHttpRequestPromise(
     notificationApiConfig.updateSettings, params,
+  ),
+  getCommunitySettings: (communityId: string) => withHttpRequestPromise(
+    notificationApiConfig.getCommunitySettings, communityId,
+  ),
+  getGroupSettings: (communityId: string, groupId: string, groupIds: string[]) => withHttpRequestPromise(
+    notificationApiConfig.getGroupSettings, communityId, groupId, groupIds,
+  ),
+  updateCommunitySettings: (communityId: string, params: IEditNotificationSetting) => withHttpRequestPromise(
+    notificationApiConfig.updateCommunitySettings, communityId, params,
+  ),
+  updateGroupSettings: (
+    communityId: string,
+    groupId: string,
+    params: IEditNotificationSetting,
+  ) => withHttpRequestPromise(
+    notificationApiConfig.updateGroupSettings, communityId, groupId, params,
   ),
 };
 
