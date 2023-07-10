@@ -25,6 +25,11 @@ const getConfigSettings = (set, _get) => async (isRefreshing?: boolean) => {
         state.loading = false;
         state.isRefreshing = false;
       }, 'getConfigSettingsSuccess');
+    } else {
+      set((state: INotiSettingsStore) => {
+        state.loading = false;
+        state.isRefreshing = false;
+      }, 'getConfigSettingsSuccessButNoData');
     }
   } catch (err) {
     console.error(
