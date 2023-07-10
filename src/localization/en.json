@@ -1505,6 +1505,12 @@
     "question": "Question",
     "successfully_created_a_quiz": "Successfully created a quiz",
     "empty_title_quiz": "Empty title",
-    "empty_description_quiz": "Empty description"
+    "empty_description_quiz": "Empty description",
+    "quiz_review": "Quiz Review",
+    "edit_the_question_number": "Edit the question {{number}}",
+    "enter_question_placeholder": "Enter question",
+    "enter_answer_placeholder": "Enter answer",
+    "alert_title_delete_question": "Delete the question {{number}}",
+    "alert_content_delete_question": "Do you want to delete question {{number}}?"
   }
 }

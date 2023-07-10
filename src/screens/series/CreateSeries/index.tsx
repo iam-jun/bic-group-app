@@ -165,7 +165,7 @@ const CreateSeries = ({ route }: CreationSeriesProps) => {
             maxLength={255}
             placeholder={t('common:text_input_summary')}
             style={styles.summary}
-            inputStyle={styles.textInput}
+            inputStyleContainer={styles.textInput}
             onChangeText={handleSummaryChange}
             onFocus={onFoucusInput}
           />

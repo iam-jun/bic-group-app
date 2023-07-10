@@ -1,6 +1,8 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { Button } from '~/baseComponents';
+import Icon from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { spacing } from '~/theme';
@@ -10,7 +12,6 @@ type QuestionHeaderProps = {
     onPressEdit: () => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const QuestionHeader: FC<QuestionHeaderProps> = ({ index, onPressEdit }) => {
   const { t } = useBaseHook();
   const theme = useTheme();
@@ -20,6 +21,9 @@ const QuestionHeader: FC<QuestionHeaderProps> = ({ index, onPressEdit }) => {
   return (
     <View style={styles.container}>
       <Text.SubtitleM color={colors.neutral80}>{`${t('quiz:question')} ${index + 1}`}</Text.SubtitleM>
+      <Button onPress={onPressEdit}>
+        <Icon size={16} tintColor={colors.neutral40} icon="PenSolid" />
+      </Button>
     </View>
   );
 };

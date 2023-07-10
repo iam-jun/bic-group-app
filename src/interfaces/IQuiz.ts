@@ -32,11 +32,13 @@ export type RegenerateQuizParams = Partial<
 >;
 
 export type AnswerItem = {
+  id: string;
   answer: string;
   isCorrect: boolean;
 };
 
 export type QuestionItem = {
+  id: string;
   question: string;
   answers: AnswerItem[];
 };
@@ -50,7 +52,10 @@ export interface IQuiz extends GenerateQuizParams {
   updatedAt?: string;
 }
 
-export type QuizPost = Pick<IQuiz, 'id' | 'title' | 'description' | 'status' | 'createdAt' | 'updatedAt' | 'genStatus'>
+export type QuizPost = Pick<
+  IQuiz,
+  'id' | 'title' | 'description' | 'status' | 'createdAt' | 'updatedAt' | 'genStatus'
+>;
 
 export type EditQuizParams = Partial<Omit<IQuiz, 'id'>>;
 
@@ -65,3 +70,8 @@ export interface IParamsGetDraftQuiz {
   limit?: number;
   endCursor?: string;
 }
+
+export type EditQuestionForm = {
+  question: string;
+  answers: AnswerItem[];
+};

@@ -1444,6 +1444,12 @@
     "title_check_generate_random_quiz": "Bạn có muốn tạo câu hỏi và câu trả lời ngẫu nhiên không?",
     "the_question": "Câu hỏi",
     "question": "Câu hỏi",
-    "successfully_created_a_quiz": "Tạo quiz thành công"
+    "successfully_created_a_quiz": "Tạo quiz thành công",
+    "quiz_review": "Quiz Review",
+    "edit_the_question_number": "Sửa câu hỏi số {{number}}",
+    "enter_question_placeholder": "Nhập câu hỏi",
+    "enter_answer_placeholder": "Nhập câu trả lời",
+    "alert_title_delete_question": "Xoá câu hỏi số {{number}}",
+    "alert_content_delete_question": "Bạn có muốn xoá câu hỏi số {{number}}?"
   }
 }
