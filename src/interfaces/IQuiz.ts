@@ -54,7 +54,7 @@ export interface IQuiz extends GenerateQuizParams {
 
 export type QuizPost = Pick<
   IQuiz,
-  'id' | 'title' | 'description' | 'status' | 'createdAt' | 'updatedAt'
+  'id' | 'title' | 'description' | 'status' | 'createdAt' | 'updatedAt' | 'genStatus'
 >;
 
 export type EditQuizParams = Partial<Omit<IQuiz, 'id'>>;
@@ -65,6 +65,11 @@ export type EditQuizActionsParams = {
   audiences?: IAudienceGroup[];
   onSuccess?: (response: IQuiz) => void;
 };
+
+export interface IParamsGetDraftQuiz {
+  limit?: number;
+  endCursor?: string;
+}
 
 export type EditQuestionForm = {
   question: string;
