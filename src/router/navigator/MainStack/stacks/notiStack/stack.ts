@@ -5,6 +5,7 @@ const notiStack = {
   notiChangeLogsPage: 'noti-change-logs-page',
   notiSettings: 'noti-settings',
   notiSettingDetail: 'noti-setting-detail',
+  advancedSettings: 'advanced-settings',
 };
 
 export default notiStack;

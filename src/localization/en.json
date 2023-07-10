@@ -1163,7 +1163,15 @@
       "error_description": "Please refresh the page or try again later",
       "allow_notifications": "Allow notifications",
       "in_app_text": "In-app",
-      "push_text": "Push"
+      "push_text": "Push",
+      "not_joined_the_community": {
+        "title": "Nothing to set up",
+        "description": "Join a community then set up the settings here."
+      },
+      "advanced_notifications_settings":{
+        "title":   "Advanced Notifications Settings"
+      }
+      }
     }
   },
   "new_feature": {
