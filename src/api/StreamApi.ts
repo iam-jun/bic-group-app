@@ -557,7 +557,7 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}quizzes/draft`,
     method: 'get',
-    data: {
+    params: {
       limit: params?.limit || DEFAULT_LIMIT,
       after: params?.endCursor,
     },

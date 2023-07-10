@@ -24,7 +24,6 @@ const getDraftQuiz = (set, get) => async (isRefresh?: boolean) => {
         }, 'getDraftQuiz');
 
         const response = await streamApi.getDraftQuiz({ endCursor: endCursorParams });
-        console.log('log response: ', response)
 
         const newDraftQuizzes
         = isRefresh ? response?.data?.list || [] : listDraftQuiz?.concat(response?.data?.list || []);

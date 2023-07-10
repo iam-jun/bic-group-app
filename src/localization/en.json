@@ -629,7 +629,10 @@
     "text_empty": "There are no scheduled content yet!",
     "text_no_reported_content": "There are no reported content now!",
     "text_no_publish_content": "There are no publish content now!",
-    "text_no_quiz_content": "There are no quiz now!"
+    "text_no_quiz_content": "There are no quiz now!",
+    "gen_status_quiz_process_fail": "The quiz processing failed.",
+    "gen_status_quiz_processing": "The quiz is currently being processed.",
+    "gen_status_quiz_waiting_process": "The quiz is awaiting processing."
   },
   "article": {
     "title": {
@@ -1500,6 +1503,8 @@
     "title_check_generate_random_quiz": "Do you want to randomize the questions and answers or not?",
     "the_question": "The question",
     "question": "Question",
-    "successfully_created_a_quiz": "Successfully created a quiz"
+    "successfully_created_a_quiz": "Successfully created a quiz",
+    "empty_title_quiz": "Empty title",
+    "empty_description_quiz": "Empty description"
   }
 }

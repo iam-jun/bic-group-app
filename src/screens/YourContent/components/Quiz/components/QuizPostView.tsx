@@ -1,14 +1,14 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import {
   View, StyleSheet, StyleProp, ViewStyle,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IPost } from '~/interfaces/IPost';
 import { GenStatus } from '~/interfaces/IQuiz';
 import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
+import { fontFamilies } from '~/theme/fonts';
 import { Button } from '~/baseComponents';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Divider from '~/beinComponents/Divider';
@@ -24,14 +24,8 @@ export interface QuizPostViewProps {
 
 const onDoNothing = () => true;
 
-const QuizPostView: FC<QuizPostViewProps> = ({
-  data,
-  style,
-}) => {
-  const [publishing, setPublishing] = useState(false);
-
+const QuizPostView: FC<QuizPostViewProps> = ({ data, style }) => {
   const { rootNavigation } = useRootNavigation();
-  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
@@ -40,32 +34,33 @@ const QuizPostView: FC<QuizPostViewProps> = ({
 //   const modalActions = useModalStore((state) => state.actions);
 
   const {
-    id,
+    id: contentId,
     setting,
     communities,
     quiz,
   } = data || {};
-
-  const { genStatus } = quiz || {};
-
+  const { genStatus, id: quizId } = quiz || {};
   const { isImportant, importantExpiredAt } = setting || {};
-  const isProcessing = genStatus === GenStatus.PROCESSING;
 
-  const disableButtonPost = genStatus === GenStatus.FAILED || genStatus === GenStatus.PROCESSING || genStatus === GenStatus.PENDING;
+  const disableButtonEdit = [
+    GenStatus.FAILED,
+    GenStatus.PROCESSING,
+    GenStatus.PENDING,
+  ].includes(genStatus);
 
-//   const refreshDraftQuiz = () => {
-//   };
+  const disableButtonDelete = [
+    GenStatus.PROCESSING,
+    GenStatus.PENDING,
+  ].includes(genStatus);
 
-  const onCreateQuiz = () => {
-    if (id) {
-      // do somethings
-    }
-  };
+  // const refreshDraftQuiz = () => {
+  //   actions.getDraftQuiz(true);
+  // };
 
   const onPressEdit = () => {
     rootNavigation.navigate(
       quizStack.composeQuiz, {
-        contentId: id,
+        contentId: contentId,
       },
     );
   };
@@ -87,45 +82,65 @@ const QuizPostView: FC<QuizPostViewProps> = ({
     // });
   };
 
-  const renderFooter = () => {
-    if (isProcessing) {
-      return (
-        <Text.BodyS
-          testID="quiz_draft_view.quiz_processing_publish"
-          color={colors.gray50}
-          style={styles.draftText}
-        >
-          {t('quiz:draft:text_processing_publish')}
-        </Text.BodyS>
+  const renderLabelStatus = (
+    label,
+    color,
+    isItalic,
+  ) => (
+    <View style={styles.genStatusContainer}>
+      <Text.ParagraphS useI18n
+        style={isItalic && styles.textItalic}
+        color={color}
+      >
+        { label }
+      </Text.ParagraphS>
+    </View>
+  );
+
+  const renderGenStatus = () => {
+    if (genStatus === GenStatus.FAILED) {
+      return renderLabelStatus(
+        'your_content:gen_status_quiz_process_fail',
+        colors.red30,
+        false,
       );
     }
+    if (genStatus === GenStatus.PROCESSING) {
+      return renderLabelStatus(
+        'your_content:gen_status_quiz_processing',
+        colors.neutral30,
+        true,
+      );
+    }
+    if (genStatus === GenStatus.PENDING) {
+      return renderLabelStatus(
+        'your_content:gen_status_quiz_waiting_process',
+        colors.neutral30,
+        true,
+      );
+    }
+
+    return null;
+  }
+
+  const renderFooter = () => {
     return (
-      <View style={[styles.row, styles.footerButtonContainer]}>
-        <View style={styles.row}>
-          <Button.Danger
-            testID="quiz_draft_view.button_delete"
-            type="ghost"
-            icon="TrashCan"
-            onPress={onPressDelete}
-          />
-          <ViewSpacing width={16} />
-          <Button.Secondary
-            testID="quiz_draft_view.button_edit"
-            type="ghost"
-            icon="PenToSquare"
-            onPress={onPressEdit}
-          />
-        </View>
-        <Button.Primary
-          testID="quiz_draft_view.button_publish"
-          useI18n
-          size="medium"
-          loading={publishing}
-          disabled={disableButtonPost}
-          onPress={onCreateQuiz}
-        >
-          common:btn_publish
-        </Button.Primary>
+      <View style={styles.footerContainer}>
+        <Button.Danger
+          testID="quiz_draft_view.button_delete"
+          type="ghost"
+          icon="TrashCan"
+          onPress={onPressDelete}
+          disabled={disableButtonDelete}
+        />
+        <ViewSpacing width={16} />
+        <Button.Secondary
+          testID="quiz_draft_view.button_edit"
+          type="ghost"
+          icon="PenToSquare"
+          onPress={onPressEdit}
+          disabled={disableButtonEdit}
+        />
       </View>
     );
   };
@@ -147,11 +162,12 @@ const QuizPostView: FC<QuizPostViewProps> = ({
           data={data}
           isPostDetail={false}
         />
-        <View style={styles.divider}>
+        {renderGenStatus()}
+        <View style={styles.dividerContainer}>
           <Divider color={colors.neutral5} />
         </View>
         {renderFooter()}
-        <ViewSpacing height={8} />
+        <ViewSpacing height={spacing.margin.small} />
       </View>
     </View>
   );
@@ -163,21 +179,23 @@ const createStyle = (theme: ExtendedTheme) => {
     container: {
       backgroundColor: colors.white,
     },
-    row: {
+    footerContainer: {
       flexDirection: 'row',
+      paddingLeft: spacing.padding.large,
+      paddingBottom: spacing.padding.large,
     },
-    footerButtonContainer: {
+    dividerContainer: {
       paddingHorizontal: spacing.padding.large,
-      paddingVertical: spacing.padding.small,
-      justifyContent: 'space-between',
+      paddingBottom: spacing.padding.large,
     },
-    draftText: {
-      marginVertical: spacing.margin.small,
-      marginHorizontal: spacing.margin.large,
+    genStatusContainer: {
+      paddingLeft: spacing.padding.small,
+      marginLeft: spacing.margin.large,
+      marginTop: spacing.margin.small,
+      marginBottom: spacing.margin.large,
     },
-    divider: {
-      paddingHorizontal: spacing.padding.large,
-      paddingVertical: spacing.padding.base,
+    textItalic: {
+      fontFamily: fontFamilies.BeVietnamProLightItalic,
     },
   });
 };

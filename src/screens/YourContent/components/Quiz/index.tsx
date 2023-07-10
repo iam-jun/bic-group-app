@@ -9,6 +9,7 @@ import { homeHeaderTabHeight } from '~/theme/dimension';
 import useDraftQuizStore from './store';
 import { spacing } from '~/theme';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import QuizPostView from './components/QuizPostView';
 
 interface QuizProps {
     onScroll: (e: any) => void;
@@ -43,9 +44,7 @@ const Quiz: React.FC<QuizProps> = ({ onScroll }) => {
         }
     };
 
-    const renderItem = () => {
-        return <></>
-    };
+    const renderItem = ({ item }) => (<QuizPostView data={item} />);
 
     const renderHeader = () => (
         <View style={styles.header}>
