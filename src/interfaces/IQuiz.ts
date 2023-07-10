@@ -64,4 +64,4 @@ export type EditQuizActionsParams = {
 export interface IParamsGetDraftQuiz {
   limit?: number;
   endCursor?: string;
-};
+}

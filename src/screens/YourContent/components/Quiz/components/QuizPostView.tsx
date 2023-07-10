@@ -30,8 +30,8 @@ const QuizPostView: FC<QuizPostViewProps> = ({ data, style }) => {
   const { colors } = theme;
   const styles = createStyle(theme);
 
-//   const actions = useDraftQuizStore((state) => state.actions);
-//   const modalActions = useModalStore((state) => state.actions);
+  //   const actions = useDraftQuizStore((state) => state.actions);
+  //   const modalActions = useModalStore((state) => state.actions);
 
   const {
     id: contentId,
@@ -39,7 +39,7 @@ const QuizPostView: FC<QuizPostViewProps> = ({ data, style }) => {
     communities,
     quiz,
   } = data || {};
-  const { genStatus, id: quizId } = quiz || {};
+  const { genStatus } = quiz || {};
   const { isImportant, importantExpiredAt } = setting || {};
 
   const disableButtonEdit = [
@@ -60,13 +60,13 @@ const QuizPostView: FC<QuizPostViewProps> = ({ data, style }) => {
   const onPressEdit = () => {
     rootNavigation.navigate(
       quizStack.composeQuiz, {
-        contentId: contentId,
+        contentId,
       },
     );
   };
 
-//   const onDelete = () => {
-//   };
+  //   const onDelete = () => {
+  //   };
 
   const onPressDelete = () => {
     // modalActions.hideModal();
@@ -88,7 +88,8 @@ const QuizPostView: FC<QuizPostViewProps> = ({ data, style }) => {
     isItalic,
   ) => (
     <View style={styles.genStatusContainer}>
-      <Text.ParagraphS useI18n
+      <Text.ParagraphS
+        useI18n
         style={isItalic && styles.textItalic}
         color={color}
       >
@@ -121,29 +122,27 @@ const QuizPostView: FC<QuizPostViewProps> = ({ data, style }) => {
     }
 
     return null;
-  }
-
-  const renderFooter = () => {
-    return (
-      <View style={styles.footerContainer}>
-        <Button.Danger
-          testID="quiz_draft_view.button_delete"
-          type="ghost"
-          icon="TrashCan"
-          onPress={onPressDelete}
-          disabled={disableButtonDelete}
-        />
-        <ViewSpacing width={16} />
-        <Button.Secondary
-          testID="quiz_draft_view.button_edit"
-          type="ghost"
-          icon="PenToSquare"
-          onPress={onPressEdit}
-          disabled={disableButtonEdit}
-        />
-      </View>
-    );
   };
+
+  const renderFooter = () => (
+    <View style={styles.footerContainer}>
+      <Button.Danger
+        testID="quiz_draft_view.button_delete"
+        type="ghost"
+        icon="TrashCan"
+        onPress={onPressDelete}
+        disabled={disableButtonDelete}
+      />
+      <ViewSpacing width={16} />
+      <Button.Secondary
+        testID="quiz_draft_view.button_edit"
+        type="ghost"
+        icon="PenToSquare"
+        onPress={onPressEdit}
+        disabled={disableButtonEdit}
+      />
+    </View>
+  );
 
   return (
     <View>

@@ -18,23 +18,23 @@ export interface IDraftQuizState extends IBaseState {
 }
 
 const initState: InitStateType<IDraftQuizState> = {
-    draftQuiz: {
-        data: [],
-        loading: false,
-        refreshing: false,
-        hasNextPage: true,
-        endCursor: '',
-    },
+  draftQuiz: {
+    data: [],
+    loading: false,
+    refreshing: false,
+    hasNextPage: true,
+    endCursor: '',
+  },
 };
 
 const draftQuizStore = (set, get) => ({
-    ...initState,
+  ...initState,
 
-    actions: {
-        getDraftQuiz: getDraftQuiz(set, get),
-    },
+  actions: {
+    getDraftQuiz: getDraftQuiz(set, get),
+  },
 
-    reset: () => resetStore(initState, set),
+  reset: () => resetStore(initState, set),
 });
 
 const useDraftQuizStore = createStore<IDraftQuizState>(draftQuizStore);

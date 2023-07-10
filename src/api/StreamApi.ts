@@ -41,7 +41,9 @@ import {
 } from '~/interfaces/ISeries';
 import { IParamGetReportContent, IParamsReportContent } from '~/interfaces/IReport';
 import { CreateTag, EditTag, IParamGetCommunityTags } from '~/interfaces/ITag';
-import { EditQuizParams, GenerateQuizParams, IParamsGetDraftQuiz, RegenerateQuizParams } from '~/interfaces/IQuiz';
+import {
+  EditQuizParams, GenerateQuizParams, IParamsGetDraftQuiz, RegenerateQuizParams,
+} from '~/interfaces/IQuiz';
 
 const DEFAULT_LIMIT = 10;
 

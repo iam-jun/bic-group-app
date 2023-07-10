@@ -40,7 +40,7 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({ quiz }) => {
             {!!title ? title : t('quiz:empty_title_quiz')}
           </Text.SubtitleM>
           <Text.BodyXS
-            color={!!description ? colors.neutral40: colors.neutral20}
+            color={!!description ? colors.neutral40 : colors.neutral20}
             numberOfLines={2}
           >
             {!!description ? description : t('quiz:empty_description_quiz')}
