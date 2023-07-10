@@ -125,6 +125,12 @@ const NotificationList = ({
           )}
         </View>
       );
+    } if (loadingNotifications) {
+      return (
+        <View style={styles.listFooter}>
+          <ActivityIndicator color={theme.colors.gray20} />
+        </View>
+      );
     }
     return null;
   };
@@ -146,34 +152,30 @@ const NotificationList = ({
 
   return (
     <View testID="notification_screen.container" style={styles.container}>
-      {!loadingNotifications && notificationList?.length > 0 ? (
-        <AnimatedFlashList
-          ref={listRef}
+      <AnimatedFlashList
+        ref={listRef}
           // @ts-ignore
-          testID="notification_list.list"
-          renderItem={renderItem}
-          keyExtractor={keyExtractor}
-          estimatedItemSize={ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT}
-          refreshing
-          refreshControl={(
-            <RefreshControl
-              testID="notification_list.refresh_control"
-              refreshing={refreshing}
-              onRefresh={refreshListNotification}
-              tintColor={theme.colors.gray40}
-            />
+        testID="notification_list.list"
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        estimatedItemSize={ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT}
+        refreshing
+        refreshControl={(
+          <RefreshControl
+            testID="notification_list.refresh_control"
+            refreshing={refreshing}
+            onRefresh={refreshListNotification}
+            tintColor={theme.colors.gray40}
+          />
           )}
-          showsHorizontalScrollIndicator={false}
-          data={notificationList}
-          ListEmptyComponent={renderUnReadNotificationsEmpty}
-          onEndReached={loadMoreNotifications}
-          ListFooterComponent={renderListFooter}
-          ItemSeparatorComponent={renderItemSeparatorComponent}
-          contentContainerStyle={styles.listContainer}
-        />
-      ) : (
-        <ActivityIndicator testID="notification_screen.loading" color={theme.colors.gray20} />
-      )}
+        showsHorizontalScrollIndicator={false}
+        data={notificationList}
+        ListEmptyComponent={renderUnReadNotificationsEmpty}
+        onEndReached={loadMoreNotifications}
+        ListFooterComponent={renderListFooter}
+        ItemSeparatorComponent={renderItemSeparatorComponent}
+        contentContainerStyle={styles.listContainer}
+      />
     </View>
   );
 };
