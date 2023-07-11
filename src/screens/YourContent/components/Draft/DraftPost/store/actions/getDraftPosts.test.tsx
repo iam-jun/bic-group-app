@@ -34,8 +34,13 @@ describe('getDraftPosts', () => {
   });
   it('should call api get draft posts when isRefresh = true success', () => {
     const response = {
-      data: [POST_DETAIL],
-      canLoadMore: true,
+      data: {
+        list: [POST_DETAIL],
+        meta: {
+          hasNextPage: true,
+          endCursor: 'asd123'
+        }
+      },
     };
     const spy = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(
       () => Promise.resolve(response) as any,
@@ -55,24 +60,28 @@ describe('getDraftPosts', () => {
     act(() => {
       jest.runAllTimers();
     });
-    expect(result.current.posts).toEqual(response.data);
+    expect(result.current.posts).toEqual(response.data.list);
     expect(result.current.loading).toBe(false);
     expect(result.current.hasNextPage).toBe(true);
+    expect(result.current.endCursor).toBe(response.data.meta.endCursor);
     expect(result.current.refreshing).toBe(false);
   });
 
   it('should load more draft post success', () => {
     const response = {
-      data: [POST_DETAIL],
-      canLoadMore: true,
-      total: 3,
+      data: {
+        list: [POST_DETAIL],
+        meta: {
+          hasNextPage: true,
+          endCursor: 'asd123'
+        }
+      },
     };
     const spy = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(
       () => Promise.resolve(response) as any,
     );
     useDraftPostStore.setState((state:IDraftPostState) => {
       state.posts = [{ a: 1 }] as any;
-      state.total = 1;
       return state;
     });
 
@@ -89,8 +98,8 @@ describe('getDraftPosts', () => {
     expect(result.current.posts.length).toEqual(2);
     expect(result.current.loading).toBe(false);
     expect(result.current.hasNextPage).toBe(true);
+    expect(result.current.endCursor).toBe(response.data.meta.endCursor);
     expect(result.current.refreshing).toBe(false);
-    expect(result.current.total).toBe(response.total);
   });
 
   afterEach(() => {

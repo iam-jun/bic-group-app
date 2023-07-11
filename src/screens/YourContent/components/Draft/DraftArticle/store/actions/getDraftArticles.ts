@@ -28,7 +28,7 @@ const getDraftArticles = (set, get) => async (payload: IPayloadGetDraftContents)
       const endCursorParams = isRefresh ? null : endCursor;
       const response = await streamApi.getDraftContents({
         endCursor: endCursorParams,
-        type: PostType.ARTICLE
+        type: PostType.ARTICLE,
       });
 
       const newArticles = getNewPosts({ isRefresh, response, list: draftArticles });

@@ -662,7 +662,9 @@ const streamApi = {
   },
 
   getPostDetail: (params: IParamGetPostDetail) => withHttpRequestPromise(streamApiConfig.getPostDetail, params),
-  getDraftContents: (params: IParamGetDraftContents) => withHttpRequestPromise(streamApiConfig.getDraftContents, params),
+  getDraftContents: (params: IParamGetDraftContents) => withHttpRequestPromise(
+    streamApiConfig.getDraftContents, params,
+  ),
   getCommentDetail: (commentId: string, params: IRequestGetPostComment) => withHttpRequestPromise(
     streamApiConfig.getCommentDetail, commentId, params,
   ),

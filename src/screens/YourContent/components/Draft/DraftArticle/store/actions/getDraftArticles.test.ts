@@ -11,9 +11,13 @@ describe('getDraftArticles', () => {
 
   it('should call api get draft articles when isRefresh = true success', () => {
     const response = {
-      data: [POST_DETAIL],
-      canLoadMore: true,
-      total: 1,
+      data: {
+        list: [POST_DETAIL],
+        meta: {
+          hasNextPage: true,
+          endCursor: 'asd123'
+        }
+      },
     };
 
     const spy = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(
@@ -28,25 +32,28 @@ describe('getDraftArticles', () => {
       result.current.actions.getDraftArticles({ isRefresh: true });
     });
     expect(result.current.refreshing).toBe(true);
-    expect(result.current.total).toBe(0);
     expect(spy).toBeCalled();
 
     act(() => {
       jest.runAllTimers();
     });
 
-    expect(result.current.articles).toEqual(response.data);
+    expect(result.current.articles).toEqual(response.data.list);
     expect(result.current.hasNextPage).toBe(true);
+    expect(result.current.endCursor).toBe(response.data.meta.endCursor);
     expect(result.current.refreshing).toBe(false);
     expect(result.current.loading).toBe(false);
-    expect(result.current.total).toBe(1);
   });
 
   it('should call api get draft articles when isRefresh = false success', () => {
     const response = {
-      data: [POST_DETAIL],
-      canLoadMore: true,
-      total: 1,
+      data: {
+        list: [POST_DETAIL],
+        meta: {
+          hasNextPage: true,
+          endCursor: 'asd123'
+        }
+      },
     };
 
     const spy = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(
@@ -55,7 +62,6 @@ describe('getDraftArticles', () => {
 
     useDraftArticleStore.setState((state: IDraftArticleState) => {
       state.articles = [];
-      state.total = 0;
       state.hasNextPage = true;
       return state;
     });
@@ -72,11 +78,11 @@ describe('getDraftArticles', () => {
       jest.runAllTimers();
     });
 
-    expect(result.current.articles).toEqual(response.data);
+    expect(result.current.articles).toEqual(response.data.list);
     expect(result.current.hasNextPage).toBe(true);
+    expect(result.current.endCursor).toBe(response.data.meta.endCursor);
     expect(result.current.refreshing).toBe(false);
     expect(result.current.loading).toBe(false);
-    expect(result.current.total).toBe(1);
   });
 
   it('should not call API when isRefresh = false and cannot load more', () => {
@@ -86,7 +92,6 @@ describe('getDraftArticles', () => {
 
     useDraftArticleStore.setState((state: IDraftArticleState) => {
       state.articles = [];
-      state.total = 0;
       state.hasNextPage = false;
       return state;
     });
