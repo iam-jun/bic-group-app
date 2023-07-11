@@ -55,7 +55,7 @@ const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
     questions = [], id,
   } = quiz || {};
 
-  const disabledBtnSave = isGenerating || loading || isEmpty(quiz);
+  const disabledBtnSave = isGenerating || loading || questions.length === 0 || isEmpty(quiz);
 
   const generateQuiz = () => {
     if (!id) {
