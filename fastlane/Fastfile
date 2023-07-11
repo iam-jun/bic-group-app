@@ -252,7 +252,7 @@ platform :android do
     )
 
     app_name =  'bic-group'
-    version_number = android_get_version_name(gradle_file: './android/app/build.gradle')
+    version_number = ENV['APP_VERSION']
     timestamp = Time.now.strftime("%Y%m%d%H%M")
     file_name = "#{app_name}-#{version_number}-#{timestamp}.aab"
     UI.message("Generated file name: #{file_name}")
@@ -275,7 +275,7 @@ platform :android do
     UI.message("File uploaded to google drive: #{file_upload_path}")
     UI.message("Upload done!")
 
-    version_number = android_get_version_name(gradle_file: './android/app/build.gradle')
+    version_number = ENV['APP_VERSION']
     build_number = android_get_version_code(gradle_file: './android/app/build.gradle')
     commit = last_git_commit
     git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- %s")
