@@ -116,8 +116,8 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}content/draft`,
     params: {
-      offset: params?.offset || 0,
-      limit: params?.limit || 10,
+      limit: params?.limit || DEFAULT_LIMIT,
+      after: params?.endCursor,
       isProcessing: params?.isProcessing || false,
       type: params?.type,
     },
@@ -662,25 +662,7 @@ const streamApi = {
   },
 
   getPostDetail: (params: IParamGetPostDetail) => withHttpRequestPromise(streamApiConfig.getPostDetail, params),
-  getDraftContents: async (param: IParamGetDraftContents) => {
-    try {
-      const response: any = await makeHttpRequest(
-        streamApiConfig.getDraftContents(param),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve({
-          data: response?.data?.data?.list || [],
-          canLoadMore:
-            (param?.offset || 0) + (param?.limit || DEFAULT_LIMIT)
-            <= response?.data?.data?.meta?.total,
-          total: response?.data?.data?.meta?.total,
-        });
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  getDraftContents: (params: IParamGetDraftContents) => withHttpRequestPromise(streamApiConfig.getDraftContents, params),
   getCommentDetail: (commentId: string, params: IRequestGetPostComment) => withHttpRequestPromise(
     streamApiConfig.getCommentDetail, commentId, params,
   ),
