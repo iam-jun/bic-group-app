@@ -15,8 +15,8 @@ describe('getDraftArticles', () => {
         list: [POST_DETAIL],
         meta: {
           hasNextPage: true,
-          endCursor: 'asd123'
-        }
+          endCursor: 'asd123',
+        },
       },
     };
 
@@ -51,8 +51,8 @@ describe('getDraftArticles', () => {
         list: [POST_DETAIL],
         meta: {
           hasNextPage: true,
-          endCursor: 'asd123'
-        }
+          endCursor: 'asd123',
+        },
       },
     };
 

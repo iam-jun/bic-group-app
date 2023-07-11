@@ -38,8 +38,8 @@ describe('getDraftPosts', () => {
         list: [POST_DETAIL],
         meta: {
           hasNextPage: true,
-          endCursor: 'asd123'
-        }
+          endCursor: 'asd123',
+        },
       },
     };
     const spy = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(
@@ -73,8 +73,8 @@ describe('getDraftPosts', () => {
         list: [POST_DETAIL],
         meta: {
           hasNextPage: true,
-          endCursor: 'asd123'
-        }
+          endCursor: 'asd123',
+        },
       },
     };
     const spy = jest.spyOn(streamApi, 'getDraftContents').mockImplementation(
