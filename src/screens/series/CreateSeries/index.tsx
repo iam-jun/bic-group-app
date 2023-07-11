@@ -11,13 +11,13 @@ import CoverImage from './components/CoverImage';
 import { TextArea, TextInput } from '~/baseComponents/Input';
 import { useBaseHook } from '~/hooks';
 import Text from '~/baseComponents/Text';
-import SettingsButton from '~/components/ImportantSettings/SettingsButton';
+import SettingsButton from '~/components/ContentSettings/SettingsButton';
 import useSeriesCreation from '../hooks/useSeriesCreation';
 import { CreationSeriesProps } from '~/interfaces/ISeries';
 import useSeriesStore, { ISeriesState } from '../store';
 import { IAudienceGroup, PostType } from '~/interfaces/IPost';
 import AlertDeleteAudiencesConfirmContent from '~/components/posts/AlertDeleteAudiences';
-import CreateBannerImportant from '~/components/ImportantSettings/CreateBannerImportant';
+import CreateBannerImportant from '~/components/ContentSettings/CreateBannerImportant';
 import useModalStore from '~/store/modal';
 
 const CreateSeries = ({ route }: CreationSeriesProps) => {

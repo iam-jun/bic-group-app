@@ -15,6 +15,7 @@ import {
   IRequestGetUsersInterestedPost,
   IParamsGetPostByParams,
   IParamUpdatePost,
+  PutEditSettingsApiParams,
 } from '~/interfaces/IPost';
 import {
   IParamGetFeed,
@@ -237,7 +238,7 @@ export const streamApiConfig = {
   },
   putMarkAsRead: (postId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}posts/${postId}/mark-as-read`,
+    url: `${provider.url}content/${postId}/mark-as-read`,
     method: 'put',
   }),
   putMarkSeenContent: (id: string): HttpApiRequestConfig => ({
@@ -535,6 +536,19 @@ export const streamApiConfig = {
     provider: apiProviders.beinFeed,
     params,
   }),
+  putEditSettings: ({ id, setting }: PutEditSettingsApiParams): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}content/${id}/setting`,
+    method: 'put',
+    data: { ...setting },
+  }),
+  getContentsInSeries: (seriesIds: string[]): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}series/items`,
+    params: {
+      seriesIds,
+    },
+  }),
   generateQuiz: (params: GenerateQuizParams): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}quizzes`,
@@ -562,13 +576,6 @@ export const streamApiConfig = {
     params: {
       limit: params?.limit || DEFAULT_LIMIT,
       after: params?.endCursor,
-    },
-  }),
-  getContentsInSeries: (seriesIds: string[]): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}series/items`,
-    params: {
-      seriesIds,
     },
   }),
 };
@@ -844,6 +851,12 @@ const streamApi = {
       ...param,
     },
   ),
+  putEditSettings: (params: PutEditSettingsApiParams) => withHttpRequestPromise(
+    streamApiConfig.putEditSettings, params,
+  ),
+  getContentsInSeries: (seriesIds: string[]) => withHttpRequestPromise(
+    streamApiConfig.getContentsInSeries, seriesIds,
+  ),
   generateQuiz: (params: GenerateQuizParams) => withHttpRequestPromise(
     streamApiConfig.generateQuiz, params,
   ),
@@ -855,9 +868,6 @@ const streamApi = {
   ),
   getDraftQuiz: (params: IParamsGetDraftQuiz) => withHttpRequestPromise(
     streamApiConfig.getDraftQuiz, params,
-  ),
-  getContentsInSeries: (seriesIds: string[]) => withHttpRequestPromise(
-    streamApiConfig.getContentsInSeries, seriesIds,
   ),
 };
 

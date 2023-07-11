@@ -4,6 +4,7 @@ import IDiscoverGroupsState from '../Interface';
 import groupApi from '~/api/GroupApi';
 import { mockDiscoverGroupsResponse } from '~/test/mock_data/discoverGroup';
 import { mapItems } from '~/screens/groups/helper/mapper';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 
 describe('getDiscoverGroups', () => {
   afterEach(() => {
@@ -137,7 +138,7 @@ describe('getDiscoverGroups', () => {
 
     const { result } = renderHook(() => useDiscoverGroupsStore((state) => state));
     act(() => {
-      result.current.actions.setGroupStatus('', 0);
+      result.current.actions.setGroupStatus('', GroupJoinStatus.UNABLE_TO_JOIN);
     });
     expect(result.current.items).toEqual(mockItems);
   });
@@ -146,7 +147,7 @@ describe('getDiscoverGroups', () => {
     const mockIds = [1, 2, 3];
     const mockItems = { 1: { id: '1' }, 2: { id: '2' }, 3: { id: '3' } };
 
-    const expectItems = { 1: { id: '1', joinStatus: 2 }, 2: { id: '2' }, 3: { id: '3' } };
+    const expectItems = { 1: { id: '1', joinStatus: GroupJoinStatus.MEMBER }, 2: { id: '2' }, 3: { id: '3' } };
 
     useDiscoverGroupsStore.setState((state: IDiscoverGroupsState) => {
       state.ids = mockIds;
@@ -156,7 +157,7 @@ describe('getDiscoverGroups', () => {
 
     const { result } = renderHook(() => useDiscoverGroupsStore((state) => state));
     act(() => {
-      result.current.actions.setGroupStatus('1', 2);
+      result.current.actions.setGroupStatus('1', GroupJoinStatus.MEMBER);
     });
     expect(result.current.items).toEqual(expectItems);
   });

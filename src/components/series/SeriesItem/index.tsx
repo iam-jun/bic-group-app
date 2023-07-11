@@ -6,7 +6,6 @@ import DeletedItem from '../../DeletedItem';
 import SeriesContent from '../SeriesContent';
 import SeriesHeader from '../SeriesHeader';
 import { ButtonMarkAsRead, PostImportant } from '~/components/posts';
-import { useUserIdAuth } from '~/hooks/auth';
 
 type SeriesItemProps = {
     data: IPost;
@@ -16,11 +15,9 @@ type SeriesItemProps = {
 const SeriesItem: FC<SeriesItemProps> = ({ data: series, isLite }) => {
   const theme = useTheme();
   const styles = createStyle(theme);
-  const userId = useUserIdAuth();
 
   const {
     id,
-    actor,
     communities,
     setting,
     markedReadPost,
@@ -51,7 +48,6 @@ const SeriesItem: FC<SeriesItemProps> = ({ data: series, isLite }) => {
       markedReadPost={markedReadPost}
       isImportant={isImportant}
       expireTime={importantExpiredAt}
-      isActor={actor?.id == userId}
     />
   );
 

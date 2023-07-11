@@ -47,7 +47,7 @@ export interface IQuiz extends GenerateQuizParams {
   id: string;
   questions: QuestionItem[];
   status: QuizStatus;
-  genStatus: GenStatus;
+  genStatus?: GenStatus;
   createdAt?: string;
   updatedAt?: string;
 }

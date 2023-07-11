@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, StyleSheet, Dimensions, ScrollView,
+  View, StyleSheet, ScrollView,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/baseComponents/Text';
@@ -9,8 +9,9 @@ import Tag from '~/baseComponents/Tag';
 import useSelectAudienceStore from '~/components/SelectAudience/store';
 import spacing from '~/theme/spacing';
 import { useBaseHook } from '~/hooks';
+import { dimension } from '~/theme';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_WIDTH = dimension.deviceWidth;
 const TAG_MAX_WIDTH = SCREEN_WIDTH * 0.6;
 
 const SelectedAudiences = () => {

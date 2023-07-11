@@ -2,6 +2,7 @@ const Common = {
   SUCCESS: 'api.ok',
   SYSTEM_ISSUE: 0,
   MAINTENANCE: 'api.is_under_maintenance',
+  FORBIDDEN: 'forbidden',
 };
 
 const Auth = {
@@ -23,6 +24,7 @@ const Post = {
   ARTICLE_NO_READ_PERMISSION: 'article.no_read_permission',
   COMMENT_IS_REPORTED_AND_DELETED: 'comment.reported_and_deleted',
   QUIZ_NO_CRUD_PERMISSION_AT_GROUP: 'quiz.no_crud_permission_at_group',
+  NO_EDIT_SETTING_PERMISSION_AT_GROUP: 'content.no_edit_setting_permission_at_group',
 };
 
 const Group = {

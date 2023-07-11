@@ -2,6 +2,7 @@ import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack
 import getEnv from '~/utils/env';
 import homeStack from './navigator/MainStack/stacks/homeStack/stack';
 import quizStack from './navigator/MainStack/stacks/quizStack/stack';
+import seriesStack from './navigator/MainStack/stacks/series/stack';
 
 export const PREFIX_DEEPLINK_GROUP = 'bic://';
 
@@ -23,12 +24,15 @@ export const customBackHandlerRoutes = [
   articleStack.createArticleSeries,
   articleStack.createArticleTags,
   articleStack.createArticleContent,
+  articleStack.createArticleSettings,
+  homeStack.postSettings,
   homeStack.createPostTags,
   homeStack.createPostSeries,
   homeStack.pinContent,
   homeStack.reorderedPinContent,
   quizStack.submitFormQuiz,
   quizStack.editQuestion,
+  seriesStack.seriesSettings,
 ];
 
 export const EVENT_NAVIGATION_BACK_PRESSED = 'navigation-back-pressed';

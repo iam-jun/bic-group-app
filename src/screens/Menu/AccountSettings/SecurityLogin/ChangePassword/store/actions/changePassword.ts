@@ -9,7 +9,7 @@ import i18n from '~/localization';
 import showToastError from '~/store/helper/showToastError';
 import showToast from '~/store/helper/showToast';
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = withNavigation?.(rootNavigationRef);
 
 const changePassword = (set, _get) => async (payload: IChangePasswordPayload) => {
   try {

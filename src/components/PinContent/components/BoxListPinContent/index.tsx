@@ -4,7 +4,6 @@ import {
   StyleSheet,
   ActivityIndicator,
   FlatList,
-  Dimensions,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import usePinContentStore from '../../store';
@@ -15,7 +14,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
 
-const DeviceWidth = Dimensions.get('window').width;
+const DeviceWidth = dimension.deviceWidth;
 
 interface BoxListPinContentProps {
   id: string;

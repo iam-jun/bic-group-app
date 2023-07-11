@@ -216,9 +216,12 @@ import { faRectangleHistory } from '@fortawesome/pro-regular-svg-icons/faRectang
 import { faUserLargeSlash as faUserLargeSlashSolid } from '@fortawesome/pro-solid-svg-icons/faUserLargeSlash';
 import { faChevronDown } from '@fortawesome/pro-regular-svg-icons/faChevronDown';
 import { faChevronUp } from '@fortawesome/pro-regular-svg-icons/faChevronUp';
-import { faChevronRight } from '@fortawesome/pro-regular-svg-icons/faChevronRight';
 import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons';
 import { faRotate as faRotateSolid } from '@fortawesome/pro-solid-svg-icons/faRotate';
+import { faMemoCircleInfo as faMemoCircleInfoSolid } from '@fortawesome/pro-solid-svg-icons/faMemoCircleInfo';
+import { faChevronRight } from '@fortawesome/pro-regular-svg-icons/faChevronRight';
+import { faUsersMedical as faUsersMedicalSolid } from '@fortawesome/pro-solid-svg-icons/faUsersMedical';
+import { faSquareList as faSquareListSolid } from '@fortawesome/pro-solid-svg-icons/faSquareList';
 import { faCaretDown as faCaretDownSolid } from '@fortawesome/pro-solid-svg-icons/faCaretDown';
 import { faCaretRight as faCaretRightSolid } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
 
@@ -459,7 +462,10 @@ export const initFontAwesomeIcon = () => {
     faChevronUp,
     faBadgeCheck,
     faRotateSolid,
+    faMemoCircleInfoSolid,
     faChevronRight,
+    faUsersMedicalSolid,
+    faSquareListSolid,
     faCaretDownSolid,
     faCaretRightSolid,
   );
@@ -685,7 +691,10 @@ export const fontAwesomeIcons = {
   ChevronUp: 'fa-regular fa-chevron-up',
   BadgeCheck: 'fa-solid fa-badge-check',
   RotateSolid: 'fa-solid fa-rotate',
+  MemoCircleInfoSolid: 'fa-solid fa-memo-circle-info',
   ChevronRight: 'fa-regular fa-chevron-right',
+  UsersMedicalSolid: 'fa-solid fa-users-medical',
+  SquareListSolid: 'fa-solid fa-square-list',
   CaretDownSolid: 'fa-solid fa-caret-down',
   CaretRightSolid: 'fa-solid fa-caret-right',
 };
