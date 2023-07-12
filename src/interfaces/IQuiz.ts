@@ -14,17 +14,17 @@ export enum GenStatus {
 }
 
 export type FormGenerateQuiz = {
-  title: string;
+  title?: string;
   description?: string;
-  numberOfQuestions: string | number | null;
-  numberOfAnswers: string | number | null;
+  numberOfQuestions?: string | number | null;
+  numberOfAnswers?: string | number | null;
   numberOfQuestionsDisplay?: string | number | null;
   numberOfAnswersDisplay?: string | number | null;
   isRandom?: boolean;
 };
 
 export type GenerateQuizParams = FormGenerateQuiz & {
-  contentId: string;
+  contentId?: string;
 };
 
 export type RegenerateQuizParams = Partial<
@@ -60,10 +60,10 @@ export type QuizPost = Pick<
 export type EditQuizParams = Partial<Omit<IQuiz, 'id'>>;
 
 export type EditQuizActionsParams = {
-  idQuiz: string;
+  quizId: string;
   params: EditQuizParams;
   audiences?: IAudienceGroup[];
-  onSuccess?: (response: IQuiz) => void;
+  onSuccess?: (response: any) => void;
 };
 
 export interface IParamsGetDraftQuiz {
@@ -75,3 +75,8 @@ export type EditQuestionForm = {
   question: string;
   answers: AnswerItem[];
 };
+
+export type GetQuizDetailParams = {
+  quizId: string;
+  isShowLoading?: boolean;
+}

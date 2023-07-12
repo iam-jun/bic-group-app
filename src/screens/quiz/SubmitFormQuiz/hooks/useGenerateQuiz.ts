@@ -7,11 +7,33 @@ import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import showAlert from '~/store/helper/showAlert';
 import useMyPermissionsStore from '~/store/permissions';
-import { buildGenerateQuizParams, showAlertAudienceListWithNoPermissionQuiz } from '../helper';
-import { FormGenerateQuiz } from '~/interfaces/IQuiz';
+import {
+  buildGenerateQuizParams,
+  showAlertAudienceListWithNoPermissionQuiz,
+} from '../helper';
+import {
+  EditQuizActionsParams,
+  FormGenerateQuiz,
+  GenerateQuizParams,
+  IQuiz,
+  QuizStatus,
+} from '~/interfaces/IQuiz';
 import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
+import useQuizzesStore from '~/store/entities/quizzes';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
-const useGenerateQuiz = (postId: string) => {
+const useGenerateQuiz = (
+  contentId: string,
+  initFormData?: FormGenerateQuiz,
+) => {
+  const {
+    title = '',
+    description = '',
+    numberOfQuestions = '10',
+    numberOfAnswers = '4',
+    numberOfQuestionsDisplay = null,
+    numberOfAnswersDisplay = null,
+  } = initFormData || {};
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
   const {
@@ -22,47 +44,95 @@ const useGenerateQuiz = (postId: string) => {
     trigger,
   } = useForm<FormGenerateQuiz>({
     defaultValues: {
-      title: '',
-      description: '',
-      numberOfQuestions: '10', // use string instead of number for display in input text
-      numberOfAnswers: '4', // use string instead of number for display in input text
-      numberOfQuestionsDisplay: null,
-      numberOfAnswersDisplay: null,
+      title,
+      description,
+      numberOfQuestions, // use string instead of number for display in input text
+      numberOfAnswers, // use string instead of number for display in input text
+      numberOfQuestionsDisplay,
+      numberOfAnswersDisplay,
     },
     mode: 'onChange',
     reValidateMode: 'onChange',
   });
 
-  const post = usePostsStore(postsSelector.getPost(postId, {}));
+  const isGenerating = useQuizzesStore((state) => state.isGenerating);
+  const loading = useQuizzesStore((state) => state.loading);
+  const actionsQuizzesStore = useQuizzesStore((state) => state.actions);
+
+  const post = usePostsStore(postsSelector.getPost(contentId, {}));
 
   const { audience } = post;
-  const groupAudience = audience?.groups || [];
+  const groupAudiences = audience?.groups || [];
 
-  const loadingGetPermissions = useMyPermissionsStore((state) => state.loading);
   const { getMyPermissions, getAudienceListWithNoPermission }
     = useMyPermissionsStore((state) => state.actions);
 
-  const enabledBtnNext = isValid;
+  const isFormValid = isValid;
 
-  const checkPermissions = async (data: FormGenerateQuiz) => {
-    await getMyPermissions();
-    const audienceListWithNoPermissionQuiz = getAudienceListWithNoPermission(
-      groupAudience,
-      PermissionKey.CUD_QUIZ,
-    );
+  const generateQuiz = async (data: FormGenerateQuiz) => {
+    try {
+      actionsQuizzesStore.setIsGenerating(true);
 
-    if (audienceListWithNoPermissionQuiz.length > 0) {
-      showAlertAudienceListWithNoPermissionQuiz(
-        audienceListWithNoPermissionQuiz,
+      await getMyPermissions();
+      const audienceListWithNoPermissionQuiz = getAudienceListWithNoPermission(
+        groupAudiences,
+        PermissionKey.CUD_QUIZ,
       );
-    } else {
-      const params = buildGenerateQuizParams(data, postId);
-      rootNavigation.navigate(quizStack.composeQuiz, params);
+
+      if (audienceListWithNoPermissionQuiz.length > 0) {
+        actionsQuizzesStore.setIsGenerating(false);
+        showAlertAudienceListWithNoPermissionQuiz(
+          audienceListWithNoPermissionQuiz,
+        );
+      } else {
+        const formParams = buildGenerateQuizParams(data, contentId);
+        const params: GenerateQuizParams = {
+          contentId: formParams.contentId,
+          numberOfQuestions: formParams.numberOfQuestions,
+          numberOfAnswers: formParams.numberOfAnswers,
+        };
+        const onSuccess = (quiz: IQuiz) => {
+          const { id } = quiz;
+          rootNavigation.replace(quizStack.composeQuiz, { quizId: id });
+        };
+        actionsQuizzesStore.generateQuiz(params, onSuccess);
+      }
+    } catch (e) {
+      console.error('generateQuiz useGenerateQuiz error:', e);
+      actionsQuizzesStore.setIsGenerating(false);
     }
   };
 
+  const publishQuiz = (quizId: string, data: FormGenerateQuiz) => {
+    const onSuccess = (response: any) => {
+      showToastSuccess(response);
+      rootNavigation.pop(2);
+    };
+    const formParams = buildGenerateQuizParams(data);
+    const params: GenerateQuizParams = {
+      title: formParams.title,
+      description: formParams.description,
+      numberOfQuestionsDisplay: formParams.numberOfQuestionsDisplay,
+    };
+    const editQuizActionsParams: EditQuizActionsParams = {
+      quizId,
+      params: {
+        ...params,
+        status: QuizStatus.PUBLISHED,
+      },
+      audiences: groupAudiences,
+      onSuccess,
+    };
+
+    actionsQuizzesStore.editQuiz(editQuizActionsParams);
+  };
+
   const onNext = handleSubmit((data) => {
-    checkPermissions(data);
+    generateQuiz(data);
+  });
+
+  const onPublish = (quizId: string) => handleSubmit((data) => {
+    publishQuiz(quizId, data);
   });
 
   const handleBack = () => {
@@ -86,9 +156,11 @@ const useGenerateQuiz = (postId: string) => {
   return {
     control,
     watch,
-    enabledBtnNext,
-    loadingGetPermissions,
+    isFormValid,
+    isGenerating,
+    loading,
     onNext,
+    onPublish,
     trigger,
     handleBack,
   };

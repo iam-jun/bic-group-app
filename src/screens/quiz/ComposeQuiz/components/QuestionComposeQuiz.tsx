@@ -10,15 +10,15 @@ import { useRootNavigation } from '~/hooks/navigation';
 import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 
 type QuestionComposeQuizProps = {
-  contentId: string;
+  quizId: string;
   questionItem: QuestionItem;
-  index: number;
+  questionIndex: number;
 };
 
 const QuestionComposeQuiz: FC<QuestionComposeQuizProps> = ({
-  contentId,
+  quizId,
   questionItem,
-  index,
+  questionIndex,
 }) => {
   const { rootNavigation } = useRootNavigation();
   const theme = useTheme();
@@ -26,14 +26,14 @@ const QuestionComposeQuiz: FC<QuestionComposeQuizProps> = ({
 
   const onPressEdit = () => {
     rootNavigation.navigate(quizStack.editQuestion, {
-      questionIndex: index,
-      contentId,
+      questionIndex,
+      quizId,
     });
   };
 
   return (
     <View style={styles.container}>
-      <QuestionHeader index={index} onPressEdit={onPressEdit} />
+      <QuestionHeader questionIndex={questionIndex} onPressEdit={onPressEdit} />
       <QuestionContent questionItem={questionItem} />
     </View>
   );

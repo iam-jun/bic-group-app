@@ -43,14 +43,17 @@ const useEditQuestion = (
   const {
     handleSubmit,
     formState: { isValid, isDirty },
+    watch,
   } = methods;
 
-  const enabledBtnSave = isValid && !loading && isDirty;
+  const answersData = watch('answers');
+
+  const enabledBtnSave = isValid && !loading && isDirty && answersData.length > 0;
 
   const removeQuestion = () => {
     const newQuestions = questions.filter((_quest, index) => index !== questionIndex);
     const editQuizActionsParams: EditQuizActionsParams = {
-      idQuiz: id,
+      quizId: id,
       params: {
         questions: newQuestions,
       },
@@ -77,7 +80,7 @@ const useEditQuestion = (
   const onSave = handleSubmit((data) => {
     const { question: questionData, answers: answersData } = data;
 
-    const onSuccess = (response: IQuiz) => {
+    const onSuccess = (response: any) => {
       showToastSuccess(response);
       rootNavigation.goBack();
     };
@@ -94,7 +97,7 @@ const useEditQuestion = (
       return quest;
     });
     const editQuizActionsParams: EditQuizActionsParams = {
-      idQuiz: id,
+      quizId: id,
       params: {
         questions: newQuestions,
       },

@@ -26,7 +26,7 @@ export const showAlertAudienceListWithNoPermissionQuiz = (audiences: IAudience[]
   showAlert(alertPayload);
 };
 
-export const buildGenerateQuizParams = (data: FormGenerateQuiz, contentId: string): GenerateQuizParams => {
+export const buildGenerateQuizParams = (data: FormGenerateQuiz, contentId?: string): GenerateQuizParams => {
   const {
     title,
     description,

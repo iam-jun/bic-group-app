@@ -1525,6 +1525,7 @@
     "question_is_required": "Question is required",
     "answer_is_required": "Answer is required",
     "title_describe_question_answer_display": "Enter the number of questions and answer options that will be displayed to the user for each question during the quiz",
+    "title_describe_question_display": "Enter the number of question will display for member.",
     "cannot_exceed_the_number_of_questions_above": "This number cannot exceed the number of questions above",
     "cannot_exceed_the_number_of_answers_above": "This number cannot exceed the number of answers above",
     "title_check_generate_random_quiz": "Do you want to randomize the questions and answers or not?",
@@ -1538,6 +1539,14 @@
     "enter_question_placeholder": "Enter question",
     "enter_answer_placeholder": "Enter answer",
     "alert_title_delete_question": "Delete the question {{number}}",
-    "alert_content_delete_question": "Do you want to delete question {{number}}?"
+    "alert_content_delete_question": "Do you want to delete question {{number}}?",
+    "the_ai_is_carefully_crafting_your_questions": "The AI is carefully crafting your questions...",
+    "this_may_take_up_to_a_few_minute": "This may take up to a few minute, but it's worth the wait! If you exit, the quiz will be automatically saved as a",
+    "something_went_wrong": "Oops! Something went wrong",
+    "sorry_an_error_has_occurred": "Sorry, an error has occurred. Please try again.",
+    "regenerate": "Regenerate",
+    "quiz_information": "Quiz information",
+    "draft_quiz": "Draft Quiz",
+    "quiz_saved_to_draft": "Quiz saved to Draft"
   }
 }

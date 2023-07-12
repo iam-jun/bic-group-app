@@ -5,10 +5,11 @@ import usePostsStore from '../../posts';
 import { EditQuizActionsParams } from '~/interfaces/IQuiz';
 import APIErrorCode from '~/constants/apiErrorCode';
 import { showAlertAudienceListWithNoPermissionQuiz } from '~/screens/quiz/SubmitFormQuiz/helper';
+import useDraftQuizStore from '~/screens/YourContent/components/Quiz/store';
 
 const editQuiz = (set, get) => async (editQuizActionsParams: EditQuizActionsParams) => {
   const {
-    idQuiz, params, audiences = [], onSuccess,
+    quizId, params, audiences = [], onSuccess,
   } = editQuizActionsParams;
   try {
     const { actions }: IQuizzesState = get();
@@ -16,7 +17,7 @@ const editQuiz = (set, get) => async (editQuizActionsParams: EditQuizActionsPara
       state.loading = true;
     }, 'editQuiz');
 
-    const response = await streamApi.editQuiz(idQuiz, params);
+    const response = await streamApi.editQuiz(quizId, params);
 
     if (!response || !response.data) {
       throw new Error('wrong response');
@@ -28,6 +29,7 @@ const editQuiz = (set, get) => async (editQuizActionsParams: EditQuizActionsPara
 
     actions.addOrUpdateQuiz(response.data);
     usePostsStore.getState().actions.getPostDetail({ postId: response.data.contentId });
+    useDraftQuizStore.getState().actions.getDraftQuiz(true);
 
     onSuccess?.(response);
   } catch (error) {

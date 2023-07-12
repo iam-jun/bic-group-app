@@ -30,8 +30,9 @@ export const customBackHandlerRoutes = [
   homeStack.createPostSeries,
   homeStack.pinContent,
   homeStack.reorderedPinContent,
-  quizStack.submitFormQuiz,
+  quizStack.entryQuiz,
   quizStack.editQuestion,
+  quizStack.publishQuiz,
   seriesStack.seriesSettings,
 ];
 
