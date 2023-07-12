@@ -8,11 +8,11 @@ import { useBaseHook } from '~/hooks';
 import { spacing } from '~/theme';
 
 type QuestionHeaderProps = {
-    index: number;
+    questionIndex: number;
     onPressEdit: () => void;
 }
 
-const QuestionHeader: FC<QuestionHeaderProps> = ({ index, onPressEdit }) => {
+const QuestionHeader: FC<QuestionHeaderProps> = ({ questionIndex, onPressEdit }) => {
   const { t } = useBaseHook();
   const theme = useTheme();
   const { colors } = theme;
@@ -20,7 +20,7 @@ const QuestionHeader: FC<QuestionHeaderProps> = ({ index, onPressEdit }) => {
 
   return (
     <View style={styles.container}>
-      <Text.SubtitleM color={colors.neutral80}>{`${t('quiz:question')} ${index + 1}`}</Text.SubtitleM>
+      <Text.SubtitleM color={colors.neutral80}>{`${t('quiz:question')} ${questionIndex + 1}`}</Text.SubtitleM>
       <Button onPress={onPressEdit}>
         <Icon size={16} tintColor={colors.neutral40} icon="PenSolid" />
       </Button>

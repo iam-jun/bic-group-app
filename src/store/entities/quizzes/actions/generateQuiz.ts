@@ -1,9 +1,9 @@
-import { GenerateQuizParams } from '~/interfaces/IQuiz';
+import { GenerateQuizParams, IQuiz } from '~/interfaces/IQuiz';
 import { IQuizzesState } from '..';
 import streamApi from '~/api/StreamApi';
 import showToastError from '~/store/helper/showToastError';
 
-const generateQuiz = (set, get) => async (params: GenerateQuizParams) => {
+const generateQuiz = (set, get) => async (params: GenerateQuizParams, onSuccess?: (quiz: IQuiz) => void) => {
   try {
     const { actions }: IQuizzesState = get();
     set((state: IQuizzesState) => {
@@ -21,6 +21,7 @@ const generateQuiz = (set, get) => async (params: GenerateQuizParams) => {
     }, 'generateQuiz');
 
     actions.addOrUpdateQuiz(response.data);
+    onSuccess?.(response.data);
   } catch (error) {
     console.error('generateQuiz error', error);
     set((state: IQuizzesState) => {

@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { Control, Controller } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
 import { TextInput } from '~/baseComponents/Input';
@@ -18,8 +17,7 @@ export const MAX_ANSWERS = 6;
 
 const QuestionAnswerSection: FC<QuestionAnswerSectionProps> = ({ control }) => {
   const { t } = useBaseHook();
-  const theme = useTheme();
-  const styles = createStyle(theme);
+  const styles = createStyle();
 
   const renderInputQuestion = ({ field: { onChange, value }, fieldState: { error } }: any) => (
     <TextInput
@@ -58,7 +56,7 @@ const QuestionAnswerSection: FC<QuestionAnswerSectionProps> = ({ control }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View>
       <Text.ParagraphL useI18n style={styles.textTitle}>quiz:enter_number_of_questions_answers_quiz</Text.ParagraphL>
       <Controller
         name="numberOfQuestions"
@@ -77,24 +75,16 @@ const QuestionAnswerSection: FC<QuestionAnswerSectionProps> = ({ control }) => {
   );
 };
 
-const createStyle = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-
-  return StyleSheet.create({
-    container: {
-      borderTopWidth: 1,
-      borderTopColor: colors.neutral5,
-    },
-    btnSave: {
-      marginRight: spacing.margin.small,
-    },
-    containerInputDescription: {
-      paddingHorizontal: 0,
-    },
-    textTitle: {
-      marginVertical: spacing.margin.large,
-    },
-  });
-};
+const createStyle = () => StyleSheet.create({
+  btnSave: {
+    marginRight: spacing.margin.small,
+  },
+  containerInputDescription: {
+    paddingHorizontal: 0,
+  },
+  textTitle: {
+    marginBottom: spacing.margin.large,
+  },
+});
 
 export default QuestionAnswerSection;

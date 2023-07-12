@@ -34,12 +34,11 @@ const QuizPostView: FC<QuizPostViewProps> = ({ data, style }) => {
   //   const modalActions = useModalStore((state) => state.actions);
 
   const {
-    id: contentId,
     setting,
     communities,
     quiz,
   } = data || {};
-  const { genStatus } = quiz || {};
+  const { genStatus, id: quizId } = quiz || {};
   const { isImportant, importantExpiredAt } = setting || {};
 
   const disableButtonEdit = [
@@ -60,7 +59,7 @@ const QuizPostView: FC<QuizPostViewProps> = ({ data, style }) => {
   const onPressEdit = () => {
     rootNavigation.navigate(
       quizStack.composeQuiz, {
-        contentId,
+        quizId,
       },
     );
   };

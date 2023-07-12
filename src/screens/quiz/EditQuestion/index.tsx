@@ -16,7 +16,7 @@ type EditQuestionProps = {
   route?: {
     params?: {
       questionIndex: number;
-      contentId: string;
+      quizId: string;
     };
   };
 };
@@ -24,10 +24,10 @@ type EditQuestionProps = {
 const EditQuestion: FC<EditQuestionProps> = (props) => {
   const { route } = props;
   const { params } = route || {};
-  const { questionIndex, contentId } = params || {};
+  const { questionIndex, quizId } = params || {};
 
   const loading = useQuizzesStore((state) => state.loading);
-  const quiz = useQuizzesStore((state) => state.data[contentId]);
+  const quiz = useQuizzesStore((state) => state.data[quizId]);
 
   const {
     methods, hasQuestion, enabledBtnSave, onSave, onRemoveQuestion, handleBack,

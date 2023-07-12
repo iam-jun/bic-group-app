@@ -26,7 +26,7 @@ describe('editQuiz', () => {
 
     act(() => {
       result.current.actions.editQuiz({
-        idQuiz: mockPublishResponse.data.id,
+        quizId: mockPublishResponse.data.id,
         params: {
           status: QuizStatus.PUBLISHED,
         },
@@ -56,7 +56,7 @@ describe('editQuiz', () => {
 
     act(() => {
       result.current.actions.editQuiz({
-        idQuiz: '111',
+        quizId: '111',
         params: {
           status: QuizStatus.PUBLISHED,
         },

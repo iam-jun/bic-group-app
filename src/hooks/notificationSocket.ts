@@ -18,12 +18,15 @@ import INotificationsState from '~/screens/Notification/store/Interface';
 import useNotificationStore from '~/screens/Notification/store';
 import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
 import useUserBadge from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
+import { handleQuizNotificationSocket } from '~/screens/quiz/helper';
 
 const useNotificationSocket = () => {
   const token = useAuthController(getAuthToken);
   const userId = useUserIdAuth();
   const commonController = useCommonController((state) => state.actions);
-  const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
+  const notiActions = useNotificationStore(
+    (state: INotificationsState) => state.actions,
+  );
   const postActions = usePostsInProgressStore((state) => state.actions);
   const userBadgeActions = useUserBadge((state) => state.actions);
 
@@ -38,9 +41,22 @@ const useNotificationSocket = () => {
         ) {
           postActions.updatePosts(data);
         }
-        if (data?.extra?.type === NOTIFICATION_TYPE.CHANGE_USER_BADGE_COLLECTION) {
+
+        if (
+          data?.extra?.type === NOTIFICATION_TYPE.CHANGE_USER_BADGE_COLLECTION
+        ) {
           userBadgeActions.getOwnedBadges();
         }
+
+        if (
+          [
+            NOTIFICATION_TYPE.QUIZ_GENERATE_SUCCESSFUL,
+            NOTIFICATION_TYPE.QUIZ_GENERATE_UNSUCCESSFUL,
+          ].includes(data?.extra?.type)
+        ) {
+          handleQuizNotificationSocket(data);
+        }
+
         return notiActions.attach(data);
       case notificationActions.DETACH:
         return notiActions.detach(data);
@@ -60,7 +76,10 @@ const useNotificationSocket = () => {
     with this, we also not to load notification again when access Notification screen
    */
   const handleSocketNoti = (msg: string) => {
-    console.log('\x1b[36m🐣️ notificationSocket receive socket noti \x1b[0m');
+    console.log(
+      '\x1b[36m🐣️ notificationSocket receive socket noti \x1b[0m',
+      msg,
+    );
     const msgData = ConvertHelper.camelizeKeys(parseSafe(msg));
     const data = msgData || {};
     handleNotification(data);
@@ -80,49 +99,43 @@ const useNotificationSocket = () => {
     }
   };
 
-  useEffect(
-    () => {
-      if (!token) {
-        console.log('\x1b[33m🐣️ Maintab: empty token \x1b[0m');
-        return;
-      }
+  useEffect(() => {
+    if (!token) {
+      console.log('\x1b[33m🐣️ Maintab: empty token \x1b[0m');
+      return;
+    }
 
-      notiActions.getTabData();
+    notiActions.getTabData();
 
-      const socket = io(
-        getEnv('BEIN_API'), {
-          transports: ['websocket'],
-          path: getEnv('BEIN_NOTIFICATION_WS_PATH'),
-          ...getMsgPackParser(getEnv('BEIN_FEED_WS_MSGPACK') !== 'disable'),
-        },
-      );
+    const socket = io(getEnv('BEIN_API'), {
+      transports: ['websocket'],
+      path: getEnv('BEIN_NOTIFICATION_WS_PATH'),
+      ...getMsgPackParser(getEnv('BEIN_FEED_WS_MSGPACK') !== 'disable'),
+    });
 
-      console.log(`\x1b[37m🐣️ Bein notification socket will connect with token ${token.slice(-10)}\x1b[0m`);
-      socket.on(
-        'connect', () => {
-          console.log(`\x1b[32m🐣️ Bein notification socket connected with id: ${socket.id}\x1b[0m`);
-          socket.emit(
-            'auth_challenge', token,
-          );
-        },
+    console.log(
+      `\x1b[37m🐣️ Bein notification socket will connect with token ${token.slice(
+        -10,
+      )}\x1b[0m`,
+    );
+    socket.on('connect', () => {
+      console.log(
+        `\x1b[32m🐣️ Bein notification socket connected with id: ${socket.id}\x1b[0m`,
       );
-      socket.on(
-        'disconnect', (reason) => {
-          console.log(`\x1b[31m🐣️ Bein notification socket disconnected: ${reason}\x1b[0m`);
-        },
+      socket.emit('auth_challenge', token);
+    });
+    socket.on('disconnect', (reason) => {
+      console.log(
+        `\x1b[31m🐣️ Bein notification socket disconnected: ${reason}\x1b[0m`,
       );
-      socket.on(
-        'notifications', handleSocketNoti,
-      );
-      socket.on(
-        'internal_event', handleInternalEvent,
-      );
+    });
+    socket.on('notifications', handleSocketNoti);
+    socket.on('internal_event', handleInternalEvent);
 
-      return () => {
-        socket?.disconnect?.();
-      };
-    }, [token],
-  );
+    return () => {
+      socket?.disconnect?.();
+    };
+  }, [token]);
 };
 
 export default useNotificationSocket;

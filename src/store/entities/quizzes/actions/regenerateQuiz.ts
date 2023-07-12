@@ -3,14 +3,14 @@ import { IQuizzesState } from '..';
 import streamApi from '~/api/StreamApi';
 import showToastError from '~/store/helper/showToastError';
 
-const regenerateQuiz = (set, get) => async (idQuiz: string, params?: RegenerateQuizParams) => {
+const regenerateQuiz = (set, get) => async (quizId: string, params?: RegenerateQuizParams) => {
   try {
     const { actions }: IQuizzesState = get();
     set((state: IQuizzesState) => {
       state.isGenerating = true;
     }, 'regenerateQuiz');
 
-    const response = await streamApi.regenerateQuiz(idQuiz, params);
+    const response = await streamApi.regenerateQuiz(quizId, params);
 
     if (!response || !response.data) {
       throw new Error('wrong response');

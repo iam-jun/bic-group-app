@@ -578,6 +578,10 @@ export const streamApiConfig = {
       after: params?.endCursor,
     },
   }),
+  getQuizDetail: (idQuiz: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${idQuiz}`,
+  }),
 };
 
 const streamApi = {
@@ -868,6 +872,9 @@ const streamApi = {
   ),
   getDraftQuiz: (params: IParamsGetDraftQuiz) => withHttpRequestPromise(
     streamApiConfig.getDraftQuiz, params,
+  ),
+  getQuizDetail: (idQuiz: string) => withHttpRequestPromise(
+    streamApiConfig.getQuizDetail, idQuiz,
   ),
 };
 
