@@ -5,6 +5,7 @@ import { TextInput, TextArea } from '~/baseComponents/Input';
 import { useBaseHook } from '~/hooks';
 import { FormGenerateQuiz } from '~/interfaces/IQuiz';
 import { spacing } from '~/theme';
+import { validateSpaceTrap } from '../../helper';
 
 type TitleDescriptionSectionProps = {
   control: Control<FormGenerateQuiz>;
@@ -48,7 +49,7 @@ const TitleDescriptionSection: FC<TitleDescriptionSectionProps> = ({
       <Controller
         name="title"
         control={control}
-        rules={{ required: t('quiz:title_is_required') }}
+        rules={{ required: t('quiz:title_is_required'), validate: validateSpaceTrap }}
         render={renderInputTitle}
       />
       <Controller

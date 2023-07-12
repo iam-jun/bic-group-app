@@ -17,3 +17,5 @@ export const handleQuizNotificationSocket = (msg: any) => {
     usePostsStore.getState().actions.getPostDetail({ postId: contentId });
   }
 };
+
+export const validateSpaceTrap = (value) => value.trim().length > 0;

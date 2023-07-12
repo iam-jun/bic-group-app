@@ -11,6 +11,7 @@ import postsSelector from '~/store/entities/posts/selectors';
 import useQuizzesStore from '~/store/entities/quizzes';
 import showAlert from '~/store/helper/showAlert';
 import showToastSuccess from '~/store/helper/showToastSuccess';
+import { formatAnswers } from '../helper';
 
 const useEditQuestion = (
   quiz: IQuiz, questionIndex: number,
@@ -87,8 +88,8 @@ const useEditQuestion = (
 
     const newQuestionItem: QuestionItem = {
       ...questionItem,
-      question: questionData,
-      answers: answersData,
+      question: questionData.trim(),
+      answers: formatAnswers(answersData),
     };
     const newQuestions = questions.map((quest, index) => {
       if (index === questionIndex) {
