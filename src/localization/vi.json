@@ -45,6 +45,7 @@
     "btn_create": "Tạo",
     "btn_join": "Tham gia",
     "btn_view": "Xem",
+    "btn_only_invited_people_can_join": "Chỉ những người được mời mới có thể tham gia",
     "btn_stay_here": "Ở lại đây",
     "btn_leave": "Đóng",
     "btn_stay_on_this_page": "Ở lại màn hình này",
@@ -206,10 +207,12 @@
     "text_community_terms": "Điều khoản cộng đồng",
     "text_got_it": "Đã biết",
     "text_sorry_something_went_wrong": "Đã có lỗi xảy ra",
-    "text_pull_to_refresh": "Vui lòng kéo xuống để làm mới trang hoặc thử lại sau",
+    "text_pull_to_refresh": "Vui lòng kéo xuống để làm mới trang và thử lại",
     "text_answer_title": "Câu hỏi dành cho thành viên",
     "text_answer_input_placeholder": "Viết câu trả lời của bạn",
-    "text_send_request_join_successfully": "Gửi yêu cầu thành công"
+    "text_send_request_join_successfully": "Gửi yêu cầu thành công",
+    "edit_settings": "Cài đặt",
+    "text_new": "Mới"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -404,10 +407,10 @@
     "title_closed": "Đóng",
     "title_closed_subtitle_group": "Nhóm có thể nhìn thấy và truy cập được đối với những người không phải là thành viên và thành viên cộng đồng. Tuy nhiên, tất cả nội dung & hoạt động bên trong chỉ các thành viên cộng đồng mới có thể nhìn thấy và truy cập được.",
     "title_privacy_note": "Tất cả thành viên và ban quản trị sẽ nhận được thông báo về sự thay đổi này.",
-    "text_secret_community_banner_message": "Theo chế độ riêng tư, thiết lập yêu cầu tham gia sẽ bị khóa và tất cả yêu cầu tham gia sẽ bị từ chối. Thành viên phải được mời mới được tham gia cộng đồng này.",
-    "text_secret_group_banner_message": "Theo chế độ riêng tư, thiết lập yêu cầu tham gia sẽ bị khóa và tất cả yêu cầu tham gia sẽ bị từ chối. Thành viên phải được mời mới được tham gia nhóm này.",
-    "text_private_community_banner_message": "Theo chế độ riêng tư, thiết lập yêu cầu tham gia sẽ được bật để chắc chắn rằng cộng đồng của bạn hoàn toàn riêng tư (Khuyến nghị)",
-    "text_private_group_banner_message": "Theo chế độ riêng tư, thiết lập yêu cầu tham gia sẽ được bật để chắc chắn rằng nhóm của bạn hoàn toàn riêng tư (Khuyến nghị)",
+    "text_secret_community_banner_message": "Theo quyền riêng tư này, cài đặt chính sách thành viên sẽ được điều chỉnh thành \"Chỉ những người được mời\" và tất cả các yêu cầu đang chờ xử lý cũng sẽ bị từ chối",
+    "text_secret_group_banner_message": "Theo quyền riêng tư này, cài đặt chính sách thành viên sẽ được điều chỉnh thành \"Chỉ những người được mời\" và tất cả các yêu cầu đang chờ xử lý cũng sẽ bị từ chối",
+    "text_private_community_banner_message": "Theo quyền riêng tư này, cài đặt chính sách thành viên có thể là \"Bất kỳ ai\" có bật tính năng phê duyệt tư cách thành viên hoặc \"Chỉ những người được mời\"",
+    "text_private_group_banner_message": "Theo quyền riêng tư này, cài đặt chính sách thành viên có thể là \"Bất kỳ ai\" có bật tính năng phê duyệt tư cách thành viên hoặc \"Chỉ những người được mời\"",
     "title_edit_description": "Chỉnh sửa Mô tả",
     "title_edit_privacy": "Chỉnh sửa Quyền riêng tư",
     "title_logout_from_all_devices": "Đăng xuất khỏi tất cả thiết bị",
@@ -497,7 +500,32 @@
     "text_blocked_at": "Đã chặn",
     "title_privacy": "Bảo mật",
     "toast_profile_is_verified": "Hồ sơ này đã được xác minh",
-    "text_profile_is_verified": "Thông tin của bạn đã được xác minh và không thể chỉnh sửa"
+    "text_profile_is_verified": "Thông tin của bạn đã được xác minh và không thể chỉnh sửa",
+    "membership_policy_settings": {
+      "title": "Cài đặt chính sách thành viên",
+      "description": "Thiết lập ai có thể tham gia và liệu họ có cần được phê duyệt để trở thành thành viên hay không",
+      "who_can_join_this_group": "Ai có thể tham gia {{type}} này?",
+      "anyone": "bất kỳ ai",
+      "anyone_description": "Bất kỳ ai cũng có thể tham gia hoặc yêu cầu tham gia {{type}} này",
+      "only_invited_people": "Chỉ những người được mời",
+      "only_invited_people_description": "Chỉ những người nhận được lời mời",
+      "membership_approval": "Phê duyệt tư cách thành viên",
+      "membership_approval_description": "Mọi người phải yêu cầu phê duyệt để tham gia {{type}} này",
+      "alert_turn_off_membership_approval": {
+        "title": "Tắt phê duyệt thành viên?",
+        "description": "Tất cả các yêu cầu đang chờ xử lý sẽ được phê duyệt tự động.",
+        "cancel": "Huỷ",
+        "turn_off": "Tắt"
+      },
+      "tooltip": {
+        "private": "Không thể tắt vì quyền riêng tư {{type}} của bạn là Riêng tư",
+        "secret": "Không thể chọn tùy chọn này vì quyền riêng tư nhóm của bạn là Bí mật",
+        "default_group_set_toggle": "Không thể bật vì nhóm của bạn nằm trong nhóm mặc định",
+        "default_group_set_radio": "Không thể chọn tùy chọn này vì nhóm của bạn nằm trong nhóm mặc định"
+      },
+      "community": "cộng đồng",
+      "group": "nhóm"
+    }
   },
   "languages": {
     "title_en": "English",
@@ -1331,7 +1359,9 @@
     "text_remove_article": "Bạn muốn xoá bài báo này?",
     "text_remove_post": "Bạn muốn xoá bài viết này?",
     "text_article_removed": "Bài viết đã được xoá",
-    "text_no_content": "Không có nội dung"
+    "text_no_content": "Không có nội dung",
+    "this_content_is_in_the_following_series": "Nội dung này trong các series dưới đây",
+    "text_untitled": "Không có tiêu đề"
   },
   "tags": {
     "create_tag": "Tạo thẻ",
@@ -1407,7 +1437,10 @@
     },
     "owned_badges": {
       "title": "Danh sách huy hiệu",
-      "description": "Huy hiệu bạn nhận được từ các cộng đồng bạn đã tham gia"
-    }
+      "description": "Huy hiệu bạn nhận được từ các cộng đồng bạn đã tham gia",
+      "total_badges": "((total) huy hiệu)",
+      "search_placeholder": "Tìm huy hiệu theo tên"
+    },
+    "edit_showing_badges_title": "Chỉnh sửa huy hiệu đang hiển thị"
   }
 }

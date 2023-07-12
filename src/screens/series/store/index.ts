@@ -12,6 +12,7 @@ import removeAudiences from './actions/removeAudiences';
 import { reorderItemsInSeries } from './actions/reorderItemsInSeries';
 
 export interface ISeriesState extends IBaseState{
+  isInitDone: boolean;
   loading: boolean;
   data: ISeriesData;
   requestings: IObject<boolean>;
@@ -38,6 +39,7 @@ export interface ISeriesState extends IBaseState{
 }
 
 const initialState = {
+  isInitDone: false,
   loading: false,
   data: {
     title: '',
@@ -67,6 +69,7 @@ const useSeries = (set, get) => ({
     setData: (data: ISeriesData) => {
       set((state: ISeriesState) => {
         state.data = data || initialState.data as ISeriesData;
+        state.isInitDone = true;
       }, 'setData');
     },
     setTitle: (title: string) => {

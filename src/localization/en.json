@@ -44,6 +44,7 @@
     "btn_create": "Create",
     "btn_join": "Join",
     "btn_view": "View",
+    "btn_only_invited_people_can_join": "Invited people only",
     "btn_leave": "Leave",
     "btn_stay_here": "Stay here",
     "btn_stay_on_this_page": "Stay on this page",
@@ -108,7 +109,7 @@
     "message_add_member_success_group": "Added members to group successfully",
     "message_remove_member_success": "{n} has been removed from this group",
     "title_mention_all": "All members in this group",
-    "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
+    "text_search_no_results": "Sorry, we couldn’t find anything\nrelated to your search.",
     "title_page_not_found": "Page Not Found",
     "text_edit_success": "Profile updated successfully",
     "text_edit_fail": "Failed to update profile!",
@@ -236,10 +237,12 @@
     "text_group_terms": "Group Terms & Conditions",
     "text_community_terms": "Community Terms & Conditions",
     "text_sorry_something_went_wrong": "Sorry, something went wrong",
-    "text_pull_to_refresh": "Please pull down to refresh the page or try again later",
+    "text_pull_to_refresh": "Please pull down to refresh the page and try again",
     "text_answer_title": "Membership questions",
     "text_answer_input_placeholder": "Write your answer",
-    "text_send_request_join_successfully": "Sent request successfully"
+    "text_send_request_join_successfully": "Sent request successfully",
+    "edit_settings": "Edit Settings",
+    "text_new": "New"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -442,10 +445,10 @@
     "title_closed": "Closed",
     "title_closed_subtitle_group": "The group is visible and accessible to non-members and community members. However, all content & activities inside are only visible and accessible to community members only.",
     "title_privacy_note": "All members and admins will receive a notification that the privacy settings have changed.",
-    "text_secret_community_banner_message": "According to the privacy, the join request setting is disabled and all pending requests will be also declined. Member must be invited to join the community.",
-    "text_secret_group_banner_message": "According to the privacy, the join request setting is disabled and all pending requests will be also declined. Member must be invited to join the group.",
-    "text_private_community_banner_message": "According to the privacy, the join request setting is also turned on to make sure your community is completely private (Recommend)",
-    "text_private_group_banner_message": "According to the privacy, the join request setting is also turned on to make sure your group is completely private (Recommend)",
+    "text_secret_community_banner_message": "According to this privacy, the membership policy setting will be adjusted to \"Invited only\" and all pending requests will also be declined",
+    "text_secret_group_banner_message": "According to this privacy, the membership policy setting will be adjusted to \"Invited only\" and all pending requests will also be declined",
+    "text_private_community_banner_message": "According to this privacy, the membership policy setting can be either \"Anyone\" with membership approval turned on or \"Invited only\"",
+    "text_private_group_banner_message": "According to this privacy, the membership policy setting can be either \"Anyone\" with membership approval turned on or \"Invited only\"",
     "title_edit_description": "Edit Description",
     "title_edit_privacy": "Edit Privacy",
     "title_logout_from_all_devices": "Logout from all devices",
@@ -536,7 +539,32 @@
     "text_blocked_at": "Blocked at",
     "title_privacy": "Privacy",
     "toast_profile_is_verified": "This profile is verified",
-    "text_profile_is_verified": "Your information has been verified and can’t be edited"
+    "text_profile_is_verified": "Your information has been verified and can’t be edited",
+    "membership_policy_settings": {
+      "title": "Membership Policy Settings",
+      "description": "Set up who can join and whether they need to be approved to be a member",
+      "who_can_join_this_group": "Who can join this {{type}}?",
+      "anyone": "Anyone",
+      "anyone_description": "Anyone can join or ask to join this {{type}}",
+      "only_invited_people": "Only invited people",
+      "only_invited_people_description": "Only those who receive the invitation",
+      "membership_approval": "Membership Approval",
+      "membership_approval_description": "People must ask for approval to join this {{type}}",
+      "alert_turn_off_membership_approval": {
+        "title": "Turn off membership approval?",
+        "description": "All pending request will be approved automatically.",
+        "cancel": "Cancel",
+        "turn_off": "Turn off"
+      },
+      "tooltip": {
+        "private": "Can’t be turned off because your {{type}} privacy is Private",
+        "secret": "Can’t select this option because your group privacy is Secret",
+        "default_group_set_toggle": "Can’t be turned on because your group is in the default group set",
+        "default_group_set_radio": "Can’t select this option because your group is in the default group set"
+      },
+      "community": "community",
+      "group": "group"
+    }
   },
   "languages": {
     "title_en": "English",
@@ -1390,7 +1418,9 @@
     "text_remove_article": "Do you want to remove this article?",
     "text_remove_post": "Do you want to remove this post?",
     "text_article_removed": "Remove successful",
-    "text_no_content": "No content"
+    "text_no_content": "No content",
+    "this_content_is_in_the_following_series": "This content is in the following Series",
+    "text_untitled": "Untitled"
   },
   "tags": {
     "create_tag": "Create Tag",
@@ -1466,7 +1496,10 @@
     },
     "owned_badges": {
       "title": "Badges List",
-      "description": "Badges you received from the communities you joined"
-    }
+      "description": "Badges you received from the communities you joined",
+      "total_badges": "((total) badges)",
+      "search_placeholder": "Search for badges name"
+    },
+    "edit_showing_badges_title": "Edit Showing Badges"
   }
 }

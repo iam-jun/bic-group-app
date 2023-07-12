@@ -1,10 +1,11 @@
 import {
-  StyleProp, ViewStyle, StyleSheet, ScrollView, Dimensions,
+  StyleProp, ViewStyle, StyleSheet, ScrollView,
 } from 'react-native';
 import React, { useRef } from 'react';
 
 import PillTabButton, { PillTabButtonProps } from './PillTabButton';
 import TabButton from './TabButton';
+import { dimension } from '~/theme';
 
 interface TabProps {
   data: { id?: string; text?: string; [x: string | number]: any }[];
@@ -13,9 +14,10 @@ interface TabProps {
   buttonProps?: PillTabButtonProps;
   style?: StyleProp<ViewStyle>;
   isScrollToIndex?: boolean;
-  onPressTab?: (item: any, index: number) => void;
   selectedTypePillTab?: PillTabButtonProps['type'];
   unselectedTypePillTab?: PillTabButtonProps['type'];
+  renderCustomTab?: (item: any, index: number) => void;
+  onPressTab?: (item: any, index: number) => void;
 }
 
 const Tab = ({
@@ -25,9 +27,10 @@ const Tab = ({
   buttonProps,
   style,
   isScrollToIndex,
-  onPressTab,
   selectedTypePillTab,
   unselectedTypePillTab,
+  renderCustomTab,
+  onPressTab,
 }: TabProps) => {
   const scrollViewRef = useRef<ScrollView>();
   const TabButtonComponent = type === 'normal' ? TabButton : PillTabButton;
@@ -35,7 +38,7 @@ const Tab = ({
   const onPress = (item: any, index: number) => {
     onPressTab?.(item, index);
     if (isScrollToIndex) {
-      scrollViewRef?.current?.scrollTo({ x: Dimensions.get('window').width * index, animated: true });
+      scrollViewRef?.current?.scrollTo({ x: dimension.deviceWidth * index, animated: true });
     }
   };
 
@@ -43,7 +46,7 @@ const Tab = ({
     const isSelected = index === activeIndex;
     const isMixTypePillTab = type === 'pill' && selectedTypePillTab && unselectedTypePillTab;
     const mixTypePillTab = isMixTypePillTab ? { type: isSelected ? selectedTypePillTab : unselectedTypePillTab } : {};
-
+    if (renderCustomTab) return renderCustomTab(item, index);
     return (
       <TabButtonComponent
         useI18n

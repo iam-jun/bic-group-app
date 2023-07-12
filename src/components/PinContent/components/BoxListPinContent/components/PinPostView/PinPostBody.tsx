@@ -1,16 +1,16 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useRoute, useTheme } from '@react-navigation/native';
 import { IPost } from '~/interfaces/IPost';
 import PinPostImage from './PinPostImage';
 import PinPostFile from './PinPostFile';
 import PinPostVideo from './PinPostVideo';
 import PinPostContent from './PinPostContent';
-import { spacing } from '~/theme';
+import { dimension, spacing } from '~/theme';
 import { ResourceUploadType } from '~/interfaces/IUpload';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 
-const WidthDevice = Dimensions.get('window').width;
+const WidthDevice = dimension.deviceWidth;
 const WidthBoxBottomPadding = WidthDevice * 0.8;
 
 interface PinPostBodyProps {

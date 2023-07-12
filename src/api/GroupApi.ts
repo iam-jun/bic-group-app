@@ -1,5 +1,5 @@
 import { Method } from 'axios';
-import { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
+import { apiProviders, apiVersionId, HttpApiRequestConfig } from '~/api/apiConfig';
 import {
   IGetCommunityGroup,
   IGroupDetailEdit,
@@ -20,12 +20,16 @@ import {
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 import { IParamsReportMember } from '~/interfaces/IReport';
 import { ContentType } from '~/components/SelectAudience';
+import { IGroupSettings } from '~/interfaces/common';
 
 const provider = apiProviders.bein;
 const defaultConfig = {
   provider,
   method: 'get' as Method,
   useRetry: true,
+  headers: {
+    'x-version-id': apiVersionId.group,
+  },
 };
 
 export const groupsApiConfig = {
@@ -33,11 +37,11 @@ export const groupsApiConfig = {
     ...defaultConfig,
     url: `${provider.url}me/permissions/can-cud-tags/community/${communityId}`,
   }),
-  updateGroupJoinSetting: (groupId: string, isJoinApproval: boolean): HttpApiRequestConfig => ({
+  updateGroupJoinSetting: (groupId: string, settings: IGroupSettings): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/settings`,
     method: 'put',
-    data: { isJoinApproval },
+    data: { ...settings },
   }),
   getLinkPreview: (link: string): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -370,20 +374,20 @@ export const groupsApiConfig = {
     url: `${provider.url}communities/${communityId}/groups/discover`,
     params,
   }),
-  joinCommunity: (communityId: string, params?: MembershipAnswerRequestParam): HttpApiRequestConfig => ({
+  joinCommunity: (rootGroupId: string, params?: MembershipAnswerRequestParam): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/join`,
+    url: `${provider.url}groups/${rootGroupId}/join`,
     method: 'post',
     data: { ...params },
   }),
-  cancelJoinCommunity: (communityId: string): HttpApiRequestConfig => ({
+  cancelJoinCommunity: (rootGroupId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/cancel-joining-request`,
+    url: `${provider.url}groups/${rootGroupId}/cancel-joining-request`,
     method: 'put',
   }),
-  leaveCommunity: (communityId: string): HttpApiRequestConfig => ({
+  leaveCommunity: (rootGroupId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/leave`,
+    url: `${provider.url}groups/${rootGroupId}/leave`,
     method: 'post',
   }),
   getCommunities: (params?: IParamGetCommunities): HttpApiRequestConfig => ({
@@ -465,14 +469,22 @@ export const groupsApiConfig = {
     url: `${provider.url}/me/showing-badges`,
     data: { badgeIds },
   }),
+  markNewBadge: (badgeIds: string[]) : HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/owned-badges/new-label`,
+    method: 'delete',
+    data: {
+      badgeIds,
+    },
+  }),
 };
 
 const groupApi = {
   getCommunityCUDTagPermission: (communityId: string) => withHttpRequestPromise(
     groupsApiConfig.getCommunityCUDTagPermission, communityId,
   ),
-  updateGroupJoinSetting: (groupId: string, isJoinApproval: boolean) => withHttpRequestPromise(
-    groupsApiConfig.updateGroupJoinSetting, groupId, isJoinApproval,
+  updateGroupJoinSetting: (groupId: string, settings: IGroupSettings) => withHttpRequestPromise(
+    groupsApiConfig.updateGroupJoinSetting, groupId, settings,
   ),
   getLinkPreview: (link: string) => withHttpRequestPromise(
     groupsApiConfig.getLinkPreview, link,
@@ -699,13 +711,13 @@ const groupApi = {
     communityId,
     params,
   ),
-  joinCommunity: (communityId: string, params?: MembershipAnswerRequestParam) => withHttpRequestPromise(
-    groupsApiConfig.joinCommunity, communityId, params,
+  joinCommunity: (rootGroupId: string, params?: MembershipAnswerRequestParam) => withHttpRequestPromise(
+    groupsApiConfig.joinCommunity, rootGroupId, params,
   ),
-  cancelJoinCommunity: (communityId: string) => withHttpRequestPromise(
-    groupsApiConfig.cancelJoinCommunity, communityId,
+  cancelJoinCommunity: (rootGroupId: string) => withHttpRequestPromise(
+    groupsApiConfig.cancelJoinCommunity, rootGroupId,
   ),
-  leaveCommunity: (communityId: string) => withHttpRequestPromise(groupsApiConfig.leaveCommunity, communityId),
+  leaveCommunity: (rootGroupId: string) => withHttpRequestPromise(groupsApiConfig.leaveCommunity, rootGroupId),
   getCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getCommunities, params),
   getJoinedAllGroups: (params: IParamsGetJoinedAllGroups) => withHttpRequestPromise(
     groupsApiConfig.getJoinedAllGroups, params,
@@ -741,6 +753,7 @@ const groupApi = {
   getUserNotFoundInfo: (email: string) => withHttpRequestPromise(groupsApiConfig.getUserNotFoundInfo, email),
   getOwnedBadges: () => withHttpRequestPromise(groupsApiConfig.getOwnedBadges),
   putShowingBadges: (badgeIds: string[]) => withHttpRequestPromise(groupsApiConfig.putShowingBadges, badgeIds),
+  markNewBadge: (badgeIds: string[]) => withHttpRequestPromise(groupsApiConfig.markNewBadge, badgeIds),
 };
 
 export default groupApi;

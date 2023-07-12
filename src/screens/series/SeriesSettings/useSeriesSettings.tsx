@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { IActivityImportant } from '~/interfaces/IPost';
+import { IActivityImportant, IPostSetting, IPutEditSettingsParams } from '~/interfaces/IPost';
 import useSeriesStore from '../store';
 import {
   getMinDateImportant as getMinDate,
@@ -10,21 +10,35 @@ import {
   toggleImportant,
 } from '~/helpers/settingImportant';
 import { useRootNavigation } from '~/hooks/navigation';
+import useSeriesCreation from '../hooks/useSeriesCreation';
+import showAlert from '~/store/helper/showAlert';
+import { useBaseHook } from '~/hooks';
+import usePostsStore from '~/store/entities/posts';
 
 export interface IUseSeriesSettings {
     seriesId?: string;
-    listAudiencesWithoutPermission?: any[];
 }
 
 const useSeriesSettings = (params?: IUseSeriesSettings) => {
-  const { listAudiencesWithoutPermission } = params || {};
+  const { seriesId } = params || {};
 
+  const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
 
+  const postsStoreActions = usePostsStore((state) => state.actions);
+
+  const {
+    audiencesWithNoPermission: listAudiencesWithoutPermission,
+  } = useSeriesCreation({ seriesId });
+
   const { setting } = useSeriesStore((state) => state.data);
-  const { isImportant, importantExpiredAt } = setting || {};
+  const {
+    isImportant, importantExpiredAt, canReact, canComment,
+  } = setting || {};
+  const chooseGroups = useSeriesStore((state) => state.groups);
   const actions = useSeriesStore((state) => state.actions);
 
+  const [loading, setLoading] = useState(false);
   const [disableButtonSave, setDisableButtonSave] = useState<boolean>(true);
   const [showWarning, setShowWarning] = useState<boolean>(false);
   const [showCustomExpire, setCustomExpire] = useState<boolean>(false);
@@ -51,12 +65,58 @@ const useSeriesSettings = (params?: IUseSeriesSettings) => {
     setDisableButtonSave(!isImportantChanged);
   }, [sImportant]);
 
-  const handleSaveSettings = () => {
+  const updateStore = () => {
     actions.setSettings({
       isImportant: sImportant.active,
       importantExpiredAt: sImportant.expiresTime,
+      canReact,
+      canComment,
     });
-    rootNavigation.goBack();
+  };
+
+  const editSettingsOnExistedSeries = () => {
+    const newSetting: IPostSetting = {
+      isImportant: sImportant.active,
+      importantExpiredAt: sImportant.expiresTime,
+      canReact,
+      canComment,
+    };
+
+    const onPreLoad = () => {
+      setLoading(true);
+    };
+
+    const onSuccess = () => {
+      setLoading(false);
+      updateStore();
+      actions.getSeriesDetail(seriesId);
+      rootNavigation.goBack();
+    };
+
+    const onFailed = () => {
+      setLoading(false);
+    };
+
+    const params: IPutEditSettingsParams = {
+      id: seriesId,
+      setting: newSetting,
+      audiences: chooseGroups,
+      onPreLoad,
+      onSuccess,
+      onFailed,
+    };
+    postsStoreActions.putEditSettings(params);
+  };
+
+  const handleSaveSettings = () => {
+    // update settings on editing series, or from menu edit settings
+    if (seriesId) {
+      editSettingsOnExistedSeries();
+    } else {
+      // update settings on creating series
+      updateStore();
+      rootNavigation.goBack();
+    }
   };
 
   const handleToggleImportant = () => {
@@ -93,11 +153,27 @@ const useSeriesSettings = (params?: IUseSeriesSettings) => {
     );
   };
 
+  const handleBack = () => {
+    if (disableButtonSave) {
+      rootNavigation.goBack();
+    } else {
+      showAlert({
+        title: t('discard_alert:title'),
+        content: t('discard_alert:content'),
+        cancelBtn: true,
+        cancelLabel: t('common:btn_discard'),
+        confirmLabel: t('common:btn_stay_here'),
+        onCancel: () => rootNavigation.goBack(),
+      });
+    }
+  };
+
   return {
     sImportant,
     showWarning,
     showCustomExpire,
     disableButtonSave,
+    loading,
     getMinDate,
     getMaxDate,
     handleToggleImportant,
@@ -105,6 +181,7 @@ const useSeriesSettings = (params?: IUseSeriesSettings) => {
     handleChangeTimePicker,
     handleChangeSuggestDate,
     handleSaveSettings,
+    handleBack,
   };
 };
 

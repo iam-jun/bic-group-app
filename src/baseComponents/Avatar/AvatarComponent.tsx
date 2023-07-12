@@ -14,6 +14,7 @@ import Text from '../Text';
 import {
   ACTION_CONTAINER_SIZES, ACTION_ICON_SIZES, AVATAR_STYLES, PRIVACY_ICON_SIZES, PRIVACY_ICON_VIEW_SIZES,
 } from './constants';
+import images from '~/resources/images';
 
 export type AvatarType =
   | 'tiny'
@@ -197,6 +198,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
           testID="avatar.image"
           style={[avatarStyle, borderStyle, { backgroundColor: _backgroundColor }]}
           source={source}
+          placeholderSource={images.img_user_avatar_default}
           usePixelWidth
           {...props}
         />

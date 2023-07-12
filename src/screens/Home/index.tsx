@@ -23,7 +23,6 @@ import useNetworkStore from '~/store/network';
 import networkSelectors from '~/store/network/selectors';
 import spacing from '~/theme/spacing';
 import { openUrl } from '~/utils/link';
-import getEnv from '~/utils/env';
 import HomeHeader from '~/screens/Home/components/HomeHeader';
 import useHomeStore from '~/screens/Home/store';
 import useCommonController from '../store';
@@ -32,6 +31,7 @@ import useModalStore from '~/store/modal';
 import usePostsInProgressStore from './components/VideoProcessingNotice/store';
 import useFeedSearchStore from './HomeSearch/store';
 import useAppStore from '~/store/app';
+import { chatSchemes } from '~/constants/chat';
 
 const Home = () => {
   const [lossInternet, setLossInternet] = useState(false);
@@ -147,11 +147,16 @@ const Home = () => {
   useEffect(
     () => {
       if (currentUserId) commonActions.getMyProfile({ userId: currentUserId });
+    }, [],
+  );
+
+  useEffect(
+    () => {
       if (redirectUrl) {
         openUrl(redirectUrl);
         appActions.setRedirectUrl('');
       }
-    }, [],
+    }, [redirectUrl],
   );
 
   const handleBackPress = () => {
@@ -173,7 +178,7 @@ const Home = () => {
   };
 
   const navigateToChat = () => {
-    openUrl(getEnv('BEIN_CHAT_DEEPLINK'), () => {
+    openUrl(chatSchemes.FULL_DEEPLINK, () => {
       showAlert({
         title: t('home:title_install_chat'),
         content: t('home:text_desc_install_chat'),
