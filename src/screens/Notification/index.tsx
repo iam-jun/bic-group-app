@@ -178,7 +178,18 @@ const Notification = () => {
             case NOTIFICATION_TYPE.COMMENT_TO_PARENT_COMMENT_CREATOR:
             case NOTIFICATION_TYPE.COMMENT_TO_PARENT_COMMENT_CREATOR_AGGREGATED:
             case NOTIFICATION_TYPE.REACTION_TO_COMMENT_CREATOR:
-            case NOTIFICATION_TYPE.REACTION_TO_COMMENT_CREATOR_AGGREGATED:
+            case NOTIFICATION_TYPE.REACTION_TO_COMMENT_CREATOR_AGGREGATED: {
+              rootNavigation.navigate(
+                homeStack.commentDetail, {
+                  postId: act?.id,
+                  commentId: act?.comment?.id,
+                  notiId: item.id,
+                  target: act?.contentType || '',
+                },
+              );
+              break;
+            }
+
             case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT:
             case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT_PUSH:
             case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT_AGGREGATED: {

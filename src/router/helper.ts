@@ -220,8 +220,7 @@ export const getScreenAndParams = (data: {
     case NOTIFICATION_TYPE.POST_IMPORTANT_TO_MENTIONED_USER_IN_POST_IN_MULTIPLE_GROUPS:
     case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR:
     case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR_AGGREGATED:
-      navigatePostDetail({ postId, target });
-      break;
+      return navigatePostDetail({ postId, target });
 
     case NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL:
       return {
@@ -234,8 +233,7 @@ export const getScreenAndParams = (data: {
     case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_POST_AGGREGATED:
     case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST:
     case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST_AGGREGATED:
-      navigatePostDetailWithFocusComment({ postId, target, commentId });
-      break;
+      return navigatePostDetailWithCommentId({ postId, target, commentId });
 
     case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_COMMENT:
     case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_PARENT_COMMENT:
@@ -244,6 +242,15 @@ export const getScreenAndParams = (data: {
     case NOTIFICATION_TYPE.COMMENT_TO_PARENT_COMMENT_CREATOR_AGGREGATED:
     case NOTIFICATION_TYPE.REACTION_TO_COMMENT_CREATOR:
     case NOTIFICATION_TYPE.REACTION_TO_COMMENT_CREATOR_AGGREGATED:
+      return {
+        screen: 'comment-detail',
+        params: {
+          postId,
+          commentId,
+          target: target === TargetType.COMMENT_ARTICLE ? TargetType.ARTICLE : TargetType.POST,
+        },
+      };
+
     case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT:
     case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT_PUSH:
     case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT_AGGREGATED:
@@ -259,8 +266,7 @@ export const getScreenAndParams = (data: {
 
     case NOTIFICATION_TYPE.GROUP_ASSIGNED_ROLE_TO_USER:
     case NOTIFICATION_TYPE.GROUP_DEMOTED_ROLE_TO_USER:
-      navigateGroupMembers({ groupId, communityId });
-      break;
+      return navigateGroupMembers({ groupId, communityId });
 
     case NOTIFICATION_TYPE.GROUP_CHANGED_PRIVACY_TO_GROUP:
     case NOTIFICATION_TYPE.GROUP_REMOVED_FROM_GROUP_TO_USER:
@@ -269,8 +275,7 @@ export const getScreenAndParams = (data: {
     case NOTIFICATION_TYPE.GROUP_ADDED_TO_GROUP_TO_USER_IN_ONE_GROUP:
     case NOTIFICATION_TYPE.LEAVE_COMMUNITY_TO_USER:
     case NOTIFICATION_TYPE.LEAVE_GROUP_TO_USER:
-      navigateGroupDetail({ groupId, communityId });
-      break;
+      return navigateGroupDetail({ groupId, communityId });
 
     case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN:
     case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN_AGGREGATED:
@@ -313,8 +318,7 @@ export const getScreenAndParams = (data: {
         params: { post_id: contentId },
       };
     case NOTIFICATION_TYPE.DELETE_SERIES_TO_USER:
-      navigatePostDetailWithContentType({ contentType, contentId });
-      break;
+      return navigatePostDetailWithContentType({ contentType, contentId });
 
     case NOTIFICATION_TYPE.LEAVE_MULTIPLE_GROUP_TO_USER:
       return null;
@@ -324,7 +328,6 @@ export const getScreenAndParams = (data: {
     case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER_IN_MULTIPLE_GROUPS:
     case NOTIFICATION_TYPE.SERIES_POST_ITEM_CHANGED:
     case NOTIFICATION_TYPE.SERIES_ARTICLE_ITEM_CHANGED:
-
       return {
         screen: seriesStack.seriesDetail,
         params: {
@@ -366,7 +369,7 @@ const navigatePostDetail = ({ postId, target }) => {
   };
 };
 
-const navigatePostDetailWithFocusComment = ({ postId, target, commentId }) => {
+const navigatePostDetailWithCommentId = ({ postId, target, commentId }) => {
   if (target === TargetType.COMMENT_ARTICLE || target === TargetType.ARTICLE) {
     return {
       screen: articleStack.articleDetail,
