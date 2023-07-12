@@ -1,14 +1,10 @@
 import { useEffect, useState } from 'react';
 import {
   IActivityImportant,
-  IAudienceUser,
-  IPayloadPutEditPost,
-  IPost,
-  IPostCreatePost,
   IPostSetting,
+  IPutEditSettingsParams,
 } from '~/interfaces/IPost';
-import usePostsStore, { IPostsState } from '~/store/entities/posts';
-import postsSelector from '~/store/entities/posts/selectors';
+import usePostsStore from '~/store/entities/posts';
 import { useRootNavigation } from '~/hooks/navigation';
 import { isPostExpired } from '~/helpers/post';
 import useCreatePostStore from '../CreatePost/store';
@@ -20,6 +16,8 @@ import {
   handleChangeDatePickerImportant,
   toggleImportant,
 } from '~/helpers/settingImportant';
+import showAlert from '~/store/helper/showAlert';
+import { useBaseHook } from '~/hooks';
 
 export interface IUsePostSettings {
   postId?: string;
@@ -29,19 +27,17 @@ export interface IUsePostSettings {
 export const usePostSettings = (params?: IUsePostSettings) => {
   const { postId, listAudiencesWithoutPermission } = params || {};
 
+  const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
 
-  const putUpdateSettings = !!postId;
-
-  const initPostData: IPost = usePostsStore(postsSelector.getPost(postId));
+  const postsStoreActions = usePostsStore((state) => state.actions);
 
   const {
-    important, canReact, canComment,
+    important, canReact, canComment, chosenAudiences,
   } = useCreatePostStore((state) => state.createPost);
   const createPostStoreActions = useCreatePostStore((state) => state.actions);
 
-  const { putEditPost } = usePostsStore((state: IPostsState) => state.actions);
-
+  const [loading, setLoading] = useState(false);
   const [disableButtonSave, setDisableButtonSave] = useState<boolean>(true);
   const [showWarning, setShowWarning] = useState<boolean>(false);
   const [showCustomExpire, setCustomExpire] = useState<boolean>(false);
@@ -134,51 +130,6 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     );
   };
 
-  // update setting post from option Edit Post Settings on menu post
-  const handlePutUpdateSettings = () => {
-    const {
-      id, content, media, setting, audience, mentions,
-    } = initPostData || {};
-    if (!id) {
-      console.error('\x1b[31m🐣️ usePostSettings update: id not found\x1b[0m');
-      return 'doNothing';
-    }
-
-    const userIds: string[] = [];
-    const groupIds: string[] = [];
-    const audienceIds = { groupIds, userIds };
-    audience?.users?.map?.((u: IAudienceUser) => !!u?.id && userIds.push(u.id || ''));
-    audience?.groups?.map?.((u: IAudienceUser) => !!u?.id && groupIds.push(u.id || ''));
-
-    const newSettings: IPostSetting = { ...setting };
-    newSettings.isImportant = sImportant?.active;
-    newSettings.importantExpiredAt = sImportant?.active
-      ? sImportant?.expiresTime
-      : null;
-    newSettings.canComment = sCanComment;
-    newSettings.canReact = sCanReact;
-
-    const data: IPostCreatePost = {
-      content,
-      media,
-      setting: newSettings,
-      audience: audienceIds,
-      mentions,
-    };
-    const payload: IPayloadPutEditPost = {
-      id,
-      data,
-      disableNavigate: true,
-      onRetry: () => putEditPost(payload),
-      isHandleSeriesTagsError: false,
-      isRefresh: false,
-      isCreatingNewPost: false,
-    };
-    putEditPost(payload);
-    rootNavigation.goBack();
-    return 'dispatchPutEditPost';
-  };
-
   const handleChangeSuggestDate = (chooseDate: any) => {
     handleChangeSuggestDateImportant(
       chooseDate,
@@ -188,33 +139,79 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     );
   };
 
-  const handlePressSave = () => {
-    if (putUpdateSettings) {
-      handlePutUpdateSettings();
-      return 'putUpdateSettings';
-    }
+  const updateStore = () => {
     const isExpired = isPostExpired(sImportant?.expiresTime) || sImportant.neverExpires;
-
     const dataDefault = [
       !isExpired,
       !sCanComment,
       !sCanReact,
     ];
-
     const newCount = dataDefault.filter((i) => !!i);
+
     createPostStoreActions.updateCreatePost({
       important: { active: sImportant.active, expiresTime: sImportant.expiresTime },
       canComment: sCanComment,
       canReact: sCanReact,
       count: newCount?.length || 0,
     });
-    rootNavigation.goBack();
-    return 'setCreatePostSettings';
+  };
+
+  const handlePressSave = () => {
+    if (!postId) return;
+
+    const newSetting: IPostSetting = {};
+    newSetting.isImportant = sImportant?.active;
+    newSetting.importantExpiredAt = sImportant?.active
+      ? sImportant?.expiresTime
+      : null;
+    newSetting.canComment = sCanComment;
+    newSetting.canReact = sCanReact;
+
+    const onPreLoad = () => {
+      setLoading(true);
+    };
+
+    const onSuccess = () => {
+      setLoading(false);
+      updateStore();
+      postsStoreActions.getPostDetail({ postId });
+      rootNavigation.goBack();
+    };
+
+    const onFailed = () => {
+      setLoading(false);
+    };
+
+    const params: IPutEditSettingsParams = {
+      id: postId,
+      setting: newSetting,
+      audiences: chosenAudiences,
+      onPreLoad,
+      onSuccess,
+      onFailed,
+    };
+    postsStoreActions.putEditSettings(params);
+  };
+
+  const handleBack = () => {
+    if (disableButtonSave) {
+      rootNavigation.goBack();
+    } else {
+      showAlert({
+        title: t('discard_alert:title'),
+        content: t('discard_alert:content'),
+        cancelBtn: true,
+        cancelLabel: t('common:btn_discard'),
+        confirmLabel: t('common:btn_stay_here'),
+        onCancel: () => rootNavigation.goBack(),
+      });
+    }
   };
 
   return {
     sImportant,
     disableButtonSave,
+    loading,
     showWarning,
     sCanComment,
     sCanReact,
@@ -225,9 +222,9 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     handleToggleCanReact,
     handleChangeDatePicker,
     handleChangeTimePicker,
-    handlePutUpdateSettings,
     handleChangeSuggestDate,
     getMinDate,
     getMaxDate,
+    handleBack,
   };
 };

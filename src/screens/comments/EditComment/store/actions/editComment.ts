@@ -10,7 +10,7 @@ import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import { getMentionsFromContent } from '~/helpers/post';
 import useCommentDetailController from '~/screens/comments/CommentDetail/store';
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = withNavigation?.(rootNavigationRef);
 
 const editComment = (_set, _get) => async (payload: IPayloadPutEditComment) => {
   const {

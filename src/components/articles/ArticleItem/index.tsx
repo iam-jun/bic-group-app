@@ -25,7 +25,6 @@ import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import { ITag } from '~/interfaces/ITag';
 import Divider from '~/beinComponents/Divider';
 import DeletedItem from '~/components/DeletedItem';
-import { useUserIdAuth } from '~/hooks/auth';
 
 export interface ArticleItemProps {
   data: IPost;
@@ -43,7 +42,6 @@ const ArticleItem: FC<ArticleItemProps> = ({
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
-  const userId = useUserIdAuth();
 
   const {
     id,
@@ -179,7 +177,6 @@ const ArticleItem: FC<ArticleItemProps> = ({
       markedReadPost={markedReadPost}
       isImportant={isImportant}
       expireTime={importantExpiredAt}
-      isActor={actor?.id == userId}
     />
   );
 

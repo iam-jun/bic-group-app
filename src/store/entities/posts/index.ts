@@ -9,6 +9,7 @@ import {
   IPayloadRemoveAudiencesOfPost,
   IPayloadReplying,
   IErrorContent,
+  IPutEditSettingsParams,
 } from '~/interfaces/IPost';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
@@ -17,6 +18,7 @@ import deletePost from './actions/deletePost';
 import deletePostLocal from './actions/deletePostLocal';
 import getPostDetail from './actions/getPostDetail';
 import putEditPost from './actions/putEditPost';
+import putEditSettings from './actions/putEditSettings';
 import putMarkSeenPost from './actions/putMarkSeenPost';
 import removeAudiencesFromPost from './actions/removeAudiencesFromPost';
 
@@ -45,6 +47,7 @@ export interface IPostsState extends IBaseState {
     setCommentErrorCode: (payload: boolean | string) => void;
     addToErrorContents: (id: string, payload: IErrorContent) => void;
     clearComments: (id: string) => void;
+    putEditSettings: (params: IPutEditSettingsParams) => void;
   };
 }
 
@@ -110,6 +113,7 @@ const postsStore = (set, get) => ({
         state.posts[id].comments.meta = {};
       }, 'clearComments');
     },
+    putEditSettings: putEditSettings(set, get),
   },
 
   reset: () => resetStore(initState, set),

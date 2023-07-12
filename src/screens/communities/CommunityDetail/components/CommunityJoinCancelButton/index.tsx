@@ -51,11 +51,11 @@ const CommunityJoinCancelButton = ({
       termsActions.setTermInfo(payload);
       return;
     }
-    actions.joinCommunity({ communityId: id, communityName: name });
+    actions.joinCommunity({ communityId: id, communityName: name, rootGroupId: groupId });
   };
 
   const onPressCancelRequest = () => {
-    actions.cancelJoinCommunity(id, name);
+    actions.cancelJoinCommunity({ communityId: id, rootGroupId: groupId });
   };
 
   return (

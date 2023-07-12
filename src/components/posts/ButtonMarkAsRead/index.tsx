@@ -18,7 +18,6 @@ export interface ButtonMarkAsReadProps {
   isImportant?: boolean;
   expireTime?: string | null;
   markedReadPost: boolean;
-  isActor?: boolean;
 }
 
 const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
@@ -28,7 +27,6 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
   isImportant,
   expireTime = '',
   markedReadPost,
-  isActor,
 }: ButtonMarkAsReadProps) => {
   const [loading, setLoading] = useState(false);
 
@@ -42,7 +40,6 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
 
   if (
     !isImportant
-    || isActor
     || markedReadPost
     || isExpired
   ) {

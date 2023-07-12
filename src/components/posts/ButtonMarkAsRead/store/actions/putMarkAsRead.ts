@@ -12,20 +12,18 @@ const putMarkAsRead = () => async (payload: IPayloadPutMarkAsRead) => {
   }
 
   try {
-    const response = await streamApi.putMarkAsRead(postId);
+    await streamApi.putMarkAsRead(postId);
 
-    const isSuccess = !!response?.data;
-    callback?.(isSuccess);
-    if (isSuccess) {
-      const post = usePostsStore.getState()?.posts?.[postId] || {};
-      usePostsStore.getState().actions.addToPosts({
-        data: {
-          ...post,
-          markedReadPost: true,
-          markedReadSuccess: true,
-        },
-      } as IPayloadAddToAllPost);
-    }
+    callback?.(true);
+
+    const post = usePostsStore.getState()?.posts?.[postId] || {};
+    usePostsStore.getState().actions.addToPosts({
+      data: {
+        ...post,
+        markedReadPost: true,
+        markedReadSuccess: true,
+      },
+    } as IPayloadAddToAllPost);
   } catch (error) {
     callback?.(false);
     showToastError(error);

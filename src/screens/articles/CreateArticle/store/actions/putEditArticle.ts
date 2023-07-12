@@ -10,7 +10,7 @@ import showToastSuccess from '~/store/helper/showToastSuccess';
 import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
 import { PostType } from '~/interfaces/IPost';
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = withNavigation?.(rootNavigationRef);
 
 const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
   const {
@@ -32,6 +32,7 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
       ...data, categories, series, tags,
     } as any;
     delete params.id;
+    delete params.setting;
 
     const response = await streamApi.putEditArticle(articleId, params);
 

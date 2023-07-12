@@ -9,7 +9,7 @@ import { openUrl } from '~/utils/link';
 import { goToContentInseries } from '~/components/RelatedContentsInSeries/helper';
 import { EventType } from '~/components/articles/ArticleWebview';
 
-const rootNavigation = withNavigation(rootNavigationRef);
+const rootNavigation = withNavigation?.(rootNavigationRef);
 
 export const handleMessage = (data: {
   message: any;

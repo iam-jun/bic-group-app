@@ -1,10 +1,11 @@
 import React from 'react';
 import { fireEvent, languages, renderWithRedux } from '../../test/testUtils';
 import ButtonCommunityGroupCard from './ButtonCommunityGroupCard';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 
 describe('ButtonCommunityGroupCard component', () => {
-  it('given joinStatus = 1, should render button join', () => {
-    const joinStatus = 1;
+  it('given joinStatus = VISITOR, should render button join', () => {
+    const joinStatus = GroupJoinStatus.VISITOR;
     const onView = jest.fn();
     const onJoin = jest.fn();
     const onCancel = jest.fn();
@@ -22,8 +23,8 @@ describe('ButtonCommunityGroupCard component', () => {
     expect(onJoin).toBeCalled();
   });
 
-  it('given joinStatus = 2, should render button view', () => {
-    const joinStatus = 2;
+  it('given joinStatus = MEMBER, should render button view', () => {
+    const joinStatus = GroupJoinStatus.MEMBER;
     const onView = jest.fn();
     const onJoin = jest.fn();
     const onCancel = jest.fn();
@@ -41,8 +42,8 @@ describe('ButtonCommunityGroupCard component', () => {
     expect(onView).toBeCalled();
   });
 
-  it('given joinStatus = 3, should render button cancel request', () => {
-    const joinStatus = 3;
+  it('given joinStatus = REQUESTED, should render button cancel request', () => {
+    const joinStatus = GroupJoinStatus.REQUESTED;
     const onView = jest.fn();
     const onJoin = jest.fn();
     const onCancel = jest.fn();

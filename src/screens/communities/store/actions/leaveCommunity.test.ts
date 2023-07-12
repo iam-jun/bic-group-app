@@ -5,7 +5,10 @@ import * as showToastError from '~/store/helper/showToastError';
 import * as showToastSuccess from '~/store/helper/showToastSuccess';
 
 describe('leaveCommunity', () => {
-  const communityId = '879c8129-0840-437f-8f23-a7585dc6ba22';
+  const payload = {
+    communityId: '879c8129-0840-437f-8f23-a7585dc6ba22',
+    rootGroupId: 'test-root-group-id',
+  };
 
   it('should leave community success:', () => {
     const response = {
@@ -31,7 +34,7 @@ describe('leaveCommunity', () => {
     jest.useFakeTimers();
     const { result } = renderHook(() => useCommunityController((state) => state));
     act(() => {
-      result.current.actions.leaveCommunity(communityId);
+      result.current.actions.leaveCommunity(payload);
     });
     expect(spy).toBeCalled();
     act(() => {
@@ -56,7 +59,7 @@ describe('leaveCommunity', () => {
     const { result } = renderHook(() => useCommunityController((state) => state));
     act(() => {
       try {
-        result.current.actions.leaveCommunity(communityId);
+        result.current.actions.leaveCommunity(payload);
       } catch (e) {
         expect(e).toBeInstanceOf(TypeError);
         expect(e).toBe(error);

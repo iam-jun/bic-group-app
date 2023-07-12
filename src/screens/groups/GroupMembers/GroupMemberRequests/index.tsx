@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 
 import MemberRequestList from '../../components/MemberRequestList';
 import GroupApproveDeclineAllRequests from './components/GroupApproveDeclineAllRequests';
-import JoinRequestSetting from '~/screens/communities/CommunityMembers/CommunityMemberRequests/components/JoinRequestSetting';
 import useGroupDetailStore, { IGroupDetailState } from '../../GroupDetail/store';
 import useGroupMemberStore from '../store';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
@@ -12,7 +11,6 @@ interface GroupMemberRequestsProps {
   groupId: string;
   canAddMember: boolean;
   canApproveRejectJoiningRequests: boolean;
-  canEditJoinSetting: boolean
   onPressAdd?: () => void;
 }
 
@@ -20,17 +18,15 @@ const GroupMemberRequests = ({
   groupId,
   canAddMember,
   canApproveRejectJoiningRequests,
-  canEditJoinSetting,
   onPressAdd,
 }: GroupMemberRequestsProps) => {
   const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
   const { group } = groups[currentGroupId] || {};
-  const { id, settings, privacy } = group || {};
-  const { isJoinApproval } = settings || {};
+  const { id } = group || {};
   const {
     actions: { getGroupDetail },
   } = useGroupDetailStore((state: IGroupDetailState) => state);
-  const { ids, canLoadMore, total } = useGroupMemberStore((state) => state.groupMemberRequests);
+  const { ids, canLoadMore } = useGroupMemberStore((state) => state.groupMemberRequests);
   const actions = useGroupMemberStore((state) => state.actions);
 
   useEffect(
@@ -62,27 +58,8 @@ const GroupMemberRequests = ({
     getData(true);
   };
 
-  const onUpdateJoinSetting = (isJoinApproval: boolean) => {
-    actions.updateGroupJoinSetting({ groupId, isJoinApproval });
-  };
-
-  const onPressApproveAll = () => {
-    actions.approveAllGroupMemberRequests({ groupId, total });
-  };
-
   return (
     <View style={styles.container} testID="GroupMemberRequests">
-      {!!canEditJoinSetting && (
-        <JoinRequestSetting
-          type="group"
-          total={total}
-          privacy={privacy}
-          isJoinApproval={isJoinApproval}
-          onUpdateJoinSetting={onUpdateJoinSetting}
-          onPressApproveAll={onPressApproveAll}
-        />
-      )}
-
       {!!canApproveRejectJoiningRequests && (
         <>
           <MemberRequestList

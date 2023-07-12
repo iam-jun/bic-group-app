@@ -49,7 +49,7 @@ const LoggerView = () => {
   const host = getEnv('BEIN_API');
   const env = {
     SELF_DOMAIN: getEnv('SELF_DOMAIN'),
-    BEIN_CHAT_DEEPLINK: getEnv('BEIN_CHAT_DEEPLINK'),
+    CHAT_URL_SCHEME: getEnv('CHAT_URL_SCHEME'),
     APP_GROUP_PACKAGE_NAME_IOS: getEnv('APP_GROUP_PACKAGE_NAME_IOS'),
     APP_GROUP_PACKAGE_NAME_ANDROID: getEnv('APP_GROUP_PACKAGE_NAME_ANDROID'),
   };

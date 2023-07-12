@@ -124,8 +124,9 @@ export interface CreateArticleProps {
   };
 }
 
-export interface IArticleSettingsParams {
+export interface IArticleSettingsScreenParams {
   articleId?: string;
+  isFromArticleMenuSettings?: boolean;
 }
 
 export interface IEditAritcleError {
