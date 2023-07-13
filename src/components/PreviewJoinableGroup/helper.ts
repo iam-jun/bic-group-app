@@ -1,6 +1,8 @@
 import groupApi from '~/api/GroupApi';
 import usePreviewJoinableGroupStore from './store';
 import showToastError from '~/store/helper/showToastError';
+import { showAlertRefreshPage } from '~/helpers/common';
+import APIErrorCode from '~/constants/apiErrorCode';
 
 export const getPreviewJoinableGroup = async (groupId: string) => {
   try {
@@ -22,6 +24,13 @@ export const getPreviewJoinableGroup = async (groupId: string) => {
     }
     return true;
   } catch (error) {
+    if (
+      error?.code === APIErrorCode.Group.MISSIING_MEMBERSHIP_ANSWERS
+      || error?.code === APIErrorCode.Common.FORBIDDEN
+    ) {
+      showAlertRefreshPage();
+      return;
+    }
     console.error('getPreviewJoinableGroup', error);
     showToastError(error);
     throw new Error(error);
