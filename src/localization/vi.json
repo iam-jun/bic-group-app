@@ -212,7 +212,8 @@
     "text_answer_input_placeholder": "Viết câu trả lời của bạn",
     "text_send_request_join_successfully": "Gửi yêu cầu thành công",
     "edit_settings": "Cài đặt",
-    "text_new": "Mới"
+    "text_new": "Mới",
+    "text_empty": "Rỗng"
   },
   "auth": {
     "text_kickout_title": "Notice",

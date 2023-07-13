@@ -10,7 +10,7 @@ const markNewBadge = (set, get) => async (id: string) => {
 
     await groupApi.markNewBadge([id]);
 
-    if (newBadges?.[id]) {
+    if (newBadges[id]) {
       newBadges[id].isNew = false;
     }
 

@@ -4,7 +4,16 @@ import { fireEvent, render } from '~/test/testUtils';
 import UserBadge from './index';
 
 describe('UserBadge component', () => {
+  let Platform: any;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    Platform = require('react-native').Platform;
+  });
+
   it('renders correctly when showingBadges value length = 1', () => {
+    Platform.OS = 'android';
+
     const showingBadges = [{
       id: '322472ea-5ce9-4518-b93f-79d3bd6dced2',
       community: {

@@ -29,13 +29,18 @@ const ShowingBadgesItem = ({ index, isShowEditButton }: ShowingBadgesItemProps) 
   if (choosingBadges[index]?.id) {
     const { iconUrl, id } = choosingBadges[index];
     return (
-      <View key={`showing_badges_${index}_${id || ''}`} style={styles.item}>
+      <View
+        key={`showing_badges_${index}_${id || ''}`}
+        testID="showing_badges.item"
+        style={styles.item}
+      >
         <Avatar.Medium
           isRounded
           source={{ uri: iconUrl }}
         />
         {Boolean(isShowEditButton) && (
           <Button
+            testID="showing_badges.item.button_remove"
             style={styles.iconClose}
             onPress={removeBadge}
           >
@@ -46,9 +51,13 @@ const ShowingBadgesItem = ({ index, isShowEditButton }: ShowingBadgesItemProps) 
     );
   }
   return (
-    <View key={`index_${index}`} style={[styles.item, styles.emptyItem]}>
-      <Text.BodyXS color={colors.neutral30}>
-        Empty
+    <View
+      key={`index_${index}`}
+      testID="showing_badges.empty_item"
+      style={[styles.item, styles.emptyItem]}
+    >
+      <Text.BodyXS useI18n color={colors.neutral30}>
+        common:text_empty
       </Text.BodyXS>
     </View>
   );
