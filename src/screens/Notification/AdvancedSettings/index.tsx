@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
-  ActivityIndicator, RefreshControl, StyleSheet, View,
+  ActivityIndicator, FlatList, StyleSheet, View,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Animated from 'react-native-reanimated';
+import { Modalize } from 'react-native-modalize';
+import { isEmpty } from 'lodash';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -12,10 +13,22 @@ import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 import EmptyScreen from '~/components/EmptyScreen';
 import images from '~/resources/images';
-import { Button } from '~/baseComponents';
+import { Avatar, Button } from '~/baseComponents';
 import Text from '~/baseComponents/Text';
 import Image from '~/components/Image';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import { sizes } from '~/theme/dimension';
+import NotiSettingItem from '../components/NotiSettingItem';
+import useYourCommunitiesStore from '~/screens/communities/Communities/components/YourCommunities/store';
+import useAdvancedNotiSettingsStore from './store';
+import ButtonWrapper from '~/baseComponents/Button/ButtonWrapper';
+import Icon from '~/baseComponents/Icon';
+import SearchInput from '~/baseComponents/Input/SearchInput';
+import BottomSheet from '~/baseComponents/BottomSheet';
+import SearchCoummunityContent from '../components/SearchCoummunityContent';
+import AdvancedSettingItem from '../components/AdvancedSettingItem';
+import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
+import SettingItemSkeleton from '../components/SettingItemSkeleton';
 
 const AdvancedSettings = () => {
   const theme: ExtendedTheme = useTheme();
@@ -23,8 +36,24 @@ const AdvancedSettings = () => {
   const styles = createStyle(theme);
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
+  const modalizeRef = useRef<Modalize>(null);
 
-  const loading = false;
+  const { ids, actions } = useYourCommunitiesStore();
+  const advancedSettingsActions = useAdvancedNotiSettingsStore((state) => state.actions);
+  const isLoading = useAdvancedNotiSettingsStore((state) => state.isLoading);
+  const isLoadingCommunitySettings = useAdvancedNotiSettingsStore((state) => state.isLoadingCommunitySettings);
+  const isLoadingJoinedGroup = useAdvancedNotiSettingsStore((state) => state.isLoadingJoinedGroup);
+  const slelectedCommunity = useAdvancedNotiSettingsStore((state) => state.slelectedCommunity);
+  const joinedGroups = useAdvancedNotiSettingsStore((state) => state.joinedGroups);
+
+  useEffect(
+    () => {
+      if (ids.length === 0) {
+        advancedSettingsActions.setIsLoading(true);
+        actions.getYourCommunities();
+      }
+    }, [],
+  );
 
   const onRefresh = () => {
   };
@@ -33,9 +62,23 @@ const AdvancedSettings = () => {
 
   };
 
+  const onChangeText = (text:string) => {
+
+  };
+
+  const onPressItem = (item: any) => {
+    if (item?.id) {
+      rootNavigation.navigate(notiStack.advancedSettingsDetail, { name: item?.id });
+    }
+  };
+
+  const onOpenBottomSheet = () => {
+    modalizeRef.current?.open?.();
+  };
+
   const renderEmpty = () => (
     <View style={styles.container}>
-      {Boolean(loading) ? <ActivityIndicator size="large" color={colors.neutral1} />
+      {Boolean(isLoadingJoinedGroup) ? <ActivityIndicator size="large" color={colors.neutral1} />
         : (
           <EmptyScreen
             source={images.img_empty_search_post}
@@ -66,17 +109,73 @@ const AdvancedSettings = () => {
         source={images.img_empty_box}
         style={styles.imgEmpty}
       />
-      <Text.BodyS color={colors.neutral40} useI18n>
-        your_content:text_empty
-      </Text.BodyS>
+      <Text.H3 useI18n style={styles.emptyTitle}>
+        notification:notification_settings:not_joined_the_community:title
+      </Text.H3>
+      <Text.SubtitleS useI18n>
+        notification:notification_settings:not_joined_the_community:description
+      </Text.SubtitleS>
     </View>
   );
 
   const renderHeader = () => (
-    <View style={styles.headerContainer}>
-      <Text.BodyS>
-        {t('notification:notification_settings:description')}
-      </Text.BodyS>
+    <View>
+      <View style={styles.background}>
+        <View style={styles.headerContainer}>
+          <Text.BodyS useI18n color={colors.neutral40}>
+            notification:notification_settings:description
+          </Text.BodyS>
+        </View>
+        <View style={styles.communityContainer}>
+          <Text.BadgeL useI18n color={colors.neutral80}>
+            notification:notification_settings:advanced_notifications_settings:title_setup_community
+          </Text.BadgeL>
+          <ButtonWrapper onPress={onOpenBottomSheet}>
+            <View style={[styles.dropdownContainer, styles.row]}>
+              <Avatar.Tiny />
+              <ViewSpacing width={spacing.margin.xSmall} />
+              <Text.BodyS numberOfLines={1} style={styles.flex1}>
+                {isEmpty(slelectedCommunity)
+                  ? t('common:text_loading')
+                  : slelectedCommunity?.name || ''}
+              </Text.BodyS>
+              <Icon icon="AngleDown" size={16} />
+            </View>
+          </ButtonWrapper>
+        </View>
+        {Boolean(isLoadingCommunitySettings)
+          ? <SettingItemSkeleton />
+          : (
+            <NotiSettingItem
+              item={{ name: 'hi', title: 'hi' }}
+              iconName="Bell"
+              onPressToggle={onPressToggle}
+            />
+          )}
+      </View>
+      <ViewSpacing height={spacing.margin.large} />
+      <View style={styles.communityContainer}>
+        <Text.BadgeL useI18n color={colors.neutral80}>
+          notification:notification_settings:advanced_notifications_settings:title_setup_group
+        </Text.BadgeL>
+        <Text.BodyS useI18n color={colors.neutral40}>
+          notification:notification_settings:advanced_notifications_settings:description_setup_group
+        </Text.BodyS>
+        <ViewSpacing height={spacing.margin.small} />
+        <SearchInput
+          style={styles.flex1}
+          placeholder={t('home:newsfeed_search:search_people')}
+          onChangeText={onChangeText}
+        />
+      </View>
+    </View>
+  );
+
+  const renderItem = ({ item }: any) => <AdvancedSettingItem item={item} onPress={onPressItem} />;
+
+  const renderLoading = () => (
+    <View style={styles.container}>
+      <ActivityIndicator testID="your_communites.loading_more" />
     </View>
   );
 
@@ -87,22 +186,25 @@ const AdvancedSettings = () => {
       backgroundColor={colors.gray5}
     >
       <Header title={t('notification:notification_settings:title')} />
-      <Animated.ScrollView
-        style={styles.flex1}
-        contentContainerStyle={styles.flex1}
-        showsVerticalScrollIndicator={false}
-        scrollEventThrottle={16}
-        refreshControl={(
-          <RefreshControl
-            refreshing={false}
-            onRefresh={onRefresh}
-          />
+      <ViewSpacing height={spacing.padding.large} />
+      {Boolean(isLoading)
+        ? renderLoading()
+        : (ids.length === 0 ? renderNothingToSetup()
+          : (
+            <FlatList
+              data={joinedGroups}
+              StickyHeaderComponent={renderHeader}
+              keyExtractor={(item) => `group.${item?.id}`}
+              renderItem={renderItem}
+              ListHeaderComponent={renderHeader}
+              ListEmptyComponent={renderEmpty}
+            />
+          )
         )}
-      >
-        <ViewSpacing height={spacing.padding.large} />
-        {/* {renderEmpty()} */}
-        {renderNothingToSetup()}
-      </Animated.ScrollView>
+      <BottomSheet
+        modalizeRef={modalizeRef}
+        ContentComponent={<SearchCoummunityContent />}
+      />
     </ScreenWrapper>
   );
 };
@@ -112,6 +214,9 @@ const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     flex1: {
       flex: 1,
+    },
+    background: {
+      backgroundColor: colors.white,
     },
     container: {
       flex: 1,
@@ -125,6 +230,7 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingVertical: spacing.padding.base,
       borderBottomColor: colors.neutral5,
       borderBottomWidth: 1,
+      borderColor: colors.neutral5,
     },
     boxNothingToSetup: {
       paddingVertical: spacing.padding.big,
@@ -135,6 +241,29 @@ const createStyle = (theme: ExtendedTheme) => {
       width: 100,
       aspectRatio: 1,
       marginBottom: spacing.margin.large,
+    },
+    emptyTitle: {
+      textAlign: 'center',
+      marginBottom: spacing.margin.xTiny,
+      fontSize: sizes.mdH2,
+    },
+    communityContainer: {
+      paddingHorizontal: spacing.padding.large,
+      paddingTop: spacing.padding.large,
+      paddingBottom: spacing.padding.small,
+      backgroundColor: colors.white,
+    },
+    dropdownContainer: {
+      padding: spacing.padding.small,
+      borderRadius: spacing.borderRadius.small,
+      marginTop: spacing.margin.small,
+      borderWidth: 1,
+      borderColor: colors.neutral5,
+      justifyContent: 'space-between',
+    },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
     },
   });
 };

@@ -80,9 +80,9 @@ export const notificationApiConfig = {
     ...defaultConfig,
     url: `${provider.url}settings/advanced/${communityId}`,
   }),
-  getGroupSettings: (communityId: string, groupId: string, groupIds: string[]): HttpApiRequestConfig => ({
+  getGroupSettings: (communityId: string, groupIds: string[]): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}settings/advanced/${communityId}/${groupId}`,
+    url: `${provider.url}settings/advanced/${communityId}`,
     method: 'post',
     data: { groupIds },
   }),
@@ -133,8 +133,8 @@ const notificationApi = {
   getCommunitySettings: (communityId: string) => withHttpRequestPromise(
     notificationApiConfig.getCommunitySettings, communityId,
   ),
-  getGroupSettings: (communityId: string, groupId: string, groupIds: string[]) => withHttpRequestPromise(
-    notificationApiConfig.getGroupSettings, communityId, groupId, groupIds,
+  getGroupSettings: (communityId: string, groupIds: string[]) => withHttpRequestPromise(
+    notificationApiConfig.getGroupSettings, communityId, groupIds,
   ),
   updateCommunitySettings: (communityId: string, params: IEditNotificationSetting) => withHttpRequestPromise(
     notificationApiConfig.updateCommunitySettings, communityId, params,

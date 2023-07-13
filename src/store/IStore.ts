@@ -58,6 +58,7 @@ import { IDraftContentsState } from '~/screens/YourContent/components/Draft/Draf
 import { IPublishState } from '~/screens/YourContent/components/Publish/store';
 import { IUserBadgesState } from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
 import { INotiSettingsStore } from '~/screens/Notification/NotiSettings/store';
+import { IAdvancedNotiSettingsStore } from '~/screens/Notification/AdvancedSettings/store';
 
 export interface BicStore {
   entities: {
@@ -160,6 +161,7 @@ export interface BicStore {
   Notifications: {
     notificationStore: INotificationsState;
     INotiSettingsStore: INotiSettingsStore;
+    IAdvancedNotiSettingsStore: IAdvancedNotiSettingsStore;
   };
   Draft: {
     DraftArticle: {

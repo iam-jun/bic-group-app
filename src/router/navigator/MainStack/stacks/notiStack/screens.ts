@@ -5,6 +5,7 @@ import NoNotificationFound from '~/screens/Notification/components/NoNotificatio
 import NotificationSettings from '~/screens/Notification/NotiSettings';
 import NotiSettingDetail from '~/screens/Notification/NotiSettings/NotiSettingDetail';
 import AdvancedSettings from '~/screens/Notification/AdvancedSettings';
+import AdvancedSettingsDetail from '~/screens/Notification/AdvancedSettings/AdvancedSettingsDetail';
 
 const notiScreens = {
   notification: Notification,
@@ -14,6 +15,7 @@ const notiScreens = {
   'noti-settings': NotificationSettings,
   'noti-setting-detail': NotiSettingDetail,
   'advanced-settings': AdvancedSettings,
+  'advanced-settings-detail': AdvancedSettingsDetail,
 };
 
 export default notiScreens;

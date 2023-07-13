@@ -1106,7 +1106,20 @@
       "error_description": "Xin vui lòng làm mới trang hoặc thử lại lần sau",
       "allow_notifications": "Cho phép thông báo",
       "in_app_text": "Trong ứng dụng",
-      "push_text": "Ngoài ứng dụng"
+      "push_text": "Ngoài ứng dụng",
+      "not_joined_the_community": {
+        "title": "Không có gì để thiết lập",
+        "description": "Tham gia một cộng đồng sau đó thiết lập cài đặt tại đây."
+      },
+      "advanced_notifications_settings": {
+        "title": "Cài đặt thông báo nâng cao",
+        "content": "Cài đặt thông báo cụ thể cho từng cộng đồng và các nhóm bên trong cộng đồng đó",
+        "title_setup_community": "Thiết lập cho cộng đồng của bạn",
+        "title_setup_group": "Thiết lập cho các nhóm của bạn",
+        "description_setup_group": "Cài đặt mặc định sử dụng cài đặt thông báo chung của bạn cho đến khi bạn thiết lập cụ thể.",
+        "title_reset_to_default": "Đặt lại về mặc định",
+        "reset_to_default_tooltip": "Đặt lại về mặc định để sử dụng cài đặt thông báo chung của bạn."
+      }
     }
   },
   "new_feature": {

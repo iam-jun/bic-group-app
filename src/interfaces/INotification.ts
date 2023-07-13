@@ -73,3 +73,9 @@ export interface INotiSettings {
   child?: INotiSettings[];
   channels?: INotiChannel;
 }
+
+export interface IAdvancedNotificationSettings {
+  communityId: string;
+  name: string;
+  enable?: boolean;
+}

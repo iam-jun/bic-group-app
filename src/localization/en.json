@@ -1168,9 +1168,14 @@
         "title": "Nothing to set up",
         "description": "Join a community then set up the settings here."
       },
-      "advanced_notifications_settings":{
-        "title":   "Advanced Notifications Settings"
-      }
+      "advanced_notifications_settings": {
+        "title": "Advanced Notifications Settings",
+        "content": "Specific notification settings for each community and its inner groups",
+        "title_setup_community": "Set up for your communities",
+        "title_setup_group": "Set up for your groups",
+        "description_setup_group": "Default settings use your general notification settings until you set up specifically.",
+        "title_reset_to_default": "Reset to default",
+        "reset_to_default_tooltip": "Reset to default to use your general notification settings."
       }
     }
   },
