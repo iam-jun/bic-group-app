@@ -18,7 +18,7 @@ const Maintenance = () => {
   const styles = createStyles(theme, insets);
 
   const { data, reset, actions } = useMaintenanceStore();
-  const { enableMaintenance, estimatedCompletionTime = 120, startedAt = 1689218453002 } = data || {};
+  const { enableMaintenance, estimatedCompletionTime, startedAt } = data || {};
 
   const [isRefresh, setIsRefresh] = useState(false);
 
