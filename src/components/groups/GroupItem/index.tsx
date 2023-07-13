@@ -17,6 +17,9 @@ export interface GroupItemProps {
   menuIcon?: IconType;
   isChecked?: boolean;
   checkboxDisabled?: boolean;
+  isNotCollapsible?: boolean;
+  isDisableLastItem?: boolean;
+  index?: number;
 
   onPress?: (item: IGroup) => void
   onMenuPress?: (item: IGroup) => void;
@@ -46,7 +49,7 @@ const GroupItem: FC<GroupItemProps> = ({
 
   const {
     icon, name, privacy,
-  } = item;
+  } = item || {};
 
   const privacyIcon = GroupPrivacyDetail[privacy]?.icon as IconType;
 

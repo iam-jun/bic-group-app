@@ -20,10 +20,14 @@ import useDiscoverGroupsStore from './store';
 import IDiscoverGroupsState from './store/Interface';
 import { useBaseHook } from '~/hooks';
 import useCommunitiesStore from '~/store/entities/communities';
-import useTermStore from '~/components/TermsModal/store';
+import useTermStore, { TermsInfo } from '~/components/TermsModal/store';
 import TermsView from '~/components/TermsModal';
 import MemberQuestionsModal from '~/components/MemberQuestionsModal';
 import useMemberQuestionsStore, { MembershipQuestionsInfo } from '~/components/MemberQuestionsModal/store';
+import { getPreviewJoinableGroup } from '~/components/PreviewJoinableGroup/helper';
+import PreviewJoinableGroup from '~/components/PreviewJoinableGroup';
+import useModalStore from '~/store/modal';
+import { ITypeGroup } from '~/interfaces/common';
 
 type HandleJoinGroupData = {
   isActiveGroupTerms: boolean;
@@ -54,34 +58,63 @@ const DiscoverGroups = ({ route }: any) => {
     actions.getDiscoverGroups({ communityId, isRefreshing });
   };
 
+  const { showModal } = useModalStore((state) => state.actions);
+
   useEffect(
     () => {
       getDiscoverGroups(true); // refreshing whenever open
     }, [communityId],
   );
 
-  const handleJoinGroup = ({ isActiveGroupTerms, groupId, isActiveMembershipQuestions } : HandleJoinGroupData) => {
-    if (isActiveMembershipQuestions) {
-      const payload: MembershipQuestionsInfo = {
-        groupId,
-        name: '',
-        rootGroupId: groupId,
-        type: 'group',
-        isActive: true,
-        isActiveGroupTerms,
-      };
-      membershipQuestionActions.setMembershipQuestionsInfo(payload);
-      return;
-    }
+  const handleJoinGroup = async ({ isActiveGroupTerms, groupId, isActiveMembershipQuestions }: HandleJoinGroupData) => {
+    try {
+      const isShowModalPreviewJoinableGroup = await getPreviewJoinableGroup(groupId);
+      if (isShowModalPreviewJoinableGroup) {
+        showModal({
+          isOpen: true,
+          ContentComponent: <PreviewJoinableGroup group={items[groupId]} />,
+        });
+        return;
+      }
 
-    if (isActiveGroupTerms) {
-      const payload = {
-        groupId, rootGroupId: groupId, name: '', type: 'group', isActive: true,
-      } as any;
-      termsActions.setTermInfo(payload);
-      return;
+      const {
+        name, icon, privacy, userCount,
+      } = items[groupId];
+
+      if (isActiveMembershipQuestions) {
+        const payload: MembershipQuestionsInfo = {
+          groupId,
+          name,
+          icon,
+          privacy,
+          userCount,
+          rootGroupId: groupId,
+          type: ITypeGroup.GROUP,
+          isActive: true,
+          isActiveGroupTerms,
+        };
+        membershipQuestionActions.setMembershipQuestionsInfo(payload);
+        return;
+      }
+
+      if (isActiveGroupTerms) {
+        const payload = {
+          groupId,
+          rootGroupId: groupId,
+          name,
+          icon,
+          privacy,
+          userCount,
+          type: ITypeGroup.GROUP,
+          isActive: true,
+        } as TermsInfo;
+        termsActions.setTermInfo(payload);
+        return;
+      }
+      actions.joinNewGroup(groupId);
+    } catch (error) {
+      return null;
     }
-    actions.joinNewGroup(groupId);
   };
 
   const handleCancelJoinGroup = (groupId: string) => {

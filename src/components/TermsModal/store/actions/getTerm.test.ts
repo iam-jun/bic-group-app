@@ -74,7 +74,7 @@ describe('get terms actions', () => {
 
   it('setTermInfo should change store state:', () => {
     const payload = {
-      groupId: 'id', rootGroupId: 'groupId', name: 'name', type: 'community', isActive: true,
+      groupId: 'id', rootGroupId: 'groupId', name: 'name', icon: 'icon', privacy: 'privacy', userCount: 1, type: 'community', isActive: true,
     };
     const { result } = renderHook(() => useTermStore((state) => state));
     act(() => {

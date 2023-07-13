@@ -248,6 +248,10 @@ export const groupsApiConfig = {
     method: 'put',
     data: { userIds },
   }),
+  getPreviewJoinableGroup: (groupId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/joinable-outer-groups`,
+  }),
   joinGroup: (groupId: string, params?: MembershipAnswerRequestParam): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/join`,
@@ -655,6 +659,9 @@ const groupApi = {
   ),
   removeGroupMembers: (groupId: string, userIds: string[]) => withHttpRequestPromise(
     groupsApiConfig.removeGroupMembers, groupId, userIds,
+  ),
+  getPreviewJoinableGroup: (groupId: string) => withHttpRequestPromise(
+    groupsApiConfig.getPreviewJoinableGroup, groupId,
   ),
   joinGroup: (groupId: string, params?: MembershipAnswerRequestParam) => withHttpRequestPromise(
     groupsApiConfig.joinGroup, groupId, params,

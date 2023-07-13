@@ -3,71 +3,86 @@ import { StyleProp, ViewStyle } from 'react-native';
 
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import JoinCancelButton from '../../components/JoinCancelButton';
-import { useBaseHook } from '~/hooks';
 import useDiscoverGroupsStore from '../../DiscoverGroups/store';
 import IDiscoverGroupsState from '../../DiscoverGroups/store/Interface';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 import useModalStore from '~/store/modal';
-import { ICommunity } from '~/interfaces/ICommunity';
-import useTermStore from '~/components/TermsModal/store';
+import useTermStore, { TermsInfo } from '~/components/TermsModal/store';
 import useMemberQuestionsStore, { MembershipQuestionsInfo } from '~/components/MemberQuestionsModal/store';
+import PreviewJoinableGroup from '~/components/PreviewJoinableGroup';
+import { getPreviewJoinableGroup } from '~/components/PreviewJoinableGroup/helper';
+import { ITypeGroup } from '~/interfaces/common';
 
 interface GroupJoinCancelButtonProps {
   style?: StyleProp<ViewStyle>;
-  community: ICommunity;
 }
 
-const GroupJoinCancelButton = ({ style, community }: GroupJoinCancelButtonProps) => {
-  const { t } = useBaseHook();
+const GroupJoinCancelButton = ({ style }: GroupJoinCancelButtonProps) => {
   const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
   const { group: infoDetail, joinStatus } = groups[currentGroupId] || {};
   const {
     privacy,
     id: groupId,
     affectedSettings,
+    name,
+    icon,
+    userCount,
   } = infoDetail || {};
-  const joinStatusCommunity = community?.joinStatus;
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
-  const isMemberOfCommunity = joinStatusCommunity === GroupJoinStatus.MEMBER;
 
   const actions = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.actions);
-  const { showAlert } = useModalStore((state) => state.actions);
+  const { showModal } = useModalStore((state) => state.actions);
   const membershipQuestionActions = useMemberQuestionsStore((state) => state.actions);
   const termsActions = useTermStore((state) => state.actions);
 
   if (isMember) return null;
 
-  const onPressJoin = () => {
-    if (!isMemberOfCommunity) {
-      showAlert({
-        title: t('error:alert_title'),
-        content: t('communities:text_must_be_member_first'),
-        confirmLabel: t('common:text_ok'),
-      });
-      return;
-    }
-    if (affectedSettings?.isActiveMembershipQuestions) {
-      const payload: MembershipQuestionsInfo = {
-        groupId,
-        name: '',
-        rootGroupId: groupId,
-        type: 'group',
-        isActive: true,
-        isActiveGroupTerms: affectedSettings?.isActiveGroupTerms,
-      };
-      membershipQuestionActions.setMembershipQuestionsInfo(payload);
-      return;
-    }
+  const onPressJoin = async () => {
+    try {
+      const isShowModalPreviewJoinableGroup = await getPreviewJoinableGroup(groupId);
+      if (isShowModalPreviewJoinableGroup) {
+        showModal({
+          isOpen: true,
+          ContentComponent: <PreviewJoinableGroup group={infoDetail} />,
+        });
+        return;
+      }
 
-    if (affectedSettings?.isActiveGroupTerms) {
-      const payload = {
-        groupId, rootGroupId: groupId, name: '', type: 'group', isActive: true,
-      } as any;
-      termsActions.setTermInfo(payload);
-      return;
-    }
+      if (affectedSettings?.isActiveMembershipQuestions) {
+        const payload: MembershipQuestionsInfo = {
+          groupId,
+          name,
+          icon,
+          privacy,
+          userCount,
+          rootGroupId: groupId,
+          type: ITypeGroup.GROUP,
+          isActive: true,
+          isActiveGroupTerms: affectedSettings?.isActiveGroupTerms,
+        };
+        membershipQuestionActions.setMembershipQuestionsInfo(payload);
+        return;
+      }
 
-    actions.joinNewGroup(groupId);
+      if (affectedSettings?.isActiveGroupTerms) {
+        const payload = {
+          groupId,
+          rootGroupId: groupId,
+          name,
+          icon,
+          privacy,
+          userCount,
+          type: ITypeGroup.GROUP,
+          isActive: true,
+        } as TermsInfo;
+        termsActions.setTermInfo(payload);
+        return;
+      }
+
+      actions.joinNewGroup(groupId);
+    } catch (error) {
+      return null;
+    }
   };
 
   const onPressCancelRequest = () => {

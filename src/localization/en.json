@@ -234,8 +234,8 @@
     "settings": "Settings",
     "pin_unpin": "Pin/Unpin",
     "text_i_agree": "I agree",
-    "text_group_terms": "Group Terms & Conditions",
-    "text_community_terms": "Community Terms & Conditions",
+    "text_group_terms": "Terms & Conditions",
+    "text_community_terms": "Terms & Conditions",
     "text_sorry_something_went_wrong": "Sorry, something went wrong",
     "text_pull_to_refresh": "Please pull down to refresh the page and try again",
     "text_answer_title": "Membership questions",
@@ -1500,5 +1500,11 @@
       "search_placeholder": "Search for badges name"
     },
     "edit_showing_badges_title": "Edit Showing Badges"
+  },
+  "previewJoinableGroup": {
+    "title": "Join all outer groups?",
+    "description_1": "By joining ",
+    "description_2": ", you’ll join all its outer groups.",
+    "text_join_group_button": "Join"
   }
 }
