@@ -1538,6 +1538,9 @@
     "enter_question_placeholder": "Enter question",
     "enter_answer_placeholder": "Enter answer",
     "alert_title_delete_question": "Delete the question {{number}}",
-    "alert_content_delete_question": "Do you want to delete question {{number}}?"
+    "alert_content_delete_question": "Do you want to delete question {{number}}?",
+    "title_alert_take_quiz": "Start Quiz",
+    "content_alert_take_quiz": "The quiz will not be saved as a draft! Are you sure you are ready to start the quiz?",
+    "btn_start": "Start"
   }
 }

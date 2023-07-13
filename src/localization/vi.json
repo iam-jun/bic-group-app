@@ -1477,6 +1477,9 @@
     "enter_question_placeholder": "Nhập câu hỏi",
     "enter_answer_placeholder": "Nhập câu trả lời",
     "alert_title_delete_question": "Xoá câu hỏi số {{number}}",
-    "alert_content_delete_question": "Bạn có muốn xoá câu hỏi số {{number}}?"
+    "alert_content_delete_question": "Bạn có muốn xoá câu hỏi số {{number}}?",
+    "title_alert_take_quiz": "Bắt đầu Quiz",
+    "content_alert_take_quiz": "Bài quiz sẽ được lưu thành bản nháp! Bạn đã sẵn sàng để bắt đầu làm bài quiz?",
+    "btn_start": "Bắt đầu"
   }
 }
