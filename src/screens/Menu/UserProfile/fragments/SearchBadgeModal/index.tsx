@@ -7,7 +7,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import spacing from '~/theme/spacing';
 import BadgeCollection from '../BadgeCollection';
 import useUserBadge from '../BadgeCollection/store';
 import { IUserBadge } from '~/interfaces/IEditUser';
@@ -32,8 +31,15 @@ const SearchBadgeModal = ({
   const choosingBadges = useUserBadge((state) => state.choosingBadges);
   const actions = useUserBadge((state) => state.actions);
   const loadingEditing = useUserBadge((state) => state.loadingEditing);
+  const choosingBadgesOrder = useUserBadge((state) => state.choosingBadgesOrder);
 
-  const isDisable = checkEqual(choosingBadges, showingBadges);
+  const isChangeInfo = !checkEqual(choosingBadges, showingBadges);
+  const isChangeOrder = !isAscendingArray(choosingBadgesOrder);
+  const isEnable = !Boolean(showingBadges?.[0]) ? isChangeInfo : Boolean(isChangeInfo || isChangeOrder);
+
+  useEffect(() => {
+    actions.resetChoosingBadgesOrder();
+  }, []);
 
   useEffect(() => {
     if (isEditing) { setIsOpen(true); }
@@ -42,6 +48,7 @@ const SearchBadgeModal = ({
   const onClose = () => {
     setIsOpen(false);
     actions.cancleSaveBadges();
+    actions.resetChoosingBadgesOrder();
   };
 
   const onPressSave = () => {
@@ -61,7 +68,7 @@ const SearchBadgeModal = ({
       <View style={styles.screenContainer}>
         <Header
           title={t('user:edit_showing_badges_title')}
-          buttonProps={{ disabled: isDisable, loading: loadingEditing }}
+          buttonProps={{ disabled: !isEnable, loading: loadingEditing }}
           buttonText={t('common:btn_save')}
           onPressBack={onClose}
           onPressButton={onPressSave}
@@ -93,6 +100,15 @@ const checkEqual = (choosingArr: IUserBadge[], choseArr: IUserBadge[]): boolean 
   return result;
 };
 
+const isAscendingArray = (arr: number[]) => {
+  for (let i = 0; i < arr.length - 1; i++) {
+    if (arr[i] > arr[i + 1]) {
+      return false;
+    }
+  }
+  return true;
+};
+
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
@@ -102,48 +118,6 @@ const createStyles = (theme: ExtendedTheme) => {
       width: '100%',
       height: '100%',
       backgroundColor: colors.white,
-    },
-    body: {
-      flex: 1,
-    },
-    buttonsContainer: {
-      flex: 1,
-      width: '100%',
-      maxWidth: 271,
-      marginTop: spacing.margin.extraLarge,
-    },
-    button: {
-      marginVertical: spacing.margin.tiny,
-    },
-    buttonView: {
-      zIndex: 2,
-      position: 'absolute',
-      backgroundColor: colors.white,
-      paddingHorizontal: spacing.padding.large,
-      paddingTop: spacing.padding.large,
-      bottom: 0,
-      left: 0,
-      right: 0,
-    },
-    shadow: {
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 1,
-        height: 12,
-      },
-      shadowOpacity: 0.5,
-      shadowRadius: 10.32,
-      elevation: 12,
-    },
-    contentContainerStyle: {
-      backgroundColor: colors.white,
-      padding: spacing.padding.large,
-      paddingBottom: 100,
-    },
-    loading: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      flex: 1,
     },
   });
 };
