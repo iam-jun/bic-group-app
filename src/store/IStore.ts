@@ -57,6 +57,7 @@ import { ITermState } from '~/components/TermsModal/store';
 import { IDraftContentsState } from '~/screens/YourContent/components/Draft/DraftContents/store';
 import { IPublishState } from '~/screens/YourContent/components/Publish/store';
 import { IUserBadgesState } from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
+import { IPreviewJoinableGroupState } from '~/components/PreviewJoinableGroup/store';
 
 export interface BicStore {
   entities: {
@@ -196,4 +197,5 @@ export interface BicStore {
   blockingStore: IBlockingState;
   maintenanceStore: IMaintenanceState;
   pinContent: IPinContentState;
+  previewJoinableGroupStore: IPreviewJoinableGroupState;
 }
