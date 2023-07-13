@@ -1499,6 +1499,7 @@
       "total_badges": "((total) badges)",
       "search_placeholder": "Search for badges name"
     },
-    "edit_showing_badges_title": "Edit Showing Badges"
+    "edit_showing_badges_title": "Edit Showing Badges",
+    "badge_tooltip_placeholder": "Tap here to add a badge"
   }
 }

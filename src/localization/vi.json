@@ -1440,6 +1440,7 @@
       "total_badges": "((total) huy hiệu)",
       "search_placeholder": "Tìm huy hiệu theo tên"
     },
-    "edit_showing_badges_title": "Chỉnh sửa huy hiệu đang hiển thị"
+    "edit_showing_badges_title": "Chỉnh sửa huy hiệu đang hiển thị",
+    "badge_tooltip_placeholder": "Nhấn vào đây để thêm huy hiệu"
   }
 }
