@@ -10,7 +10,6 @@ import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import Text from '~/baseComponents/Text';
 import useMaintenanceStore from '~/store/maintenance';
 import { spacing } from '~/theme';
-import { formatDate } from '~/utils/formatter';
 
 const Maintenance = () => {
   const theme = useTheme();
@@ -19,7 +18,7 @@ const Maintenance = () => {
   const styles = createStyles(theme, insets);
 
   const { data, reset, actions } = useMaintenanceStore();
-  const { enableMaintenance, estimatedCompletionTime, startedAt } = data || {};
+  const { enableMaintenance, estimatedCompletionTime = 120, startedAt = 1689218453002 } = data || {};
 
   const [isRefresh, setIsRefresh] = useState(false);
 
@@ -36,17 +35,11 @@ const Maintenance = () => {
     setIsRefresh(false);
   };
 
-  const convertTime = () => {
-    if (estimatedCompletionTime && startedAt) {
-      const time = moment(data?.startedAt).add(Number(data?.estimatedCompletionTime), 'minutes').utcOffset('+07:00');
-      return formatDate(time, 'HH:mm DD/MM/YYYY');
-    }
-    return 'undefined';
-  };
-
   if (!enableMaintenance) {
     return null;
   }
+
+  const textTime = getTextDate(startedAt, estimatedCompletionTime);
 
   return (
     <Animated.ScrollView
@@ -63,11 +56,13 @@ const Maintenance = () => {
       </Text.H3>
       <Text.BodyS style={[styles.text, styles.textContent]} color={colors.neutral40}>
         {t('common:text_maintenance_content')}
-        {convertTime()}
+        {textTime}
       </Text.BodyS>
     </Animated.ScrollView>
   );
 };
+
+const getTextDate = (startedAt: number | string, minutes: number) => moment(new Date(startedAt)).add(minutes, 'minutes').format('HH:mm DD/MM/YYYY');
 
 const createStyles = (theme: ExtendedTheme, insets: EdgeInsets) => {
   const { colors } = theme;
