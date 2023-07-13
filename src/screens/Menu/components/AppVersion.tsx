@@ -6,7 +6,6 @@ import Text from '~/baseComponents/Text';
 import { APP_ENV } from '~/configs/appConfig';
 import { useRootNavigation } from '~/hooks/navigation';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
-import useCodePushStore from '~/store/codePush';
 import getEnv from '~/utils/env';
 
 const AppVersion = () => {
@@ -14,7 +13,7 @@ const AppVersion = () => {
 
   const isProduction = getEnv('APP_ENV') === APP_ENV.PRODUCTION;
 
-  const updateDescription = useCodePushStore((state) => state?.currentUpdate?.description) || '';
+  const updateDescription = '';
 
   const onPressAppVersion = () => {
     rootNavigation.navigate(menuStack.componentCollection);
