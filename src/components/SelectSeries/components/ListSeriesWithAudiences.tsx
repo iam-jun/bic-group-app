@@ -16,12 +16,13 @@ interface Props {
   loading: boolean,
   data: any[],
   selectedData: IEditArticleSeries[],
+  maximumSeries?: number,
   onCheckedItem: (isChecked: boolean, item:any)=>void,
   onLoadMore: ()=> void,
 }
 
 const ListSeriesWithAudiences = ({
-  loading, data, selectedData, onCheckedItem, onLoadMore,
+  loading, data, selectedData, onCheckedItem, onLoadMore, maximumSeries,
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
 
@@ -41,6 +42,9 @@ const ListSeriesWithAudiences = ({
 
   const renderItem = ({ item }: any) => {
     const isChecked = selectedData?.findIndex((selected) => selected?.id === item?.id) > -1;
+    const isDisabled = (selectedData?.length === maximumSeries) && !isChecked;
+    const disabledCheckbox = isDisabled ? 'disabled' : undefined;
+
     return (
       <View testID="series_item" style={styles.container}>
         <View style={styles.row}>
@@ -55,6 +59,7 @@ const ListSeriesWithAudiences = ({
           <Checkbox
             testID="series_item.check_box"
             isChecked={isChecked}
+            disabled={disabledCheckbox}
             onPress={(isChecked: boolean) => { onCheckedItem?.(isChecked, item); }}
           />
         </View>

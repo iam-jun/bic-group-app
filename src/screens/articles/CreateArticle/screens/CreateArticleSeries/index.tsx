@@ -19,6 +19,7 @@ import appConfig from '~/configs/appConfig';
 import { ListSeriesWithAudiences } from '~/components/SelectSeries';
 import useSelectSeriesStore from '~/components/SelectSeries/store';
 import SelectingListInfo from '~/components/SelectingListInfo';
+import { MAXIMUM_SERIES } from '../../constanst';
 
 const CreateArticleSeries: FC<CreateArticleProps> = ({ route }: CreateArticleProps) => {
   const articleId = route?.params?.articleId;
@@ -54,6 +55,7 @@ const CreateArticleSeries: FC<CreateArticleProps> = ({ route }: CreateArticlePro
     handleSave, handleBack, enableButtonSave, loading,
   } = useCreateArticle({ articleId });
 
+  // const isValidSeries = enableButtonSave && selectedSeries?.length <= MAXIMUM_SERIES;
   const disabled = !enableButtonSave || loading;
 
   useBackPressListener(handleBack);
@@ -104,6 +106,7 @@ const CreateArticleSeries: FC<CreateArticleProps> = ({ route }: CreateArticlePro
       <SelectingListInfo
         data={selectedSeries}
         type="series"
+        infoMessage={t('article:series_maximum_message_info')}
         tagProps={{
           type: 'neutral',
           textProps: {
@@ -117,6 +120,7 @@ const CreateArticleSeries: FC<CreateArticleProps> = ({ route }: CreateArticlePro
       <ListSeriesWithAudiences
         data={listData}
         selectedData={selectedSeries}
+        maximumSeries={MAXIMUM_SERIES}
         loading={loadingSeries || loadingSearch}
         onCheckedItem={handleCheckedItem}
         onLoadMore={onLoadMore}

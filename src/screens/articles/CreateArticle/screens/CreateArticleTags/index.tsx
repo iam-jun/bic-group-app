@@ -12,6 +12,7 @@ import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 import SelectingListInfo from '~/components/SelectingListInfo';
 import useSelectTagsStore from '~/components/SelectTags/store';
 import appConfig from '~/configs/appConfig';
+import { MAXIMUM_TAGS } from '../../constanst';
 
 import { useBaseHook } from '~/hooks';
 import { useBackPressListener } from '~/hooks/navigation';
@@ -21,8 +22,6 @@ import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import spacing from '~/theme/spacing';
-
-const MAXIMUM_TAGS = 5;
 
 const CreateArticleTags: FC<CreateArticleProps> = ({ route }: CreateArticleProps) => {
   const articleId = route?.params?.articleId;
