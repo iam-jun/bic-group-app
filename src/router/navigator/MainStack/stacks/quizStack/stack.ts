@@ -1,7 +1,8 @@
 const quizStack = {
-  submitFormQuiz: 'submit-form-quiz',
+  entryQuiz: 'entry-quiz',
   composeQuiz: 'compose-quiz',
   editQuestion: 'edit-question',
+  publishQuiz: 'publish-quiz',
 };
 
 export default quizStack;

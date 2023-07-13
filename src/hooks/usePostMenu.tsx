@@ -165,7 +165,7 @@ const usePostMenu = (
 
   const onPressCUDQuiz = () => {
     modalActions.hideBottomList();
-    rootNavigation?.navigate?.(quizStack.submitFormQuiz, { postId });
+    rootNavigation?.navigate?.(quizStack.entryQuiz, { postId });
   };
 
   const defaultData = [

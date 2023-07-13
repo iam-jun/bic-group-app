@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import {
   Controller, useFormContext, useWatch,
 } from 'react-hook-form';
@@ -12,7 +12,7 @@ import { spacing } from '~/theme';
 import { Button } from '~/baseComponents';
 import Icon from '~/baseComponents/Icon';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import { mapIndexToAlphabet } from '../../helper';
+import { mapIndexToAlphabet, validateSpaceTrap } from '../../helper';
 
 type AnswerFieldProps = {
   answerIndex: number;
@@ -54,7 +54,7 @@ const AnswerField: FC<AnswerFieldProps> = ({ answerIndex, remove }) => {
       onChangeText={onChange}
       showCountLength={false}
       style={styles.containerViewInput}
-      inputStyle={styles.inputStyle}
+      inputStyle={[styles.inputStyle, Platform.OS === 'android' && { padding: 0 }]}
       inputStyleContainer={styles.inputStyleContainer}
     />
   );
@@ -71,7 +71,7 @@ const AnswerField: FC<AnswerFieldProps> = ({ answerIndex, remove }) => {
         <Controller
           name={`answers.${answerIndex}.answer`}
           control={control}
-          rules={{ required: true }}
+          rules={{ required: true, validate: validateSpaceTrap }}
           render={renderTextInput}
         />
       </View>

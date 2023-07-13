@@ -11,6 +11,7 @@ import postsSelector from '~/store/entities/posts/selectors';
 import useQuizzesStore from '~/store/entities/quizzes';
 import showAlert from '~/store/helper/showAlert';
 import showToastSuccess from '~/store/helper/showToastSuccess';
+import { formatAnswers } from '../helper';
 
 const useEditQuestion = (
   quiz: IQuiz, questionIndex: number,
@@ -43,14 +44,17 @@ const useEditQuestion = (
   const {
     handleSubmit,
     formState: { isValid, isDirty },
+    watch,
   } = methods;
 
-  const enabledBtnSave = isValid && !loading && isDirty;
+  const answersData = watch('answers');
+
+  const enabledBtnSave = isValid && !loading && isDirty && answersData.length > 0;
 
   const removeQuestion = () => {
     const newQuestions = questions.filter((_quest, index) => index !== questionIndex);
     const editQuizActionsParams: EditQuizActionsParams = {
-      idQuiz: id,
+      quizId: id,
       params: {
         questions: newQuestions,
       },
@@ -77,15 +81,15 @@ const useEditQuestion = (
   const onSave = handleSubmit((data) => {
     const { question: questionData, answers: answersData } = data;
 
-    const onSuccess = (response: IQuiz) => {
+    const onSuccess = (response: any) => {
       showToastSuccess(response);
       rootNavigation.goBack();
     };
 
     const newQuestionItem: QuestionItem = {
       ...questionItem,
-      question: questionData,
-      answers: answersData,
+      question: questionData.trim(),
+      answers: formatAnswers(answersData),
     };
     const newQuestions = questions.map((quest, index) => {
       if (index === questionIndex) {
@@ -94,7 +98,7 @@ const useEditQuestion = (
       return quest;
     });
     const editQuizActionsParams: EditQuizActionsParams = {
-      idQuiz: id,
+      quizId: id,
       params: {
         questions: newQuestions,
       },

@@ -1,9 +1,12 @@
-import { SubmitFormQuiz, ComposeQuiz, EditQuestion } from '~/screens/quiz';
+import {
+  EntryQuiz, ComposeQuiz, EditQuestion, PublishQuiz,
+} from '~/screens/quiz';
 
 const quizScreens = {
-  'submit-form-quiz': SubmitFormQuiz,
+  'entry-quiz': EntryQuiz,
   'compose-quiz': ComposeQuiz,
   'edit-question': EditQuestion,
+  'publish-quiz': PublishQuiz,
 };
 
 export default quizScreens;

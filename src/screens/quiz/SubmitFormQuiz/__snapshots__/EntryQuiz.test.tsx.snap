@@ -552,12 +552,15 @@ exports[`SubmitFormQuiz should render correctly 1`] = `
                     placeholderTextColor="#BAC0DE"
                     selectionColor="#767D93"
                     style={
-                      Object {
-                        "color": "#353E6E",
-                        "flex": 1,
-                        "fontFamily": "BeVietnamPro-Light",
-                        "fontSize": 14,
-                      }
+                      Array [
+                        Object {
+                          "color": "#353E6E",
+                          "flex": 1,
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        undefined,
+                      ]
                     }
                     testID="title_description_section.description"
                     textAlignVertical="top"

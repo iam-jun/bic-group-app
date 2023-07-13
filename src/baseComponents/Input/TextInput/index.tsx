@@ -17,6 +17,7 @@ import Icon, { IconProps } from '~/baseComponents/Icon';
 import { getTextHelperColor } from '../helper';
 import dimension from '~/theme/dimension';
 import { IconType } from '~/resources/icons';
+import { useBaseHook } from '~/hooks';
 
 export type HelperType =
   | 'error'
@@ -49,6 +50,7 @@ export interface TextInputProps extends RNTextInputProps {
   horizontal?: boolean;
   leftIcon?: IconType;
   leftIconProps?: IconProps;
+  isShowTextOptional?: boolean;
 
   onFocus?: () => void;
   onBlur?: () => void;
@@ -78,12 +80,14 @@ const TextInput: React.FC<TextInputProps> = ({
   horizontal,
   leftIcon,
   leftIconProps,
+  isShowTextOptional,
   onFocus,
   onBlur,
   onChangeText,
   helperActionOnPress,
   ...props
 }: TextInputProps) => {
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = themeStyles(
@@ -153,7 +157,10 @@ const TextInput: React.FC<TextInputProps> = ({
     <View testID="text_input" style={[styles.container, style]}>
       {label ? (
         <View style={styles.labelStyle}>
-          <Text.LabelM color={colors.neutral80} {...labelProps}>{label}</Text.LabelM>
+          <Text.LabelM color={colors.neutral80} {...labelProps}>
+            {label}
+            {isShowTextOptional && <Text.LabelM color={colors.neutral20}>{` (${t('common:text_optional')})`}</Text.LabelM>}
+          </Text.LabelM>
         </View>
       ) : null}
       <View style={[horizontal ? { flex: 1 } : {}]}>

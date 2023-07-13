@@ -1466,6 +1466,7 @@
     "question_is_required": "Câu hỏi là bắt buộc",
     "answer_is_required": "Câu trả lời là bắt buộc",
     "title_describe_question_answer_display": "Nhập số lượng câu hỏi và câu trả lời hiển thị cho người dùng trên mỗi câu hỏi trong bài quiz",
+    "title_describe_question_display": "Nhập số lượng câu hỏi hiển thị cho thành viên.",
     "cannot_exceed_the_number_of_questions_above": "Không thể lớn hơn số câu hỏi ở trên",
     "cannot_exceed_the_number_of_answers_above": "Không thể lớn hơn số câu trả lời ở trên",
     "title_check_generate_random_quiz": "Bạn có muốn tạo câu hỏi và câu trả lời ngẫu nhiên không?",
@@ -1480,6 +1481,14 @@
     "alert_content_delete_question": "Bạn có muốn xoá câu hỏi số {{number}}?",
     "title_alert_take_quiz": "Bắt đầu Quiz",
     "content_alert_take_quiz": "Bài quiz sẽ được lưu thành bản nháp! Bạn đã sẵn sàng để bắt đầu làm bài quiz?",
-    "btn_start": "Bắt đầu"
+    "btn_start": "Bắt đầu",
+    "the_ai_is_carefully_crafting_your_questions": "AI đang tạo câu hỏi cho bạn...",
+    "this_may_take_up_to_a_few_minute": "Điều này sẽ mất khoảng vài phút, nhưng đáng để chờ ! Nếu bạn thoát, Quiz sẽ tự động lưu vào",
+    "something_went_wrong": "Oops! Có gì đó sai",
+    "sorry_an_error_has_occurred": "Xin lỗi, đã xảy ra lỗi. Vui lòng thử lại sau.",
+    "regenerate": "Sinh lại",
+    "quiz_information": "Thông tin quiz",
+    "draft_quiz": "Bản nháp quiz",
+    "quiz_saved_to_draft": "Quiz đã được lưu vào nháp"
   }
 }

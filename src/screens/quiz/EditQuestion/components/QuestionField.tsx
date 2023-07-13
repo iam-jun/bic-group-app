@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { Controller, useFormContext } from 'react-hook-form';
 import { EditQuestionForm } from '~/interfaces/IQuiz';
 import Text from '~/baseComponents/Text';
@@ -9,6 +9,7 @@ import { useBaseHook } from '~/hooks';
 import { spacing } from '~/theme';
 import { Button } from '~/baseComponents';
 import Icon from '~/baseComponents/Icon';
+import { validateSpaceTrap } from '../../helper';
 
 type QuestionFieldProps = {
   remove: () => void;
@@ -31,7 +32,7 @@ const QuestionField: FC<QuestionFieldProps> = ({ remove, questionIndex }) => {
       onChangeText={onChange}
       showCountLength={false}
       style={styles.containerViewInput}
-      inputStyle={styles.inputStyle}
+      inputStyle={[styles.inputStyle, Platform.OS === 'android' && { padding: 0 }]}
       inputStyleContainer={styles.inputStyleContainer}
     />
   );
@@ -43,7 +44,7 @@ const QuestionField: FC<QuestionFieldProps> = ({ remove, questionIndex }) => {
         <Controller
           name="question"
           control={control}
-          rules={{ required: true }}
+          rules={{ required: true, validate: validateSpaceTrap }}
           render={renderTextInput}
         />
       </View>

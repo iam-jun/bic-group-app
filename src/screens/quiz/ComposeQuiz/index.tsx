@@ -1,5 +1,5 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useLayoutEffect } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -12,69 +12,89 @@ import { isEmpty } from 'lodash';
 import Header from '~/beinComponents/Header';
 import { spacing } from '~/theme';
 import {
-  EditQuizActionsParams,
-  GenerateQuizParams,
+  GenStatus,
   QuestionItem,
-  QuizStatus,
 } from '~/interfaces/IQuiz';
 import useQuizzesStore from '~/store/entities/quizzes';
 import { useRootNavigation } from '~/hooks/navigation';
 import QuestionComposeQuiz from './components/QuestionComposeQuiz';
+import GeneratingQuiz from './components/GeneratingQuiz';
+import GeneratingQuizFailed from './components/GeneratingQuizFailed';
+import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 import showToast from '~/store/helper/showToast';
-import postsSelector from '~/store/entities/posts/selectors';
+import { useBaseHook } from '~/hooks';
+import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import usePostsStore from '~/store/entities/posts';
 
 type ComposeQuizProps = {
   route?: {
-    params?: GenerateQuizParams;
+    params?: {
+      quizId: string;
+    };
   };
 };
 
 const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
   const { route } = props;
   const { params } = route || {};
-  const { contentId } = params || {};
+  const { quizId } = params || {};
 
+  const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
 
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
 
-  const post = usePostsStore(postsSelector.getPost(contentId, {}));
-  const { audience } = post;
-  const { groups = [] } = audience || {};
-
   const isGenerating = useQuizzesStore((state) => state.isGenerating);
-  const loading = useQuizzesStore((state) => state.loading);
-  const quiz = useQuizzesStore((state) => state.data[contentId]);
+  const isGettingQuizDetail = useQuizzesStore((state) => state.isGettingQuizDetail);
+  const quiz = useQuizzesStore((state) => state.data[quizId]);
 
   const actionsQuizzesStore = useQuizzesStore((state) => state.actions);
+  const actionsPostsStore = usePostsStore((state) => state.actions);
 
   const {
-    questions = [], id,
+    questions = [], id, genStatus, contentId,
   } = quiz || {};
 
-  const disabledBtnSave = isGenerating || loading || questions.length === 0 || isEmpty(quiz);
+  const disabledBtnNext = questions.length === 0;
+  const isShowGenerating = isGenerating || [GenStatus.PENDING, GenStatus.PROCESSING].includes(genStatus);
+  const isShowGeneratingFailed = genStatus === GenStatus.FAILED;
 
-  const generateQuiz = () => {
-    if (!id) {
-      const paramsGenerateQuiz: GenerateQuizParams = {
-        ...params,
-        isRandom: true,
-      };
-      actionsQuizzesStore.generateQuiz(paramsGenerateQuiz);
-    } else {
-      actionsQuizzesStore.regenerateQuiz(id);
-    }
+  const onNext = () => {
+    rootNavigation.navigate(quizStack.publishQuiz, { quizId });
   };
 
+  const btnNext = !isGettingQuizDetail && !isShowGenerating && !isShowGeneratingFailed && !isEmpty(quiz) && {
+    buttonProps: {
+      disabled: disabledBtnNext,
+      loading: false,
+      style: styles.btnNext,
+    },
+    buttonText: 'common:btn_next',
+    onPressButton: onNext,
+  };
+
+  useLayoutEffect(() => {
+    // clear quiz for refetching quiz
+    actionsQuizzesStore.removeQuiz(id);
+  }, []);
+
   useEffect(() => {
-    generateQuiz();
+    // refetching quiz
+    actionsQuizzesStore.getQuizDetail({ quizId });
+    // set waitingProcessingQuiz for handling socket
+    // see handleQuizNotificationSocket in src/screens/quiz/helper.ts
+    actionsQuizzesStore.setWaitingProcessingQuiz(quizId);
+
+    return () => {
+      // remove waitingProcessingQuiz when leaving
+      actionsQuizzesStore.setWaitingProcessingQuiz(null);
+    };
   }, []);
 
   const renderItem: ListRenderItem<QuestionItem> = ({ item, index }) => (
-    <QuestionComposeQuiz contentId={contentId} questionItem={item} index={index} />
+    <QuestionComposeQuiz quizId={id} questionItem={item} questionIndex={index} />
   );
 
   const keyExtractor = (question) => `question_${question.id}`;
@@ -83,51 +103,51 @@ const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
     <View style={styles.line} />
   );
 
+  const onPressDraft = () => {
+    rootNavigation.navigate(menuStack.yourContent, { initTab: 4 });
+  };
+
   const onPressBack = () => {
-    if (id) {
-      actionsQuizzesStore.removeQuiz(contentId);
+    if (isShowGenerating) {
+      showToast({
+        content: 'quiz:quiz_saved_to_draft',
+        buttonText: t('quiz:draft_quiz'),
+        onButtonPress: onPressDraft,
+      });
     }
+    actionsPostsStore.getPostDetail({ postId: contentId });
     rootNavigation.goBack();
   };
 
-  const onSave = () => {
-    const onSuccess = () => {
-      showToast({ content: 'quiz:successfully_created_a_quiz' });
-      rootNavigation.pop(2);
-      // temporarily for task create quiz
-      actionsQuizzesStore.removeQuiz(contentId);
-    };
-    const editQuizActionsParams: EditQuizActionsParams = {
-      idQuiz: id,
-      params: {
-        status: QuizStatus.PUBLISHED,
-      },
-      audiences: groups,
-      onSuccess,
-    };
-    actionsQuizzesStore.editQuiz(editQuizActionsParams);
+  const renderLoadingQuizDetail = () => (
+    <View style={styles.containerLoadingView}>
+      <ActivityIndicator color={colors.gray20} />
+    </View>
+  );
+
+  const onPressRegenerate = () => {
+    actionsQuizzesStore.regenerateQuiz(id);
   };
 
-  return (
-    <View style={styles.container}>
-      <Header
-        useI18n
-        title="quiz:quiz_review"
-        buttonProps={{
-          disabled: disabledBtnSave,
-          loading,
-          style: styles.btnSave,
-        }}
-        buttonText="common:btn_create"
-        onPressButton={onSave}
-        onPressBack={onPressBack}
-      />
-      {isGenerating && (
-        <View style={styles.containerLoadingView}>
-          <ActivityIndicator color={colors.gray20} />
-        </View>
-      )}
-      {!isGenerating && questions.length !== 0 && (
+  const renderContent = () => {
+    if (isGettingQuizDetail) {
+      return renderLoadingQuizDetail();
+    }
+
+    if (isEmpty(quiz)) {
+      return null;
+    }
+
+    if (isShowGenerating) {
+      return <GeneratingQuiz />;
+    }
+
+    if (isShowGeneratingFailed) {
+      return <GeneratingQuizFailed onPressRegenerate={onPressRegenerate} />;
+    }
+
+    if (!isGenerating && questions.length !== 0) {
+      return (
         <FlatList
           data={questions}
           keyExtractor={keyExtractor}
@@ -135,7 +155,19 @@ const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
           contentContainerStyle={styles.containerContent}
           ItemSeparatorComponent={renderItemSeparatorComponent}
         />
-      )}
+      );
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Header
+        useI18n
+        title="quiz:quiz_review"
+        onPressBack={onPressBack}
+        {...btnNext}
+      />
+      {renderContent()}
     </View>
   );
 };
@@ -153,7 +185,7 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingHorizontal: spacing.padding.large,
       paddingBottom: spacing.padding.large + insets.bottom,
     },
-    btnSave: {
+    btnNext: {
       marginRight: spacing.margin.small,
     },
     btnRegenerateQuiz: {

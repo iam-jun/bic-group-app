@@ -6,7 +6,7 @@ import {
   renderWithRedux,
   waitFor,
 } from '~/test/testUtils';
-import SubmitFormQuiz from '.';
+import EntryQuiz from './EntryQuiz';
 import MockedNavigator from '~/test/MockedNavigator';
 import usePostsStore from '~/store/entities/posts';
 import { postWithQuiz } from '~/test/mock_data/quiz';
@@ -24,7 +24,7 @@ describe('SubmitFormQuiz', () => {
     const wrapper = renderWithRedux(
       <MockedNavigator
         component={() => (
-          <SubmitFormQuiz
+          <EntryQuiz
             route={{
               params: { postId: '54f4a2eb-034d-4e4e-8810-44744bffc87d' },
             }}
@@ -56,7 +56,7 @@ describe('SubmitFormQuiz', () => {
     });
 
     const wrapper = renderWithRedux(<MockedNavigator
-      component={() => <SubmitFormQuiz route={{ params: { postId: '54f4a2eb-034d-4e4e-8810-44744bffc87d' } }} />}
+      component={() => <EntryQuiz route={{ params: { postId: '54f4a2eb-034d-4e4e-8810-44744bffc87d' } }} />}
     />);
 
     let inputTitle;
@@ -86,7 +86,7 @@ describe('SubmitFormQuiz', () => {
     });
 
     const wrapper = renderWithRedux(<MockedNavigator
-      component={() => <SubmitFormQuiz route={{ params: { postId: '54f4a2eb-034d-4e4e-8810-44744bffc87d' } }} />}
+      component={() => <EntryQuiz route={{ params: { postId: '54f4a2eb-034d-4e4e-8810-44744bffc87d' } }} />}
     />);
 
     let inputTitle;
