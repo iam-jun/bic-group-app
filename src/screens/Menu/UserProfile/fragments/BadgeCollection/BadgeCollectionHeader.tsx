@@ -8,7 +8,11 @@ import useUserBadge from './store';
 import useBaseHook from '~/hooks/baseHook';
 import ShowingBadges from '../../components/ShowingBadges/ShowingBadges';
 
-const BadgeCollectionHeader = ({ isShowEditButton }: {style?: any, isShowEditButton?:boolean}) => {
+interface BadgeCollectionHeaderProps {
+  isShowEditButton?:boolean;
+}
+
+const BadgeCollectionHeader = ({ isShowEditButton }: BadgeCollectionHeaderProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const { colors } = theme;
@@ -26,10 +30,7 @@ const BadgeCollectionHeader = ({ isShowEditButton }: {style?: any, isShowEditBut
   const totalBadgesText = t('user:owned_badges:total_badges').replace('(total)', totalBadges);
 
   return (
-    <View style={{
-      paddingHorizontal: spacing.padding.large,
-    }}
-    >
+    <View testID="badge_collection_header.view" style={styles.container}>
       <View style={styles.row}>
         <Text.H4 color={colors.neutral40} useI18n>
           user:showing_badges:title
@@ -39,7 +40,7 @@ const BadgeCollectionHeader = ({ isShowEditButton }: {style?: any, isShowEditBut
           isCurrentUser
           onPress={editBadge}
           icon="PenToSquareSolid"
-          testID="badge_collection.edit_btn"
+          testID="badge_collection_header.edit_btn"
         />
         )}
       </View>
@@ -49,7 +50,10 @@ const BadgeCollectionHeader = ({ isShowEditButton }: {style?: any, isShowEditBut
       <ShowingBadges isShowEditButton={isShowEditButton} />
       <Text.H4 color={colors.neutral40}>
         {t('user:owned_badges:title')}
-        <Text.BadgeS color={colors.neutral40}>
+        <Text.BadgeS
+          color={colors.neutral40}
+          testID="badge_collection_header.total_badges"
+        >
           {` ${totalBadgesText}`}
         </Text.BadgeS>
       </Text.H4>
@@ -62,8 +66,7 @@ const BadgeCollectionHeader = ({ isShowEditButton }: {style?: any, isShowEditBut
 
 const themeStyles = (_theme: ExtendedTheme) => StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: spacing.padding.large,
+    paddingHorizontal: spacing.padding.large,
   },
   row: {
     flexDirection: 'row',
