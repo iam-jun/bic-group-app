@@ -377,12 +377,12 @@ export const streamApiConfig = {
     url: `${provider.url}series`,
     params,
   }),
-  scheduleArticle: (draftArticleId: string, publishedAt: string): HttpApiRequestConfig => ({
+  scheduleArticle: (draftArticleId: string, scheduledAt: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}articles/${draftArticleId}/schedule`,
     method: 'put',
     data: {
-      publishedAt,
+      scheduledAt,
     },
   }),
   deleteArticle: (id: string): HttpApiRequestConfig => ({
