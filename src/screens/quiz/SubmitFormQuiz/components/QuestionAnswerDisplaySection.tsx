@@ -53,6 +53,7 @@ const QuestionAnswerDisplaySection: FC<QuestionAnswerDisplaySectionProps> = ({
     <TextInput
       testID="question_answer_display_section.question"
       label={t('quiz:input_title_number_question')}
+      isShowTextOptional
       value={value}
       placeholder={t('quiz:input_number_question_placeholder', {
         max: MAX_QUESTIONS,
