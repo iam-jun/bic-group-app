@@ -15,7 +15,7 @@ import scheduleArticle from './actions/scheduleArticle';
 
 export interface ICreateArticleState extends IBaseState {
   schedule: {
-    publishedAt: string;
+    scheduledAt: string;
     errorSubmiting: string;
     isSubmitingSuccess: boolean;
     isSubmiting: boolean;
@@ -45,7 +45,7 @@ export interface ICreateArticleState extends IBaseState {
     setTags: (tags?: IEditArticleTags[]) => void;
     addTag: (tag: IEditArticleTags) => void;
     removeTag: (tag: IEditArticleTags) => void;
-    setPublishedAt: (publishedAt: string) => void;
+    setScheduledAt: (scheduledAt: string) => void;
     setErrorScheduleSubmiting: (errorScheduleSubmiting: string) => void;
     setIsScheduleSubmitingSuccess: (
       isScheduleSubmitingSuccess: boolean
@@ -61,7 +61,7 @@ export interface ICreateArticleState extends IBaseState {
 
 const initialState: InitStateType<ICreateArticleState> = {
   schedule: {
-    publishedAt: '',
+    scheduledAt: '',
     errorSubmiting: '',
     isSubmitingSuccess: false,
     isSubmiting: false,
@@ -225,10 +225,10 @@ const useCreateArticle = (set, get) => ({
         state.data.tags = newSelecting;
       }, 'removeTags');
     },
-    setPublishedAt: (publishedAt: string) => {
+    setScheduledAt: (scheduledAt: string) => {
       set((state: ICreateArticleState) => {
-        state.schedule.publishedAt = publishedAt;
-      }, 'setPublishedAt');
+        state.schedule.scheduledAt = scheduledAt;
+      }, 'setScheduledAt');
     },
     setErrorScheduleSubmiting: (errorScheduleSubmiting: string) => {
       set((state: ICreateArticleState) => {

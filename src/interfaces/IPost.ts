@@ -71,6 +71,7 @@ export interface IPost {
   isReported?: boolean;
   isHidden?: boolean;
   publishedAt?: string;
+  scheduledAt?: string;
   wordCount?: number;
 }
 

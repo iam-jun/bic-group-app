@@ -709,8 +709,8 @@ const streamApi = {
   getArticleDetailByAdmin: (id: string, params?: IParamGetArticleDetail) => withHttpRequestPromise(
     streamApiConfig.getArticleDetailByAdmin, id, params,
   ),
-  scheduleArticle: (draftArticleId: string, publishedAt: string) => withHttpRequestPromise(
-    streamApiConfig.scheduleArticle, draftArticleId, publishedAt,
+  scheduleArticle: (draftArticleId: string, scheduledAt: string) => withHttpRequestPromise(
+    streamApiConfig.scheduleArticle, draftArticleId, scheduledAt,
   ),
   deleteArticle: (id: string) => withHttpRequestPromise(
     streamApiConfig.deleteArticle, id,

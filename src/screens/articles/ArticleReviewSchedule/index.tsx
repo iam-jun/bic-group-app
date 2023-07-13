@@ -49,7 +49,7 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
     categories,
     actor,
     tags,
-    publishedAt,
+    scheduledAt,
     status,
     deleted,
   } = data;
@@ -159,11 +159,11 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
   };
 
   const renderArticleBoxScheduleTime = () => {
-    if (!isMounted || !publishedAt) return null;
+    if (!isMounted || !scheduledAt) return null;
 
     return (
       <ArticleBoxScheduleTime
-        publishedAt={publishedAt}
+        scheduledAt={scheduledAt}
         status={status}
       />
     );
