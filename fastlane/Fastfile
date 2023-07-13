@@ -24,15 +24,15 @@ platform :android do
     code = ""
 
     begin
-      appcenter_codepush_release_react(
-        api_token: ENV["CODE_PUSH_ACCESS_KEY_ANDROID"],
-        app_name: ENV["APPCENTER_APP_NAME_ANDROID"],
-        deployment: "Staging",
-        target_version: ENV['VERSION_NAME'],
-        description: ENV['UPDATE_DESC'],
-        mandatory: false,
-        dry_run: false,
-      )
+#       appcenter_codepush_release_react(
+#         api_token: ENV["CODE_PUSH_ACCESS_KEY_ANDROID"],
+#         app_name: ENV["APPCENTER_APP_NAME_ANDROID"],
+#         deployment: "Staging",
+#         target_version: ENV['VERSION_NAME'],
+#         description: ENV['UPDATE_DESC'],
+#         mandatory: false,
+#         dry_run: false,
+#       )
 
       if (disable_notice != 'true')
         notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
@@ -60,15 +60,15 @@ platform :android do
       code = ""
 
       begin
-        appcenter_codepush_release_react(
-          api_token: ENV["CODE_PUSH_ACCESS_KEY_ANDROID"],
-          app_name: ENV["APPCENTER_APP_NAME_ANDROID"],
-          deployment: "Release",
-          target_version: ENV['VERSION_NAME'],
-          description: ENV['UPDATE_DESC'],
-          mandatory: false,
-          dry_run: false,
-        )
+#         appcenter_codepush_release_react(
+#           api_token: ENV["CODE_PUSH_ACCESS_KEY_ANDROID"],
+#           app_name: ENV["APPCENTER_APP_NAME_ANDROID"],
+#           deployment: "Release",
+#           target_version: ENV['VERSION_NAME'],
+#           description: ENV['UPDATE_DESC'],
+#           mandatory: false,
+#           dry_run: false,
+#         )
 
         if (disable_notice != 'true')
           notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
@@ -96,15 +96,15 @@ platform :android do
     code = ""
 
     begin
-      appcenter_codepush_release_react(
-        api_token: ENV["CODE_PUSH_ACCESS_KEY_ANDROID"],
-        app_name: ENV["APPCENTER_APP_NAME_ANDROID"],
-        deployment: "Production",
-        target_version: ENV['VERSION_NAME'],
-        description: ENV['UPDATE_DESC'],
-        mandatory: false,
-        dry_run: false,
-      )
+#       appcenter_codepush_release_react(
+#         api_token: ENV["CODE_PUSH_ACCESS_KEY_ANDROID"],
+#         app_name: ENV["APPCENTER_APP_NAME_ANDROID"],
+#         deployment: "Production",
+#         target_version: ENV['VERSION_NAME'],
+#         description: ENV['UPDATE_DESC'],
+#         mandatory: false,
+#         dry_run: false,
+#       )
 
       if (disable_notice != 'true')
         notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
@@ -319,15 +319,15 @@ platform :ios do
     code = ""
 
     begin
-      appcenter_codepush_release_react(
-        api_token: ENV["CODE_PUSH_ACCESS_KEY_IOS"],
-        app_name: ENV["APPCENTER_APP_NAME_IOS"],
-        deployment: "Staging",
-        target_version: ENV['VERSION_NAME'],
-        description: ENV['UPDATE_DESC'],
-        mandatory: false,
-        dry_run: false,
-      )
+#       appcenter_codepush_release_react(
+#         api_token: ENV["CODE_PUSH_ACCESS_KEY_IOS"],
+#         app_name: ENV["APPCENTER_APP_NAME_IOS"],
+#         deployment: "Staging",
+#         target_version: ENV['VERSION_NAME'],
+#         description: ENV['UPDATE_DESC'],
+#         mandatory: false,
+#         dry_run: false,
+#       )
 
       if (disable_notice != 'true')
         notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
@@ -355,15 +355,15 @@ platform :ios do
       code = ""
 
       begin
-        appcenter_codepush_release_react(
-          api_token: ENV["CODE_PUSH_ACCESS_KEY_IOS"],
-          app_name: ENV["APPCENTER_APP_NAME_IOS"],
-          deployment: "Release",
-          target_version: ENV['VERSION_NAME'],
-          description: ENV['UPDATE_DESC'],
-          mandatory: false,
-          dry_run: false,
-        )
+#         appcenter_codepush_release_react(
+#           api_token: ENV["CODE_PUSH_ACCESS_KEY_IOS"],
+#           app_name: ENV["APPCENTER_APP_NAME_IOS"],
+#           deployment: "Release",
+#           target_version: ENV['VERSION_NAME'],
+#           description: ENV['UPDATE_DESC'],
+#           mandatory: false,
+#           dry_run: false,
+#         )
 
         if (disable_notice != 'true')
           notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
@@ -391,15 +391,15 @@ platform :ios do
     code = ""
 
     begin
-      appcenter_codepush_release_react(
-        api_token: ENV["CODE_PUSH_ACCESS_KEY_IOS"],
-        app_name: ENV["APPCENTER_APP_NAME_IOS"],
-        deployment: "Production",
-        target_version: ENV['VERSION_NAME'],
-        description: ENV['UPDATE_DESC'],
-        mandatory: false,
-        dry_run: false,
-      )
+#       appcenter_codepush_release_react(
+#         api_token: ENV["CODE_PUSH_ACCESS_KEY_IOS"],
+#         app_name: ENV["APPCENTER_APP_NAME_IOS"],
+#         deployment: "Production",
+#         target_version: ENV['VERSION_NAME'],
+#         description: ENV['UPDATE_DESC'],
+#         mandatory: false,
+#         dry_run: false,
+#       )
 
       if (disable_notice != 'true')
         notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
