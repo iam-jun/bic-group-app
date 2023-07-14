@@ -5,7 +5,6 @@ import { rootNavigationRef } from '~/router/refs';
 import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
 import useArticlesStore from '~/screens/articles/ArticleDetail/store';
 import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
-import showToastError from '~/store/helper/showToastError';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
 import { PostType } from '~/interfaces/IPost';
@@ -27,25 +26,28 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
     const categories = data?.categories?.map?.((category) => category?.id);
     const series = data?.series?.map?.((item) => item?.id);
     const tags = data?.tags?.map?.((item) => item?.id);
+    const coverMedia = data?.coverMedia?.id && { id: data?.coverMedia?.id };
 
     const params = {
-      ...data, categories, series, tags,
+      ...data, categories, series, tags, coverMedia,
     } as any;
     delete params.id;
     delete params.setting;
 
-    const response = await streamApi.putEditArticle(articleId, params);
-
-    if (!response?.data) {
-      showToastError(response);
-      set((state: ICreateArticleState) => {
-        state.loading = false;
-      }, 'putEditArticleError');
-      return;
+    let response = null;
+    if (isDraft) {
+      response = await streamApi.putAutoSaveArticle(articleId, params);
+    } else {
+      response = await streamApi.putEditArticle(articleId, params);
     }
 
-    useArticlesStore.getState().actions.getArticleDetail({ articleId });
-    onSuccess?.();
+    // after edit article success, get article detail again with isDraft
+    // if isDraft, get article detail without comments
+    useArticlesStore.getState().actions.getArticleDetail({ articleId, isDraft });
+    useScheduleArticlesStore.getState().actions.getScheduleArticles({
+      isRefresh: true,
+      isShowToast: false,
+    });
 
     set((state: ICreateArticleState) => {
       state.loading = false;
@@ -55,7 +57,6 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
       showToastSuccess(response, 'article:text_edit_article_success');
     }
     onSuccess?.();
-    useScheduleArticlesStore.getState().actions.getScheduleArticles({ isRefresh: true });
     if (isNavigateBack) {
       navigation.goBack();
     }

@@ -50,6 +50,7 @@ export interface IGetSeries {
   contentSearch?: string;
   groupIds?: string[];
   itemIds?: string[];
+  limitSeries?: boolean;
 }
 
 export interface IReorderItems {
