@@ -1,85 +1,88 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable unused-imports/no-unused-imports */
 import React from 'react';
 import { fireEvent, renderHook, waitFor } from '@testing-library/react-native';
 import streamApi from '~/api/StreamApi';
-import { GenerateQuizParams, QuizStatus } from '~/interfaces/IQuiz';
+import {
+  GenStatus, IQuiz,
+} from '~/interfaces/IQuiz';
 import { mockGenerateQuizResponse } from '~/test/mock_data/quiz';
 import { renderWithRedux } from '~/test/testUtils';
 import ComposeQuiz from './index';
 import useQuizzesStore from '~/store/entities/quizzes';
+import useModalStore from '~/store/modal';
 
 describe('ComposeQuiz', () => {
-  // it('should generate quiz success', async () => {
-  //   jest.spyOn(streamApi, 'generateQuiz').mockImplementation(
-  //     () => Promise.resolve(mockGenerateQuizResponse) as any,
-  //   );
+  it('should show empty quiz', async () => {
+    jest.spyOn(streamApi, 'getQuizDetail').mockImplementation(
+      () => Promise.reject() as any,
+    );
 
-  //   const { result } = renderHook(() => useQuizzesStore());
+    const { result } = renderHook(() => useQuizzesStore());
 
-  //   const paramsGenerateQuiz: GenerateQuizParams = {
-  //     contentId: '2f1bb8bb-84ac-46ed-9a0e-c254487e3520',
-  //     title: 'hu',
-  //     description: '',
-  //     numberOfAnswers: 4,
-  //     numberOfQuestions: 10,
-  //     isRandom: true,
-  //     numberOfAnswersDisplay: 4,
-  //     numberOfQuestionsDisplay: 10,
-  //   };
+    result.current.actions.addOrUpdateQuiz(mockGenerateQuizResponse.data as IQuiz);
 
-  //   const wrapper = renderWithRedux(<ComposeQuiz route={{ params: paramsGenerateQuiz }} />);
+    renderWithRedux(<ComposeQuiz route={{ params: { quizId: mockGenerateQuizResponse.data.id } }} />);
 
-  //   await waitFor(() => {
-  //     expect(result.current.data['2f1bb8bb-84ac-46ed-9a0e-c254487e3520']).toBeDefined();
-  //   });
+    await waitFor(() => {
+      expect(result.current.data[mockGenerateQuizResponse.data.id]).not.toBeDefined();
+    });
+  });
 
-  //   expect(wrapper).toMatchSnapshot();
-  // });
+  it('should show generating quiz', async () => {
+    const fakeQuizResponse = {
+      ...mockGenerateQuizResponse,
+      data: {
+        ...mockGenerateQuizResponse.data,
+        genStatus: GenStatus.PENDING,
+      },
+    };
+    jest.spyOn(streamApi, 'getQuizDetail').mockImplementation(
+      () => Promise.resolve(fakeQuizResponse) as any,
+    );
 
-  // it('should save quiz success', async () => {
-  //   jest.spyOn(streamApi, 'generateQuiz').mockImplementation(
-  //     () => Promise.resolve(mockGenerateQuizResponse) as any,
-  //   );
-  //   const mockPublishResponse = {
-  //     ...mockGenerateQuizResponse,
-  //     data: {
-  //       ...mockGenerateQuizResponse.data,
-  //       status: QuizStatus.PUBLISHED,
-  //     },
-  //   };
-  //   jest.spyOn(streamApi, 'editQuiz').mockImplementation(
-  //     () => Promise.resolve(mockPublishResponse) as any,
-  //   );
-  //   jest
-  //     .spyOn(streamApi, 'getPostDetail')
-  //     .mockImplementation(() => Promise.resolve());
+    const wrapper = renderWithRedux(<ComposeQuiz route={{ params: { quizId: fakeQuizResponse.data.id } }} />);
 
-  //   const { result } = renderHook(() => useQuizzesStore());
+    await waitFor(() => {
+      expect(wrapper.getByTestId('generating_quiz')).toBeDefined();
+      const btnBack = wrapper.getByTestId('header.back');
+      fireEvent.press(btnBack);
+      expect(useModalStore.getState().toast.content).toBeDefined();
+    });
+  });
 
-  //   const paramsGenerateQuiz: GenerateQuizParams = {
-  //     contentId: '2f1bb8bb-84ac-46ed-9a0e-c254487e3520',
-  //     title: 'hu',
-  //     description: '',
-  //     numberOfAnswers: 4,
-  //     numberOfQuestions: 10,
-  //     isRandom: true,
-  //     numberOfAnswersDisplay: 4,
-  //     numberOfQuestionsDisplay: 10,
-  //   };
+  it('should show generating quiz failed', async () => {
+    const fakeQuizResponse = {
+      ...mockGenerateQuizResponse,
+      data: {
+        ...mockGenerateQuizResponse.data,
+        genStatus: GenStatus.FAILED,
+      },
+    };
+    jest.spyOn(streamApi, 'getQuizDetail').mockImplementation(
+      () => Promise.resolve(fakeQuizResponse) as any,
+    );
+    const spyApiRegenerateQuiz = jest.spyOn(streamApi, 'regenerateQuiz').mockImplementation(
+      () => Promise.resolve(fakeQuizResponse) as any,
+    );
 
-  //   const wrapper = renderWithRedux(<ComposeQuiz route={{ params: paramsGenerateQuiz }} />);
+    const wrapper = renderWithRedux(<ComposeQuiz route={{ params: { quizId: fakeQuizResponse.data.id } }} />);
 
-  //   await waitFor(() => {
-  //     expect(result.current.data['2f1bb8bb-84ac-46ed-9a0e-c254487e3520']).toBeDefined();
-  //   });
+    await waitFor(() => {
+      expect(wrapper.getByTestId('generating_quiz_failed')).toBeDefined();
+      const btnRegenerateQuiz = wrapper.getByTestId('generating_quiz_failed.btn_regenerate');
+      fireEvent.press(btnRegenerateQuiz);
+      expect(spyApiRegenerateQuiz).toBeCalled();
+    });
+  });
 
-  //   const btnSave = wrapper.getByTestId('header.button');
+  it('should show question', async () => {
+    jest.spyOn(streamApi, 'getQuizDetail').mockImplementation(
+      () => Promise.resolve(mockGenerateQuizResponse) as any,
+    );
 
-  //   fireEvent.press(btnSave);
+    const wrapper = renderWithRedux(<ComposeQuiz route={{ params: { quizId: mockGenerateQuizResponse.data.id } }} />);
 
-  //   await waitFor(() => {
-  //     expect(result.current.data['2f1bb8bb-84ac-46ed-9a0e-c254487e3520'].status).toBe(QuizStatus.PUBLISHED);
-  //   });
-  // });
+    await waitFor(() => {
+      expect(wrapper.queryAllByTestId('question_compose_quiz_', { exact: false }).length).toBe(mockGenerateQuizResponse.data.questions.length);
+    });
+  });
 });

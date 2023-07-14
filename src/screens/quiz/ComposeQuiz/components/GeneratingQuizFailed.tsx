@@ -20,7 +20,7 @@ const GeneratingQuizFailed: FC<GeneratingQuizFailedProps> = ({
   const styles = createStyle(theme);
 
   return (
-    <View style={styles.container}>
+    <View testID="generating_quiz_failed" style={styles.container}>
       <Image style={styles.img} source={images.img_error} />
       <Text.H5 useI18n color={colors.neutral40} style={styles.centerText}>
         quiz:something_went_wrong
@@ -29,7 +29,7 @@ const GeneratingQuizFailed: FC<GeneratingQuizFailedProps> = ({
         quiz:sorry_an_error_has_occurred
       </Text.BodyM>
       <ViewSpacing height={spacing.margin.extraLarge} />
-      <Button.Primary useI18n icon="RotateSolid" onPress={onPressRegenerate}>
+      <Button.Primary testID="generating_quiz_failed.btn_regenerate" useI18n icon="RotateSolid" onPress={onPressRegenerate}>
         quiz:regenerate
       </Button.Primary>
     </View>

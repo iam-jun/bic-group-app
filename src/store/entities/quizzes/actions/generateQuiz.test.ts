@@ -30,7 +30,7 @@ describe('generateQuiz', () => {
     expect(spyApiGenerateQuiz).toBeCalled();
 
     await waitFor(() => {
-      expect(result.current.data['2f1bb8bb-84ac-46ed-9a0e-c254487e3520']).toBeDefined();
+      expect(result.current.data[mockGenerateQuizResponse.data.id]).toBeDefined();
     });
   });
 
@@ -58,7 +58,6 @@ describe('generateQuiz', () => {
     expect(spyApiGenerateQuiz).toBeCalled();
 
     await waitFor(() => {
-      expect(result.current.data['2f1bb8bb-84ac-46ed-9a0e-c254487e3520']).not.toBeDefined();
       expect(result.current.isGenerating).toBeFalsy();
       expect(useModalStore.getState().toast).toBeDefined();
     });

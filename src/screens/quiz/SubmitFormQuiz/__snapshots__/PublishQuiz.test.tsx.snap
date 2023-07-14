@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SubmitFormQuiz should render correctly 1`] = `
+exports[`PublishQuiz should render correctly 1`] = `
 <RNSScreenStack
   style={
     Object {
@@ -241,14 +241,14 @@ exports[`SubmitFormQuiz should render correctly 1`] = `
                     }
                     testID="header.text"
                   >
-                    Create Quiz
+                    Quiz information
                   </Text>
                 </View>
               </View>
               <View
                 accessibilityState={
                   Object {
-                    "disabled": false,
+                    "disabled": true,
                   }
                 }
                 accessible={true}
@@ -284,7 +284,7 @@ exports[`SubmitFormQuiz should render correctly 1`] = `
                       },
                       undefined,
                       Object {
-                        "backgroundColor": "#7335C0",
+                        "backgroundColor": "#F4EFFB",
                         "height": 36,
                         "paddingHorizontal": 12,
                       },
@@ -301,7 +301,7 @@ exports[`SubmitFormQuiz should render correctly 1`] = `
                           "fontSize": 15,
                         },
                         Object {
-                          "color": "#FFFFFF",
+                          "color": "#BAC0DE",
                         },
                         Array [
                           Object {
@@ -313,7 +313,7 @@ exports[`SubmitFormQuiz should render correctly 1`] = `
                     }
                     testID="button.text"
                   >
-                    Next
+                    Create
                   </Text>
                 </View>
               </View>
@@ -375,23 +375,238 @@ exports[`SubmitFormQuiz should render correctly 1`] = `
         >
           <View>
             <View>
-              <Text
+              <View
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
-                      "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 17,
+                      "flexDirection": "column",
+                      "marginVertical": 4,
                     },
-                    Object {},
+                    undefined,
+                  ]
+                }
+                testID="text_input"
+              >
+                <View
+                  style={
                     Object {
-                      "marginBottom": 16,
+                      "marginBottom": 8,
+                      "marginRight": 0,
+                      "maxWidth": 750,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#353E6E",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 15,
+                        },
+                        Object {
+                          "color": "#181C32",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Title
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Array [
+                      Object {},
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "flexDirection": "row",
+                          "height": 40,
+                        },
+                      ]
+                    }
+                  >
+                    <View
+                      style={
+                        Array [
+                          Object {
+                            "borderBottomLeftRadius": 6,
+                            "borderBottomRightRadius": 6,
+                            "borderTopLeftRadius": 6,
+                            "borderTopRightRadius": 6,
+                            "borderWidth": 1,
+                            "flex": 1,
+                            "flexDirection": "row",
+                          },
+                          Object {
+                            "backgroundColor": "#FFFFFF",
+                            "borderColor": "#E3E6F2",
+                          },
+                          undefined,
+                        ]
+                      }
+                    >
+                      <View
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "flex": 1,
+                            "flexDirection": "row",
+                            "height": 40,
+                          }
+                        }
+                      >
+                        <TextInput
+                          editable={true}
+                          maxLength={64}
+                          onBlur={[Function]}
+                          onChangeText={[Function]}
+                          onFocus={[Function]}
+                          placeholder="Enter title of quiz"
+                          placeholderTextColor="#BAC0DE"
+                          selectionColor="#767D93"
+                          style={
+                            Array [
+                              Object {
+                                "flex": 1,
+                                "fontFamily": "BeVietnamPro-Light",
+                                "fontSize": 14,
+                                "height": 40,
+                                "paddingHorizontal": 16,
+                              },
+                              Object {
+                                "color": "#181C32",
+                              },
+                            ]
+                          }
+                          testID="title_description_section.title"
+                          value=""
+                        />
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+              <View
+                style={
+                  Array [
+                    Object {
+                      "padding": 16,
+                    },
+                    Object {
+                      "paddingHorizontal": 0,
                     },
                   ]
                 }
+                testID="text_input.text_area"
               >
-                Enter the number of questions and answers for your quiz
-              </Text>
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#353E6E",
+                        "fontFamily": "BeVietnamPro-Light",
+                        "fontSize": 15,
+                      },
+                      Object {
+                        "color": "#181C32",
+                      },
+                      Object {
+                        "marginBottom": 8,
+                      },
+                    ]
+                  }
+                >
+                  Description
+                </Text>
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "borderColor": "#E3E6F2",
+                        "borderRadius": 4,
+                        "borderWidth": 1,
+                        "marginBottom": 6,
+                        "minHeight": 84,
+                        "paddingHorizontal": 12,
+                        "paddingVertical": 6,
+                      },
+                      Object {
+                        "borderColor": "#E3E6F2",
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                  <TextInput
+                    maxLength={255}
+                    multiline={true}
+                    onBlur={[Function]}
+                    onChangeText={[Function]}
+                    onFocus={[Function]}
+                    placeholder="Describe quiz"
+                    placeholderTextColor="#BAC0DE"
+                    selectionColor="#767D93"
+                    style={
+                      Array [
+                        Object {
+                          "color": "#353E6E",
+                          "flex": 1,
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 14,
+                        },
+                        undefined,
+                      ]
+                    }
+                    testID="title_description_section.description"
+                    textAlignVertical="top"
+                    value=""
+                  />
+                </View>
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#212745",
+                        "fontFamily": "BeVietnamPro-Light",
+                        "fontSize": 11,
+                      },
+                      Object {
+                        "color": "#BAC0DE",
+                      },
+                      Object {
+                        "alignSelf": "flex-end",
+                      },
+                    ]
+                  }
+                >
+                  0/255
+                </Text>
+              </View>
+            </View>
+            <View
+              style={
+                Object {
+                  "borderTopColor": "#E3E6F2",
+                  "borderTopWidth": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "height": 16,
+                    "paddingHorizontal": undefined,
+                    "paddingVertical": undefined,
+                    "width": undefined,
+                  }
+                }
+              />
               <View
                 style={
                   Array [
@@ -429,6 +644,23 @@ exports[`SubmitFormQuiz should render correctly 1`] = `
                     }
                   >
                     Question
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "#353E6E",
+                            "fontFamily": "BeVietnamPro-Light",
+                            "fontSize": 15,
+                          },
+                          Object {
+                            "color": "#BAC0DE",
+                          },
+                          undefined,
+                        ]
+                      }
+                    >
+                       (optional)
+                    </Text>
                   </Text>
                 </View>
                 <View
@@ -501,32 +733,143 @@ exports[`SubmitFormQuiz should render correctly 1`] = `
                               },
                             ]
                           }
-                          testID="question_answer_section.question"
-                          value="10"
+                          testID="question_answer_display_section.question"
+                          value=""
                         />
                       </View>
                     </View>
                   </View>
                 </View>
               </View>
-              <View
+              <Text
                 style={
                   Array [
                     Object {
-                      "flexDirection": "column",
-                      "marginVertical": 4,
+                      "color": "#212745",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 13,
                     },
-                    undefined,
+                    Object {},
+                    Object {
+                      "marginTop": 6,
+                    },
                   ]
                 }
-                testID="text_input"
               >
+                Enter the number of question will display for member.
+              </Text>
+              <View
+                style={
+                  Object {
+                    "height": 24,
+                    "paddingHorizontal": undefined,
+                    "paddingVertical": undefined,
+                    "width": undefined,
+                  }
+                }
+              />
+            </View>
+            <View
+              accessibilityState={
+                Object {
+                  "disabled": true,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+              testID="button_wrapper"
+            >
+              <View
+                style={
+                  Object {
+                    "flexDirection": "row",
+                  }
+                }
+              >
+                <View
+                  accessibilityState={
+                    Object {
+                      "disabled": true,
+                    }
+                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={false}
+                  hitSlop={
+                    Object {
+                      "bottom": 10,
+                      "left": 10,
+                      "right": 10,
+                      "top": 10,
+                    }
+                  }
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Object {
+                      "opacity": 1,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                        },
+                        undefined,
+                        Object {
+                          "backgroundColor": undefined,
+                        },
+                      ]
+                    }
+                  >
+                    <View
+                      style={
+                        Array [
+                          undefined,
+                          undefined,
+                          undefined,
+                        ]
+                      }
+                    >
+                      <View />
+                    </View>
+                  </View>
+                </View>
                 <View
                   style={
                     Object {
-                      "marginBottom": 8,
-                      "marginRight": 0,
-                      "maxWidth": 750,
+                      "height": undefined,
+                      "paddingHorizontal": undefined,
+                      "paddingVertical": undefined,
+                      "width": 12,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
                     }
                   }
                 >
@@ -534,108 +877,19 @@ exports[`SubmitFormQuiz should render correctly 1`] = `
                     style={
                       Array [
                         Object {
-                          "color": "#353E6E",
+                          "color": "#212745",
                           "fontFamily": "BeVietnamPro-Light",
-                          "fontSize": 15,
+                          "fontSize": 13,
                         },
-                        Object {
-                          "color": "#181C32",
-                        },
+                        Object {},
                         undefined,
                       ]
                     }
                   >
-                    Answer
+                    Do you want to randomize the questions and answers or not?
                   </Text>
                 </View>
-                <View
-                  style={
-                    Array [
-                      Object {},
-                    ]
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "flexDirection": "row",
-                          "height": 40,
-                        },
-                      ]
-                    }
-                  >
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "borderBottomLeftRadius": 6,
-                            "borderBottomRightRadius": 6,
-                            "borderTopLeftRadius": 6,
-                            "borderTopRightRadius": 6,
-                            "borderWidth": 1,
-                            "flex": 1,
-                            "flexDirection": "row",
-                          },
-                          Object {
-                            "backgroundColor": "#FFFFFF",
-                            "borderColor": "#E3E6F2",
-                          },
-                          undefined,
-                        ]
-                      }
-                    >
-                      <View
-                        style={
-                          Object {
-                            "alignItems": "center",
-                            "flex": 1,
-                            "flexDirection": "row",
-                            "height": 40,
-                          }
-                        }
-                      >
-                        <TextInput
-                          editable={true}
-                          keyboardType="number-pad"
-                          onBlur={[Function]}
-                          onChangeText={[Function]}
-                          onFocus={[Function]}
-                          placeholder="Enter number 0-{{max}}"
-                          placeholderTextColor="#BAC0DE"
-                          selectionColor="#767D93"
-                          style={
-                            Array [
-                              Object {
-                                "flex": 1,
-                                "fontFamily": "BeVietnamPro-Light",
-                                "fontSize": 14,
-                                "height": 40,
-                                "paddingHorizontal": 16,
-                              },
-                              Object {
-                                "color": "#181C32",
-                              },
-                            ]
-                          }
-                          testID="question_answer_section.answer"
-                          value="4"
-                        />
-                      </View>
-                    </View>
-                  </View>
-                </View>
               </View>
-              <View
-                style={
-                  Object {
-                    "height": 16,
-                    "paddingHorizontal": undefined,
-                    "paddingVertical": undefined,
-                    "width": undefined,
-                  }
-                }
-              />
             </View>
           </View>
         </RCTScrollView>

@@ -48,7 +48,7 @@ const QuestionField: FC<QuestionFieldProps> = ({ remove, questionIndex }) => {
           render={renderTextInput}
         />
       </View>
-      <Button style={styles.square} onPress={remove}>
+      <Button testID="question_field.btn_remove" style={styles.square} onPress={remove}>
         <Icon size={16} tintColor={colors.neutral40} icon="Xmark" />
       </Button>
     </View>

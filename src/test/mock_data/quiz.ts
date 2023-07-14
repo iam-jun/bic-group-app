@@ -1,3 +1,5 @@
+import { GenStatus } from '~/interfaces/IQuiz';
+
 export const postWithQuiz = {
   code: 'api.ok',
   data: {
@@ -130,219 +132,270 @@ export const mockGenerateQuizResponse = {
     id: '47279515-8d41-41e8-935c-d3d07293489b',
     contentId: '2f1bb8bb-84ac-46ed-9a0e-c254487e3520',
     status: 'DRAFT',
-    title: 'hu',
+    genStatus: GenStatus.PROCESSED,
+    title: null,
     description: null,
     numberOfQuestions: 10,
-    numberOfQuestionsDisplay: 10,
+    numberOfQuestionsDisplay: null,
     numberOfAnswers: 4,
-    numberOfAnswersDisplay: 4,
+    numberOfAnswersDisplay: null,
     isRandom: true,
     questions: [
       {
+        id: '123',
         question: 'Con mèo biết làm gì?',
         answers: [
           {
+            id: '1234',
             answer: 'Biết bơi',
             isCorrect: false,
           },
           {
+            id: '12345',
             answer: 'Biết sửa cơ điện',
             isCorrect: false,
           },
           {
+            id: '123456',
             answer: 'Biết trèo cây',
             isCorrect: true,
           },
           {
+            id: '1234567',
             answer: 'Biết lái ô tô',
             isCorrect: false,
           },
         ],
       },
       {
+        id: '12345678',
         question: 'Mèo là động vật thuộc họ nào?',
         answers: [
           {
+            id: '123456789',
             answer: 'Họ mèo',
             isCorrect: true,
           },
           {
+            id: '12345678910',
             answer: 'Họ chó',
             isCorrect: false,
           },
           {
+            id: '12345678911',
             answer: 'Họ báo',
             isCorrect: false,
           },
           {
+            id: '12345678912',
             answer: 'Họ chuột',
             isCorrect: false,
           },
         ],
       },
       {
+        id: '12345678913',
         question: 'Mèo có bao nhiêu chân?',
         answers: [
           {
+            id: '12345678914',
             answer: '2 chân',
             isCorrect: false,
           },
           {
+            id: '12345678915',
             answer: '3 chân',
             isCorrect: false,
           },
           {
+            id: '12345678916',
             answer: '4 chân',
             isCorrect: true,
           },
           {
+            id: '12345678917',
             answer: '5 chân',
             isCorrect: false,
           },
         ],
       },
       {
+        id: '12345678918',
         question: 'Cây cau là loại cây gì?',
         answers: [
           {
+            id: '12345678919',
             answer: 'Cây cỏ',
             isCorrect: false,
           },
           {
+            id: '12345678920',
             answer: 'Cây hoa',
             isCorrect: false,
           },
           {
+            id: '12345678921',
             answer: 'Cây thân gỗ',
             isCorrect: true,
           },
           {
+            id: '12345678922',
             answer: 'Cây xương rồng',
             isCorrect: false,
           },
         ],
       },
       {
+        id: '12345678923',
         question: 'Con mèo có móng vuốt dài hay ngắn?',
         answers: [
           {
+            id: '12345678924',
             answer: 'Dài',
             isCorrect: true,
           },
           {
+            id: '12345678925',
             answer: 'Ngắn',
             isCorrect: false,
           },
           {
+            id: '12345678926',
             answer: 'Không có móng vuốt',
             isCorrect: false,
           },
           {
+            id: '12345678927',
             answer: 'Móng vuốt giống chó',
             isCorrect: false,
           },
         ],
       },
       {
+        id: '12345678928',
         question: 'Còn gọi mèo là gì?',
         answers: [
           {
+            id: '12345678929',
             answer: 'Mèu',
             isCorrect: false,
           },
           {
+            id: '12345678930',
             answer: 'Mỡ',
             isCorrect: false,
           },
           {
+            id: '12345678931',
             answer: 'Móc',
             isCorrect: false,
           },
           {
+            id: '12345678932',
             answer: 'Miu',
             isCorrect: true,
           },
         ],
       },
       {
+        id: '12345678933',
         question: 'Mèo có ai thức ăn yêu thích?',
         answers: [
           {
+            id: '12345678934',
             answer: 'Rau củ',
             isCorrect: false,
           },
           {
+            id: '12345678935',
             answer: 'Hamburger',
             isCorrect: false,
           },
           {
+            id: '12345678936',
             answer: 'Cà phê',
             isCorrect: false,
           },
           {
+            id: '12345678937',
             answer: 'Cá',
             isCorrect: true,
           },
         ],
       },
       {
+        id: '12345678938',
         question: 'Mèo là động vật hoang dã hay nuôi trong nhà?',
         answers: [
           {
+            id: '12345678939',
             answer: 'Hoang dã',
             isCorrect: false,
           },
           {
+            id: '12345678940',
             answer: 'Nhà',
             isCorrect: false,
           },
           {
+            id: '12345678941',
             answer: 'Đều được',
             isCorrect: true,
           },
           {
+            id: '12345678942',
             answer: 'Không thể xác định',
             isCorrect: false,
           },
         ],
       },
       {
+        id: '12345678943',
         question: 'Mèo có màu lông gì?',
         answers: [
           {
+            id: '12345678944',
             answer: 'Màu trắng',
             isCorrect: false,
           },
           {
+            id: '12345678945',
             answer: 'Màu đen',
             isCorrect: false,
           },
           {
+            id: '12345678946',
             answer: 'Màu nâu',
             isCorrect: false,
           },
           {
+            id: '12345678947',
             answer: 'Tất cả các màu trên',
             isCorrect: true,
           },
         ],
       },
       {
+        id: '12345678948',
         question: 'Con mèo có khả năng nào sau đây?',
         answers: [
           {
+            id: '12345678949',
             answer: 'Bay',
             isCorrect: false,
           },
           {
+            id: '12345678950',
             answer: 'Biết nói',
             isCorrect: false,
           },
           {
+            id: '12345678951',
             answer: 'Nhảy cao',
             isCorrect: true,
           },
           {
+            id: '12345678952',
             answer: 'Đói mãi không no',
             isCorrect: false,
           },

@@ -4,40 +4,40 @@ import streamApi from '~/api/StreamApi';
 import { mockGenerateQuizResponse } from '~/test/mock_data/quiz';
 import useModalStore from '~/store/modal';
 
-describe('regenerateQuiz', () => {
-  it('should regenerate quiz success', async () => {
-    const spyApiRegenerateQuiz = jest.spyOn(streamApi, 'regenerateQuiz').mockImplementation(
+describe('getQuizDetail', () => {
+  it('should getQuizDetail success', async () => {
+    const spyApiGetQuizDetail = jest.spyOn(streamApi, 'getQuizDetail').mockImplementation(
       () => Promise.resolve(mockGenerateQuizResponse) as any,
     );
 
     const { result } = renderHook(() => useQuizzesStore());
 
     act(() => {
-      result.current.actions.regenerateQuiz(mockGenerateQuizResponse.data.id);
+      result.current.actions.getQuizDetail({ quizId: mockGenerateQuizResponse.data.id });
     });
 
-    expect(spyApiRegenerateQuiz).toBeCalled();
+    expect(spyApiGetQuizDetail).toBeCalled();
 
     await waitFor(() => {
       expect(result.current.data[mockGenerateQuizResponse.data.id]).toBeDefined();
     });
   });
 
-  it('should generate quiz failed', async () => {
-    const spyApiRegenerateQuiz = jest.spyOn(streamApi, 'regenerateQuiz').mockImplementation(
-      () => Promise.reject() as any,
+  it('should getQuizDetail failed', async () => {
+    const spyApiGetQuizDetail = jest.spyOn(streamApi, 'getQuizDetail').mockImplementation(
+      () => Promise.resolve() as any,
     );
 
     const { result } = renderHook(() => useQuizzesStore());
 
     act(() => {
-      result.current.actions.regenerateQuiz('123');
+      result.current.actions.getQuizDetail({ quizId: mockGenerateQuizResponse.data.id });
     });
 
-    expect(spyApiRegenerateQuiz).toBeCalled();
+    expect(spyApiGetQuizDetail).toBeCalled();
 
     await waitFor(() => {
-      expect(result.current.isGenerating).toBeFalsy();
+      expect(result.current.isGettingQuizDetail).toBeFalsy();
       expect(useModalStore.getState().toast).toBeDefined();
     });
   });

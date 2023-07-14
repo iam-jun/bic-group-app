@@ -1,9 +1,7 @@
 import React, { FC } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { Platform, StyleSheet, View } from 'react-native';
-import {
-  Controller, useFormContext, useWatch,
-} from 'react-hook-form';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { EditQuestionForm } from '~/interfaces/IQuiz';
 import Text from '~/baseComponents/Text';
 import { TextArea } from '~/baseComponents/Input';
@@ -54,7 +52,10 @@ const AnswerField: FC<AnswerFieldProps> = ({ answerIndex, remove }) => {
       onChangeText={onChange}
       showCountLength={false}
       style={styles.containerViewInput}
-      inputStyle={[styles.inputStyle, Platform.OS === 'android' && { padding: 0 }]}
+      inputStyle={[
+        styles.inputStyle,
+        Platform.OS === 'android' && { padding: 0 },
+      ]}
       inputStyleContainer={styles.inputStyleContainer}
     />
   );
@@ -75,12 +76,29 @@ const AnswerField: FC<AnswerFieldProps> = ({ answerIndex, remove }) => {
           render={renderTextInput}
         />
       </View>
-      <Button onPress={setCorrectAnswer} style={[styles.square, isCorrect && styles.squareCheckCorrect]}>
-        <Icon size={16} tintColor={isCorrect ? colors.white : colors.neutral40} icon="Check" />
+      <Button
+        testID={`answer_field.btn_check_${answerIndex}`}
+        onPress={setCorrectAnswer}
+        style={[styles.square, isCorrect && styles.squareCheckCorrect]}
+      >
+        <Icon
+          size={16}
+          tintColor={isCorrect ? colors.white : colors.neutral40}
+          icon="Check"
+        />
       </Button>
       <ViewSpacing width={spacing.margin.xSmall} />
-      <Button style={styles.square} disabled={isCorrect} onPress={removeField}>
-        <Icon size={16} tintColor={isCorrect ? colors.neutral20 : colors.neutral40} icon="Xmark" />
+      <Button
+        testID={`answer_field.btn_remove_${answerIndex}`}
+        style={styles.square}
+        disabled={isCorrect}
+        onPress={removeField}
+      >
+        <Icon
+          size={16}
+          tintColor={isCorrect ? colors.neutral20 : colors.neutral40}
+          icon="Xmark"
+        />
       </Button>
     </View>
   );
