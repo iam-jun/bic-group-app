@@ -7,7 +7,7 @@ import showToastError from '~/store/helper/showToastError';
 import { timeOut } from '~/utils/common';
 
 const getScheduleArticles = (set, get) => async (payload: IPayloadGetScheduleArticles) => {
-  const { isRefresh = true } = payload;
+  const { isRefresh = true, isShowToast = true } = payload;
   const { scheduleArticles }: IScheduleArticlesState = get();
   const {
     data: listScheduleArticle,
@@ -49,7 +49,7 @@ const getScheduleArticles = (set, get) => async (payload: IPayloadGetScheduleArt
       state.scheduleArticles.hasNextPage = false;
     }, 'getScheduleArticlesError');
     console.error('\x1b[31m🐣️ action getScheduleArticles error: ', e, '\x1b[0m');
-    showToastError(e);
+    isShowToast && showToastError(e);
   }
 };
 

@@ -86,6 +86,7 @@ const GridItem = ({
       onClose={onClose}
     >
       <TouchableOpacity
+        testID="badge_collection.badge_item"
         style={[styles.container,
         ]}
         disabled={shouldDisable}
@@ -99,13 +100,24 @@ const GridItem = ({
           source={{ uri: item?.iconUrl }}
         />
         {Boolean(isSelected) && (
-        <View style={styles.iconChose}>
+        <View
+          testID="badge_collection.badge_item.checked"
+          style={styles.iconChose}
+        >
           <Icon size={10} icon="Check" tintColor={colors.white} />
         </View>
         )}
-        {Boolean(!isSelected) && Boolean(disabled) && <View style={styles.disabled} />}
+        {Boolean(!isSelected) && Boolean(disabled) && (
+        <View
+          testID="badge_collection.badge_item.disabled"
+          style={styles.disabled}
+        />
+        )}
         {Boolean(item?.isNew) && !Boolean(isSelected) && !Boolean(shouldHideBadgeNew) && (
-          <View style={styles.badgeNewStyle}>
+          <View
+            testID="badge_collection.badge_item.badge_new"
+            style={styles.badgeNewStyle}
+          >
             <BadgeNew />
           </View>
         )}

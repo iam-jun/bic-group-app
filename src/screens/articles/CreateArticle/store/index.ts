@@ -23,6 +23,7 @@ export interface ICreateArticleState extends IBaseState {
   loading: boolean;
   data: IEditArticleData;
   isDraft: boolean;
+  isSchedule: boolean;
   chooseAudiences: IAudience[];
   actions: {
     setLoading: (isLoading: boolean) => void;
@@ -37,6 +38,7 @@ export interface ICreateArticleState extends IBaseState {
     addCategory: (category: ICategory) => void;
     removeCategory: (category: ICategory) => void;
     setIsDraft: (setIsDraft: boolean) => void;
+    setIsSchedule: (isSchedule: boolean) => void;
     setSeries: (series?: IEditArticleSeries[]) => void;
     addSeries: (series: IEditArticleSeries) => void;
     removeSeries: (series: IEditArticleSeries) => void;
@@ -90,6 +92,7 @@ const initialState: InitStateType<ICreateArticleState> = {
     wordCount: 0,
   },
   isDraft: false,
+  isSchedule: false,
   chooseAudiences: [],
 };
 
@@ -167,6 +170,11 @@ const useCreateArticle = (set, get) => ({
       set((state: ICreateArticleState) => {
         state.isDraft = isDraft;
       }, 'setIsDraft');
+    },
+    setIsSchedule: (isSchedule: boolean) => {
+      set((state: ICreateArticleState) => {
+        state.isSchedule = isSchedule;
+      }, 'setIsSchedule');
     },
     setSeries: (series?: IEditArticleSeries[]) => {
       set((state: ICreateArticleState) => {

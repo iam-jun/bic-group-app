@@ -3,7 +3,8 @@ export const mockOwnedBadges = [
     id: '3d06a315-d416-4ef2-aa7b-3caa14847b3f',
     name: 'Joy Plain',
     icon: 'https://cdn.dribbble.com/users/183984/screenshots/2582592/pokemon_5.jpg',
-    data: [
+    isNew: true,
+    badges: [
       {
         id: 'a8cbf951-a51e-49ea-9aa5-1c1c39142b3e',
         name: 'test badge',
@@ -11,8 +12,9 @@ export const mockOwnedBadges = [
       },
       {
         id: 'bd2989d8-6c47-45f0-8c04-785869c86655',
-        name: 'test badge 2',
+        name: 'Name ne',
         iconUrl: 'https://cdn-icons-png.flaticon.com/512/4436/4436481.png',
+        isNew: true,
       },
       {
         id: 'a34f9543-ec3f-47c0-aecb-d8ac8f6e6f513',
@@ -20,7 +22,7 @@ export const mockOwnedBadges = [
         iconUrl: 'https://cdn-icons-png.flaticon.com/512/4436/4436481.png',
       },
       {
-        id: 'a8cbf951-a51e-49ea-9aa5-1c1c39142b3e',
+        id: 'a8cbf951-a51e-49ea-9aa5-1c1c3142b3e',
         name: 'test badge',
         iconUrl: 'https://cdn-icons-png.flaticon.com/512/4436/4436481.png',
       },
@@ -55,7 +57,7 @@ export const mockOwnedBadges = [
     id: '3d06a315-d416-4ef2-aa7b-3caa14847bw3f',
     name: 'Joy Plain 2',
     icon: 'https://cdn.dribbble.com/users/183984/screenshots/2582592/pokemon_5.jpg',
-    data: [
+    badges: [
       {
         id: 'a8cbf951-a51e-49ea-9aa5-1c1c3914w2b3e',
         name: 'test badge',
@@ -102,5 +104,52 @@ export const mockOwnedBadges = [
         iconUrl: 'https://cdn-icons-png.flaticon.com/512/4436/4436481.png',
       },
     ],
+  },
+];
+
+export const mockBadges = {
+  'a8cbf951-a51e-49ea-9aa5-1c1c39142b3e': {
+    id: 'a8cbf951-a51e-49ea-9aa5-1c1c39142b3e',
+    name: 'test badge',
+    iconUrl: 'https://cdn-icons-png.flaticon.com/512/4436/4436481.png',
+    isNew: true,
+  },
+  'a8cbf951-a51e-49ea-9aa5-1c1c3914567': {
+    id: 'a8cbf951-a51e-49ea-9aa5-1c1c3914567',
+    name: 'test badge',
+    iconUrl: 'https://cdn-icons-png.flaticon.com/512/4436/4436481.png',
+  },
+  'bd2989d8-6c47-45f0-8c04-785869c86655': {
+    id: 'bd2989d8-6c47-45f0-8c04-785869c86655',
+    name: 'test badge 2',
+    iconUrl: 'https://cdn-icons-png.flaticon.com/512/4436/4436481.png',
+    isNew: true,
+  },
+  'a34f9543-ec3f-47c0-aecb-d8ac8f6e6f513': {
+    id: 'a34f9543-ec3f-47c0-aecb-d8ac8f6e6f513',
+    name: 'test badge 3',
+    iconUrl: 'https://cdn-icons-png.flaticon.com/512/4436/4436481.png',
+  },
+};
+
+export const mockBadgeList = [
+  {
+    id: 'a8cbf951-a51e-49ea-9aa5-1c1c39142b3e',
+    name: 'test badge',
+    iconUrl: 'https://cdn-icons-png.flaticon.com/512/4436/4436481.png',
+    isNew: true,
+    community: {
+      id: '3d06a315-d416-4ef2-aa7b-3caa14847b3f',
+      name: 'Joy Plain',
+    },
+  }, {
+    id: 'bd2989d8-6c47-45f0-8c04-785869c86655',
+    name: 'test badge 2',
+    iconUrl: 'https://cdn-icons-png.flaticon.com/512/4436/4436481.png',
+    isNew: true,
+    community: {
+      id: '3d06a315-d416-4ef2-aa7b-3caa14847b3f',
+      name: 'Joy Plain',
+    },
   },
 ];

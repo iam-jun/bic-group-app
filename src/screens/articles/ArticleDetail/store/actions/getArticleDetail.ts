@@ -7,7 +7,9 @@ import usePostsStore from '~/store/entities/posts';
 import { IArticlesState } from '..';
 
 const getArticleDetail = (set, get) => async (payload: IPayloadGetArticleDetail) => {
-  const { articleId: id, isReported, isAdmin } = payload || {};
+  const {
+    articleId: id, isReported, isAdmin, isDraft = false,
+  } = payload || {};
   const { requestings }: IArticlesState = get();
 
   if (requestings[id]) return;
@@ -36,13 +38,24 @@ const getArticleDetail = (set, get) => async (payload: IPayloadGetArticleDetail)
       const responeArticleDetail = isAdmin
         ? await streamApi.getArticleDetailByAdmin(id, params)
         : await streamApi.getArticleDetail(id);
-      const responseComments = await streamApi.getCommentsByPostId({ postId: id, order: 'DESC' });
-      if (responeArticleDetail?.data && responseComments?.data) {
+
+      if (!isDraft) {
+        const responseComments = await streamApi.getCommentsByPostId({ postId: id, order: 'DESC' });
+        if (responeArticleDetail?.data) {
+          response = {
+            ...responeArticleDetail.data,
+            comments: {
+              list: responseComments.data?.list || [],
+              meta: responseComments.data?.meta || {},
+            },
+          };
+        }
+      } else {
         response = {
           ...responeArticleDetail.data,
           comments: {
-            list: responseComments.data?.list,
-            meta: responseComments.data?.meta,
+            list: [],
+            meta: {},
           },
         };
       }
