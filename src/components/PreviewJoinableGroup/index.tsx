@@ -100,11 +100,7 @@ const PreviewJoinableGroup = (props: PreviewJoinableGroupProps) => {
     = 20 + spacing.padding.small * 3 + (level - firstLevel) * (spacing.padding.small * 2 + 1);
 
   const renderItemTitle = () => (
-    <Text.BodyXS
-      color={theme.colors.blue50}
-      numberOfLines={1}
-      useI18n
-    >
+    <Text.BodyXS color={theme.colors.blue50} numberOfLines={1} useI18n>
       previewJoinableGroup:text_you_are_asking_to_join
     </Text.BodyXS>
   );
@@ -183,7 +179,7 @@ const themeStyle = (theme: ExtendedTheme) => {
     },
     list: {
       paddingRight: 0,
-      maxHeight: dimension.deviceHeight / 2,
+      maxHeight: dimension.deviceHeight < 770 ? dimension.deviceHeight / 3 : dimension.deviceHeight / 2,
     },
     listFooter: {
       marginBottom: 0,

@@ -1,8 +1,8 @@
 import groupApi from '~/api/GroupApi';
-import usePreviewJoinableGroupStore from './store';
 import showToastError from '~/store/helper/showToastError';
 import { showAlertRefreshPage } from '~/helpers/common';
 import APIErrorCode from '~/constants/apiErrorCode';
+import usePreviewJoinableGroupStore from '.';
 
 export const getPreviewJoinableGroup = async (groupId: string) => {
   try {

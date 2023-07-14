@@ -24,10 +24,10 @@ import useTermStore, { TermsInfo } from '~/components/TermsModal/store';
 import TermsView from '~/components/TermsModal';
 import MemberQuestionsModal from '~/components/MemberQuestionsModal';
 import useMemberQuestionsStore, { MembershipQuestionsInfo } from '~/components/MemberQuestionsModal/store';
-import { getPreviewJoinableGroup } from '~/components/PreviewJoinableGroup/helper';
 import PreviewJoinableGroup from '~/components/PreviewJoinableGroup';
 import useModalStore from '~/store/modal';
 import { ITypeGroup } from '~/interfaces/common';
+import { getPreviewJoinableGroup } from '~/components/PreviewJoinableGroup/store/helper';
 
 type HandleJoinGroupData = {
   isActiveGroupTerms: boolean;

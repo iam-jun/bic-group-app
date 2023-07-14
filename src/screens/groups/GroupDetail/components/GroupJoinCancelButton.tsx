@@ -10,8 +10,8 @@ import useModalStore from '~/store/modal';
 import useTermStore, { TermsInfo } from '~/components/TermsModal/store';
 import useMemberQuestionsStore, { MembershipQuestionsInfo } from '~/components/MemberQuestionsModal/store';
 import PreviewJoinableGroup from '~/components/PreviewJoinableGroup';
-import { getPreviewJoinableGroup } from '~/components/PreviewJoinableGroup/helper';
 import { ITypeGroup } from '~/interfaces/common';
+import { getPreviewJoinableGroup } from '~/components/PreviewJoinableGroup/store/helper';
 
 interface GroupJoinCancelButtonProps {
   style?: StyleProp<ViewStyle>;
