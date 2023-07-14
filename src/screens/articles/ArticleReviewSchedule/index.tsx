@@ -60,13 +60,14 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
 
   const { rootNavigation } = useRootNavigation();
 
+  // for waiting schedule article use createdAt
   const initScript = {
     type: 'initView',
     payload: {
       title,
       summary,
       coverUrl: coverMedia?.url,
-      createdAt,
+      time: createdAt,
       audience,
       series,
       categories,
