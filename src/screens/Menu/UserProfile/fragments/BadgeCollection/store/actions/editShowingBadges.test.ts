@@ -24,9 +24,9 @@ describe('editShowingBadges function', () => {
     });
 
     const setMyProfile = jest.fn();
-    // @ts-ignore
     useCommonController.setState((state: ICommonController) => {
       state.actions.setMyProfile = setMyProfile;
+      return state;
     });
 
     const showToast = jest.fn();
@@ -82,9 +82,9 @@ describe('editShowingBadges function', () => {
     });
 
     const setMyProfile = jest.fn();
-    // @ts-ignore
     useCommonController.setState((state: ICommonController) => {
       state.actions.setMyProfile = setMyProfile;
+      return state;
     });
 
     const showToast = jest.fn();
