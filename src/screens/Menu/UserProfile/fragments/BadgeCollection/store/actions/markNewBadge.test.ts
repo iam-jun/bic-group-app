@@ -46,9 +46,11 @@ describe('markNewBadge function', () => {
     const id = '0987';
     useUserBadge.setState((state: IUserBadgesState) => {
       state.badges = {
-        '0987': {
+        [id]: {
           id,
           isNew: false,
+          name: 'name',
+          iconUrl: 'test',
         },
       };
       return state;
