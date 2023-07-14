@@ -32,7 +32,7 @@ const QuestionComposeQuiz: FC<QuestionComposeQuizProps> = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View testID={`question_compose_quiz_${quizId}`} style={styles.container}>
       <QuestionHeader questionIndex={questionIndex} onPressEdit={onPressEdit} />
       <QuestionContent questionItem={questionItem} />
     </View>

@@ -36,7 +36,7 @@ describe('editQuiz', () => {
     expect(spyApiEditQuiz).toBeCalled();
 
     await waitFor(() => {
-      expect(result.current.data[mockPublishResponse.data.contentId].status).toBe(QuizStatus.PUBLISHED);
+      expect(result.current.data[mockPublishResponse.data.id].status).toBe(QuizStatus.PUBLISHED);
     });
   });
 
