@@ -99,6 +99,16 @@ const PreviewJoinableGroup = (props: PreviewJoinableGroupProps) => {
   const paddingLeftLastGroupItem
     = 20 + spacing.padding.small * 3 + (level - firstLevel) * (spacing.padding.small * 2 + 1);
 
+  const renderItemTitle = () => (
+    <Text.BodyXS
+      color={theme.colors.blue50}
+      numberOfLines={1}
+      useI18n
+    >
+      previewJoinableGroup:text_you_are_asking_to_join
+    </Text.BodyXS>
+  );
+
   return (
     <ScreenWrapper testID="preview_joinable_group">
       <Text.H3 style={styles.title} useI18n>
@@ -120,6 +130,8 @@ const PreviewJoinableGroup = (props: PreviewJoinableGroupProps) => {
             style={[styles.lastGroupItem, { paddingLeft: paddingLeftLastGroupItem }]}
             item={group}
             onPress={onPressGroup}
+            nameLines={1}
+            renderItemTitle={renderItemTitle}
           />
           <View style={styles.descriptionContainer}>
             <Icon icon="CircleInfo" size={18} tintColor={theme.colors.blue50} />

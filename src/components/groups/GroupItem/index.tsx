@@ -27,6 +27,7 @@ export interface GroupItemProps {
   shouldBeChecked?: (item: IGroup) => boolean;
   shouldCheckboxDisabled?: (item: IGroup) => boolean;
   renderItemExtraInfo?: (item: IGroup) => JSX.Element;
+  renderItemTitle?: (item: IGroup) => JSX.Element;
 }
 
 const GroupItem: FC<GroupItemProps> = ({
@@ -43,6 +44,7 @@ const GroupItem: FC<GroupItemProps> = ({
   shouldBeChecked,
   shouldCheckboxDisabled,
   renderItemExtraInfo,
+  renderItemTitle,
 }) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -71,6 +73,7 @@ const GroupItem: FC<GroupItemProps> = ({
         privacyIcon={privacyIcon}
       />
       <View style={styles.textContainer}>
+        {renderItemTitle?.(item)}
         <Text.BodyMMedium
           style={styles.textName}
           color={theme.colors.neutral60}

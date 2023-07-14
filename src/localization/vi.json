@@ -1446,6 +1446,7 @@
     "title": "Tham gia tất cả các nhóm bên ngoài?",
     "description_1": "Bằng cách tham gia ",
     "description_2": ", bạn sẽ tham gia tất cả các nhóm bên ngoài của nó.",
-    "text_join_group_button": "Tham gia"
+    "text_join_group_button": "Tham gia",
+    "text_you_are_asking_to_join": "Bạn đang yêu cầu tham gia"
   }
 }

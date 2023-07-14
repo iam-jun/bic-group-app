@@ -1505,6 +1505,7 @@
     "title": "Join all outer groups?",
     "description_1": "By joining ",
     "description_2": ", you’ll join all its outer groups.",
-    "text_join_group_button": "Join"
+    "text_join_group_button": "Join",
+    "text_you_are_asking_to_join": "You’re asking to join"
   }
 }
