@@ -4,6 +4,7 @@ echo Cleaning started
 
 #rm -rf ios/Pods
 #rm -rf node_modules
+rm -rf ~/Library/Developer/Xcode/DerivedData
 rm -rf ios/build
 rm -rf android/app/build
 watchman watch-del-all
