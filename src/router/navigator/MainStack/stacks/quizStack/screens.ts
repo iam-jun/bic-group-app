@@ -1,5 +1,9 @@
 import {
-  EntryQuiz, ComposeQuiz, EditQuestion, PublishQuiz,
+  EntryQuiz,
+  ComposeQuiz,
+  EditQuestion,
+  PublishQuiz,
+  TakeQuiz,
 } from '~/screens/quiz';
 
 const quizScreens = {
@@ -7,6 +11,7 @@ const quizScreens = {
   'compose-quiz': ComposeQuiz,
   'edit-question': EditQuestion,
   'publish-quiz': PublishQuiz,
+  'take-quiz': TakeQuiz,
 };
 
 export default quizScreens;

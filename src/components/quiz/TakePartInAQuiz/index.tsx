@@ -10,35 +10,22 @@ import { useBaseHook } from '~/hooks';
 import { QuizPost } from '~/interfaces/IQuiz';
 import images from '~/resources/images';
 import { spacing } from '~/theme';
-import showAlert from '~/store/helper/showAlert';
-import { useRootNavigation } from '~/hooks/navigation';
-import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 
 type TakePartInAQuizProps = {
   quiz: QuizPost;
+  onPressTakeQuiz?: (quizId: string) => void;
 };
 
-const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({ quiz }) => {
-  const { title, description } = quiz || {};
+const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({ quiz, onPressTakeQuiz }) => {
+  const { title, description, id } = quiz || {};
 
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
   const { t } = useBaseHook();
-  const { rootNavigation } = useRootNavigation();
-
-  const onStartTakeQuiz = () => {
-    // rootNavigation.navigate(quizStack.takeQuiz, { quizId:  });
-  };
 
   const onPress = () => {
-    showAlert({
-      title: t('quiz:title_alert_take_quiz'),
-      content: t('quiz:content_alert_take_quiz'),
-      cancelBtn: true,
-      confirmLabel: t('quiz:btn_start'),
-      onConfirm: onStartTakeQuiz,
-    });
+    onPressTakeQuiz?.(id);
   };
 
   return (

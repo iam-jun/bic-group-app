@@ -3,6 +3,7 @@ const quizStack = {
   composeQuiz: 'compose-quiz',
   editQuestion: 'edit-question',
   publishQuiz: 'publish-quiz',
+  takeQuiz: 'take-quiz',
 };
 
 export default quizStack;

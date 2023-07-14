@@ -1489,6 +1489,10 @@
     "regenerate": "Sinh lại",
     "quiz_information": "Thông tin quiz",
     "draft_quiz": "Bản nháp quiz",
-    "quiz_saved_to_draft": "Quiz đã được lưu vào nháp"
+    "quiz_saved_to_draft": "Quiz đã được lưu vào nháp",
+    "title_take_quiz": "Làm bài quiz",
+    "alert_title_discard_quiz": "Hủy bài Quiz",
+    "alert_content_discard_quiz": "Rời trang này mà không lưu sẽ dẫn tới quá trình làm bài Quiz hiện tại bị mất. Bạn có chắc muốn thoát?",
+    "btn_exit": "Thoát"
   }
 }

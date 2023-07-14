@@ -92,6 +92,7 @@ const _PostView: FC<PostViewProps> = ({
     onRemoveReaction,
     onLongPressReaction,
     onPressMarkSeenPost,
+    onPressTakeQuiz,
   } = useContentActions({
     postId,
     ownerReactions,
@@ -197,6 +198,7 @@ const _PostView: FC<PostViewProps> = ({
           isEmptyPost={isEmpty}
           isPostDetail={isPostDetail}
           onPressMarkSeenPost={onPressMarkSeenPost}
+          onPressTakeQuiz={onPressTakeQuiz}
         />
         {!isLite && shouldShowInterested && !isHidden && (
           <ContentInterestedUserCount

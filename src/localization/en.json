@@ -1550,6 +1550,12 @@
     "regenerate": "Regenerate",
     "quiz_information": "Quiz information",
     "draft_quiz": "Draft Quiz",
-    "quiz_saved_to_draft": "Quiz saved to Draft"
+    "quiz_saved_to_draft": "Quiz saved to Draft",
+    "title_take_quiz": "Take a quiz",
+    "alert_title_discard_quiz": "Discard Quiz",
+    "alert_content_discard_quiz": "Leaving this page without saving will result in the loss of your current progress. Are you sure you want to exit the quiz?",
+    "btn_exit": "Exit",
+    "btn_next" : "Next",
+    "btn_previous": "Previous"
   }
 }
