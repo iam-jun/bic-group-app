@@ -4,6 +4,7 @@ import {
   EditQuestion,
   PublishQuiz,
   TakeQuiz,
+  TakeQuizReview
 } from '~/screens/quiz';
 
 const quizScreens = {
@@ -12,6 +13,7 @@ const quizScreens = {
   'edit-question': EditQuestion,
   'publish-quiz': PublishQuiz,
   'take-quiz': TakeQuiz,
+  'take-quiz-review': TakeQuizReview,
 };
 
 export default quizScreens;

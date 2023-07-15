@@ -50,13 +50,13 @@ const createStyle = (theme: ExtendedTheme) => {
         square: {
             height: 28,
             width: 28,
-            borderRadius: spacing.borderRadius.base,
             justifyContent: 'center',
             alignItems: 'center',
             marginRight: spacing.margin.small,
         },
         squareCorrect: {
-            backgroundColor: colors.purple5, 
+            backgroundColor: colors.purple5,
+            borderRadius: spacing.borderRadius.base,
         },
         answerBtn: {
             flex: 1,

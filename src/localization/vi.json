@@ -1493,6 +1493,9 @@
     "title_take_quiz": "Làm bài quiz",
     "alert_title_discard_quiz": "Hủy bài Quiz",
     "alert_content_discard_quiz": "Rời trang này mà không lưu sẽ dẫn tới quá trình làm bài Quiz hiện tại bị mất. Bạn có chắc muốn thoát?",
-    "btn_exit": "Thoát"
+    "btn_exit": "Thoát",
+    "btn_next" : "Tiếp theo",
+    "btn_previous": "Trước đó",
+    "title_quiz_review": "Xem lại bài làm quiz"
   }
 }

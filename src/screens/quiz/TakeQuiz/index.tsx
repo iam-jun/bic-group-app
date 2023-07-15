@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, Platform } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -10,8 +10,11 @@ import Text from '~/baseComponents/Text';
 import { Button } from '~/baseComponents';
 import { spacing } from '~/theme';
 import AnswerItem from './components/AnswerItem';
+import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 
 interface TakeQuizProps {}
+
+const BOTTOM_SPACE = Platform.OS === 'ios' ? 38 : 24;
 
 const TakeQuiz: React.FC<TakeQuizProps> = () => {
     const theme: ExtendedTheme = useTheme();
@@ -33,7 +36,7 @@ const TakeQuiz: React.FC<TakeQuizProps> = () => {
     };
 
     const onPressNext = () => {
-
+        rootNavigation.navigate(quizStack.takeQuizReview);
     }
 
     const onPickAnswer = (data) => {
@@ -75,6 +78,7 @@ const TakeQuiz: React.FC<TakeQuizProps> = () => {
                 </View>
             </ScrollView>
             <Button.Primary
+                size='large'
                 useI18n
                 onPress={onPressNext}
                 style={styles.btnNext}
@@ -96,7 +100,8 @@ const styles = StyleSheet.create({
         marginBottom: spacing.margin.large,
     },
     btnNext: {
-        marginBottom: 38,
+        marginTop: spacing.margin.base,
+        marginBottom: BOTTOM_SPACE,
         marginHorizontal: spacing.margin.large,
     },
 });

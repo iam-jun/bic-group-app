@@ -1556,6 +1556,7 @@
     "alert_content_discard_quiz": "Leaving this page without saving will result in the loss of your current progress. Are you sure you want to exit the quiz?",
     "btn_exit": "Exit",
     "btn_next" : "Next",
-    "btn_previous": "Previous"
+    "btn_previous": "Previous",
+    "title_quiz_review": "Quiz Review"
   }
 }

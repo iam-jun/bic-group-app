@@ -10,20 +10,33 @@ import { spacing } from '~/theme';
 type QuestionHeaderProps = {
     questionIndex: number;
     onPressEdit: () => void;
+    isTakeQuizReview?: boolean;
 }
 
-const QuestionHeader: FC<QuestionHeaderProps> = ({ questionIndex, onPressEdit }) => {
+const QuestionHeader: FC<QuestionHeaderProps> = ({
+  questionIndex,
+  onPressEdit,
+  isTakeQuizReview = false,
+}) => {
   const { t } = useBaseHook();
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
 
-  return (
-    <View style={styles.container}>
-      <Text.SubtitleM color={colors.neutral80}>{`${t('quiz:question')} ${questionIndex + 1}`}</Text.SubtitleM>
+  const renderButtonEdit = () => {
+    if (isTakeQuizReview) return null;
+
+    return (
       <Button onPress={onPressEdit}>
         <Icon size={16} tintColor={colors.neutral40} icon="PenSolid" />
       </Button>
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text.SubtitleM color={colors.neutral80}>{`${t('quiz:question')} ${questionIndex + 1}`}</Text.SubtitleM>
+      {renderButtonEdit()}
     </View>
   );
 };
