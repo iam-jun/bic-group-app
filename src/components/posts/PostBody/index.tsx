@@ -177,8 +177,8 @@ const _PostBody: FC<PostBodyProps> = ({
           <TakePartInAQuiz
             quiz={quiz}
             onPressTakeQuiz={onPressTakeQuiz}
-          />)
-        }
+          />
+        )}
       </>
     </View>
   );

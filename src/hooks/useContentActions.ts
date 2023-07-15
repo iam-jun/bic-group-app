@@ -76,7 +76,7 @@ const useContentActions = (props: Props) => {
       confirmLabel: t('quiz:btn_start'),
       onConfirm: () => onStartTakeQuiz(quizId),
     });
-  }
+  };
 
   return {
     onAddReaction,

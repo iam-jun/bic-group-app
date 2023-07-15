@@ -29,7 +29,8 @@ const QuestionContent: FC<QuestionContentProps> = ({
             <View style={[
               styles.square,
               isTakeQuizReview ? styles.squareTakeQuizReview : styles.squareComposeQuiz,
-            ]}>
+            ]}
+            >
               <Text.ButtonS
                 color={isTakeQuizReview ? colors.purple50 : colors.green50}
               >

@@ -4,7 +4,7 @@ import {
   EditQuestion,
   PublishQuiz,
   TakeQuiz,
-  TakeQuizReview
+  TakeQuizReview,
 } from '~/screens/quiz';
 
 const quizScreens = {
