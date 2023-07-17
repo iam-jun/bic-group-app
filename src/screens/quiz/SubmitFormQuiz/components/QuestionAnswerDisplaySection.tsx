@@ -17,6 +17,7 @@ import Text from '~/baseComponents/Text';
 import { MAX_QUESTIONS } from './QuestionAnswerSection';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { FormGenerateQuiz } from '~/interfaces/IQuiz';
+import { validateIntegerNumber } from '../../helper';
 
 type QuestionAnswerDisplaySectionProps = {
   control: Control<FormGenerateQuiz>;
@@ -79,6 +80,7 @@ const QuestionAnswerDisplaySection: FC<QuestionAnswerDisplaySectionProps> = ({
   // );
 
   const validateInputQuestion = {
+    validateIntegerNumber,
     greaterThan0: (value) => isEmpty(value)
       || (!isEmpty(value) && Number(value) > 0)
       || t('quiz:the_question_must_be_greater_than_0'),

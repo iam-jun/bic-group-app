@@ -7,10 +7,12 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { spacing } from '~/theme';
 import { LottieFileGeneratingQuiz } from '~/resources/lottieJson';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
+import { useBaseHook } from '~/hooks';
 
 type GeneratingQuizProps = {};
 
 const GeneratingQuiz: FC<GeneratingQuizProps> = () => {
+  const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
   const theme = useTheme();
   const { colors } = theme;
@@ -31,14 +33,14 @@ const GeneratingQuiz: FC<GeneratingQuizProps> = () => {
       <Text.H4 useI18n color={colors.neutral40} style={styles.centerText}>
         quiz:the_ai_is_carefully_crafting_your_questions
       </Text.H4>
-      <Text.BodyS useI18n color={colors.neutral40} style={styles.centerText}>
-        quiz:this_may_take_up_to_a_few_minute
+      <Text.BodyS color={colors.neutral40} style={styles.centerText}>
+        {`${t('quiz:this_may_take_up_to_a_few_minute')} `}
+        <TouchableWithoutFeedback onPress={onDraftPress}>
+          <Text.BodyS useI18n color={colors.blue50} style={styles.textLink}>
+            post:draft:title_draft
+          </Text.BodyS>
+        </TouchableWithoutFeedback>
       </Text.BodyS>
-      <TouchableWithoutFeedback onPress={onDraftPress}>
-        <Text.BodyS useI18n color={colors.blue50} style={styles.textLink}>
-          post:draft:title_draft
-        </Text.BodyS>
-      </TouchableWithoutFeedback>
     </View>
   );
 };

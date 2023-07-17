@@ -78,7 +78,6 @@ const useNotificationSocket = () => {
   const handleSocketNoti = (msg: string) => {
     console.log(
       '\x1b[36m🐣️ notificationSocket receive socket noti \x1b[0m',
-      msg,
     );
     const msgData = ConvertHelper.camelizeKeys(parseSafe(msg));
     const data = msgData || {};

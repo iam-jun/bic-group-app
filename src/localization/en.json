@@ -1558,7 +1558,7 @@
     "alert_title_discard_quiz": "Discard Quiz",
     "alert_content_discard_quiz": "Leaving this page without saving will result in the loss of your current progress. Are you sure you want to exit the quiz?",
     "btn_exit": "Exit",
-    "btn_next" : "Next",
+    "btn_next": "Next",
     "btn_previous": "Previous",
     "title_quiz_review": "Review",
     "btn_retake": "Retake",
@@ -1572,6 +1572,7 @@
     "result_complete": "Completion",
     "result_correct": "Correct Answer",
     "result_incorrect": "Incorrect Answer",
-    "result_skip": "Skipped"
+    "result_skip": "Skipped",
+    "enter_an_integer": "Please enter an integer"
   }
 }
