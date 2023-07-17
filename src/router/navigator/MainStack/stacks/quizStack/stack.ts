@@ -5,6 +5,7 @@ const quizStack = {
   publishQuiz: 'publish-quiz',
   takeQuiz: 'take-quiz',
   takeQuizReview: 'take-quiz-review',
+  takeQuizResult: 'take-quiz-result',
 };
 
 export default quizStack;

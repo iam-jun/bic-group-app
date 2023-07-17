@@ -6,7 +6,8 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import { useRootNavigation } from '~/hooks/navigation';
+import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
+import { useBaseHook } from '~/hooks';
 import { QuestionItem } from '~/interfaces/IQuiz';
 import useQuizzesStore from '~/store/entities/quizzes';
 import QuestionComposeQuiz from '../ComposeQuiz/components/QuestionComposeQuiz';
@@ -14,6 +15,8 @@ import Text from '~/baseComponents/Text';
 import { Button } from '~/baseComponents';
 import { spacing } from '~/theme';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import showAlert from '~/store/helper/showAlert';
+import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 
 interface TakeQuizReviewProps {}
 
@@ -24,6 +27,7 @@ const fakeId = 'f400562d-5ee9-4a14-abb2-80f4f0e81fff';
 const TakeQuizReview: React.FC<TakeQuizReviewProps> = () => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
+  const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
   const styles = createStyle(theme);
   // temporary use for UI
@@ -36,12 +40,34 @@ const TakeQuizReview: React.FC<TakeQuizReviewProps> = () => {
     actionsQuizzesStore.getQuizDetail({ quizId: fakeId });
   }, []);
 
-  const onPressBack = () => {
+  const goBack = () => {
     rootNavigation.goBack();
   };
 
-  const onPressSubmit = () => {
+  const onPressBack = () => {
+    showAlert({
+      title: t('quiz:alert_title_discard_quiz'),
+      content: t('quiz:alert_content_discard_quiz'),
+      cancelBtn: true,
+      confirmLabel: t('quiz:btn_exit'),
+      onConfirm: goBack,
+    });
+  };
 
+  useBackPressListener(onPressBack);
+
+  const onSubmit = () => {
+    rootNavigation.navigate(quizStack.takeQuizResult);
+  };
+
+  const onPressSubmit = () => {
+    showAlert({
+      title: t('common:btn_submit'),
+      content: t('quiz:alert_content_submit_quiz'),
+      cancelBtn: true,
+      confirmLabel: t('common:btn_submit'),
+      onConfirm: onSubmit,
+    });
   };
 
   const renderItem: ListRenderItem<QuestionItem> = ({ item, index }) => (

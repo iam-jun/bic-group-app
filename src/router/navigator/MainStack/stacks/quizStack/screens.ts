@@ -5,6 +5,7 @@ import {
   PublishQuiz,
   TakeQuiz,
   TakeQuizReview,
+  TakeQuizResult,
 } from '~/screens/quiz';
 
 const quizScreens = {
@@ -14,6 +15,7 @@ const quizScreens = {
   'publish-quiz': PublishQuiz,
   'take-quiz': TakeQuiz,
   'take-quiz-review': TakeQuizReview,
+  'take-quiz-result': TakeQuizResult,
 };
 
 export default quizScreens;

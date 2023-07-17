@@ -7,7 +7,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import showAlert from '~/store/helper/showAlert';
 import { useBaseHook } from '~/hooks';
-import { useRootNavigation } from '~/hooks/navigation';
+import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import Text from '~/baseComponents/Text';
 import { Button } from '~/baseComponents';
 import { spacing } from '~/theme';
@@ -36,6 +36,8 @@ const TakeQuiz: React.FC<TakeQuizProps> = () => {
       onConfirm: goBack,
     });
   };
+
+  useBackPressListener(onPressBack);
 
   const onPressNext = () => {
     rootNavigation.navigate(quizStack.takeQuizReview);
@@ -69,11 +71,11 @@ const TakeQuiz: React.FC<TakeQuizProps> = () => {
       <ScrollView>
         <View style={styles.content}>
           <Text.SubtitleXS color={colors.neutral30}>
-            QUESTION 1 OF 10
+            QUESTION 1 OF 1
           </Text.SubtitleXS>
           <View style={styles.questionContainer}>
             <Text.H4 color={colors.neutral60}>
-              Who was elected as the prime minister of Britain in November 2022 ?
+              This is test question fake data, right ?
             </Text.H4>
           </View>
           {fakeAnswers.map(rendeAnswerItem)}

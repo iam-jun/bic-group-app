@@ -1557,6 +1557,10 @@
     "btn_exit": "Exit",
     "btn_next" : "Next",
     "btn_previous": "Previous",
-    "title_quiz_review": "Quiz Review"
+    "title_quiz_review": "Review",
+    "btn_retake": "Retake",
+    "btn_retry": "Retry",
+    "btn_quit": "Quit",
+    "alert_content_submit_quiz": "Are you sure you want to submit the quiz?"
   }
 }

@@ -1496,6 +1496,10 @@
     "btn_exit": "Thoát",
     "btn_next" : "Tiếp theo",
     "btn_previous": "Trước đó",
-    "title_quiz_review": "Xem lại bài làm quiz"
+    "title_quiz_review": "Xem lại",
+    "btn_retake": "Làm lại",
+    "btn_retry": "Thử lại",
+    "btn_quit": "Thoát",
+    "alert_content_submit_quiz": "Bạn có chắc muốn nộp bài làm quiz?"
   }
 }
