@@ -16,7 +16,7 @@ import { spacing } from '~/theme';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import showAlert from '~/store/helper/showAlert';
 import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
-  // temporary use for UI
+// temporary use for UI
 import { mockGenerateQuizResponse } from '~/test/mock_data/quiz';
 
 interface TakeQuizReviewProps {
