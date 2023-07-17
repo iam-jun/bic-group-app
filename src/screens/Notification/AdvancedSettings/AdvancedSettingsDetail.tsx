@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import {
+  ActivityIndicator,
   Platform, RefreshControl, StatusBar, StyleSheet, View,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -246,15 +247,37 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
               }}
               onClose={updateIsVisibleTooltip}
             >
-              <View style={styles.row}>
-                <ButtonWrapper disabled={isUpdatting} style={styles.buttonWrapper} onPress={onResetConfig}>
-                  <Text.ButtonM color={isUpdatting ? colors.neutral20 : colors.neutral60}>
-                    {buttonText}
+              <View style={[styles.row, styles.buttonGroup, isDefault ? styles.primaryButton : styles.defaultButton]}>
+                <ButtonWrapper
+                  disabled={isUpdatting}
+                  style={[styles.buttonWrapper, styles.row]}
+                  onPress={onResetConfig}
+                >
+                  {
+                    isUpdatting && (
+                    <ActivityIndicator
+                      testID="button.loading"
+                      color={isDefault ? colors.purple50 : colors.neutral60}
+                      style={styles.loading}
+                      size={18}
+                    />
+                    )
+                  }
+                  <Text.ButtonM color={isDefault ? colors.purple50 : colors.neutral60}>
+                    { buttonText}
                   </Text.ButtonM>
                 </ButtonWrapper>
-                <Divider horizontal size={1} />
-                <ButtonWrapper style={styles.buttonInfoWrapper} onPress={updateIsVisibleTooltip}>
-                  <Icon icon="CircleQuestion" size={16} color={colors.neutral40} />
+                <Divider horizontal size={1} color={isDefault ? colors.purple5 : colors.neutral5} />
+                <ButtonWrapper
+                  disabled={isUpdatting}
+                  style={styles.buttonInfoWrapper}
+                  onPress={updateIsVisibleTooltip}
+                >
+                  <Icon
+                    icon="CircleQuestion"
+                    size={16}
+                    tintColor={isDefault ? colors.purple50 : colors.neutral60}
+                  />
                 </ButtonWrapper>
               </View>
             </Tooltip>
@@ -301,13 +324,15 @@ const createStyle = (theme: ExtendedTheme) => {
     row: {
       flexDirection: 'row',
       alignItems: 'center',
-      paddingVertical: spacing.padding.small,
+    },
+    buttonGroup: {
       borderRadius: spacing.borderRadius.base,
-      backgroundColor: colors.neutral2,
+      overflow: 'hidden',
     },
     buttonWrapper: {
       paddingHorizontal: spacing.padding.base,
       backgroundColor: colors.neutral2,
+      paddingVertical: spacing.padding.small,
     },
     buttonInfoWrapper: {
       paddingHorizontal: spacing.padding.base - spacing.padding.xTiny,
@@ -317,7 +342,16 @@ const createStyle = (theme: ExtendedTheme) => {
     tooltipStyle: {
       backgroundColor: colors.neutral80,
       borderRadius: spacing.padding.tiny,
-      maxWidth: 200,
+      maxWidth: 250,
+    },
+    defaultButton: {
+      backgroundColor: colors.neutral2,
+    },
+    primaryButton: {
+      backgroundColor: colors.purple2,
+    },
+    loading: {
+      marginRight: spacing.margin.small,
     },
   });
 };
