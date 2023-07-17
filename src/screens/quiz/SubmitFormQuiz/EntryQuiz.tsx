@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable unused-imports/no-unused-imports */
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -8,10 +6,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Header from '~/beinComponents/Header';
 import { spacing } from '~/theme';
 import useGenerateQuiz from './hooks/useGenerateQuiz';
-import TitleDescriptionSection from './components/TitleDescriptionSection';
 import QuestionAnswerSection from './components/QuestionAnswerSection';
-import QuestionAnswerDisplaySection from './components/QuestionAnswerDisplaySection';
-import CheckmarkGenerateRandomQuiz from './components/CheckmarkGenerateRandomQuiz';
 import { useBackPressListener } from '~/hooks/navigation';
 
 type EntryQuizProps = {
@@ -32,8 +27,6 @@ const EntryQuiz: FC<EntryQuizProps> = (props) => {
     onNext,
     isFormValid,
     isGenerating,
-    watch,
-    trigger,
     handleBack,
   } = useGenerateQuiz(postId);
 
@@ -62,14 +55,7 @@ const EntryQuiz: FC<EntryQuizProps> = (props) => {
         style={styles.container}
         contentContainerStyle={styles.containerContent}
       >
-        {/* <TitleDescriptionSection control={control} /> */}
         <QuestionAnswerSection control={control} />
-        {/* <QuestionAnswerDisplaySection
-          control={control}
-          watch={watch}
-          trigger={trigger}
-        /> */}
-        {/* <CheckmarkGenerateRandomQuiz /> */}
       </KeyboardAwareScrollView>
     </View>
   );

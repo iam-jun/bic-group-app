@@ -21,7 +21,7 @@ const GeneratingQuiz: FC<GeneratingQuizProps> = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View testID="generating_quiz" style={styles.container}>
       <LottieView
         style={styles.loadingView}
         source={LottieFileGeneratingQuiz}
