@@ -11,16 +11,17 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Icon from '~/baseComponents/Icon';
 import SettingItemSkeleton from './SettingItemSkeleton';
 import NotiSettingItem from './NotiSettingItem';
-import { SearchInput } from '~/baseComponents/Input';
 import useBaseHook from '~/hooks/baseHook';
 import { INotiSettings } from '~/interfaces/INotification';
 
 interface Props {
+  onPressSearch: () => void;
   onPressToShowBottomSheet: () => void;
   onChangeToggle: (isChecked: boolean) => void;
 }
 
 const AdvancedSettingHeader = ({
+  onPressSearch,
   onPressToShowBottomSheet,
   onChangeToggle,
 }:Props) => {
@@ -31,21 +32,16 @@ const AdvancedSettingHeader = ({
 
   const isLoadingCommunitySettings = useAdvancedNotiSettingsStore((state) => state.isLoadingCommunitySettings);
   const selectedCommunity = useAdvancedNotiSettingsStore((state) => state.selectedCommunity);
-  const { icon, name, enable } = selectedCommunity || {};
+  const { icon, name } = selectedCommunity || {};
   const communitySettingData: any = useAdvancedNotiSettingsStore(
     (state) => state.communityData?.[selectedCommunity?.id] || {},
   );
-  const actions = useAdvancedNotiSettingsStore((state) => state.actions);
 
   const defaultItem: INotiSettings = {
     title: t('notification:notification_settings:allow_notifications'),
     enable: communitySettingData?.enable || false,
     name: 'advanced_settings',
     order: 0,
-  };
-
-  const _onChangeText = (text:string) => {
-    actions.searchJoinedGroupFlat(selectedCommunity.id, { key: text });
   };
 
   return (
@@ -92,14 +88,25 @@ const AdvancedSettingHeader = ({
           notification:advanced_notifications_settings:description_setup_group
         </Text.BodyS>
         <ViewSpacing height={spacing.margin.small} />
-        <View style={[styles.flex1, !Boolean(enable) ? styles.disable : {}]}>
-          <SearchInput
-            editable={!Boolean(enable)}
-            style={styles.flex1}
-            placeholder={t('notification:advanced_notifications_settings:search_group_placeholder')}
-            onChangeText={_onChangeText}
-          />
-        </View>
+        <ButtonWrapper
+          activeOpacity={0.85}
+          disabled={!Boolean(communitySettingData?.enable)}
+          onPress={onPressSearch}
+          style={[styles.flex1, !Boolean(communitySettingData?.enable) ? styles.disable : {}]}
+        >
+          <View style={[styles.searchContainer, styles.row]}>
+            <Icon
+              testID="search_input.icon"
+              icon="search"
+              size={18}
+              tintColor={colors.neutral20}
+            />
+            <ViewSpacing width={spacing.margin.small} />
+            <Text.BodyS useI18n>
+              notification:advanced_notifications_settings:search_group_placeholder
+            </Text.BodyS>
+          </View>
+        </ButtonWrapper>
       </View>
     </View>
   );
@@ -143,6 +150,12 @@ const createStyle = (theme: ExtendedTheme) => {
     disable: {
       backgroundColor: colors.white,
       opacity: 0.6,
+    },
+    searchContainer: {
+      padding: spacing.padding.small,
+      borderRadius: spacing.borderRadius.extraLarge + spacing.borderRadius.large,
+      borderWidth: 1,
+      borderColor: colors.neutral5,
     },
   });
 };

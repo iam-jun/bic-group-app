@@ -2,38 +2,33 @@ import groupApi from '~/api/GroupApi';
 import { IAdvancedNotiSettingsStore } from '../index';
 import showToastError from '~/store/helper/showToastError';
 
-const getJoinedGroupFlat = (set, get) => async (id: string) => {
+const getJoinedGroupFlat = (set, get) => async (id: string, isRefresh?: boolean) => {
   try {
-    const {
-      groupFlat, joinedGroups, actions, hasNextPage,
-    } = get();
-    if (!hasNextPage) return;
+    const { joinedGroups, actions, hasNextPage } = get();
+    if (!hasNextPage && !isRefresh) return;
 
-    if (Boolean(groupFlat?.[id]?.length > 0)) {
-      set((state: IAdvancedNotiSettingsStore) => {
-        state.joinedGroups = groupFlat[id];
-      }, 'joinedGroupFlatHasYet');
-      return;
-    }
     set((state: IAdvancedNotiSettingsStore) => {
       state.isLoadingJoinedGroup = true;
+      state.hasNextPage = isRefresh ? true : state.hasNextPage;
     }, 'getJoinedGroupFlat');
 
     const params: any = {
       listBy: 'flat',
       includeRootGroup: true,
       sort: 'level:asc',
-      offset: joinedGroups.length,
+      offset: isRefresh ? 0 : joinedGroups.length,
     };
+
     const response = await groupApi.getCommunityGroups(id, params);
 
     const { data, meta } = response;
     const groupIds = data?.map((item: any) => item.id) || [];
     actions.getGroupSettings(groupIds);
+    const newData = isRefresh ? data : [...joinedGroups, ...data];
 
     set((state: IAdvancedNotiSettingsStore) => {
       state.isLoadingJoinedGroup = false;
-      state.joinedGroups = data || [];
+      state.joinedGroups = newData;
       state.hasNextPage = meta.hasNextPage;
     }, 'getJoinedGroupFlatSuccess');
   } catch (error) {

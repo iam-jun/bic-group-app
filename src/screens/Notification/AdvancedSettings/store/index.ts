@@ -1,6 +1,6 @@
 import IBaseState from '~/store/interfaces/IBaseState';
 import {
-  createStore,
+  createStore, resetStore,
 } from '~/store/utils';
 import { IAdvancedNotificationSettings, IEditNotificationSetting } from '~/interfaces/INotification';
 import getCommunitySettings from './actions/getCommunitySettings';
@@ -28,15 +28,14 @@ export interface IAdvancedNotiSettingsStore extends IBaseState {
   selectedCommunity: any;
   hasNextPage: boolean;
   hasSearchNextPage: boolean;
-  searchKey: string;
 
   actions: {
     setIsLoading: (isLoading: boolean) => void;
     setIsLoadingCommunitySettings: (isLoading: boolean) => void;
     setSelectedCommunity: (community: any) => void;
     getCommunitySettings: (communityId: string, isRefreshing?: boolean) => void;
-    getJoinedGroupFlat: (communityId: string) =>void;
-    searchJoinedGroupFlat: (communityId: string, params: IGetCommunityGroup) => void;
+    getJoinedGroupFlat: (communityId: string, isRefresh?: boolean) =>void;
+    searchJoinedGroupFlat: (params: IGetCommunityGroup, isRefresh?:boolean) => void;
     getGroupSettings: (groupIds: string[]) => void;
     updateCommunitySettings: (
       params: IEditNotificationSetting,
@@ -45,7 +44,7 @@ export interface IAdvancedNotiSettingsStore extends IBaseState {
       params: IEditNotificationSetting,
       dataUpdateStore: IAdvancedNotificationSettings,
     ) => void;
-    setSearchKey: (key: string) => void;
+    clearSearchGroup: () => void;
   },
 }
 
@@ -64,7 +63,6 @@ const initialState = {
   selectedCommunity: {},
   hasNextPage: true,
   hasSearchNextPage: true,
-  searchKey: '',
 };
 
 const advancedNotiSettingsStore = (set, get) => ({
@@ -91,12 +89,20 @@ const advancedNotiSettingsStore = (set, get) => ({
     searchJoinedGroupFlat: searchJoinedGroupFlat(set, get),
     updateGroupSettings: updateGroupSettings(set, get),
     updateCommunitySettings: updateCommunitySettings(set, get),
-    setSearchKey: (key: string) => {
+    clearSearchGroup: () => {
       set((state: IAdvancedNotiSettingsStore) => {
-        state.searchKey = key;
-      }, 'setSearchKey');
+        state.searchJoinedGroups = [];
+        state.hasSearchNextPage = true;
+      }, 'clearSearchGroup');
+    },
+    clearSearchCommunity: () => {
+      set((state: IAdvancedNotiSettingsStore) => {
+        state.searchJoinedGroups = [];
+        state.hasSearchNextPage = true;
+      }, 'clearSearchGroup');
     },
   },
+  reset: () => resetStore(initialState, set),
 });
 
 const useAdvancedNotiSettingsStore = createStore<IAdvancedNotiSettingsStore>(advancedNotiSettingsStore);

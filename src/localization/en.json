@@ -1181,9 +1181,10 @@
       "reset_to_default_tooltip": "Reset to default to use your general notification settings.",
       "text_enable_settings": "Enable settings",
       "enable_settings_tooltip": "Enable settings to set up specifically for your group",
-      "search_title": "Select your community",
+      "search_community_title": "Select your community",
       "search_placeholder": "Search community",
-      "search_group_placeholder": "Search group"
+      "search_group_placeholder": "Search group",
+      "search_group_title": "Select your group"
     }
   },
   "new_feature": {

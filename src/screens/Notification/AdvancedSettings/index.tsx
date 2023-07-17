@@ -25,6 +25,8 @@ import SearchCoummunityContent from '../components/SearchCoummunityContent';
 import AdvancedSettingItem from '../components/AdvancedSettingItem';
 import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 import AdvancedSettingHeader from '../components/AdvancedSettingHeader';
+import SearchGroupBottomSheet from '../components/SearchGroupBottomSheet';
+import useSearchJoinedCommunitiesStore from '~/screens/communities/Communities/components/SearchCommunity/store';
 
 const AdvancedSettings = () => {
   const theme: ExtendedTheme = useTheme();
@@ -33,8 +35,9 @@ const AdvancedSettings = () => {
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const modalizeRef = useRef<Modalize>(null);
+  const groupSearchRef = useRef<Modalize>(null);
 
-  const { ids, actions } = useYourCommunitiesStore();
+  const { ids, actions, items } = useYourCommunitiesStore();
   const advancedSettingsActions = useAdvancedNotiSettingsStore((state) => state.actions);
   const isLoading = useAdvancedNotiSettingsStore((state) => state.isLoading);
   const isLoadingJoinedGroup = useAdvancedNotiSettingsStore((state) => state.isLoadingJoinedGroup);
@@ -43,19 +46,20 @@ const AdvancedSettings = () => {
   const communitySettingData: any = useAdvancedNotiSettingsStore(
     useCallback((state) => state.communityData?.[selectedCommunity?.id] || {}, [selectedCommunity?.id]),
   );
-  const searchJoinedGroups = useAdvancedNotiSettingsStore((state) => state.searchJoinedGroups);
   const hasNextPage = useAdvancedNotiSettingsStore((state) => state.hasNextPage);
-  const hasSearchNextPage = useAdvancedNotiSettingsStore((state) => state.hasSearchNextPage);
-  const searchKey = useAdvancedNotiSettingsStore((state) => state.searchKey);
-
-  const needUseDefault = searchJoinedGroups?.length === 0;
-  const data = needUseDefault ? joinedGroups : searchJoinedGroups;
+  const { reset } = useSearchJoinedCommunitiesStore();
+  const { reset: resetAdvancedSettings } = useAdvancedNotiSettingsStore();
 
   useEffect(
     () => {
       if (ids.length === 0) {
         getData();
+      } else {
+        advancedSettingsActions.setSelectedCommunity(items?.[ids[0]]);
       }
+      return () => {
+        resetAdvancedSettings();
+      };
     }, [],
   );
 
@@ -67,7 +71,7 @@ const AdvancedSettings = () => {
   useEffect(() => {
     if (selectedCommunity?.id) {
       advancedSettingsActions.getCommunitySettings(selectedCommunity.id);
-      advancedSettingsActions.getJoinedGroupFlat(selectedCommunity.id);
+      advancedSettingsActions.getJoinedGroupFlat(selectedCommunity.id, true);
     }
   }, [selectedCommunity?.id]);
 
@@ -76,11 +80,8 @@ const AdvancedSettings = () => {
   };
 
   const onLoadMore = () => {
-    if (needUseDefault && hasNextPage) {
-      advancedSettingsActions.getJoinedGroupFlat(selectedCommunity.id);
-    } else if (hasSearchNextPage) {
-      advancedSettingsActions.searchJoinedGroupFlat(selectedCommunity.id, { key: searchKey });
-    }
+    if (!hasNextPage || isLoadingJoinedGroup) return;
+    advancedSettingsActions.getJoinedGroupFlat(selectedCommunity.id);
   };
 
   const onChangeToggle = (isChecked: boolean) => {
@@ -104,10 +105,17 @@ const AdvancedSettings = () => {
         communityId: selectedCommunity.id,
       });
     }
+    groupSearchRef.current?.close?.();
   };
 
   const onOpenBottomSheet = () => {
+    reset();
     modalizeRef.current?.open?.();
+  };
+
+  const onOpenGroupSearch = () => {
+    advancedSettingsActions.clearSearchGroup();
+    groupSearchRef.current?.open?.();
   };
 
   const renderEmpty = () => (
@@ -154,6 +162,7 @@ const AdvancedSettings = () => {
 
   const renderHeader = () => (
     <AdvancedSettingHeader
+      onPressSearch={onOpenGroupSearch}
       onChangeToggle={onChangeToggle}
       onPressToShowBottomSheet={onOpenBottomSheet}
     />
@@ -177,7 +186,7 @@ const AdvancedSettings = () => {
   );
 
   const renderListFooter = () => {
-    if ((needUseDefault && !hasNextPage) || (!needUseDefault && !hasSearchNextPage)) return null;
+    if (!hasNextPage || !isLoadingJoinedGroup) return null;
     return (
       <View style={styles.listFooter}>
         <ActivityIndicator testID="advanced_settings.loading_more" />
@@ -198,7 +207,7 @@ const AdvancedSettings = () => {
         : (ids.length === 0 ? renderNothingToSetup()
           : (
             <FlatList
-              data={data}
+              data={joinedGroups}
               scrollEventThrottle={16}
               keyboardDismissMode="interactive"
               keyboardShouldPersistTaps="handled"
@@ -215,6 +224,10 @@ const AdvancedSettings = () => {
       <SearchCoummunityContent
         modalizeRef={modalizeRef}
         onPressItem={onPressCommuntiyItem}
+      />
+      <SearchGroupBottomSheet
+        modalizeRef={groupSearchRef}
+        onPressItem={onPressItem}
       />
     </ScreenWrapper>
   );

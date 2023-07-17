@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   View, StyleSheet, Dimensions, ActivityIndicator,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { debounce } from 'lodash';
 import SearchInput from '~/baseComponents/Input/SearchInput';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
 import useBaseHook from '~/hooks/baseHook';
-import useYourCommunitiesStore from '~/screens/communities/Communities/components/YourCommunities/store';
 import AdvancedSettingItem from './AdvancedSettingItem';
 import BottomSheet from '~/baseComponents/BottomSheet';
-import useSearchJoinedCommunitiesStore from '~/screens/communities/Communities/components/SearchCommunity/store';
+import useAdvancedNotiSettingsStore from '../AdvancedSettings/store';
+import appConfig from '~/configs/appConfig';
 import EmptyScreen from '~/components/EmptyScreen';
 import images from '~/resources/images';
 
@@ -22,7 +23,7 @@ interface Props {
   onPressItem: (item: any) => void;
 }
 
-const SearchCoummunityContent = ({ modalizeRef, onPressItem }: Props) => {
+const SearchGroupBottomSheet = ({ modalizeRef, onPressItem }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
@@ -31,59 +32,67 @@ const SearchCoummunityContent = ({ modalizeRef, onPressItem }: Props) => {
   const [searchText, setSearchText] = useState('');
 
   const {
-    ids: defaultIds, items: defaultItems, hasNextPage: hasNextPageDefault, actions,
-  } = useYourCommunitiesStore();
-  const {
-    hasNextPage, ids, items, actions: joinedActions, reset, loading,
-  } = useSearchJoinedCommunitiesStore();
+    actions, searchJoinedGroups,
+    hasSearchNextPage, joinedGroups, hasNextPage, selectedCommunity,
+    isLoadingJoinedGroup,
+  } = useAdvancedNotiSettingsStore((state) => state);
+
   const needUseDefault = !Boolean(searchText?.trim?.()?.length > 0);
-  const shouldShowData = needUseDefault ? defaultIds : ids;
+  const shouldShowData = needUseDefault ? joinedGroups : searchJoinedGroups;
+
+  const searchGroup = (text: string) => {
+    setSearchText(text);
+    actions.searchJoinedGroupFlat({ key: text }, true);
+  };
+
+  const searchHandler = useCallback(
+    debounce(
+      searchGroup, appConfig.searchTriggerTime,
+    ),
+    [],
+  );
 
   const onChangeText = (text: string) => {
-    reset();
-    setSearchText(text);
-    joinedActions.searchJoinedCommunities({ key: text });
+    searchHandler(text);
+  };
+
+  const onLoadMore = () => {
+    if (isLoadingJoinedGroup) return;
+    if (needUseDefault && hasNextPage) {
+      actions.getJoinedGroupFlat(selectedCommunity.id);
+    } else if (hasSearchNextPage) {
+      actions.searchJoinedGroupFlat({ key: searchText });
+    }
   };
 
   const onResetSearchText = () => {
     setSearchText('');
   };
 
-  const onLoadMore = () => {
-    if (needUseDefault && hasNextPageDefault) {
-      actions.getYourCommunities();
-    } else if (hasNextPage) {
-      joinedActions.searchJoinedCommunities({ key: searchText });
-    }
-  };
-
   const renderHeader = () => (
     <View style={[styles.headerContainer]}>
       <Text.H3 useI18n color={colors.neutral80}>
-        notification:advanced_notifications_settings:search_community_title
+        notification:advanced_notifications_settings:search_group_title
       </Text.H3>
       <ViewSpacing height={spacing.margin.small} />
       <SearchInput
         autoFocus
-        placeholder={t('notification:advanced_notifications_settings:search_placeholder')}
+        placeholder={t('notification:advanced_notifications_settings:search_group_placeholder')}
         onChangeText={onChangeText}
       />
     </View>
   );
 
-  const renderItem = (item: string) => {
-    const currentItem = needUseDefault ? defaultItems[item] : items[item];
-    return (
-      <AdvancedSettingItem
-        key={`communtiy.${item}`}
-        item={currentItem}
-        onPress={onPressItem}
-      />
-    );
-  };
+  const renderItem = ({ item }: any) => (
+    <AdvancedSettingItem
+      key={`communtiy.${item}`}
+      item={item}
+      onPress={onPressItem}
+    />
+  );
 
   const renderListFooter = () => {
-    if ((needUseDefault && !hasNextPageDefault) || (!needUseDefault && !hasNextPage)) return null;
+    if ((needUseDefault && !hasNextPage) || (!needUseDefault && !hasSearchNextPage)) return null;
     return (
       <View style={styles.listFooter}>
         <ActivityIndicator testID="your_communites.loading_more" />
@@ -92,7 +101,7 @@ const SearchCoummunityContent = ({ modalizeRef, onPressItem }: Props) => {
   };
 
   const renderEmptyComponent = () => {
-    if (loading) return null;
+    if (isLoadingJoinedGroup) return null;
     return (
       <EmptyScreen
         source={images.img_empty_search_post}
@@ -114,8 +123,8 @@ const SearchCoummunityContent = ({ modalizeRef, onPressItem }: Props) => {
         showsVerticalScrollIndicator: false,
         scrollEnabled: true,
         scrollEventThrottle: 16,
-        keyExtractor: (item) => `advanced_settings.search_communtiy.${item}`,
-        renderItem: ({ item }) => renderItem(item),
+        keyExtractor: (item) => `advanced_settings.search_group.${item?.id}`,
+        renderItem: ({ item }) => renderItem({ item }),
         ListFooterComponent: renderListFooter,
         ListEmptyComponent: renderEmptyComponent,
         onEndReached: onLoadMore,
@@ -147,4 +156,4 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
-export default SearchCoummunityContent;
+export default SearchGroupBottomSheet;

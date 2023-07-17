@@ -1124,9 +1124,10 @@
       "reset_to_default_tooltip": "Đặt lại về mặc định để sử dụng cài đặt thông báo chung của bạn.",
       "text_enable_settings": "Bật cài đặt",
       "enable_settings_tooltip": "Bật cài đặt để thiết lập riêng cho nhóm của bạn",
-      "search_title": "Chọn cộng đồng của bạn",
+      "search_community_title": "Chọn cộng đồng của bạn",
       "search_placeholder": "Tìm kiếm cộng đồng",
-      "search_group_placeholder": "Tìm kiếm nhóm"
+      "search_group_placeholder": "Tìm kiếm nhóm",
+      "search_group_title": "Chọn nhóm của bạn"
     }
   },
   "new_feature": {
