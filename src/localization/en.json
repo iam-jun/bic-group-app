@@ -242,7 +242,8 @@
     "text_answer_input_placeholder": "Write your answer",
     "text_send_request_join_successfully": "Sent request successfully",
     "edit_settings": "Edit Settings",
-    "text_new": "New"
+    "text_new": "New",
+    "text_empty": "Empty"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -718,6 +719,7 @@
       "content_confirm": "Are you sure you want to remove communities / groups?"
     },
     "tags_maximum_message_info": "Maxium input 5 Tags",
+    "series_maximum_message_info": "Maxium input 3 Series",
     "text_add_title": "Add title",
     "text_title_require_max_length": "Maximum 64 characters",
     "text_description_require_max_length": "Maximum 255 characters",
@@ -1504,7 +1506,8 @@
       "total_badges": "((total) badges)",
       "search_placeholder": "Search for badges name"
     },
-    "edit_showing_badges_title": "Edit Showing Badges"
+    "edit_showing_badges_title": "Edit Showing Badges",
+    "badge_tooltip_placeholder": "Tap here to add a badge"
   },
   "quiz": {
     "create_quiz": "Create Quiz",

@@ -5,22 +5,32 @@
 
 
 
-      <testcase classname="fastlane.lanes" name="0: setup_circle_ci" time="0.000357">
+      <testcase classname="fastlane.lanes" name="0: last_git_commit" time="0.139653">
 
       </testcase>
 
 
-      <testcase classname="fastlane.lanes" name="1: app_store_connect_api_key" time="0.001772">
+      <testcase classname="fastlane.lanes" name="1: changelog_from_git_commits" time="0.013324">
 
       </testcase>
 
 
-      <testcase classname="fastlane.lanes" name="2: Switch to ios deploy_staging lane" time="0.000262">
+      <testcase classname="fastlane.lanes" name="2: clean" time="72.189076">
 
       </testcase>
 
 
-      <testcase classname="fastlane.lanes" name="3: add_badge" time="4.332583">
+      <testcase classname="fastlane.lanes" name="3: assembleStagingRelease" time="540.652613">
+
+      </testcase>
+
+
+      <testcase classname="fastlane.lanes" name="4: firebase_app_distribution" time="17.984829">
+
+      </testcase>
+
+
+      <testcase classname="fastlane.lanes" name="5: Switch to android update_staging lane" time="0.000643">
 
       </testcase>
 

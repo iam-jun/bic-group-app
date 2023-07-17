@@ -1,6 +1,6 @@
 import {
   FlatList,
-  StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle,
+  StyleProp, StyleSheet, View, ViewStyle,
 } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -9,9 +9,9 @@ import { ImageStyle } from 'react-native-fast-image';
 import { IUserBadge } from '~/interfaces/IEditUser';
 import UserBadgeItem from './UserBadgeItem';
 import spacing from '~/theme/spacing';
-import Icon from '~/baseComponents/Icon';
 import Button from '~/baseComponents/Button';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import UserBadgePlaceHolderItem from './UserBadgePlaceHolderItem';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
@@ -37,21 +37,13 @@ const UserBadge = ({
 
   if (showingBadges.length === 0 || !Boolean(showingBadges?.[0]?.id)) return null;
 
-  const renderItem = ({ item, index }: any) => {
+  const renderItem = ({ item }: any) => {
     if (!item?.id) {
       return (
-        <TouchableOpacity
-          testID="user_badge_item.empty"
-          key={`badge_showing_item_empty_${index}`}
-          style={styles.emptyItem}
+        <UserBadgePlaceHolderItem
+          placement={isInMenuTab ? 'bottom' : 'top'}
           onPress={onPress}
-        >
-          <Icon
-            size={28}
-            icon="CirclePlus"
-            tintColor={theme.colors.neutral20}
-          />
-        </TouchableOpacity>
+        />
       );
     }
     return (
@@ -85,6 +77,7 @@ const UserBadge = ({
       <FlatList
         data={showingBadges}
         horizontal
+        scrollEnabled={false}
         keyExtractor={(item, index) => `badge_showing_${item?.id}_${index}`}
         renderItem={renderItem}
         ListFooterComponent={renderFooter}
@@ -102,10 +95,6 @@ const themeStyles = (_theme: ExtendedTheme) => StyleSheet.create({
   },
   buttonEdit: {
     marginLeft: spacing.margin.small,
-  },
-  emptyItem: {
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   contentContainerStyle: {
     alignItems: 'center',

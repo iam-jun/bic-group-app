@@ -131,10 +131,12 @@ const SignIn = () => {
     const isInstalled = await isAppInstalled();
     if (isInstalled) {
       const user = await getUserFromSharedPreferences();
-      if (user?.email && user?.email !== email) {
+      const hasChatSession = user?.activeSessions?.chat;
+
+      if (hasChatSession && user?.email && user?.email !== email) {
         setValue(EMAIL, user?.email);
+        setAuthSessions(user);
       }
-      setAuthSessions(user);
     } else {
       setAuthSessions(null);
     }
