@@ -6,7 +6,7 @@ import usePostsStore from '~/store/entities/posts';
 import showToastError from '~/store/helper/showToastError';
 import { ICreatePostState } from '..';
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = withNavigation?.(rootNavigationRef);
 
 export const getPostDetail = (set, _get) => async (postId: string) => {
   try {

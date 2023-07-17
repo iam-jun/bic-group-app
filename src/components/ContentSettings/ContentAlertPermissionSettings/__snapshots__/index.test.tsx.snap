@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContentAlertPermissionSettings should render correctly 1`] = `
+<Text
+  style={
+    Array [
+      Object {
+        "color": "#212745",
+        "fontFamily": "BeVietnamPro-Light",
+        "fontSize": 14,
+      },
+      Object {},
+      Object {
+        "paddingBottom": 12,
+        "paddingHorizontal": 16,
+        "paddingTop": 4,
+      },
+    ]
+  }
+>
+  You don't have this permission at 
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#212745",
+          "fontFamily": "BeVietnamPro-Medium",
+          "fontSize": 15,
+        },
+        Object {},
+        undefined,
+      ]
+    }
+  >
+    a community, b community
+  </Text>
+  . Please remove them or contact your admin.
+</Text>
+`;

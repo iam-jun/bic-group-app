@@ -3,7 +3,7 @@ import { IMaintenanceState } from '../index';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = withNavigation?.(rootNavigationRef);
 
 const checkMaintenance
   = (set, _get) => async (isRefreshing = false) => {

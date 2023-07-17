@@ -26,13 +26,14 @@ import ContentSection from './screens/CreateArticleContent/ContentSection';
 import { useBaseHook } from '~/hooks';
 import useCreateArticle from './hooks/useCreateArticle';
 import Schedule from './components/Schedule';
-import SettingsButton from '~/components/ImportantSettings/SettingsButton';
+import SettingsButton from '~/components/ContentSettings/SettingsButton';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import { ArticleBoxScheduleTime } from '~/components/articles';
-import CreateBannerImportant from '~/components/ImportantSettings/CreateBannerImportant';
+import CreateBannerImportant from '~/components/ContentSettings/CreateBannerImportant';
 import { PostType } from '~/interfaces/IPost';
 import showToastSuccess from '~/store/helper/showToastSuccess';
+import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftContents/store';
 
 enum SectionName {
   Title,
@@ -117,6 +118,7 @@ const CreateArticle: FC<CreateArticleProps> = ({
   const articleData = useCreateArticleStore((state) => state.data);
   const actions = useCreateArticleStore((state) => state.actions);
   const isDraft = useCreateArticleStore((state) => state.isDraft);
+  const isSchedule = useCreateArticleStore((state) => state.isSchedule);
   const draftActions = useDraftArticleStore((state) => state.actions);
   const articleActions = useArticlesStore(
     (state: IArticlesState) => state.actions,
@@ -130,6 +132,8 @@ const CreateArticle: FC<CreateArticleProps> = ({
 
   const resetEditArticleStore = useCreateArticleStore((state) => state.reset);
   const resetMentionInputStore = useMentionInputStore((state) => state.reset);
+
+  const draftContentsStoreActions = useDraftContentsStore((state) => state.actions);
 
   useEffect(() => {
     if (isCreateNewArticle) actions.createArticle();
@@ -152,6 +156,7 @@ const CreateArticle: FC<CreateArticleProps> = ({
   const onPressBackToDraft = () => {
     // For editing draft article, navigating back needs to refresh data
     draftActions.getDraftArticles({ isRefresh: true });
+    draftContentsStoreActions.getDraftContents({ isRefresh: true });
     rootNavigation.goBack();
     showToastSuccess(null, 'article:text_article_saved_to_draft');
   };
@@ -169,7 +174,7 @@ const CreateArticle: FC<CreateArticleProps> = ({
   };
 
   const renderBtnSchedule = () => {
-    if (isDraft) return (<Schedule articleId={articleId} />);
+    if (isDraft || isSchedule) return (<Schedule articleId={articleId} />);
 
     return null;
   };

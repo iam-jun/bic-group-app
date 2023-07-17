@@ -32,37 +32,74 @@ export const onReceiveURL = async ({
     }
 
     switch (match.type) {
-      case DeepLinkTypes.POST_DETAIL:
-        navigation?.navigate?.(mainStack.postDetail, { post_id: match.postId });
-        break;
-
-      case DeepLinkTypes.COMMENT_DETAIL:
-        navigation?.navigate?.(mainStack.commentDetail, {
-          ...match.params as Object,
-          postId: match.postId,
+      case DeepLinkTypes.POST_DETAIL: {
+        const navigateToPostDetail = () => navigation?.navigate?.(
+          mainStack.postDetail, { post_id: match.postId },
+        );
+        redirectToScreenWithSignIn({
+          userId, url, navigateCallback: navigateToPostDetail,
         });
         break;
+      }
 
-      case DeepLinkTypes.COMMUNTY_DETAIL:
-        navigation?.navigate?.(mainStack.communityDetail, { communityId: match.communityId });
+      case DeepLinkTypes.COMMENT_DETAIL: {
+        const navigateToCommentDetail = () => navigation?.navigate?.(
+          mainStack.commentDetail, {
+            ...match.params as Object,
+            postId: match.postId,
+          },
+        );
+        redirectToScreenWithSignIn({
+          userId, url, navigateCallback: navigateToCommentDetail,
+        });
         break;
+      }
 
-      case DeepLinkTypes.GROUP_DETAIL:
-        navigation?.navigate?.(mainStack.groupDetail, {
+      case DeepLinkTypes.COMMUNTY_DETAIL: {
+        const navigateToCommunityDetail = () => navigation?.navigate?.(
+          mainStack.communityDetail, { communityId: match.communityId },
+        );
+        redirectToScreenWithSignIn({
+          userId, url, navigateCallback: navigateToCommunityDetail,
+        });
+        break;
+      }
+
+      case DeepLinkTypes.GROUP_DETAIL: {
+        const navigateToGroupDetail = () => navigation?.navigate?.(mainStack.groupDetail, {
           communityId: match.communityId,
           groupId: match.groupId,
         });
-        break;
-      case DeepLinkTypes.SERIES_DETAIL:
-        navigation?.navigate?.(mainStack.seriesDetail, {
-          seriesId: match.seriesId,
+        redirectToScreenWithSignIn({
+          userId, url, navigateCallback: navigateToGroupDetail,
         });
         break;
-      case DeepLinkTypes.ARTICLE_DETAIL:
-        navigation?.navigate?.(mainStack.articleContentDetail, {
-          articleId: match.articleId,
+      }
+
+      case DeepLinkTypes.SERIES_DETAIL: {
+        const navigateToSeriesDetail = () => navigation?.navigate?.(
+          mainStack.seriesDetail, {
+            seriesId: match.seriesId,
+          },
+        );
+        redirectToScreenWithSignIn({
+          userId, url, navigateCallback: navigateToSeriesDetail,
         });
         break;
+      }
+
+      case DeepLinkTypes.ARTICLE_DETAIL: {
+        const navigateToArticleDetail = () => navigation?.navigate?.(
+          mainStack.articleContentDetail, {
+            articleId: match.articleId,
+          },
+        );
+        redirectToScreenWithSignIn({
+          userId, url, navigateCallback: navigateToArticleDetail,
+        });
+        break;
+      }
+
       case DeepLinkTypes.LOGIN:
         if (userId) return;
         navigation?.navigate?.(authStacks.signIn);
@@ -77,11 +114,21 @@ export const onReceiveURL = async ({
       case DeepLinkTypes.REFERRAL:
         await navigateFromReferralLink({ match, navigation, userId });
         break;
-      case DeepLinkTypes.USER_PROFILE:
-        navigateFromUserProfile({
-          match, navigation, userId, url,
+
+      case DeepLinkTypes.USER_PROFILE: {
+        const navigateToUserProfile = () => navigation?.navigate?.(
+          mainStack.userProfile, {
+            userId: match.userName,
+            params: {
+              type: 'username',
+            },
+          },
+        );
+        redirectToScreenWithSignIn({
+          userId, url, navigateCallback: navigateToUserProfile,
         });
         break;
+      }
       case DeepLinkTypes.APP:
         break;
       default:
@@ -152,9 +199,9 @@ const navigateWithValidReferralCode = async (payload: {
     userId, responseValidate, navigation, referralCode,
   } = payload;
   if (userId) {
-    const { id: communityId } = responseValidate?.data || {};
+    const { groupId: rootGroupId, id: communityId } = responseValidate?.data || {};
     try {
-      const responseJoinCommunity = await groupApi.joinCommunity(communityId);
+      const responseJoinCommunity = await groupApi.joinCommunity(rootGroupId);
       if (responseJoinCommunity && responseJoinCommunity?.data) {
         navigation?.navigate?.(mainStack.communityDetail, { communityId });
       }
@@ -199,20 +246,19 @@ const getListScreenToReplace = () => {
   return listScreen;
 };
 
-const navigateFromUserProfile = (params: { userId: any; navigation: IRootNavigation; match: any; url: string }) => {
+const redirectToScreenWithSignIn = (params: {
+  userId: any;
+  url: string;
+  navigateCallback: () => void }) => {
   const {
-    userId, navigation, match, url,
+    userId, url, navigateCallback,
   } = params;
+
   if (userId) {
-    navigation?.navigate?.(mainStack.userProfile, {
-      userId: match.userName,
-      params: {
-        type: 'username',
-      },
-    });
+    navigateCallback?.();
     return;
   }
-  navigation?.navigate?.(authStacks.signIn);
+
   useAppStore.getState().actions.setRedirectUrl(url);
 };
 

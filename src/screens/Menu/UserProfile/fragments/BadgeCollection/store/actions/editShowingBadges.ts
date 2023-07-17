@@ -6,14 +6,27 @@ import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import showToastError from '~/store/helper/showToastError';
 import useCommonController from '~/screens/store';
 import { IUserProfile } from '~/interfaces/IAuth';
+import { IUserBadge } from '~/interfaces/IEditUser';
+
+const sortChoosingBadgesByOrder = (choosingBadges: IUserBadge[], choosingBadgesOrder: number[]) => {
+  const newChoosingBadges = [];
+  choosingBadgesOrder.forEach((order) => {
+    newChoosingBadges.push(choosingBadges[order]);
+  });
+  return newChoosingBadges;
+};
 
 const editShowingBadges = (set, get) => async () => {
+  const {
+    choosingBadges = [], ownBadges, actions, choosingBadgesOrder,
+  }:IUserBadgesState = get();
   try {
-    const { choosingBadges = [], ownBadges }:IUserBadgesState = get();
     const ids = [];
     const showingBadges = [];
 
-    choosingBadges.forEach((badge) => {
+    const choosingBadgesOrderSorted = sortChoosingBadgesByOrder(choosingBadges, choosingBadgesOrder);
+
+    choosingBadgesOrderSorted.forEach((badge) => {
       if (badge?.id) {
         ids.push(badge?.id);
         showingBadges.push(badge);
@@ -39,6 +52,7 @@ const editShowingBadges = (set, get) => async () => {
       state.choosingBadges = showingBadges;
       state.dataSearch = ownBadges;
     }, 'editShowingBadgesSuccess');
+    actions.resetChoosingBadgesOrder();
 
     const { myProfile } = useCommonController.getState();
     const newProfile: IUserProfile = { ...myProfile, showingBadges: ids.length > 0 ? showingBadges : [] };
@@ -55,6 +69,7 @@ const editShowingBadges = (set, get) => async () => {
       state.loadingEditing = false;
     }, 'editShowingBadgesError');
     showToastError(error);
+    actions.resetChoosingBadgesOrder();
   }
 };
 

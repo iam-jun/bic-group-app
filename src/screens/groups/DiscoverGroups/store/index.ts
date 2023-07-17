@@ -4,6 +4,7 @@ import getDiscoverGroups from './actions/getDiscoverGroups';
 import joinNewGroup from './actions/joinNewGroup';
 import cancelJoinGroup from './actions/cancelJoinGroup';
 import { InitStateType } from '~/store/interfaces/IBaseState';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 
 const initState: InitStateType<IDiscoverGroupsState> = {
   loading: true,
@@ -16,7 +17,7 @@ const initState: InitStateType<IDiscoverGroupsState> = {
 const discoverGroupsStore = (set, get) => ({
   ...initState,
   actions: {
-    setGroupStatus: (groupId: string, status: number) => {
+    setGroupStatus: (groupId: string, status: GroupJoinStatus) => {
       if (!groupId) return;
       const currentState: IDiscoverGroupsState = get();
       set((state:IDiscoverGroupsState) => {

@@ -38,6 +38,7 @@ export interface IPayloadPublishDraftArticle {
   draftArticleId: string;
   replaceWithDetail?: boolean;
   refreshDraftArticles?: boolean;
+  data?: IEditArticleData;
   onSuccess?: (payload?: any) => void;
   onError?: (error) => void;
 }
@@ -124,8 +125,9 @@ export interface CreateArticleProps {
   };
 }
 
-export interface IArticleSettingsParams {
+export interface IArticleSettingsScreenParams {
   articleId?: string;
+  isFromArticleMenuSettings?: boolean;
 }
 
 export interface IEditAritcleError {
@@ -149,6 +151,7 @@ export interface IPayloadGetScheduleArticles {
   isRefresh?: boolean;
   offset?: number;
   isProcessing?: boolean;
+  isShowToast?: boolean;
 }
 
 export interface IPayloadGetArticleScheduleContent {
@@ -168,4 +171,5 @@ export interface IPayloadGetArticleDetail {
   articleId: string;
   isReported?: boolean;
   isAdmin?: boolean;
+  isDraft?: boolean;
 }

@@ -36,7 +36,7 @@ describe('CommunitItem component', () => {
     const isMember = false;
     const mockData = {
       ...communityDetailData,
-      settings: {
+      affectedSettings: {
         isJoinApproval: true,
         isActiveGroupTerms: true,
       },

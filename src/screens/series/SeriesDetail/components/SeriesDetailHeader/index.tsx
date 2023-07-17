@@ -157,7 +157,6 @@ const SeriesDetailHeader: FC<SeriesDetailHeaderProps> = ({ series }) => {
       markedReadPost={markedReadPost}
       isImportant={isImportant}
       expireTime={importantExpiredAt}
-      isActor={isActor}
       style={styles.markAsReadView}
       styleBtn={styles.markAsReadBtn}
     />

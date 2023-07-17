@@ -14,7 +14,7 @@ import { IDraftArticleState } from '..';
 import useDraftContentsStore from '../../../DraftContents/store';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = withNavigation?.(rootNavigationRef);
 
 const publishDraftArticle = (set, get) => async (payload: IPayloadPublishDraftArticle) => {
   const {
@@ -22,6 +22,7 @@ const publishDraftArticle = (set, get) => async (payload: IPayloadPublishDraftAr
     replaceWithDetail,
     onSuccess,
     onError,
+    data,
   } = payload;
   const { actions } = get();
   try {
@@ -29,7 +30,9 @@ const publishDraftArticle = (set, get) => async (payload: IPayloadPublishDraftAr
       state.isPublishing = true;
     }, 'publishDraftArticle');
 
-    const response = await streamApi.publishDraftArticle(draftArticleId);
+    const param = { ...data } as any;
+
+    const response = await streamApi.publishDraftArticle(draftArticleId, param);
 
     if (!response.data) {
       set((state: IDraftArticleState) => {

@@ -1,3 +1,5 @@
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
+
 export const mockDiscoverGroupsResponse = {
   code: 'api.ok',
   meta: {
@@ -18,7 +20,7 @@ export const mockDiscoverGroupsResponse = {
       level: 1,
       backgroundImgUrl: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/group/default-cover.png',
       userCount: 3,
-      joinStatus: 1,
+      joinStatus: GroupJoinStatus.VISITOR,
     },
     {
       id: '1155635a-b16f-47e7-bad2-6cd41e9e8890',
@@ -30,7 +32,7 @@ export const mockDiscoverGroupsResponse = {
       level: 1,
       backgroundImgUrl: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/group/default-cover.png',
       userCount: 5,
-      joinStatus: 3,
+      joinStatus: GroupJoinStatus.REQUESTED,
     },
     {
       id: 'c74a74e6-9dfd-4fe1-9803-4ed2c4339da2',
@@ -42,9 +44,9 @@ export const mockDiscoverGroupsResponse = {
       level: 1,
       backgroundImgUrl: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/group/default-cover.png',
       userCount: 0,
-      joinStatus: 1,
+      joinStatus: GroupJoinStatus.VISITOR,
     },
   ],
 };
 
-export const mockJoinNewGroupResponse = { code: 'api.ok', meta: { message: 'Sent request successfully' }, data: { joinStatus: 3 } };
+export const mockJoinNewGroupResponse = { code: 'api.ok', meta: { message: 'Sent request successfully' }, data: { joinStatus: GroupJoinStatus.REQUESTED } };

@@ -12,8 +12,8 @@ const apiUrls = {
 };
 
 export const apiVersionId = {
-  content: '1.5.0',
-  group: undefined,
+  content: '1.6.0',
+  group: '1.0.0',
   user: undefined,
   notification: undefined,
 };

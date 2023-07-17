@@ -15,6 +15,7 @@ import {
   IRequestGetUsersInterestedPost,
   IParamsGetPostByParams,
   IParamUpdatePost,
+  PutEditSettingsApiParams,
 } from '~/interfaces/IPost';
 import {
   IParamGetFeed,
@@ -141,10 +142,22 @@ export const streamApiConfig = {
     url: `${provider.url}articles`,
     method: 'post',
   }),
+  publishDraftArticle: (draftArticleId: string, param?: IParamPutEditArticle): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}articles/${draftArticleId}/publish`,
+    method: 'put',
+    data: param,
+  }),
   putEditArticle: (articleId: string, param: IParamPutEditArticle): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}articles/${articleId}`,
     method: 'put',
+    data: param,
+  }),
+  putAutoSaveArticle: (articleId: string, param: IParamPutEditArticle): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}articles/${articleId}`,
+    method: 'patch',
     data: param,
   }),
   putPublishPost: (param: IParamUpdatePost): HttpApiRequestConfig => {
@@ -234,7 +247,7 @@ export const streamApiConfig = {
   },
   putMarkAsRead: (postId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}posts/${postId}/mark-as-read`,
+    url: `${provider.url}content/${postId}/mark-as-read`,
     method: 'put',
   }),
   putMarkSeenContent: (id: string): HttpApiRequestConfig => ({
@@ -363,11 +376,6 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}series`,
     params,
-  }),
-  publishDraftArticle: (draftArticleId: string): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}articles/${draftArticleId}/publish`,
-    method: 'put',
   }),
   scheduleArticle: (draftArticleId: string, publishedAt: string): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -532,6 +540,12 @@ export const streamApiConfig = {
     provider: apiProviders.beinFeed,
     params,
   }),
+  putEditSettings: ({ id, setting }: PutEditSettingsApiParams): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}content/${id}/setting`,
+    method: 'put',
+    data: { ...setting },
+  }),
   getContentsInSeries: (seriesIds: string[]): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}series/items`,
@@ -612,8 +626,14 @@ const streamApi = {
   postCreateNewPost: (data: IPostCreatePost) => withHttpRequestPromise(streamApiConfig.postCreateNewPost, data),
   putReaction: (param: IParamPutReaction) => withHttpRequestPromise(streamApiConfig.putReaction, param),
   createArticle: () => withHttpRequestPromise(streamApiConfig.createArticle),
+  publishDraftArticle: (draftArticleId: string, param?: IParamPutEditArticle) => withHttpRequestPromise(
+    streamApiConfig.publishDraftArticle, draftArticleId, param,
+  ),
   putEditArticle: (articleId: string, param: IParamPutEditArticle) => withHttpRequestPromise(
     streamApiConfig.putEditArticle, articleId, param,
+  ),
+  putAutoSaveArticle: (articleId: string, param: IParamPutEditArticle) => withHttpRequestPromise(
+    streamApiConfig.putAutoSaveArticle, articleId, param,
   ),
   putPublishPost: (param: IParamUpdatePost) => withHttpRequestPromise(streamApiConfig.putPublishPost, param),
   putEditPost: (param: IParamUpdatePost) => withHttpRequestPromise(streamApiConfig.putEditPost, param),
@@ -688,9 +708,6 @@ const streamApi = {
   ),
   getArticleDetailByAdmin: (id: string, params?: IParamGetArticleDetail) => withHttpRequestPromise(
     streamApiConfig.getArticleDetailByAdmin, id, params,
-  ),
-  publishDraftArticle: (draftArticleId: string) => withHttpRequestPromise(
-    streamApiConfig.publishDraftArticle, draftArticleId,
   ),
   scheduleArticle: (draftArticleId: string, publishedAt: string) => withHttpRequestPromise(
     streamApiConfig.scheduleArticle, draftArticleId, publishedAt,
@@ -811,6 +828,9 @@ const streamApi = {
       limit: param?.limit || appConfig.recordsPerPage,
       ...param,
     },
+  ),
+  putEditSettings: (params: PutEditSettingsApiParams) => withHttpRequestPromise(
+    streamApiConfig.putEditSettings, params,
   ),
   getContentsInSeries: (seriesIds: string[]) => withHttpRequestPromise(
     streamApiConfig.getContentsInSeries, seriesIds,

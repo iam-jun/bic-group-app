@@ -116,4 +116,10 @@ export interface IGroupSettings {
   isJoinApproval?: boolean;
   isActiveGroupTerms?: boolean;
   isActiveMembershipQuestions?: boolean;
+  isInvitedOnly?: boolean;
+}
+
+export enum ITypeGroup {
+  GROUP = 'group',
+  COMMUNITY = 'community',
 }
