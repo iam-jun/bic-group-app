@@ -12,51 +12,52 @@ import Text from '~/baseComponents/Text';
 import { Toggle } from '~/baseComponents';
 import { IGroup } from '~/interfaces/IGroup';
 import { ICommunity } from '~/interfaces/ICommunity';
-import { CommunityPrivacyType, GroupPrivacyType } from '~/constants/privacyTypes';
+import { GroupPrivacyType } from '~/constants/privacyTypes';
 import showAlert from '~/store/helper/showAlert';
 import { IGroupSettings } from '~/interfaces/common';
 import { checkTypeByRootGroup } from '../helper';
+import { IDataSettings } from '../store';
 
-export const topAdjustment = Platform.OS === 'android' ? -StatusBar.currentHeight + 3 : 0;
+export const topAdjustment = Platform.OS === 'android' ? -StatusBar.currentHeight : 0;
 
-export interface Props {
+export interface SettingsProps {
   data: IGroup | ICommunity;
+  settings: IDataSettings['settings'];
+  changeableSettings: IDataSettings['changeableSettings'];
   updateJoinSetting: (payload: IGroupSettings) => void;
 }
 
-const MembershipApproval: FC<Props> = (props) => {
+const MembershipApproval: FC<SettingsProps> = (props) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyles(theme);
 
-  const { data, updateJoinSetting } = props || {};
+  const {
+    data, settings, changeableSettings, updateJoinSetting,
+  } = props || {};
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const typeByRootGroup = checkTypeByRootGroup(data);
 
   const privacy = data?.privacy;
-  const isJoinApproval = data?.affectedSettings?.isJoinApproval;
-  const isInvitedOnly = data?.affectedSettings?.isInvitedOnly;
-  const isPrivatePrivacy = privacy === CommunityPrivacyType.PRIVATE || privacy === GroupPrivacyType.PRIVATE;
+  const isJoinApproval = settings?.isJoinApproval;
+  const isInvitedOnly = settings?.isInvitedOnly;
   const isSecretPrivacy = privacy === GroupPrivacyType.SECRET;
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const isInDefaultGroupSet = data?.isInDefaultGroupSet;
+  const contentTooltip = changeableSettings?.isJoinApproval;
 
-  const [isCheckedToggle, setIsCheckedToggle] = useState<boolean>(isJoinApproval || false);
   const [isVisibleTooltip, setIsVisibleTooltip] = useState<boolean>(false);
+  const [isToggle, setIsToggle] = useState(false);
 
   useEffect(() => {
-    setIsCheckedToggle(isJoinApproval);
+    setIsToggle(isJoinApproval);
   }, [isJoinApproval]);
 
   const onPressToggle = (isChecked: boolean) => {
-    if (isChecked) return onShowAlertTurnOn();
+    if (isChecked) return onPressTurnOn();
     return onShowAlertTurnOff();
   };
 
-  const onShowAlertTurnOn = () => {
-    setIsCheckedToggle(true);
+  const onPressTurnOn = () => {
     updateJoinSetting({ isJoinApproval: true });
   };
 
@@ -66,14 +67,13 @@ const MembershipApproval: FC<Props> = (props) => {
       content: t('settings:membership_policy_settings:alert_turn_off_membership_approval:description'),
       cancelBtn: true,
       cancelLabel: t('common:btn_cancel'),
-      onConfirm: _onPressTurnOff,
+      onConfirm: onPressTurnOff,
       confirmLabel: t('settings:membership_policy_settings:alert_turn_off_membership_approval:turn_off'),
     };
     showAlert(alertPayload);
   };
 
-  const _onPressTurnOff = () => {
-    setIsCheckedToggle(false);
+  const onPressTurnOff = () => {
     updateJoinSetting({ isJoinApproval: false });
   };
 
@@ -83,9 +83,7 @@ const MembershipApproval: FC<Props> = (props) => {
 
   const renderContentTooltip = () => (
     <Text.BodyM useI18n color={colors.white}>
-      {isInDefaultGroupSet
-        ? 'settings:membership_policy_settings:tooltip:default_group_set_toggle'
-        : t('settings:membership_policy_settings:tooltip:private', { type: typeByRootGroup })}
+      {contentTooltip}
     </Text.BodyM>
   );
 
@@ -95,7 +93,7 @@ const MembershipApproval: FC<Props> = (props) => {
     return null;
   }
 
-  const isDisabled = isPrivatePrivacy || isInDefaultGroupSet;
+  const isDisabled = !!contentTooltip;
   const position = isDisabled ? 'absolute' : 'relative';
 
   return (
@@ -112,7 +110,7 @@ const MembershipApproval: FC<Props> = (props) => {
         <Toggle
           testID="membership_approval.toggle"
           style={[styles.toggle, { position }]}
-          isChecked={isCheckedToggle}
+          isChecked={isToggle}
           onValueChanged={onPressToggle}
           disableBuiltInState
           disabled={isDisabled}

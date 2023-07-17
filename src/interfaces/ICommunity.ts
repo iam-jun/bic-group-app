@@ -154,8 +154,7 @@ export interface IRequestJoinCommunity {
 export interface IRequestUpdateCommunityJoinSetting {
   communityId: string,
   groupId: string,
-  isJoinApproval?: boolean
-  isInvitedOnly?: boolean
+  settings: IGroupSettings,
 }
 export interface IRequestLeaveCommunity {
   rootGroupId: string,

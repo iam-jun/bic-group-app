@@ -375,3 +375,53 @@ export const MEMBERSHIP_QUESITONS = [
     updatedAt: 'string',
   },
 ];
+
+export const previewSettingsResponse = {
+  code: 'api.ok',
+  meta: {
+    message: 'Success',
+  },
+  data: {
+    effectedInnerGroups: [
+      {
+        name: 'Bot trading',
+        icon: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/group/default-avatar.png',
+        description: 'Bot trading',
+      },
+      {
+        name: '.NET private group 3',
+        icon: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/group/default-avatar.png',
+        description: '.NET private group3',
+      },
+      {
+        name: 'Software Engineering',
+        icon: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/58372eb7-249e-43ae-be01-25ffdadf18e3.jpg',
+        description: 'Software Engineering',
+      },
+      {
+        name: 'Dota 3',
+        icon: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/group/default-avatar.png',
+        description: 'add description',
+      },
+      {
+        name: 'test',
+        icon: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/group/default-avatar.png',
+        description: null,
+      },
+    ],
+  },
+};
+
+export const getSettingsResponse = {
+  code: 'api.ok',
+  meta: { message: 'Success' },
+  data: {
+    settings: { isInvited_only: false, isJoin_approval: false },
+    changeableSettings: {
+      isJoinApproval: '',
+      isInvitedOnly: '',
+      isActiveGroupTerms: '',
+      isActiveMembershipQuestions: '',
+    },
+  },
+};

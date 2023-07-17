@@ -57,6 +57,7 @@ import { ITermState } from '~/components/TermsModal/store';
 import { IDraftContentsState } from '~/screens/YourContent/components/Draft/DraftContents/store';
 import { IPublishState } from '~/screens/YourContent/components/Publish/store';
 import { IUserBadgesState } from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
+import { IMembershipPolicySettingsState } from '~/screens/groups/MembershipPolicySettings/store';
 
 export interface BicStore {
   entities: {
@@ -124,6 +125,9 @@ export interface BicStore {
     yourCommunitiesStore: IYourCommunitiesState;
     yourGroupsStore: IYourGroupsState;
     searchJoinedCommunitiesStore: ISearchJoinedCommunitiesState;
+    MembershipPolicySettings: {
+      membershipPolicySettingsStore: IMembershipPolicySettingsState
+    }
   };
   Discover: {
     components: {
