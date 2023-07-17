@@ -21,7 +21,8 @@ import ButtonWrapper from '~/baseComponents/Button/ButtonWrapper';
 import Icon from '~/baseComponents/Icon';
 import Divider from '~/beinComponents/Divider';
 
-const topAdjustment = Platform.OS === 'android' ? -StatusBar.currentHeight + 3 : 0;
+const topAdjustment = Platform.OS === 'android' ? -StatusBar.currentHeight : 0;
+const defaultData = { enable: true, channels: { inApp: true, push: true } };
 
 const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
   const { name, groupId } = props?.route?.params || {};
@@ -101,15 +102,13 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
   }, 100);
 
   const onResetConfig = () => {
-    const newData = { enable: true, channels: { inApp: true, push: true } };
     // apply default config
     if (isDefault) {
-      const payload:any = { flag: true, ...newData };
+      const payload:any = { flag: true, ...defaultData };
       const dataUpdateStore:any = {
         ...data,
-        ...newData,
+        ...defaultData,
         flag: {
-          label: 'Default',
           value: true,
         },
       };
@@ -117,19 +116,18 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
       return;
     }
     // reset to default (not config)
-    const payload:any = { flag: false, ...newData };
+    const payload:any = { flag: false, ...defaultData };
     const dataUpdateStore:any = {
       ...data,
-      ...newData,
+      ...defaultData,
       flag: {
-        label: 'Default',
         value: false,
       },
     };
     actions.updateGroupSettings(payload, dataUpdateStore);
   };
 
-  const _setIsVisibleTooltip = () => {
+  const updateIsVisibleTooltip = () => {
     setIsVisibleTooltip(!isVisibleTooltip);
   };
 
@@ -188,14 +186,16 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
 
   const buttonText = isDefault ? t('notification:advanced_notifications_settings:text_enable_settings')
     : t('notification:advanced_notifications_settings:title_reset_to_default');
-  const tooltipText = isDefault ? t('notification:advanced_notifications_settings:reset_to_default_tooltip')
-    : t('notification:advanced_notifications_settings:enable_settings_tooltip');
 
-  const renderContentTooltip = () => (
-    <Text.BodyM color={colors.white}>
-      {tooltipText}
-    </Text.BodyM>
-  );
+  const renderContentTooltip = () => {
+    const tooltipText = isDefault ? t('notification:advanced_notifications_settings:enable_settings_tooltip')
+      : t('notification:advanced_notifications_settings:reset_to_default_tooltip');
+    return (
+      <Text.BodyM color={colors.white}>
+        {tooltipText}
+      </Text.BodyM>
+    );
+  };
 
   return (
     <ScreenWrapper
@@ -229,6 +229,7 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
         <View style={styles.wrapperContainer}>
           <View style={styles.groupButtonContainer}>
             <Tooltip
+              key={`advanced_settinsg.tooltip_${buttonText}`}
               isVisible={isVisibleTooltip}
               disableShadow
               childContentSpacing={3}
@@ -243,7 +244,7 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
                 left: spacing.margin.large,
                 right: spacing.margin.large,
               }}
-              onClose={_setIsVisibleTooltip}
+              onClose={updateIsVisibleTooltip}
             >
               <View style={styles.row}>
                 <ButtonWrapper disabled={isUpdatting} style={styles.buttonWrapper} onPress={onResetConfig}>
@@ -252,7 +253,7 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
                   </Text.ButtonM>
                 </ButtonWrapper>
                 <Divider horizontal size={1} />
-                <ButtonWrapper style={styles.buttonInfoWrapper} onPress={_setIsVisibleTooltip}>
+                <ButtonWrapper style={styles.buttonInfoWrapper} onPress={updateIsVisibleTooltip}>
                   <Icon icon="CircleQuestion" size={16} color={colors.neutral40} />
                 </ButtonWrapper>
               </View>
@@ -316,7 +317,7 @@ const createStyle = (theme: ExtendedTheme) => {
     tooltipStyle: {
       backgroundColor: colors.neutral80,
       borderRadius: spacing.padding.tiny,
-      width: 200,
+      maxWidth: 200,
     },
   });
 };

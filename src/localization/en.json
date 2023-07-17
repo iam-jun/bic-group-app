@@ -1180,7 +1180,7 @@
       "title_reset_to_default": "Reset to default",
       "reset_to_default_tooltip": "Reset to default to use your general notification settings.",
       "text_enable_settings": "Enable settings",
-      "enable_settings_tooltip": "Enable settings to set up specifically for your group",
+      "enable_settings_tooltip": "Use settings for\nthis specific group",
       "search_community_title": "Select your community",
       "search_placeholder": "Search community",
       "search_group_placeholder": "Search group",

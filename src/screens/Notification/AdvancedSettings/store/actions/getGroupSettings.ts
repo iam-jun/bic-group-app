@@ -20,6 +20,10 @@ const getGroupSettings = (set, get) => async (groupIds: string[]) => {
         state.isLoadingGroupSettings = false;
         state.groupData = { ...state.groupData, ...newData };
       }, 'getGroupSettingsSuccess');
+    } else {
+      set((state: IAdvancedNotiSettingsStore) => {
+        state.isLoadingGroupSettings = false;
+      }, 'getGroupSettingsSuccessButEmpty');
     }
   } catch (err) {
     console.error(

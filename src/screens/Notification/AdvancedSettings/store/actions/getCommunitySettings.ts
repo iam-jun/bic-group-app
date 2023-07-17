@@ -18,6 +18,10 @@ const getCommunitySettings = (set, _get) => async (communityId: string) => {
         state.isLoadingCommunitySettings = false;
         state.communityData = { ...state.communityData, ...newData };
       }, 'getCommunitySettingsSuccess');
+    } else {
+      set((state: IAdvancedNotiSettingsStore) => {
+        state.isLoadingCommunitySettings = false;
+      }, 'getCommunitySettingsSuccessButEmpty');
     }
   } catch (err) {
     console.error(
