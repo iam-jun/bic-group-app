@@ -7,6 +7,7 @@ import { spacing } from '~/theme';
 import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { FormGenerateQuiz } from '~/interfaces/IQuiz';
+import { validateIntegerNumber } from '../../helper';
 
 type QuestionAnswerSectionProps = {
     control: Control<FormGenerateQuiz>;
@@ -46,11 +47,13 @@ const QuestionAnswerSection: FC<QuestionAnswerSectionProps> = ({ control }) => {
   );
 
   const validateInputQuestion = {
+    validateIntegerNumber,
     greaterThan0: (value) => Number(value) > 0 || t('quiz:the_question_must_be_greater_than_0'),
     lessThan: (value) => Number(value) <= MAX_QUESTIONS || t('quiz:number_of_questions_should_not_exceed', { max: MAX_QUESTIONS }),
   };
 
   const validateInputAnswer = {
+    validateIntegerNumber,
     greaterThan0: (value) => Number(value) > 0 || t('quiz:the_answers_must_be_greater_than_0'),
     lessThan: (value) => Number(value) <= MAX_ANSWERS || t('quiz:number_of_answers_should_not_exceed', { max: MAX_ANSWERS }),
   };
