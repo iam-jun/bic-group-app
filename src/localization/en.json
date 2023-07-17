@@ -1564,6 +1564,14 @@
     "btn_retake": "Retake",
     "btn_retry": "Retry",
     "btn_quit": "Quit",
-    "alert_content_submit_quiz": "Are you sure you want to submit the quiz?"
+    "alert_content_submit_quiz": "Are you sure you want to submit the quiz?",
+    "text_dont_give_up": "Don’t Give Up!",
+    "text_study_more": "Study more next time and get all the answers correct!",
+    "text_awesome": "You are awesome!",
+    "text_congrats": "Congratulations for getting all the anwers correct!",
+    "result_complete": "Completion",
+    "result_correct": "Correct Answer",
+    "result_incorrect": "Incorrect Answer",
+    "result_skip": "Skipped"
   }
 }

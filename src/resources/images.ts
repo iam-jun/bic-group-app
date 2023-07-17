@@ -22,6 +22,7 @@ const images = {
   no_image_avalable: require('../../assets/images/no_image_avalable.png'),
   img_thumbnail_take_part_in_a_quiz: require('../../assets/images/img_thumbnail_take_part_in_a_quiz.png'),
   img_error: require('../../assets/images/img_error.png'),
+  img_congrats: require('../../assets/images/img_congrats.png'),
 };
 
 export default images;

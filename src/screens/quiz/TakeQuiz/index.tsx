@@ -23,7 +23,7 @@ const TakeQuiz: React.FC<TakeQuizProps> = () => {
   const { colors } = theme;
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
-  const [answerCorrect, setAnswerCorrect] = useState<any>({});
+  const [answerCorrect, setAnswerCorrect] = useState<any>(null);
 
   const goBack = () => rootNavigation.goBack();
 
@@ -40,7 +40,7 @@ const TakeQuiz: React.FC<TakeQuizProps> = () => {
   useBackPressListener(onPressBack);
 
   const onPressNext = () => {
-    rootNavigation.navigate(quizStack.takeQuizReview);
+    rootNavigation.navigate(quizStack.takeQuizReview, { showCongrat: !!answerCorrect });
   };
 
   const onPickAnswer = (data) => {

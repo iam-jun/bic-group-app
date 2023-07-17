@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import {
   View, StyleSheet, FlatList, ListRenderItem, Platform,
@@ -9,7 +9,6 @@ import Header from '~/beinComponents/Header';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import { useBaseHook } from '~/hooks';
 import { QuestionItem } from '~/interfaces/IQuiz';
-import useQuizzesStore from '~/store/entities/quizzes';
 import QuestionComposeQuiz from '../ComposeQuiz/components/QuestionComposeQuiz';
 import Text from '~/baseComponents/Text';
 import { Button } from '~/baseComponents';
@@ -17,28 +16,29 @@ import { spacing } from '~/theme';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import showAlert from '~/store/helper/showAlert';
 import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
+  // temporary use for UI
+import { mockGenerateQuizResponse } from '~/test/mock_data/quiz';
 
-interface TakeQuizReviewProps {}
+interface TakeQuizReviewProps {
+  route?: {
+    params?: {
+        showCongrat?: boolean; // temporary use for UI
+    };
+  };
+}
 
 const BOTTOM_SPACE = Platform.OS === 'ios' ? 38 : 24;
 
 const fakeId = 'f400562d-5ee9-4a14-abb2-80f4f0e81fff';
 
-const TakeQuizReview: React.FC<TakeQuizReviewProps> = () => {
+const TakeQuizReview: React.FC<TakeQuizReviewProps> = ({ route }) => {
+  const { showCongrat } = route.params || {}; // temporary use for UI
+
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
   const styles = createStyle(theme);
-  // temporary use for UI
-  const actionsQuizzesStore = useQuizzesStore((state) => state.actions);
-  const quiz = useQuizzesStore((state) => state.data[fakeId]);
-  const { questions = [] } = quiz || {};
-
-  // temporary use for UI
-  useEffect(() => {
-    actionsQuizzesStore.getQuizDetail({ quizId: fakeId });
-  }, []);
 
   const goBack = () => {
     rootNavigation.goBack();
@@ -57,7 +57,7 @@ const TakeQuizReview: React.FC<TakeQuizReviewProps> = () => {
   useBackPressListener(onPressBack);
 
   const onSubmit = () => {
-    rootNavigation.navigate(quizStack.takeQuizResult);
+    rootNavigation.navigate(quizStack.takeQuizResult, { showCongrat });
   };
 
   const onPressSubmit = () => {
@@ -105,7 +105,7 @@ const TakeQuizReview: React.FC<TakeQuizReviewProps> = () => {
         onPressBack={onPressBack}
       />
       <FlatList
-        data={questions}
+        data={mockGenerateQuizResponse.data.questions}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         ListHeaderComponent={renderHeader}
