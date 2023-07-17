@@ -1164,19 +1164,26 @@
       "allow_notifications": "Allow notifications",
       "in_app_text": "In-app",
       "push_text": "Push",
+      "default_text": "Default",
+      "off_text": "Off",
       "not_joined_the_community": {
         "title": "Nothing to set up",
         "description": "Join a community then set up the settings here."
-      },
-      "advanced_notifications_settings": {
-        "title": "Advanced Notifications Settings",
-        "content": "Specific notification settings for each community and its inner groups",
-        "title_setup_community": "Set up for your communities",
-        "title_setup_group": "Set up for your groups",
-        "description_setup_group": "Default settings use your general notification settings until you set up specifically.",
-        "title_reset_to_default": "Reset to default",
-        "reset_to_default_tooltip": "Reset to default to use your general notification settings."
       }
+    },
+    "advanced_notifications_settings": {
+      "title": "Advanced Notifications Settings",
+      "content": "Specific notification settings for each community and its inner groups",
+      "title_setup_community": "Set up for your communities",
+      "title_setup_group": "Set up for your groups",
+      "description_setup_group": "Default settings use your general notification settings until you set up specifically.",
+      "title_reset_to_default": "Reset to default",
+      "reset_to_default_tooltip": "Reset to default to use your general notification settings.",
+      "text_enable_settings": "Enable settings",
+      "enable_settings_tooltip": "Enable settings to set up specifically for your group",
+      "search_title": "Select your community",
+      "search_placeholder": "Search community",
+      "search_group_placeholder": "Search group"
     }
   },
   "new_feature": {

@@ -1,31 +1,28 @@
 import groupApi from '~/api/GroupApi';
 import { IAdvancedNotiSettingsStore } from '../index';
 import showToastError from '~/store/helper/showToastError';
+import { IGetCommunityGroup } from '~/interfaces/IGroup';
 
-const getJoinedGroupFlat = (set, get) => async (id: string) => {
+const searchJoinedGroupFlat = (set, get) => async (id: string, params: IGetCommunityGroup) => {
   try {
     const {
-      groupFlat, joinedGroups, actions, hasNextPage,
+      searchJoinedGroups, actions, hasSearchNextPage,
     } = get();
-    if (!hasNextPage) return;
+    if (!hasSearchNextPage) return;
 
-    if (Boolean(groupFlat?.[id]?.length > 0)) {
-      set((state: IAdvancedNotiSettingsStore) => {
-        state.joinedGroups = groupFlat[id];
-      }, 'joinedGroupFlatHasYet');
-      return;
-    }
     set((state: IAdvancedNotiSettingsStore) => {
       state.isLoadingJoinedGroup = true;
-    }, 'getJoinedGroupFlat');
+    }, 'searchJoinedGroupFlat');
 
-    const params: any = {
+    const newParams: any = {
+      ...params,
       listBy: 'flat',
       includeRootGroup: true,
-      sort: 'level:asc',
-      offset: joinedGroups.length,
+      offset: searchJoinedGroups.length,
+      communityId: id,
     };
-    const response = await groupApi.getCommunityGroups(id, params);
+
+    const response = await groupApi.getCommunityGroups(id, newParams);
 
     const { data, meta } = response;
     const groupIds = data?.map((item: any) => item.id) || [];
@@ -33,17 +30,17 @@ const getJoinedGroupFlat = (set, get) => async (id: string) => {
 
     set((state: IAdvancedNotiSettingsStore) => {
       state.isLoadingJoinedGroup = false;
-      state.joinedGroups = data || [];
-      state.hasNextPage = meta.hasNextPage;
-    }, 'getJoinedGroupFlatSuccess');
+      state.searchJoinedGroups = data || [];
+      state.hasSearchNextPage = meta.hasNextPage;
+    }, 'searchJoinedGroupFlatSuccess');
   } catch (error) {
     console.error('\x1b[35m🐣️ joinedGroupTree error ', error, '\x1b[0m');
     showToastError(error);
     set((state: IAdvancedNotiSettingsStore) => {
       state.isLoadingJoinedGroup = false;
-      state.joinedGroups = [];
-    }, 'getJoinedGroupFlatFailed');
+      state.searchJoinedGroups = [];
+    }, 'searchJoinedGroupFlatFailed');
   }
 };
 
-export default getJoinedGroupFlat;
+export default searchJoinedGroupFlat;

@@ -16,12 +16,12 @@ const getCommunitySettings = (set, _get) => async (communityId: string) => {
       });
       set((state: IAdvancedNotiSettingsStore) => {
         state.isLoadingCommunitySettings = false;
-        state.communityData = newData;
+        state.communityData = { ...state.communityData, ...newData };
       }, 'getCommunitySettingsSuccess');
     }
   } catch (err) {
     console.error(
-      '\x1b[33m', 'notification get advanced notification settings error', err, '\x1b[0m',
+      '\x1b[33m', 'notification get community advanced notification settings error', err, '\x1b[0m',
     );
     set((state: IAdvancedNotiSettingsStore) => {
       state.isLoadingCommunitySettings = false;

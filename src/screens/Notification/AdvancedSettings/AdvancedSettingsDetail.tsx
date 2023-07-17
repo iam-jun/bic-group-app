@@ -1,126 +1,137 @@
-import React, { FC } from 'react';
-import { RefreshControl, StyleSheet, View } from 'react-native';
+import React, { FC, useState } from 'react';
+import {
+  Platform, RefreshControl, StatusBar, StyleSheet, View,
+} from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Animated from 'react-native-reanimated';
 
 import { debounce } from 'lodash';
+import Tooltip from 'react-native-walkthrough-tooltip';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 import { IRouteParams } from '~/interfaces/IRouter';
-import useNotiSettingsStore from './store';
 import Text from '~/baseComponents/Text';
 import NotiSettingItem from '../components/NotiSettingItem';
-import { IEditNotificationSetting, INotiChannel, INotiSettings } from '~/interfaces/INotification';
+import { INotiChannel, INotiSettings } from '~/interfaces/INotification';
+import useAdvancedNotiSettingsStore from './store';
+import ButtonWrapper from '~/baseComponents/Button/ButtonWrapper';
+import Icon from '~/baseComponents/Icon';
+import Divider from '~/beinComponents/Divider';
 
-interface IHandleToggleProps {
-  isChecked: boolean;
-  item: INotiSettings;
-  index: number;
-}
-
-interface IHandleUpdateSettings {
-  payload: INotiSettings;
-  oldPayload: INotiSettings;
-  index: number;
-}
-
-const icons = {
-  email_important_content: 'Star',
-  email_content_mentions: 'At',
-};
+const topAdjustment = Platform.OS === 'android' ? -StatusBar.currentHeight + 3 : 0;
 
 const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
-  const { name } = props?.route?.params || {};
+  const { name, groupId } = props?.route?.params || {};
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
   const { t } = useBaseHook();
 
-  const data = useNotiSettingsStore((state) => state.data?.[name]);
-  const actions = useNotiSettingsStore((state) => state.actions);
-  const isRefreshing = useNotiSettingsStore((state) => state.isRefreshing);
+  const [isVisibleTooltip, setIsVisibleTooltip] = useState<boolean>(false);
 
-  const {
-    title = '', subtitle = '', enable, child = [], channels = undefined,
-  } = data;
+  const data = useAdvancedNotiSettingsStore((state) => state.groupData?.[groupId]);
+  const actions = useAdvancedNotiSettingsStore((state) => state.actions);
+  const isRefreshing = useAdvancedNotiSettingsStore((state) => state.isRefreshing);
+  const isUpdatting = useAdvancedNotiSettingsStore((state) => state.isUpdatingGroupSettings);
+
+  const { channels = {}, enable = true, flag } = data;
+
+  const isDefault = !Boolean(flag?.value) && enable;
+  const isDisableItemAllowAll = isDefault;
+  const isDisableItem = isDisableItemAllowAll || !enable;
 
   const onRefresh = () => {
-    actions.getConfigSettings(true);
+    actions.getGroupSettings([groupId]);
   };
 
-  const handleUpdateSettings = ({ payload, oldPayload, index }:IHandleUpdateSettings) => {
-    let payloadUpdateStore: IEditNotificationSetting = {
-      name: payload.name,
+  const onChangeToggleAllowAll = (isChecked :boolean) => {
+    const newChannels = {
+      inApp: isChecked ? true : channels?.inApp,
+      push: isChecked ? true : channels?.push,
     };
-    if (oldPayload?.enable !== undefined) {
-      payloadUpdateStore = { ...payloadUpdateStore, enable: oldPayload.enable };
-    }
-    if (oldPayload?.channels !== undefined) {
-      payloadUpdateStore = { ...payloadUpdateStore, channels: oldPayload.channels };
-    }
-
-    if (index !== -1) {
-      const newChild = child?.map((item: INotiSettings, i: number) => {
-        if (i === index) {
-          return oldPayload;
-        }
-        return item;
-      });
-      const newData = { ...data, child: newChild };
-      actions.updateSettings(payload, newData);
-    } else {
-      actions.updateSettings(payload, payloadUpdateStore);
-    }
+    const payload = { enable: isChecked, channels: newChannels };
+    const dataUpdateStore:any = { ...data, channels: newChannels, enable: isChecked };
+    actions.updateGroupSettings(payload, dataUpdateStore);
   };
 
-  const onPressToggle = ({ index, item, isChecked }:IHandleToggleProps) => {
-    const payload = { ...item, enable: isChecked };
-    const oldPayload = { ...item, enable: isChecked };
-    handleUpdateSettings({ payload, oldPayload, index });
-  };
-
-  const handlePressItemInApp = debounce(({ index, item, isChecked }:IHandleToggleProps) => {
+  const handlePressItemInApp = debounce((isChecked :boolean) => {
+    const newEnable = Boolean(isChecked || channels?.push);
     const payload = {
-      name: item.name,
       channels:
         {
           inApp: isChecked,
         },
+      enable: newEnable,
     };
-    const oldPayload = {
-      ...item,
+    const dataUpdateStore: any = {
+      ...data,
       channels:
         {
           inApp: isChecked,
-          push: item?.channels?.push,
+          push: channels?.push,
         },
+      enable: newEnable,
     };
-
-    handleUpdateSettings({ payload, oldPayload, index });
+    actions.updateGroupSettings(payload, dataUpdateStore);
   }, 100);
 
-  const handlePressItemPush = debounce(({ index, item, isChecked }:IHandleToggleProps) => {
+  const handlePressItemPush = debounce((isChecked :boolean) => {
+    const newEnable = Boolean(isChecked || channels?.inApp);
     const payload = {
-      name: item.name,
       channels:
         {
           push: isChecked,
         },
+      enable: newEnable,
     };
-    const oldPayload = {
-      ...item,
+    const dataUpdateStore: any = {
+      ...data,
       channels:
         {
+          inApp: channels?.inApp,
           push: isChecked,
-          inApp: item?.channels?.inApp,
         },
+      enable: newEnable,
     };
-    handleUpdateSettings({ payload, oldPayload, index });
+    actions.updateGroupSettings(payload, dataUpdateStore);
   }, 100);
+
+  const onResetConfig = () => {
+    const newData = { enable: true, channels: { inApp: true, push: true } };
+    // apply default config
+    if (isDefault) {
+      const payload:any = { flag: true, ...newData };
+      const dataUpdateStore:any = {
+        ...data,
+        ...newData,
+        flag: {
+          label: 'Default',
+          value: true,
+        },
+      };
+      actions.updateGroupSettings(payload, dataUpdateStore);
+      return;
+    }
+    // reset to default (not config)
+    const payload:any = { flag: false, ...newData };
+    const dataUpdateStore:any = {
+      ...data,
+      ...newData,
+      flag: {
+        label: 'Default',
+        value: false,
+      },
+    };
+    actions.updateGroupSettings(payload, dataUpdateStore);
+  };
+
+  const _setIsVisibleTooltip = () => {
+    setIsVisibleTooltip(!isVisibleTooltip);
+  };
 
   if (!Boolean(data)) return null;
 
@@ -133,16 +144,14 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
 
   const renderHeader = () => (
     <View style={styles.headerContainer}>
-      <Text.BodyS>
-        {subtitle}
+      <Text.BodyS useI18n color={colors.neutral40}>
+        notification:advanced_notifications_settings:description_setup_group
       </Text.BodyS>
     </View>
   );
 
   const renderChildContent = (
     { inApp = true, push = true }: INotiChannel,
-    item: INotiSettings,
-    index: number,
   ) => {
     const inAppItem: INotiSettings = {
       title: t('notification:notification_settings:in_app_text'),
@@ -161,47 +170,32 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
       <>
         <NotiSettingItem
           item={inAppItem}
-          isDisable={!Boolean(enable)}
-          isDisableToggle={!Boolean(enable)}
+          isDisable={isDisableItem}
+          isDisableToggle={isDisableItem}
           iconName="Grid2"
-          onPressToggle={(isChecked: boolean) => handlePressItemInApp({ isChecked, item, index })}
+          onPressToggle={handlePressItemInApp}
         />
         <NotiSettingItem
           item={pushItem}
-          isDisable={!Boolean(enable)}
-          isDisableToggle={!Boolean(enable)}
+          isDisable={isDisableItem}
+          isDisableToggle={isDisableItem}
           iconName="Window"
-          onPressToggle={(isChecked: boolean) => handlePressItemPush({ isChecked, item, index })}
+          onPressToggle={handlePressItemPush}
         />
       </>
     );
   };
 
-  const renderChild = (item: INotiSettings, index: number) => {
-    const { channels: itemChannels = undefined, title } = item;
-    if (!Boolean(itemChannels)) {
-      const iconName = icons?.[item.name] || 'Bell';
-      return (
-        <NotiSettingItem
-          key={`child_noti_setting_item_${item.name}`}
-          item={item}
-          iconName={iconName}
-          isShowSubTitle
-          isDisable={!Boolean(enable)}
-          isDisableToggle={!Boolean(enable)}
-          onPressToggle={(isChecked: boolean) => onPressToggle({ isChecked, item, index })}
-        />
-      );
-    }
-    return (
-      <View key={item.name} style={styles.childContainer}>
-        <Text.BodyMMedium color={colors.neutral80} style={styles.childHeader}>
-          {title}
-        </Text.BodyMMedium>
-        {Boolean(itemChannels) && renderChildContent(itemChannels, item, index)}
-      </View>
-    );
-  };
+  const buttonText = isDefault ? t('notification:advanced_notifications_settings:text_enable_settings')
+    : t('notification:advanced_notifications_settings:title_reset_to_default');
+  const tooltipText = isDefault ? t('notification:advanced_notifications_settings:reset_to_default_tooltip')
+    : t('notification:advanced_notifications_settings:enable_settings_tooltip');
+
+  const renderContentTooltip = () => (
+    <Text.BodyM color={colors.white}>
+      {tooltipText}
+    </Text.BodyM>
+  );
 
   return (
     <ScreenWrapper
@@ -209,8 +203,8 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
       isFullView
       backgroundColor={colors.gray5}
     >
-      {Boolean(title)
-      && <Header title={title} />}
+      {Boolean(name)
+      && <Header title={name} />}
       <ViewSpacing height={spacing.padding.large} />
       <Animated.ScrollView
         style={styles.flex1}
@@ -226,11 +220,45 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
         {renderHeader()}
         <NotiSettingItem
           item={defaultItem}
+          isDisable={isDisableItemAllowAll}
+          isDisableToggle={isDisableItemAllowAll}
           iconName="Bell"
-          onPressToggle={(isChecked: boolean) => onPressToggle({ isChecked, item: data, index: -1 })}
+          onPressToggle={onChangeToggleAllowAll}
         />
-        {child?.length > 0 && child.map((item: INotiSettings, index: number) => renderChild(item, index))}
-        {Boolean(channels) && renderChildContent(channels, data, -1)}
+        {Boolean(channels) && renderChildContent(channels)}
+        <View style={styles.wrapperContainer}>
+          <View style={styles.groupButtonContainer}>
+            <Tooltip
+              isVisible={isVisibleTooltip}
+              disableShadow
+              childContentSpacing={3}
+              placement="top"
+              contentStyle={styles.tooltipStyle}
+              content={renderContentTooltip()}
+              backgroundColor="transparent"
+              topAdjustment={topAdjustment}
+              displayInsets={{
+                top: spacing.margin.large,
+                bottom: spacing.margin.large,
+                left: spacing.margin.large,
+                right: spacing.margin.large,
+              }}
+              onClose={_setIsVisibleTooltip}
+            >
+              <View style={styles.row}>
+                <ButtonWrapper disabled={isUpdatting} style={styles.buttonWrapper} onPress={onResetConfig}>
+                  <Text.ButtonM color={isUpdatting ? colors.neutral20 : colors.neutral60}>
+                    {buttonText}
+                  </Text.ButtonM>
+                </ButtonWrapper>
+                <Divider horizontal size={1} />
+                <ButtonWrapper style={styles.buttonInfoWrapper} onPress={_setIsVisibleTooltip}>
+                  <Icon icon="CircleQuestion" size={16} color={colors.neutral40} />
+                </ButtonWrapper>
+              </View>
+            </Tooltip>
+          </View>
+        </View>
       </Animated.ScrollView>
     </ScreenWrapper>
   );
@@ -261,6 +289,34 @@ const createStyle = (theme: ExtendedTheme) => {
     childHeader: {
       marginTop: spacing.margin.large,
       marginLeft: spacing.margin.large,
+    },
+    wrapperContainer: {
+      padding: spacing.padding.large,
+      backgroundColor: colors.white,
+    },
+    groupButtonContainer: {
+      alignSelf: 'flex-start',
+    },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: spacing.padding.small,
+      borderRadius: spacing.borderRadius.base,
+      backgroundColor: colors.neutral2,
+    },
+    buttonWrapper: {
+      paddingHorizontal: spacing.padding.base,
+      backgroundColor: colors.neutral2,
+    },
+    buttonInfoWrapper: {
+      paddingHorizontal: spacing.padding.base - spacing.padding.xTiny,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    tooltipStyle: {
+      backgroundColor: colors.neutral80,
+      borderRadius: spacing.padding.tiny,
+      width: 200,
     },
   });
 };

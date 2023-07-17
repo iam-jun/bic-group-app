@@ -128,6 +128,7 @@ const NotificationSettings = () => {
       />
       <ViewSpacing height={spacing.padding.large} />
       <NotiSettingItem
+        isDisable={!Boolean(generic?.enable)}
         item={advancedSettings}
         iconName="Sliders"
         onPress={handlePressAdvancedSettings}
@@ -141,7 +142,7 @@ const NotificationSettings = () => {
       isFullView
       backgroundColor={colors.gray5}
     >
-      <Header title="Advanced Notifications Settings" />
+      <Header title={t('notification:notification_settings:title')} />
       <Animated.ScrollView
         style={styles.flex1}
         contentContainerStyle={styles.flex1}

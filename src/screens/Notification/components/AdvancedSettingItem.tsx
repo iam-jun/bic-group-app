@@ -13,19 +13,46 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { Avatar } from '~/baseComponents';
 import { useSkeletonAnimation } from '~/hooks/useSkeletonAnimation';
 import useAdvancedNotiSettingsStore from '../AdvancedSettings/store';
+import useBaseHook from '~/hooks/baseHook';
+import { IAdvancedNotificationSettings } from '~/interfaces/INotification';
 
 interface Props {
     item: IGroup;
+    isDisabled?: boolean;
     onPress: (item: IGroup) => void;
 }
 
-const AdvancedSettingItem = ({ item, onPress }: Props) => {
+const AdvancedSettingItem = ({ item, isDisabled = false, onPress }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
+  const { t } = useBaseHook();
   const animatedStyle = useSkeletonAnimation({ targetOpacityValue: 0.5, speed: 500 });
 
   const isLoading = useAdvancedNotiSettingsStore((state) => state.isLoadingGroupSettings);
+  const groupData = useAdvancedNotiSettingsStore((state) => state.groupData?.[item.id]);
+
+  const getLabelText = (item: IAdvancedNotificationSettings) => {
+    if (isEmpty(item)) return '';
+    const { flag, channels, enable } = item;
+    if (enable && flag?.value) {
+      if (channels?.inApp && channels?.push) {
+        return `${t('notification:notification_settings:in_app_text')}, ${t('notification:notification_settings:push_text')}`;
+      }
+      if (channels?.inApp) {
+        return t('notification:notification_settings:in_app_text');
+      }
+      if (channels?.push) {
+        return t('notification:notification_settings:push_text');
+      }
+    } else if (!flag?.value) {
+      return t('notification:notification_settings:default_text');
+    } else {
+      return t('notification:notification_settings:off_text');
+    }
+  };
+
+  const label = getLabelText(groupData);
 
   const onPressItem = () => onPress(item);
 
@@ -34,18 +61,21 @@ const AdvancedSettingItem = ({ item, onPress }: Props) => {
   const privacyIcon = GroupPrivacyDetail[privacy]?.icon as IconType;
   return (
     <ButtonWrapper
+      disabled={isDisabled}
       activeOpacity={0.85}
       style={styles.container}
       onPress={onPressItem}
     >
+      {Boolean(isDisabled)
+      && <View style={styles.disable} />}
       <Avatar.Base source={icon} privacyIcon={privacyIcon} />
       <ViewSpacing width={spacing.margin.small} />
-      <View>
+      <View style={styles.flex1}>
         <Text.BodyMMedium color={colors.neutral60} numberOfLines={2}>{name}</Text.BodyMMedium>
         {
           Boolean(isLoading)
             ? <Animated.View style={[styles.labelSkeleton, animatedStyle]} />
-            : <Text.BadgeM color={colors.neutral40}>default</Text.BadgeM>
+            : <Text.BadgeM color={colors.neutral40}>{label}</Text.BadgeM>
         }
       </View>
     </ButtonWrapper>
@@ -65,6 +95,19 @@ const createStyle = (theme: ExtendedTheme) => {
     labelSkeleton: {
       width: 80,
       height: 12,
+    },
+    flex1: {
+      flex: 1,
+    },
+    disable: {
+      position: 'absolute',
+      zIndex: 1,
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: colors.white,
+      opacity: 0.6,
     },
   });
 };
