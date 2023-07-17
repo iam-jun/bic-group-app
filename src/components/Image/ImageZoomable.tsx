@@ -128,12 +128,39 @@ const ImageZoomable: FC<ImageZoomableProps> = ({
         scale.value = event.scale + context.scale - 1;
       },
       onFinish: () => {
-        if (scale.value < 1) {
+        if (scale.value <= 1) {
           scale.value = withTiming(1);
+          translateX.value = withTiming(state.imgX);
+          translateY.value = withTiming(state.imgY);
         }
 
         if (scale.value > maxScale) {
           scale.value = withTiming(maxScale);
+        }
+
+        if (scale.value > 1) {
+          const maxHorizontalPannable
+          = (state.imgWidth * scale.value - state.width) / 2;
+          const maxVerticlePannable
+          = (state.imgHeight * scale.value - state.height) / 2;
+
+          if (Math.abs(translateX.value) > maxHorizontalPannable) {
+            if (translateX.value < 0) {
+              translateX.value = withTiming(-maxHorizontalPannable);
+            }
+            if (translateX.value > 0) {
+              translateX.value = withTiming(maxHorizontalPannable);
+            }
+          }
+
+          if (Math.abs(translateY.value) > maxVerticlePannable) {
+            if (translateY.value < 0) {
+              translateY.value = withTiming(-maxVerticlePannable);
+            }
+            if (translateY.value > 0) {
+              translateY.value = withTiming(maxVerticlePannable);
+            }
+          }
         }
       },
     });
