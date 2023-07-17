@@ -16,7 +16,7 @@ const BadgeNew = ({ style }: BadgeNewProps) => {
   const styles = themeStyles(theme);
 
   return (
-    <View style={[styles.container, style]}>
+    <View testID="badge_new" style={[styles.container, style]}>
       <Text.BadgeS color={colors.white} useI18n>common:text_new</Text.BadgeS>
     </View>
   );

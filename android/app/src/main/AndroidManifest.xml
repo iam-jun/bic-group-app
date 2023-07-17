@@ -16,12 +16,12 @@
     <uses-permission android:name="${beinChatId}.WRITE_DATABASE" />
 
     <permission
-        android:name="@string/provider_read_permission"
+        android:name="${applicationId}.READ_DATABASE"
         android:label="Read Database"
         android:protectionLevel="signature" />
 
     <permission
-        android:name="@string/provider_write_permission"
+        android:name="${applicationId}.WRITE_DATABASE"
         android:label="Write Database"
         android:protectionLevel="signature" />
 
@@ -55,7 +55,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="bic" />
+                <data android:scheme="${scheme}" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -65,7 +65,7 @@
 
                 <data
                     android:scheme="https"
-                    android:host="${selfHost}" />
+                    android:host="www.${selfHost}" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -75,21 +75,21 @@
 
                 <data
                     android:scheme="https"
-                    android:host="${selfHost}" />
+                    android:host="www.${selfHost}" />
             </intent-filter>
         </activity>
         <provider
             android:name="com.poppop.RNReactNativeSharedGroupPreferences.SharedProvider"
-            android:authorities="@string/provider_authorities"
+            android:authorities="${applicationId}.SharedProvider"
             android:enabled="true"
             android:exported="true"
-            android:readPermission="@string/provider_read_permission"
-            android:writePermission="@string/provider_write_permission" />
+            android:readPermission="${applicationId}.READ_DATABASE"
+            android:writePermission="${applicationId}.WRITE_DATABASE" />
     </application>
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="bicchat" />
+            <data android:scheme="${chatScheme}" />
         </intent>
     </queries>
 </manifest>

@@ -19,6 +19,7 @@ const searchArticles = (set, get) => async (params: IGetSearchArticleInSeries, i
       ...params,
       offset: isLoadMore ? items.length : 0,
       limit: appConfig.articlesInSeriesLimit,
+      limitSeries: true,
     };
 
     const response = await streamApi.searchArticleInSeries(newParams);

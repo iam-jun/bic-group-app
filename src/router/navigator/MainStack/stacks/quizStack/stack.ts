@@ -3,6 +3,9 @@ const quizStack = {
   composeQuiz: 'compose-quiz',
   editQuestion: 'edit-question',
   publishQuiz: 'publish-quiz',
+  takeQuiz: 'take-quiz',
+  takeQuizReview: 'take-quiz-review',
+  takeQuizResult: 'take-quiz-result',
 };
 
 export default quizStack;

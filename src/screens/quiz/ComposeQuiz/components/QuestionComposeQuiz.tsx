@@ -13,12 +13,14 @@ type QuestionComposeQuizProps = {
   quizId: string;
   questionItem: QuestionItem;
   questionIndex: number;
+  isTakeQuizReview?: boolean;
 };
 
 const QuestionComposeQuiz: FC<QuestionComposeQuizProps> = ({
   quizId,
   questionItem,
   questionIndex,
+  isTakeQuizReview,
 }) => {
   const { rootNavigation } = useRootNavigation();
   const theme = useTheme();
@@ -33,8 +35,15 @@ const QuestionComposeQuiz: FC<QuestionComposeQuizProps> = ({
 
   return (
     <View testID={`question_compose_quiz_${quizId}`} style={styles.container}>
-      <QuestionHeader questionIndex={questionIndex} onPressEdit={onPressEdit} />
-      <QuestionContent questionItem={questionItem} />
+      <QuestionHeader
+        questionIndex={questionIndex}
+        onPressEdit={onPressEdit}
+        isTakeQuizReview={isTakeQuizReview}
+      />
+      <QuestionContent
+        questionItem={questionItem}
+        isTakeQuizReview={isTakeQuizReview}
+      />
     </View>
   );
 };

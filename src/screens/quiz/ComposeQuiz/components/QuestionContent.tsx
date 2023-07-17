@@ -8,10 +8,12 @@ import { mapIndexToAlphabet } from '../../helper';
 
 type QuestionContentProps = {
   questionItem: QuestionItem;
+  isTakeQuizReview?: boolean;
 };
 
 const QuestionContent: FC<QuestionContentProps> = ({
   questionItem,
+  isTakeQuizReview = false,
 }) => {
   const { question, answers } = questionItem;
   const theme = useTheme();
@@ -24,13 +26,21 @@ const QuestionContent: FC<QuestionContentProps> = ({
       <View key={`answer_${id}`}>
         {isCorrect ? (
           <View style={styles.container}>
-            <View style={styles.square}>
-              <Text.ButtonS color={colors.green50}>
+            <View style={[
+              styles.square,
+              isTakeQuizReview ? styles.squareTakeQuizReview : styles.squareComposeQuiz,
+            ]}
+            >
+              <Text.ButtonS
+                color={isTakeQuizReview ? colors.purple50 : colors.green50}
+              >
                 {mapIndexToAlphabet[index]}
               </Text.ButtonS>
             </View>
             <View style={styles.textContainer}>
-              <Text.BodyMMedium color={colors.green50}>
+              <Text.BodyMMedium
+                color={isTakeQuizReview ? colors.purple50 : colors.green50}
+              >
                 {answer}
               </Text.BodyMMedium>
             </View>
@@ -87,8 +97,13 @@ const createStyle = (theme: ExtendedTheme) => {
       borderRadius: spacing.borderRadius.base,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: colors.green2,
       marginRight: spacing.margin.small,
+    },
+    squareComposeQuiz: {
+      backgroundColor: colors.green2,
+    },
+    squareTakeQuizReview: {
+      backgroundColor: colors.purple5,
     },
     textContainer: {
       flex: 1,

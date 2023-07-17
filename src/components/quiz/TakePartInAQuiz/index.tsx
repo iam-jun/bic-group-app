@@ -13,10 +13,11 @@ import { spacing } from '~/theme';
 
 type TakePartInAQuizProps = {
   quiz: QuizPost;
+  onPressTakeQuiz?: (quizId: string) => void;
 };
 
-const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({ quiz }) => {
-  const { title, description } = quiz || {};
+const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({ quiz, onPressTakeQuiz }) => {
+  const { title, description, id } = quiz || {};
 
   const theme = useTheme();
   const { colors } = theme;
@@ -24,7 +25,7 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({ quiz }) => {
   const { t } = useBaseHook();
 
   const onPress = () => {
-    // do something
+    onPressTakeQuiz?.(id);
   };
 
   return (

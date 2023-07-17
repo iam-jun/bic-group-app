@@ -242,7 +242,8 @@
     "text_answer_input_placeholder": "Write your answer",
     "text_send_request_join_successfully": "Sent request successfully",
     "edit_settings": "Edit Settings",
-    "text_new": "New"
+    "text_new": "New",
+    "text_empty": "Empty"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -718,6 +719,7 @@
       "content_confirm": "Are you sure you want to remove communities / groups?"
     },
     "tags_maximum_message_info": "Maxium input 5 Tags",
+    "series_maximum_message_info": "Maxium input 3 Series",
     "text_add_title": "Add title",
     "text_title_require_max_length": "Maximum 64 characters",
     "text_description_require_max_length": "Maximum 255 characters",
@@ -1504,7 +1506,8 @@
       "total_badges": "((total) badges)",
       "search_placeholder": "Search for badges name"
     },
-    "edit_showing_badges_title": "Edit Showing Badges"
+    "edit_showing_badges_title": "Edit Showing Badges",
+    "badge_tooltip_placeholder": "Tap here to add a badge"
   },
   "quiz": {
     "create_quiz": "Create Quiz",
@@ -1540,6 +1543,9 @@
     "enter_answer_placeholder": "Enter answer",
     "alert_title_delete_question": "Delete the question {{number}}",
     "alert_content_delete_question": "Do you want to delete question {{number}}?",
+    "title_alert_take_quiz": "Start Quiz",
+    "content_alert_take_quiz": "The quiz will not be saved as a draft! Are you sure you are ready to start the quiz?",
+    "btn_start": "Start",
     "the_ai_is_carefully_crafting_your_questions": "The AI is carefully crafting your questions...",
     "this_may_take_up_to_a_few_minute": "This may take up to a few minute, but it's worth the wait! If you exit, the quiz will be automatically saved as a",
     "something_went_wrong": "Oops! Something went wrong",
@@ -1547,6 +1553,25 @@
     "regenerate": "Regenerate",
     "quiz_information": "Quiz information",
     "draft_quiz": "Draft Quiz",
-    "quiz_saved_to_draft": "Quiz saved to Draft"
+    "quiz_saved_to_draft": "Quiz saved to Draft",
+    "title_take_quiz": "Take a quiz",
+    "alert_title_discard_quiz": "Discard Quiz",
+    "alert_content_discard_quiz": "Leaving this page without saving will result in the loss of your current progress. Are you sure you want to exit the quiz?",
+    "btn_exit": "Exit",
+    "btn_next" : "Next",
+    "btn_previous": "Previous",
+    "title_quiz_review": "Review",
+    "btn_retake": "Retake",
+    "btn_retry": "Retry",
+    "btn_quit": "Quit",
+    "alert_content_submit_quiz": "Are you sure you want to submit the quiz?",
+    "text_dont_give_up": "Don’t Give Up!",
+    "text_study_more": "Study more next time and get all the answers correct!",
+    "text_awesome": "You are awesome!",
+    "text_congrats": "Congratulations for getting all the anwers correct!",
+    "result_complete": "Completion",
+    "result_correct": "Correct Answer",
+    "result_incorrect": "Incorrect Answer",
+    "result_skip": "Skipped"
   }
 }

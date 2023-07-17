@@ -33,6 +33,7 @@ export interface PostBodyProps {
   isEmptyPost?: boolean;
   isPostDetail: boolean;
   onPressMarkSeenPost?: () => void;
+  onPressTakeQuiz?: (quizId: string) => void;
 }
 
 const _PostBody: FC<PostBodyProps> = ({
@@ -41,6 +42,7 @@ const _PostBody: FC<PostBodyProps> = ({
   isEmptyPost,
   isPostDetail,
   onPressMarkSeenPost,
+  onPressTakeQuiz,
 }: PostBodyProps) => {
   const { rootNavigation } = useRootNavigation();
 
@@ -171,7 +173,12 @@ const _PostBody: FC<PostBodyProps> = ({
           collapsible={!isPostDetail}
         />
         {showLinkPreviewer && <LinkPreview data={linkPreview} />}
-        {!!quiz && <TakePartInAQuiz quiz={quiz} />}
+        {!!quiz && (
+          <TakePartInAQuiz
+            quiz={quiz}
+            onPressTakeQuiz={onPressTakeQuiz}
+          />
+        )}
       </>
     </View>
   );

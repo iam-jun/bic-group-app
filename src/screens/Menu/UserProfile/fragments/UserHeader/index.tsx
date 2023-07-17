@@ -106,7 +106,7 @@ const UserHeader = ({
       )}
       <WorkInfo style={styles.subtitle} latestWork={latestWork} />
       <UserBadge
-        isCurrentUser={isCurrentUser}
+        isCurrentUser={false}
         showingBadges={showingBadges}
         style={styles.userBadge}
         onPress={handleEditBadge}
