@@ -5,7 +5,7 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IPost } from '~/interfaces/IPost';
-import { GenStatus } from '~/interfaces/IQuiz';
+import { GenStatus, QuizStatus } from '~/interfaces/IQuiz';
 import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
 import { fontFamilies } from '~/theme/fonts';
@@ -38,7 +38,7 @@ const QuizPostView: FC<QuizPostViewProps> = ({ data, style }) => {
     communities,
     quiz,
   } = data || {};
-  const { genStatus, id: quizId } = quiz || {};
+  const { status, genStatus, id: quizId } = quiz || {};
   const { isImportant, importantExpiredAt } = setting || {};
 
   const disableButtonEdit = [
@@ -51,6 +51,8 @@ const QuizPostView: FC<QuizPostViewProps> = ({ data, style }) => {
     GenStatus.PROCESSING,
     GenStatus.PENDING,
   ].includes(genStatus);
+
+  const shouldNotRenderFooter = status === QuizStatus.PUBLISHED;
 
   // const refreshDraftQuiz = () => {
   //   actions.getDraftQuiz(true);
@@ -123,25 +125,29 @@ const QuizPostView: FC<QuizPostViewProps> = ({ data, style }) => {
     return null;
   };
 
-  const renderFooter = () => (
-    <View style={styles.footerContainer}>
-      <Button.Danger
-        testID="quiz_draft_view.button_delete"
-        type="ghost"
-        icon="TrashCan"
-        onPress={onPressDelete}
-        disabled={disableButtonDelete}
-      />
-      <ViewSpacing width={16} />
-      <Button.Secondary
-        testID="quiz_draft_view.button_edit"
-        type="ghost"
-        icon="PenToSquare"
-        onPress={onPressEdit}
-        disabled={disableButtonEdit}
-      />
-    </View>
-  );
+  const renderFooter = () => {
+    if (shouldNotRenderFooter) return null;
+
+    return (
+      <View style={styles.footerContainer}>
+        <Button.Danger
+          testID="quiz_draft_view.button_delete"
+          type="ghost"
+          icon="TrashCan"
+          onPress={onPressDelete}
+          disabled={disableButtonDelete}
+        />
+        <ViewSpacing width={16} />
+        <Button.Secondary
+          testID="quiz_draft_view.button_edit"
+          type="ghost"
+          icon="PenToSquare"
+          onPress={onPressEdit}
+          disabled={disableButtonEdit}
+        />
+      </View>
+    );
+  };
 
   return (
     <View>
