@@ -1180,7 +1180,7 @@
       "title_setup_group": "Set up for your groups",
       "description_setup_group": "Default settings use your general notification settings until you set up specifically.",
       "title_reset_to_default": "Reset to General settings",
-      "reset_to_default_tooltip": "Reset to default to use your\ngeneral notification settings.",
+      "reset_to_default_tooltip": "Apply general settings to\nthis group.",
       "text_enable_settings": "Enable settings",
       "enable_settings_tooltip": "Use settings for this\nspecific group",
       "search_community_title": "Select your community",
