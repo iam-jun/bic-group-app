@@ -3,12 +3,10 @@ import {
   ActivityIndicator,
   LayoutChangeEvent,
   StyleSheet,
-  Image,
   StyleProp,
   ImageStyle,
   ViewStyle,
   ActivityIndicatorProps,
-  ImageProps,
 } from 'react-native';
 import {
   GestureHandlerRootView,
@@ -29,6 +27,8 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import ImageWrapper from './ImageWrapper';
+import { ImageProps } from '.';
 
 export type ImageZoomableProps = {
   uri?: string;
@@ -43,7 +43,7 @@ export type ImageZoomableProps = {
   isShowLoading?: boolean;
 };
 
-const AnimatedImage = Animated.createAnimatedComponent(Image);
+const AnimatedImage = Animated.createAnimatedComponent(ImageWrapper);
 
 const ImageZoomable: FC<ImageZoomableProps> = ({
   uri = '',
@@ -78,6 +78,43 @@ const ImageZoomable: FC<ImageZoomableProps> = ({
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
 
+  const reset = () => {
+    'worklet';
+
+    scale.value = withTiming(1);
+    translateX.value = withTiming(state.imgX);
+    translateY.value = withTiming(state.imgY);
+  };
+
+  const bouncingEdges = () => {
+    'worklet';
+
+    if (scale.value > 1) {
+      const maxHorizontalPannable
+          = (state.imgWidth * scale.value - state.width) / 2;
+      const maxVerticlePannable
+          = (state.imgHeight * scale.value - state.height) / 2;
+
+      if (Math.abs(translateX.value) > maxHorizontalPannable) {
+        if (translateX.value < 0) {
+          translateX.value = withTiming(-maxHorizontalPannable);
+        }
+        if (translateX.value > 0) {
+          translateX.value = withTiming(maxHorizontalPannable);
+        }
+      }
+
+      if (Math.abs(translateY.value) > maxVerticlePannable) {
+        if (translateY.value < 0) {
+          translateY.value = withTiming(-maxVerticlePannable);
+        }
+        if (translateY.value > 0) {
+          translateY.value = withTiming(maxVerticlePannable);
+        }
+      }
+    }
+  };
+
   const panHandler = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
     onStart: (_event: PanGestureHandlerEventPayload, context: any) => {
       if (scale.value > 1) {
@@ -92,30 +129,7 @@ const ImageZoomable: FC<ImageZoomableProps> = ({
       }
     },
     onFinish: () => {
-      if (scale.value > 1) {
-        const maxHorizontalPannable
-          = (state.imgWidth * scale.value - state.width) / 2;
-        const maxVerticlePannable
-          = (state.imgHeight * scale.value - state.height) / 2;
-
-        if (Math.abs(translateX.value) > maxHorizontalPannable) {
-          if (translateX.value < 0) {
-            translateX.value = withTiming(-maxHorizontalPannable);
-          }
-          if (translateX.value > 0) {
-            translateX.value = withTiming(maxHorizontalPannable);
-          }
-        }
-
-        if (Math.abs(translateY.value) > maxVerticlePannable) {
-          if (translateY.value < 0) {
-            translateY.value = withTiming(-maxVerticlePannable);
-          }
-          if (translateY.value > 0) {
-            translateY.value = withTiming(maxVerticlePannable);
-          }
-        }
-      }
+      bouncingEdges();
     },
   });
 
@@ -129,39 +143,14 @@ const ImageZoomable: FC<ImageZoomableProps> = ({
       },
       onFinish: () => {
         if (scale.value <= 1) {
-          scale.value = withTiming(1);
-          translateX.value = withTiming(state.imgX);
-          translateY.value = withTiming(state.imgY);
+          reset();
         }
 
         if (scale.value > maxScale) {
           scale.value = withTiming(maxScale);
         }
 
-        if (scale.value > 1) {
-          const maxHorizontalPannable
-          = (state.imgWidth * scale.value - state.width) / 2;
-          const maxVerticlePannable
-          = (state.imgHeight * scale.value - state.height) / 2;
-
-          if (Math.abs(translateX.value) > maxHorizontalPannable) {
-            if (translateX.value < 0) {
-              translateX.value = withTiming(-maxHorizontalPannable);
-            }
-            if (translateX.value > 0) {
-              translateX.value = withTiming(maxHorizontalPannable);
-            }
-          }
-
-          if (Math.abs(translateY.value) > maxVerticlePannable) {
-            if (translateY.value < 0) {
-              translateY.value = withTiming(-maxVerticlePannable);
-            }
-            if (translateY.value > 0) {
-              translateY.value = withTiming(maxVerticlePannable);
-            }
-          }
-        }
+        bouncingEdges();
       },
     });
 
@@ -214,9 +203,7 @@ const ImageZoomable: FC<ImageZoomableProps> = ({
   const _onDoubleTap = (event) => {
     if (event.nativeEvent.state === State.ACTIVE) {
       if (scale.value > 1) {
-        scale.value = withTiming(1);
-        translateX.value = withTiming(state.imgX);
-        translateY.value = withTiming(state.imgY);
+        reset();
       }
 
       if (scale.value === 1) {
@@ -275,14 +262,16 @@ const ImageZoomable: FC<ImageZoomableProps> = ({
                 onHandlerStateChange={_onDoubleTap}
               >
                 <LongPressGestureHandler onHandlerStateChange={_onLongPressTap}>
-                  <AnimatedImage
-                    style={[styles.container, style, animatedStyle]}
-                    source={{ uri }}
-                    resizeMode="contain"
-                    onLoadEnd={onImageLoadEnd}
-                    onLayout={onLayoutImage}
-                    {...imageProps}
-                  />
+                  <Animated.View style={styles.container}>
+                    <AnimatedImage
+                      style={[styles.container, style as any, animatedStyle]}
+                      source={{ uri }}
+                      resizeMode="contain"
+                      onLoadEnd={onImageLoadEnd}
+                      onLayout={onLayoutImage}
+                      {...imageProps}
+                    />
+                  </Animated.View>
                 </LongPressGestureHandler>
               </TapGestureHandler>
               {isShowLoading && (isLoading
