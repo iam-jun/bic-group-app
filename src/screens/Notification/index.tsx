@@ -182,7 +182,8 @@ const Notification = () => {
               rootNavigation.navigate(
                 homeStack.commentDetail, {
                   postId: act?.id,
-                  commentId: act?.comment?.id,
+                  commentId: act?.comment?.child?.id || act?.comment?.id,
+                  parentId: act?.comment?.id,
                   notiId: item.id,
                   target: act?.contentType || '',
                 },
