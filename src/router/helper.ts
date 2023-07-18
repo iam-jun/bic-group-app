@@ -246,7 +246,8 @@ export const getScreenAndParams = (data: {
         screen: 'comment-detail',
         params: {
           postId,
-          commentId,
+          commentId: childCommentId || commentId,
+          parentId: commentId,
           target: target === TargetType.COMMENT_ARTICLE ? TargetType.ARTICLE : TargetType.POST,
         },
       };
