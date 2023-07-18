@@ -1101,6 +1101,7 @@
     "text_bic_team": "BIC team",
     "notification_settings": {
       "title": "Cài đặt thông báo",
+      "screen_title": "Cài đặt chung",
       "description": "Chúng tôi vẫn có thể gửi cho bạn thông báo quan trọng về tài khoản của bạn ngoài cài đặt của bạn",
       "error_title": "Xin lỗi, chúng tôi không thể lấy dữ liệu ở đây",
       "error_description": "Xin vui lòng làm mới trang hoặc thử lại lần sau",
@@ -1116,6 +1117,7 @@
     },
     "advanced_notifications_settings": {
       "title": "Cài đặt thông báo nâng cao",
+      "screen_title": "Cài đặt nâng cao",
       "content": "Cài đặt thông báo cụ thể cho từng cộng đồng và các nhóm bên trong cộng đồng đó",
       "title_setup_community": "Thiết lập cho cộng đồng của bạn",
       "title_setup_group": "Thiết lập cho các nhóm của bạn",

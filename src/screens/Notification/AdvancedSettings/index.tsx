@@ -200,7 +200,7 @@ const AdvancedSettings = () => {
       isFullView
       backgroundColor={colors.gray5}
     >
-      <Header title={t('notification:notification_settings:title')} />
+      <Header title={t('notification:advanced_notifications_settings:screen_title')} />
       <ViewSpacing height={spacing.padding.large} />
       {Boolean(isLoading)
         ? renderLoading()

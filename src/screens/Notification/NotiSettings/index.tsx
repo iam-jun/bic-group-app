@@ -38,7 +38,10 @@ const NotificationSettings = () => {
   } = useNotiSettingsStore((state) => state.data);
   const loading = useNotiSettingsStore((state) => state.loading);
   const isRefreshing = useNotiSettingsStore((state) => state.isRefreshing);
-  const advancedSettings = { name: 'advancedSettings', title: 'Advanced Notification Settings' };
+  const advancedSettings = {
+    name: 'advancedSettings',
+    title: t('notification:advanced_notifications_settings:title'),
+  };
 
   const onRefresh = () => {
     actions.getConfigSettings(true);
@@ -142,7 +145,7 @@ const NotificationSettings = () => {
       isFullView
       backgroundColor={colors.gray5}
     >
-      <Header title={t('notification:notification_settings:title')} />
+      <Header title={t('notification:notification_settings:screen_title')} />
       <Animated.ScrollView
         style={styles.flex1}
         contentContainerStyle={styles.flex1}
