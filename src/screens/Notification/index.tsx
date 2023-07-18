@@ -29,6 +29,7 @@ import { useUserIdAuth } from '~/hooks/auth';
 import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 import { USER_TABS } from '../Menu/UserProfile';
 import { USER_TABS_TYPES } from '../Menu/UserProfile/constants';
+import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 
 const Notification = () => {
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
@@ -402,6 +403,15 @@ const Notification = () => {
               rootNavigation.navigate(mainStack.userProfile, { userId, targetIndex });
               break;
             }
+
+            case NOTIFICATION_TYPE.QUIZ_GENERATE_SUCCESSFUL:
+            case NOTIFICATION_TYPE.QUIZ_GENERATE_UNSUCCESSFUL:
+              rootNavigation.navigate(quizStack.previewDraftQuizNotification, {
+                quizId: act?.quizInfo?.quizId,
+                contentId: act?.quizInfo?.contentId,
+                contentType: act?.quizInfo?.contentType,
+              });
+              break;
 
             default:
               console.warn(`Notification type ${type} have not implemented yet`);
