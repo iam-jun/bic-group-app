@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { RefreshControl } from 'react-native';
+import { RefreshControl, ScrollView } from 'react-native';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import usePostsStore from '~/store/entities/posts';
@@ -10,7 +10,6 @@ import postsSelector from '~/store/entities/posts/selectors';
 import { QuizStatus } from '~/interfaces/IQuiz';
 import { useRootNavigation } from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import { ScrollView } from 'react-native-gesture-handler';
 
 interface PreviewDraftQuizNotificationProps {
   route?: {
@@ -29,7 +28,7 @@ const PreviewDraftQuizNotification: React.FC<PreviewDraftQuizNotificationProps> 
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const { rootNavigation } = useRootNavigation(); 
+  const { rootNavigation } = useRootNavigation();
 
   const actions = usePostsStore((state) => state.actions);
   const data = usePostsStore(postsSelector.getPost(contentId, {}));
@@ -49,17 +48,17 @@ const PreviewDraftQuizNotification: React.FC<PreviewDraftQuizNotificationProps> 
 
   const onRefresh = () => {
     actions.getPostDetail({ postId: contentId });
-  }
+  };
 
   const renderContent = () => {
     if (status === QuizStatus.PUBLISHED) return null;
 
     return (<QuizPostView data={data} />);
-  }
+  };
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.neutral5} testID="take_quiz_review">
-      <Header/>
+      <Header />
       <ScrollView
         refreshControl={(
           <RefreshControl
