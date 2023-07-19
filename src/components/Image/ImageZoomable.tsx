@@ -62,6 +62,7 @@ const ImageZoomable: FC<ImageZoomableProps> = ({
 
   const [isLoading, setIsLoading] = useState(true);
   const [state, setState] = useState({
+    canInteract: false,
     centerX: 0,
     centerY: 0,
     x: 0,
@@ -171,6 +172,7 @@ const ImageZoomable: FC<ImageZoomableProps> = ({
   }: LayoutChangeEvent) => {
     setState((current) => ({
       ...current,
+      canInteract: true,
       centerX: x + width / 2,
       centerY: y + height / 2,
       x,
@@ -244,24 +246,25 @@ const ImageZoomable: FC<ImageZoomableProps> = ({
     <GestureHandlerRootView onLayout={onLayoutContainer} style={{ flex: 1 }}>
       <PinchGestureHandler
         ref={pinchRef}
-        simultaneousHandlers={[panRef]}
         onGestureEvent={pinchHandler}
+        enabled={state.canInteract}
       >
         <Animated.View style={[styles.container]}>
           <PanGestureHandler
             ref={panRef}
-            simultaneousHandlers={[pinchRef]}
             onGestureEvent={panHandler}
             minPointers={1}
             maxPointers={1}
             onEnded={onPanEnded}
+            enabled={state.canInteract}
           >
             <Animated.View style={[styles.content, imageWrapperStyle]}>
               <TapGestureHandler
                 numberOfTaps={2}
                 onHandlerStateChange={_onDoubleTap}
+                enabled={state.canInteract}
               >
-                <LongPressGestureHandler onHandlerStateChange={_onLongPressTap}>
+                <LongPressGestureHandler onHandlerStateChange={_onLongPressTap} enabled={state.canInteract}>
                   <Animated.View style={styles.container}>
                     <AnimatedImage
                       style={[styles.container, style as any, animatedStyle]}
