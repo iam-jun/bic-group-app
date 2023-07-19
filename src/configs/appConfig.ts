@@ -1,6 +1,7 @@
 export const APP_ENV = {
   SANDBOX: 'sbx',
   STAGING: 'stg',
+  PRERELEASE: 'pre',
   PRODUCTION: 'pro',
 };
 

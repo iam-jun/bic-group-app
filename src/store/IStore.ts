@@ -57,6 +57,7 @@ import { ITermState } from '~/components/TermsModal/store';
 import { IDraftContentsState } from '~/screens/YourContent/components/Draft/DraftContents/store';
 import { IPublishState } from '~/screens/YourContent/components/Publish/store';
 import { IUserBadgesState } from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
+import { INotiSettingsStore } from '~/screens/Notification/NotiSettings/store';
 
 export interface BicStore {
   entities: {
@@ -158,6 +159,7 @@ export interface BicStore {
 
   Notifications: {
     notificationStore: INotificationsState;
+    INotiSettingsStore: INotiSettingsStore;
   };
   Draft: {
     DraftArticle: {

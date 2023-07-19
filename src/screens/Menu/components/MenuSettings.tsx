@@ -24,6 +24,7 @@ import { POLICY_URL } from '~/constants/url';
 import AccordionMenu from './AccordionMenu';
 import { ISettings, SettingsAndPrivacyType } from '~/interfaces/IMenu';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
+import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 
 const REPORT_URL = 'https://report.beincom.com/';
 
@@ -37,13 +38,13 @@ const MenuSettings = () => {
   const authActions = useAuthController(getActions) || {};
   const { showAlert } = useModalStore((state) => state.actions);
 
-  const isStaging = getEnv('APP_ENV') === APP_ENV.STAGING;
+  const isQcEnv = getEnv('APP_ENV') === APP_ENV.STAGING || getEnv('APP_ENV') === APP_ENV.PRERELEASE;
   const debuggerVisible = useAppStore((state) => state.debuggerVisible);
   const appActions = useAppStore((state) => state.actions);
 
   const myProfile = useCommonController((state) => state.myProfile);
 
-  const isShowDebug = __DEV__ || isStaging || AppConfig.superUsers.includes(myProfile?.email);
+  const isShowDebug = __DEV__ || isQcEnv || AppConfig.superUsers.includes(myProfile?.email);
 
   const onLogout = () => {
     const alertPayload: IAlertModal = {
@@ -76,6 +77,9 @@ const MenuSettings = () => {
       case SettingsAndPrivacyType.BLOCKING:
         rootNavigation.navigate(menuStack.blocking);
         break;
+      case SettingsAndPrivacyType.NOTIFICATIONS:
+        rootNavigation.navigate(notiStack.notiSettings);
+        break;
       default:
         break;
     }
@@ -98,6 +102,12 @@ const MenuSettings = () => {
           title: 'settings:title_blocking',
           icon: 'UserSlashSolid',
           onPress: () => onPressSettingsAndPrivacy(SettingsAndPrivacyType.BLOCKING),
+        },
+        {
+          type: SettingsAndPrivacyType.NOTIFICATIONS,
+          title: 'tabs:notification',
+          icon: 'BellSolid',
+          onPress: () => onPressSettingsAndPrivacy(SettingsAndPrivacyType.NOTIFICATIONS),
         },
         /**
          * Temporarily hidden language in task BEIN-13338

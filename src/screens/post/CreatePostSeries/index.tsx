@@ -16,6 +16,7 @@ import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import { ListSeriesWithAudiences } from '~/components/SelectSeries';
 import useSelectSeriesStore from '~/components/SelectSeries/store';
 import SelectingListInfo from '~/components/SelectingListInfo';
+import { MAXIMUM_SERIES } from '../CreatePost/constanst';
 
 const CreatePostSeries = () => {
   const { rootNavigation } = useRootNavigation();
@@ -77,6 +78,7 @@ const CreatePostSeries = () => {
     handleBackWhenSelectingSeries,
   } = useCreatePost();
 
+  // const isValidSeries = enableButtonSaveSeries && tempSelectedSeries?.length <= MAXIMUM_SERIES;
   const disabled = !enableButtonSaveSeries || loading;
 
   useBackPressListener(handleBackWhenSelectingSeries);
@@ -133,6 +135,7 @@ const CreatePostSeries = () => {
         data={tempSelectedSeries}
         type="series"
         title={t('post:text_selecting_will_be_added_to')}
+        infoMessage={t('article:series_maximum_message_info')}
         tagProps={{
           type: 'neutral',
           textProps: {
@@ -146,6 +149,7 @@ const CreatePostSeries = () => {
       <ListSeriesWithAudiences
         data={listData}
         selectedData={tempSelectedSeries}
+        maximumSeries={MAXIMUM_SERIES}
         loading={loadingSeries || loadingSearch}
         onCheckedItem={handleCheckedItem}
         onLoadMore={onLoadMore}

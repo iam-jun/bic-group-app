@@ -242,7 +242,8 @@
     "text_answer_input_placeholder": "Write your answer",
     "text_send_request_join_successfully": "Sent request successfully",
     "edit_settings": "Edit Settings",
-    "text_new": "New"
+    "text_new": "New",
+    "text_empty": "Empty"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -713,6 +714,7 @@
       "content_confirm": "Are you sure you want to remove communities / groups?"
     },
     "tags_maximum_message_info": "Maxium input 5 Tags",
+    "series_maximum_message_info": "Maxium input 3 Series",
     "text_add_title": "Add title",
     "text_title_require_max_length": "Maximum 64 characters",
     "text_description_require_max_length": "Maximum 255 characters",
@@ -1128,7 +1130,6 @@
     "mark_all_as_read": "Mark all as Read",
     "mark_all_as_read_success": "All notifications marked as read",
     "turn_off_notification": "Turn off Notification",
-    "notification_settings": "Notification Settings",
     "created_a_post": "created a post",
     "mentioned_you_in_a_post": "mentioned you in a post",
     "mentioned_you_in_a_comment": "mentioned you in a comment",
@@ -1156,7 +1157,18 @@
     "seen_all_notifications": "You have seen it all",
     "text_scheduled": "Scheduled Maintenance Downtime",
     "content_scheduled_maintenance_downtime": "We’ll improve the platform to enhance your experience. During maintenance, it may be temporarily unavailable or have limited functionality.\n \nMaintenance will start at **(startAt)** in about **(duration)**.\n \nWe apologize for any inconvenience and appreciate your continued support.",
-    "text_bic_team": "BIC team"
+    "text_bic_team": "BIC team",
+    "text_remove_notification": "Remove this notification",
+    "text_remove_notification_success": "Notification removed successfully",
+    "notification_settings": {
+      "title": "Notification Settings",
+      "description": "We may still send you important notification about your account outside of your settings",
+      "error_title": "Sorry, we can’t get the data here",
+      "error_description": "Please refresh the page or try again later",
+      "allow_notifications": "Allow notifications",
+      "in_app_text": "In-app",
+      "push_text": "Push"
+    }
   },
   "new_feature": {
     "title": "New feature",
@@ -1499,6 +1511,7 @@
       "total_badges": "((total) badges)",
       "search_placeholder": "Search for badges name"
     },
-    "edit_showing_badges_title": "Edit Showing Badges"
+    "edit_showing_badges_title": "Edit Showing Badges",
+    "badge_tooltip_placeholder": "Tap here to add a badge"
   }
 }
