@@ -12,6 +12,7 @@ import { dimension, spacing } from '~/theme';
 import Icon from '~/baseComponents/Icon';
 import { Button } from '~/baseComponents';
 import useModalStore from '~/store/modal';
+import { borderRadius } from '~/theme/spacing';
 
 interface ChangeSettingsProps {
   isChangeMembershipApproval: boolean;
@@ -22,6 +23,7 @@ interface ChangeSettingsProps {
 const ChangeSettings = (props: ChangeSettingsProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
+  const styles = createStyles(theme);
 
   const { isChangeMembershipApproval = false, name = 'undefined', updateJoinSetting } = props;
   const [isShowMore, setIsShowMore] = useState(false);
@@ -59,7 +61,12 @@ const ChangeSettings = (props: ChangeSettingsProps) => {
     <View>
       <Text.BodyM style={[styles.textCenter, styles.content]} color={colors.neutral60}>
         {list?.length > 0 && list?.length < 10 ? '0' : ''}
-        {t('settings:membership_policy_settings:change_settings:content_first', { count: list?.length })}
+        {t(
+          list?.length === 1
+            ? 'settings:membership_policy_settings:change_settings:content_first_with_group'
+            : 'settings:membership_policy_settings:change_settings:content_first_with_groups',
+          { count: list?.length },
+        )}
         <Text.SubtitleM>{name}</Text.SubtitleM>
         {isChangeMembershipApproval
           ? t('settings:membership_policy_settings:change_settings:content_membership_approval')
@@ -69,19 +76,22 @@ const ChangeSettings = (props: ChangeSettingsProps) => {
   );
 
   const renderList = () => {
-    if (!isShowMore) {
-      return null;
-    }
+    const stylelistContainer = isShowMore ? styles.listContainer : {};
     return (
-      <ScrollView style={styles.list}>
-        {list?.map((item, index) => (
-          <Text.SubtitleM key={`${index}_${item.name}`} style={styles.textCenter} color={colors.neutral60}>
-            •
-            {' '}
-            {item.name}
-          </Text.SubtitleM>
-        ))}
-      </ScrollView>
+      <View style={stylelistContainer}>
+        {isShowMore && (
+          <ScrollView style={styles.list}>
+            {list?.map((item, index) => (
+              <Text.SubtitleM key={`${index}_${item.name}`} style={styles.textCenter} color={colors.neutral60}>
+                •
+                {' '}
+                {item.name}
+              </Text.SubtitleM>
+            ))}
+          </ScrollView>
+        )}
+        {renderButtonShowMore()}
+      </View>
     );
   };
 
@@ -109,39 +119,46 @@ const ChangeSettings = (props: ChangeSettingsProps) => {
       {renderTitle()}
       {renderContent()}
       {renderList()}
-      {renderButtonShowMore()}
       {renderButtonChange()}
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: spacing.padding.large,
-  },
-  textCenter: {
-    textAlign: 'center',
-  },
-  content: {
-    marginTop: spacing.margin.large,
-  },
-  buttonShowMore: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: spacing.margin.small,
-  },
-  icon: {
-    marginLeft: spacing.margin.tiny,
-  },
-  list: {
-    marginTop: spacing.margin.extraLarge + spacing.margin.tiny,
-    maxHeight: dimension.deviceHeight < 770 ? dimension.deviceHeight / 3 : dimension.deviceHeight / 2,
-  },
-  buttonChange: {
-    marginTop: spacing.margin.large,
-  },
-});
+const createStyles = (theme: ExtendedTheme) => {
+  const { colors } = theme;
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: spacing.padding.large,
+    },
+    textCenter: {
+      textAlign: 'center',
+    },
+    content: {
+      marginTop: spacing.margin.large,
+    },
+    buttonShowMore: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: spacing.margin.small,
+    },
+    icon: {
+      marginLeft: spacing.margin.tiny,
+    },
+    list: {
+      maxHeight: dimension.deviceHeight < 770 ? dimension.deviceHeight / 3 : dimension.deviceHeight / 2,
+    },
+    buttonChange: {
+      marginTop: spacing.margin.large,
+    },
+    listContainer: {
+      marginTop: spacing.margin.large,
+      padding: spacing.padding.base,
+      backgroundColor: colors.neutral1,
+      borderRadius: borderRadius.large,
+    },
+  });
+};
 
 export default ChangeSettings;

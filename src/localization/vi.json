@@ -523,7 +523,8 @@
       "change_settings": {
         "title_membership_approval": "Bật phê duyệt tư cách thành viên cho các nhóm nội bộ?",
         "title_policy_setting": "Thay đổi cài đặt chính sách cho các nhóm bên trong?",
-        "content_first": "{{count}} nhóm bên trong của ",
+        "content_first_with_group": "{{count}} nhóm bên trong của ",
+        "content_first_with_groups": "{{count}} nhóm bên trong của ",
         "content_membership_approval": " sẽ được bật phê duyệt tư cách thành viên.",
         "content_policy_setting": " sẽ được thay đổi thành chỉ những người được mời mới có thể tham gia.",
         "button_change": "Thay đổi",
