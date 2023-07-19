@@ -1,7 +1,9 @@
 import { useIsFocused } from '@react-navigation/native';
 
 import i18next from 'i18next';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
 import { StyleSheet } from 'react-native';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -29,12 +31,23 @@ import { useUserIdAuth } from '~/hooks/auth';
 import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 import { USER_TABS } from '../Menu/UserProfile';
 import { USER_TABS_TYPES } from '../Menu/UserProfile/constants';
+import { IToastMessage } from '~/interfaces/common';
+import { useBaseHook } from '~/hooks';
+
+const NOT_SHOW_DELETE_OPTION_LIST = [
+  NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME,
+  NOTIFICATION_TYPE.CHANGE_LOGS,
+];
 
 const Notification = () => {
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
+  const { showToast, clearToast } = useModalStore((state) => state.actions);
+
   const { rootNavigation } = useRootNavigation();
   const isFocused = useIsFocused();
   const userId = useUserIdAuth();
+  const { t } = useBaseHook();
+  const timeOutRef = useRef<any>();
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const modalActions = useModalStore((state) => state.actions);
@@ -60,7 +73,56 @@ const Notification = () => {
     modalActions.hideBottomList();
   };
 
+  const clearToastDeleteNoti = () => {
+    timeOutRef?.current && clearTimeout(timeOutRef?.current);
+    clearToast();
+  };
+
+  const onRefresh = () => {
+    clearToastDeleteNoti();
+    notiActions.deleteAllWaitingNotification();
+  };
+
+  const onPressUndo = (id: string) => {
+    clearToastDeleteNoti();
+    notiActions.undoDeleteNotificationLocal(id);
+  };
+
+  const onPressDelete = (id: string) => {
+    notiActions.deleteNotification(id);
+  };
+
+  const handleRemoveNotification = (id: string) => {
+    notiActions.deleteNotificationLocal(id);
+    const toastMessage: IToastMessage = {
+      content: t('notification:text_remove_notification_success'),
+      buttonText: t('common:text_undo'),
+      onButtonPress: () => { onPressUndo(id); },
+      duration: 3000,
+      onClose: () => { onPressDelete(id); },
+    };
+    showToast(toastMessage);
+
+    timeOutRef.current = setTimeout(
+      () => {
+        onPressDelete(id);
+      }, 3500,
+    );
+
+    modalActions.hideBottomList();
+  };
+
+  const checkShowDeleteOption = (type: string) => {
+    if (!type) return false;
+    const index = NOT_SHOW_DELETE_OPTION_LIST.findIndex((item) => item === type);
+    return !(index === -1);
+  };
+
   const onPressItemOption = ({ item }: {item: any}) => {
+    clearToastDeleteNoti();
+    notiActions.deleteAllWaitingNotification();
+
+    const type = item?.extra?.type || undefined;
     const menuData: any[] = [{
       id: 1,
       testID: 'notification.mark_notification_read_or_unread',
@@ -72,12 +134,15 @@ const Notification = () => {
       onPress: () => { handleMarkNotification(item); },
     }, {
       id: 2,
-      testID: 'notifications.turn_off_notification',
-      leftIcon: 'BellSlash',
-      title: i18next.t('notification:turn_off_notification'),
+      testID: 'notifications.remove_notification',
+      leftIcon: 'TrashCan',
+      title: i18next.t('notification:text_remove_notification'),
       requireIsActor: true,
-      upcoming: true,
+      onPress: () => { handleRemoveNotification(item?.id); },
     }];
+    if (checkShowDeleteOption(type)) {
+      menuData.splice(1, 1);
+    }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     modalActions.showBottomList({ data: menuData } as BottomListItemProps);
@@ -119,6 +184,7 @@ const Notification = () => {
       const type = item?.extra?.type || undefined;
       const act = item?.activities?.[0];
       const target = item?.target;
+      clearToastDeleteNoti();
 
       try {
         if (type !== undefined) {
@@ -447,10 +513,11 @@ const Notification = () => {
       />
       <ScrollableTabBar
         data={notificationMenuData}
+        activeIndex={activeIndex}
         onItemPress={onItemPress}
         onPressItemOption={onPressItemOption}
         onChangeTab={onPressFilterItem}
-        activeIndex={activeIndex}
+        onRefresh={onRefresh}
       />
     </ScreenWrapper>
   );
