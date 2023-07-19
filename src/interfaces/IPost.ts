@@ -513,6 +513,7 @@ export interface IParamGetDraftContents {
   order?: 'ASC';
   offset?: number;
   limit?: number;
+  endCursor?: string;
   idGte?: string;
   idLte?: string;
   idGt?: string;

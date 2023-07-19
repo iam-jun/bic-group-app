@@ -5,9 +5,9 @@ import getDraftPosts from './actions/getDraftPosts';
 const initState: IDraftPostState = {
   posts: [],
   hasNextPage: true,
+  endCursor: '',
   loading: false,
   refreshing: false,
-  total: 0,
 };
 
 const draftPostStore = (set, get) => ({
