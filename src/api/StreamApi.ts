@@ -43,7 +43,7 @@ import {
 import { IParamGetReportContent, IParamsReportContent } from '~/interfaces/IReport';
 import { CreateTag, EditTag, IParamGetCommunityTags } from '~/interfaces/ITag';
 
-const DEFAULT_LIMIT = 10;
+export const DEFAULT_LIMIT = 10;
 
 const provider = apiProviders.beinFeed;
 const defaultConfig = {
@@ -286,8 +286,8 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}comments/${commentId}`,
     params: {
-      limit: 1,
-      targetChildLimit: params?.targetChildLimit || 10,
+      limit: params?.limit || 1,
+      targetChildLimit: params?.targetChildLimit || DEFAULT_LIMIT,
     },
   }),
   getUsersInterestedPost: (

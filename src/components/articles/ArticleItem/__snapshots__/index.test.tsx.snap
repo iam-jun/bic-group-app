@@ -758,38 +758,85 @@ exports[`ArticleItem Component renders correctly 1`] = `
   </View>
   <View
     style={
-      Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+      }
+    }
+  >
+    <View
+      style={
         Object {
-          "alignItems": "flex-end",
+          "alignItems": "center",
+          "flexDirection": "row",
           "paddingBottom": 6,
           "paddingHorizontal": 16,
           "paddingTop": 12,
-        },
-        undefined,
-      ]
-    }
-    testID="article_item.content_interested_user_count"
-  >
-    <View
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "opacity": 1,
         }
       }
-      testID="article_item.content_interested_user_count.button"
+      testID="article_reading_time.content"
     >
+      <View
+        accessibilityState={
+          Object {
+            "disabled": true,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              Object {
+                "marginRight": 8,
+              },
+              Object {
+                "backgroundColor": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View />
+          </View>
+        </View>
+      </View>
       <Text
-        numberOfLines={1}
         style={
           Array [
             Object {
@@ -803,15 +850,55 @@ exports[`ArticleItem Component renders correctly 1`] = `
             undefined,
           ]
         }
-        testID="article_item.content_interested_user_count.show_text"
       >
-        Interested by 
+        Reading time:
+         
+        article:about
+         
+        0
+         
+        min
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "flex-end",
+            "paddingBottom": 6,
+            "paddingHorizontal": 16,
+            "paddingTop": 12,
+          },
+          undefined,
+        ]
+      }
+      testID="article_item.content_interested_user_count"
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="article_item.content_interested_user_count.button"
+      >
         <Text
+          numberOfLines={1}
           style={
             Array [
               Object {
                 "color": "#212745",
-                "fontFamily": "BeVietnamPro-Medium",
+                "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
               Object {
@@ -820,10 +907,28 @@ exports[`ArticleItem Component renders correctly 1`] = `
               undefined,
             ]
           }
+          testID="article_item.content_interested_user_count.show_text"
         >
-          2
+          Interested by 
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 13,
+                },
+                Object {
+                  "color": "#353E6E",
+                },
+                undefined,
+              ]
+            }
+          >
+            2
+          </Text>
         </Text>
-      </Text>
+      </View>
     </View>
   </View>
   <View
@@ -839,7 +944,7 @@ exports[`ArticleItem Component renders correctly 1`] = `
         Object {
           "marginBottom": 8,
           "marginHorizontal": 16,
-          "marginTop": 12,
+          "marginTop": 8,
         },
       ]
     }
