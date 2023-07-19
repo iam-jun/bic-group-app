@@ -382,7 +382,7 @@ export const previewSettingsResponse = {
     message: 'Success',
   },
   data: {
-    effectedInnerGroups: [
+    affectedInnerGroups: [
       {
         name: 'Bot trading',
         icon: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/group/default-avatar.png',

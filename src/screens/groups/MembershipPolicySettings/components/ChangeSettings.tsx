@@ -28,7 +28,7 @@ const ChangeSettings = (props: ChangeSettingsProps) => {
   const { isChangeMembershipApproval = false, name = 'undefined', updateJoinSetting } = props;
   const [isShowMore, setIsShowMore] = useState(false);
   const {
-    effectedInnerGroups: list,
+    affectedInnerGroups: list,
     actions: { clearPreviewSettings },
   } = useMembershipPolicySettingsStore((state) => state);
   const modalActions = useModalStore((state) => state.actions);

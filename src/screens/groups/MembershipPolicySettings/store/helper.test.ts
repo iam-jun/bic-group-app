@@ -19,7 +19,7 @@ describe('useMembershipPolicySettingsStore helper', () => {
 
   it('should call api success no data', async () => {
     const cloneResponse = cloneDeep(previewSettingsResponse);
-    cloneResponse.data.effectedInnerGroups = [];
+    cloneResponse.data.affectedInnerGroups = [];
     jest.spyOn(groupApi, 'previewSettings').mockImplementation(() => Promise.resolve(cloneResponse) as any);
     const payload = {
       groupId: 'test',

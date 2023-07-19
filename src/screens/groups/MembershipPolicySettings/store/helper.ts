@@ -8,11 +8,11 @@ export const previewSettings = async (payload: IPayloadPreviewSettings) => {
     const response = await groupApi.previewSettings(payload);
 
     useMembershipPolicySettingsStore.setState((state) => {
-      state.effectedInnerGroups = response?.data?.effectedInnerGroups || [];
+      state.affectedInnerGroups = response?.data?.affectedInnerGroups || [];
       return state;
     });
 
-    if (response?.data?.effectedInnerGroups?.length === 0) {
+    if (response?.data?.affectedInnerGroups?.length === 0) {
       return false;
     }
     return true;

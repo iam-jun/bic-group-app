@@ -17,7 +17,7 @@ export interface IDataSettings {
   };
 }
 
-interface IEffectedInnerGroups {
+interface IAffectedInnerGroups {
   name: string;
   icon: string;
   description: string;
@@ -25,7 +25,7 @@ interface IEffectedInnerGroups {
 
 export interface IMembershipPolicySettingsState extends IBaseState {
   data: IDataSettings;
-  effectedInnerGroups: IEffectedInnerGroups[];
+  affectedInnerGroups: IAffectedInnerGroups[];
   actions: {
     getSettings: (groupId: string) => void;
     updateSettings: (payload: IDataSettings) => void;
@@ -48,7 +48,7 @@ const initialState: InitStateType<IMembershipPolicySettingsState> = {
       isActiveMembershipQuestions: '',
     },
   },
-  effectedInnerGroups: [],
+  affectedInnerGroups: [],
 };
 
 const useMembershipPolicySettings = (set, get): IMembershipPolicySettingsState => ({
@@ -62,7 +62,7 @@ const useMembershipPolicySettings = (set, get): IMembershipPolicySettingsState =
     },
     clearPreviewSettings: () => {
       set((state: IMembershipPolicySettingsState) => {
-        state.effectedInnerGroups = initialState.effectedInnerGroups;
+        state.affectedInnerGroups = initialState.affectedInnerGroups;
       }, 'updateSettings');
     },
   },
