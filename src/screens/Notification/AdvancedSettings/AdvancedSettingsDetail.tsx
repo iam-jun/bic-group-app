@@ -38,7 +38,7 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
   const data = useAdvancedNotiSettingsStore((state) => state.groupData?.[groupId]);
   const actions = useAdvancedNotiSettingsStore((state) => state.actions);
   const isRefreshing = useAdvancedNotiSettingsStore((state) => state.isRefreshing);
-  const isUpdatting = useAdvancedNotiSettingsStore((state) => state.isUpdatingGroupSettings);
+  const isUpdatting = useAdvancedNotiSettingsStore((state) => state.isResetOrEnableGroupSettings);
 
   const { channels = {}, enable = true, flag } = data;
 
@@ -113,7 +113,7 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
           value: true,
         },
       };
-      actions.updateGroupSettings(payload, dataUpdateStore);
+      actions.updateGroupSettings(payload, dataUpdateStore, true);
       return;
     }
     // reset to default (not config)
@@ -125,7 +125,7 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
         value: false,
       },
     };
-    actions.updateGroupSettings(payload, dataUpdateStore);
+    actions.updateGroupSettings(payload, dataUpdateStore, true);
   };
 
   const updateIsVisibleTooltip = () => {

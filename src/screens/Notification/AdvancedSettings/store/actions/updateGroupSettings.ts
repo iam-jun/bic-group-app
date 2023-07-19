@@ -5,11 +5,13 @@ import { IAdvancedNotificationSettings, IEditNotificationSetting } from '~/inter
 const updateGroupSettings = (set, _get) => async (
   params: IEditNotificationSetting,
   dataUpdateStore: IAdvancedNotificationSettings,
+  isResetOrEnableSettings?: boolean,
 ) => {
   try {
     const { groupId, communityId } = dataUpdateStore;
     set((state: IAdvancedNotiSettingsStore) => {
       state.isUpdatingGroupSettings = true;
+      state.isResetOrEnableGroupSettings = isResetOrEnableSettings;
     }, 'updateGroupSettingsLoading');
 
     await notificationApi.updateGroupSettings(communityId, groupId, params);
@@ -17,6 +19,7 @@ const updateGroupSettings = (set, _get) => async (
     set((state: IAdvancedNotiSettingsStore) => {
       state.isUpdatingGroupSettings = false;
       state.groupData = { ...state.groupData, [groupId]: dataUpdateStore };
+      state.isResetOrEnableGroupSettings = false;
     }, 'updateGroupSettingsSuccess');
   } catch (err) {
     console.error(
@@ -24,6 +27,7 @@ const updateGroupSettings = (set, _get) => async (
     );
     set((state: IAdvancedNotiSettingsStore) => {
       state.isUpdatingGroupSettings = false;
+      state.isResetOrEnableGroupSettings = false;
     }, 'updateGroupSettingsError');
   }
 };

@@ -1,9 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import {
-  View, StyleSheet, Dimensions, ActivityIndicator,
+  View, StyleSheet, Dimensions, ScrollView,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { debounce } from 'lodash';
+import { useKeyboard } from '@react-native-community/hooks';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import SearchInput from '~/baseComponents/Input/SearchInput';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Text from '~/baseComponents/Text';
@@ -18,6 +20,8 @@ import images from '~/resources/images';
 
 const screenHeight = Dimensions.get('window').height;
 const modalHeight = 0.8 * screenHeight;
+
+const LIMIT_FOR_SEARCH = 500;
 interface Props {
   modalizeRef: any;
   onPressItem: (item: any) => void;
@@ -28,12 +32,13 @@ const SearchGroupBottomSheet = ({ modalizeRef, onPressItem }: Props) => {
   const { colors } = theme;
   const styles = createStyle(theme);
   const { t } = useBaseHook();
+  const insets = useSafeAreaInsets();
+  const keyboard = useKeyboard();
 
   const [searchText, setSearchText] = useState('');
 
   const {
-    actions, searchJoinedGroups,
-    hasSearchNextPage, joinedGroups, hasNextPage, selectedCommunity,
+    actions, searchJoinedGroups, joinedGroups,
     isLoadingJoinedGroup,
   } = useAdvancedNotiSettingsStore((state) => state);
 
@@ -42,7 +47,7 @@ const SearchGroupBottomSheet = ({ modalizeRef, onPressItem }: Props) => {
 
   const searchGroup = (text: string) => {
     setSearchText(text);
-    actions.searchJoinedGroupFlat({ key: text }, true);
+    actions.searchJoinedGroupFlat({ key: text, limit: LIMIT_FOR_SEARCH }, true);
   };
 
   const searchHandler = useCallback(
@@ -54,15 +59,6 @@ const SearchGroupBottomSheet = ({ modalizeRef, onPressItem }: Props) => {
 
   const onChangeText = (text: string) => {
     searchHandler(text);
-  };
-
-  const onLoadMore = () => {
-    if (isLoadingJoinedGroup) return;
-    if (needUseDefault && hasNextPage) {
-      actions.getJoinedGroupFlat(selectedCommunity.id);
-    } else if (hasSearchNextPage) {
-      actions.searchJoinedGroupFlat({ key: searchText });
-    }
   };
 
   const onResetSearchText = () => {
@@ -91,15 +87,6 @@ const SearchGroupBottomSheet = ({ modalizeRef, onPressItem }: Props) => {
     />
   );
 
-  const renderListFooter = () => {
-    if ((needUseDefault && !hasNextPage) || (!needUseDefault && !hasSearchNextPage)) return null;
-    return (
-      <View style={styles.listFooter}>
-        <ActivityIndicator testID="your_communites.loading_more" />
-      </View>
-    );
-  };
-
   const renderEmptyComponent = () => {
     if (isLoadingJoinedGroup) return null;
     return (
@@ -113,22 +100,37 @@ const SearchGroupBottomSheet = ({ modalizeRef, onPressItem }: Props) => {
   return (
     <BottomSheet
       modalizeRef={modalizeRef}
-      disableScrollIfPossible={false}
-      childrenStyle={styles.container}
-      onClose={onResetSearchText}
-      HeaderComponent={renderHeader}
-      flatListProps={{
-        data: shouldShowData,
+      handlePosition="inside"
+      childrenStyle={styles.childrenStyle}
+      onClosed={onResetSearchText}
+      closeSnapPointStraightEnabled={false}
+      scrollViewProps={{
         keyboardShouldPersistTaps: 'handled',
-        showsVerticalScrollIndicator: false,
-        scrollEnabled: true,
-        scrollEventThrottle: 16,
-        keyExtractor: (item) => `advanced_settings.search_group.${item?.id}`,
-        renderItem: ({ item }) => renderItem({ item }),
-        ListFooterComponent: renderListFooter,
-        ListEmptyComponent: renderEmptyComponent,
-        onEndReached: onLoadMore,
+        keyboardDismissMode: 'interactive',
+        contentContainerStyle: {
+          height: '100%',
+        },
       }}
+      ContentComponent={(
+        <View testID="edit_location" style={styles.contentContainerStyle}>
+          {renderHeader()}
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+            style={styles.childrenStyle}
+            scrollEventThrottle={16}
+          >
+            {shouldShowData?.length > 0 ? (shouldShowData).map((item) => (
+              <View key={`advanced_settings.search_group.${item?.id}`}>
+                {renderItem({ item })}
+              </View>
+            ))
+              : renderEmptyComponent()}
+            <ViewSpacing height={insets.bottom} />
+            <View style={{ height: keyboard?.keyboardHeight || 0 }} />
+          </ScrollView>
+        </View>
+      )}
     />
   );
 };
@@ -149,9 +151,15 @@ const createStyle = (theme: ExtendedTheme) => {
       padding: spacing.padding.large,
     },
     listFooter: {
-      height: 100,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    childrenStyle: {
+      maxHeight: modalHeight,
+      paddingBottom: 0,
+    },
+    contentContainerStyle: {
+      height: '100%',
     },
   });
 };

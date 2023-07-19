@@ -340,6 +340,16 @@ export const groupsApiConfig = {
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
+  searchJoinedCommunitiesOnly: (
+    params: IParamGetCommunities,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/communities`,
+    params: {
+      ...params,
+      key: params?.key?.trim?.() ? params.key : undefined,
+    },
+  }),
   getJoinedCommunities: (params: {
     previewMembers?: boolean;
     managed?: boolean;
@@ -754,6 +764,9 @@ const groupApi = {
   getOwnedBadges: () => withHttpRequestPromise(groupsApiConfig.getOwnedBadges),
   putShowingBadges: (badgeIds: string[]) => withHttpRequestPromise(groupsApiConfig.putShowingBadges, badgeIds),
   markNewBadge: (badgeIds: string[]) => withHttpRequestPromise(groupsApiConfig.markNewBadge, badgeIds),
+  searchJoinedCommunitiesOnly: (params?: IParamGetCommunities) => withHttpRequestPromise(
+    groupsApiConfig.searchJoinedCommunitiesOnly, params,
+  ),
 };
 
 export default groupApi;

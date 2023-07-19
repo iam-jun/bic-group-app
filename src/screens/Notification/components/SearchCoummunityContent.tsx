@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import {
-  View, StyleSheet, Dimensions, ActivityIndicator,
+  View, StyleSheet, Dimensions, ScrollView,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useKeyboard } from '@react-native-community/hooks';
 import SearchInput from '~/baseComponents/Input/SearchInput';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Text from '~/baseComponents/Text';
@@ -14,6 +16,8 @@ import BottomSheet from '~/baseComponents/BottomSheet';
 import useSearchJoinedCommunitiesStore from '~/screens/communities/Communities/components/SearchCommunity/store';
 import EmptyScreen from '~/components/EmptyScreen';
 import images from '~/resources/images';
+
+const LIMIT_FOR_SEARCH = 500;
 
 const screenHeight = Dimensions.get('window').height;
 const modalHeight = 0.8 * screenHeight;
@@ -27,14 +31,16 @@ const SearchCoummunityContent = ({ modalizeRef, onPressItem }: Props) => {
   const { colors } = theme;
   const styles = createStyle(theme);
   const { t } = useBaseHook();
+  const insets = useSafeAreaInsets();
+  const keyboard = useKeyboard();
 
   const [searchText, setSearchText] = useState('');
 
   const {
-    ids: defaultIds, items: defaultItems, hasNextPage: hasNextPageDefault, actions,
+    ids: defaultIds, items: defaultItems,
   } = useYourCommunitiesStore();
   const {
-    hasNextPage, ids, items, actions: joinedActions, reset, loading,
+    ids, items, actions: joinedActions, reset, loading,
   } = useSearchJoinedCommunitiesStore();
   const needUseDefault = !Boolean(searchText?.trim?.()?.length > 0);
   const shouldShowData = needUseDefault ? defaultIds : ids;
@@ -42,19 +48,11 @@ const SearchCoummunityContent = ({ modalizeRef, onPressItem }: Props) => {
   const onChangeText = (text: string) => {
     reset();
     setSearchText(text);
-    joinedActions.searchJoinedCommunities({ key: text });
+    joinedActions.searchJoinedCommunities({ key: text, limit: LIMIT_FOR_SEARCH }, true);
   };
 
   const onResetSearchText = () => {
     setSearchText('');
-  };
-
-  const onLoadMore = () => {
-    if (needUseDefault && hasNextPageDefault) {
-      actions.getYourCommunities();
-    } else if (hasNextPage) {
-      joinedActions.searchJoinedCommunities({ key: searchText });
-    }
   };
 
   const renderHeader = () => (
@@ -82,15 +80,6 @@ const SearchCoummunityContent = ({ modalizeRef, onPressItem }: Props) => {
     );
   };
 
-  const renderListFooter = () => {
-    if ((needUseDefault && !hasNextPageDefault) || (!needUseDefault && !hasNextPage)) return null;
-    return (
-      <View style={styles.listFooter}>
-        <ActivityIndicator testID="your_communites.loading_more" />
-      </View>
-    );
-  };
-
   const renderEmptyComponent = () => {
     if (loading) return null;
     return (
@@ -104,22 +93,37 @@ const SearchCoummunityContent = ({ modalizeRef, onPressItem }: Props) => {
   return (
     <BottomSheet
       modalizeRef={modalizeRef}
-      disableScrollIfPossible={false}
-      childrenStyle={styles.container}
-      onClose={onResetSearchText}
-      HeaderComponent={renderHeader}
-      flatListProps={{
-        data: shouldShowData,
+      handlePosition="inside"
+      childrenStyle={styles.childrenStyle}
+      onClosed={onResetSearchText}
+      closeSnapPointStraightEnabled={false}
+      scrollViewProps={{
         keyboardShouldPersistTaps: 'handled',
-        showsVerticalScrollIndicator: false,
-        scrollEnabled: true,
-        scrollEventThrottle: 16,
-        keyExtractor: (item) => `advanced_settings.search_communtiy.${item}`,
-        renderItem: ({ item }) => renderItem(item),
-        ListFooterComponent: renderListFooter,
-        ListEmptyComponent: renderEmptyComponent,
-        onEndReached: onLoadMore,
+        keyboardDismissMode: 'interactive',
+        contentContainerStyle: {
+          height: '100%',
+        },
       }}
+      ContentComponent={(
+        <View testID="edit_location" style={styles.container}>
+          {renderHeader()}
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+            style={styles.flex1}
+            scrollEventThrottle={16}
+          >
+            {shouldShowData?.length > 0 ? (shouldShowData).map((item) => (
+              <View key={`advanced_settings.search_communtiy.${item}`}>
+                {renderItem(item)}
+              </View>
+            ))
+              : renderEmptyComponent()}
+            <ViewSpacing height={insets.bottom} />
+            <View style={{ height: keyboard?.keyboardHeight || 0 }} />
+          </ScrollView>
+        </View>
+      )}
     />
   );
 };
@@ -133,16 +137,18 @@ const createStyle = (theme: ExtendedTheme) => {
     background: {
       backgroundColor: colors.white,
     },
-    container: {
-      height: modalHeight,
+    childrenStyle: {
+      maxHeight: modalHeight,
+      paddingBottom: 0,
     },
     headerContainer: {
       padding: spacing.padding.large,
     },
-    listFooter: {
-      height: 100,
-      justifyContent: 'center',
-      alignItems: 'center',
+    container: {
+      height: modalHeight,
+    },
+    contentContainerStyle: {
+      height: '100%',
     },
   });
 };

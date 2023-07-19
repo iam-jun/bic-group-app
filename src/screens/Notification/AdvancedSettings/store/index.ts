@@ -22,6 +22,7 @@ export interface IAdvancedNotiSettingsStore extends IBaseState {
   isLoadingJoinedGroup: boolean;
   isUpdatingCommunitySettings: boolean;
   isUpdatingGroupSettings: boolean;
+  isResetOrEnableGroupSettings: boolean;
   isRefreshing: boolean;
   joinedGroups: IGroup[];
   searchJoinedGroups: IGroup[];
@@ -43,6 +44,7 @@ export interface IAdvancedNotiSettingsStore extends IBaseState {
     updateGroupSettings: (
       params: IEditNotificationSetting,
       dataUpdateStore: IAdvancedNotificationSettings,
+      isResetOrEnableSettings?: boolean,
     ) => void;
     clearSearchGroup: () => void;
   },
@@ -57,6 +59,7 @@ const initialState = {
   isLoadingJoinedGroup: false,
   isUpdatingCommunitySettings: false,
   isUpdatingGroupSettings: false,
+  isResetOrEnableGroupSettings: false,
   isRefreshing: false,
   joinedGroups: [],
   searchJoinedGroups: [],
