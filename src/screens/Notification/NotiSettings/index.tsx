@@ -56,7 +56,13 @@ const NotificationSettings = () => {
 
   const renderEmpty = () => (
     <View style={styles.container}>
-      {Boolean(loading) ? <ActivityIndicator size="large" color={colors.neutral1} />
+      {Boolean(loading) ? (
+        <ActivityIndicator
+          testID="notification_settings.loading"
+          size="large"
+          color={colors.neutral1}
+        />
+      )
         : (
           <EmptyScreen
             source={images.img_empty_search_post}
