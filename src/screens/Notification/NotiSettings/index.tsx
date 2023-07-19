@@ -40,7 +40,7 @@ const NotificationSettings = () => {
   const isRefreshing = useNotiSettingsStore((state) => state.isRefreshing);
   const advancedSettings = {
     name: 'advancedSettings',
-    title: t('notification:advanced_notifications_settings:title'),
+    title: t('notification:advanced_notifications_settings:screen_title'),
   };
 
   const onRefresh = () => {

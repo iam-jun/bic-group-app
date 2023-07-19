@@ -49,7 +49,7 @@ const AdvancedSettingHeader = ({
       <View style={styles.background}>
         <View style={styles.headerContainer}>
           <Text.BodyS useI18n color={colors.neutral40}>
-            notification:notification_settings:description
+            notification:advanced_notifications_settings:content
           </Text.BodyS>
         </View>
         <View style={styles.communityContainer}>
@@ -81,12 +81,14 @@ const AdvancedSettingHeader = ({
       </View>
       <ViewSpacing height={spacing.margin.large} />
       <View style={styles.communityContainer}>
-        <Text.BadgeL useI18n color={colors.neutral80}>
-          notification:advanced_notifications_settings:title_setup_group
-        </Text.BadgeL>
-        <Text.BodyS useI18n color={colors.neutral40}>
-          notification:advanced_notifications_settings:description_setup_group
-        </Text.BodyS>
+        <View style={[!Boolean(communitySettingData?.enable) ? styles.disable : {}]}>
+          <Text.BadgeL useI18n color={colors.neutral80}>
+            notification:advanced_notifications_settings:title_setup_group
+          </Text.BadgeL>
+          <Text.BodyS useI18n color={colors.neutral40}>
+            notification:advanced_notifications_settings:description_setup_group
+          </Text.BodyS>
+        </View>
         <ViewSpacing height={spacing.margin.small} />
         <ButtonWrapper
           activeOpacity={0.85}
