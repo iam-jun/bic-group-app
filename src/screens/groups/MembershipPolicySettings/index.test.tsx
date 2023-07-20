@@ -28,11 +28,11 @@ describe('MembershipPolicySettings component', () => {
     });
 
     const { getByTestId } = rendered;
-    const containerView = getByTestId('membership_policy_settings');
-    const toggle = getByTestId('membership_approval.toggle');
-    expect(containerView).toBeDefined();
 
     await waitFor(() => {
+      const containerView = getByTestId('membership_policy_settings');
+      expect(containerView).toBeDefined();
+      const toggle = getByTestId('membership_approval.toggle');
       fireEvent.press(toggle);
       expect(showModal).toBeCalled();
     });

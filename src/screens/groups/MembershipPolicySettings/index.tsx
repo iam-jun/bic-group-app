@@ -23,6 +23,7 @@ import useMembershipPolicySettingsStore from './store';
 import ChangeSettings from './components/ChangeSettings';
 import useModalStore from '~/store/modal';
 import { previewSettings } from './store/helper';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 
 export interface MembershipPolicySettingsProps {
   route: {
@@ -55,11 +56,13 @@ const MembershipPolicySettings: FC<MembershipPolicySettingsProps> = (props) => {
   } = useMembershipPolicySettingsStore((state) => state);
   const modalActions = useModalStore((state) => state.actions);
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isRefresh, setIsRefresh] = useState<boolean>(false);
 
   useEffect(() => {
     (async () => {
       await getData();
+      setIsLoading(false);
     })();
     return () => {
       reset();
@@ -67,9 +70,7 @@ const MembershipPolicySettings: FC<MembershipPolicySettingsProps> = (props) => {
   }, []);
 
   const getData = async () => {
-    setIsLoading(true);
     await Promise.all([getSettings(groupId), _getGroupDetail()]);
-    setIsLoading(false);
   };
 
   const _getGroupDetail = async () => {
@@ -78,6 +79,12 @@ const MembershipPolicySettings: FC<MembershipPolicySettingsProps> = (props) => {
     } else {
       await getGroupDetail({ groupId });
     }
+  };
+
+  const onRefresh = async () => {
+    setIsRefresh(true);
+    await getData();
+    setIsRefresh(false);
   };
 
   let updateJoinSetting: any;
@@ -128,12 +135,14 @@ const MembershipPolicySettings: FC<MembershipPolicySettingsProps> = (props) => {
     }
   };
 
-  return (
-    <ScreenWrapper testID="membership_policy_settings" isFullView style={styles.container}>
-      <Header title={t('settings:membership_policy_settings:title')} />
+  const renderContent = () => {
+    if (isLoading) {
+      return <LoadingIndicator style={styles.loading} size="large" />;
+    }
+    return (
       <ScrollView
         showsVerticalScrollIndicator={false}
-        refreshControl={<RefreshControl refreshing={isLoading} onRefresh={getData} />}
+        refreshControl={<RefreshControl refreshing={isRefresh} onRefresh={onRefresh} />}
       >
         <Divider size={spacing.margin.large} />
         <Text.BodyS style={styles.itemContainer} color={colors.neutral40}>
@@ -154,6 +163,13 @@ const MembershipPolicySettings: FC<MembershipPolicySettingsProps> = (props) => {
           updateJoinSetting={_updateJoinSetting}
         />
       </ScrollView>
+    );
+  };
+
+  return (
+    <ScreenWrapper testID="membership_policy_settings" isFullView style={styles.container}>
+      <Header title={t('settings:membership_policy_settings:title')} />
+      {renderContent()}
     </ScreenWrapper>
   );
 };
@@ -169,6 +185,9 @@ const createStyles = (theme: ExtendedTheme) => {
     itemContainer: {
       padding: spacing.padding.large,
       backgroundColor: colors.white,
+    },
+    loading: {
+      marginTop: spacing.margin.large,
     },
   });
 };

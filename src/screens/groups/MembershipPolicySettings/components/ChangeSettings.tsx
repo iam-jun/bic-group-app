@@ -82,7 +82,7 @@ const ChangeSettings = (props: ChangeSettingsProps) => {
         {isShowMore && (
           <ScrollView style={styles.list}>
             {list?.map((item, index) => (
-              <Text.SubtitleM key={`${index}_${item.name}`} style={styles.textCenter} color={colors.neutral60}>
+              <Text.SubtitleM key={`${index}_${item.name}`} color={colors.neutral60}>
                 •
                 {' '}
                 {item.name}
