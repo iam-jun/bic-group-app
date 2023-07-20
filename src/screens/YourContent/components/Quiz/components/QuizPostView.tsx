@@ -102,21 +102,21 @@ const QuizPostView: FC<QuizPostViewProps> = ({ data, style }) => {
   const renderGenStatus = () => {
     if (genStatus === GenStatus.FAILED) {
       return renderLabelStatus(
-        'your_content:gen_status_quiz_process_fail',
+        'quiz:gen_status_quiz_process_fail',
         colors.red30,
         false,
       );
     }
     if (genStatus === GenStatus.PROCESSING) {
       return renderLabelStatus(
-        'your_content:gen_status_quiz_processing',
+        'quiz:gen_status_quiz_processing',
         colors.neutral30,
         true,
       );
     }
     if (genStatus === GenStatus.PENDING) {
       return renderLabelStatus(
-        'your_content:gen_status_quiz_waiting_process',
+        'quiz:gen_status_quiz_waiting_process',
         colors.neutral30,
         true,
       );

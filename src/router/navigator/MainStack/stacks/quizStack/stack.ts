@@ -7,6 +7,7 @@ const quizStack = {
   takeQuizReview: 'take-quiz-review',
   takeQuizResult: 'take-quiz-result',
   previewDraftQuizNotification: 'preview-draft-quiz-notification',
+  yourQuiz: 'your-quiz',
 };
 
 export default quizStack;

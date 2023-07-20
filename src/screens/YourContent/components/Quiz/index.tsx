@@ -77,7 +77,7 @@ const Quiz: React.FC<QuizProps> = ({ onScroll }) => {
           style={styles.imgEmpty}
         />
         <Text.BodyS color={colors.neutral40} useI18n>
-          your_content:text_no_quiz_content
+          quiz:text_no_quiz_content
         </Text.BodyS>
       </View>
     );

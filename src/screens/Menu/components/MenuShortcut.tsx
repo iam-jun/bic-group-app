@@ -14,6 +14,7 @@ import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
+import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 
 const MenuShortcut = () => {
   const theme: ExtendedTheme = useTheme();
@@ -40,6 +41,10 @@ const MenuShortcut = () => {
     rootNavigation.navigate(menuStack.yourContent, { initTab: 1 });
   };
 
+  const onPressQuiz = () => {
+    rootNavigation.navigate(quizStack.yourQuiz);
+  }; 
+
   const renderButton = (icon, name, onPress) => (
     <Button testID="menu_shortcut.item" style={styles.button} onPress={onPress}>
       <View>
@@ -64,6 +69,9 @@ const MenuShortcut = () => {
       <View style={styles.directionRow}>
         {renderButton('AlbumCollectionSolid', t('menu:title_write_series'), onPressWriteSeries)}
         {renderButton('BallotCheckSolid', t('menu:title_your_content'), onPressYourContent)}
+      </View>
+      <View style={styles.halfView}>
+        {renderButton('BlockQuestionSolid', t('quiz:title_quiz'), onPressQuiz)}
       </View>
     </View>
   );
@@ -91,6 +99,9 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     directionRow: {
       flexDirection: 'row',
+    },
+    halfView: {
+      width: '50%',
     },
   });
 };

@@ -57,7 +57,7 @@ const PreviewDraftQuizNotification: React.FC<PreviewDraftQuizNotificationProps> 
   };
 
   return (
-    <ScreenWrapper isFullView backgroundColor={colors.neutral5} testID="take_quiz_review">
+    <ScreenWrapper isFullView backgroundColor={colors.neutral5} testID="preview_draft_quiz_notification.content">
       <Header />
       <ScrollView
         refreshControl={(

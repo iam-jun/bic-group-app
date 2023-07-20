@@ -80,3 +80,14 @@ export type GetQuizDetailParams = {
   quizId: string;
   isShowLoading?: boolean;
 }
+
+export enum AttributeQuiz {
+  DRAFT = 'DRAFT',
+  PUBLISHED = 'PUBLISHED',
+};
+
+export enum ContentQuiz {
+  ALL = 'ALL',
+  POST = 'POST',
+  ARTICLE = 'ARTICLE',
+}

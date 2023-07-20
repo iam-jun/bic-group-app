@@ -47,7 +47,7 @@ const HEADER_TAB = [
   },
   {
     id: 'your-content-tab-5',
-    text: 'your_content:title_quiz',
+    text: 'quiz:title_quiz',
   },
 ];
 
