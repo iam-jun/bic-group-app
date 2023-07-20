@@ -2,8 +2,6 @@ import { useForm } from 'react-hook-form';
 import { Keyboard } from 'react-native';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
-import usePostsStore from '~/store/entities/posts';
-import postsSelector from '~/store/entities/posts/selectors';
 import showAlert from '~/store/helper/showAlert';
 import {
   buildGenerateQuizParams,
@@ -56,11 +54,6 @@ const useGenerateQuiz = (
   const loading = useQuizzesStore((state) => state.loading);
   const actionsQuizzesStore = useQuizzesStore((state) => state.actions);
 
-  const post = usePostsStore(postsSelector.getPost(contentId, {}));
-
-  const { audience } = post;
-  const groupAudiences = audience?.groups || [];
-
   const isFormValid = isValid;
 
   const generateQuiz = async (data: FormGenerateQuiz) => {
@@ -94,7 +87,6 @@ const useGenerateQuiz = (
         ...params,
         status: QuizStatus.PUBLISHED,
       },
-      audiences: groupAudiences,
       onSuccess,
     };
 

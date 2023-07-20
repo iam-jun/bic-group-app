@@ -11,9 +11,7 @@ import MockedNavigator from '~/test/MockedNavigator';
 import usePostsStore from '~/store/entities/posts';
 import { mockGenerateQuizResponse, postWithQuiz } from '~/test/mock_data/quiz';
 import { IPost } from '~/interfaces/IPost';
-import groupApi from '~/api/GroupApi';
 import useModalStore from '~/store/modal';
-import { PermissionKey } from '~/constants/permissionScheme';
 import streamApi from '~/api/StreamApi';
 import useQuizzesStore from '~/store/entities/quizzes';
 
@@ -75,18 +73,6 @@ describe('SubmitFormQuiz', () => {
   });
 
   it('should create quiz success', async () => {
-    jest.spyOn(groupApi, 'getMyPermissions').mockImplementation(
-      () => Promise.resolve({
-        data: {
-          communities: {},
-          groups: {
-            '18508ac3-2bfc-4172-b071-1d67f1b1e05b': [PermissionKey.CUD_QUIZ],
-            'aeab68c2-bcec-4edb-a78b-60c0ee90afd7': [PermissionKey.CUD_QUIZ],
-            'b01fb58e-9299-4a0e-a55f-9839293fb42a': [PermissionKey.CUD_QUIZ],
-          },
-        },
-      }) as any,
-    );
     jest.spyOn(streamApi, 'generateQuiz').mockImplementation(
       () => Promise.resolve(mockGenerateQuizResponse) as any,
     );
