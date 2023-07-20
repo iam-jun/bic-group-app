@@ -43,15 +43,10 @@ const usePostMenu = (
   if (!data) return null;
 
   const {
-    id: postId, reactionsCount, isSaved, type, audience, actor,
+    id: postId, reactionsCount, isSaved, type, audience, actor, quiz,
   } = data;
 
   const groupAudience = audience?.groups || [];
-
-  const audienceListWithNoPermissionQuiz = getAudienceListWithNoPermission(
-    groupAudience,
-    PermissionKey.CUD_QUIZ,
-  );
 
   const audienceListCannotEditSettings = getAudienceListWithNoPermission(
     groupAudience,
@@ -207,8 +202,8 @@ const usePostMenu = (
       testID: 'post_view_menu.quiz',
       leftIcon: 'BallotCheck',
       title: i18next.t('quiz:create_quiz'),
-      requireIsActor: false,
-      shouldBeHidden: audienceListWithNoPermissionQuiz.length > 0,
+      requireIsActor: true,
+      shouldBeHidden: !!quiz,
       onPress: onPressCUDQuiz,
     },
     {

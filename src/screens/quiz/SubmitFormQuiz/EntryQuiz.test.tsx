@@ -43,42 +43,6 @@ describe('SubmitFormQuiz', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should show alert when user doesnt have permission', async () => {
-    jest.spyOn(groupApi, 'getMyPermissions').mockImplementation(
-      () => Promise.resolve({
-        data: {
-          communities: {},
-          groups: {},
-        },
-      }) as any,
-    );
-
-    const { result } = renderHook(() => usePostsStore());
-    act(() => {
-      result.current.actions.addToPosts({ data: postWithQuiz.data as IPost });
-    });
-
-    const wrapper = renderWithRedux(<MockedNavigator
-      component={() => <EntryQuiz route={{ params: { postId: '54f4a2eb-034d-4e4e-8810-44744bffc87d' } }} />}
-    />);
-
-    await waitFor(() => {
-      wrapper.getByTestId('question_answer_section.question');
-    });
-
-    const btnNext = wrapper.getByTestId('header.button');
-
-    await waitFor(() => {
-      expect(btnNext.props.disabled).toBeFalsy();
-    });
-
-    fireEvent.press(btnNext);
-
-    await waitFor(() => {
-      expect(useModalStore.getState().alert.visible).toBeTruthy();
-    });
-  });
-
   it('should show alert when user press back', async () => {
     const { result } = renderHook(() => usePostsStore());
     await act(() => {
