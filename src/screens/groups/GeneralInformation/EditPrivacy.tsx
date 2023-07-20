@@ -11,13 +11,11 @@ import { CommunityPrivacyType, GroupPrivacyType } from '~/constants/privacyTypes
 import useCommunityController from '~/screens/communities/store';
 import { useRootNavigation } from '~/hooks/navigation';
 import Icon from '~/baseComponents/Icon';
-import { CheckBox } from '~/baseComponents';
-import useGroupMemberStore from '../GroupMembers/store';
 import useGeneralInformationStore from './store';
 
 const EditPrivacy = (props: any) => {
   const {
-    type = 'group', id = '', privacy = '', isJoinApproval, rootGroupId,
+    type = 'group', id = '', privacy = '', rootGroupId,
   } = props?.route?.params || {};
 
   const theme: ExtendedTheme = useTheme();
@@ -30,13 +28,11 @@ const EditPrivacy = (props: any) => {
   const privacyType = isGroupScope ? GroupPrivacyType : CommunityPrivacyType;
   const controller = useCommunityController((state) => state.actions);
   const groupActions = useGeneralInformationStore((state) => state.actions);
-  const actions = useGroupMemberStore((state) => state.actions);
 
   const shouldSelectSecretPrivacy = selectedPrivacy === GroupPrivacyType.SECRET;
   const shouldSelectPrivatePrivacy = selectedPrivacy === privacyType.PRIVATE;
 
-  const [joinSettingState, setJoinSettingState] = useState(isJoinApproval);
-  const shouldDisableSaveBtn = selectedPrivacy === privacy && joinSettingState === isJoinApproval;
+  const shouldDisableSaveBtn = selectedPrivacy === privacy;
 
   const onNavigateBack = () => rootNavigation.goBack();
 
@@ -44,29 +40,14 @@ const EditPrivacy = (props: any) => {
     const data = { id, rootGroupId, privacy: selectedPrivacy };
 
     if (type === 'group') {
-      if (shouldSelectPrivatePrivacy) {
-        actions.updateGroupJoinSetting({ groupId: id, isJoinApproval: joinSettingState });
-      }
       groupActions.editGroupDetail(data, onNavigateBack);
     } else {
-      if (shouldSelectPrivatePrivacy) {
-        controller.updateCommunityJoinSetting(id, rootGroupId, joinSettingState);
-      }
       controller.editCommunityDetail(data, onNavigateBack);
     }
   };
 
   const onSelectPrivacy = (value: string) => {
     setSelectedPrivacy(value);
-
-    // Auto turn ON checkbox when selecting Private privacy
-    if (value === privacyType.PRIVATE) {
-      setJoinSettingState(true);
-    }
-  };
-
-  const onPressPrivateCheckbox = (isChecked?: boolean) => {
-    setJoinSettingState(isChecked);
   };
 
   const renderPrivacyNote = () => (
@@ -109,7 +90,7 @@ const EditPrivacy = (props: any) => {
       />
       {shouldSelectPrivatePrivacy && (
         <View style={styles.privacyBannerView}>
-          <CheckBox size="small" isChecked={joinSettingState} onPress={onPressPrivateCheckbox} />
+          <Icon icon="CircleInfo" tintColor={colors.neutral20} size={18} />
           <Text.BodyS style={styles.bannerText} color={colors.neutral40} useI18n>
             {`settings:text_private_${type}_banner_message`}
           </Text.BodyS>

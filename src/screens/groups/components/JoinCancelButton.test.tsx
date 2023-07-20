@@ -7,7 +7,7 @@ import GroupJoinStatus from '~/constants/GroupJoinStatus';
 
 describe('CommunitItem component', () => {
   it('should render button join and call onPressJoin when press button', () => {
-    const joinStatus = 1;
+    const joinStatus = GroupJoinStatus.VISITOR;
     const privacy = CommunityPrivacyType.OPEN;
     const onPressJoin = jest.fn();
     const onPressCancelRequest = jest.fn();

@@ -14,7 +14,7 @@ import useModalStore from '~/store/modal';
 import resetAllStores from '~/store/resetAllStores';
 import useUploaderStore from '~/store/uploader';
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = withNavigation?.(rootNavigationRef);
 
 const updateSharedPreferences = async () => {
   /**

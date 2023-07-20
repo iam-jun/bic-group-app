@@ -1,9 +1,11 @@
+import { t } from 'i18next';
 import streamApi from '~/api/StreamApi';
 import { ICommunityMembers } from '~/interfaces/ICommunity';
 import { IGroupMembers } from '~/interfaces/IGroup';
 import { IParamGetReportContent } from '~/interfaces/IReport';
 import { mockReportReason } from '~/test/mock_data/report';
 import { IUserProfile } from '~/interfaces/IAuth';
+import useModalStore from '~/store/modal';
 
 export const removeMemberFromMemberList = (userId: string, membersData: object) => {
   let updatedData = {};
@@ -89,3 +91,14 @@ export const getSummaryPostItemInSeires = (content: string, titlePost: string) =
 };
 
 export const mapProfile = (data: any): IUserProfile => ({ ...data, language: data?.language || [] });
+
+export const showAlertRefreshPage = () => {
+  setTimeout(() => {
+    useModalStore.getState().actions.showAlert({
+      cancelBtn: false,
+      confirmLabel: t('common:text_got_it'),
+      title: t('common:text_sorry_something_went_wrong'),
+      content: t('common:text_pull_to_refresh'),
+    });
+  }, 500);
+};

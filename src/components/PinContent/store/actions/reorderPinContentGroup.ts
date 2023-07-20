@@ -5,7 +5,7 @@ import { IPinContentState } from '..';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = withNavigation?.(rootNavigationRef);
 
 const reorderPinContentGroup = (set, _get) => async (reorderedPinContent: string[], groupId: string) => {
   try {

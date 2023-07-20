@@ -15,7 +15,7 @@ import { mapProfile } from '~/helpers/common';
 import { timeOut } from '~/utils/common';
 import { userApiConfig } from '~/api/UserApi';
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = withNavigation?.(rootNavigationRef);
 
 const getUserProfile = async (username, token) => {
   try {

@@ -20,7 +20,7 @@ const cancelJoinGroup = (set, get) => async (groupId: string) => {
     set((state:IDiscoverGroupsState) => {
       state.items[groupId] = {
         ...state.items[groupId],
-        joinStatus: GroupJoinStatus.VISITOR,
+        joinStatus: response?.data?.joinStatus,
       };
     }, 'cancelJoinGroupSuccess');
 

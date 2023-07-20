@@ -4,7 +4,6 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { isEqual } from 'lodash';
 import ReactionView from '~/beinComponents/ReactionView';
-import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IPost, TargetType } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
@@ -72,7 +71,6 @@ const _PostView: FC<PostViewProps> = ({
 
   const {
     id: postId,
-    actor,
     content,
     highlight,
     setting,
@@ -88,8 +86,6 @@ const _PostView: FC<PostViewProps> = ({
   const { isImportant, importantExpiredAt, canReact } = setting || {};
 
   const isEmpty = useMemo(() => isEmptyPost(data), [data]);
-
-  const userId = useUserIdAuth();
 
   const {
     onAddReaction,
@@ -162,7 +158,6 @@ const _PostView: FC<PostViewProps> = ({
             markedReadPost={markedReadPost}
             isImportant={isImportant}
             expireTime={importantExpiredAt}
-            isActor={actor?.id == userId}
           />
         )}
         {!showRelatedContentsInSeries && (

@@ -1,7 +1,7 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React from 'react';
 import {
-  Dimensions, ScrollView, StyleSheet, View,
+  ScrollView, StyleSheet, View,
 } from 'react-native';
 import Text from '~/baseComponents/Text';
 
@@ -9,13 +9,14 @@ import Tag from '~/baseComponents/Tag';
 import { useBaseHook } from '~/hooks';
 import { IAudience } from '~/interfaces/IPost';
 import spacing from '~/theme/spacing';
+import { dimension } from '~/theme';
 
 export interface SelectingAudiencesProps {
   list: IAudience[];
   onRemoveItem: (item: IAudience) => void;
 }
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_WIDTH = dimension.deviceWidth;
 const TAG_MAX_WIDTH = SCREEN_WIDTH * 0.6;
 
 const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({

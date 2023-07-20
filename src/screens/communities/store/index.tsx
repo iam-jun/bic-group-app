@@ -1,4 +1,9 @@
-import { IRequestJoinCommunity } from '~/interfaces/ICommunity';
+import {
+  IRequestJoinCommunity,
+  IRequestUpdateCommunityJoinSetting,
+  IRequestLeaveCommunity,
+  IRequestCancelJoinCommunity,
+} from '~/interfaces/ICommunity';
 import { IGroupDetailEdit } from '~/interfaces/IGroup';
 import {
   createStore,
@@ -13,10 +18,10 @@ import updateCommunityJoinSetting from './actions/updateCommunityJoinSetting';
 
 interface ICommunityController {
   actions: {
-    leaveCommunity: (id: string) => void;
+    leaveCommunity: (payload: IRequestLeaveCommunity) => void;
     joinCommunity: (payload: IRequestJoinCommunity) => void;
-    cancelJoinCommunity: (id: string, name: string) => void;
-    updateCommunityJoinSetting: (communityId: string, groupId: string, isJoinApproval: boolean) => void;
+    cancelJoinCommunity: (payload: IRequestCancelJoinCommunity) => void;
+    updateCommunityJoinSetting: (payload: IRequestUpdateCommunityJoinSetting) => void;
     editCommunityDetail: (data: IGroupDetailEdit, callback?: () => void) => Promise<void>;
     assignCommunityAdmin: (id: string, userId: string) => void;
     revokeCommunityAdmin: (id: string, userId: string) => void;
