@@ -6,8 +6,6 @@ import { useRootNavigation } from '~/hooks/navigation';
 import {
   EditQuestionForm, EditQuizActionsParams, IQuiz, QuestionItem,
 } from '~/interfaces/IQuiz';
-import usePostsStore from '~/store/entities/posts';
-import postsSelector from '~/store/entities/posts/selectors';
 import useQuizzesStore from '~/store/entities/quizzes';
 import showAlert from '~/store/helper/showAlert';
 import showToastSuccess from '~/store/helper/showToastSuccess';
@@ -19,14 +17,10 @@ const useEditQuestion = (
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
 
-  const { questions, id, contentId } = quiz || {};
+  const { questions, id } = quiz || {};
   const questionItem = questions?.[questionIndex];
 
   if (!questionItem) return { hasQuestion: false };
-
-  const post = usePostsStore(postsSelector.getPost(contentId, {}));
-  const { audience } = post;
-  const { groups = [] } = audience || {};
 
   const loading = useQuizzesStore((state) => state.loading);
   const actionsQuizzesStore = useQuizzesStore((state) => state.actions);
@@ -58,7 +52,6 @@ const useEditQuestion = (
       params: {
         questions: newQuestions,
       },
-      audiences: groups,
     };
 
     actionsQuizzesStore.editQuiz(editQuizActionsParams);
@@ -102,7 +95,6 @@ const useEditQuestion = (
       params: {
         questions: newQuestions,
       },
-      audiences: groups,
       onSuccess,
     };
 

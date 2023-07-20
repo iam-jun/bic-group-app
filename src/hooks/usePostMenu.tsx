@@ -48,6 +48,11 @@ const usePostMenu = (
 
   const groupAudience = audience?.groups || [];
 
+  const audienceListCannotCRUDPostArticle = getAudienceListWithNoPermission(
+    groupAudience,
+    PermissionKey.CRUD_POST_ARTICLE,
+  );
+
   const audienceListCannotEditSettings = getAudienceListWithNoPermission(
     groupAudience,
     PermissionKey.EDIT_OWN_CONTENT_SETTING,
@@ -203,7 +208,7 @@ const usePostMenu = (
       leftIcon: 'BallotCheck',
       title: i18next.t('quiz:create_quiz'),
       requireIsActor: true,
-      shouldBeHidden: !!quiz,
+      shouldBeHidden: !!quiz || audienceListCannotCRUDPostArticle.length > 0,
       onPress: onPressCUDQuiz,
     },
     {
