@@ -203,8 +203,8 @@
     "settings": "Thiết lập bài viết",
     "pin_unpin": "Ghim/Bỏ ghim",
     "text_i_agree": "Tôi đồng ý",
-    "text_group_terms": "Điều khoản nhóm",
-    "text_community_terms": "Điều khoản cộng đồng",
+    "text_group_terms": "Điều khoản",
+    "text_community_terms": "Điều khoản",
     "text_got_it": "Đã biết",
     "text_sorry_something_went_wrong": "Đã có lỗi xảy ra",
     "text_pull_to_refresh": "Vui lòng kéo xuống để làm mới trang và thử lại",
@@ -1454,5 +1454,12 @@
     },
     "edit_showing_badges_title": "Chỉnh sửa huy hiệu đang hiển thị",
     "badge_tooltip_placeholder": "Nhấn vào đây để thêm huy hiệu"
+  },
+  "previewJoinableGroup": {
+    "title": "Tham gia tất cả các nhóm bên ngoài?",
+    "description_1": "Bằng cách tham gia ",
+    "description_2": ", bạn sẽ tham gia tất cả các nhóm bên ngoài của nó.",
+    "text_join_group_button": "Tham gia",
+    "text_you_are_asking_to_join": "Bạn đang yêu cầu tham gia"
   }
 }

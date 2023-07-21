@@ -391,7 +391,7 @@ const GroupDetail = (props: any) => {
           {renderGroupContent()}
         </Animated.View>
         <Animated.View onLayout={onButtonBottomLayout} style={[styles.button, buttonStyle]}>
-          <GroupJoinCancelButton style={styles.joinBtn} community={communityDetail} />
+          <GroupJoinCancelButton style={styles.joinBtn} />
         </Animated.View>
         <ContentSearch groupId={groupId} />
         <MemberQuestionsModal />
