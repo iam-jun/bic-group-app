@@ -22,7 +22,6 @@ import ScheduledArticles from './components/ScheduledArticles';
 import ReportedContents from './components/ReportedContents';
 import Draft from './components/Draft';
 import Publish from './components/Publish';
-import Quiz from './components/Quiz';
 import useReportContentStore from '~/components/Report/store';
 import useYourContentStore from './store';
 import { homeHeaderTabHeight, homeHeaderContentContainerHeight } from '~/theme/dimension';
@@ -44,10 +43,6 @@ const HEADER_TAB = [
   {
     id: 'your-content-tab-4',
     text: 'your_content:title_report_content',
-  },
-  {
-    id: 'your-content-tab-5',
-    text: 'quiz:title_quiz',
   },
 ];
 
@@ -177,14 +172,6 @@ const YourContent: React.FC<YourContentProps> = ({ route }) => {
     if (activeTab === 3) {
       return (
         <ReportedContents
-          onScroll={onScrollHandler}
-        />
-      );
-    }
-
-    if (activeTab === 4) {
-      return (
-        <Quiz
           onScroll={onScrollHandler}
         />
       );

@@ -28,13 +28,13 @@ export interface IYourQuizState extends IBaseState {
 }
 
 const initData = Object.values(ContentQuiz).reduce((acc, valueContentQuiz) => {
-  const feed: any = { [valueContentQuiz]: {} };
+  const data: any = { [valueContentQuiz]: {} };
   Object.values(AttributeQuiz).forEach((valueAttributeQuiz) => {
-    feed[valueContentQuiz][valueAttributeQuiz] = DEFAULT_DATA;
+    data[valueContentQuiz][valueAttributeQuiz] = DEFAULT_DATA;
   });
   return {
     ...acc,
-    ...feed,
+    ...data,
   };
 }, {});
 
@@ -47,7 +47,7 @@ const initState: InitStateType<IYourQuizState> = {
 const yourQuizStore = (set, get) => ({
   ...initState,
 
-  action: {
+  actions: {
      setContentFilterQuiz: (contentFilter: ContentQuiz) => {
       set((state: IYourQuizState) => {
         state.contentFilter = contentFilter;

@@ -66,9 +66,11 @@ export type EditQuizActionsParams = {
   onSuccess?: (response: any) => void;
 };
 
-export interface IParamsGetDraftQuiz {
+export interface IParamsGetQuizzesContent {
   limit?: number;
   endCursor?: string;
+  status: AttributeQuiz;
+  type?: ContentQuiz | undefined;
 }
 
 export type EditQuestionForm = {

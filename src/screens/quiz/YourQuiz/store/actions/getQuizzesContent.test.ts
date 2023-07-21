@@ -1,6 +1,6 @@
 import streamApi from '~/api/StreamApi';
 import { act, renderHook } from '~/test/testUtils';
-import useDraftQuizStore, { IDraftQuizState } from '../index';
+import useDraftQuizStore, { IDraftQuizState } from '../../../../YourContent/components/Quiz/store/index';
 import { postWithQuiz } from '~/test/mock_data/quiz';
 
 describe('getDraftQuiz', () => {

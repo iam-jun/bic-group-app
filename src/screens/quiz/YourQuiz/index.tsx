@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { View, StyleSheet, Platform, Dimensions } from 'react-native';
 import Animated, {
@@ -16,23 +16,19 @@ import { homeHeaderTabHeight, homeHeaderContentContainerHeight } from '~/theme/d
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import Tab from '~/baseComponents/Tab';
-import { ContentFeed } from '~/interfaces/IFeed';
+import QuizzesContentList from './components/QuizzesContentList';
+import { ContentQuiz, AttributeQuiz } from '~/interfaces/IQuiz';
+import useYourQuizStore from './store';
 
 const HEADER_TAB = [
-  {
-    id: 'your-content-tab-1',
-    text: 'your_content:title_draft',
-  },
-  {
-    id: 'your-content-tab-2',
-    text: 'your_content:title_published',
-  },
+  { id: AttributeQuiz.DRAFT, text: 'your_content:title_draft' },
+  { id: AttributeQuiz.PUBLISHED, text: 'your_content:title_published' },
 ];
 
 const HEADER_SUB_TAB = [
-  { id: ContentFeed.ALL, text: 'home:title_feed_content_all' },
-  { id: ContentFeed.POST, text: 'home:title_feed_content_posts' },
-  { id: ContentFeed.ARTICLE, text: 'home:title_feed_content_articles' },
+  { id: ContentQuiz.ALL, text: 'home:title_feed_content_all' },
+  { id: ContentQuiz.POST, text: 'home:title_feed_content_posts' },
+  { id: ContentQuiz.ARTICLE, text: 'home:title_feed_content_articles' },
 ];
 
 const DeviceHeight = Dimensions.get('window').height;
@@ -41,17 +37,26 @@ const YourQuiz: React.FC = () => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyles(theme);
-  const [activeTab, setActiveTab] = useState<number>(0);
-  const [activeSubTab, setActiveSubTab] = useState<number>(0);
   const showShared = useSharedValue(1);
   const prevOffsetYShared = useSharedValue(0);
 
-  const onPressTab = (item: any, index: number) => {
-    setActiveTab(index);
+  const actions = useYourQuizStore((state) => state.actions);
+  const reset = useYourQuizStore((state) => state.reset);
+  const { attributeFilter, contentFilter } = useYourQuizStore((state) => state);
+
+  const activeTab = HEADER_TAB.findIndex((item) => item.id === attributeFilter);
+  const activeSubTab = HEADER_SUB_TAB.findIndex((item) => item.id === contentFilter);
+
+  useEffect(() => {
+    return () => reset();
+  }, []);
+
+  const onPressTab = (item: any) => {
+    actions.setAttributeFilterQuiz(item.id);
   };
 
-  const onPressSubTab = (item: any, index: number) => {
-    setActiveSubTab(index);
+  const onPressSubTab = (item: any) => {
+    actions.setContentFilterQuiz(item.id);
   };
 
   const handleScroll = throttle((offsetY: number) => {
@@ -129,17 +134,7 @@ const YourQuiz: React.FC = () => {
     </Animated.View>
   );
 
-  const renderContent = () => {
-    if (activeTab === 0) {
-
-    }
-
-    if (activeTab === 1) {
-      
-    }
-
-    return null;
-  }
+  const renderContent = () => (<QuizzesContentList onScroll={onScrollHandler} />)
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.neutral5} testID="your_quiz.content">

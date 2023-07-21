@@ -5,7 +5,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import usePostsStore from '~/store/entities/posts';
 import { PostType } from '~/interfaces/IPost';
-import QuizPostView from '~/screens/YourContent/components/Quiz/components/QuizPostView';
+import QuizPostView from '~/screens/quiz/YourQuiz/components/QuizPostView';
 import postsSelector from '~/store/entities/posts/selectors';
 import { QuizStatus } from '~/interfaces/IQuiz';
 import { useRootNavigation } from '~/hooks/navigation';
