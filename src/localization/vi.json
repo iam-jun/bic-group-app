@@ -212,7 +212,8 @@
     "text_answer_input_placeholder": "Viết câu trả lời của bạn",
     "text_send_request_join_successfully": "Gửi yêu cầu thành công",
     "edit_settings": "Cài đặt",
-    "text_new": "Mới"
+    "text_new": "Mới",
+    "text_empty": "Rỗng"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -674,6 +675,7 @@
       "content_confirm": "Bạn có chắc muốn xoá?"
     },
     "tags_maximum_message_info": "Chỉ có thể chọn tối đa 5 tags",
+    "series_maximum_message_info": "Chỉ có thể chọn tối đa 3 Series",
     "text_add_title": "Thêm tiêu đề",
     "text_title_require_max_length": "Tối đa 64 ký tự",
     "text_description_require_max_length": "Tối đa 255 ký tự",
@@ -1070,7 +1072,6 @@
     "mark_all_as_read": "Đánh dấu đã đọc tất cả",
     "mark_all_as_read_success": "Tất cả các thông báo đã được đánh dấu là đã đọc",
     "turn_off_notification": "Tắt thông báo",
-    "notification_settings": "Cài đặt thông báo",
     "created_a_post": "created a post",
     "mentioned_you_in_a_post": "mentioned you in a post",
     "mentioned_you_in_a_comment": "mentioned you in a comment",
@@ -1099,7 +1100,18 @@
     "seen_all_notifications": "Bạn đã đọc hết thông báo",
     "text_scheduled": "Scheduled Maintenance Downtime",
     "content_scheduled_maintenance_downtime": "Chúng tôi sẽ cải thiện nền tảng để nâng cao trải nghiệm của bạn. Trong quá trình bảo trì, các tính năng có thể không khả dụng hoặc bị hạn chế.\n \nThời gian bảo trì bắt đầu lúc **(startAt)** trong khoảng **(duration)**.\n \nChúng tôi xin lỗi vì bất kỳ sự bất tiện nào và đánh giá cao sự hỗ trợ liên tục của bạn.",
-    "text_bic_team": "BIC team"
+    "text_bic_team": "BIC team",
+    "text_remove_notification": "Xóa thông báo này",
+    "text_remove_notification_success": "Đã xóa thông báo thành công",
+    "notification_settings": {
+      "title": "Cài đặt thông báo",
+      "description": "Chúng tôi vẫn có thể gửi cho bạn thông báo quan trọng về tài khoản của bạn ngoài cài đặt của bạn",
+      "error_title": "Xin lỗi, chúng tôi không thể lấy dữ liệu ở đây",
+      "error_description": "Xin vui lòng làm mới trang hoặc thử lại lần sau",
+      "allow_notifications": "Cho phép thông báo",
+      "in_app_text": "Trong ứng dụng",
+      "push_text": "Ngoài ứng dụng"
+    }
   },
   "new_feature": {
     "title": "New feature",
@@ -1440,7 +1452,8 @@
       "total_badges": "((total) huy hiệu)",
       "search_placeholder": "Tìm huy hiệu theo tên"
     },
-    "edit_showing_badges_title": "Chỉnh sửa huy hiệu đang hiển thị"
+    "edit_showing_badges_title": "Chỉnh sửa huy hiệu đang hiển thị",
+    "badge_tooltip_placeholder": "Nhấn vào đây để thêm huy hiệu"
   },
   "previewJoinableGroup": {
     "title": "Tham gia tất cả các nhóm bên ngoài?",

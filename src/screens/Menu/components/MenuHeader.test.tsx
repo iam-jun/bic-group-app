@@ -5,6 +5,7 @@ import MenuHeader from './MenuHeader';
 import * as navigationHook from '~/hooks/navigation';
 import useCommonController from '~/screens/store';
 import mainStack from '~/router/navigator/MainStack/stack';
+import { mockBadgeList } from '~/test/mock_data/userProfile';
 
 describe('MenuHeader component', () => {
   const fakeDataUserProfile = {
@@ -90,5 +91,24 @@ describe('MenuHeader component', () => {
     fireEvent.press(itemComponent);
     expect(navigate).toHaveBeenCalledWith(mainStack.userProfile,
       { userId: fakeDataUserProfile.id, targetIndex: 0 });
+  });
+
+  it('should navigate to user profile screen when click badge edit button', () => {
+    const newUserProfile = { ...fakeDataUserProfile, showingBadges: [...mockBadgeList, undefined] };
+    useCommonController.setState((state) => {
+      state.myProfile = newUserProfile as any;
+      return state;
+    });
+
+    const navigate = jest.fn();
+    const rootNavigation = { navigate };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
+
+    const rendered = render(<MenuHeader />);
+    const editBadgeButton = rendered.queryAllByTestId('user_badge_item.empty');
+    expect(editBadgeButton.length).toEqual(1);
+    fireEvent.press(editBadgeButton[0]);
+    expect(navigate).toHaveBeenCalledWith(mainStack.userProfile,
+      { userId: fakeDataUserProfile.id, targetIndex: 1 });
   });
 });

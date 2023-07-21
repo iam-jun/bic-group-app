@@ -65,7 +65,7 @@
 
                 <data
                     android:scheme="https"
-                    android:host="${selfHost}" />
+                    android:host="www.${selfHost}" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -75,7 +75,7 @@
 
                 <data
                     android:scheme="https"
-                    android:host="${selfHost}" />
+                    android:host="www.${selfHost}" />
             </intent-filter>
         </activity>
         <provider

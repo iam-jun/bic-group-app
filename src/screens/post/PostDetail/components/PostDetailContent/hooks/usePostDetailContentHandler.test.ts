@@ -1,27 +1,20 @@
 import { renderHook } from '@testing-library/react-native';
 import { act } from 'react-test-renderer';
 import React from 'react';
-import initialState from '~/storeRedux/initialState';
-import { POST_DETAIL } from '~/test/mock_data/post';
-import { createTestStore, getHookReduxWrapper } from '~/test/testUtils';
 import usePostDetailContentHandler from './usePostDetailContentHandler';
 import * as navigationHook from '~/hooks/navigation';
+import usePostsStore from '~/store/entities/posts';
 
 describe('usePostDetailContentHandler', () => {
   const props = {
-    postId: POST_DETAIL.id,
-    comments: 'test',
-    sectionData: [
-      {
-        comment: {
-          id: 'test',
-        },
-      },
-    ],
-    focusComment: 'test',
+    postId: 'test',
+    comments: [{ id: 'test' }],
+    commentId: 'test',
+    focusComment: true,
     listRef: {
       current: {
-        scrollToLocation: jest.fn(),
+        scrollToIndex: jest.fn(),
+        scrollToEnd: jest.fn(),
       },
     },
     commentInputRef: {
@@ -36,27 +29,24 @@ describe('usePostDetailContentHandler', () => {
     const rootNavigation = { navigate };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
-    const scrollToLocation = jest.fn();
-    const current = { scrollToLocation };
+    const current = false;
     jest.spyOn(React, 'useRef').mockImplementation(() => ({ current } as any));
 
-    const stateData = { ...initialState };
-    // stateData.post.scrollToLatestItem = { parentCommentId: 'test' };
-    const store = createTestStore(stateData);
-    const wrapper = getHookReduxWrapper(store);
-    const { result } = renderHook(() => usePostDetailContentHandler(props), { wrapper });
+    usePostsStore.setState((state) => {
+      state.scrollToLatestItem = true;
+      return state;
+    });
+
+    const { result } = renderHook(() => usePostDetailContentHandler(props));
     act(() => {
       result.current.onPressLoadMoreCommentLevel2({});
       result.current.onPressReplySectionHeader({});
-      result.current.onPressReplyCommentItem({}, {});
       expect(navigate).toBeCalled();
 
       result.current.onPressComment();
       result.current.onScroll();
-      result.current.onScrollToIndexFailed();
-      result.current.onLayout();
+      result.current.onScrollToIndexFailed('error');
       expect(props.commentInputRef.current.focus).toBeCalled();
-      expect(props.listRef.current.scrollToLocation).toBeCalled();
     });
   });
 });

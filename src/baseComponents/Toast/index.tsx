@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Platform, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -12,23 +12,9 @@ const Toast = () => {
     duration, buttonText, onButtonPress, onClose, ...props
   } = useModalStore((state) => state.toast) || {};
   const { clearToast } = useModalStore((state) => state.actions);
-  const durationInSeconds = duration / 1000;
-  const [countDown, setCountDown] = useState(durationInSeconds);
   const { height: keyboardHeight } = useKeyboardStatus();
 
   const styles = createStyle(keyboardHeight);
-
-  useEffect(() => {
-    setCountDown(durationInSeconds);
-
-    const interval = setInterval(() => {
-      setCountDown((countDown) => countDown - 1);
-    }, 1000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [duration]);
 
   const hideToast = () => clearToast();
 
@@ -42,18 +28,10 @@ const Toast = () => {
     hideToast();
   };
 
-  let newButtonText: string;
-  if (buttonText) {
-    newButtonText = buttonText;
-    if (duration && countDown) {
-      newButtonText = `${buttonText} (${countDown}s)`;
-    }
-  }
-
   return (
     <BaseToast
       style={styles.toast}
-      buttonText={newButtonText}
+      buttonText={buttonText}
       onButtonPress={_onButtonPress}
       onClose={_onClose}
       {...props}

@@ -72,7 +72,12 @@ const BadgeCollection = ({ showSearchBox }: Props) => {
 
   const renderEmptyComponent = () => {
     if (loadingSearch) {
-      return <LoadingIndicator style={{ margin: spacing.margin.small }} />;
+      return (
+        <LoadingIndicator
+          testID="badge_collection.loading_search"
+          style={{ margin: spacing.margin.small }}
+        />
+      );
     }
     if (!loadingSearch && dataSearch.length === 0) return <NoSearchResultsFound />;
     return (
@@ -94,7 +99,7 @@ const BadgeCollection = ({ showSearchBox }: Props) => {
   };
 
   const renderItem = ({ item: sectionItem }: any) => (
-    <View>
+    <View testID="badge_collection.list_badge.item">
       <Text.SubtitleM
         style={styles.header}
         color={colors.neutral40}
@@ -117,11 +122,12 @@ const BadgeCollection = ({ showSearchBox }: Props) => {
   );
 
   return (
-    <View style={styles.container}>
+    <View testID="badge_collection.view" style={styles.container}>
       <BadgeCollectionHeader isShowEditButton={showSearchBox} />
       {Boolean(showSearchBox)
        && (
        <SearchInput
+         testID="badge_collection.search_input"
          style={styles.textInput}
          autoComplete="off"
          placeholder={t('user:owned_badges:search_placeholder')}
@@ -133,6 +139,7 @@ const BadgeCollection = ({ showSearchBox }: Props) => {
        )}
       <ViewSpacing height={spacing.margin.large} />
       <FlatList
+        testID="badge_collection.list_badge"
         data={dataSearch}
         nestedScrollEnabled
         keyExtractor={(item) => item?.id}

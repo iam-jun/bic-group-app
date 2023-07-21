@@ -2,7 +2,7 @@ import React, {
   FC, memo, useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
 import {
-  RefreshControl, SectionList, StyleSheet, View,
+  RefreshControl, FlatList, StyleSheet, View,
 } from 'react-native';
 
 import { ExtendedTheme, useTheme, useIsFocused } from '@react-navigation/native';
@@ -23,16 +23,17 @@ import usePostsStore, { IPostsState } from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import spacing from '~/theme/spacing';
 import usePostDetailContentHandler from '~/screens/post/PostDetail/components/PostDetailContent/hooks/usePostDetailContentHandler';
-import { getSectionData } from '~/helpers/post';
 import { useRootNavigation } from '~/hooks/navigation';
 import ContentUnavailable from '~/components/ContentUnavailable';
 import BannerReport from '~/components/Report/BannerReport';
 import APIErrorCode from '~/constants/apiErrorCode';
 import ContentNoPermission from '~/components/ContentNoPermission';
+import LoadMoreComment from '~/components/LoadMoreComment';
 
 const _ArticleDetail: FC<IRouteParams> = (props) => {
   const { params } = props.route;
-  const id = params?.articleId;
+  const { articleId: id, commentId } = params || {};
+
   const focusComment = params?.focusComment;
   const isFocused = useIsFocused();
   const { rootNavigation, goHome } = useRootNavigation();
@@ -47,10 +48,14 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const [refreshing, setRefreshing] = useState(false);
   const data = usePostsStore(useCallback(postsSelector.getPost(id, {}), [id]));
   const commentEndCursor = usePostsStore(useCallback(postsSelector.getCommentEndCursor(id), [id]));
+  const commentStartCursor = usePostsStore(useCallback(postsSelector.getCommentStartCursor(id), [id]));
+  const commentHasPreviousPage = usePostsStore(useCallback(postsSelector.getCommentHasPreviousPage(id), [id]));
   const errorContent = usePostsStore(useCallback(postsSelector.getErrorContent(id), [id]));
 
+  const { reset: resetCommentsStore } = useCommentsStore((state) => state);
+  const { clearComments } = usePostsStore((state: IPostsState) => state.actions);
+
   const comments = useCommentsStore(useCallback(commentsSelector.getCommentsByParentId(id), [id]));
-  const sectionData = useMemo(() => getSectionData(comments), [comments]);
 
   const { actions } = useArticlesStore((state: IArticlesState) => state);
   const { putMarkSeenPost } = usePostsStore((state: IPostsState) => state.actions);
@@ -61,13 +66,12 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   } = data || {};
 
   const {
-    onLayout,
+    onPressComment,
     onScrollToIndexFailed,
     onPressReplySectionHeader,
     onPressLoadMoreCommentLevel2,
-    // onPressReplyCommentItem,
   } = usePostDetailContentHandler({
-    postId: id, comments, sectionData, focusComment, listRef, commentInputRef,
+    postId: id, comments, focusComment, listRef, commentInputRef, commentId,
   });
 
   const groupIds = useMemo(() => {
@@ -97,6 +101,11 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     }
   }, [deleted, isFocused]);
 
+  useEffect(() => () => {
+    resetCommentsStore();
+    clearComments(id);
+  }, []);
+
   const onRefresh = () => {
     setRefreshing(false);
     actions.getArticleDetail({ articleId: id });
@@ -106,39 +115,18 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     putMarkSeenPost({ postId: id });
   }, [id]);
 
-  // const renderCommentItem = (data: any) => (
-  //   <CommentItem
-  //     postId={id}
-  //     index={data?.index}
-  //     section={data?.section}
-  //     isReplyingComment={false}
-  //     commentData={data?.item}
-  //     groupIds={data?.groupIds}
-  //     audience={audience}
-  //     commentParent={data?.section?.comment}
-  //     onPressReply={onPressReplyCommentItem}
-  //     onPressMarkSeenPost={onPressMarkSeenPost}
-  //   />
-  // );
-
-  const renderSeparator = () => <View />;
-
-  const renderSectionHeader = (sectionData: any) => {
-    const data = sectionData?.section;
-
-    if (sectionData?.section?.type === 'empty') {
-      return <View />;
-    }
+  const renderSectionHeader = (comment: any) => {
+    const { item, index } = comment || {};
 
     return (
       <CommentItem
         postId={id}
-        index={data?.index}
+        index={index}
         groupIds={groupIds}
         audience={audience}
         isReplyingComment={false}
         showLoadMore={false}
-        commentData={data?.comment}
+        commentData={item}
         onPressReply={onPressReplySectionHeader}
         onPressLoadMore={onPressLoadMoreCommentLevel2}
         onPressMarkSeenPost={onPressMarkSeenPost}
@@ -146,15 +134,13 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     );
   };
 
+  const viewMore = commentHasPreviousPage;
   const renderFooter = () => {
-    if (
-      !setting?.canComment
-      || sectionData.length === 0
-      || sectionData[0].type === 'empty'
-    ) {
+    if (!setting?.canComment || comments?.length === 0) {
       return <View style={styles.footer} />;
+    } if (viewMore) {
+      return <LoadMoreComment title="post:text_load_more_replies" postId={id} startCursor={commentStartCursor} />;
     }
-
     return null;
   };
 
@@ -173,6 +159,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
       id={id}
       article={data}
       endCursor={commentEndCursor}
+      onPressComment={onPressComment}
     />
   );
 
@@ -181,6 +168,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
       testID="article_detail.refresh_control"
       refreshing={refreshing}
       onRefresh={onRefresh}
+      tintColor={theme.colors.gray40}
     />
   );
 
@@ -192,7 +180,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
         commentInputRef={commentInputRef}
         postId={id}
         groupIds={groupIds}
-        autoFocus={!!focusComment}
+        viewMore={viewMore}
       />
     );
   };
@@ -213,6 +201,8 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     return <ContentUnavailable />;
   }
 
+  const keyExtractor = (item: any) => `article_comment_${item?.id || ''}`;
+
   return (
     <ScreenWrapper
       testID="article_detail"
@@ -222,21 +212,17 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
       <Header />
       <BannerReport postId={id} />
       <View style={styles.contentContainer}>
-        <SectionList
+        <FlatList
           ref={listRef}
-          sections={sectionData}
-          stickySectionHeadersEnabled={false}
-          keyboardShouldPersistTaps="handled"
-          refreshControl={RefrestControl}
+          data={comments}
+          renderItem={renderSectionHeader}
           ListHeaderComponent={ListHeaderComponent}
-          onLayout={onLayout}
-          onContentSizeChange={onLayout}
-          // renderItem={renderCommentItem}
-          renderItem={() => <View />}
           ListFooterComponent={renderFooter}
-          renderSectionHeader={renderSectionHeader}
-          ItemSeparatorComponent={renderSeparator}
+          keyboardShouldPersistTaps="handled"
+          keyExtractor={keyExtractor}
           onScrollToIndexFailed={onScrollToIndexFailed}
+          scrollEventThrottle={16}
+          refreshControl={RefrestControl}
         />
       </View>
       {renderCommentInput()}

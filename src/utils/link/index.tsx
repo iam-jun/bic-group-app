@@ -26,6 +26,7 @@ export enum DeepLinkTypes {
   REFERRAL = 'referral',
   USER_PROFILE = 'user_profile',
   APP = 'APP',
+  DISCOVER_COMMUNITIES = 'discover-communities',
 }
 
 export enum LinkGeneratorTypes {
@@ -217,6 +218,14 @@ export const matchDeepLink = (url: string) => {
   ).exec(deepLinkUrl);
   if (match) {
     return { type: DeepLinkTypes.COMMUNTY_DETAIL, communityId: match[1] };
+  }
+
+  // bicdev:///communities/discover
+  match = new RegExp(
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?communities\\/?discover$`,
+  ).exec(deepLinkUrl);
+  if (match) {
+    return { type: DeepLinkTypes.DISCOVER_COMMUNITIES };
   }
 
   // bic:///communities/ba6016d4-168f-44de-aca9-4a51055e6201/groups/5578fb11-de70-49e3-9c01-27e26f5b42d8

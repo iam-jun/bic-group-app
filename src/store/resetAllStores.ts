@@ -67,6 +67,7 @@ import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftC
 import usePublishStore from '~/screens/YourContent/components/Publish/store';
 import useUserBadge from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
 import usePreviewJoinableGroupStore from '~/components/PreviewJoinableGroup/store';
+import useNotiSettingsStore from '~/screens/Notification/NotiSettings/store';
 
 export const excludedStore = [
   useAuthController,
@@ -151,6 +152,7 @@ const stores = [
   usePublishStore,
   useUserBadge,
   usePreviewJoinableGroupStore,
+  useNotiSettingsStore,
 ];
 
 export const resetAllStores = () => {

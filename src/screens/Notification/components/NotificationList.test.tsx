@@ -14,6 +14,7 @@ describe('NotificationList component', () => {
   it('should render empty screen if get notifications successfully with no data', () => {
     const onItemPress = jest.fn();
     const onPressItemOption = jest.fn();
+    const onRefresh = jest.fn();
     const response = {
       code: 200,
       results: [],
@@ -28,6 +29,7 @@ describe('NotificationList component', () => {
       activeIndex
       type={notificationMenuData[0].type}
       keyValue={notificationMenuData[0].key}
+      onRefresh={onRefresh}
       onPressItemOption={onPressItemOption}
       onItemPress={onItemPress}
     />);
@@ -45,6 +47,7 @@ describe('NotificationList component', () => {
   it('should render loading screen if loading when call api get notifications', () => {
     const onItemPress = jest.fn();
     const onPressItemOption = jest.fn();
+    const onRefresh = jest.fn();
 
     act(() => {
       useNotificationStore.setState((state) => {
@@ -60,6 +63,7 @@ describe('NotificationList component', () => {
       keyValue={notificationMenuData[0].key}
       onPressItemOption={onPressItemOption}
       onItemPress={onItemPress}
+      onRefresh={onRefresh}
     />);
 
     act(() => {
@@ -73,6 +77,8 @@ describe('NotificationList component', () => {
   it('should render list notification if get notifications successfully ', () => {
     const onItemPress = jest.fn();
     const onPressItemOption = jest.fn();
+    const onRefresh = jest.fn();
+
     const response = {
       code: 200,
       results: mockNotifications,
@@ -89,6 +95,7 @@ describe('NotificationList component', () => {
       keyValue={notificationMenuData[0].key}
       onPressItemOption={onPressItemOption}
       onItemPress={onItemPress}
+      onRefresh={onRefresh}
     />);
 
     act(() => {

@@ -118,6 +118,7 @@ const CreateArticle: FC<CreateArticleProps> = ({
   const articleData = useCreateArticleStore((state) => state.data);
   const actions = useCreateArticleStore((state) => state.actions);
   const isDraft = useCreateArticleStore((state) => state.isDraft);
+  const isSchedule = useCreateArticleStore((state) => state.isSchedule);
   const draftActions = useDraftArticleStore((state) => state.actions);
   const articleActions = useArticlesStore(
     (state: IArticlesState) => state.actions,
@@ -173,7 +174,7 @@ const CreateArticle: FC<CreateArticleProps> = ({
   };
 
   const renderBtnSchedule = () => {
-    if (isDraft) return (<Schedule articleId={articleId} />);
+    if (isDraft || isSchedule) return (<Schedule articleId={articleId} />);
 
     return null;
   };

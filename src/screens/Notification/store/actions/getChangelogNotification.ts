@@ -17,6 +17,10 @@ const getChangelogNotification = (set, _get) => async (notificationId: string) =
         state.changelogsInfo = activity.changelogsInfo || {};
         state.changelogsInfoLoading = false;
       }, 'getChangelogNotificationSuccess');
+    } else {
+      set((state: INotificationsState) => {
+        state.changelogsInfoLoading = false;
+      }, 'getChangelogNotificationSuccessButEmptActivity');
     }
   } catch (err) {
     console.error(
