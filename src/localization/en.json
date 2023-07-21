@@ -349,6 +349,7 @@
     "text_err_email_exist": "This email already exists. Please try another.",
     "text_agree_to_our": "Agree to our ",
     "text_privacy_terms": "Privacy & Terms",
+    "text_agree_to_terms_sigin": "By signing in to BIC Group, you agree to",
     "text_you_have_an_account": "You have an account? ",
     "text_sign_in_now": "Sign In now",
     "title_sign_up_success_modal": "Your account has been created successfully",

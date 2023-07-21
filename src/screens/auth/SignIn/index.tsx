@@ -43,6 +43,8 @@ import { authErrorMessage, authErrors } from '~/constants/authConstants';
 import { useBaseHook } from '~/hooks';
 import useModalStore from '~/store/modal';
 import { FieldNameType } from '~/interfaces/IAuth';
+import { POLICY_URL } from '~/constants/url';
+import { openInAppBrowser } from '~/utils/link';
 
 const { EMAIL, PASSWORD } = FieldNameType;
 
@@ -236,6 +238,10 @@ const SignIn = () => {
 
   const goToForgotPassword = () => rootNavigation.navigate(authStacks.forgotPassword);
 
+  const onPrivacy = () => {
+    openInAppBrowser(POLICY_URL);
+  };
+
   const optionsStyle = useAnimatedStyle(() => ({
     opacity: withTiming(
       loading ? 1 : 0, { duration: 500 },
@@ -317,6 +323,16 @@ const SignIn = () => {
     </Button.Primary>
   );
 
+  const renderPrivacy = () => (
+    <View style={styles.privacyContainer}>
+      <Text.BodyMMedium color={colors.neutral30} useI18n style={styles.privacyText}>
+        auth:text_agree_to_terms_sigin
+      </Text.BodyMMedium>
+      <Text.BodyMMedium onPress={onPrivacy} color={colors.neutral30} useI18n>
+        auth:text_privacy_terms
+      </Text.BodyMMedium>
+    </View>
+  );
   const renderLoading = () => {
     if (!loading) return null;
     return (
@@ -348,6 +364,7 @@ const SignIn = () => {
             {renderInputPassword()}
             {renderForgotPassword()}
             {renderButtonSignIn()}
+            {renderPrivacy()}
           </View>
         </TouchableWithoutFeedback>
       </ScrollView>
@@ -404,6 +421,14 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     forgotPassword: {
       marginTop: spacing.margin.base,
+    },
+    privacyContainer: {
+      alignItems: 'center',
+      marginTop: spacing.margin.extraLarge,
+      flex: 1,
+    },
+    privacyText: {
+      fontWeight: '400',
     },
   });
 };
