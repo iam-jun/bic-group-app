@@ -20,7 +20,7 @@ const WorkInfo = ({ style, latestWork }: Props) => {
   return (
     <View style={[styles.container, style]} testID="work_info">
       <Text.BodySMedium maxLength={MAX_LENGTH} style={styles.text}>
-        { latestWork?.company}
+        {latestWork?.company}
       </Text.BodySMedium>
       <Text.BodySMedium maxLength={MAX_LENGTH} style={styles.text}>
         {latestWork?.titlePosition}
