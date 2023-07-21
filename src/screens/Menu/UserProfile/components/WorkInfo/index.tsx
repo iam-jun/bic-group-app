@@ -17,9 +17,11 @@ const WorkInfo = ({ style, latestWork }: Props) => {
 
   return (
     <View style={[styles.container, style]} testID="work_info">
-      <Text.BodySMedium style={{ textAlign: 'center' }}>
-        {`${latestWork?.titlePosition} `}
-        <Text.BodySMedium>{` • ${latestWork?.company}`}</Text.BodySMedium>
+      <Text.BodySMedium maxLength={45} style={styles.text}>
+        { latestWork?.company}
+      </Text.BodySMedium>
+      <Text.BodySMedium maxLength={45} style={styles.text}>
+        {latestWork?.titlePosition}
       </Text.BodySMedium>
     </View>
   );
@@ -29,6 +31,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
   },
+  text: { textAlign: 'center' },
 });
 
 export default WorkInfo;
