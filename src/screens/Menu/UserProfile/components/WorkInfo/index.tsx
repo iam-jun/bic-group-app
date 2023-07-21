@@ -4,6 +4,8 @@ import {
 import React from 'react';
 import Text from '~/baseComponents/Text';
 
+const MAX_LENGTH = 45;
+
 interface Props {
   style?: StyleProp<ViewStyle>;
   latestWork?: {
@@ -17,10 +19,10 @@ const WorkInfo = ({ style, latestWork }: Props) => {
 
   return (
     <View style={[styles.container, style]} testID="work_info">
-      <Text.BodySMedium maxLength={45} style={styles.text}>
+      <Text.BodySMedium maxLength={MAX_LENGTH} style={styles.text}>
         { latestWork?.company}
       </Text.BodySMedium>
-      <Text.BodySMedium maxLength={45} style={styles.text}>
+      <Text.BodySMedium maxLength={MAX_LENGTH} style={styles.text}>
         {latestWork?.titlePosition}
       </Text.BodySMedium>
     </View>
