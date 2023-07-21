@@ -1,5 +1,5 @@
-import React from 'react';
-import { ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { RefreshControl, ScrollView } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Header from '~/beinComponents/Header';
@@ -10,6 +10,9 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import AboutContent from '~/screens/communities/CommunityDetail/components/AboutContent';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
+import useTermStore from '~/components/TermsModal/store';
+import useGroupDetailStore from '../GroupDetail/store';
+import { ITypeGroup } from '~/interfaces/common';
 
 const GroupAbout = () => {
   const { rootNavigation } = useRootNavigation();
@@ -24,11 +27,37 @@ const GroupAbout = () => {
     rootNavigation.navigate(groupStack.groupMembers, { groupId: id, isMember });
   };
 
+  const [isRefresh, setIsRefresh] = useState(false);
+
+  const {
+    actions: { getTermsData },
+  } = useTermStore((state) => state);
+  const {
+    actions: { getGroupDetail },
+  } = useGroupDetailStore((state) => state);
+
+  const getData = async () => {
+    await Promise.all([getTermsData(id), getGroupDetail({ groupId: id })]);
+  };
+
+  const onRefresh = async () => {
+    setIsRefresh(true);
+    await getData();
+    setIsRefresh(false);
+  };
+
   return (
     <ScreenWrapper backgroundColor={theme.colors.gray5} isFullView>
       <Header title={`${t('settings:title_about')} ${name}`} />
-      <ScrollView>
-        <AboutContent profileInfo={groupInfo} onPressMember={onPressTotalMember} />
+      <ScrollView
+        refreshControl={<RefreshControl refreshing={isRefresh} onRefresh={onRefresh} tintColor={theme.colors.gray40} />}
+      >
+        <AboutContent
+          typeGroup={ITypeGroup.GROUP}
+          profileInfo={groupInfo}
+          groupId={id}
+          onPressMember={onPressTotalMember}
+        />
       </ScrollView>
     </ScreenWrapper>
   );

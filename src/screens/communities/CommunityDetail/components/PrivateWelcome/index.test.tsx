@@ -56,7 +56,7 @@ describe('PrivateWelcome component', () => {
       />,
       store,
     );
-    const component = wrapper.getByTestId('about_content');
+    const component = wrapper.queryByTestId('about_content_private');
     expect(component).toBeDefined();
   });
 });

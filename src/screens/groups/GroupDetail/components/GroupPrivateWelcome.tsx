@@ -53,7 +53,7 @@ const GroupPrivateWelcome = ({
         <GroupJoinCancelButton community={community} />
       </View>
 
-      <AboutContent profileInfo={infoDetail as any} showPrivate />
+      <AboutContent profileInfo={infoDetail as any} showPrivate groupId={groupId} />
     </Animated.ScrollView>
   );
 };

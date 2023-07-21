@@ -51,6 +51,7 @@ import usePinContentStore from '~/components/PinContent/store';
 import TermsView from '~/components/TermsModal';
 import MemberQuestionsModal from '~/components/MemberQuestionsModal';
 import FloatingCreatePost from '~/screens/Home/components/FloatingCreatePost';
+import useTermStore from '~/components/TermsModal/store';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -100,6 +101,7 @@ const CommunityDetail = (props: any) => {
 
   const actionsFeedSearch = useFeedSearchStore((state) => state.actions);
   const actionPinContent = usePinContentStore((state) => state.actions);
+  const actionTerms = useTermStore((state) => state.actions);
 
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
 
@@ -194,6 +196,7 @@ const CommunityDetail = (props: any) => {
       timelineActions.getPosts(groupId, true);
     }
     actionPinContent.getPinContentsGroup(groupId);
+    actionTerms.getTermsData(groupId);
     getCommunityDetail();
   }, [groupId, contentFilter, attributeFilter]);
 
