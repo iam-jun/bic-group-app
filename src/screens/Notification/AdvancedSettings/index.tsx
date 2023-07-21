@@ -1,12 +1,11 @@
 import React, {
-  useCallback, useEffect, useRef,
+  useCallback, useEffect, useState,
 } from 'react';
 import {
   ActivityIndicator, FlatList, StyleSheet, View,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import { Modalize } from 'react-native-modalize';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -21,12 +20,12 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { sizes } from '~/theme/dimension';
 import useYourCommunitiesStore from '~/screens/communities/Communities/components/YourCommunities/store';
 import useAdvancedNotiSettingsStore from './store';
-import SearchCoummunityContent from '../components/SearchCoummunityContent';
 import AdvancedSettingItem from '../components/AdvancedSettingItem';
 import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 import AdvancedSettingHeader from '../components/AdvancedSettingHeader';
-import SearchGroupBottomSheet from '../components/SearchGroupBottomSheet';
 import useSearchJoinedCommunitiesStore from '~/screens/communities/Communities/components/SearchCommunity/store';
+import SearchCommunityView from './components/SearchCommunityView';
+import SearchGroupView from './components/SearchGroupView';
 
 const AdvancedSettings = () => {
   const theme: ExtendedTheme = useTheme();
@@ -34,8 +33,9 @@ const AdvancedSettings = () => {
   const styles = createStyle(theme);
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
-  const modalizeRef = useRef<Modalize>(null);
-  const groupSearchRef = useRef<Modalize>(null);
+
+  const [isOpenSearchCommunity, setIsOpenSearchCommunity] = useState(false);
+  const [isOpenSearchGroups, setIsOpenSearchGroups] = useState(false);
 
   const { ids, actions, items } = useYourCommunitiesStore();
   const advancedSettingsActions = useAdvancedNotiSettingsStore((state) => state.actions);
@@ -47,7 +47,7 @@ const AdvancedSettings = () => {
     useCallback((state) => state.communityData?.[selectedCommunity?.id] || {}, [selectedCommunity?.id]),
   );
   const hasNextPage = useAdvancedNotiSettingsStore((state) => state.hasNextPage);
-  const { reset } = useSearchJoinedCommunitiesStore();
+  const { actions: joinedActions } = useSearchJoinedCommunitiesStore();
   const { reset: resetAdvancedSettings } = useAdvancedNotiSettingsStore();
 
   useEffect(
@@ -70,8 +70,9 @@ const AdvancedSettings = () => {
 
   useEffect(() => {
     if (selectedCommunity?.id) {
-      advancedSettingsActions.getCommunitySettings(selectedCommunity.id);
-      advancedSettingsActions.getJoinedGroupFlat(selectedCommunity.id, true);
+      const comID = selectedCommunity?.communityId || selectedCommunity?.id;
+      advancedSettingsActions.getCommunitySettings(comID);
+      advancedSettingsActions.getJoinedGroupFlat(comID, true);
     }
   }, [selectedCommunity?.id]);
 
@@ -93,8 +94,8 @@ const AdvancedSettings = () => {
   };
 
   const onPressCommuntiyItem = (item: any) => {
+    setIsOpenSearchCommunity(false);
     advancedSettingsActions.setSelectedCommunity(item);
-    modalizeRef.current?.close?.();
   };
 
   const onPressItem = (item: any) => {
@@ -105,17 +106,25 @@ const AdvancedSettings = () => {
         communityId: selectedCommunity.id,
       });
     }
-    groupSearchRef.current?.close?.();
+    setIsOpenSearchCommunity(false);
   };
 
-  const onOpenBottomSheet = () => {
-    reset();
-    modalizeRef.current?.open?.();
+  const onOpenSearchCommunity = () => {
+    joinedActions.searchJoinedCommunities({ key: '' }, true);
+    setIsOpenSearchCommunity(true);
+  };
+
+  const onCloseSearchCommunity = () => {
+    setIsOpenSearchCommunity(false);
+  };
+
+  const onCloseSearchGrops = () => {
+    setIsOpenSearchGroups(false);
   };
 
   const onOpenGroupSearch = () => {
-    advancedSettingsActions.clearSearchGroup();
-    groupSearchRef.current?.open?.();
+    advancedSettingsActions.searchJoinedGroupFlat({ key: '' });
+    setIsOpenSearchGroups(true);
   };
 
   const renderEmpty = () => (
@@ -164,7 +173,7 @@ const AdvancedSettings = () => {
     <AdvancedSettingHeader
       onPressSearch={onOpenGroupSearch}
       onChangeToggle={onChangeToggle}
-      onPressToShowBottomSheet={onOpenBottomSheet}
+      onPressToShowBottomSheet={onOpenSearchCommunity}
     />
   );
 
@@ -221,12 +230,14 @@ const AdvancedSettings = () => {
             />
           )
         )}
-      <SearchCoummunityContent
-        modalizeRef={modalizeRef}
+      <SearchCommunityView
+        isOpen={isOpenSearchCommunity}
+        onClose={onCloseSearchCommunity}
         onPressItem={onPressCommuntiyItem}
       />
-      <SearchGroupBottomSheet
-        modalizeRef={groupSearchRef}
+      <SearchGroupView
+        isOpen={isOpenSearchGroups}
+        onClose={onCloseSearchGrops}
         onPressItem={onPressItem}
       />
     </ScreenWrapper>
