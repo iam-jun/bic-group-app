@@ -77,7 +77,7 @@ const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
 
   useLayoutEffect(() => {
     // clear quiz for refetching quiz
-    actionsQuizzesStore.removeQuiz(id);
+    actionsQuizzesStore.removeQuizLocal(id);
   }, []);
 
   useEffect(() => {

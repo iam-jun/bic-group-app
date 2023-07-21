@@ -589,6 +589,11 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}quizzes/${idQuiz}`,
   }),
+  deleteQuiz: (idQuiz: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${idQuiz}`,
+    method: 'delete',
+  }),
 };
 
 const streamApi = {
@@ -885,6 +890,9 @@ const streamApi = {
   ),
   getQuizDetail: (idQuiz: string) => withHttpRequestPromise(
     streamApiConfig.getQuizDetail, idQuiz,
+  ),
+  deleteQuiz: (idQuiz: string) => withHttpRequestPromise(
+    streamApiConfig.deleteQuiz, idQuiz,
   ),
 };
 

@@ -22,12 +22,14 @@ import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
+import useQuizzesStore from '~/store/entities/quizzes';
 
 const useArticleMenu = (data: IPost, isActor: boolean) => {
   const { rootNavigation } = useRootNavigation();
 
   const commonActions = useCommonController((state) => state.actions);
   const modalActions = useModalStore((state) => state.actions);
+  const actionsQuizzesStore = useQuizzesStore((state) => state.actions);
 
   const { getAudienceListWithNoPermission } = useMyPermissionsStore(
     (state) => state.actions,
@@ -159,6 +161,26 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
     // rootNavigation?.navigate?.(quizStack.entryQuiz, { postId: articleId });
   };
 
+  const onPressEditQuiz = () => {
+    modalActions.hideBottomList();
+    // do something
+  };
+
+  const onPressDeleteQuiz = () => {
+    modalActions.hideBottomList();
+    modalActions.showAlert({
+      title: i18next.t('quiz:alert_delete:header'),
+      content: i18next.t('quiz:alert_delete:content'),
+      cancelBtn: true,
+      confirmLabel: i18next.t('common:btn_delete'),
+      ConfirmBtnComponent: Button.Danger,
+      confirmBtnProps: { type: 'ghost' },
+      onConfirm: () => {
+        actionsQuizzesStore.deleteQuiz(quiz?.id, articleId);
+      },
+    });
+  };
+
   const defaultData = [
     {
       id: 1,
@@ -231,14 +253,6 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
     },
     {
       id: 9,
-      testID: 'article_view_menu.delete',
-      leftIcon: 'TrashCan',
-      title: i18next.t('article:menu:delete'),
-      requireIsActor: true,
-      onPress: onDelete,
-    },
-    {
-      id: 10,
       testID: 'article_view_menu.report',
       leftIcon: 'Flag',
       title: i18next.t('common:btn_report_content'),
@@ -247,13 +261,42 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       onPress: onPressReport,
     },
     {
-      id: 11,
+      id: 10,
       testID: 'article_view_menu.report_this_member',
       leftIcon: 'UserXmark',
       title: i18next.t('groups:member_menu:label_report_member'),
       requireIsActor: false,
       notShowForActor: isActor,
       onPress: _onPressReportThisMember,
+    },
+    {
+      id: 11,
+      testID: 'article_view_menu.edit_quiz',
+      leftIcon: 'FilePen',
+      title: i18next.t('quiz:edit_quiz'),
+      requireIsActor: true,
+      shouldBeHidden: !quiz || audienceListCannotCRUDPostArticle.length > 0,
+      onPress: onPressEditQuiz,
+      isShowBorderTop: true,
+    },
+    {
+      id: 12,
+      testID: 'article_view_menu.delete_quiz',
+      leftIcon: 'TrashCan',
+      title: i18next.t('quiz:delete_quiz'),
+      requireIsActor: true,
+      shouldBeHidden: !quiz || audienceListCannotCRUDPostArticle.length > 0,
+      onPress: onPressDeleteQuiz,
+      isShowBorderBottom: true,
+    },
+    {
+      id: 13,
+      testID: 'article_view_menu.delete',
+      leftIcon: 'TrashCan',
+      title: i18next.t('article:menu:delete'),
+      requireIsActor: true,
+      onPress: onDelete,
+      isDanger: true,
     },
   ];
 

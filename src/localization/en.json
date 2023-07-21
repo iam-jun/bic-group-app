@@ -1573,6 +1573,12 @@
     "result_correct": "Correct Answer",
     "result_incorrect": "Incorrect Answer",
     "result_skip": "Skipped",
-    "enter_an_integer": "Please enter an integer"
+    "enter_an_integer": "Please enter an integer",
+    "edit_quiz": "Edit quiz",
+    "delete_quiz": "Delete quiz",
+    "alert_delete": {
+      "header": "Delete Quiz",
+      "content": "Are you sure you want to delete this quiz?"
+    }
   }
 }
