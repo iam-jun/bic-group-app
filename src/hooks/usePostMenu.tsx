@@ -23,6 +23,7 @@ import useModalStore from '~/store/modal';
 import usePostsStore, { IPostsState } from '~/store/entities/posts';
 import { onPressReportThisMember } from '~/helpers/blocking';
 import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
+import useQuizzesStore from '~/store/entities/quizzes';
 
 const usePostMenu = (
   data: IPost,
@@ -34,6 +35,8 @@ const usePostMenu = (
 
   const commonActions = useCommonController((state) => state.actions);
   const modalActions = useModalStore((state) => state.actions);
+  const actionsQuizzesStore = useQuizzesStore((state) => state.actions);
+
   const { deletePost } = usePostsStore((state: IPostsState) => state.actions);
 
   const { getAudienceListWithNoPermission } = useMyPermissionsStore(
@@ -168,6 +171,26 @@ const usePostMenu = (
     rootNavigation?.navigate?.(quizStack.entryQuiz, { postId });
   };
 
+  const onPressEditQuiz = () => {
+    modalActions.hideBottomList();
+    // do something
+  };
+
+  const onPressDeleteQuiz = () => {
+    modalActions.hideBottomList();
+    modalActions.showAlert({
+      title: i18next.t('quiz:alert_delete:header'),
+      content: i18next.t('quiz:alert_delete:content'),
+      cancelBtn: true,
+      confirmLabel: i18next.t('common:btn_delete'),
+      ConfirmBtnComponent: Button.Danger,
+      confirmBtnProps: { type: 'ghost' },
+      onConfirm: () => {
+        actionsQuizzesStore.deleteQuiz(quiz?.id, postId);
+      },
+    });
+  };
+
   const defaultData = [
     {
       id: 1,
@@ -240,14 +263,6 @@ const usePostMenu = (
     },
     {
       id: 9,
-      testID: 'post_view_menu.delete',
-      leftIcon: 'TrashCan',
-      title: i18next.t('post:post_menu_delete'),
-      requireIsActor: true,
-      onPress: onPressDelete,
-    },
-    {
-      id: 10,
       testID: 'post_view_menu.report',
       leftIcon: 'Flag',
       title: i18next.t('common:btn_report_content'),
@@ -256,13 +271,42 @@ const usePostMenu = (
       onPress: onPressReport,
     },
     {
-      id: 11,
+      id: 10,
       testID: 'post_view_menu.report_this_member',
       leftIcon: 'UserXmark',
       title: i18next.t('groups:member_menu:label_report_member'),
       requireIsActor: false,
       notShowForActor: isActor,
       onPress: _onPressReportThisMember,
+    },
+    {
+      id: 11,
+      testID: 'post_view_menu.edit_quiz',
+      leftIcon: 'FilePen',
+      title: i18next.t('quiz:edit_quiz'),
+      requireIsActor: true,
+      shouldBeHidden: !quiz || audienceListCannotCRUDPostArticle.length > 0,
+      onPress: onPressEditQuiz,
+      isShowBorderTop: true,
+    },
+    {
+      id: 12,
+      testID: 'post_view_menu.delete_quiz',
+      leftIcon: 'TrashCan',
+      title: i18next.t('quiz:delete_quiz'),
+      requireIsActor: true,
+      shouldBeHidden: !quiz || audienceListCannotCRUDPostArticle.length > 0,
+      onPress: onPressDeleteQuiz,
+      isShowBorderBottom: true,
+    },
+    {
+      id: 13,
+      testID: 'post_view_menu.delete',
+      leftIcon: 'TrashCan',
+      title: i18next.t('post:post_menu_delete'),
+      requireIsActor: true,
+      onPress: onPressDelete,
+      isDanger: true,
     },
   ];
 

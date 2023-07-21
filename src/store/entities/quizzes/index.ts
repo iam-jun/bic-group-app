@@ -11,6 +11,7 @@ import generateQuiz from './actions/generateQuiz';
 import regenerateQuiz from './actions/regenerateQuiz';
 import editQuiz from './actions/editQuiz';
 import getQuizDetail from './actions/getQuizDetail';
+import deleteQuiz from './actions/deleteQuiz';
 
 export interface IQuizzesState extends IBaseState {
   waitingProcessingQuiz: string | null;
@@ -28,7 +29,8 @@ export interface IQuizzesState extends IBaseState {
     editQuiz: (params: EditQuizActionsParams) => void;
     getQuizDetail: (params: GetQuizDetailParams) => void;
     addOrUpdateQuiz: (quiz: IQuiz) => void;
-    removeQuiz: (quizId: string) => void;
+    removeQuizLocal: (quizId: string) => void;
+    deleteQuiz: (quizId: string, contentId: string) => void;
   };
 }
 
@@ -63,11 +65,12 @@ const quizzesStore = (set, get): IQuizzesState => ({
         state.data[id] = quiz;
       }, 'addOrUpdateQuiz');
     },
-    removeQuiz: (quizId: string) => {
+    removeQuizLocal: (quizId: string) => {
       set((state: IQuizzesState) => {
         delete state.data[quizId];
-      }, 'removeQuiz');
+      }, 'removeQuizLocal');
     },
+    deleteQuiz: deleteQuiz(set, get),
   },
   reset: () => resetStore(initState, set),
 });
