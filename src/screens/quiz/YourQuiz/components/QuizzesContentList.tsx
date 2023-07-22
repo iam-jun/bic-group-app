@@ -10,7 +10,7 @@ import images from '~/resources/images';
 import { homeHeaderTabHeight, homeHeaderContentContainerHeight } from '~/theme/dimension';
 import { spacing } from '~/theme';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import ContentQuizItem from './ContentQuizItem';
+import ContentItem from '~/components/ContentItem';
 import useYourQuizStore from '../store';
 
 interface QuizzesContentListProps {
@@ -52,7 +52,7 @@ const QuizzesContentList: React.FC<QuizzesContentListProps> = ({ onScroll }) => 
     }
   };
 
-  const renderItem = ({ item }) => (<ContentQuizItem contentId={item} />);
+  const renderItem = ({ item }) => (<ContentItem id={item} shouldShowDraftQuiz />);
 
   const renderHeader = () => (
     <View style={styles.header}>
@@ -61,7 +61,7 @@ const QuizzesContentList: React.FC<QuizzesContentListProps> = ({ onScroll }) => 
   );
 
   const renderFooter = () => {
-    if (!loading) return <ViewSpacing height={spacing.padding.large} />;
+    if (!loading) return <ViewSpacing height={spacing.padding.big} />;
 
     return (
       <View style={styles.boxFooter}>

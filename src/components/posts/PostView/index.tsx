@@ -14,6 +14,7 @@ import {
   PostHeader,
   PostImportant,
 } from '../index';
+import DraftQuizFooter from '~/components/quiz/DraftQuizFooter';
 import spacing from '~/theme/spacing';
 import { ContentInterestedUserCount } from '~/components/ContentView';
 import appConfig from '~/configs/appConfig';
@@ -37,6 +38,7 @@ export interface PostViewProps {
   hasReactPermission?: boolean;
   pressNavigateToDetail?: boolean;
   shouldHideBannerImportant?: boolean;
+  shouldShowDraftQuiz?: boolean;
 
   onPress?: () => void;
   onPressHeader?: () => void;
@@ -55,6 +57,7 @@ const _PostView: FC<PostViewProps> = ({
   hasReactPermission = true,
   pressNavigateToDetail,
   shouldHideBannerImportant,
+  shouldShowDraftQuiz = false,
 
   onPress,
   onPressHeader,
@@ -127,7 +130,7 @@ const _PostView: FC<PostViewProps> = ({
           && dataRelatedContentsInSeriesStore.length > 0;
 
   const renderContent = () => {
-    if (isHidden) {
+    if (isHidden || shouldShowDraftQuiz) {
       return null;
     }
     return (
@@ -169,6 +172,14 @@ const _PostView: FC<PostViewProps> = ({
     );
   };
 
+  const renderDraftQuizFooter = () => {
+    if (!shouldShowDraftQuiz) return null;
+
+    return (
+      <DraftQuizFooter data={data} />
+    );
+  };
+
   return (
     <TouchableOpacity
       testID={testID}
@@ -199,6 +210,7 @@ const _PostView: FC<PostViewProps> = ({
           isPostDetail={isPostDetail}
           onPressMarkSeenPost={onPressMarkSeenPost}
           onPressTakeQuiz={onPressTakeQuiz}
+          shouldShowDraftQuiz={shouldShowDraftQuiz}
         />
         {!isLite && shouldShowInterested && !isHidden && (
           <ContentInterestedUserCount
@@ -207,6 +219,7 @@ const _PostView: FC<PostViewProps> = ({
           />
         )}
         {renderContent()}
+        {renderDraftQuizFooter()}
       </View>
     </TouchableOpacity>
   );

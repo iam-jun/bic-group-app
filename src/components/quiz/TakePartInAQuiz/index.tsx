@@ -7,17 +7,23 @@ import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Image from '~/components/Image';
 import { useBaseHook } from '~/hooks';
-import { QuizPost } from '~/interfaces/IQuiz';
+import { QuizPost, QuizStatus } from '~/interfaces/IQuiz';
 import images from '~/resources/images';
 import { spacing } from '~/theme';
 
 type TakePartInAQuizProps = {
   quiz: QuizPost;
   onPressTakeQuiz?: (quizId: string) => void;
+  shouldShowDraftQuiz?: boolean;
 };
 
-const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({ quiz, onPressTakeQuiz }) => {
-  const { title, description, id } = quiz || {};
+const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
+  quiz,
+  onPressTakeQuiz,
+  shouldShowDraftQuiz,
+}) => {
+  const { title, description, id, status } = quiz || {};
+  const canTakeQuiz = status === QuizStatus.PUBLISHED;
 
   const theme = useTheme();
   const { colors } = theme;
@@ -25,8 +31,14 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({ quiz, onPressTakeQuiz }) =>
   const { t } = useBaseHook();
 
   const onPress = () => {
-    onPressTakeQuiz?.(id);
+    if (canTakeQuiz) {
+      onPressTakeQuiz?.(id);
+    }
   };
+
+  // when status is not PUBLISHED and ContentItem is rendered in Newfeed
+  // so we should not render this component
+  if (!canTakeQuiz && !shouldShowDraftQuiz) return null;
 
   return (
     <Button onPress={onPress}>

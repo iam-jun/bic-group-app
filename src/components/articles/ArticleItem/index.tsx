@@ -25,17 +25,20 @@ import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import { ITag } from '~/interfaces/ITag';
 import Divider from '~/beinComponents/Divider';
 import DeletedItem from '~/components/DeletedItem';
+import DraftQuizFooter from '~/components/quiz/DraftQuizFooter';
 
 export interface ArticleItemProps {
   data: IPost;
   isLite?: boolean;
   shouldHideBannerImportant?: boolean;
+  shouldShowDraftQuiz?: boolean;
 }
 
 const ArticleItem: FC<ArticleItemProps> = ({
   data = {},
   isLite,
   shouldHideBannerImportant,
+  shouldShowDraftQuiz = false,
 }: ArticleItemProps) => {
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
@@ -136,13 +139,15 @@ const ArticleItem: FC<ArticleItemProps> = ({
             interestedUserCount={totalUsersSeen}
           />
         </View>
-        <Divider style={styles.divider} />
+        {!shouldShowDraftQuiz && <Divider style={styles.divider} />}
       </>
     )
   );
 
-  const renderFooter = () => (
-    !isHidden && (
+  const renderFooter = () => {
+    if (shouldShowDraftQuiz || isHidden) return null;
+
+    return (
       <ArticleFooter
         articleId={id}
         canReact={setting?.canReact}
@@ -150,10 +155,9 @@ const ArticleItem: FC<ArticleItemProps> = ({
         commentsCount={commentsCount}
         reactionsCount={reactionsCount}
         ownerReactions={ownerReactions}
-      />
-
-    )
-  );
+      />)
+    ;
+  };
 
   const renderLite = () => (
     <>
@@ -168,14 +172,26 @@ const ArticleItem: FC<ArticleItemProps> = ({
     </>
   );
 
-  const renderMarkAsRead = () => (
-    <ButtonMarkAsRead
-      postId={id}
-      markedReadPost={markedReadPost}
-      isImportant={isImportant}
-      expireTime={importantExpiredAt}
-    />
-  );
+  const renderMarkAsRead = () => {
+    if (shouldShowDraftQuiz) return null;
+
+    return (
+      <ButtonMarkAsRead
+        postId={id}
+        markedReadPost={markedReadPost}
+        isImportant={isImportant}
+        expireTime={importantExpiredAt}
+      />
+    );
+  };
+
+  const renderDraftQuizFooter = () => {
+    if (!shouldShowDraftQuiz) return null;
+
+    return (
+      <DraftQuizFooter data={data} />
+    );
+  };
 
   if (deleted) {
     return <DeletedItem title="article:text_delete_article_success" />;
@@ -197,6 +213,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
       {!isLite && renderInterestedBy()}
       {!isLite && renderFooter()}
       {!isLite && renderMarkAsRead()}
+      {renderDraftQuizFooter()}
     </View>
   );
 };

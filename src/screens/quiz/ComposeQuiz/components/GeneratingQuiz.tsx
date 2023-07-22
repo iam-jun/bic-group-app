@@ -6,7 +6,7 @@ import Text from '~/baseComponents/Text';
 import { useRootNavigation } from '~/hooks/navigation';
 import { spacing } from '~/theme';
 import { LottieFileGeneratingQuiz } from '~/resources/lottieJson';
-import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
+import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 import { useBaseHook } from '~/hooks';
 
 type GeneratingQuizProps = {};
@@ -19,7 +19,7 @@ const GeneratingQuiz: FC<GeneratingQuizProps> = () => {
   const styles = createStyle(theme);
 
   const onDraftPress = () => {
-    rootNavigation.replace(menuStack.yourContent, { initTab: 4 });
+    rootNavigation.replace(quizStack.yourQuiz);
   };
 
   return (

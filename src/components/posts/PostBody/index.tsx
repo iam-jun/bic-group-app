@@ -32,6 +32,8 @@ export interface PostBodyProps {
   isLite?: boolean;
   isEmptyPost?: boolean;
   isPostDetail: boolean;
+  shouldShowDraftQuiz?: boolean;
+
   onPressMarkSeenPost?: () => void;
   onPressTakeQuiz?: (quizId: string) => void;
 }
@@ -41,6 +43,8 @@ const _PostBody: FC<PostBodyProps> = ({
   isLite,
   isEmptyPost,
   isPostDetail,
+  shouldShowDraftQuiz,
+
   onPressMarkSeenPost,
   onPressTakeQuiz,
 }: PostBodyProps) => {
@@ -177,6 +181,7 @@ const _PostBody: FC<PostBodyProps> = ({
           <TakePartInAQuiz
             quiz={quiz}
             onPressTakeQuiz={onPressTakeQuiz}
+            shouldShowDraftQuiz={shouldShowDraftQuiz}
           />
         )}
       </>

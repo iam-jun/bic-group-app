@@ -5,7 +5,7 @@ import usePostsStore from '../../posts';
 import { EditQuizActionsParams } from '~/interfaces/IQuiz';
 import APIErrorCode from '~/constants/apiErrorCode';
 import { showAlertAudienceListWithNoPermissionQuiz } from '~/screens/quiz/SubmitFormQuiz/helper';
-import useDraftQuizStore from '~/screens/YourContent/components/Quiz/store';
+import useYourQuizStore from '~/screens/quiz/YourQuiz/store';
 
 const editQuiz = (set, get) => async (editQuizActionsParams: EditQuizActionsParams) => {
   const {
@@ -29,7 +29,7 @@ const editQuiz = (set, get) => async (editQuizActionsParams: EditQuizActionsPara
 
     actions.addOrUpdateQuiz(response.data);
     usePostsStore.getState().actions.getPostDetail({ postId: response.data.contentId });
-    useDraftQuizStore.getState().actions.getDraftQuiz(true);
+    useYourQuizStore.getState().actions.getQuizzesContent(true);
 
     onSuccess?.(response);
   } catch (error) {
