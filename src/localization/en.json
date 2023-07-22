@@ -1573,6 +1573,12 @@
     "text_no_quiz_content": "There are no quiz now!",
     "gen_status_quiz_process_fail": "The quiz processing failed.",
     "gen_status_quiz_processing": "The quiz is currently being processed.",
-    "gen_status_quiz_waiting_process": "The quiz is awaiting processing."
+    "gen_status_quiz_waiting_process": "The quiz is awaiting processing.",
+    "edit_quiz": "Edit quiz",
+    "delete_quiz": "Delete quiz",
+    "alert_delete": {
+      "header": "Delete Quiz",
+      "content": "Are you sure you want to delete this quiz?"
+    }
   }
 }

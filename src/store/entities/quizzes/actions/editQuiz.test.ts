@@ -4,7 +4,6 @@ import streamApi from '~/api/StreamApi';
 import { mockGenerateQuizResponse } from '~/test/mock_data/quiz';
 import useModalStore from '~/store/modal';
 import { QuizStatus } from '~/interfaces/IQuiz';
-import APIErrorCode from '~/constants/apiErrorCode';
 
 describe('editQuiz', () => {
   it('should publish quiz success', async () => {
@@ -42,14 +41,7 @@ describe('editQuiz', () => {
 
   it('should generate quiz failed show alert', async () => {
     const spyApiRegenerateQuiz = jest.spyOn(streamApi, 'editQuiz').mockImplementation(
-      () => Promise.reject({
-        code: APIErrorCode.Post.QUIZ_NO_CRUD_PERMISSION_AT_GROUP,
-        meta: {
-          errors: {
-            groupsDenied: ['123', '456'],
-          },
-        },
-      }) as any,
+      () => Promise.reject({}) as any,
     );
 
     const { result } = renderHook(() => useQuizzesStore());
@@ -60,10 +52,6 @@ describe('editQuiz', () => {
         params: {
           status: QuizStatus.PUBLISHED,
         },
-        audiences: [{
-          id: '123',
-          name: 'community fake 1',
-        }],
       });
     });
 
@@ -71,7 +59,7 @@ describe('editQuiz', () => {
 
     await waitFor(() => {
       expect(result.current.loading).toBeFalsy();
-      expect(useModalStore.getState().alert.visible).toBeTruthy();
+      expect(useModalStore.getState().toast).toBeDefined();
     });
   });
 });

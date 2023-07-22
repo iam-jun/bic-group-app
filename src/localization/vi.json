@@ -1512,6 +1512,12 @@
     "text_no_quiz_content": "Không có Quiz!",
     "gen_status_quiz_process_fail": "Quá trình tạo quiz thất bại.",
     "gen_status_quiz_processing": "Đang trong quá trình tạo quiz.",
-    "gen_status_quiz_waiting_process": "Chuẩn bị tạo quiz."
+    "gen_status_quiz_waiting_process": "Chuẩn bị tạo quiz.",
+    "edit_quiz": "Sửa quiz",
+    "delete_quiz": "Xoá quiz",
+    "alert_delete": {
+      "header": "Xoá Quiz",
+      "content": "Bạn có chắc muốn xoá quiz không?"
+    }
   }
 }

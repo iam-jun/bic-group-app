@@ -1,15 +1,10 @@
 import { useForm } from 'react-hook-form';
 import { Keyboard } from 'react-native';
-import { PermissionKey } from '~/constants/permissionScheme';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
-import usePostsStore from '~/store/entities/posts';
-import postsSelector from '~/store/entities/posts/selectors';
 import showAlert from '~/store/helper/showAlert';
-import useMyPermissionsStore from '~/store/permissions';
 import {
   buildGenerateQuizParams,
-  showAlertAudienceListWithNoPermissionQuiz,
 } from '../helper';
 import {
   EditQuizActionsParams,
@@ -59,48 +54,20 @@ const useGenerateQuiz = (
   const loading = useQuizzesStore((state) => state.loading);
   const actionsQuizzesStore = useQuizzesStore((state) => state.actions);
 
-  const post = usePostsStore(postsSelector.getPost(contentId, {}));
-
-  const { audience } = post;
-  const groupAudiences = audience?.groups || [];
-
-  const { getMyPermissions, getAudienceListWithNoPermission }
-    = useMyPermissionsStore((state) => state.actions);
-
   const isFormValid = isValid;
 
   const generateQuiz = async (data: FormGenerateQuiz) => {
-    try {
-      actionsQuizzesStore.setIsGenerating(true);
-
-      await getMyPermissions();
-      const audienceListWithNoPermissionQuiz = getAudienceListWithNoPermission(
-        groupAudiences,
-        PermissionKey.CUD_QUIZ,
-      );
-
-      if (audienceListWithNoPermissionQuiz.length > 0) {
-        actionsQuizzesStore.setIsGenerating(false);
-        showAlertAudienceListWithNoPermissionQuiz(
-          audienceListWithNoPermissionQuiz,
-        );
-      } else {
-        const formParams = buildGenerateQuizParams(data, contentId);
-        const params: GenerateQuizParams = {
-          contentId: formParams.contentId,
-          numberOfQuestions: formParams.numberOfQuestions,
-          numberOfAnswers: formParams.numberOfAnswers,
-        };
-        const onSuccess = (quiz: IQuiz) => {
-          const { id } = quiz;
-          rootNavigation.replace(quizStack.composeQuiz, { quizId: id });
-        };
-        actionsQuizzesStore.generateQuiz(params, onSuccess);
-      }
-    } catch (e) {
-      console.error('generateQuiz useGenerateQuiz error:', e);
-      actionsQuizzesStore.setIsGenerating(false);
-    }
+    const formParams = buildGenerateQuizParams(data, contentId);
+    const params: GenerateQuizParams = {
+      contentId: formParams.contentId,
+      numberOfQuestions: formParams.numberOfQuestions,
+      numberOfAnswers: formParams.numberOfAnswers,
+    };
+    const onSuccess = (quiz: IQuiz) => {
+      const { id } = quiz;
+      rootNavigation.replace(quizStack.composeQuiz, { quizId: id });
+    };
+    actionsQuizzesStore.generateQuiz(params, onSuccess);
   };
 
   const publishQuiz = (quizId: string, data: FormGenerateQuiz) => {
@@ -120,7 +87,6 @@ const useGenerateQuiz = (
         ...params,
         status: QuizStatus.PUBLISHED,
       },
-      audiences: groupAudiences,
       onSuccess,
     };
 
