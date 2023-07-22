@@ -14,6 +14,7 @@ import { Button } from '~/baseComponents';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Divider from '~/beinComponents/Divider';
 import useModalStore from '~/store/modal';
+import useQuizzesStore from '~/store/entities/quizzes';
 import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 
 interface DraftQuizFooterProps {
@@ -32,8 +33,9 @@ const DraftQuizFooter: React.FC<DraftQuizFooterProps> = ({
   const { t } = useBaseHook();
 
   const modalActions = useModalStore((state) => state.actions);
+  const actionsQuizzesStore = useQuizzesStore((state) => state.actions);
 
-  const { quiz } = data || {};
+  const { id: contentId, quiz } = data || {};
   const { status, genStatus, id: quizId } = quiz || {};
 
   const disableButtonEdit = [
@@ -58,15 +60,14 @@ const DraftQuizFooter: React.FC<DraftQuizFooterProps> = ({
   };
 
   const onDelete = () => {
-
+    actionsQuizzesStore.deleteQuiz(quizId, contentId);
   };
 
   const onPressDelete = () => {
     modalActions.showAlert({
-      title: t('post:title_delete_quiz'),
-      content: t('post:content_delete_quiz'),
+      title: t('quiz:alert_delete:header'),
+      content: t('quiz:alert_delete:content'),
       cancelBtn: true,
-      cancelLabel: t('common:btn_cancel'),
       confirmLabel: t('common:btn_delete'),
       ConfirmBtnComponent: Button.Danger,
       confirmBtnProps: { type: 'ghost' },
