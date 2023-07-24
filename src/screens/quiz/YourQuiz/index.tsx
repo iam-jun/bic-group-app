@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { View, StyleSheet, Platform, Dimensions } from 'react-native';
+import {
+  View, StyleSheet, Platform, Dimensions,
+} from 'react-native';
 import Animated, {
   interpolate,
   runOnJS,
@@ -47,9 +49,7 @@ const YourQuiz: React.FC = () => {
   const activeTab = HEADER_TAB.findIndex((item) => item.id === attributeFilter);
   const activeSubTab = HEADER_SUB_TAB.findIndex((item) => item.id === contentFilter);
 
-  useEffect(() => {
-    return () => reset();
-  }, []);
+  useEffect(() => () => reset(), []);
 
   const onPressTab = (item: any) => {
     actions.setAttributeFilterQuiz(item.id);
@@ -134,7 +134,7 @@ const YourQuiz: React.FC = () => {
     </Animated.View>
   );
 
-  const renderContent = () => (<QuizzesContentList onScroll={onScrollHandler} />)
+  const renderContent = () => (<QuizzesContentList onScroll={onScrollHandler} />);
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.neutral5} testID="your_quiz.content">
@@ -203,7 +203,7 @@ const createStyles = (theme: ExtendedTheme) => {
     contentTab: {
       marginLeft: spacing.margin.small,
     },
-  }); 
+  });
 };
 
 export default YourQuiz;

@@ -43,7 +43,7 @@ const MenuShortcut = () => {
 
   const onPressQuiz = () => {
     rootNavigation.navigate(quizStack.yourQuiz);
-  }; 
+  };
 
   const renderButton = (icon, name, onPress) => (
     <Button testID="menu_shortcut.item" style={styles.button} onPress={onPress}>

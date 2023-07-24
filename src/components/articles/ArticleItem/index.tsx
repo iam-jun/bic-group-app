@@ -155,8 +155,8 @@ const ArticleItem: FC<ArticleItemProps> = ({
         commentsCount={commentsCount}
         reactionsCount={reactionsCount}
         ownerReactions={ownerReactions}
-      />)
-    ;
+      />
+    );
   };
 
   const renderLite = () => (

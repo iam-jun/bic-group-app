@@ -123,7 +123,6 @@ const DraftQuizFooter: React.FC<DraftQuizFooterProps> = ({
     </View>
   );
 
-
   const renderOptionButtons = () => (
     <View style={styles.footerContainer}>
       <Button.Danger
@@ -147,7 +146,7 @@ const DraftQuizFooter: React.FC<DraftQuizFooterProps> = ({
   if (shouldNotRender) {
     return (
       <ViewSpacing height={spacing.margin.large} />
-    )
+    );
   }
 
   return (

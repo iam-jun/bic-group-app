@@ -59,7 +59,7 @@ const PreviewDraftQuizNotification: React.FC<PreviewDraftQuizNotificationProps> 
     if (contentType === PostType.ARTICLE) {
       articleActions.getArticleDetail({ articleId: contentId });
     }
-  }
+  };
 
   const onRefresh = () => {
     getDataDetail();

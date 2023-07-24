@@ -48,7 +48,7 @@ const yourQuizStore = (set, get) => ({
   ...initState,
 
   actions: {
-     setContentFilterQuiz: (contentFilter: ContentQuiz) => {
+    setContentFilterQuiz: (contentFilter: ContentQuiz) => {
       set((state: IYourQuizState) => {
         state.contentFilter = contentFilter;
       }, 'setContentFilter Quiz');

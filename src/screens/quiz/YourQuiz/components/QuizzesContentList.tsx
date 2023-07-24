@@ -3,8 +3,8 @@ import {
   StyleSheet, RefreshControl, View, ActivityIndicator,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import Text from '~/baseComponents/Text';
 import Animated from 'react-native-reanimated';
+import Text from '~/baseComponents/Text';
 import Image from '~/components/Image';
 import images from '~/resources/images';
 import { homeHeaderTabHeight, homeHeaderContentContainerHeight } from '~/theme/dimension';
@@ -31,7 +31,7 @@ const QuizzesContentList: React.FC<QuizzesContentListProps> = ({ onScroll }) => 
     ids,
     loading,
     refreshing,
-    hasNextPage
+    hasNextPage,
   } = data[contentFilter][attributeFilter] || {};
 
   useEffect(() => {

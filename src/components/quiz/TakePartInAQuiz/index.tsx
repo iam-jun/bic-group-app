@@ -22,7 +22,9 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
   onPressTakeQuiz,
   shouldShowDraftQuiz,
 }) => {
-  const { title, description, id, status } = quiz || {};
+  const {
+    title, description, id, status,
+  } = quiz || {};
   const canTakeQuiz = status === QuizStatus.PUBLISHED;
 
   const theme = useTheme();

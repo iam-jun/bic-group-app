@@ -86,7 +86,7 @@ export type GetQuizDetailParams = {
 export enum AttributeQuiz {
   DRAFT = 'DRAFT',
   PUBLISHED = 'PUBLISHED',
-};
+}
 
 export enum ContentQuiz {
   ALL = 'ALL',
