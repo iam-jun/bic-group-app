@@ -196,7 +196,7 @@ const CommunityDetail = (props: any) => {
       timelineActions.getPosts(groupId, true);
     }
     actionPinContent.getPinContentsGroup(groupId);
-    actionTerms.getTermsData(groupId);
+    isPrivateCommunity && actionTerms.getTermsData(groupId);
     getCommunityDetail();
   }, [groupId, contentFilter, attributeFilter]);
 

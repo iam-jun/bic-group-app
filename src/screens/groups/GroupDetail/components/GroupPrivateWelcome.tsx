@@ -32,7 +32,7 @@ const GroupPrivateWelcome = ({
   const { id: groupId } = groupData || {};
 
   const _onRefresh = async () => {
-    await onRefresh({ setIsRefreshing, groupId });
+    await onRefresh({ setIsRefreshing, groupId, isPrivacyGroup: true });
   };
 
   return (
