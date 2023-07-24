@@ -61,9 +61,9 @@ const Maintenance = () => {
       </Text.ParagraphS>
       <View style={styles.textContentContainer}>
         <Markdown value={content} />
-        <Text.ParagraphS useI18n style={{ fontWeight: 'bold' }}>
+        <Text.BodyMMedium useI18n>
           notification:text_bic_team
-        </Text.ParagraphS>
+        </Text.BodyMMedium>
       </View>
     </Animated.ScrollView>
   );
