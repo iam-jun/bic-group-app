@@ -58,6 +58,8 @@ import { IDraftContentsState } from '~/screens/YourContent/components/Draft/Draf
 import { IPublishState } from '~/screens/YourContent/components/Publish/store';
 import { IUserBadgesState } from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
 import { IMembershipPolicySettingsState } from '~/screens/groups/MembershipPolicySettings/store';
+import { IPreviewJoinableGroupState } from '~/components/PreviewJoinableGroup/store';
+import { INotiSettingsStore } from '~/screens/Notification/NotiSettings/store';
 
 export interface BicStore {
   entities: {
@@ -162,6 +164,7 @@ export interface BicStore {
 
   Notifications: {
     notificationStore: INotificationsState;
+    INotiSettingsStore: INotiSettingsStore;
   };
   Draft: {
     DraftArticle: {
@@ -200,4 +203,5 @@ export interface BicStore {
   blockingStore: IBlockingState;
   maintenanceStore: IMaintenanceState;
   pinContent: IPinContentState;
+  previewJoinableGroupStore: IPreviewJoinableGroupState;
 }

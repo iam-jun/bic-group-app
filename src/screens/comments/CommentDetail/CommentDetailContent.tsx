@@ -30,6 +30,7 @@ import { getTitle, replacePostDetail } from './helper';
 import useModalStore from '~/store/modal';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import BannerReport from '~/components/Report/BannerReport';
+import { handleScrollToIndexFailed } from '~/helpers/post';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -82,6 +83,14 @@ const CommentDetailContent = (props: any) => {
     comments = useCommentsStore(commentsSelector.getCommentsByParentId(id));
   }
 
+  const { reset: resetCommentsStore } = useCommentsStore((state) => state);
+
+  useEffect(() => () => {
+    if (notiId) {
+      resetCommentsStore();
+    }
+  }, []);
+
   const {
     childrenComments = [],
     newCommentData,
@@ -90,12 +99,24 @@ const CommentDetailContent = (props: any) => {
   } = getListChildComment(comments, parentId || commentId);
 
   const scrollToCommentsPosition = usePostsStore((state) => state.scrollToCommentsPosition);
+  const scrollToLatestItem = usePostsStore((state) => state.scrollToLatestItem);
 
   const copyCommentError = usePostsStore((state) => state.commentErrorCode);
 
   const headerTitle = t(getTitle(type), {
     name: actor?.fullname || '',
   });
+
+  useEffect(() => {
+    if (scrollToLatestItem) {
+      onCommentSuccess();
+    }
+  }, [scrollToLatestItem]);
+
+  const onCommentSuccess = () => {
+    scrollToIndex({ isScrollToBottom: true });
+    postActions.setScrollToLatestItem(false);
+  };
 
   useEffect(() => {
     if (audience?.groups?.length > 0) {
@@ -164,31 +185,38 @@ const CommentDetailContent = (props: any) => {
   }, [notFoundComment, loading, isEmpty, copyCommentError]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (scrollToCommentsPosition?.position === 'top') {
-        postActions.setScrollCommentsPosition(null);
-      } else if (scrollToCommentsPosition?.position === 'bottom') {
-        scrollToIndex();
-      } else if (!!parentId && childrenComments?.length > 0 && !isScrollFirst) {
-        const commentPosition = childrenComments?.findIndex?.(
-          (item: ICommentData) => item.id == commentId,
-        );
-        if (commentPosition > 0) {
-          setIsScrollFirst(true);
-          scrollToIndex(commentPosition);
+    if (!loading) {
+      const timer = setTimeout(() => {
+        if (scrollToCommentsPosition?.position === 'top') {
+          postActions.setScrollCommentsPosition(null);
+        } else if (scrollToCommentsPosition?.position === 'bottom') {
+          scrollToIndex({ isScrollToBottom: true });
+        } else if (!!parentId && childrenComments?.length > 0 && !isScrollFirst) {
+          const commentPosition = childrenComments?.findIndex?.((item: ICommentData) => item.id == commentId);
+          if (commentPosition > 0) {
+            setIsScrollFirst(true);
+            scrollToIndex({ index: commentPosition });
+          }
         }
-      }
-    }, 300);
-    return () => clearTimeout(timer);
-  }, [scrollToCommentsPosition, childrenComments]);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [scrollToCommentsPosition, childrenComments, loading]);
 
-  const scrollToIndex = (index?: number) => {
+  const scrollToIndex = (payload: { isScrollToBottom?: boolean, index?: number}) => {
+    const { isScrollToBottom = false, index } = payload;
     try {
-      const position = childrenComments?.length || 1;
-      listRef.current?.scrollToIndex?.({
-        animated: true,
-        index: index || (position > 0 ? position : 0),
-      });
+      if (isScrollToBottom) {
+        listRef.current?.scrollToEnd?.({
+          animated: true,
+        });
+      } else {
+        const position = childrenComments?.length || 1;
+        listRef.current?.scrollToIndex?.({
+          animated: true,
+          index: index || (position > 0 ? position : 0),
+        });
+      }
       postActions.setScrollCommentsPosition(null);
     } catch (error) {
       // scroll to the first comment to avoid scroll error
@@ -197,12 +225,7 @@ const CommentDetailContent = (props: any) => {
   };
 
   const onScrollToIndexFailed = (error: any) => {
-    const offset = (error?.averageItemLength || 0) * (error?.index || 0);
-    listRef.current?.scrollToOffset?.({ offset });
-    setTimeout(
-      () => listRef.current?.scrollToIndex?.({ index: error?.index || 0 }),
-      100,
-    );
+    handleScrollToIndexFailed({ error, listRef });
   };
 
   const showNotice = (type = 'deleted_comment') => {
@@ -316,7 +339,6 @@ const CommentDetailContent = (props: any) => {
         postId={id}
         groupIds={groupIds}
         autoFocus={!!replyItem}
-        isCommentLevel1Screen
         showHeader
         viewMore={viewMore}
         defaultReplyTargetId={newCommentData?.id}

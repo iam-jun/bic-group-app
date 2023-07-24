@@ -10,6 +10,7 @@ const getDraftArticles = (set, get) => async (payload: IPayloadGetDraftContents)
   const {
     articles: draftArticles,
     hasNextPage,
+    endCursor,
     refreshing,
     loading,
   } = data || {};
@@ -19,23 +20,25 @@ const getDraftArticles = (set, get) => async (payload: IPayloadGetDraftContents)
       set((state: IDraftArticleState) => {
         if (isRefresh) {
           state.refreshing = true;
-          state.total = 0;
         } else {
           state.loading = true;
         }
       }, 'getDraftArticles');
 
-      const offset = isRefresh ? 0 : draftArticles?.length || 0;
-      const response = await streamApi.getDraftContents({ offset, type: PostType.ARTICLE });
+      const endCursorParams = isRefresh ? null : endCursor;
+      const response = await streamApi.getDraftContents({
+        endCursor: endCursorParams,
+        type: PostType.ARTICLE,
+      });
 
       const newArticles = getNewPosts({ isRefresh, response, list: draftArticles });
 
       set((state: IDraftArticleState) => {
         state.articles = newArticles;
-        state.hasNextPage = response?.canLoadMore;
+        state.hasNextPage = response?.data?.meta?.hasNextPage;
+        state.endCursor = response?.data?.meta?.endCursor;
         state.refreshing = false;
         state.loading = false;
-        state.total = response?.total;
       }, 'getDraftArticlesSuccess');
 
       usePostsStore.getState().actions.addToPosts({ data: response?.data });
@@ -48,6 +51,7 @@ const getDraftArticles = (set, get) => async (payload: IPayloadGetDraftContents)
     set((state: IDraftArticleState) => {
       state.refreshing = false;
       state.loading = false;
+      state.endCursor = null;
     }, 'getDraftArticlesError');
   }
 };

@@ -31,6 +31,7 @@ export interface Props {
   onChangeTab: (index: number) => void;
   onItemPress: (item: any) => void;
   onPressItemOption: (item: any) => void;
+  onRefresh: () => void;
 }
 
 const ScrollableTabBar = ({
@@ -39,6 +40,7 @@ const ScrollableTabBar = ({
   onChangeTab,
   onItemPress,
   onPressItemOption,
+  onRefresh,
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
 
@@ -133,11 +135,12 @@ const ScrollableTabBar = ({
           ) => (
             <NotificationList
               key={`NOTI_ITEM_SCREEN_${index}${item?.type}`}
-              onItemPress={_onItemPress}
               type={item?.type}
               keyValue={item?.key}
-              onPressItemOption={_onPressItemOption}
               activeIndex={activeIndex === index}
+              onPressItemOption={_onPressItemOption}
+              onItemPress={_onItemPress}
+              onRefresh={onRefresh}
             />
           ))}
       </Animated.ScrollView>

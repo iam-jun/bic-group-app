@@ -20,6 +20,8 @@ export interface ICommunity {
   teamName?: string;
   settings?: IGroupSettings;
   affectedSettings?: IGroupSettings;
+  communityId?: string;
+  level?: number;
 }
 
 export interface IParamGetCommunities {

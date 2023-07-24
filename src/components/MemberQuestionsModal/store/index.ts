@@ -7,6 +7,9 @@ export interface MembershipQuestionsInfo {
   groupId: string;
   rootGroupId: string;
   name: string;
+  icon: string;
+  privacy: string;
+  userCount: number;
   type: string;
   isActive: boolean;
   isActiveGroupTerms: boolean;
@@ -17,6 +20,9 @@ export interface IMemberQuestionsState extends IBaseState {
   groupId: string;
   rootGroupId: string;
   name: string;
+  icon: string;
+  privacy: string;
+  userCount: number;
   isActive: boolean;
   isActiveGroupTerms: boolean;
   loading: boolean;
@@ -40,6 +46,9 @@ const initState: InitStateType<IMemberQuestionsState> = {
   groupId: '',
   rootGroupId: '',
   name: '',
+  icon: '',
+  userCount: 0,
+  privacy: '',
   ids: [],
   questions: {},
   answers: {},
@@ -59,7 +68,10 @@ const memberQuestionsStore = (set, get) => ({
         state.groupId = payload.groupId;
         state.type = payload.type;
         state.rootGroupId = payload.rootGroupId;
-        state.name = payload?.name || '';
+        state.name = payload?.name || initState.name;
+        state.icon = payload?.icon || initState.icon;
+        state.privacy = payload?.privacy || initState.privacy;
+        state.userCount = payload?.userCount || initState.userCount;
       }, 'setMembershipQuestionsInfo');
     },
     getQuestions: getQuestions(set, get),
