@@ -7,8 +7,6 @@ import {
 import useCommonController from '~/screens/store';
 import usePostsStore, { IPostsState } from '~/store/entities/posts';
 import useModalStore from '~/store/modal';
-import useBaseHook from './baseHook';
-import { useRootNavigation } from './navigation';
 
 export interface Props {
   postId: string;
@@ -25,8 +23,6 @@ const useContentActions = (props: Props) => {
   const commonController = useCommonController((state) => state.actions);
   const { putMarkSeenPost } = usePostsStore((state: IPostsState) => state.actions);
   const modalActions = useModalStore((state) => state.actions);
-  const { t } = useBaseHook();
-  const { rootNavigation } = useRootNavigation();
 
   const onPressMarkSeenPost = useCallback(() => {
     putMarkSeenPost({ postId });
