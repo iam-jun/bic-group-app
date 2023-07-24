@@ -66,9 +66,11 @@ export type EditQuizActionsParams = {
   onSuccess?: (response: any) => void;
 };
 
-export interface IParamsGetDraftQuiz {
+export interface IParamsGetQuizzesContent {
   limit?: number;
   endCursor?: string;
+  status: AttributeQuiz;
+  type?: ContentQuiz | undefined;
 }
 
 export type EditQuestionForm = {
@@ -79,4 +81,15 @@ export type EditQuestionForm = {
 export type GetQuizDetailParams = {
   quizId: string;
   isShowLoading?: boolean;
+}
+
+export enum AttributeQuiz {
+  DRAFT = 'DRAFT',
+  PUBLISHED = 'PUBLISHED',
+}
+
+export enum ContentQuiz {
+  ALL = 'ALL',
+  POST = 'POST',
+  ARTICLE = 'ARTICLE',
 }

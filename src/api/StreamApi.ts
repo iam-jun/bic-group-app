@@ -43,7 +43,7 @@ import {
 import { IParamGetReportContent, IParamsReportContent } from '~/interfaces/IReport';
 import { CreateTag, EditTag, IParamGetCommunityTags } from '~/interfaces/ITag';
 import {
-  EditQuizParams, GenerateQuizParams, IParamsGetDraftQuiz, RegenerateQuizParams,
+  EditQuizParams, GenerateQuizParams, IParamsGetQuizzesContent, RegenerateQuizParams,
 } from '~/interfaces/IQuiz';
 
 const DEFAULT_LIMIT = 10;
@@ -576,13 +576,15 @@ export const streamApiConfig = {
     method: 'put',
     data: params,
   }),
-  getDraftQuiz: (params: IParamsGetDraftQuiz): HttpApiRequestConfig => ({
+  getQuizzesContent: (params: IParamsGetQuizzesContent): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}quizzes/draft`,
+    url: `${provider.url}quizzes`,
     method: 'get',
     params: {
       limit: params?.limit || DEFAULT_LIMIT,
       after: params?.endCursor,
+      status: params?.status,
+      type: params?.type,
     },
   }),
   getQuizDetail: (idQuiz: string): HttpApiRequestConfig => ({
@@ -885,8 +887,8 @@ const streamApi = {
   editQuiz: (idQuiz: string, params: EditQuizParams) => withHttpRequestPromise(
     streamApiConfig.editQuiz, idQuiz, params,
   ),
-  getDraftQuiz: (params: IParamsGetDraftQuiz) => withHttpRequestPromise(
-    streamApiConfig.getDraftQuiz, params,
+  getQuizzesContent: (params: IParamsGetQuizzesContent) => withHttpRequestPromise(
+    streamApiConfig.getQuizzesContent, params,
   ),
   getQuizDetail: (idQuiz: string) => withHttpRequestPromise(
     streamApiConfig.getQuizDetail, idQuiz,

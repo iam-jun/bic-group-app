@@ -28,7 +28,7 @@ import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import { ITag } from '~/interfaces/ITag';
 import Divider from '~/beinComponents/Divider';
 import DeletedItem from '~/components/DeletedItem';
-import { QuizStatus } from '~/interfaces/IQuiz';
+import DraftQuizFooter from '~/components/quiz/DraftQuizFooter';
 import TakePartInAQuiz from '~/components/quiz/TakePartInAQuiz';
 import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 import showAlert from '~/store/helper/showAlert';
@@ -38,12 +38,14 @@ export interface ArticleItemProps {
   data: IPost;
   isLite?: boolean;
   shouldHideBannerImportant?: boolean;
+  shouldShowDraftQuiz?: boolean;
 }
 
 const ArticleItem: FC<ArticleItemProps> = ({
   data = {},
   isLite,
   shouldHideBannerImportant,
+  shouldShowDraftQuiz = false,
 }: ArticleItemProps) => {
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
@@ -80,8 +82,6 @@ const ArticleItem: FC<ArticleItemProps> = ({
   const titleArticle = isLite && titleHighlight ? titleHighlight : title;
   const summaryArticle
     = isLite && summaryHighlight ? summaryHighlight : summary;
-
-  const isShowQuiz = !isLite && !!quiz && quiz.status === QuizStatus.PUBLISHED;
 
   const numberOfReactions = formatLargeNumber(
     getTotalReactions(reactionsCount, 'user'),
@@ -153,29 +153,37 @@ const ArticleItem: FC<ArticleItemProps> = ({
     </View>
   );
 
-  const renderDivider = () => !isHidden && <Divider style={styles.divider} />;
-
   const renderInterestedBy = () => !isHidden && (
-  <View style={styles.boxInterested}>
-    <ArticleReadingTime numberWords={wordCount} />
-    <ContentInterestedUserCount
-      id={id}
-      testIDPrefix="article_item"
-      interestedUserCount={totalUsersSeen}
-    />
-  </View>
+    <View style={styles.boxInterested}>
+      <ArticleReadingTime numberWords={wordCount} />
+      <ContentInterestedUserCount
+        id={id}
+        testIDPrefix="article_item"
+        interestedUserCount={totalUsersSeen}
+      />
+    </View>
   );
 
-  const renderFooter = () => !isHidden && (
-  <ArticleFooter
-    articleId={id}
-    canReact={setting?.canReact}
-    canComment={setting?.canComment}
-    commentsCount={commentsCount}
-    reactionsCount={reactionsCount}
-    ownerReactions={ownerReactions}
-  />
-  );
+  const renderFooter = () => {
+    if (shouldShowDraftQuiz || isHidden) return null;
+
+    return (
+      <ArticleFooter
+        articleId={id}
+        canReact={setting?.canReact}
+        canComment={setting?.canComment}
+        commentsCount={commentsCount}
+        reactionsCount={reactionsCount}
+        ownerReactions={ownerReactions}
+      />
+    );
+  };
+
+  const renderDivider = () => {
+    if (isHidden || shouldShowDraftQuiz) return null;
+
+    return <Divider style={styles.divider} />;
+  };
 
   const renderLite = () => (
     <>
@@ -190,17 +198,33 @@ const ArticleItem: FC<ArticleItemProps> = ({
     </>
   );
 
-  const renderMarkAsRead = () => (
-    <ButtonMarkAsRead
-      postId={id}
-      markedReadPost={markedReadPost}
-      isImportant={isImportant}
-      expireTime={importantExpiredAt}
-    />
-  );
+  const renderMarkAsRead = () => {
+    if (shouldShowDraftQuiz) return null;
 
-  const renderTakePartInAQuiz = () => isShowQuiz && (
-  <TakePartInAQuiz quiz={quiz} onPressTakeQuiz={onPressTakeQuiz} />
+    return (
+      <ButtonMarkAsRead
+        postId={id}
+        markedReadPost={markedReadPost}
+        isImportant={isImportant}
+        expireTime={importantExpiredAt}
+      />
+    );
+  };
+
+  const renderDraftQuizFooter = () => {
+    if (!shouldShowDraftQuiz) return null;
+
+    return (
+      <DraftQuizFooter data={data} />
+    );
+  };
+
+  const renderTakePartInAQuiz = () => (
+    <TakePartInAQuiz
+      quiz={quiz}
+      onPressTakeQuiz={onPressTakeQuiz}
+      shouldShowDraftQuiz={shouldShowDraftQuiz}
+    />
   );
 
   if (deleted) {
@@ -225,6 +249,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
       {!isLite && renderDivider()}
       {!isLite && renderFooter()}
       {!isLite && renderMarkAsRead()}
+      {renderDraftQuizFooter()}
     </View>
   );
 };

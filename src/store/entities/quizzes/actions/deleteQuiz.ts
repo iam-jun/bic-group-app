@@ -2,6 +2,7 @@ import { IQuizzesState } from '..';
 import streamApi from '~/api/StreamApi';
 import showToastError from '~/store/helper/showToastError';
 import usePostsStore from '../../posts';
+import useYourQuizStore from '~/screens/quiz/YourQuiz/store';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const deleteQuiz = (set, _get) => async (quizId: string, contentId: string) => {
@@ -17,6 +18,7 @@ const deleteQuiz = (set, _get) => async (quizId: string, contentId: string) => {
     }, 'deleteQuiz');
 
     usePostsStore.getState().actions.getContentDetail(contentId);
+    useYourQuizStore.getState().actions.getQuizzesContent(true);
 
     showToastSuccess(response);
   } catch (error) {

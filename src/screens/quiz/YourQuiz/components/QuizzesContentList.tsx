@@ -1,39 +1,45 @@
 import React, { useEffect } from 'react';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import {
   StyleSheet, RefreshControl, View, ActivityIndicator,
 } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Animated from 'react-native-reanimated';
+import Text from '~/baseComponents/Text';
 import Image from '~/components/Image';
 import images from '~/resources/images';
-import Text from '~/baseComponents/Text';
-import { homeHeaderTabHeight } from '~/theme/dimension';
-import useDraftQuizStore from './store';
+import { homeHeaderTabHeight, homeHeaderContentContainerHeight } from '~/theme/dimension';
 import { spacing } from '~/theme';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import QuizPostView from './components/QuizPostView';
+import ContentItem from '~/components/ContentItem';
+import useYourQuizStore from '../store';
 
-interface QuizProps {
-    onScroll: (e: any) => void;
+interface QuizzesContentListProps {
+  onScroll: (e: any) => void;
 }
 
-const Quiz: React.FC<QuizProps> = ({ onScroll }) => {
+const HeaderFilterHeight = homeHeaderTabHeight + homeHeaderContentContainerHeight;
+
+const QuizzesContentList: React.FC<QuizzesContentListProps> = ({ onScroll }) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const { draftQuiz, actions } = useDraftQuizStore();
+
+  const { attributeFilter, contentFilter } = useYourQuizStore((state) => state);
+  const data = useYourQuizStore((state) => state.data);
+  const actions = useYourQuizStore((state) => state.actions);
+
   const {
-    data,
+    ids,
     loading,
     refreshing,
     hasNextPage,
-  } = draftQuiz || {};
+  } = data[contentFilter][attributeFilter] || {};
 
   useEffect(() => {
     getData(true);
-  }, []);
+  }, [attributeFilter, contentFilter]);
 
   const getData = (isRefresh?: boolean) => {
-    actions.getDraftQuiz(isRefresh);
+    actions.getQuizzesContent(isRefresh);
   };
 
   const onRefresh = () => {
@@ -46,7 +52,7 @@ const Quiz: React.FC<QuizProps> = ({ onScroll }) => {
     }
   };
 
-  const renderItem = ({ item }) => (<QuizPostView data={item} />);
+  const renderItem = ({ item }) => (<ContentItem id={item} shouldShowDraftQuiz />);
 
   const renderHeader = () => (
     <View style={styles.header}>
@@ -55,7 +61,7 @@ const Quiz: React.FC<QuizProps> = ({ onScroll }) => {
   );
 
   const renderFooter = () => {
-    if (!loading) return <ViewSpacing height={spacing.padding.large} />;
+    if (!loading) return <ViewSpacing height={spacing.padding.big} />;
 
     return (
       <View style={styles.boxFooter}>
@@ -70,25 +76,25 @@ const Quiz: React.FC<QuizProps> = ({ onScroll }) => {
     if (hasNextPage) return null;
 
     return (
-      <View style={styles.boxEmpty} testID="draft_quiz.empty_view">
+      <View style={styles.boxEmpty} testID="quiz_content.empty_view">
         <Image
           resizeMode="contain"
           source={images.img_empty_box}
           style={styles.imgEmpty}
         />
         <Text.BodyS color={colors.neutral40} useI18n>
-          your_content:text_no_quiz_content
+          quiz:text_no_quiz_content
         </Text.BodyS>
       </View>
     );
   };
 
-  const keyExtractor = (item) => `draft-quiz-${item?.id}`;
+  const keyExtractor = (item) => `quiz-content-${item}`;
 
   return (
     <Animated.FlatList
       testID="quiz.list"
-      data={data}
+      data={ids}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
       ListHeaderComponent={renderHeader}
@@ -100,9 +106,9 @@ const Quiz: React.FC<QuizProps> = ({ onScroll }) => {
           refreshing={refreshing}
           onRefresh={onRefresh}
           tintColor={colors.gray40}
-          progressViewOffset={homeHeaderTabHeight}
+          progressViewOffset={HeaderFilterHeight}
         />
-            )}
+      )}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.2}
       onScroll={onScroll}
@@ -122,7 +128,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.margin.base,
   },
   header: {
-    paddingTop: homeHeaderTabHeight,
+    paddingTop: HeaderFilterHeight,
   },
   boxFooter: {
     height: 100,
@@ -131,4 +137,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Quiz;
+export default QuizzesContentList;

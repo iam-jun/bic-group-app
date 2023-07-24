@@ -1,9 +1,9 @@
 import React from 'react';
 import { postWithQuiz } from '~/test/mock_data/quiz';
-import useDraftQuizStore, { IDraftQuizState } from './store';
+import useDraftQuizStore, { IDraftQuizState } from '../store';
 import { IPost } from '~/interfaces/IPost';
 import { renderWithRedux } from '~/test/testUtils';
-import Quiz from '.';
+import Quiz from '..';
 
 describe('Quiz component', () => {
   it('render correctly', () => {

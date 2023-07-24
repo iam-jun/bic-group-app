@@ -614,14 +614,9 @@
     "title_schedule_article": "Bài báo đã lên lịch",
     "title_published": "Nội dung đã đăng",
     "title_report_content": "Nội dung được báo cáo",
-    "title_quiz": "Quiz",
     "text_empty": "Không có nội dung",
     "text_no_reported_content": "Không có nội dung!",
-    "text_no_publish_content": "Không có nội dung nào được đăng!",
-    "text_no_quiz_content": "Không có Quiz!",
-    "gen_status_quiz_process_fail": "Quá trình tạo quiz thất bại.",
-    "gen_status_quiz_processing": "Đang trong quá trình tạo quiz.",
-    "gen_status_quiz_waiting_process": "Chuẩn bị tạo quiz."
+    "text_no_publish_content": "Không có nội dung nào được đăng!"
   },
   "article": {
     "title": {
@@ -1513,6 +1508,11 @@
     "result_incorrect": "Câu sai",
     "result_skip": "Bỏ qua",
     "enter_an_integer": "Vui lòng nhập số nguyên",
+    "title_quiz": "Quiz",
+    "text_no_quiz_content": "Không có Quiz!",
+    "gen_status_quiz_process_fail": "Quá trình tạo quiz thất bại.",
+    "gen_status_quiz_processing": "Đang trong quá trình tạo quiz.",
+    "gen_status_quiz_waiting_process": "Chuẩn bị tạo quiz.",
     "edit_quiz": "Sửa quiz",
     "delete_quiz": "Xoá quiz",
     "alert_delete": {

@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { ExtendedTheme, useIsFocused, useTheme } from '@react-navigation/native';
 import { RefreshControl, ScrollView } from 'react-native';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import usePostsStore from '~/store/entities/posts';
+import useArticlesStore from '~/screens/articles/ArticleDetail/store';
 import { PostType } from '~/interfaces/IPost';
-import QuizPostView from '~/screens/YourContent/components/Quiz/components/QuizPostView';
+import ContentItem from '~/components/ContentItem';
 import postsSelector from '~/store/entities/posts/selectors';
 import { QuizStatus } from '~/interfaces/IQuiz';
 import { useRootNavigation } from '~/hooks/navigation';
-import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 
 interface PreviewDraftQuizNotificationProps {
   route?: {
@@ -24,40 +24,60 @@ interface PreviewDraftQuizNotificationProps {
 const PreviewDraftQuizNotification: React.FC<PreviewDraftQuizNotificationProps> = ({
   route,
 }) => {
-  const { contentId } = route.params || {};
+  const { contentId, contentType } = route.params || {};
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const { rootNavigation } = useRootNavigation();
+  const isFocused = useIsFocused();
 
-  const actions = usePostsStore((state) => state.actions);
+  const postActions = usePostsStore((state) => state.actions);
+  const deleted = usePostsStore(postsSelector.getDeleted(contentId));
   const data = usePostsStore(postsSelector.getPost(contentId, {}));
+  const articleActions = useArticlesStore((state) => state.actions);
 
   const { quiz } = data || {};
   const { status } = quiz || {};
+  const shouldShowDraftQuiz = status !== QuizStatus.PUBLISHED;
 
   useEffect(() => {
-    actions.getPostDetail({ postId: contentId });
-  }, [contentId]);
+    getDataDetail();
+  }, [contentId, contentType]);
 
   useEffect(() => {
-    if (status === QuizStatus.PUBLISHED) {
-      rootNavigation.replace(homeStack.postDetail, { post_id: contentId });
+    if (deleted && isFocused) {
+      setTimeout(() => {
+        rootNavigation.goBack();
+      }, 200);
     }
-  }, [data]);
+  }, [deleted, isFocused]);
+
+  const getDataDetail = () => {
+    if (contentType === PostType.POST) {
+      postActions.getPostDetail({ postId: contentId });
+    }
+    if (contentType === PostType.ARTICLE) {
+      articleActions.getArticleDetail({ articleId: contentId });
+    }
+  };
 
   const onRefresh = () => {
-    actions.getPostDetail({ postId: contentId });
+    getDataDetail();
   };
 
   const renderContent = () => {
-    if (status === QuizStatus.PUBLISHED) return null;
+    if (!quiz && !deleted) return null;
 
-    return (<QuizPostView data={data} />);
+    return (
+      <ContentItem
+        id={contentId}
+        shouldShowDraftQuiz={shouldShowDraftQuiz}
+      />
+    );
   };
 
   return (
-    <ScreenWrapper isFullView backgroundColor={colors.neutral5} testID="take_quiz_review">
+    <ScreenWrapper isFullView backgroundColor={colors.neutral5} testID="preview_draft_quiz_notification.content">
       <Header />
       <ScrollView
         refreshControl={(

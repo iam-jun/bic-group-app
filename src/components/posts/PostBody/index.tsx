@@ -26,13 +26,14 @@ import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import TagsView from '~/components/TagsView';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import TakePartInAQuiz from '~/components/quiz/TakePartInAQuiz';
-import { QuizStatus } from '~/interfaces/IQuiz';
 
 export interface PostBodyProps {
   data: IPost;
   isLite?: boolean;
   isEmptyPost?: boolean;
   isPostDetail: boolean;
+  shouldShowDraftQuiz?: boolean;
+
   onPressMarkSeenPost?: () => void;
   onPressTakeQuiz?: (quizId: string) => void;
 }
@@ -42,6 +43,8 @@ const _PostBody: FC<PostBodyProps> = ({
   isLite,
   isEmptyPost,
   isPostDetail,
+  shouldShowDraftQuiz,
+
   onPressMarkSeenPost,
   onPressTakeQuiz,
 }: PostBodyProps) => {
@@ -135,8 +138,6 @@ const _PostBody: FC<PostBodyProps> = ({
 
   const isShowVideoPlayer = videos?.[0]?.thumbnails?.length > 0;
 
-  const isShowQuiz = !isLite && !!quiz && quiz.status === QuizStatus.PUBLISHED;
-
   return (
     <View>
       <View style={styles.contentContainer}>
@@ -176,10 +177,11 @@ const _PostBody: FC<PostBodyProps> = ({
           collapsible={!isPostDetail}
         />
         {isShowLinkPreviewer && <LinkPreview data={linkPreview} />}
-        {isShowQuiz && (
+        {!isLite && (
           <TakePartInAQuiz
             quiz={quiz}
             onPressTakeQuiz={onPressTakeQuiz}
+            shouldShowDraftQuiz={shouldShowDraftQuiz}
           />
         )}
       </>

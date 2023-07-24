@@ -3,7 +3,7 @@ import streamApi from '~/api/StreamApi';
 import showToastError from '~/store/helper/showToastError';
 import usePostsStore from '../../posts';
 import { EditQuizActionsParams } from '~/interfaces/IQuiz';
-import useDraftQuizStore from '~/screens/YourContent/components/Quiz/store';
+import useYourQuizStore from '~/screens/quiz/YourQuiz/store';
 
 const editQuiz = (set, get) => async (editQuizActionsParams: EditQuizActionsParams) => {
   const {
@@ -27,7 +27,7 @@ const editQuiz = (set, get) => async (editQuizActionsParams: EditQuizActionsPara
 
     actions.addOrUpdateQuiz(response.data);
     usePostsStore.getState().actions.getContentDetail(response.data.contentId);
-    useDraftQuizStore.getState().actions.getDraftQuiz(true);
+    useYourQuizStore.getState().actions.getQuizzesContent(true);
 
     onSuccess?.(response);
   } catch (error) {
