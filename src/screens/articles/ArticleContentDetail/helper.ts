@@ -8,6 +8,8 @@ import { IMentionUser, IPost } from '~/interfaces/IPost';
 import { openUrl } from '~/utils/link';
 import { goToContentInseries } from '~/components/RelatedContentsInSeries/helper';
 import { EventType } from '~/components/articles/ArticleWebview';
+import { QuizPost, QuizStatus } from '~/interfaces/IQuiz';
+import { onPressTakeQuiz } from '~/components/quiz/TakePartInAQuiz/helper';
 
 const rootNavigation = withNavigation?.(rootNavigationRef);
 
@@ -45,6 +47,8 @@ export const handleMessage = (data: {
       return onPressLink(payload);
     case EventType.ON_NAVIGATE:
       return onNavigateArticle(payload);
+    case EventType.ON_PRESS_QUIZ:
+      return onPressQuiz(payload);
     default:
       return console.warn('Article webview onMessage unhandled', message);
   }
@@ -136,4 +140,15 @@ export const getListImage = (node: any) => {
 
 const onNavigateArticle = (payload: IPost) => {
   goToContentInseries(payload);
+};
+
+const onPressQuiz = (payload: QuizPost) => {
+  const { id, status } = payload;
+  const canTakeQuiz = status === QuizStatus.PUBLISHED;
+
+  if (!id) return;
+
+  if (canTakeQuiz) {
+    onPressTakeQuiz(id);
+  }
 };

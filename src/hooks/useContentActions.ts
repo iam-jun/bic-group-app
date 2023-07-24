@@ -7,10 +7,6 @@ import {
 import useCommonController from '~/screens/store';
 import usePostsStore, { IPostsState } from '~/store/entities/posts';
 import useModalStore from '~/store/modal';
-import useBaseHook from './baseHook';
-import { useRootNavigation } from './navigation';
-import showAlert from '~/store/helper/showAlert';
-import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 
 export interface Props {
   postId: string;
@@ -27,8 +23,6 @@ const useContentActions = (props: Props) => {
   const commonController = useCommonController((state) => state.actions);
   const { putMarkSeenPost } = usePostsStore((state: IPostsState) => state.actions);
   const modalActions = useModalStore((state) => state.actions);
-  const { t } = useBaseHook();
-  const { rootNavigation } = useRootNavigation();
 
   const onPressMarkSeenPost = useCallback(() => {
     putMarkSeenPost({ postId });
@@ -64,26 +58,11 @@ const useContentActions = (props: Props) => {
     modalActions.showReactionDetailBottomSheet(payload);
   };
 
-  const onStartTakeQuiz = (quizId) => {
-    rootNavigation.navigate(quizStack.takeQuiz, { quizId });
-  };
-
-  const onPressTakeQuiz = (quizId) => {
-    showAlert({
-      title: t('quiz:title_alert_take_quiz'),
-      content: t('quiz:content_alert_take_quiz'),
-      cancelBtn: true,
-      confirmLabel: t('quiz:btn_start'),
-      onConfirm: () => onStartTakeQuiz(quizId),
-    });
-  };
-
   return {
     onAddReaction,
     onRemoveReaction,
     onLongPressReaction,
     onPressMarkSeenPost,
-    onPressTakeQuiz,
   };
 };
 

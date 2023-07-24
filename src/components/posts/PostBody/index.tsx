@@ -35,7 +35,6 @@ export interface PostBodyProps {
   shouldShowDraftQuiz?: boolean;
 
   onPressMarkSeenPost?: () => void;
-  onPressTakeQuiz?: (quizId: string) => void;
 }
 
 const _PostBody: FC<PostBodyProps> = ({
@@ -46,7 +45,6 @@ const _PostBody: FC<PostBodyProps> = ({
   shouldShowDraftQuiz,
 
   onPressMarkSeenPost,
-  onPressTakeQuiz,
 }: PostBodyProps) => {
   const { rootNavigation } = useRootNavigation();
 
@@ -180,7 +178,6 @@ const _PostBody: FC<PostBodyProps> = ({
         {!isLite && (
           <TakePartInAQuiz
             quiz={quiz}
-            onPressTakeQuiz={onPressTakeQuiz}
             shouldShowDraftQuiz={shouldShowDraftQuiz}
           />
         )}

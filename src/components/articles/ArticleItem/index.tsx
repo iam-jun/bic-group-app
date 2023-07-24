@@ -30,9 +30,6 @@ import Divider from '~/beinComponents/Divider';
 import DeletedItem from '~/components/DeletedItem';
 import DraftQuizFooter from '~/components/quiz/DraftQuizFooter';
 import TakePartInAQuiz from '~/components/quiz/TakePartInAQuiz';
-import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
-import showAlert from '~/store/helper/showAlert';
-import { useBaseHook } from '~/hooks';
 
 export interface ArticleItemProps {
   data: IPost;
@@ -47,7 +44,6 @@ const ArticleItem: FC<ArticleItemProps> = ({
   shouldHideBannerImportant,
   shouldShowDraftQuiz = false,
 }: ArticleItemProps) => {
-  const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -97,20 +93,6 @@ const ArticleItem: FC<ArticleItemProps> = ({
   const goToTagDetail = (tagData: ITag) => {
     const communityId = useCommunitiesStore.getState().currentCommunityId;
     rootNavigation.navigate(tagsStack.tagDetail, { tagData, communityId });
-  };
-
-  const onStartTakeQuiz = (quizId) => {
-    rootNavigation.navigate(quizStack.takeQuiz, { quizId });
-  };
-
-  const onPressTakeQuiz = (quizId) => {
-    showAlert({
-      title: t('quiz:title_alert_take_quiz'),
-      content: t('quiz:content_alert_take_quiz'),
-      cancelBtn: true,
-      confirmLabel: t('quiz:btn_start'),
-      onConfirm: () => onStartTakeQuiz(quizId),
-    });
   };
 
   const renderImportant = () => (
@@ -222,7 +204,6 @@ const ArticleItem: FC<ArticleItemProps> = ({
   const renderTakePartInAQuiz = () => (
     <TakePartInAQuiz
       quiz={quiz}
-      onPressTakeQuiz={onPressTakeQuiz}
       shouldShowDraftQuiz={shouldShowDraftQuiz}
     />
   );
