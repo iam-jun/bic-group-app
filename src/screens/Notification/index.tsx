@@ -60,6 +60,11 @@ const Notification = () => {
     modalActions.hideBottomList();
   };
 
+  const handleRemoveNotification = (_data: any) => {
+    // TODO: ANH QUOC LAM TIEP PHAN NAY
+    modalActions.hideBottomList();
+  };
+
   const onPressItemOption = ({ item }: {item: any}) => {
     const menuData: any[] = [{
       id: 1,
@@ -72,11 +77,11 @@ const Notification = () => {
       onPress: () => { handleMarkNotification(item); },
     }, {
       id: 2,
-      testID: 'notifications.turn_off_notification',
-      leftIcon: 'BellSlash',
-      title: i18next.t('notification:turn_off_notification'),
+      testID: 'notifications.remove_notification',
+      leftIcon: 'TrashCan',
+      title: i18next.t('notification:text_remove_notification'),
       requireIsActor: true,
-      upcoming: true,
+      onPress: () => { handleRemoveNotification(item); },
     }];
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore

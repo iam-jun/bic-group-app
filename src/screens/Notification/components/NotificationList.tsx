@@ -108,6 +108,17 @@ const NotificationList = ({
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
+  const renderEmpty = () => {
+    if (loadingNotifications) {
+      return (
+        <View style={styles.listFooter}>
+          <ActivityIndicator color={theme.colors.gray20} />
+        </View>
+      );
+    }
+    return <NoNotificationFound />;
+  };
+
   const renderListFooter = () => {
     if (notificationList?.length > 0) {
       return (
@@ -135,15 +146,13 @@ const NotificationList = ({
     />
   );
 
-  const renderUnReadNotificationsEmpty = () => <NoNotificationFound />;
-
   const keyExtractor = (item: any) => `noti_id_${item}`;
 
   const renderItemSeparatorComponent = () => <Divider size={1} color={theme.colors.neutral5} />;
 
   return (
     <View testID="notification_screen.container" style={styles.container}>
-      {!loadingNotifications && notificationList?.length > 0 ? (
+      {notificationList?.length > 0 ? (
         <AnimatedFlashList
           ref={listRef}
           // @ts-ignore
@@ -162,15 +171,12 @@ const NotificationList = ({
           )}
           showsHorizontalScrollIndicator={false}
           data={notificationList}
-          ListEmptyComponent={renderUnReadNotificationsEmpty}
           onEndReached={loadMoreNotifications}
           ListFooterComponent={renderListFooter}
           ItemSeparatorComponent={renderItemSeparatorComponent}
           contentContainerStyle={styles.listContainer}
         />
-      ) : (
-        <ActivityIndicator testID="notification_screen.loading" color={theme.colors.gray20} />
-      )}
+      ) : renderEmpty() }
     </View>
   );
 };
