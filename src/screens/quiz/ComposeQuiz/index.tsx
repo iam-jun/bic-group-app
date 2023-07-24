@@ -24,7 +24,6 @@ import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 import showToast from '~/store/helper/showToast';
 import { useBaseHook } from '~/hooks';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
-import usePostsStore from '~/store/entities/posts';
 
 type ComposeQuizProps = {
   route?: {
@@ -51,10 +50,9 @@ const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
   const quiz = useQuizzesStore((state) => state.data[quizId]);
 
   const actionsQuizzesStore = useQuizzesStore((state) => state.actions);
-  const actionsPostsStore = usePostsStore((state) => state.actions);
 
   const {
-    questions = [], id, genStatus, contentId,
+    questions = [], id, genStatus,
   } = quiz || {};
 
   const disabledBtnNext = questions.length === 0;
