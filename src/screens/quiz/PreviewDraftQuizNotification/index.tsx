@@ -65,12 +65,16 @@ const PreviewDraftQuizNotification: React.FC<PreviewDraftQuizNotificationProps> 
     getDataDetail();
   };
 
-  const renderContent = () => (
-    <ContentItem
-      id={contentId}
-      shouldShowDraftQuiz={shouldShowDraftQuiz}
-    />
-  );
+  const renderContent = () => {
+    if (!quiz && !deleted) return null;
+
+    return (
+      <ContentItem
+        id={contentId}
+        shouldShowDraftQuiz={shouldShowDraftQuiz}
+      />
+    );
+  };
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.neutral5} testID="preview_draft_quiz_notification.content">
