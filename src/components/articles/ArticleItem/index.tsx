@@ -29,7 +29,6 @@ import { ITag } from '~/interfaces/ITag';
 import Divider from '~/beinComponents/Divider';
 import DeletedItem from '~/components/DeletedItem';
 import DraftQuizFooter from '~/components/quiz/DraftQuizFooter';
-import { QuizStatus } from '~/interfaces/IQuiz';
 import TakePartInAQuiz from '~/components/quiz/TakePartInAQuiz';
 import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 import showAlert from '~/store/helper/showAlert';
@@ -83,8 +82,6 @@ const ArticleItem: FC<ArticleItemProps> = ({
   const titleArticle = isLite && titleHighlight ? titleHighlight : title;
   const summaryArticle
     = isLite && summaryHighlight ? summaryHighlight : summary;
-
-  const isShowQuiz = !isLite && !!quiz && quiz.status === QuizStatus.PUBLISHED;
 
   const numberOfReactions = formatLargeNumber(
     getTotalReactions(reactionsCount, 'user'),
@@ -182,7 +179,11 @@ const ArticleItem: FC<ArticleItemProps> = ({
     );
   };
 
-  const renderDivider = () => !isHidden && <Divider style={styles.divider} />;
+  const renderDivider = () => {
+    if (isHidden || shouldShowDraftQuiz) return null;
+
+    return <Divider style={styles.divider} />;
+  };
 
   const renderLite = () => (
     <>
@@ -218,8 +219,12 @@ const ArticleItem: FC<ArticleItemProps> = ({
     );
   };
 
-  const renderTakePartInAQuiz = () => isShowQuiz && (
-  <TakePartInAQuiz quiz={quiz} onPressTakeQuiz={onPressTakeQuiz} />
+  const renderTakePartInAQuiz = () => (
+    <TakePartInAQuiz
+      quiz={quiz}
+      onPressTakeQuiz={onPressTakeQuiz}
+      shouldShowDraftQuiz={shouldShowDraftQuiz}
+    />
   );
 
   if (deleted) {
