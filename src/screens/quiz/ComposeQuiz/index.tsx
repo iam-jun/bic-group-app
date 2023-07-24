@@ -115,7 +115,6 @@ const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
         onButtonPress: onPressDraft,
       });
     }
-    actionsPostsStore.getPostDetail({ postId: contentId });
     rootNavigation.goBack();
   };
 
