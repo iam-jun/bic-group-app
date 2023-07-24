@@ -53,15 +53,9 @@ const AboutContent: FC<AboutContentProps> = ({
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const {
-    actions: { getTermsData, clearTermsByGroupId },
-  } = useTermStore((state) => state);
-  const {
-    actions: { getGroupDetail },
-  } = useGroupDetailStore((state) => state);
-  const {
-    actions: { getCommunity },
-  } = useCommunitiesStore((state) => state);
+  const { getTermsData, clearTermsByGroupId } = useTermStore((state) => state.actions);
+  const getGroupDetail = useGroupDetailStore((state) => state.actions.getGroupDetail);
+  const getCommunity = useCommunitiesStore((state) => state.actions.getCommunity);
 
   useEffect(() => {
     (async () => {

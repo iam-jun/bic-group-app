@@ -29,12 +29,8 @@ const GroupAbout = () => {
 
   const [isRefresh, setIsRefresh] = useState(false);
 
-  const {
-    actions: { getTermsData },
-  } = useTermStore((state) => state);
-  const {
-    actions: { getGroupDetail },
-  } = useGroupDetailStore((state) => state);
+  const getTermsData = useTermStore((state) => state.actions.getTermsData);
+  const getGroupDetail = useGroupDetailStore((state) => state.actions.getGroupDetail);
 
   const getData = async () => {
     await Promise.all([getTermsData(id), getGroupDetail({ groupId: id })]);

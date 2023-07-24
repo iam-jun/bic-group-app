@@ -30,12 +30,8 @@ const CommunityAbout = (props: any) => {
 
   const [isRefresh, setIsRefresh] = useState(false);
 
-  const {
-    actions: { getTermsData },
-  } = useTermStore((state) => state);
-  const {
-    actions: { getCommunity },
-  } = useCommunitiesStore((state) => state);
+  const getTermsData = useTermStore((state) => state.actions.getTermsData);
+  const getCommunity = useCommunitiesStore((state) => state.actions.getCommunity);
 
   const getData = async () => {
     await Promise.all([getTermsData(groupId), getCommunity(communityId)]);

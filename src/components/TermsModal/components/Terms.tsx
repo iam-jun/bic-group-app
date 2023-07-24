@@ -18,8 +18,7 @@ const Terms = (props: TermsProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
-  const { data } = useTermStore((state) => state);
-  const content = data[groupId]?.content;
+  const content = useTermStore((state) => state.data?.[groupId]?.content) || '';
 
   if (!content) return null;
 
