@@ -88,7 +88,9 @@ const AdvancedSettings = () => {
   const onChangeToggle = (isChecked: boolean) => {
     const payload = { enable: isChecked };
     const dataUpdateStore: any = {
-      ...selectedCommunity, enable: isChecked,
+      ...selectedCommunity,
+      enable: isChecked,
+      id: selectedCommunity?.communityId || selectedCommunity?.id,
     };
     advancedSettingsActions.updateCommunitySettings(payload, dataUpdateStore);
   };

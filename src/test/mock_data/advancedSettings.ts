@@ -70,7 +70,7 @@ export const mockGroupInFlat = {
     total: 7,
     offset: 0,
     limit: 20,
-    has_next_page: false,
+    hasNextPage: false,
   },
   data: [
     {

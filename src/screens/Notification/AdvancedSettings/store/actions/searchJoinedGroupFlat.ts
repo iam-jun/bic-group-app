@@ -9,7 +9,7 @@ const searchJoinedGroupFlat = (set, get) => async (params: IGetCommunityGroup, i
       searchJoinedGroups, actions, hasSearchNextPage, selectedCommunity,
     } = get();
     if (!hasSearchNextPage && !isRefresh) return;
-    const id = selectedCommunity?.id;
+    const id = selectedCommunity?.communityId || selectedCommunity?.id;
 
     set((state: IAdvancedNotiSettingsStore) => {
       state.isLoadingJoinedGroup = true;
