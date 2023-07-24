@@ -26,6 +26,7 @@ import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import TagsView from '~/components/TagsView';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import TakePartInAQuiz from '~/components/quiz/TakePartInAQuiz';
+import { QuizStatus } from '~/interfaces/IQuiz';
 
 export interface PostBodyProps {
   data: IPost;
@@ -130,9 +131,11 @@ const _PostBody: FC<PostBodyProps> = ({
 
   const hasNoAttachment = isEmpty(images) && isEmpty(videos) && isEmpty(files);
   /* only show link previewer when there aren't any attachments */
-  const showLinkPreviewer = hasNoAttachment && !!linkPreview;
+  const isShowLinkPreviewer = hasNoAttachment && !!linkPreview;
 
   const isShowVideoPlayer = videos?.[0]?.thumbnails?.length > 0;
+
+  const isShowQuiz = !isLite && !!quiz && quiz.status === QuizStatus.PUBLISHED;
 
   return (
     <View>
@@ -172,8 +175,8 @@ const _PostBody: FC<PostBodyProps> = ({
           onPressDownload={onPressMarkSeenPost}
           collapsible={!isPostDetail}
         />
-        {showLinkPreviewer && <LinkPreview data={linkPreview} />}
-        {!!quiz && (
+        {isShowLinkPreviewer && <LinkPreview data={linkPreview} />}
+        {isShowQuiz && (
           <TakePartInAQuiz
             quiz={quiz}
             onPressTakeQuiz={onPressTakeQuiz}

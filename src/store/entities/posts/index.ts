@@ -21,6 +21,7 @@ import putEditPost from './actions/putEditPost';
 import putEditSettings from './actions/putEditSettings';
 import putMarkSeenPost from './actions/putMarkSeenPost';
 import removeAudiencesFromPost from './actions/removeAudiencesFromPost';
+import getContentDetail from './actions/getContentDetail';
 
 export interface IPostsState extends IBaseState {
   isLoadingGetPostDetail: boolean;
@@ -47,6 +48,7 @@ export interface IPostsState extends IBaseState {
     setCommentErrorCode: (payload: boolean | string) => void;
     addToErrorContents: (id: string, payload: IErrorContent) => void;
     putEditSettings: (params: IPutEditSettingsParams) => void;
+    getContentDetail: (contentId: string) => void;
   };
 }
 
@@ -107,6 +109,7 @@ const postsStore = (set, get) => ({
       }, 'addToErrorContents');
     },
     putEditSettings: putEditSettings(set, get),
+    getContentDetail: getContentDetail(set, get),
   },
 
   reset: () => resetStore(initState, set),

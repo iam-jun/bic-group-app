@@ -24,6 +24,7 @@ import usePostsStore, { IPostsState } from '~/store/entities/posts';
 import { onPressReportThisMember } from '~/helpers/blocking';
 import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 import useQuizzesStore from '~/store/entities/quizzes';
+import { QuizStatus } from '~/interfaces/IQuiz';
 
 const usePostMenu = (
   data: IPost,
@@ -46,7 +47,13 @@ const usePostMenu = (
   if (!data) return null;
 
   const {
-    id: postId, reactionsCount, isSaved, type, audience, actor, quiz,
+    id: postId,
+    reactionsCount,
+    isSaved,
+    type,
+    audience,
+    actor,
+    quiz,
   } = data;
 
   const groupAudience = audience?.groups || [];
@@ -63,11 +70,15 @@ const usePostMenu = (
 
   const audienceListCannotPinContent = getAudienceListWithNoPermission(
     groupAudience,
-    [
-      PermissionKey.FULL_PERMISSION,
-      PermissionKey.PIN_CONTENT,
-    ],
+    [PermissionKey.FULL_PERMISSION, PermissionKey.PIN_CONTENT],
   );
+
+  const shouldBeHiddenCreateQuizOption
+    = !!quiz || audienceListCannotCRUDPostArticle.length > 0;
+  const shouldBeHiddenEditOrDeleteQuizOption
+    = !quiz
+    || quiz.status !== QuizStatus.PUBLISHED
+    || audienceListCannotCRUDPostArticle.length > 0;
 
   const onPressEdit = () => {
     modalActions.hideBottomList();
@@ -79,7 +90,10 @@ const usePostMenu = (
 
   const onPressEditSettings = () => {
     modalActions.hideBottomList();
-    rootNavigation?.navigate?.(homeStack.postSettings, { postId, isFromPostMenuSettings: true });
+    rootNavigation?.navigate?.(homeStack.postSettings, {
+      postId,
+      isFromPostMenuSettings: true,
+    });
   };
 
   const onPressSave = () => {
@@ -231,7 +245,7 @@ const usePostMenu = (
       leftIcon: 'BallotCheck',
       title: i18next.t('quiz:create_quiz'),
       requireIsActor: true,
-      shouldBeHidden: !!quiz || audienceListCannotCRUDPostArticle.length > 0,
+      shouldBeHidden: shouldBeHiddenCreateQuizOption,
       onPress: onPressCUDQuiz,
     },
     {
@@ -285,7 +299,7 @@ const usePostMenu = (
       leftIcon: 'FilePen',
       title: i18next.t('quiz:edit_quiz'),
       requireIsActor: true,
-      shouldBeHidden: !quiz || audienceListCannotCRUDPostArticle.length > 0,
+      shouldBeHidden: shouldBeHiddenEditOrDeleteQuizOption,
       onPress: onPressEditQuiz,
       isShowBorderTop: true,
     },
@@ -295,7 +309,7 @@ const usePostMenu = (
       leftIcon: 'TrashCan',
       title: i18next.t('quiz:delete_quiz'),
       requireIsActor: true,
-      shouldBeHidden: !quiz || audienceListCannotCRUDPostArticle.length > 0,
+      shouldBeHidden: shouldBeHiddenEditOrDeleteQuizOption,
       onPress: onPressDeleteQuiz,
       isShowBorderBottom: true,
     },
