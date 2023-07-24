@@ -1,6 +1,8 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
-import { StyleSheet, View } from 'react-native';
+import {
+  StyleProp, StyleSheet, View, ViewStyle,
+} from 'react-native';
 import { Button } from '~/baseComponents';
 import Icon from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
@@ -14,12 +16,14 @@ import { spacing } from '~/theme';
 type TakePartInAQuizProps = {
   quiz: QuizPost;
   onPressTakeQuiz?: (quizId: string) => void;
+  style?: StyleProp<ViewStyle>;
   shouldShowDraftQuiz?: boolean;
 };
 
 const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
   quiz,
   onPressTakeQuiz,
+  style,
   shouldShowDraftQuiz,
 }) => {
   const {
@@ -44,7 +48,7 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
 
   return (
     <Button onPress={onPress}>
-      <View style={styles.container}>
+      <View style={[styles.container, style]}>
         <Image style={styles.img} source={images.img_thumbnail_take_part_in_a_quiz} />
         <ViewSpacing width={spacing.margin.small} />
         <View style={{ flex: 1 }}>

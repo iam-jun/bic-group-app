@@ -11,7 +11,10 @@ import { ButtonMarkAsRead, PostImportant } from '~/components/posts';
 import ArticleHeader from '../ArticleHeader';
 import ArticleFooter from '../ArticleFooter';
 import ArticleReadingTime from '../ArticleReadingTime';
-import { ContentFooterLite, ContentInterestedUserCount } from '~/components/ContentView';
+import {
+  ContentFooterLite,
+  ContentInterestedUserCount,
+} from '~/components/ContentView';
 import { Button, PlaceHolderRemoveContent } from '~/baseComponents';
 import { IPost } from '~/interfaces/IPost';
 import { formatLargeNumber } from '~/utils/formatter';
@@ -26,6 +29,11 @@ import { ITag } from '~/interfaces/ITag';
 import Divider from '~/beinComponents/Divider';
 import DeletedItem from '~/components/DeletedItem';
 import DraftQuizFooter from '~/components/quiz/DraftQuizFooter';
+import { QuizStatus } from '~/interfaces/IQuiz';
+import TakePartInAQuiz from '~/components/quiz/TakePartInAQuiz';
+import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
+import showAlert from '~/store/helper/showAlert';
+import { useBaseHook } from '~/hooks';
 
 export interface ArticleItemProps {
   data: IPost;
@@ -40,6 +48,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
   shouldHideBannerImportant,
   shouldShowDraftQuiz = false,
 }: ArticleItemProps) => {
+  const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -66,24 +75,45 @@ const ArticleItem: FC<ArticleItemProps> = ({
     deleted = false,
     isHidden,
     wordCount,
+    quiz,
   } = data || {};
 
-  const {
-    isImportant, importantExpiredAt,
-  } = setting || {};
+  const { isImportant, importantExpiredAt } = setting || {};
 
   const titleArticle = isLite && titleHighlight ? titleHighlight : title;
-  const summaryArticle = isLite && summaryHighlight ? summaryHighlight : summary;
+  const summaryArticle
+    = isLite && summaryHighlight ? summaryHighlight : summary;
+
+  const isShowQuiz = !isLite && !!quiz && quiz.status === QuizStatus.PUBLISHED;
 
   const numberOfReactions = formatLargeNumber(
     getTotalReactions(reactionsCount, 'user'),
   );
 
-  const goToContentDetail = () => rootNavigation.navigate(articleStack.articleContentDetail, { articleId: id });
-  const goToDetail = () => rootNavigation.navigate(articleStack.articleDetail, { articleId: id, focusComment: true });
+  const goToContentDetail = () => rootNavigation.navigate(articleStack.articleContentDetail, {
+    articleId: id,
+  });
+  const goToDetail = () => rootNavigation.navigate(articleStack.articleDetail, {
+    articleId: id,
+    focusComment: true,
+  });
   const goToTagDetail = (tagData: ITag) => {
     const communityId = useCommunitiesStore.getState().currentCommunityId;
     rootNavigation.navigate(tagsStack.tagDetail, { tagData, communityId });
+  };
+
+  const onStartTakeQuiz = (quizId) => {
+    rootNavigation.navigate(quizStack.takeQuiz, { quizId });
+  };
+
+  const onPressTakeQuiz = (quizId) => {
+    showAlert({
+      title: t('quiz:title_alert_take_quiz'),
+      content: t('quiz:content_alert_take_quiz'),
+      cancelBtn: true,
+      confirmLabel: t('quiz:btn_start'),
+      onConfirm: () => onStartTakeQuiz(quizId),
+    });
   };
 
   const renderImportant = () => (
@@ -116,32 +146,25 @@ const ArticleItem: FC<ArticleItemProps> = ({
   const renderPreviewSummary = () => (
     <View style={styles.contentContainer}>
       <ArticleTitle text={titleArticle} />
-      {(!!summaryArticle) && (
+      {!!summaryArticle && (
         <>
           <ViewSpacing height={spacing.margin.small} />
           <ArticleSummary text={summaryArticle} />
         </>
       )}
-      {tags?.length > 0 && (
-        <TagsView data={tags} onPressTag={goToTagDetail} />
-      )}
+      {tags?.length > 0 && <TagsView data={tags} onPressTag={goToTagDetail} />}
     </View>
   );
 
-  const renderInterestedBy = () => (
-    !isHidden && (
-      <>
-        <View style={styles.boxInterested}>
-          <ArticleReadingTime numberWords={wordCount} />
-          <ContentInterestedUserCount
-            id={id}
-            testIDPrefix="article_item"
-            interestedUserCount={totalUsersSeen}
-          />
-        </View>
-        {!shouldShowDraftQuiz && <Divider style={styles.divider} />}
-      </>
-    )
+  const renderInterestedBy = () => !isHidden && (
+    <View style={styles.boxInterested}>
+      <ArticleReadingTime numberWords={wordCount} />
+      <ContentInterestedUserCount
+        id={id}
+        testIDPrefix="article_item"
+        interestedUserCount={totalUsersSeen}
+      />
+    </View>
   );
 
   const renderFooter = () => {
@@ -158,6 +181,8 @@ const ArticleItem: FC<ArticleItemProps> = ({
       />
     );
   };
+
+  const renderDivider = () => !isHidden && <Divider style={styles.divider} />;
 
   const renderLite = () => (
     <>
@@ -193,12 +218,16 @@ const ArticleItem: FC<ArticleItemProps> = ({
     );
   };
 
+  const renderTakePartInAQuiz = () => isShowQuiz && (
+  <TakePartInAQuiz quiz={quiz} onPressTakeQuiz={onPressTakeQuiz} />
+  );
+
   if (deleted) {
     return <DeletedItem title="article:text_delete_article_success" />;
   }
 
   if (reported) {
-    return (<PlaceHolderRemoveContent label="common:text_article_reported" />);
+    return <PlaceHolderRemoveContent label="common:text_article_reported" />;
   }
 
   return (
@@ -211,6 +240,8 @@ const ArticleItem: FC<ArticleItemProps> = ({
       </Button>
       {isLite && renderLite()}
       {!isLite && renderInterestedBy()}
+      {!isLite && renderTakePartInAQuiz()}
+      {!isLite && renderDivider()}
       {!isLite && renderFooter()}
       {!isLite && renderMarkAsRead()}
       {renderDraftQuizFooter()}

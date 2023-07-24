@@ -26,7 +26,7 @@ const editQuiz = (set, get) => async (editQuizActionsParams: EditQuizActionsPara
     }, 'editQuiz');
 
     actions.addOrUpdateQuiz(response.data);
-    usePostsStore.getState().actions.getPostDetail({ postId: response.data.contentId });
+    usePostsStore.getState().actions.getContentDetail(response.data.contentId);
     useYourQuizStore.getState().actions.getQuizzesContent(true);
 
     onSuccess?.(response);

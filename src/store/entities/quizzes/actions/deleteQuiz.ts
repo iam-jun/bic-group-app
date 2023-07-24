@@ -17,8 +17,9 @@ const deleteQuiz = (set, _get) => async (quizId: string, contentId: string) => {
       state.loading = false;
     }, 'deleteQuiz');
 
-    usePostsStore.getState().actions.getPostDetail({ postId: contentId });
+    usePostsStore.getState().actions.getContentDetail(contentId);
     useYourQuizStore.getState().actions.getQuizzesContent(true);
+
     showToastSuccess(response);
   } catch (error) {
     console.error('deleteQuiz error', error);
