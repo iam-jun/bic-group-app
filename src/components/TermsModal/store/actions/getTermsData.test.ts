@@ -1,6 +1,7 @@
 import { act, renderHook } from '~/test/testUtils';
 import groupApi from '~/api/GroupApi';
 import useTermStore from '../index';
+import APIErrorCode from '~/constants/apiErrorCode';
 
 describe('get terms actions', () => {
   afterEach(() => {
@@ -34,7 +35,7 @@ describe('get terms actions', () => {
   });
 
   it('should get term throw error:', () => {
-    const error = 'error';
+    const error = { code: APIErrorCode.Group.TERMS_NOT_FOUND };
 
     const spyCallApi = jest.spyOn(groupApi, 'getGroupTerms').mockImplementation(() => Promise.reject(error) as any);
 
@@ -58,6 +59,6 @@ describe('get terms actions', () => {
     });
 
     expect(spyCallApi).toBeCalled();
-    expect(result.current.data[groupId]).toEqual(undefined);
+    expect(result.current.data[groupId]).toEqual({ content: '' });
   });
 });
