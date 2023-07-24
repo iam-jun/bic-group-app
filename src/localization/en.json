@@ -213,7 +213,7 @@
     "btn_go_back": "Back",
     "text_unsupport_feature": "We are not supporting this feature on mobile. Please see the detail on web version",
     "text_maintenance_title": "We are under maintenance.",
-    "text_maintenance_content": "We will be back at ",
+    "text_maintenance_content": "The platform is temporarily unavailable during maintenance time. We will be back at **(endAt)**\nWe apologize for any inconvenience and appreciate your continued support.",
     "text_select_file": "Select File",
     "content_unavailable": {
       "title": "This content isn’t available right now",
