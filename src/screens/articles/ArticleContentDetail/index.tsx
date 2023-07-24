@@ -55,7 +55,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
 
   const {
     content, title, summary, coverMedia, createdAt, audience, wordCount,
-    series, categories, actor, setting, reactionsCount, commentsCount, ownerReactions, tags,
+    series, categories, actor, setting, reactionsCount, commentsCount, ownerReactions, tags, quiz,
   } = data;
 
   const { isError, code } = errorContent || {};
@@ -78,6 +78,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
       tags,
       seriesWithItems: relatedContentsInSeries,
       wordCount,
+      quiz,
     },
   };
 

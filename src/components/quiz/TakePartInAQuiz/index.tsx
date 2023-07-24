@@ -12,17 +12,16 @@ import { useBaseHook } from '~/hooks';
 import { QuizPost, QuizStatus } from '~/interfaces/IQuiz';
 import images from '~/resources/images';
 import { spacing } from '~/theme';
+import { onPressTakeQuiz } from './helper';
 
 type TakePartInAQuizProps = {
   quiz: QuizPost;
-  onPressTakeQuiz?: (quizId: string) => void;
   style?: StyleProp<ViewStyle>;
   shouldShowDraftQuiz?: boolean;
 };
 
 const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
   quiz,
-  onPressTakeQuiz,
   style,
   shouldShowDraftQuiz,
 }) => {
@@ -38,7 +37,7 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
 
   const onPress = () => {
     if (canTakeQuiz) {
-      onPressTakeQuiz?.(id);
+      onPressTakeQuiz(id);
     }
   };
 
