@@ -15,7 +15,7 @@ export const handleQuizNotificationSocket = (msg: any) => {
   // then getQuizDetail & getPostDetail for getting the new quiz's status
   if (waitingProcessingQuiz === quizId) {
     actionsQuizzesStore.getQuizDetail({ quizId, isShowLoading: false });
-    usePostsStore.getState().actions.getPostDetail({ postId: contentId });
+    usePostsStore.getState().actions.getContentDetail(contentId);
   }
 };
 

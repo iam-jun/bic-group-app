@@ -23,6 +23,8 @@ import { PermissionKey } from '~/constants/permissionScheme';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
 import useQuizzesStore from '~/store/entities/quizzes';
+import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
+import { QuizStatus } from '~/interfaces/IQuiz';
 
 const useArticleMenu = (data: IPost, isActor: boolean) => {
   const { rootNavigation } = useRootNavigation();
@@ -60,6 +62,13 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       PermissionKey.PIN_CONTENT,
     ],
   );
+
+  const shouldBeHiddenCreateQuizOption
+    = !!quiz || audienceListCannotCRUDPostArticle.length > 0;
+  const shouldBeHiddenEditOrDeleteQuizOption
+    = !quiz
+    || quiz.status !== QuizStatus.PUBLISHED
+    || audienceListCannotCRUDPostArticle.length > 0;
 
   const onPressEdit = () => {
     modalActions.hideBottomList();
@@ -158,7 +167,7 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
 
   const onPressCUDQuiz = () => {
     modalActions.hideBottomList();
-    // rootNavigation?.navigate?.(quizStack.entryQuiz, { postId: articleId });
+    rootNavigation?.navigate?.(quizStack.entryQuiz, { postId: articleId });
   };
 
   const onPressEditQuiz = () => {
@@ -221,7 +230,7 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       leftIcon: 'BallotCheck',
       title: i18next.t('quiz:create_quiz'),
       requireIsActor: true,
-      shouldBeHidden: !!quiz || audienceListCannotCRUDPostArticle.length > 0,
+      shouldBeHidden: shouldBeHiddenCreateQuizOption,
       onPress: onPressCUDQuiz,
     },
     {
@@ -275,7 +284,7 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       leftIcon: 'FilePen',
       title: i18next.t('quiz:edit_quiz'),
       requireIsActor: true,
-      shouldBeHidden: !quiz || audienceListCannotCRUDPostArticle.length > 0,
+      shouldBeHidden: shouldBeHiddenEditOrDeleteQuizOption,
       onPress: onPressEditQuiz,
       isShowBorderTop: true,
     },
@@ -285,7 +294,7 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       leftIcon: 'TrashCan',
       title: i18next.t('quiz:delete_quiz'),
       requireIsActor: true,
-      shouldBeHidden: !quiz || audienceListCannotCRUDPostArticle.length > 0,
+      shouldBeHidden: shouldBeHiddenEditOrDeleteQuizOption,
       onPress: onPressDeleteQuiz,
       isShowBorderBottom: true,
     },
