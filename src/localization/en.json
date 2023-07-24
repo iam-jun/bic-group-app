@@ -557,14 +557,20 @@
         "cancel": "Cancel",
         "turn_off": "Turn off"
       },
-      "tooltip": {
-        "private": "Can’t be turned off because your {{type}} privacy is Private",
-        "secret": "Can’t select this option because your group privacy is Secret",
-        "default_group_set_toggle": "Can’t be turned on because your group is in the default group set",
-        "default_group_set_radio": "Can’t select this option because your group is in the default group set"
-      },
       "community": "community",
-      "group": "group"
+      "group": "group",
+      "change_settings": {
+        "title_membership_approval": "Turn on the membership approval for inner groups?",
+        "title_policy_setting": "Change the policy setting for inner groups?",
+        "content_first_with_group": "{{count}} inner group of ",
+        "content_first_with_groups": "{{count}} inner groups of ",
+        "content_membership_approval": " will be turned on the membership approval.",
+        "content_policy_setting": " will be changed to only invited people can join.",
+        "button_change": "Change",
+        "button_turn_on": "Turn On",
+        "button_more_details": "More details",
+        "button_show_less": "Show less"
+      }
     }
   },
   "languages": {

@@ -66,6 +66,7 @@ import useTermStore from '~/components/TermsModal/store';
 import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftContents/store';
 import usePublishStore from '~/screens/YourContent/components/Publish/store';
 import useUserBadge from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
+import useMembershipPolicySettingsStore from '~/screens/groups/MembershipPolicySettings/store';
 import usePreviewJoinableGroupStore from '~/components/PreviewJoinableGroup/store';
 import useNotiSettingsStore from '~/screens/Notification/NotiSettings/store';
 
@@ -151,6 +152,7 @@ const stores = [
   useDraftContentsStore,
   usePublishStore,
   useUserBadge,
+  useMembershipPolicySettingsStore,
   usePreviewJoinableGroupStore,
   useNotiSettingsStore,
 ];

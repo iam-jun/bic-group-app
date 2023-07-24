@@ -518,14 +518,20 @@
         "cancel": "Huỷ",
         "turn_off": "Tắt"
       },
-      "tooltip": {
-        "private": "Không thể tắt vì quyền riêng tư {{type}} của bạn là Riêng tư",
-        "secret": "Không thể chọn tùy chọn này vì quyền riêng tư nhóm của bạn là Bí mật",
-        "default_group_set_toggle": "Không thể bật vì nhóm của bạn nằm trong nhóm mặc định",
-        "default_group_set_radio": "Không thể chọn tùy chọn này vì nhóm của bạn nằm trong nhóm mặc định"
-      },
       "community": "cộng đồng",
-      "group": "nhóm"
+      "group": "nhóm",
+      "change_settings": {
+        "title_membership_approval": "Bật phê duyệt tư cách thành viên cho các nhóm nội bộ?",
+        "title_policy_setting": "Thay đổi cài đặt chính sách cho các nhóm bên trong?",
+        "content_first_with_group": "{{count}} nhóm bên trong của ",
+        "content_first_with_groups": "{{count}} nhóm bên trong của ",
+        "content_membership_approval": " sẽ được bật phê duyệt tư cách thành viên.",
+        "content_policy_setting": " sẽ được thay đổi thành chỉ những người được mời mới có thể tham gia.",
+        "button_change": "Thay đổi",
+        "button_turn_on": "Bật",
+        "button_more_details": "Hiển thị nhiều hơn",
+        "button_show_less": "Hiển thị ít hơn"
+      }
     }
   },
   "languages": {
