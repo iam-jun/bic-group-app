@@ -2,6 +2,7 @@ import { GenerateQuizParams, IQuiz } from '~/interfaces/IQuiz';
 import { IQuizzesState } from '..';
 import streamApi from '~/api/StreamApi';
 import showToastError from '~/store/helper/showToastError';
+import usePostsStore from '../../posts';
 
 const generateQuiz = (set, get) => async (params: GenerateQuizParams, onSuccess?: (quiz: IQuiz) => void) => {
   try {
@@ -21,6 +22,8 @@ const generateQuiz = (set, get) => async (params: GenerateQuizParams, onSuccess?
     }, 'generateQuiz');
 
     actions.addOrUpdateQuiz(response.data);
+    usePostsStore.getState().actions.getContentDetail(response.data.contentId);
+
     onSuccess?.(response.data);
   } catch (error) {
     console.error('generateQuiz error', error);
