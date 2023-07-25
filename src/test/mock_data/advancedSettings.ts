@@ -136,3 +136,46 @@ export const mockGroupInFlat = {
     },
   ],
 };
+
+export const mockCommunitySearchResponse = {
+  code: 'api.ok',
+  meta: {
+    message: 'Success',
+    total: 11,
+    offset: 0,
+    limit: 20,
+    hasNextPage: false,
+  },
+  data: [
+    {
+      id: '34e70efc-297f-4ee9-9ff3-99239e4c096e',
+      name: 'Test sync archive to Chat',
+      slug: '5723ae424e4a',
+      icon: 'https://bic-stg-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/group/default-avatar.png',
+      level: 0,
+      privacy: 'OPEN',
+      parents: [],
+      parent_id: null,
+      created_at: '2023-01-31T08:13:28.732Z',
+      updated_at: '2023-01-31T08:13:29.148Z',
+      description: 'sdasda',
+      community_id: 'b03addd7-1792-4662-82d2-fd9d9b3c8c41',
+      background_img_url: 'https://bic-stg-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/group/default-cover.png',
+    },
+    {
+      id: 'c3b9a925-5b6e-4baf-b9e3-2718448395f1',
+      name: 'EVOL 11999 Cường Test Final Nguyễn Ngọc Cường Cường Test Ngọc',
+      slug: '950587db295b',
+      icon: 'https://media.beincom.app/image/variants/group/avatar/c5c58f81-01a3-4af3-8778-5e21a6e31341',
+      level: 0,
+      privacy: 'OPEN',
+      parents: [],
+      parent_id: null,
+      created_at: '2022-07-05T11:12:26.366Z',
+      updated_at: '2023-07-24T09:39:14.200Z',
+      description: 'EVOL Cường Test Final Cường Test Final Cường Test Final Cường TeEVOL Cường Test Final Cường Test Final Cường Test Final Cường TeEVOL Cường Test Final Cường Test Final Cường Test Final Cường TeEVOL Cường Test Final Cường Test Final Cường Test Final Cường T',
+      community_id: '6b9b33dc-5a52-478f-8f31-76ce27e6b2e7',
+      background_img_url: 'https://media.beincom.app/image/variants/group/cover/5b71fdf4-7425-49c9-8bc0-71a7161d60f6',
+    },
+  ],
+};

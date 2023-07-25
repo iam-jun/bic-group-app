@@ -6,13 +6,13 @@ import Avatar from '~/baseComponents/Avatar';
 import useAdvancedNotiSettingsStore from '../AdvancedSettings/store';
 import spacing from '~/theme/spacing';
 import Text from '~/baseComponents/Text';
-import ButtonWrapper from '~/baseComponents/Button/ButtonWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Icon from '~/baseComponents/Icon';
 import SettingItemSkeleton from './SettingItemSkeleton';
 import NotiSettingItem from './NotiSettingItem';
 import useBaseHook from '~/hooks/baseHook';
 import { INotiSettings } from '~/interfaces/INotification';
+import Button from '~/baseComponents/Button';
 
 interface Props {
   onPressSearch: () => void;
@@ -43,6 +43,7 @@ const AdvancedSettingHeader = ({
     name: 'advanced_settings',
     order: 0,
   };
+  console.log('>>>>>>>>>>>>>>>>', communitySettingData, isLoadingCommunitySettings);
 
   return (
     <View>
@@ -56,7 +57,10 @@ const AdvancedSettingHeader = ({
           <Text.BadgeL useI18n color={colors.neutral80}>
             notification:advanced_notifications_settings:title_setup_community
           </Text.BadgeL>
-          <ButtonWrapper onPress={onPressToShowBottomSheet}>
+          <Button
+            testID="notification_advanced_setting_header.selected_community"
+            onPress={onPressToShowBottomSheet}
+          >
             <View style={[styles.dropdownContainer, styles.row]}>
               <Avatar.Tiny source={icon} />
               <ViewSpacing width={spacing.margin.xSmall} />
@@ -67,7 +71,7 @@ const AdvancedSettingHeader = ({
               </Text.BodyS>
               <Icon icon="AngleDown" size={16} />
             </View>
-          </ButtonWrapper>
+          </Button>
         </View>
         {Boolean(isLoadingCommunitySettings)
           ? <SettingItemSkeleton />
@@ -90,7 +94,8 @@ const AdvancedSettingHeader = ({
           </Text.BodyS>
         </View>
         <ViewSpacing height={spacing.margin.small} />
-        <ButtonWrapper
+        <Button
+          testID="notification_advanced_setting_header.button_search_group"
           activeOpacity={0.85}
           disabled={!Boolean(communitySettingData?.enable)}
           onPress={onPressSearch}
@@ -108,7 +113,7 @@ const AdvancedSettingHeader = ({
               notification:advanced_notifications_settings:search_group_placeholder
             </Text.BodyS>
           </View>
-        </ButtonWrapper>
+        </Button>
       </View>
     </View>
   );

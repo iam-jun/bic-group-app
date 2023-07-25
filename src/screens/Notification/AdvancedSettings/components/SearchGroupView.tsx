@@ -43,7 +43,7 @@ const SearchGroupView = ({
     }
   };
 
-  const searchMembers = (searchQuery: string) => {
+  const searchGroups = (searchQuery: string) => {
     actions.clearSearchGroup();
     setSearchText(searchQuery);
     actions.searchJoinedGroupFlat({ key: searchQuery }, true);
@@ -51,12 +51,12 @@ const SearchGroupView = ({
 
   const searchHandler = useCallback(
     debounce(
-      searchMembers, appConfig.searchTriggerTime,
+      searchGroups, appConfig.searchTriggerTime,
     ),
     [],
   );
 
-  const onSearchMembers = (text: string) => {
+  const onSearchGroup = (text: string) => {
     searchHandler(text);
   };
 
@@ -74,7 +74,7 @@ const SearchGroupView = ({
     if (!hasSearchNextPage) return null;
     return (
       <View style={styles.listFooter}>
-        <ActivityIndicator testID="your_communites.loading_more" />
+        <ActivityIndicator testID="search_group.loading_more" />
       </View>
     );
   };
@@ -94,7 +94,7 @@ const SearchGroupView = ({
       isOpen={isOpen}
       placeholder={t('notification:advanced_notifications_settings:search_group_placeholder')}
       onClose={onClose}
-      onChangeText={onSearchMembers}
+      onChangeText={onSearchGroup}
     >
       <FlatList
         data={searchJoinedGroups}

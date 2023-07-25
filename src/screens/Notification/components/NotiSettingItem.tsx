@@ -38,6 +38,7 @@ const NotiSettingItem = ({
   }
   const { title, enable, subtitle = '' } = item;
   const disable = Boolean(isDisable);
+  console.log('>>>>>>>>>>>>>>>>>>>>>>item', item, onPressToggle);
 
   return (
     <TouchableOpacity
@@ -64,6 +65,7 @@ const NotiSettingItem = ({
       {Boolean(onPressToggle)
         ? (
           <Toggle
+            testID="notification_settings.item.toggle"
             isChecked={enable}
             disabled={isDisableToggle}
             onValueChanged={onPressToggle}

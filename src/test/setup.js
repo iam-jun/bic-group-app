@@ -353,12 +353,12 @@ jest.mock('mixpanel-react-native', () => ({
   })),
 }));
 
-jest.mock('react-native-fast-image', () => ({
-  __esModule: true,
-  default: {
-    preload: jest.fn(),
-  },
-}));
+// jest.mock('react-native-fast-image', () => ({
+//   __esModule: true,
+//   default: {
+//     preload: jest.fn(),
+//   },
+// }));
 
 jest.mock('~/router/helper', () => ({
   __esModule: true,

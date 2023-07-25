@@ -192,7 +192,7 @@ const AdvancedSettings = () => {
 
   const renderLoading = () => (
     <View style={styles.container}>
-      <ActivityIndicator testID="your_communites.loading_more" />
+      <ActivityIndicator testID="advanced_setting.loading" />
     </View>
   );
 

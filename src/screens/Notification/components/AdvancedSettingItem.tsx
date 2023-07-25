@@ -3,14 +3,13 @@ import { isEmpty } from 'lodash';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Animated from 'react-native-reanimated';
-import ButtonWrapper from '~/baseComponents/Button/ButtonWrapper';
 import { GroupPrivacyDetail } from '~/constants/privacyTypes';
 import { IGroup } from '~/interfaces/IGroup';
 import { IconType } from '~/resources/icons';
 import spacing from '~/theme/spacing';
 import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import { Avatar } from '~/baseComponents';
+import { Avatar, Button } from '~/baseComponents';
 import { useSkeletonAnimation } from '~/hooks/useSkeletonAnimation';
 import useAdvancedNotiSettingsStore from '../AdvancedSettings/store';
 import useBaseHook from '~/hooks/baseHook';
@@ -60,25 +59,39 @@ const AdvancedSettingItem = ({ item, isDisabled = false, onPress }: Props) => {
   const { icon, name, privacy } = item;
   const privacyIcon = GroupPrivacyDetail[privacy]?.icon as IconType;
   return (
-    <ButtonWrapper
+    <Button
+      testID="notification_advanced_setting_item"
       disabled={isDisabled}
       activeOpacity={0.85}
       style={styles.container}
       onPress={onPressItem}
     >
       {Boolean(isDisabled)
-      && <View style={styles.disable} />}
+      && <View testID="notification_advanced_setting_item.disable_view" style={styles.disable} />}
       <Avatar.Base source={icon} privacyIcon={privacyIcon} />
       <ViewSpacing width={spacing.margin.small} />
       <View style={styles.flex1}>
-        <Text.BodyMMedium color={colors.neutral60} numberOfLines={2}>{name}</Text.BodyMMedium>
+        <Text.BodyMMedium
+          testID="notification_advanced_setting_item.name"
+          color={colors.neutral60}
+          numberOfLines={2}
+        >
+          {name}
+        </Text.BodyMMedium>
         {
           Boolean(isLoading)
             ? <Animated.View style={[styles.labelSkeleton, animatedStyle]} />
-            : <Text.BadgeM color={colors.neutral40}>{label}</Text.BadgeM>
+            : (
+              <Text.BadgeM
+                testID="notification_advanced_setting_item.label"
+                color={colors.neutral40}
+              >
+                {label}
+              </Text.BadgeM>
+            )
         }
       </View>
-    </ButtonWrapper>
+    </Button>
   );
 };
 
