@@ -187,7 +187,11 @@ const usePostMenu = (
 
   const onPressEditQuiz = () => {
     modalActions.hideBottomList();
-    // do something
+    rootNavigation?.navigate(
+      quizStack.composeQuiz, {
+        quizId: quiz?.id,
+      },
+    );
   };
 
   const onPressDeleteQuiz = () => {
