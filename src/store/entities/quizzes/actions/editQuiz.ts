@@ -9,6 +9,7 @@ const editQuiz = (set, get) => async (editQuizActionsParams: EditQuizActionsPara
   const {
     quizId, params, onSuccess,
   } = editQuizActionsParams;
+
   try {
     const { actions }: IQuizzesState = get();
     set((state: IQuizzesState) => {

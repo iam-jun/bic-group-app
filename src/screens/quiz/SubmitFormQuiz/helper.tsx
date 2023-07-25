@@ -36,8 +36,8 @@ export const buildGenerateQuizParams = (data: FormGenerateQuiz, contentId?: stri
     numberOfAnswersDisplay,
   } = data;
   const params: GenerateQuizParams = {
-    title: title.trim(),
-    description: description.trim(),
+    title: !!title ? title.trim() : title,
+    description: !!description ? description.trim() : description,
     numberOfQuestions: Number(numberOfQuestions),
     numberOfAnswers: Number(numberOfAnswers),
     numberOfQuestionsDisplay: !!numberOfQuestionsDisplay

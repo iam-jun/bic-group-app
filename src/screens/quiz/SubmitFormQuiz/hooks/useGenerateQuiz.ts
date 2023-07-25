@@ -71,26 +71,30 @@ const useGenerateQuiz = (
   };
 
   const publishQuiz = (quizId: string, data: FormGenerateQuiz) => {
-    const onSuccess = (response: any) => {
-      showToastSuccess(response);
-      rootNavigation.pop(2);
-    };
-    const formParams = buildGenerateQuizParams(data);
-    const params: GenerateQuizParams = {
-      title: formParams.title,
-      description: formParams.description,
-      numberOfQuestionsDisplay: formParams.numberOfQuestionsDisplay,
-    };
-    const editQuizActionsParams: EditQuizActionsParams = {
-      quizId,
-      params: {
-        ...params,
-        status: QuizStatus.PUBLISHED,
-      },
-      onSuccess,
-    };
+    try {
+      const onSuccess = (response: any) => {
+        showToastSuccess(response);
+        rootNavigation.pop(2);
+      };
+      const formParams = buildGenerateQuizParams(data);
+      const params: GenerateQuizParams = {
+        title: formParams.title,
+        description: formParams.description,
+        numberOfQuestionsDisplay: formParams.numberOfQuestionsDisplay,
+      };
+      const editQuizActionsParams: EditQuizActionsParams = {
+        quizId,
+        params: {
+          ...params,
+          status: QuizStatus.PUBLISHED,
+        },
+        onSuccess,
+      };
 
-    actionsQuizzesStore.editQuiz(editQuizActionsParams);
+      actionsQuizzesStore.editQuiz(editQuizActionsParams);
+    } catch (e) {
+      console.error('publishQuiz error', e);
+    }
   };
 
   const onNext = handleSubmit((data) => {
