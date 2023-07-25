@@ -1,4 +1,3 @@
-/* eslint-disable unused-imports/no-unused-imports */
 import { useForm } from 'react-hook-form';
 import { Keyboard } from 'react-native';
 import { useBaseHook } from '~/hooks';
