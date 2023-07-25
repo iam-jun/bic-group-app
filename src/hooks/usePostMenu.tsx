@@ -187,7 +187,19 @@ const usePostMenu = (
 
   const onPressEditQuiz = () => {
     modalActions.hideBottomList();
-    // do something
+    modalActions.showAlert({
+      title: i18next.t('quiz:alert_edit:header'),
+      content: i18next.t('quiz:alert_edit:content'),
+      cancelBtn: true,
+      confirmLabel: i18next.t('quiz:continue'),
+      onConfirm: () => {
+        rootNavigation?.navigate(
+          quizStack.composeQuiz, {
+            quizId: quiz?.id,
+          },
+        );
+      },
+    });
   };
 
   const onPressDeleteQuiz = () => {

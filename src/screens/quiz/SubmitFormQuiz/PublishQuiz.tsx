@@ -5,6 +5,7 @@ import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { isNumber } from 'lodash';
 import Header from '~/beinComponents/Header';
 import { spacing } from '~/theme';
 import useGenerateQuiz from './hooks/useGenerateQuiz';
@@ -30,10 +31,23 @@ const PublishQuiz: FC<PublishQuizProps> = (props) => {
   const { quizId } = params || {};
 
   const quiz = useQuizzesStore((state) => state.data[quizId]);
-  const { contentId, numberOfQuestions } = quiz || {};
+  const {
+    contentId,
+    title,
+    description,
+    numberOfQuestions,
+    numberOfQuestionsDisplay,
+  } = quiz || {};
 
   const initFormData: FormGenerateQuiz = {
-    numberOfQuestions,
+    title,
+    description,
+    numberOfQuestions: isNumber(numberOfQuestions)
+      ? `${numberOfQuestions}`
+      : numberOfQuestions,
+    numberOfQuestionsDisplay: isNumber(numberOfQuestionsDisplay)
+      ? `${numberOfQuestionsDisplay}`
+      : numberOfQuestionsDisplay,
   };
   const {
     control,

@@ -1579,6 +1579,11 @@
     "alert_delete": {
       "header": "Delete Quiz",
       "content": "Are you sure you want to delete this quiz?"
-    }
+    },
+    "alert_edit": {
+      "header": "Edit quiz",
+      "content": "Are you sure you want to edit this quiz?"
+    },
+    "continue": "Continue"
   }
 }
