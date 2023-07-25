@@ -1,3 +1,4 @@
+/* eslint-disable unused-imports/no-unused-imports */
 import { useForm } from 'react-hook-form';
 import { Keyboard } from 'react-native';
 import { useBaseHook } from '~/hooks';
@@ -70,7 +71,7 @@ const useGenerateQuiz = (
     actionsQuizzesStore.generateQuiz(params, onSuccess);
   };
 
-  const publishQuiz = (quizId: string, data: FormGenerateQuiz) => {
+  const publishOrSaveQuiz = (quizId: string, data: FormGenerateQuiz, isPublish: boolean) => {
     try {
       const onSuccess = (response: any) => {
         showToastSuccess(response);
@@ -86,7 +87,7 @@ const useGenerateQuiz = (
         quizId,
         params: {
           ...params,
-          status: QuizStatus.PUBLISHED,
+          ...(isPublish && { status: QuizStatus.PUBLISHED }),
         },
         onSuccess,
       };
@@ -101,8 +102,8 @@ const useGenerateQuiz = (
     generateQuiz(data);
   });
 
-  const onPublish = (quizId: string) => handleSubmit((data) => {
-    publishQuiz(quizId, data);
+  const onPublishOrSaveQuiz = (quizId: string, isPublish: boolean) => handleSubmit((data) => {
+    publishOrSaveQuiz(quizId, data, isPublish);
   });
 
   const handleBack = () => {
@@ -130,7 +131,7 @@ const useGenerateQuiz = (
     isGenerating,
     loading,
     onNext,
-    onPublish,
+    onPublishOrSaveQuiz,
     trigger,
     handleBack,
   };

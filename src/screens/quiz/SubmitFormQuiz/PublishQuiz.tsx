@@ -15,7 +15,7 @@ import QuestionAnswerDisplaySection from './components/QuestionAnswerDisplaySect
 import CheckmarkGenerateRandomQuiz from './components/CheckmarkGenerateRandomQuiz';
 import { useBackPressListener } from '~/hooks/navigation';
 import useQuizzesStore from '~/store/entities/quizzes';
-import { FormGenerateQuiz } from '~/interfaces/IQuiz';
+import { FormGenerateQuiz, QuizStatus } from '~/interfaces/IQuiz';
 
 type PublishQuizProps = {
   route?: {
@@ -37,6 +37,7 @@ const PublishQuiz: FC<PublishQuizProps> = (props) => {
     description,
     numberOfQuestions,
     numberOfQuestionsDisplay,
+    status,
   } = quiz || {};
 
   const initFormData: FormGenerateQuiz = {
@@ -51,7 +52,7 @@ const PublishQuiz: FC<PublishQuizProps> = (props) => {
   };
   const {
     control,
-    onPublish,
+    onPublishOrSaveQuiz,
     isFormValid,
     loading,
     watch,
@@ -60,6 +61,7 @@ const PublishQuiz: FC<PublishQuizProps> = (props) => {
   } = useGenerateQuiz(contentId, initFormData);
 
   const disabled = !isFormValid || loading;
+  const isPublishQuiz = status !== QuizStatus.PUBLISHED;
 
   const theme = useTheme();
   const styles = createStyle(theme);
@@ -76,8 +78,8 @@ const PublishQuiz: FC<PublishQuizProps> = (props) => {
           loading,
           style: styles.btnCreate,
         }}
-        buttonText="common:btn_create"
-        onPressButton={onPublish(quizId)}
+        buttonText={isPublishQuiz ? 'common:btn_create' : 'common:btn_save'}
+        onPressButton={onPublishOrSaveQuiz(quizId, isPublishQuiz)}
         onPressBack={handleBack}
       />
       <KeyboardAwareScrollView
