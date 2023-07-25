@@ -5,7 +5,9 @@ import usePostsStore from '../../posts';
 import useYourQuizStore from '~/screens/quiz/YourQuiz/store';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 
-const deleteQuiz = (set, _get) => async (quizId: string, contentId: string) => {
+const deleteQuiz = (set, get) => async (quizId: string, contentId: string) => {
+  const { actions }: IQuizzesState = get();
+
   try {
     set((state: IQuizzesState) => {
       state.loading = true;
@@ -17,6 +19,7 @@ const deleteQuiz = (set, _get) => async (quizId: string, contentId: string) => {
       state.loading = false;
     }, 'deleteQuiz');
 
+    actions.deleteQuizLocal(quizId);
     usePostsStore.getState().actions.getContentDetail(contentId);
     useYourQuizStore.getState().actions.getQuizzesContent(true);
 

@@ -1576,6 +1576,7 @@
     "gen_status_quiz_waiting_process": "The quiz is awaiting processing.",
     "edit_quiz": "Edit quiz",
     "delete_quiz": "Delete quiz",
+    "label_quiz_deleted": "Quiz deleted",
     "alert_delete": {
       "header": "Delete Quiz",
       "content": "Are you sure you want to delete this quiz?"

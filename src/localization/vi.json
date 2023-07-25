@@ -1515,6 +1515,7 @@
     "gen_status_quiz_waiting_process": "Chuẩn bị tạo quiz.",
     "edit_quiz": "Sửa quiz",
     "delete_quiz": "Xoá quiz",
+    "label_quiz_deleted": "Quiz đã bị xóa",
     "alert_delete": {
       "header": "Xoá Quiz",
       "content": "Bạn có chắc muốn xoá quiz không?"

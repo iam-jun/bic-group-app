@@ -10,6 +10,8 @@ import ContentItem from '~/components/ContentItem';
 import postsSelector from '~/store/entities/posts/selectors';
 import { QuizStatus } from '~/interfaces/IQuiz';
 import { useRootNavigation } from '~/hooks/navigation';
+import useQuizzesStore from '~/store/entities/quizzes';
+import { PlaceHolderRemoveContent } from '~/baseComponents';
 
 interface PreviewDraftQuizNotificationProps {
   route?: {
@@ -24,7 +26,7 @@ interface PreviewDraftQuizNotificationProps {
 const PreviewDraftQuizNotification: React.FC<PreviewDraftQuizNotificationProps> = ({
   route,
 }) => {
-  const { contentId, contentType } = route.params || {};
+  const { contentId, contentType, quizId } = route.params || {};
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -32,27 +34,32 @@ const PreviewDraftQuizNotification: React.FC<PreviewDraftQuizNotificationProps> 
   const isFocused = useIsFocused();
 
   const postActions = usePostsStore((state) => state.actions);
-  const deleted = usePostsStore(postsSelector.getDeleted(contentId));
   const data = usePostsStore(postsSelector.getPost(contentId, {}));
   const articleActions = useArticlesStore((state) => state.actions);
+  const quizzesActions = useQuizzesStore((state) => state.actions);
+  const { data: quizzes } = useQuizzesStore((state) => state);
 
-  const { quiz } = data || {};
-  const { status } = quiz || {};
-  const shouldShowDraftQuiz = status !== QuizStatus.PUBLISHED;
+  const { deleted: deletedQuiz } = quizzes[quizId] || {};
+
+  const { quiz: quizOnContent } = data || {};
+  const { status: statusQuizOnContent } = quizOnContent || {};
+  const shouldShowDraftQuiz = statusQuizOnContent !== QuizStatus.PUBLISHED;
 
   useEffect(() => {
     getDataDetail();
   }, [contentId, contentType]);
 
   useEffect(() => {
-    if (deleted && isFocused) {
+    if (deletedQuiz && isFocused) {
       setTimeout(() => {
         rootNavigation.goBack();
       }, 200);
     }
-  }, [deleted, isFocused]);
+  }, [deletedQuiz, isFocused]);
 
   const getDataDetail = () => {
+    quizzesActions.getQuizDetail({ quizId });
+
     if (contentType === PostType.POST) {
       postActions.getPostDetail({ postId: contentId });
     }
@@ -66,7 +73,7 @@ const PreviewDraftQuizNotification: React.FC<PreviewDraftQuizNotificationProps> 
   };
 
   const renderContent = () => {
-    if (!quiz && !deleted) return null;
+    if (deletedQuiz) return <PlaceHolderRemoveContent label='quiz:label_quiz_deleted' />;
 
     return (
       <ContentItem
