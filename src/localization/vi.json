@@ -546,6 +546,7 @@
     "title_feed_content_series": "Series",
     "title_install_chat": "Không tìm thấy BIC Chat",
     "text_desc_install_chat": "Vui lòng cài đặt BIC Chat để sử dụng tính năng này",
+    "text_get_bic_chat": "Tải BIC Chat",
     "newsfeed_search": {
       "text_cta_see_result_for_search_text": "Xem kết quả tìm kiếm \"%SEARCH_TEXT%\"",
       "clear": "Xoá hết",
