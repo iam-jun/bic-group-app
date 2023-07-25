@@ -6,6 +6,7 @@ import {
   IParamsGetJoinedAllGroups,
   IParamsGetManagedCommunityAndGroup,
   IPayloadGroupSchemeAssignments,
+  IPayloadPreviewPrivacy,
   IScheme,
 } from '~/interfaces/IGroup';
 import {
@@ -473,6 +474,14 @@ export const groupsApiConfig = {
       badgeIds,
     },
   }),
+  previewPrivacy: (params: IPayloadPreviewPrivacy): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}groups/${params?.groupId}/profile/preview`,
+    method: 'put',
+    data: {
+      ...params?.data,
+    },
+  }),
 };
 
 const groupApi = {
@@ -749,6 +758,9 @@ const groupApi = {
   getOwnedBadges: () => withHttpRequestPromise(groupsApiConfig.getOwnedBadges),
   putShowingBadges: (badgeIds: string[]) => withHttpRequestPromise(groupsApiConfig.putShowingBadges, badgeIds),
   markNewBadge: (badgeIds: string[]) => withHttpRequestPromise(groupsApiConfig.markNewBadge, badgeIds),
+  previewPrivacy: (params: IPayloadPreviewPrivacy) => withHttpRequestPromise(
+    groupsApiConfig.previewPrivacy, params,
+  ),
 };
 
 export default groupApi;

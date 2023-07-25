@@ -41,6 +41,8 @@
     "btn_done": "Done",
     "btn_next": "Next",
     "btn_confirm": "Confirm",
+    "btn_show_less": "Show less",
+    "btn_more_details": "More details",
     "btn_create": "Create",
     "btn_join": "Join",
     "btn_view": "View",
@@ -565,6 +567,32 @@
       },
       "community": "community",
       "group": "group"
+    },
+    "privacy_impact": {
+      "default_group_set_and_membership_approval": {
+        "title": "Privacy change impacts the default group set & the membership approval of inner groups?",
+        "content": "Please be aware that your group is in a default group set, this change also turn on the membership approval of {{prefix}}{{count}} inner groups.",
+        "title_default_group_set": "The default group set:",
+        "title_membership_approval": "The inner groups:"
+      },
+      "membership_approval": {
+        "title": "Turn on the membership approval for inner groups?",
+        "content": "{{prefix}}{{count}} inner groups will be turned on the membership approval."
+      },
+      "default_group_set": {
+        "title": "Privacy change impacts the default group set",
+        "content": "Please be aware that your group is in the default group set "
+      },
+      "default_group_set_and_badge": {
+        "title": "Privacy change impacts default group set & the badge",
+        "content": "Please be aware that your group is in a default group set, this change also unassigns a badge from your group.",
+        "title_default_group_set": "The default group set:",
+        "title_badge": "The badge:"
+      },
+      "badge": {
+        "title": "Unassign the group badge?",
+        "content": "To protect the privacy of group members, the badge will be unassigned from your group."
+      }
     }
   },
   "languages": {

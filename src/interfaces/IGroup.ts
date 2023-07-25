@@ -308,3 +308,8 @@ export interface IPayloadUpdateGroupJoinSetting {
   isJoinApproval?: boolean;
   isInvitedOnly?: boolean;
 }
+
+export interface IPayloadPreviewPrivacy {
+  groupId: string;
+  data: IGroupDetailEdit;
+}

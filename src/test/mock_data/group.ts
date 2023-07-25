@@ -375,3 +375,19 @@ export const MEMBERSHIP_QUESITONS = [
     updatedAt: 'string',
   },
 ];
+
+export const previewPrivacyResponse = {
+  code: 'api.ok',
+  meta: {
+    message: 'Success',
+  },
+  data: {
+    affectedInnerGroupsMembershipApproval: [
+      {
+        id: '1',
+        name: 'test',
+      },
+    ],
+    badge: null,
+  },
+};
