@@ -43,7 +43,6 @@ const AdvancedSettingHeader = ({
     name: 'advanced_settings',
     order: 0,
   };
-  console.log('>>>>>>>>>>>>>>>>', communitySettingData, isLoadingCommunitySettings);
 
   return (
     <View>
