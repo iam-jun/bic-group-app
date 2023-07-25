@@ -1518,6 +1518,11 @@
     "alert_delete": {
       "header": "Xoá Quiz",
       "content": "Bạn có chắc muốn xoá quiz không?"
-    }
+    },
+    "alert_edit": {
+      "header": "Sửa quiz",
+      "content": "Bạn có chắc muốn sửa quiz không?"
+    },
+    "continue": "Tiếp tục"
   }
 }
