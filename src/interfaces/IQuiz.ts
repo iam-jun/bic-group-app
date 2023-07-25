@@ -50,6 +50,7 @@ export interface IQuiz extends GenerateQuizParams {
   genStatus?: GenStatus;
   createdAt?: string;
   updatedAt?: string;
+  deleted?: boolean;
 }
 
 export type QuizPost = Pick<

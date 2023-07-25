@@ -23,6 +23,7 @@ import notiStack from './navigator/MainStack/stacks/notiStack/stack';
 import { USER_TABS } from '~/screens/Menu/UserProfile';
 import { USER_TABS_TYPES } from '~/screens/Menu/UserProfile/constants';
 import useAuthController from '~/screens/auth/store';
+import quizStack from './navigator/MainStack/stacks/quizStack/stack';
 
 export const isNavigationRefReady: any = React.createRef();
 
@@ -175,6 +176,7 @@ export const getScreenAndParams = (data: {
   duration: number;
   startAt: string;
   notificationId: string;
+  quizId: string;
 }) => {
   if (isEmpty(data)) {
     return null;
@@ -195,6 +197,7 @@ export const getScreenAndParams = (data: {
     duration = 0,
     startAt = '',
     notificationId = '',
+    quizId = '',
   } = data || {};
 
   if (duration) {
@@ -346,6 +349,17 @@ export const getScreenAndParams = (data: {
       );
       return { screen: mainStack.userProfile, params: { userId, targetIndex } };
     }
+
+    case NOTIFICATION_TYPE.QUIZ_GENERATE_SUCCESSFUL:
+    case NOTIFICATION_TYPE.QUIZ_GENERATE_UNSUCCESSFUL:
+      return {
+        screen: quizStack.previewDraftQuizNotification,
+        params: {
+          quizId,
+          contentId,
+          contentType,
+        },
+      };
 
     default:
       console.warn(`Notification type ${type} have not implemented yet`);
