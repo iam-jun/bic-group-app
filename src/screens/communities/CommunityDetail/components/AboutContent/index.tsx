@@ -17,7 +17,7 @@ import PreviewMembers from '../PreviewMembers';
 import Terms from '~/components/TermsModal/components/Terms';
 import useTermStore from '~/components/TermsModal/store';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import { ITypeGroup } from '~/interfaces/common';
+import { IGroupSettings, ITypeGroup } from '~/interfaces/common';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import useCommunitiesStore from '~/store/entities/communities';
 
@@ -27,6 +27,7 @@ type AboutContentProps = {
     userCount?: number;
     privacy?: GroupPrivacyType;
     members?: IPreviewMember[];
+    affectedSettings?: IGroupSettings
   };
   groupId?: string;
   communityId?: string;
@@ -46,10 +47,11 @@ const AboutContent: FC<AboutContentProps> = ({
   const { colors } = theme;
 
   const {
-    description, userCount, privacy, members,
+    description, userCount, privacy, members, affectedSettings,
   } = profileInfo;
   const privacyData = GroupPrivacyDetail[privacy] || {};
   const { icon: iconPrivacy, privacyTitle }: any = privacyData;
+  const { isActiveGroupTerms } = affectedSettings || {};
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -103,7 +105,7 @@ const AboutContent: FC<AboutContentProps> = ({
     return (
       <View testID="about_content_private" style={styles.container}>
         {renderDescription()}
-        <Terms style={styles.termsInPrivate} groupId={groupId} />
+        <Terms style={styles.termsInPrivate} groupId={groupId} isActiveGroupTerms={isActiveGroupTerms} />
       </View>
     );
   }
@@ -149,7 +151,7 @@ const AboutContent: FC<AboutContentProps> = ({
         })}
         <PreviewMembers userCount={userCount} members={members} />
       </View>
-      <Terms style={styles.terms} groupId={groupId} />
+      <Terms style={styles.terms} groupId={groupId} isActiveGroupTerms={isActiveGroupTerms} />
     </View>
   );
 };

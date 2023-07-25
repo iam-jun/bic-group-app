@@ -10,17 +10,18 @@ import useTermStore from '../store';
 
 interface TermsProps {
   groupId: string;
+  isActiveGroupTerms: boolean;
   style?: StyleProp<ViewStyle>;
 }
 
 const Terms = (props: TermsProps) => {
-  const { style = {}, groupId } = props;
+  const { style = {}, groupId, isActiveGroupTerms } = props;
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
   const content = useTermStore((state) => state.data?.[groupId]?.content) || '';
 
-  if (!content) return null;
+  if (!isActiveGroupTerms || !content) return null;
 
   return (
     <View style={[styles.container, style]} testID="terms">

@@ -13,7 +13,7 @@ describe('Terms component', () => {
       return state;
     });
 
-    const rendered = renderWithRedux(<Terms groupId={groupId} />);
+    const rendered = renderWithRedux(<Terms groupId={groupId} isActiveGroupTerms />);
 
     const { getByTestId } = rendered;
     const containerComponent = getByTestId('terms');
