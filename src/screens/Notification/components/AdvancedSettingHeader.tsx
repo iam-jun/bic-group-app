@@ -108,7 +108,7 @@ const AdvancedSettingHeader = ({
               tintColor={colors.neutral20}
             />
             <ViewSpacing width={spacing.margin.small} />
-            <Text.BodyS useI18n>
+            <Text.BodyS color={colors.neutral20} useI18n>
               notification:advanced_notifications_settings:search_group_placeholder
             </Text.BodyS>
           </View>
