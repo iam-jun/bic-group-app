@@ -124,7 +124,12 @@ const CommentDetail: FC<IRouteParams> = (props) => {
   }
 
   return (
-    <ScreenWrapper isFullView backgroundColor={colors.neutral5} testID="comment_detail">
+    <ScreenWrapper
+      key={`comment_detail_screen.${notiId}.${postId}.${commentId}`}
+      isFullView
+      backgroundColor={colors.neutral5}
+      testID="comment_detail"
+    >
       <Header
         titleTextProps={{ useI18n: true }}
         title={renderTitle()}

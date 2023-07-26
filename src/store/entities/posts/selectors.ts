@@ -15,6 +15,9 @@ const postsSelector = {
   getCommentsCount: (id: string) => (state: IPostsState) => state?.posts?.[id]?.commentsCount,
   getCommentOnlyCount: (id: string) => (state: IPostsState) => state?.posts?.[id]?.comments?.meta?.hasNextPage,
   getCommentEndCursor: (id: string) => (state: IPostsState) => state?.posts?.[id]?.comments?.meta?.endCursor,
+  getCommentStartCursor: (id: string) => (state: IPostsState) => state?.posts?.[id]?.comments?.meta?.startCursor,
+  // eslint-disable-next-line max-len
+  getCommentHasPreviousPage: (id: string) => (state: IPostsState) => state?.posts?.[id]?.comments?.meta?.hasPreviousPage,
   getCommentList: (id: string) => (state: IPostsState) => state?.posts?.[id]?.comments?.list,
   getStatus: (id: string) => (state: IPostsState) => state?.posts?.[id]?.status,
   getDeleted: (id: string) => (state: IPostsState) => state?.posts?.[id]?.deleted,

@@ -8,8 +8,7 @@ import Tooltip from 'react-native-walkthrough-tooltip';
 import spacing from '~/theme/spacing';
 import Text from '~/baseComponents/Text';
 import { Radio } from '~/baseComponents';
-import { Props, topAdjustment } from './MembershipApproval';
-import { GroupPrivacyType } from '~/constants/privacyTypes';
+import { SettingsProps, topAdjustment } from './MembershipApproval';
 import { dimension } from '~/theme';
 import { checkTypeByRootGroup } from '../helper';
 
@@ -24,12 +23,14 @@ export enum IdType {
   ONLY_INVITED_PEOPLE = 1,
 }
 
-const OptionsWhoCanJoin: FC<Props> = (props) => {
+const OptionsWhoCanJoin: FC<SettingsProps> = (props) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyles(theme);
 
-  const { data, updateJoinSetting } = props || {};
+  const {
+    data, settings, changeableSettings, updateJoinSetting,
+  } = props || {};
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const typeByRootGroup = checkTypeByRootGroup(data);
@@ -47,11 +48,8 @@ const OptionsWhoCanJoin: FC<Props> = (props) => {
     },
   ];
 
-  const isInvitedOnly = data?.affectedSettings?.isInvitedOnly;
-  const isSecretPrivacy = data?.privacy === GroupPrivacyType.SECRET;
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const isInDefaultGroupSet = data?.isInDefaultGroupSet;
+  const isInvitedOnly = settings?.isInvitedOnly;
+  const contentTooltip = changeableSettings?.isInvitedOnly;
 
   const [selectedOption, setSelectedOption] = useState(null);
   const [isVisibleTooltip, setIsVisibleTooltip] = useState<boolean>(false);
@@ -67,7 +65,6 @@ const OptionsWhoCanJoin: FC<Props> = (props) => {
 
   const onPress = (option: IOption) => {
     if (option.id === selectedOption.id) return;
-    setSelectedOption(option);
     if (option.id === OPTIONS[IdType.ANYONE].id) {
       updateJoinSetting({ isInvitedOnly: false });
     } else {
@@ -81,15 +78,26 @@ const OptionsWhoCanJoin: FC<Props> = (props) => {
 
   const renderContentTooltip = () => (
     <Text.BodyM useI18n color={colors.white}>
-      {isInDefaultGroupSet
-        ? 'settings:membership_policy_settings:tooltip:default_group_set_radio'
-        : 'settings:membership_policy_settings:tooltip:secret'}
+      {contentTooltip}
     </Text.BodyM>
   );
 
-  const renderOptions = () => OPTIONS.map((option) => {
+  const checkIsDisabled = (index: number) => {
+    if (index === 0) {
+      if (isInvitedOnly && contentTooltip) {
+        return true;
+      }
+      return false;
+    }
+    if (!isInvitedOnly && contentTooltip) {
+      return true;
+    }
+    return false;
+  };
+
+  const renderOptions = () => OPTIONS.map((option, index) => {
     const isChecked = selectedOption?.id === option.id;
-    const isDisabled = (isSecretPrivacy && !isChecked) || (isInDefaultGroupSet && !isChecked);
+    const isDisabled = checkIsDisabled(index);
 
     const backgroundColor = isChecked ? colors.neutral2 : colors.white;
     const titleColor = isDisabled ? colors.neutral30 : colors.neutral80;

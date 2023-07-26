@@ -21,7 +21,7 @@ type CommunityGroupCardProps = {
   item: any;
   testID?: string;
   shouldShowAlertJoinTheCommunityFirst?: boolean;
-  onJoin?: (id: string, name: string, isGroup?: boolean)=>void;
+  onJoin?: (payload: { id: string, name: string, icon: string, privacy: string, userCount: number })=>void;
   onCancel?: (id: string, groupId: string, isGroup?: boolean)=>void;
 };
 
@@ -90,7 +90,9 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
       return;
     }
     if (!!onJoin) {
-      onJoin(id, name, isGroup(item));
+      onJoin({
+        id, name, icon, privacy, userCount,
+      });
     }
   };
 

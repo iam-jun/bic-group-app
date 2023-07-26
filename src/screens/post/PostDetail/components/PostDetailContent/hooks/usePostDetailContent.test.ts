@@ -14,6 +14,7 @@ describe('usePostDetailContent', () => {
     notificationId: 'test',
     HeaderImageComponent: 'test',
     isReported: false,
+    commentId: 'test',
   };
 
   it('render correctly', () => {

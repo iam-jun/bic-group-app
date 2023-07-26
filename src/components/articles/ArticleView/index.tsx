@@ -14,12 +14,14 @@ export interface ArticleViewProps {
     id: string;
     article: any;
     endCursor: string;
+    onPressComment?: () => void;
 }
 
 const ArticleView: FC<ArticleViewProps> = ({
   id,
   article,
   endCursor,
+  onPressComment,
 }) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -29,7 +31,7 @@ const ArticleView: FC<ArticleViewProps> = ({
   return (
     <>
       <ViewSpacing height={spacing.margin.large} />
-      <ArticleItem data={article} />
+      <ArticleItem data={article} onPressComment={onPressComment} />
       <View style={styles.boxDivider}>
         <Divider style={styles.divider} />
       </View>

@@ -241,7 +241,14 @@ export const getRootGroupIdFromGroupItem = (group: any) => {
 export const getNewPosts = (params: { isRefresh: boolean; response: any; list: IPost[] }) => {
   const { isRefresh, response, list } = params;
   if (isRefresh) {
-    return response?.data || [];
+    return response?.data?.list || [];
   }
-  return list.concat(response?.data || []);
+  return list.concat(response?.data?.list || []);
+};
+
+export const handleScrollToIndexFailed = (params: { error: any, listRef: any }) => {
+  const { error, listRef } = params;
+  const offset = (error?.averageItemLength || 0) * (error?.index || 0);
+  listRef.current?.scrollToOffset?.({ offset });
+  setTimeout(() => listRef.current?.scrollToIndex?.({ index: error?.index || 0 }), 100);
 };

@@ -17,6 +17,7 @@ import useCommonController from '~/screens/store';
 import INotificationsState from '~/screens/Notification/store/Interface';
 import useNotificationStore from '~/screens/Notification/store';
 import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
+import useNotiSettingsStore from '~/screens/Notification/NotiSettings/store';
 import useUserBadge from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
 
 const useNotificationSocket = () => {
@@ -25,6 +26,7 @@ const useNotificationSocket = () => {
   const commonController = useCommonController((state) => state.actions);
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
   const postActions = usePostsInProgressStore((state) => state.actions);
+  const notiSettingsActions = useNotiSettingsStore((state) => state.actions);
   const userBadgeActions = useUserBadge((state) => state.actions);
 
   const handleNotification = (data: any) => {
@@ -88,6 +90,7 @@ const useNotificationSocket = () => {
       }
 
       notiActions.getTabData();
+      notiSettingsActions.getConfigSettings();
 
       const socket = io(
         getEnv('BEIN_API'), {

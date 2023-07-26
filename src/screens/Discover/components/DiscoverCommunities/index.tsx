@@ -15,12 +15,16 @@ import CommunityGroupCard from '~/components/CommunityGroupCard';
 import useDiscoverCommunitiesStore from './store';
 import useCommunityController from '~/screens/communities/store';
 import useCommunitiesStore from '~/store/entities/communities';
-import useTermStore from '~/components/TermsModal/store';
+import useTermStore, { TermsInfo } from '~/components/TermsModal/store';
 import useMemberQuestionsStore, { MembershipQuestionsInfo } from '~/components/MemberQuestionsModal/store';
+import { ITypeGroup } from '~/interfaces/common';
 
 type HandleJoinCommunityData = {
   id: string;
   name: string;
+  icon: string;
+  privacy: string;
+  userCount: number;
   isActiveGroupTerms: boolean;
   isActiveMembershipQuestions: boolean;
   rootGroupId: string;
@@ -47,10 +51,16 @@ const ItemDiscoverCommunities: FC<ItemDiscoverCommunitiesProps> = ({
     <CommunityGroupCard
       item={item}
       testID="discover_communities_item"
-      onJoin={(id: string, name: string) => {
+      onJoin={(payload) => {
+        const {
+          id, name, icon, privacy, userCount,
+        } = payload || {};
         const data = {
           id,
           name,
+          icon,
+          privacy,
+          userCount,
           isActiveGroupTerms,
           isActiveMembershipQuestions,
           rootGroupId,
@@ -112,33 +122,44 @@ const DiscoverCommunities = () => {
   };
 
   const handleJoin = (data: HandleJoinCommunityData) => {
-    if (data?.isActiveMembershipQuestions) {
+    const {
+      id, rootGroupId, name, icon, privacy, userCount, isActiveGroupTerms, isActiveMembershipQuestions,
+    }
+      = data || {};
+
+    if (isActiveMembershipQuestions) {
       const payload: MembershipQuestionsInfo = {
-        groupId: data.id,
-        rootGroupId: data.rootGroupId,
-        name: data.name,
-        type: 'community',
+        groupId: id,
+        rootGroupId,
+        name,
+        icon,
+        privacy,
+        userCount,
+        type: ITypeGroup.COMMUNITY,
         isActive: true,
-        isActiveGroupTerms: data?.isActiveGroupTerms,
+        isActiveGroupTerms,
       };
       membershipQuestionActions.setMembershipQuestionsInfo(payload);
       return;
     }
-    if (data?.isActiveGroupTerms) {
+    if (isActiveGroupTerms) {
       const payload = {
-        groupId: data.id,
-        rootGroupId: data.rootGroupId,
-        name: data.name,
-        type: 'community',
+        groupId: id,
+        rootGroupId,
+        name,
+        icon,
+        privacy,
+        userCount,
+        type: ITypeGroup.COMMUNITY,
         isActive: true,
-      } as any;
+      } as TermsInfo;
       termsActions.setTermInfo(payload);
       return;
     }
     communityController.joinCommunity({
-      rootGroupId: data.rootGroupId,
-      communityId: data.id,
-      communityName: data.name,
+      rootGroupId,
+      communityId: id,
+      communityName: name,
     });
   };
 

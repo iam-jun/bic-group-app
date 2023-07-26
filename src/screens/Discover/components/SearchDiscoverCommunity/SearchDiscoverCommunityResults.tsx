@@ -17,8 +17,9 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import useDiscoverCommunitiesSearchStore from './store';
 import useCommunityController from '~/screens/communities/store';
 import useCommunitiesStore from '~/store/entities/communities';
-import useTermStore from '~/components/TermsModal/store';
+import useTermStore, { TermsInfo } from '~/components/TermsModal/store';
 import useMemberQuestionsStore, { MembershipQuestionsInfo } from '~/components/MemberQuestionsModal/store';
+import { ITypeGroup } from '~/interfaces/common';
 
 interface SearchDiscoverCommunityResultsProps {
   onLoadMore?: () => void;
@@ -68,14 +69,17 @@ const SearchDiscoverCommunityResults = ({
 
   const onJoin = (item: any) => {
     const {
-      id, name, groupId, affectedSettings,
+      id, name, icon, privacy, userCount, groupId, affectedSettings,
     } = item;
     if (affectedSettings?.isActiveMembershipQuestions) {
       const payload: MembershipQuestionsInfo = {
         groupId: id,
         rootGroupId: groupId,
         name,
-        type: 'community',
+        icon,
+        privacy,
+        userCount,
+        type: ITypeGroup.COMMUNITY,
         isActive: true,
         isActiveGroupTerms: affectedSettings?.isActiveGroupTerms,
       };
@@ -88,9 +92,12 @@ const SearchDiscoverCommunityResults = ({
         groupId: id,
         rootGroupId: groupId,
         name,
-        type: 'community',
+        icon,
+        privacy,
+        userCount,
+        type: ITypeGroup.COMMUNITY,
         isActive: true,
-      } as any;
+      } as TermsInfo;
       termsActions.setTermInfo(payload);
       return;
     }

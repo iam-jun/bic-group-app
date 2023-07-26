@@ -236,8 +236,8 @@
     "settings": "Settings",
     "pin_unpin": "Pin/Unpin",
     "text_i_agree": "I agree",
-    "text_group_terms": "Group Terms & Conditions",
-    "text_community_terms": "Community Terms & Conditions",
+    "text_group_terms": "Terms & Conditions",
+    "text_community_terms": "Terms & Conditions",
     "text_sorry_something_went_wrong": "Sorry, something went wrong",
     "text_pull_to_refresh": "Please pull down to refresh the page and try again",
     "text_answer_title": "Membership questions",
@@ -559,14 +559,20 @@
         "cancel": "Cancel",
         "turn_off": "Turn off"
       },
-      "tooltip": {
-        "private": "Can’t be turned off because your {{type}} privacy is Private",
-        "secret": "Can’t select this option because your group privacy is Secret",
-        "default_group_set_toggle": "Can’t be turned on because your group is in the default group set",
-        "default_group_set_radio": "Can’t select this option because your group is in the default group set"
-      },
       "community": "community",
-      "group": "group"
+      "group": "group",
+      "change_settings": {
+        "title_membership_approval": "Turn on the membership approval for inner groups?",
+        "title_policy_setting": "Change the policy setting for inner groups?",
+        "content_first_with_group": "{{count}} inner group of ",
+        "content_first_with_groups": "{{count}} inner groups of ",
+        "content_membership_approval": " will be turned on the membership approval.",
+        "content_policy_setting": " will be changed to only invited people can join.",
+        "button_change": "Change",
+        "button_turn_on": "Turn On",
+        "button_more_details": "More details",
+        "button_show_less": "Show less"
+      }
     },
     "privacy_impact": {
       "default_group_set_and_membership_approval": {
@@ -1158,7 +1164,6 @@
     "mark_all_as_read": "Mark all as Read",
     "mark_all_as_read_success": "All notifications marked as read",
     "turn_off_notification": "Turn off Notification",
-    "notification_settings": "Notification Settings",
     "created_a_post": "created a post",
     "mentioned_you_in_a_post": "mentioned you in a post",
     "mentioned_you_in_a_comment": "mentioned you in a comment",
@@ -1186,7 +1191,18 @@
     "seen_all_notifications": "You have seen it all",
     "text_scheduled": "Scheduled Maintenance Downtime",
     "content_scheduled_maintenance_downtime": "We’ll improve the platform to enhance your experience. During maintenance, it may be temporarily unavailable or have limited functionality.\n \nMaintenance will start at **(startAt)** in about **(duration)**.\n \nWe apologize for any inconvenience and appreciate your continued support.",
-    "text_bic_team": "BIC team"
+    "text_bic_team": "BIC team",
+    "text_remove_notification": "Remove this notification",
+    "text_remove_notification_success": "Notification removed successfully",
+    "notification_settings": {
+      "title": "Notification Settings",
+      "description": "We may still send you important notification about your account outside of your settings",
+      "error_title": "Sorry, we can’t get the data here",
+      "error_description": "Please refresh the page or try again later",
+      "allow_notifications": "Allow notifications",
+      "in_app_text": "In-app",
+      "push_text": "Push"
+    }
   },
   "new_feature": {
     "title": "New feature",
@@ -1531,5 +1547,12 @@
     },
     "edit_showing_badges_title": "Edit Showing Badges",
     "badge_tooltip_placeholder": "Tap here to add a badge"
+  },
+  "previewJoinableGroup": {
+    "title": "Join all outer groups?",
+    "description_1": "By joining ",
+    "description_2": ", you’ll join all its outer groups.",
+    "text_join_group_button": "Join",
+    "text_you_are_asking_to_join": "You’re asking to join"
   }
 }

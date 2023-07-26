@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import MarkdownView from '~/beinComponents/MarkdownView';
 import TimeView from '~/beinComponents/TimeView';
 import spacing from '~/theme/spacing';
 import Icon from '~/baseComponents/Icon';
@@ -21,6 +20,7 @@ interface Props {
   content: string;
   updatedAt: string;
   type?: string;
+  isRead?: boolean;
 }
 
 const NotificationContent = ({
@@ -28,8 +28,10 @@ const NotificationContent = ({
   content,
   updatedAt,
   type = '',
+  isRead = false,
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
+  const styles = createStyles(theme);
   const { colors } = theme;
 
   const [icon, setIcon] = useState('');
@@ -56,9 +58,12 @@ const NotificationContent = ({
         style={styles.icon}
       />
       )}
-        <MarkdownView testID="notification_content.description">
-          {description}
-        </MarkdownView>
+        { Boolean(description) && (
+        <Markdown
+          testID="notification_content.description"
+          value={description}
+        />
+        )}
       </View>
       {!!content && (
       <Markdown
@@ -66,31 +71,46 @@ const NotificationContent = ({
         value={content}
       />
       )}
-      <TimeView
-        testID="notification_content.time_view"
-        time={updatedAt}
-        style={styles.timeCreated}
-        type="short"
-        textProps={{ variant: 'bodyS', color: colors.neutral40 }}
-      />
+      <View style={[styles.row, styles.timeCreated]}>
+        {
+        Boolean(!isRead)
+        && <View style={styles.dot} />
+      }
+        <TimeView
+          testID="notification_content.time_view"
+          time={updatedAt}
+          type="short"
+          textProps={{ variant: 'bodyS', color: colors.neutral40 }}
+        />
+      </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  timeCreated: {
-    marginTop: spacing.margin.tiny,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  icon: {
-    marginRight: spacing.margin.xSmall,
-  },
-});
+const createStyles = (theme: ExtendedTheme) => {
+  const { colors } = theme;
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    timeCreated: {
+      marginTop: spacing.margin.tiny,
+    },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    icon: {
+      marginRight: spacing.margin.xSmall,
+    },
+    dot: {
+      width: spacing.margin.small,
+      height: spacing.margin.small,
+      borderRadius: spacing.borderRadius.circle,
+      backgroundColor: colors.purple50,
+      marginRight: spacing.margin.xSmall,
+    },
+  });
+};
 
 export default NotificationContent;

@@ -89,7 +89,6 @@ describe('Notification Screen', () => {
     const spy = jest.spyOn(notificationApi, 'getNotificationList').mockImplementation(
       () => Promise.resolve(response) as any,
     );
-    jest.useFakeTimers();
 
     const showBottomList = jest.fn();
     useModalStore.setState((state) => {
@@ -104,11 +103,6 @@ describe('Notification Screen', () => {
         )}
       />,
     );
-
-    act(() => {
-      jest.runAllTimers();
-    });
-
     expect(spy).toBeCalled();
     const notiComponent = wrapper.queryAllByTestId('notification_screen.item_wrapper');
     expect(notiComponent).toBeDefined();

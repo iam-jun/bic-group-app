@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import i18next from 'i18next';
+import { isEmpty } from 'lodash';
 import { IPayloadReplying } from '~/interfaces/IPost';
 
 import Text from '~/baseComponents/Text';
@@ -29,7 +30,7 @@ const ReplyingView = () => {
 
   const loading = useCommentInputStore((state: ICommentInputState) => state.createComment.loading);
 
-  if (!replying) {
+  if (!replying || isEmpty(replying)) {
     return null;
   }
 
