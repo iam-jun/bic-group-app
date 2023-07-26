@@ -1,5 +1,5 @@
 import {
-  View, StyleSheet, FlatList, ActivityIndicator, Omit, FlatListProps,
+  View, StyleSheet, FlatList, ActivityIndicator, Omit, FlatListProps, StyleProp, ViewStyle,
 } from 'react-native';
 import React, { FC, useEffect } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -16,6 +16,8 @@ export interface GroupListProps extends Omit<FlatListProps<IGroup>, 'renderItem'
     loading?: boolean;
     itemProps?: Omit<GroupItemProps, 'item'>;
     resetOnHide?: boolean;
+    styleList?: StyleProp<ViewStyle>;
+    styleListFooter?: StyleProp<ViewStyle>;
 
     onToggle?: (item: IGroup, isCollapsed: boolean) => void;
     onPressItem?: (item: IGroup) => void;
@@ -27,6 +29,8 @@ const _GroupList: FC<GroupListProps> = ({
   loading,
   itemProps,
   resetOnHide = true,
+  styleList = {},
+  styleListFooter = {},
 
   onToggle,
   onPressItem,
@@ -44,7 +48,7 @@ const _GroupList: FC<GroupListProps> = ({
   const ListEmptyComponent = loading ? null : <NoSearchResultsFound />;
 
   const ListFooterComponent = (
-    <View style={styles.footer}>
+    <View style={[styles.footer, styleListFooter]}>
       {loading && (
       <ActivityIndicator size="large" color={theme.colors.neutral5} />
       )}
@@ -53,10 +57,10 @@ const _GroupList: FC<GroupListProps> = ({
 
   const renderItemSeperator = () => (mode === 'flat' && <ViewSpacing height={padding.small} />);
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item, index }) => {
     if (mode === 'flat') return <GroupItem {...itemProps} item={item} onPress={onPressItem} />;
 
-    return <GroupTreeItem {...itemProps} item={item} onToggle={onToggle} onPress={onPressItem} />;
+    return <GroupTreeItem {...itemProps} item={item} index={index} onToggle={onToggle} onPress={onPressItem} />;
   };
 
   const keyExtractor = (item: IGroup, index: number) => `group_list_${item?.id}_${index}`;
@@ -65,7 +69,7 @@ const _GroupList: FC<GroupListProps> = ({
     <View style={styles.container}>
       <FlatList
         data={data}
-        style={styles.list}
+        style={[styles.list, styleList]}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         ListEmptyComponent={ListEmptyComponent}

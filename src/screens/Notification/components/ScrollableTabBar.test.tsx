@@ -14,6 +14,7 @@ describe('ScrollableTabBar component', () => {
     const onItemPress = jest.fn();
     const onPressItemOption = jest.fn();
     const onPressFilterItem = jest.fn();
+    const onRefresh = jest.fn();
 
     const rendered = renderWithRedux(<ScrollableTabBar
       activeIndex={0}
@@ -21,6 +22,7 @@ describe('ScrollableTabBar component', () => {
       onItemPress={onItemPress}
       onPressItemOption={onPressItemOption}
       onChangeTab={onPressFilterItem}
+      onRefresh={onRefresh}
     />);
 
     const filterComponent = rendered.queryByTestId('notification.filter');
@@ -39,6 +41,7 @@ describe('ScrollableTabBar component', () => {
     const onItemPress = jest.fn();
     const onPressItemOption = jest.fn();
     const onPressFilterItem = jest.fn();
+    const onRefresh = jest.fn();
 
     const response = {
       code: 200,
@@ -56,6 +59,7 @@ describe('ScrollableTabBar component', () => {
       onItemPress={onItemPress}
       onPressItemOption={onPressItemOption}
       onChangeTab={onPressFilterItem}
+      onRefresh={onRefresh}
     />);
 
     act(() => {
@@ -81,6 +85,7 @@ describe('ScrollableTabBar component', () => {
     const onItemPress = jest.fn();
     const onPressItemOption = jest.fn();
     const onPressFilterItem = jest.fn();
+    const onRefresh = jest.fn();
 
     const rendered = renderWithRedux(<ScrollableTabBar
       activeIndex={0}
@@ -88,6 +93,7 @@ describe('ScrollableTabBar component', () => {
       onItemPress={onItemPress}
       onPressItemOption={onPressItemOption}
       onChangeTab={onPressFilterItem}
+      onRefresh={onRefresh}
     />);
 
     const filterComponent = rendered.queryByTestId('notification.filter');

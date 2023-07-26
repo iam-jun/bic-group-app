@@ -20,6 +20,7 @@ import Divider from '~/beinComponents/Divider';
 import useModalStore from '~/store/modal';
 import useBaseHook from '~/hooks/baseHook';
 import useMemberQuestionsStore from '../MemberQuestionsModal/store';
+import GroupInfo from '../GroupInfo';
 
 const TermsView = () => {
   const theme: ExtendedTheme = useTheme();
@@ -38,6 +39,9 @@ const TermsView = () => {
   const groupId = useTermStore((state) => state.groupId);
   const rootGroupId = useTermStore((state) => state.rootGroupId);
   const name = useTermStore((state) => state.name);
+  const icon = useTermStore((state) => state.icon);
+  const privacy = useTermStore((state) => state.privacy);
+  const userCount = useTermStore((state) => state.userCount);
   const isActiveGroupTerms = useTermStore((state) => state.isActiveGroupTerms);
   const isOpen = useTermStore((state) => state.isOpen);
   const answers = useTermStore((state) => state.answers);
@@ -142,11 +146,12 @@ const TermsView = () => {
           titleTextProps={{ useI18n: true }}
           onPressBack={onClose}
         />
-        <Divider size={spacing.margin.small} />
+        <Divider size={spacing.margin.large} />
         <View style={styles.body}>
           {!!content && !loading
             ? (
               <>
+                <GroupInfo name={name} icon={icon} privacy={privacy} userCount={userCount} />
                 <ScrollView
                   showsVerticalScrollIndicator={false}
                   contentContainerStyle={styles.contentContainerStyle}

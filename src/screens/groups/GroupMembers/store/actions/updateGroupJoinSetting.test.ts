@@ -19,7 +19,7 @@ describe('updateGroupJoinSetting', () => {
     jest.useFakeTimers();
     const { result } = renderHook(() => useGroupMemberStore((state) => state));
     act(() => {
-      result.current.actions.updateGroupJoinSetting({ groupId, isJoinApproval });
+      result.current.actions.updateGroupJoinSetting({ groupId, settings: { isJoinApproval } });
     });
     expect(spy).toBeCalled();
     act(() => {
@@ -49,7 +49,7 @@ describe('updateGroupJoinSetting', () => {
     jest.useFakeTimers();
     const { result } = renderHook(() => useGroupMemberStore((state) => state));
     act(() => {
-      result.current.actions.updateGroupJoinSetting({ groupId, isJoinApproval });
+      result.current.actions.updateGroupJoinSetting({ groupId, settings: { isJoinApproval } });
     });
     expect(spy).toBeCalled();
     act(() => {

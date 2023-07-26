@@ -26,6 +26,7 @@ export enum DeepLinkTypes {
   REFERRAL = 'referral',
   USER_PROFILE = 'user_profile',
   APP = 'APP',
+  DISCOVER_COMMUNITIES = 'discover-communities',
 }
 
 export enum LinkGeneratorTypes {
@@ -213,15 +214,24 @@ export const matchDeepLink = (url: string) => {
 
   // bic:///communities/ba6016d4-168f-44de-aca9-4a51055e6201
   match = new RegExp(
-    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?communities\\/(${UUID_V4_PATTERN})$`,
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?communities\\/(${UUID_V4_PATTERN})(?:\\/about$|\\/members$|$)`,
   ).exec(deepLinkUrl);
   if (match) {
     return { type: DeepLinkTypes.COMMUNTY_DETAIL, communityId: match[1] };
   }
 
+  // bicdev:///communities/discover
+  match = new RegExp(
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?communities\\/?discover$`,
+  ).exec(deepLinkUrl);
+  if (match) {
+    return { type: DeepLinkTypes.DISCOVER_COMMUNITIES };
+  }
+
   // bic:///communities/ba6016d4-168f-44de-aca9-4a51055e6201/groups/5578fb11-de70-49e3-9c01-27e26f5b42d8
   match = new RegExp(
-    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?communities\\/(${UUID_V4_PATTERN})\\/groups\\/(${UUID_V4_PATTERN})$`,
+    // eslint-disable-next-line max-len
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?communities\\/(${UUID_V4_PATTERN})\\/groups\\/(${UUID_V4_PATTERN})(?:\\/about$|\\/members$|$)`,
   ).exec(deepLinkUrl);
   if (match) {
     return { type: DeepLinkTypes.GROUP_DETAIL, communityId: match[1], groupId: match[2] };

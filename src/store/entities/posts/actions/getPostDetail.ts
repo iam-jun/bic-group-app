@@ -8,13 +8,13 @@ import {
 import { IParamGetReportContent, TargetType } from '~/interfaces/IReport';
 import { mockReportReason } from '~/test/mock_data/report';
 import { IPostsState } from '..';
-import streamApi from '~/api/StreamApi';
+import streamApi, { DEFAULT_LIMIT } from '~/api/StreamApi';
 import showToast from '~/store/helper/showToast';
 import showToastError from '~/store/helper/showToastError';
 
 const getPostDetail = (_set, get) => async (payload: IPayloadGetPostDetail) => {
   const {
-    callbackLoading, postId, isReported, ...restParams
+    callbackLoading, postId, isReported, commentId, ...restParams
   } = payload || {};
   const { actions }: IPostsState = get();
 
@@ -26,7 +26,9 @@ const getPostDetail = (_set, get) => async (payload: IPayloadGetPostDetail) => {
     callbackLoading?.(true, false);
     actions.setIsLoadingGetPostDetail(true);
 
-    const response = await callApi({ isReported, postId, restParams });
+    const response = await callApi({
+      isReported, postId, commentId, restParams,
+    });
 
     actions.addToPosts({
       data: response || {},
@@ -65,8 +67,10 @@ const getPostDetail = (_set, get) => async (payload: IPayloadGetPostDetail) => {
   }
 };
 
-const callApi = async (params: { isReported: boolean, postId: string, restParams: any }) => {
-  const { isReported, postId, restParams } = params;
+const callApi = async (params: { isReported: boolean, postId: string, commentId: string, restParams: any }) => {
+  const {
+    isReported, postId, commentId, restParams,
+  } = params;
   let response = null;
   if (isReported) {
     const paramGetReportContent: IParamGetReportContent = {
@@ -93,7 +97,12 @@ const callApi = async (params: { isReported: boolean, postId: string, restParams
     };
 
     const responePostDetail = await streamApi.getPostDetail(params);
-    const responseComments = await streamApi.getCommentsByPostId({ postId, order: 'DESC' });
+    let responseComments = null;
+    if (commentId) {
+      responseComments = await streamApi.getCommentDetail(commentId, { postId, limit: DEFAULT_LIMIT });
+    } else {
+      responseComments = await streamApi.getCommentsByPostId({ postId, order: 'DESC' });
+    }
     const { list, meta } = responseComments?.data || {};
     if (responePostDetail?.data && responseComments?.data) {
       response = {

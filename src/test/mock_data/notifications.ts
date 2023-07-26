@@ -639,3 +639,49 @@ export const mockNoti = {
   },
   updated_at: '2023-02-16T02:50:28.238Z',
 };
+
+export const mockChangeLogData = {
+  code: 'api.ok',
+  data: {
+    id: 'a3100e1b-f682-46cc-a6b9-5e30807beba9',
+    activities: [
+      {
+        actor: {
+          id: '',
+          avatar: '',
+          fullname: '',
+          username: '',
+        },
+        changelogsInfo: {
+          title: 'QC test noti',
+          content: "We're excited to announce the release of version ...\nHere's a quick preview of what's new in this version:\n\nThank you for your continued support, and we hope you enjoy the latest improvements!\n**BIC Team**",
+        },
+      },
+    ],
+    group: '65d538df-1898-4a89-913b-946fab99b379',
+    target: 'USER',
+    verb: 'NOTIFY',
+    activity_count: 1,
+    actor_count: 1,
+    extra: {
+      type: 'changelogs',
+      actors: [
+        {
+          id: '',
+          fullname: '',
+          username: '',
+          avatar: '',
+        },
+      ],
+      description: '**A new version of BIC has been released!**',
+      content: 'Please check the details for more information',
+    },
+    is_read: true,
+    is_seen: true,
+    created_at: '2023-07-06T02:43:37.766Z',
+    updated_at: '2023-07-06T02:43:37.766Z',
+  },
+  meta: {
+    message: 'OK',
+  },
+};

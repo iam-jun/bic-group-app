@@ -203,8 +203,8 @@
     "settings": "Thiết lập bài viết",
     "pin_unpin": "Ghim/Bỏ ghim",
     "text_i_agree": "Tôi đồng ý",
-    "text_group_terms": "Điều khoản nhóm",
-    "text_community_terms": "Điều khoản cộng đồng",
+    "text_group_terms": "Điều khoản",
+    "text_community_terms": "Điều khoản",
     "text_got_it": "Đã biết",
     "text_sorry_something_went_wrong": "Đã có lỗi xảy ra",
     "text_pull_to_refresh": "Vui lòng kéo xuống để làm mới trang và thử lại",
@@ -518,14 +518,20 @@
         "cancel": "Huỷ",
         "turn_off": "Tắt"
       },
-      "tooltip": {
-        "private": "Không thể tắt vì quyền riêng tư {{type}} của bạn là Riêng tư",
-        "secret": "Không thể chọn tùy chọn này vì quyền riêng tư nhóm của bạn là Bí mật",
-        "default_group_set_toggle": "Không thể bật vì nhóm của bạn nằm trong nhóm mặc định",
-        "default_group_set_radio": "Không thể chọn tùy chọn này vì nhóm của bạn nằm trong nhóm mặc định"
-      },
       "community": "cộng đồng",
-      "group": "nhóm"
+      "group": "nhóm",
+      "change_settings": {
+        "title_membership_approval": "Bật phê duyệt tư cách thành viên cho các nhóm nội bộ?",
+        "title_policy_setting": "Thay đổi cài đặt chính sách cho các nhóm bên trong?",
+        "content_first_with_group": "{{count}} nhóm bên trong của ",
+        "content_first_with_groups": "{{count}} nhóm bên trong của ",
+        "content_membership_approval": " sẽ được bật phê duyệt tư cách thành viên.",
+        "content_policy_setting": " sẽ được thay đổi thành chỉ những người được mời mới có thể tham gia.",
+        "button_change": "Thay đổi",
+        "button_turn_on": "Bật",
+        "button_more_details": "Hiển thị nhiều hơn",
+        "button_show_less": "Hiển thị ít hơn"
+      }
     }
   },
   "languages": {
@@ -1072,7 +1078,6 @@
     "mark_all_as_read": "Đánh dấu đã đọc tất cả",
     "mark_all_as_read_success": "Tất cả các thông báo đã được đánh dấu là đã đọc",
     "turn_off_notification": "Tắt thông báo",
-    "notification_settings": "Cài đặt thông báo",
     "created_a_post": "created a post",
     "mentioned_you_in_a_post": "mentioned you in a post",
     "mentioned_you_in_a_comment": "mentioned you in a comment",
@@ -1101,7 +1106,18 @@
     "seen_all_notifications": "Bạn đã đọc hết thông báo",
     "text_scheduled": "Scheduled Maintenance Downtime",
     "content_scheduled_maintenance_downtime": "Chúng tôi sẽ cải thiện nền tảng để nâng cao trải nghiệm của bạn. Trong quá trình bảo trì, các tính năng có thể không khả dụng hoặc bị hạn chế.\n \nThời gian bảo trì bắt đầu lúc **(startAt)** trong khoảng **(duration)**.\n \nChúng tôi xin lỗi vì bất kỳ sự bất tiện nào và đánh giá cao sự hỗ trợ liên tục của bạn.",
-    "text_bic_team": "BIC team"
+    "text_bic_team": "BIC team",
+    "text_remove_notification": "Xóa thông báo này",
+    "text_remove_notification_success": "Đã xóa thông báo thành công",
+    "notification_settings": {
+      "title": "Cài đặt thông báo",
+      "description": "Chúng tôi vẫn có thể gửi cho bạn thông báo quan trọng về tài khoản của bạn ngoài cài đặt của bạn",
+      "error_title": "Xin lỗi, chúng tôi không thể lấy dữ liệu ở đây",
+      "error_description": "Xin vui lòng làm mới trang hoặc thử lại lần sau",
+      "allow_notifications": "Cho phép thông báo",
+      "in_app_text": "Trong ứng dụng",
+      "push_text": "Ngoài ứng dụng"
+    }
   },
   "new_feature": {
     "title": "New feature",
@@ -1444,5 +1460,12 @@
     },
     "edit_showing_badges_title": "Chỉnh sửa huy hiệu đang hiển thị",
     "badge_tooltip_placeholder": "Nhấn vào đây để thêm huy hiệu"
+  },
+  "previewJoinableGroup": {
+    "title": "Tham gia tất cả các nhóm bên ngoài?",
+    "description_1": "Bằng cách tham gia ",
+    "description_2": ", bạn sẽ tham gia tất cả các nhóm bên ngoài của nó.",
+    "text_join_group_button": "Tham gia",
+    "text_you_are_asking_to_join": "Bạn đang yêu cầu tham gia"
   }
 }

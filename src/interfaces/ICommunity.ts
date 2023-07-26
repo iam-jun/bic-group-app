@@ -20,6 +20,8 @@ export interface ICommunity {
   teamName?: string;
   settings?: IGroupSettings;
   affectedSettings?: IGroupSettings;
+  communityId?: string;
+  level?: number;
 }
 
 export interface IParamGetCommunities {
@@ -154,8 +156,7 @@ export interface IRequestJoinCommunity {
 export interface IRequestUpdateCommunityJoinSetting {
   communityId: string,
   groupId: string,
-  isJoinApproval?: boolean
-  isInvitedOnly?: boolean
+  settings: IGroupSettings,
 }
 export interface IRequestLeaveCommunity {
   rootGroupId: string,

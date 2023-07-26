@@ -17,6 +17,9 @@ export interface GroupItemProps {
   menuIcon?: IconType;
   isChecked?: boolean;
   checkboxDisabled?: boolean;
+  isNotCollapsible?: boolean;
+  isDisableLastItem?: boolean;
+  index?: number;
 
   onPress?: (item: IGroup) => void
   onMenuPress?: (item: IGroup) => void;
@@ -24,6 +27,7 @@ export interface GroupItemProps {
   shouldBeChecked?: (item: IGroup) => boolean;
   shouldCheckboxDisabled?: (item: IGroup) => boolean;
   renderItemExtraInfo?: (item: IGroup) => JSX.Element;
+  renderItemTitle?: (item: IGroup) => JSX.Element;
 }
 
 const GroupItem: FC<GroupItemProps> = ({
@@ -40,13 +44,14 @@ const GroupItem: FC<GroupItemProps> = ({
   shouldBeChecked,
   shouldCheckboxDisabled,
   renderItemExtraInfo,
+  renderItemTitle,
 }) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const {
     icon, name, privacy,
-  } = item;
+  } = item || {};
 
   const privacyIcon = GroupPrivacyDetail[privacy]?.icon as IconType;
 
@@ -68,6 +73,7 @@ const GroupItem: FC<GroupItemProps> = ({
         privacyIcon={privacyIcon}
       />
       <View style={styles.textContainer}>
+        {renderItemTitle?.(item)}
         <Text.BodyMMedium
           style={styles.textName}
           color={theme.colors.neutral60}

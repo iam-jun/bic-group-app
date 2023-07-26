@@ -103,7 +103,7 @@ const GroupContent = ({
         communityId={communityId}
         teamName={teamName}
       />
-      <GroupJoinCancelButton community={community} />
+      <GroupJoinCancelButton />
       <BoxListPinContent id={groupId} />
       <FilterFeedButtonGroup
         contentFilter={contentFilter}

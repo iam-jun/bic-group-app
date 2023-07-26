@@ -41,7 +41,7 @@ const ScheduledMaintenance: FC<IRouteParams> = (props) => {
         <View style={styles.image}>
           <SVGIcon source={MaintenanceSvg} size={120} />
         </View>
-        <Text.H3 useI18n style={styles.title}>
+        <Text.H3 testID="scheduled_maintenance.title" useI18n style={styles.title}>
           notification:text_scheduled
         </Text.H3>
         <Text.ParagraphS>

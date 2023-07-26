@@ -19,7 +19,7 @@ export interface GroupTreeItemProps extends GroupItemProps {
 }
 
 const GroupTreeItem: FC<GroupTreeItemProps> = ({
-  style, item, isChecked, onToggle, ...props
+  style, item, isChecked, onToggle, index, ...props
 }) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -34,11 +34,13 @@ const GroupTreeItem: FC<GroupTreeItemProps> = ({
     const icon = isCollapsed ? 'CirclePlus' : 'CircleMinus';
 
     const _onToggleItem = () => {
-      // GroupSchemeAssignment doesn't have id but groupId
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      actions.toggle(group.id || group.groupId);
-      onToggle?.(group, !isCollapsed);
+      if (!props.isNotCollapsible) {
+        // GroupSchemeAssignment doesn't have id but groupId
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        actions.toggle(group.id || group.groupId);
+        onToggle?.(group, !isCollapsed);
+      }
     };
 
     return (
@@ -58,7 +60,9 @@ const GroupTreeItem: FC<GroupTreeItemProps> = ({
   const renderLines = (level: number) => {
     if (level <= 0) return null;
 
-    return Array.from(Array(level).keys()).map((item) => (
+    const newLevel = !props.isNotCollapsible ? level : index;
+
+    return Array.from(Array(newLevel).keys()).map((item) => (
       <View
         key={`group-tree-item-level-${level}-${item}`}
         style={styles.line}
@@ -69,8 +73,11 @@ const GroupTreeItem: FC<GroupTreeItemProps> = ({
   const level = item?.level;
   const children = item?.children || [];
 
+  const isDisableLastItem = props.isDisableLastItem && children.length === 0;
+  if (isDisableLastItem) return null;
+
   return (
-    <View style={style}>
+    <View style={style} testID={`group_tree_item_${index}`}>
       <View style={styles.childContainer}>
         {renderLines(level)}
         {renderToggle(item, item.children)}
@@ -88,6 +95,7 @@ const GroupTreeItem: FC<GroupTreeItemProps> = ({
                 {...props}
                 key={`group-tree-item-${child.id}`}
                 item={child}
+                index={index + 1}
               />
             ))}
         </Animated.View>
