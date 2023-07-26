@@ -94,6 +94,12 @@ const MenuSettings = () => {
           onPress: () => onPressSettingsAndPrivacy(SettingsAndPrivacyType.SECURITY),
         },
         {
+          type: SettingsAndPrivacyType.PRIVACY,
+          title: 'settings:title_blocking',
+          icon: 'UnlockSolid',
+          onPress: () => onPressSettingsAndPrivacy(SettingsAndPrivacyType.PRIVACY),
+        },
+        {
           type: SettingsAndPrivacyType.BLOCKING,
           title: 'settings:title_blocking',
           icon: 'UserSlashSolid',
