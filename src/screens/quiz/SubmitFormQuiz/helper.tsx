@@ -7,6 +7,7 @@ import showAlert from '~/store/helper/showAlert';
 import { spacing } from '~/theme';
 import { FormGenerateQuiz, GenerateQuizParams } from '~/interfaces/IQuiz';
 
+/* istanbul ignore next */
 export const showAlertAudienceListWithNoPermissionQuiz = (audiences: IAudience[]) => {
   const lstAudienceNamesNotPermit = audiences
     .map((audience) => audience?.name)

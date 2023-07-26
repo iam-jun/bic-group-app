@@ -26,8 +26,8 @@ const getQuizDetail = (set, get) => async (params: GetQuizDetailParams) => {
     actions.addOrUpdateQuiz(response.data);
   } catch (error) {
     if (
-      error?.code === APIErrorCode.Post.QUIZ_DELETED ||
-      error?.code === APIErrorCode.Post.POST_DELETED
+      error?.code === APIErrorCode.Post.QUIZ_DELETED
+      || error?.code === APIErrorCode.Post.POST_DELETED
     ) {
       actions.deleteQuizLocal(quizId);
     }
