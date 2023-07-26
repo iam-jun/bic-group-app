@@ -25,8 +25,8 @@ const Terms = (props: TermsProps) => {
 
   return (
     <View style={[styles.container, style]} testID="terms">
-      <Text.SubtitleL useI18n>common:text_group_terms</Text.SubtitleL>
-      <Markdown paragraphStyles={styles.content} value={content} />
+      <Text.SubtitleL style={styles.title} useI18n>common:text_group_terms</Text.SubtitleL>
+      <Markdown value={content} />
     </View>
   );
 };
@@ -40,8 +40,8 @@ const createStyles = (theme: ExtendedTheme) => {
       backgroundColor: colors.white,
       padding: spacing.padding.large,
     },
-    content: {
-      marginTop: spacing.margin.small,
+    title: {
+      marginBottom: spacing.margin.small,
     },
   });
 };
