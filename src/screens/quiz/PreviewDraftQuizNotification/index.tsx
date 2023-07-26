@@ -73,7 +73,7 @@ const PreviewDraftQuizNotification: React.FC<PreviewDraftQuizNotificationProps> 
   };
 
   const renderContent = () => {
-    if (deletedQuiz) return <PlaceHolderRemoveContent label='quiz:label_quiz_deleted' />;
+    if (deletedQuiz) return <PlaceHolderRemoveContent label="quiz:label_quiz_deleted" />;
 
     return (
       <ContentItem
