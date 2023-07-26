@@ -10,6 +10,7 @@ import {
   IPayloadReplying,
   IErrorContent,
   IPutEditSettingsParams,
+  PostType,
 } from '~/interfaces/IPost';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
@@ -48,7 +49,7 @@ export interface IPostsState extends IBaseState {
     setCommentErrorCode: (payload: boolean | string) => void;
     addToErrorContents: (id: string, payload: IErrorContent) => void;
     putEditSettings: (params: IPutEditSettingsParams) => void;
-    getContentDetail: (contentId: string) => void;
+    getContentDetail: (contentId: string, contentType?: PostType) => void;
   };
 }
 

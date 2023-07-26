@@ -86,13 +86,82 @@ describe('PublishQuiz', () => {
       const { title, description, numberOfQuestionsDisplay } = params;
 
       expect(title).toBe('test');
-      expect(description).toBe('');
+      expect(description).toBe(null);
       expect(numberOfQuestionsDisplay).toBeUndefined();
     });
 
     await waitFor(() => {
       expect(result.current.data[mockGenerateQuizResponse.data.id].title).toBe('test');
       expect(result.current.data[mockGenerateQuizResponse.data.id].status).toBe(QuizStatus.PUBLISHED);
+    });
+  });
+
+  it('should edit successfully', async () => {
+    const fakeQuiz = {
+      ...mockGenerateQuizResponse,
+      data: {
+        ...mockGenerateQuizResponse.data,
+        status: QuizStatus.PUBLISHED,
+        title: 'title1',
+        numberOfQuestionsDisplay: 10,
+      },
+    };
+    const fakeEditQuizSuccess = {
+      ...mockGenerateQuizResponse,
+      data: {
+        ...mockGenerateQuizResponse.data,
+        status: QuizStatus.PUBLISHED,
+        title: 'test',
+        numberOfQuestionsDisplay: 10,
+      },
+    };
+    const spyApiEditQuiz = jest
+      .spyOn(streamApi, 'editQuiz')
+      .mockImplementation(() => Promise.resolve(fakeEditQuizSuccess) as any);
+
+    const { result } = renderHook(() => useQuizzesStore());
+
+    result.current.actions.addOrUpdateQuiz(
+      fakeQuiz.data as IQuiz,
+    );
+
+    const wrapper = renderWithRedux(
+      <MockedNavigator
+        component={() => (
+          <PublishQuiz
+            route={{
+              params: { quizId: mockGenerateQuizResponse.data.id },
+            }}
+          />
+        )}
+      />,
+    );
+
+    let inputTitle;
+    await waitFor(() => {
+      inputTitle = wrapper.getByTestId('title_description_section.title');
+    });
+
+    fireEvent.changeText(inputTitle, 'test');
+
+    const btnSave = wrapper.getByTestId('header.button');
+    await waitFor(() => {
+      expect(btnSave.props.disabled).toBeFalsy();
+    });
+
+    fireEvent.press(btnSave);
+
+    await waitFor(() => {
+      const params = spyApiEditQuiz.mock.calls[0][1] || {};
+      const { title, description, numberOfQuestionsDisplay } = params;
+
+      expect(title).toBe('test');
+      expect(description).toBe(null);
+      expect(numberOfQuestionsDisplay).toBe(10);
+    });
+
+    await waitFor(() => {
+      expect(result.current.data[mockGenerateQuizResponse.data.id].title).toBe('test');
     });
   });
 });
