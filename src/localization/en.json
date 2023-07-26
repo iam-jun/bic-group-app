@@ -1112,7 +1112,18 @@
     "title_edit_profile": "Edit Profile",
     "title_direct_message": "Direct Message",
     "title_view_profile": "View Profile",
-    "text_name_must_not_be_empty": "Name must not be empty"
+    "text_name_must_not_be_empty": "Name must not be empty",
+    "fullname_rule": {
+      "not_allow_special_character": "Full name can not contain special characters",
+      "not_allow_number": "Full name can not contain numbers",
+      "character_length": "Full name must be between 3 to 64 characters"
+    },
+    "username_rule": {
+      "character_length": "Username must be between 5 to 50 characters",
+      "not_allow_special_character": "Username can not contain special characters",
+      "not_allow_uppercase": "Username can not contain uppercase characters",
+      "not_allow_start_with_number_or_dot": "Username must start with a letter"
+    }
   },
   "right_col": {
     "about_bein": "About Bein",
