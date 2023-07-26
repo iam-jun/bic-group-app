@@ -22,9 +22,9 @@ const WorkInfo = ({ style, latestWork }: Props) => {
       <Text.BodySMedium maxLength={MAX_LENGTH} style={styles.text}>
         {latestWork?.company}
       </Text.BodySMedium>
-      <Text.BodySMedium maxLength={MAX_LENGTH} style={styles.text}>
+      <Text.BodyS maxLength={MAX_LENGTH} style={styles.text}>
         {latestWork?.titlePosition}
-      </Text.BodySMedium>
+      </Text.BodyS>
     </View>
   );
 };
