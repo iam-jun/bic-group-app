@@ -569,9 +569,7 @@
         "content_membership_approval": " will be turned on the membership approval.",
         "content_policy_setting": " will be changed to only invited people can join.",
         "button_change": "Change",
-        "button_turn_on": "Turn On",
-        "button_more_details": "More details",
-        "button_show_less": "Show less"
+        "button_turn_on": "Turn On"
       }
     },
     "privacy_impact": {

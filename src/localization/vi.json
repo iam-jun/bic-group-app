@@ -530,9 +530,7 @@
         "content_membership_approval": " sẽ được bật phê duyệt tư cách thành viên.",
         "content_policy_setting": " sẽ được thay đổi thành chỉ những người được mời mới có thể tham gia.",
         "button_change": "Thay đổi",
-        "button_turn_on": "Bật",
-        "button_more_details": "Hiển thị nhiều hơn",
-        "button_show_less": "Hiển thị ít hơn"
+        "button_turn_on": "Bật"
       }
     },
     "privacy_impact": {
