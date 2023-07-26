@@ -42,7 +42,7 @@ const TermsView = () => {
   const isOpen = useTermStore((state) => state.isOpen);
   const answers = useTermStore((state) => state.answers);
 
-  const resetTerms = useTermStore((state) => state.reset);
+  const clearTerms = useTermStore((state) => state.actions.clearTerms);
 
   const modalActions = useModalStore((state) => state.actions);
 
@@ -70,7 +70,7 @@ const TermsView = () => {
 
   useEffect(() => {
     if (!isOpen) {
-      resetTerms();
+      clearTerms();
       setIsAgree(false);
       setContainerHeight(0);
       setLayoutHeight(0);

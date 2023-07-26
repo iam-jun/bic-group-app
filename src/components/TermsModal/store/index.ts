@@ -25,15 +25,16 @@ export interface ITermState extends IBaseState {
   errorText: string;
   answers: MembershipAnswerRequest[];
   data: {
-    [groupId: string]: { content: string }
+    [groupId: string]: { content: string };
   };
 
   actions: {
     setIsOpen: (isOpen: boolean) => void;
     setTermInfo: (payload: TermsInfo) => void;
-    getTerms: (groupId: string, callBackError: ()=> void) => void;
+    getTerms: (groupId: string, callBackError: () => void) => void;
     getTermsData: (groupId: string) => Promise<void>;
     clearTermsByGroupId: (groupId: string) => void;
+    clearTerms: () => void;
   };
 }
 
@@ -74,6 +75,20 @@ const termStore = (set, get) => ({
       set((state: ITermState) => {
         state.data[groupId] = { content: '' };
       }, 'clearTermsByGroupId');
+    },
+    clearTerms: () => {
+      set((state: ITermState) => {
+        state.type = initState.type;
+        state.isOpen = initState.isOpen;
+        state.loading = initState.loading;
+        state.isActiveGroupTerms = initState.isActiveGroupTerms;
+        state.groupId = initState.groupId;
+        state.rootGroupId = initState.rootGroupId;
+        state.name = initState.name;
+        state.termContent = initState.termContent;
+        state.errorText = initState.errorText;
+        state.answers = initState.answers;
+      }, 'clearTerms');
     },
     getTerms: getTerms(set, get),
     getTermsData: getTermsData(set, get),
