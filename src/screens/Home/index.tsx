@@ -34,6 +34,7 @@ import useAppStore from '~/store/app';
 import { chatSchemes } from '~/constants/chat';
 import Icon from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
+import useRemoteConfigStore from '~/store/remoteConfig';
 
 const Home = () => {
   const [lossInternet, setLossInternet] = useState(false);
@@ -72,6 +73,7 @@ const Home = () => {
   const isFocused = useIsFocused();
   const redirectUrl = useAppStore((state) => state.redirectUrl);
   const appActions = useAppStore((state) => state.actions);
+  const appStoreUrlChat = useRemoteConfigStore((state) => state.appStoreUrlChat);
 
   useEffect(
     () => {
@@ -205,7 +207,7 @@ const Home = () => {
         confirmLabel: t('home:text_get_bic_chat'),
         confirmBtnProps: { style: { marginBottom: spacing.margin.small } },
         onConfirm: () => {
-          // last one
+          !!appStoreUrlChat && openUrl(appStoreUrlChat);
         },
       });
     });

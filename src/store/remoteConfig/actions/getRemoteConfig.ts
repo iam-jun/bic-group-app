@@ -23,6 +23,7 @@ const getRemoteConfig = (set, _get) => async () => {
       state.appVersion = remoteConfig().getValue('appVersion').asString();
       state.minSupportedVersion = remoteConfig().getValue('minSupportedAppVersion').asString();
       state.appStoreUrl = remoteConfig().getValue('appStoreUrl').asString();
+      state.appStoreUrlChat = remoteConfig().getValue('appStoreUrlChat').asString();
     }, 'getRemoteConfigSuccess');
   } catch (e) {
     console.error('\x1b[35m🐣️ getRemoteConfig exception ', e, '\x1b[0m');
