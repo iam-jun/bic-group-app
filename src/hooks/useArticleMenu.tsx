@@ -170,6 +170,17 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
     rootNavigation?.navigate?.(quizStack.entryQuiz, { postId: articleId });
   };
 
+  const onConfirmEditQuiz = () => {
+    const onSuccess = () => {
+      rootNavigation?.navigate(
+        quizStack.composeQuiz, {
+          quizId: quiz?.id,
+        },
+      );
+    };
+    actionsQuizzesStore.getQuizDetail({ quizId: quiz?.id, onSuccess });
+  };
+
   const onPressEditQuiz = () => {
     modalActions.hideBottomList();
     modalActions.showAlert({
@@ -177,13 +188,7 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       content: i18next.t('quiz:alert_edit:content'),
       cancelBtn: true,
       confirmLabel: i18next.t('quiz:continue'),
-      onConfirm: () => {
-        rootNavigation?.navigate(
-          quizStack.composeQuiz, {
-            quizId: quiz?.id,
-          },
-        );
-      },
+      onConfirm: onConfirmEditQuiz,
     });
   };
 

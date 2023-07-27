@@ -52,11 +52,14 @@ const DraftQuizFooter: React.FC<DraftQuizFooterProps> = ({
   const shouldNotRender = status === QuizStatus.PUBLISHED;
 
   const onPressEdit = () => {
-    rootNavigation.navigate(
-      quizStack.composeQuiz, {
-        quizId,
-      },
-    );
+    const onSuccess = () => {
+      rootNavigation.navigate(
+        quizStack.composeQuiz, {
+          quizId,
+        },
+      );
+    };
+    actionsQuizzesStore.getQuizDetail({ quizId, onSuccess });
   };
 
   const onDelete = () => {

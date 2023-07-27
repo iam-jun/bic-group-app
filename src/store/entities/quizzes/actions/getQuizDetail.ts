@@ -5,7 +5,7 @@ import showToastError from '~/store/helper/showToastError';
 import APIErrorCode from '~/constants/apiErrorCode';
 
 const getQuizDetail = (set, get) => async (params: GetQuizDetailParams) => {
-  const { quizId, isShowLoading = true } = params;
+  const { quizId, isShowLoading = true, onSuccess } = params;
   const { actions }: IQuizzesState = get();
 
   try {
@@ -24,6 +24,8 @@ const getQuizDetail = (set, get) => async (params: GetQuizDetailParams) => {
     }, 'getQuizDetail');
 
     actions.addOrUpdateQuiz(response.data);
+
+    onSuccess?.();
   } catch (error) {
     if (
       error?.code === APIErrorCode.Post.QUIZ_DELETED
