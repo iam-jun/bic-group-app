@@ -40,7 +40,7 @@ const GroupAdministration = (props: any) => {
   };
 
   const goToMembershipPolicySettings = () => {
-    rootNavigation.navigate(groupStack.membershipPolicySettings, { id: groupId });
+    rootNavigation.navigate(groupStack.membershipPolicySettings, { groupId });
   };
 
   const goToScheduleContent = () => {

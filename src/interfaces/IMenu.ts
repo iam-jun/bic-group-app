@@ -20,6 +20,7 @@ export interface IAccordion {
 export enum SettingsAndPrivacyType {
   SECURITY = 'security',
   BLOCKING = 'blocking',
+  NOTIFICATIONS = 'notifications',
   LANGUAGE = 'language',
   PRIVACY = 'privacy',
 }

@@ -6,6 +6,8 @@ import {
   IParamsGetJoinedAllGroups,
   IParamsGetManagedCommunityAndGroup,
   IPayloadGroupSchemeAssignments,
+  IPayloadPreviewSettings,
+  IPayloadUpdateGroupJoinSetting,
   IScheme,
 } from '~/interfaces/IGroup';
 import {
@@ -20,7 +22,6 @@ import {
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 import { IParamsReportMember } from '~/interfaces/IReport';
 import { ContentType } from '~/components/SelectAudience';
-import { IGroupSettings } from '~/interfaces/common';
 
 const provider = apiProviders.bein;
 const defaultConfig = {
@@ -37,11 +38,11 @@ export const groupsApiConfig = {
     ...defaultConfig,
     url: `${provider.url}me/permissions/can-cud-tags/community/${communityId}`,
   }),
-  updateGroupJoinSetting: (groupId: string, settings: IGroupSettings): HttpApiRequestConfig => ({
+  updateGroupJoinSetting: (params: IPayloadUpdateGroupJoinSetting): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}groups/${groupId}/settings`,
+    url: `${provider.url}groups/${params?.groupId}/settings`,
     method: 'put',
-    data: { ...settings },
+    data: params?.settings,
   }),
   getLinkPreview: (link: string): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -247,6 +248,10 @@ export const groupsApiConfig = {
     url: `${provider.url}groups/${groupId}/users/remove`,
     method: 'put',
     data: { userIds },
+  }),
+  getPreviewJoinableGroup: (groupId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/joinable-outer-groups`,
   }),
   joinGroup: (groupId: string, params?: MembershipAnswerRequestParam): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -473,14 +478,24 @@ export const groupsApiConfig = {
       badgeIds,
     },
   }),
+  getSettings: (groupId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/settings`,
+  }),
+  previewSettings: (params: IPayloadPreviewSettings): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}groups/${params?.groupId}/settings/preview`,
+    method: 'post',
+    data: params?.settings,
+  }),
 };
 
 const groupApi = {
   getCommunityCUDTagPermission: (communityId: string) => withHttpRequestPromise(
     groupsApiConfig.getCommunityCUDTagPermission, communityId,
   ),
-  updateGroupJoinSetting: (groupId: string, settings: IGroupSettings) => withHttpRequestPromise(
-    groupsApiConfig.updateGroupJoinSetting, groupId, settings,
+  updateGroupJoinSetting: (params: IPayloadUpdateGroupJoinSetting) => withHttpRequestPromise(
+    groupsApiConfig.updateGroupJoinSetting, params,
   ),
   getLinkPreview: (link: string) => withHttpRequestPromise(
     groupsApiConfig.getLinkPreview, link,
@@ -652,6 +667,9 @@ const groupApi = {
   removeGroupMembers: (groupId: string, userIds: string[]) => withHttpRequestPromise(
     groupsApiConfig.removeGroupMembers, groupId, userIds,
   ),
+  getPreviewJoinableGroup: (groupId: string) => withHttpRequestPromise(
+    groupsApiConfig.getPreviewJoinableGroup, groupId,
+  ),
   joinGroup: (groupId: string, params?: MembershipAnswerRequestParam) => withHttpRequestPromise(
     groupsApiConfig.joinGroup, groupId, params,
   ),
@@ -749,6 +767,10 @@ const groupApi = {
   getOwnedBadges: () => withHttpRequestPromise(groupsApiConfig.getOwnedBadges),
   putShowingBadges: (badgeIds: string[]) => withHttpRequestPromise(groupsApiConfig.putShowingBadges, badgeIds),
   markNewBadge: (badgeIds: string[]) => withHttpRequestPromise(groupsApiConfig.markNewBadge, badgeIds),
+  getSettings: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getSettings, groupId),
+  previewSettings: (params: IPayloadPreviewSettings) => withHttpRequestPromise(
+    groupsApiConfig.previewSettings, params,
+  ),
 };
 
 export default groupApi;

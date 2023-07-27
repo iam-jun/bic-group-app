@@ -52,3 +52,24 @@ export interface INotiChangeLogsInfo {
   title: string;
   content: string;
 }
+
+export interface INotiChannel {
+  inApp?: boolean;
+  push?: boolean;
+}
+
+export interface IEditNotificationSetting {
+  name: string;
+  enable?: boolean;
+  channels?: INotiChannel;
+}
+
+export interface INotiSettings {
+  name: string;
+  enable?: boolean;
+  order?: number;
+  title?: string;
+  subtitle?: string;
+  child?: INotiSettings[];
+  channels?: INotiChannel;
+}

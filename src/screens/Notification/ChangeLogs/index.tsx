@@ -36,7 +36,7 @@ const ChangeLogs: FC<IRouteParams> = (props) => {
   const styles = createStyle(theme);
 
   return (
-    <View style={styles.container}>
+    <View testID="changelog_screen" style={styles.container}>
       <Header
         title="common:btn_go_back"
         useI18n
@@ -45,17 +45,21 @@ const ChangeLogs: FC<IRouteParams> = (props) => {
       {!!loading
         ? (
           <View style={styles.center}>
-            <LoadingIndicator />
+            <LoadingIndicator testID="changelog_screen.loading" />
           </View>
         )
         : !loading && !title
           ? (
-            <View style={styles.center}>
+            <View
+              testID="changelog_screen.error"
+              style={styles.center}
+            >
               <Text.ParagraphM useI18n>common:text_sorry_something_went_wrong</Text.ParagraphM>
             </View>
           )
           : (
             <ScrollView
+              testID="changelog_screen.content"
               style={styles.content}
               contentContainerStyle={styles.contentContainerStyle}
             >

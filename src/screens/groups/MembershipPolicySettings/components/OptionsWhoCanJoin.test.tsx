@@ -11,6 +11,18 @@ afterEach(cleanup);
 describe('OptionsWhoCanJoin component', () => {
   const props = {
     data: groupDetailData.group,
+    settings: {
+      isInvitedOnly: false,
+      isJoinApproval: false,
+      isActiveGroupTerms: false,
+      isActiveMembershipQuestions: false,
+    },
+    changeableSettings: {
+      isJoinApproval: '',
+      isInvitedOnly: '',
+      isActiveGroupTerms: '',
+      isActiveMembershipQuestions: '',
+    },
     updateJoinSetting: jest.fn(),
   };
 

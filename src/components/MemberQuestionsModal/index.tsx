@@ -21,6 +21,7 @@ import { IMembershipQuestion, MembershipAnswerRequest } from '~/interfaces/IComm
 import useModalStore from '~/store/modal';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Divider from '~/beinComponents/Divider';
+import GroupInfo from '../GroupInfo';
 
 const MemberQuestionsModal = () => {
   const theme: ExtendedTheme = useTheme();
@@ -33,6 +34,9 @@ const MemberQuestionsModal = () => {
   const groupId = useMemberQuestionsStore((state) => state.groupId);
   const rootGroupId = useMemberQuestionsStore((state) => state.rootGroupId);
   const name = useMemberQuestionsStore((state) => state.name);
+  const icon = useMemberQuestionsStore((state) => state.icon);
+  const privacy = useMemberQuestionsStore((state) => state.privacy);
+  const userCount = useMemberQuestionsStore((state) => state.userCount);
   const questionsIds = useMemberQuestionsStore((state) => state.ids);
   const isActive = useMemberQuestionsStore((state) => state.isActive);
   const isActiveGroupTerms = useMemberQuestionsStore((state) => state.isActiveGroupTerms);
@@ -84,6 +88,9 @@ const MemberQuestionsModal = () => {
         groupId,
         rootGroupId,
         name,
+        icon,
+        privacy,
+        userCount,
         type,
         isActive: true,
         answers: newAnswers,
@@ -123,10 +130,11 @@ const MemberQuestionsModal = () => {
           titleTextProps={{ useI18n: true }}
           onPressBack={onClose}
         />
-        <Divider size={spacing.margin.small} />
+        <Divider size={spacing.margin.large} />
         {!loading && questionsIds?.length > 0
           ? (
             <>
+              <GroupInfo name={name} icon={icon} privacy={privacy} userCount={userCount} />
               <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}
                 enabled

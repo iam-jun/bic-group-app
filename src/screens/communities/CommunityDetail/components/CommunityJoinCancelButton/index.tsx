@@ -4,8 +4,9 @@ import { StyleProp, ViewStyle } from 'react-native';
 import { ICommunity } from '~/interfaces/ICommunity';
 import useCommunityController from '~/screens/communities/store';
 import JoinCancelButton from '../../../../groups/components/JoinCancelButton';
-import useTermStore from '~/components/TermsModal/store';
+import useTermStore, { TermsInfo } from '~/components/TermsModal/store';
 import useMemberQuestionsStore, { MembershipQuestionsInfo } from '~/components/MemberQuestionsModal/store';
+import { ITypeGroup } from '~/interfaces/common';
 
 interface CommunityJoinCancelButtonProps {
   style?: StyleProp<ViewStyle>;
@@ -22,6 +23,8 @@ const CommunityJoinCancelButton = ({
     id,
     groupId,
     name,
+    icon,
+    userCount,
     affectedSettings,
   } = community;
   const actions = useCommunityController((state) => state.actions);
@@ -36,7 +39,10 @@ const CommunityJoinCancelButton = ({
         groupId: id,
         rootGroupId: groupId,
         name,
-        type: 'community',
+        icon,
+        privacy,
+        userCount,
+        type: ITypeGroup.COMMUNITY,
         isActive: true,
         isActiveGroupTerms: affectedSettings?.isActiveGroupTerms,
       };
@@ -46,8 +52,15 @@ const CommunityJoinCancelButton = ({
 
     if (affectedSettings?.isActiveGroupTerms) {
       const payload = {
-        groupId: id, rootGroupId: groupId, name, type: 'community', isActive: true,
-      } as any;
+        groupId: id,
+        rootGroupId: groupId,
+        name,
+        icon,
+        privacy,
+        userCount,
+        type: ITypeGroup.COMMUNITY,
+        isActive: true,
+      } as TermsInfo;
       termsActions.setTermInfo(payload);
       return;
     }

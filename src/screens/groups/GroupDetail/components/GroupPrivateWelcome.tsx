@@ -50,7 +50,7 @@ const GroupPrivateWelcome = ({
           insideCommunityName={community?.name}
         />
         <View style={styles.space} />
-        <GroupJoinCancelButton community={community} />
+        <GroupJoinCancelButton />
       </View>
 
       <AboutContent profileInfo={infoDetail as any} showPrivate />
