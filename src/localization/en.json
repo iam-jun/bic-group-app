@@ -565,7 +565,24 @@
       },
       "community": "community",
       "group": "group"
-    }
+    },
+    "privacy_center": {
+      "menu_item_title": "Privacy",
+      "screen_title": "Privacy Center",
+      "screen_description": "Manage and control your personal privacy that is right for you.",
+      "personal_information_visibility": {
+        "title": "Personal Information Visibility",
+        "description": "Control who can see your personal information in your profile.",
+        "everyone_type": "Everyone",
+        "everyone_description": "Everyone can see your information.",
+        "community_members_type": "Community Members",
+        "community_members_description": "People in the same community with you can see your information.",
+        "only_me_type": "Only Me",
+        "only_me_description": "No one can see your information."
+      }
+    },
+    "text_no_experience_to_show": "No experience to show",
+    "text_no_contact_to_show": "No contact to show"
   },
   "languages": {
     "title_en": "English",

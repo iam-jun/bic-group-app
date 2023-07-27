@@ -76,6 +76,9 @@ const MenuSettings = () => {
       case SettingsAndPrivacyType.BLOCKING:
         rootNavigation.navigate(menuStack.blocking);
         break;
+      case SettingsAndPrivacyType.PRIVACY:
+        rootNavigation.navigate(menuStack.privacyCenter);
+        break;
       default:
         break;
     }
@@ -95,7 +98,7 @@ const MenuSettings = () => {
         },
         {
           type: SettingsAndPrivacyType.PRIVACY,
-          title: 'settings:title_blocking',
+          title: 'settings:privacy_center:menu_item_title',
           icon: 'UnlockSolid',
           onPress: () => onPressSettingsAndPrivacy(SettingsAndPrivacyType.PRIVACY),
         },
