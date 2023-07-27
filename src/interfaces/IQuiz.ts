@@ -82,6 +82,7 @@ export type EditQuestionForm = {
 export type GetQuizDetailParams = {
   quizId: string;
   isShowLoading?: boolean;
+  onSuccess?: () => void;
 }
 
 export enum AttributeQuiz {
