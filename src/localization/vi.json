@@ -1063,7 +1063,7 @@
     },
     "username_rule": {
       "character_length": "Tên người dùng phải từ 5 đến 50 ký tự",
-      "not_allow_special_character": "Tên Người dùng không thể chứa ký tự đặc biệt",
+      "not_allow_special_character": "Tên Người dùng không thể chứa ký tự đặc biệt kể cả khoảng trắng",
       "not_allow_uppercase": "Tên người dùng không được chứa các ký tự viết hoa",
       "not_allow_start_with_number_or_dot": "Tên người dùng phải bắt đầu bằng một chữ cái"
     }
