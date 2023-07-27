@@ -1,18 +1,14 @@
 import streamApi from '~/api/StreamApi';
-import { act, renderHook } from '~/test/testUtils';
-import useDraftQuizStore, { IDraftQuizState } from '../../../../YourContent/components/Quiz/store/index';
-import { postWithQuiz } from '~/test/mock_data/quiz';
+import { act, renderHook, waitFor } from '~/test/testUtils';
+import useYourQuizStore from '../index';
+import { POST_DETAIL } from '~/test/mock_data/post';
+import { AttributeQuiz, ContentQuiz } from '~/interfaces/IQuiz';
 
-describe('getDraftQuiz', () => {
-  afterEach(() => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
-  });
-
+describe('getQuizzesContent', () => {
   const response = {
     code: 'api.ok',
     data: {
-      list: [postWithQuiz],
+      list: [POST_DETAIL],
       meta: {
         endCursor: 'eyJjcmVhdGVkQXQiOiIyMDIzLTA3LTA5VDE1OjM5OjA1LjE0MloifQ==',
         hasNextPage: true,
@@ -20,19 +16,19 @@ describe('getDraftQuiz', () => {
     },
   };
 
-  it('should call api getDraftQuiz throw error', () => {
+  it('should call api getQuizzesContent throw error', () => {
     const error = 'internal error';
-    const spy = jest.spyOn(streamApi, 'getDraftQuiz').mockImplementation(
+    const spy = jest.spyOn(streamApi, 'getQuizzesContent').mockImplementation(
       () => Promise.reject(error) as any,
     );
 
     jest.useFakeTimers();
 
-    const { result } = renderHook(() => useDraftQuizStore((state) => state));
+    const { result } = renderHook(() => useYourQuizStore((state) => state));
 
     act(() => {
       try {
-        result.current.actions.getDraftQuiz(true);
+        result.current.actions.getQuizzesContent(true);
       } catch (error) {
         expect(error).toBeInstanceOf(TypeError);
         expect(error).toBe(error);
@@ -44,60 +40,38 @@ describe('getDraftQuiz', () => {
       jest.runAllTimers();
     });
 
-    expect(result.current.draftQuiz.refreshing).toBe(false);
-    expect(result.current.draftQuiz.loading).toBe(false);
+    const { attributeFilter, contentFilter, data } = result.current;
+    expect(attributeFilter).toBe(AttributeQuiz.DRAFT);
+    expect(contentFilter).toBe(ContentQuiz.ALL);
+    expect(data.ALL.DRAFT.refreshing).toBe(false);
+    expect(data.ALL.DRAFT.loading).toBe(false);
   });
 
-  it('should call api getDraftQuiz when isRefresh = true success', () => {
-    const spy = jest.spyOn(streamApi, 'getDraftQuiz').mockImplementation(
+  it('should call api getQuizzesContent when isRefresh = true success', async () => {
+    jest.useFakeTimers();
+
+    const spy = jest.spyOn(streamApi, 'getQuizzesContent').mockImplementation(
       () => Promise.resolve(response),
     );
 
-    jest.useFakeTimers();
-
-    const { result } = renderHook(() => useDraftQuizStore((state) => state));
+    const { result } = renderHook(() => useYourQuizStore((state) => state));
 
     act(() => {
-      result.current.actions.getDraftQuiz(true);
+      result.current.actions.getQuizzesContent(true);
+      jest.advanceTimersByTime(200);
     });
-    expect(result.current.draftQuiz.refreshing).toBe(true);
+
+    jest.useRealTimers();
+
     expect(spy).toBeCalled();
 
-    act(() => {
-      jest.runAllTimers();
+    await waitFor(() => {
+      const { attributeFilter, contentFilter, data } = result.current;
+      expect(attributeFilter).toBe(AttributeQuiz.DRAFT);
+      expect(contentFilter).toBe(ContentQuiz.ALL);
+      expect(data.ALL.DRAFT.ids.length).toBe(1);
+      expect(data.ALL.DRAFT.hasNextPage).toBe(true);
+      expect(data.ALL.DRAFT.loading).toBe(false);
     });
-
-    expect(result.current.draftQuiz.data).toEqual(response.data.list);
-    expect(result.current.draftQuiz.hasNextPage).toBe(true);
-    expect(result.current.draftQuiz.refreshing).toBe(false);
-    expect(result.current.draftQuiz.loading).toBe(false);
-  });
-
-  it('should call api getDraftQuiz when isRefresh = false success', () => {
-    useDraftQuizStore.setState((state: IDraftQuizState) => {
-      state.draftQuiz.data = [postWithQuiz] as any;
-      return state;
-    });
-    const spy = jest.spyOn(streamApi, 'getDraftQuiz').mockImplementation(
-      () => Promise.resolve(response) as any,
-    );
-
-    jest.useFakeTimers();
-
-    const { result } = renderHook(() => useDraftQuizStore((state) => state));
-
-    act(() => {
-      result.current.actions.getDraftQuiz(false);
-    });
-    expect(result.current.draftQuiz.loading).toBe(true);
-    expect(spy).toBeCalled();
-
-    act(() => {
-      jest.runAllTimers();
-    });
-
-    expect(result.current.draftQuiz.data.length).toBe(2);
-    expect(result.current.draftQuiz.refreshing).toBe(false);
-    expect(result.current.draftQuiz.loading).toBe(false);
   });
 });
