@@ -26,7 +26,7 @@ const InputFullName = ({
   const { t } = useBaseHook();
 
   const rules = {
-    required: t('auth:text_err_full_name_required'),
+    required: t('profile:fullname_rule:character_length'),
     maxLength: {
       value: 64,
       message: t('profile:fullname_rule:character_length'),
