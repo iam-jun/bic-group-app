@@ -76,7 +76,7 @@ const AdvancedSettings = () => {
       advancedSettingsActions.getCommunitySettings(comID);
       advancedSettingsActions.getJoinedGroupFlat(comID, true);
     }
-  }, [selectedCommunity]);
+  }, [selectedCommunity?.id]);
 
   const onRefresh = () => {
     getData();

@@ -30,6 +30,7 @@ const getJoinedGroupFlat = (set, get) => async (id: string, isRefresh?: boolean)
     set((state: IAdvancedNotiSettingsStore) => {
       state.isLoadingJoinedGroup = false;
       state.joinedGroups = newData;
+      state.searchJoinedGroups = newData;
       state.hasNextPage = meta.hasNextPage;
     }, 'getJoinedGroupFlatSuccess');
   } catch (error) {
