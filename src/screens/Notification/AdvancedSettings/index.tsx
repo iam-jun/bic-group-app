@@ -76,7 +76,7 @@ const AdvancedSettings = () => {
       advancedSettingsActions.getCommunitySettings(comID);
       advancedSettingsActions.getJoinedGroupFlat(comID, true);
     }
-  }, [selectedCommunity?.id]);
+  }, [selectedCommunity]);
 
   const onRefresh = () => {
     getData();
@@ -84,7 +84,7 @@ const AdvancedSettings = () => {
 
   const onLoadMore = () => {
     if (!hasNextPage || isLoadingJoinedGroup) return;
-    advancedSettingsActions.getJoinedGroupFlat(selectedCommunity.id);
+    advancedSettingsActions.getJoinedGroupFlat(comId);
   };
 
   const onChangeToggle = (isChecked: boolean) => {
@@ -92,7 +92,7 @@ const AdvancedSettings = () => {
     const dataUpdateStore: any = {
       ...selectedCommunity,
       enable: isChecked,
-      id: selectedCommunity?.communityId || selectedCommunity?.id,
+      id: comId,
     };
     advancedSettingsActions.updateCommunitySettings(payload, dataUpdateStore);
   };
@@ -107,7 +107,7 @@ const AdvancedSettings = () => {
       rootNavigation.navigate(notiStack.advancedSettingsDetail, {
         name: item.name,
         groupId: item.id,
-        communityId: selectedCommunity.id,
+        communityId: comId,
       });
     }
     setIsOpenSearchCommunity(false);

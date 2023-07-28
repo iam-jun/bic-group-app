@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   ActivityIndicator, RefreshControl, StyleSheet, View,
 } from 'react-native';
@@ -20,6 +20,7 @@ import Divider from '~/beinComponents/Divider';
 import NotiSettingItem from '../components/NotiSettingItem';
 import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 import { INotiSettings } from '~/interfaces/INotification';
+import useAdvancedNotiSettingsStore from '../AdvancedSettings/store';
 
 const NotificationSettings = () => {
   const theme: ExtendedTheme = useTheme();
@@ -38,10 +39,16 @@ const NotificationSettings = () => {
   } = useNotiSettingsStore((state) => state.data);
   const loading = useNotiSettingsStore((state) => state.loading);
   const isRefreshing = useNotiSettingsStore((state) => state.isRefreshing);
+  const resetAdvancedSettingsStore = useAdvancedNotiSettingsStore((state) => state.reset);
+
   const advancedSettings = {
     name: 'advancedSettings',
     title: t('notification:advanced_notifications_settings:screen_title'),
   };
+
+  useEffect(() => {
+    resetAdvancedSettingsStore();
+  }, []);
 
   const onRefresh = () => {
     actions.getConfigSettings(true);
