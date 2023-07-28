@@ -8,8 +8,8 @@ import React, {
   useRef,
 } from 'react';
 import {
+  FlatList,
   RefreshControl,
-  SectionList,
   StyleSheet,
   View,
 } from 'react-native';
@@ -30,18 +30,19 @@ import BannerReport from '~/components/Report/BannerReport';
 import useModalStore from '~/store/modal';
 import ContentNoPermission from '~/components/ContentNoPermission';
 import ContentUnavailable from '~/components/ContentUnavailable';
+import LoadMoreComment from '~/components/LoadMoreComment';
 
 const _PostDetailContent = (props) => {
   const { t } = useBaseHook();
   const { rootNavigation, goHome } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
-  const { colors } = theme;
   const styles = useMemo(() => createStyle(theme), [theme]);
   const { showAlert } = useModalStore((state) => state.actions);
 
   const params = props?.route?.params;
   const {
     post_id: postId,
+    comment_id: commentId,
     focus_comment: focusComment,
     noti_id: notificationId = '',
     is_reported: isReported = false,
@@ -59,11 +60,28 @@ const _PostDetailContent = (props) => {
   );
 
   const {
-    refreshing, isEmptyContent, actor, setting, deleted, createdAt,
-    commentLeft, commentEndCursor, groupIds, comments, sectionData, audience, errorContent,
-    onRefresh, onPressMarkSeenPost,
+    refreshing,
+    isEmptyContent,
+    actor,
+    setting,
+    deleted,
+    createdAt,
+    commentLeft,
+    commentEndCursor,
+    commentStartCursor,
+    commentHasPreviousPage,
+    groupIds,
+    comments,
+    audience,
+    errorContent,
+    onRefresh,
+    onPressMarkSeenPost,
   } = usePostDetailContent({
-    postId, notificationId, HeaderImageComponent, isReported,
+    postId,
+    notificationId,
+    HeaderImageComponent,
+    isReported,
+    commentId,
   });
 
   const commentInputRef = useRef<any>();
@@ -71,15 +89,13 @@ const _PostDetailContent = (props) => {
   const listRef = useRef<any>();
 
   const {
-    onLayout,
     onScroll,
     onPressComment,
     onScrollToIndexFailed,
     onPressReplySectionHeader,
     onPressLoadMoreCommentLevel2,
-    // onPressReplyCommentItem,
   } = usePostDetailContentHandler({
-    postId, comments, sectionData, focusComment, listRef, commentInputRef,
+    postId, comments, focusComment, listRef, commentInputRef, commentId,
   });
 
   const headerTitle = () => {
@@ -114,28 +130,31 @@ const _PostDetailContent = (props) => {
 
   useBackPressListener(onPressBack);
 
+  const viewMore = commentHasPreviousPage;
   let ListFooterComponent = null;
-  if (
-    deleted
-      || !setting?.canComment
-      || sectionData.length === 0
-      || sectionData[0].type === 'empty'
-  ) {
+  if (deleted || !setting?.canComment || comments?.length === 0) {
     ListFooterComponent = <View style={styles.footer} />;
+  } else if (viewMore) {
+    ListFooterComponent = (
+      <LoadMoreComment
+        title="post:text_load_more_replies"
+        postId={postId}
+        startCursor={commentStartCursor}
+      />
+    );
   }
 
-  const renderSectionHeader = (sectionData: any) => {
-    const { section } = sectionData || {};
-    const { comment, index } = section || {};
+  const renderSectionHeader = (comment: any) => {
+    const { item, index } = comment || {};
 
-    if (sectionData?.section?.type === 'empty' || isReported) {
+    if (isReported) {
       return <View />;
     }
 
     return (
       <CommentItem
         postId={postId}
-        commentData={comment}
+        commentData={item}
         groupIds={groupIds}
         audience={audience}
         index={index}
@@ -148,24 +167,6 @@ const _PostDetailContent = (props) => {
     );
   };
 
-  // const renderCommentItem = (data: any) => {
-  //   const { item, index, section } = data || {};
-  //   return (
-  //     <CommentItem
-  //       index={index}
-  //       postId={postId}
-  //       section={section}
-  //       commentData={item}
-  //       groupIds={groupIds}
-  //       audience={audience}
-  //       isReplyingComment={false}
-  //       commentParent={section?.comment}
-  //       onPressReply={onPressReplyCommentItem}
-  //       onPressMarkSeenPost={onPressMarkSeenPost}
-  //     />
-  //   );
-  // };
-
   const renderCommentInputView = () => {
     if (setting?.canComment && !isReported) {
       return (
@@ -173,7 +174,7 @@ const _PostDetailContent = (props) => {
           commentInputRef={commentInputRef}
           postId={postId}
           groupIds={groupIds}
-          autoFocus={focusComment}
+          viewMore={viewMore}
         />
       );
     }
@@ -188,6 +189,8 @@ const _PostDetailContent = (props) => {
       />
     );
   }
+
+  const keyExtractor = (item: any) => `post_comment_${item?.id || ''}`;
 
   const renderContent = () => {
     if (isReported && deleted) {
@@ -206,12 +209,10 @@ const _PostDetailContent = (props) => {
       <View style={styles.container}>
         <View style={styles.postDetailContainer}>
           <BannerReport postId={postId} />
-          <SectionList
+          <FlatList
             ref={listRef}
-            sections={sectionData}
-            // renderItem={renderCommentItem}
-            renderItem={() => <View />}
-            renderSectionHeader={renderSectionHeader}
+            data={comments}
+            renderItem={renderSectionHeader}
             ListHeaderComponent={(
               <PostDetailContentHeader
                 id={postId}
@@ -222,19 +223,17 @@ const _PostDetailContent = (props) => {
               />
             )}
             ListFooterComponent={ListFooterComponent}
-            stickySectionHeadersEnabled={false}
-            ItemSeparatorComponent={() => <View />}
             keyboardShouldPersistTaps="handled"
-            onLayout={onLayout}
-            onContentSizeChange={onLayout}
-            onScroll={onScroll}
+            keyExtractor={keyExtractor}
             onScrollToIndexFailed={onScrollToIndexFailed}
+            onScroll={onScroll}
+            scrollEventThrottle={16}
             refreshControl={(
               <RefreshControl
                 testID="post_detail_content.refresh_control"
                 refreshing={refreshing}
                 onRefresh={onRefresh}
-                tintColor={colors.gray40}
+                tintColor={theme.colors.gray40}
               />
             )}
           />

@@ -3,7 +3,7 @@ import getEnv from '~/utils/env';
 import homeStack from './navigator/MainStack/stacks/homeStack/stack';
 import seriesStack from './navigator/MainStack/stacks/series/stack';
 
-export const PREFIX_DEEPLINK_GROUP = 'bic://';
+export const PREFIX_DEEPLINK_GROUP = `${getEnv('URL_SCHEME')}://`;
 
 // added www because related to performance, auth,...
 export const PREFIX_URL = 'https://www.';

@@ -26,6 +26,7 @@ export enum DeepLinkTypes {
   REFERRAL = 'referral',
   USER_PROFILE = 'user_profile',
   APP = 'APP',
+  DISCOVER_COMMUNITIES = 'discover-communities',
 }
 
 export enum LinkGeneratorTypes {
@@ -96,21 +97,15 @@ export const getGroupLink = ({
   communityId: string; groupId: string; params?: any
 }) => `${PREFIX_URL}${getEnv('SELF_DOMAIN')}/communities/${communityId}/groups/${groupId}${formatParams(params)}`;
 
-export const getChatDomain = () => (
-  chatSchemes.PREFIX_HTTPS
-    + getHostNameFromUri(
-      getEnv('BEIN_CHAT_DEEPLINK'),
-      true,
-    )
-);
+export const getChatDomain = () => `${chatSchemes.PREFIX_HTTPS}${chatSchemes.CHAT_DOMAIN}/`;
 
 export const formatChannelLink = (
   teamId: string, channel: string,
-) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/channels/${channel}`;
+) => `${chatSchemes.FULL_DEEPLINK}${teamId}/channels/${channel}`;
 
 export const formatDMLink = (
   teamId: string, username: string,
-) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/messages/@${username}`;
+) => `${chatSchemes.FULL_DEEPLINK}${teamId}/messages/@${username}`;
 
 export const getHostNameFromUri = (url: string, subDomain = false) => {
   if (!url) return '';
@@ -219,15 +214,24 @@ export const matchDeepLink = (url: string) => {
 
   // bic:///communities/ba6016d4-168f-44de-aca9-4a51055e6201
   match = new RegExp(
-    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?communities\\/(${UUID_V4_PATTERN})$`,
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?communities\\/(${UUID_V4_PATTERN})(?:\\/about$|\\/members$|$)`,
   ).exec(deepLinkUrl);
   if (match) {
     return { type: DeepLinkTypes.COMMUNTY_DETAIL, communityId: match[1] };
   }
 
+  // bicdev:///communities/discover
+  match = new RegExp(
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?communities\\/?discover$`,
+  ).exec(deepLinkUrl);
+  if (match) {
+    return { type: DeepLinkTypes.DISCOVER_COMMUNITIES };
+  }
+
   // bic:///communities/ba6016d4-168f-44de-aca9-4a51055e6201/groups/5578fb11-de70-49e3-9c01-27e26f5b42d8
   match = new RegExp(
-    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?communities\\/(${UUID_V4_PATTERN})\\/groups\\/(${UUID_V4_PATTERN})$`,
+    // eslint-disable-next-line max-len
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?communities\\/(${UUID_V4_PATTERN})\\/groups\\/(${UUID_V4_PATTERN})(?:\\/about$|\\/members$|$)`,
   ).exec(deepLinkUrl);
   if (match) {
     return { type: DeepLinkTypes.GROUP_DETAIL, communityId: match[1], groupId: match[2] };

@@ -7,6 +7,9 @@ export interface TermsInfo {
   groupId: string;
   rootGroupId: string;
   name: string;
+  icon: string;
+  privacy: string;
+  userCount: number;
   type: string;
   isActive: boolean;
   answers?: MembershipAnswerRequest[];
@@ -18,6 +21,9 @@ export interface ITermState extends IBaseState {
   groupId: string;
   rootGroupId: string;
   name: string;
+  icon: string;
+  privacy: string;
+  userCount: number;
   isActiveGroupTerms: boolean;
   loading: boolean;
   termContent: string;
@@ -39,6 +45,9 @@ const initState: InitStateType<ITermState> = {
   groupId: '',
   rootGroupId: '',
   name: '',
+  icon: '',
+  privacy: '',
+  userCount: 0,
   termContent: '',
   errorText: '',
   answers: [],
@@ -59,7 +68,10 @@ const termStore = (set, get) => ({
         state.groupId = payload.groupId;
         state.type = payload.type;
         state.rootGroupId = payload.rootGroupId;
-        state.name = payload?.name || '';
+        state.name = payload?.name || initState.name;
+        state.icon = payload?.icon || initState.icon;
+        state.privacy = payload?.privacy || initState.privacy;
+        state.userCount = payload?.userCount || initState.userCount;
         state.answers = payload?.answers || [];
       }, 'setTermInfo');
     },

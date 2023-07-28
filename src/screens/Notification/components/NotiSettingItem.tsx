@@ -41,6 +41,7 @@ const NotiSettingItem = ({
 
   return (
     <TouchableOpacity
+      testID="notification_settings.item"
       activeOpacity={1}
       style={[styles.container, styles.row]}
       disabled={disable || isDisableToggle}
@@ -54,7 +55,7 @@ const NotiSettingItem = ({
             {title}
           </Text.BodyMMedium>
           {Boolean(isShowSubTitle) && Boolean(subtitle) && (
-          <Text.BodyS style={styles.subTitle}>
+          <Text.BodyS testID="notification_settings.item.sub_title" style={styles.subTitle}>
             {subtitle}
           </Text.BodyS>
           )}
@@ -69,7 +70,14 @@ const NotiSettingItem = ({
             disabled={isDisableToggle}
             onValueChanged={onPressToggle}
           />
-        ) : <Icon tintColor={disable ? colors.neutral30 : colors.neutral40} size={14} icon="ChevronRight" />}
+        ) : (
+          <Icon
+            testID="notification_settings.item.icon"
+            tintColor={disable ? colors.neutral30 : colors.neutral40}
+            size={14}
+            icon="ChevronRight"
+          />
+        )}
     </TouchableOpacity>
   );
 };

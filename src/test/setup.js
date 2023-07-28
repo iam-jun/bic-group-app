@@ -340,16 +340,13 @@ jest.doMock('expo-av', () => ({
   ResizeMode: { CONTAIN: 'CONTAIN' },
 }));
 
-// Fix case - TypeError: Cannot read properties of undefined (reading 'now')
-global.ReanimatedDataMock = {
-  now: () => 0,
-};
-
 jest.mock('mixpanel-react-native', () => ({
   __esModule: true,
   default: () => jest.fn(),
   Mixpanel: jest.fn(() => ({
     init: jest.fn(),
+    getPeople: () => ({ set: jest.fn() }),
+    reset: jest.fn(),
   })),
 }));
 
@@ -359,6 +356,10 @@ jest.mock('mixpanel-react-native', () => ({
 //     preload: jest.fn(),
 //   },
 // }));
+// Fix case - TypeError: Cannot read properties of undefined (reading 'now')
+global.ReanimatedDataMock = {
+  now: () => 0,
+};
 
 jest.mock('~/router/helper', () => ({
   __esModule: true,

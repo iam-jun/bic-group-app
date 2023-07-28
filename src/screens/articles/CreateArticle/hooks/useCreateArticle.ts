@@ -229,15 +229,18 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
       wordCount,
     };
     actions.setData(data);
-    const isDraft = [
-      PostStatus.DRAFT,
+
+    const isDraft = status === PostStatus.DRAFT;
+    const isSchedule = [
       PostStatus.WAITING_SCHEDULE,
       PostStatus.SCHEDULE_FAILED,
     ].includes(status);
     actions.setIsDraft(isDraft);
-    if (isDraft) {
+    actions.setIsSchedule(isSchedule);
+    if (isSchedule) {
       actions.setPublishedAt(publishedAt || '');
     }
+
     // setChooseAudiences for handle article settings
     actions.setChooseAudiences(audienceObject?.groups);
   };

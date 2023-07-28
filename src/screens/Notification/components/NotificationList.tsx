@@ -33,6 +33,7 @@ export interface Props {
   activeIndex: boolean;
   onPressItemOption: (item: any) => void;
   onItemPress: (item: any) => void;
+  onRefresh: () => void;
 }
 
 const ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT = 100;
@@ -47,6 +48,7 @@ const NotificationList = ({
   activeIndex,
   onItemPress,
   onPressItemOption,
+  onRefresh,
 }: Props) => {
   const listRef = useRef<any>();
 
@@ -79,6 +81,7 @@ const NotificationList = ({
   );
 
   const refreshListNotification = () => {
+    onRefresh();
     // @ts-ignore
     notiActions.getTabData({ flag: type, keyValue, isRefresh: true });
   };

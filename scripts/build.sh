@@ -29,6 +29,8 @@ function ipa() {
 }
 
 function setup() {
+    git checkout -- .
+    git pull
     npm run clone-build-resources
     npm run prepare-resources $2
     npm run clean || exit 1

@@ -102,6 +102,11 @@ export const notificationApiConfig = {
     method: 'patch',
     data: params,
   }),
+  deleteNotification: (id: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}notifications/${id}`,
+    method: 'delete',
+  }),
 };
 
 const notificationApi = {
@@ -146,6 +151,7 @@ const notificationApi = {
   ) => withHttpRequestPromise(
     notificationApiConfig.updateGroupSettings, communityId, groupId, params,
   ),
+  deleteNotification: (id: string) => withHttpRequestPromise(notificationApiConfig.deleteNotification, id),
 };
 
 export default notificationApi;

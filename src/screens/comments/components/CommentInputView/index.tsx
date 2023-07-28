@@ -26,7 +26,6 @@ export interface CommentInputViewProps {
   groupIds: string;
   autoFocus?: boolean;
   commentInputRef?: any;
-  isCommentLevel1Screen?: boolean;
   showHeader?: boolean;
   defaultReplyTargetId?: string;
   viewMore?: boolean;
@@ -38,7 +37,6 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   groupIds = '',
   autoFocus,
   commentInputRef,
-  isCommentLevel1Screen,
   showHeader,
   defaultReplyTargetId,
   onCommentSuccess,
@@ -138,7 +136,6 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         commentData: { content: content?.trim(), media, giphy: sendData?.giphy },
         userId,
         onSuccess: _onCommentSuccess,
-        isCommentLevel1Screen,
         viewMore,
         preComment,
       };

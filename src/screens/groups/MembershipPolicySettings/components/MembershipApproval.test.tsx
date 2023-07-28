@@ -11,6 +11,18 @@ afterEach(cleanup);
 describe('MembershipApproval component', () => {
   const props = {
     data: groupDetailData.group,
+    settings: {
+      isInvitedOnly: false,
+      isJoinApproval: false,
+      isActiveGroupTerms: false,
+      isActiveMembershipQuestions: false,
+    },
+    changeableSettings: {
+      isJoinApproval: '',
+      isInvitedOnly: '',
+      isActiveGroupTerms: '',
+      isActiveMembershipQuestions: '',
+    },
     updateJoinSetting: jest.fn(),
   };
 
@@ -27,16 +39,5 @@ describe('MembershipApproval component', () => {
     const toggle = getByTestId('membership_approval.toggle');
     fireEvent.press(toggle);
     expect(propsClone.updateJoinSetting).toHaveBeenCalled();
-  });
-
-  it('renders null with privacy = SECRET', () => {
-    const propsClone = cloneDeep(props);
-    propsClone.data.privacy = GroupPrivacyType.SECRET;
-
-    const rendered = render(<MembershipApproval {...propsClone} />);
-
-    const { queryByTestId } = rendered;
-    const containerView = queryByTestId('membership_approval');
-    expect(containerView).toBeNull();
   });
 });

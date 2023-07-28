@@ -106,6 +106,10 @@ export const userApiConfig = {
     method: 'post',
     data: { ...params },
   }),
+  getUserNotFoundInfo: (email: string) : HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}/public/users/${email}/verify`,
+  }),
 };
 
 const userApi = {
@@ -140,6 +144,7 @@ const userApi = {
     userApiConfig.getSearchMentionAudiences, params,
   ),
   signUp: (params: IParamsSignUp) => withHttpRequestPromise(userApiConfig.signUp, params),
+  getUserNotFoundInfo: (email: string) => withHttpRequestPromise(userApiConfig.getUserNotFoundInfo, email),
 };
 
 export default userApi;

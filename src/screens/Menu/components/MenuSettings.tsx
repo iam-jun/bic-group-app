@@ -38,13 +38,13 @@ const MenuSettings = () => {
   const authActions = useAuthController(getActions) || {};
   const { showAlert } = useModalStore((state) => state.actions);
 
-  const isStaging = getEnv('APP_ENV') === APP_ENV.STAGING;
+  const isQcEnv = getEnv('APP_ENV') === APP_ENV.STAGING || getEnv('APP_ENV') === APP_ENV.PRERELEASE;
   const debuggerVisible = useAppStore((state) => state.debuggerVisible);
   const appActions = useAppStore((state) => state.actions);
 
   const myProfile = useCommonController((state) => state.myProfile);
 
-  const isShowDebug = __DEV__ || isStaging || AppConfig.superUsers.includes(myProfile?.email);
+  const isShowDebug = __DEV__ || isQcEnv || AppConfig.superUsers.includes(myProfile?.email);
 
   const onLogout = () => {
     const alertPayload: IAlertModal = {

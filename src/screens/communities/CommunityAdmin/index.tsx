@@ -51,7 +51,11 @@ const CommunityAdmin = (props: any) => {
   };
 
   const onPressMembershipPolicySettings = () => {
-    rootNavigation.navigate(groupStack.membershipPolicySettings, { id: communityId, type: ITypeGroup.COMMUNITY });
+    rootNavigation.navigate(groupStack.membershipPolicySettings, {
+      communityId,
+      groupId,
+      type: ITypeGroup.COMMUNITY,
+    });
   };
 
   const onPressScheduleContent = () => {

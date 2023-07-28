@@ -133,7 +133,9 @@ const NotiSettingDetail: FC<IRouteParams> = (props) => {
 
   const renderHeader = () => (
     <View style={styles.headerContainer}>
-      <Text.BodyS>
+      <Text.BodyS
+        testID="notification_settings_detail.sub_title"
+      >
         {subtitle}
       </Text.BodyS>
     </View>
@@ -195,7 +197,11 @@ const NotiSettingDetail: FC<IRouteParams> = (props) => {
     }
     return (
       <View key={item.name} style={styles.childContainer}>
-        <Text.BodyMMedium color={colors.neutral80} style={styles.childHeader}>
+        <Text.BodyMMedium
+          testID="notification_settings_detail.child.title"
+          color={colors.neutral80}
+          style={styles.childHeader}
+        >
           {title}
         </Text.BodyMMedium>
         {Boolean(itemChannels) && renderChildContent(itemChannels, item, index)}
