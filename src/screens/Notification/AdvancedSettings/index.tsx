@@ -41,6 +41,7 @@ const AdvancedSettings = () => {
   const advancedSettingsActions = useAdvancedNotiSettingsStore((state) => state.actions);
   const isLoading = useAdvancedNotiSettingsStore((state) => state.isLoading);
   const isLoadingJoinedGroup = useAdvancedNotiSettingsStore((state) => state.isLoadingJoinedGroup);
+  const isLoadingGroupSettings = useAdvancedNotiSettingsStore((state) => state.isLoadingGroupSettings);
   const joinedGroups = useAdvancedNotiSettingsStore((state) => state.joinedGroups);
   const selectedCommunity = useAdvancedNotiSettingsStore((state) => state.selectedCommunity);
   const comId = selectedCommunity?.communityId || selectedCommunity?.id;
@@ -127,7 +128,6 @@ const AdvancedSettings = () => {
   };
 
   const onOpenGroupSearch = () => {
-    advancedSettingsActions.searchJoinedGroupFlat({ key: '' });
     setIsOpenSearchGroups(true);
   };
 
@@ -182,7 +182,8 @@ const AdvancedSettings = () => {
   );
 
   const renderItem = ({ item }: any) => {
-    const isDisabled = !Boolean(communitySettingData?.enable);
+    const isDisabled = !Boolean(communitySettingData?.enable)
+     || isLoadingJoinedGroup || isLoadingGroupSettings;
     return (
       <AdvancedSettingItem
         isDisabled={isDisabled}

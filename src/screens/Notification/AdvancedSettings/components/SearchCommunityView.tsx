@@ -5,6 +5,7 @@ import {
   ActivityIndicator, FlatList, View, StyleSheet,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useKeyboard } from '@react-native-community/hooks';
 import appConfig from '~/configs/appConfig';
 import SearchBaseView from '~/beinComponents/SearchBaseView';
 import AdvancedSettingItem from '../../components/AdvancedSettingItem';
@@ -27,6 +28,8 @@ const SearchCommunityView = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const { t } = useBaseHook();
+  const keyboard = useKeyboard();
+
   const [searchText, setSearchText] = useState('');
 
   const {
@@ -66,7 +69,8 @@ const SearchCommunityView = ({
   };
 
   const renderListFooter = () => {
-    if (!hasNextPage) return null;
+    if (!hasNextPage) return <View style={{ height: keyboard?.keyboardHeight || 0 }} />;
+
     return (
       <View style={styles.listFooter}>
         <ActivityIndicator testID="your_communites.loading_more" />

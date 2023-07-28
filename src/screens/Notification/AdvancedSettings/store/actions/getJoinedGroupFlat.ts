@@ -32,6 +32,7 @@ const getJoinedGroupFlat = (set, get) => async (id: string, isRefresh?: boolean)
       state.joinedGroups = newData;
       state.searchJoinedGroups = newData;
       state.hasNextPage = meta.hasNextPage;
+      state.hasSearchNextPage = meta.hasNextPage;
     }, 'getJoinedGroupFlatSuccess');
   } catch (error) {
     console.error('\x1b[35m🐣️ joinedGroupTree error ', error, '\x1b[0m');
