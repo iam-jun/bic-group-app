@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 
 import { debounce } from 'lodash';
 import {
-  ActivityIndicator, FlatList, View, StyleSheet,
+  ActivityIndicator, FlatList, View, StyleSheet, Platform,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useKeyboard } from '@react-native-community/hooks';
@@ -73,7 +73,9 @@ const SearchGroupView = ({
   };
 
   const renderListFooter = () => {
-    if (!hasSearchNextPage) return <View style={{ height: keyboard?.keyboardHeight || 0 }} />;
+    if (!hasSearchNextPage) {
+      return <View style={{ height: Platform?.OS === 'ios' ? (keyboard?.keyboardHeight || 0) : 0 }} />;
+    }
     return (
       <View style={styles.listFooter}>
         <ActivityIndicator testID="search_group.loading_more" />
