@@ -11,6 +11,8 @@ import updateGroupSettings from './actions/updateGroupSettings';
 import updateCommunitySettings from './actions/updateCommunitySettings';
 import searchJoinedGroupFlat from './actions/searchJoinedGroupFlat';
 
+export const MAX_GROUP_LIMIT = 500;
+
 export interface IAdvancedNotiSettingsStore extends IBaseState {
   // community setting data
   communityData: { [communityId: string]: IAdvancedNotificationSettings };

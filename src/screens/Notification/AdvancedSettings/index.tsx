@@ -43,8 +43,10 @@ const AdvancedSettings = () => {
   const isLoadingJoinedGroup = useAdvancedNotiSettingsStore((state) => state.isLoadingJoinedGroup);
   const joinedGroups = useAdvancedNotiSettingsStore((state) => state.joinedGroups);
   const selectedCommunity = useAdvancedNotiSettingsStore((state) => state.selectedCommunity);
+  const comId = selectedCommunity?.communityId || selectedCommunity?.id;
+
   const communitySettingData: any = useAdvancedNotiSettingsStore(
-    useCallback((state) => state.communityData?.[selectedCommunity?.id] || {}, [selectedCommunity?.id]),
+    useCallback((state) => state.communityData?.[comId] || {}, [comId]),
   );
   const hasNextPage = useAdvancedNotiSettingsStore((state) => state.hasNextPage);
   const { actions: joinedActions } = useSearchJoinedCommunitiesStore();

@@ -1,5 +1,5 @@
 import groupApi from '~/api/GroupApi';
-import { IAdvancedNotiSettingsStore } from '../index';
+import { IAdvancedNotiSettingsStore, MAX_GROUP_LIMIT } from '../index';
 import showToastError from '~/store/helper/showToastError';
 
 const getJoinedGroupFlat = (set, get) => async (id: string, isRefresh?: boolean) => {
@@ -17,6 +17,7 @@ const getJoinedGroupFlat = (set, get) => async (id: string, isRefresh?: boolean)
       includeRootGroup: true,
       sort: 'level:asc',
       offset: isRefresh ? 0 : joinedGroups.length,
+      limit: MAX_GROUP_LIMIT,
     };
 
     const response = await groupApi.getCommunityGroups(id, params);

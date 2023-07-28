@@ -5,7 +5,12 @@ import { IAdvancedNotificationSettings } from '~/interfaces/INotification';
 const getGroupSettings = (set, get) => async (groupIds: string[]) => {
   try {
     if (groupIds?.length === 0) return;
+
+    const groupData = get().groupData || {};
+    if (groupData?.[groupIds[0]]) return;
+
     const communityId = get().selectedCommunity?.id;
+
     set((state: IAdvancedNotiSettingsStore) => {
       state.isLoadingGroupSettings = true;
     }, 'getGroupSettingsLoading');

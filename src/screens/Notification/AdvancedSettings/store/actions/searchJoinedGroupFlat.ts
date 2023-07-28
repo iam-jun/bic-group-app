@@ -1,12 +1,12 @@
 import groupApi from '~/api/GroupApi';
-import { IAdvancedNotiSettingsStore } from '../index';
+import { IAdvancedNotiSettingsStore, MAX_GROUP_LIMIT } from '../index';
 import showToastError from '~/store/helper/showToastError';
 import { IGetCommunityGroup } from '~/interfaces/IGroup';
 
 const searchJoinedGroupFlat = (set, get) => async (params: IGetCommunityGroup, isRefresh?:boolean) => {
   try {
     const {
-      searchJoinedGroups, actions, hasSearchNextPage, selectedCommunity,
+      searchJoinedGroups, hasSearchNextPage, selectedCommunity,
     } = get();
     if (!hasSearchNextPage && !isRefresh) return;
     const id = selectedCommunity?.communityId || selectedCommunity?.id;
@@ -22,14 +22,11 @@ const searchJoinedGroupFlat = (set, get) => async (params: IGetCommunityGroup, i
       includeRootGroup: true,
       offset: isRefresh ? 0 : searchJoinedGroups.length,
       communityId: id,
+      limit: MAX_GROUP_LIMIT,
     };
 
     const response = await groupApi.getCommunityGroups(id, newParams);
-
     const { data, meta } = response;
-    const groupIds = data?.map((item: any) => item.id) || [];
-    actions.getGroupSettings(groupIds);
-
     const newData = isRefresh ? data : [...searchJoinedGroups, ...data];
 
     set((state: IAdvancedNotiSettingsStore) => {

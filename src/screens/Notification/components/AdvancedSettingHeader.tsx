@@ -32,9 +32,12 @@ const AdvancedSettingHeader = ({
 
   const isLoadingCommunitySettings = useAdvancedNotiSettingsStore((state) => state.isLoadingCommunitySettings);
   const selectedCommunity = useAdvancedNotiSettingsStore((state) => state.selectedCommunity);
-  const { icon, name } = selectedCommunity || {};
+  const {
+    icon, name, communityId, id,
+  } = selectedCommunity || {};
+  const comId = communityId || id;
   const communitySettingData: any = useAdvancedNotiSettingsStore(
-    (state) => state.communityData?.[selectedCommunity?.id] || {},
+    (state) => state.communityData?.[comId] || {},
   );
 
   const defaultItem: INotiSettings = {
