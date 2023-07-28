@@ -219,6 +219,7 @@ const AdvancedSettings = () => {
           : (
             <FlatList
               data={joinedGroups}
+              extraData={communitySettingData}
               scrollEventThrottle={16}
               keyboardDismissMode="interactive"
               keyboardShouldPersistTaps="handled"
