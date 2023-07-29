@@ -58,6 +58,7 @@ import { IDraftContentsState } from '~/screens/YourContent/components/Draft/Draf
 import { IPublishState } from '~/screens/YourContent/components/Publish/store';
 import { IUserBadgesState } from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
 import { IYourQuizState } from '~/screens/quiz/YourQuiz/store';
+import { ITakeQuizState } from '~/screens/quiz/TakeQuiz/store';
 
 export interface BicStore {
   entities: {
@@ -181,7 +182,10 @@ export interface BicStore {
   };
   YourQuiz: {
     yourQuizStore: IYourQuizState;
-  }
+  },
+  TakeQuiz: {
+    takeQuizStore: ITakeQuizState;
+  },
 
   // others
   chat: IChatState;

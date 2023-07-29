@@ -165,7 +165,7 @@ const createStyle = (theme: ExtendedTheme) => {
     btnRetakeOrRetry: {
       marginTop: spacing.margin.base,
       marginHorizontal: spacing.margin.large,
-      marginBottom: spacing.margin.base,
+      marginBottom: 20,
     },
     btnQuit: {
       marginBottom: BOTTOM_SPACE,

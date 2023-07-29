@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  View, StyleSheet, ScrollView, Platform,
+  View, StyleSheet, ScrollView, Platform, ActivityIndicator,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -12,18 +12,44 @@ import Text from '~/baseComponents/Text';
 import { Button } from '~/baseComponents';
 import { spacing } from '~/theme';
 import AnswerItem from './components/AnswerItem';
-import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
+import useTakeQuiz from './hooks/useTakeQuiz';
+import { BUTTON_SIZES } from '~/baseComponents/Button/constants';
 
-interface TakeQuizProps {}
+interface TakeQuizProps {
+  route?: {
+    params?: {
+      quizId: string;
+      contentId: string;
+    };
+  };
+}
 
 const BOTTOM_SPACE = Platform.OS === 'ios' ? 38 : 24;
 
-const TakeQuiz: React.FC<TakeQuizProps> = () => {
+const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
+  const { route } = props;
+  const { quizId, contentId } = route.params || {};
+
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
+  const styles = createStyle(theme);
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
   const [answerCorrect, setAnswerCorrect] = useState<any>(null);
+
+  const {
+    isPrepareTakingQuiz,
+    onPressNextQuestion,
+    onPressPreviousQuestion,
+    enableButtonPrevious,
+    currentQuestionIndex,
+    currentQuestion,
+    totalQuestion,
+
+
+  } = useTakeQuiz(quizId, contentId);
+
+  const { id, content, answers } = currentQuestion || {};
 
   const goBack = () => rootNavigation.goBack();
 
@@ -38,10 +64,6 @@ const TakeQuiz: React.FC<TakeQuizProps> = () => {
   };
 
   useBackPressListener(onPressBack);
-
-  const onPressNext = () => {
-    rootNavigation.navigate(quizStack.takeQuizReview, { showCongrat: !!answerCorrect });
-  };
 
   const onPickAnswer = (data) => {
     setAnswerCorrect(data);
@@ -61,6 +83,55 @@ const TakeQuiz: React.FC<TakeQuizProps> = () => {
     );
   };
 
+  const renderContent = () => {
+    if (isPrepareTakingQuiz) return (
+      <View style={styles.loadingView}>
+        <ActivityIndicator color={colors.neutral30} size='large' />
+      </View>
+    );;
+
+    return (
+      <View style={styles.content}>
+        <Text.SubtitleXS color={colors.neutral30}>
+          {`QUESTION ${currentQuestionIndex} OF ${totalQuestion}`}
+        </Text.SubtitleXS>
+        <View style={styles.questionContainer}>
+          <Text.H4 color={colors.neutral60}>
+            { content }
+          </Text.H4>
+        </View>
+        {answers.map(rendeAnswerItem)}
+      </View>
+    );
+  }
+
+  const renderButtons = () => {
+    if (isPrepareTakingQuiz) return null;
+
+    return (
+      <>
+        <Button.Primary
+          size="large"
+          useI18n
+          onPress={onPressNextQuestion}
+          style={styles.btnNext}
+        >
+          quiz:btn_next
+        </Button.Primary>
+        {enableButtonPrevious && (
+          <Button
+            onPress={onPressPreviousQuestion}
+            style={styles.btnPrev}
+          >
+            <Text.ButtonM useI18n color={colors.neutral60}>
+              quiz:btn_previous
+            </Text.ButtonM>
+          </Button>
+        )}
+      </>
+    );
+  };
+
   return (
     <ScreenWrapper isFullView backgroundColor={colors.white} testID="take_quiz">
       <Header
@@ -68,70 +139,51 @@ const TakeQuiz: React.FC<TakeQuizProps> = () => {
         title="quiz:title_take_quiz"
         onPressBack={onPressBack}
       />
-      <ScrollView>
-        <View style={styles.content}>
-          <Text.SubtitleXS color={colors.neutral30}>
-            QUESTION 1 OF 1
-          </Text.SubtitleXS>
-          <View style={styles.questionContainer}>
-            <Text.H4 color={colors.neutral60}>
-              This is test question fake data, right ?
-            </Text.H4>
-          </View>
-          {fakeAnswers.map(rendeAnswerItem)}
-        </View>
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        {renderContent()}
       </ScrollView>
-      <Button.Primary
-        size="large"
-        useI18n
-        onPress={onPressNext}
-        style={styles.btnNext}
-      >
-        quiz:btn_next
-      </Button.Primary>
+      {renderButtons()}
     </ScreenWrapper>
   );
 };
 
-const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-    paddingHorizontal: spacing.padding.large,
-    paddingTop: spacing.padding.extraLarge,
-  },
-  questionContainer: {
-    marginTop: spacing.margin.base,
-    marginBottom: spacing.margin.large,
-  },
-  btnNext: {
-    marginTop: spacing.margin.base,
-    marginBottom: BOTTOM_SPACE,
-    marginHorizontal: spacing.margin.large,
-  },
-});
+const createStyle = (theme: ExtendedTheme) => {
+  const { colors } = theme;
+
+  return StyleSheet.create({
+    contentContainer: {
+      flex: 1,
+    },
+    content: {
+      flex: 1,
+      paddingHorizontal: spacing.padding.large,
+      paddingTop: spacing.padding.extraLarge,
+    },
+    questionContainer: {
+      marginTop: spacing.margin.base,
+      marginBottom: spacing.margin.large,
+    },
+    btnNext: {
+      marginTop: spacing.margin.base,
+      marginBottom: 20,
+      marginHorizontal: spacing.margin.large,
+    },
+    btnPrev: {
+      marginBottom: BOTTOM_SPACE,
+      marginHorizontal: spacing.margin.large,
+      borderWidth: 1,
+      borderColor: colors.neutral20,
+      borderRadius: spacing.borderRadius.large,
+      height: BUTTON_SIZES.large,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    loadingView: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  });
+};
 
 export default TakeQuiz;
-
-const fakeAnswers = [
-  {
-    answer: 'Vàng và thiếc',
-    id: 'ac50b926-a1f6-413e-a6da-ac1d1d595193',
-  },
-  {
-    answer: 'Vàng và kim cương',
-    id: '78db5d50-0beb-4235-b125-8abd254b5063',
-  },
-  {
-    answer: 'Vàng và FAIENCE',
-    id: 'ac50b926-a1f6-413e-a6da-ac1d1d591212',
-  },
-  {
-    answer: 'Gold và Diamond',
-    id: 'ac50b926-a1f6-413e-a6da-acfdgd595193',
-  },
-  {
-    answer: 'Iron và Metan',
-    id: 'ac50b926-a1f6-413e-a6da-acfdgd59393',
-  },
-
-];

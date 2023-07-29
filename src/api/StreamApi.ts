@@ -43,7 +43,11 @@ import {
 import { IParamGetReportContent, IParamsReportContent } from '~/interfaces/IReport';
 import { CreateTag, EditTag, IParamGetCommunityTags } from '~/interfaces/ITag';
 import {
-  EditQuizParams, GenerateQuizParams, IParamsGetQuizzesContent, RegenerateQuizParams,
+  EditQuizParams,
+  GenerateQuizParams,
+  IParamsGetQuizzesContent,
+  RegenerateQuizParams,
+  IParamsUpdateAnwsers,
 } from '~/interfaces/IQuiz';
 
 const DEFAULT_LIMIT = 10;
@@ -587,6 +591,24 @@ export const streamApiConfig = {
       type: params?.type,
     },
   }),
+  startQuiz: (quizId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${quizId}/start`,
+    method: 'post',
+  }),
+  getQuizParticipant: (quizParticipantId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${quizParticipantId}/result`,
+  }),
+  updateAnwsers: (quizParticipantId: string, params: IParamsUpdateAnwsers) => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${quizParticipantId}`,
+    method: 'put',
+    params: {
+      isFinished: params?.isFinished || false,
+      anwsers: params?.anwsers,
+    },
+  }),
   getQuizDetail: (idQuiz: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}quizzes/${idQuiz}`,
@@ -889,6 +911,15 @@ const streamApi = {
   ),
   getQuizzesContent: (params: IParamsGetQuizzesContent) => withHttpRequestPromise(
     streamApiConfig.getQuizzesContent, params,
+  ),
+  startQuiz: (quizId: string) => withHttpRequestPromise(
+    streamApiConfig.startQuiz, quizId,
+  ),
+  getQuizParticipant: (quizParticipantId: string) => withHttpRequestPromise(
+    streamApiConfig.getQuizParticipant, quizParticipantId,
+  ),
+  updateAnwsers: (quizParticipantId: string, params: IParamsUpdateAnwsers) => withHttpRequestPromise(
+    streamApiConfig.updateAnwsers, quizParticipantId, params,
   ),
   getQuizDetail: (idQuiz: string) => withHttpRequestPromise(
     streamApiConfig.getQuizDetail, idQuiz,

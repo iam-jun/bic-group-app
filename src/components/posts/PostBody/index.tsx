@@ -178,6 +178,7 @@ const _PostBody: FC<PostBodyProps> = ({
         {!isLite && (
           <TakePartInAQuiz
             quiz={quiz}
+            contentId={postId}
             shouldShowDraftQuiz={shouldShowDraftQuiz}
           />
         )}

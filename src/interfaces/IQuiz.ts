@@ -33,13 +33,13 @@ export type RegenerateQuizParams = Partial<
 
 export type AnswerItem = {
   id: string;
-  answer: string;
+  content: string;
   isCorrect: boolean;
 };
 
 export type QuestionItem = {
   id: string;
-  question: string;
+  content: string;
   answers: AnswerItem[];
 };
 
@@ -94,4 +94,56 @@ export enum ContentQuiz {
   ALL = 'ALL',
   POST = 'POST',
   ARTICLE = 'ARTICLE',
+}
+
+export type ChoosedAnswer = {
+  questionId: string;
+  answerId: string;
+}
+
+export interface IParamsUpdateAnwsers {
+  isFinished?: boolean;
+  anwsers: ChoosedAnswer[];
+}
+
+export interface IPayLoadUpdateAnwsers extends IParamsUpdateAnwsers {
+  quizParticipantId: string;
+}
+
+export interface IPayloadStartQuiz {
+  quizId: string;
+  onSuccess?: (quizParticipantId: string) => void;
+}
+
+export type QuizDoing = {
+  quizParticipantId?: string;
+}
+
+export type QuizHighestScore = {
+  quizParticipantId?: string;
+  score?: number;
+}
+
+export type UserAnswerItem = {
+  questionId: string;
+  answerId: string;
+}
+
+export type TakingAnswerItem = Omit<AnswerItem, 'isCorrect'>;
+
+export type TakingQuestionItem = Omit<QuestionItem, 'answers'> & {
+  answers: TakingAnswerItem[];
+};
+
+export interface ITakingQuizData {
+  id: string;
+  questions: TakingQuestionItem[];
+  userAnswers: UserAnswerItem[];
+  quizId: string;
+  contentId: string;
+  timeLimit: number;
+  startedAt: string;
+  score: number;
+  totalAnswers: number;
+  totalCorrectAnswers: number;
 }

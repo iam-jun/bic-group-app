@@ -33,7 +33,7 @@ const AnswerItem: React.FC<AnswerItemProps> = ({
       </View>
       <Button style={[styles.answerBtn, isCorrect && styles.answerCorrect]} onPress={onPressAnswer}>
         <Text.DropdownM color={isCorrect ? colors.white : colors.neutral60}>
-          { data?.answer }
+          { data?.content }
         </Text.DropdownM>
       </Button>
     </View>

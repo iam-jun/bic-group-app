@@ -204,6 +204,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
   const renderTakePartInAQuiz = () => (
     <TakePartInAQuiz
       quiz={quiz}
+      contentId={id}
       shouldShowDraftQuiz={shouldShowDraftQuiz}
     />
   );

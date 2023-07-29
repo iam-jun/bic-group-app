@@ -16,12 +16,14 @@ import { onPressTakeQuiz } from './helper';
 
 type TakePartInAQuizProps = {
   quiz: QuizPost;
+  contentId: string;
   style?: StyleProp<ViewStyle>;
   shouldShowDraftQuiz?: boolean;
 };
 
 const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
   quiz,
+  contentId,
   style,
   shouldShowDraftQuiz,
 }) => {
@@ -37,7 +39,7 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
 
   const onPress = () => {
     if (canTakeQuiz) {
-      onPressTakeQuiz(id);
+      onPressTakeQuiz(id, contentId);
     }
   };
 
