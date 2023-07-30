@@ -3,49 +3,41 @@ import {
   StyleSheet, View, StyleProp, ViewStyle,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import {
-  ShineOverlay,
-  Placeholder,
-  PlaceholderLine,
-  PlaceholderMedia,
-} from 'rn-placeholder';
+
+import Animated from 'react-native-reanimated';
 import dimension from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
 import { getRandomInt } from '~/utils/generator';
+import { useSkeletonAnimation } from '~/hooks/useSkeletonAnimation';
+import ViewSpacing from '../ViewSpacing';
 
 export interface CommentPlaceholderProps {
   style?: StyleProp<ViewStyle>;
-  disableRandom?: boolean;
+  isChildComment?: boolean;
 }
 
 const CommentPlaceholder: React.FC<CommentPlaceholderProps> = ({
   style,
-  disableRandom,
+  isChildComment,
 }: CommentPlaceholderProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
+  const animatedStyle = useSkeletonAnimation({ targetOpacityValue: 0.5, speed: 500 });
 
   return (
-    <View style={StyleSheet.flatten([styles.container, style])}>
-      <Placeholder
-        Animation={ShineOverlay}
-        Left={() => <PlaceholderMedia style={styles.avatar} />}
-        style={styles.infoContainer}
-      >
-        <Placeholder Animation={ShineOverlay} style={styles.contentContainer}>
-          <PlaceholderLine width={disableRandom ? 50 : getRandomInt(
-            30, 60,
-          )}
-          />
-          <PlaceholderLine
-            width={disableRandom ? 60 : getRandomInt(
-              30, 80,
-            )}
-            style={styles.secondLine}
-          />
-        </Placeholder>
-      </Placeholder>
+    <View style={StyleSheet.flatten([styles.container, styles.row, style])}>
+      {
+        Boolean(isChildComment) && (
+          <View style={[styles.avatar, styles.avatarHidden]} />
+        )
+      }
+      <Animated.View style={[styles.avatar, animatedStyle]} />
+      <View style={styles.contentContainer}>
+        <Animated.View style={[styles.line, styles.firstLine, animatedStyle]} />
+        <ViewSpacing height={spacing.margin.small} />
+        <Animated.View style={[styles.line, styles.secondLine, animatedStyle]} />
+      </View>
     </View>
   );
 };
@@ -55,31 +47,44 @@ export default CommentPlaceholder;
 const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
     container: {
       backgroundColor: colors.white,
-      paddingHorizontal: spacing.padding.tiny,
+      paddingHorizontal: spacing.padding.large,
+      paddingVertical: spacing.padding.small,
     },
     avatar: {
       width: dimension.avatarSizes.medium,
       height: dimension.avatarSizes.medium,
       marginRight: spacing.margin.small,
-      borderRadius: 20,
-      backgroundColor: '#F9FAFB',
-    },
-    secondLine: {
-      marginBottom: spacing.margin.small,
-      backgroundColor: '#EAEDF2',
-    },
-    infoContainer: {
-      paddingTop: spacing.padding.small,
-      paddingHorizontal: spacing.padding.base,
-      paddingBottom: spacing.padding.base,
+      borderRadius: spacing.borderRadius.pill,
+      backgroundColor: colors.neutral5,
     },
     contentContainer: {
-      flexDirection: 'row',
-      padding: spacing.padding.small,
-      backgroundColor: '#F9FAFB',
+      backgroundColor: colors.neutral1,
+      paddingHorizontal: spacing.padding.small,
+      paddingTop: spacing.padding.small,
+      paddingBottom: spacing.padding.large,
       borderRadius: spacing.borderRadius.small,
+      flex: 1,
+    },
+    line: {
+      height: spacing.margin.base,
+      borderRadius: spacing.margin.xTiny,
+      width: getRandomInt(80, 120),
+      backgroundColor: colors.neutral5,
+    },
+    firstLine: {
+      width: 80,
+    },
+    secondLine: {
+      width: 160,
+    },
+    avatarHidden: {
+      backgroundColor: colors.white,
     },
   });
 };

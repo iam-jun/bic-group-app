@@ -44,8 +44,8 @@ describe('get notification changelog function', () => {
     act(() => {
       jest.runAllTimers();
     });
-    // @ts-ignore
-    expect(result.current.changelogsInfo).toEqual(activity.changelogsInfo);
+    const { changelogsInfo }: any = activity;
+    expect(result.current.changelogsInfo).toEqual(changelogsInfo);
     expect(result.current.changelogsInfoLoading).toBeFalsy();
   });
 
