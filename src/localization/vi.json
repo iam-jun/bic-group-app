@@ -182,7 +182,7 @@
     "btn_go_back": "Quay về",
     "text_unsupport_feature": "Chúng tôi chưa hỗ trợ tính năng này trên thiết bị di động. Vui lòng xem chi tiết trên phiên bản web",
     "text_maintenance_title": "Chúng tôi đang bảo trì.",
-    "text_maintenance_content": "Chúng tôi sẽ trở lại lúc ",
+    "text_maintenance_content": "Nền tảng tạm thời không khả dụng trong thời gian bảo trì. Chúng tôi sẽ quay lại tại **(endAt)**\nChúng tôi xin lỗi vì bất kỳ sự bất tiện nào và đánh giá cao sự hỗ trợ liên tục của bạn.",
     "text_select_file": "Chọn file",
     "content_unavailable": {
       "title": "Nội dung này hiện không khả dụng",
