@@ -13,7 +13,7 @@ const AppVersion = () => {
 
   const isProduction = getEnv('APP_ENV') === APP_ENV.PRODUCTION;
 
-  const updateDescription = '';
+  const updateDescription = getEnv('UPDATE_DESC');
 
   const onPressAppVersion = () => {
     rootNavigation.navigate(menuStack.componentCollection);
