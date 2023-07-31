@@ -35,7 +35,9 @@ const AdvancedSettings = () => {
   const [isOpenSearchCommunity, setIsOpenSearchCommunity] = useState(false);
   const [isOpenSearchGroups, setIsOpenSearchGroups] = useState(false);
 
-  const { ids, actions, items } = useYourCommunitiesStore();
+  const {
+    ids, actions, items, reset: resetCommunityStore,
+  } = useYourCommunitiesStore();
   const advancedSettingsActions = useAdvancedNotiSettingsStore((state) => state.actions);
   const isLoading = useAdvancedNotiSettingsStore((state) => state.isLoading);
   const isLoadingJoinedGroup = useAdvancedNotiSettingsStore((state) => state.isLoadingJoinedGroup);
@@ -58,6 +60,7 @@ const AdvancedSettings = () => {
       }
       return () => {
         resetAdvancedSettings();
+        resetCommunityStore();
       };
     }, [],
   );

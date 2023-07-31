@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { debounce } from 'lodash';
 import {
@@ -35,6 +35,10 @@ const SearchCommunityView = ({
   const {
     ids, items, actions: joinedActions, reset, loading, hasNextPage,
   } = useSearchJoinedCommunitiesStore();
+
+  useEffect(() => () => {
+    reset();
+  }, []);
 
   const onLoadMore = () => {
     hasNextPage && joinedActions.searchJoinedCommunities({ key: searchText }, true);
