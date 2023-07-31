@@ -3,7 +3,7 @@ import { RefreshControl, StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Animated from 'react-native-reanimated';
 
-import { debounce } from 'lodash';
+import { capitalize, debounce } from 'lodash';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
@@ -14,6 +14,7 @@ import useNotiSettingsStore from './store';
 import Text from '~/baseComponents/Text';
 import NotiSettingItem from '../components/NotiSettingItem';
 import { IEditNotificationSetting, INotiChannel, INotiSettings } from '~/interfaces/INotification';
+import { trackEventWithUserId } from '~/store/helper/trackingWithUserId';
 
 interface IHandleToggleProps {
   isChecked: boolean;
@@ -81,6 +82,11 @@ const NotiSettingDetail: FC<IRouteParams> = (props) => {
     const payload = { ...item, enable: isChecked };
     const oldPayload = { ...item, enable: isChecked };
     handleUpdateSettings({ payload, oldPayload, index });
+    if (index === -1) {
+      trackEventWithUserId(`${capitalize(name)} Noti Changed`, {
+        state: isChecked,
+      });
+    }
   };
 
   const handlePressItemInApp = debounce(({ index, item, isChecked }:IHandleToggleProps) => {
