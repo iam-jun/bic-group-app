@@ -6,7 +6,7 @@ on:
       - 'pre-*'
 
 jobs:
-  build-ios-prerelease:
+  build-android-prerelease:
     runs-on: self-hosted
     steps:
       - name: ci/checkout-repo
