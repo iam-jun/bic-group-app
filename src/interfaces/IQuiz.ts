@@ -1,4 +1,4 @@
-import { IAudienceGroup } from './IPost';
+import { IAudienceGroup, PostType } from './IPost';
 
 export enum QuizStatus {
   PENDING = 'PENDING',
@@ -75,7 +75,7 @@ export interface IParamsGetQuizzesContent {
 }
 
 export type EditQuestionForm = {
-  question: string;
+  content: string;
   answers: AnswerItem[];
 };
 
@@ -96,14 +96,9 @@ export enum ContentQuiz {
   ARTICLE = 'ARTICLE',
 }
 
-export type ChoosedAnswer = {
-  questionId: string;
-  answerId: string;
-}
-
 export interface IParamsUpdateAnwsers {
   isFinished?: boolean;
-  anwsers: ChoosedAnswer[];
+  answers: UserAnswerItem[];
 }
 
 export interface IPayLoadUpdateAnwsers extends IParamsUpdateAnwsers {
@@ -135,15 +130,24 @@ export type TakingQuestionItem = Omit<QuestionItem, 'answers'> & {
   answers: TakingAnswerItem[];
 };
 
-export interface ITakingQuizData {
+export type ParticipantContent = {
+  id: string;
+  type: PostType;
+}
+
+export interface IParticipantResult {
+  content: ParticipantContent;
+  description?: string;
+  finishedAt: string;
   id: string;
   questions: TakingQuestionItem[];
-  userAnswers: UserAnswerItem[];
   quizId: string;
-  contentId: string;
-  timeLimit: number;
-  startedAt: string;
   score: number;
+  startedAt: string;
+  timeLimit: number;
+  title?: string;
   totalAnswers: number;
+  totalTimes: number;
   totalCorrectAnswers: number;
+  userAnswers?: UserAnswerItem[];
 }

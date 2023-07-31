@@ -21,7 +21,9 @@ const AnswerItem: React.FC<AnswerItemProps> = ({
   const styles = createStyle(theme);
 
   const onPressAnswer = () => {
-    onPress(data);
+    if (!isCorrect) {
+      onPress(data);
+    }
   };
 
   return (

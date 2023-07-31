@@ -1,13 +1,15 @@
 import { createStore, resetStore } from '~/store/utils';
-import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
+import IBaseState from '~/store/interfaces/IBaseState';
 import {
   IPayloadStartQuiz,
   IPayLoadUpdateAnwsers,
-  ITakingQuizData,
+  IParticipantResult,
+  UserAnswerItem,
 } from '~/interfaces/IQuiz';
 import startQuiz from './actions/startQuiz';
 import getQuizParticipant from './actions/getQuizParticipant';
 import updateAnwsers from './actions/updateAnwsers';
+import addToUserAnswers from './actions/addToUserAnswers';
 
 export interface ITakeQuizState extends IBaseState {
   isPrepareTakingQuiz: boolean;
@@ -16,8 +18,9 @@ export interface ITakeQuizState extends IBaseState {
   };
   takingQuiz: {
     currentQuestionIndex: number;
-    data: ITakingQuizData;
+    userAnswers: UserAnswerItem[];
   };
+  participantResult: IParticipantResult;
 
   actions: {
     startQuiz: (payload: IPayloadStartQuiz) => void;
@@ -26,7 +29,9 @@ export interface ITakeQuizState extends IBaseState {
 
     onNext: () => void;
     onPrevious: () => void;
+    addToUserAnswers: (payload: UserAnswerItem) => void;
     addToQuizParticipants: (quizId: string, participant: string) => void;
+    setUserAnswersData: (payload: UserAnswerItem[]) => void;
     resetDataTakingQuiz: () => void;
   };
 }
@@ -36,8 +41,9 @@ const initState = {
   quizParticipants: {},
   takingQuiz: {
     currentQuestionIndex: 0,
-    data: {},
+    userAnswers: [],
   },
+  participantResult: {},
 };
 
 const takeQuizStore = (set, get) => ({
@@ -58,15 +64,21 @@ const takeQuizStore = (set, get) => ({
         state.takingQuiz.currentQuestionIndex -= 1;
       }, 'onPrevious');
     },
+    addToUserAnswers: addToUserAnswers(set, get),
     addToQuizParticipants: (quizId, participant) => {
       set((state: ITakeQuizState) => {
         state.quizParticipants[quizId] = participant;
       }, 'addToQuizParticipants');
     },
+    setUserAnswersData: (payload: UserAnswerItem[]) => {
+      set((state: ITakeQuizState) => {
+        state.takingQuiz.userAnswers = payload;
+      }, 'setUserAnswersData');
+    },
     resetDataTakingQuiz: () => {
-      set((state) => {
+      set((state: ITakeQuizState) => {
         state.takingQuiz.currentQuestionIndex = 0;
-        state.takingQuiz.data = {};
+        state.takingQuiz.userAnswers = [];
       }, 'resetDataTakingQuiz');
     },
   },

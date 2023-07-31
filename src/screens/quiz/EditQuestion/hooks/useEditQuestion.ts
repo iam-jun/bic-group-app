@@ -25,11 +25,11 @@ const useEditQuestion = (
   const loading = useQuizzesStore((state) => state.loading);
   const actionsQuizzesStore = useQuizzesStore((state) => state.actions);
 
-  const { question, answers } = questionItem;
+  const { content, answers } = questionItem;
 
   const methods = useForm<EditQuestionForm>({
     defaultValues: {
-      question,
+      content,
       answers,
     },
     mode: 'onChange',
@@ -72,7 +72,7 @@ const useEditQuestion = (
   };
 
   const onSave = handleSubmit((data) => {
-    const { question: questionData, answers: answersData } = data;
+    const { content: contentQuestionData, answers: answersData } = data;
 
     const onSuccess = (response: any) => {
       showToastSuccess(response);
@@ -81,7 +81,7 @@ const useEditQuestion = (
 
     const newQuestionItem: QuestionItem = {
       ...questionItem,
-      question: questionData.trim(),
+      content: contentQuestionData.trim(),
       answers: formatAnswers(answersData),
     };
     const newQuestions = questions.map((quest, index) => {

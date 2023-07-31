@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   View, StyleSheet, ScrollView, Platform, ActivityIndicator,
 } from 'react-native';
@@ -35,7 +35,6 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
   const styles = createStyle(theme);
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
-  const [answerCorrect, setAnswerCorrect] = useState<any>(null);
 
   const {
     isPrepareTakingQuiz,
@@ -45,11 +44,14 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
     currentQuestionIndex,
     currentQuestion,
     totalQuestion,
-
-
+    questionChoosedAnswer,
+    onPickAnswer,
+    resetDataTakingQuiz,
   } = useTakeQuiz(quizId, contentId);
 
-  const { id, content, answers } = currentQuestion || {};
+  const { content, answers } = currentQuestion || {};
+
+  useEffect(() => () => resetDataTakingQuiz(), []);
 
   const goBack = () => rootNavigation.goBack();
 
@@ -65,12 +67,8 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
 
   useBackPressListener(onPressBack);
 
-  const onPickAnswer = (data) => {
-    setAnswerCorrect(data);
-  };
-
   const rendeAnswerItem = (item, index) => {
-    const isCorrect = answerCorrect?.id === item.id;
+    const isCorrect = questionChoosedAnswer?.answerId === item.id;
 
     return (
       <AnswerItem
@@ -93,14 +91,14 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
     return (
       <View style={styles.content}>
         <Text.SubtitleXS color={colors.neutral30}>
-          {`QUESTION ${currentQuestionIndex} OF ${totalQuestion}`}
+          {`QUESTION ${currentQuestionIndex + 1} OF ${totalQuestion}`}
         </Text.SubtitleXS>
         <View style={styles.questionContainer}>
           <Text.H4 color={colors.neutral60}>
             { content }
           </Text.H4>
         </View>
-        {answers.map(rendeAnswerItem)}
+        {answers?.map(rendeAnswerItem)}
       </View>
     );
   }

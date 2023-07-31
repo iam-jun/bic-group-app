@@ -593,20 +593,20 @@ export const streamApiConfig = {
   }),
   startQuiz: (quizId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}quizzes/${quizId}/start`,
+    url: `${provider.url}quiz-participant/${quizId}/start`,
     method: 'post',
   }),
   getQuizParticipant: (quizParticipantId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}quizzes/${quizParticipantId}/result`,
+    url: `${provider.url}quiz-participant/${quizParticipantId}`,
   }),
   updateAnwsers: (quizParticipantId: string, params: IParamsUpdateAnwsers) => ({
     ...defaultConfig,
-    url: `${provider.url}quizzes/${quizParticipantId}`,
+    url: `${provider.url}quiz-participant/${quizParticipantId}/answers`,
     method: 'put',
-    params: {
+    data: {
       isFinished: params?.isFinished || false,
-      anwsers: params?.anwsers,
+      answers: params?.answers,
     },
   }),
   getQuizDetail: (idQuiz: string): HttpApiRequestConfig => ({

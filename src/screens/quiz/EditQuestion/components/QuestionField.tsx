@@ -42,7 +42,7 @@ const QuestionField: FC<QuestionFieldProps> = ({ remove, questionIndex }) => {
       <Text.LabelM color={colors.neutral40}>{`${questionIndex + 1}.`}</Text.LabelM>
       <View style={{ flex: 1 }}>
         <Controller
-          name="question"
+          name="content"
           control={control}
           rules={{ required: true, validate: validateSpaceTrap }}
           render={renderTextInput}
