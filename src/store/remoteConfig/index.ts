@@ -9,6 +9,7 @@ export interface IRemoteConfigState extends IBaseState {
   appVersion: string;
   minSupportedVersion: string;
   appStoreUrl: string;
+  appStoreUrlChat: string;
 
   actions: {
     getRemoteConfig: () => void;
@@ -19,6 +20,7 @@ const initialState: InitStateType<IRemoteConfigState> = {
   appVersion: APP_VERSION,
   minSupportedVersion: APP_VERSION,
   appStoreUrl: '',
+  appStoreUrlChat: '',
 };
 
 const remoteConfigStore = (set, get) => ({

@@ -590,8 +590,9 @@
     "title_feed_content_posts": "Posts",
     "title_feed_content_articles": "Articles",
     "title_feed_content_series": "Series",
-    "title_install_chat": "App not found",
-    "text_desc_install_chat": "Please install BIC Chat",
+    "title_install_chat": "BIC Chat Not Found",
+    "text_desc_install_chat": "To utilize our Chat feature, you need to have the BIC Chat app on your device.",
+    "text_get_bic_chat": "Get BIC Chat",
     "newsfeed_search": {
       "text_cta_see_result_for_search_text": "See result for \"%SEARCH_TEXT%\"",
       "clear": "Clear all",
