@@ -1,6 +1,4 @@
-import React, {
-  useCallback, useEffect, useState,
-} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator, FlatList, StyleSheet, View,
 } from 'react-native';
@@ -46,9 +44,7 @@ const AdvancedSettings = () => {
   const selectedCommunity = useAdvancedNotiSettingsStore((state) => state.selectedCommunity);
   const comId = selectedCommunity?.communityId || selectedCommunity?.id;
 
-  const communitySettingData: any = useAdvancedNotiSettingsStore(
-    useCallback((state) => state.communityData?.[comId] || {}, [comId]),
-  );
+  const communitySettingData: any = useAdvancedNotiSettingsStore((state) => state.communityData?.[comId] || {});
   const hasNextPage = useAdvancedNotiSettingsStore((state) => state.hasNextPage);
   const { actions: joinedActions } = useSearchJoinedCommunitiesStore();
   const { reset: resetAdvancedSettings } = useAdvancedNotiSettingsStore();
@@ -186,6 +182,7 @@ const AdvancedSettings = () => {
      || isLoadingJoinedGroup || isLoadingGroupSettings;
     return (
       <AdvancedSettingItem
+        key={`advanced_settings.${item?.id}?.${communitySettingData?.enable}`}
         isDisabled={isDisabled}
         item={item}
         onPress={onPressItem}
@@ -226,7 +223,6 @@ const AdvancedSettings = () => {
               scrollEventThrottle={16}
               keyboardDismissMode="interactive"
               keyboardShouldPersistTaps="handled"
-              StickyHeaderComponent={renderHeader}
               keyExtractor={(item) => `group.${item?.id}.${selectedCommunity?.id}`}
               renderItem={renderItem}
               ListHeaderComponent={renderHeader}

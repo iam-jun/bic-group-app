@@ -21,6 +21,7 @@ import NotiSettingItem from '../components/NotiSettingItem';
 import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 import { INotiSettings } from '~/interfaces/INotification';
 import useAdvancedNotiSettingsStore from '../AdvancedSettings/store';
+import useYourCommunitiesStore from '~/screens/communities/Communities/components/YourCommunities/store';
 
 const NotificationSettings = () => {
   const theme: ExtendedTheme = useTheme();
@@ -40,6 +41,7 @@ const NotificationSettings = () => {
   const loading = useNotiSettingsStore((state) => state.loading);
   const isRefreshing = useNotiSettingsStore((state) => state.isRefreshing);
   const resetAdvancedSettingsStore = useAdvancedNotiSettingsStore((state) => state.reset);
+  const communityActions = useYourCommunitiesStore((state) => state.actions);
 
   const advancedSettings = {
     name: 'advancedSettings',
@@ -47,6 +49,7 @@ const NotificationSettings = () => {
   };
 
   useEffect(() => {
+    communityActions.getYourCommunities(true);
     resetAdvancedSettingsStore();
   }, []);
 
