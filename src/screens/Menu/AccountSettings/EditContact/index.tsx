@@ -20,6 +20,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { ICityResponseItem } from '~/interfaces/IAuth';
 import useCommonController from '~/screens/store';
 import useMenuController from '../../store';
+import { trackEventWithUserId } from '~/store/helper/trackingWithUserId';
 
 const PHONE_INPUT_NAME = 'phoneNumber';
 
@@ -62,6 +63,7 @@ const EditContact = () => {
       },
       callback: navigateBack,
     });
+    trackEventWithUserId('Contact Info Updated');
   };
 
   const onEditLocationOpen = (e: any) => {

@@ -14,6 +14,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import UserBadge from '../../components/UserBadge';
 import { IUserBadge } from '~/interfaces/IEditUser';
+import { trackEventWithUserId } from '~/store/helper/trackingWithUserId';
 
 interface Props {
   id: string;
@@ -57,6 +58,7 @@ const UserHeader = ({
   const onConfirmBlock = () => {
     actions.blockUser(id, blockUserSuccess);
     onCancelBlock();
+    trackEventWithUserId('User Blocked');
   };
 
   const onCancelBlock = () => {

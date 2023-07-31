@@ -7,6 +7,7 @@ import showToastError from '~/store/helper/showToastError';
 import useCommonController from '~/screens/store';
 import { IUserProfile } from '~/interfaces/IAuth';
 import { IUserBadge } from '~/interfaces/IEditUser';
+import { trackEventWithUserId } from '~/store/helper/trackingWithUserId';
 
 const sortChoosingBadgesByOrder = (choosingBadges: IUserBadge[], choosingBadgesOrder: number[]) => {
   const newChoosingBadges = [];
@@ -23,6 +24,7 @@ const editShowingBadges = (set, get) => async () => {
   try {
     const ids = [];
     const showingBadges = [];
+    const badgesName = [];
 
     const choosingBadgesOrderSorted = sortChoosingBadgesByOrder(choosingBadges, choosingBadgesOrder);
 
@@ -30,6 +32,7 @@ const editShowingBadges = (set, get) => async () => {
       if (badge?.id) {
         ids.push(badge?.id);
         showingBadges.push(badge);
+        badgesName.push(badge?.name);
       }
     });
     if (showingBadges.length > 0 && showingBadges.length < 3) {
@@ -44,6 +47,7 @@ const editShowingBadges = (set, get) => async () => {
     }, 'editShowingBadgesLoading');
 
     const response = await groupApi.putShowingBadges(ids);
+    trackEventWithUserId('Badges Saved', { showing_badge: badgesName });
 
     set((state: IUserBadgesState) => {
       state.loadingEditing = false;

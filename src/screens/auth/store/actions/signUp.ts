@@ -1,6 +1,7 @@
 import userApi from '~/api/UserApi';
 import { IPayloadSignUp } from '~/interfaces/IAuth';
 import { IAuthState } from '~/screens/auth/store';
+import { trackEvent } from '~/services/tracking';
 
 const signUp
   = (set, get) => async (payload: IPayloadSignUp, callbackError: (error: any) => void, callbackSuccess: () => void) => {
@@ -25,6 +26,11 @@ const signUp
 
       const response = await userApi.signUp(params);
       if (response && response?.data) {
+        trackEvent('Signed Up', {
+          email,
+          full_name: fullName,
+          username: userName,
+        });
         callbackSuccess();
       }
     } catch (error: any) {

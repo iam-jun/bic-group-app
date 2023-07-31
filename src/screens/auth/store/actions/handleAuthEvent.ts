@@ -87,6 +87,7 @@ const handleAuthEvent = (set, get) => async (data: HubCapsule) => {
         email: userResponse.email,
         full_name: userResponse.name,
         username: userResponse.username,
+        user_id: userProfile?.id,
       });
 
       navigation.replace(rootSwitch.mainStack);
