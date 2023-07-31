@@ -49,7 +49,9 @@ const PersonalInfoVisibility = () => {
         <TouchableWithoutFeedback onPress={() => onChangeSetting(item)}>
           <View style={styles.radioItemTextContainer}>
             <Text.BodyMMedium useI18n color={colors.neutral80}>{title}</Text.BodyMMedium>
-            <Text.BodyS useI18n color={colors.neutral40}>{description}</Text.BodyS>
+            <Text.BodyS useI18n color={colors.neutral40} style={styles.text}>
+              {description}
+            </Text.BodyS>
           </View>
         </TouchableWithoutFeedback>
       </View>
@@ -102,10 +104,13 @@ const createStyle = (theme: ExtendedTheme) => {
       marginTop: spacing.margin.large,
     },
     radioItemTextContainer: {
-      paddingLeft: spacing.padding.large,
+      paddingHorizontal: spacing.padding.large,
     },
     radio: {
       alignSelf: 'center',
+    },
+    text: {
+      flexShrink: 1,
     },
   });
 };
