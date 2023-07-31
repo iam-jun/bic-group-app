@@ -29,6 +29,7 @@ function ipa() {
 }
 
 function setup() {
+    export RCT_NO_LAUNCH_PACKAGER=true
     git checkout -- .
     git pull
     npm run clone-build-resources
