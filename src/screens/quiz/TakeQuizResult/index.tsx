@@ -58,7 +58,7 @@ const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
   const onRetake = () => {
     const onSuccess = (quizParticipantId: string) => {
       actions.getQuizParticipant(quizParticipantId);
-    }
+    };
 
     actions.startQuiz({ quizId, onSuccess });
   };

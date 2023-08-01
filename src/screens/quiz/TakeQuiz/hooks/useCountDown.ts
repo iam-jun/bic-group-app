@@ -10,7 +10,7 @@ const useCountdown = (
   const timer = useRef(null);
 
   const [countDown, setCountDown] = useState(
-    endedAtDate - new Date().getTime()
+    endedAtDate - new Date().getTime(),
   );
 
   useEffect(() => {

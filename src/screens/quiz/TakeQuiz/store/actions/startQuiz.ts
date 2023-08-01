@@ -16,7 +16,7 @@ const startQuiz = (set, get) => async (payload: IPayloadStartQuiz) => {
   try {
     set((state: ITakeQuizState) => {
       state.isPrepareTakingQuiz = true;
-    }, 'startQuiz Prepare');    
+    }, 'startQuiz Prepare');
 
     const response = await streamApi.startQuiz(quizId);
 
@@ -30,7 +30,7 @@ const startQuiz = (set, get) => async (payload: IPayloadStartQuiz) => {
       || error?.code === APIErrorCode.Post.POST_DELETED
     ) {
       showAlert({
-        title: error?.meta?.message || i18n.t('quiz:label_quiz_deleted'),  
+        title: error?.meta?.message || i18n.t('quiz:label_quiz_deleted'),
         confirmBtnProps: { type: 'ghost' },
         onConfirm: () => {
           useRootNavigation().goHome();

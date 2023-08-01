@@ -61,14 +61,14 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
     }
 
     return (
-      <CirclePercentage 
+      <CirclePercentage
         percent={score || 0}
         ringBgColor={colors.neutral5}
         ringColor={colors.purple50}
         textFontColor={colors.purple50}
       />
-    )
-  }
+    );
+  };
 
   // when status is not PUBLISHED and ContentItem is rendered in Newfeed
   // so we should not render this component

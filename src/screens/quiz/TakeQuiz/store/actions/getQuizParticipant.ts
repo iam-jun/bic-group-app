@@ -1,7 +1,7 @@
+import { isEmpty } from 'lodash';
 import streamApi from '~/api/StreamApi';
 import showToastError from '~/store/helper/showToastError';
 import { ITakeQuizState } from '../index';
-import { isEmpty } from 'lodash';
 
 const getQuizParticipant = (set, get) => async (quizParticipantId: string) => {
   const { actions, takingQuiz }: ITakeQuizState = get();
@@ -9,7 +9,7 @@ const getQuizParticipant = (set, get) => async (quizParticipantId: string) => {
   if (!quizParticipantId) return;
 
   try {
-    if(isEmpty(takingQuiz[quizParticipantId])) {
+    if (isEmpty(takingQuiz[quizParticipantId])) {
       actions.initDataTakingQuiz(quizParticipantId);
     }
 
@@ -19,7 +19,7 @@ const getQuizParticipant = (set, get) => async (quizParticipantId: string) => {
       state.isPrepareTakingQuiz = false;
       state.takingQuiz[quizParticipantId].userAnswers = response?.data?.userAnswers;
       state.participantResult[quizParticipantId] = response?.data;
-    }, `getQuizParticipant prepare done ${quizParticipantId}`);    
+    }, `getQuizParticipant prepare done ${quizParticipantId}`);
   } catch (error) {
     console.error('getQuizParticipant error', error);
     showToastError(error);

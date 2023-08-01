@@ -82,11 +82,13 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
   };
 
   const renderContent = () => {
-    if (isPrepareTakingQuiz) return (
-      <View style={styles.loadingView}>
-        <ActivityIndicator color={colors.neutral30} size='large' />
-      </View>
-    );;
+    if (isPrepareTakingQuiz) {
+      return (
+        <View style={styles.loadingView}>
+          <ActivityIndicator color={colors.neutral30} size="large" />
+        </View>
+      );
+    }
 
     return (
       <View style={styles.content}>
@@ -101,7 +103,7 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
         {answers?.map(rendeAnswerItem)}
       </View>
     );
-  }
+  };
 
   const renderButtons = () => {
     if (isPrepareTakingQuiz) return null;

@@ -32,12 +32,6 @@ const renderThirdLayer = (
     offsetLayerRotation += 180;
   }
   if (percent > 50) {
-    /**
-     * Third layer circles default rotation is kept 45 degrees for clockwise rotation, so by default it occupies the right half semicircle.
-     * Since first 50 percent is already taken care  by second layer circle, hence we subtract it
-     * before passing to the rotateByStyle function
-     **/
-
     return (
       <View
         style={[
@@ -48,18 +42,17 @@ const renderThirdLayer = (
         ]}
       />
     );
-  } else {
-    return (
-      <View
-        style={[
-          styles.offsetLayer,
-          innerRingStyle,
-          ringBgColorStyle,
-          { transform: [{ rotateZ: `${offsetLayerRotation}deg` }] },
-        ]}
-      />
-    );
   }
+  return (
+    <View
+      style={[
+        styles.offsetLayer,
+        innerRingStyle,
+        ringBgColorStyle,
+        { transform: [{ rotateZ: `${offsetLayerRotation}deg` }] },
+      ]}
+    />
+  );
 };
 
 interface CirclePercentageProps {
@@ -104,7 +97,7 @@ const CirclePercentage: React.FC<CirclePercentageProps> = ({
   /**
    * Calculate radius for base layer and offset layer.
    * If progressRingWidth == bgRingWidth, innerRadius is equal to radius
-   **/
+   * */
   const widthDiff = progressRingWidth - bgRingWidth;
   const innerRadius = radius - progressRingWidth + bgRingWidth + widthDiff / 2;
 
@@ -136,7 +129,7 @@ const CirclePercentage: React.FC<CirclePercentageProps> = ({
   let rotation = -135 + startDegrees;
   /**
    * If we want our ring progress to be displayed in anti-clockwise direction
-   **/
+   * */
   if (!clockwise) {
     rotation += 180;
   }
@@ -212,8 +205,10 @@ const CirclePercentage: React.FC<CirclePercentageProps> = ({
             fontWeight: textFontWeight,
             color: textFontColor,
           },
-        ]}>
-        {percent}%
+        ]}
+      >
+        {percent}
+        %
       </Text>
     </View>
   );
@@ -222,7 +217,7 @@ const CirclePercentage: React.FC<CirclePercentageProps> = ({
 /**
  * offsetLayer has transform:[{rotateZ: '-135deg'}] since
  * the offsetLayer rotation is fixed by us.
- **/
+ * */
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',

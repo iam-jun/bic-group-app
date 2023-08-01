@@ -15,8 +15,8 @@ const updateAnwsers = (get) => async (payload: IPayLoadUpdateAnwsers) => {
       answers,
     };
 
-   await streamApi.updateAnwsers(quizParticipantId, params);
-   actions.getQuizParticipant(quizParticipantId);
+    await streamApi.updateAnwsers(quizParticipantId, params);
+    actions.getQuizParticipant(quizParticipantId);
   } catch (error) {
     console.error('updateAnwsers error', error);
     showToastError(error);
