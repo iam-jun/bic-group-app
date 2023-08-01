@@ -15,19 +15,24 @@ import Text from '~/baseComponents/Text';
 import { BUTTON_SIZES } from '~/baseComponents/Button/constants';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import images from '~/resources/images';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
+import useTakeQuizStore from '../TakeQuiz/store';
 
 interface TakeQuizResultProps {
-    route?: {
-        params?: {
-            showCongrat?: boolean; // temporary use for UI
-        };
+  route?: {
+    params?: {
+      quizId?: string;
+      participantId?: string;
+      contentId?: string;
     };
+  };
 }
 
 const BOTTOM_SPACE = Platform.OS === 'ios' ? 38 : 24;
 
 const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
-  const { showCongrat } = route.params || {}; // temporary use for UI
+  const { quizId, participantId, contentId } = route.params || {};
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -35,8 +40,27 @@ const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
   const { rootNavigation, goHome } = useRootNavigation();
   const styles = createStyle(theme);
 
-  const onPressRetakeOrRetry = () => {
-    rootNavigation.navigate(quizStack.takeQuiz, {});
+  const actions = useTakeQuizStore((state) => state.actions);
+  const { participantResult } = useTakeQuizStore((state) => state);
+  const { quizHighestScore } = usePostsStore(postsSelector.getPost(contentId, {}));
+  const { score: higestScore } = quizHighestScore || {};
+  const { totalTimes, score } = participantResult[participantId] || {};
+  const showCongrat = score === 100;
+
+  const onPressRetake = () => {
+    onRetake();
+    rootNavigation.navigate(quizStack.takeQuiz, {
+      quizId,
+      contentId,
+    });
+  };
+
+  const onRetake = () => {
+    const onSuccess = (quizParticipantId: string) => {
+      actions.getQuizParticipant(quizParticipantId);
+    };
+
+    actions.startQuiz({ quizId, onSuccess });
   };
 
   const onPressQuit = () => {
@@ -44,7 +68,6 @@ const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
   };
 
   const renderResult = () => {
-    // temporary use for UI
     if (showCongrat) {
       return (
         <Image
@@ -57,7 +80,7 @@ const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
     return (
       <View style={styles.circleProgress}>
         <CircularProgress
-          value={88}
+          value={score || 0}
           valueSuffix="%"
           progressValueColor={colors.neutral40}
           progressValueFontSize={24}
@@ -72,28 +95,25 @@ const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
     );
   };
 
-  const renderBlockResult = (name, value, isNoted = false) => {
-    const showNoted = value > 0 && isNoted;
-
-    return (
-      <View style={styles.blockResult}>
-        <Text.BodyMMedium color={showNoted ? colors.red40 : colors.neutral60}>
-          { value }
-          %
-        </Text.BodyMMedium>
-        <ViewSpacing height={spacing.margin.small} />
-        <Text.BodyS color={colors.neutral30} useI18n>
-          { name }
-        </Text.BodyS>
-      </View>
-    );
-  };
+  const renderBlockResult = (name, value, isPercent = false) => (
+    <View style={styles.blockResult}>
+      <Text.BodyMMedium color={colors.neutral60}>
+        { value }
+        { isPercent && '%' }
+      </Text.BodyMMedium>
+      <ViewSpacing height={spacing.margin.small} />
+      <Text.BodyS color={colors.neutral30} useI18n>
+        { name }
+      </Text.BodyS>
+    </View>
+  );
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.white} testID="take_quiz_result">
       <Header
         titleTextProps={{ useI18n: true }}
         title="quiz:title_take_quiz"
+        onPressBack={onPressQuit}
       />
       <ScrollView>
         <View style={styles.contentContainer}>
@@ -106,20 +126,15 @@ const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
             {showCongrat ? t('quiz:text_congrats') : t('quiz:text_study_more')}
           </Text.BodyM>
           <View style={styles.row}>
-            {renderBlockResult('quiz:result_complete', showCongrat ? 100 : 88)}
-            {renderBlockResult('quiz:result_correct', showCongrat ? 100 : 79)}
-          </View>
-          <ViewSpacing height={spacing.margin.large} />
-          <View style={styles.row}>
-            {renderBlockResult('quiz:result_incorrect', showCongrat ? 0 : 15, !showCongrat)}
-            {renderBlockResult('quiz:result_skip', showCongrat ? 0 : 9)}
+            {renderBlockResult('quiz:highest_score', higestScore || 0, true)}
+            {renderBlockResult('quiz:time_take_quiz', totalTimes || 0)}
           </View>
         </View>
       </ScrollView>
       <Button.Primary
         size="large"
         useI18n
-        onPress={onPressRetakeOrRetry}
+        onPress={onPressRetake}
         style={styles.btnRetakeOrRetry}
       >
         quiz:btn_retake
@@ -159,13 +174,13 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     subText: {
       marginHorizontal: 38,
-      marginBottom: spacing.margin.extraLarge,
+      marginBottom: 40,
       textAlign: 'center',
     },
     btnRetakeOrRetry: {
       marginTop: spacing.margin.base,
       marginHorizontal: spacing.margin.large,
-      marginBottom: spacing.margin.base,
+      marginBottom: 20,
     },
     btnQuit: {
       marginBottom: BOTTOM_SPACE,

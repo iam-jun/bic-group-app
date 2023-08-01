@@ -71,6 +71,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
     isHidden,
     wordCount,
     quiz,
+    quizHighestScore,
   } = data || {};
 
   const { isImportant, importantExpiredAt } = setting || {};
@@ -204,6 +205,8 @@ const ArticleItem: FC<ArticleItemProps> = ({
   const renderTakePartInAQuiz = () => (
     <TakePartInAQuiz
       quiz={quiz}
+      contentId={id}
+      quizHighestScore={quizHighestScore}
       shouldShowDraftQuiz={shouldShowDraftQuiz}
     />
   );

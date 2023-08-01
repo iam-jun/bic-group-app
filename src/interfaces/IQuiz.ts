@@ -1,4 +1,4 @@
-import { IAudienceGroup } from './IPost';
+import { IAudienceGroup, PostType } from './IPost';
 
 export enum QuizStatus {
   PENDING = 'PENDING',
@@ -33,13 +33,13 @@ export type RegenerateQuizParams = Partial<
 
 export type AnswerItem = {
   id: string;
-  answer: string;
+  content: string;
   isCorrect: boolean;
 };
 
 export type QuestionItem = {
   id: string;
-  question: string;
+  content: string;
   answers: AnswerItem[];
 };
 
@@ -75,7 +75,7 @@ export interface IParamsGetQuizzesContent {
 }
 
 export type EditQuestionForm = {
-  question: string;
+  content: string;
   answers: AnswerItem[];
 };
 
@@ -94,4 +94,60 @@ export enum ContentQuiz {
   ALL = 'ALL',
   POST = 'POST',
   ARTICLE = 'ARTICLE',
+}
+
+export interface IParamsUpdateAnwsers {
+  isFinished?: boolean;
+  answers: UserAnswerItem[];
+}
+
+export interface IPayLoadUpdateAnwsers extends IParamsUpdateAnwsers {
+  quizParticipantId: string;
+}
+
+export interface IPayloadStartQuiz {
+  quizId: string;
+  onSuccess?: (quizParticipantId: string) => void;
+}
+
+export type QuizDoing = {
+  quizParticipantId?: string;
+}
+
+export type QuizHighestScore = {
+  quizParticipantId?: string;
+  score?: number;
+}
+
+export type UserAnswerItem = {
+  questionId: string;
+  answerId: string;
+}
+
+export type TakingAnswerItem = Omit<AnswerItem, 'isCorrect'>;
+
+export type TakingQuestionItem = Omit<QuestionItem, 'answers'> & {
+  answers: TakingAnswerItem[];
+};
+
+export type ParticipantContent = {
+  id: string;
+  type: PostType;
+}
+
+export interface IParticipantResult {
+  content: ParticipantContent;
+  description?: string;
+  finishedAt: string;
+  id: string;
+  questions: TakingQuestionItem[];
+  quizId: string;
+  score: number;
+  startedAt: string;
+  timeLimit: number;
+  title?: string;
+  totalAnswers: number;
+  totalTimes: number;
+  totalCorrectAnswers: number;
+  userAnswers?: UserAnswerItem[];
 }

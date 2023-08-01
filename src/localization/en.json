@@ -1564,10 +1564,8 @@
     "text_study_more": "Study more next time and get all the answers correct!",
     "text_awesome": "You are awesome!",
     "text_congrats": "Congratulations for getting all the anwers correct!",
-    "result_complete": "Completion",
-    "result_correct": "Correct Answer",
-    "result_incorrect": "Incorrect Answer",
-    "result_skip": "Skipped",
+    "highest_score": "Highest Score",
+    "time_take_quiz": "Time",
     "enter_an_integer": "Please enter an integer",
     "title_quiz": "Quiz",
     "text_no_quiz_content": "There are no quiz now!",
@@ -1585,6 +1583,7 @@
       "header": "Edit quiz",
       "content": "Are you sure you want to edit this quiz?"
     },
-    "continue": "Continue"
+    "continue": "Continue",
+    "pass_quiz": "PASS"
   }
 }

@@ -9,19 +9,24 @@ import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Image from '~/components/Image';
 import { useBaseHook } from '~/hooks';
-import { QuizPost, QuizStatus } from '~/interfaces/IQuiz';
+import { QuizHighestScore, QuizPost, QuizStatus } from '~/interfaces/IQuiz';
 import images from '~/resources/images';
 import { spacing } from '~/theme';
 import { onPressTakeQuiz } from './helper';
+import CirclePercentage from '~/baseComponents/CirclePercentage';
 
 type TakePartInAQuizProps = {
   quiz: QuizPost;
+  contentId: string;
+  quizHighestScore: QuizHighestScore;
   style?: StyleProp<ViewStyle>;
   shouldShowDraftQuiz?: boolean;
 };
 
 const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
   quiz,
+  contentId,
+  quizHighestScore,
   style,
   shouldShowDraftQuiz,
 }) => {
@@ -29,6 +34,7 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
     title, description, id, status,
   } = quiz || {};
   const canTakeQuiz = status === QuizStatus.PUBLISHED;
+  const { score } = quizHighestScore || {};
 
   const theme = useTheme();
   const { colors } = theme;
@@ -37,8 +43,31 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
 
   const onPress = () => {
     if (canTakeQuiz) {
-      onPressTakeQuiz(id);
+      onPressTakeQuiz(id, contentId);
     }
+  };
+
+  const renderResult = () => {
+    if (!quizHighestScore) return null;
+
+    if (score === 100) {
+      return (
+        <View style={styles.viewPass}>
+          <Text.SubtitleS useI18n color={colors.purple50}>
+            quiz:pass_quiz
+          </Text.SubtitleS>
+        </View>
+      );
+    }
+
+    return (
+      <CirclePercentage
+        percent={score || 0}
+        ringBgColor={colors.neutral5}
+        ringColor={colors.purple50}
+        textFontColor={colors.purple50}
+      />
+    );
   };
 
   // when status is not PUBLISHED and ContentItem is rendered in Newfeed
@@ -65,6 +94,9 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
           </Text.BodyXS>
         </View>
         <ViewSpacing width={spacing.margin.small} />
+        <View style={styles.viewResult}>
+          {renderResult()}
+        </View>
         <Icon size={24} tintColor={colors.neutral40} icon="ChevronRight" />
       </View>
     </Button>
@@ -89,6 +121,15 @@ const createStyle = (theme: ExtendedTheme) => {
     img: {
       width: 64,
       height: 64,
+    },
+    viewResult: {
+      marginRight: spacing.margin.tiny,
+    },
+    viewPass: {
+      backgroundColor: colors.purple2,
+      paddingHorizontal: spacing.padding.base,
+      paddingVertical: spacing.padding.tiny,
+      borderRadius: spacing.borderRadius.base,
     },
   });
 };

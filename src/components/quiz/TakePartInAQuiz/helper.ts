@@ -6,16 +6,16 @@ import showAlert from '~/store/helper/showAlert';
 
 const navigation = withNavigation?.(rootNavigationRef);
 
-const onStartTakeQuiz = (quizId) => {
-  navigation.navigate(quizStack.takeQuiz, { quizId });
+const onStartTakeQuiz = (quizId, contentId) => {
+  navigation.navigate(quizStack.takeQuiz, { quizId, contentId });
 };
 
-export const onPressTakeQuiz = (quizId) => {
+export const onPressTakeQuiz = (quizId, contentId) => {
   showAlert({
     title: i18next.t('quiz:title_alert_take_quiz'),
     content: i18next.t('quiz:content_alert_take_quiz'),
     cancelBtn: true,
     confirmLabel: i18next.t('quiz:btn_start'),
-    onConfirm: () => onStartTakeQuiz(quizId),
+    onConfirm: () => onStartTakeQuiz(quizId, contentId),
   });
 };

@@ -2,5 +2,5 @@ import { AnswerItem } from '~/interfaces/IQuiz';
 
 export const formatAnswers = (answers: AnswerItem[]) => answers.map((answerItem) => ({
   ...answerItem,
-  answer: answerItem.answer?.trim(),
+  answer: answerItem.content?.trim(),
 }));

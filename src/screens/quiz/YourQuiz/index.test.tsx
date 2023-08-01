@@ -1,7 +1,7 @@
-import React from "react";
-import { fireEvent, renderWithRedux } from '~/test/testUtils';
-import YourQuiz from "./index";
+import React from 'react';
 import { Dimensions } from 'react-native';
+import { fireEvent, renderWithRedux } from '~/test/testUtils';
+import YourQuiz from './index';
 
 const { height } = Dimensions.get('window');
 const { width } = Dimensions.get('window');
@@ -9,16 +9,16 @@ const { width } = Dimensions.get('window');
 describe('Your Quiz screen', () => {
   it('should render correctly', () => {
     const wrapper = renderWithRedux(
-      <YourQuiz />
+      <YourQuiz />,
     );
 
     const tabDraftQuiz = wrapper.queryByTestId(
-      'tab-button-your_content:title_draft-selected'
+      'tab-button-your_content:title_draft-selected',
     );
     expect(tabDraftQuiz).toBeDefined();
 
     const tabPublishedQuiz = wrapper.queryByTestId(
-      'tab-button-your_content:title_published-notselected'
+      'tab-button-your_content:title_published-notselected',
     );
     expect(tabPublishedQuiz).toBeDefined();
     fireEvent.press(tabPublishedQuiz);
@@ -30,18 +30,18 @@ describe('Your Quiz screen', () => {
     );
 
     const subTabContent = wrapper.queryByTestId(
-      'tab-button-home:title_feed_content_all-selected'
+      'tab-button-home:title_feed_content_all-selected',
     );
     expect(subTabContent).toBeDefined();
     fireEvent.press(subTabContent);
 
     const subTabPost = wrapper.queryByTestId(
-      'tab-button-home:title_feed_content_posts-notselected'
+      'tab-button-home:title_feed_content_posts-notselected',
     );
     expect(subTabPost).toBeDefined();
 
     const subTabArticle = wrapper.queryByTestId(
-      'tab-button-home:title_feed_content_articles-notselected'
+      'tab-button-home:title_feed_content_articles-notselected',
     );
     expect(subTabArticle).toBeDefined();
   });

@@ -70,7 +70,7 @@ const AnswerField: FC<AnswerFieldProps> = ({ answerIndex, remove }) => {
       </View>
       <View style={{ flex: 1 }}>
         <Controller
-          name={`answers.${answerIndex}.answer`}
+          name={`answers.${answerIndex}.content`}
           control={control}
           rules={{ required: true, validate: validateSpaceTrap }}
           render={renderTextInput}

@@ -67,6 +67,7 @@ import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftC
 import usePublishStore from '~/screens/YourContent/components/Publish/store';
 import useUserBadge from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
 import useYourQuizStore from '~/screens/quiz/YourQuiz/store';
+import useTakeQuizStore from '~/screens/quiz/TakeQuiz/store';
 
 export const excludedStore = [
   useAuthController,
@@ -105,6 +106,7 @@ const stores = [
   useCreatePostStore,
   useGroupJoinableUsersStore,
   useYourQuizStore,
+  useTakeQuizStore,
 
   // others
   useChatStore,

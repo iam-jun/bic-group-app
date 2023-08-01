@@ -15,30 +15,33 @@ import { Button } from '~/baseComponents';
 import { spacing } from '~/theme';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import showAlert from '~/store/helper/showAlert';
-import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
-// temporary use for UI
-import { mockGenerateQuizResponse } from '~/test/mock_data/quiz';
+import useTakeQuiz from '../TakeQuiz/hooks/useTakeQuiz';
+import useTakeQuizStore from '../TakeQuiz/store';
 
 interface TakeQuizReviewProps {
   route?: {
     params?: {
-        showCongrat?: boolean; // temporary use for UI
+      quizId?: string;
+      participantId?: string;
+      contentId?: string;
     };
   };
 }
 
 const BOTTOM_SPACE = Platform.OS === 'ios' ? 38 : 24;
 
-const fakeId = 'f400562d-5ee9-4a14-abb2-80f4f0e81fff';
-
 const TakeQuizReview: React.FC<TakeQuizReviewProps> = ({ route }) => {
-  const { showCongrat } = route.params || {}; // temporary use for UI
+  const { quizId, participantId, contentId } = route.params || {};
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
   const styles = createStyle(theme);
+
+  const { participantResult } = useTakeQuizStore((state) => state);
+  const { title, description } = participantResult[participantId] || {};
+  const { onSubmit, questionReviews } = useTakeQuiz(quizId, contentId);
 
   const goBack = () => {
     rootNavigation.goBack();
@@ -56,10 +59,6 @@ const TakeQuizReview: React.FC<TakeQuizReviewProps> = ({ route }) => {
 
   useBackPressListener(onPressBack);
 
-  const onSubmit = () => {
-    rootNavigation.navigate(quizStack.takeQuizResult, { showCongrat });
-  };
-
   const onPressSubmit = () => {
     showAlert({
       title: t('common:btn_submit'),
@@ -72,7 +71,7 @@ const TakeQuizReview: React.FC<TakeQuizReviewProps> = ({ route }) => {
 
   const renderItem: ListRenderItem<QuestionItem> = ({ item, index }) => (
     <QuestionComposeQuiz
-      quizId={fakeId}
+      quizId={quizId}
       questionItem={item}
       questionIndex={index}
       isTakeQuizReview
@@ -82,12 +81,14 @@ const TakeQuizReview: React.FC<TakeQuizReviewProps> = ({ route }) => {
   const renderHeader = () => (
     <View style={styles.headerList}>
       <Text.SubtitleL color={colors.neutral80}>
-        Taking part in a quiz for a reward
+        { title }
       </Text.SubtitleL>
       <ViewSpacing height={spacing.margin.small} />
-      <Text.BodyM color={colors.neutral80}>
-        Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat mollit non deserunt ullamco est sit aliqua dolor duis.
-      </Text.BodyM>
+      {!!description && (
+        <Text.BodyM color={colors.neutral80}>
+          { description }
+        </Text.BodyM>
+      )}
       <ViewSpacing height={spacing.margin.large} />
       {renderItemSeparatorComponent()}
     </View>
@@ -105,7 +106,7 @@ const TakeQuizReview: React.FC<TakeQuizReviewProps> = ({ route }) => {
         onPressBack={onPressBack}
       />
       <FlatList
-        data={mockGenerateQuizResponse.data.questions}
+        data={questionReviews}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         ListHeaderComponent={renderHeader}

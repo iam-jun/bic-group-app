@@ -15,13 +15,13 @@ const QuestionContent: FC<QuestionContentProps> = ({
   questionItem,
   isTakeQuizReview = false,
 }) => {
-  const { question, answers } = questionItem;
+  const { content, answers } = questionItem;
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
 
   const renderAnswerItem = (item: AnswerItem, index: number) => {
-    const { answer, isCorrect, id } = item;
+    const { content, isCorrect, id } = item;
     return (
       <View key={`answer_${id}`}>
         {isCorrect ? (
@@ -41,7 +41,7 @@ const QuestionContent: FC<QuestionContentProps> = ({
               <Text.BodyMMedium
                 color={isTakeQuizReview ? colors.purple50 : colors.green50}
               >
-                {answer}
+                {content}
               </Text.BodyMMedium>
             </View>
           </View>
@@ -61,7 +61,7 @@ const QuestionContent: FC<QuestionContentProps> = ({
               </Text.BodyM>
             </View>
             <View style={styles.textContainer}>
-              <Text.BodyM color={colors.neutral40}>{answer}</Text.BodyM>
+              <Text.BodyM color={colors.neutral40}>{content}</Text.BodyM>
             </View>
           </View>
         )}
@@ -72,7 +72,7 @@ const QuestionContent: FC<QuestionContentProps> = ({
   return (
     <View>
       <Text.BodyMMedium color={colors.neutral60} style={styles.titleQuestion}>
-        {question}
+        {content}
       </Text.BodyMMedium>
       {answers.map(renderAnswerItem)}
     </View>
