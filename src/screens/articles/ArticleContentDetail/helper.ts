@@ -18,7 +18,7 @@ export const handleMessage = (data: {
   listImage: any[];
   setInitIndex: (value: number) => void;
   setGalleryVisible: (value: boolean) => void;
-  id: string;
+  id?: string;
 }) => {
   const {
     message, listImage, setInitIndex, setGalleryVisible, id,

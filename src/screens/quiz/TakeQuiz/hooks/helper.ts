@@ -7,7 +7,7 @@ export const mapQuestionReview = (
   userAnswers: UserAnswerItem[],
   questions: TakingQuestionItem[] = [],
 ) => questions?.map((question) => {
-  const newAnswers = [...question?.answers];
+  const newAnswers = [...question.answers];
   const questionChoosedAnswer = userAnswers?.find((item) => item?.questionId === question?.id);
 
   if (questionChoosedAnswer) {
