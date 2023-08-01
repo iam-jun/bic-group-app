@@ -17,22 +17,27 @@ export interface ITakeQuizState extends IBaseState {
     [quizId: string]: string;
   };
   takingQuiz: {
-    currentQuestionIndex: number;
-    userAnswers: UserAnswerItem[];
+    [participantId: string]: {
+      currentQuestionIndex: number;
+      userAnswers: UserAnswerItem[];
+    }
   };
-  participantResult: IParticipantResult;
+  participantResult: {
+    [participantId: string]: IParticipantResult;
+  }
 
   actions: {
     startQuiz: (payload: IPayloadStartQuiz) => void;
     getQuizParticipant: (quizParticipantId: string) => void;
     updateAnwsers: (payload: IPayLoadUpdateAnwsers) => void;
 
-    onNext: () => void;
-    onPrevious: () => void;
-    addToUserAnswers: (payload: UserAnswerItem) => void;
+    initDataTakingQuiz: (participantId: string) => void;
+    onNext: (participantId: string) => void;
+    onPrevious: (participantId: string) => void;
+    addToUserAnswers: (participantId: string, payload: UserAnswerItem) => void;
     addToQuizParticipants: (quizId: string, participant: string) => void;
-    setUserAnswersData: (payload: UserAnswerItem[]) => void;
-    resetDataTakingQuiz: () => void;
+    setUserAnswersData: (participantId: string, payload: UserAnswerItem[]) => void;
+    resetDataTakingQuiz: (participantId: string) => void;
     clearQuizParticipantId: (quizId: string) => void;
   };
 }
@@ -40,10 +45,7 @@ export interface ITakeQuizState extends IBaseState {
 const initState = {
   isPrepareTakingQuiz: true,
   quizParticipants: {},
-  takingQuiz: {
-    currentQuestionIndex: 0,
-    userAnswers: [],
-  },
+  takingQuiz: {},
   participantResult: {},
 };
 
@@ -52,18 +54,26 @@ const takeQuizStore = (set, get) => ({
 
   actions: {
     startQuiz: startQuiz(set, get),
-    getQuizParticipant: getQuizParticipant(set),
+    getQuizParticipant: getQuizParticipant(set, get),
     updateAnwsers: updateAnwsers(get),
 
-    onNext: () => {
+    initDataTakingQuiz: (participantId: string) => {
       set((state: ITakeQuizState) => {
-        state.takingQuiz.currentQuestionIndex += 1;
-      }, 'onNext');
+        state.takingQuiz[participantId] = {
+          currentQuestionIndex: 0,
+          userAnswers: [],
+        };
+      }, `initDataTakingQuiz id ${participantId}`);
     },
-    onPrevious: () => {
+    onNext: (participantId: string) => {
       set((state: ITakeQuizState) => {
-        state.takingQuiz.currentQuestionIndex -= 1;
-      }, 'onPrevious');
+        state.takingQuiz[participantId].currentQuestionIndex += 1;
+      }, `onNext id ${participantId}`);
+    },
+    onPrevious: (participantId: string) => {
+      set((state: ITakeQuizState) => {
+        state.takingQuiz[participantId].currentQuestionIndex -= 1;
+      }, `onPrevious id ${participantId}`);
     },
     addToUserAnswers: addToUserAnswers(set, get),
     addToQuizParticipants: (quizId, participant) => {
@@ -71,17 +81,17 @@ const takeQuizStore = (set, get) => ({
         state.quizParticipants[quizId] = participant;
       }, 'addToQuizParticipants');
     },
-    setUserAnswersData: (payload: UserAnswerItem[]) => {
+    setUserAnswersData: (participantId: string, payload: UserAnswerItem[]) => {
       set((state: ITakeQuizState) => {
-        state.takingQuiz.userAnswers = payload;
-      }, 'setUserAnswersData');
+        state.takingQuiz[participantId].userAnswers = payload;
+      }, `setUserAnswersData id ${participantId}`);
     },
-    resetDataTakingQuiz: () => {
+    resetDataTakingQuiz: (participantId: string) => {
       set((state: ITakeQuizState) => {
-        state.takingQuiz.currentQuestionIndex = 0;
-        state.takingQuiz.userAnswers = [];
+        state.takingQuiz[participantId].currentQuestionIndex = 0;
+        // state.takingQuiz[participantId].userAnswers = [];
         // state.participantResult = {} as IParticipantResult;
-      }, 'resetDataTakingQuiz');
+      }, `resetDataTakingQuiz id ${participantId}`);
     },
     clearQuizParticipantId: (quizId: string) => {
       set((state: ITakeQuizState) => {

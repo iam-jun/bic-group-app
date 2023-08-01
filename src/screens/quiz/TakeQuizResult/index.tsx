@@ -23,6 +23,7 @@ interface TakeQuizResultProps {
   route?: {
     params?: {
       quizId?: string;
+      participantId?: string;
       contentId?: string;
     };
   };
@@ -31,7 +32,7 @@ interface TakeQuizResultProps {
 const BOTTOM_SPACE = Platform.OS === 'ios' ? 38 : 24;
 
 const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
-  const { quizId, contentId } = route.params || {};
+  const { quizId, participantId, contentId } = route.params || {};
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -43,7 +44,7 @@ const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
   const { participantResult } = useTakeQuizStore((state) => state);
   const { quizHighestScore } = usePostsStore(postsSelector.getPost(contentId, {}));
   const { score: higestScore } = quizHighestScore || {};
-  const { totalTimes, score } = participantResult || {};
+  const { totalTimes, score } = participantResult[participantId] || {};
   const showCongrat = score === 100;
 
   const onPressRetake = () => {
@@ -112,6 +113,7 @@ const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
       <Header
         titleTextProps={{ useI18n: true }}
         title="quiz:title_take_quiz"
+        onPressBack={onPressQuit}
       />
       <ScrollView>
         <View style={styles.contentContainer}>

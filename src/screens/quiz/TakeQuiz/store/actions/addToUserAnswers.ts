@@ -1,7 +1,7 @@
 import { UserAnswerItem } from '~/interfaces/IQuiz';
 import { ITakeQuizState } from '../index';
 
-const addToUserAnswers = (set, get) => (payload: UserAnswerItem) => {
+const addToUserAnswers = (set, get) => (participantId: string, payload: UserAnswerItem) => {
   const { questionId, answerId } = payload || {};
 
   if (!questionId || !answerId) {
@@ -11,7 +11,7 @@ const addToUserAnswers = (set, get) => (payload: UserAnswerItem) => {
 
   try {
     const { takingQuiz }: ITakeQuizState = get();
-    const { userAnswers = [] } = takingQuiz || {};
+    const { userAnswers = [] } = takingQuiz[participantId] || {};
     const newUserAnswers = [...userAnswers];
 
     const indexQuestion = userAnswers.findIndex((item) => item?.questionId === questionId);
@@ -27,8 +27,8 @@ const addToUserAnswers = (set, get) => (payload: UserAnswerItem) => {
     }
 
     set((state: ITakeQuizState) => {
-      state.takingQuiz.userAnswers = newUserAnswers;
-    }, 'addToUserAnswers');
+      state.takingQuiz[participantId].userAnswers = newUserAnswers;
+    }, `addToUserAnswers ${participantId}`);
   } catch (error) {
     console.warn('\x1b[31m🐣️ addToUserAnswers error\x1b[0m', error);
   }

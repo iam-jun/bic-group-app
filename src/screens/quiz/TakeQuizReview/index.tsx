@@ -22,6 +22,7 @@ interface TakeQuizReviewProps {
   route?: {
     params?: {
       quizId?: string;
+      participantId?: string;
       contentId?: string;
     };
   };
@@ -30,7 +31,7 @@ interface TakeQuizReviewProps {
 const BOTTOM_SPACE = Platform.OS === 'ios' ? 38 : 24;
 
 const TakeQuizReview: React.FC<TakeQuizReviewProps> = ({ route }) => {
-  const { quizId, contentId } = route.params || {};
+  const { quizId, participantId, contentId } = route.params || {};
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -39,7 +40,7 @@ const TakeQuizReview: React.FC<TakeQuizReviewProps> = ({ route }) => {
   const styles = createStyle(theme);
 
   const { participantResult } = useTakeQuizStore((state) => state);
-  const { title, description } = participantResult || {};
+  const { title, description } = participantResult[participantId] || {};
   const { onSubmit, questionReviews } = useTakeQuiz(quizId, contentId);
 
   const goBack = () => {

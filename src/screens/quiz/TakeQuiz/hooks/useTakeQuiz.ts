@@ -1,11 +1,11 @@
 import { useEffect } from "react";
+import { isEqual } from "lodash";
 import { useRootNavigation } from "~/hooks/navigation";
 import useTakeQuizStore from "../store";
 import usePostsStore from "~/store/entities/posts";
 import postsSelector from "~/store/entities/posts/selectors";
 import quizStack from "~/router/navigator/MainStack/stacks/quizStack/stack";
 import { IPayLoadUpdateAnwsers, TakingAnswerItem } from '~/interfaces/IQuiz';
-import { isEqual } from "lodash";
 import { mapQuestionReview } from './helper';
 import useCountDown from "./useCountDown";
 
@@ -15,7 +15,6 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
   const contentData = usePostsStore(postsSelector.getPost(contentId, {}));
   const postActions = usePostsStore((state) => state.actions);
   const actions = useTakeQuizStore((state) => state.actions);
-  const resetDataTakingQuiz = useTakeQuizStore((state) => state.actions.resetDataTakingQuiz);
   const {
     isPrepareTakingQuiz,
     quizParticipants,
@@ -26,9 +25,9 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
   const { quizDoing } = contentData || {};
   // participantDoingId only available in 30 minutes
   const { quizParticipantId: participantDoingId } = quizDoing || {};
-  const currentParticipant = participantDoingId || quizParticipants[quizId];
+  const currentParticipantId = participantDoingId || quizParticipants[quizId];
 
-  const { currentQuestionIndex, userAnswers } = takingQuiz || {};
+  const { currentQuestionIndex, userAnswers } = takingQuiz[currentParticipantId] || {};
   const {
     questions,
     userAnswers: userAnswersResult,
@@ -36,14 +35,15 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
     timeLimit,
     content,
     finishedAt,
-  } = participantResult || {};
+    score,
+  } = participantResult[currentParticipantId] || {};
   const { type } = content || {};
   const currentQuestion = questions?.[currentQuestionIndex];
   const questionChoosedAnswer = userAnswers?.find((item) => item?.questionId === currentQuestion?.id);
   const totalQuestion = questions?.length || 0;
   const enableButtonPrevious = currentQuestionIndex !== 0;
   const canAutoSave = !isEqual(userAnswers, userAnswersResult);
-  const questionReviews = mapQuestionReview(userAnswers, questions);
+  const questionReviews = mapQuestionReview(userAnswersResult, questions);
 
   const { timer, minutes, seconds } = useCountDown(startedAt, timeLimit);
 
@@ -51,16 +51,18 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
   console.log('seconds ---: ', seconds);
 
   useEffect(() => {
-    if (!currentParticipant) {
+    if (!currentParticipantId) {
       startTakeQuiz();
     } else {
       getCurrentQuizParticipant();
     }
   }, [quizId]);
 
-  useEffect(() => {
-    initDataUserAnswer();
-  }, [userAnswersResult]);
+  // useEffect(() => {
+    // if (!!takingQuiz[currentParticipantId]) {
+    //   initData();
+    // }
+  // }, [userAnswersResult]);
 
   // auto save when user pick answer
   useEffect(() => {
@@ -71,7 +73,7 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
 
   // auto submit and get result when time up
   useEffect(() => {
-    if (minutes <= 0 && seconds <= 0 && !finishedAt) {
+    if (minutes <= 0 && seconds <= 0) {
       onSubmit();
     }
 
@@ -80,9 +82,9 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
     }
   }, [minutes, seconds, finishedAt]);
 
-  const initDataUserAnswer = () => {
-    actions.setUserAnswersData(userAnswersResult);
-  }
+  // const initData = () => {
+  //   actions.setUserAnswersData(currentParticipantId, userAnswersResult);
+  // }
 
   const startTakeQuiz = () => {
     const onSuccess = (quizParticipantId: string) => {
@@ -93,11 +95,11 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
   }
 
   const saveAnwsers = (isFinished = false) => {
-    const answers = useTakeQuizStore.getState().takingQuiz.userAnswers;
-    const canSave = answers && answers?.length !== 0 && currentParticipant || isFinished;
+    const answers = useTakeQuizStore.getState().takingQuiz?.[currentParticipantId]?.userAnswers;
+    const canSave = answers && answers?.length !== 0 && currentParticipantId || isFinished;
     const payload = {
       isFinished,
-      quizParticipantId: currentParticipant,
+      quizParticipantId: currentParticipantId,
       answers,
     } as IPayLoadUpdateAnwsers;
 
@@ -107,48 +109,56 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
   };
 
   const getCurrentQuizParticipant = () => {
-    actions.getQuizParticipant(currentParticipant);
+    actions.getQuizParticipant(currentParticipantId);
   };
 
   const onPressNextQuestion = () => {
     if (currentQuestionIndex === questions.length - 1) {
       rootNavigation.navigate(quizStack.takeQuizReview, {
         quizId,
+        participantId: currentParticipantId,
         contentId,
       });
     } else {
-      actions.onNext();
+      actions.onNext(currentParticipantId);
     }
   };
 
   const onPressPreviousQuestion = () => {
     if (enableButtonPrevious) {
-      actions.onPrevious();
+      actions.onPrevious(currentParticipantId);
     }
   };
 
   const onPickAnswer = (data: TakingAnswerItem) => {
-    actions.addToUserAnswers({
+    actions.addToUserAnswers(currentParticipantId, {
       questionId: currentQuestion?.id,
       answerId: data?.id,
     });
   };
 
   const onSubmit = () => {
-    saveAnwsers(true);
-    postActions.getContentDetail(contentId, type);
-    clearDataTakeQuiz();
-    rootNavigation.navigate(quizStack.takeQuizResult, {
-      quizId,
-      contentId,
-    });
+    if (!finishedAt && typeof score !== 'number') {
+      saveAnwsers(true);
+      postActions.getContentDetail(contentId, type);
+      clearDataTakeQuiz();
+      rootNavigation.navigate(quizStack.takeQuizResult, {
+        quizId,
+        participantId: currentParticipantId,
+        contentId,
+      });
+    }
   };
 
   const clearDataTakeQuiz = () => {
-    actions.clearQuizParticipantId(quizId);
-    actions.resetDataTakingQuiz();
+    !!finishedAt && actions.clearQuizParticipantId(quizId);
+    // actions.resetDataTakingQuiz(currentParticipantId);
     clearInterval(timer.current);
   }
+
+  const resetQuestionIndex = () => {
+    actions.resetDataTakingQuiz(currentParticipantId);
+  };
 
   return {
     isPrepareTakingQuiz,
@@ -161,7 +171,7 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
     questionChoosedAnswer,
     onPickAnswer,
     onSubmit,
-    resetDataTakingQuiz,
+    resetQuestionIndex,
     questionReviews,
     clearDataTakeQuiz,
   };
