@@ -7,11 +7,13 @@ import quizStack from "~/router/navigator/MainStack/stacks/quizStack/stack";
 import { IPayLoadUpdateAnwsers, TakingAnswerItem } from '~/interfaces/IQuiz';
 import { isEqual } from "lodash";
 import { mapQuestionReview } from './helper';
+import useCountDown from "./useCountDown";
 
 const useTakeQuiz = (quizId: string, contentId: string) => {
   const { rootNavigation } = useRootNavigation();
 
   const contentData = usePostsStore(postsSelector.getPost(contentId, {}));
+  const postActions = usePostsStore((state) => state.actions);
   const actions = useTakeQuizStore((state) => state.actions);
   const resetDataTakingQuiz = useTakeQuizStore((state) => state.actions.resetDataTakingQuiz);
   const {
@@ -30,13 +32,23 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
   const {
     questions,
     userAnswers: userAnswersResult,
+    startedAt,
+    timeLimit,
+    content,
+    finishedAt,
   } = participantResult || {};
+  const { type } = content || {};
   const currentQuestion = questions?.[currentQuestionIndex];
   const questionChoosedAnswer = userAnswers?.find((item) => item?.questionId === currentQuestion?.id);
   const totalQuestion = questions?.length || 0;
   const enableButtonPrevious = currentQuestionIndex !== 0;
   const canAutoSave = !isEqual(userAnswers, userAnswersResult);
   const questionReviews = mapQuestionReview(userAnswers, questions);
+
+  const { timer, minutes, seconds } = useCountDown(startedAt, timeLimit);
+
+  console.log('minutes ---: ', minutes);
+  console.log('seconds ---: ', seconds);
 
   useEffect(() => {
     if (!currentParticipant) {
@@ -52,10 +64,21 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
 
   // auto save when user pick answer
   useEffect(() => {
-    if (canAutoSave) {
+    if (canAutoSave && !finishedAt) {
       saveAnwsers();
     }
-  }, [userAnswers]);
+  }, [userAnswers, finishedAt]);
+
+  // auto submit and get result when time up
+  useEffect(() => {
+    if (minutes <= 0 && seconds <= 0 && !finishedAt) {
+      onSubmit();
+    }
+
+    if (!!finishedAt) {
+      clearInterval(timer.current);
+    }
+  }, [minutes, seconds, finishedAt]);
 
   const initDataUserAnswer = () => {
     actions.setUserAnswersData(userAnswersResult);
@@ -71,13 +94,14 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
 
   const saveAnwsers = (isFinished = false) => {
     const answers = useTakeQuizStore.getState().takingQuiz.userAnswers;
+    const canSave = answers && answers?.length !== 0 && currentParticipant || isFinished;
     const payload = {
       isFinished,
       quizParticipantId: currentParticipant,
       answers,
     } as IPayLoadUpdateAnwsers;
 
-    if (answers && answers?.length !== 0 && currentParticipant) {
+    if (canSave) {
       actions.updateAnwsers(payload);
     }
   };
@@ -112,13 +136,19 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
 
   const onSubmit = () => {
     saveAnwsers(true);
-    rootNavigation.navigate(quizStack.takeQuizResult);
+    postActions.getContentDetail(contentId, type);
+    clearDataTakeQuiz();
+    rootNavigation.navigate(quizStack.takeQuizResult, {
+      quizId,
+      contentId,
+    });
   };
 
-
-  // check phần countdount hết giờ auto submit và chuyển screen
-  // check lại phần lấy particiantid bằng cách get content detail thay vì lưu cache...
-
+  const clearDataTakeQuiz = () => {
+    actions.clearQuizParticipantId(quizId);
+    actions.resetDataTakingQuiz();
+    clearInterval(timer.current);
+  }
 
   return {
     isPrepareTakingQuiz,
@@ -133,6 +163,7 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
     onSubmit,
     resetDataTakingQuiz,
     questionReviews,
+    clearDataTakeQuiz,
   };
 };
 

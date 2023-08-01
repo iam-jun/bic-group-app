@@ -3,9 +3,11 @@ import showToastError from '~/store/helper/showToastError';
 import { IPayLoadUpdateAnwsers, IParamsUpdateAnwsers } from '~/interfaces/IQuiz';
 import { ITakeQuizState } from '..';
 
-const updateAnwsers = (set, get) => async (payload: IPayLoadUpdateAnwsers) => {
+const updateAnwsers = (get) => async (payload: IPayLoadUpdateAnwsers) => {
   const { quizParticipantId, answers, isFinished } = payload || {};
   const { actions }: ITakeQuizState = get();
+
+  if (!quizParticipantId) return;
 
   try {
     const params: IParamsUpdateAnwsers = {

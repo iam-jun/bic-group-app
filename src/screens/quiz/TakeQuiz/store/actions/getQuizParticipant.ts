@@ -2,7 +2,9 @@ import streamApi from '~/api/StreamApi';
 import showToastError from '~/store/helper/showToastError';
 import { ITakeQuizState } from '../index';
 
-const getQuizParticipant = (set, get) => async (quizParticipantId: string) => {
+const getQuizParticipant = (set) => async (quizParticipantId: string) => {
+  if (!quizParticipantId) return;
+
   try {
     const response = await streamApi.getQuizParticipant(quizParticipantId);
 

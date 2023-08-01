@@ -8,7 +8,7 @@ describe('TakePartInAQuiz', () => {
   it('should render correctly', () => {
     const { quiz } = postWithQuiz.data;
 
-    const wrapper = renderWithRedux(<TakePartInAQuiz quiz={quiz as QuizPost} />);
+    const wrapper = renderWithRedux(<TakePartInAQuiz quiz={quiz as QuizPost} contentId='123' />);
 
     expect(wrapper).toMatchSnapshot();
   });

@@ -50,6 +50,7 @@ const _PostBody: FC<PostBodyProps> = ({
 
   const {
     id: postId, mentions, status, media, content: postContent, highlight, linkPreview, totalUsersSeen, tags, quiz,
+    quizHighestScore,
   } = data;
 
   const { images, videos, files } = media || {};
@@ -179,6 +180,7 @@ const _PostBody: FC<PostBodyProps> = ({
           <TakePartInAQuiz
             quiz={quiz}
             contentId={postId}
+            quizHighestScore={quizHighestScore}
             shouldShowDraftQuiz={shouldShowDraftQuiz}
           />
         )}

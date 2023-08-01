@@ -1503,10 +1503,8 @@
     "text_study_more": "Học lại lần nữa và làm đúng hết tất cả các câu!",
     "text_awesome": "Bạn thật tuyệt vời!",
     "text_congrats": "Chúc mừng bạn đã trả lời đúng hết tất cả các câu!",
-    "result_complete": "Hoàn thành",
-    "result_correct": "Câu đúng",
-    "result_incorrect": "Câu sai",
-    "result_skip": "Bỏ qua",
+    "highest_score": "Điểm cao nhất",
+    "time_take_quiz": "Số lần làm",
     "enter_an_integer": "Vui lòng nhập số nguyên",
     "title_quiz": "Quiz",
     "text_no_quiz_content": "Không có Quiz!",
@@ -1524,6 +1522,7 @@
       "header": "Sửa quiz",
       "content": "Bạn có chắc muốn sửa quiz không?"
     },
-    "continue": "Tiếp tục"
+    "continue": "Tiếp tục",
+    "pass_quiz": "PASS"
   }
 }

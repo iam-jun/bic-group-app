@@ -18,9 +18,10 @@ export const handleMessage = (data: {
   listImage: any[];
   setInitIndex: (value: number) => void;
   setGalleryVisible: (value: boolean) => void;
+  id: string;
 }) => {
   const {
-    message, listImage, setInitIndex, setGalleryVisible,
+    message, listImage, setInitIndex, setGalleryVisible, id,
   } = data;
   const payload = message?.payload;
 
@@ -48,7 +49,7 @@ export const handleMessage = (data: {
     case EventType.ON_NAVIGATE:
       return onNavigateArticle(payload);
     case EventType.ON_PRESS_QUIZ:
-      return onPressQuiz(payload);
+      return onPressQuiz(payload, id);
     default:
       return console.warn('Article webview onMessage unhandled', message);
   }
@@ -142,13 +143,13 @@ const onNavigateArticle = (payload: IPost) => {
   goToContentInseries(payload);
 };
 
-const onPressQuiz = (payload: QuizPost) => {
+const onPressQuiz = (payload: QuizPost, articleId: string) => {
   const { id, status } = payload;
   const canTakeQuiz = status === QuizStatus.PUBLISHED;
 
   if (!id) return;
 
   if (canTakeQuiz) {
-    onPressTakeQuiz(id);
+    onPressTakeQuiz(id, articleId);
   }
 };
