@@ -28,7 +28,7 @@ export interface ITakeQuizState extends IBaseState {
 
   actions: {
     startQuiz: (payload: IPayloadStartQuiz) => void;
-    getQuizParticipant: (quizParticipantId: string) => void;
+    getQuizParticipant: (quizParticipantId: string, isUpdateAnswer?: boolean) => void;
     updateAnwsers: (payload: IPayLoadUpdateAnwsers) => void;
 
     initDataTakingQuiz: (participantId: string) => void;
@@ -88,9 +88,10 @@ const takeQuizStore = (set, get) => ({
     },
     resetDataTakingQuiz: (participantId: string) => {
       set((state: ITakeQuizState) => {
-        state.takingQuiz[participantId].currentQuestionIndex = 0;
-        // state.takingQuiz[participantId].userAnswers = [];
-        // state.participantResult = {} as IParticipantResult;
+        state.takingQuiz[participantId] = {
+          ...state.takingQuiz[participantId],
+          currentQuestionIndex: 0,
+        };
       }, `resetDataTakingQuiz id ${participantId}`);
     },
     clearQuizParticipantId: (quizId: string) => {
