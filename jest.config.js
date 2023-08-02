@@ -31,7 +31,6 @@ module.exports = {
     '!src/beinComponents/ReorderList/**/*.{js,jsx,ts,tsx}',
     '!src/components/LoggerView/**/*.{js,jsx,ts,tsx}',
     '!src/components/reaction/**/*.{js,jsx,ts,tsx}',
-    '!src/store/codePush/**/*.{js,jsx,ts,tsx}',
     '!src/store/remoteConfig/**/*.{js,jsx,ts,tsx}',
     '!src/storeRedux/**/*.{js,jsx,ts,tsx}',
     '!src/**/*.stories.{js,jsx,ts,tsx}',

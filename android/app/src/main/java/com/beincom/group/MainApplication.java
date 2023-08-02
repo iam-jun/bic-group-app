@@ -3,7 +3,6 @@ package com.beincom.group;
 import android.content.res.Configuration;
 import expo.modules.ApplicationLifecycleDispatcher;
 import expo.modules.ReactNativeHostWrapper;
-import com.microsoft.codepush.react.CodePush;
 
 import android.app.Application;
 import android.content.Context;
@@ -35,11 +34,6 @@ public class MainApplication extends Application implements ReactApplication {
                     // Packages that cannot be autolinked yet can be added manually here, for example:
                     // packages.add(new MyReactNativePackage());
                     return packages;
-                }
-
-                @Override
-                protected String getJSBundleFile() {
-                    return CodePush.getJSBundleFile();
                 }
 
                 @Override
