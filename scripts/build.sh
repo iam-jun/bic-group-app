@@ -13,6 +13,12 @@ function apk() {
     fi
 }
 
+function aab() {
+  echo "Bundle Android Aab"
+  setup android production
+  fastlane android bundle_aab_production
+}
+
 function ipa() {
     echo "Building iOS app"
     setup ios $1
@@ -42,6 +48,9 @@ function setup() {
 case $1 in
   apk)
     apk $2
+  ;;
+  aab)
+    aab
   ;;
   ipa)
     ipa $2
