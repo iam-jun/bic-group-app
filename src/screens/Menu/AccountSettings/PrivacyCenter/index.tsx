@@ -25,7 +25,7 @@ const PrivacyCenter = () => {
   };
 
   return (
-    <ScreenWrapper testID="blocking" isFullView>
+    <ScreenWrapper testID="privacy_center" isFullView>
       <Header title={t('settings:privacy_center:screen_title')} />
       <View style={styles.container}>
         <View style={styles.headerContainer}>
@@ -33,7 +33,11 @@ const PrivacyCenter = () => {
             settings:privacy_center:screen_description
           </Text.BodyS>
         </View>
-        <Button style={styles.settingRow} onPress={goToPersonalInfoVisibility}>
+        <Button
+          testID="privacy_center.personal_information_visibility"
+          style={styles.settingRow}
+          onPress={goToPersonalInfoVisibility}
+        >
           <Text.BodyMMedium useI18n color={colors.neutral80}>
             settings:privacy_center:personal_information_visibility:title
           </Text.BodyMMedium>

@@ -41,7 +41,7 @@ const PersonalInfoVisibility = () => {
       <View style={styles.radioItemContainer}>
         <Radio
           key={`personal_info_visibility.raido_${id}`}
-          testID="personal_info_visibility.raido"
+          testID="personal_information_visibility.raido"
           isChecked={Boolean(visibilityPrivacy === id)}
           onPress={() => onChangeSetting(item)}
           style={styles.radio}
@@ -59,7 +59,7 @@ const PersonalInfoVisibility = () => {
   };
 
   return (
-    <ScreenWrapper testID="blocking" isFullView>
+    <ScreenWrapper testID="personal_information_visibility" isFullView>
       <Header title={t('settings:privacy_center:personal_information_visibility:title')} />
       <View style={styles.container}>
         <View style={styles.headerContainer}>
