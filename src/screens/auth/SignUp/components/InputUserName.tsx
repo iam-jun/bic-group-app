@@ -48,7 +48,7 @@ const InputUserName = ({
         return t('profile:username_rule:not_allow_start_with_number_or_dot');
       }
       if (userName?.length > 0 && !validation.userNameRegex.test(userName)) {
-        return t('profile:fullname_rule:not_allow_special_character');
+        return t('profile:username_rule:not_allow_special_character');
       }
     },
   };
