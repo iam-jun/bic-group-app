@@ -4,7 +4,7 @@ import showToastError from '~/store/helper/showToastError';
 import { ITakeQuizState } from '../index';
 
 const getQuizParticipant = (set, get) => async (
-  quizParticipantId: string, isUpdateAnswer: boolean = false,
+  quizParticipantId: string, isUpdateAnswer = false,
 ) => {
   const { actions, takingQuiz }: ITakeQuizState = get();
 
