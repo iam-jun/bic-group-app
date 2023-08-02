@@ -64,6 +64,8 @@ const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
   };
 
   const onPressQuit = () => {
+    actions.resetDataTakingQuiz(participantId);
+    actions.clearQuizParticipantId(quizId);
     goHome();
   };
 

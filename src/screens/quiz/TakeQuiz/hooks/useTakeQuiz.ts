@@ -23,7 +23,7 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
   } = useTakeQuizStore((state) => state);
 
   const { quizDoing } = contentData || {};
-  // participantDoingId only available in 30 minutes
+  // participantDoingId only available in timeLimit minutes
   const { quizParticipantId: participantDoingId } = quizDoing || {};
   const currentParticipantId = participantDoingId || quizParticipants[quizId];
 
@@ -55,12 +55,6 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
     }
   }, [quizId]);
 
-  // useEffect(() => {
-  // if (!!takingQuiz[currentParticipantId]) {
-  //   initData();
-  // }
-  // }, [userAnswersResult]);
-
   // auto save when user pick answer
   useEffect(() => {
     if (canAutoSave && !finishedAt) {
@@ -79,10 +73,6 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
     }
   }, [minutes, seconds, finishedAt]);
 
-  // const initData = () => {
-  //   actions.setUserAnswersData(currentParticipantId, userAnswersResult);
-  // }
-
   const startTakeQuiz = () => {
     const onSuccess = (quizParticipantId: string) => {
       actions.getQuizParticipant(quizParticipantId);
@@ -91,13 +81,19 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
     actions.startQuiz({ quizId, onSuccess });
   };
 
-  const saveAnwsers = (isFinished = false) => {
+  const saveAnwsers = (
+    isFinished = false,
+    onSuccess?: () => void,
+    onErrors?: () => void,
+  ) => {
     const answers = useTakeQuizStore.getState().takingQuiz?.[currentParticipantId]?.userAnswers;
     const canSave = (answers && answers?.length !== 0 && currentParticipantId) || isFinished;
     const payload = {
       isFinished,
       quizParticipantId: currentParticipantId,
       answers,
+      onSuccess,
+      onErrors,
     } as IPayLoadUpdateAnwsers;
 
     if (canSave) {
@@ -135,21 +131,32 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
   };
 
   const onSubmit = () => {
-    if (!finishedAt && typeof score !== 'number') {
-      saveAnwsers(true);
+    const onSuccess = () => {
+      actions.clearQuizParticipantId(quizId);
+      navigateResult();
+    };
+
+    const onErrors = () => {
+      getCurrentQuizParticipant();
+      navigateResult();
+    };
+
+    if (!finishedAt && typeof score !== 'number' && !isPrepareTakingQuiz) {
+      saveAnwsers(true, onSuccess, onErrors);
       postActions.getContentDetail(contentId, type);
       clearDataTakeQuiz();
-      rootNavigation.navigate(quizStack.takeQuizResult, {
-        quizId,
-        participantId: currentParticipantId,
-        contentId,
-      });
     }
   };
 
+  const navigateResult = () => {
+    rootNavigation.navigate(quizStack.takeQuizResult, {
+      quizId,
+      participantId: currentParticipantId,
+      contentId,
+    });
+  };
+
   const clearDataTakeQuiz = () => {
-    !!finishedAt && actions.clearQuizParticipantId(quizId);
-    // actions.resetDataTakingQuiz(currentParticipantId);
     clearInterval(timer.current);
   };
 

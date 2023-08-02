@@ -53,7 +53,10 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
 
   useEffect(() => () => resetQuestionIndex(), []);
 
-  const goBack = () => rootNavigation.goBack();
+  const goBack = () => {
+    rootNavigation.goBack();
+    resetQuestionIndex();
+  };
 
   const onPressBack = () => {
     showAlert({
@@ -93,7 +96,7 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
     return (
       <View style={styles.content}>
         <Text.SubtitleXS color={colors.neutral30}>
-          {`QUESTION ${currentQuestionIndex || 0 + 1} OF ${totalQuestion}`}
+          {`QUESTION ${currentQuestionIndex + 1} OF ${totalQuestion}`}
         </Text.SubtitleXS>
         <View style={styles.questionContainer}>
           <Text.H4 color={colors.neutral60}>

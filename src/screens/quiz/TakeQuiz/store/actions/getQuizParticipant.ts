@@ -3,12 +3,20 @@ import streamApi from '~/api/StreamApi';
 import showToastError from '~/store/helper/showToastError';
 import { ITakeQuizState } from '../index';
 
-const getQuizParticipant = (set, get) => async (quizParticipantId: string) => {
+const getQuizParticipant = (set, get) => async (
+  quizParticipantId: string, isUpdateAnswer: boolean = false,
+) => {
   const { actions, takingQuiz }: ITakeQuizState = get();
 
   if (!quizParticipantId) return;
 
   try {
+    if (!isUpdateAnswer) {
+      set((state: ITakeQuizState) => {
+        state.isPrepareTakingQuiz = true;
+      }, `getQuizParticipant preparing ${quizParticipantId}`);
+    }
+
     if (isEmpty(takingQuiz[quizParticipantId])) {
       actions.initDataTakingQuiz(quizParticipantId);
     }

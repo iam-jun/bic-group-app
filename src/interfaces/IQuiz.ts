@@ -103,6 +103,8 @@ export interface IParamsUpdateAnwsers {
 
 export interface IPayLoadUpdateAnwsers extends IParamsUpdateAnwsers {
   quizParticipantId: string;
+  onSuccess?: () => void;
+  onErrors?: () => void;
 }
 
 export interface IPayloadStartQuiz {
