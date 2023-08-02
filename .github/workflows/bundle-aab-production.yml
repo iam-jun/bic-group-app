@@ -1,12 +1,12 @@
 ---
-name: build-android-prerelease
+name: bundle-aab-production
 on:
   push:
     tags:
-      - 'pre-*.*.*'
+      - 'v*.*.*'
 
 jobs:
-  build-android-prerelease:
+  bundle-aab-production:
     runs-on: self-hosted
     steps:
       - name: ci/checkout-repo
@@ -18,5 +18,5 @@ jobs:
           npm run clone-build-resources
           npm run prepare-resources
 
-      - name: ci/build-android-prerelease
-        run: npm run build-android-prerelease
+      - name: ci/bundle-aab-production
+        run: npm run bundle-aab
