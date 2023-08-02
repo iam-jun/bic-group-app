@@ -153,3 +153,9 @@ export interface IParticipantResult {
   totalCorrectAnswers: number;
   userAnswers?: UserAnswerItem[];
 }
+
+export interface ISaveAnswerTakeQuiz {
+  onSuccess?: () => void;
+  onErrors?: () => void;
+  isFinished?: boolean;
+}

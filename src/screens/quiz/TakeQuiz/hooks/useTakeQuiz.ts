@@ -5,7 +5,7 @@ import useTakeQuizStore from '../store';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
-import { IPayLoadUpdateAnwsers, TakingAnswerItem } from '~/interfaces/IQuiz';
+import { IPayLoadUpdateAnwsers, ISaveAnswerTakeQuiz, TakingAnswerItem } from '~/interfaces/IQuiz';
 import { mapQuestionReview } from './helper';
 import useCountDown from './useCountDown';
 
@@ -58,7 +58,7 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
   // auto save when user pick answer
   useEffect(() => {
     if (canAutoSave && !finishedAt) {
-      saveAnwsers();
+      saveAnwsers({});
     }
   }, [userAnswers, finishedAt]);
 
@@ -81,11 +81,13 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
     actions.startQuiz({ quizId, onSuccess });
   };
 
-  const saveAnwsers = (
-    isFinished = false,
-    onSuccess?: () => void,
-    onErrors?: () => void,
-  ) => {
+  const saveAnwsers = (options: ISaveAnswerTakeQuiz) => {
+    const {
+      onSuccess,
+      onErrors,
+      isFinished = false,
+    } = options || {};
+
     const answers = useTakeQuizStore.getState().takingQuiz?.[currentParticipantId]?.userAnswers;
     const canSave = (answers && answers?.length !== 0 && currentParticipantId) || isFinished;
     const payload = {
@@ -142,7 +144,7 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
     };
 
     if (!finishedAt && typeof score !== 'number' && !isPrepareTakingQuiz) {
-      saveAnwsers(true, onSuccess, onErrors);
+      saveAnwsers({ onSuccess, onErrors, isFinished: true });
       postActions.getContentDetail(contentId, type);
       clearDataTakeQuiz();
     }
