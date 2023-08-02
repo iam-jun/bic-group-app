@@ -2,7 +2,7 @@ import React from 'react';
 import { mockViewContentJoinRequire } from '~/test/mock_data/post';
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import ContentNoPermission from './index';
-import * as Navigation from '~/hooks/navigation';
+import * as common from '~/helpers/common';
 
 describe('ContentNoPermission component', () => {
   it('given requireGroups is not empty should render correctly', () => {
@@ -33,13 +33,9 @@ describe('ContentNoPermission component', () => {
     expect(component).toMatchSnapshot();
   });
 
-  it('should navigate to community when pressing on community name', () => {
-    const navigate = jest.fn();
-    jest.spyOn(Navigation, 'useRootNavigation').mockReturnValue({
-      rootNavigation: {
-        navigate,
-      },
-    } as any);
+  it('should push to community when pressing on community name', () => {
+    const navigateToCommunityDetail = jest.spyOn(common, 'navigateToCommunityDetail');
+
     const onContentLayout = jest.fn();
     const data = {
       message: mockViewContentJoinRequire.meta.message,
@@ -56,16 +52,12 @@ describe('ContentNoPermission component', () => {
 
     fireEvent.press(textCommunity);
 
-    expect(navigate).toBeCalled();
+    expect(navigateToCommunityDetail).toBeCalled();
   });
 
-  it('should navigate to group when pressing on group name', () => {
-    const navigate = jest.fn();
-    jest.spyOn(Navigation, 'useRootNavigation').mockReturnValue({
-      rootNavigation: {
-        navigate,
-      },
-    } as any);
+  it('should push to group when pressing on group name', () => {
+    const navigateToGroupDetail = jest.spyOn(common, 'navigateToGroupDetail');
+
     const onContentLayout = jest.fn();
     const data = {
       message: mockViewContentJoinRequire.meta.message,
@@ -82,6 +74,6 @@ describe('ContentNoPermission component', () => {
 
     fireEvent.press(textGroup);
 
-    expect(navigate).toBeCalled();
+    expect(navigateToGroupDetail).toBeCalled();
   });
 });

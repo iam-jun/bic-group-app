@@ -11,11 +11,10 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Text from '~/baseComponents/Text';
 import CommunityItem from '~/screens/groups/components/CommunityItem';
 import spacing from '~/theme/spacing';
-import { useRootNavigation } from '~/hooks/navigation';
 import useSearchJoinedCommunitiesStore from './store';
 import { isGroup } from '~/helpers/groups';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/helpers/common';
 
 interface CommunitySearchResultsProps {
   onLoadMore?: () => void;
@@ -25,7 +24,6 @@ interface CommunitySearchResultsProps {
 const CommunitySearchResults = ({
   onLoadMore,
 }: CommunitySearchResultsProps) => {
-  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
 
   const {
@@ -42,23 +40,14 @@ const CommunitySearchResults = ({
       // so before navigate to group detail we need to fetch community detail
       actions.getCommunity(community.id);
 
-      rootNavigation.navigate(
-        groupStack.groupDetail,
-        {
-          groupId: id,
-          communityId: community.id,
-        },
-      );
+      navigateToGroupDetail({ groupId: id, communityId: community.id });
       return;
     }
 
     // if a community has community field (manage api, /me/search/groups)
     // so need to pick id from community field
     // otherwise pick id by normal
-    rootNavigation.navigate(
-      groupStack.communityDetail,
-      { communityId: community ? community.id : id },
-    );
+    navigateToCommunityDetail({ communityId: community ? community.id : id });
   };
 
   const renderItem = ({ item }: {item: string}) => {

@@ -5,7 +5,7 @@ import { mockDiscoverCommunityResponse } from '~/test/mock_data/discoverCommunit
 import useDiscoverCommunitiesSearchStore, { IDiscoverCommunitiesSearchState } from './store';
 import useCommunityController from '~/screens/communities/store';
 import useCommunitiesStore from '~/store/entities/communities';
-import * as navigationHook from '~/hooks/navigation';
+import * as common from '~/helpers/common';
 
 describe('SearchDiscoverCommunityResults component', () => {
   const mockData = mockDiscoverCommunityResponse.data;
@@ -28,9 +28,7 @@ describe('SearchDiscoverCommunityResults component', () => {
 
   it('should render empty screen if loading = false and ids = []', () => {
     const onLoadMore = jest.fn();
-    const navigate = jest.fn();
-    const rootNavigation = { navigate };
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
+    const navigateToCommunityDetail = jest.spyOn(common, 'navigateToCommunityDetail');
 
     const ids = [mockData[0].id, mockData[1].id, mockData[2].id,
     ];
@@ -75,7 +73,7 @@ describe('SearchDiscoverCommunityResults component', () => {
 
     const btnView = wrapper.getByText(languages.common.btn_view);
     fireEvent.press(btnView);
-    expect(navigate).toBeCalled();
+    expect(navigateToCommunityDetail).toBeCalled();
 
     const btnCancelRequest = wrapper.getByText(languages.common.btn_cancel_request);
     fireEvent.press(btnCancelRequest);

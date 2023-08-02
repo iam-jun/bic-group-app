@@ -26,8 +26,8 @@ const GroupAdministration = (props: any) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const { rootNavigation } = useRootNavigation();
-  const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
-  const { group } = groups[currentGroupId] || {};
+  const groups = useGroupsStore((state: IGroupsState) => state.groups);
+  const { group } = groups[groupId] || {};
   const { name } = group || {};
 
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);

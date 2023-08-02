@@ -4,9 +4,8 @@ import { FlatList, StyleSheet, View } from 'react-native';
 
 import GroupItem from '~/beinComponents/list/items/GroupItem';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import { useRootNavigation } from '~/hooks/navigation';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/helpers/common';
 import { IGroup } from '~/interfaces/IGroup';
-import mainStack from '~/router/navigator/MainStack/stack';
 import useModalStore from '~/store/modal';
 import spacing from '~/theme/spacing';
 
@@ -21,7 +20,6 @@ const PostAudiencesModal: FC<PostAudiencesModalProps> = ({
   showBlockedIcon,
   onPressItemAudience,
 }: PostAudiencesModalProps) => {
-  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const modalActions = useModalStore((state) => state.actions);
@@ -30,23 +28,15 @@ const PostAudiencesModal: FC<PostAudiencesModalProps> = ({
     modalActions.hideModal();
   };
 
-  const navigateToGroup = (groupId: any, communityId: any) => {
-    rootNavigation.navigate(mainStack.groupDetail, { groupId, communityId });
-  };
-
-  const navigateToCommunity = (communityId: string) => {
-    rootNavigation.navigate(mainStack.communityDetail, { communityId });
-  };
-
   const onPressItem = (item: any) => {
     const { id, communityId, isCommunity } = item || {};
 
     if (onPressItemAudience) {
       onPressItemAudience?.(item);
     } else if (isCommunity && communityId) {
-      navigateToCommunity(communityId);
+      navigateToCommunityDetail({ communityId });
     } else {
-      navigateToGroup(id, communityId);
+      navigateToGroupDetail({ groupId: id, communityId });
     }
 
     onPressClose();

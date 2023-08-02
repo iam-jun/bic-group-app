@@ -5,10 +5,9 @@ import NoContent from '~/../assets/images/no_content.svg';
 import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import Text from '~/baseComponents/Text';
 import { spacing } from '~/theme';
-import { useRootNavigation } from '~/hooks/navigation';
 import Header from '~/beinComponents/Header';
 import { IErrorContent } from '~/interfaces/IPost';
-import mainStack from '~/router/navigator/MainStack/stack';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/helpers/common';
 
 interface ContentNoPermissionProps {
   onContentLayout?: () => void;
@@ -21,24 +20,15 @@ const ContentNoPermission: React.FC<ContentNoPermissionProps> = ({
 }) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
-  const { rootNavigation } = useRootNavigation();
   const { message, requireGroups = [] } = data || {};
-
-  const goToGroupDetail = (groupId, communityId) => {
-    rootNavigation.navigate(mainStack.groupDetail, { groupId, communityId });
-  };
-
-  const goToCommunityDetail = (communityId) => {
-    rootNavigation.navigate(mainStack.communityDetail, { communityId });
-  };
 
   const goToAudienceDetail = (item) => {
     const { id, communityId, isCommunity } = item || {};
 
     if (isCommunity && communityId) {
-      goToCommunityDetail(communityId);
+      navigateToCommunityDetail({ communityId });
     } else {
-      goToGroupDetail(id, communityId);
+      navigateToGroupDetail({ groupId: id, communityId });
     }
   };
 

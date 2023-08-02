@@ -8,14 +8,13 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { GroupPrivacyDetail } from '~/constants/privacyTypes';
 import { useBaseHook } from '~/hooks';
-import { useRootNavigation } from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { isGroup } from '~/helpers/groups';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import { spacing } from '~/theme';
 import { formatLargeNumber } from '~/utils/formatter';
 import ButtonCommunityGroupCard from './ButtonCommunityGroupCard';
 import useModalStore from '~/store/modal';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/helpers/common';
 
 type CommunityGroupCardProps = {
   item: any;
@@ -32,7 +31,6 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
   onJoin,
   onCancel,
 }) => {
-  const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -61,23 +59,14 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
       // and clear community detail when go back from group detail
       actions.getCommunity(community.id);
 
-      rootNavigation.navigate(
-        groupStack.groupDetail,
-        {
-          groupId: id,
-          communityId: community.id,
-        },
-      );
+      navigateToGroupDetail({ groupId: id, communityId: community.id });
       return;
     }
 
     // if a community has community field, then it is in manage api
     // so need to pick id from community field
     // otherwise pick id by normal
-    rootNavigation.navigate(
-      groupStack.communityDetail,
-      { communityId: community ? community.id : id },
-    );
+    navigateToCommunityDetail({ communityId: community ? community.id : id });
   };
 
   const handleJoin = () => {
@@ -105,7 +94,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
   const onViewCommunity = () => {
     if (community) {
       const { id } = community;
-      rootNavigation.navigate(groupStack.communityDetail, { communityId: id });
+      navigateToCommunityDetail({ communityId: id });
     }
   };
 

@@ -6,6 +6,11 @@ import { IParamGetReportContent } from '~/interfaces/IReport';
 import { mockReportReason } from '~/test/mock_data/report';
 import { IUserProfile } from '~/interfaces/IAuth';
 import useModalStore from '~/store/modal';
+import { withNavigation } from '~/router/helper';
+import { rootNavigationRef } from '~/router/refs';
+import mainStack from '~/router/navigator/MainStack/stack';
+
+const rootNavigation = withNavigation?.(rootNavigationRef);
 
 export const removeMemberFromMemberList = (userId: string, membersData: object) => {
   let updatedData = {};
@@ -57,12 +62,8 @@ export const getReportContent = async ({ id, type }) => {
 };
 
 export const getAllAudiences = (selectedAudiences) => {
-  const groupAudiences = Object.keys(selectedAudiences.groups).map(
-    (key: string) => selectedAudiences.groups[key],
-  );
-  const userAudiences = Object.keys(selectedAudiences.users).map(
-    (key: string) => selectedAudiences.users[key],
-  );
+  const groupAudiences = Object.keys(selectedAudiences.groups).map((key: string) => selectedAudiences.groups[key]);
+  const userAudiences = Object.keys(selectedAudiences.users).map((key: string) => selectedAudiences.users[key]);
 
   return groupAudiences.concat(userAudiences);
 };
@@ -101,4 +102,14 @@ export const showAlertRefreshPage = () => {
       content: t('common:text_pull_to_refresh'),
     });
   }, 500);
+};
+
+export const navigateToGroupDetail = (params: { groupId: string; communityId?: string }) => {
+  const { groupId, communityId } = params;
+  return rootNavigation.push(mainStack.groupDetail, { groupId, communityId });
+};
+
+export const navigateToCommunityDetail = (params: { communityId: string }) => {
+  const { communityId } = params;
+  return rootNavigation.push(mainStack.communityDetail, { communityId });
 };

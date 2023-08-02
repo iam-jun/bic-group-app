@@ -137,21 +137,10 @@ const CommunityDetail = (props: any) => {
   }, [groupId, isMember, privacy, isLoadingCommunity, community, contentFilter, attributeFilter]);
 
   useEffect(() => {
-    // only update currentCommunityId when navigating to the community profile
-    useCommunitiesStore.setState({
-      currentCommunityId: communityId,
-    });
-
     if (isMounted) {
       getCommunityDetail();
     }
-  }, [isMounted, communityId]);
-
-  useEffect(() => () => {
-    useCommunitiesStore.setState({
-      currentCommunityId: '',
-    });
-  }, []);
+  }, [isMounted]);
 
   useEffect(() => {
     if (isEmpty(timelines[groupId]) && isEmpty(communityPost?.ids)) {
@@ -335,6 +324,7 @@ const CommunityDetail = (props: any) => {
           communityId={communityId}
           isMember={isMember}
           teamName={community?.teamName}
+          groupId={groupId}
         />
         <FilterFeedButtonGroup
           contentFilter={contentFilter}

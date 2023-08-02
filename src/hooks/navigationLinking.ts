@@ -2,6 +2,7 @@
 import { Linking } from 'react-native';
 import groupApi from '~/api/GroupApi';
 import APIErrorCode from '~/constants/apiErrorCode';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/helpers/common';
 import { useRootNavigation } from '~/hooks/navigation';
 import { linkingConfig, PREFIX_DEEPLINK_GROUP, PREFIX_URL } from '~/router/config';
 import { hideSplashScreen, Props as IRootNavigation } from '~/router/helper';
@@ -56,11 +57,9 @@ export const onReceiveURL = async ({
       }
 
       case DeepLinkTypes.COMMUNTY_DETAIL: {
-        const navigateToCommunityDetail = () => navigation?.navigate?.(
-          mainStack.communityDetail, { communityId: match.communityId },
-        );
+        const _navigateToCommunityDetail = () => navigateToCommunityDetail({ communityId: match.communityId });
         redirectToScreenWithSignIn({
-          userId, url, navigateCallback: navigateToCommunityDetail,
+          userId, url, navigateCallback: _navigateToCommunityDetail,
         });
         break;
       }
@@ -76,12 +75,10 @@ export const onReceiveURL = async ({
       }
 
       case DeepLinkTypes.GROUP_DETAIL: {
-        const navigateToGroupDetail = () => navigation?.navigate?.(mainStack.groupDetail, {
-          communityId: match.communityId,
-          groupId: match.groupId,
-        });
+        // eslint-disable-next-line max-len
+        const _navigateToGroupDetail = () => navigateToGroupDetail({ communityId: match.communityId, groupId: match.groupId });
         redirectToScreenWithSignIn({
-          userId, url, navigateCallback: navigateToGroupDetail,
+          userId, url, navigateCallback: _navigateToGroupDetail,
         });
         break;
       }
@@ -213,7 +210,7 @@ const navigateWithValidReferralCode = async (payload: {
     try {
       const responseJoinCommunity = await groupApi.joinCommunity(rootGroupId);
       if (responseJoinCommunity && responseJoinCommunity?.data) {
-        navigation?.navigate?.(mainStack.communityDetail, { communityId });
+        navigateToCommunityDetail({ communityId });
       }
     } catch (error) {
       console.error('joinCommunity error:', error);
@@ -222,7 +219,7 @@ const navigateWithValidReferralCode = async (payload: {
         error?.code === APIErrorCode.Group.ALREADY_MEMBER
         || error?.code === APIErrorCode.Group.JOIN_REQUEST_ALREADY_SENT
       ) {
-        navigation?.navigate?.(mainStack.communityDetail, { communityId });
+        navigateToCommunityDetail({ communityId });
       } else {
         navigation?.navigate?.('home');
         showToastError(error);

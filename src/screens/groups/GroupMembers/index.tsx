@@ -25,7 +25,9 @@ import useMyPermissionsStore from '~/store/permissions';
 import useGroupDetailStore from '../GroupDetail/store';
 
 const _GroupMembers = ({ route }: any) => {
-  const { groupId, targetIndex, isMemberCommunity } = route.params;
+  const {
+    groupId, targetIndex, isMemberCommunity, communityId,
+  } = route.params;
 
   const [selectedMember, setSelectedMember] = useState<IGroupMembers>();
   const [isOpen, setIsOpen] = useState(false);
@@ -109,7 +111,7 @@ const _GroupMembers = ({ route }: any) => {
 
   const renderContent = () => {
     if (selectedIndex === 0) {
-      return <GroupMemberList groupId={groupId} onPressMenu={onPressMenu} />;
+      return <GroupMemberList communityId={communityId} groupId={groupId} onPressMenu={onPressMenu} />;
     }
 
     if (selectedIndex === 1) {
@@ -180,6 +182,7 @@ const _GroupMembers = ({ route }: any) => {
 
       <SearchMemberView
         groupId={groupId}
+        communityId={communityId}
         isOpen={isOpen}
         onClose={onCloseModal}
         onPressMenu={onPressMenu}

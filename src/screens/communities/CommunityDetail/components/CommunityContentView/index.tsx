@@ -132,7 +132,7 @@ const _CommunityContentView = ({
       ListHeaderComponent={(
         <View onLayout={onButtonLayout}>
           <InfoHeader infoDetail={community} />
-          <CommunityTabHeader communityId={id} isMember={isMember} teamName={teamName} />
+          <CommunityTabHeader communityId={id} groupId={groupId} isMember={isMember} teamName={teamName} />
           <CommunityJoinCancelButton community={community} isMember={isMember} />
           <BoxListPinContent id={groupId} />
           <FilterFeedButtonGroup

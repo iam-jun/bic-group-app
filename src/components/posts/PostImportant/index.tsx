@@ -2,9 +2,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { useRootNavigation } from '~/hooks/navigation';
-import mainStack from '~/router/navigator/MainStack/stack';
-
 import useNetworkStore from '~/store/network';
 import networkSelectors from '~/store/network/selectors';
 
@@ -16,6 +13,7 @@ import spacing from '~/theme/spacing';
 import { IPostCommunities } from '~/interfaces/IPost';
 import { useBaseHook } from '~/hooks';
 import useModalStore from '~/store/modal';
+import { navigateToCommunityDetail } from '~/helpers/common';
 
 export interface PostImportantProps {
   isImportant: boolean;
@@ -34,7 +32,6 @@ const PostImportant: FC<PostImportantProps> = ({
   listCommunity,
   shouldBeHidden,
 }: PostImportantProps) => {
-  const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
 
@@ -61,7 +58,7 @@ const PostImportant: FC<PostImportantProps> = ({
   }
 
   const goToCommunity = ({ communityId }) => {
-    rootNavigation.navigate(mainStack.communityDetail, { communityId });
+    navigateToCommunityDetail({ communityId });
   };
 
   const _onPressBanner = () => {

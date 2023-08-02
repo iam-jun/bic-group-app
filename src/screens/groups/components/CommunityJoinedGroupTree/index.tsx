@@ -6,14 +6,13 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { SearchInput } from '~/baseComponents/Input';
 import JoinedGroupSearch from '~/screens/groups/components/CommunityJoinedGroupTree/JoinedGroupSearch';
 import useCommunityJoinedGroupTreeStore from './store';
-import mainStack from '~/router/navigator/MainStack/stack';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { IGroup } from '~/interfaces/IGroup';
-import { useRootNavigation } from '~/hooks/navigation';
 import spacing from '~/theme/spacing';
 import { useBaseHook } from '~/hooks';
 import GroupList from '~/components/groups/GroupList';
 import useModalStore from '~/store/modal';
+import { isGroup } from '~/helpers/groups';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/helpers/common';
 
 export interface CommunityJoinedGroupsProps {
   communityId?: string;
@@ -24,7 +23,6 @@ const CommunityJoinedGroupTree: FC<CommunityJoinedGroupsProps> = (
   { communityId, teamName = 'bein' }: CommunityJoinedGroupsProps,
 ) => {
   const { t } = useBaseHook();
-  const { rootNavigation } = useRootNavigation();
 
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
@@ -47,18 +45,10 @@ const CommunityJoinedGroupTree: FC<CommunityJoinedGroupsProps> = (
 
   const onPressGroup = useCallback((group: IGroup) => {
     modalActions.hideModal();
-    const isGroup = group?.level > 0;
-    if (group.communityId && !isGroup) {
-      rootNavigation.navigate(mainStack.communityDetail, {
-        communityId: group.communityId,
-      });
+    if (group.communityId && !isGroup(group)) {
+      navigateToCommunityDetail({ communityId: group.communityId });
     } else {
-      rootNavigation.navigate(
-        groupStack.groupDetail, {
-          groupId: group.id,
-          communityId: group?.communityId || communityId,
-        },
-      );
+      navigateToGroupDetail({ groupId: group.id, communityId: group?.communityId || communityId });
     }
   }, []);
 

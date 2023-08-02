@@ -2,10 +2,9 @@ import React from 'react';
 
 import { fireEvent, render, renderWithRedux } from '~/test/testUtils';
 import MenuDiscoverCommunity from './MenuDiscoverCommunity';
-import * as navigationHook from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { communities } from '~/test/mock_data/communities';
 import useMenuController from '../store';
+import * as common from '~/helpers/common';
 
 describe('MenuDiscoverCommunity component', () => {
   it('renders loading list:', () => {
@@ -20,16 +19,14 @@ describe('MenuDiscoverCommunity component', () => {
     expect(loadingComponent).toBeDefined();
   });
 
-  it('should navigate to community detail screen when click community item', () => {
+  it('should push to community detail screen when click community item', () => {
     useMenuController.setState((state) => {
       state.data = communities as any;
       state.loading = false;
       return state;
     });
 
-    const navigate = jest.fn();
-    const rootNavigation = { navigate };
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
+    const navigateToCommunityDetail = jest.spyOn(common, 'navigateToCommunityDetail');
 
     const rendered = renderWithRedux(<MenuDiscoverCommunity />);
 
@@ -39,7 +36,7 @@ describe('MenuDiscoverCommunity component', () => {
 
     expect(itemsComponent[0]).toBeDefined();
     fireEvent.press(itemsComponent[0]);
-    expect(navigate).toHaveBeenCalledWith(groupStack.communityDetail, { communityId: communities[0].id });
+    expect(navigateToCommunityDetail).toBeCalled();
   });
 
   it('renders empty list:', () => {

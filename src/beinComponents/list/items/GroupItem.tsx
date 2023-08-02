@@ -6,8 +6,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { IGroup, IParsedGroup } from '~/interfaces/IGroup';
 import Icon from '~/baseComponents/Icon';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import { useRootNavigation } from '~/hooks/navigation';
 import Text from '~/baseComponents/Text';
 import Avatar from '~/baseComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
@@ -16,7 +14,6 @@ import useNetworkStore from '~/store/network';
 import networkSelectors from '~/store/network/selectors';
 import { generateUniqueId } from '~/utils/generator';
 import { GroupPrivacyDetail } from '~/constants/privacyTypes';
-import mainStack from '~/router/navigator/MainStack/stack';
 import { AvatarType } from '~/baseComponents/Avatar/AvatarComponent';
 import { IconType } from '~/resources/icons';
 import spacing from '~/theme/spacing';
@@ -24,6 +21,7 @@ import dimension from '~/theme/dimension';
 import { Button } from '~/baseComponents';
 import Tag from '~/baseComponents/Tag';
 import { useBaseHook } from '~/hooks';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/helpers/common';
 
 export interface GroupItemProps extends IParsedGroup {
   groupStyle?: StyleProp<ViewStyle>;
@@ -87,7 +85,6 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
-  const { rootNavigation } = useRootNavigation();
 
   if (hide) {
     return null;
@@ -101,15 +98,9 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     if (onPressItem) {
       onPressItem(props);
     } else if (communityId) {
-      rootNavigation.navigate(mainStack.communityDetail, {
-        communityId,
-      });
+      navigateToCommunityDetail({ communityId });
     } else {
-      rootNavigation.navigate(
-        groupStack.groupDetail, {
-          groupId: id,
-        },
-      );
+      navigateToGroupDetail({ groupId: id });
     }
   };
 

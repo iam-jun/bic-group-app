@@ -12,10 +12,10 @@ import DescriptionSection from '~/components/series/SeriesContent/DescriptionSec
 import Icon from '~/baseComponents/Icon';
 import { IPost, IPostAudience } from '~/interfaces/IPost';
 import { useRootNavigation } from '~/hooks/navigation';
-import mainStack from '~/router/navigator/MainStack/stack';
 import { ContentInterestedUserCount } from '~/components/ContentView';
 import { ButtonMarkAsRead, PostImportant } from '~/components/posts';
 import { useUserIdAuth } from '~/hooks/auth';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/helpers/common';
 
 type SeriesDetailHeaderProps = {
   series: IPost;
@@ -32,20 +32,12 @@ const AudiencesSection: FC<AudiencesSectionProps> = ({ audience }) => {
   const theme = useTheme();
   const styles = createStyle(theme);
 
-  const navigateToGroup = (groupId: any, communityId: any) => {
-    rootNavigation.navigate(mainStack.groupDetail, { groupId, communityId });
-  };
-
-  const navigateToCommunity = (communityId: string) => {
-    rootNavigation.navigate(mainStack.communityDetail, { communityId });
-  };
-
   const onPressItem = (item: any) => {
     const { id, communityId, isCommunity } = item || {};
     if (isCommunity && communityId) {
-      navigateToCommunity(communityId);
+      navigateToCommunityDetail({ communityId });
     } else {
-      navigateToGroup(id, communityId);
+      navigateToGroupDetail({ groupId: id, communityId });
     }
   };
 
