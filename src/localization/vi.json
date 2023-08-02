@@ -537,12 +537,15 @@
       "default_group_set_and_membership_approval": {
         "title": "Thay đổi quyền riêng tư có tác động đến nhóm mặc định & sự chấp thuận thành viên của các nhóm bên trong?",
         "content": "Xin lưu ý rằng nhóm của bạn nằm trong nhóm mặc định, thay đổi này cũng bật tính năng phê duyệt tư cách thành viên của {{prefix}}{{count}} nhóm bên trong.",
+        "contents": "Xin lưu ý rằng nhóm của bạn nằm trong nhóm mặc định, thay đổi này cũng bật tính năng phê duyệt tư cách thành viên của {{prefix}}{{count}} nhóm bên trong.",
         "title_default_group_set": "Nhóm mặc định được đặt:",
-        "title_membership_approval": "Các nhóm bên trong:"
+        "title_membership_approval": "Nhóm bên trong:",
+        "title_membership_approval_s": "Các nhóm bên trong:"
       },
       "membership_approval": {
         "title": "Bật phê duyệt thành viên cho các nhóm nội bộ?",
-        "content": "{{prefix}}{{count}} nhóm bên trong sẽ được bật phê duyệt thành viên."
+        "content": "{{prefix}}{{count}} nhóm bên trong sẽ được bật phê duyệt thành viên.",
+        "contents": "{{prefix}}{{count}} nhóm bên trong sẽ được bật phê duyệt thành viên."
       },
       "default_group_set": {
         "title": "Thay đổi quyền riêng tư tác động đến nhóm mặc định",

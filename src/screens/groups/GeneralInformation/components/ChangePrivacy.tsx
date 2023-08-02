@@ -92,11 +92,21 @@ const ChangePrivacy = (props: ChangeSettingsProps) => {
     const count = list?.length;
     switch (typePrivacyImpact) {
       case TypePrivacyImpact.DEFAULT_GROUP_SET_AND_MEMBERSHIP_APPROVAL:
+        if (count > 1) {
+          return textContent(
+            t('settings:privacy_impact:default_group_set_and_membership_approval:contents', { count, prefix }),
+          );
+        }
         return textContent(
           t('settings:privacy_impact:default_group_set_and_membership_approval:content', { count, prefix }),
         );
+
       case TypePrivacyImpact.MEMBERSHIP_APPROVAL:
+        if (count > 1) {
+          return textContent(t('settings:privacy_impact:membership_approval:contents', { count, prefix }));
+        }
         return textContent(t('settings:privacy_impact:membership_approval:content', { count, prefix }));
+
       case TypePrivacyImpact.DEFAULT_GROUP_SET:
         return textContent(t('settings:privacy_impact:default_group_set:content'));
       case TypePrivacyImpact.DEFAULT_GROUP_SET_AND_BADGE:
@@ -127,6 +137,21 @@ const ChangePrivacy = (props: ChangeSettingsProps) => {
     );
   };
 
+  const renderTitleMembershipApproval = () => {
+    if (list.length > 1) {
+      return (
+        <Text.BodyM color={colors.neutral60}>
+          {t('settings:privacy_impact:default_group_set_and_membership_approval:title_membership_approval_s')}
+        </Text.BodyM>
+      );
+    }
+    return (
+      <Text.BodyM color={colors.neutral60}>
+        {t('settings:privacy_impact:default_group_set_and_membership_approval:title_membership_approval')}
+      </Text.BodyM>
+    );
+  };
+
   const renderListContent = () => {
     if (
       typePrivacyImpact === TypePrivacyImpact.DEFAULT_GROUP_SET_AND_MEMBERSHIP_APPROVAL
@@ -143,9 +168,7 @@ const ChangePrivacy = (props: ChangeSettingsProps) => {
                 <Text.SubtitleM color={colors.neutral60}>{defaultGroupSet?.name}</Text.SubtitleM>
               </View>
               <View style={[styles.textGroup, styles.SecondTextGroup]}>
-                <Text.BodyM color={colors.neutral60}>
-                  {t('settings:privacy_impact:default_group_set_and_membership_approval:title_membership_approval')}
-                </Text.BodyM>
+                {renderTitleMembershipApproval()}
                 {list?.map((item, index) => (
                   <Text.SubtitleM key={`${index}_${item.name}`} color={colors.neutral60}>
                     •
