@@ -4,11 +4,13 @@ import ReactionView from '~/beinComponents/ReactionView';
 import ContentFooter, { ContentFooterProps } from '~/components/ContentView/ContentFooter';
 import { useRootNavigation } from '~/hooks/navigation';
 import useContentActions from '~/hooks/useContentActions';
-import { TargetType } from '~/interfaces/IPost';
+import { PostType, TargetType } from '~/interfaces/IPost';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import { padding } from '~/theme/spacing';
 import { ArticleReactionsProps } from '../ArticleReactions';
 import { handleLabelButtonComment } from '~/utils/common';
+import { TrackingEventContentReadAction, TrackingEventContentReadProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
+import { trackEvent } from '~/services/tracking';
 
 export interface ArticleFooterProps extends Omit<ContentFooterProps, 'labelButtonComment'>, Omit<ArticleReactionsProps, 'onAddReaction'> {
   articleId: string;
@@ -41,6 +43,13 @@ const ArticleFooter: FC<ArticleFooterProps> = ({
       onPressComment?.(articleId);
     } else {
       navigateToDetail(true);
+
+      // tracking event
+      const eventContentReadProperties: TrackingEventContentReadProperties = {
+        content_type: PostType.ARTICLE,
+        action: TrackingEventContentReadAction.COMMENT,
+      };
+      trackEvent({ event: TrackingEventType.CONTENT_READ, properties: eventContentReadProperties });
     }
   };
 

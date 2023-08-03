@@ -10,6 +10,8 @@ import usePostsStore from '~/store/entities/posts';
 import showToastError from '~/store/helper/showToastError';
 import ICommentInputState from '../Interface';
 import useLoadMoreCommentsController from '~/components/LoadMoreComment/store';
+import { TrackingEventCommentAddedProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
+import { trackEvent } from '~/services/tracking';
 
 const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
   const {
@@ -90,6 +92,13 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
         data: commentData,
       });
       resComment = response?.data;
+
+      // tracking event
+      const eventCommentAddedProperties: TrackingEventCommentAddedProperties = {
+        images: !isEmpty(commentData?.media?.images),
+        gif: !isEmpty(commentData?.giphy),
+      };
+      trackEvent({ event: TrackingEventType.COMMENT_ADDED, properties: eventCommentAddedProperties });
     }
     onSuccess?.(); // clear content in text input
     if (!!viewMore && !!parentCommentId) {

@@ -37,6 +37,8 @@ import { PermissionKey } from '~/constants/permissionScheme';
 import { PostStatus, PostType } from '~/interfaces/IPost';
 import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
 import showToastSuccess from '~/store/helper/showToastSuccess';
+import { TrackingEventContentPublishedProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
+import { trackEvent } from '~/services/tracking';
 
 interface IHandleSaveOptions {
   isShowLoading?: boolean;
@@ -392,6 +394,13 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     const payload: IPayloadPublishDraftArticle = {
       draftArticleId: data.id,
       onSuccess: (res) => {
+        // tracking event
+        const eventContentPublishedProperties: TrackingEventContentPublishedProperties = {
+          content_type: PostType.ARTICLE,
+          important: !!data?.setting?.isImportant,
+        };
+        trackEvent({ event: TrackingEventType.CONTENT_PUBLISHED, properties: eventContentPublishedProperties });
+
         goToArticleDetail();
         useScheduleArticlesStore
           .getState()

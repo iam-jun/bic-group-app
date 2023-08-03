@@ -4,8 +4,10 @@ import { ContentHeader, ContentHeaderProps } from '~/components/ContentView';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
-import { IPost } from '~/interfaces/IPost';
+import { IPost, PostType } from '~/interfaces/IPost';
 import useArticleMenu from '~/hooks/useArticleMenu';
+import { TrackingEventContentReadAction, TrackingEventContentReadProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
+import { trackEvent } from '~/services/tracking';
 
 export interface ArticleHeaderProps extends ContentHeaderProps {
   data: IPost;
@@ -28,6 +30,13 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({
       onPressHeader?.();
     } else {
       rootNavigation.navigate(articleStack.articleDetail, { articleId });
+
+      // tracking event
+      const eventContentReadProperties: TrackingEventContentReadProperties = {
+        content_type: PostType.ARTICLE,
+        action: TrackingEventContentReadAction.CONTENT_HEADER,
+      };
+      trackEvent({ event: TrackingEventType.CONTENT_READ, properties: eventContentReadProperties });
     }
   };
 

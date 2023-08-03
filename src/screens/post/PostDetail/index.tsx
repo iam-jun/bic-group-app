@@ -6,6 +6,10 @@ import Header from '~/beinComponents/Header';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PostDetailContent from './components/PostDetailContent';
+import { isFromNotificationScreen } from '~/router/helper';
+import { TrackingEventContentReadAction, TrackingEventContentReadProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
+import { PostType } from '~/interfaces/IPost';
+import { trackEvent } from '~/services/tracking';
 
 const PostDetail = (props: any) => {
   const [showContent, setShowContent] = useState(false);
@@ -15,6 +19,7 @@ const PostDetail = (props: any) => {
   const { colors } = theme;
   const styles = createStyle(theme);
 
+  const navigation = props?.navigation;
   const params = props?.route?.params;
   const { is_reported: isReported = false } = params || {};
 
@@ -27,6 +32,19 @@ const PostDetail = (props: any) => {
       return () => cancelAnimationFrame(taskId);
     }, [],
   );
+
+  useEffect(() => {
+    if (navigation) {
+      if (isFromNotificationScreen(navigation)) {
+        // tracking event
+        const eventContentReadProperties: TrackingEventContentReadProperties = {
+          content_type: PostType.POST,
+          action: TrackingEventContentReadAction.NOTIFICATION,
+        };
+        trackEvent({ event: TrackingEventType.CONTENT_READ, properties: eventContentReadProperties });
+      }
+    }
+  }, []);
 
   const onContentLayout = useCallback(
     () => {

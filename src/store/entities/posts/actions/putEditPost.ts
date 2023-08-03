@@ -19,10 +19,13 @@ import useDraftPostStore from '~/screens/YourContent/components/Draft/DraftPost/
 import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftContents/store';
 import useHomeStore from '~/screens/Home/store';
 import showToastSuccess from '~/store/helper/showToastSuccess';
+import { TrackingEventContentPublishedProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
+import { trackEvent } from '~/services/tracking';
 
 const navigation = withNavigation?.(rootNavigationRef);
 
 const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
+  const { important = {} } = useCreatePostStore.getState().createPost;
   const {
     id, data, replaceWithDetail = true, onRetry, disableNavigate, isCreatingNewPost = true,
     onError, isPublish = true, createFromGroupId, isHandleSeriesTagsError = true, isRefresh = true,
@@ -67,6 +70,15 @@ const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
     actions.addToPosts({ data: post } as IPayloadAddToAllPost);
 
     showToastSuccess(response);
+
+    if (isCreatingNewPost) {
+      // tracking event
+      const eventContentPublishedProperties: TrackingEventContentPublishedProperties = {
+        content_type: PostType.POST,
+        important: !!important?.active,
+      };
+      trackEvent({ event: TrackingEventType.CONTENT_PUBLISHED, properties: eventContentPublishedProperties });
+    }
 
     if (post.status === PostStatus.PROCESSING) {
       usePostsInProgressStore.getState().actions.getPosts();

@@ -10,6 +10,9 @@ import { formatLargeNumber } from '~/utils/formatter';
 import { useBaseHook } from '~/hooks';
 import { ContentFooterLite, ContentFooterLiteProps } from '~/components/ContentView';
 import { getTotalReactions } from '~/helpers/post';
+import { TrackingEventContentReadAction, TrackingEventContentReadProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
+import { PostType } from '~/interfaces/IPost';
+import { trackEvent } from '~/services/tracking';
 
 export interface PostFooterProps extends Partial<ContentFooterProps>,
  Partial<Omit<Omit<ContentFooterLiteProps, 'reactionsCount'>, 'onPressComment'>> {
@@ -47,6 +50,13 @@ const PostFooter: FC<PostFooterProps> = ({
         post_id: postId,
         focus_comment: true,
       });
+
+      // tracking event
+      const eventContentReadProperties: TrackingEventContentReadProperties = {
+        content_type: PostType.POST,
+        action: TrackingEventContentReadAction.COMMENT,
+      };
+      trackEvent({ event: TrackingEventType.CONTENT_READ, properties: eventContentReadProperties });
     }
   };
 

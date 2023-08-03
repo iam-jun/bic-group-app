@@ -90,6 +90,7 @@ const _PostBody: FC<PostBodyProps> = ({
           mentions={mentions}
           onPressAudience={onPressMentionAudience}
           onToggleShowTextContent={onPressMarkSeenPost}
+          isTracking={status === PostStatus.PUBLISHED}
         />
       );
     }
@@ -119,6 +120,7 @@ const _PostBody: FC<PostBodyProps> = ({
         BottomRightComponent={BottomRightComponent}
         onPressAudience={onPressMentionAudience}
         onToggleShowTextContent={onPressMarkSeenPost}
+        isTracking={status === PostStatus.PUBLISHED}
       />
     );
   };

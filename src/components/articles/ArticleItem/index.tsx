@@ -13,7 +13,7 @@ import ArticleFooter from '../ArticleFooter';
 import ArticleReadingTime from '../ArticleReadingTime';
 import { ContentFooterLite, ContentInterestedUserCount } from '~/components/ContentView';
 import { Button, PlaceHolderRemoveContent } from '~/baseComponents';
-import { IPost } from '~/interfaces/IPost';
+import { IPost, PostType } from '~/interfaces/IPost';
 import { formatLargeNumber } from '~/utils/formatter';
 import { ArticleSummary, ArticleTitle } from '../ArticleText';
 import { getTotalReactions } from '~/helpers/post';
@@ -25,6 +25,8 @@ import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import { ITag } from '~/interfaces/ITag';
 import Divider from '~/beinComponents/Divider';
 import DeletedItem from '~/components/DeletedItem';
+import { TrackingEventContentReadAction, TrackingEventContentReadProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
+import { trackEvent } from '~/services/tracking';
 
 export interface ArticleItemProps {
   data: IPost;
@@ -78,7 +80,16 @@ const ArticleItem: FC<ArticleItemProps> = ({
     getTotalReactions(reactionsCount, 'user'),
   );
 
-  const goToContentDetail = () => rootNavigation.navigate(articleStack.articleContentDetail, { articleId: id });
+  const goToContentDetail = () => {
+    rootNavigation.navigate(articleStack.articleContentDetail, { articleId: id });
+
+    // tracking event
+    const eventContentReadProperties: TrackingEventContentReadProperties = {
+      content_type: PostType.ARTICLE,
+      action: TrackingEventContentReadAction.BODY,
+    };
+    trackEvent({ event: TrackingEventType.CONTENT_READ, properties: eventContentReadProperties });
+  };
   const goToDetail = () => rootNavigation.navigate(articleStack.articleDetail, { articleId: id, focusComment: true });
   const goToTagDetail = (tagData: ITag) => {
     const communityId = useCommunitiesStore.getState().currentCommunityId;

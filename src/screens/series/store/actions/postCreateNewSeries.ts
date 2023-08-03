@@ -6,6 +6,9 @@ import useHomeStore from '~/screens/Home/store';
 import showToastError from '~/store/helper/showToastError';
 import { ISeriesState } from '..';
 import showToastSuccess from '~/store/helper/showToastSuccess';
+import { TrackingEventContentPublishedProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
+import { PostType } from '~/interfaces/IPost';
+import { trackEvent } from '~/services/tracking';
 
 const navigation = routerHelper?.withNavigation?.(rootNavigationRef);
 
@@ -23,6 +26,13 @@ const postCreateNewSeries = (set, get) => async () => {
     set((state: ISeriesState) => {
       state.loading = false;
     }, 'postCreateNewSeriesSuccess');
+
+    // tracking event
+    const eventContentPublishedProperties: TrackingEventContentPublishedProperties = {
+      content_type: PostType.SERIES,
+      important: !!data?.setting?.isImportant,
+    };
+    trackEvent({ event: TrackingEventType.CONTENT_PUBLISHED, properties: eventContentPublishedProperties });
 
     navigation.replace(seriesStack.seriesDetail, { seriesId: id });
     useHomeStore.getState().actions.refreshHome();
