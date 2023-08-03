@@ -17,21 +17,24 @@ exports[`TakePartInAQuiz should render correctly 1`] = `
       "opacity": 1,
     }
   }
-  testID="button_wrapper"
+  testID="take_part_in_quiz.content"
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#FFFFFF",
-        "borderColor": "#E3E6F2",
-        "borderRadius": 8,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "marginHorizontal": 16,
-        "marginVertical": 8,
-        "padding": 16,
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "borderColor": "#E3E6F2",
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "marginHorizontal": 16,
+          "marginVertical": 8,
+          "padding": 16,
+        },
+        undefined,
+      ]
     }
   >
     <View
@@ -133,6 +136,142 @@ exports[`TakePartInAQuiz should render correctly 1`] = `
         }
       }
     />
+    <View
+      style={
+        Object {
+          "marginRight": 4,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "justifyContent": "center",
+            },
+            Object {
+              "height": 48,
+              "width": 48,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "position": "absolute",
+              },
+              Object {
+                "borderBottomWidth": 4,
+                "borderLeftWidth": 4,
+                "borderRadius": 24,
+                "borderRightWidth": 4,
+                "borderTopWidth": 4,
+                "height": 48,
+                "width": 48,
+              },
+              Object {
+                "borderColor": "#E3E6F2",
+                "borderWidth": 4,
+              },
+            ]
+          }
+        />
+        <View
+          style={
+            Array [
+              Object {
+                "borderBottomColor": "transparent",
+                "borderLeftColor": "transparent",
+                "position": "absolute",
+              },
+              Object {
+                "transform": Array [
+                  Object {
+                    "rotateZ": "45deg",
+                  },
+                ],
+              },
+              Object {
+                "borderBottomWidth": 4,
+                "borderLeftWidth": 4,
+                "borderRadius": 24,
+                "borderRightWidth": 4,
+                "borderTopWidth": 4,
+                "height": 48,
+                "width": 48,
+              },
+              Object {
+                "borderRightColor": "#7335C0",
+                "borderTopColor": "#7335C0",
+              },
+              Object {
+                "borderRightWidth": 4,
+                "borderTopWidth": 4,
+              },
+            ]
+          }
+        />
+        <View
+          style={
+            Array [
+              Object {
+                "borderBottomColor": "transparent",
+                "borderLeftColor": "transparent",
+                "position": "absolute",
+              },
+              Object {
+                "transform": Array [
+                  Object {
+                    "rotateZ": "153deg",
+                  },
+                ],
+              },
+              Object {
+                "borderBottomWidth": 4,
+                "borderLeftWidth": 4,
+                "borderRadius": 24,
+                "borderRightWidth": 4,
+                "borderTopWidth": 4,
+                "height": 48,
+                "width": 48,
+              },
+              Object {
+                "borderRightColor": "#7335C0",
+                "borderTopColor": "#7335C0",
+              },
+            ]
+          }
+        />
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 14,
+              },
+              Object {},
+              Array [
+                Object {
+                  "position": "absolute",
+                },
+                Object {
+                  "color": "#7335C0",
+                  "fontSize": 10,
+                  "fontWeight": "bold",
+                },
+              ],
+            ]
+          }
+        >
+          80
+          %
+        </Text>
+      </View>
+    </View>
     <View
       accessibilityState={
         Object {
