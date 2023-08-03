@@ -10,6 +10,6 @@ export const trackEvent = ({
   sendWithUserId = false,
 }:{event: string, properties?: any, sendWithUserId?:boolean}) => {
   const userId = useAuthController.getState().authUser?.userId;
-  const newProperties = sendWithUserId ? { user_id: userId } : { user_id: userId, ...properties };
+  const newProperties = sendWithUserId ? { user_id: userId, ...properties } : { ...properties };
   mixPanelManager.trackEvent(event, newProperties);
 };
