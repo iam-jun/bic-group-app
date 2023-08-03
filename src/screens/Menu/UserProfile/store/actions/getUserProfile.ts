@@ -45,9 +45,12 @@ const getUserProfile
         });
       } else {
         useUserBadge.getState().actions.setShowingBadges(showingBadges, false);
-        trackEvent('Another Profile Viewed', {
-          actor: { user_id: myId },
-          user_info: { user_id: userId },
+        trackEvent({
+          event: 'Another Profile Viewed',
+          properties: {
+            actor: { user_id: myId },
+            user_info: { user_id: userId },
+          },
         });
       }
     } catch (err) {

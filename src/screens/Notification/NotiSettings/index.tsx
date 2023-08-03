@@ -20,7 +20,7 @@ import Divider from '~/beinComponents/Divider';
 import NotiSettingItem from '../components/NotiSettingItem';
 import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 import { INotiSettings } from '~/interfaces/INotification';
-import { trackEventWithUserId } from '~/store/helper/trackingWithUserId';
+import { trackEvent } from '~/services/tracking';
 
 const NotificationSettings = () => {
   const theme: ExtendedTheme = useTheme();
@@ -49,8 +49,10 @@ const NotificationSettings = () => {
     const dataUpdate = { ...generic, enable: isChecked };
 
     actions.updateSettings(payload, dataUpdate);
-    trackEventWithUserId('Master Noti Changed', {
-      state: isChecked,
+    trackEvent({
+      event: 'Master Noti Changed',
+      sendWithUserId: true,
+      properties: { state: isChecked },
     });
   };
 

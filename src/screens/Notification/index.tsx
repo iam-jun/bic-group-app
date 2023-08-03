@@ -96,10 +96,13 @@ const Notification = () => {
   const trackEventNoti = (eventName: string, item: any) => {
     const type = item?.extra?.type || undefined;
     const act = item?.activities?.[0];
-    trackEvent(eventName, {
-      content_type: act?.contentType,
-      is_read: item?.isRead,
-      type,
+    trackEvent({
+      event: eventName,
+      properties: {
+        content_type: act?.contentType,
+        is_read: item?.isRead,
+        type,
+      },
     });
   };
 

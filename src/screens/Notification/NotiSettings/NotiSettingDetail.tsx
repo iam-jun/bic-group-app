@@ -14,7 +14,7 @@ import useNotiSettingsStore from './store';
 import Text from '~/baseComponents/Text';
 import NotiSettingItem from '../components/NotiSettingItem';
 import { IEditNotificationSetting, INotiChannel, INotiSettings } from '~/interfaces/INotification';
-import { trackEventWithUserId } from '~/store/helper/trackingWithUserId';
+import { trackEvent } from '~/services/tracking';
 
 interface IHandleToggleProps {
   isChecked: boolean;
@@ -83,8 +83,10 @@ const NotiSettingDetail: FC<IRouteParams> = (props) => {
     const oldPayload = { ...item, enable: isChecked };
     handleUpdateSettings({ payload, oldPayload, index });
     if (index === -1) {
-      trackEventWithUserId(`${capitalize(name)} Noti Changed`, {
-        state: isChecked,
+      trackEvent({
+        event: `${capitalize(name)} Noti Changed`,
+        sendWithUserId: true,
+        properties: { state: isChecked },
       });
     }
   };

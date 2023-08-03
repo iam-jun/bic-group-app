@@ -26,10 +26,13 @@ const signUp
 
       const response = await userApi.signUp(params);
       if (response && response?.data) {
-        trackEvent('Signed Up', {
-          email,
-          full_name: fullName,
-          username: userName,
+        trackEvent({
+          event: 'Signed Up',
+          properties: {
+            email,
+            full_name: fullName,
+            username: userName,
+          },
         });
         callbackSuccess();
       }

@@ -14,7 +14,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import useCommonController from '~/screens/store';
 import InlineText from './InlineText';
 import UserBadge from '../UserProfile/components/UserBadge';
-import { trackEventWithUserId } from '~/store/helper/trackingWithUserId';
+import { trackEvent } from '~/services/tracking';
 
 const PADDING_INFO = spacing.padding.large * 2 + dimension.avatarSizes.large;
 
@@ -34,7 +34,7 @@ const MenuHeader = () => {
       mainStack.userProfile, { userId: id, targetIndex },
     );
     if (targetIndex !== 1) {
-      trackEventWithUserId('Own Profile Viewed');
+      trackEvent({ event: 'Own Profile Viewed', sendWithUserId: true });
     }
   };
 

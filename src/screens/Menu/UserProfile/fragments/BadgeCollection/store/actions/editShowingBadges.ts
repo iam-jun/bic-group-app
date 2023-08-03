@@ -7,7 +7,7 @@ import showToastError from '~/store/helper/showToastError';
 import useCommonController from '~/screens/store';
 import { IUserProfile } from '~/interfaces/IAuth';
 import { IUserBadge } from '~/interfaces/IEditUser';
-import { trackEventWithUserId } from '~/store/helper/trackingWithUserId';
+import { trackEvent } from '~/services/tracking';
 
 const sortChoosingBadgesByOrder = (choosingBadges: IUserBadge[], choosingBadgesOrder: number[]) => {
   const newChoosingBadges = [];
@@ -47,7 +47,11 @@ const editShowingBadges = (set, get) => async () => {
     }, 'editShowingBadgesLoading');
 
     const response = await groupApi.putShowingBadges(ids);
-    trackEventWithUserId('Badges Saved', { showing_badge: badgesName });
+    trackEvent({
+      event: 'Badges Saved',
+      sendWithUserId: true,
+      properties: { showing_badge: badgesName },
+    });
 
     set((state: IUserBadgesState) => {
       state.loadingEditing = false;
