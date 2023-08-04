@@ -35,7 +35,7 @@ describe('TakeQuiz screen', () => {
       state.takingQuiz[participantId] = {
         currentQuestionIndex: 0,
         userAnswers: mockResultQuiz.data.userAnswers,
-      }
+      };
       state.participantResult[participantId] = {
         ...mockResultQuiz.data,
       } as IParticipantResult;
@@ -70,7 +70,7 @@ describe('TakeQuiz screen', () => {
     });
 
     const spygetQuizParticipant = jest.spyOn(streamApi, 'getQuizParticipant').mockImplementation(
-      () => Promise.resolve(mockResultQuiz)
+      () => Promise.resolve(mockResultQuiz),
     );
 
     const wrapper = renderWithRedux(
@@ -96,7 +96,7 @@ describe('TakeQuiz screen', () => {
 
   it('should call startQuiz when currentParticipantId = null', () => {
     const spyStartQuiz = jest.spyOn(streamApi, 'startQuiz').mockImplementation(
-      () => Promise.resolve({})
+      () => Promise.resolve({}),
     );
 
     const wrapper = renderWithRedux(
@@ -131,7 +131,7 @@ describe('TakeQuiz screen', () => {
       state.takingQuiz[participantId] = {
         currentQuestionIndex: 0,
         userAnswers: mockResultQuiz.data.userAnswers,
-      }
+      };
       state.participantResult[participantId] = {
         ...mockResultQuiz.data,
       } as IParticipantResult;
@@ -161,7 +161,7 @@ describe('TakeQuiz screen', () => {
 
     fireEvent.press(btnNext);
     expect(
-      useTakeQuizStore.getState().takingQuiz[participantId].currentQuestionIndex
+      useTakeQuizStore.getState().takingQuiz[participantId].currentQuestionIndex,
     ).toEqual(1);
   });
 
@@ -176,7 +176,7 @@ describe('TakeQuiz screen', () => {
       state.takingQuiz[participantId] = {
         currentQuestionIndex: 1,
         userAnswers: mockResultQuiz.data.userAnswers,
-      }
+      };
       state.participantResult[participantId] = {
         ...mockResultQuiz.data,
       } as IParticipantResult;
@@ -206,7 +206,7 @@ describe('TakeQuiz screen', () => {
 
     fireEvent.press(btnPrev);
     expect(
-      useTakeQuizStore.getState().takingQuiz[participantId].currentQuestionIndex
+      useTakeQuizStore.getState().takingQuiz[participantId].currentQuestionIndex,
     ).toEqual(0);
   });
 
@@ -215,7 +215,7 @@ describe('TakeQuiz screen', () => {
     const navigate = jest.fn();
     const rootNavigation = { navigate };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(
-      () => ({ rootNavigation } as any)
+      () => ({ rootNavigation } as any),
     );
 
     act(() => {
@@ -226,7 +226,7 @@ describe('TakeQuiz screen', () => {
       state.takingQuiz[participantId] = {
         currentQuestionIndex: 2,
         userAnswers: mockResultQuiz.data.userAnswers,
-      }
+      };
       state.participantResult[participantId] = {
         ...mockResultQuiz.data,
       } as IParticipantResult;
@@ -270,7 +270,7 @@ describe('TakeQuiz screen', () => {
       state.takingQuiz[participantId] = {
         currentQuestionIndex: 0,
         userAnswers: [],
-      }
+      };
       state.participantResult[participantId] = {
         ...mockResultQuiz.data,
       } as IParticipantResult;
@@ -301,7 +301,7 @@ describe('TakeQuiz screen', () => {
 
     fireEvent.press(answerItem);
     expect(
-      useTakeQuizStore.getState().takingQuiz[participantId].userAnswers.length
+      useTakeQuizStore.getState().takingQuiz[participantId].userAnswers.length,
     ).toEqual(1);
   });
 
@@ -317,7 +317,7 @@ describe('TakeQuiz screen', () => {
       state.takingQuiz[participantId] = {
         currentQuestionIndex: 0,
         userAnswers: mockResultQuiz.data.userAnswers,
-      }
+      };
       state.participantResult[participantId] = {
         ...resultDoing,
       } as IParticipantResult;
@@ -348,7 +348,7 @@ describe('TakeQuiz screen', () => {
 
     fireEvent.press(answerItem);
     expect(
-      useTakeQuizStore.getState().takingQuiz[participantId].userAnswers.length
+      useTakeQuizStore.getState().takingQuiz[participantId].userAnswers.length,
     ).toEqual(3);
   });
 });

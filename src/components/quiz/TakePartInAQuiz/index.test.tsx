@@ -1,4 +1,5 @@
 import React from 'react';
+import { act } from 'react-test-renderer';
 import {
   fireEvent,
   renderWithRedux,
@@ -9,7 +10,6 @@ import { postWithQuiz } from '~/test/mock_data/quiz';
 import { QuizPost } from '~/interfaces/IQuiz';
 import useModalStore from '~/store/modal';
 import AlertModal from '~/beinComponents/modals/AlertModal';
-import { act } from 'react-test-renderer';
 
 describe('TakePartInAQuiz', () => {
   it('should render correctly', () => {

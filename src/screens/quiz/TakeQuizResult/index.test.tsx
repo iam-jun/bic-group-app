@@ -105,7 +105,7 @@ describe('TakeQuizResult screen', () => {
     const navigate = jest.fn();
     const rootNavigation = { navigate };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(
-      () => ({ rootNavigation } as any)
+      () => ({ rootNavigation } as any),
     );
 
     useTakeQuizStore.setState((state: ITakeQuizState) => {
@@ -134,7 +134,7 @@ describe('TakeQuizResult screen', () => {
 
     const content = wrapper.getByTestId('take_quiz_result');
     const btnRetake = wrapper.getByTestId('take_quiz_result.btn_retake');
-    
+
     fireEvent.press(btnRetake);
 
     expect(content).toBeDefined();

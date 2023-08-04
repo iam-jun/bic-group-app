@@ -69,19 +69,19 @@ describe('TakeQuizReview screen', () => {
 
     const spyUpdateAnswers = jest.spyOn(streamApi, 'updateAnwsers').mockImplementation(
       () => Promise.resolve({
-        code: "api.ok",
-        meta:{
-          message:"OK",
-        }
+        code: 'api.ok',
+        meta: {
+          message: 'OK',
+        },
       }),
-    );;
+    );
 
     useTakeQuizStore.setState((state: ITakeQuizState) => {
       state.isPrepareTakingQuiz = false;
       state.takingQuiz[participantId] = {
         currentQuestionIndex: 0,
         userAnswers: mockResultQuiz.data.userAnswers,
-      }
+      };
       state.participantResult[participantId] = {
         ...resultDoing,
       } as IParticipantResult;
