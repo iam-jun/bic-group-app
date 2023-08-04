@@ -31,7 +31,7 @@ describe('search joined group flat', () => {
   it('should search group success', () => {
     useAdvancedNotiSettingsStore.setState((state) => {
       state.hasSearchNextPage = true;
-      state.searchJoinedGroups = [{ id: '1', name: 'test' }];
+      state.searchJoinedGroups = [{ id: '1', name: 'test' }] as any;
       state.selectedCommunity = { communityId: '1' };
       return state;
     });
@@ -61,7 +61,7 @@ describe('search joined group flat', () => {
   it('should search group success in refresh mode', () => {
     useAdvancedNotiSettingsStore.setState((state) => {
       state.hasSearchNextPage = false;
-      state.searchJoinedGroups = [{ id: '1', name: 'test' }];
+      state.searchJoinedGroups = [{ id: '1', name: 'test' }] as any;
       state.selectedCommunity = { id: '1' };
       return state;
     });
