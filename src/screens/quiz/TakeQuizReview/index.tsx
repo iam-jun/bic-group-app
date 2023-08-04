@@ -114,6 +114,7 @@ const TakeQuizReview: React.FC<TakeQuizReviewProps> = ({ route }) => {
         contentContainerStyle={styles.containerContent}
       />
       <Button.Primary
+        testID="take_quiz_review.btn_submit"
         size="large"
         useI18n
         onPress={onPressSubmit}

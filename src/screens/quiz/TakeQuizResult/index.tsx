@@ -73,6 +73,7 @@ const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
     if (showCongrat) {
       return (
         <Image
+          testID="take_quiz_result.congrats"
           resizeMode="contain"
           source={images.img_congrats}
           style={styles.img}
@@ -134,6 +135,7 @@ const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
         </View>
       </ScrollView>
       <Button.Primary
+        testID="take_quiz_result.btn_retake"
         size="large"
         useI18n
         onPress={onPressRetake}
@@ -142,6 +144,7 @@ const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
         quiz:btn_retake
       </Button.Primary>
       <Button
+        testID="take_quiz_result.btn_quit"
         onPress={onPressQuit}
         style={styles.btnQuit}
       >
