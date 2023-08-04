@@ -114,6 +114,7 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
     return (
       <>
         <Button.Primary
+          testID="take_quiz.btn_next"
           size="large"
           useI18n
           onPress={onPressNextQuestion}
@@ -123,6 +124,7 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
         </Button.Primary>
         {enableButtonPrevious && (
           <Button
+            testID="take_quiz.btn_previous"
             onPress={onPressPreviousQuestion}
             style={styles.btnPrev}
           >

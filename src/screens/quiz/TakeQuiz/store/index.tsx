@@ -36,7 +36,7 @@ export interface ITakeQuizState extends IBaseState {
     onPrevious: (participantId: string) => void;
     addToUserAnswers: (participantId: string, payload: UserAnswerItem) => void;
     addToQuizParticipants: (quizId: string, participant: string) => void;
-    setUserAnswersData: (participantId: string, payload: UserAnswerItem[]) => void;
+    // setUserAnswersData: (participantId: string, payload: UserAnswerItem[]) => void;
     resetDataTakingQuiz: (participantId: string) => void;
     clearQuizParticipantId: (quizId: string) => void;
   };
@@ -81,11 +81,11 @@ const takeQuizStore = (set, get) => ({
         state.quizParticipants[quizId] = participant;
       }, 'addToQuizParticipants');
     },
-    setUserAnswersData: (participantId: string, payload: UserAnswerItem[]) => {
-      set((state: ITakeQuizState) => {
-        state.takingQuiz[participantId].userAnswers = payload;
-      }, `setUserAnswersData id ${participantId}`);
-    },
+    // setUserAnswersData: (participantId: string, payload: UserAnswerItem[]) => {
+    //   set((state: ITakeQuizState) => {
+    //     state.takingQuiz[participantId].userAnswers = payload;
+    //   }, `setUserAnswersData id ${participantId}`);
+    // },
     resetDataTakingQuiz: (participantId: string) => {
       set((state: ITakeQuizState) => {
         state.takingQuiz[participantId] = {

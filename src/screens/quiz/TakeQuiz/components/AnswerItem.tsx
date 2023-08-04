@@ -33,7 +33,11 @@ const AnswerItem: React.FC<AnswerItemProps> = ({
           {mapIndexToAlphabet[index]}
         </Text.ButtonS>
       </View>
-      <Button style={[styles.answerBtn, isCorrect && styles.answerCorrect]} onPress={onPressAnswer}>
+      <Button
+        testID={`answer_item.btn_answer_${index}`}
+        style={[styles.answerBtn, isCorrect && styles.answerCorrect]}
+        onPress={onPressAnswer}
+      >
         <Text.DropdownM color={isCorrect ? colors.white : colors.neutral60}>
           { data?.content }
         </Text.DropdownM>

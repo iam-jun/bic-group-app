@@ -52,7 +52,7 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
 
     if (score === 100) {
       return (
-        <View style={styles.viewPass}>
+        <View style={styles.viewPass} testID="take_part_in_quiz.pass_view">
           <Text.SubtitleS useI18n color={colors.purple50}>
             quiz:pass_quiz
           </Text.SubtitleS>
@@ -75,7 +75,7 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
   if (!canTakeQuiz && !shouldShowDraftQuiz) return null;
 
   return (
-    <Button onPress={onPress}>
+    <Button onPress={onPress} testID="take_part_in_quiz.content">
       <View style={[styles.container, style]}>
         <Image style={styles.img} source={images.img_thumbnail_take_part_in_a_quiz} />
         <ViewSpacing width={spacing.margin.small} />

@@ -43,8 +43,16 @@ export const postWithQuiz = {
       title: 'testse',
       description: 'ahihihi',
       status: 'PUBLISHED',
+      genStatus: 'PROCESSED',
       createdAt: '2023-06-29T08:37:43.927Z',
       updatedAt: '2023-06-29T08:38:39.825Z',
+    },
+    quizDoing: {
+      quizParticipantId: '6bb91eea-04f8-4919-81ee-63f2985a031f',
+    },
+    quizHighestScore: {
+      quizParticipantId: '83127aef-aede-455e-bf05-e04b7b46482a',
+      score: 30,
     },
     communities: [
       {
@@ -407,5 +415,113 @@ export const mockGenerateQuizResponse = {
   },
   meta: {
     message: 'Created quiz successfully',
+  },
+};
+
+export const mockResultQuiz = {
+  code: 'api.ok',
+  data: {
+    id: '6bb91eea-04f8-4919-81ee-63f2985a031f',
+    title: 'Test06',
+    description: null,
+    questions: [
+      {
+        id: 'c52863d0-b19b-4d82-b87c-9e30a2738197',
+        content: 'Thành phần nào phụ thuộc vào Application Core trong CA?',
+        answers: [
+          {
+            id: '80915264-d75c-4dc8-8175-bfdd5cc7d523',
+            content: 'User Interface',
+          },
+          {
+            id: '1c94329c-6bcd-47f7-b2f3-04f33116dc72',
+            content: 'Infrastructure',
+          },
+          {
+            id: 'e5884d8a-97ba-4ccc-a7f8-a2768f32e8c8',
+            content: 'Application Core',
+          },
+          {
+            id: 'c53c546d-8bed-4e3c-9de2-e2d1ec1bf7ae',
+            content: 'Database',
+          },
+        ],
+      },
+      {
+        id: 'b37e91c4-e0bd-4344-a12f-60c10efa8df6',
+        content: 'Trong CA, User Interface có chứa logic nghiệp vụ phức tạp không?',
+        answers: [
+          {
+            id: 'c67cc70f-2f1d-4933-bf5f-86babe238195',
+            content: 'Có',
+          },
+          {
+            id: '85f15f65-4fcb-4338-9ce8-4c7b743bc228',
+            content: 'Không',
+          },
+          {
+            id: '344c4ab4-2717-48d0-901b-1ded3fa7720e',
+            content: 'Không rõ',
+          },
+          {
+            id: 'a5f15f0d-dbbf-4e66-85a1-b64303c55729',
+            content: 'Tùy vào tình huống',
+          },
+        ],
+      },
+      {
+        id: 'e13342b1-b355-4205-a785-1b2acfff0caf',
+        content: 'Trong kiến trúc Clean Architecture (CA), ứng dụng được chia thành bao nhiêu thành phần chính?',
+        answers: [
+          {
+            id: '8473e95b-5044-4731-946e-518dee32a928',
+            content: '1',
+          },
+          {
+            id: 'd45c79fa-828e-456f-8569-19e3dcdc2f5f',
+            content: '2',
+          },
+          {
+            id: '30e6861e-14dc-44d4-bb8d-2ddd9ea8b615',
+            content: '3',
+          },
+          {
+            id: '6d05b0e3-911d-4752-9fe6-e7d60621e17e',
+            content: '4',
+          },
+        ],
+      },
+    ],
+    userAnswers: [
+      {
+        questionId: 'b37e91c4-e0bd-4344-a12f-60c10efa8df6',
+        answerId: '85f15f65-4fcb-4338-9ce8-4c7b743bc228',
+      },
+      {
+        questionId: 'e13342b1-b355-4205-a785-1b2acfff0caf',
+        answerId: 'd45c79fa-828e-456f-8569-19e3dcdc2f5f',
+      },
+      {
+        questionId: 'c52863d0-b19b-4d82-b87c-9e30a2738197',
+        answerId: '1c94329c-6bcd-47f7-b2f3-04f33116dc72',
+      },
+    ],
+    quizId: 'c14e8f68-2b33-4303-ab81-0f29bb3192ac',
+    score: 50,
+    totalAnswers: 10,
+    totalCorrectAnswers: 5,
+    finishedAt: '2023-08-03T10:29:16.973Z',
+    timeLimit: 1800,
+    startedAt: '2023-08-03T10:28:48.326Z',
+    createdAt: '2023-08-03T10:28:48.326Z',
+    updatedAt: '2023-08-03T10:29:16.973Z',
+    totalTimes: 6,
+    content: {
+      id: '54f4a2eb-034d-4e4e-8810-44744bffc87d',
+      type: 'POST',
+    },
+  },
+  meta: {
+    message: 'OK',
   },
 };

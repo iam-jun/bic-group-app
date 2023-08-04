@@ -83,7 +83,7 @@ const DraftQuizFooter: React.FC<DraftQuizFooterProps> = ({
     color,
     isItalic,
   ) => (
-    <View style={styles.genStatusContainer}>
+    <View style={styles.genStatusContainer} testID={label}>
       <Text.ParagraphS
         useI18n
         style={isItalic && styles.textItalic}
@@ -153,7 +153,7 @@ const DraftQuizFooter: React.FC<DraftQuizFooterProps> = ({
   }
 
   return (
-    <View style={[styles.container, style]}>
+    <View style={[styles.container, style]} testID="draft_quiz_footer.content">
       {renderGenStatus()}
       {renderDivider()}
       {renderOptionButtons()}
