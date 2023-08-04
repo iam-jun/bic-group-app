@@ -24,14 +24,14 @@ const searchJoinedGroupFlat = (set, get) => async (params: IGetCommunityGroup, i
     };
 
     const response = await notificationApi.getGroupsAndGroupsSettings(id, newParams);
-    const { data, meta } = response;
+    const { data } = response;
     const groupdData = data?.groups || [];
     const newData = isRefresh ? groupdData : [...searchJoinedGroups, ...groupdData];
 
     set((state: IAdvancedNotiSettingsStore) => {
       state.isLoadingSearchJoinedGroup = false;
       state.searchJoinedGroups = newData;
-      state.hasSearchNextPage = meta.hasNextPage;
+      state.hasSearchNextPage = data.metadata.hasNextPage;
     }, 'searchJoinedGroupFlatSuccess');
   } catch (error) {
     console.error('\x1b[35m🐣️ search joined group flat error ', error, '\x1b[0m');

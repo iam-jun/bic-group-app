@@ -73,6 +73,12 @@ export const mockGroupInFlat = {
     hasNextPage: false,
   },
   data: {
+    metadata: {
+      total: 7,
+      offset: 0,
+      limit: 20,
+      hasNextPage: false,
+    },
     groups: [
       {
         id: 'c157e820-de96-45a9-be74-5e36be83ff03',

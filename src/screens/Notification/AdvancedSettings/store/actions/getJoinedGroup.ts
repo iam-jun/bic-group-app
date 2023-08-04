@@ -23,20 +23,20 @@ const getJoinedGroup = (set, get) => async (id: string, isRefresh?: boolean) => 
     };
 
     const response = await notificationApi.getGroupsAndGroupsSettings(id, params);
-    const { data, meta } = response;
+    const { data } = response;
     const groupdData = data?.groups || [];
     const newData = isRefresh ? groupdData : [...joinedGroups, ...groupdData];
     const newGroupData = {};
     groupdData.forEach((item: IGroupNotificationSetting) => {
-      newGroupData[item?.id] = { ...item };
+      newGroupData[item?.id] = { ...item, ...item.setting };
     });
 
     set((state: IAdvancedNotiSettingsStore) => {
       state.isLoadingJoinedGroup = false;
       state.joinedGroups = newData;
       state.searchJoinedGroups = newData;
-      state.hasNextPage = meta.hasNextPage;
-      state.hasSearchNextPage = meta.hasNextPage;
+      state.hasNextPage = data.metadata.hasNextPage;
+      state.hasSearchNextPage = data.metadata.hasNextPage;
       state.groupData = { ...state.groupData, ...newGroupData };
     }, 'getJoinedGroupSuccess');
   } catch (error) {
