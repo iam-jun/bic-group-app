@@ -37,8 +37,9 @@ import { PermissionKey } from '~/constants/permissionScheme';
 import { PostStatus, PostType } from '~/interfaces/IPost';
 import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
 import showToastSuccess from '~/store/helper/showToastSuccess';
-import { TrackingEventContentPublishedProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentPublishedProperties } from '~/services/tracking/Interface';
+import { TrackingEventType } from '~/services/tracking/constants';
 
 interface IHandleSaveOptions {
   isShowLoading?: boolean;

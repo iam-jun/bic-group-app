@@ -19,8 +19,9 @@ import useDraftPostStore from '~/screens/YourContent/components/Draft/DraftPost/
 import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftContents/store';
 import useHomeStore from '~/screens/Home/store';
 import showToastSuccess from '~/store/helper/showToastSuccess';
-import { TrackingEventContentPublishedProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentPublishedProperties } from '~/services/tracking/Interface';
+import { TrackingEventType } from '~/services/tracking/constants';
 
 const navigation = withNavigation?.(rootNavigationRef);
 

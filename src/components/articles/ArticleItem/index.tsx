@@ -25,8 +25,9 @@ import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import { ITag } from '~/interfaces/ITag';
 import Divider from '~/beinComponents/Divider';
 import DeletedItem from '~/components/DeletedItem';
-import { TrackingEventContentReadAction, TrackingEventContentReadProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
 
 export interface ArticleItemProps {
   data: IPost;

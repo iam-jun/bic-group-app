@@ -3,9 +3,10 @@ import streamApi from '~/api/StreamApi';
 import { IPayloadGetScheduleArticles } from '~/interfaces/IArticle';
 import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import { ICreateArticleState } from '..';
-import { TrackingEventContentPublishedProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
 import { PostType } from '~/interfaces/IPost';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentPublishedProperties } from '~/services/tracking/Interface';
+import { TrackingEventType } from '~/services/tracking/constants';
 
 const scheduleArticle = (set, get) => async () => {
   try {

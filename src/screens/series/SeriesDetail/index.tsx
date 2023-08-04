@@ -25,8 +25,9 @@ import ContentUnavailable from '~/components/ContentUnavailable';
 import useMounted from '~/hooks/mounted';
 import useModalStore from '~/store/modal';
 import { isFromNotificationScreen } from '~/router/helper';
-import { TrackingEventContentReadAction, TrackingEventContentReadProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
 
 const SeriesDetail = ({ route, navigation }: any) => {
   const { params } = route || {};

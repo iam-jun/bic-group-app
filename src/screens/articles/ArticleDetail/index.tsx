@@ -30,8 +30,9 @@ import APIErrorCode from '~/constants/apiErrorCode';
 import ContentNoPermission from '~/components/ContentNoPermission';
 import LoadMoreComment from '~/components/LoadMoreComment';
 import { isFromNotificationScreen } from '~/router/helper';
-import { TrackingEventContentReadAction, TrackingEventContentReadProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
 
 const _ArticleDetail: FC<IRouteParams> = (props) => {
   const navigation = props?.navigation;

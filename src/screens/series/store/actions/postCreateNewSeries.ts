@@ -6,9 +6,10 @@ import useHomeStore from '~/screens/Home/store';
 import showToastError from '~/store/helper/showToastError';
 import { ISeriesState } from '..';
 import showToastSuccess from '~/store/helper/showToastSuccess';
-import { TrackingEventContentPublishedProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
 import { PostType } from '~/interfaces/IPost';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentPublishedProperties } from '~/services/tracking/Interface';
+import { TrackingEventType } from '~/services/tracking/constants';
 
 const navigation = routerHelper?.withNavigation?.(rootNavigationRef);
 

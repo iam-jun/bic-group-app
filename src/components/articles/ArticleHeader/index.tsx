@@ -6,8 +6,9 @@ import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import { IPost, PostType } from '~/interfaces/IPost';
 import useArticleMenu from '~/hooks/useArticleMenu';
-import { TrackingEventContentReadAction, TrackingEventContentReadProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
 
 export interface ArticleHeaderProps extends ContentHeaderProps {
   data: IPost;

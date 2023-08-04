@@ -10,8 +10,9 @@ import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { Button } from '~/baseComponents';
-import { TrackingEventContentReadAction, TrackingEventContentReadProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
 
 type SeriesDetailItemProps = {
     item: IPost;

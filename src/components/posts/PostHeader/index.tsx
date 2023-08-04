@@ -14,8 +14,9 @@ import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import AlertDeleteAudiences from '../AlertDeleteAudiences';
 import useModalStore from '~/store/modal';
 import usePostsStore from '~/store/entities/posts';
-import { TrackingEventContentReadAction, TrackingEventContentReadProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
 
 export interface PostHeaderProps extends Partial<ContentHeaderProps> {
   data: any,

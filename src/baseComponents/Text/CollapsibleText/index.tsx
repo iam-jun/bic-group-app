@@ -19,9 +19,10 @@ import Markdown from '~/beinComponents/Markdown';
 import CopyableView from '../../../beinComponents/CopyableView';
 import { escapeMarkDown } from '~/utils/formatter';
 import spacing from '~/theme/spacing';
-import { TrackingEventContentReadAction, TrackingEventContentReadProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
 import { PostType } from '~/interfaces/IPost';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
 
 export interface CollapsibleTextProps extends TextProps {
   testID?: string;

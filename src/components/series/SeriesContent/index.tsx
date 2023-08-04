@@ -13,8 +13,9 @@ import { ContentInterestedUserCount } from '~/components/ContentView';
 import { useRootNavigation } from '~/hooks/navigation';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { IPost, PostType } from '~/interfaces/IPost';
-import { TrackingEventContentReadAction, TrackingEventContentReadProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
 
 const LIMIT_ITEM = 3;
 

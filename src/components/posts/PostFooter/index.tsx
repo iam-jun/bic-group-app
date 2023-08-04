@@ -10,9 +10,10 @@ import { formatLargeNumber } from '~/utils/formatter';
 import { useBaseHook } from '~/hooks';
 import { ContentFooterLite, ContentFooterLiteProps } from '~/components/ContentView';
 import { getTotalReactions } from '~/helpers/post';
-import { TrackingEventContentReadAction, TrackingEventContentReadProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
 import { PostType } from '~/interfaces/IPost';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
 
 export interface PostFooterProps extends Partial<ContentFooterProps>,
  Partial<Omit<Omit<ContentFooterLiteProps, 'reactionsCount'>, 'onPressComment'>> {

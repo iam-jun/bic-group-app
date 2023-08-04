@@ -10,8 +10,9 @@ import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack
 import { IPost, PostType } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { getTitlePostItemInSeries } from '~/helpers/common';
-import { TrackingEventContentReadAction, TrackingEventContentReadProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
 
 type ListItemProps = {
   listItem: IPost[];

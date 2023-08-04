@@ -9,8 +9,9 @@ import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack
 import { padding } from '~/theme/spacing';
 import { ArticleReactionsProps } from '../ArticleReactions';
 import { handleLabelButtonComment } from '~/utils/common';
-import { TrackingEventContentReadAction, TrackingEventContentReadProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
 
 export interface ArticleFooterProps extends Omit<ContentFooterProps, 'labelButtonComment'>, Omit<ArticleReactionsProps, 'onAddReaction'> {
   articleId: string;

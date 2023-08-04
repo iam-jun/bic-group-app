@@ -4,8 +4,9 @@ import {
 import usePostsStore from '~/store/entities/posts';
 import showToastError from '~/store/helper/showToastError';
 import streamApi from '../../../api/StreamApi';
-import { TrackingEventEmojiReactedProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEventEmojiReactedProperties } from '~/services/tracking/Interface';
+import { TrackingEventType } from '~/services/tracking/constants';
 
 const putReactionToPost = (_set, get) => async (
   payload: IPayloadReactToPost,

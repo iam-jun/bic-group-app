@@ -7,9 +7,10 @@ import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholde
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PostDetailContent from './components/PostDetailContent';
 import { isFromNotificationScreen } from '~/router/helper';
-import { TrackingEventContentReadAction, TrackingEventContentReadProperties, TrackingEventType } from '~/interfaces/ITrackingEvent';
 import { PostType } from '~/interfaces/IPost';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
 
 const PostDetail = (props: any) => {
   const [showContent, setShowContent] = useState(false);
