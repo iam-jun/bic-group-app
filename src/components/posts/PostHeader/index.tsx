@@ -16,7 +16,7 @@ import useModalStore from '~/store/modal';
 import usePostsStore from '~/store/entities/posts';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
-import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
 export interface PostHeaderProps extends Partial<ContentHeaderProps> {
   data: any,
@@ -62,7 +62,7 @@ const PostHeader: FC<PostHeaderProps> = ({
         content_type: PostType.POST,
         action: TrackingEventContentReadAction.CONTENT_HEADER,
       };
-      trackEvent({ event: TrackingEventType.CONTENT_READ, properties: eventContentReadProperties });
+      trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
     }
   };
 

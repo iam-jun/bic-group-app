@@ -1,4 +1,4 @@
-export enum TrackingEventType {
+export enum TrackingEvent {
   CONTENT_READ = 'Content Read',
   CONTENT_PUBLISHED = 'Content Published',
   SCHEDULE = 'Schedule',

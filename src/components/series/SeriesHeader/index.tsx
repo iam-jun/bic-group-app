@@ -15,7 +15,7 @@ import useMyPermissionsStore from '~/store/permissions';
 import useModalStore from '~/store/modal';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
-import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
 type SeriesHeaderProps = {
   series: IPost;
@@ -50,7 +50,7 @@ const SeriesHeader: FC<SeriesHeaderProps> = ({ series, disabled }) => {
       content_type: PostType.SERIES,
       action: TrackingEventContentReadAction.CONTENT_HEADER,
     };
-    trackEvent({ event: TrackingEventType.CONTENT_READ, properties: eventContentReadProperties });
+    trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
   };
 
   const handleError = (listIdAudiences: string[]) => {

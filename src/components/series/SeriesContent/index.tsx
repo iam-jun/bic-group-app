@@ -15,7 +15,7 @@ import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { IPost, PostType } from '~/interfaces/IPost';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
-import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
 const LIMIT_ITEM = 3;
 
@@ -53,7 +53,7 @@ const SeriesContent: FC<SeriesContentProps> = ({ series, isLite }) => {
       content_type: PostType.SERIES,
       action: TrackingEventContentReadAction.BODY,
     };
-    trackEvent({ event: TrackingEventType.CONTENT_READ, properties: eventContentReadProperties });
+    trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
   };
 
   const onToggleShowItem = () => {
@@ -64,7 +64,7 @@ const SeriesContent: FC<SeriesContentProps> = ({ series, isLite }) => {
         content_type: PostType.SERIES,
         action: TrackingEventContentReadAction.SEE_MORE,
       };
-      trackEvent({ event: TrackingEventType.CONTENT_READ, properties: eventContentReadProperties });
+      trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
     }
   };
 

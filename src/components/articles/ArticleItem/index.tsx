@@ -27,7 +27,7 @@ import Divider from '~/beinComponents/Divider';
 import DeletedItem from '~/components/DeletedItem';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
-import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
 export interface ArticleItemProps {
   data: IPost;
@@ -89,7 +89,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
       content_type: PostType.ARTICLE,
       action: TrackingEventContentReadAction.BODY,
     };
-    trackEvent({ event: TrackingEventType.CONTENT_READ, properties: eventContentReadProperties });
+    trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
   };
   const goToDetail = () => rootNavigation.navigate(articleStack.articleDetail, { articleId: id, focusComment: true });
   const goToTagDetail = (tagData: ITag) => {

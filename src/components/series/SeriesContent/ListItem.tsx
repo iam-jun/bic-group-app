@@ -12,7 +12,7 @@ import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { getTitlePostItemInSeries } from '~/helpers/common';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
-import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
 type ListItemProps = {
   listItem: IPost[];
@@ -41,7 +41,7 @@ const Item: FC<ItemProps> = ({ index, item }) => {
       content_type: PostType.ARTICLE,
       action: TrackingEventContentReadAction.SERIES_ITEM,
     };
-    trackEvent({ event: TrackingEventType.CONTENT_READ, properties: eventContentReadProperties });
+    trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
   };
 
   const goToPostDetail = () => {
@@ -52,7 +52,7 @@ const Item: FC<ItemProps> = ({ index, item }) => {
       content_type: PostType.POST,
       action: TrackingEventContentReadAction.SERIES_ITEM,
     };
-    trackEvent({ event: TrackingEventType.CONTENT_READ, properties: eventContentReadProperties });
+    trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
   };
 
   const onRedirect = () => {

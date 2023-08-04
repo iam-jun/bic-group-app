@@ -39,7 +39,7 @@ import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentPublishedProperties } from '~/services/tracking/Interface';
-import { TrackingEventType } from '~/services/tracking/constants';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 interface IHandleSaveOptions {
   isShowLoading?: boolean;
@@ -400,7 +400,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
           content_type: PostType.ARTICLE,
           important: !!data?.setting?.isImportant,
         };
-        trackEvent({ event: TrackingEventType.CONTENT_PUBLISHED, properties: eventContentPublishedProperties });
+        trackEvent({ event: TrackingEvent.CONTENT_PUBLISHED, properties: eventContentPublishedProperties });
 
         goToArticleDetail();
         useScheduleArticlesStore

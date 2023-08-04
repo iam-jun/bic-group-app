@@ -9,7 +9,7 @@ import showToastSuccess from '~/store/helper/showToastSuccess';
 import { PostType } from '~/interfaces/IPost';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentPublishedProperties } from '~/services/tracking/Interface';
-import { TrackingEventType } from '~/services/tracking/constants';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const navigation = routerHelper?.withNavigation?.(rootNavigationRef);
 
@@ -33,7 +33,7 @@ const postCreateNewSeries = (set, get) => async () => {
       content_type: PostType.SERIES,
       important: !!data?.setting?.isImportant,
     };
-    trackEvent({ event: TrackingEventType.CONTENT_PUBLISHED, properties: eventContentPublishedProperties });
+    trackEvent({ event: TrackingEvent.CONTENT_PUBLISHED, properties: eventContentPublishedProperties });
 
     navigation.replace(seriesStack.seriesDetail, { seriesId: id });
     useHomeStore.getState().actions.refreshHome();

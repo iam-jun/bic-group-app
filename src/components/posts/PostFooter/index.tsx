@@ -13,7 +13,7 @@ import { getTotalReactions } from '~/helpers/post';
 import { PostType } from '~/interfaces/IPost';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
-import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
 export interface PostFooterProps extends Partial<ContentFooterProps>,
  Partial<Omit<Omit<ContentFooterLiteProps, 'reactionsCount'>, 'onPressComment'>> {
@@ -57,7 +57,7 @@ const PostFooter: FC<PostFooterProps> = ({
         content_type: PostType.POST,
         action: TrackingEventContentReadAction.COMMENT,
       };
-      trackEvent({ event: TrackingEventType.CONTENT_READ, properties: eventContentReadProperties });
+      trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
     }
   };
 

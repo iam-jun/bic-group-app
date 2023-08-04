@@ -10,7 +10,7 @@ import { isFromNotificationScreen } from '~/router/helper';
 import { PostType } from '~/interfaces/IPost';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
-import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
 const PostDetail = (props: any) => {
   const [showContent, setShowContent] = useState(false);
@@ -42,7 +42,7 @@ const PostDetail = (props: any) => {
           content_type: PostType.POST,
           action: TrackingEventContentReadAction.NOTIFICATION,
         };
-        trackEvent({ event: TrackingEventType.CONTENT_READ, properties: eventContentReadProperties });
+        trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
       }
     }
   }, []);

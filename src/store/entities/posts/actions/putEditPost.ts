@@ -21,7 +21,7 @@ import useHomeStore from '~/screens/Home/store';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentPublishedProperties } from '~/services/tracking/Interface';
-import { TrackingEventType } from '~/services/tracking/constants';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const navigation = withNavigation?.(rootNavigationRef);
 
@@ -78,7 +78,7 @@ const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
         content_type: PostType.POST,
         important: !!important?.active,
       };
-      trackEvent({ event: TrackingEventType.CONTENT_PUBLISHED, properties: eventContentPublishedProperties });
+      trackEvent({ event: TrackingEvent.CONTENT_PUBLISHED, properties: eventContentPublishedProperties });
     }
 
     if (post.status === PostStatus.PROCESSING) {

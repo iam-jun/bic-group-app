@@ -4,7 +4,7 @@ import showToastError from '~/store/helper/showToastError';
 import usePostsStore from '~/store/entities/posts';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventImportantMarkedProperties } from '~/services/tracking/Interface';
-import { TrackingEventType } from '~/services/tracking/constants';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const putMarkAsRead = () => async (payload: IPayloadPutMarkAsRead) => {
   const { postId, callback } = payload;
@@ -32,7 +32,7 @@ const putMarkAsRead = () => async (payload: IPayloadPutMarkAsRead) => {
     const eventImportantMarkedProperties: TrackingEventImportantMarkedProperties = {
       content_type: post.type,
     };
-    trackEvent({ event: TrackingEventType.IMPORTANT_MARKED, properties: eventImportantMarkedProperties });
+    trackEvent({ event: TrackingEvent.IMPORTANT_MARKED, properties: eventImportantMarkedProperties });
   } catch (error) {
     callback?.(false);
     showToastError(error);

@@ -32,7 +32,7 @@ import LoadMoreComment from '~/components/LoadMoreComment';
 import { isFromNotificationScreen } from '~/router/helper';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
-import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
 const _ArticleDetail: FC<IRouteParams> = (props) => {
   const navigation = props?.navigation;
@@ -119,7 +119,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
           content_type: PostType.ARTICLE,
           action: TrackingEventContentReadAction.NOTIFICATION,
         };
-        trackEvent({ event: TrackingEventType.CONTENT_READ, properties: eventContentReadProperties });
+        trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
       }
     }
   }, []);

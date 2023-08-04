@@ -27,7 +27,7 @@ import useModalStore from '~/store/modal';
 import { isFromNotificationScreen } from '~/router/helper';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
-import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
 const SeriesDetail = ({ route, navigation }: any) => {
   const { params } = route || {};
@@ -76,7 +76,7 @@ const SeriesDetail = ({ route, navigation }: any) => {
           content_type: PostType.SERIES,
           action: TrackingEventContentReadAction.NOTIFICATION,
         };
-        trackEvent({ event: TrackingEventType.CONTENT_READ, properties: eventContentReadProperties });
+        trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
       }
     }
   }, []);

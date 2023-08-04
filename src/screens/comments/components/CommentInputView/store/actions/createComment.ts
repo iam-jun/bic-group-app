@@ -12,7 +12,7 @@ import ICommentInputState from '../Interface';
 import useLoadMoreCommentsController from '~/components/LoadMoreComment/store';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventCommentAddedProperties } from '~/services/tracking/Interface';
-import { TrackingEventType } from '~/services/tracking/constants';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
   const {
@@ -99,7 +99,7 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
         images: !isEmpty(commentData?.media?.images),
         gif: !isEmpty(commentData?.giphy),
       };
-      trackEvent({ event: TrackingEventType.COMMENT_ADDED, properties: eventCommentAddedProperties });
+      trackEvent({ event: TrackingEvent.COMMENT_ADDED, properties: eventCommentAddedProperties });
     }
     onSuccess?.(); // clear content in text input
     if (!!viewMore && !!parentCommentId) {

@@ -11,7 +11,7 @@ import { ArticleReactionsProps } from '../ArticleReactions';
 import { handleLabelButtonComment } from '~/utils/common';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
-import { TrackingEventContentReadAction, TrackingEventType } from '~/services/tracking/constants';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
 export interface ArticleFooterProps extends Omit<ContentFooterProps, 'labelButtonComment'>, Omit<ArticleReactionsProps, 'onAddReaction'> {
   articleId: string;
@@ -50,7 +50,7 @@ const ArticleFooter: FC<ArticleFooterProps> = ({
         content_type: PostType.ARTICLE,
         action: TrackingEventContentReadAction.COMMENT,
       };
-      trackEvent({ event: TrackingEventType.CONTENT_READ, properties: eventContentReadProperties });
+      trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
     }
   };
 
