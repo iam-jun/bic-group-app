@@ -2,23 +2,20 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import Animated from 'react-native-reanimated';
 import { GroupPrivacyDetail } from '~/constants/privacyTypes';
-import { IGroup } from '~/interfaces/IGroup';
 import { IconType } from '~/resources/icons';
 import spacing from '~/theme/spacing';
 import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { Avatar, Button } from '~/baseComponents';
-import { useSkeletonAnimation } from '~/hooks/useSkeletonAnimation';
-import useAdvancedNotiSettingsStore from '../AdvancedSettings/store';
 import useBaseHook from '~/hooks/baseHook';
-import { IAdvancedNotificationSettings } from '~/interfaces/INotification';
+import { IAdvancedNotificationSettings, IGroupNotificationSetting } from '~/interfaces/INotification';
+import useAdvancedNotiSettingsStore from '../AdvancedSettings/store';
 
 interface Props {
-    item: IGroup;
+    item: IGroupNotificationSetting;
     isDisabled?: boolean;
-    onPress: (item: IGroup) => void;
+    onPress: (item: IGroupNotificationSetting) => void;
 }
 
 const AdvancedSettingItem = ({ item, isDisabled = false, onPress }: Props) => {
@@ -26,14 +23,12 @@ const AdvancedSettingItem = ({ item, isDisabled = false, onPress }: Props) => {
   const { colors } = theme;
   const styles = createStyle(theme);
   const { t } = useBaseHook();
-  const animatedStyle = useSkeletonAnimation({ targetOpacityValue: 0.5, speed: 500 });
 
-  const isLoading = useAdvancedNotiSettingsStore((state) => state.isLoadingGroupSettings);
   const groupData = useAdvancedNotiSettingsStore((state) => state.groupData?.[item.id]);
 
-  const getLabelText = (item: IAdvancedNotificationSettings) => {
-    if (isEmpty(item)) return '';
-    const { flag, channels, enable } = item;
+  const getLabelText = (data: IAdvancedNotificationSettings) => {
+    if (isEmpty(data)) return '';
+    const { flag, channels, enable } = data;
     if (enable && flag?.value) {
       if (channels?.inApp && channels?.push) {
         return `${t('notification:notification_settings:in_app_text')}, ${t('notification:notification_settings:push_text')}`;
@@ -51,13 +46,15 @@ const AdvancedSettingItem = ({ item, isDisabled = false, onPress }: Props) => {
     }
   };
 
-  const label = getLabelText(groupData);
-
   const onPressItem = () => onPress(item);
 
   if (isEmpty(item)) return null;
-  const { icon, name, privacy } = item;
+  const {
+    icon, name, privacy,
+  } = item;
   const privacyIcon = GroupPrivacyDetail[privacy]?.icon as IconType;
+  const label = getLabelText(groupData);
+
   return (
     <Button
       testID="notification_advanced_setting_item"
@@ -78,18 +75,12 @@ const AdvancedSettingItem = ({ item, isDisabled = false, onPress }: Props) => {
         >
           {name}
         </Text.BodyMMedium>
-        {
-          Boolean(isLoading)
-            ? <Animated.View style={[styles.labelSkeleton, animatedStyle]} />
-            : (
-              <Text.BadgeM
-                testID="notification_advanced_setting_item.label"
-                color={colors.neutral40}
-              >
-                {label}
-              </Text.BadgeM>
-            )
-        }
+        <Text.BadgeM
+          testID="notification_advanced_setting_item.label"
+          color={colors.neutral40}
+        >
+          {label}
+        </Text.BadgeM>
       </View>
     </Button>
   );

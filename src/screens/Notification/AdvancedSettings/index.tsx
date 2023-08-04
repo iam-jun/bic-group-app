@@ -24,6 +24,7 @@ import AdvancedSettingHeader from '../components/AdvancedSettingHeader';
 import useSearchJoinedCommunitiesStore from '~/screens/communities/Communities/components/SearchCommunity/store';
 import SearchCommunityView from './components/SearchCommunityView';
 import SearchGroupView from './components/SearchGroupView';
+import { IGroupNotificationSetting } from '~/interfaces/INotification';
 
 const AdvancedSettings = () => {
   const theme: ExtendedTheme = useTheme();
@@ -74,7 +75,7 @@ const AdvancedSettings = () => {
     if (selectedCommunity?.id) {
       const comID = selectedCommunity?.communityId || selectedCommunity?.id;
       advancedSettingsActions.getCommunitySettings(comID);
-      advancedSettingsActions.getJoinedGroupFlat(comID, true);
+      advancedSettingsActions.getJoinedGroup(comID, true);
     }
   }, [selectedCommunity?.id]);
 
@@ -84,7 +85,7 @@ const AdvancedSettings = () => {
 
   const onLoadMore = () => {
     if (!hasNextPage || isLoadingJoinedGroup) return;
-    advancedSettingsActions.getJoinedGroupFlat(comId);
+    advancedSettingsActions.getJoinedGroup(comId);
   };
 
   const onChangeToggle = (isChecked: boolean) => {
@@ -102,7 +103,7 @@ const AdvancedSettings = () => {
     advancedSettingsActions.setSelectedCommunity(item);
   };
 
-  const onPressItem = (item: any) => {
+  const onPressItem = (item: IGroupNotificationSetting) => {
     if (item?.id) {
       rootNavigation.navigate(notiStack.advancedSettingsDetail, {
         name: item.name,

@@ -2,10 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { debounce } from 'lodash';
 import {
-  ActivityIndicator, FlatList, View, StyleSheet, Platform,
+  ActivityIndicator, FlatList, View, StyleSheet,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useKeyboard } from '@react-native-community/hooks';
 import appConfig from '~/configs/appConfig';
 import SearchBaseView from '~/beinComponents/SearchBaseView';
 import AdvancedSettingItem from '../../components/AdvancedSettingItem';
@@ -13,6 +12,7 @@ import useBaseHook from '~/hooks/baseHook';
 import useSearchJoinedCommunitiesStore from '~/screens/communities/Communities/components/SearchCommunity/store';
 import EmptyScreen from '~/components/EmptyScreen';
 import images from '~/resources/images';
+import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 
 interface SearchMemberViewProps {
   isOpen: boolean;
@@ -28,7 +28,6 @@ const SearchCommunityView = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const { t } = useBaseHook();
-  const keyboard = useKeyboard();
 
   const [searchText, setSearchText] = useState('');
 
@@ -74,7 +73,7 @@ const SearchCommunityView = ({
 
   const renderListFooter = () => {
     if (!hasNextPage) {
-      return <View style={{ height: Platform?.OS === 'ios' ? (keyboard?.keyboardHeight || 0) : 0 }} />;
+      return <KeyboardSpacer iosOnly />;
     }
 
     return (

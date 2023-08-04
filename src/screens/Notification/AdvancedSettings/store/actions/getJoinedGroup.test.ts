@@ -1,7 +1,7 @@
 import { act, renderHook } from '~/test/testUtils';
 import useAdvancedNotiSettingsStore from '../index';
 import { mockGroupInFlat } from '~/test/mock_data/advancedSettings';
-import groupApi from '~/api/GroupApi';
+import notificationApi from '~/api/NotificationApi';
 
 describe('get list group in flat mode', () => {
   afterEach(() => {
@@ -20,14 +20,14 @@ describe('get list group in flat mode', () => {
       return state;
     });
 
-    const spyApi = jest.spyOn(groupApi, 'getCommunityGroups').mockImplementation(
+    const spyApi = jest.spyOn(notificationApi, 'getGroupsAndGroupsSettings').mockImplementation(
       () => Promise.resolve(response) as any,
     );
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useAdvancedNotiSettingsStore((state) => state));
     act(() => {
-      result.current.actions.getJoinedGroupFlat(communityId);
+      result.current.actions.getJoinedGroup(communityId);
     });
     expect(result.current.isLoadingJoinedGroup).toBeFalsy();
     expect(spyApi).not.toBeCalled();
@@ -49,14 +49,14 @@ describe('get list group in flat mode', () => {
       return state;
     });
 
-    const spyApi = jest.spyOn(groupApi, 'getCommunityGroups').mockImplementation(
+    const spyApi = jest.spyOn(notificationApi, 'getGroupsAndGroupsSettings').mockImplementation(
       () => Promise.resolve(response) as any,
     );
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useAdvancedNotiSettingsStore((state) => state));
     act(() => {
-      result.current.actions.getJoinedGroupFlat(communityId);
+      result.current.actions.getJoinedGroup(communityId);
     });
     expect(result.current.isLoadingJoinedGroup).toBeTruthy();
     expect(spyApi).toBeCalled();
@@ -66,7 +66,7 @@ describe('get list group in flat mode', () => {
     });
 
     expect(result.current.isLoadingJoinedGroup).toBeFalsy();
-    expect(result.current.joinedGroups.length).toEqual(mockGroupInFlat.data.length);
+    expect(result.current.joinedGroups.length).toEqual(mockGroupInFlat.data.groups.length);
   });
 
   it('should get groups config success with refresh = true', () => {
@@ -82,14 +82,14 @@ describe('get list group in flat mode', () => {
       return state;
     });
 
-    const spyApi = jest.spyOn(groupApi, 'getCommunityGroups').mockImplementation(
+    const spyApi = jest.spyOn(notificationApi, 'getGroupsAndGroupsSettings').mockImplementation(
       () => Promise.resolve(response) as any,
     );
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useAdvancedNotiSettingsStore((state) => state));
     act(() => {
-      result.current.actions.getJoinedGroupFlat(communityId, true);
+      result.current.actions.getJoinedGroup(communityId, true);
     });
 
     expect(spyApi).toBeCalled();
@@ -104,7 +104,7 @@ describe('get list group in flat mode', () => {
 
   it('should get groups throw error', () => {
     const error = 'internal error';
-    const spyApi = jest.spyOn(groupApi, 'getCommunityGroups').mockImplementation(
+    const spyApi = jest.spyOn(notificationApi, 'getGroupsAndGroupsSettings').mockImplementation(
       () => Promise.reject(error) as any,
     );
 
@@ -113,7 +113,7 @@ describe('get list group in flat mode', () => {
 
     act(() => {
       try {
-        result.current.actions.getJoinedGroupFlat(communityId);
+        result.current.actions.getJoinedGroup(communityId);
       } catch (e) {
         expect(e).toBeInstanceOf(TypeError);
         expect(e).toBe(error);

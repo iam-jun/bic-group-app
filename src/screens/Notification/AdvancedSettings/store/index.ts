@@ -2,16 +2,14 @@ import IBaseState from '~/store/interfaces/IBaseState';
 import {
   createStore, resetStore,
 } from '~/store/utils';
-import { IAdvancedNotificationSettings, IEditNotificationSetting } from '~/interfaces/INotification';
+import { IAdvancedNotificationSettings, IEditNotificationSetting, IGroupNotificationSetting } from '~/interfaces/INotification';
 import getCommunitySettings from './actions/getCommunitySettings';
-import getJoinedGroupFlat from './actions/getJoinedGroupFlat';
-import { IGetCommunityGroup, IGroup } from '~/interfaces/IGroup';
+import { IGetCommunityGroup } from '~/interfaces/IGroup';
 import getGroupSettings from './actions/getGroupSettings';
 import updateGroupSettings from './actions/updateGroupSettings';
 import updateCommunitySettings from './actions/updateCommunitySettings';
 import searchJoinedGroupFlat from './actions/searchJoinedGroupFlat';
-
-export const MAX_GROUP_LIMIT = 500;
+import getJoinedGroup from './actions/getJoinedGroup';
 
 export interface IAdvancedNotiSettingsStore extends IBaseState {
   // community setting data
@@ -22,12 +20,13 @@ export interface IAdvancedNotiSettingsStore extends IBaseState {
   isLoadingCommunitySettings: boolean;
   isLoadingGroupSettings: boolean;
   isLoadingJoinedGroup: boolean;
+  isLoadingSearchJoinedGroup: boolean;
   isUpdatingCommunitySettings: boolean;
   isUpdatingGroupSettings: boolean;
   isResetOrEnableGroupSettings: boolean;
   isRefreshing: boolean;
-  joinedGroups: IGroup[];
-  searchJoinedGroups: IGroup[];
+  joinedGroups: IGroupNotificationSetting[];
+  searchJoinedGroups: IGroupNotificationSetting[];
   selectedCommunity: any;
   hasNextPage: boolean;
   hasSearchNextPage: boolean;
@@ -37,7 +36,7 @@ export interface IAdvancedNotiSettingsStore extends IBaseState {
     setIsLoadingCommunitySettings: (isLoading: boolean) => void;
     setSelectedCommunity: (community: any) => void;
     getCommunitySettings: (communityId: string, isRefreshing?: boolean) => void;
-    getJoinedGroupFlat: (communityId: string, isRefresh?: boolean) =>void;
+    getJoinedGroup: (communityId: string, isRefresh?: boolean) =>void;
     searchJoinedGroupFlat: (params: IGetCommunityGroup, isRefresh?:boolean) => void;
     getGroupSettings: (groupIds: string[]) => void;
     updateCommunitySettings: (
@@ -59,6 +58,7 @@ const initialState = {
   isLoadingCommunitySettings: false,
   isLoadingGroupSettings: false,
   isLoadingJoinedGroup: false,
+  isLoadingSearchJoinedGroup: false,
   isUpdatingCommunitySettings: false,
   isUpdatingGroupSettings: false,
   isResetOrEnableGroupSettings: false,
@@ -89,7 +89,7 @@ const advancedNotiSettingsStore = (set, get) => ({
       }, 'setSelectedCommunity');
     },
     getCommunitySettings: getCommunitySettings(set, get),
-    getJoinedGroupFlat: getJoinedGroupFlat(set, get),
+    getJoinedGroup: getJoinedGroup(set, get),
     getGroupSettings: getGroupSettings(set, get),
     searchJoinedGroupFlat: searchJoinedGroupFlat(set, get),
     updateGroupSettings: updateGroupSettings(set, get),

@@ -2,6 +2,7 @@ import { Method } from 'axios';
 import { makeHttpRequest, withHttpRequestPromise } from '~/api/apiRequest';
 import { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
 import { IEditNotificationSetting, IParamGetNotifications } from '~/interfaces/INotification';
+import { IGetCommunityGroup } from '~/interfaces/IGroup';
 
 const LIMIT = 20;
 
@@ -107,6 +108,14 @@ export const notificationApiConfig = {
     url: `${provider.url}notifications/${id}`,
     method: 'delete',
   }),
+  getGroupsAndGroupsSettings: (communityId: string, otherParams: IGetCommunityGroup): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/advanced/${communityId}/groups`,
+    params: {
+      ...otherParams,
+      key: otherParams?.key?.trim?.() ? otherParams.key : undefined,
+    },
+  }),
 };
 
 const notificationApi = {
@@ -152,6 +161,9 @@ const notificationApi = {
     notificationApiConfig.updateGroupSettings, communityId, groupId, params,
   ),
   deleteNotification: (id: string) => withHttpRequestPromise(notificationApiConfig.deleteNotification, id),
+  getGroupsAndGroupsSettings: (communityId: string, params: IGetCommunityGroup) => withHttpRequestPromise(
+    notificationApiConfig.getGroupsAndGroupsSettings, communityId, params,
+  ),
 };
 
 export default notificationApi;

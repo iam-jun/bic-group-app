@@ -1,7 +1,7 @@
-import groupApi from '~/api/GroupApi';
-import { IAdvancedNotiSettingsStore, MAX_GROUP_LIMIT } from '../index';
+import { IAdvancedNotiSettingsStore } from '../index';
 import showToastError from '~/store/helper/showToastError';
 import { IGetCommunityGroup } from '~/interfaces/IGroup';
+import notificationApi from '~/api/NotificationApi';
 
 const searchJoinedGroupFlat = (set, get) => async (params: IGetCommunityGroup, isRefresh?:boolean) => {
   try {
@@ -12,7 +12,7 @@ const searchJoinedGroupFlat = (set, get) => async (params: IGetCommunityGroup, i
     const id = selectedCommunity?.communityId || selectedCommunity?.id;
 
     set((state: IAdvancedNotiSettingsStore) => {
-      state.isLoadingJoinedGroup = true;
+      state.isLoadingSearchJoinedGroup = true;
       state.hasSearchNextPage = isRefresh ? true : state.hasSearchNextPage;
     }, 'searchJoinedGroupFlat');
 
@@ -21,16 +21,15 @@ const searchJoinedGroupFlat = (set, get) => async (params: IGetCommunityGroup, i
       listBy: 'flat',
       includeRootGroup: true,
       offset: isRefresh ? 0 : searchJoinedGroups.length,
-      communityId: id,
-      limit: MAX_GROUP_LIMIT,
     };
 
-    const response = await groupApi.getCommunityGroups(id, newParams);
+    const response = await notificationApi.getGroupsAndGroupsSettings(id, newParams);
     const { data, meta } = response;
-    const newData = isRefresh ? data : [...searchJoinedGroups, ...data];
+    const groupdData = data?.groups || [];
+    const newData = isRefresh ? groupdData : [...searchJoinedGroups, ...groupdData];
 
     set((state: IAdvancedNotiSettingsStore) => {
-      state.isLoadingJoinedGroup = false;
+      state.isLoadingSearchJoinedGroup = false;
       state.searchJoinedGroups = newData;
       state.hasSearchNextPage = meta.hasNextPage;
     }, 'searchJoinedGroupFlatSuccess');
@@ -38,7 +37,7 @@ const searchJoinedGroupFlat = (set, get) => async (params: IGetCommunityGroup, i
     console.error('\x1b[35m🐣️ search joined group flat error ', error, '\x1b[0m');
     showToastError(error);
     set((state: IAdvancedNotiSettingsStore) => {
-      state.isLoadingJoinedGroup = false;
+      state.isLoadingSearchJoinedGroup = false;
       state.searchJoinedGroups = [];
     }, 'searchJoinedGroupFlatFailed');
   }
