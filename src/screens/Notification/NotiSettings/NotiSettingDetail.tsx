@@ -5,7 +5,7 @@ import Animated from 'react-native-reanimated';
 
 import { debounce } from 'lodash';
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';

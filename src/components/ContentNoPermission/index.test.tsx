@@ -2,7 +2,7 @@ import React from 'react';
 import { mockViewContentJoinRequire } from '~/test/mock_data/post';
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import ContentNoPermission from './index';
-import * as common from '~/helpers/common';
+import * as helper from '~/router/helper';
 
 describe('ContentNoPermission component', () => {
   it('given requireGroups is not empty should render correctly', () => {
@@ -34,7 +34,7 @@ describe('ContentNoPermission component', () => {
   });
 
   it('should push to community when pressing on community name', () => {
-    const navigateToCommunityDetail = jest.spyOn(common, 'navigateToCommunityDetail');
+    const navigateToCommunityDetail = jest.spyOn(helper, 'navigateToCommunityDetail');
 
     const onContentLayout = jest.fn();
     const data = {
@@ -56,7 +56,7 @@ describe('ContentNoPermission component', () => {
   });
 
   it('should push to group when pressing on group name', () => {
-    const navigateToGroupDetail = jest.spyOn(common, 'navigateToGroupDetail');
+    const navigateToGroupDetail = jest.spyOn(helper, 'navigateToGroupDetail');
 
     const onContentLayout = jest.fn();
     const data = {

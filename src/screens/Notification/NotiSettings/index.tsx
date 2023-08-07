@@ -6,7 +6,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Animated from 'react-native-reanimated';
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';

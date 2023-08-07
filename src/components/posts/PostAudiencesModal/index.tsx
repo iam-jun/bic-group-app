@@ -4,8 +4,8 @@ import { FlatList, StyleSheet, View } from 'react-native';
 
 import GroupItem from '~/beinComponents/list/items/GroupItem';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import { navigateToCommunityDetail, navigateToGroupDetail } from '~/helpers/common';
 import { IGroup } from '~/interfaces/IGroup';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
 import useModalStore from '~/store/modal';
 import spacing from '~/theme/spacing';
 

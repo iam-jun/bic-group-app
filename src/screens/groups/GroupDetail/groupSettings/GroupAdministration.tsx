@@ -8,7 +8,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { IconType } from '~/resources/icons';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import Text from '~/baseComponents/Text';
 import Divider from '~/beinComponents/Divider';

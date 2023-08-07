@@ -2,7 +2,7 @@ import * as React from 'react';
 import { mockSeries, mockSeriesWithSummary } from '~/test/mock_data/series';
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import SeriesDetailHeader from '.';
-import * as common from '~/helpers/common';
+import * as helper from '~/router/helper';
 
 describe('SeriesDetailHeader component', () => {
   it('given audiences, should render n audience', () => {
@@ -13,7 +13,7 @@ describe('SeriesDetailHeader component', () => {
   });
 
   it('should push to community detail when press audience is community', () => {
-    const navigateToCommunityDetail = jest.spyOn(common, 'navigateToCommunityDetail');
+    const navigateToCommunityDetail = jest.spyOn(helper, 'navigateToCommunityDetail');
 
     const wrapper = renderWithRedux(<SeriesDetailHeader series={mockSeries} />);
 
@@ -25,7 +25,7 @@ describe('SeriesDetailHeader component', () => {
   });
 
   it('should push to group detail when press audience is group', () => {
-    const navigateToGroupDetail = jest.spyOn(common, 'navigateToGroupDetail');
+    const navigateToGroupDetail = jest.spyOn(helper, 'navigateToGroupDetail');
 
     const wrapper = renderWithRedux(<SeriesDetailHeader series={mockSeries} />);
 

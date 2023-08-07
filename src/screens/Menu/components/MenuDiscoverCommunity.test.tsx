@@ -4,7 +4,7 @@ import { fireEvent, render, renderWithRedux } from '~/test/testUtils';
 import MenuDiscoverCommunity from './MenuDiscoverCommunity';
 import { communities } from '~/test/mock_data/communities';
 import useMenuController from '../store';
-import * as common from '~/helpers/common';
+import * as helper from '~/router/helper';
 
 describe('MenuDiscoverCommunity component', () => {
   it('renders loading list:', () => {
@@ -26,7 +26,7 @@ describe('MenuDiscoverCommunity component', () => {
       return state;
     });
 
-    const navigateToCommunityDetail = jest.spyOn(common, 'navigateToCommunityDetail');
+    const navigateToCommunityDetail = jest.spyOn(helper, 'navigateToCommunityDetail');
 
     const rendered = renderWithRedux(<MenuDiscoverCommunity />);
 

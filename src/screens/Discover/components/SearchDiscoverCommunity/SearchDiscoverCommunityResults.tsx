@@ -18,7 +18,7 @@ import useCommunitiesStore from '~/store/entities/communities';
 import useTermStore, { TermsInfo } from '~/components/TermsModal/store';
 import useMemberQuestionsStore, { MembershipQuestionsInfo } from '~/components/MemberQuestionsModal/store';
 import { ITypeGroup } from '~/interfaces/common';
-import { navigateToCommunityDetail } from '~/helpers/common';
+import { navigateToCommunityDetail } from '~/router/helper';
 
 interface SearchDiscoverCommunityResultsProps {
   onLoadMore?: () => void;

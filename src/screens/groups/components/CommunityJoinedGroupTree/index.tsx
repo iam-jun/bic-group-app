@@ -12,7 +12,7 @@ import { useBaseHook } from '~/hooks';
 import GroupList from '~/components/groups/GroupList';
 import useModalStore from '~/store/modal';
 import { isGroup } from '~/helpers/groups';
-import { navigateToCommunityDetail, navigateToGroupDetail } from '~/helpers/common';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
 
 export interface CommunityJoinedGroupsProps {
   communityId?: string;

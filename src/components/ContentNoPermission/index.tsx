@@ -7,7 +7,7 @@ import Text from '~/baseComponents/Text';
 import { spacing } from '~/theme';
 import Header from '~/beinComponents/Header';
 import { IErrorContent } from '~/interfaces/IPost';
-import { navigateToCommunityDetail, navigateToGroupDetail } from '~/helpers/common';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
 
 interface ContentNoPermissionProps {
   onContentLayout?: () => void;

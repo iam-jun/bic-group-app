@@ -12,7 +12,7 @@ import { avatarSizes } from '~/theme/dimension';
 import { ICommunity } from '~/interfaces/ICommunity';
 import useMenuController from '../store';
 import JoinedCommunityPlaceholder from './JoinedCommunityPlaceholder';
-import { navigateToCommunityDetail } from '~/helpers/common';
+import { navigateToCommunityDetail } from '~/router/helper';
 
 export const MAX_LENGTH = 10;
 

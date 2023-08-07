@@ -10,7 +10,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { debounce } from 'lodash';
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import EmptyScreen from '~/components/EmptyScreen';
 
 import CommunityGroupCard from '~/components/CommunityGroupCard';

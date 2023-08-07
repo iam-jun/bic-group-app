@@ -1,4 +1,4 @@
-import { withNavigation } from '~/router/helper';
+import { navigateToCommunityDetail, navigateToGroupDetail, withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import mainStack from '~/router/navigator/MainStack/stack';
 import topicStack from '~/router/navigator/MainStack/stacks/topic/stack';
@@ -7,7 +7,6 @@ import { IMentionUser, IPost } from '~/interfaces/IPost';
 import { openUrl } from '~/utils/link';
 import { goToContentInseries } from '~/components/RelatedContentsInSeries/helper';
 import { EventType } from '~/components/articles/ArticleWebview';
-import { navigateToCommunityDetail, navigateToGroupDetail } from '~/helpers/common';
 
 const rootNavigation = withNavigation?.(rootNavigationRef);
 

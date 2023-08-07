@@ -24,9 +24,9 @@ import { USER_TABS } from '~/screens/Menu/UserProfile';
 import { USER_TABS_TYPES } from '~/screens/Menu/UserProfile/constants';
 import useAuthController from '~/screens/auth/store';
 import groupStack from './navigator/MainStack/stacks/groupStack/stack';
+import { rootNavigationRef } from './refs';
 
 export const isNavigationRefReady: any = React.createRef();
-
 export interface Props {
   current?: NavigationContainerRef<any> | null;
   canGoBack: boolean | undefined;
@@ -462,6 +462,18 @@ const navigatePostDetailWithContentType = ({ contentType, contentId }) => {
 
 export const hideSplashScreen = async () => {
   await SplashScreen.hideAsync();
+};
+
+const rootNavigation = withNavigation?.(rootNavigationRef);
+
+export const navigateToGroupDetail = (params: { groupId: string; communityId?: string }) => {
+  const { groupId, communityId } = params;
+  return rootNavigation.push(mainStack.groupDetail, { groupId, communityId });
+};
+
+export const navigateToCommunityDetail = (params: { communityId: string }) => {
+  const { communityId } = params;
+  return rootNavigation.push(mainStack.communityDetail, { communityId });
 };
 
 export default routerHelper;

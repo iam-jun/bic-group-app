@@ -5,7 +5,7 @@ import { mockDiscoverCommunityResponse } from '~/test/mock_data/discoverCommunit
 import useDiscoverCommunitiesSearchStore, { IDiscoverCommunitiesSearchState } from './store';
 import useCommunityController from '~/screens/communities/store';
 import useCommunitiesStore from '~/store/entities/communities';
-import * as common from '~/helpers/common';
+import * as helper from '~/router/helper';
 
 describe('SearchDiscoverCommunityResults component', () => {
   const mockData = mockDiscoverCommunityResponse.data;
@@ -28,7 +28,7 @@ describe('SearchDiscoverCommunityResults component', () => {
 
   it('should render empty screen if loading = false and ids = []', () => {
     const onLoadMore = jest.fn();
-    const navigateToCommunityDetail = jest.spyOn(common, 'navigateToCommunityDetail');
+    const navigateToCommunityDetail = jest.spyOn(helper, 'navigateToCommunityDetail');
 
     const ids = [mockData[0].id, mockData[1].id, mockData[2].id,
     ];

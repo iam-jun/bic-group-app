@@ -13,7 +13,7 @@ import spacing from '~/theme/spacing';
 import { IPostCommunities } from '~/interfaces/IPost';
 import { useBaseHook } from '~/hooks';
 import useModalStore from '~/store/modal';
-import { navigateToCommunityDetail } from '~/helpers/common';
+import { navigateToCommunityDetail } from '~/router/helper';
 
 export interface PostImportantProps {
   isImportant: boolean;

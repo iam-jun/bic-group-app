@@ -14,7 +14,7 @@ import { spacing } from '~/theme';
 import { formatLargeNumber } from '~/utils/formatter';
 import ButtonCommunityGroupCard from './ButtonCommunityGroupCard';
 import useModalStore from '~/store/modal';
-import { navigateToCommunityDetail, navigateToGroupDetail } from '~/helpers/common';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
 
 type CommunityGroupCardProps = {
   item: any;

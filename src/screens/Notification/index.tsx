@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import { StyleSheet } from 'react-native';
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import { BottomListItemProps } from '~/components/BottomList/BottomListItem';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -33,7 +33,7 @@ import { USER_TABS } from '../Menu/UserProfile';
 import { USER_TABS_TYPES } from '../Menu/UserProfile/constants';
 import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
-import { navigateToCommunityDetail, navigateToGroupDetail } from '~/helpers/common';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
 
 const NOT_SHOW_DELETE_OPTION_LIST = [
   NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME,

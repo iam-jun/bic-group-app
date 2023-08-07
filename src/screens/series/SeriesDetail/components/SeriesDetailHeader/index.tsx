@@ -15,7 +15,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { ContentInterestedUserCount } from '~/components/ContentView';
 import { ButtonMarkAsRead, PostImportant } from '~/components/posts';
 import { useUserIdAuth } from '~/hooks/auth';
-import { navigateToCommunityDetail, navigateToGroupDetail } from '~/helpers/common';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
 
 type SeriesDetailHeaderProps = {
   series: IPost;

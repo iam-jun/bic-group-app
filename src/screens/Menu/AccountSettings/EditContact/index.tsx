@@ -5,7 +5,7 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useForm, useWatch, useFormState } from 'react-hook-form';
 
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 
 import { useBaseHook } from '~/hooks';

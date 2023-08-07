@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/baseComponents/Text';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import spacing from '~/theme/spacing';
 import Icon from '~/baseComponents/Icon';
 import { Button } from '~/baseComponents';
@@ -18,7 +18,7 @@ import useTermStore, { TermsInfo } from '../TermsModal/store';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 import { ITypeGroup } from '~/interfaces/common';
 import { isGroup } from '~/helpers/groups';
-import { navigateToCommunityDetail, navigateToGroupDetail } from '~/helpers/common';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
 
 interface PreviewJoinableGroupProps {
   group: IGroup;

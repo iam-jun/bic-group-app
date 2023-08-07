@@ -9,7 +9,7 @@ import { useBaseHook } from '~/hooks';
 import Tag from '~/baseComponents/Tag';
 import { PostAudiencesModal } from '~/components/posts';
 import useModalStore from '~/store/modal';
-import { navigateToCommunityDetail, navigateToGroupDetail } from '~/helpers/common';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
 
 interface IAudiences {
   audience: IPostAudience;

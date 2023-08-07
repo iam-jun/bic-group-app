@@ -12,7 +12,7 @@ import {
 import OptionMenu from './fragments/OptionMenu';
 import { useRootNavigation } from '~/hooks/navigation';
 
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import TitleComponent from '../fragments/TitleComponent';
 import Button from '~/beinComponents/Button';

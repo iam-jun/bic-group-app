@@ -2,7 +2,7 @@ import React, {
   useRef, useEffect, useCallback, useState,
 } from 'react';
 import { StyleSheet } from 'react-native';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import { IRouteParams } from '~/interfaces/IRouter';
 import Header from '~/beinComponents/Header';
 import ArticleWebview, { ArticleWebviewRef } from '~/components/articles/ArticleWebview';

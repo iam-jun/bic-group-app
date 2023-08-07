@@ -2,10 +2,11 @@
 import { Linking } from 'react-native';
 import groupApi from '~/api/GroupApi';
 import APIErrorCode from '~/constants/apiErrorCode';
-import { navigateToCommunityDetail, navigateToGroupDetail } from '~/helpers/common';
 import { useRootNavigation } from '~/hooks/navigation';
 import { linkingConfig, PREFIX_DEEPLINK_GROUP, PREFIX_URL } from '~/router/config';
-import { hideSplashScreen, Props as IRootNavigation } from '~/router/helper';
+import {
+  hideSplashScreen, Props as IRootNavigation, navigateToCommunityDetail, navigateToGroupDetail,
+} from '~/router/helper';
 import authStacks from '~/router/navigator/AuthStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
 import useAuthController from '~/screens/auth/store';

@@ -14,7 +14,7 @@ import spacing from '~/theme/spacing';
 import useSearchJoinedCommunitiesStore from './store';
 import { isGroup } from '~/helpers/groups';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
-import { navigateToCommunityDetail, navigateToGroupDetail } from '~/helpers/common';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
 
 interface CommunitySearchResultsProps {
   onLoadMore?: () => void;

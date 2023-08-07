@@ -21,7 +21,7 @@ import dimension from '~/theme/dimension';
 import { Button } from '~/baseComponents';
 import Tag from '~/baseComponents/Tag';
 import { useBaseHook } from '~/hooks';
-import { navigateToCommunityDetail, navigateToGroupDetail } from '~/helpers/common';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
 
 export interface GroupItemProps extends IParsedGroup {
   groupStyle?: StyleProp<ViewStyle>;

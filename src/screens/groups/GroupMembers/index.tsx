@@ -6,7 +6,7 @@ import i18next from 'i18next';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IGroupMembers } from '~/interfaces/IGroup';
 
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header, { HeaderProps } from '~/beinComponents/Header';
 import useNetworkStore from '~/store/network';
 import networkSelectors from '~/store/network/selectors';
