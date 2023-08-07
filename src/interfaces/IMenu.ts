@@ -22,4 +22,5 @@ export enum SettingsAndPrivacyType {
   BLOCKING = 'blocking',
   NOTIFICATIONS = 'notifications',
   LANGUAGE = 'language',
+  PRIVACY = 'privacy',
 }
