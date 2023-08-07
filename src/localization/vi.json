@@ -1079,7 +1079,19 @@
   "profile": {
     "title_edit_profile": "Chỉnh sửa thông tin",
     "title_direct_message": "Gửi tin nhắn",
-    "title_view_profile": "Xem trang cá nhân"
+    "title_view_profile": "Xem trang cá nhân",
+    "text_name_must_not_be_empty": "Tên không được để trống",
+    "fullname_rule": {
+      "not_allow_special_character": "Họ và tên không được chứa ký tự đặc biệt",
+      "not_allow_number": "Tên đầy đủ không được chứa số",
+      "character_length": "Tên đầy đủ phải từ 3 đến 64 ký tự"
+    },
+    "username_rule": {
+      "character_length": "Tên người dùng phải từ 5 đến 50 ký tự",
+      "not_allow_special_character": "Tên Người dùng không thể chứa ký tự đặc biệt kể cả khoảng trắng",
+      "not_allow_uppercase": "Tên người dùng không được chứa các ký tự viết hoa",
+      "not_allow_start_with_number_or_dot": "Tên người dùng phải bắt đầu bằng một chữ cái"
+    }
   },
   "right_col": {
     "about_bein": "About Bein",
