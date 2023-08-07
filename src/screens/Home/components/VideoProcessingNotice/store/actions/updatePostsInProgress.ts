@@ -1,4 +1,3 @@
-import { IPayloadAddToAllPost } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
