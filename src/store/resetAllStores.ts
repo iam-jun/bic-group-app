@@ -68,6 +68,7 @@ import useUserBadge from '~/screens/Menu/UserProfile/fragments/BadgeCollection/s
 import useMembershipPolicySettingsStore from '~/screens/groups/MembershipPolicySettings/store';
 import usePreviewJoinableGroupStore from '~/components/PreviewJoinableGroup/store';
 import useNotiSettingsStore from '~/screens/Notification/NotiSettings/store';
+import useAdvancedNotiSettingsStore from '~/screens/Notification/AdvancedSettings/store';
 
 export const excludedStore = [
   useAuthController,
@@ -153,6 +154,7 @@ const stores = [
   useMembershipPolicySettingsStore,
   usePreviewJoinableGroupStore,
   useNotiSettingsStore,
+  useAdvancedNotiSettingsStore,
 ];
 
 export const resetAllStores = () => {

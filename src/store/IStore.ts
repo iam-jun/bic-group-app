@@ -59,6 +59,7 @@ import { IUserBadgesState } from '~/screens/Menu/UserProfile/fragments/BadgeColl
 import { IMembershipPolicySettingsState } from '~/screens/groups/MembershipPolicySettings/store';
 import { IPreviewJoinableGroupState } from '~/components/PreviewJoinableGroup/store';
 import { INotiSettingsStore } from '~/screens/Notification/NotiSettings/store';
+import { IAdvancedNotiSettingsStore } from '~/screens/Notification/AdvancedSettings/store';
 
 export interface BicStore {
   entities: {
@@ -164,6 +165,7 @@ export interface BicStore {
   Notifications: {
     notificationStore: INotificationsState;
     INotiSettingsStore: INotiSettingsStore;
+    IAdvancedNotiSettingsStore: IAdvancedNotiSettingsStore;
   };
   Draft: {
     DraftArticle: {

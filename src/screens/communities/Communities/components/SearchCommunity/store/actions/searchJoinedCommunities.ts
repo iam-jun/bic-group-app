@@ -2,7 +2,10 @@ import groupApi from '~/api/GroupApi';
 import appConfig from '~/configs/appConfig';
 import { IParamGetCommunities } from '~/interfaces/ICommunity';
 
-const searchJoinedCommunities = (set, get) => async (params: IParamGetCommunities) => {
+const searchJoinedCommunities = (set, get) => async (
+  params: IParamGetCommunities,
+  isCommunitiesOnly?: boolean,
+) => {
   try {
     const { ids, items, hasNextPage } = get();
 
@@ -15,11 +18,15 @@ const searchJoinedCommunities = (set, get) => async (params: IParamGetCommunitie
       'searchJoinedCommunitiesFetching',
     );
 
-    const response = await groupApi.searchJoinedCommunities({
+    const newParams = {
       limit: appConfig.recordsPerPage,
       offset: ids.length,
       ...params,
-    });
+    };
+
+    const response = isCommunitiesOnly
+      ? await groupApi.searchJoinedCommunitiesOnly(newParams)
+      : await groupApi.searchJoinedCommunities(newParams);
 
     if (!response.data) {
       throw new Error('Incorrect response');

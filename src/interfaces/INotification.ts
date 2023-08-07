@@ -59,7 +59,7 @@ export interface INotiChannel {
 }
 
 export interface IEditNotificationSetting {
-  name: string;
+  name?: string;
   enable?: boolean;
   channels?: INotiChannel;
 }
@@ -72,4 +72,17 @@ export interface INotiSettings {
   subtitle?: string;
   child?: INotiSettings[];
   channels?: INotiChannel;
+}
+
+export interface IAdvancedNotificationSettings {
+  communityId: string;
+  id: string;
+  groupId?: string;
+  name?: string;
+  enable?: boolean;
+  channels?: INotiChannel;
+  flag?: {
+    label: string;
+    value: boolean;
+  }
 }

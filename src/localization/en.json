@@ -1170,12 +1170,35 @@
     "text_remove_notification_success": "Notification removed successfully",
     "notification_settings": {
       "title": "Notification Settings",
+      "screen_title": "General Settings",
       "description": "We may still send you important notification about your account outside of your settings",
       "error_title": "Sorry, we can’t get the data here",
       "error_description": "Please refresh the page or try again later",
       "allow_notifications": "Allow notifications",
       "in_app_text": "In-app",
-      "push_text": "Push"
+      "push_text": "Push",
+      "default_text": "General Settings",
+      "off_text": "Off",
+      "not_joined_the_community": {
+        "title": "Nothing to set up",
+        "description": "Join a community then set up the settings here."
+      }
+    },
+    "advanced_notifications_settings": {
+      "title": "Advanced Notification Settings",
+      "screen_title": "Advanced Settings",
+      "content": "Specific notification settings for each community and its inner groups",
+      "title_setup_community": "Set up for your communities",
+      "title_setup_group": "Set up for your groups",
+      "description_setup_group": "Default settings use your general notification settings until you set up specifically.",
+      "title_reset_to_default": "Reset to General settings",
+      "reset_to_default_tooltip": "Reset to use your general notification settings",
+      "text_enable_settings": "Enable settings",
+      "enable_settings_tooltip": "Use settings for this\nspecific group",
+      "search_community_title": "Select your community",
+      "search_placeholder": "Search community",
+      "search_group_placeholder": "Search group",
+      "search_group_title": "Select your group"
     }
   },
   "new_feature": {

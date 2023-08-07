@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   ActivityIndicator, RefreshControl, StyleSheet, View,
 } from 'react-native';
@@ -20,6 +20,8 @@ import Divider from '~/beinComponents/Divider';
 import NotiSettingItem from '../components/NotiSettingItem';
 import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 import { INotiSettings } from '~/interfaces/INotification';
+import useAdvancedNotiSettingsStore from '../AdvancedSettings/store';
+import useYourCommunitiesStore from '~/screens/communities/Communities/components/YourCommunities/store';
 
 const NotificationSettings = () => {
   const theme: ExtendedTheme = useTheme();
@@ -38,6 +40,18 @@ const NotificationSettings = () => {
   } = useNotiSettingsStore((state) => state.data);
   const loading = useNotiSettingsStore((state) => state.loading);
   const isRefreshing = useNotiSettingsStore((state) => state.isRefreshing);
+  const resetAdvancedSettingsStore = useAdvancedNotiSettingsStore((state) => state.reset);
+  const communityActions = useYourCommunitiesStore((state) => state.actions);
+
+  const advancedSettings = {
+    name: 'advancedSettings',
+    title: t('notification:advanced_notifications_settings:screen_title'),
+  };
+
+  useEffect(() => {
+    communityActions.getYourCommunities(true);
+    resetAdvancedSettingsStore();
+  }, []);
 
   const onRefresh = () => {
     actions.getConfigSettings(true);
@@ -52,6 +66,10 @@ const NotificationSettings = () => {
 
   const handlePressItem = (item: INotiSettings) => {
     rootNavigation.navigate(notiStack.notiSettingDetail, { name: item?.name });
+  };
+
+  const handlePressAdvancedSettings = () => {
+    rootNavigation.navigate(notiStack.advancedSettings);
   };
 
   const renderEmpty = () => (
@@ -127,6 +145,13 @@ const NotificationSettings = () => {
         iconName="Envelope"
         onPress={handlePressItem}
       />
+      <ViewSpacing height={spacing.padding.large} />
+      <NotiSettingItem
+        isDisable={!Boolean(generic?.enable)}
+        item={advancedSettings}
+        iconName="Sliders"
+        onPress={handlePressAdvancedSettings}
+      />
     </>
   );
 
@@ -136,9 +161,10 @@ const NotificationSettings = () => {
       isFullView
       backgroundColor={colors.gray5}
     >
-      <Header title={t('notification:notification_settings:title')} />
+      <Header title={t('notification:notification_settings:screen_title')} />
       <Animated.ScrollView
         style={styles.flex1}
+        contentContainerStyle={styles.flex1}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
         refreshControl={(
@@ -166,6 +192,7 @@ const createStyle = (theme: ExtendedTheme) => {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
+      backgroundColor: colors.white,
     },
     headerContainer: {
       backgroundColor: colors.white,

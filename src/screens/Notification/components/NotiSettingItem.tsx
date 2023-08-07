@@ -8,10 +8,11 @@ import Text from '~/baseComponents/Text';
 import { INotiSettings } from '~/interfaces/INotification';
 import Icon from '~/baseComponents/Icon';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import { IconType } from '~/resources/icons';
 
 interface NotiSettingItemProps {
     item: INotiSettings;
-    iconName: any;
+    iconName: IconType;
     isDisable?: boolean;
     isDisableToggle?: boolean;
     isShowSubTitle?: boolean;
