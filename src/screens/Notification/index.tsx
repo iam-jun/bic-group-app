@@ -99,7 +99,6 @@ const Notification = () => {
       buttonText: t('common:text_undo'),
       onButtonPress: () => { onPressUndo(id); },
       duration: 3000,
-      onClose: () => { onPressDelete(id); },
     };
     showToast(toastMessage);
 
