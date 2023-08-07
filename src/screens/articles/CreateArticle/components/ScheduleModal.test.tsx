@@ -33,11 +33,11 @@ describe('ScheduleModal', () => {
   it('should enable button schedule if date time is set', () => {
     const article = { ...mockArticle };
     article.status = PostStatus.DRAFT;
-    article.publishedAt = '2023-01-13T11:00:00.963Z';
+    article.scheduledAt = '2023-01-13T11:00:00.963Z';
 
     act(() => {
       usePostsStore.getState().actions.addToPosts({ data: article as IPost });
-      useCreateArticleStore.getState().actions.setPublishedAt(article.publishedAt);
+      useCreateArticleStore.getState().actions.setScheduledAt(article.scheduledAt);
     });
 
     const wrapper = renderWithRedux(
@@ -61,7 +61,7 @@ describe('ScheduleModal', () => {
 
     act(() => {
       usePostsStore.getState().actions.addToPosts({ data: article as IPost });
-      useCreateArticleStore.getState().actions.setPublishedAt('2023-01-11T11:00:00.963Z');
+      useCreateArticleStore.getState().actions.setScheduledAt('2023-01-11T11:00:00.963Z');
     });
 
     const wrapper = renderWithRedux(
