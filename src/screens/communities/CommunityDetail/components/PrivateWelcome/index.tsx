@@ -52,7 +52,7 @@ const PrivateWelcome = ({
         <CommunityJoinCancelButton style={styles.btnJoin} community={community} isMember={isMember} />
       </View>
 
-      <AboutContent profileInfo={community as any} showPrivate />
+      <AboutContent profileInfo={community as any} showPrivate groupId={community?.groupId} />
     </Animated.ScrollView>
   );
 };
