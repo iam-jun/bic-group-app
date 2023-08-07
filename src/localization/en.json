@@ -213,7 +213,7 @@
     "btn_go_back": "Back",
     "text_unsupport_feature": "We are not supporting this feature on mobile. Please see the detail on web version",
     "text_maintenance_title": "We are under maintenance.",
-    "text_maintenance_content": "We will be back at ",
+    "text_maintenance_content": "The platform is temporarily unavailable during maintenance time. We will be back at **(endAt)**\nWe apologize for any inconvenience and appreciate your continued support.",
     "text_select_file": "Select File",
     "content_unavailable": {
       "title": "This content isn’t available right now",
@@ -349,6 +349,7 @@
     "text_err_email_exist": "This email already exists. Please try another.",
     "text_agree_to_our": "Agree to our ",
     "text_privacy_terms": "Privacy & Terms",
+    "text_agree_to_terms_sigin": "By signing in to BIC Group, you agree to",
     "text_you_have_an_account": "You have an account? ",
     "text_sign_in_now": "Sign In now",
     "title_sign_up_success_modal": "Your account has been created successfully",
@@ -589,8 +590,9 @@
     "title_feed_content_posts": "Posts",
     "title_feed_content_articles": "Articles",
     "title_feed_content_series": "Series",
-    "title_install_chat": "App not found",
-    "text_desc_install_chat": "Please install BIC Chat",
+    "title_install_chat": "BIC Chat Not Found",
+    "text_desc_install_chat": "To utilize our Chat feature, you need to have the BIC Chat app on your device.",
+    "text_get_bic_chat": "Get BIC Chat",
     "newsfeed_search": {
       "text_cta_see_result_for_search_text": "See result for \"%SEARCH_TEXT%\"",
       "clear": "Clear all",

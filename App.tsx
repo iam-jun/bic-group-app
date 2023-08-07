@@ -2,7 +2,6 @@
 import 'intl-pluralrules';
 import React, { useEffect } from 'react';
 import { LogBox } from 'react-native';
-import CodePush from 'react-native-code-push';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { enableFreeze } from 'react-native-screens';
@@ -10,7 +9,6 @@ import i18Next from '~/localization';
 import Root from '~/Root';
 import mixPanelManager from '~/services/mixpanel';
 import { initSmartlook } from '~/services/smartlook';
-import useCodePushStore from '~/store/codePush';
 import rootSaga from '~/storeRedux/sagas';
 import Store from './src/storeRedux';
 import initFatalErrorHandler from '~/services/fatalErrorHandler';
@@ -35,14 +33,12 @@ initSmartlook();
 mixPanelManager.init();
 
 const App = () => {
-  const codePushActions = useCodePushStore((state) => state.actions);
   const remoteConfigActions = useRemoteConfigStore((state) => state.actions);
 
   useEffect(() => {
     initAmplify();
     initFirebaseMessaging();
     remoteConfigActions.getRemoteConfig();
-    codePushActions?.getUpdateMetaData?.();
   }, []);
 
   Store.sagaMiddleware.run(rootSaga);
@@ -58,9 +54,4 @@ const App = () => {
 
 const AppWithSentry = wrapWithSentry(App);
 
-const AppWithCodePush = CodePush({
-  updateDialog: false,
-  installMode: CodePush.InstallMode.ON_NEXT_RESTART,
-})(AppWithSentry);
-
-export default AppWithCodePush;
+export default AppWithSentry;
