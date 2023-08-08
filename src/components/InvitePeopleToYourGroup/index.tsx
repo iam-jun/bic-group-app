@@ -111,7 +111,6 @@ const InvitePeopleToYourGroup = (props: InvitePeopleToYourGroupProps) => {
       <View style={styles.inputIconContainer}>
         <SearchInput
           editable={!loading}
-          autoFocus
           value={searchText}
           autoComplete="off"
           placeholder={t('common:text_search_for_people')}
