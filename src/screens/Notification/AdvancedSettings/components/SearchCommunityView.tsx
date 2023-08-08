@@ -103,12 +103,12 @@ const SearchCommunityView = ({
       <FlatList
         data={ids}
         scrollEventThrottle={16}
-        keyboardDismissMode="interactive"
         keyboardShouldPersistTaps="handled"
         keyExtractor={(item) => `advanced_settings.search_communtiy.${item}`}
         renderItem={renderItem}
         ListEmptyComponent={renderEmpty}
         ListFooterComponent={renderListFooter}
+        onEndReachedThreshold={0.1}
         onEndReached={onLoadMore}
       />
     </SearchBaseView>

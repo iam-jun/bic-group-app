@@ -110,6 +110,7 @@ const SearchGroupView = ({
         ListEmptyComponent={renderEmpty}
         ListFooterComponent={renderListFooter}
         onEndReached={onLoadMore}
+        onEndReachedThreshold={0.1}
       />
     </SearchBaseView>
   );

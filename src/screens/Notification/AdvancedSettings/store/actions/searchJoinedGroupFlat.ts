@@ -2,6 +2,7 @@ import { IAdvancedNotiSettingsStore } from '../index';
 import showToastError from '~/store/helper/showToastError';
 import { IGetCommunityGroup } from '~/interfaces/IGroup';
 import notificationApi from '~/api/NotificationApi';
+import appConfig from '~/configs/appConfig';
 
 const searchJoinedGroupFlat = (set, get) => async (params: IGetCommunityGroup, isRefresh?:boolean) => {
   try {
@@ -21,6 +22,7 @@ const searchJoinedGroupFlat = (set, get) => async (params: IGetCommunityGroup, i
       listBy: 'flat',
       includeRootGroup: true,
       offset: isRefresh ? 0 : searchJoinedGroups.length,
+      limit: appConfig.limitGroupAdvancedSettings,
     };
 
     const response = await notificationApi.getGroupsAndGroupsSettings(id, newParams);

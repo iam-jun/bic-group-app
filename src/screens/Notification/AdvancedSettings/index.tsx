@@ -225,14 +225,16 @@ const AdvancedSettings = () => {
               data={joinedGroups}
               extraData={communitySettingData}
               scrollEventThrottle={16}
-              keyboardDismissMode="interactive"
+              initialNumToRender={20}
               keyboardShouldPersistTaps="handled"
               keyExtractor={(item) => `group.${item?.id}.${selectedCommunity?.id}`}
               renderItem={renderItem}
               ListHeaderComponent={renderHeader}
               ListEmptyComponent={renderEmpty}
               ListFooterComponent={renderListFooter}
+              onEndReachedThreshold={0.2}
               onEndReached={onLoadMore}
+              removeClippedSubviews
             />
           )
         )}

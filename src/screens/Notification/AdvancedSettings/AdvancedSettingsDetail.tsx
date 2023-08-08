@@ -49,7 +49,6 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
   const onRefresh = () => {
     actions.getGroupSettings([groupId]);
   };
-  console.log('>>>>>>>>>>>>>>>>>', groupId, data);
 
   const onChangeToggleAllowAll = (isChecked :boolean) => {
     const newChannels = {
