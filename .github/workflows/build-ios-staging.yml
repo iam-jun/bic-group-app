@@ -3,7 +3,7 @@ name: build-ios-staging
 on:
   push:
     tags:
-      - 'stg-*.*.*'
+      - 'stg-*'
 
 jobs:
   build-ios-staging:

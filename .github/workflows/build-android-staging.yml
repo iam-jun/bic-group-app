@@ -3,7 +3,7 @@ name: build-android-staging
 on:
   push:
     tags:
-      - 'stg-*.*.*'
+      - 'stg-*'
 
 jobs:
   build-android-staging:

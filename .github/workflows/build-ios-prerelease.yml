@@ -3,7 +3,7 @@ name: build-ios-prerelease
 on:
   push:
     tags:
-      - 'pre-*.*.*'
+      - 'pre-*'
 
 jobs:
   build-ios-prerelease:
