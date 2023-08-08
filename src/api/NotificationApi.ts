@@ -116,6 +116,10 @@ export const notificationApiConfig = {
       key: otherParams?.key?.trim?.() ? otherParams.key : undefined,
     },
   }),
+  generateAdvancedSettings: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/advanced/generate`,
+  }),
 };
 
 const notificationApi = {
@@ -164,6 +168,7 @@ const notificationApi = {
   getGroupsAndGroupsSettings: (communityId: string, params: IGetCommunityGroup) => withHttpRequestPromise(
     notificationApiConfig.getGroupsAndGroupsSettings, communityId, params,
   ),
+  generateAdvancedSettings: () => withHttpRequestPromise(notificationApiConfig.generateAdvancedSettings),
 };
 
 export default notificationApi;
