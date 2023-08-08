@@ -6,3 +6,4 @@ export { default as TakeQuizReview } from './TakeQuizReview';
 export { default as TakeQuizResult } from './TakeQuizResult';
 export { default as PreviewDraftQuizNotification } from './PreviewDraftQuizNotification';
 export { default as YourQuiz } from './YourQuiz';
+export { default as Scoreboard } from './Scoreboard';

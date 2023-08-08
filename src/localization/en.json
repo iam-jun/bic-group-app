@@ -1569,6 +1569,8 @@
     "enter_an_integer": "Please enter an integer",
     "title_quiz": "Quiz",
     "text_no_quiz_content": "There are no quiz now!",
+    "text_start_quiz": "Let’s get started!",
+    "text_view_report": "View Report",
     "gen_status_quiz_process_fail": "The quiz processing failed.",
     "gen_status_quiz_processing": "The quiz is currently being processed.",
     "gen_status_quiz_waiting_process": "The quiz is awaiting processing.",

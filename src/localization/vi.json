@@ -1508,6 +1508,8 @@
     "enter_an_integer": "Vui lòng nhập số nguyên",
     "title_quiz": "Quiz",
     "text_no_quiz_content": "Không có Quiz!",
+    "text_start_quiz": "Bắt đầu thôi!",
+    "text_view_report": "Xem báo cáo",
     "gen_status_quiz_process_fail": "Quá trình tạo quiz thất bại.",
     "gen_status_quiz_processing": "Đang trong quá trình tạo quiz.",
     "gen_status_quiz_waiting_process": "Chuẩn bị tạo quiz.",

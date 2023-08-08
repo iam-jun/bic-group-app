@@ -609,6 +609,14 @@ export const streamApiConfig = {
       answers: params?.answers,
     },
   }),
+  getQuizSummary: (quizId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${quizId}/summary`,
+  }),
+  getUsersParticipants: (quizId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${quizId}/participants`,
+  }),
   getQuizDetail: (idQuiz: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}quizzes/${idQuiz}`,
@@ -920,6 +928,12 @@ const streamApi = {
   ),
   updateAnwsers: (quizParticipantId: string, params: IParamsUpdateAnwsers) => withHttpRequestPromise(
     streamApiConfig.updateAnwsers, quizParticipantId, params,
+  ),
+  getQuizSummary: (quizId: string) => withHttpRequestPromise(
+    streamApiConfig.getQuizSummary, quizId,
+  ),
+  getUsersParticipants: (quizId: string) => withHttpRequestPromise(
+    streamApiConfig.getUsersParticipants, quizId,
   ),
   getQuizDetail: (idQuiz: string) => withHttpRequestPromise(
     streamApiConfig.getQuizDetail, idQuiz,
