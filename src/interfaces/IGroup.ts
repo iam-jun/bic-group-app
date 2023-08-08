@@ -311,3 +311,17 @@ export interface IPayloadPreviewSettings {
   groupId: string;
   settings: IGroupSettings;
 }
+export interface IPayloadInvitations {
+  targetId: string,
+  targetType: IInvitationsTargetType,
+  inviteeIds: string[]
+}
+
+export interface IParamsInvitations extends IPayloadInvitations {
+  onCallback: () => void;
+}
+
+export enum IInvitationsTargetType {
+  GROUP = 'GROUP',
+  GROUP_SET = 'GROUP_SET',
+}

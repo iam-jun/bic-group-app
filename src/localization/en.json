@@ -98,7 +98,6 @@
     "label_discard_changes": "Discard Changes",
     "text_not_saved_changes_warning": "Your changes haven’t been saved. Are you sure to discard changes?",
     "text_discard_warning": "If you discard now, you'll lose any changes that you've made",
-    "text_invite": "Invite",
     "text_search_not_found": "Not found",
     "title_group_add_member": {
       "1": "This person will be added to this group chat and group {0} also. Do you want to continue?",
@@ -243,7 +242,19 @@
     "text_send_request_join_successfully": "Sent request successfully",
     "edit_settings": "Edit Settings",
     "text_new": "New",
-    "text_empty": "Empty"
+    "text_empty": "Empty",
+    "text_invite_people_to_your_group": "Invite people to your group",
+    "text_search_for_people": "Search for people",
+    "text_selected_people": "Selected people",
+    "text_invite": "Invite",
+    "text_maximum": "Maximum {{count}}",
+    "text_you_have_seen_it_all": "You've it all",
+    "alert_quit_without_completing": {
+      "title": "Quit without completing?",
+      "content": "Invites won’t be sent and your selections won’t be saved.",
+      "button_keep_editing": "Keep Editing",
+      "button_quit": "Quit"
+    }
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -1304,7 +1315,8 @@
     "text_search_communities": "Search...",
     "member_tab_types": {
       "title_member_list": "Member List",
-      "title_member_requests": "Member Requests"
+      "title_member_requests": "Member Requests",
+      "title_invited_people": "Invited People"
     },
     "join_request_setting": {
       "title": "Joining Approval Required",

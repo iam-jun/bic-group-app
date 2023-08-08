@@ -6,6 +6,7 @@ import {
   IParamsGetJoinedAllGroups,
   IParamsGetManagedCommunityAndGroup,
   IPayloadGroupSchemeAssignments,
+  IPayloadInvitations,
   IPayloadPreviewSettings,
   IPayloadUpdateGroupJoinSetting,
   IScheme,
@@ -488,6 +489,14 @@ export const groupsApiConfig = {
     method: 'post',
     data: params?.settings,
   }),
+  invitations: (
+    params: IPayloadInvitations,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}invitations`,
+    method: 'post',
+    data: { ...params },
+  }),
 };
 
 const groupApi = {
@@ -770,6 +779,9 @@ const groupApi = {
   getSettings: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getSettings, groupId),
   previewSettings: (params: IPayloadPreviewSettings) => withHttpRequestPromise(
     groupsApiConfig.previewSettings, params,
+  ),
+  invitations: (params: IPayloadInvitations) => withHttpRequestPromise(
+    groupsApiConfig.invitations, params,
   ),
 };
 

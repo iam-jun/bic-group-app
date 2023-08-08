@@ -43,7 +43,6 @@ import { IButtonMarkAsReadState } from '~/components/posts/ButtonMarkAsRead/stor
 import { ICreatePostState } from '~/screens/post/CreatePost/store';
 import { ILinkPreviewState } from './linkPreview';
 import { ISeriesContentModalState } from '~/components/series/SeriesContentModal/store';
-import { IGroupJoinableUsersState } from '~/screens/groups/GroupMembers/AddMembersToGroup/store';
 import { ISelectSeriesState } from '~/components/SelectSeries/store';
 import { ISelectTagsState } from '~/components/SelectTags/store';
 import { IValidateSeriesTags } from '~/components/ValidateSeriesTags/store';
@@ -59,6 +58,7 @@ import { IUserBadgesState } from '~/screens/Menu/UserProfile/fragments/BadgeColl
 import { IMembershipPolicySettingsState } from '~/screens/groups/MembershipPolicySettings/store';
 import { IPreviewJoinableGroupState } from '~/components/PreviewJoinableGroup/store';
 import { INotiSettingsStore } from '~/screens/Notification/NotiSettings/store';
+import { IGroupJoinableUsersState } from '~/components/InvitePeopleToYourGroup/store';
 
 export interface BicStore {
   entities: {
@@ -80,6 +80,9 @@ export interface BicStore {
       buttonMarkAsReadStore: IButtonMarkAsReadState;
     };
   };
+  InvitePeopleToYourGroup: {
+    groupJoinableUsersStore: IGroupJoinableUsersState;
+  }
 
   // screens
   post: {
@@ -117,7 +120,6 @@ export interface BicStore {
     };
     GroupMembers: {
       groupMemberStore: IGroupMemberState;
-      addMembersToGroupStore: IGroupJoinableUsersState;
     };
     GroupDetail: {
       groupDetailStore: IGroupDetailState;

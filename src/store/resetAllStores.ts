@@ -52,7 +52,6 @@ import useCreatePostStore from '~/screens/post/CreatePost/store';
 import useLinkPreviewStore from './linkPreview';
 import useSeriesContentModalStore from '~/components/series/SeriesContentModal/store';
 import useAppStore from './app';
-import useGroupJoinableUsersStore from '~/screens/groups/GroupMembers/AddMembersToGroup/store';
 import useSelectSeriesStore from '~/components/SelectSeries/store';
 import useSelectTagsStore from '~/components/SelectTags/store';
 import useValidateSeriesTagsStore from '~/components/ValidateSeriesTags/store';
@@ -68,6 +67,7 @@ import useUserBadge from '~/screens/Menu/UserProfile/fragments/BadgeCollection/s
 import useMembershipPolicySettingsStore from '~/screens/groups/MembershipPolicySettings/store';
 import usePreviewJoinableGroupStore from '~/components/PreviewJoinableGroup/store';
 import useNotiSettingsStore from '~/screens/Notification/NotiSettings/store';
+import useGroupJoinableUsersStore from '~/components/InvitePeopleToYourGroup/store';
 
 export const excludedStore = [
   useAuthController,
@@ -85,6 +85,7 @@ const stores = [
 
   // components
   useReportContentStore,
+  useGroupJoinableUsersStore,
 
   // screens
   useHomeStore,
@@ -104,7 +105,6 @@ const stores = [
   useYourContentStore,
   useArticleScheduleContentStore,
   useCreatePostStore,
-  useGroupJoinableUsersStore,
 
   // others
   useChatStore,

@@ -3,11 +3,12 @@ import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import i18next from 'i18next';
 
+import { cloneDeep } from 'lodash';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IGroupMembers } from '~/interfaces/IGroup';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Header, { HeaderProps } from '~/beinComponents/Header';
+import Header from '~/beinComponents/Header';
 import useNetworkStore from '~/store/network';
 import networkSelectors from '~/store/network/selectors';
 import MemberOptionsMenu from './components/GroupMemberOptionsMenu';
@@ -23,6 +24,7 @@ import useGroupMemberStore, { IGroupMemberState } from './store';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 import useGroupDetailStore from '../GroupDetail/store';
+import { onPressButtonInvite } from '~/components/InvitePeopleToYourGroup/helper';
 
 const _GroupMembers = ({ route }: any) => {
   const { groupId, targetIndex, isMemberCommunity } = route.params;
@@ -30,7 +32,6 @@ const _GroupMembers = ({ route }: any) => {
   const [selectedMember, setSelectedMember] = useState<IGroupMembers>();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(targetIndex || 0);
-  const { ids } = useGroupMemberStore((state) => state.groupMemberRequests);
 
   const [needReloadWhenReconnected, setNeedReloadWhenReconnected] = useState(false);
   const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
@@ -126,25 +127,41 @@ const _GroupMembers = ({ route }: any) => {
     return null;
   };
 
-  const showAddButton = () => {
-    if (canAddMember) {
-      // don't show button Add on header when there's button Add Members on Member request screen
-      if (selectedIndex === 1 && ids.length === 0) return false;
-      return true;
-    }
-
-    return false;
-  };
-
-  const headerProps: HeaderProps = showAddButton() && {
-    buttonText: 'common:text_add',
-    onPressButton: onPressAdd,
-    buttonProps: { icon: 'Plus', style: styles.addButton, useI18n: true },
-  };
+  const isShowInvitedPeopleTabs = canAddMember;
+  const isShowMemberRequestsTab = canApproveRejectJoiningRequests || canEditJoinSetting;
 
   const showSearchMember = isMemberCommunity && {
     icon: 'search' as IconType,
     onPressIcon: onPressSearch,
+  };
+
+  const showButtonInvite = isShowInvitedPeopleTabs && {
+    buttonText: 'common:text_invite',
+    buttonProps: { useI18n: true, icon: 'Plus' as IconType, iconSize: 14 },
+    onPressButton: () => onPressButtonInvite(groupId),
+  };
+
+  const renderTabs = () => {
+    const memberTabsClone = cloneDeep(MEMBER_TABS);
+    if (!isShowMemberRequestsTab && !isShowInvitedPeopleTabs) return null;
+
+    if (isShowMemberRequestsTab && !isShowInvitedPeopleTabs) {
+      memberTabsClone.splice(1, 1);
+    } else if (!isShowMemberRequestsTab && isShowInvitedPeopleTabs) {
+      memberTabsClone.splice(2, 1);
+    }
+
+    return (
+      <View style={styles.tabContainer}>
+        <Tab
+          buttonProps={{ size: 'large', type: 'primary', useI18n: true }}
+          data={memberTabsClone}
+          onPressTab={onPressTab}
+          activeIndex={selectedIndex}
+          isScrollToIndex
+        />
+      </View>
+    );
   };
 
   return (
@@ -153,19 +170,10 @@ const _GroupMembers = ({ route }: any) => {
         titleTextProps={{ useI18n: true }}
         title="groups:title_members_other"
         {...showSearchMember}
-        {...headerProps}
+        {...showButtonInvite}
       />
 
-      {(!!canApproveRejectJoiningRequests || !!canEditJoinSetting) && (
-        <View style={styles.tabContainer}>
-          <Tab
-            buttonProps={{ size: 'large', type: 'primary', useI18n: true }}
-            data={MEMBER_TABS}
-            onPressTab={onPressTab}
-            activeIndex={selectedIndex}
-          />
-        </View>
-      )}
+      {renderTabs()}
 
       <View style={styles.memberList}>
         {renderContent()}

@@ -213,7 +213,19 @@
     "text_send_request_join_successfully": "Gửi yêu cầu thành công",
     "edit_settings": "Cài đặt",
     "text_new": "Mới",
-    "text_empty": "Rỗng"
+    "text_empty": "Rỗng",
+    "text_invite_people_to_your_group": "Mời mọi người vào nhóm của bạn",
+    "text_search_for_people": "Tìm người",
+    "text_selected_people": "Những người được chọn",
+    "text_invite": "Mời",
+    "text_maximum": "Tối đa {{count}}",
+    "text_you_have_seen_it_all": "Bạn có tất cả",
+    "alert_quit_without_completing": {
+      "title": "Thoát mà không hoàn thành?",
+      "content": "Lời mời sẽ không được gửi và lựa chọn của bạn sẽ không được lưu.",
+      "button_keep_editing": "Tiếp tục chỉnh sửa",
+      "button_quit": "Thoát"
+    }
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -1247,7 +1259,8 @@
     "text_search_communities": "Tìm kiếm...",
     "member_tab_types": {
       "title_member_list": " Danh sách thành viên",
-      "title_member_requests": "Yêu cầu tham gia"
+      "title_member_requests": "Yêu cầu tham gia",
+      "title_invited_people": "Người được mời"
     },
     "join_request_setting": {
       "title": "Yêu cầu phê duyệt để được tham gia",

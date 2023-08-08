@@ -13,7 +13,7 @@ const apiUrls = {
 
 export const apiVersionId = {
   content: '1.7.0',
-  group: '1.0.0',
+  group: '1.1.0',
   user: undefined,
   notification: undefined,
 };

@@ -21,7 +21,6 @@ export enum PermissionKey {
   CUD_TAGS = 'cud_tags',
 
   // Management
-  INVITE_MEMBER = 'invite_member',
   ADD_MEMBER = 'add_member',
   REMOVE_MEMBER = 'remove_member',
   APPROVE_REJECT_JOINING_REQUESTS = 'approve_reject_jr',
