@@ -8,31 +8,36 @@ import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import spacing from '~/theme/spacing';
 import Text from '~/baseComponents/Text';
-import { Radio } from '~/baseComponents';
+import { Radio, Button } from '~/baseComponents';
 import usePersonalPrivacy from '../store';
-import { PERSONAL_INFORMATION_VISIBILITY_TYPE, PERSONAL_INFORMATION_VISIBILITY_TYPES } from '~/constants/privacyCenter';
+import { INVITATION_PRIVACY_TYPE, INVITATION_PRIVACY_TYPES } from '~/constants/privacyCenter';
 import Divider from '~/beinComponents/Divider';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 interface IRadioItem {
-    id: PERSONAL_INFORMATION_VISIBILITY_TYPE;
+    id: INVITATION_PRIVACY_TYPE;
     title: string;
     description: string;
 }
 
-const PersonalInfoVisibility = () => {
+const InvitationPrivacy = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const { colors } = theme;
 
   const actions = usePersonalPrivacy((state) => state.actions);
-  const visibilityPrivacy = usePersonalPrivacy((state) => state.visibilityPrivacy);
+  const invitationPrivacy = usePersonalPrivacy((state) => state.invitationPrivacy);
 
   useEffect(() => {
     actions.getPersonalPrivacySettings();
   }, []);
 
   const onChangeSetting = (item: IRadioItem) => {
-    actions.editPersonalInfoVisibility(item.id);
+    actions.editInvitationPrivacy(item.id);
+  };
+
+  const goToProfile = () => {
+    // TODO: go to profile
   };
 
   const renderRadioItem = (item: IRadioItem) => {
@@ -40,9 +45,9 @@ const PersonalInfoVisibility = () => {
     return (
       <View style={styles.radioItemContainer}>
         <Radio
-          key={`personal_info_visibility.raido_${id}`}
-          testID="personal_information_visibility.raido"
-          isChecked={Boolean(visibilityPrivacy === id)}
+          key={`invitation_privacy.raido_${id}`}
+          testID="invitation_privacy.raido"
+          isChecked={Boolean(invitationPrivacy === id)}
           onPress={() => onChangeSetting(item)}
           style={styles.radio}
         />
@@ -59,26 +64,31 @@ const PersonalInfoVisibility = () => {
   };
 
   return (
-    <ScreenWrapper testID="personal_information_visibility" isFullView>
-      <Header title={t('settings:privacy_center:personal_information_visibility:title')} />
+    <ScreenWrapper testID="invitation_privacy" isFullView>
+      <Header title={t('settings:privacy_center:invitation_privacy:title')} />
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <Text.BodyS useI18n color={colors.neutral40}>
-            settings:privacy_center:personal_information_visibility:description
+            settings:privacy_center:invitation_privacy:screen_description
           </Text.BodyS>
         </View>
         <View style={styles.optionsContainer}>
           <Divider />
-          {renderRadioItem(PERSONAL_INFORMATION_VISIBILITY_TYPES[0])}
-          {renderRadioItem(PERSONAL_INFORMATION_VISIBILITY_TYPES[1])}
-          {renderRadioItem(PERSONAL_INFORMATION_VISIBILITY_TYPES[2])}
+          {renderRadioItem(INVITATION_PRIVACY_TYPES[0])}
+          {renderRadioItem(INVITATION_PRIVACY_TYPES[1])}
+          <ViewSpacing height={spacing.margin.large} />
+          <Button onPress={goToProfile}>
+            <Text.LinkS>
+              {t('settings:privacy_center:invitation_privacy:view_all_inviations')}
+            </Text.LinkS>
+          </Button>
         </View>
       </View>
     </ScreenWrapper>
   );
 };
 
-export default PersonalInfoVisibility;
+export default InvitationPrivacy;
 
 const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;

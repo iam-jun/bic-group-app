@@ -585,6 +585,15 @@
         "community_members_description": "People in the same community with you can see your information.",
         "only_me_type": "Only Me",
         "only_me_description": "No one can see your information."
+      },
+      "invitation_privacy": {
+        "title": "Invitation Privacy",
+        "screen_description": "Manage the invitation from the group or community in the way you want.",
+        "manual_acceptance_type": "Manual Acceptance",
+        "manual_acceptance_description": "You can review and decide whether accept or decline.",
+        "hide_all_inviations_type": "Hide All Invitations",
+        "hide_all_inviations_description": "Turn off all notifications about invitations, you can still review them later.",
+        "view_all_inviations": "View all Invitations"
       }
     },
     "text_no_experience_to_show": "No experience to show",

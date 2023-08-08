@@ -546,6 +546,15 @@
         "community_members_description": "Những người trong cùng một cộng đồng với bạn có thể xem thông tin của bạn.",
         "only_me_type": "Chỉ mình tôi",
         "only_me_description": "Không ai có thể xem thông tin của bạn."
+      },
+      "invitation_privacy": {
+        "title": "Quyền riêng tư của lời mời",
+        "screen_description": "Quản lý lời mời từ nhóm hoặc cộng đồng theo cách bạn muốn.",
+        "manual_acceptance_type": "Chấp nhận thủ công",
+        "manual_acceptance_description": "Bạn có thể xem xét và quyết định chấp nhận hay từ chối.",
+        "hide_all_inviations_type": "Ẩn tất cả lời mời",
+        "hide_all_inviations_description": "Tắt tất cả các thông báo về lời mời, bạn vẫn có thể xem lại sau.",
+        "view_all_inviations": "Xem tất cả Thư mời"
       }
     },
     "text_no_experience_to_show": "Không có kinh nghiệm để hiển thị",

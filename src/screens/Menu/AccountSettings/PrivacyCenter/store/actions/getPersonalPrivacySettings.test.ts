@@ -1,11 +1,11 @@
 import { act, renderHook } from '~/test/testUtils';
 import useModalStore from '~/store/modal';
-import useVisibilityPrivacyStore from '../index';
+import usePersonalPrivacy from '../index';
 import { mockPersonalInfoVisibilityResponse } from '~/test/mock_data/privacyCenter';
 import userApi from '~/api/UserApi';
 import { PERSONAL_INFORMATION_VISIBILITY_TYPE } from '~/constants/privacyCenter';
 
-describe('getPersonalInfoVisibility function', () => {
+describe('getPersonalPrivacySettings function', () => {
   afterEach(() => {
     jest.runOnlyPendingTimers(); // you must add this
     jest.useRealTimers(); // you must add this
@@ -13,15 +13,15 @@ describe('getPersonalInfoVisibility function', () => {
 
   it('should get personal info visibility success', () => {
     const response = mockPersonalInfoVisibilityResponse;
-    const spyApi = jest.spyOn(userApi, 'getVisibilityPrivacy').mockImplementation(
+    const spyApi = jest.spyOn(userApi, 'getPersonalPrivacySettings').mockImplementation(
       () => Promise.resolve(response) as any,
     );
 
     jest.useFakeTimers();
 
-    const { result } = renderHook(() => useVisibilityPrivacyStore((state) => state));
+    const { result } = renderHook(() => usePersonalPrivacy((state) => state));
     act(() => {
-      result.current.actions.getPersonalInfoVisibility();
+      result.current.actions.getPersonalPrivacySettings();
     });
     expect(result.current.loading).toBeTruthy();
     expect(spyApi).toBeCalled();
@@ -42,15 +42,15 @@ describe('getPersonalInfoVisibility function', () => {
       data: {
       },
     };
-    const spyApi = jest.spyOn(userApi, 'getVisibilityPrivacy').mockImplementation(
+    const spyApi = jest.spyOn(userApi, 'getPersonalPrivacySettings').mockImplementation(
       () => Promise.resolve(response) as any,
     );
 
     jest.useFakeTimers();
 
-    const { result } = renderHook(() => useVisibilityPrivacyStore((state) => state));
+    const { result } = renderHook(() => usePersonalPrivacy((state) => state));
     act(() => {
-      result.current.actions.getPersonalInfoVisibility();
+      result.current.actions.getPersonalPrivacySettings();
     });
     expect(result.current.loading).toBeTruthy();
     expect(spyApi).toBeCalled();
@@ -64,7 +64,7 @@ describe('getPersonalInfoVisibility function', () => {
 
   it('should get personal info visibility throw error and should show toast', () => {
     const error = 'internal error';
-    const spyApi = jest.spyOn(userApi, 'getVisibilityPrivacy').mockImplementation(
+    const spyApi = jest.spyOn(userApi, 'getPersonalPrivacySettings').mockImplementation(
       () => Promise.reject(error) as any,
     );
     const showToast = jest.fn();
@@ -72,11 +72,11 @@ describe('getPersonalInfoVisibility function', () => {
     jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
-    const { result } = renderHook(() => useVisibilityPrivacyStore((state) => state));
+    const { result } = renderHook(() => usePersonalPrivacy((state) => state));
 
     act(() => {
       try {
-        result.current.actions.getPersonalInfoVisibility();
+        result.current.actions.getPersonalPrivacySettings();
       } catch (e) {
         expect(e).toBeInstanceOf(TypeError);
         expect(e).toBe(error);

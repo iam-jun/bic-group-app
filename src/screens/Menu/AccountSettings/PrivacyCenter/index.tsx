@@ -24,6 +24,32 @@ const PrivacyCenter = () => {
     rootNavigation.navigate(menuStack.personalInfoVisibility);
   };
 
+  const goToInvitationPrivacy = () => {
+    rootNavigation.navigate(menuStack.invitationPrivacy);
+  };
+
+  const renderItem = (
+    title: string,
+    testID: string,
+    onPress: () => void,
+  ) => (
+    <Button
+      testID={testID}
+      style={styles.settingRow}
+      onPress={onPress}
+    >
+      <Text.BodyMMedium useI18n color={colors.neutral80}>
+        {title}
+        {' '}
+        settings:privacy_center:personal_information_visibility:title
+      </Text.BodyMMedium>
+      <Icon
+        size={16}
+        icon="ChevronRight"
+      />
+    </Button>
+  );
+
   return (
     <ScreenWrapper testID="privacy_center" isFullView>
       <Header title={t('settings:privacy_center:screen_title')} />
@@ -33,19 +59,16 @@ const PrivacyCenter = () => {
             settings:privacy_center:screen_description
           </Text.BodyS>
         </View>
-        <Button
-          testID="privacy_center.personal_information_visibility"
-          style={styles.settingRow}
-          onPress={goToPersonalInfoVisibility}
-        >
-          <Text.BodyMMedium useI18n color={colors.neutral80}>
-            settings:privacy_center:personal_information_visibility:title
-          </Text.BodyMMedium>
-          <Icon
-            size={16}
-            icon="ChevronRight"
-          />
-        </Button>
+        {renderItem(
+          'settings:privacy_center:invitation_privacy:title',
+          'privacy_center.invitation_privacy',
+          goToInvitationPrivacy,
+        )}
+        {renderItem(
+          'settings:privacy_center:personal_information_visibility:title',
+          'privacy_center.personal_information_visibility',
+          goToPersonalInfoVisibility,
+        )}
       </View>
     </ScreenWrapper>
   );
