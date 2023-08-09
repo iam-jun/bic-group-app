@@ -23,13 +23,13 @@ jobs:
           echo "Number of Commits: ${{ github.event.pull_request.commits }}"
           
           if [[ "${{ github.event.pull_request.base.ref }}" == staging* ]]; then
-            fastlane notice_build_task env:"stg"
+            bundle exec fastlane notice_build_task env:"stg"
           elif [[ "${{ github.event.pull_request.base.ref }}" == release* ]]; then
-            fastlane notice_build_task env:"rel"
+            bundle exec fastlane notice_build_task env:"rel"
           elif [[ "${{ github.event.pull_request.base.ref }}" == master* ]]; then
-            fastlane notice_build_task env:"pro"
+            bundle exec fastlane notice_build_task env:"pro"
           elif [[ "${{ github.event.pull_request.base.ref }}" == test* ]]; then
-            fastlane notice_build_task env:"stg"
+            bundle exec fastlane notice_build_task env:"stg"
           else
             echo "No matching conditions for branch ${GITHUB_REF}"
           fi
