@@ -60,9 +60,9 @@ const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       paddingHorizontal: spacing.padding.large,
-      // paddingVertical: 10,
     },
     content: {
+      paddingVertical: spacing.padding.small,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
@@ -77,15 +77,13 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingVertical: spacing.padding.xTiny,
       paddingHorizontal: spacing.padding.tiny,
       borderRadius: spacing.borderRadius.base,
-      alignSelf: 'center'
+      alignSelf: 'flex-start'
     },
     pass: {
       backgroundColor: colors.purple2,
-      // width: 34,
     },
     fail: {
       backgroundColor: colors.red2,
-      // width: 28,
     },
     textStatus: {
       fontSize: 11,

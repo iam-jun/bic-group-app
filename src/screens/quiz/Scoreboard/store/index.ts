@@ -42,7 +42,7 @@ const scoreboardStore = (set, get) => ({
   ...initState,
 
   actions: {
-    getQuizSummary: getQuizSummary(set, get),
+    getQuizSummary: getQuizSummary(set),
     getUsersParticipants: getUsersParticipants(set, get),
   },
 

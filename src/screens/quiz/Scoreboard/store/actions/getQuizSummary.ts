@@ -2,7 +2,7 @@ import streamApi from '~/api/StreamApi';
 import { IScoreboardState } from '../index';
 import showToastError from '~/store/helper/showToastError';
 
-const getQuizSummary = (set, get) => async (contentId: string) => {
+const getQuizSummary = (set) => async (contentId: string) => {
   try {
     const response = await streamApi.getQuizSummary(contentId);
 

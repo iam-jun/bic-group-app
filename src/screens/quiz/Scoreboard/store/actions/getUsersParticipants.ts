@@ -2,6 +2,7 @@ import streamApi from '~/api/StreamApi';
 import { IScoreboardState } from '../index';
 import showToastError from '~/store/helper/showToastError';
 import { IParamsGetUsersParticipants, IPayloadGetUsersParticipants } from '~/interfaces/IQuiz';
+import { timeOut } from '~/utils/common';
 
 const getUsersParticipants = (set, get) => async (payload: IPayloadGetUsersParticipants) => {
   const { contentId, isRefresh = true } = payload;
@@ -25,9 +26,11 @@ const getUsersParticipants = (set, get) => async (payload: IPayloadGetUsersParti
     }, 'getUsersParticipants');
 
     const params = {
+      limit: 15,
       endCursor: endCursorParams,
     } as IParamsGetUsersParticipants;
     const response = await streamApi.getUsersParticipants(contentId, params);
+    await timeOut(200);
 
     const result = response?.data?.list || [];
     const newData = isRefresh ? result || [] : listUserParticipants.concat(result || []);

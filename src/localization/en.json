@@ -1579,6 +1579,8 @@
     "text_failed": "Failed",
     "text_name": "Name",
     "text_percentage": "Percentage",
+    "title_empty_result": "Empty list!",
+    "text_empty_result": "There haven't been any participants in the quiz. Please come back later.",
     "gen_status_quiz_process_fail": "The quiz processing failed.",
     "gen_status_quiz_processing": "The quiz is currently being processed.",
     "gen_status_quiz_waiting_process": "The quiz is awaiting processing.",

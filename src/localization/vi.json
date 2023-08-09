@@ -1518,6 +1518,8 @@
     "text_failed": "Thất bại",
     "text_name": "Tên",
     "text_percentage": "Tỉ lệ",
+    "title_empty_result": "Không có kết quả!",
+    "text_empty_result": "Không có bất kỳ người tham gia trong bài kiểm tra. Vui lòng quay lại sau.",
     "gen_status_quiz_process_fail": "Quá trình tạo quiz thất bại.",
     "gen_status_quiz_processing": "Đang trong quá trình tạo quiz.",
     "gen_status_quiz_waiting_process": "Chuẩn bị tạo quiz.",
