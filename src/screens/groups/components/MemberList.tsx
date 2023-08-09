@@ -56,13 +56,14 @@ const MemberList = ({
     return <NoSearchResultsFound />;
   };
 
-  const renderSectionHeader = ({ section: { title, userCount } }: any) => (
-    <View style={styles.sectionHeader}>
-      <Text.H4 color={colors.neutral40}>
-        {`${title} · ${formatLargeNumber(userCount)}`}
-      </Text.H4>
-    </View>
-  );
+  const renderSectionHeader = ({ section: { title, userCount } }: any) => {
+    const style = title === 'Group Admins' ? styles.sectionHeaderFirst : styles.sectionHeader;
+    return (
+      <View style={style}>
+        <Text.H4 color={colors.neutral40}>{`${title} · ${formatLargeNumber(userCount)}`}</Text.H4>
+      </View>
+    );
+  };
 
   const renderListFooter = () => {
     if (!loading && !loadingBlocking) return <ViewSpacing height={insets.bottom || spacing.padding.large} />;
@@ -128,6 +129,11 @@ const createStyles = (theme: ExtendedTheme) => {
       marginVertical: spacing.margin.large,
     },
     sectionHeader: {
+      paddingHorizontal: spacing.padding.large,
+      paddingTop: spacing.padding.large,
+      paddingBottom: spacing.padding.base,
+    },
+    sectionHeaderFirst: {
       paddingHorizontal: spacing.padding.large,
       paddingBottom: spacing.padding.base,
     },
