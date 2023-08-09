@@ -1,4 +1,8 @@
-import { IAudienceGroup, PostType } from './IPost';
+import {
+  IAudienceGroup,
+  IAudienceUser,
+  PostType,
+} from './IPost';
 
 export enum QuizStatus {
   PENDING = 'PENDING',
@@ -158,4 +162,38 @@ export interface ISaveAnswerTakeQuiz {
   onSuccess?: () => void;
   onErrors?: () => void;
   isFinished?: boolean;
+}
+
+export type ParticipantDetail = {
+  total: number;
+  pass: number;
+  fail: number;
+}
+
+export interface ISummaryDetail {
+  contentId: string;
+  participants: ParticipantDetail;
+}
+
+export enum ResultStatus {
+  PASS = 'PASS',
+  FAIL = 'FAIL',
+}
+
+export interface IPayloadGetUsersParticipants {
+  contentId: string;
+  isRefresh?: boolean;
+}
+
+export interface IParamsGetUsersParticipants {
+  limit?: number;
+  endCursor?: string;
+}
+
+export interface IUserParticipant {
+  id: string;
+  quizId: string;
+  score: number;
+  status: ResultStatus;
+  actor: IAudienceUser;
 }

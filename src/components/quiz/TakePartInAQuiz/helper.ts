@@ -19,3 +19,7 @@ export const onPressTakeQuiz = (quizId, contentId) => {
     onConfirm: () => onStartTakeQuiz(quizId, contentId),
   });
 };
+
+export const onViewReport = (contentId: string) => {
+  navigation.navigate(quizStack.scoreboard, { contentId });
+};

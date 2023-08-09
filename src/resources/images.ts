@@ -23,6 +23,7 @@ const images = {
   img_thumbnail_take_part_in_a_quiz: require('../../assets/images/img_thumbnail_take_part_in_a_quiz.png'),
   img_error: require('../../assets/images/img_error.png'),
   img_congrats: require('../../assets/images/img_congrats.png'),
+  img_empty_result_quiz: require('../../assets/images/img_no_result.png'),
 };
 
 export default images;

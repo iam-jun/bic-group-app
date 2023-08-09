@@ -9,16 +9,21 @@ import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Image from '~/components/Image';
 import { useBaseHook } from '~/hooks';
+import { useUserIdAuth } from '~/hooks/auth';
 import { QuizHighestScore, QuizPost, QuizStatus } from '~/interfaces/IQuiz';
+import { IAudienceUser } from '~/interfaces/IPost';
 import images from '~/resources/images';
 import { spacing } from '~/theme';
-import { onPressTakeQuiz } from './helper';
+import { onPressTakeQuiz, onViewReport } from './helper';
 import CirclePercentage from '~/baseComponents/CirclePercentage';
+import { fontFamilies } from '~/theme/fonts';
+import { sizes } from '~/theme/dimension';
 
 type TakePartInAQuizProps = {
   quiz: QuizPost;
   contentId: string;
   quizHighestScore: QuizHighestScore;
+  actor: IAudienceUser;
   style?: StyleProp<ViewStyle>;
   shouldShowDraftQuiz?: boolean;
 };
@@ -27,6 +32,7 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
   quiz,
   contentId,
   quizHighestScore,
+  actor,
   style,
   shouldShowDraftQuiz,
 }) => {
@@ -40,11 +46,39 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
   const { colors } = theme;
   const styles = createStyle(theme);
   const { t } = useBaseHook();
+  const userId = useUserIdAuth();
+
+  const isActor = actor?.id === userId;
+  const shouldBeHiddenViewReport = !isActor || !quiz;
 
   const onPress = () => {
     if (canTakeQuiz) {
       onPressTakeQuiz(id, contentId);
     }
+  };
+
+  const onPressViewReport = () => {
+    if (canTakeQuiz) {
+      onViewReport(contentId);
+    }
+  };
+
+  const renderTextViewReport = () => {
+    if (!canTakeQuiz) return null;
+
+    if (shouldBeHiddenViewReport) {
+      return (
+        <Text.ParagraphS useI18n color={colors.neutral40}>
+          quiz:text_start_quiz
+        </Text.ParagraphS>
+      );
+    }
+
+    return (
+      <Text style={styles.textViewReport} useI18n onPress={onPressViewReport}>
+        quiz:text_view_report
+      </Text>
+    );
   };
 
   const renderResult = () => {
@@ -86,12 +120,15 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
           >
             {!!title ? title : t('quiz:empty_title_quiz')}
           </Text.SubtitleM>
+          <ViewSpacing height={spacing.margin.tiny} />
           <Text.BodyXS
             color={!!description ? colors.neutral40 : colors.neutral20}
             numberOfLines={2}
           >
             {!!description ? description : t('quiz:empty_description_quiz')}
           </Text.BodyXS>
+          <ViewSpacing height={spacing.margin.tiny} />
+          {renderTextViewReport()}
         </View>
         <ViewSpacing width={spacing.margin.small} />
         <View style={styles.viewResult}>
@@ -130,6 +167,12 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingHorizontal: spacing.padding.base,
       paddingVertical: spacing.padding.tiny,
       borderRadius: spacing.borderRadius.base,
+    },
+    textViewReport: {
+      fontFamily: fontFamilies.BeVietnamProLight,
+      color: colors.blue50,
+      textDecorationLine: 'underline',
+      fontSize: sizes.bodyS,
     },
   });
 };

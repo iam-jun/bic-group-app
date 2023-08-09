@@ -8,6 +8,7 @@ import {
   TakeQuizResult,
   PreviewDraftQuizNotification,
   YourQuiz,
+  Scoreboard,
 } from '~/screens/quiz';
 
 const quizScreens = {
@@ -20,6 +21,7 @@ const quizScreens = {
   'take-quiz-result': TakeQuizResult,
   'preview-draft-quiz-notification': PreviewDraftQuizNotification,
   'your-quiz': YourQuiz,
+  'score-board': Scoreboard,
 };
 
 export default quizScreens;

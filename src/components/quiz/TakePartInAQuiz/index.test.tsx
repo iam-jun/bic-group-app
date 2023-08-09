@@ -25,6 +25,7 @@ describe('TakePartInAQuiz', () => {
         quiz={quiz as QuizPost}
         contentId="123"
         quizHighestScore={quizHighestScore}
+        actor={postWithQuiz.data.actor}
       />,
     );
 
@@ -41,6 +42,7 @@ describe('TakePartInAQuiz', () => {
         quiz={quiz as QuizPost}
         contentId="123"
         quizHighestScore={quizHighestScore}
+        actor={postWithQuiz.data.actor}
       />,
     );
 
@@ -62,6 +64,7 @@ describe('TakePartInAQuiz', () => {
         quiz={quiz as QuizPost}
         contentId="123"
         quizHighestScore={quizHighestScore}
+        actor={postWithQuiz.data.actor}
       />,
     );
 
@@ -83,6 +86,7 @@ describe('TakePartInAQuiz', () => {
         quiz={quiz as QuizPost}
         contentId="123"
         quizHighestScore={quizHighestScore}
+        actor={postWithQuiz.data.actor}
       />,
     );
 
@@ -106,6 +110,7 @@ describe('TakePartInAQuiz', () => {
         quiz={quiz as QuizPost}
         contentId="123"
         quizHighestScore={quizHighestScore}
+        actor={postWithQuiz.data.actor}
       />,
     );
 

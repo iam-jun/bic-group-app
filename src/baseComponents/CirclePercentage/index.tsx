@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Text from '../Text';
 
@@ -68,6 +68,7 @@ interface CirclePercentageProps {
   clockwise?: boolean,
   bgColor?: string,
   startDegrees?: number,
+  renderCustomComponent?: () => ReactElement;
 }
 
 const CirclePercentage: React.FC<CirclePercentageProps> = ({
@@ -83,6 +84,7 @@ const CirclePercentage: React.FC<CirclePercentageProps> = ({
   clockwise = true,
   bgColor = 'white',
   startDegrees = 0,
+  renderCustomComponent,
 }) => {
   const commonStyles = {
     width: radius * 2,
@@ -197,19 +199,22 @@ const CirclePercentage: React.FC<CirclePercentageProps> = ({
         innerRingStyle,
         startDegrees,
       )}
-      <Text
-        style={[
-          styles.display,
-          {
-            fontSize: textFontSize,
-            fontWeight: textFontWeight,
-            color: textFontColor,
-          },
-        ]}
-      >
-        {percent}
-        %
-      </Text>
+      {renderCustomComponent && renderCustomComponent()}
+      {!renderCustomComponent && (
+        <Text
+          style={[
+            styles.display,
+            {
+              fontSize: textFontSize,
+              fontWeight: textFontWeight,
+              color: textFontColor,
+            },
+          ]}
+        >
+          {percent}
+          %
+        </Text>
+      )}
     </View>
   );
 };

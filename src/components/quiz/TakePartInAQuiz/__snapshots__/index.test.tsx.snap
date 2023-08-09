@@ -107,6 +107,16 @@ exports[`TakePartInAQuiz should render correctly 1`] = `
       >
         testse
       </Text>
+      <View
+        style={
+          Object {
+            "height": 4,
+            "paddingHorizontal": undefined,
+            "paddingVertical": undefined,
+            "width": undefined,
+          }
+        }
+      />
       <Text
         numberOfLines={2}
         style={
@@ -124,6 +134,33 @@ exports[`TakePartInAQuiz should render correctly 1`] = `
         }
       >
         ahihihi
+      </Text>
+      <View
+        style={
+          Object {
+            "height": 4,
+            "paddingHorizontal": undefined,
+            "paddingVertical": undefined,
+            "width": undefined,
+          }
+        }
+      />
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#181C32",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 13,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            undefined,
+          ]
+        }
+      >
+        Let’s get started!
       </Text>
     </View>
     <View

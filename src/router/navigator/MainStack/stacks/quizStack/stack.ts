@@ -8,6 +8,7 @@ const quizStack = {
   takeQuizResult: 'take-quiz-result',
   previewDraftQuizNotification: 'preview-draft-quiz-notification',
   yourQuiz: 'your-quiz',
+  scoreboard: 'score-board',
 };
 
 export default quizStack;

@@ -207,6 +207,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
       quiz={quiz}
       contentId={id}
       quizHighestScore={quizHighestScore}
+      actor={actor}
       shouldShowDraftQuiz={shouldShowDraftQuiz}
     />
   );

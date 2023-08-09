@@ -48,6 +48,7 @@ import {
   IParamsGetQuizzesContent,
   RegenerateQuizParams,
   IParamsUpdateAnwsers,
+  IParamsGetUsersParticipants,
 } from '~/interfaces/IQuiz';
 
 const DEFAULT_LIMIT = 10;
@@ -609,6 +610,18 @@ export const streamApiConfig = {
       answers: params?.answers,
     },
   }),
+  getQuizSummary: (contentId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${contentId}/summary`,
+  }),
+  getUsersParticipants: (contentId: string, params: IParamsGetUsersParticipants): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${contentId}/participants`,
+    params: {
+      limit: params?.limit || DEFAULT_LIMIT,
+      after: params?.endCursor,
+    },
+  }),
   getQuizDetail: (idQuiz: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}quizzes/${idQuiz}`,
@@ -920,6 +933,12 @@ const streamApi = {
   ),
   updateAnwsers: (quizParticipantId: string, params: IParamsUpdateAnwsers) => withHttpRequestPromise(
     streamApiConfig.updateAnwsers, quizParticipantId, params,
+  ),
+  getQuizSummary: (contentId: string) => withHttpRequestPromise(
+    streamApiConfig.getQuizSummary, contentId,
+  ),
+  getUsersParticipants: (contentId: string, params: IParamsGetUsersParticipants) => withHttpRequestPromise(
+    streamApiConfig.getUsersParticipants, contentId, params,
   ),
   getQuizDetail: (idQuiz: string) => withHttpRequestPromise(
     streamApiConfig.getQuizDetail, idQuiz,
