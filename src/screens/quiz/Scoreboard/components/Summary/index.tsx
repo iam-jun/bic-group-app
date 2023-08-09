@@ -14,8 +14,8 @@ const Summary: React.FC = () => {
 
   const { participants } = useScoreboardStore((state) => state.summaryDetail);
   const { total, pass, fail } = participants || {};
-  const percentPass = Math.round((pass || 0) / (total || 0) * 100); 
-  const percentFail = Math.round((fail || 0) / (total || 0) * 100);
+  const percentPass = Math.round(((pass || 0) / (total || 0)) * 100);
+  const percentFail = Math.round(((fail || 0) / (total || 0)) * 100);
 
   const renderInnerCircle = () => (
     <View style={styles.innerView}>
@@ -55,7 +55,7 @@ const Summary: React.FC = () => {
           <ViewSpacing height={spacing.margin.small} />
           <View style={styles.rowDetail}>
             <View style={[styles.row, styles.width40]}>
-              <View style={[styles.circle, styles.pass]}/>
+              <View style={[styles.circle, styles.pass]} />
               <Text.BodyXS useI18n color={colors.neutral40}>
                 quiz:text_passed
               </Text.BodyXS>
@@ -64,13 +64,14 @@ const Summary: React.FC = () => {
               { pass }
             </Text.BodyXS>
             <Text.BodyXS color={colors.neutral40} style={styles.width20}>
-              { percentPass }%
+              { percentPass }
+              %
             </Text.BodyXS>
           </View>
           <ViewSpacing height={spacing.margin.small} />
           <View style={styles.rowDetail}>
             <View style={[styles.row, styles.width40]}>
-              <View style={[styles.circle, styles.fail]}/>
+              <View style={[styles.circle, styles.fail]} />
               <Text.BodyXS useI18n color={colors.neutral40}>
                 quiz:text_failed
               </Text.BodyXS>
@@ -79,7 +80,8 @@ const Summary: React.FC = () => {
               { fail }
             </Text.BodyXS>
             <Text.BodyXS color={colors.neutral40} style={styles.width20}>
-              { percentFail }%
+              { percentFail }
+              %
             </Text.BodyXS>
           </View>
         </View>
@@ -129,7 +131,7 @@ const createStyle = (theme: ExtendedTheme) => {
     headDetail: {
       borderBottomWidth: 1,
       borderBottomColor: colors.gray5,
-      paddingBottom: spacing.padding.small
+      paddingBottom: spacing.padding.small,
     },
     circle: {
       width: 12,
@@ -165,7 +167,7 @@ const createStyle = (theme: ExtendedTheme) => {
     widthStatus: {
       width: '15%',
     },
-  }); 
-}
+  });
+};
 
 export default Summary;

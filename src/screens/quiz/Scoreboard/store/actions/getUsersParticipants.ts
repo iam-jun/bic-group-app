@@ -15,10 +15,10 @@ const getUsersParticipants = (set, get) => async (payload: IPayloadGetUsersParti
   const endCursorParams = isRefresh ? null : endCursor;
 
   if (loading || !contentId) return;
-  
+
   try {
     set((state: IScoreboardState) => {
-      if(isRefresh) {
+      if (isRefresh) {
         state.userParticipants.refreshing = true;
       } else {
         state.userParticipants.loading = true;
@@ -52,6 +52,6 @@ const getUsersParticipants = (set, get) => async (payload: IPayloadGetUsersParti
     console.error('\x1b[31m🐣️ action getUsersParticipants error: ', error, '\x1b[0m');
     showToastError(error);
   }
-}
+};
 
 export default getUsersParticipants;

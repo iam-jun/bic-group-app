@@ -58,7 +58,7 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
   };
 
   const onPressViewReport = () => {
-    if(canTakeQuiz) {
+    if (canTakeQuiz) {
       onViewReport(contentId);
     }
   };

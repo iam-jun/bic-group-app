@@ -13,6 +13,6 @@ const getQuizSummary = (set) => async (contentId: string) => {
     console.error('\x1b[31m🐣️ action getQuizSummary error: ', error, '\x1b[0m');
     showToastError(error);
   }
-}
+};
 
 export default getQuizSummary;

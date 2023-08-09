@@ -32,7 +32,8 @@ const UserParticipantItem: React.FC<UserParticipantItemProps> = ({ data }) => {
           </Text.BodyXS>
         </View>
         <Text.ParagraphS color={colors.neutral40} style={styles.widthPercentage}>
-          { score }%
+          { score }
+          %
         </Text.ParagraphS>
         <View style={styles.widthStatus}>
           <View
@@ -42,7 +43,7 @@ const UserParticipantItem: React.FC<UserParticipantItemProps> = ({ data }) => {
             ]}
           >
             <Text.ButtonS
-              color={isPassed ? colors.purple50: colors.red40}
+              color={isPassed ? colors.purple50 : colors.red40}
               style={styles.textStatus}
             >
               { stautsLabel }
@@ -77,7 +78,7 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingVertical: spacing.padding.xTiny,
       paddingHorizontal: spacing.padding.tiny,
       borderRadius: spacing.borderRadius.base,
-      alignSelf: 'flex-start'
+      alignSelf: 'flex-start',
     },
     pass: {
       backgroundColor: colors.purple2,
@@ -98,6 +99,6 @@ const createStyle = (theme: ExtendedTheme) => {
       width: '15%',
     },
   });
-}
+};
 
 export default UserParticipantItem;

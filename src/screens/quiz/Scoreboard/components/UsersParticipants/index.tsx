@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import {
+  View, StyleSheet, FlatList, ActivityIndicator,
+} from 'react-native';
 import useScoreboardStore from '../../store';
 import UserParticipantItem from './UserParticipantItem';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
@@ -19,7 +21,7 @@ const UsersParticipants: React.FC<UsersParticipantsProps> = ({ contentId }) => {
 
   const onLoadMore = () => {
     if (hasNextPage) {
-      actions.getUsersParticipants({ contentId, isRefresh: false })
+      actions.getUsersParticipants({ contentId, isRefresh: false });
     }
   };
 
