@@ -26,7 +26,7 @@ import SearchCommunityView from './components/SearchCommunityView';
 import SearchGroupView from './components/SearchGroupView';
 import { IGroupNotificationSetting } from '~/interfaces/INotification';
 
-const AdvancedSettings = () => {
+const _AdvancedSettings = () => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
@@ -164,13 +164,13 @@ const AdvancedSettings = () => {
     </View>
   );
 
-  const renderHeader = () => (
+  const renderHeader = useCallback(() => (
     <AdvancedSettingHeader
       onPressSearch={onOpenGroupSearch}
       onChangeToggle={onChangeToggle}
       onPressToShowBottomSheet={onOpenSearchCommunity}
     />
-  );
+  ), [communitySettingData]);
 
   const renderItem = useCallback(({ item }: any) => (
     <AdvancedSettingItem
@@ -211,7 +211,7 @@ const AdvancedSettings = () => {
         ListHeaderComponent={renderHeader}
         ListEmptyComponent={renderEmpty}
         ListFooterComponent={renderListFooter}
-        onEndReachedThreshold={0.5}
+        onEndReachedThreshold={0.1}
         onEndReached={onLoadMore}
         removeClippedSubviews
       />
@@ -281,4 +281,6 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
+const AdvancedSettings = React.memo(_AdvancedSettings);
+// AdvancedSettings.whyDidYouRender = true;
 export default AdvancedSettings;
