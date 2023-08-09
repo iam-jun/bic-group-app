@@ -135,6 +135,7 @@
     "text_privacy": "Privacy",
     "btn_approve": "Approve",
     "btn_decline": "Decline",
+    "btn_accept": "Accept",
     "btn_approve_all": "Approve All",
     "btn_decline_all": "Decline All",
     "btn_submit": "Submit",
@@ -1168,6 +1169,8 @@
     "text_bic_team": "BIC team",
     "text_remove_notification": "Remove this notification",
     "text_remove_notification_success": "Notification removed successfully",
+    "text_invitation_accepted": "Invitation accepted",
+    "text_invitation_declined": "Invitation declined",
     "notification_settings": {
       "title": "Notification Settings",
       "description": "We may still send you important notification about your account outside of your settings",

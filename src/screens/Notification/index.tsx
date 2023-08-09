@@ -478,7 +478,13 @@ const Notification = () => {
               rootNavigation.navigate(mainStack.userProfile, { userId, targetIndex });
               break;
             }
-
+            case NOTIFICATION_TYPE.GROUP_INVITATION:
+              // eslint-disable-next-line no-case-declarations
+              const communityId = act?.invitation?.target?.communityId || '';
+              if (communityId) {
+                rootNavigation.navigate(groupStack.communityDetail, { communityId });
+              }
+              break;
             default:
               console.warn(`Notification type ${type} have not implemented yet`);
               break;
