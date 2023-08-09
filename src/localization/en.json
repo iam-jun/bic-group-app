@@ -248,13 +248,18 @@
     "text_selected_people": "Selected people",
     "text_invite": "Invite",
     "text_maximum": "Maximum {{count}}",
-    "text_you_have_seen_it_all": "You've it all",
+    "text_you_have_seen_it_all": "You have seen it all",
     "alert_quit_without_completing": {
       "title": "Quit without completing?",
       "content": "Invites won’t be sent and your selections won’t be saved.",
       "button_keep_editing": "Keep Editing",
       "button_quit": "Quit"
-    }
+    },
+    "text_no_one_is_invited": "No one is invited!",
+    "text_invite_someone": "Invite someone",
+    "text_to_see_them_here": "to see them here",
+    "text_invited_by": "Invited by",
+    "button_cancel_invite": "Cancel Invite"
   },
   "auth": {
     "text_kickout_title": "Notice",

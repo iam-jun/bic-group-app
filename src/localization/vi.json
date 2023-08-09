@@ -225,7 +225,12 @@
       "content": "Lời mời sẽ không được gửi và lựa chọn của bạn sẽ không được lưu.",
       "button_keep_editing": "Tiếp tục chỉnh sửa",
       "button_quit": "Thoát"
-    }
+    },
+    "text_no_one_is_invited": "Không ai được mời!",
+    "text_invite_someone": "Mời ai đó",
+    "text_to_see_them_here": "xem họ tại đây",
+    "text_invited_by": "Được mời bởi",
+    "button_cancel_invite": "Huỷ lời mời"
   },
   "auth": {
     "text_kickout_title": "Notice",
