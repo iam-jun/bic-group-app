@@ -11,13 +11,11 @@ import Image from '~/components/Image';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
 import { QuizHighestScore, QuizPost, QuizStatus } from '~/interfaces/IQuiz';
-import { IAudienceUser, IPostAudience } from '~/interfaces/IPost';
+import { IAudienceUser } from '~/interfaces/IPost';
 import images from '~/resources/images';
 import { spacing } from '~/theme';
 import { onPressTakeQuiz, onViewReport } from './helper';
 import CirclePercentage from '~/baseComponents/CirclePercentage';
-import { PermissionKey } from '~/constants/permissionScheme';
-import useMyPermissionsStore from '~/store/permissions';
 import { fontFamilies } from '~/theme/fonts';
 import { sizes } from '~/theme/dimension';
 
@@ -26,7 +24,6 @@ type TakePartInAQuizProps = {
   contentId: string;
   quizHighestScore: QuizHighestScore;
   actor: IAudienceUser;
-  audience: IPostAudience;
   style?: StyleProp<ViewStyle>;
   shouldShowDraftQuiz?: boolean;
 };
@@ -35,7 +32,6 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
   quiz,
   contentId,
   quizHighestScore,
-  audience,
   actor,
   style,
   shouldShowDraftQuiz,
@@ -45,25 +41,15 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
   } = quiz || {};
   const canTakeQuiz = status === QuizStatus.PUBLISHED;
   const { score } = quizHighestScore || {};
-  const groupAudience = audience?.groups || [];
 
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
   const { t } = useBaseHook();
   const userId = useUserIdAuth();
-  const { getAudienceListWithNoPermission } = useMyPermissionsStore(
-    (state) => state.actions,
-  );
 
   const isActor = actor?.id === userId;
-  const audienceListCannotCRUDPostArticle = getAudienceListWithNoPermission(
-    groupAudience,
-    PermissionKey.CRUD_POST_ARTICLE,
-  );
-
-  const shouldBeHiddenViewReport
-    = !isActor || audienceListCannotCRUDPostArticle.length > 0 || !quiz;
+  const shouldBeHiddenViewReport = !isActor || !quiz;
 
   const onPress = () => {
     if (canTakeQuiz) {
@@ -73,11 +59,13 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
 
   const onPressViewReport = () => {
     if(canTakeQuiz) {
-      onViewReport(id);
+      onViewReport(contentId);
     }
   };
 
   const renderTextViewReport = () => {
+    if (!canTakeQuiz) return null;
+
     if (shouldBeHiddenViewReport) {
       return (
         <Text.ParagraphS useI18n color={colors.neutral40}>
@@ -135,7 +123,7 @@ const TakePartInAQuiz: FC<TakePartInAQuizProps> = ({
           <ViewSpacing height={spacing.margin.tiny} />
           <Text.BodyXS
             color={!!description ? colors.neutral40 : colors.neutral20}
-            numberOfLines={1}
+            numberOfLines={2}
           >
             {!!description ? description : t('quiz:empty_description_quiz')}
           </Text.BodyXS>

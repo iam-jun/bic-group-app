@@ -207,7 +207,6 @@ const ArticleItem: FC<ArticleItemProps> = ({
       quiz={quiz}
       contentId={id}
       quizHighestScore={quizHighestScore}
-      audience={audience}
       actor={actor}
       shouldShowDraftQuiz={shouldShowDraftQuiz}
     />

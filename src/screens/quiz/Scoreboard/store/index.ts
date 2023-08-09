@@ -1,7 +1,8 @@
 import { createStore, resetStore } from '~/store/utils';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
-import { ISummaryDetail, IUserParticipant } from '~/interfaces/IQuiz';
+import { IPayloadGetUsersParticipants, ISummaryDetail, IUserParticipant } from '~/interfaces/IQuiz';
 import getQuizSummary from './actions/getQuizSummary';
+import getUsersParticipants from './actions/getUsersParticipants';
 
 export interface IScoreboardState extends IBaseState {
   summaryDetail: ISummaryDetail;
@@ -14,8 +15,8 @@ export interface IScoreboardState extends IBaseState {
   };
 
   actions: {
-    getQuizSummary: (quizId: string) => void;
-    getUsersParticipants: (quizId: string) => void;
+    getQuizSummary: (contentId: string) => void;
+    getUsersParticipants: (payload: IPayloadGetUsersParticipants) => void;
   },
 }
 
@@ -42,7 +43,7 @@ const scoreboardStore = (set, get) => ({
 
   actions: {
     getQuizSummary: getQuizSummary(set, get),
-    // getUsersParticipants: getUsersParticipants(set, get),
+    getUsersParticipants: getUsersParticipants(set, get),
   },
 
   reset: () => resetStore(initState, set),

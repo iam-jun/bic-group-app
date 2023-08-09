@@ -180,6 +180,16 @@ export enum ResultStatus {
   FAIL = 'FAIL',
 }
 
+export interface IPayloadGetUsersParticipants {
+  contentId: string;
+  isRefresh?: boolean;
+}
+
+export interface IParamsGetUsersParticipants {
+  limit?: number;
+  endCursor?: string;
+}
+
 export interface IUserParticipant {
   id: string;
   quizId: string;

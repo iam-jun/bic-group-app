@@ -20,6 +20,6 @@ export const onPressTakeQuiz = (quizId, contentId) => {
   });
 };
 
-export const onViewReport = (quizId) => {
-  navigation.navigate(quizStack.scoreboard, { quizId });
+export const onViewReport = (contentId: string) => {
+  navigation.navigate(quizStack.scoreboard, { contentId });
 };

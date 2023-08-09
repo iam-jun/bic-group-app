@@ -2,9 +2,9 @@ import streamApi from '~/api/StreamApi';
 import { IScoreboardState } from '../index';
 import showToastError from '~/store/helper/showToastError';
 
-const getQuizSummary = (set, get) => async (quizId: string) => {
+const getQuizSummary = (set, get) => async (contentId: string) => {
   try {
-    const response = await streamApi.getQuizSummary(quizId);
+    const response = await streamApi.getQuizSummary(contentId);
 
     set((state: IScoreboardState) => {
       state.summaryDetail = response?.data;
