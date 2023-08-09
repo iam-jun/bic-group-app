@@ -4,15 +4,12 @@ import React, {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { StyleSheet, View } from 'react-native';
-import { cloneDeep } from 'lodash';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 
 import SearchMemberView from './CommunityMemberList/components/SearchMemberView';
 import { ICommunity, ICommunityMembers } from '~/interfaces/ICommunity';
 import { useBaseHook } from '~/hooks';
-import CommunityMemberList from './CommunityMemberList';
-import Tab from '~/baseComponents/Tab';
 import { MEMBER_TAB_TYPES } from '../constants';
 import { spacing } from '~/theme';
 import CommunityMemberRequests from './CommunityMemberRequests';
@@ -22,6 +19,7 @@ import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communi
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 import { onPressButtonInvite } from '~/components/InvitePeopleToYourGroup/helper';
+import { renderTabs } from './helper';
 
 export const MEMBER_TABS = [
   { id: MEMBER_TAB_TYPES.MEMBER_LIST, text: 'communities:member_tab_types:title_member_list' },
@@ -38,7 +36,6 @@ const CommunityMembers = ({ route }: any) => {
   const { t } = useBaseHook();
 
   const [selectedIndex, setSelectedIndex] = useState<number>(targetIndex || 0);
-  const [isOpen, setIsOpen] = useState(false);
   const [selectedMember, setSelectedMember] = useState<ICommunityMembers>();
   const baseSheetRef: any = useRef();
 
@@ -83,17 +80,16 @@ const CommunityMembers = ({ route }: any) => {
     setSelectedIndex(index);
   };
 
-  const onPressSearch = () => {
-    setIsOpen(true);
-  };
-
-  const onCloseModal = React.useCallback(() => {
-    setIsOpen(false);
-  }, []);
-
   const renderContent = () => {
     if (selectedIndex === 0) {
-      return <CommunityMemberList community={community} onPressMenu={onPressMenu} />;
+      return (
+        <SearchMemberView
+          community={community}
+          isMember={isMember}
+          placeholder={t('groups:text_search_for_members')}
+          onPressMenu={onPressMenu}
+        />
+      );
     }
 
     if (selectedIndex === 1) {
@@ -109,53 +105,31 @@ const CommunityMembers = ({ route }: any) => {
     return null;
   };
 
-  const isShowInvitedPeopleTabs = canAddMember;
+  const isShowInvitedPeopleTab = canAddMember;
   const isShowMemberRequestsTab = canApproveRejectJoiningRequests || canEditJoinSetting;
 
-  const showSearchMember = isMember && {
-    icon: 'search' as IconType,
-    onPressIcon: onPressSearch,
-  };
-
-  const showButtonInvite = isShowInvitedPeopleTabs && {
+  const showButtonInvite = isShowInvitedPeopleTab && {
     buttonText: 'common:text_invite',
     buttonProps: { useI18n: true, icon: 'Plus' as IconType, iconSize: 14 },
     onPressButton: () => onPressButtonInvite(groupId),
   };
 
-  const renderTabs = () => {
-    const memberTabsClone = cloneDeep(MEMBER_TABS);
-    if (!isShowMemberRequestsTab && !isShowInvitedPeopleTabs) return null;
-
-    if (isShowMemberRequestsTab && !isShowInvitedPeopleTabs) {
-      memberTabsClone.splice(1, 1);
-    } else if (!isShowMemberRequestsTab && isShowInvitedPeopleTabs) {
-      memberTabsClone.splice(2, 1);
-    }
-
-    return (
-      <View style={styles.tabContainer}>
-        <Tab
-          buttonProps={{ size: 'large', type: 'primary', useI18n: true }}
-          data={memberTabsClone}
-          onPressTab={onPressTab}
-          activeIndex={selectedIndex}
-          isScrollToIndex
-        />
-      </View>
-    );
-  };
+  const _renderTabs = () => renderTabs({
+    isShowInvitedPeopleTab,
+    isShowMemberRequestsTab,
+    selectedIndex,
+    onPressTab,
+  });
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.gray5}>
       <Header
         titleTextProps={{ useI18n: true }}
         title="groups:title_members_other"
-        {...showSearchMember}
         {...showButtonInvite}
       />
 
-      {renderTabs()}
+      {_renderTabs()}
 
       <View style={styles.memberList}>
         {renderContent()}
@@ -167,14 +141,6 @@ const CommunityMembers = ({ route }: any) => {
         selectedMember={selectedMember || {} as ICommunityMembers}
         onOptionsClosed={clearSelectedMember}
       />
-
-      <SearchMemberView
-        isOpen={isOpen}
-        community={community}
-        onClose={onCloseModal}
-        onPressMenu={onPressMenu}
-        placeholder={t('groups:text_search_member')}
-      />
     </ScreenWrapper>
   );
 };
@@ -182,10 +148,6 @@ const CommunityMembers = ({ route }: any) => {
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
-    tabContainer: {
-      backgroundColor: colors.white,
-      marginTop: spacing.margin.large,
-    },
     memberList: {
       flex: 1,
       marginTop: spacing.margin.large,

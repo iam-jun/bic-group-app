@@ -125,14 +125,14 @@ const createStyles = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     content: {
       backgroundColor: colors.white,
+      marginVertical: spacing.margin.large,
     },
     sectionHeader: {
       paddingHorizontal: spacing.padding.large,
-      paddingTop: spacing.padding.large,
       paddingBottom: spacing.padding.base,
     },
     listFooter: {
-      height: 100,
+      marginBottom: spacing.margin.large,
       justifyContent: 'center',
       alignItems: 'center',
     },

@@ -990,6 +990,7 @@
     "search_results": "Kết quả tìm kiếm",
     "all_groups": "Tất cả",
     "text_search_member": "Tìm kiếm thành viên...",
+    "text_search_for_members": "Tìm kiếm thành viên",
     "group_menu": {
       "label_admin_tools": "Công cụ quản trị",
       "label_copy_group_link": "Sao chép đường dẫn nhóm",

@@ -95,7 +95,7 @@ const MemberSearchResult = ({
 
 const styles = StyleSheet.create({
   list: {
-    marginVertical: spacing.margin.small,
+    marginVertical: spacing.margin.large,
   },
   textSearchResults: {
     marginHorizontal: spacing.margin.large,
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     margin: spacing.margin.large,
   },
   listFooter: {
-    height: 100,
+    marginBottom: spacing.margin.large,
     justifyContent: 'center',
     alignItems: 'center',
   },

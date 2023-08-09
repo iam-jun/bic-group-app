@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import i18next from 'i18next';
+import { t } from 'i18next';
 
-import { cloneDeep } from 'lodash';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IGroupMembers } from '~/interfaces/IGroup';
 
@@ -14,9 +13,6 @@ import networkSelectors from '~/store/network/selectors';
 import MemberOptionsMenu from './components/GroupMemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
 import spacing from '~/theme/spacing';
-import GroupMemberList from './GroupMemberList';
-import Tab from '~/baseComponents/Tab';
-import { MEMBER_TABS } from '~/screens/communities/CommunityMembers';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import GroupMemberRequests from './GroupMemberRequests';
 import { IconType } from '~/resources/icons';
@@ -25,12 +21,12 @@ import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 import useGroupDetailStore from '../GroupDetail/store';
 import { onPressButtonInvite } from '~/components/InvitePeopleToYourGroup/helper';
+import { renderTabs } from '~/screens/communities/CommunityMembers/helper';
 
 const _GroupMembers = ({ route }: any) => {
   const { groupId, targetIndex, isMemberCommunity } = route.params;
 
   const [selectedMember, setSelectedMember] = useState<IGroupMembers>();
-  const [isOpen, setIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(targetIndex || 0);
 
   const [needReloadWhenReconnected, setNeedReloadWhenReconnected] = useState(false);
@@ -41,7 +37,10 @@ const _GroupMembers = ({ route }: any) => {
   const styles = createStyle(theme);
   const { rootNavigation } = useRootNavigation();
   const baseSheetRef: any = useRef();
-  const { actions, groupMembers: { offset } } = useGroupMemberStore((state: IGroupMemberState) => state);
+  const {
+    actions,
+    groupMembers: { offset },
+  } = useGroupMemberStore((state: IGroupMemberState) => state);
   const { getGroupDetail } = useGroupDetailStore((state) => state.actions);
 
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
@@ -96,21 +95,20 @@ const _GroupMembers = ({ route }: any) => {
     rootNavigation.navigate(groupStack.addMembers, { groupId });
   };
 
-  const onPressSearch = () => {
-    setIsOpen(true);
-  };
-
-  const onCloseModal = () => {
-    setIsOpen(false);
-  };
-
   const onPressTab = (item: any, index: number) => {
     setSelectedIndex(index);
   };
 
   const renderContent = () => {
     if (selectedIndex === 0) {
-      return <GroupMemberList groupId={groupId} onPressMenu={onPressMenu} />;
+      return (
+        <SearchMemberView
+          isMemberCommunity={isMemberCommunity}
+          placeholder={t('groups:text_search_for_members')}
+          onPressMenu={onPressMenu}
+          groupId={groupId}
+        />
+      );
     }
 
     if (selectedIndex === 1) {
@@ -127,53 +125,27 @@ const _GroupMembers = ({ route }: any) => {
     return null;
   };
 
-  const isShowInvitedPeopleTabs = canAddMember;
+  const isShowInvitedPeopleTab = canAddMember;
   const isShowMemberRequestsTab = canApproveRejectJoiningRequests || canEditJoinSetting;
 
-  const showSearchMember = isMemberCommunity && {
-    icon: 'search' as IconType,
-    onPressIcon: onPressSearch,
-  };
-
-  const showButtonInvite = isShowInvitedPeopleTabs && {
+  const showButtonInvite = isShowInvitedPeopleTab && {
     buttonText: 'common:text_invite',
     buttonProps: { useI18n: true, icon: 'Plus' as IconType, iconSize: 14 },
     onPressButton: () => onPressButtonInvite(groupId),
   };
 
-  const renderTabs = () => {
-    const memberTabsClone = cloneDeep(MEMBER_TABS);
-    if (!isShowMemberRequestsTab && !isShowInvitedPeopleTabs) return null;
-
-    if (isShowMemberRequestsTab && !isShowInvitedPeopleTabs) {
-      memberTabsClone.splice(1, 1);
-    } else if (!isShowMemberRequestsTab && isShowInvitedPeopleTabs) {
-      memberTabsClone.splice(2, 1);
-    }
-
-    return (
-      <View style={styles.tabContainer}>
-        <Tab
-          buttonProps={{ size: 'large', type: 'primary', useI18n: true }}
-          data={memberTabsClone}
-          onPressTab={onPressTab}
-          activeIndex={selectedIndex}
-          isScrollToIndex
-        />
-      </View>
-    );
-  };
+  const _renderTabs = () => renderTabs({
+    isShowInvitedPeopleTab,
+    isShowMemberRequestsTab,
+    selectedIndex,
+    onPressTab,
+  });
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.gray5}>
-      <Header
-        titleTextProps={{ useI18n: true }}
-        title="groups:title_members_other"
-        {...showSearchMember}
-        {...showButtonInvite}
-      />
+      <Header titleTextProps={{ useI18n: true }} title="groups:title_members_other" {...showButtonInvite} />
 
-      {renderTabs()}
+      {_renderTabs()}
 
       <View style={styles.memberList}>
         {renderContent()}
@@ -185,14 +157,6 @@ const _GroupMembers = ({ route }: any) => {
         selectedMember={selectedMember || {}}
         onOptionsClosed={clearSelectedMember}
       />
-
-      <SearchMemberView
-        groupId={groupId}
-        isOpen={isOpen}
-        onClose={onCloseModal}
-        onPressMenu={onPressMenu}
-        placeholder={i18next.t('groups:text_search_member')}
-      />
     </ScreenWrapper>
   );
 };
@@ -200,10 +164,6 @@ const _GroupMembers = ({ route }: any) => {
 const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
-    tabContainer: {
-      backgroundColor: colors.white,
-      marginTop: spacing.margin.large,
-    },
     memberList: {
       flex: 1,
       marginTop: spacing.margin.large,

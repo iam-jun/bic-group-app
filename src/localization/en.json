@@ -1026,6 +1026,7 @@
     "search_results": "Search results",
     "all_groups": "All groups",
     "text_search_member": "Search member...",
+    "text_search_for_members": "Search for members",
     "group_menu": {
       "label_admin_tools": "Admin Tools",
       "label_copy_group_link": "Copy Link",
