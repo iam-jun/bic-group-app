@@ -32,7 +32,7 @@ const SearchCommunityView = ({
   const [searchText, setSearchText] = useState('');
 
   const {
-    ids, items, actions: joinedActions, reset, loading, hasNextPage,
+    ids, actions: joinedActions, reset, loading, hasNextPage,
   } = useSearchJoinedCommunitiesStore();
 
   useEffect(() => () => {
@@ -62,10 +62,10 @@ const SearchCommunityView = ({
 
   const renderItem = ({ item }: any) => {
     if (!item) return null;
-    const currentItem = items[item];
     return (
       <AdvancedSettingItem
-        item={currentItem}
+        type="community"
+        item={item}
         onPress={onPressItem}
       />
     );

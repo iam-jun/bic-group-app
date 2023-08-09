@@ -93,6 +93,8 @@ const SearchGroupView = ({
     );
   };
 
+  const keyExtractor = (item) => `advanced_settings.search_group.${item}`;
+
   return (
     <SearchBaseView
       isOpen={isOpen}
@@ -105,7 +107,7 @@ const SearchGroupView = ({
         scrollEventThrottle={16}
         keyboardDismissMode="interactive"
         keyboardShouldPersistTaps="handled"
-        keyExtractor={(item) => `advanced_settings.search_group.${item?.id}`}
+        keyExtractor={keyExtractor}
         renderItem={renderItem}
         ListEmptyComponent={renderEmpty}
         ListFooterComponent={renderListFooter}

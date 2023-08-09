@@ -28,10 +28,12 @@ const getJoinedGroup = (set, get) => async (id: string, isRefresh?: boolean) => 
     const response = await notificationApi.getGroupsAndGroupsSettings(id, params);
     const { data } = response;
     const groupdData = data?.groups || [];
-    const newData = isRefresh ? groupdData : [...joinedGroups, ...groupdData];
+    const newIds = groupdData.map((item) => item.id);
+    const newData = isRefresh ? newIds : [...joinedGroups, ...newIds];
+
     const newGroupData = {};
     groupdData.forEach((item: IGroupNotificationSetting) => {
-      newGroupData[item?.id] = { ...item, ...item.setting };
+      newGroupData[item?.id] = { ...item };
     });
 
     set((state: IAdvancedNotiSettingsStore) => {

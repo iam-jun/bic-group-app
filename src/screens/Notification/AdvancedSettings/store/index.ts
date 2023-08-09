@@ -15,7 +15,7 @@ export interface IAdvancedNotiSettingsStore extends IBaseState {
   // community setting data
   communityData: { [communityId: string]: IAdvancedNotificationSettings };
   // group setting data
-  groupData: { [groupId: string]: IAdvancedNotificationSettings };
+  groupData: { [groupId: string]: IGroupNotificationSetting };
   isLoading: boolean;
   isLoadingCommunitySettings: boolean;
   isLoadingGroupSettings: boolean;
@@ -25,8 +25,8 @@ export interface IAdvancedNotiSettingsStore extends IBaseState {
   isUpdatingGroupSettings: boolean;
   isResetOrEnableGroupSettings: boolean;
   isRefreshing: boolean;
-  joinedGroups: IGroupNotificationSetting[];
-  searchJoinedGroups: IGroupNotificationSetting[];
+  joinedGroups: string[];
+  searchJoinedGroups: string[];
   selectedCommunity: any;
   hasNextPage: boolean;
   hasSearchNextPage: boolean;

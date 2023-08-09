@@ -9,26 +9,37 @@ import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { Avatar, Button } from '~/baseComponents';
 import useBaseHook from '~/hooks/baseHook';
-import { IAdvancedNotificationSettings, IGroupNotificationSetting } from '~/interfaces/INotification';
+import { IGroupNotificationSetting } from '~/interfaces/INotification';
 import useAdvancedNotiSettingsStore from '../AdvancedSettings/store';
+import useSearchJoinedCommunitiesStore from '~/screens/communities/Communities/components/SearchCommunity/store';
 
 interface Props {
-    item: IGroupNotificationSetting;
-    isDisabled?: boolean;
-    onPress: (item: IGroupNotificationSetting) => void;
+  type?: 'community' | 'group';
+  item: string;
+  onPress: (item: IGroupNotificationSetting) => void;
 }
 
-const AdvancedSettingItem = ({ item, isDisabled = false, onPress }: Props) => {
+const AdvancedSettingItem = ({
+  type = 'group', item, onPress,
+}: Props) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
   const { t } = useBaseHook();
 
-  const groupData = useAdvancedNotiSettingsStore((state) => state.groupData?.[item.id]);
+  const { items } = useSearchJoinedCommunitiesStore();
+  const groupData = useAdvancedNotiSettingsStore((state) => state.groupData?.[item]);
+  const currentData = Boolean(type === 'community') ? items?.[item] : groupData;
 
-  const getLableByData = (data: IAdvancedNotificationSettings) => {
-    if (isEmpty(data)) return '';
-    const { flag, channels, enable } = data;
+  const selectedCommunity = useAdvancedNotiSettingsStore((state) => state.selectedCommunity);
+  const comId = selectedCommunity?.communityId || selectedCommunity?.id;
+  const communitySettingData: any = useAdvancedNotiSettingsStore((state) => state.communityData?.[comId] || {});
+
+  const isDisabled = Boolean(type === 'group') ? !Boolean(communitySettingData?.enable) : false;
+
+  const getLableByData = (data: IGroupNotificationSetting) => {
+    if (isEmpty(data?.setting)) return '';
+    const { flag, channels, enable } = data.setting;
     if (enable && flag?.value) {
       if (channels?.inApp && channels?.push) {
         return `${t('notification:notification_settings:in_app_text')}, ${t('notification:notification_settings:push_text')}`;
@@ -46,14 +57,14 @@ const AdvancedSettingItem = ({ item, isDisabled = false, onPress }: Props) => {
     }
   };
 
-  const onPressItem = () => onPress(item);
+  const onPressItem = () => onPress(currentData);
 
   if (isEmpty(item)) return null;
   const {
     icon, name, privacy,
-  } = item;
+  } = currentData || {};
   const privacyIcon = GroupPrivacyDetail[privacy]?.icon as IconType;
-  const label = useMemo(() => getLableByData(groupData), [groupData]);
+  const label = useMemo(() => getLableByData(currentData), [currentData]);
 
   return (
     <Button

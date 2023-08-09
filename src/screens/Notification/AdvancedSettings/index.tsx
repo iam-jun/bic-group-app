@@ -50,7 +50,6 @@ const AdvancedSettings = () => {
   const hasNextPage = useAdvancedNotiSettingsStore((state) => state.hasNextPage);
   const { actions: joinedActions } = useSearchJoinedCommunitiesStore();
   const { reset: resetAdvancedSettings } = useAdvancedNotiSettingsStore();
-  const isDisabled = !Boolean(communitySettingData?.enable);
 
   useEffect(
     () => {
@@ -175,13 +174,10 @@ const AdvancedSettings = () => {
 
   const renderItem = useCallback(({ item }: any) => (
     <AdvancedSettingItem
-      key={`advanced_settings.${item?.id}?.${isDisabled}`}
-      isDisabled={isDisabled}
       item={item}
       onPress={onPressItem}
     />
-  ),
-  [isDisabled]);
+  ), [selectedCommunity?.id]);
 
   const renderLoading = () => (
     <View style={styles.container}>
@@ -198,7 +194,7 @@ const AdvancedSettings = () => {
     );
   };
 
-  const keyExtractor = (item: any) => `group.${item?.id}.${selectedCommunity?.id}`;
+  const keyExtractor = (item: any) => `group.${item}.${selectedCommunity?.id}`;
 
   const renderContent = () => {
     if (ids.length === 0) return renderNothingToSetup();
