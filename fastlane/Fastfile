@@ -8,7 +8,9 @@ end
 
 lane :test do
     UI.message("Welcome to the test lane")
-    replace_update_desc_with_commit_date({:env => 'stg'})
+    Dotenv.overload('../.env.base', '../.env.staging')
+    insert_update_desc_to_env({:env => 'stg'})
+    insert_app_version_to_env({:env => 'stg'})
 end
 
 lane :notice_build_task do |options|
@@ -33,8 +35,9 @@ end
 ############# Android ############# Android ############# Android ############# Android ############# Android ##########
 platform :android do
   lane :deploy_staging do
-    replace_update_desc_with_commit_date({:env => 'stg'})
+    insert_update_desc_to_env({:env => 'stg'})
     Dotenv.overload('../.env.base', '../.env.staging')
+    insert_app_version_to_env({:env => 'stg'})
 
     appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
     updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
@@ -65,8 +68,9 @@ platform :android do
   end
 
   lane :deploy_prerelease do
-      replace_update_desc_with_commit_date({:env => 'pre'})
+      insert_update_desc_to_env({:env => 'pre'})
       Dotenv.overload('../.env.base', '../.env.prerelease')
+      insert_app_version_to_env({:env => 'pre'})
 
       appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
       updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
@@ -97,8 +101,9 @@ platform :android do
     end
 
   lane :deploy_production do
-    replace_update_desc_with_commit_date({:env => 'pro'})
+    insert_update_desc_to_env({:env => 'pro'})
     Dotenv.overload('../.env.base', '../.env.production')
+    insert_app_version_to_env({:env => 'pro'})
 
     appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
     updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
@@ -129,8 +134,9 @@ platform :android do
   end
 
   lane :bundle_aab_production do
-    replace_update_desc_with_commit_date({:env => 'pro'})
+    insert_update_desc_to_env({:env => 'pro'})
     Dotenv.overload('../.env.base', '../.env.production')
+    insert_app_version_to_env({:env => 'pro'})
 
     gradle(task: "clean", project_dir: 'android/')
     gradle(
@@ -192,8 +198,9 @@ platform :ios do
   end
 
   lane :deploy_staging do
-    replace_update_desc_with_commit_date({:env => 'stg'})
+    insert_update_desc_to_env({:env => 'stg'})
     Dotenv.overload('../.env.base', '../.env.staging')
+    insert_app_version_to_env({:env => 'stg'})
 
     UI.message("#Badging app icon")
     add_badge(custom: './fastlane/assets/badge_staging.png')
@@ -243,8 +250,9 @@ platform :ios do
   end
 
   lane :deploy_prerelease do
-    replace_update_desc_with_commit_date({:env => 'pre'})
+    insert_update_desc_to_env({:env => 'pre'})
     Dotenv.overload('../.env.base', '../.env.prerelease')
+    insert_app_version_to_env({:env => 'pre'})
 
     UI.message("#Badging app icon")
     add_badge(custom: './fastlane/assets/badge_release.png')
@@ -294,8 +302,9 @@ platform :ios do
   end
 
   lane :deploy_production do
-    replace_update_desc_with_commit_date({:env => 'pro'})
+    insert_update_desc_to_env({:env => 'pro'})
     Dotenv.overload('../.env.base', '../.env.production')
+    insert_app_version_to_env({:env => 'pro'})
 
     match(
       type: "appstore",
@@ -343,26 +352,45 @@ platform :ios do
 end
 
 ################ Utils ################ Utils ################ Utils ################ Utils ################ Utils #####
-def replace_update_desc_with_commit_date(data)
-    env = data[:env]
+def get_env_file_path(data)
+  env = data[:env]
+  if env == "dev"
+    env_file_path = "../.env"
+  elsif env == "stg"
+    env_file_path = "../.env.staging"
+  elsif env == "pre"
+    env_file_path = "../.env.prerelease"
+  else
+    env_file_path = "../.env.production"
+  end
+  UI.message("env_file_path=#{env_file_path}")
+  return env_file_path
+end
 
+def insert_update_desc_to_env(data)
     UI.message("Replace UPDATE_DESC with commit date")
     last_commit_date = sh("git log -1 --format=%cd", log: false).strip
     formatted_date = Time.parse(last_commit_date).strftime("%m%d%H%M")
 
-    if env == "dev"
-      env_file_path = "../.env"
-    elsif env == "stg"
-      env_file_path = "../.env.staging"
-    elsif env == "pre"
-      env_file_path = "../.env.prerelease"
-    else
-      env_file_path = "../.env.production"
-    end
-
-    UI.message("env_file_path=#{env_file_path}")
-
+    env = data[:env]
+    env_file_path = get_env_file_path({:env => env})
     env_content = File.read(env_file_path)
-    modified_content = env_content.gsub(/UPDATE_DESC=.*/, "UPDATE_DESC=(#{formatted_date})")
+
+    new_line = "UPDATE_DESC=(#{formatted_date})"
+    modified_content = "#{env_content}\n#{new_line}"
+    File.write(env_file_path, modified_content)
+end
+
+# Android use .env.staging/.prerelease/.production when build, so we have to add app_version to exact env file
+def insert_app_version_to_env(data)
+    UI.message("Replace APP_VERSION from base env")
+    appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+
+    env = data[:env]
+    env_file_path = get_env_file_path({:env => env})
+    env_content = File.read(env_file_path)
+
+    new_line = "APP_VERSION=#{appVersionText}"
+    modified_content = "#{env_content}\n#{new_line}"
     File.write(env_file_path, modified_content)
 end
