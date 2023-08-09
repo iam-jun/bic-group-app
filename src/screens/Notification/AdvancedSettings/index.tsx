@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator, FlatList, StyleSheet, View,
 } from 'react-native';
@@ -42,7 +42,6 @@ const AdvancedSettings = () => {
   const advancedSettingsActions = useAdvancedNotiSettingsStore((state) => state.actions);
   const isLoading = useAdvancedNotiSettingsStore((state) => state.isLoading);
   const isLoadingJoinedGroup = useAdvancedNotiSettingsStore((state) => state.isLoadingJoinedGroup);
-  const isLoadingGroupSettings = useAdvancedNotiSettingsStore((state) => state.isLoadingGroupSettings);
   const joinedGroups = useAdvancedNotiSettingsStore((state) => state.joinedGroups);
   const selectedCommunity = useAdvancedNotiSettingsStore((state) => state.selectedCommunity);
   const comId = selectedCommunity?.communityId || selectedCommunity?.id;
@@ -51,6 +50,7 @@ const AdvancedSettings = () => {
   const hasNextPage = useAdvancedNotiSettingsStore((state) => state.hasNextPage);
   const { actions: joinedActions } = useSearchJoinedCommunitiesStore();
   const { reset: resetAdvancedSettings } = useAdvancedNotiSettingsStore();
+  const isDisabled = !Boolean(communitySettingData?.enable);
 
   useEffect(
     () => {
@@ -70,14 +70,6 @@ const AdvancedSettings = () => {
     advancedSettingsActions.setIsLoading(true);
     actions.getYourCommunities(true);
   };
-
-  useEffect(() => {
-    if (selectedCommunity?.id) {
-      const comID = selectedCommunity?.communityId || selectedCommunity?.id;
-      advancedSettingsActions.getCommunitySettings(comID);
-      advancedSettingsActions.getJoinedGroup(comID, true);
-    }
-  }, [selectedCommunity?.id]);
 
   const onRefresh = () => {
     getData();
@@ -131,28 +123,28 @@ const AdvancedSettings = () => {
     setIsOpenSearchGroups(true);
   };
 
-  const renderEmpty = () => (
-    <View style={styles.container}>
-      {Boolean(isLoadingJoinedGroup) ? <ActivityIndicator size="large" color={colors.neutral1} />
-        : (
-          <EmptyScreen
-            source={images.img_empty_search_post}
-            size={100}
-            title="notification:notification_settings:error_title"
-            description="notification:notification_settings:error_description"
-            ButtonComponent={(
-              <Button.Primary
-                size="medium"
-                onPress={onRefresh}
-                useI18n
-              >
-                common:text_refresh
-              </Button.Primary>
+  const renderEmpty = () => {
+    if (isLoadingJoinedGroup) return null;
+    return (
+      <View style={styles.container}>
+        <EmptyScreen
+          source={images.img_empty_search_post}
+          size={100}
+          title="notification:notification_settings:error_title"
+          description="notification:notification_settings:error_description"
+          ButtonComponent={(
+            <Button.Primary
+              size="medium"
+              onPress={onRefresh}
+              useI18n
+            >
+              common:text_refresh
+            </Button.Primary>
         )}
-          />
-        )}
-    </View>
-  );
+        />
+      </View>
+    );
+  };
 
   const renderNothingToSetup = () => (
     <View
@@ -181,18 +173,15 @@ const AdvancedSettings = () => {
     />
   );
 
-  const renderItem = ({ item }: any) => {
-    const isDisabled = !Boolean(communitySettingData?.enable)
-     || isLoadingJoinedGroup || isLoadingGroupSettings;
-    return (
-      <AdvancedSettingItem
-        key={`advanced_settings.${item?.id}?.${communitySettingData?.enable}`}
-        isDisabled={isDisabled}
-        item={item}
-        onPress={onPressItem}
-      />
-    );
-  };
+  const renderItem = useCallback(({ item }: any) => (
+    <AdvancedSettingItem
+      key={`advanced_settings.${item?.id}?.${isDisabled}`}
+      isDisabled={isDisabled}
+      item={item}
+      onPress={onPressItem}
+    />
+  ),
+  [isDisabled]);
 
   const renderLoading = () => (
     <View style={styles.container}>
@@ -209,6 +198,30 @@ const AdvancedSettings = () => {
     );
   };
 
+  const keyExtractor = (item: any) => `group.${item?.id}.${selectedCommunity?.id}`;
+
+  const renderContent = () => {
+    if (ids.length === 0) return renderNothingToSetup();
+    return (
+      <FlatList
+        data={joinedGroups}
+        extraData={communitySettingData}
+        scrollEventThrottle={16}
+        initialNumToRender={20}
+        maxToRenderPerBatch={20}
+        keyboardShouldPersistTaps="handled"
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        ListHeaderComponent={renderHeader}
+        ListEmptyComponent={renderEmpty}
+        ListFooterComponent={renderListFooter}
+        onEndReachedThreshold={0.5}
+        onEndReached={onLoadMore}
+        removeClippedSubviews
+      />
+    );
+  };
+
   return (
     <ScreenWrapper
       testID="advanced_settings.screen"
@@ -219,25 +232,7 @@ const AdvancedSettings = () => {
       <ViewSpacing height={spacing.padding.large} />
       {Boolean(isLoading)
         ? renderLoading()
-        : (ids.length === 0 ? renderNothingToSetup()
-          : (
-            <FlatList
-              data={joinedGroups}
-              extraData={communitySettingData}
-              scrollEventThrottle={16}
-              initialNumToRender={20}
-              keyboardShouldPersistTaps="handled"
-              keyExtractor={(item) => `group.${item?.id}.${selectedCommunity?.id}`}
-              renderItem={renderItem}
-              ListHeaderComponent={renderHeader}
-              ListEmptyComponent={renderEmpty}
-              ListFooterComponent={renderListFooter}
-              onEndReachedThreshold={0.2}
-              onEndReached={onLoadMore}
-              removeClippedSubviews
-            />
-          )
-        )}
+        : renderContent()}
       <SearchCommunityView
         isOpen={isOpenSearchCommunity}
         onClose={onCloseSearchCommunity}

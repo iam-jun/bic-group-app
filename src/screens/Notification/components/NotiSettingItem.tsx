@@ -9,6 +9,7 @@ import { INotiSettings } from '~/interfaces/INotification';
 import Icon from '~/baseComponents/Icon';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { IconType } from '~/resources/icons';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 
 interface NotiSettingItemProps {
     item: INotiSettings;
@@ -16,6 +17,7 @@ interface NotiSettingItemProps {
     isDisable?: boolean;
     isDisableToggle?: boolean;
     isShowSubTitle?: boolean;
+    isLoading?: boolean;
     onPressToggle?: (isChecked: boolean) => void;
     onPress?: (item: INotiSettings) => void;
 }
@@ -26,6 +28,7 @@ const NotiSettingItem = ({
   isDisable = false,
   isDisableToggle = false,
   isShowSubTitle = false,
+  isLoading = false,
   onPressToggle,
   onPress,
 }: NotiSettingItemProps) => {
@@ -38,6 +41,31 @@ const NotiSettingItem = ({
   }
   const { title, enable, subtitle = '' } = item;
   const disable = Boolean(isDisable);
+
+  const renderLoading = () => (
+    <LoadingIndicator size="small" />
+  );
+
+  const renderRightComponent = () => {
+    if (Boolean(onPressToggle)) {
+      return (
+        <Toggle
+          testID="notification_settings.item.toggle"
+          isChecked={enable}
+          disabled={isDisableToggle}
+          onValueChanged={onPressToggle}
+        />
+      );
+    }
+    return (
+      <Icon
+        testID="notification_settings.item.icon"
+        tintColor={disable ? colors.neutral30 : colors.neutral40}
+        size={14}
+        icon="ChevronRight"
+      />
+    );
+  };
 
   return (
     <TouchableOpacity
@@ -62,22 +90,7 @@ const NotiSettingItem = ({
         </View>
       </View>
       <ViewSpacing width={spacing.margin.large} />
-      {Boolean(onPressToggle)
-        ? (
-          <Toggle
-            testID="notification_settings.item.toggle"
-            isChecked={enable}
-            disabled={isDisableToggle}
-            onValueChanged={onPressToggle}
-          />
-        ) : (
-          <Icon
-            testID="notification_settings.item.icon"
-            tintColor={disable ? colors.neutral30 : colors.neutral40}
-            size={14}
-            icon="ChevronRight"
-          />
-        )}
+      {Boolean(isLoading) ? renderLoading() : renderRightComponent()}
     </TouchableOpacity>
   );
 };

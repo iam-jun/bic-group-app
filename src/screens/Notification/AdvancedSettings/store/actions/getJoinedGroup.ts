@@ -14,6 +14,7 @@ const getJoinedGroup = (set, get) => async (id: string, isRefresh?: boolean) => 
     set((state: IAdvancedNotiSettingsStore) => {
       state.isLoadingJoinedGroup = true;
       state.hasNextPage = isRefresh ? true : state.hasSearchNextPage;
+      state.joinedGroups = isRefresh ? [] : state.joinedGroups;
     }, 'getJoinedGroup');
 
     const params: any = {
@@ -21,7 +22,7 @@ const getJoinedGroup = (set, get) => async (id: string, isRefresh?: boolean) => 
       includeRootGroup: true,
       sort: 'level:asc',
       offset: isRefresh ? 0 : joinedGroups.length,
-      limit: appConfig.limitGroupAdvancedSettings,
+      limit: isRefresh ? appConfig.limitGroupAdvancedSettings * 2 : appConfig.limitGroupAdvancedSettings,
     };
 
     const response = await notificationApi.getGroupsAndGroupsSettings(id, params);

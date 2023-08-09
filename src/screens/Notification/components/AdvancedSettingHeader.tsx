@@ -32,6 +32,8 @@ const AdvancedSettingHeader = ({
 
   const isLoadingCommunitySettings = useAdvancedNotiSettingsStore((state) => state.isLoadingCommunitySettings);
   const selectedCommunity = useAdvancedNotiSettingsStore((state) => state.selectedCommunity);
+  const isUpdatingCommunitySettings = useAdvancedNotiSettingsStore((state) => state.isUpdatingCommunitySettings);
+
   const {
     icon, name, communityId, id,
   } = selectedCommunity || {};
@@ -80,6 +82,7 @@ const AdvancedSettingHeader = ({
           : (
             <NotiSettingItem
               item={defaultItem}
+              isLoading={isUpdatingCommunitySettings}
               iconName="Bell"
               onPressToggle={onChangeToggle}
             />

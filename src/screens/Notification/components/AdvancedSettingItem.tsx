@@ -1,6 +1,6 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { GroupPrivacyDetail } from '~/constants/privacyTypes';
 import { IconType } from '~/resources/icons';
@@ -26,7 +26,7 @@ const AdvancedSettingItem = ({ item, isDisabled = false, onPress }: Props) => {
 
   const groupData = useAdvancedNotiSettingsStore((state) => state.groupData?.[item.id]);
 
-  const getLabelText = (data: IAdvancedNotificationSettings) => {
+  const getLableByData = (data: IAdvancedNotificationSettings) => {
     if (isEmpty(data)) return '';
     const { flag, channels, enable } = data;
     if (enable && flag?.value) {
@@ -53,7 +53,7 @@ const AdvancedSettingItem = ({ item, isDisabled = false, onPress }: Props) => {
     icon, name, privacy,
   } = item;
   const privacyIcon = GroupPrivacyDetail[privacy]?.icon as IconType;
-  const label = getLabelText(groupData);
+  const label = useMemo(() => getLableByData(groupData), [groupData]);
 
   return (
     <Button
@@ -116,4 +116,4 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
-export default AdvancedSettingItem;
+export default React.memo(AdvancedSettingItem);

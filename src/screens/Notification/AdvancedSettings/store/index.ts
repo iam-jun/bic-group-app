@@ -84,9 +84,16 @@ const advancedNotiSettingsStore = (set, get) => ({
       }, 'setIsLoadingCommunitySettings');
     },
     setSelectedCommunity: (community: any) => {
+      const { selectedCommunity, actions } = get();
+      const currentComID = selectedCommunity?.communityId || selectedCommunity?.id;
+      const newComID = community?.communityId || community?.id;
+      if (newComID === currentComID) return;
+
       set((state: IAdvancedNotiSettingsStore) => {
         state.selectedCommunity = community;
       }, 'setSelectedCommunity');
+      actions.getCommunitySettings(newComID);
+      actions.getJoinedGroup(newComID, true);
     },
     getCommunitySettings: getCommunitySettings(set, get),
     getJoinedGroup: getJoinedGroup(set, get),
