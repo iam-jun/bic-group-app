@@ -3,7 +3,7 @@ name: bundle-aab-production
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - 'v*'
 
 jobs:
   bundle-aab-production:
