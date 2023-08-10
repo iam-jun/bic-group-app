@@ -163,18 +163,20 @@ const CirclePercentage: React.FC<CirclePercentageProps> = ({
           { borderColor: ringBgColor, borderWidth: bgRingWidth },
         ]}
       />
-      <View
-        style={[
-          styles.firstProgressLayer,
-          firstProgressLayerStyle,
-          commonStyles,
-          ringColorStyle,
-          {
-            borderTopWidth: progressRingWidth,
-            borderRightWidth: progressRingWidth,
-          },
-        ]}
-      />
+      {percent !== 0 && (
+        <View
+          style={[
+            styles.firstProgressLayer,
+            firstProgressLayerStyle,
+            commonStyles,
+            ringColorStyle,
+            {
+              borderTopWidth: progressRingWidth,
+              borderRightWidth: progressRingWidth,
+            },
+          ]}
+        />
+      )}
       {displayThickOffsetLayer && (
         <View
           style={[
