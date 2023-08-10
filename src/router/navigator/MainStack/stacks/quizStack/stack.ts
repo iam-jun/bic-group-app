@@ -1,7 +1,7 @@
 const quizStack = {
   entryQuiz: 'entry-quiz',
   composeQuiz: 'compose-quiz',
-  editQuestion: 'edit-question',
+  composeQuestion: 'compose-question',
   publishQuiz: 'publish-quiz',
   takeQuiz: 'take-quiz',
   takeQuizReview: 'take-quiz-review',

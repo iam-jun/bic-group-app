@@ -27,7 +27,7 @@ const QuestionComposeQuiz: FC<QuestionComposeQuizProps> = ({
   const styles = createStyle(theme);
 
   const onPressEdit = () => {
-    rootNavigation.navigate(quizStack.editQuestion, {
+    rootNavigation.navigate(quizStack.composeQuestion, {
       questionIndex,
       quizId,
     });

@@ -11,10 +11,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { isEmpty } from 'lodash';
 import Header from '~/beinComponents/Header';
 import { spacing } from '~/theme';
-import {
-  GenStatus,
-  QuestionItem,
-} from '~/interfaces/IQuiz';
+import { GenStatus, QuestionItem } from '~/interfaces/IQuiz';
 import useQuizzesStore from '~/store/entities/quizzes';
 import { useRootNavigation } from '~/hooks/navigation';
 import QuestionComposeQuiz from './components/QuestionComposeQuiz';
@@ -24,6 +21,8 @@ import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 import showToast from '~/store/helper/showToast';
 import { useBaseHook } from '~/hooks';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
+import { MAX_QUESTIONS } from '../helper';
+import { Button } from '~/baseComponents';
 
 type ComposeQuizProps = {
   route?: {
@@ -46,24 +45,29 @@ const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
   const styles = createStyle(theme);
 
   const isGenerating = useQuizzesStore((state) => state.isGenerating);
-  const isGettingQuizDetail = useQuizzesStore((state) => state.isGettingQuizDetail);
+  const isGettingQuizDetail = useQuizzesStore(
+    (state) => state.isGettingQuizDetail,
+  );
   const quiz = useQuizzesStore((state) => state.data[quizId]);
 
   const actionsQuizzesStore = useQuizzesStore((state) => state.actions);
 
-  const {
-    questions = [], id, genStatus,
-  } = quiz || {};
+  const { questions = [], id, genStatus } = quiz || {};
 
   const disabledBtnNext = questions.length === 0;
-  const isShowGenerating = isGenerating || [GenStatus.PENDING, GenStatus.PROCESSING].includes(genStatus);
+  const isShowGenerating
+    = isGenerating
+    || [GenStatus.PENDING, GenStatus.PROCESSING].includes(genStatus);
   const isShowGeneratingFailed = genStatus === GenStatus.FAILED;
 
   const onNext = () => {
     rootNavigation.navigate(quizStack.publishQuiz, { quizId });
   };
 
-  const btnNext = !isGettingQuizDetail && !isShowGenerating && !isShowGeneratingFailed && !isEmpty(quiz) && {
+  const btnNext = !isGettingQuizDetail
+    && !isShowGenerating
+    && !isShowGeneratingFailed
+    && !isEmpty(quiz) && {
     buttonProps: {
       disabled: disabledBtnNext,
       loading: false,
@@ -92,17 +96,25 @@ const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
   }, []);
 
   const renderItem: ListRenderItem<QuestionItem> = ({ item, index }) => (
-    <QuestionComposeQuiz quizId={id} questionItem={item} questionIndex={index} />
+    <QuestionComposeQuiz
+      quizId={id}
+      questionItem={item}
+      questionIndex={index}
+    />
   );
 
   const keyExtractor = (question) => `question_${question.id}`;
 
-  const renderItemSeparatorComponent = () => (
-    <View style={styles.line} />
-  );
+  const renderItemSeparatorComponent = () => <View style={styles.line} />;
 
   const onPressDraft = () => {
     rootNavigation.navigate(menuStack.yourContent, { initTab: 4 });
+  };
+
+  const onPressAddQuestion = () => {
+    rootNavigation.navigate(quizStack.composeQuestion, {
+      quizId,
+    });
   };
 
   const onPressBack = () => {
@@ -120,6 +132,23 @@ const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
     <View style={styles.containerLoadingView}>
       <ActivityIndicator color={colors.gray20} />
     </View>
+  );
+
+  const renderListFooterComponent = () => !!questions
+    && questions.length < MAX_QUESTIONS && (
+      <Button.Neutral
+        type="ghost"
+        icon="Plus"
+        iconSize={16}
+        useI18n
+        style={[
+          styles.btnAddQuestion,
+          questions.length === 0 && { marginTop: spacing.margin.small },
+        ]}
+        onPress={onPressAddQuestion}
+      >
+        quiz:add_question
+      </Button.Neutral>
   );
 
   const onPressRegenerate = () => {
@@ -143,7 +172,7 @@ const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
       return <GeneratingQuizFailed onPressRegenerate={onPressRegenerate} />;
     }
 
-    if (!isGenerating && questions.length !== 0) {
+    if (!isGenerating) {
       return (
         <FlatList
           data={questions}
@@ -151,6 +180,7 @@ const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
           renderItem={renderItem}
           contentContainerStyle={styles.containerContent}
           ItemSeparatorComponent={renderItemSeparatorComponent}
+          ListFooterComponent={renderListFooterComponent}
         />
       );
     }
@@ -196,6 +226,9 @@ const createStyle = (theme: ExtendedTheme) => {
     line: {
       borderTopColor: colors.neutral5,
       borderTopWidth: 1,
+    },
+    btnAddQuestion: {
+      alignSelf: 'baseline',
     },
   });
 };

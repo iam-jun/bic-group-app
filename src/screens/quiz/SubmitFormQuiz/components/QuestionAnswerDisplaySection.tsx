@@ -14,10 +14,9 @@ import { TextInput } from '~/baseComponents/Input';
 import { useBaseHook } from '~/hooks';
 import { spacing } from '~/theme';
 import Text from '~/baseComponents/Text';
-import { MAX_QUESTIONS } from './QuestionAnswerSection';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { FormGenerateQuiz } from '~/interfaces/IQuiz';
-import { validateIntegerNumber } from '../../helper';
+import { MAX_QUESTIONS, MAX_ANSWERS, validateIntegerNumber } from '../../helper';
 
 type QuestionAnswerDisplaySectionProps = {
   control: Control<FormGenerateQuiz>;

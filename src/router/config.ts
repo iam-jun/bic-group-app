@@ -31,7 +31,7 @@ export const customBackHandlerRoutes = [
   homeStack.pinContent,
   homeStack.reorderedPinContent,
   quizStack.entryQuiz,
-  quizStack.editQuestion,
+  quizStack.composeQuestion,
   quizStack.publishQuiz,
   quizStack.takeQuiz,
   quizStack.takeQuizReview,

@@ -7,14 +7,11 @@ import { spacing } from '~/theme';
 import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { FormGenerateQuiz } from '~/interfaces/IQuiz';
-import { validateIntegerNumber } from '../../helper';
+import { MAX_QUESTIONS, MAX_ANSWERS, validateIntegerNumber } from '../../helper';
 
 type QuestionAnswerSectionProps = {
     control: Control<FormGenerateQuiz>;
 }
-
-export const MAX_QUESTIONS = 50;
-export const MAX_ANSWERS = 6;
 
 const QuestionAnswerSection: FC<QuestionAnswerSectionProps> = ({ control }) => {
   const { t } = useBaseHook();

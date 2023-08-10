@@ -36,15 +36,15 @@ export type RegenerateQuizParams = Partial<
 >;
 
 export type AnswerItem = {
-  id: string;
-  content: string;
-  isCorrect: boolean;
+  id?: string;
+  content?: string;
+  isCorrect?: boolean;
 };
 
 export type QuestionItem = {
-  id: string;
-  content: string;
-  answers: AnswerItem[];
+  id?: string;
+  content?: string;
+  answers?: AnswerItem[];
 };
 
 export interface IQuiz extends GenerateQuizParams {
@@ -78,7 +78,7 @@ export interface IParamsGetQuizzesContent {
   type?: ContentQuiz | undefined;
 }
 
-export type EditQuestionForm = {
+export type ComposeQuestionForm = {
   content: string;
   answers: AnswerItem[];
 };

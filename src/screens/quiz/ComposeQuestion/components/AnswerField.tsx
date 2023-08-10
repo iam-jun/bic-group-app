@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { Platform, StyleSheet, View } from 'react-native';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { EditQuestionForm } from '~/interfaces/IQuiz';
+import { ComposeQuestionForm } from '~/interfaces/IQuiz';
 import Text from '~/baseComponents/Text';
 import { TextArea } from '~/baseComponents/Input';
 import { useBaseHook } from '~/hooks';
@@ -15,15 +15,18 @@ import { mapIndexToAlphabet, validateSpaceTrap } from '../../helper';
 type AnswerFieldProps = {
   answerIndex: number;
   remove: (index?: number | number[]) => void;
+  onLayoutAnswerView: (indexInputAnswer: number, y: number) => void;
 };
 
-const AnswerField: FC<AnswerFieldProps> = ({ answerIndex, remove }) => {
+const AnswerField: FC<AnswerFieldProps> = ({ answerIndex, remove, onLayoutAnswerView }) => {
   const { t } = useBaseHook();
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
 
-  const { control, setValue } = useFormContext<EditQuestionForm>();
+  const [isShowCountLength, setIsShowCountLength] = useState(false);
+
+  const { control, setValue } = useFormContext<ComposeQuestionForm>();
 
   const answers = useWatch({
     name: 'answers',
@@ -31,6 +34,8 @@ const AnswerField: FC<AnswerFieldProps> = ({ answerIndex, remove }) => {
   });
   const answerItem = answers[answerIndex];
   const { isCorrect } = answerItem || {};
+
+  const disabledBtnDelete = isCorrect || answers.length === 1;
 
   const setCorrectAnswer = () => {
     answers.forEach((_ans, index) => {
@@ -44,24 +49,42 @@ const AnswerField: FC<AnswerFieldProps> = ({ answerIndex, remove }) => {
     remove(answerIndex);
   };
 
-  const renderTextInput = ({ field: { onChange, value } }: any) => (
+  const onInputFocus = () => {
+    setIsShowCountLength(true);
+  };
+
+  const onInputBlur = () => {
+    setIsShowCountLength(false);
+  };
+
+  const renderTextInput = ({ field: { onChange, value }, fieldState: { error } }: any) => (
     <TextArea
       testID="answer_field.answer"
       value={value}
       placeholder={t('quiz:enter_answer_placeholder')}
       onChangeText={onChange}
-      showCountLength={false}
+      showCountLength={isShowCountLength}
       style={styles.containerViewInput}
       inputStyle={[
         styles.inputStyle,
         Platform.OS === 'android' && { padding: 0 },
       ]}
       inputStyleContainer={styles.inputStyleContainer}
+      errorText={!!error && error.message}
+      onFocus={onInputFocus}
+      onBlur={onInputBlur}
     />
   );
 
+  const onLayout = (e) => {
+    onLayoutAnswerView(answerIndex, e.nativeEvent?.layout?.y);
+  };
+
   return (
-    <View style={styles.container}>
+    <View
+      style={styles.container}
+      onLayout={onLayout}
+    >
       <ViewSpacing width={spacing.margin.small} />
       <View style={[styles.square, isCorrect && styles.squareAlphabetCorrect]}>
         <Text.ButtonS color={isCorrect ? colors.green50 : colors.neutral40}>
@@ -72,7 +95,7 @@ const AnswerField: FC<AnswerFieldProps> = ({ answerIndex, remove }) => {
         <Controller
           name={`answers.${answerIndex}.content`}
           control={control}
-          rules={{ required: true, validate: validateSpaceTrap }}
+          rules={{ required: t('quiz:this_field_must_not_be_empty'), validate: validateSpaceTrap }}
           render={renderTextInput}
         />
       </View>
@@ -91,12 +114,12 @@ const AnswerField: FC<AnswerFieldProps> = ({ answerIndex, remove }) => {
       <Button
         testID={`answer_field.btn_remove_${answerIndex}`}
         style={styles.square}
-        disabled={isCorrect}
+        disabled={disabledBtnDelete}
         onPress={removeField}
       >
         <Icon
           size={16}
-          tintColor={isCorrect ? colors.neutral20 : colors.neutral40}
+          tintColor={disabledBtnDelete ? colors.neutral20 : colors.neutral40}
           icon="Xmark"
         />
       </Button>
@@ -134,6 +157,7 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     squareAlphabetCorrect: {
       backgroundColor: colors.green2,
+      borderRadius: spacing.borderRadius.base,
     },
     squareCheckCorrect: {
       backgroundColor: colors.green50,

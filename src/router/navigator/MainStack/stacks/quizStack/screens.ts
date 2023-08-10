@@ -1,7 +1,7 @@
 import {
   EntryQuiz,
   ComposeQuiz,
-  EditQuestion,
+  ComposeQuestion,
   PublishQuiz,
   TakeQuiz,
   TakeQuizReview,
@@ -14,7 +14,7 @@ import {
 const quizScreens = {
   'entry-quiz': EntryQuiz,
   'compose-quiz': ComposeQuiz,
-  'edit-question': EditQuestion,
+  'compose-question': ComposeQuestion,
   'publish-quiz': PublishQuiz,
   'take-quiz': TakeQuiz,
   'take-quiz-review': TakeQuizReview,

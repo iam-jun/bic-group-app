@@ -49,6 +49,7 @@ import {
   RegenerateQuizParams,
   IParamsUpdateAnwsers,
   IParamsGetUsersParticipants,
+  QuestionItem,
 } from '~/interfaces/IQuiz';
 
 const DEFAULT_LIMIT = 10;
@@ -631,6 +632,26 @@ export const streamApiConfig = {
     url: `${provider.url}quizzes/${idQuiz}`,
     method: 'delete',
   }),
+  deleteQuestionQuiz: (idQuiz: string, questionId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${idQuiz}/questions/${questionId}`,
+    method: 'delete',
+  }),
+  createQuestionQuiz: (idQuiz: string, question: QuestionItem): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${idQuiz}/questions`,
+    method: 'post',
+    data: question,
+  }),
+  editQuestionQuiz: (idQuiz: string, question: QuestionItem): HttpApiRequestConfig => {
+    const { id, ...body } = question;
+    return ({
+      ...defaultConfig,
+      url: `${provider.url}quizzes/${idQuiz}/questions/${id}`,
+      method: 'put',
+      data: body,
+    });
+  },
 };
 
 const streamApi = {
@@ -945,6 +966,15 @@ const streamApi = {
   ),
   deleteQuiz: (idQuiz: string) => withHttpRequestPromise(
     streamApiConfig.deleteQuiz, idQuiz,
+  ),
+  deleteQuestionQuiz: (idQuiz: string, questionId: string) => withHttpRequestPromise(
+    streamApiConfig.deleteQuestionQuiz, idQuiz, questionId,
+  ),
+  createQuestionQuiz: (idQuiz: string, question: QuestionItem) => withHttpRequestPromise(
+    streamApiConfig.createQuestionQuiz, idQuiz, question,
+  ),
+  editQuestionQuiz: (idQuiz: string, question: QuestionItem) => withHttpRequestPromise(
+    streamApiConfig.editQuestionQuiz, idQuiz, question,
   ),
 };
 
