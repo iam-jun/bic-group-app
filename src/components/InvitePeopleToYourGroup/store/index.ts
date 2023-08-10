@@ -20,6 +20,7 @@ export interface IGroupJoinableUsersState extends IBaseState {
     hasNextPage: boolean;
   };
   selectedUsers: string[];
+  searchText: string;
 
   invitedPeople: {
     data: IInvitedPeople[],
@@ -37,6 +38,7 @@ export interface IGroupJoinableUsersState extends IBaseState {
     cancelInvitation: (invitationId: string) => Promise<void>;
     clearInviteData: () => void;
     clearInvitedPeople: () => void;
+    setSearchText: (value: string) => void;
   };
 }
 
@@ -49,6 +51,7 @@ const initialState: InitStateType<IGroupJoinableUsersState> = {
     hasNextPage: false,
   },
   selectedUsers: [],
+  searchText: '',
   invitedPeople: {
     data: [],
     isLoading: false,
@@ -73,12 +76,18 @@ const groupJoinableUsersStore = (set, get) => ({
         state.loading = initialState.loading;
         state.users = initialState.users;
         state.selectedUsers = initialState.selectedUsers;
+        state.searchText = initialState.searchText;
       }, 'clearInviteData');
     },
     clearInvitedPeople: () => {
       set((state: IGroupJoinableUsersState) => {
         state.invitedPeople = initialState.invitedPeople;
       }, 'clearInvitedPeople');
+    },
+    setSearchText: (value: string) => {
+      set((state: IGroupJoinableUsersState) => {
+        state.searchText = value;
+      }, 'setSearchText');
     },
   },
 

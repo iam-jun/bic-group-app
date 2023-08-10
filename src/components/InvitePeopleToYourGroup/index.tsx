@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
@@ -39,10 +39,9 @@ const InvitePeopleToYourGroup = (props: InvitePeopleToYourGroupProps) => {
 
   const { hideModal } = useModalStore((state) => state.actions);
   const {
-    data, selectedUsers, loading, actions,
+    data, selectedUsers, loading, actions, searchText,
   } = useGroupJoinableUsersStore((state) => state);
 
-  const [searchText, setSearchText] = useState('');
   const shouldDisableButton = selectedUsers.length === 0;
 
   const getData = (key: string, isLoadMore = false) => {
@@ -54,7 +53,7 @@ const InvitePeopleToYourGroup = (props: InvitePeopleToYourGroupProps) => {
   };
 
   const searchUsers = (searchQuery: string) => {
-    setSearchText(searchQuery);
+    actions.setSearchText(searchQuery);
     if (!searchQuery.trim()) return;
     getData(searchQuery);
   };
