@@ -6,6 +6,7 @@ import { adminDetail, memberDetail } from '~/test/mock_data/communities';
 
 describe('MemberSearchResult component', () => {
   const onPressMenu = jest.fn();
+  const onLoadMore = jest.fn();
 
   it('should NOT render empty screen correctly when loading', () => {
     const wrapper = renderWithRedux(
@@ -14,6 +15,7 @@ describe('MemberSearchResult component', () => {
         memberSearchData={{ loading: true, canLoadMore: true, data: [] }}
         isAdminRole
         onPressMenu={onPressMenu}
+        onLoadMore={onLoadMore}
       />,
     );
     const emptyText = wrapper.queryByTestId('member_search_result.no_results');
@@ -31,6 +33,7 @@ describe('MemberSearchResult component', () => {
         }}
         isAdminRole
         onPressMenu={onPressMenu}
+        onLoadMore={onLoadMore}
       />,
     );
     const emptyText = wrapper.queryByTestId('member_search_result.no_results');
@@ -48,6 +51,7 @@ describe('MemberSearchResult component', () => {
         }}
         isAdminRole
         onPressMenu={onPressMenu}
+        onLoadMore={onLoadMore}
       />,
     );
     const emptyText = wrapper.getByTestId('no_search_results');
@@ -65,6 +69,7 @@ describe('MemberSearchResult component', () => {
         }}
         isAdminRole
         onPressMenu={onPressMenu}
+        onLoadMore={onLoadMore}
       />,
     );
     const loadingIndicator = wrapper.getByTestId(
@@ -84,6 +89,7 @@ describe('MemberSearchResult component', () => {
         }}
         isAdminRole
         onPressMenu={onPressMenu}
+        onLoadMore={onLoadMore}
       />,
     );
     const loadingIndicator = wrapper.queryByTestId(
@@ -103,6 +109,7 @@ describe('MemberSearchResult component', () => {
         }}
         isAdminRole
         onPressMenu={onPressMenu}
+        onLoadMore={onLoadMore}
       />,
     );
     const flatlist = wrapper.getByTestId('flatlist');

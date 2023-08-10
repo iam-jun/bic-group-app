@@ -2,19 +2,26 @@ import { t } from 'i18next';
 import React from 'react';
 import InvitePeopleToYourGroup from '~/components/InvitePeopleToYourGroup';
 import useGroupJoinableUsersStore from '~/components/InvitePeopleToYourGroup/store';
+import { ITypeGroup } from '~/interfaces/common';
 import useModalStore from '~/store/modal';
 
-export const onPressButtonInvite = (groupId: string) => {
+interface IParams {
+  type: ITypeGroup;
+  groupId: string;
+}
+
+export const onPressButtonInvite = (params: IParams) => {
+  const { type, groupId } = params;
   const { showModal } = useModalStore.getState().actions;
   showModal({
     isOpen: true,
-    ContentComponent: <InvitePeopleToYourGroup groupId={groupId} />,
-    props: { onClosed: () => onCloseModalInvitePeopleToYourGroup(groupId) },
+    ContentComponent: <InvitePeopleToYourGroup type={type} groupId={groupId} />,
+    props: { onClosed: () => onCloseModalInvitePeopleToYourGroup(params) },
   });
   return true;
 };
 
-export const onCloseModalInvitePeopleToYourGroup = (groupId: string) => {
+export const onCloseModalInvitePeopleToYourGroup = (params: IParams) => {
   const { selectedUsers } = useGroupJoinableUsersStore.getState();
   if (selectedUsers.length > 0) {
     const { showAlert } = useModalStore.getState().actions;
@@ -24,19 +31,19 @@ export const onCloseModalInvitePeopleToYourGroup = (groupId: string) => {
       confirmLabel: t('common:alert_quit_without_completing:button_quit'),
       cancelBtn: true,
       cancelLabel: t('common:alert_quit_without_completing:button_keep_editing'),
-      onCancel: () => onCancel(groupId),
+      onCancel: () => onCancel(params),
       onConfirm,
     });
     return true;
   }
 };
 
-export const onCancel = (groupId: string) => {
-  onPressButtonInvite(groupId);
+export const onCancel = (params: IParams) => {
+  onPressButtonInvite(params);
   return true;
 };
 
 export const onConfirm = () => {
-  useGroupJoinableUsersStore.getState().reset();
+  useGroupJoinableUsersStore.getState().actions.clearInviteData();
   return true;
 };

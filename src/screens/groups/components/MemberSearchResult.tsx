@@ -1,13 +1,12 @@
 import {
   ActivityIndicator,
   FlatList,
-  RefreshControl,
   StyleSheet,
   View,
 } from 'react-native';
 import React from 'react';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import MemberItem from './MemberItem';
 import spacing from '~/theme/spacing';
@@ -18,8 +17,7 @@ interface MemberSearchResultProps {
   canManageMember: boolean;
   memberSearchData: {loading: boolean; canLoadMore: boolean; data: any[]};
   isAdminRole: boolean;
-  onLoadMore?: () => void;
-  onRefresh?: () => void;
+  onLoadMore: () => void;
   onPressMenu: (item: any) => void;
 }
 
@@ -28,10 +26,9 @@ const MemberSearchResult = ({
   memberSearchData,
   isAdminRole,
   onLoadMore,
-  onRefresh,
   onPressMenu,
 }: MemberSearchResultProps) => {
-  const theme: ExtendedTheme = useTheme();
+  const insets = useSafeAreaInsets();
 
   const { loading, canLoadMore, data } = memberSearchData;
 
@@ -58,11 +55,11 @@ const MemberSearchResult = ({
       );
     }
 
-    return null;
+    return <ViewSpacing height={insets.bottom || spacing.padding.large} />;
   };
 
   const renderItemSeparatorComponent = () => (
-    <ViewSpacing height={8} />
+    <ViewSpacing height={spacing.margin.small} />
   );
 
   return (
@@ -79,15 +76,6 @@ const MemberSearchResult = ({
       showsVerticalScrollIndicator={false}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.1}
-      refreshControl={
-        onRefresh ? (
-          <RefreshControl
-            refreshing={loading}
-            onRefresh={onRefresh}
-            tintColor={theme.colors.gray40}
-          />
-        ) : undefined
-      }
       ItemSeparatorComponent={renderItemSeparatorComponent}
     />
   );
@@ -109,13 +97,6 @@ const styles = StyleSheet.create({
     marginBottom: spacing.margin.large,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  imgEmpty: {
-    width: 150,
-    aspectRatio: 1,
-  },
-  noResultText: {
-    textAlign: 'center',
   },
 });
 

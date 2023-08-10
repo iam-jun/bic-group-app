@@ -23,9 +23,9 @@ export const renderTabs = (params: {
   if (!isShowMemberRequestsTab && !isShowInvitedPeopleTab) return null;
 
   if (isShowMemberRequestsTab && !isShowInvitedPeopleTab) {
-    memberTabsClone.splice(1, 1);
-  } else if (!isShowMemberRequestsTab && isShowInvitedPeopleTab) {
     memberTabsClone.splice(2, 1);
+  } else if (!isShowMemberRequestsTab && isShowInvitedPeopleTab) {
+    memberTabsClone.splice(1, 1);
   }
 
   return (

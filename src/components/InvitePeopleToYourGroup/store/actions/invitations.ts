@@ -6,8 +6,9 @@ import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const invitations = (set, get) => async (params: IParamsInvitations) => {
   const {
-    targetId, targetType, inviteeIds, onCallback,
+    targetId, targetType, inviteeIds, onSuccess, onError,
   } = params;
+
   try {
     set((state: IGroupJoinableUsersState) => {
       state.loading = true;
@@ -25,16 +26,16 @@ const invitations = (set, get) => async (params: IParamsInvitations) => {
       state.loading = false;
     }, 'invitations Success');
 
-    onCallback();
-    get().reset();
+    onSuccess();
+    get().actions.clearInviteData();
     showToastSuccess(response);
   } catch (error) {
     console.error('invitations error:', error);
     set((state: IGroupJoinableUsersState) => {
       state.loading = false;
     }, 'invitations Failed');
-    onCallback();
-    get().reset();
+    onError();
+    get().actions.clearInviteData();
     showToastError(error);
   }
 };

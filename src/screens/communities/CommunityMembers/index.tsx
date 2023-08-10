@@ -20,6 +20,8 @@ import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 import { onPressButtonInvite } from '~/components/InvitePeopleToYourGroup/helper';
 import { renderTabs } from './helper';
+import CommunityInvitedPeople from './CommunityInvitedPeople';
+import { ITypeGroup } from '~/interfaces/common';
 
 export const MEMBER_TABS = [
   { id: MEMBER_TAB_TYPES.MEMBER_LIST, text: 'communities:member_tab_types:title_member_list' },
@@ -81,28 +83,28 @@ const CommunityMembers = ({ route }: any) => {
   };
 
   const renderContent = () => {
-    if (selectedIndex === 0) {
-      return (
-        <SearchMemberView
-          community={community}
-          isMember={isMember}
-          placeholder={t('groups:text_search_for_members')}
-          onPressMenu={onPressMenu}
-        />
-      );
+    switch (selectedIndex) {
+      case 0:
+        return (
+          <SearchMemberView
+            community={community}
+            isMember={isMember}
+            placeholder={t('groups:text_search_for_members')}
+            onPressMenu={onPressMenu}
+          />
+        );
+      case 1:
+        return (
+          <CommunityMemberRequests
+            community={community}
+            canApproveRejectJoiningRequests={canApproveRejectJoiningRequests}
+          />
+        );
+      case 2:
+        return <CommunityInvitedPeople type={ITypeGroup.COMMUNITY} groupId={groupId} />;
+      default:
+        return null;
     }
-
-    if (selectedIndex === 1) {
-      return (
-        <CommunityMemberRequests
-          community={community}
-          canAddMember={false}
-          canApproveRejectJoiningRequests={canApproveRejectJoiningRequests}
-        />
-      );
-    }
-
-    return null;
   };
 
   const isShowInvitedPeopleTab = canAddMember;
@@ -111,7 +113,7 @@ const CommunityMembers = ({ route }: any) => {
   const showButtonInvite = isShowInvitedPeopleTab && {
     buttonText: 'common:text_invite',
     buttonProps: { useI18n: true, icon: 'Plus' as IconType, iconSize: 14 },
-    onPressButton: () => onPressButtonInvite(groupId),
+    onPressButton: () => onPressButtonInvite({ groupId, type: ITypeGroup.COMMUNITY }),
   };
 
   const _renderTabs = () => renderTabs({

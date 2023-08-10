@@ -1,13 +1,15 @@
 import { IObject } from '~/interfaces/common';
 import {
+  IInvitedPeople,
   IJoinableUsers, IParamsGetJoinableUsers, IParamsInvitations,
 } from '~/interfaces/IGroup';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
-import addUsersToGroup from './actions/addUsersToGroup';
 import getGroupJoinableUsers from './actions/getGroupJoinableUsers';
 import setSelectedUsers from './actions/setSelectedUsers';
 import invitations from './actions/invitations';
+import getInvitations from './actions/getInvitations';
+import cancelInvitation from './actions/cancelInvitation';
 
 export interface IGroupJoinableUsersState extends IBaseState {
   data: IObject<IJoinableUsers>;
@@ -19,11 +21,22 @@ export interface IGroupJoinableUsersState extends IBaseState {
   };
   selectedUsers: string[];
 
+  invitedPeople: {
+    data: IInvitedPeople[],
+    isLoading: boolean,
+    isRefreshing: boolean,
+    canLoadMore: boolean,
+    offset: number;
+  }
+
   actions: {
     getGroupJoinableUsers: (payload: IParamsGetJoinableUsers) => void;
     setSelectedUsers: (userId: string) => void;
-    addUsersToGroup: (groupId: string) => void;
     invitations: (params: IParamsInvitations) => void;
+    getInvitations: (groupId: string, isRefreshing?: boolean) => Promise<void>;
+    cancelInvitation: (invitationId: string) => Promise<void>;
+    clearInviteData: () => void;
+    clearInvitedPeople: () => void;
   };
 }
 
@@ -36,6 +49,13 @@ const initialState: InitStateType<IGroupJoinableUsersState> = {
     hasNextPage: false,
   },
   selectedUsers: [],
+  invitedPeople: {
+    data: [],
+    isLoading: false,
+    isRefreshing: false,
+    canLoadMore: true,
+    offset: 0,
+  },
 };
 
 const groupJoinableUsersStore = (set, get) => ({
@@ -44,8 +64,22 @@ const groupJoinableUsersStore = (set, get) => ({
   actions: {
     getGroupJoinableUsers: getGroupJoinableUsers(set, get),
     setSelectedUsers: setSelectedUsers(set, get),
-    addUsersToGroup: addUsersToGroup(set, get),
     invitations: invitations(set, get),
+    getInvitations: getInvitations(set, get),
+    cancelInvitation: cancelInvitation(set, get),
+    clearInviteData: () => {
+      set((state: IGroupJoinableUsersState) => {
+        state.data = initialState.data;
+        state.loading = initialState.loading;
+        state.users = initialState.users;
+        state.selectedUsers = initialState.selectedUsers;
+      }, 'clearInviteData');
+    },
+    clearInvitedPeople: () => {
+      set((state: IGroupJoinableUsersState) => {
+        state.invitedPeople = initialState.invitedPeople;
+      }, 'clearInvitedPeople');
+    },
   },
 
   reset: () => resetStore(initialState, set),

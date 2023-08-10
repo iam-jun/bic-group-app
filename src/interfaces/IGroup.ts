@@ -313,15 +313,52 @@ export interface IPayloadPreviewSettings {
 }
 export interface IPayloadInvitations {
   targetId: string,
-  targetType: IInvitationsTargetType,
+  targetType: InvitationsTargetType,
   inviteeIds: string[]
 }
 
 export interface IParamsInvitations extends IPayloadInvitations {
-  onCallback: () => void;
+  onSuccess: () => void;
+  onError: () => void;
 }
 
-export enum IInvitationsTargetType {
+export enum InvitationsTargetType {
   GROUP = 'GROUP',
   GROUP_SET = 'GROUP_SET',
+}
+
+export interface IInvitedPeople {
+  id: string,
+  inviter: IUserInfo,
+  invitee: IUserInfo,
+  targetType: InvitationsTargetType,
+  targetInfo: IInvitationsTargetInfo,
+  status: IInvitationsStatus,
+  createdAt: string,
+  updatedAt: string | null,
+}
+
+interface IUserInfo {
+  id: string,
+  username: string,
+  fullname: string,
+  avatar: string,
+  isDeactivated: boolean,
+}
+
+interface IInvitationsTargetInfo {
+  id: string,
+  name: string
+}
+
+export enum IInvitationsStatus {
+  WAITING = 'WAITING',
+  ACCEPTED = 'ACCEPTED',
+  DECLINED = 'DECLINED',
+  CANCELLED = 'CANCELLED',
+}
+
+export interface IParamsGetInvitations {
+  limit: number,
+  offset: number,
 }

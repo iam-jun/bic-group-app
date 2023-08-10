@@ -17,11 +17,13 @@ import SelectedPeople from './components/SelectedPeople';
 import SearchResults from './components/SearchResults';
 import useGroupJoinableUsersStore from './store';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import { IInvitationsTargetType, IParamsInvitations } from '~/interfaces/IGroup';
+import { InvitationsTargetType, IParamsInvitations } from '~/interfaces/IGroup';
 import TextSelectedPeople from './components/TextSelectedPeople';
+import { ITypeGroup } from '~/interfaces/common';
 
 interface InvitePeopleToYourGroupProps {
   groupId: string;
+  type: ITypeGroup;
 }
 
 export const WARNING_SECTION = {
@@ -33,7 +35,7 @@ const InvitePeopleToYourGroup = (props: InvitePeopleToYourGroupProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyle(theme);
 
-  const { groupId } = props;
+  const { groupId, type } = props;
 
   const { hideModal } = useModalStore((state) => state.actions);
   const {
@@ -66,14 +68,20 @@ const InvitePeopleToYourGroup = (props: InvitePeopleToYourGroupProps) => {
   const onPressInvite = () => {
     const params: IParamsInvitations = {
       targetId: groupId,
-      targetType: IInvitationsTargetType.GROUP,
+      targetType: InvitationsTargetType.GROUP,
       inviteeIds: selectedUsers,
-      onCallback,
+      onSuccess,
+      onError,
     };
     actions.invitations(params);
   };
 
-  const onCallback = () => {
+  const onSuccess = () => {
+    hideModal();
+    actions.getInvitations(groupId, true);
+  };
+
+  const onError = () => {
     hideModal();
   };
 
@@ -105,7 +113,7 @@ const InvitePeopleToYourGroup = (props: InvitePeopleToYourGroupProps) => {
   return (
     <ScreenWrapper style={styles.container} testID="invite_people_to_your_group">
       <Text.H3 style={styles.title} useI18n>
-        common:text_invite_people_to_your_group
+        {t(`common:text_invite_people_to_your_${type}`)}
       </Text.H3>
       <TextSelectedPeople selectedUsers={selectedUsers} loading={loading} />
       <View style={styles.inputIconContainer}>

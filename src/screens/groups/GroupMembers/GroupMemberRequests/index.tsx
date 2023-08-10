@@ -9,16 +9,12 @@ import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 
 interface GroupMemberRequestsProps {
   groupId: string;
-  canAddMember: boolean;
   canApproveRejectJoiningRequests: boolean;
-  onPressAdd?: () => void;
 }
 
 const GroupMemberRequests = ({
   groupId,
-  canAddMember,
   canApproveRejectJoiningRequests,
-  onPressAdd,
 }: GroupMemberRequestsProps) => {
   const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
   const { group } = groups[currentGroupId] || {};
@@ -64,10 +60,8 @@ const GroupMemberRequests = ({
         <>
           <MemberRequestList
             type="group"
-            canAddMember={canAddMember}
             onLoadMore={onLoadMore}
             onRefresh={onRefresh}
-            onPressAdd={onPressAdd}
           />
 
           {ids.length > 1 && <GroupApproveDeclineAllRequests groupId={groupId} />}

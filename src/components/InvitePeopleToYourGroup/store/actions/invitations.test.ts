@@ -1,7 +1,7 @@
 import groupApi from '~/api/GroupApi';
 import { act, renderHook } from '~/test/testUtils';
 import useGroupJoinableUsersStore from '../index';
-import { IInvitationsTargetType, IParamsInvitations } from '~/interfaces/IGroup';
+import { InvitationsTargetType, IParamsInvitations } from '~/interfaces/IGroup';
 import * as showToastError from '~/store/helper/showToastError';
 import * as showToastSuccess from '~/store/helper/showToastSuccess';
 
@@ -13,9 +13,10 @@ describe('invitations', () => {
 
   const params: IParamsInvitations = {
     targetId: 'test',
-    targetType: IInvitationsTargetType.GROUP,
+    targetType: InvitationsTargetType.GROUP,
     inviteeIds: ['test'],
-    onCallback: jest.fn(),
+    onError: jest.fn(),
+    onSuccess: jest.fn(),
   };
 
   it('should call api success', () => {

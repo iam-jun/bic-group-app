@@ -5,12 +5,14 @@ import {
 } from '~/test/testUtils';
 import usePreviewJoinableGroupStore from './store';
 import InvitePeopleToYourGroup from './index';
+import { ITypeGroup } from '~/interfaces/common';
 
 afterEach(cleanup);
 
 describe('PreviewJoinableGroup component', () => {
   const baseProps = {
     groupId: 'test',
+    type: ITypeGroup.COMMUNITY,
   };
 
   it('renders correctly', async () => {

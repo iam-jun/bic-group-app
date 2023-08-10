@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { t } from 'i18next';
 
-import { useRootNavigation } from '~/hooks/navigation';
 import { IGroupMembers } from '~/interfaces/IGroup';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -13,7 +12,6 @@ import networkSelectors from '~/store/network/selectors';
 import MemberOptionsMenu from './components/GroupMemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
 import spacing from '~/theme/spacing';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import GroupMemberRequests from './GroupMemberRequests';
 import { IconType } from '~/resources/icons';
 import useGroupMemberStore, { IGroupMemberState } from './store';
@@ -22,6 +20,8 @@ import useMyPermissionsStore from '~/store/permissions';
 import useGroupDetailStore from '../GroupDetail/store';
 import { onPressButtonInvite } from '~/components/InvitePeopleToYourGroup/helper';
 import { renderTabs } from '~/screens/communities/CommunityMembers/helper';
+import CommunityInvitedPeople from '~/screens/communities/CommunityMembers/CommunityInvitedPeople';
+import { ITypeGroup } from '~/interfaces/common';
 
 const _GroupMembers = ({ route }: any) => {
   const { groupId, targetIndex, isMemberCommunity } = route.params;
@@ -35,7 +35,6 @@ const _GroupMembers = ({ route }: any) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
-  const { rootNavigation } = useRootNavigation();
   const baseSheetRef: any = useRef();
   const {
     actions,
@@ -91,38 +90,30 @@ const _GroupMembers = ({ route }: any) => {
     baseSheetRef.current?.open();
   };
 
-  const onPressAdd = () => {
-    rootNavigation.navigate(groupStack.addMembers, { groupId });
-  };
-
   const onPressTab = (item: any, index: number) => {
     setSelectedIndex(index);
   };
 
   const renderContent = () => {
-    if (selectedIndex === 0) {
-      return (
-        <SearchMemberView
-          isMemberCommunity={isMemberCommunity}
-          placeholder={t('groups:text_search_for_members')}
-          onPressMenu={onPressMenu}
-          groupId={groupId}
-        />
-      );
+    switch (selectedIndex) {
+      case 0:
+        return (
+          <SearchMemberView
+            isMemberCommunity={isMemberCommunity}
+            placeholder={t('groups:text_search_for_members')}
+            onPressMenu={onPressMenu}
+            groupId={groupId}
+          />
+        );
+      case 1:
+        return (
+          <GroupMemberRequests groupId={groupId} canApproveRejectJoiningRequests={canApproveRejectJoiningRequests} />
+        );
+      case 2:
+        return <CommunityInvitedPeople type={ITypeGroup.GROUP} groupId={groupId} />;
+      default:
+        return null;
     }
-
-    if (selectedIndex === 1) {
-      return (
-        <GroupMemberRequests
-          groupId={groupId}
-          canAddMember={canAddMember}
-          canApproveRejectJoiningRequests={canApproveRejectJoiningRequests}
-          onPressAdd={onPressAdd}
-        />
-      );
-    }
-
-    return null;
   };
 
   const isShowInvitedPeopleTab = canAddMember;
@@ -131,7 +122,7 @@ const _GroupMembers = ({ route }: any) => {
   const showButtonInvite = isShowInvitedPeopleTab && {
     buttonText: 'common:text_invite',
     buttonProps: { useI18n: true, icon: 'Plus' as IconType, iconSize: 14 },
-    onPressButton: () => onPressButtonInvite(groupId),
+    onPressButton: () => onPressButtonInvite({ groupId, type: ITypeGroup.GROUP }),
   };
 
   const _renderTabs = () => renderTabs({
