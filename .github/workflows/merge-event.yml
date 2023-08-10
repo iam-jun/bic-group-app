@@ -7,7 +7,7 @@ on:
 
 jobs:
   process_merge:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted-merge-pr
 
     steps:
       - name: Checkout Repository
