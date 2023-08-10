@@ -4,11 +4,9 @@ import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import MockedNavigator from '~/test/MockedNavigator';
 import AdvancedSettings from './index';
 import * as navigationHook from '~/hooks/navigation';
-import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 import useAdvancedNotiSettingsStore from './store';
 import useYourCommunitiesStore from '~/screens/communities/Communities/components/YourCommunities/store';
 import { mockCommunityResponse, mockGroupInFlat } from '~/test/mock_data/advancedSettings';
-import groupApi from '~/api/GroupApi';
 import notificationApi from '~/api/NotificationApi';
 
 describe('Notification Advanced Setting Screen', () => {
@@ -59,7 +57,7 @@ describe('Notification Advanced Setting Screen', () => {
 
   it('should render correctly when get config success', () => {
     const response = mockGroupInFlat;
-    const spyApi = jest.spyOn(groupApi, 'getCommunityGroups').mockImplementation(
+    const spyApi = jest.spyOn(notificationApi, 'getGroupsAndGroupsSettings').mockImplementation(
       () => Promise.resolve(response) as any,
     );
     const responseGetComSetting = mockCommunityResponse;
@@ -86,7 +84,7 @@ describe('Notification Advanced Setting Screen', () => {
     });
     useAdvancedNotiSettingsStore.setState((state) => {
       state.isLoading = false;
-      state.joinedGroups = mockGroupInFlat.data as any;
+      state.joinedGroups = mockGroupInFlat.data.groups as any;
       state.selectedCommunity = mockSelectedCommunity;
       state.isLoadingCommunitySettings = false;
       state.communityData = {
@@ -116,14 +114,8 @@ describe('Notification Advanced Setting Screen', () => {
     expect(toggleComponent).toBeDefined();
 
     const groupItems = wrapper.queryAllByTestId('notification_advanced_setting_item');
-    expect(groupItems.length).toEqual(mockGroupInFlat.data.length);
+    expect(groupItems.length).toEqual(mockGroupInFlat.data.groups.length);
     fireEvent.press(groupItems[0]);
-    const expectParams = {
-      name: mockGroupInFlat.data[0].name,
-      groupId: mockGroupInFlat.data[0].id,
-      communityId: mockSelectedCommunity.id,
-    };
-    expect(navigate).toBeCalledWith(notiStack.advancedSettingsDetail, expectParams);
   });
 
   it('should render correctly when get config success', () => {

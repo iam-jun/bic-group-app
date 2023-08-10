@@ -8,17 +8,17 @@ const updateGroupSettings = (set, _get) => async (
   isResetOrEnableSettings?: boolean,
 ) => {
   try {
-    const { groupId, communityId } = dataUpdateStore;
+    const { id, communityId } = dataUpdateStore;
     set((state: IAdvancedNotiSettingsStore) => {
       state.isUpdatingGroupSettings = true;
       state.isResetOrEnableGroupSettings = isResetOrEnableSettings;
     }, 'updateGroupSettingsLoading');
 
-    await notificationApi.updateGroupSettings(communityId, groupId, params);
+    await notificationApi.updateGroupSettings(communityId, id, params);
 
     set((state: IAdvancedNotiSettingsStore) => {
       state.isUpdatingGroupSettings = false;
-      state.groupData = { ...state.groupData, [groupId]: dataUpdateStore };
+      state.groupData = { ...state.groupData, [id]: dataUpdateStore };
       state.isResetOrEnableGroupSettings = false;
     }, 'updateGroupSettingsSuccess');
   } catch (err) {

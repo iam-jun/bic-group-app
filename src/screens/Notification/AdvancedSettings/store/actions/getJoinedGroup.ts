@@ -1,55 +1,58 @@
 import { IAdvancedNotiSettingsStore } from '../index';
 import showToastError from '~/store/helper/showToastError';
-import { IGetCommunityGroup } from '~/interfaces/IGroup';
 import notificationApi from '~/api/NotificationApi';
-import appConfig from '~/configs/appConfig';
 import { IGroupNotificationSetting } from '~/interfaces/INotification';
+import appConfig from '~/configs/appConfig';
 
-const searchJoinedGroupFlat = (set, get) => async (params: IGetCommunityGroup, isRefresh?:boolean) => {
+const getJoinedGroup = (set, get) => async (id: string, isRefresh?: boolean) => {
   try {
     const {
-      searchJoinedGroups, hasSearchNextPage, selectedCommunity,
+      joinedGroups, hasNextPage,
     } = get();
-    if (!hasSearchNextPage && !isRefresh) return;
-    const id = selectedCommunity?.communityId || selectedCommunity?.id;
+    if (!hasNextPage && !isRefresh) return;
 
     set((state: IAdvancedNotiSettingsStore) => {
-      state.isLoadingSearchJoinedGroup = true;
-      state.hasSearchNextPage = isRefresh ? true : state.hasSearchNextPage;
-    }, 'searchJoinedGroupFlat');
+      state.isLoadingJoinedGroup = true;
+      state.hasNextPage = isRefresh ? true : state.hasSearchNextPage;
+      state.joinedGroups = isRefresh ? [] : state.joinedGroups;
+    }, 'getJoinedGroup');
 
-    const newParams: any = {
-      ...params,
+    const params: any = {
       listBy: 'flat',
       includeRootGroup: true,
-      offset: isRefresh ? 0 : searchJoinedGroups.length,
-      limit: appConfig.limitGroupAdvancedSettings,
+      sort: 'level:asc',
+      offset: isRefresh ? 0 : joinedGroups.length,
+      limit: isRefresh ? appConfig.limitGroupAdvancedSettings * 2 : appConfig.limitGroupAdvancedSettings,
     };
 
-    const response = await notificationApi.getGroupsAndGroupsSettings(id, newParams);
+    const response = await notificationApi.getGroupsAndGroupsSettings(id, params);
     const { data } = response;
     const groupdData = data?.groups || [];
     const newIds = groupdData.map((item) => item.id);
-    const newData = isRefresh ? newIds : [...searchJoinedGroups, ...newIds];
+    const newData = isRefresh ? newIds : [...joinedGroups, ...newIds];
+
     const newGroupData = {};
     groupdData.forEach((item: IGroupNotificationSetting) => {
       newGroupData[item?.id] = { ...item };
     });
 
     set((state: IAdvancedNotiSettingsStore) => {
-      state.isLoadingSearchJoinedGroup = false;
+      state.isLoadingJoinedGroup = false;
+      state.joinedGroups = newData;
       state.searchJoinedGroups = newData;
+      state.hasNextPage = data.metadata.hasNextPage;
       state.hasSearchNextPage = data.metadata.hasNextPage;
       state.groupData = { ...state.groupData, ...newGroupData };
-    }, 'searchJoinedGroupFlatSuccess');
+    }, 'getJoinedGroupSuccess');
   } catch (error) {
     console.error('\x1b[35m🐣️ search joined group flat error ', error, '\x1b[0m');
     showToastError(error);
     set((state: IAdvancedNotiSettingsStore) => {
-      state.isLoadingSearchJoinedGroup = false;
+      state.isLoadingJoinedGroup = false;
+      state.joinedGroups = [];
       state.searchJoinedGroups = [];
-    }, 'searchJoinedGroupFlatFailed');
+    }, 'getJoinedGroupFailed');
   }
 };
 
-export default searchJoinedGroupFlat;
+export default getJoinedGroup;

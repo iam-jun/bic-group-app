@@ -7,8 +7,8 @@ import useAdvancedNotiSettingsStore from '../store';
 describe('SearchGroupView modal component', () => {
   it('should render correctly with groups and should call prop onPressItem', () => {
     useAdvancedNotiSettingsStore.setState((state) => {
-      state.isLoadingJoinedGroup = false;
-      state.searchJoinedGroups = mockGroupInFlat.data as any;
+      state.isLoadingSearchJoinedGroup = false;
+      state.searchJoinedGroups = mockGroupInFlat.data.groups as any;
       state.hasSearchNextPage = false;
       return state;
     });
@@ -28,7 +28,7 @@ describe('SearchGroupView modal component', () => {
     expect(searchView).toBeDefined();
 
     const groupComponents = wrapper.queryAllByTestId('notification_advanced_setting_item');
-    expect(groupComponents.length).toEqual(mockGroupInFlat.data.length);
+    expect(groupComponents.length).toEqual(mockGroupInFlat.data.groups.length);
 
     fireEvent.press(groupComponents[0]);
     expect(onPressItem).toBeCalled();
@@ -36,7 +36,7 @@ describe('SearchGroupView modal component', () => {
 
   it('should render empty if no group and will call prop onClose', () => {
     useAdvancedNotiSettingsStore.setState((state) => {
-      state.isLoadingJoinedGroup = false;
+      state.isLoadingSearchJoinedGroup = false;
       state.searchJoinedGroups = [];
       return state;
     });
@@ -66,7 +66,7 @@ describe('SearchGroupView modal component', () => {
 
   it('should render loading if is loading', () => {
     useAdvancedNotiSettingsStore.setState((state) => {
-      state.isLoadingJoinedGroup = true;
+      state.isLoadingSearchJoinedGroup = true;
       state.hasSearchNextPage = true;
       state.searchJoinedGroups = [];
       return state;

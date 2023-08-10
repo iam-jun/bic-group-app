@@ -1,7 +1,7 @@
 import { act, renderHook } from '~/test/testUtils';
 import useAdvancedNotiSettingsStore from '../index';
-import groupApi from '~/api/GroupApi';
 import { mockGroupInFlat } from '~/test/mock_data/advancedSettings';
+import notificationApi from '~/api/NotificationApi';
 
 describe('search joined group flat', () => {
   afterEach(() => {
@@ -15,7 +15,7 @@ describe('search joined group flat', () => {
       return state;
     });
 
-    const spyApi = jest.spyOn(groupApi, 'getCommunityGroups').mockImplementation(
+    const spyApi = jest.spyOn(notificationApi, 'getGroupsAndGroupsSettings').mockImplementation(
       () => Promise.resolve(true),
     );
 
@@ -31,13 +31,13 @@ describe('search joined group flat', () => {
   it('should search group success', () => {
     useAdvancedNotiSettingsStore.setState((state) => {
       state.hasSearchNextPage = true;
-      state.searchJoinedGroups = [{ id: '1', name: 'test' }];
+      state.searchJoinedGroups = [{ id: '1', name: 'test' }] as any;
       state.selectedCommunity = { communityId: '1' };
       return state;
     });
 
     const response = mockGroupInFlat;
-    const spyApi = jest.spyOn(groupApi, 'getCommunityGroups').mockImplementation(
+    const spyApi = jest.spyOn(notificationApi, 'getGroupsAndGroupsSettings').mockImplementation(
       () => Promise.resolve(response),
     );
 
@@ -46,28 +46,28 @@ describe('search joined group flat', () => {
     act(() => {
       result.current.actions.searchJoinedGroupFlat({ key: '' });
     });
-    expect(result.current.isLoadingJoinedGroup).toBeTruthy();
+    expect(result.current.isLoadingSearchJoinedGroup).toBeTruthy();
     expect(spyApi).toBeCalled();
 
     act(() => {
       jest.runAllTimers();
     });
 
-    expect(result.current.isLoadingJoinedGroup).toBeFalsy();
+    expect(result.current.isLoadingSearchJoinedGroup).toBeFalsy();
     expect(result.current.hasSearchNextPage).toEqual(mockGroupInFlat.meta.hasNextPage);
-    expect(result.current.searchJoinedGroups.length).toEqual(mockGroupInFlat.data.length + 1);
+    expect(result.current.searchJoinedGroups.length).toEqual(mockGroupInFlat.data.groups.length + 1);
   });
 
   it('should search group success in refresh mode', () => {
     useAdvancedNotiSettingsStore.setState((state) => {
       state.hasSearchNextPage = false;
-      state.searchJoinedGroups = [{ id: '1', name: 'test' }];
+      state.searchJoinedGroups = [{ id: '1', name: 'test' }] as any;
       state.selectedCommunity = { id: '1' };
       return state;
     });
 
     const response = mockGroupInFlat;
-    const spyApi = jest.spyOn(groupApi, 'getCommunityGroups').mockImplementation(
+    const spyApi = jest.spyOn(notificationApi, 'getGroupsAndGroupsSettings').mockImplementation(
       () => Promise.resolve(response),
     );
 
@@ -76,7 +76,7 @@ describe('search joined group flat', () => {
     act(() => {
       result.current.actions.searchJoinedGroupFlat({ key: 'test' }, true);
     });
-    expect(result.current.isLoadingJoinedGroup).toBeTruthy();
+    expect(result.current.isLoadingSearchJoinedGroup).toBeTruthy();
     expect(result.current.hasSearchNextPage).toBeTruthy();
 
     expect(spyApi).toBeCalled();
@@ -85,14 +85,14 @@ describe('search joined group flat', () => {
       jest.runAllTimers();
     });
 
-    expect(result.current.isLoadingJoinedGroup).toBeFalsy();
+    expect(result.current.isLoadingSearchJoinedGroup).toBeFalsy();
     expect(result.current.hasSearchNextPage).toEqual(mockGroupInFlat.meta.hasNextPage);
-    expect(result.current.searchJoinedGroups.length).toEqual(mockGroupInFlat.data.length);
+    expect(result.current.searchJoinedGroups.length).toEqual(mockGroupInFlat.data.groups.length);
   });
 
   it('should update community setting throw error', () => {
     const error = 'internal error';
-    const spyApi = jest.spyOn(groupApi, 'getCommunityGroups').mockImplementation(
+    const spyApi = jest.spyOn(notificationApi, 'getGroupsAndGroupsSettings').mockImplementation(
       () => Promise.reject(error) as any,
     );
 
@@ -119,7 +119,7 @@ describe('search joined group flat', () => {
       jest.runAllTimers();
     });
 
-    expect(result.current.isLoadingJoinedGroup).toBeFalsy();
+    expect(result.current.isLoadingSearchJoinedGroup).toBeFalsy();
     expect(result.current.searchJoinedGroups.length).toEqual(0);
   });
 });

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator, FlatList, StyleSheet, View,
 } from 'react-native';
@@ -24,8 +24,9 @@ import AdvancedSettingHeader from '../components/AdvancedSettingHeader';
 import useSearchJoinedCommunitiesStore from '~/screens/communities/Communities/components/SearchCommunity/store';
 import SearchCommunityView from './components/SearchCommunityView';
 import SearchGroupView from './components/SearchGroupView';
+import { IGroupNotificationSetting } from '~/interfaces/INotification';
 
-const AdvancedSettings = () => {
+const _AdvancedSettings = () => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
@@ -41,7 +42,6 @@ const AdvancedSettings = () => {
   const advancedSettingsActions = useAdvancedNotiSettingsStore((state) => state.actions);
   const isLoading = useAdvancedNotiSettingsStore((state) => state.isLoading);
   const isLoadingJoinedGroup = useAdvancedNotiSettingsStore((state) => state.isLoadingJoinedGroup);
-  const isLoadingGroupSettings = useAdvancedNotiSettingsStore((state) => state.isLoadingGroupSettings);
   const joinedGroups = useAdvancedNotiSettingsStore((state) => state.joinedGroups);
   const selectedCommunity = useAdvancedNotiSettingsStore((state) => state.selectedCommunity);
   const comId = selectedCommunity?.communityId || selectedCommunity?.id;
@@ -70,21 +70,13 @@ const AdvancedSettings = () => {
     actions.getYourCommunities(true);
   };
 
-  useEffect(() => {
-    if (selectedCommunity?.id) {
-      const comID = selectedCommunity?.communityId || selectedCommunity?.id;
-      advancedSettingsActions.getCommunitySettings(comID);
-      advancedSettingsActions.getJoinedGroupFlat(comID, true);
-    }
-  }, [selectedCommunity?.id]);
-
   const onRefresh = () => {
     getData();
   };
 
   const onLoadMore = () => {
     if (!hasNextPage || isLoadingJoinedGroup) return;
-    advancedSettingsActions.getJoinedGroupFlat(comId);
+    advancedSettingsActions.getJoinedGroup(comId);
   };
 
   const onChangeToggle = (isChecked: boolean) => {
@@ -102,7 +94,7 @@ const AdvancedSettings = () => {
     advancedSettingsActions.setSelectedCommunity(item);
   };
 
-  const onPressItem = (item: any) => {
+  const onPressItem = (item: IGroupNotificationSetting) => {
     if (item?.id) {
       rootNavigation.navigate(notiStack.advancedSettingsDetail, {
         name: item.name,
@@ -130,28 +122,28 @@ const AdvancedSettings = () => {
     setIsOpenSearchGroups(true);
   };
 
-  const renderEmpty = () => (
-    <View style={styles.container}>
-      {Boolean(isLoadingJoinedGroup) ? <ActivityIndicator size="large" color={colors.neutral1} />
-        : (
-          <EmptyScreen
-            source={images.img_empty_search_post}
-            size={100}
-            title="notification:notification_settings:error_title"
-            description="notification:notification_settings:error_description"
-            ButtonComponent={(
-              <Button.Primary
-                size="medium"
-                onPress={onRefresh}
-                useI18n
-              >
-                common:text_refresh
-              </Button.Primary>
+  const renderEmpty = () => {
+    if (isLoadingJoinedGroup) return null;
+    return (
+      <View style={styles.container}>
+        <EmptyScreen
+          source={images.img_empty_search_post}
+          size={100}
+          title="notification:notification_settings:error_title"
+          description="notification:notification_settings:error_description"
+          ButtonComponent={(
+            <Button.Primary
+              size="medium"
+              onPress={onRefresh}
+              useI18n
+            >
+              common:text_refresh
+            </Button.Primary>
         )}
-          />
-        )}
-    </View>
-  );
+        />
+      </View>
+    );
+  };
 
   const renderNothingToSetup = () => (
     <View
@@ -172,26 +164,20 @@ const AdvancedSettings = () => {
     </View>
   );
 
-  const renderHeader = () => (
+  const renderHeader = useCallback(() => (
     <AdvancedSettingHeader
       onPressSearch={onOpenGroupSearch}
       onChangeToggle={onChangeToggle}
       onPressToShowBottomSheet={onOpenSearchCommunity}
     />
-  );
+  ), [communitySettingData]);
 
-  const renderItem = ({ item }: any) => {
-    const isDisabled = !Boolean(communitySettingData?.enable)
-     || isLoadingJoinedGroup || isLoadingGroupSettings;
-    return (
-      <AdvancedSettingItem
-        key={`advanced_settings.${item?.id}?.${communitySettingData?.enable}`}
-        isDisabled={isDisabled}
-        item={item}
-        onPress={onPressItem}
-      />
-    );
-  };
+  const renderItem = useCallback(({ item }: any) => (
+    <AdvancedSettingItem
+      item={item}
+      onPress={onPressItem}
+    />
+  ), [selectedCommunity?.id]);
 
   const renderLoading = () => (
     <View style={styles.container}>
@@ -208,6 +194,30 @@ const AdvancedSettings = () => {
     );
   };
 
+  const keyExtractor = (item: any) => `group.${item}.${selectedCommunity?.id}`;
+
+  const renderContent = () => {
+    if (ids.length === 0) return renderNothingToSetup();
+    return (
+      <FlatList
+        data={joinedGroups}
+        extraData={communitySettingData}
+        scrollEventThrottle={16}
+        initialNumToRender={20}
+        maxToRenderPerBatch={20}
+        keyboardShouldPersistTaps="handled"
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        ListHeaderComponent={renderHeader}
+        ListEmptyComponent={renderEmpty}
+        ListFooterComponent={renderListFooter}
+        onEndReachedThreshold={0.1}
+        onEndReached={onLoadMore}
+        removeClippedSubviews
+      />
+    );
+  };
+
   return (
     <ScreenWrapper
       testID="advanced_settings.screen"
@@ -218,23 +228,7 @@ const AdvancedSettings = () => {
       <ViewSpacing height={spacing.padding.large} />
       {Boolean(isLoading)
         ? renderLoading()
-        : (ids.length === 0 ? renderNothingToSetup()
-          : (
-            <FlatList
-              data={joinedGroups}
-              extraData={communitySettingData}
-              scrollEventThrottle={16}
-              keyboardDismissMode="interactive"
-              keyboardShouldPersistTaps="handled"
-              keyExtractor={(item) => `group.${item?.id}.${selectedCommunity?.id}`}
-              renderItem={renderItem}
-              ListHeaderComponent={renderHeader}
-              ListEmptyComponent={renderEmpty}
-              ListFooterComponent={renderListFooter}
-              onEndReached={onLoadMore}
-            />
-          )
-        )}
+        : renderContent()}
       <SearchCommunityView
         isOpen={isOpenSearchCommunity}
         onClose={onCloseSearchCommunity}
@@ -287,4 +281,6 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
+const AdvancedSettings = React.memo(_AdvancedSettings);
+// AdvancedSettings.whyDidYouRender = true;
 export default AdvancedSettings;

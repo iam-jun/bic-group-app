@@ -2,10 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { debounce } from 'lodash';
 import {
-  ActivityIndicator, FlatList, View, StyleSheet, Platform,
+  ActivityIndicator, FlatList, View, StyleSheet,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useKeyboard } from '@react-native-community/hooks';
 import appConfig from '~/configs/appConfig';
 import SearchBaseView from '~/beinComponents/SearchBaseView';
 import AdvancedSettingItem from '../../components/AdvancedSettingItem';
@@ -13,6 +12,7 @@ import useBaseHook from '~/hooks/baseHook';
 import useSearchJoinedCommunitiesStore from '~/screens/communities/Communities/components/SearchCommunity/store';
 import EmptyScreen from '~/components/EmptyScreen';
 import images from '~/resources/images';
+import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 
 interface SearchMemberViewProps {
   isOpen: boolean;
@@ -28,12 +28,11 @@ const SearchCommunityView = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const { t } = useBaseHook();
-  const keyboard = useKeyboard();
 
   const [searchText, setSearchText] = useState('');
 
   const {
-    ids, items, actions: joinedActions, reset, loading, hasNextPage,
+    ids, actions: joinedActions, reset, loading, hasNextPage,
   } = useSearchJoinedCommunitiesStore();
 
   useEffect(() => () => {
@@ -63,10 +62,10 @@ const SearchCommunityView = ({
 
   const renderItem = ({ item }: any) => {
     if (!item) return null;
-    const currentItem = items[item];
     return (
       <AdvancedSettingItem
-        item={currentItem}
+        type="community"
+        item={item}
         onPress={onPressItem}
       />
     );
@@ -74,7 +73,7 @@ const SearchCommunityView = ({
 
   const renderListFooter = () => {
     if (!hasNextPage) {
-      return <View style={{ height: Platform?.OS === 'ios' ? (keyboard?.keyboardHeight || 0) : 0 }} />;
+      return <KeyboardSpacer iosOnly />;
     }
 
     return (
@@ -104,12 +103,12 @@ const SearchCommunityView = ({
       <FlatList
         data={ids}
         scrollEventThrottle={16}
-        keyboardDismissMode="interactive"
         keyboardShouldPersistTaps="handled"
         keyExtractor={(item) => `advanced_settings.search_communtiy.${item}`}
         renderItem={renderItem}
         ListEmptyComponent={renderEmpty}
         ListFooterComponent={renderListFooter}
+        onEndReachedThreshold={0.1}
         onEndReached={onLoadMore}
       />
     </SearchBaseView>
