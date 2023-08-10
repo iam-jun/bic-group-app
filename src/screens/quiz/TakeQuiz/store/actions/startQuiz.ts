@@ -8,7 +8,7 @@ import showAlert from '~/store/helper/showAlert';
 import { useRootNavigation } from '~/hooks/navigation';
 
 const startQuiz = (set, get) => async (payload: IPayloadStartQuiz) => {
-  const { quizId, onSuccess } = payload || {};
+  const { quizId, onNext } = payload || {};
   const { actions }: ITakeQuizState = get();
 
   if (!quizId) return;
@@ -23,7 +23,7 @@ const startQuiz = (set, get) => async (payload: IPayloadStartQuiz) => {
     const newParticipantId = response?.data;
     actions.addToQuizParticipants(quizId, newParticipantId);
 
-    onSuccess?.(newParticipantId);
+    onNext?.(newParticipantId);
   } catch (error) {
     if (
       error?.code === APIErrorCode.Post.QUIZ_DELETED
@@ -36,6 +36,12 @@ const startQuiz = (set, get) => async (payload: IPayloadStartQuiz) => {
           useRootNavigation().goHome();
         },
       });
+    } else if (
+      error?.code === APIErrorCode.Post.QUIZ_PARTICIPANT_NOT_FINISH
+    ) {
+      const participantDoingId = error?.meta?.errors?.quizDoing?.id;
+      actions.addToQuizParticipants(quizId, participantDoingId);
+      onNext?.(participantDoingId);
     } else {
       showToastError(error);
     }

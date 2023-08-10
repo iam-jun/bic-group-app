@@ -74,11 +74,11 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
   }, [minutes, seconds, finishedAt]);
 
   const startTakeQuiz = () => {
-    const onSuccess = (quizParticipantId: string) => {
+    const onNext = (quizParticipantId: string) => {
       actions.getQuizParticipant(quizParticipantId);
     };
 
-    actions.startQuiz({ quizId, onSuccess });
+    actions.startQuiz({ quizId, onNext });
   };
 
   const saveAnwsers = (options: ISaveAnswerTakeQuiz) => {
