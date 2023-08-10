@@ -60,6 +60,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   const { colors } = theme;
 
   const itemValue = useNotificationStore(notiSelector.getNotificationById(id)) || {};
+  const notiActions = useNotificationStore((state) => state.actions);
   const actions = useNotiInvitationsStore((state) => state.actions);
   const requestingsAccept = useNotiInvitationsStore(
     useCallback((state) => state.requestingsAccept?.[id], [id]),
@@ -76,10 +77,12 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   );
 
   const onAccept = () => {
+    notiActions.markAsRead(id);
     actions.acceptInvitation(itemValue);
   };
 
   const onDecline = () => {
+    notiActions.markAsRead(id);
     actions.declineInvitation(itemValue);
   };
 
