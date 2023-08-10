@@ -27,9 +27,11 @@ const UserParticipantItem: React.FC<UserParticipantItemProps> = ({ data }) => {
         <View style={[styles.userView, styles.widthName]}>
           <Avatar.Small isRounded source={avatar} />
           <ViewSpacing width={spacing.margin.tiny} />
-          <Text.BodyXS color={colors.neutral40}>
-            { fullname }
-          </Text.BodyXS>
+          <View style={styles.nameView}>
+            <Text.BodyXS color={colors.neutral40} numberOfLines={1}>
+              { fullname }
+            </Text.BodyXS>
+          </View>
         </View>
         <Text.ParagraphS color={colors.neutral40} style={styles.widthPercentage}>
           { score }
@@ -73,6 +75,9 @@ const createStyle = (theme: ExtendedTheme) => {
     userView: {
       flexDirection: 'row',
       alignItems: 'center',
+    },
+    nameView: {
+      flex: 1,
     },
     statusView: {
       paddingVertical: spacing.padding.xTiny,
