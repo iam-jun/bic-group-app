@@ -5,7 +5,7 @@ const setSelectedUsers = (set, get) => (userId: string) => {
   const isSelected = selectedUsers.includes(userId);
   const newSelectedUsers = isSelected
     ? selectedUsers.filter((item) => item !== userId)
-    : selectedUsers.concat(userId);
+    : [userId, ...selectedUsers];
 
   set((state: IGroupJoinableUsersState) => {
     state.selectedUsers = newSelectedUsers;
