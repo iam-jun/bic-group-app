@@ -21,11 +21,13 @@ import BottomList from '~/components/BottomList';
 import LoggerView from '~/components/LoggerView';
 import useUserProfileStore from '~/screens/Menu/UserProfile/store';
 import useAppStore from '~/store/app';
+import useNotificationStore from '~/screens/Notification/store';
 
 const Stack = createNativeStackNavigator();
 
 const MainStack = (): React.ReactElement => {
   const actions = useUserProfileStore((state) => state.actions);
+  const notiActions = useNotificationStore((state) => state.actions);
 
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
@@ -47,6 +49,7 @@ const MainStack = (): React.ReactElement => {
     actions.getLanguages();
     actions.getCountry();
     actions.getCity();
+    notiActions.generateAdvancedSettings();
   }, []);
 
   return (
