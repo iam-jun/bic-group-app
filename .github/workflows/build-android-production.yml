@@ -3,7 +3,7 @@ name: build-android-production
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - 'v*'
 
 jobs:
   build-android-prerelease:

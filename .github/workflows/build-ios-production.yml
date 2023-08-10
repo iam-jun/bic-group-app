@@ -3,7 +3,7 @@ name: build-ios-production
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - 'v*'
 
 jobs:
   build-ios-production:

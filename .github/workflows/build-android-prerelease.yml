@@ -3,7 +3,7 @@ name: build-android-prerelease
 on:
   push:
     tags:
-      - 'pre-*.*.*'
+      - 'pre-*'
 
 jobs:
   build-android-prerelease:

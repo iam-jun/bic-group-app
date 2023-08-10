@@ -6,153 +6,38 @@ before_all do
 #   sh("git pull origin #{branch}")
 end
 
+lane :test do
+    UI.message("Welcome to the test lane")
+    Dotenv.overload('../.env.base', '../.env.staging')
+    insert_update_desc_to_env({:env => 'stg'})
+    insert_app_version_to_env({:env => 'stg'})
+end
+
+lane :notice_build_task do |options|
+  webhook = ENV['NOTICE_BUILD_WEBHOOK']
+  status = options[:status] || "pending"
+  build_name = options[:build_name] || "BIC Group App"
+  build_link = ""
+
+  root = "beincom/"
+  env = options[:env]
+  repo = "bic-group-app"
+  commit_hash = sh("git rev-parse HEAD", log: false).strip
+  message = "#{root}#{env}-#{repo}:#{commit_hash}"
+
+  if webhook
+      notice_build_task_webhook(webhook, status, build_name, build_link, message)
+    else
+      UI.message("Webhook does not exist. Skipping webhook notification.")
+    end
+end
+
+############# Android ############# Android ############# Android ############# Android ############# Android ##########
 platform :android do
-  lane :update_staging do |options|
-    Dotenv.overload('../.env.base', '../.env.staging')
-    disable_notice = options[:disable_notice]
-
-    app_version = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
-    update_desc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
-
-    webhook = ENV['NOTICE_WEBHOOK'].length > 0 ? ENV['NOTICE_WEBHOOK'] : ""
-    title = "🟡🤖 BIC Group Staging Android"
-    version_text = "**#{app_version} #{update_desc}**"
-    download_destination = options[:download_destination] || 'In-app Update'
-    git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
-    message = "Build successful"
-    color = "#9E6FD8"
-    code = ""
-
-    begin
-#       appcenter_codepush_release_react(
-#         api_token: ENV["CODE_PUSH_ACCESS_KEY_ANDROID"],
-#         app_name: ENV["APPCENTER_APP_NAME_ANDROID"],
-#         deployment: "Staging",
-#         target_version: ENV['VERSION_NAME'],
-#         description: ENV['UPDATE_DESC'],
-#         mandatory: false,
-#         dry_run: false,
-#       )
-
-      if (disable_notice != 'true')
-        notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
-      end
-    rescue => error
-      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, 'Build failed', "#F64E60")
-    end
-
-  end
-
-  lane :update_prerelease do |options|
-      Dotenv.overload('../.env.base', '../.env.prerelease')
-      disable_notice = options[:disable_notice]
-
-      app_version = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
-      update_desc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
-
-      webhook = ENV['NOTICE_WEBHOOK'].length > 0 ? ENV['NOTICE_WEBHOOK'] : ""
-      title = "🔵🤖 BIC Group Release Android"
-      version_text = "**#{app_version} #{update_desc}**"
-      download_destination = options[:download_destination] || 'In-app Update'
-      git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
-      message = "Build successful"
-      color = "#9E6FD8"
-      code = ""
-
-      begin
-#         appcenter_codepush_release_react(
-#           api_token: ENV["CODE_PUSH_ACCESS_KEY_ANDROID"],
-#           app_name: ENV["APPCENTER_APP_NAME_ANDROID"],
-#           deployment: "Release",
-#           target_version: ENV['VERSION_NAME'],
-#           description: ENV['UPDATE_DESC'],
-#           mandatory: false,
-#           dry_run: false,
-#         )
-
-        if (disable_notice != 'true')
-          notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
-        end
-      rescue => error
-        notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, 'Build failed', "#F64E60")
-      end
-
-    end
-
-  lane :update_production do |options|
-    Dotenv.overload('../.env.base', '../.env.production')
-    disable_notice = options[:disable_notice]
-
-    app_version = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
-    update_desc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
-
-    webhook = ENV['NOTICE_WEBHOOK'].length > 0 ? ENV['NOTICE_WEBHOOK'] : ""
-    title = "🟢🤖 BIC Group Production Android"
-    version_text = "**#{app_version} #{update_desc}**"
-    download_destination = options[:download_destination] || 'In-app Update'
-    git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
-    message = "Build successful"
-    color = "#9E6FD8"
-    code = ""
-
-    begin
-#       appcenter_codepush_release_react(
-#         api_token: ENV["CODE_PUSH_ACCESS_KEY_ANDROID"],
-#         app_name: ENV["APPCENTER_APP_NAME_ANDROID"],
-#         deployment: "Production",
-#         target_version: ENV['VERSION_NAME'],
-#         description: ENV['UPDATE_DESC'],
-#         mandatory: false,
-#         dry_run: false,
-#       )
-
-      if (disable_notice != 'true')
-        notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
-      end
-    rescue => error
-      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, 'Build failed', "#F64E60")
-    end
-
-  end
-
-  lane :build_staging do
-    Dotenv.overload('../.env.base', '../.env.staging')
-    gradle(task: "clean", project_dir: 'android/')
-    gradle(
-      task: "assemble",
-      build_type: "Release",
-      flavor: "Staging",
-      project_dir: 'android/',
-    )
-  end
-
-  lane :build_prerelease do
-    Dotenv.overload('../.env.base', '../.env.prerelease')
-
-    app_env =  ENV['APP_ENV'] || 'Beincomm Dev'
-    UI.message("Build app env: #{app_env}")
-
-    gradle(task: "clean", project_dir: 'android/')
-    gradle(
-      task: "assemble",
-      build_type: "Release",
-      flavor: "Prerelease",
-      project_dir: 'android/',
-    )
-  end
-
-  lane :build_production do
-    gradle(task: "clean", project_dir: 'android/')
-    gradle(
-      task: "assemble",
-      build_type: "Release",
-      flavor: "Production",
-      project_dir: 'android/',
-    )
-  end
-
   lane :deploy_staging do
+    insert_update_desc_to_env({:env => 'stg'})
     Dotenv.overload('../.env.base', '../.env.staging')
+    insert_app_version_to_env({:env => 'stg'})
 
     appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
     updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
@@ -177,12 +62,15 @@ platform :android do
         groups: "bicteam",
     )
 
-    update_staging({:download_destination => 'Firebase App Tester'})
+    build_name = "🟡🤖 BIC Group Staging Android v#{appVersionText} #{updateDesc}"
+    notice_build_task(env: 'stg', status: true, build_name: build_name)
 
   end
 
   lane :deploy_prerelease do
+      insert_update_desc_to_env({:env => 'pre'})
       Dotenv.overload('../.env.base', '../.env.prerelease')
+      insert_app_version_to_env({:env => 'pre'})
 
       appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
       updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
@@ -207,12 +95,15 @@ platform :android do
           groups: "bicteam",
       )
 
-      update_prerelease({:download_destination => 'Firebase App Tester'})
+    build_name = "🔵🤖 BIC Group Release Android v#{appVersionText} #{updateDesc}"
+    notice_build_task(env: 'rel', status: true, build_name: build_name)
 
     end
 
   lane :deploy_production do
+    insert_update_desc_to_env({:env => 'pro'})
     Dotenv.overload('../.env.base', '../.env.production')
+    insert_app_version_to_env({:env => 'pro'})
 
     appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
     updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
@@ -237,12 +128,16 @@ platform :android do
       groups: "bicteam",
     )
 
-    update_production({:download_destination => 'Firebase App Tester'})
+    build_name = "🟢🤖 BIC Group Production Android v#{appVersionText} #{updateDesc}"
+    notice_build_task(env: 'pro', status: true, build_name: build_name)
 
   end
 
   lane :bundle_aab_production do
+    insert_update_desc_to_env({:env => 'pro'})
     Dotenv.overload('../.env.base', '../.env.production')
+    insert_app_version_to_env({:env => 'pro'})
+
     gradle(task: "clean", project_dir: 'android/')
     gradle(
         task: 'app:bundle',
@@ -290,7 +185,7 @@ platform :android do
     end
 end
 
-########################################################################################################################
+################## iOS ################## iOS ################## iOS ################## iOS ################## iOS #####
 platform :ios do
   before_all do
     setup_circle_ci
@@ -302,116 +197,10 @@ platform :ios do
     match(type: "appstore", readonly: false, force: true)
   end
 
-  lane :update_staging do |options|
-    Dotenv.overload('../.env.base', '../.env.staging')
-    disable_notice = options[:disable_notice]
-
-    app_version = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
-    update_desc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
-
-    webhook = ENV['NOTICE_WEBHOOK'].length > 0 ? ENV['NOTICE_WEBHOOK'] : ""
-    title = "🟡🍎 BIC Group Staging iOS"
-    version_text = "**#{app_version} #{update_desc}**"
-    download_destination = options[:download_destination] || 'In-app Update'
-    git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
-    message = "Build successful"
-    color = "#9E6FD8"
-    code = ""
-
-    begin
-#       appcenter_codepush_release_react(
-#         api_token: ENV["CODE_PUSH_ACCESS_KEY_IOS"],
-#         app_name: ENV["APPCENTER_APP_NAME_IOS"],
-#         deployment: "Staging",
-#         target_version: ENV['VERSION_NAME'],
-#         description: ENV['UPDATE_DESC'],
-#         mandatory: false,
-#         dry_run: false,
-#       )
-
-      if (disable_notice != 'true')
-        notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
-      end
-    rescue => error
-      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, 'Build failed', "#F64E60")
-    end
-
-  end
-
-  lane :update_prerelease do |options|
-      Dotenv.overload('../.env.base', '../.env.prerelease')
-      disable_notice = options[:disable_notice]
-
-      app_version = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
-      update_desc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
-
-      webhook = ENV['NOTICE_WEBHOOK'].length > 0 ? ENV['NOTICE_WEBHOOK'] : ""
-      title = "🔵🍎 BIC Group Release iOS"
-      version_text = "**#{app_version} #{update_desc}**"
-      download_destination = options[:download_destination] || 'In-app Update'
-      git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
-      message = "Build successful"
-      color = "#9E6FD8"
-      code = ""
-
-      begin
-#         appcenter_codepush_release_react(
-#           api_token: ENV["CODE_PUSH_ACCESS_KEY_IOS"],
-#           app_name: ENV["APPCENTER_APP_NAME_IOS"],
-#           deployment: "Release",
-#           target_version: ENV['VERSION_NAME'],
-#           description: ENV['UPDATE_DESC'],
-#           mandatory: false,
-#           dry_run: false,
-#         )
-
-        if (disable_notice != 'true')
-          notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
-        end
-      rescue => error
-        notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, 'Build failed', "#F64E60")
-      end
-
-    end
-
-  lane :update_production do |options|
-    Dotenv.overload('../.env.base', '../.env.production')
-    disable_notice = options[:disable_notice]
-
-    app_version = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
-    update_desc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
-
-    webhook = ENV['NOTICE_WEBHOOK'].length > 0 ? ENV['NOTICE_WEBHOOK'] : ""
-    title = "🟢🍎 BIC Group Production iOS"
-    version_text = "**#{app_version} #{update_desc}**"
-    download_destination = options[:download_destination] || 'In-app Update'
-    git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
-    message = "Build successful"
-    color = "#9E6FD8"
-    code = ""
-
-    begin
-#       appcenter_codepush_release_react(
-#         api_token: ENV["CODE_PUSH_ACCESS_KEY_IOS"],
-#         app_name: ENV["APPCENTER_APP_NAME_IOS"],
-#         deployment: "Production",
-#         target_version: ENV['VERSION_NAME'],
-#         description: ENV['UPDATE_DESC'],
-#         mandatory: false,
-#         dry_run: false,
-#       )
-
-      if (disable_notice != 'true')
-        notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
-      end
-    rescue => error
-      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, 'Build failed', "#F64E60")
-    end
-
-  end
-
   lane :deploy_staging do
+    insert_update_desc_to_env({:env => 'stg'})
     Dotenv.overload('../.env.base', '../.env.staging')
+    insert_app_version_to_env({:env => 'stg'})
 
     UI.message("#Badging app icon")
     add_badge(custom: './fastlane/assets/badge_staging.png')
@@ -455,12 +244,15 @@ platform :ios do
       changelog: "Staging version #{ENV['APP_VERSION']}",
     )
 
-    update_staging({:download_destination => 'TestFlight'})
+    build_name = "🟡🍎 BIC Group Staging iOS v#{appVersionText} #{updateDesc}"
+    notice_build_task(env: 'stg', status: true, build_name: build_name)
 
   end
 
   lane :deploy_prerelease do
+    insert_update_desc_to_env({:env => 'pre'})
     Dotenv.overload('../.env.base', '../.env.prerelease')
+    insert_app_version_to_env({:env => 'pre'})
 
     UI.message("#Badging app icon")
     add_badge(custom: './fastlane/assets/badge_release.png')
@@ -504,12 +296,15 @@ platform :ios do
       changelog: "Release version #{ENV['APP_VERSION']}",
     )
 
-    update_prerelease({:download_destination => 'TestFlight'})
+    build_name = "🔵🍎 BIC Group Release iOS v#{appVersionText} #{updateDesc}"
+    notice_build_task(env: 'rel', status: true, build_name: build_name)
 
   end
 
   lane :deploy_production do
+    insert_update_desc_to_env({:env => 'pro'})
     Dotenv.overload('../.env.base', '../.env.production')
+    insert_app_version_to_env({:env => 'pro'})
 
     match(
       type: "appstore",
@@ -550,20 +345,52 @@ platform :ios do
       changelog: "Production version #{ENV['APP_VERSION']}",
     )
 
-    update_production({:download_destination => 'TestFlight'})
+    build_name = "🟢🍎 BIC Group Production iOS v#{appVersionText} #{updateDesc}"
+    notice_build_task(env: 'pro', status: true, build_name: build_name)
 
   end
+end
 
-  lane :deploy_staging_ci do
-    deploy_staging
+################ Utils ################ Utils ################ Utils ################ Utils ################ Utils #####
+def get_env_file_path(data)
+  env = data[:env]
+  if env == "dev"
+    env_file_path = "../.env"
+  elsif env == "stg"
+    env_file_path = "../.env.staging"
+  elsif env == "pre"
+    env_file_path = "../.env.prerelease"
+  else
+    env_file_path = "../.env.production"
   end
+  UI.message("env_file_path=#{env_file_path}")
+  return env_file_path
+end
 
-  lane :deploy_prerelease_ci do
-    deploy_prerelease
-  end
+def insert_update_desc_to_env(data)
+    UI.message("Replace UPDATE_DESC with commit date")
+    last_commit_date = sh("git log -1 --format=%cd", log: false).strip
+    formatted_date = Time.parse(last_commit_date).strftime("%m%d%H%M")
 
-  lane :deploy_production_ci do
-    deploy_production
-  end
+    env = data[:env]
+    env_file_path = get_env_file_path({:env => env})
+    env_content = File.read(env_file_path)
 
+    new_line = "UPDATE_DESC=(#{formatted_date})"
+    modified_content = "#{env_content}\n#{new_line}"
+    File.write(env_file_path, modified_content)
+end
+
+# Android use .env.staging/.prerelease/.production when build, so we have to add app_version to exact env file
+def insert_app_version_to_env(data)
+    UI.message("Replace APP_VERSION from base env")
+    appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+
+    env = data[:env]
+    env_file_path = get_env_file_path({:env => env})
+    env_content = File.read(env_file_path)
+
+    new_line = "APP_VERSION=#{appVersionText}"
+    modified_content = "#{env_content}\n#{new_line}"
+    File.write(env_file_path, modified_content)
 end
