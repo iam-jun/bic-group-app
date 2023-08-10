@@ -40,9 +40,11 @@ import TabButton from '~/baseComponents/Tab/TabButton';
 import Text from '~/baseComponents/Text';
 import BadgeCollectionHeader from './fragments/BadgeCollection/BadgeCollectionHeader';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import InvitationList from './fragments/InvitationList';
 
 export const USER_TABS = [
   { id: USER_TABS_TYPES.USER_ABOUT, text: 'user:user_tab_types:title_about' },
+  { id: USER_TABS_TYPES.USER_INVITATIONS, text: 'user:user_tab_types:title_invitations' },
   { id: USER_TABS_TYPES.USER_BADGE_COLLECTION, text: 'user:user_tab_types:title_badge_collection' },
 ];
 
@@ -172,9 +174,11 @@ const UserProfile = (props: any) => {
     }
 
     if (selectedIndex === 1) {
-      return (
-        <BadgeCollection />
-      );
+      return <InvitationList />;
+    }
+
+    if (selectedIndex === 2) {
+      return <BadgeCollection />;
     }
 
     return null;

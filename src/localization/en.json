@@ -1527,7 +1527,8 @@
   "user": {
     "user_tab_types": {
       "title_about": "About",
-      "title_badge_collection": "Badge Collection"
+      "title_badge_collection": "Badge Collection",
+      "title_invitations": "Invitations"
     },
     "empty_badge_collection": {
       "title": "You don't have any badges yet",
@@ -1544,7 +1545,9 @@
       "search_placeholder": "Search for badges name"
     },
     "edit_showing_badges_title": "Edit Showing Badges",
-    "badge_tooltip_placeholder": "Tap here to add a badge"
+    "badge_tooltip_placeholder": "Tap here to add a badge",
+    "text_invitation_privacy_settings": "Invitation Privacy Settings",
+    "invitation_description": "Review the invitations for you to decide whether to accept or decline."
   },
   "previewJoinableGroup": {
     "title": "Join all outer groups?",

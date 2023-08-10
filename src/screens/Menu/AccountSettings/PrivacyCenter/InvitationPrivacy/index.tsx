@@ -13,6 +13,11 @@ import usePersonalPrivacy from '../store';
 import { INVITATION_PRIVACY_TYPE, INVITATION_PRIVACY_TYPES } from '~/constants/privacyCenter';
 import Divider from '~/beinComponents/Divider';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import { useRootNavigation } from '~/hooks/navigation';
+import { USER_TABS } from '~/screens/Menu/UserProfile';
+import { USER_TABS_TYPES } from '~/screens/Menu/UserProfile/constants';
+import mainStack from '~/router/navigator/MainStack/stack';
+import useCommonController from '~/screens/store';
 
 interface IRadioItem {
     id: INVITATION_PRIVACY_TYPE;
@@ -25,8 +30,11 @@ const InvitationPrivacy = () => {
   const styles = createStyle(theme);
   const { colors } = theme;
 
+  const { rootNavigation } = useRootNavigation();
+
   const actions = usePersonalPrivacy((state) => state.actions);
   const invitationPrivacy = usePersonalPrivacy((state) => state.invitationPrivacy);
+  const { id } = useCommonController((state) => state.myProfile) || {};
 
   useEffect(() => {
     actions.getPersonalPrivacySettings();
@@ -37,7 +45,10 @@ const InvitationPrivacy = () => {
   };
 
   const goToProfile = () => {
-    // TODO: go to profile
+    const targetIndex = USER_TABS.findIndex(
+      (item: { id: string; text: string }) => item.id === USER_TABS_TYPES.USER_INVITATIONS,
+    );
+    rootNavigation.navigate(mainStack.userProfile, { userId: id, targetIndex });
   };
 
   const renderRadioItem = (item: IRadioItem) => {

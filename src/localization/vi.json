@@ -1468,7 +1468,8 @@
   "user": {
     "user_tab_types": {
       "title_about": "Giới thiệu",
-      "title_badge_collection": "Bộ sưu tập huy hiệu"
+      "title_badge_collection": "Bộ sưu tập huy hiệu",
+      "title_invitations": "Lời mời"
     },
     "empty_badge_collection": {
       "title": "Bạn chưa có huy hiệu nào",
@@ -1485,7 +1486,9 @@
       "search_placeholder": "Tìm huy hiệu theo tên"
     },
     "edit_showing_badges_title": "Chỉnh sửa huy hiệu đang hiển thị",
-    "badge_tooltip_placeholder": "Nhấn vào đây để thêm huy hiệu"
+    "badge_tooltip_placeholder": "Nhấn vào đây để thêm huy hiệu",
+    "text_invitation_privacy_settings": "Cài đặt Quyền riêng tư của Lời mời",
+    "invitation_description": "Xem xét các lời mời để bạn quyết định chấp nhận hay từ chối."
   },
   "previewJoinableGroup": {
     "title": "Tham gia tất cả các nhóm bên ngoài?",
