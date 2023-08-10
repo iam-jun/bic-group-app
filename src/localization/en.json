@@ -1596,6 +1596,10 @@
       "content": "Are you sure you want to edit this quiz?"
     },
     "continue": "Continue",
-    "pass_quiz": "PASS"
+    "pass_quiz": "PASS",
+    "add_question": "Add question",
+    "add_answer": "Add answer",
+    "this_field_must_not_be_empty": "This field must not be empty",
+    "please_select_correct_answer": "Please select the correct answer for the question"
   }
 }

@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { Platform, StyleSheet, View } from 'react-native';
 import { Controller, useFormContext } from 'react-hook-form';
-import { EditQuestionForm } from '~/interfaces/IQuiz';
+import { ComposeQuestionForm } from '~/interfaces/IQuiz';
 import Text from '~/baseComponents/Text';
 import { TextArea } from '~/baseComponents/Input';
 import { useBaseHook } from '~/hooks';
@@ -22,18 +22,31 @@ const QuestionField: FC<QuestionFieldProps> = ({ remove, questionIndex }) => {
   const { colors } = theme;
   const styles = createStyle(theme);
 
-  const { control } = useFormContext<EditQuestionForm>();
+  const [isShowCountLength, setIsShowCountLength] = useState(false);
 
-  const renderTextInput = ({ field: { onChange, value } }: any) => (
+  const { control } = useFormContext<ComposeQuestionForm>();
+
+  const onInputFocus = () => {
+    setIsShowCountLength(true);
+  };
+
+  const onInputBlur = () => {
+    setIsShowCountLength(false);
+  };
+
+  const renderTextInput = ({ field: { onChange, value }, fieldState: { error } }: any) => (
     <TextArea
       testID="question_field.question"
       value={value}
       placeholder={t('quiz:enter_question_placeholder')}
       onChangeText={onChange}
-      showCountLength={false}
+      showCountLength={isShowCountLength}
       style={styles.containerViewInput}
       inputStyle={[styles.inputStyle, Platform.OS === 'android' && { padding: 0 }]}
       inputStyleContainer={styles.inputStyleContainer}
+      errorText={!!error && error.message}
+      onFocus={onInputFocus}
+      onBlur={onInputBlur}
     />
   );
 
@@ -44,7 +57,7 @@ const QuestionField: FC<QuestionFieldProps> = ({ remove, questionIndex }) => {
         <Controller
           name="content"
           control={control}
-          rules={{ required: true, validate: validateSpaceTrap }}
+          rules={{ required: t('quiz:this_field_must_not_be_empty'), validate: validateSpaceTrap }}
           render={renderTextInput}
         />
       </View>
@@ -70,6 +83,7 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     inputStyleContainer: {
       minHeight: 0,
+      marginBottom: 0,
     },
     containerViewInput: {
       paddingVertical: 0,
