@@ -27,7 +27,7 @@ const AdvancedSettingItem = ({
   const styles = createStyle(theme);
   const { t } = useBaseHook();
 
-  const { items } = useSearchJoinedCommunitiesStore();
+  const items = useSearchJoinedCommunitiesStore((state) => state.items);
   const groupData = useAdvancedNotiSettingsStore((state) => state.groupData?.[item]);
   const currentData = Boolean(type === 'community') ? items?.[item] : groupData;
 

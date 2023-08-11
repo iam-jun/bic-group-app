@@ -1,10 +1,10 @@
 import notificationApi from '~/api/NotificationApi';
 import { IAdvancedNotiSettingsStore } from '../index';
-import { IAdvancedNotificationSettings, IEditNotificationSetting } from '~/interfaces/INotification';
+import { IEditNotificationSetting, IGroupNotificationSetting } from '~/interfaces/INotification';
 
 const updateGroupSettings = (set, _get) => async (
   params: IEditNotificationSetting,
-  dataUpdateStore: IAdvancedNotificationSettings,
+  dataUpdateStore: IGroupNotificationSetting,
   isResetOrEnableSettings?: boolean,
 ) => {
   try {
