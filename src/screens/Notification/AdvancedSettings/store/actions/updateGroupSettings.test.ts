@@ -1,7 +1,7 @@
 import { act, renderHook } from '~/test/testUtils';
 import useAdvancedNotiSettingsStore from '../index';
 import notificationApi from '~/api/NotificationApi';
-import { IAdvancedNotificationSettings } from '~/interfaces/INotification';
+import { IGroupNotificationSetting } from '~/interfaces/INotification';
 
 describe('update group notification setting', () => {
   afterEach(() => {
@@ -11,26 +11,28 @@ describe('update group notification setting', () => {
 
   const response = { code: 'api.ok', data: true, meta: { message: 'OK' } };
   const payload: any = { flag: true };
-  const dataUpdateStore: IAdvancedNotificationSettings = {
+  const dataUpdateStore: IGroupNotificationSetting = {
     communityId: '4343060d-93c9-4039-90c1-afc0e7e479ea',
-    groupId: 'f43f2509-3b51-4b00-8d79-82b577ea49f0',
+    id: 'f43f2509-3b51-4b00-8d79-82b577ea49f0',
     name: 'group',
-    enable: true,
-    channels: {
-      inApp: true,
-      push: true,
+    setting: {
+      name: 'group',
+      enable: true,
+      channels: {
+        inApp: true,
+        push: true,
+      },
+      flag: {
+        value: payload.flag,
+        label: 'Default',
+      },
     },
-    flag: {
-      value: payload.flag,
-      label: 'Default',
-    },
-    id: '',
   };
 
   it('should update group config success', () => {
     const response = { code: 'api.ok', data: true, meta: { message: 'OK' } };
 
-    const expectData = { [dataUpdateStore.groupId]: { ...dataUpdateStore } };
+    const expectData = { [dataUpdateStore.id]: { ...dataUpdateStore } };
 
     const spyApi = jest.spyOn(notificationApi, 'updateGroupSettings').mockImplementation(
       () => Promise.resolve(response) as any,
@@ -55,7 +57,7 @@ describe('update group notification setting', () => {
   });
 
   it('should update group config success with full param', () => {
-    const expectData = { [dataUpdateStore.groupId]: { ...dataUpdateStore } };
+    const expectData = { [dataUpdateStore.id]: { ...dataUpdateStore } };
 
     const spyApi = jest.spyOn(notificationApi, 'updateGroupSettings').mockImplementation(
       () => Promise.resolve(response) as any,

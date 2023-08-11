@@ -3,6 +3,7 @@ import React from 'react';
 import { fireEvent, renderWithRedux, languages } from '~/test/testUtils';
 import AdvancedSettingItem from './AdvancedSettingItem';
 import useAdvancedNotiSettingsStore from '../AdvancedSettings/store';
+import useSearchJoinedCommunitiesStore from '~/screens/communities/Communities/components/SearchCommunity/store';
 
 describe('Notification Advanced Setting Item Component', () => {
   const mockItemData: any = {
@@ -27,15 +28,33 @@ describe('Notification Advanced Setting Item Component', () => {
     userCount: 65,
   };
 
+  const mockCommunitySelected: any = {
+    id: mockItemData.communityId,
+    enable: true,
+  };
+
   it('should render correctly and call prop onPress', () => {
     const onPressItem = jest.fn();
-    useAdvancedNotiSettingsStore.setState((state) => {
-      state.isLoadingGroupSettings = true;
+    useSearchJoinedCommunitiesStore.setState((state) => {
+      state.items = {
+        [mockItemData.id]: mockItemData,
+      };
       return state;
     });
+    useAdvancedNotiSettingsStore.setState((state) => {
+      state.selectedCommunity = mockItemData;
+      state.communityData = {
+        [mockItemData.communityId]: {
+          enable: true,
+        },
+      } as any;
+      return state;
+    });
+
     const wrapper = renderWithRedux(
       <AdvancedSettingItem
-        item={mockItemData}
+        type="community"
+        item={mockItemData.id}
         onPress={onPressItem}
       />,
     );
@@ -51,13 +70,16 @@ describe('Notification Advanced Setting Item Component', () => {
     const onPressItem = jest.fn();
     useAdvancedNotiSettingsStore.setState((state) => {
       state.isLoadingGroupSettings = false;
+      state.selectedCommunity = mockCommunitySelected;
       state.groupData = {
         [mockItemData.id]: {
-          flag: { value: false },
-          channels: {
-            inApp: true, push: true,
+          setting: {
+            flag: { value: false },
+            channels: {
+              inApp: true, push: true,
+            },
+            enable: true,
           },
-          enable: true,
         },
       } as any;
       return state;
@@ -65,8 +87,7 @@ describe('Notification Advanced Setting Item Component', () => {
 
     const wrapper = renderWithRedux(
       <AdvancedSettingItem
-        isDisabled
-        item={mockItemData}
+        item={mockItemData.id}
         onPress={onPressItem}
       />,
     );
@@ -92,12 +113,14 @@ describe('Notification Advanced Setting Item Component', () => {
       state.isLoadingGroupSettings = false;
       state.groupData = {
         [mockItemData.id]: {
-          flag: { value: true },
-          channels: {
-            inApp: false,
-            push: true,
+          setting: {
+            flag: { value: true },
+            channels: {
+              inApp: false,
+              push: true,
+            },
+            enable: true,
           },
-          enable: true,
         },
       } as any;
       return state;
@@ -105,8 +128,7 @@ describe('Notification Advanced Setting Item Component', () => {
 
     const wrapper = renderWithRedux(
       <AdvancedSettingItem
-        isDisabled
-        item={mockItemData}
+        item={mockItemData.id}
         onPress={onPressItem}
       />,
     );
@@ -125,12 +147,14 @@ describe('Notification Advanced Setting Item Component', () => {
       state.isLoadingGroupSettings = false;
       state.groupData = {
         [mockItemData.id]: {
-          flag: { value: true },
-          channels: {
-            inApp: true,
-            push: false,
+          setting: {
+            flag: { value: true },
+            channels: {
+              inApp: true,
+              push: false,
+            },
+            enable: true,
           },
-          enable: true,
         },
       } as any;
       return state;
@@ -138,8 +162,7 @@ describe('Notification Advanced Setting Item Component', () => {
 
     const wrapper = renderWithRedux(
       <AdvancedSettingItem
-        isDisabled
-        item={mockItemData}
+        item={mockItemData.id}
         onPress={onPressItem}
       />,
     );
@@ -158,12 +181,14 @@ describe('Notification Advanced Setting Item Component', () => {
       state.isLoadingGroupSettings = false;
       state.groupData = {
         [mockItemData.id]: {
-          flag: { value: true },
-          channels: {
-            inApp: true,
-            push: true,
+          setting: {
+            flag: { value: true },
+            channels: {
+              inApp: true,
+              push: true,
+            },
+            enable: true,
           },
-          enable: true,
         },
       } as any;
       return state;
@@ -171,8 +196,7 @@ describe('Notification Advanced Setting Item Component', () => {
 
     const wrapper = renderWithRedux(
       <AdvancedSettingItem
-        isDisabled
-        item={mockItemData}
+        item={mockItemData.id}
         onPress={onPressItem}
       />,
     );
@@ -193,12 +217,14 @@ describe('Notification Advanced Setting Item Component', () => {
       state.isLoadingGroupSettings = false;
       state.groupData = {
         [mockItemData.id]: {
-          flag: { value: true },
-          channels: {
-            inApp: false,
-            push: false,
+          setting: {
+            flag: { value: true },
+            channels: {
+              inApp: false,
+              push: false,
+            },
+            enable: false,
           },
-          enable: false,
         },
       } as any;
       return state;
@@ -206,8 +232,7 @@ describe('Notification Advanced Setting Item Component', () => {
 
     const wrapper = renderWithRedux(
       <AdvancedSettingItem
-        isDisabled
-        item={mockItemData}
+        item={mockItemData.id}
         onPress={onPressItem}
       />,
     );
