@@ -110,14 +110,14 @@ const TextArea: React.FC<TextAreaProps> = ({
         {!!errorText ? (
           <View style={styles.errorView}>
             <Icon icon="CircleExclamation" size={14} tintColor={colors.red40} />
-            <Text.BodyXS style={styles.errorText}>{errorText}</Text.BodyXS>
+            <Text.BodyXS testID="textarea_error" style={styles.errorText}>{errorText}</Text.BodyXS>
           </View>
         ) : (
           <View />
         )}
         {showCountLength && (
           <Text.BodyXS color={colors.neutral20}>
-            {`${text?.trim?.()?.length}/${maxLength}`}
+            {`${text?.length}/${maxLength}`}
           </Text.BodyXS>
         )}
       </View>

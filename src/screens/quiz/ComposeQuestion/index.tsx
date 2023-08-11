@@ -145,6 +145,7 @@ const ComposeQuestion: FC<ComposeQuestionProps> = (props) => {
           ))}
           {fields.length < MAX_ANSWERS && (
             <Button.Neutral
+              testID="compose_question.add_answer"
               type="ghost"
               icon="Plus"
               iconSize={16}
@@ -156,7 +157,7 @@ const ComposeQuestion: FC<ComposeQuestionProps> = (props) => {
             </Button.Neutral>
           )}
           {needToChooseCorrectAnswer && (
-            <View style={styles.errorView}>
+            <View testID="compose_question.error_choose_correct_answer" style={styles.errorView}>
               <Icon
                 icon="CircleExclamation"
                 size={14}
