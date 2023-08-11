@@ -527,60 +527,60 @@ export const mockResultQuiz = {
 };
 
 export const mockResponseSummary = {
-    code: "api.ok",
-    data: {
-      contentId: "c3e104b4-86b9-4f0d-a649-3c2fc15a97fb",
-      participants: {
-        total: 1,
-        pass: 1,
-        fail: 0
-      }
+  code: 'api.ok',
+  data: {
+    contentId: 'c3e104b4-86b9-4f0d-a649-3c2fc15a97fb',
+    participants: {
+      total: 1,
+      pass: 1,
+      fail: 0,
     },
-    meta: {
-      message: "OK"
-    }
+  },
+  meta: {
+    message: 'OK',
+  },
 };
 
 export const mockResponseUserParticipants = {
-  code: "api.ok",
+  code: 'api.ok',
   data: {
     list: [
       {
-        id: "222b7e3b-6c99-4c68-bb4f-02c6c54fe340",
-        quizId: "119d1c2d-fc85-41df-bba7-231f876d91b1",
-        createdAt: "2023-08-01T07:02:32.545Z",
+        id: '222b7e3b-6c99-4c68-bb4f-02c6c54fe340',
+        quizId: '119d1c2d-fc85-41df-bba7-231f876d91b1',
+        createdAt: '2023-08-01T07:02:32.545Z',
         score: 100,
-        status: "PASS",
+        status: 'PASS',
         actor: {
-          id: "7b63852c-5249-499a-a32b-6bdaa2761fc2",
-          username: "trannamanh",
-          fullname: "Nam Anh",
-          email: "namanh@tgm.vn",
-          avatar: "https://media.beincom.io/image/variants/user/avatar/1e65c01e-7916-46aa-b5a8-aeea19cfef97",
+          id: '7b63852c-5249-499a-a32b-6bdaa2761fc2',
+          username: 'trannamanh',
+          fullname: 'Nam Anh',
+          email: 'namanh@tgm.vn',
+          avatar: 'https://media.beincom.io/image/variants/user/avatar/1e65c01e-7916-46aa-b5a8-aeea19cfef97',
           isDeactivated: false,
           isVerified: false,
           showingBadges: [
             {
-              id: "e939d0a7-3df8-4139-8522-5254bcb62ed1",
-              name: "71",
-              iconUrl: "https://media.beincom.io/image/variants/badge/81307d0c-4446-4dcf-9f5c-aa92c2decca6",
+              id: 'e939d0a7-3df8-4139-8522-5254bcb62ed1',
+              name: '71',
+              iconUrl: 'https://media.beincom.io/image/variants/badge/81307d0c-4446-4dcf-9f5c-aa92c2decca6',
               community: {
-                id: "b5c7a117-dcb8-47ba-9677-dc33da0320ba",
-                name: "Root wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
-              }
+                id: 'b5c7a117-dcb8-47ba-9677-dc33da0320ba',
+                name: 'Root wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww',
+              },
             },
-            ]
-        }
-      }
-      ],
-      meta: {
-        startCursor: "eyJjcmVhdGVkQXQiOiIyMDIzLTA4LTAxVDA3OjAyOjMyLjU0NVoifQ==",
-        endCursor: "eyJjcmVhdGVkQXQiOiIyMDIzLTA4LTAxVDA3OjAyOjMyLjU0NVoifQ==",
-        hasNextPage: false,
-        hasPreviousPage: false
-      }
+          ],
+        },
+      },
+    ],
+    meta: {
+      startCursor: 'eyJjcmVhdGVkQXQiOiIyMDIzLTA4LTAxVDA3OjAyOjMyLjU0NVoifQ==',
+      endCursor: 'eyJjcmVhdGVkQXQiOiIyMDIzLTA4LTAxVDA3OjAyOjMyLjU0NVoifQ==',
+      hasNextPage: false,
+      hasPreviousPage: false,
+    },
   },
   meta: {
-    message: "OK"
-  }
+    message: 'OK',
+  },
 };

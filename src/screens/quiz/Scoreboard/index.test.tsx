@@ -2,7 +2,7 @@ import React from 'react';
 import {
   renderWithRedux,
   act,
-} from '~/test/testUtils'
+} from '~/test/testUtils';
 import Scoreboard from '.';
 import useScoreboardStore, { IScoreboardState } from './store';
 import MockedNavigator from '~/test/MockedNavigator';
