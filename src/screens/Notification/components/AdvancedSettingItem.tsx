@@ -27,7 +27,7 @@ const AdvancedSettingItem = ({
   const styles = createStyle(theme);
   const { t } = useBaseHook();
 
-  const { items } = useSearchJoinedCommunitiesStore();
+  const items = useSearchJoinedCommunitiesStore((state) => state.items);
   const groupData = useAdvancedNotiSettingsStore((state) => state.groupData?.[item]);
   const currentData = Boolean(type === 'community') ? items?.[item] : groupData;
 
@@ -69,6 +69,7 @@ const AdvancedSettingItem = ({
   return (
     <Button
       testID="notification_advanced_setting_item"
+      key={`notification_advanced_setting_item_${item}_${isDisabled}`}
       disabled={isDisabled}
       activeOpacity={0.85}
       style={styles.container}

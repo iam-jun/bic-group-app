@@ -177,7 +177,7 @@ const _AdvancedSettings = () => {
       item={item}
       onPress={onPressItem}
     />
-  ), [selectedCommunity?.id]);
+  ), [selectedCommunity?.id, communitySettingData?.enable]);
 
   const renderLoading = () => (
     <View style={styles.container}>

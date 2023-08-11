@@ -40,7 +40,7 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
   const isRefreshing = useAdvancedNotiSettingsStore((state) => state.isRefreshing);
   const isUpdatting = useAdvancedNotiSettingsStore((state) => state.isResetOrEnableGroupSettings);
 
-  const { channels = {}, enable = true, flag } = data;
+  const { channels = {}, enable = true, flag } = data.setting || {};
 
   const isDefault = !Boolean(flag?.value) && enable;
   const isDisableItemAllowAll = isDefault;
@@ -56,7 +56,14 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
       push: isChecked ? true : channels?.push,
     };
     const payload = { enable: isChecked, channels: newChannels };
-    const dataUpdateStore:any = { ...data, channels: newChannels, enable: isChecked };
+    const dataUpdateStore:any = {
+      ...data,
+      setting: {
+        ...data.setting,
+        channels: newChannels,
+        enable: isChecked,
+      },
+    };
     actions.updateGroupSettings(payload, dataUpdateStore);
   };
 
@@ -71,12 +78,15 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
     };
     const dataUpdateStore: any = {
       ...data,
-      channels:
-        {
-          inApp: isChecked,
-          push: channels?.push,
-        },
-      enable: newEnable,
+      setting: {
+        ...data.setting,
+        channels:
+          {
+            inApp: isChecked,
+            push: channels?.push,
+          },
+        enable: newEnable,
+      },
     };
     actions.updateGroupSettings(payload, dataUpdateStore);
   }, 100);
@@ -92,12 +102,15 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
     };
     const dataUpdateStore: any = {
       ...data,
-      channels:
+      setting: {
+        ...data.setting,
+        channels:
         {
           inApp: channels?.inApp,
           push: isChecked,
         },
-      enable: newEnable,
+        enable: newEnable,
+      },
     };
     actions.updateGroupSettings(payload, dataUpdateStore);
   }, 100);
@@ -108,9 +121,12 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
       const payload:any = { flag: true, ...defaultData };
       const dataUpdateStore:any = {
         ...data,
-        ...defaultData,
-        flag: {
-          value: true,
+        setting: {
+          ...data.setting,
+          ...defaultData,
+          flag: {
+            value: true,
+          },
         },
       };
       actions.updateGroupSettings(payload, dataUpdateStore, true);
@@ -120,9 +136,12 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
     const payload:any = { flag: false, ...defaultData };
     const dataUpdateStore:any = {
       ...data,
-      ...defaultData,
-      flag: {
-        value: false,
+      setting: {
+        ...data.setting,
+        ...defaultData,
+        flag: {
+          value: false,
+        },
       },
     };
     actions.updateGroupSettings(payload, dataUpdateStore, true);
