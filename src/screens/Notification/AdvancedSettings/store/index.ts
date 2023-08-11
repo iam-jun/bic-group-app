@@ -44,7 +44,7 @@ export interface IAdvancedNotiSettingsStore extends IBaseState {
       dataUpdateStore: IAdvancedNotificationSettings) => void;
     updateGroupSettings: (
       params: IEditNotificationSetting,
-      dataUpdateStore: IAdvancedNotificationSettings,
+      dataUpdateStore: IGroupNotificationSetting,
       isResetOrEnableSettings?: boolean,
     ) => void;
     clearSearchGroup: () => void;
