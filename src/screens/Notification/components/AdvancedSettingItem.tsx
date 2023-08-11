@@ -69,6 +69,7 @@ const AdvancedSettingItem = ({
   return (
     <Button
       testID="notification_advanced_setting_item"
+      key={`notification_advanced_setting_item_${item}_${isDisabled}`}
       disabled={isDisabled}
       activeOpacity={0.85}
       style={styles.container}
