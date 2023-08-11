@@ -11,7 +11,7 @@ import { onPressButtonInvite } from '~/components/InvitePeopleToYourGroup/helper
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { ITypeGroup } from '~/interfaces/common';
 
-interface NoOneIsInvitedProps {
+export interface NoOneIsInvitedProps {
   groupId: string;
   type: ITypeGroup;
 }
@@ -26,7 +26,7 @@ const NoOneIsInvited = ({ groupId, type }: NoOneIsInvitedProps) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="no_one_is_invited">
       <Image resizeMode="contain" style={styles.imgEmpty} source={images.img_empty_box} />
       <Text.H3 style={[styles.text, styles.title]} color={theme.colors.neutral60}>
         {t('common:text_no_one_is_invited')}

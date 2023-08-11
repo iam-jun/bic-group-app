@@ -12,7 +12,7 @@ import Text from '~/baseComponents/Text';
 import useGroupJoinableUsersStore from '~/components/InvitePeopleToYourGroup/store';
 import { ITypeGroup } from '~/interfaces/common';
 
-interface CommunityInvitedPeopleProps {
+export interface CommunityInvitedPeopleProps {
   groupId: string;
   type: ITypeGroup;
 }
@@ -65,7 +65,12 @@ const CommunityInvitedPeople = ({ groupId, type }: CommunityInvitedPeopleProps) 
     }
     if (!canLoadMore && data.length > 0) {
       return (
-        <Text.BodyM style={styles.footerContainer} color={colors.neutral30} useI18n>
+        <Text.BodyM
+          testID="flatlist.text_you_have_seen_it_all"
+          style={styles.footerContainer}
+          color={colors.neutral30}
+          useI18n
+        >
           common:text_you_have_seen_it_all
         </Text.BodyM>
       );

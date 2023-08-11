@@ -71,7 +71,7 @@ const Invitee = ({ item }: InviteeProps) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="invitee">
       <Avatar.Small source={invitee.avatar || images.img_user_avatar_default} isRounded />
       <View style={styles.rightContainer}>
         {renderInvitee()}
