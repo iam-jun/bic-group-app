@@ -525,3 +525,26 @@ export const mockResultQuiz = {
     message: 'OK',
   },
 };
+
+export const mockCreateQuestionQuizResponse = {
+  code: 'api.ok',
+  data: {
+    id: 'a08a1775-769d-49fe-a8db-6a2729575135',
+    content: 'r',
+    answers: [
+      {
+        id: '895b42be-b89e-4af3-9a3d-8b312191c17d',
+        content: 'c',
+        isCorrect: false,
+      },
+      {
+        id: '376953f6-8a3f-496a-a316-f99b45e71380',
+        content: 'v',
+        isCorrect: true,
+      },
+    ],
+  },
+  meta: {
+    message: 'Created question successfully',
+  },
+};
