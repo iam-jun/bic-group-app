@@ -258,15 +258,6 @@ const usePostMenu = (
     },
     {
       id: 5,
-      testID: 'post_view_menu.quiz',
-      leftIcon: 'BallotCheck',
-      title: i18next.t('quiz:create_quiz'),
-      requireIsActor: true,
-      shouldBeHidden: shouldBeHiddenCreateQuizOption,
-      onPress: onPressCUDQuiz,
-    },
-    {
-      id: 6,
       testID: 'post_view_menu.insights',
       leftIcon: 'iconReact',
       title: i18next.t('post:post_menu_view_reactions'),
@@ -275,7 +266,7 @@ const usePostMenu = (
       onPress: onPressViewReactions,
     },
     {
-      id: 7,
+      id: 6,
       testID: 'post_view_menu.view_series',
       leftIcon: 'RectangleHistory',
       title: i18next.t('common:btn_view_series'),
@@ -283,7 +274,7 @@ const usePostMenu = (
       onPress: onPressViewSeries,
     },
     {
-      id: 8,
+      id: 7,
       testID: 'post_view_menu.pin',
       leftIcon: 'Thumbtack',
       title: i18next.t('common:pin_unpin'),
@@ -293,7 +284,7 @@ const usePostMenu = (
       onPress: onPressPin,
     },
     {
-      id: 9,
+      id: 8,
       testID: 'post_view_menu.report',
       leftIcon: 'Flag',
       title: i18next.t('common:btn_report_content'),
@@ -302,13 +293,24 @@ const usePostMenu = (
       onPress: onPressReport,
     },
     {
-      id: 10,
+      id: 9,
       testID: 'post_view_menu.report_this_member',
       leftIcon: 'UserXmark',
       title: i18next.t('groups:member_menu:label_report_member'),
       requireIsActor: false,
       notShowForActor: isActor,
       onPress: _onPressReportThisMember,
+    },
+    {
+      id: 10,
+      testID: 'post_view_menu.quiz',
+      leftIcon: 'BallotCheck',
+      title: i18next.t('quiz:create_quiz'),
+      requireIsActor: true,
+      shouldBeHidden: shouldBeHiddenCreateQuizOption,
+      onPress: onPressCUDQuiz,
+      isShowBorderTop: true,
+      isShowBorderBottom: true,
     },
     {
       id: 11,
