@@ -68,7 +68,7 @@ const Invitee = ({ item }: InviteeProps) => {
       );
     }
     return (
-      <Text.SubtitleXS numberOfLines={1} style={styles.nameInviter} color={theme.colors.neutral40}>
+      <Text.SubtitleXS numberOfLines={2} style={styles.nameInviter} color={theme.colors.neutral40}>
         {inviter.fullname}
       </Text.SubtitleXS>
     );
