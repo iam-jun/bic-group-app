@@ -133,20 +133,23 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
   };
 
   const onSubmit = () => {
+    // after submit should getContentDetail again to get new data
+    // and clear quizDoing of content detail
     const onSuccess = () => {
       actions.clearQuizParticipantId(quizId);
+      postActions.getContentDetail(contentId, type);
       navigateResult();
     };
 
     const onErrors = () => {
       getCurrentQuizParticipant();
+      postActions.getContentDetail(contentId, type);
       navigateResult();
     };
 
     if (!finishedAt && typeof score !== 'number' && !isPrepareTakingQuiz) {
       saveAnwsers({ onSuccess, onErrors, isFinished: true });
-      postActions.getContentDetail(contentId, type);
-      clearDataTakeQuiz();
+      clearCountDownTakeQuiz();
     }
   };
 
@@ -158,7 +161,7 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
     });
   };
 
-  const clearDataTakeQuiz = () => {
+  const clearCountDownTakeQuiz = () => {
     clearInterval(timer.current);
   };
 
@@ -179,7 +182,7 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
     onSubmit,
     resetQuestionIndex,
     questionReviews,
-    clearDataTakeQuiz,
+    clearCountDownTakeQuiz,
   };
 };
 
