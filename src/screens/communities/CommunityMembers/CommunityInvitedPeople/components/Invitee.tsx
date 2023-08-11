@@ -60,14 +60,18 @@ const Invitee = ({ item }: InviteeProps) => {
     if (invitee.isDeactivated) {
       return (
         <View style={styles.deactivatedContainer}>
-          <Text.SubtitleXS style={styles.deactivatedName} numberOfLines={1} color={theme.colors.grey40}>
+          <Text.SubtitleXS style={styles.nameInviter} numberOfLines={1} color={theme.colors.grey40}>
             {inviter.fullname}
           </Text.SubtitleXS>
           <DeactivatedView style={styles.deactivatedView} />
         </View>
       );
     }
-    return <Text.SubtitleXS color={theme.colors.neutral40}>{inviter.fullname}</Text.SubtitleXS>;
+    return (
+      <Text.SubtitleXS numberOfLines={1} style={styles.nameInviter} color={theme.colors.neutral40}>
+        {inviter.fullname}
+      </Text.SubtitleXS>
+    );
   };
 
   return (
@@ -105,7 +109,7 @@ const createStyles = (theme: ExtendedTheme) => {
       flexDirection: 'row',
       alignItems: 'center',
     },
-    deactivatedName: {
+    nameInviter: {
       flexShrink: 1,
     },
     deactivatedView: {
