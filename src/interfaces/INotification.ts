@@ -73,3 +73,8 @@ export interface INotiSettings {
   child?: INotiSettings[];
   channels?: INotiChannel;
 }
+
+export enum InvitationTargetType {
+  GROUP = 'GROUP',
+  COMMUNITY = 'COMMUNITY',
+}

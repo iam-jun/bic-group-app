@@ -135,6 +135,7 @@
     "text_remove": "Loại bỏ",
     "btn_approve": "Phê duyệt",
     "btn_decline": "Từ chối",
+    "btn_accept": "Chấp nhận",
     "btn_approve_all": "Phê duyệt tất cả",
     "btn_decline_all": "Từ chối tất cả",
     "btn_submit": "Gửi",
@@ -182,7 +183,7 @@
     "btn_go_back": "Quay về",
     "text_unsupport_feature": "Chúng tôi chưa hỗ trợ tính năng này trên thiết bị di động. Vui lòng xem chi tiết trên phiên bản web",
     "text_maintenance_title": "Chúng tôi đang bảo trì.",
-    "text_maintenance_content": "Chúng tôi sẽ trở lại lúc ",
+    "text_maintenance_content": "Nền tảng tạm thời không khả dụng trong thời gian bảo trì. Chúng tôi sẽ quay lại tại **(endAt)**\nChúng tôi xin lỗi vì bất kỳ sự bất tiện nào và đánh giá cao sự hỗ trợ liên tục của bạn.",
     "text_select_file": "Chọn file",
     "content_unavailable": {
       "title": "Nội dung này hiện không khả dụng",
@@ -319,6 +320,7 @@
     "text_err_email_exist": "Email này đã tồn tại. Vui lòng thử email khác.",
     "text_agree_to_our": "Đồng ý với chúng tôi về ",
     "text_privacy_terms": "Quyền riêng tư và các điều khoản",
+    "text_agree_to_terms_sigin": "Bằng cách đăng nhập vào BIC Group, bạn đồng ý với chúng tôi ",
     "text_you_have_an_account": "Bạn đã có một tài khoản? ",
     "text_sign_in_now": "Đăng nhập ngay",
     "title_sign_up_success_modal": "Tài khoản của bạn đã được tạo thành công",
@@ -578,6 +580,7 @@
     "title_feed_content_series": "Series",
     "title_install_chat": "Không tìm thấy BIC Chat",
     "text_desc_install_chat": "Vui lòng cài đặt BIC Chat để sử dụng tính năng này",
+    "text_get_bic_chat": "Tải BIC Chat",
     "newsfeed_search": {
       "text_cta_see_result_for_search_text": "Xem kết quả tìm kiếm \"%SEARCH_TEXT%\"",
       "clear": "Xoá hết",
@@ -1135,6 +1138,8 @@
     "text_bic_team": "BIC team",
     "text_remove_notification": "Xóa thông báo này",
     "text_remove_notification_success": "Đã xóa thông báo thành công",
+    "text_invitation_accepted": "Lời mời đã được chấp nhận",
+    "text_invitation_declined": "Lời mời đã bị từ chối",
     "notification_settings": {
       "title": "Cài đặt thông báo",
       "description": "Chúng tôi vẫn có thể gửi cho bạn thông báo quan trọng về tài khoản của bạn ngoài cài đặt của bạn",

@@ -4,6 +4,8 @@ import {
 import React from 'react';
 import Text from '~/baseComponents/Text';
 
+const MAX_LENGTH = 45;
+
 interface Props {
   style?: StyleProp<ViewStyle>;
   latestWork?: {
@@ -17,10 +19,12 @@ const WorkInfo = ({ style, latestWork }: Props) => {
 
   return (
     <View style={[styles.container, style]} testID="work_info">
-      <Text.BodySMedium style={{ textAlign: 'center' }}>
-        {`${latestWork?.titlePosition} `}
-        <Text.BodySMedium>{` • ${latestWork?.company}`}</Text.BodySMedium>
+      <Text.BodySMedium maxLength={MAX_LENGTH} style={styles.text}>
+        {latestWork?.company}
       </Text.BodySMedium>
+      <Text.BodyS maxLength={MAX_LENGTH} style={styles.text}>
+        {latestWork?.titlePosition}
+      </Text.BodyS>
     </View>
   );
 };
@@ -29,6 +33,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
   },
+  text: { textAlign: 'center' },
 });
 
 export default WorkInfo;

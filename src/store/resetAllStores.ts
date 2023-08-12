@@ -1,7 +1,6 @@
 import useSelectAudienceStore from '~/components/SelectAudience/store';
 import useAuthController from '~/screens/auth/store';
 import useCommunityJoinedGroupTreeStore from '~/screens/groups/components/CommunityJoinedGroupTree/store';
-import useCodePushStore from '~/store/codePush';
 import useCommentsStore from '~/store/entities/comments';
 import usePostsStore from './entities/posts';
 import useHomeStore from '~/screens/Home/store';
@@ -70,6 +69,7 @@ import usePersonalPrivacy from '~/screens/Menu/AccountSettings/PrivacyCenter/sto
 import useMembershipPolicySettingsStore from '~/screens/groups/MembershipPolicySettings/store';
 import usePreviewJoinableGroupStore from '~/components/PreviewJoinableGroup/store';
 import useNotiSettingsStore from '~/screens/Notification/NotiSettings/store';
+import useNotiInvitationsStore from '~/screens/Notification/components/NotificationItem/store';
 
 export const excludedStore = [
   useAuthController,
@@ -127,7 +127,6 @@ const stores = [
   useSearchJoinedCommunitiesStore,
   useGiphyStore,
   useSeriesStore,
-  useCodePushStore,
   useAddArticlesStore,
   useForgotPasswordStore,
   useChangePasswordStore,
@@ -157,6 +156,7 @@ const stores = [
   useMembershipPolicySettingsStore,
   usePreviewJoinableGroupStore,
   useNotiSettingsStore,
+  useNotiInvitationsStore,
 ];
 
 export const resetAllStores = () => {

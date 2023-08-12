@@ -1,6 +1,5 @@
 import { ISelectAudienceState } from '~/components/SelectAudience/store';
 import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
-import { ICodePushState } from '~/store/codePush';
 import { INetworkState } from '~/store/network';
 import { IPostsState } from './entities/posts';
 import ICommentsState from '~/store/entities/comments/Interface';
@@ -61,6 +60,7 @@ import { IPersonalInfoVisibilityState } from '~/screens/Menu/AccountSettings/Pri
 import { IMembershipPolicySettingsState } from '~/screens/groups/MembershipPolicySettings/store';
 import { IPreviewJoinableGroupState } from '~/components/PreviewJoinableGroup/store';
 import { INotiSettingsStore } from '~/screens/Notification/NotiSettings/store';
+import { INotiInvitationsStore } from '~/screens/Notification/components/NotificationItem/store';
 
 export interface BicStore {
   entities: {
@@ -169,6 +169,7 @@ export interface BicStore {
   Notifications: {
     notificationStore: INotificationsState;
     INotiSettingsStore: INotiSettingsStore;
+    INotiInvitationsStore: INotiInvitationsStore;
   };
   Draft: {
     DraftArticle: {
@@ -193,7 +194,6 @@ export interface BicStore {
   // others
   chat: IChatState;
   giphy: IGiphyState;
-  codePush: ICodePushState;
   myPermissions: IMyPermissionsState;
   network: INetworkState;
   tags: ITagsState;

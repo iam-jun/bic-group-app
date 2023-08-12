@@ -3,7 +3,7 @@ import { cleanup } from '@testing-library/react-native';
 import React from 'react';
 
 import { renderWithRedux } from '~/test/testUtils';
-import NotificationAvatar from './NotificationAvatar';
+import NotificationAvatar from '.';
 import { mockNotifications } from '~/test/mock_data/notifications';
 
 afterEach(cleanup);

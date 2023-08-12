@@ -1,0 +1,22 @@
+---
+name: build-android-prerelease
+on:
+  push:
+    tags:
+      - 'pre-*.*.*'
+
+jobs:
+  build-android-prerelease:
+    runs-on: self-hosted
+    steps:
+      - name: ci/checkout-repo
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+
+      - name: ci/prepare-build-resources
+        run: |
+          npm run clone-secret
+          npm run clone-build-resources
+          npm run prepare-resources
+
+      - name: ci/build-android-prerelease
+        run: npm run build-android-prerelease
