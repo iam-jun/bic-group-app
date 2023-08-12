@@ -1,11 +1,17 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, StyleSheet, FlatList } from 'react-native';
 import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useRootNavigation } from '~/hooks/navigation';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import { spacing } from '~/theme';
+import useMyInvitationsStore from './store';
+import InvitationItem from './component/InvitationItem';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import images from '~/resources/images';
+import Image from '~/components/Image';
+import Divider from '~/beinComponents/Divider';
 
 const InvitationList = () => {
   const theme: ExtendedTheme = useTheme();
@@ -13,30 +19,90 @@ const InvitationList = () => {
   const styles = createStyles(theme);
   const { rootNavigation } = useRootNavigation();
 
+  const actions = useMyInvitationsStore((state) => state.actions);
+  const ids = useMyInvitationsStore((state) => state.invitationIds);
+  const loading = useMyInvitationsStore((state) => state.loading);
+  const hasNextPage = useMyInvitationsStore((state) => state.hasNextPage);
+
+  useEffect(() => {
+    if (ids.length === 0) {
+      actions.getInvitations(true);
+    }
+  }, []);
+
   const goToInvitationSettings = () => {
     rootNavigation.navigate(menuStack.invitationPrivacy);
   };
 
+  const onLoadMore = () => {
+    if (!hasNextPage || loading) return;
+    actions.getInvitations();
+  };
+
   const renderHeader = () => (
-    <View style={styles.headerContainer}>
-      <View style={[styles.row, styles.textContainer]}>
-        <Text.H4 useI18n>
-          user:user_tab_types:title_invitations
-        </Text.H4>
-        <Text.LinkS useI18n onPress={goToInvitationSettings}>
-          user:text_invitation_privacy_settings
-        </Text.LinkS>
+    <View>
+      <View style={styles.headerContainer}>
+        <View style={[styles.row, styles.textContainer]}>
+          <Text.H4 useI18n>
+            user:user_tab_types:title_invitations
+          </Text.H4>
+          <Text.LinkS useI18n onPress={goToInvitationSettings}>
+            user:text_invitation_privacy_settings
+          </Text.LinkS>
+        </View>
+        <ViewSpacing height={spacing.margin.tiny} />
+        <Text.BodyM useI18n>
+          user:invitation_description
+        </Text.BodyM>
       </View>
-      <ViewSpacing height={spacing.margin.tiny} />
-      <Text.BodyM useI18n>
-        user:invitation_description
-      </Text.BodyM>
+      <Divider color={colors.gray5} size={spacing.padding.large} />
     </View>
   );
 
+  const renderItem = ({ item }: any) => <InvitationItem id={item} />;
+
+  const keyExtractor = (item: any) => item;
+
+  const renderFooter = () => {
+    if (!loading || !hasNextPage) {
+      return null;
+    }
+    return <LoadingIndicator style={styles.loading} />;
+  };
+
+  const renderEmptyComponent = () => {
+    if (loading) return null;
+    return (
+      <View
+        testID="invitation_list.box_empty"
+        style={styles.boxEmpty}
+      >
+        <Image
+          resizeMode="contain"
+          source={images.img_empty_box}
+          style={styles.imgEmpty}
+        />
+        <Text.BodyS color={colors.neutral40} useI18n>
+          user:text_no_invitations_found
+        </Text.BodyS>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
-      {renderHeader()}
+      <FlatList
+        data={ids}
+        style={styles.list}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        ListEmptyComponent={renderEmptyComponent}
+        ListHeaderComponent={renderHeader}
+        ListFooterComponent={renderFooter}
+        ItemSeparatorComponent={() => <Divider color={colors.gray5} size={spacing.padding.large} />}
+        onEndReached={onLoadMore}
+        onEndReachedThreshold={0.4}
+      />
     </View>
   );
 };
@@ -50,7 +116,6 @@ const createStyles = (theme: ExtendedTheme) => {
     headerContainer: {
       backgroundColor: colors.white,
       padding: spacing.padding.large,
-      marginTop: spacing.margin.large,
     },
     row: {
       flexDirection: 'row',
@@ -58,6 +123,22 @@ const createStyles = (theme: ExtendedTheme) => {
     },
     textContainer: {
       justifyContent: 'space-between',
+    },
+    loading: {
+      marginTop: spacing.margin.large,
+    },
+    boxEmpty: {
+      alignItems: 'center',
+      marginTop: spacing.margin.base,
+      paddingVertical: 32,
+    },
+    imgEmpty: {
+      width: 100,
+      aspectRatio: 1,
+      marginBottom: spacing.margin.large,
+    },
+    list: {
+      flex: 1,
     },
   });
 };
