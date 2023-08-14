@@ -68,6 +68,7 @@ import useMembershipPolicySettingsStore from '~/screens/groups/MembershipPolicyS
 import usePreviewJoinableGroupStore from '~/components/PreviewJoinableGroup/store';
 import useNotiSettingsStore from '~/screens/Notification/NotiSettings/store';
 import useGroupJoinableUsersStore from '~/components/InvitePeopleToYourGroup/store';
+import useNotiInvitationsStore from '~/screens/Notification/components/NotificationItem/store';
 
 export const excludedStore = [
   useAuthController,
@@ -153,6 +154,7 @@ const stores = [
   useMembershipPolicySettingsStore,
   usePreviewJoinableGroupStore,
   useNotiSettingsStore,
+  useNotiInvitationsStore,
 ];
 
 export const resetAllStores = () => {

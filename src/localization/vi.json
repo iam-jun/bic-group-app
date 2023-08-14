@@ -143,6 +143,7 @@
     "text_remove": "Loại bỏ",
     "btn_approve": "Phê duyệt",
     "btn_decline": "Từ chối",
+    "btn_accept": "Chấp nhận",
     "btn_approve_all": "Phê duyệt tất cả",
     "btn_decline_all": "Từ chối tất cả",
     "btn_submit": "Gửi",
@@ -1138,6 +1139,8 @@
     "text_bic_team": "BIC team",
     "text_remove_notification": "Xóa thông báo này",
     "text_remove_notification_success": "Đã xóa thông báo thành công",
+    "text_invitation_accepted": "Lời mời đã được chấp nhận",
+    "text_invitation_declined": "Lời mời đã bị từ chối",
     "notification_settings": {
       "title": "Cài đặt thông báo",
       "description": "Chúng tôi vẫn có thể gửi cho bạn thông báo quan trọng về tài khoản của bạn ngoài cài đặt của bạn",
