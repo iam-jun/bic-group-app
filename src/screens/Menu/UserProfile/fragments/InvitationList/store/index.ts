@@ -8,9 +8,16 @@ import IFetchingState from '~/store/interfaces/IFetchingState';
 import { IInvitation } from '~/interfaces/IInvitation';
 import getInvitations from './actions/getInvitations';
 
+export interface IGroupedInvitations {
+  id: number;
+  title: string;
+  data: string[];
+}
+
 export interface IMyInvitationsStore extends IBaseState, IFetchingState {
-  invitationIds: string[];
+  groupedInvitations: IGroupedInvitations[];
   invitationData: {[id: string]: IInvitation};
+  currentInvitationIds: number;
 
   requestingsAccept: { [id: string]: boolean };
   requestingsDecline: { [id: string]: boolean };
@@ -18,8 +25,8 @@ export interface IMyInvitationsStore extends IBaseState, IFetchingState {
   declined: { [id: string]: boolean };
 
   actions: {
-    acceptInvitation: (notiInfo: any) =>void;
-    declineInvitation: (notiInfo: any) => void;
+    acceptInvitation: (invitationId: string) =>void;
+    declineInvitation: (invitationId: string) => void;
     getInvitations: (isRefresh?: boolean) => void;
   }
 }
@@ -29,9 +36,10 @@ const initialState = {
   requestingsDecline: {},
   accepted: {},
   declined: {},
-  invitationIds: [],
+  groupedInvitations: [],
   invitationData: {},
   hasNextPage: true,
+  currentInvitationIds: 0,
 };
 
 const myInvitationsStore = (set, get) => ({

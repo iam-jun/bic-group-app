@@ -209,7 +209,7 @@ const UserProfile = (props: any) => {
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
       <Header />
-      {Boolean(isCurrentUser) && Boolean(selectedIndex === 1)
+      {Boolean(isCurrentUser) && Boolean(selectedIndex === 2)
       && (
       <Animated.View style={[styles.badgesHeader, headerAnimated]}>
         <Header />
@@ -255,7 +255,6 @@ const UserProfile = (props: any) => {
               <Divider color={colors.gray5} size={spacing.padding.large} />
             </>
           )}
-
           {renderContent()}
         </Animated.ScrollView>
       )}

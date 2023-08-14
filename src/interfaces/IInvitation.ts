@@ -9,6 +9,7 @@ export interface IInviter {
 export interface ITargetInfo {
     id: string;
     name: string;
+    isRootGroup: boolean;
 }
 
 export interface IInvitation {
@@ -20,4 +21,5 @@ export interface IInvitation {
   status: string;
   createdAt: string;
   updatedAt: string;
+  communityId: string;
 }

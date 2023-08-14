@@ -6,19 +6,19 @@ import { Button } from '~/baseComponents';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import spacing from '~/theme/spacing';
 
-interface NotificationInvitationButtonsProps {
+interface InvitationGroupButtonsProps {
   isLoadingAccept?: boolean;
   isLoadingDecline?: boolean;
   onAccept: (...params: any) => void;
   onDecline: (...params: any) => void;
 }
 
-const NotificationInvitationButtons = ({
+const InvitationGroupButtons = ({
   isLoadingAccept = false,
   isLoadingDecline = false,
   onAccept,
   onDecline,
-}: NotificationInvitationButtonsProps) => (
+}: InvitationGroupButtonsProps) => (
   <View style={[styles.row, styles.buttonsContainer]}>
     <Button.Neutral
       testID="button_approve_decline_all_requests.decline"
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NotificationInvitationButtons;
+export default InvitationGroupButtons;

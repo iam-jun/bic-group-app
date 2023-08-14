@@ -7,11 +7,11 @@ import { useRootNavigation } from '~/hooks/navigation';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import { spacing } from '~/theme';
 import useMyInvitationsStore from './store';
-import InvitationItem from './component/InvitationItem';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import images from '~/resources/images';
 import Image from '~/components/Image';
 import Divider from '~/beinComponents/Divider';
+import InvitationBlock from './component/InvitationBlock';
 
 const InvitationList = () => {
   const theme: ExtendedTheme = useTheme();
@@ -20,12 +20,12 @@ const InvitationList = () => {
   const { rootNavigation } = useRootNavigation();
 
   const actions = useMyInvitationsStore((state) => state.actions);
-  const ids = useMyInvitationsStore((state) => state.invitationIds);
+  const data = useMyInvitationsStore((state) => state.groupedInvitations);
   const loading = useMyInvitationsStore((state) => state.loading);
   const hasNextPage = useMyInvitationsStore((state) => state.hasNextPage);
 
   useEffect(() => {
-    if (ids.length === 0) {
+    if (data.length === 0) {
       actions.getInvitations(true);
     }
   }, []);
@@ -59,9 +59,9 @@ const InvitationList = () => {
     </View>
   );
 
-  const renderItem = ({ item }: any) => <InvitationItem id={item} />;
+  const renderItem = ({ item }: any) => <InvitationBlock data={item} />;
 
-  const keyExtractor = (item: any) => item;
+  const keyExtractor = (item: any, index: number) => `${index}_ ${item?.title}`;
 
   const renderFooter = () => {
     if (!loading || !hasNextPage) {
@@ -92,7 +92,7 @@ const InvitationList = () => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={ids}
+        data={data}
         style={styles.list}
         renderItem={renderItem}
         keyExtractor={keyExtractor}

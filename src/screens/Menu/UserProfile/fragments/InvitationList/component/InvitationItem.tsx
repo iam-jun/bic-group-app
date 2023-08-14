@@ -1,5 +1,5 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
@@ -10,6 +10,8 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { Avatar, Button } from '~/baseComponents';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import DeactivatedView from '~/components/DeactivatedView';
+import InvitationGroupButtons from '~/components/InvitationGroupButtons';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 
 interface Props {
 id: string;
@@ -22,25 +24,69 @@ const InvitationItem = ({ id }: Props) => {
   const { rootNavigation } = useRootNavigation();
 
   const data: IInvitation = useMyInvitationsStore((state) => state.invitationData?.[id]);
+  const actions = useMyInvitationsStore((state) => state.actions);
+  const requestingsAccept = useMyInvitationsStore(
+    useCallback((state) => state.requestingsAccept?.[id], [id]),
+  );
+  const requestingsDecline = useMyInvitationsStore(
+    useCallback((state) => state.requestingsDecline?.[id], [id]),
+  );
+
+  const isAccepted = useMyInvitationsStore(
+    useCallback((state) => state.accepted?.[id], [id]),
+  );
+  const isDeclined = useMyInvitationsStore(
+    useCallback((state) => state.declined?.[id], [id]),
+  );
+
   const {
-    inviter, targetInfo, targetType,
+    inviter, targetInfo, targetType, communityId,
   } = data || {};
 
   const { fullname, avatar, isDeactivated } = inviter || {};
-  const { name } = targetInfo || {};
+  const { name, isRootGroup, id: groupId } = targetInfo || {};
 
   const onPressTarget = () => {
-    if (!targetType) return;
+    if (!targetType || !communityId) return;
+    if (!isRootGroup && groupId && communityId) {
+      rootNavigation.navigate(
+        groupStack.groupDetail, {
+          groupId,
+          communityId,
+        },
+      );
+      return;
+    }
+
+    if (communityId) {
+      rootNavigation.navigate(
+        mainTabStack.communityDetail, {
+          communityId,
+        },
+      );
+    }
   };
 
   const onPressActor = () => {
     if (!inviter.id || inviter?.isDeactivated) return;
 
     const payload = { userId: inviter.id };
-    rootNavigation.navigate(
+    rootNavigation.push(
       mainTabStack.userProfile, payload,
     );
   };
+
+  const onAccept = () => {
+    actions.acceptInvitation(id);
+  };
+
+  const onDecline = () => {
+    actions.declineInvitation(id);
+  };
+
+  if (isAccepted || isDeclined) return null;
+
+  const textColor = isDeactivated ? colors.grey40 : colors.neutral60;
 
   return (
     <View style={[styles.row, styles.container]}>
@@ -52,7 +98,7 @@ const InvitationItem = ({ id }: Props) => {
         <View style={[styles.row, styles.contentContainer]}>
           <Button style={styles.btnActor} onPress={onPressActor}>
             <Text.SubtitleM
-              color={colors.neutral60}
+              color={textColor}
               testID="invitation_item.inviter"
             >
               {fullname}
@@ -62,6 +108,7 @@ const InvitationItem = ({ id }: Props) => {
           <Text.BodyM useI18n>
             user:text_invited_to_join
           </Text.BodyM>
+          <ViewSpacing width={spacing.margin.tiny} />
           <Button onPress={onPressTarget}>
             <Text.SubtitleM
               color={colors.neutral60}
@@ -71,7 +118,13 @@ const InvitationItem = ({ id }: Props) => {
             </Text.SubtitleM>
           </Button>
         </View>
-        <ViewSpacing height={spacing.margin.large} />
+        <ViewSpacing height={spacing.margin.small} />
+        <InvitationGroupButtons
+          isLoadingAccept={requestingsAccept}
+          isLoadingDecline={requestingsDecline}
+          onAccept={onAccept}
+          onDecline={onDecline}
+        />
       </View>
     </View>
   );
