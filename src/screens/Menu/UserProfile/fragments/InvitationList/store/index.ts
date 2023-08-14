@@ -21,12 +21,11 @@ export interface IMyInvitationsStore extends IBaseState, IFetchingState {
 
   requestingsAccept: { [id: string]: boolean };
   requestingsDecline: { [id: string]: boolean };
-  accepted: { [id: string]: boolean };
-  declined: { [id: string]: boolean };
+  requestSent: { [id: string]: boolean };
 
   actions: {
-    acceptInvitation: (invitationId: string) =>void;
-    declineInvitation: (invitationId: string) => void;
+    acceptInvitation: (invitationId: string, inviGroupId: number) =>void;
+    declineInvitation: (invitationId: string, inviGroupId: number) => void;
     getInvitations: (isRefresh?: boolean) => void;
   }
 }
@@ -34,8 +33,7 @@ export interface IMyInvitationsStore extends IBaseState, IFetchingState {
 const initialState = {
   requestingsAccept: {},
   requestingsDecline: {},
-  accepted: {},
-  declined: {},
+  requestSent: {},
   groupedInvitations: [],
   invitationData: {},
   hasNextPage: true,

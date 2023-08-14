@@ -25,9 +25,7 @@ const InvitationList = () => {
   const hasNextPage = useMyInvitationsStore((state) => state.hasNextPage);
 
   useEffect(() => {
-    if (data.length === 0) {
-      actions.getInvitations(true);
-    }
+    actions.getInvitations(true);
   }, []);
 
   const goToInvitationSettings = () => {

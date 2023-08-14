@@ -12,13 +12,20 @@ export interface ITargetInfo {
     isRootGroup: boolean;
 }
 
+export enum IInvitationsStatus {
+  WAITING = 'WAITING',
+  ACCEPTED = 'ACCEPTED',
+  DECLINED = 'DECLINED',
+  CANCELLED = 'CANCELLED',
+}
+
 export interface IInvitation {
   id: string,
   inviter: IInviter,
   invitee: IInviter,
   targetType: string;
   targetInfo: ITargetInfo;
-  status: string;
+  status: IInvitationsStatus;
   createdAt: string;
   updatedAt: string;
   communityId: string;

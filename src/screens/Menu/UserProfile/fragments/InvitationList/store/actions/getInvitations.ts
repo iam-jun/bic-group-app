@@ -3,7 +3,7 @@ import moment from 'moment';
 import showToastError from '~/store/helper/showToastError';
 import { IGroupedInvitations, IMyInvitationsStore } from '../index';
 import groupApi from '~/api/GroupApi';
-import { IInvitation } from '~/interfaces/IInvitation';
+import { IInvitation, IInvitationsStatus } from '~/interfaces/IInvitation';
 
 const formatDate = (inputDate:string) => {
   const currentDate = moment();
@@ -24,20 +24,22 @@ const groupInvitationsByCreatedAt = (
   const groupedData: IGroupedInvitations[] = currentData || [];
 
   inputData.forEach((item: IInvitation) => {
-    const dateString = formatDate(item.createdAt);
-    const indexOfGroup = groupedData.findIndex((group: IGroupedInvitations) => group?.title === dateString);
+    if (item.status === IInvitationsStatus.WAITING) {
+      const dateString = formatDate(item.createdAt);
+      const indexOfGroup = groupedData.findIndex((group: IGroupedInvitations) => group?.title === dateString);
 
-    if (indexOfGroup === -1) {
-      const newData: string[] = [item.id];
-      const newGroup = {
-        id: groupedData.length + 1,
-        title: dateString,
-        data: newData,
-      };
-      groupedData.push(newGroup);
-    } else {
-      const newGroup = { ...groupedData[indexOfGroup], data: [...groupedData[indexOfGroup].data, item.id] };
-      groupedData.splice(indexOfGroup, 1, newGroup);
+      if (indexOfGroup === -1) {
+        const newData: string[] = [item.id];
+        const newGroup = {
+          id: groupedData.length + 1,
+          title: dateString,
+          data: newData,
+        };
+        groupedData.push(newGroup);
+      } else {
+        const newGroup = { ...groupedData[indexOfGroup], data: [...groupedData[indexOfGroup].data, item.id] };
+        groupedData.splice(indexOfGroup, 1, newGroup);
+      }
     }
   });
 

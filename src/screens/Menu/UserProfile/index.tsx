@@ -190,7 +190,7 @@ const UserProfile = (props: any) => {
     >
       {t(text)}
       {'    '}
-      {Boolean(hasNewBadge) && Boolean(index === 1) && (
+      {Boolean(hasNewBadge) && Boolean(index === 2) && (
         <View style={styles.dot} />
       ) }
     </Text.TabM>

@@ -15,9 +15,10 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 
 interface Props {
 id: string;
+groupedId: number;
 }
 
-const InvitationItem = ({ id }: Props) => {
+const InvitationItem = ({ id, groupedId }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyles(theme);
@@ -32,11 +33,8 @@ const InvitationItem = ({ id }: Props) => {
     useCallback((state) => state.requestingsDecline?.[id], [id]),
   );
 
-  const isAccepted = useMyInvitationsStore(
-    useCallback((state) => state.accepted?.[id], [id]),
-  );
-  const isDeclined = useMyInvitationsStore(
-    useCallback((state) => state.declined?.[id], [id]),
+  const isHideItem = useMyInvitationsStore(
+    useCallback((state) => state.requestSent?.[id], [id]),
   );
 
   const {
@@ -77,14 +75,14 @@ const InvitationItem = ({ id }: Props) => {
   };
 
   const onAccept = () => {
-    actions.acceptInvitation(id);
+    actions.acceptInvitation(id, groupedId);
   };
 
   const onDecline = () => {
-    actions.declineInvitation(id);
+    actions.declineInvitation(id, groupedId);
   };
 
-  if (isAccepted || isDeclined) return null;
+  if (isHideItem) return null;
 
   const textColor = isDeactivated ? colors.grey40 : colors.neutral60;
 

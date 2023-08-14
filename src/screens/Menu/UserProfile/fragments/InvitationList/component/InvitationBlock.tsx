@@ -26,7 +26,7 @@ const InvitationBlock = ({
     </View>
   );
 
-  const renderItem = ({ item }: any) => <InvitationItem id={item} />;
+  const renderItem = ({ item }: any) => <InvitationItem id={item} groupedId={data.id} />;
 
   const keyExtractor = (item: any) => item;
 
