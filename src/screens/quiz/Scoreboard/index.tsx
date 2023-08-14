@@ -71,7 +71,7 @@ const Scoreboard: React.FC<ScoreboardProps> = (props) => {
     }
 
     return (
-      <View>
+      <View style={styles.contentView}>
         <Summary />
         <UsersParticipants contentId={contentId} />
       </View>
@@ -90,6 +90,9 @@ const Scoreboard: React.FC<ScoreboardProps> = (props) => {
 };
 
 const styles = StyleSheet.create({
+  contentView: {
+    flex: 1,
+  },
   centerView: {
     flex: 1,
     alignItems: 'center',
