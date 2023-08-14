@@ -6,9 +6,8 @@ import { t } from 'i18next';
 import Image from '~/components/Image';
 import Text from '~/baseComponents/Text';
 import images from '~/resources/images';
-import { dimension, spacing } from '~/theme';
+import { spacing } from '~/theme';
 import { onPressButtonInvite } from '~/components/InvitePeopleToYourGroup/helper';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { ITypeGroup } from '~/interfaces/common';
 
 export interface NoOneIsInvitedProps {
@@ -19,7 +18,7 @@ export interface NoOneIsInvitedProps {
 const NoOneIsInvited = ({ groupId, type }: NoOneIsInvitedProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = createStyles(theme);
+  const styles = createStyles();
 
   const onPress = () => {
     onPressButtonInvite({ groupId, type });
@@ -38,33 +37,28 @@ const NoOneIsInvited = ({ groupId, type }: NoOneIsInvitedProps) => {
         {' '}
         {t('common:text_to_see_them_here')}
       </Text.BodyS>
-      <ViewSpacing height={dimension.deviceHeight} />
     </View>
   );
 };
 
 export default NoOneIsInvited;
 
-const createStyles = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-  return StyleSheet.create({
-    container: {
-      backgroundColor: colors.white,
-      alignItems: 'center',
-    },
-    imgEmpty: {
-      width: 100,
-      height: 85,
-      marginTop: spacing.margin.big,
-    },
-    text: {
-      textAlign: 'center',
-    },
-    title: {
-      marginTop: spacing.margin.large,
-    },
-    content: {
-      marginTop: spacing.margin.tiny,
-    },
-  });
-};
+const createStyles = () => StyleSheet.create({
+  container: {
+    alignItems: 'center',
+  },
+  imgEmpty: {
+    width: 100,
+    height: 85,
+    marginTop: spacing.margin.big,
+  },
+  text: {
+    textAlign: 'center',
+  },
+  title: {
+    marginTop: spacing.margin.large,
+  },
+  content: {
+    marginTop: spacing.margin.tiny,
+  },
+});
