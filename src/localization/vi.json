@@ -1116,6 +1116,7 @@
     "text_invitation_declined": "Lời mời đã bị từ chối",
     "text_you_have_previously_joined": "Bạn đã tham gia rồi",
     "text_you_have_previously_declined": "Trước đây bạn đã từ chối tham gia",
+    "text_invitation_has_been_canceled": "Lời mời đã bị hủy",
     "notification_settings": {
       "title": "Cài đặt thông báo",
       "description": "Chúng tôi vẫn có thể gửi cho bạn thông báo quan trọng về tài khoản của bạn ngoài cài đặt của bạn",
