@@ -149,7 +149,7 @@ const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
         style={styles.btnQuit}
       >
         <Text.ButtonM useI18n color={colors.neutral60}>
-          quiz:btn_quit
+          quiz:btn_go_home
         </Text.ButtonM>
       </Button>
     </ScreenWrapper>
