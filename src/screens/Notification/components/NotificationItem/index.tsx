@@ -75,6 +75,13 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   const isShowDeclineText = useNotiInvitationsStore(
     useCallback((state) => state.declined?.[id], [id]),
   );
+  const isAlreadyJoined = useNotiInvitationsStore(
+    useCallback((state) => state.alreadyAccepted?.[id], [id]),
+  );
+
+  const isAlreadyDeclined = useNotiInvitationsStore(
+    useCallback((state) => state.alreadyDeclined?.[id], [id]),
+  );
 
   const onAccept = () => {
     notiActions.markAsRead(id);
@@ -101,7 +108,8 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   };
 
   const checkShowInvitationButtons = () => {
-    if (!extra?.type || isShowAcceptText || isShowDeclineText) return false;
+    if (!extra?.type || isShowAcceptText || isShowDeclineText
+      || isAlreadyDeclined || isAlreadyJoined) return false;
     const isShowInvitationButtons = SHOW_INVITATION_BUTTONS.findIndex((item) => item === extra.type);
     return isShowInvitationButtons !== -1;
   };
@@ -138,6 +146,8 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
                 type={extra.type}
                 isShowAcceptText={isShowAcceptText}
                 isShowDeclineText={isShowDeclineText}
+                isAlreadyJoined={isAlreadyJoined}
+                isAlreadyDeclined={isAlreadyDeclined}
               />
             </View>
           ) : (
@@ -149,6 +159,8 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
               type={extra.type}
               isShowAcceptText={isShowAcceptText}
               isShowDeclineText={isShowDeclineText}
+              isAlreadyJoined={isAlreadyJoined}
+              isAlreadyDeclined={isAlreadyDeclined}
             />
           )}
           <ButtonWrapper
