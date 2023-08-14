@@ -42,35 +42,39 @@ const Invitee = ({ item }: InviteeProps) => {
     </Text.SubtitleM>
   );
 
-  const renderInviter = () => (
-    <View style={styles.inviterContainer}>
-      <Text.BodyXS numberOfLines={1} color={theme.colors.neutral40}>
-        {t('common:text_invited_by')}
-        {' '}
-      </Text.BodyXS>
-      {renderNameInviter()}
-      <Text.BodyXS numberOfLines={1} color={theme.colors.neutral40}>
-        {' '}
-        {renderTime()}
-      </Text.BodyXS>
-    </View>
-  );
-
-  const renderNameInviter = () => {
+  const renderInviter = () => {
     if (invitee.isDeactivated) {
       return (
-        <View style={styles.deactivatedContainer}>
-          <Text.SubtitleXS style={styles.nameInviter} numberOfLines={1} color={theme.colors.grey40}>
-            {inviter.fullname}
-          </Text.SubtitleXS>
-          <DeactivatedView style={styles.deactivatedView} />
+        <View style={styles.inviterContainer}>
+          <Text.BodyXS numberOfLines={1} color={theme.colors.neutral40}>
+            {t('common:text_invited_by')}
+            {' '}
+          </Text.BodyXS>
+          <View style={styles.deactivatedContainer}>
+            <Text.SubtitleXS style={styles.deactivatedName} numberOfLines={1} color={theme.colors.grey40}>
+              {inviter.fullname}
+            </Text.SubtitleXS>
+            <DeactivatedView style={styles.deactivatedView} />
+          </View>
+          <Text.BodyXS numberOfLines={1} color={theme.colors.neutral40}>
+            {' '}
+            {renderTime()}
+          </Text.BodyXS>
         </View>
       );
     }
     return (
-      <Text.SubtitleXS numberOfLines={2} style={styles.nameInviter} color={theme.colors.neutral40}>
-        {inviter.fullname}
-      </Text.SubtitleXS>
+      <View style={styles.inviterContainer}>
+        <Text.BodyXS color={theme.colors.neutral40}>
+          {t('common:text_invited_by')}
+          {' '}
+          <Text.SubtitleXS color={theme.colors.neutral40}>
+            {inviter.fullname}
+          </Text.SubtitleXS>
+          {' '}
+          {renderTime()}
+        </Text.BodyXS>
+      </View>
     );
   };
 
@@ -109,7 +113,7 @@ const createStyles = (theme: ExtendedTheme) => {
       flexDirection: 'row',
       alignItems: 'center',
     },
-    nameInviter: {
+    deactivatedName: {
       flexShrink: 1,
     },
     deactivatedView: {
