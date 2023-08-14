@@ -57,8 +57,10 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
 
   // auto save when user pick answer
   useEffect(() => {
+    const onErrors = () => handleQuizOverTime();
+
     if (canAutoSave && !finishedAt) {
-      saveAnwsers({});
+      saveAnwsers({ onErrors });
     }
   }, [userAnswers, finishedAt]);
 
@@ -72,6 +74,13 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
       clearInterval(timer.current);
     }
   }, [minutes, seconds, finishedAt]);
+
+  // auto show result when quiz is finished and have score
+  useEffect(() => {
+    if (!!finishedAt && typeof score === 'number') {
+      handleAfterFinished();
+    }
+  }, [finishedAt, score]);
 
   const startTakeQuiz = () => {
     const onNext = (quizParticipantId: string) => {
@@ -135,22 +144,25 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
   const onSubmit = () => {
     // after submit should getContentDetail again to get new data
     // and clear quizDoing of content detail
-    const onSuccess = () => {
-      actions.clearQuizParticipantId(quizId);
-      postActions.getContentDetail(contentId, type);
-      navigateResult();
-    };
+    const onSuccess = () => handleAfterFinished();
 
-    const onErrors = () => {
-      getCurrentQuizParticipant();
-      postActions.getContentDetail(contentId, type);
-      navigateResult();
-    };
+    const onErrors = () => handleQuizOverTime();
 
     if (!finishedAt && typeof score !== 'number' && !isPrepareTakingQuiz) {
       saveAnwsers({ onSuccess, onErrors, isFinished: true });
       clearCountDownTakeQuiz();
     }
+  };
+
+  const handleQuizOverTime = () => {
+    getCurrentQuizParticipant();
+    handleAfterFinished();
+  };
+
+  const handleAfterFinished = () => {
+    actions.clearQuizParticipantId(quizId);
+    postActions.getContentDetail(contentId, type);
+    navigateResult();
   };
 
   const navigateResult = () => {

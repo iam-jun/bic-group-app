@@ -114,9 +114,9 @@ const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
   return (
     <ScreenWrapper isFullView backgroundColor={colors.white} testID="take_quiz_result">
       <Header
-        titleTextProps={{ useI18n: true }}
-        title="quiz:title_take_quiz"
-        onPressBack={onPressQuit}
+        titleTextProps={{ useI18n: true, style: styles.textHeader }}
+        title="quiz:title_quiz_result"
+        hideBack
       />
       <ScrollView>
         <View style={styles.contentContainer}>
@@ -149,7 +149,7 @@ const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
         style={styles.btnQuit}
       >
         <Text.ButtonM useI18n color={colors.neutral60}>
-          quiz:btn_quit
+          quiz:btn_go_home
         </Text.ButtonM>
       </Button>
     </ScreenWrapper>
@@ -162,6 +162,9 @@ const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     contentContainer: {
       paddingHorizontal: spacing.margin.large,
+    },
+    textHeader: {
+      marginLeft: spacing.margin.small,
     },
     circleProgress: {
       justifyContent: 'center',
