@@ -26,6 +26,7 @@ interface Props {
   isShowDeclineText?: boolean;
   isShowAcceptText?: boolean;
   isAlreadyJoined?: boolean;
+  isAlreadyDeclined?: boolean;
 }
 
 const NotificationContent = ({
@@ -37,6 +38,7 @@ const NotificationContent = ({
   isShowDeclineText = false,
   isShowAcceptText = false,
   isAlreadyJoined = false,
+  isAlreadyDeclined = false,
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
@@ -94,6 +96,11 @@ const NotificationContent = ({
       { Boolean(isAlreadyJoined) && (
       <Text.BodyM useI18n style={styles.invitationText}>
         notification:text_you_have_previously_joined
+      </Text.BodyM>
+      )}
+      { Boolean(isAlreadyDeclined) && (
+      <Text.BodyM useI18n style={styles.invitationText}>
+        notification:text_you_have_previously_declined
       </Text.BodyM>
       )}
       <View style={[styles.row, styles.timeCreated]}>

@@ -31,12 +31,11 @@ const declineInvitation = (set, get) => async (notiInfo: any) => {
       '\x1b[33m', 'notification declineInvitation error', error, '\x1b[0m',
     );
     if (
-      error?.code === APIErrorCode.Group.INVITATION_IS_ALREADY_SENT
+      error?.code === APIErrorCode.Group.INVITATION_IS_ALREADY_SENT_DECLINED
     ) {
       set((state: INotiInvitationsStore) => {
-        state.alreadySentRequest[notificationId] = true;
+        state.alreadyDeclined[notificationId] = true;
       }, 'acceptInvitationNotificationAlreadySent');
-      return;
     }
     showToastError(error);
   }
