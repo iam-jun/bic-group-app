@@ -36,6 +36,9 @@ export const onCloseModalInvitePeopleToYourGroup = (params: IParams) => {
     });
     return true;
   }
+
+  useGroupJoinableUsersStore.getState().actions.clearInviteData();
+  return false;
 };
 
 export const onCancel = (params: IParams) => {
