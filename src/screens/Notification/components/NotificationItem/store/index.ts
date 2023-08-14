@@ -10,6 +10,7 @@ export interface INotiInvitationsStore extends IBaseState {
   requestingsDecline: { [id: string]: boolean };
   accepted: { [id: string]: boolean };
   declined: { [id: string]: boolean };
+  alreadySentRequest: { [id: string]: boolean };
 
   actions: {
     acceptInvitation: (notiInfo: any) =>void;
@@ -22,6 +23,7 @@ const initialState = {
   requestingsDecline: {},
   accepted: {},
   declined: {},
+  alreadySentRequest: {},
 };
 
 const notiInvitationsStore = (set, get) => ({

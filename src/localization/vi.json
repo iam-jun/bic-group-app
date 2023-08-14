@@ -1114,6 +1114,7 @@
     "text_remove_notification_success": "Đã xóa thông báo thành công",
     "text_invitation_accepted": "Lời mời đã được chấp nhận",
     "text_invitation_declined": "Lời mời đã bị từ chối",
+    "text_you_have_previously_joined": "Bạn đã tham gia rồi",
     "notification_settings": {
       "title": "Cài đặt thông báo",
       "description": "Chúng tôi vẫn có thể gửi cho bạn thông báo quan trọng về tài khoản của bạn ngoài cài đặt của bạn",

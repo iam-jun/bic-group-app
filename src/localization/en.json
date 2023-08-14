@@ -1171,6 +1171,7 @@
     "text_remove_notification_success": "Notification removed successfully",
     "text_invitation_accepted": "Invitation accepted",
     "text_invitation_declined": "Invitation declined",
+    "text_you_have_previously_joined": "You have previously joined",
     "notification_settings": {
       "title": "Notification Settings",
       "description": "We may still send you important notification about your account outside of your settings",
