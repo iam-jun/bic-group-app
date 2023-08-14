@@ -20,7 +20,8 @@ const acceptInvitation = (set, get) => async (notiInfo: any) => {
 
     set((state: INotiInvitationsStore) => {
       delete state.requestingsAccept[notificationId];
-      state.accepted[notificationId] = true;
+      state.needToChangeNote[notificationId] = true;
+      state.textNotedList[notificationId] = 'notification:text_invitation_accepted';
     }, 'acceptInvitationNotification');
     showToastSuccess(response);
   } catch (error) {
@@ -34,7 +35,14 @@ const acceptInvitation = (set, get) => async (notiInfo: any) => {
       error?.code === APIErrorCode.Group.INVITATION_IS_ALREADY_SENT_ACCEPTED
     ) {
       set((state: INotiInvitationsStore) => {
-        state.alreadyAccepted[notificationId] = true;
+        state.needToChangeNote[notificationId] = true;
+        state.textNotedList[notificationId] = 'notification:text_you_have_previously_joined';
+      }, 'acceptInvitationNotificationAlreadySent');
+    }
+    if (error?.code === APIErrorCode.Group.INVITATION_IS_ALREADY_CANCELLED) {
+      set((state: INotiInvitationsStore) => {
+        state.needToChangeNote[notificationId] = true;
+        state.textNotedList[notificationId] = 'notification:text_invitation_has_been_canceled';
       }, 'acceptInvitationNotificationAlreadySent');
     }
     showToastError(error);

@@ -1199,6 +1199,7 @@
     "text_invitation_declined": "Invitation declined",
     "text_you_have_previously_joined": "You have previously joined",
     "text_you_have_previously_declined": "You have previously declined to join",
+    "text_invitation_has_been_canceled": "The invitation has been canceled",
     "notification_settings": {
       "title": "Notification Settings",
       "description": "We may still send you important notification about your account outside of your settings",
