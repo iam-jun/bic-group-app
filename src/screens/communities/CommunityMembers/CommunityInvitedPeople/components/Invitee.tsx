@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
 import { t } from 'i18next';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { spacing } from '~/theme';
 import { IInvitedPeople } from '~/interfaces/IGroup';
 import images from '~/resources/images';
@@ -11,6 +12,8 @@ import { formatLongTime } from '~/beinComponents/TimeView/helper';
 import { AppContext } from '~/contexts/AppContext';
 import useGroupJoinableUsersStore from '~/components/InvitePeopleToYourGroup/store';
 import DeactivatedView from '~/components/DeactivatedView';
+import { useRootNavigation } from '~/hooks/navigation';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 interface InviteeProps {
   item: IInvitedPeople;
@@ -19,6 +22,7 @@ interface InviteeProps {
 const Invitee = ({ item }: InviteeProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
+  const { rootNavigation } = useRootNavigation();
 
   const { language } = useContext(AppContext);
 
@@ -34,10 +38,16 @@ const Invitee = ({ item }: InviteeProps) => {
     setIsLoading(false);
   };
 
+  const onPressInvitee = () => {
+    rootNavigation.navigate(mainStack.userProfile, {
+      userId: invitee.id,
+    });
+  };
+
   const renderTime = () => formatLongTime(createdAt, language);
 
   const renderInvitee = () => (
-    <Text.SubtitleM numberOfLines={2} color={theme.colors.neutral60}>
+    <Text.SubtitleM onPress={onPressInvitee} numberOfLines={2} color={theme.colors.neutral60}>
       {invitee.fullname}
     </Text.SubtitleM>
   );
@@ -68,9 +78,7 @@ const Invitee = ({ item }: InviteeProps) => {
         <Text.BodyXS color={theme.colors.neutral40}>
           {t('common:text_invited_by')}
           {' '}
-          <Text.SubtitleXS color={theme.colors.neutral40}>
-            {inviter.fullname}
-          </Text.SubtitleXS>
+          <Text.SubtitleXS color={theme.colors.neutral40}>{inviter.fullname}</Text.SubtitleXS>
           {' '}
           {renderTime()}
         </Text.BodyXS>
@@ -80,7 +88,9 @@ const Invitee = ({ item }: InviteeProps) => {
 
   return (
     <View style={styles.container} testID="invitee">
-      <Avatar.Small source={invitee.avatar || images.img_user_avatar_default} isRounded />
+      <TouchableOpacity onPress={onPressInvitee}>
+        <Avatar.Small source={invitee.avatar || images.img_user_avatar_default} isRounded />
+      </TouchableOpacity>
       <View style={styles.rightContainer}>
         {renderInvitee()}
         {renderInviter()}
