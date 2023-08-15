@@ -35,6 +35,7 @@ export const customBackHandlerRoutes = [
   quizStack.publishQuiz,
   quizStack.takeQuiz,
   quizStack.takeQuizReview,
+  quizStack.takeQuizResult,
   seriesStack.seriesSettings,
 ];
 

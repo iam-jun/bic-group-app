@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { useBaseHook } from '~/hooks';
-import { useRootNavigation } from '~/hooks/navigation';
+import { useRootNavigation, useBackPressListener } from '~/hooks/navigation';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { Button } from '~/baseComponents';
 import Header from '~/beinComponents/Header';
@@ -68,6 +68,8 @@ const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
     actions.clearQuizParticipantId(quizId);
     goHome();
   };
+
+  useBackPressListener(onPressQuit);
 
   const renderResult = () => {
     if (showCongrat) {
