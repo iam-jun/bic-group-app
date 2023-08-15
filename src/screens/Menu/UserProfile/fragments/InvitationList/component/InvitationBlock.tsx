@@ -55,6 +55,8 @@ const createStyles = (theme: ExtendedTheme) => {
     headerContainer: {
       backgroundColor: colors.white,
       padding: spacing.padding.large,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.gray5,
     },
     list: {
       flex: 1,

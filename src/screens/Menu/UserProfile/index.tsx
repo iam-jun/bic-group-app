@@ -184,17 +184,19 @@ const UserProfile = (props: any) => {
     return null;
   };
 
-  const renderTabContainer = (text: string, index: number) => (
-    <Text.TabM
-      color={Boolean(selectedIndex === index) ? colors.purple50 : colors.neutral40}
-    >
-      {t(text)}
-      {'    '}
-      {Boolean(hasNewBadge) && Boolean(index === 2) && (
+  const renderTabContainer = (text: string, index: number) => {
+    const shouldShowDot = Boolean(hasNewBadge) && Boolean(index === 2);
+    return (
+      <Text.TabM
+        color={Boolean(selectedIndex === index) ? colors.purple50 : colors.neutral40}
+      >
+        {`${t(text)}${shouldShowDot ? '    ' : ''}`}
+        {shouldShowDot && (
         <View style={styles.dot} />
-      ) }
-    </Text.TabM>
-  );
+        ) }
+      </Text.TabM>
+    );
+  };
 
   const renderCustomTab = (item: any, index) => (
     <TabButton
