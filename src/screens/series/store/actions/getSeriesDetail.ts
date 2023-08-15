@@ -19,7 +19,7 @@ const getSeriesDetail = (set, get) => async (id: string) => {
       state.errors[id] = false;
     }, 'getSeriesDetailSuccess');
 
-    usePostsStore.getState().actions.addToPosts({ data, handleComment: true });
+    usePostsStore.getState().actions.addToPosts({ data });
   } catch (error) {
     set((state: ISeriesState) => {
       delete state.requestings[id];

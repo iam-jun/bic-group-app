@@ -50,7 +50,7 @@ const getSearchPosts = (set, get) => async (payload: IPayloadGetSearchPosts) => 
 
     const response = await streamApi.getSearchPost(params);
     data = data.concat(response?.list);
-    usePostsStore.getState().actions.addToPosts({ data, handleComment: false } as IPayloadAddToAllPost);
+    usePostsStore.getState().actions.addToPosts({ data } as IPayloadAddToAllPost);
 
     set((state: IFeedSearchState) => {
       state.newsfeedSearch.loadingResult = false;
