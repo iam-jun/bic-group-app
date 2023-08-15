@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { t } from 'i18next';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { spacing } from '~/theme';
 import { IInvitedPeople } from '~/interfaces/IGroup';
 import images from '~/resources/images';
