@@ -23,8 +23,7 @@ interface Props {
   updatedAt: string;
   type?: string;
   isRead?: boolean;
-  isShowDeclineText?: boolean;
-  isShowAcceptText?: boolean;
+  textNote?: string;
 }
 
 const NotificationContent = ({
@@ -33,8 +32,7 @@ const NotificationContent = ({
   updatedAt,
   type = '',
   isRead = false,
-  isShowDeclineText = false,
-  isShowAcceptText = false,
+  textNote = '',
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
@@ -77,19 +75,11 @@ const NotificationContent = ({
         value={content}
       />
       )}
-      { Boolean(isShowAcceptText) && (
+      { Boolean(textNote) && (
       <Text.BodyM useI18n style={styles.invitationText}>
-        notification:text_invitation_accepted
+        {textNote}
       </Text.BodyM>
       )}
-      {
-        Boolean(isShowDeclineText)
-         && (
-         <Text.BodyM useI18n style={styles.invitationText}>
-           notification:text_invitation_declined
-         </Text.BodyM>
-         )
-      }
       <View style={[styles.row, styles.timeCreated]}>
         {
         Boolean(!isRead)

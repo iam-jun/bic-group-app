@@ -69,11 +69,11 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     useCallback((state) => state.requestingsDecline?.[id], [id]),
   );
 
-  const isShowAcceptText = useNotiInvitationsStore(
-    useCallback((state) => state.accepted?.[id], [id]),
+  const isShouldHideButton = useNotiInvitationsStore(
+    useCallback((state) => state.needToChangeNote?.[id], [id]),
   );
-  const isShowDeclineText = useNotiInvitationsStore(
-    useCallback((state) => state.declined?.[id], [id]),
+  const textNote = useNotiInvitationsStore(
+    useCallback((state) => state.textNotedList?.[id], [id]),
   );
 
   const onAccept = () => {
@@ -101,7 +101,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   };
 
   const checkShowInvitationButtons = () => {
-    if (!extra?.type || isShowAcceptText || isShowDeclineText) return false;
+    if (!extra?.type || isShouldHideButton) return false;
     const isShowInvitationButtons = SHOW_INVITATION_BUTTONS.findIndex((item) => item === extra.type);
     return isShowInvitationButtons !== -1;
   };
@@ -136,8 +136,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
                 content={extra?.content || ''}
                 updatedAt={updatedAt}
                 type={extra.type}
-                isShowAcceptText={isShowAcceptText}
-                isShowDeclineText={isShowDeclineText}
+                textNote={textNote}
               />
             </View>
           ) : (
@@ -147,8 +146,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
               content={extra?.content || ''}
               updatedAt={updatedAt}
               type={extra.type}
-              isShowAcceptText={isShowAcceptText}
-              isShowDeclineText={isShowDeclineText}
+              textNote={textNote}
             />
           )}
           <ButtonWrapper

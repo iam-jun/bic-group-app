@@ -2,6 +2,7 @@ import groupApi from '~/api/GroupApi';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 import showToastError from '~/store/helper/showToastError';
 import { INotiInvitationsStore } from '../index';
+import APIErrorCode from '~/constants/apiErrorCode';
 
 const declineInvitation = (set, get) => async (notiInfo: any) => {
   const { id: notificationId, activities } = notiInfo || {};
@@ -19,17 +20,32 @@ const declineInvitation = (set, get) => async (notiInfo: any) => {
 
     set((state: INotiInvitationsStore) => {
       delete state.requestingsDecline[notificationId];
-      state.declined[notificationId] = true;
+      state.needToChangeNote[notificationId] = true;
+      state.textNotedList[notificationId] = 'notification:text_invitation_declined';
     }, 'declineInvitationNotification');
     showToastSuccess(response);
-  } catch (err) {
+  } catch (error) {
     set((state: INotiInvitationsStore) => {
       delete state.requestingsDecline[notificationId];
     }, 'declineInvitationNotificationError');
     console.error(
-      '\x1b[33m', 'notification declineInvitation error', err, '\x1b[0m',
+      '\x1b[33m', 'notification declineInvitation error', error, '\x1b[0m',
     );
-    showToastError(err);
+    if (
+      error?.code === APIErrorCode.Group.INVITATION_IS_ALREADY_SENT_DECLINED
+    ) {
+      set((state: INotiInvitationsStore) => {
+        state.needToChangeNote[notificationId] = true;
+        state.textNotedList[notificationId] = 'notification:text_you_have_previously_declined';
+      }, 'acceptInvitationNotificationAlreadySent');
+    }
+    if (error?.code === APIErrorCode.Group.INVITATION_IS_ALREADY_CANCELLED) {
+      set((state: INotiInvitationsStore) => {
+        state.needToChangeNote[notificationId] = true;
+        state.textNotedList[notificationId] = 'notification:text_invitation_has_been_canceled';
+      }, 'acceptInvitationNotificationAlreadySent');
+    }
+    showToastError(error);
   }
 };
 
