@@ -17,7 +17,7 @@ describe('ButtonCommunityInvitationCard', () => {
     });
 
     const { getByTestId } = render(<ButtonCommunityInvitationCard {...props} />);
-    const buttonDecline = getByTestId('button_approve_decline_all_requests.decline');
+    const buttonDecline = getByTestId('button_invitation.decline');
     fireEvent.press(buttonDecline);
     expect(declineSingleInvitation).toBeCalled();
   });
@@ -30,7 +30,7 @@ describe('ButtonCommunityInvitationCard', () => {
     });
 
     const { getByTestId } = render(<ButtonCommunityInvitationCard {...props} />);
-    const buttonAccept = getByTestId('button_approve_decline_all_requests.accept');
+    const buttonAccept = getByTestId('button_invitation.accept');
     fireEvent.press(buttonAccept);
     expect(acceptSingleInvitation).toBeCalled();
   });

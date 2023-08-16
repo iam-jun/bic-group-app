@@ -29,7 +29,7 @@ const NotificationInvitationButtons = ({
 }: NotificationInvitationButtonsProps) => (
   <View style={[styles.row, styles.buttonsContainer, style]}>
     <Button.Neutral
-      testID="button_approve_decline_all_requests.decline"
+      testID="button_invitation.decline"
       useI18n
       type="solid"
       size={size}
@@ -42,7 +42,7 @@ const NotificationInvitationButtons = ({
     </Button.Neutral>
     <ViewSpacing width={spacing.margin.small} />
     <Button.Primary
-      testID="button_approve_decline_all_requests.accept"
+      testID="button_invitation.accept"
       useI18n
       size={size}
       loading={isLoadingAccept}

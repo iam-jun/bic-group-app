@@ -21,7 +21,7 @@ describe('InvitationView', () => {
     });
 
     const { getByTestId } = render(<InvitationView {...props} />);
-    const buttonDecline = getByTestId('button_approve_decline_all_requests.decline');
+    const buttonDecline = getByTestId('button_invitation.decline');
     fireEvent.press(buttonDecline);
     expect(declineSingleInvitation).toBeCalled();
   });
@@ -34,7 +34,7 @@ describe('InvitationView', () => {
     });
 
     const { getByTestId } = render(<InvitationView {...props} />);
-    const buttonAccept = getByTestId('button_approve_decline_all_requests.accept');
+    const buttonAccept = getByTestId('button_invitation.accept');
     fireEvent.press(buttonAccept);
     expect(acceptSingleInvitation).toBeCalled();
   });

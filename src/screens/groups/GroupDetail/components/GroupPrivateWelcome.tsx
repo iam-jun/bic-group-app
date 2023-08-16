@@ -33,7 +33,7 @@ const GroupPrivateWelcome = ({
 
   const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
   const { group: groupData } = groups[currentGroupId] || {};
-  const { id: groupId, invitation } = groupData || {};
+  const { id: groupId } = groupData || {};
 
   const _onRefresh = async () => {
     await onRefresh({ setIsRefreshing, groupId });
@@ -54,7 +54,7 @@ const GroupPrivateWelcome = ({
           insideCommunityName={community?.name}
         />
         <View style={styles.space} />
-        <InvitationView data={invitation} communityId="" groupId={groupId} type={ITypeGroup.GROUP} />
+        <InvitationView data={infoDetail?.invitation} communityId="" groupId={groupId} type={ITypeGroup.GROUP} />
         <GroupJoinCancelButton />
       </View>
 
