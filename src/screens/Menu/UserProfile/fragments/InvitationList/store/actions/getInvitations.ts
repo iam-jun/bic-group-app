@@ -49,7 +49,7 @@ const groupInvitationsByCreatedAt = (
 const getInvitations = (set, get) => async (isRefresh?: boolean) => {
   try {
     const { groupedInvitations, currentInvitationIds, hasNextPage }: IMyInvitationsStore = get();
-    if (!hasNextPage || !isRefresh) return;
+    if (!hasNextPage && !isRefresh) return;
 
     set((state: IMyInvitationsStore) => {
       state.loading = true;
@@ -71,6 +71,7 @@ const getInvitations = (set, get) => async (isRefresh?: boolean) => {
       }),
       {},
     );
+
     set((state: IMyInvitationsStore) => {
       state.loading = false;
       state.groupedInvitations = newGroupedInvitations;

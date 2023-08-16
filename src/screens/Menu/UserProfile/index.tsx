@@ -3,9 +3,9 @@ import {
   useIsFocused,
   useTheme,
 } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
-  ActivityIndicator, DeviceEventEmitter, StyleSheet, View,
+  ActivityIndicator, DeviceEventEmitter, RefreshControl, StyleSheet, View,
 } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -41,6 +41,7 @@ import Text from '~/baseComponents/Text';
 import BadgeCollectionHeader from './fragments/BadgeCollection/BadgeCollectionHeader';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import InvitationList from './fragments/InvitationList';
+import useMyInvitationsStore from './fragments/InvitationList/store';
 
 export const USER_TABS = [
   { id: USER_TABS_TYPES.USER_ABOUT, text: 'user:user_tab_types:title_about' },
@@ -76,6 +77,7 @@ const UserProfile = (props: any) => {
   const [bgImgState, setBgImgState] = useState<string>(backgroundImgUrl);
   const [isChangeImg, setIsChangeImg] = useState<string>('');
   const [selectedIndex, setSelectedIndex] = useState<number>(targetIndex || 0);
+  const [refreshing, setRefreshing] = useState(false);
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -89,6 +91,7 @@ const UserProfile = (props: any) => {
   const homeActions = useHomeStore((state) => state.actions);
   const hasNewBadge = useUserBadge((state) => state.hasNewBadge);
   const userBadgeActions = useUserBadge((state) => state.actions);
+  const invitationActions = useMyInvitationsStore((state) => state.actions);
 
   useEffect(() => {
     isFocused && userProfileActions.getUserProfile({ userId, params });
@@ -120,6 +123,20 @@ const UserProfile = (props: any) => {
       }
     }
   }, [myProfileData]);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    userProfileActions.getUserProfile({ userId, params, silentLoading: true });
+    userId && userProfileActions.getWorkExperience(userId);
+    if (
+      userId?.toString?.() === currentUserId?.toString?.()
+      || userId?.toString?.() === currentUsername?.toString?.()
+    ) {
+      userBadgeActions.getOwnedBadges();
+      invitationActions.getInvitations(true);
+    }
+    setRefreshing(false);
+  };
 
   const handleEditBadge = () => {
     userBadgeActions.setIsEditing(true);
@@ -208,6 +225,46 @@ const UserProfile = (props: any) => {
     />
   );
 
+  const renderHeader = useCallback(() => (
+    <>
+      <CoverHeader
+        id={id}
+        isCurrentUser={isCurrentUser}
+        bgImg={bgImgState}
+        avatar={avatarState}
+        uploadCallback={uploadCallback}
+      />
+      <UserHeader
+        id={userId}
+        fullname={fullname}
+        username={username}
+        latestWork={latestWork}
+        isCurrentUser={isCurrentUser}
+        isVerified={isVerified}
+        showingBadges={showingBadges}
+        handleEditBadge={handleEditBadge}
+      />
+      <Divider color={colors.gray5} size={spacing.padding.large} />
+    </>
+  ), [id, avatarState, bgImgState, isCurrentUser, showingBadges]);
+
+  const renderItem = () => {
+    if (Boolean(isCurrentUser)) {
+      return (
+        <>
+          <View style={styles.tabContainer}>
+            <Tab
+              data={USER_TABS}
+              renderCustomTab={renderCustomTab}
+            />
+          </View>
+          <Divider color={colors.gray5} size={spacing.padding.large} />
+        </>
+      );
+    }
+    return null;
+  };
+
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
       <Header />
@@ -222,43 +279,24 @@ const UserProfile = (props: any) => {
       {loading ? (
         renderLoading()
       ) : (
-        <Animated.ScrollView
+        <Animated.FlatList
           style={styles.container}
+          data={[1]}
+          renderItem={renderItem}
+          refreshControl={(
+            <RefreshControl
+              refreshing={!!refreshing}
+              onRefresh={onRefresh}
+              tintColor={colors.gray40}
+            />
+          )}
+          keyExtractor={(item) => `${item?.toString?.()}`}
+          ListHeaderComponent={renderHeader}
+          ListFooterComponent={renderContent}
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={16}
           onScroll={handleScroll}
-        >
-          <CoverHeader
-            id={id}
-            isCurrentUser={isCurrentUser}
-            bgImg={bgImgState}
-            avatar={avatarState}
-            uploadCallback={uploadCallback}
-          />
-          <UserHeader
-            id={userId}
-            fullname={fullname}
-            username={username}
-            latestWork={latestWork}
-            isCurrentUser={isCurrentUser}
-            isVerified={isVerified}
-            showingBadges={showingBadges}
-            handleEditBadge={handleEditBadge}
-          />
-          <Divider color={colors.gray5} size={spacing.padding.large} />
-          {Boolean(isCurrentUser) && (
-            <>
-              <View style={styles.tabContainer}>
-                <Tab
-                  data={USER_TABS}
-                  renderCustomTab={renderCustomTab}
-                />
-              </View>
-              <Divider color={colors.gray5} size={spacing.padding.large} />
-            </>
-          )}
-          {renderContent()}
-        </Animated.ScrollView>
+        />
       )}
       <SearchBadgeModal showSearchBox />
     </ScreenWrapper>
