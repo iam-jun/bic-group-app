@@ -1,14 +1,19 @@
 import React from 'react';
 import {
-  StyleSheet, View,
+  StyleProp,
+  StyleSheet, View, ViewStyle,
 } from 'react-native';
 import { Button } from '~/baseComponents';
+import { ButtonSize } from '~/baseComponents/Button/interface';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import spacing from '~/theme/spacing';
 
 interface NotificationInvitationButtonsProps {
   isLoadingAccept?: boolean;
   isLoadingDecline?: boolean;
+  style?: StyleProp<ViewStyle>;
+  styleButton?: StyleProp<ViewStyle>;
+  size?: ButtonSize;
   onAccept: (...params: any) => void;
   onDecline: (...params: any) => void;
 }
@@ -16,29 +21,33 @@ interface NotificationInvitationButtonsProps {
 const NotificationInvitationButtons = ({
   isLoadingAccept = false,
   isLoadingDecline = false,
+  style,
+  size = 'medium',
+  styleButton,
   onAccept,
   onDecline,
 }: NotificationInvitationButtonsProps) => (
-  <View style={[styles.row, styles.buttonsContainer]}>
+  <View style={[styles.row, styles.buttonsContainer, style]}>
     <Button.Neutral
       testID="button_approve_decline_all_requests.decline"
       useI18n
       type="solid"
-      size="medium"
+      size={size}
       loading={isLoadingDecline}
       disabled={isLoadingAccept}
-      style={styles.button}
+      style={[styles.button, styleButton]}
       onPress={onDecline}
     >
       common:btn_decline
     </Button.Neutral>
     <ViewSpacing width={spacing.margin.small} />
     <Button.Primary
+      testID="button_approve_decline_all_requests.accept"
       useI18n
-      size="medium"
+      size={size}
       loading={isLoadingAccept}
       disabled={isLoadingDecline}
-      style={styles.button}
+      style={[styles.button, styleButton]}
       onPress={onAccept}
     >
       common:btn_accept

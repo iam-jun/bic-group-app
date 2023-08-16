@@ -64,3 +64,18 @@ export const responseGetInvitations = {
 };
 
 export const responseCancelInvitation = { code: 'api.ok', meta: { message: 'Cancel invitation successfully' } };
+
+export const responseAcceptSingleInvitation = {
+  code: 'invitation.status.accepted',
+  data: null,
+  meta: {
+    message: 'This invitation was already accepted',
+    errors: null,
+    cause: {
+      name: 'InvitationUpdateStatusException',
+      message: 'This invitation was already accepted',
+    },
+  },
+};
+
+export const responseDeclineSingleInvitation = { code: 'api.ok', meta: { message: 'Decline invitation successfully' } };

@@ -16,6 +16,7 @@ import { spacing } from '~/theme';
 import { formatLargeNumber } from '~/utils/formatter';
 import ButtonCommunityGroupCard from './ButtonCommunityGroupCard';
 import useModalStore from '~/store/modal';
+import ButtonCommunityInvitationCard from './ButtonCommunityInvitationCard';
 
 type CommunityGroupCardProps = {
   item: any;
@@ -48,6 +49,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
     joinStatus,
     description,
     community,
+    invitation,
   } = item || {};
   const privacyData: any = GroupPrivacyDetail[privacy] || {};
   const { icon: privacyIcon, title: privacyTitle } = privacyData;
@@ -109,6 +111,20 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
     }
   };
 
+  const renderButton = () => {
+    if (joinStatus === GroupJoinStatus.BE_INVITED) {
+      return (
+        <ButtonCommunityInvitationCard
+          communityId={id}
+          invitationId={invitation.id}
+        />
+      );
+    }
+    return (
+      <ButtonCommunityGroupCard joinStatus={joinStatus} onView={onView} onJoin={handleJoin} onCancel={handleCancel} />
+    );
+  };
+
   return (
     <View testID={testID} style={[styles.container, elevations.e1]}>
       {isGroup(item) && (
@@ -166,12 +182,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
         </View>
       </Button>
       <ViewSpacing height={spacing.margin.base} />
-      <ButtonCommunityGroupCard
-        joinStatus={joinStatus}
-        onView={onView}
-        onJoin={handleJoin}
-        onCancel={handleCancel}
-      />
+      {renderButton()}
     </View>
   );
 };

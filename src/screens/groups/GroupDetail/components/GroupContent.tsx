@@ -21,6 +21,8 @@ import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import { BoxListPinContent } from '~/components/PinContent/components';
 import { onRefresh } from './helper';
+import InvitationView from '~/screens/communities/CommunityDetail/components/InvitationView';
+import { ITypeGroup } from '~/interfaces/common';
 
 interface GroupContentProps {
   community: ICommunity;
@@ -42,7 +44,7 @@ const GroupContent = ({
 
   const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
   const { group: groupData, joinStatus } = groups[currentGroupId] || {};
-  const { id: groupId, teamName } = groupData || {};
+  const { id: groupId, teamName, invitation } = groupData || {};
 
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
   const communityId = community?.id;
@@ -103,6 +105,7 @@ const GroupContent = ({
         communityId={communityId}
         teamName={teamName}
       />
+      <InvitationView data={invitation} type={ITypeGroup.GROUP} communityId="" groupId={groupId} />
       <GroupJoinCancelButton />
       <BoxListPinContent id={groupId} />
       <FilterFeedButtonGroup

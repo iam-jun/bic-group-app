@@ -240,7 +240,10 @@
     "text_invite_someone": "Mời ai đó",
     "text_to_see_them_here": "xem họ tại đây",
     "text_invited_by": "Được mời bởi",
-    "button_cancel_invite": "Huỷ lời mời"
+    "button_cancel_invite": "Huỷ lời mời",
+    "text_invited_you_to_join_this_group": "đã mời bạn tham gia nhóm này.",
+    "text_invited_you_to_join_this_community": "đã mời bạn tham gia cộng đồng này.",
+    "text_invited": "Đã mời"
   },
   "auth": {
     "text_kickout_title": "Notice",

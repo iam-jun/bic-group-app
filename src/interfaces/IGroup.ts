@@ -97,6 +97,7 @@ export interface IGroup {
   settings?: IGroupSettings;
   affectedSettings?: IGroupSettings;
   isInDefaultGroupSet?: boolean;
+  invitation?: IInvitation;
 }
 
 export interface IParsedGroup extends IGroup {
@@ -361,4 +362,20 @@ export enum IInvitationsStatus {
 export interface IParamsGetInvitations {
   limit: number,
   offset: number,
+}
+
+export interface IInvitation {
+  id: string;
+  inviter: IUserInfo;
+  invitedAt: string;
+}
+
+export interface IParamsAcceptSingleInvitation {
+  invitationId: string;
+  callback: () => void;
+}
+
+export interface IParamsDeclineSingleInvitation {
+  invitationId: string;
+  callback: () => void;
 }

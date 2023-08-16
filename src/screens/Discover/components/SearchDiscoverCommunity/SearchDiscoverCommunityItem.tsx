@@ -8,6 +8,8 @@ import { margin, padding } from '~/theme/spacing';
 import { Avatar, Button } from '~/baseComponents';
 import ButtonCommunityGroupCard from '~/components/CommunityGroupCard/ButtonCommunityGroupCard';
 import { dimension } from '~/theme';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
+import ButtonCommunityInvitationCard from '~/components/CommunityGroupCard/ButtonCommunityInvitationCard';
 
 interface SearchDiscoverCommunityItemProps {
   testID: string,
@@ -25,7 +27,7 @@ const SearchDiscoverCommunityItem = ({
   const styles = createStyles(theme);
 
   const {
-    name, icon, privacy, joinStatus,
+    name, icon, privacy, joinStatus, id, invitation,
   } = item || {};
   const privacyData = CommunityPrivacyDetail[privacy] || {};
   const { icon: privacyIcon }: any = privacyData;
@@ -33,6 +35,22 @@ const SearchDiscoverCommunityItem = ({
   const _onView = () => onView(item);
   const _onJoin = () => onJoin(item);
   const _onCancel = () => onCancel(item);
+
+  const renderButton = () => {
+    if (joinStatus === GroupJoinStatus.BE_INVITED) {
+      return <ButtonCommunityInvitationCard communityId={id} invitationId={invitation.id} isSearch />;
+    }
+    return (
+      <ButtonCommunityGroupCard
+        style={styles.btn}
+        joinStatus={joinStatus}
+        size="small"
+        onView={_onView}
+        onJoin={_onJoin}
+        onCancel={_onCancel}
+      />
+    );
+  };
 
   return (
     <View testID={testID} style={styles.container}>
@@ -47,14 +65,7 @@ const SearchDiscoverCommunityItem = ({
           <View style={styles.chip}>
             <Text.BodyXS useI18n color={colors.blue50}>common:text_community</Text.BodyXS>
           </View>
-          <ButtonCommunityGroupCard
-            style={styles.btn}
-            joinStatus={joinStatus}
-            size="small"
-            onView={_onView}
-            onJoin={_onJoin}
-            onCancel={_onCancel}
-          />
+          {renderButton()}
         </View>
       </View>
     </View>

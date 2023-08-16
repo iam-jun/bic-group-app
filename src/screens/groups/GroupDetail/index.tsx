@@ -115,7 +115,7 @@ const GroupDetail = (props: any) => {
   ]);
   const showPrivate
     = !isMember
-    && (privacy === GroupPrivacyType.PRIVATE
+    && (privacy === GroupPrivacyType.PRIVATE || privacy === GroupPrivacyType.SECRET
       || (!isMemberCommunity && privacy === GroupPrivacyType.CLOSED));
 
   // post

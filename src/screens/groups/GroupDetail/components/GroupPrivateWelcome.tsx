@@ -11,6 +11,9 @@ import InfoHeader from '../../components/InfoHeader';
 import GroupJoinCancelButton from './GroupJoinCancelButton';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 import { onRefresh } from './helper';
+import Divider from '~/beinComponents/Divider';
+import { ITypeGroup } from '~/interfaces/common';
+import InvitationView from '~/screens/communities/CommunityDetail/components/InvitationView';
 
 interface GroupPrivateWelcomeProps {
   infoDetail: IGroup;
@@ -23,13 +26,14 @@ const GroupPrivateWelcome = ({
   infoDetail, community, onScroll, onGetInfoLayout,
 }: GroupPrivateWelcomeProps) => {
   const theme: ExtendedTheme = useTheme();
+  const { colors, elevations } = theme;
   const styles = themeStyles(theme);
 
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
   const { group: groupData } = groups[currentGroupId] || {};
-  const { id: groupId } = groupData || {};
+  const { id: groupId, invitation } = groupData || {};
 
   const _onRefresh = async () => {
     await onRefresh({ setIsRefreshing, groupId });
@@ -44,15 +48,17 @@ const GroupPrivateWelcome = ({
       onScroll={onScroll}
       refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={_onRefresh} />}
     >
-      <View onLayout={onGetInfoLayout}>
+      <View onLayout={onGetInfoLayout} style={elevations.e2}>
         <InfoHeader
           infoDetail={infoDetail}
           insideCommunityName={community?.name}
         />
         <View style={styles.space} />
+        <InvitationView data={invitation} communityId="" groupId={groupId} type={ITypeGroup.GROUP} />
         <GroupJoinCancelButton />
       </View>
 
+      <Divider size={spacing.margin.large} color={colors.gray5} />
       <AboutContent profileInfo={infoDetail as any} showPrivate />
     </Animated.ScrollView>
   );
@@ -63,13 +69,13 @@ const themeStyles = (theme: ExtendedTheme) => {
 
   return StyleSheet.create({
     space: {
-      height: spacing.padding.small,
+      height: spacing.padding.base,
       backgroundColor: colors.white,
     },
     content: {
       width: '100%',
       alignSelf: 'center',
-      backgroundColor: colors.white,
+      backgroundColor: colors.gray5,
     },
     marginTop: {
       marginTop: spacing.margin.large,

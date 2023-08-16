@@ -269,7 +269,10 @@
     "text_invite_someone": "Invite someone",
     "text_to_see_them_here": "to see them here",
     "text_invited_by": "Invited by",
-    "button_cancel_invite": "Cancel Invite"
+    "button_cancel_invite": "Cancel Invite",
+    "text_invited_you_to_join_this_group": "invited you to join this group.",
+    "text_invited_you_to_join_this_community": "invited you to join this community.",
+    "text_invited": "Invited"
   },
   "auth": {
     "text_kickout_title": "Notice",
