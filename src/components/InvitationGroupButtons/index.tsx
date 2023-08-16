@@ -21,7 +21,7 @@ const InvitationGroupButtons = ({
 }: InvitationGroupButtonsProps) => (
   <View style={[styles.row, styles.buttonsContainer]}>
     <Button.Neutral
-      testID="button_approve_decline_all_requests.decline"
+      testID="button_invitation.decline"
       useI18n
       type="solid"
       size="medium"
@@ -34,6 +34,7 @@ const InvitationGroupButtons = ({
     </Button.Neutral>
     <ViewSpacing width={spacing.margin.small} />
     <Button.Primary
+      testID="button_invitation.accept"
       useI18n
       size="medium"
       loading={isLoadingAccept}
