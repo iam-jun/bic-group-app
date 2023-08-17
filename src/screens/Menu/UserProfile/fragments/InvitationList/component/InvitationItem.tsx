@@ -87,17 +87,16 @@ const InvitationItem = ({ id, groupedId }: Props) => {
   const textColor = isDeactivated ? colors.grey40 : colors.neutral60;
 
   return (
-    <View style={[styles.row, styles.container]}>
-      <Button onPress={onPressActor}>
+    <View testID="invitation_item.container" style={[styles.row, styles.container]}>
+      <Button testID="invitation_item.actor" onPress={onPressActor}>
         <Avatar.Medium isRounded source={avatar} />
       </Button>
       <ViewSpacing width={spacing.margin.small} />
       <View style={styles.flex1}>
         <View style={[styles.row, styles.contentContainer]}>
-          <Button style={styles.btnActor} onPress={onPressActor}>
+          <Button testID="invitation_item.actor_name" style={styles.btnActor} onPress={onPressActor}>
             <Text.SubtitleM
               color={textColor}
-              testID="invitation_item.inviter"
             >
               {fullname}
             </Text.SubtitleM>
@@ -107,10 +106,9 @@ const InvitationItem = ({ id, groupedId }: Props) => {
             user:text_invited_to_join
           </Text.BodyM>
           <ViewSpacing width={spacing.margin.tiny} />
-          <Button onPress={onPressTarget}>
+          <Button testID="invitation_item.target_name" onPress={onPressTarget}>
             <Text.SubtitleM
               color={colors.neutral60}
-              testID="invitation_item.target_name"
             >
               {name}
             </Text.SubtitleM>

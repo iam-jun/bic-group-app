@@ -8,7 +8,7 @@ import Divider from '~/beinComponents/Divider';
 import { IGroupedInvitations } from '../store';
 
 interface InvitationBlockProps {
-    data: IGroupedInvitations;
+  data: IGroupedInvitations;
 }
 
 const InvitationBlock = ({
@@ -20,7 +20,10 @@ const InvitationBlock = ({
 
   const renderHeader = () => (
     <View style={styles.headerContainer}>
-      <Text.BodyMMedium useI18n>
+      <Text.BodyMMedium
+        useI18n
+        testID="invitation_block.header_title"
+      >
         {data.title}
       </Text.BodyMMedium>
     </View>
@@ -35,6 +38,7 @@ const InvitationBlock = ({
   return (
     <View style={styles.container}>
       <FlatList
+        testID="invitation_block.list_invitation"
         data={data.data}
         style={styles.list}
         renderItem={renderItem}

@@ -19,7 +19,7 @@ const acceptInvitation = (set, get) => async (invitationId: string, inviGroupId:
 
   const newGroupedInvitations = [...groupedInvitations];
   if (!newGroupedData.length) {
-    newGroupedInvitations[groupedIndex].data.splice(groupedIndex, 1);
+    newGroupedInvitations[groupedIndex].data = [];
   } else {
     newGroupedInvitations[groupedIndex].data = newGroupedData;
   }

@@ -38,13 +38,17 @@ const InvitationList = () => {
   };
 
   const renderHeader = () => (
-    <View>
+    <View testID="invitation_list.header">
       <View style={styles.headerContainer}>
         <View style={[styles.row, styles.textContainer]}>
           <Text.H4 useI18n>
             user:user_tab_types:title_invitations
           </Text.H4>
-          <Text.LinkS useI18n onPress={goToInvitationSettings}>
+          <Text.LinkS
+            testID="invitation_list.text_link_to_invitation_settings"
+            useI18n
+            onPress={goToInvitationSettings}
+          >
             user:text_invitation_privacy_settings
           </Text.LinkS>
         </View>
@@ -65,7 +69,7 @@ const InvitationList = () => {
     if (!loading || !hasNextPage) {
       return null;
     }
-    return <LoadingIndicator style={styles.loading} />;
+    return <LoadingIndicator testID="invitation_list.loading" style={styles.loading} />;
   };
 
   const renderEmptyComponent = () => {
