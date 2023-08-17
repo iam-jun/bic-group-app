@@ -6,6 +6,7 @@ import Text from '~/baseComponents/Text';
 import CollapsibleText from '~/baseComponents/Text/CollapsibleText';
 import { GroupPrivacyDetail, GroupPrivacyType } from '~/constants/privacyTypes';
 import spacing from '~/theme/spacing';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { formatLargeNumber } from '~/utils/formatter';
 import { IPreviewMember } from '~/interfaces/ICommunity';
 import { useBaseHook } from '~/hooks';
@@ -86,21 +87,24 @@ const AboutContent: FC<AboutContentProps> = ({ profileInfo, showPrivate, onPress
   );
 
   return (
-    <View style={styles.container} testID="about_content">
-      {renderDescription()}
-      {renderItem({
-        testID: 'about_content.privacy',
-        leftIcon: iconPrivacy,
-        content: t(privacyTitle),
-      })}
-      {renderItem({
-        testID: 'about_content.members',
-        leftIcon: 'UserGroupSolid',
-        content: `${formatLargeNumber(userCount)}`,
-        rightIcon: 'AngleRightSolid',
-        onPress: onPressMember,
-      })}
-      <PreviewMembers userCount={userCount} members={members} />
+    <View style={styles.wrapper}>
+      <ViewSpacing height={spacing.padding.large} />
+      <View style={styles.container} testID="about_content">
+        {renderDescription()}
+        {renderItem({
+          testID: 'about_content.privacy',
+          leftIcon: iconPrivacy,
+          content: t(privacyTitle),
+        })}
+        {renderItem({
+          testID: 'about_content.members',
+          leftIcon: 'UserGroupSolid',
+          content: `${formatLargeNumber(userCount)}`,
+          rightIcon: 'AngleRightSolid',
+          onPress: onPressMember,
+        })}
+        <PreviewMembers userCount={userCount} members={members} />
+      </View>
     </View>
   );
 };
@@ -111,6 +115,10 @@ const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
 
   return StyleSheet.create({
+    wrapper: {
+      flex: 1,
+      backgroundColor: colors.gray5,
+    },
     container: {
       backgroundColor: colors.white,
       paddingHorizontal: CONTAINER_HORIZONTAL_PADDING,
