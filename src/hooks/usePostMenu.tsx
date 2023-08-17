@@ -30,7 +30,7 @@ const usePostMenu = (
   data: IPost,
   isActor: boolean,
   isPostDetail: boolean,
-  handleDeletePostError: (listAudiences: string[]) => void,
+  handleDeletePostError?: (listAudiences: string[]) => void,
 ) => {
   const { rootNavigation } = useRootNavigation();
 

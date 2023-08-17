@@ -29,6 +29,7 @@ import { QuizStatus } from '~/interfaces/IQuiz';
 const useArticleMenu = (data: IPost, isActor: boolean) => {
   const { rootNavigation } = useRootNavigation();
 
+  const articleControllerActions = useArticleController((state) => state.actions);
   const commonActions = useCommonController((state) => state.actions);
   const modalActions = useModalStore((state) => state.actions);
   const actionsQuizzesStore = useQuizzesStore((state) => state.actions);
@@ -123,11 +124,9 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       confirmLabel: i18next.t('common:btn_delete'),
       ConfirmBtnComponent: Button.Danger,
       confirmBtnProps: { type: 'ghost' },
-      onConfirm: () => useArticleController
-        .getState()
-        .actions.deleteArticle(
-          articleId,
-        ),
+      onConfirm: () => articleControllerActions.deleteArticle(
+        articleId,
+      ),
     });
   };
 
