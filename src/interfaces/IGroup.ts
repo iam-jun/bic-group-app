@@ -379,3 +379,8 @@ export interface IParamsDeclineSingleInvitation {
   invitationId: string;
   callback: () => void;
 }
+
+export interface IPayloadGetInvitations {
+  offset?: number;
+  limit?: number;
+}

@@ -2,6 +2,7 @@ import { ISignUpResult } from 'amazon-cognito-identity-js';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { GENDER_TYPE, RELATIONSHIP_TYPE } from './IEditUser';
 import { IUserBadge } from '~/interfaces/IEditUser';
+import { INVITATION_PRIVACY_TYPE, PERSONAL_INFORMATION_VISIBILITY_TYPE } from '~/constants/privacyCenter';
 
 export enum FieldNameType {
   EMAIL = 'email',
@@ -207,4 +208,9 @@ export interface IVerifyEmail {
 
 export interface IParamValidateReferralCode {
   code: string;
+}
+
+export interface IEditPersonalInfoVisibility {
+  visibilityPrivacy?: PERSONAL_INFORMATION_VISIBILITY_TYPE;
+  invitationPrivacy?: INVITATION_PRIVACY_TYPE;
 }

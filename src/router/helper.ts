@@ -30,6 +30,7 @@ export interface Props {
   current?: NavigationContainerRef<any> | null;
   canGoBack: boolean | undefined;
   navigate: (name: string, params?: IObject<unknown>) => void;
+  push: (name: string, params?: IObject<unknown>) => void;
   replace: (name: string, params?: IObject<unknown>) => void;
   replaceListScreenByNewScreen: (replaces: string[], newScreen: RouteProp<any>) => void;
   goBack: () => void;
@@ -58,6 +59,23 @@ export const withNavigation = (navigationRef: RefObject<NavigationContainerRef<a
         () => navigationRef?.current?.navigate(
           name, params,
         ), 100,
+      );
+    }
+  };
+
+  const push = (
+    name: string, params?: IObject<unknown>,
+  ): void => {
+    if (isNavigationRefReady?.current && navigationRef?.current) {
+      navigationRef?.current?.dispatch(StackActions.push(
+        name, params,
+      ));
+    } else {
+      setTimeout(
+        () => navigationRef?.current?.dispatch(StackActions.push(
+          name, params,
+        )),
+        100,
       );
     }
   };
@@ -140,6 +158,7 @@ export const withNavigation = (navigationRef: RefObject<NavigationContainerRef<a
     current: navigationRef?.current,
     canGoBack,
     navigate,
+    push,
     replace,
     replaceListScreenByNewScreen,
     goBack,

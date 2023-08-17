@@ -6,6 +6,7 @@ import {
   IParamsGetInvitations,
   IParamsGetJoinedAllGroups,
   IParamsGetManagedCommunityAndGroup,
+  IPayloadGetInvitations,
   IPayloadGroupSchemeAssignments,
   IPayloadInvitations,
   IPayloadPreviewSettings,
@@ -504,6 +505,11 @@ export const groupsApiConfig = {
     url: `${provider.url}invitations/${invitationId}/cancel`,
     method: 'put',
   }),
+  getMyInvitations: (params: IPayloadGetInvitations): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/invitations`,
+    params,
+  }),
   acceptInvitation: (invitationId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}invitations/${invitationId}/accept`,
@@ -801,6 +807,9 @@ const groupApi = {
   getInvitations: (groupId: string, params: IParamsGetInvitations) => withHttpRequestPromise(groupsApiConfig.getInvitations, groupId, params),
   cancelInvitation: (invitationId: string) => withHttpRequestPromise(
     groupsApiConfig.cancelInvitation, invitationId,
+  ),
+  getMyInvitations: (params: IPayloadGetInvitations) => withHttpRequestPromise(
+    groupsApiConfig.getMyInvitations, params,
   ),
   acceptInvitation: (invitationId: string) => withHttpRequestPromise(groupsApiConfig.acceptInvitation, invitationId),
   declineInvitation: (invitationId: string) => withHttpRequestPromise(groupsApiConfig.declineInvitation, invitationId),

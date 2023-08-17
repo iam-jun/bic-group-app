@@ -1,8 +1,8 @@
 import React, { FC, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import useCommunitiesStore from '~/store/entities/communities';
-import NotificationInvitationButtons from '~/screens/Notification/components/NotificationItem/NotificationInvitationButtons';
 import useNotiInvitationsStore from '~/screens/Notification/components/NotificationItem/store';
+import InvitationGroupButtons from '../InvitationGroupButtons';
 
 type ButtonCommunityInvitationCardProps = {
   communityId: string;
@@ -39,7 +39,7 @@ const ButtonCommunityInvitationCard: FC<ButtonCommunityInvitationCardProps> = ({
   };
 
   return (
-    <NotificationInvitationButtons
+    <InvitationGroupButtons
       style={[styles.container, isSearch && styles.searchContainer]}
       styleButton={isSearch && styles.searchButton}
       onAccept={onAccept}

@@ -227,6 +227,7 @@ import { faSquareList as faSquareListSolid } from '@fortawesome/pro-solid-svg-ic
 import { faCaretDown as faCaretDownSolid } from '@fortawesome/pro-solid-svg-icons/faCaretDown';
 import { faCaretRight as faCaretRightSolid } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
 import { faTriangleExclamation } from '@fortawesome/pro-regular-svg-icons/faTriangleExclamation';
+import { faUnlock as faUnlockSolid } from '@fortawesome/pro-solid-svg-icons/faUnlock';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -474,6 +475,7 @@ export const initFontAwesomeIcon = () => {
     faCaretDownSolid,
     faCaretRightSolid,
     faTriangleExclamation,
+    faUnlockSolid,
   );
 };
 
@@ -706,6 +708,7 @@ export const fontAwesomeIcons = {
   CaretDownSolid: 'fa-solid fa-caret-down',
   CaretRightSolid: 'fa-solid fa-caret-right',
   TriangleExclamation: 'fa-regular fa-triangle-exclamation',
+  UnlockSolid: 'fa-solid fa-unlock',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

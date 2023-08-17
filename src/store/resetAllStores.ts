@@ -64,11 +64,13 @@ import useTermStore from '~/components/TermsModal/store';
 import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftContents/store';
 import usePublishStore from '~/screens/YourContent/components/Publish/store';
 import useUserBadge from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
+import usePersonalPrivacy from '~/screens/Menu/AccountSettings/PrivacyCenter/store';
 import useMembershipPolicySettingsStore from '~/screens/groups/MembershipPolicySettings/store';
 import usePreviewJoinableGroupStore from '~/components/PreviewJoinableGroup/store';
 import useNotiSettingsStore from '~/screens/Notification/NotiSettings/store';
 import useGroupJoinableUsersStore from '~/components/InvitePeopleToYourGroup/store';
 import useNotiInvitationsStore from '~/screens/Notification/components/NotificationItem/store';
+import useMyInvitationsStore from '~/screens/Menu/UserProfile/fragments/InvitationList/store';
 
 export const excludedStore = [
   useAuthController,
@@ -151,10 +153,12 @@ const stores = [
   useDraftContentsStore,
   usePublishStore,
   useUserBadge,
+  usePersonalPrivacy,
   useMembershipPolicySettingsStore,
   usePreviewJoinableGroupStore,
   useNotiSettingsStore,
   useNotiInvitationsStore,
+  useMyInvitationsStore,
 ];
 
 export const resetAllStores = () => {

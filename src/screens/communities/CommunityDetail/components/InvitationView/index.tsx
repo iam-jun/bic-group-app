@@ -12,10 +12,10 @@ import { AppContext } from '~/contexts/AppContext';
 import { ITypeGroup } from '~/interfaces/common';
 import { spacing } from '~/theme';
 import images from '~/resources/images';
-import NotificationInvitationButtons from '~/screens/Notification/components/NotificationItem/NotificationInvitationButtons';
 import useNotiInvitationsStore from '~/screens/Notification/components/NotificationItem/store';
 import useCommunitiesStore from '~/store/entities/communities';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
+import InvitationGroupButtons from '~/components/InvitationGroupButtons';
 
 interface InvitationViewProps {
   data: IInvitation | undefined;
@@ -86,7 +86,7 @@ const InvitationView = ({
             </Text.BodyXS>
           </View>
         </View>
-        <NotificationInvitationButtons
+        <InvitationGroupButtons
           isLoadingAccept={isLoadingAccept}
           isLoadingDecline={isLoadingDecline}
           onAccept={onAccept}

@@ -2,9 +2,9 @@
 import React from 'react';
 
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
-import NotificationInvitationButtons from './index';
+import InvitationGroupButtons from './index';
 
-describe('InvitationButtons component', () => {
+describe('InvitationGroupButtons component', () => {
   it('should render correctly', () => {
     const onAccept = jest.fn();
     const onDecline = jest.fn();
@@ -13,7 +13,7 @@ describe('InvitationButtons component', () => {
     const requestingsDecline = false;
 
     const wrapper = renderWithRedux(
-      <NotificationInvitationButtons
+      <InvitationGroupButtons
         isLoadingAccept={requestingsAccept}
         isLoadingDecline={requestingsDecline}
         onAccept={onAccept}
@@ -42,7 +42,7 @@ describe('InvitationButtons component', () => {
     const requestingsDecline = false;
 
     const wrapper = renderWithRedux(
-      <NotificationInvitationButtons
+      <InvitationGroupButtons
         isLoadingAccept={requestingsAccept}
         isLoadingDecline={requestingsDecline}
         onAccept={onAccept}
@@ -67,7 +67,7 @@ describe('InvitationButtons component', () => {
     const requestingsDecline = true;
 
     const wrapper = renderWithRedux(
-      <NotificationInvitationButtons
+      <InvitationGroupButtons
         isLoadingAccept={requestingsAccept}
         isLoadingDecline={requestingsDecline}
         onAccept={onAccept}

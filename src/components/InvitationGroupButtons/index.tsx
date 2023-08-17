@@ -8,7 +8,7 @@ import { ButtonSize } from '~/baseComponents/Button/interface';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import spacing from '~/theme/spacing';
 
-interface NotificationInvitationButtonsProps {
+interface InvitationGroupButtonsProps {
   isLoadingAccept?: boolean;
   isLoadingDecline?: boolean;
   style?: StyleProp<ViewStyle>;
@@ -18,7 +18,7 @@ interface NotificationInvitationButtonsProps {
   onDecline: (...params: any) => void;
 }
 
-const NotificationInvitationButtons = ({
+const InvitationGroupButtons = ({
   isLoadingAccept = false,
   isLoadingDecline = false,
   style,
@@ -26,7 +26,7 @@ const NotificationInvitationButtons = ({
   styleButton,
   onAccept,
   onDecline,
-}: NotificationInvitationButtonsProps) => (
+}: InvitationGroupButtonsProps) => (
   <View style={[styles.row, styles.buttonsContainer, style]}>
     <Button.Neutral
       testID="button_invitation.decline"
@@ -69,4 +69,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NotificationInvitationButtons;
+export default InvitationGroupButtons;

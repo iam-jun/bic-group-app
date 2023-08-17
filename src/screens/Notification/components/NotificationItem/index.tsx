@@ -14,7 +14,7 @@ import spacing from '~/theme/spacing';
 import ButtonWrapper from '~/baseComponents/Button/ButtonWrapper';
 import notiSelector from '~/screens/Notification/store/selectors';
 import useNotificationStore from '~/screens/Notification/store';
-import NotificationInvitationButtons from './NotificationInvitationButtons';
+import InvitationGroupButtons from '../../../../components/InvitationGroupButtons';
 import useNotiInvitationsStore from './store';
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -171,7 +171,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         </View>
         {
           Boolean(showInvitationButtons) && (
-          <NotificationInvitationButtons
+          <InvitationGroupButtons
             isLoadingAccept={requestingsAccept}
             isLoadingDecline={requestingsDecline}
             onAccept={onAccept}

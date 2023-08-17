@@ -563,7 +563,33 @@
         "button_more_details": "Hiển thị nhiều hơn",
         "button_show_less": "Hiển thị ít hơn"
       }
-    }
+    },
+    "privacy_center": {
+      "menu_item_title": "Sự riêng tư",
+      "screen_title": "Trung tâm bảo mật",
+      "screen_description": "Quản lý và kiểm soát quyền riêng tư cá nhân phù hợp với bạn.",
+      "personal_information_visibility": {
+        "title": "Hiển thị thông tin cá nhân",
+        "description": "Kiểm soát ai có thể xem thông tin cá nhân của bạn trong hồ sơ của bạn.",
+        "everyone_type": "Mọi người",
+        "everyone_description": "Mọi người đều có thể xem thông tin của bạn.",
+        "community_members_type": "Thành viên cộng đồng",
+        "community_members_description": "Những người trong cùng một cộng đồng với bạn có thể xem thông tin của bạn.",
+        "only_me_type": "Chỉ mình tôi",
+        "only_me_description": "Không ai có thể xem thông tin của bạn."
+      },
+      "invitation_privacy": {
+        "title": "Quyền riêng tư của lời mời",
+        "screen_description": "Quản lý lời mời từ nhóm hoặc cộng đồng theo cách bạn muốn.",
+        "manual_acceptance_type": "Chấp nhận thủ công",
+        "manual_acceptance_description": "Bạn có thể xem xét và quyết định chấp nhận hay từ chối.",
+        "hide_all_inviations_type": "Ẩn tất cả lời mời",
+        "hide_all_inviations_description": "Tắt tất cả các thông báo về lời mời, bạn vẫn có thể xem lại sau.",
+        "view_all_inviations": "Xem tất cả Thư mời"
+      }
+    },
+    "text_no_experience_to_show": "Không có kinh nghiệm để hiển thị",
+    "text_no_contact_to_show": "Không có liên hệ để hiển thị"
   },
   "languages": {
     "title_en": "English",
@@ -1481,7 +1507,8 @@
   "user": {
     "user_tab_types": {
       "title_about": "Giới thiệu",
-      "title_badge_collection": "Bộ sưu tập huy hiệu"
+      "title_badge_collection": "Bộ sưu tập huy hiệu",
+      "title_invitations": "Lời mời"
     },
     "empty_badge_collection": {
       "title": "Bạn chưa có huy hiệu nào",
@@ -1498,7 +1525,15 @@
       "search_placeholder": "Tìm huy hiệu theo tên"
     },
     "edit_showing_badges_title": "Chỉnh sửa huy hiệu đang hiển thị",
-    "badge_tooltip_placeholder": "Nhấn vào đây để thêm huy hiệu"
+    "badge_tooltip_placeholder": "Nhấn vào đây để thêm huy hiệu",
+    "text_invitation_privacy_settings": "Cài đặt Quyền riêng tư của Lời mời",
+    "invitation_description": "Xem xét các lời mời để bạn quyết định chấp nhận hay từ chối.",
+    "text_invited_to_join": "mời bạn tham gia",
+    "text_invited_you_to_join_a": "mời bạn tham gia",
+    "text_set_of_groups": "tập hợp các nhóm",
+    "text_default_group_set": "YBạn đã được mời đến một",
+    "text_as_you_join": "khi bạn tham gia",
+    "text_no_invitations_found": "Không tìm thấy lời mời nào"
   },
   "previewJoinableGroup": {
     "title": "Tham gia tất cả các nhóm bên ngoài?",

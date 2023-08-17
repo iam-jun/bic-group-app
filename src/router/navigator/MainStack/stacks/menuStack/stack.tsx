@@ -10,6 +10,9 @@ const menuStack = {
   discover: 'discover',
   yourContent: 'your-content',
   blocking: 'blocking',
+  privacyCenter: 'privacy-center',
+  personalInfoVisibility: 'personal-info-visibility',
+  invitationPrivacy: 'invitation-privacy',
 };
 
 export default menuStack;
