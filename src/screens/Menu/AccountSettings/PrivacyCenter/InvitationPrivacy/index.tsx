@@ -8,10 +8,11 @@ import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import spacing from '~/theme/spacing';
 import Text from '~/baseComponents/Text';
-import { Radio } from '~/baseComponents';
+import { Radio, Button } from '~/baseComponents';
 import usePersonalPrivacy from '../store';
 import { INVITATION_PRIVACY_TYPE, INVITATION_PRIVACY_TYPES } from '~/constants/privacyCenter';
 import Divider from '~/beinComponents/Divider';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 interface IRadioItem {
     id: INVITATION_PRIVACY_TYPE;
@@ -33,6 +34,10 @@ const InvitationPrivacy = () => {
 
   const onChangeSetting = (item: IRadioItem) => {
     actions.editInvitationPrivacy(item.id);
+  };
+
+  const goToProfile = () => {
+    // TODO: go to profile
   };
 
   const renderRadioItem = (item: IRadioItem) => {
@@ -71,6 +76,12 @@ const InvitationPrivacy = () => {
           <Divider />
           {renderRadioItem(INVITATION_PRIVACY_TYPES[0])}
           {renderRadioItem(INVITATION_PRIVACY_TYPES[1])}
+          <ViewSpacing height={spacing.margin.large} />
+          <Button onPress={goToProfile}>
+            <Text.LinkS>
+              {t('settings:privacy_center:invitation_privacy:view_all_inviations')}
+            </Text.LinkS>
+          </Button>
         </View>
       </View>
     </ScreenWrapper>
