@@ -49,6 +49,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
     audience,
     actor,
     createdAt,
+    publishedAt,
     commentsCount,
     reactionsCount,
     setting,
@@ -100,6 +101,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
       data={data}
       actor={actor}
       createdAt={createdAt}
+      publishedAt={publishedAt}
       audience={audience}
     />
   );

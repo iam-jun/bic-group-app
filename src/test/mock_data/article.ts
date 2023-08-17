@@ -107,6 +107,7 @@ export const mockArticle = {
   },
   tags: mockTagsInArticle,
   publishedAt: '',
+  scheduledAt: '',
 };
 
 export const responseGetScheduleArticles = {

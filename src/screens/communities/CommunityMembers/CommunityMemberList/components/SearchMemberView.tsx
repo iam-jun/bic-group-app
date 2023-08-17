@@ -67,7 +67,7 @@ const SearchMemberView = ({
     debounce(
       searchMember, appConfig.searchTriggerTime,
     ),
-    [],
+    [searchMember],
   );
 
   const onSearchMember = (text: string) => {

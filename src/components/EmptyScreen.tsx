@@ -1,6 +1,8 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import {
+  StyleProp, StyleSheet, View, ViewStyle,
+} from 'react-native';
 
 import Icon from '~/baseComponents/Icon';
 import Image from '~/components/Image';
@@ -16,6 +18,7 @@ interface EmptyScreenProps {
   ButtonComponent?: any;
   source?: string;
   iconStyle?: any;
+  style?: StyleProp<ViewStyle>;
 }
 
 const EmptyScreen = ({
@@ -26,11 +29,12 @@ const EmptyScreen = ({
   size = 150,
   ButtonComponent,
   iconStyle,
+  style,
 }: EmptyScreenProps) => {
   const theme: ExtendedTheme = useTheme();
 
   return (
-    <View testID="empty_screen" style={styles.container}>
+    <View testID="empty_screen" style={[styles.container, style]}>
       {!!icon && <Icon icon={icon} size={size} style={iconStyle} />}
       {!!source && (
       <Image
@@ -60,6 +64,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 30,
     paddingHorizontal: spacing.padding.extraLarge,
+    paddingVertical: spacing.padding.extraLarge,
   },
   text: {
     textAlign: 'center',

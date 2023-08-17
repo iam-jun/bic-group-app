@@ -113,7 +113,7 @@ const CreateArticle: FC<CreateArticleProps> = ({
   const articleDetailData = usePostsStore(
     useCallback(postsSelector.getPost(articleIdParams, {}), [articleIdParams]),
   );
-  const { publishedAt, status } = articleDetailData;
+  const { scheduledAt, status } = articleDetailData || {};
 
   const articleData = useCreateArticleStore((state) => state.data);
   const actions = useCreateArticleStore((state) => state.actions);
@@ -236,7 +236,7 @@ const CreateArticle: FC<CreateArticleProps> = ({
       )}
       {isFromReviewSchedule && (
         <ArticleBoxScheduleTime
-          publishedAt={publishedAt}
+          scheduledAt={scheduledAt}
           status={status}
         />
       )}
