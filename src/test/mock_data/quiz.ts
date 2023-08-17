@@ -35,7 +35,8 @@ export const postWithQuiz = {
         },
       ],
     },
-    content: '# Người dùng vẫn sạc smartphone qua đêm\nKhảo sát của Asus cho thấy người dùng thường xuyên sạc điện thoại qua đêm dù thói quen này được đánh giá gây hại cho thiết bị.\nAsus cho biết một nửa người dùng smartphone của hãng chọn sạc qua đêm, dù thiết bị đã có tính năng sạc nhanh. Trong đó, 25% bật Sạc ổn định - tính năng làm chậm tốc độ sạc để giảm nhiệt và kéo dài tuổi thọ pin; 26% bật Sạc theo lịch trình - chế độ trì hoãn việc sạc đầy 100% pin.Trang công nghệ _Android Authority_ cũng thực hiện khảo sát tương tự và có tới 66% người tham gia có thói quen cắm sạc thiết bị cả đêm.',
+    content:
+      '# Người dùng vẫn sạc smartphone qua đêm\nKhảo sát của Asus cho thấy người dùng thường xuyên sạc điện thoại qua đêm dù thói quen này được đánh giá gây hại cho thiết bị.\nAsus cho biết một nửa người dùng smartphone của hãng chọn sạc qua đêm, dù thiết bị đã có tính năng sạc nhanh. Trong đó, 25% bật Sạc ổn định - tính năng làm chậm tốc độ sạc để giảm nhiệt và kéo dài tuổi thọ pin; 26% bật Sạc theo lịch trình - chế độ trì hoãn việc sạc đầy 100% pin.Trang công nghệ _Android Authority_ cũng thực hiện khảo sát tương tự và có tới 66% người tham gia có thói quen cắm sạc thiết bị cả đêm.',
     createdAt: '2023-06-29T05:24:25.545Z',
     tags: [],
     quiz: {
@@ -126,6 +127,140 @@ export const postWithQuiz = {
       {
         id: '427b3794-aa51-4bb6-8ddb-743861585f90',
         reactionName: 'mask',
+      },
+    ],
+  },
+  meta: {
+    message: 'OK',
+  },
+};
+
+export const articleWithQuiz = {
+  code: 'api.ok',
+  data: {
+    id: 'c3e104b4-86b9-4f0d-a649-3c2fc15a97fb',
+    audience: {
+      groups: [
+        {
+          id: 'c8ddd4d4-9a5e-4d93-940b-e332a8d0422d',
+          name: 'Bein Community',
+          icon: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/group/default-avatar.png',
+          communityId: '15337361-1577-4b7b-a31d-990df06aa446',
+          privacy: 'OPEN',
+          rootGroupId: '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
+        },
+      ],
+    },
+    content:
+      '[{"type":"p","align":"start","children":[{"text":"Quá trình thắt chặt tiền tệ mạnh tay khiến giá euro hiện cao nhất 17 tháng so với đôla Mỹ và cao nhất 3 năm so với nhân dân tệ."}],"id":"AwYVxpTUJhpkBisgiFW2a"},{"type":"p","children":[{"text":"Tỷ giá danh nghĩa đa phương (NEER) – so sánh giá euro với tiền tệ các đối tác thương mại của khu vực đồng euro – hiện ở mức cao nhất lịch sử. Đồng tiền chung châu Âu cũng đang tiến sát đỉnh 3 năm so với nhân dân tệ. Tình hình này gây sức ép lên hoạt động xuất khẩu của khu vực trong bối cảnh cả kinh tế châu Âu và Trung Quốc đều đang trì trệ."}],"id":"cpVoK9llfFzYn2byaADH9"},{"type":"p","children":[{"text":"Mark Dragten – Giám đốc phụ trách tỷ giá hối đoái tại Insight Investment cho biết việc euro mạnh lên \\"chắc chắn\\" là mối lo ngại của Ngân hàng Trung ương châu Âu (ECB). \\"Châu Âu bán lượng hàng lớn sang Trung Quốc. Bạn sẽ phải băn khoăn về nhu cầu khi kinh tế Trung Quốc chậm lại\\", ông giải thích."}],"id":"oN3l0Aelr-ROYnnZbohRw"},{"type":"img","url":"https://i1-kinhdoanh.vnecdn.net/2023/07/24/euro-neer-1690169024-169016908-2561-3279-1690169416.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=y5BN0L0Hm8xZjLKXShKQZg","children":[{"text":""}],"id":"-SYXHtyoYaSc8K1jsA91E"},{"type":"p","align":"left","children":[{"text":"Tỷ giá danh nghĩa đa phương của euro hiện ở mức cao nhất đến nay. Đồ thị: "},{"text":"Bloomberg, ECB","italic":true}],"id":"_iNxt2g8APoN4ozmyklYa"},{"type":"p","children":[{"text":"Dù ECB còn đánh giá nhiều chỉ số khác về tiền tệ ngoài NEER, sức tăng của đồng tiền chung châu Âu đã bắt đầu thu hút sự chú ý. Euro hiện giao dịch quanh đỉnh 17 tháng so với USD. Giá euro đã tăng 18% so với đôla Mỹ kể từ khi "},{"type":"a","url":"https://vnexpress.net/kinh-doanh/euro-ngang-gia-usd-lan-dau-sau-20-nam-4486873.html","target":"_blank","children":[{"text":"ngang giá"}],"id":"GJfUQ_-mJdU5q8W8QdYOk"},{"text":" với tiền tệ này tháng 9 năm ngoái. Nguyên nhân là ECB đang thực hiện quá trình thắt chặt tiền tệ mạnh tay nhất lịch sử. Euro cũng mạnh lên đáng kể so với yen và gần đây tăng vọt so với bảng Anh."}],"id":"b8nPuuU32PMYlv3piAkLX"},{"type":"p","children":[{"text":"Tuy nhiên, biểu đồ kỹ thuật cho thấy euro đang bị mua vào quá mạnh tay. Một vài chỉ số phát tín hiệu đồng tiền này sẽ sớm quay đầu giảm."}],"id":"sg76EbZd_7EJuJjPz8MCq"},{"type":"p","children":[{"text":"Quan chức ECB sẽ có cuộc họp vào thứ Năm tuần này. Nếu Chủ tịch ECB Christine Lagarde nới lỏng quan điểm về cuộc chiến chống lãi suất, giá euro có thể giảm, tương tự bảng Anh. Đà tăng của bảng Anh tuần trước đã chậm lại, sau số liệu cho thấy lạm phát bất ngờ hạ nhiệt trong tháng 6."}],"id":"EYHFDNkbbAn-eEtN2o1RF"},{"type":"p","children":[{"text":"\\"Euro và bảng đều đang có giá cao hơn giá trị thực\\", Brad Bechtel – chiến lược gia tại Jefferies cho biết. Ông dự báo giá euro sẽ giảm về 1,108 USD, từ mức 1,111 USD cuối tuần trước. Các nhà phân tích trong khảo sát của Bloomber cũng cho rằng giá một euro sẽ xuống 1,1 USD tháng 9 năm nay."}],"id":"YySP08EkTSIO0cEjGNWEL"},{"type":"p","children":[{"text":"\\"Việc euro lên đỉnh 17 tháng so với USD chủ yếu do nhu cầu quyền chọn, vì các yếu tố vĩ mô nền tảng không có gì thay đổi. Thị trường không còn phản ứng quá đà với kỳ vọng Fed ngừng tăng lãi. Vì thế, euro sẽ cần chất xúc tác mới nếu muốn tiếp tục xu hướng tăng\\", Vassilis Karamanis – chiến lược gia ngoại hối tại Bloomberg nhận định."}],"id":"kqXTAMuyhl2ZzKVwuufZR"},{"type":"p","children":[{"text":"John Hardy – Giám đốc Chiến lược Ngoại hối tại Saxo Bank cho biết việc euro mạnh lên có thể xuất hiện trong thông điệp của ECB tuần này. \\"ECB có thể lo ngại và thông báo đây là một rủi ro với tăng trưởng kinh tế của khối này\\", ông dự báo."}],"id":"DcfvPVaOlPKdh5maJ3haX"},{"type":"p","children":[{"text":"ECB được kỳ vọng nâng lãi suất tham chiếu thêm 25 điểm cơ bản (0,25%), lên 3,75% tuần này. Nhà đầu tư cũng sẽ theo sát các phát biểu của bà Lagarde để có thêm manh mối về khả năng nâng lãi tháng 9."}],"id":"dSSZTe-jbfwr6MzGGX6FA"},{"type":"p","children":[{"text":"Các số liệu gần đây của khu vực đồng euro không đạt dự báo, trái ngược với Mỹ. Tuần này, giới chức sẽ có thêm thông tin để ra chính sách kinh tế, khi chỉ số giá sản xuất (PMI) của Pháp, Đức và eurozone được công bố. GDP quý II của Pháp và chỉ số đánh giá niềm tin doanh nghiệp tại Đức cũng được quan tâm. Fed cũng sẽ họp chính sách trong hai ngày 25 và 26/7."}],"id":"w6veApQOKi-NskBOVoumt"},{"type":"p","children":[{"text":"\\"Phép thử lớn vẫn là khả năng tăng trưởng của châu Âu. Các nền kinh tế này cần cho thấy sự sôi động nhiều hơn nữa\\", Kit Juckes – chiến lược gia tiền tệ tại Societe Generale kết luận."}],"id":"plnEsfJoiImP9YmM5xUTK"}]',
+    createdAt: '2023-07-24T07:23:59.216Z',
+    publishedAt: '2023-07-24T07:24:58.106Z',
+    scheduledAt: null,
+    tags: [
+      {
+        id: '20588f61-4bbb-45dd-9c66-16b6c00d9540',
+        name: 'HUMKI',
+        groupId: '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
+        slug: 'humki',
+        createdBy: '123',
+        updatedBy: '123',
+        totalUsed: 0,
+      },
+    ],
+    series: [
+      {
+        id: '68f26a25-1413-44ba-8de6-4813c99f9f33',
+        title: 'test add article co 3 series',
+      },
+    ],
+    quiz: {
+      id: '119d1c2d-fc85-41df-bba7-231f876d91b1',
+      title: 'Test taking quiz article',
+      description: 'Naha Naha Naha Naha',
+      status: 'PUBLISHED',
+      genStatus: 'PROCESSED',
+    },
+    communities: [
+      {
+        id: '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
+        name: 'EVOL Community',
+        icon: 'https://media.beincom.io/image/variants/group/avatar/26a806d3-3557-4f7a-b96a-132a9befccff',
+        communityId: '15337361-1577-4b7b-a31d-990df06aa446',
+        isCommunity: true,
+        privacy: 'OPEN',
+        rootGroupId: '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
+      },
+    ],
+    actor: {
+      id: '7b63852c-5249-499a-a32b-6bdaa2761fc2',
+      username: 'trannamanh',
+      fullname: 'Nam Anh',
+      email: 'namanh@tgm.vn',
+      avatar:
+        'https://media.beincom.io/image/variants/user/avatar/1e65c01e-7916-46aa-b5a8-aeea19cfef97',
+      isDeactivated: false,
+      isVerified: false,
+      showingBadges: [
+        {
+          id: 'e939d0a7-3df8-4139-8522-5254bcb62ed1',
+          name: '71',
+          iconUrl:
+            'https://media.beincom.io/image/variants/badge/81307d0c-4446-4dcf-9f5c-aa92c2decca6',
+          community: {
+            id: 'b5c7a117-dcb8-47ba-9677-dc33da0320ba',
+            name: 'Root wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww',
+          },
+        },
+        {
+          id: 'da3f7113-49d5-4e6c-b296-adc3dc178ed6',
+          name: 'Anti Mage hahahaha',
+          iconUrl:
+            'https://media.beincom.io/image/variants/badge/4192a6e7-09c0-43de-a053-8cfabb482bfd',
+          community: {
+            id: '656cebfe-1b91-473f-97fd-96837bf9e2a5',
+            name: 'Community của Bảo gất là dễ thương nuôn',
+          },
+        },
+      ],
+    },
+    status: 'PUBLISHED',
+    title: 'test article choi nha',
+    summary: '123asd',
+    type: 'ARTICLE',
+    privacy: 'OPEN',
+    setting: {
+      isImportant: false,
+      importantExpiredAt: null,
+      canComment: true,
+      canReact: true,
+    },
+    commentsCount: 0,
+    totalUsersSeen: 1,
+    markedReadPost: false,
+    isSaved: false,
+    isReported: false,
+    reactionsCount: [
+      {
+        mask: 1,
+      },
+    ],
+    ownerReactions: [],
+    wordCount: 730,
+    coverMedia: {
+      id: 'f247ffc0-b0a9-4fcb-898e-24e6dc6c4a33',
+      src: '/image/variants/article/cover/f247ffc0-b0a9-4fcb-898e-24e6dc6c4a33',
+      url: 'https://media.beincom.io/image/variants/article/cover/f247ffc0-b0a9-4fcb-898e-24e6dc6c4a33',
+      width: 736,
+      height: 1102,
+      status: 'DONE',
+      mimeType: 'image/jpeg',
+      resource: 'article:cover',
+      createdBy: '7b63852c-5249-499a-a32b-6bdaa2761fc2',
+    },
+    categories: [
+      {
+        id: '2bbb37b8-37e9-4b3d-adc3-4e401bfc0e39',
+        name: 'Outdoors',
       },
     ],
   },
@@ -449,7 +584,8 @@ export const mockResultQuiz = {
       },
       {
         id: 'b37e91c4-e0bd-4344-a12f-60c10efa8df6',
-        content: 'Trong CA, User Interface có chứa logic nghiệp vụ phức tạp không?',
+        content:
+          'Trong CA, User Interface có chứa logic nghiệp vụ phức tạp không?',
         answers: [
           {
             id: 'c67cc70f-2f1d-4933-bf5f-86babe238195',
@@ -471,7 +607,8 @@ export const mockResultQuiz = {
       },
       {
         id: 'e13342b1-b355-4205-a785-1b2acfff0caf',
-        content: 'Trong kiến trúc Clean Architecture (CA), ứng dụng được chia thành bao nhiêu thành phần chính?',
+        content:
+          'Trong kiến trúc Clean Architecture (CA), ứng dụng được chia thành bao nhiêu thành phần chính?',
         answers: [
           {
             id: '8473e95b-5044-4731-946e-518dee32a928',
@@ -556,14 +693,16 @@ export const mockResponseUserParticipants = {
           username: 'trannamanh',
           fullname: 'Nam Anh',
           email: 'namanh@tgm.vn',
-          avatar: 'https://media.beincom.io/image/variants/user/avatar/1e65c01e-7916-46aa-b5a8-aeea19cfef97',
+          avatar:
+            'https://media.beincom.io/image/variants/user/avatar/1e65c01e-7916-46aa-b5a8-aeea19cfef97',
           isDeactivated: false,
           isVerified: false,
           showingBadges: [
             {
               id: 'e939d0a7-3df8-4139-8522-5254bcb62ed1',
               name: '71',
-              iconUrl: 'https://media.beincom.io/image/variants/badge/81307d0c-4446-4dcf-9f5c-aa92c2decca6',
+              iconUrl:
+                'https://media.beincom.io/image/variants/badge/81307d0c-4446-4dcf-9f5c-aa92c2decca6',
               community: {
                 id: 'b5c7a117-dcb8-47ba-9677-dc33da0320ba',
                 name: 'Root wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww',
