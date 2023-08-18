@@ -166,11 +166,20 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
   };
 
   const navigateResult = () => {
-    rootNavigation.navigate(quizStack.takeQuizResult, {
-      quizId,
-      participantId: currentParticipantId,
-      contentId,
-    });
+    setTimeout(() => {
+      rootNavigation.replaceListScreenByNewScreen(
+        [quizStack.takeQuiz, quizStack.takeQuizReview],
+        {
+          key: quizStack.takeQuizResult,
+          name: quizStack.takeQuizResult,
+          params: {
+            quizId,
+            participantId: currentParticipantId,
+            contentId,
+          },
+        },
+      );
+    }, 50);
   };
 
   const clearCountDownTakeQuiz = () => {

@@ -28,10 +28,11 @@ const updateAnwsers = (get) => async (payload: IPayLoadUpdateAnwsers) => {
   } catch (error) {
     if (error?.code === APIErrorCode.Post.QUIZ_OVER_TIME) {
       onErrors?.();
+    } else {
+      showToastError(error);
     }
 
     console.error('updateAnwsers error', error);
-    showToastError(error);
   }
 };
 
