@@ -17,6 +17,7 @@
     "text_update_title": "Đã có bản cập nhật mới",
     "text_update_content": "System optimization, faster, more convenient",
     "btn_update": "Cập nhật",
+    "btn_not_now": "Để sau",
     "text_unconnected_title": "Không có kết nối internet",
     "text_unconnected_content": "Please check your internet connection and try again",
     "btn_try_again": "Thử lại",
@@ -1521,5 +1522,9 @@
     "description_2": ", bạn sẽ tham gia tất cả các nhóm bên ngoài của nó.",
     "text_join_group_button": "Tham gia",
     "text_you_are_asking_to_join": "Bạn đang yêu cầu tham gia"
+  },
+  "update_required": {
+    "title": "Yêu cầu cập nhật",
+    "description": "Tính năng này không còn được hỗ trợ, vui lòng cập nhật phiên bản mới nhất."
   }
 }

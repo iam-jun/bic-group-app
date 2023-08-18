@@ -17,6 +17,7 @@
     "text_update_title": "New update",
     "text_update_content": "System optimization, faster, more convenient",
     "btn_update": "Update",
+    "btn_not_now": "Not Now",
     "text_unconnected_title": "No Internet Connection",
     "text_unconnected_content": "Please check your internet connection and try again",
     "btn_try_again": "Try again",
@@ -1579,5 +1580,9 @@
     "description_2": ", you’ll join all its outer groups.",
     "text_join_group_button": "Join",
     "text_you_are_asking_to_join": "You’re asking to join"
+  },
+  "update_required": {
+    "title": "Update required",
+    "description": "This feature is no longer supported, please update the latest version."
   }
 }

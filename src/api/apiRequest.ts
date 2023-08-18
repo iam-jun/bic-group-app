@@ -18,6 +18,7 @@ import { EVENT_LOGGER_TAG } from '~/components/LoggerView';
 import { LogType } from '~/components/LoggerView/Interface';
 import ConvertHelper from '~/utils/convertHelper';
 import useMaintenanceStore from '~/store/maintenance';
+import useModalStore from '~/store/modal';
 
 const defaultTimeout = 10000;
 const commonHeaders = {
@@ -141,10 +142,7 @@ const withHttpRequestPromise = async (fn: Function, ...args: any[]) => {
   try {
     const response: any = await makeHttpRequest(isEmpty(args) ? fn() : fn(...args));
 
-    const isMaintenance = response?.code === APIErrorCode.Common.MAINTENANCE;
-    if (isMaintenance) {
-      useMaintenanceStore.getState().actions.setData(response?.data);
-    }
+    checkCodeResponse(response);
 
     const isSuccess = response?.data?.data || response?.data?.code === APIErrorCode.Common.SUCCESS;
     if (isSuccess) {
@@ -153,6 +151,19 @@ const withHttpRequestPromise = async (fn: Function, ...args: any[]) => {
     return Promise.reject(response);
   } catch (e) {
     return Promise.reject(e);
+  }
+};
+
+const checkCodeResponse = (response: any) => {
+  switch (response?.code) {
+    case APIErrorCode.Common.MAINTENANCE:
+      useMaintenanceStore.getState().actions.setData(response?.data);
+      break;
+    case APIErrorCode.Common.UNSUPPORTED_VERSION:
+      useModalStore.getState().actions.showUpdateRequiredAlert();
+      break;
+    default:
+      break;
   }
 };
 

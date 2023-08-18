@@ -3,6 +3,7 @@ const Common = {
   SYSTEM_ISSUE: 0,
   MAINTENANCE: 'api.is_under_maintenance',
   FORBIDDEN: 'forbidden',
+  UNSUPPORTED_VERSION: 'api.unsupported_version',
 };
 
 const Auth = {
