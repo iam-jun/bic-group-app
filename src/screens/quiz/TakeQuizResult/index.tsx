@@ -41,7 +41,7 @@ const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
   const styles = createStyle(theme);
 
   const actions = useTakeQuizStore((state) => state.actions);
-  const { participantResult } = useTakeQuizStore((state) => state);
+  const { participantResult, isPrepareTakingQuiz } = useTakeQuizStore((state) => state);
   const { quizHighestScore } = usePostsStore(postsSelector.getPost(contentId, {}));
   const { score: higestScore } = quizHighestScore || {};
   const { totalTimes, score } = participantResult[participantId] || {};
@@ -49,15 +49,15 @@ const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
 
   const onPressRetake = () => {
     onRetake();
-    rootNavigation.navigate(quizStack.takeQuiz, {
-      quizId,
-      contentId,
-    });
   };
 
   const onRetake = () => {
     const onNext = (quizParticipantId: string) => {
       actions.getQuizParticipant(quizParticipantId);
+      rootNavigation.replace(quizStack.takeQuiz, {
+        quizId,
+        contentId,
+      });
     };
 
     actions.startQuiz({ quizId, onNext });
@@ -142,6 +142,8 @@ const TakeQuizResult: React.FC<TakeQuizResultProps> = ({ route }) => {
         useI18n
         onPress={onPressRetake}
         style={styles.btnRetakeOrRetry}
+        loading={isPrepareTakingQuiz}
+        disabled={isPrepareTakingQuiz}
       >
         quiz:btn_retake
       </Button.Primary>
