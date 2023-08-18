@@ -52,7 +52,7 @@ const Invitee = ({ item }: InviteeProps) => {
   );
 
   const renderInviter = () => {
-    if (invitee.isDeactivated) {
+    if (inviter.isDeactivated) {
       return (
         <View style={styles.inviterContainer}>
           <Text.BodyXS numberOfLines={1} color={theme.colors.neutral40}>
