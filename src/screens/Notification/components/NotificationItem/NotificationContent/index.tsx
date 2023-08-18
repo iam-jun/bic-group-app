@@ -88,7 +88,7 @@ const NotificationContent = ({
         <TimeView
           testID="notification_content.time_view"
           time={updatedAt}
-          type="short"
+          type="long"
           textProps={{ variant: 'bodyS', color: colors.neutral40 }}
         />
       </View>
