@@ -5,7 +5,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/baseComponents/Text';
 import SvgIcon from '~/baseComponents/Icon/SvgIcon';
 import NewFeatureImg from '../../../assets/images/new_feeature_grey.svg';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import spacing from '~/theme/spacing';
 

@@ -5,7 +5,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/baseComponents/Text';
 import useAuthController from '~/screens/auth/store';
 import AppVersion from '~/screens/Menu/components/AppVersion';
-import CheckUpdate from '~/screens/Menu/components/CheckUpdate';
 import { getActions } from '~/store/selectors';
 import spacing from '~/theme/spacing';
 import Icon from '~/baseComponents/Icon';
@@ -77,6 +76,9 @@ const MenuSettings = () => {
       case SettingsAndPrivacyType.BLOCKING:
         rootNavigation.navigate(menuStack.blocking);
         break;
+      case SettingsAndPrivacyType.PRIVACY:
+        rootNavigation.navigate(menuStack.privacyCenter);
+        break;
       case SettingsAndPrivacyType.NOTIFICATIONS:
         rootNavigation.navigate(notiStack.notiSettings);
         break;
@@ -96,6 +98,12 @@ const MenuSettings = () => {
           title: 'settings:title_security',
           icon: 'ShieldCheckSolid',
           onPress: () => onPressSettingsAndPrivacy(SettingsAndPrivacyType.SECURITY),
+        },
+        {
+          type: SettingsAndPrivacyType.PRIVACY,
+          title: 'settings:privacy_center:menu_item_title',
+          icon: 'UnlockSolid',
+          onPress: () => onPressSettingsAndPrivacy(SettingsAndPrivacyType.PRIVACY),
         },
         {
           type: SettingsAndPrivacyType.BLOCKING,
@@ -168,7 +176,6 @@ const MenuSettings = () => {
 
   return (
     <View style={styles.container} testID="menu_settings">
-      <CheckUpdate />
       {settingItems.map(renderItem)}
       <Button testID="menu_setting.logout" style={[styles.itemContainer, styles.itemLogout]} onPress={onLogout}>
         <Icon tintColor={theme.colors.neutral20} size={22} icon="ArrowRightFromBracket" />

@@ -5,7 +5,7 @@ import Animated from 'react-native-reanimated';
 
 import { debounce } from 'lodash';
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
@@ -13,7 +13,7 @@ import { IRouteParams } from '~/interfaces/IRouter';
 import useNotiSettingsStore from './store';
 import Text from '~/baseComponents/Text';
 import NotiSettingItem from '../components/NotiSettingItem';
-import { IEditNotificationSetting, INotiChannel, INotiSettings } from '~/interfaces/INotification';
+import { INotiChannel, INotiSettings } from '~/interfaces/INotification';
 
 interface IHandleToggleProps {
   isChecked: boolean;
@@ -53,7 +53,7 @@ const NotiSettingDetail: FC<IRouteParams> = (props) => {
   };
 
   const handleUpdateSettings = ({ payload, oldPayload, index }:IHandleUpdateSettings) => {
-    let payloadUpdateStore: IEditNotificationSetting = {
+    let payloadUpdateStore: INotiSettings = {
       name: payload.name,
     };
     if (oldPayload?.enable !== undefined) {

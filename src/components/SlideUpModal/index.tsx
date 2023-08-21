@@ -1,6 +1,6 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, {
-  MutableRefObject, useImperativeHandle,
+  MutableRefObject, useImperativeHandle, useState,
 } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import {
@@ -51,6 +51,8 @@ const SlideUpModal: React.FC<SheetProps> = ({
   const theme = useTheme();
   const styles = createStyles(theme);
 
+  const [isReadyGesture, setIsReadyGesture] = useState(false);
+
   // Fixed values (for snap positions)
   const maxHeight = (maxHeightProps || dimension.deviceHeight - insets.top) - topOffset;
 
@@ -73,6 +75,7 @@ const SlideUpModal: React.FC<SheetProps> = ({
     if (expandHeight) expand();
     else maximise();
 
+    setIsReadyGesture(true);
     onOpened?.();
   };
 
@@ -80,6 +83,7 @@ const SlideUpModal: React.FC<SheetProps> = ({
     if (urgent) modalHeight.value = 0;
     else modalHeight.value = withSpring(0, springConfig);
     position.value = 'minimised';
+    setIsReadyGesture(false);
     onClosed?.();
   };
 
@@ -172,6 +176,7 @@ const SlideUpModal: React.FC<SheetProps> = ({
             top: 20, bottom: 20, left: 20, right: 20,
           }}
           onGestureEvent={onGestureEvent}
+          enabled={isReadyGesture}
         >
           <Animated.View
             style={styles.handleContainer}
@@ -228,6 +233,8 @@ const handleNewHeight = (params: {
   maxHeight: number;
   minHeight: number;
 }) => {
+  'worklet';
+
   const {
     position, expandHeight, maxHeight, minHeight,
   } = params;

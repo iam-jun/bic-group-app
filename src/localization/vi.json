@@ -184,7 +184,7 @@
     "btn_go_back": "Quay về",
     "text_unsupport_feature": "Chúng tôi chưa hỗ trợ tính năng này trên thiết bị di động. Vui lòng xem chi tiết trên phiên bản web",
     "text_maintenance_title": "Chúng tôi đang bảo trì.",
-    "text_maintenance_content": "Chúng tôi sẽ trở lại lúc ",
+    "text_maintenance_content": "Nền tảng tạm thời không khả dụng trong thời gian bảo trì. Chúng tôi sẽ quay lại tại **(endAt)**\nChúng tôi xin lỗi vì bất kỳ sự bất tiện nào và đánh giá cao sự hỗ trợ liên tục của bạn.",
     "text_select_file": "Chọn file",
     "content_unavailable": {
       "title": "Nội dung này hiện không khả dụng",
@@ -321,6 +321,7 @@
     "text_err_email_exist": "Email này đã tồn tại. Vui lòng thử email khác.",
     "text_agree_to_our": "Đồng ý với chúng tôi về ",
     "text_privacy_terms": "Quyền riêng tư và các điều khoản",
+    "text_agree_to_terms_sigin": "Bằng cách đăng nhập vào BIC Group, bạn đồng ý với chúng tôi ",
     "text_you_have_an_account": "Bạn đã có một tài khoản? ",
     "text_sign_in_now": "Đăng nhập ngay",
     "title_sign_up_success_modal": "Tài khoản của bạn đã được tạo thành công",
@@ -561,7 +562,24 @@
         "title": "Bỏ gán huy hiệu nhóm?",
         "content": "Để bảo vệ quyền riêng tư của các thành viên trong nhóm, huy hiệu sẽ không được gán cho nhóm của bạn."
       }
-    }
+    },
+    "privacy_center": {
+      "menu_item_title": "Sự riêng tư",
+      "screen_title": "Trung tâm bảo mật",
+      "screen_description": "Quản lý và kiểm soát quyền riêng tư cá nhân phù hợp với bạn.",
+      "personal_information_visibility": {
+        "title": "Hiển thị thông tin cá nhân",
+        "description": "Kiểm soát ai có thể xem thông tin cá nhân của bạn trong hồ sơ của bạn.",
+        "everyone_type": "Mọi người",
+        "everyone_description": "Mọi người đều có thể xem thông tin của bạn.",
+        "community_members_type": "Thành viên cộng đồng",
+        "community_members_description": "Những người trong cùng một cộng đồng với bạn có thể xem thông tin của bạn.",
+        "only_me_type": "Chỉ mình tôi",
+        "only_me_description": "Không ai có thể xem thông tin của bạn."
+      }
+    },
+    "text_no_experience_to_show": "Không có kinh nghiệm để hiển thị",
+    "text_no_contact_to_show": "Không có liên hệ để hiển thị"
   },
   "languages": {
     "title_en": "English",
@@ -581,6 +599,7 @@
     "title_feed_content_series": "Series",
     "title_install_chat": "Không tìm thấy BIC Chat",
     "text_desc_install_chat": "Vui lòng cài đặt BIC Chat để sử dụng tính năng này",
+    "text_get_bic_chat": "Tải BIC Chat",
     "newsfeed_search": {
       "text_cta_see_result_for_search_text": "Xem kết quả tìm kiếm \"%SEARCH_TEXT%\"",
       "clear": "Xoá hết",
@@ -1089,7 +1108,19 @@
   "profile": {
     "title_edit_profile": "Chỉnh sửa thông tin",
     "title_direct_message": "Gửi tin nhắn",
-    "title_view_profile": "Xem trang cá nhân"
+    "title_view_profile": "Xem trang cá nhân",
+    "text_name_must_not_be_empty": "Tên không được để trống",
+    "fullname_rule": {
+      "not_allow_special_character": "Họ và tên không được chứa ký tự đặc biệt",
+      "not_allow_number": "Tên đầy đủ không được chứa số",
+      "character_length": "Tên đầy đủ phải từ 3 đến 64 ký tự"
+    },
+    "username_rule": {
+      "character_length": "Tên người dùng phải từ 5 đến 50 ký tự",
+      "not_allow_special_character": "Tên Người dùng không thể chứa ký tự đặc biệt kể cả khoảng trắng",
+      "not_allow_uppercase": "Tên người dùng không được chứa các ký tự viết hoa",
+      "not_allow_start_with_number_or_dot": "Tên người dùng phải bắt đầu bằng một chữ cái"
+    }
   },
   "right_col": {
     "about_bein": "About Bein",
@@ -1140,12 +1171,35 @@
     "text_remove_notification_success": "Đã xóa thông báo thành công",
     "notification_settings": {
       "title": "Cài đặt thông báo",
+      "screen_title": "Cài đặt chung",
       "description": "Chúng tôi vẫn có thể gửi cho bạn thông báo quan trọng về tài khoản của bạn ngoài cài đặt của bạn",
       "error_title": "Xin lỗi, chúng tôi không thể lấy dữ liệu ở đây",
       "error_description": "Xin vui lòng làm mới trang hoặc thử lại lần sau",
       "allow_notifications": "Cho phép thông báo",
       "in_app_text": "Trong ứng dụng",
-      "push_text": "Ngoài ứng dụng"
+      "push_text": "Ngoài ứng dụng",
+      "default_text": "Mặc định",
+      "off_text": "Tắt",
+      "not_joined_the_community": {
+        "title": "Không có gì để thiết lập",
+        "description": "Tham gia một cộng đồng sau đó thiết lập cài đặt tại đây."
+      }
+    },
+    "advanced_notifications_settings": {
+      "title": "Cài đặt thông báo nâng cao",
+      "screen_title": "Cài đặt nâng cao",
+      "content": "Cài đặt thông báo cụ thể cho từng cộng đồng và các nhóm bên trong cộng đồng đó",
+      "title_setup_community": "Thiết lập cho cộng đồng của bạn",
+      "title_setup_group": "Thiết lập cho các nhóm của bạn",
+      "description_setup_group": "Cài đặt mặc định sử dụng cài đặt thông báo chung của bạn cho đến khi bạn thiết lập cụ thể.",
+      "title_reset_to_default": "Đặt lại về mặc định",
+      "reset_to_default_tooltip": "Đặt lại về mặc định để sử dụng cài đặt thông báo chung của bạn.",
+      "text_enable_settings": "Bật cài đặt",
+      "enable_settings_tooltip": "Bật cài đặt để thiết lập riêng cho nhóm của bạn",
+      "search_community_title": "Chọn cộng đồng của bạn",
+      "search_placeholder": "Tìm kiếm cộng đồng",
+      "search_group_placeholder": "Tìm kiếm nhóm",
+      "search_group_title": "Chọn nhóm của bạn"
     }
   },
   "new_feature": {

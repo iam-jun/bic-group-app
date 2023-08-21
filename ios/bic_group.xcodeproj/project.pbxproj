@@ -684,7 +684,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
-				CODEPUSH_KEY = WFkCTIUyt86FxN7FgknQdT733kFM2ZhnCGDQ6;
 				CODE_SIGN_ENTITLEMENTS = bic_group/bic_groupDebug.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -724,7 +723,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
-				CODEPUSH_KEY = WFkCTIUyt86FxN7FgknQdT733kFM2ZhnCGDQ6;
 				CODE_SIGN_ENTITLEMENTS = bic_group/bic_groupRelease.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
@@ -828,7 +826,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
-				CODEPUSH_KEY = 7dyJcdB8mq1olhp57D2oUN77kIVW7btaRsqbO;
 				CODE_SIGN_ENTITLEMENTS = bic_group/bic_groupDebugStaging.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
@@ -954,7 +951,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
-				CODEPUSH_KEY = 7dyJcdB8mq1olhp57D2oUN77kIVW7btaRsqbO;
 				CODE_SIGN_ENTITLEMENTS = bic_group/bic_groupReleaseStaging.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
@@ -1077,7 +1073,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
-				CODEPUSH_KEY = NULL;
 				CODE_SIGN_ENTITLEMENTS = bic_group/bic_group.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
@@ -1207,7 +1202,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
-				CODEPUSH_KEY = NULL;
 				CODE_SIGN_ENTITLEMENTS = bic_group/bic_groupDebugDevelopment.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
@@ -1458,7 +1452,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
-				CODEPUSH_KEY = "z6Wwzfb-KHWrnHMFRlTTuYKCreJvkCMAQbXkF";
 				CODE_SIGN_ENTITLEMENTS = bic_group/bic_groupReleasePrerelease.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
@@ -1588,7 +1581,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
-				CODEPUSH_KEY = "z6Wwzfb-KHWrnHMFRlTTuYKCreJvkCMAQbXkF";
 				CODE_SIGN_ENTITLEMENTS = bic_group/bic_groupDebugPrerelease.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;

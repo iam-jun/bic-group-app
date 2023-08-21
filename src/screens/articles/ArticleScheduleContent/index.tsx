@@ -8,7 +8,7 @@ import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Text from '~/baseComponents/Text';
 import Header from '~/beinComponents/Header';
 import Image from '~/components/Image';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { ArticleScheduleItem } from '~/components/articles';
 import { IPayloadGetArticleScheduleContent } from '~/interfaces/IArticle';

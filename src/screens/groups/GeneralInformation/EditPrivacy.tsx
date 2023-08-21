@@ -2,7 +2,7 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import Text from '~/baseComponents/Text';
 import { spacing } from '~/theme';

@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import spacing from '~/theme/spacing';
 import ChosenAudiences from './components/ChosenAudiences';
 import CoverImage from './components/CoverImage';

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { RefreshControl, ScrollView, StyleSheet } from 'react-native';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 
 import { useUserIdAuth } from '~/hooks/auth';
 

@@ -85,6 +85,13 @@
             android:exported="true"
             android:readPermission="${applicationId}.READ_DATABASE"
             android:writePermission="${applicationId}.WRITE_DATABASE" />
+        <!-- Apply custom icon noti -->
+        <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notification" 
+            tools:replace="android:resource"/>
+        <meta-data android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorPrimary"
+            tools:replace="android:resource"/>
     </application>
     <queries>
         <intent>

@@ -29,6 +29,7 @@ export interface ContentHeaderProps {
   style?: StyleProp<ViewStyle>;
 
   createdAt?: any;
+  publishedAt?: any;
   actor: any;
   audience?: IPostAudience;
   disabled?: boolean;
@@ -43,6 +44,7 @@ const ContentHeader: FC<ContentHeaderProps> = ({
   style,
 
   createdAt,
+  publishedAt,
   actor,
   audience,
   disabled = false,
@@ -61,6 +63,9 @@ const ContentHeader: FC<ContentHeaderProps> = ({
   const modalActions = useModalStore((state) => state.actions);
 
   const textAudiences = getAudiencesText(audience, t);
+  // prevent publishedAt null, use createdAt instead
+  // draft content use createdAt
+  const timeDisplay = publishedAt || createdAt;
 
   const {
     avatar, fullname: actorName, isDeactivated, isVerified, showingBadges = [],
@@ -165,7 +170,7 @@ const ContentHeader: FC<ContentHeaderProps> = ({
         <View style={styles.rowCenter}>
           <TimeView
             textProps={{ variant: 'bodyXS', color: colors.neutral40 }}
-            time={createdAt}
+            time={timeDisplay}
           />
         </View>
       </View>

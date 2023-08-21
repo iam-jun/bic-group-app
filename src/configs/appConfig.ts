@@ -31,6 +31,7 @@ const appConfig = {
   userCoverImageMaxSize: 25 * 1024 * 1024,
   userAvatarImageMaxSize: 25 * 1024 * 1024,
   groupImageMaxSize: 25 * 1024 * 1024,
+  limitGroupAdvancedSettings: 20,
   superUsers: [
     'namanh@evolgroup.vn',
     'dieplamminhthu@evolgroup.vn',

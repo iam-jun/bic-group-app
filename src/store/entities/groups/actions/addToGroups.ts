@@ -7,7 +7,7 @@ const addToGroups = (set, get) => (payload: IGroupDetail) => {
 
   newGroups[id] = payload;
 
-  set({ groups: newGroups, currentGroupId: id }, 'addToGroups');
+  set({ groups: newGroups }, 'addToGroups');
 };
 
 export default addToGroups;

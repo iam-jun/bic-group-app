@@ -8,12 +8,12 @@ import { PostStatus } from '~/interfaces/IPost';
 import { formatDate } from '~/utils/formatter';
 
 interface ArticleBoxScheduleTimeProps {
-  publishedAt: string;
+  scheduledAt: string;
   status: PostStatus;
 }
 
 const ArticleBoxScheduleTime: React.FC<ArticleBoxScheduleTimeProps> = ({
-  publishedAt,
+  scheduledAt,
   status,
 }) => {
   const theme: ExtendedTheme = useTheme();
@@ -67,7 +67,7 @@ const ArticleBoxScheduleTime: React.FC<ArticleBoxScheduleTimeProps> = ({
             style={styles.icon}
           />
           <Text.BodyMMedium color={labelTimeColor}>
-            {formatDate(publishedAt, 'dddd, MMM D')}
+            {formatDate(scheduledAt, 'dddd, MMM D')}
           </Text.BodyMMedium>
         </View>
         <Text color={colors.blue20}>
@@ -83,7 +83,7 @@ const ArticleBoxScheduleTime: React.FC<ArticleBoxScheduleTimeProps> = ({
             style={styles.icon}
           />
           <Text.BodyMMedium color={labelTimeColor}>
-            {formatDate(publishedAt, 'hh:mm A')}
+            {formatDate(scheduledAt, 'hh:mm A')}
           </Text.BodyMMedium>
         </View>
       </View>

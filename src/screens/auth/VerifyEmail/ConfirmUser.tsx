@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Text from '~/baseComponents/Text';
 import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import Button from '~/baseComponents/Button';
