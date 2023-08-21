@@ -123,12 +123,9 @@ const UserProfile = (props: any) => {
   }, [myProfileData]);
 
   const onPressBack = () => {
-    if (isCurrentUser) {
-      resetUserBadge();
-      reset();
-    } else {
-      resetUserBadge();
-      reset();
+    resetUserBadge();
+    reset();
+    if (!isCurrentUser) {
       userProfileActions.getUserProfile({ userId: currentUserId });
       userProfileActions.getWorkExperience(currentUserId);
       userBadgeActions.getOwnedBadges();
