@@ -60,13 +60,15 @@ const PublishQuiz: FC<PublishQuizProps> = (props) => {
   const theme = useTheme();
   const styles = createStyle(theme);
 
+  const onBack = () => handleBack(false);
+
   useEffect(() => {
     // By default, react hook form doesn't throw error at the init stage,
     // so we need to trigger validate immediately for showing error
     trigger('numberOfQuestionsDisplay');
   }, []);
 
-  useBackPressListener(handleBack);
+  useBackPressListener(onBack);
 
   return (
     <View style={styles.container}>
@@ -80,7 +82,7 @@ const PublishQuiz: FC<PublishQuizProps> = (props) => {
         }}
         buttonText={isPublishQuiz ? 'common:btn_create' : 'common:btn_save'}
         onPressButton={onPublishOrSaveQuiz(quizId, isPublishQuiz)}
-        onPressBack={handleBack}
+        onPressBack={onBack}
       />
       <KeyboardAwareScrollView
         style={styles.container}
