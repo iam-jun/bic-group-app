@@ -107,21 +107,21 @@ const useGenerateQuiz = (
     publishOrSaveQuiz(quizId, data, isPublish);
   });
 
-  const handleBack = () => {
-    // if (isDirty) {
-    //   Keyboard.dismiss();
-    //   showAlert({
-    //     title: t('discard_alert:title'),
-    //     content: t('discard_alert:content'),
-    //     cancelBtn: true,
-    //     cancelLabel: t('common:btn_discard'),
-    //     confirmLabel: t('common:btn_stay_here'),
-    //     onCancel: () => {
-    //       rootNavigation.goBack();
-    //     },
-    //   });
-    //   return;
-    // }
+  const handleBack = (isShowAlert = true) => {
+    if (isDirty && isShowAlert) {
+      Keyboard.dismiss();
+      showAlert({
+        title: t('discard_alert:title'),
+        content: t('discard_alert:content'),
+        cancelBtn: true,
+        cancelLabel: t('common:btn_discard'),
+        confirmLabel: t('common:btn_stay_here'),
+        onCancel: () => {
+          rootNavigation.goBack();
+        },
+      });
+      return;
+    }
     rootNavigation.goBack();
   };
 
