@@ -52,7 +52,9 @@ const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
 
   const actionsQuizzesStore = useQuizzesStore((state) => state.actions);
 
-  const { questions = [], id, genStatus } = quiz || {};
+  const {
+    questions = [], id, genStatus, numberOfQuestionsDisplay = null, title = null, description = null,
+  } = quiz || {};
 
   const disabledBtnNext = questions.length === 0;
   const isShowGenerating
@@ -94,6 +96,18 @@ const ComposeQuiz: FC<ComposeQuizProps> = (props) => {
       actionsQuizzesStore.setWaitingProcessingQuiz(null);
     };
   }, []);
+
+  useEffect(() => {
+    // prepare for PublishQuiz screen
+    actionsQuizzesStore.setFormGenerateQuiz({
+      numberOfQuestionsDisplay,
+      title,
+      description,
+    });
+    return () => {
+      actionsQuizzesStore.setFormGenerateQuiz({});
+    };
+  }, [numberOfQuestionsDisplay, title, description]);
 
   const renderItem: ListRenderItem<QuestionItem> = ({ item, index }) => (
     <QuestionComposeQuiz
