@@ -12,10 +12,14 @@ import useCommunityController from '~/screens/communities/store';
 import { useRootNavigation } from '~/hooks/navigation';
 import Icon from '~/baseComponents/Icon';
 import useGeneralInformationStore from './store';
+import useModalStore from '~/store/modal';
+import { ITypeGroup } from '~/interfaces/common';
+import { previewPrivacy } from './store/helper';
+import ChangePrivacy from './components/ChangePrivacy';
 
 const EditPrivacy = (props: any) => {
   const {
-    type = 'group', id = '', privacy = '', rootGroupId,
+    type = ITypeGroup.GROUP, id = '', privacy = '', rootGroupId,
   } = props?.route?.params || {};
 
   const theme: ExtendedTheme = useTheme();
@@ -24,10 +28,11 @@ const EditPrivacy = (props: any) => {
   const { rootNavigation } = useRootNavigation();
 
   const [selectedPrivacy, setSelectedPrivacy] = useState(privacy);
-  const isGroupScope = type === 'group';
+  const isGroupScope = type === ITypeGroup.GROUP;
   const privacyType = isGroupScope ? GroupPrivacyType : CommunityPrivacyType;
   const controller = useCommunityController((state) => state.actions);
   const groupActions = useGeneralInformationStore((state) => state.actions);
+  const showModal = useModalStore((state) => state.actions.showModal);
 
   const shouldSelectSecretPrivacy = selectedPrivacy === GroupPrivacyType.SECRET;
   const shouldSelectPrivatePrivacy = selectedPrivacy === privacyType.PRIVATE;
@@ -36,10 +41,29 @@ const EditPrivacy = (props: any) => {
 
   const onNavigateBack = () => rootNavigation.goBack();
 
-  const onPressSave = () => {
-    const data = { id, rootGroupId, privacy: selectedPrivacy };
+  const onPressSave = async () => {
+    try {
+      const payload = {
+        groupId: isGroupScope ? id : rootGroupId,
+        data: { privacy: selectedPrivacy },
+      };
+      const isShowModalChangePrivacy = await previewPrivacy(payload);
+      if (isShowModalChangePrivacy) {
+        showModal({
+          isOpen: true,
+          ContentComponent: <ChangePrivacy onChange={onEdit} />,
+        });
+        return;
+      }
+      onEdit();
+    } catch (error) {
+      return null;
+    }
+  };
 
-    if (type === 'group') {
+  const onEdit = () => {
+    const data = { id, rootGroupId, privacy: selectedPrivacy };
+    if (isGroupScope) {
       groupActions.editGroupDetail(data, onNavigateBack);
     } else {
       controller.editCommunityDetail(data, onNavigateBack);
