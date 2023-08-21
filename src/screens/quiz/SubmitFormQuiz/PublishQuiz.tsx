@@ -1,16 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable unused-imports/no-unused-imports */
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { isNumber } from 'lodash';
 import Header from '~/beinComponents/Header';
 import { spacing } from '~/theme';
 import useGenerateQuiz from './hooks/useGenerateQuiz';
 import TitleDescriptionSection from './components/TitleDescriptionSection';
-import QuestionAnswerSection from './components/QuestionAnswerSection';
 import QuestionAnswerDisplaySection from './components/QuestionAnswerDisplaySection';
 import CheckmarkGenerateRandomQuiz from './components/CheckmarkGenerateRandomQuiz';
 import { useBackPressListener } from '~/hooks/navigation';
@@ -33,22 +29,20 @@ const PublishQuiz: FC<PublishQuizProps> = (props) => {
   const quiz = useQuizzesStore((state) => state.data[quizId]);
   const {
     contentId,
-    title,
-    description,
-    numberOfQuestions,
-    numberOfQuestionsDisplay,
     status,
+    questions,
   } = quiz || {};
 
+  const inputNumberOfQuestionsDisplay = useQuizzesStore.getState().formGenerateQuiz?.numberOfQuestionsDisplay;
+  const inputTitle = useQuizzesStore.getState().formGenerateQuiz?.title;
+  const inputDescription = useQuizzesStore.getState().formGenerateQuiz?.description;
+
   const initFormData: FormGenerateQuiz = {
-    title,
-    description,
-    numberOfQuestions: isNumber(numberOfQuestions)
-      ? `${numberOfQuestions}`
-      : numberOfQuestions,
-    numberOfQuestionsDisplay: isNumber(numberOfQuestionsDisplay)
-      ? `${numberOfQuestionsDisplay}`
-      : numberOfQuestionsDisplay,
+    title: inputTitle,
+    description: inputDescription,
+    numberOfQuestionsDisplay: !!inputNumberOfQuestionsDisplay
+      ? `${inputNumberOfQuestionsDisplay}`
+      : inputNumberOfQuestionsDisplay,
   };
   const {
     control,
@@ -65,6 +59,12 @@ const PublishQuiz: FC<PublishQuizProps> = (props) => {
 
   const theme = useTheme();
   const styles = createStyle(theme);
+
+  useEffect(() => {
+    // By default, react hook form doesn't throw error at the init stage,
+    // so we need to trigger validate immediately for showing error
+    trigger('numberOfQuestionsDisplay');
+  }, []);
 
   useBackPressListener(handleBack);
 
@@ -91,6 +91,7 @@ const PublishQuiz: FC<PublishQuizProps> = (props) => {
           control={control}
           watch={watch}
           trigger={trigger}
+          questionsLength={questions.length}
         />
         <CheckmarkGenerateRandomQuiz />
       </KeyboardAwareScrollView>

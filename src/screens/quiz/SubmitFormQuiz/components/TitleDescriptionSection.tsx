@@ -6,6 +6,7 @@ import { useBaseHook } from '~/hooks';
 import { FormGenerateQuiz } from '~/interfaces/IQuiz';
 import { spacing } from '~/theme';
 import { validateSpaceTrap } from '../../helper';
+import useQuizzesStore from '~/store/entities/quizzes';
 
 type TitleDescriptionSectionProps = {
   control: Control<FormGenerateQuiz>;
@@ -17,6 +18,8 @@ const TitleDescriptionSection: FC<TitleDescriptionSectionProps> = ({
   const { t } = useBaseHook();
   const styles = createStyle();
 
+  const quizzesStoreActions = useQuizzesStore((state) => state.actions);
+
   const renderInputTitle = ({
     field: { onChange, value },
     fieldState: { error },
@@ -27,7 +30,12 @@ const TitleDescriptionSection: FC<TitleDescriptionSectionProps> = ({
       value={value}
       maxLength={64}
       placeholder={t('quiz:input_title_placeholder')}
-      onChangeText={onChange}
+      onChangeText={(text) => {
+        quizzesStoreActions.setFormGenerateQuiz({
+          title: text,
+        });
+        onChange(text);
+      }}
       error={!!error && !!error.message}
       helperText={!!error && error.message}
     />
@@ -39,7 +47,12 @@ const TitleDescriptionSection: FC<TitleDescriptionSectionProps> = ({
       label={t('quiz:input_description')}
       value={value}
       placeholder={t('quiz:input_description_placeholder')}
-      onChangeText={onChange}
+      onChangeText={(text) => {
+        quizzesStoreActions.setFormGenerateQuiz({
+          description: text,
+        });
+        onChange(text);
+      }}
       style={styles.containerInputDescription}
     />
   );

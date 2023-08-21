@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 import {
   EditQuizActionsParams,
+  FormGenerateQuiz,
   GenerateQuizParams,
   GetQuizDetailParams,
   IQuiz,
@@ -20,6 +21,7 @@ import createQuestionQuiz from './actions/createQuestionQuiz';
 import editQuestionQuiz from './actions/editQuestionQuiz';
 
 export interface IQuizzesState extends IBaseState {
+  formGenerateQuiz: FormGenerateQuiz;
   waitingProcessingQuiz: string | null;
   loading: boolean;
   isGenerating: boolean;
@@ -28,6 +30,7 @@ export interface IQuizzesState extends IBaseState {
     [quizId: string]: IQuiz;
   };
   actions: {
+    setFormGenerateQuiz: (formGenerateQuiz: FormGenerateQuiz) => void;
     setWaitingProcessingQuiz: (quizId: string | null) => void;
     setIsGenerating: (isGenerating: boolean) => void;
     generateQuiz: (params: GenerateQuizParams, onSuccess?: (quiz: IQuiz) => void) => void;
@@ -45,6 +48,7 @@ export interface IQuizzesState extends IBaseState {
 }
 
 const initState: InitStateType<IQuizzesState> = {
+  formGenerateQuiz: {},
   waitingProcessingQuiz: null,
   loading: false,
   isGenerating: false,
@@ -55,6 +59,14 @@ const initState: InitStateType<IQuizzesState> = {
 const quizzesStore = (set, get): IQuizzesState => ({
   ...initState,
   actions: {
+    setFormGenerateQuiz: (formGenerateQuiz: FormGenerateQuiz) => {
+      set((state: IQuizzesState) => {
+        state.formGenerateQuiz = {
+          ...state.formGenerateQuiz,
+          ...formGenerateQuiz,
+        };
+      }, 'setFormGenerateQuiz');
+    },
     setWaitingProcessingQuiz: (quizId: string | null) => {
       set((state: IQuizzesState) => {
         state.waitingProcessingQuiz = quizId;

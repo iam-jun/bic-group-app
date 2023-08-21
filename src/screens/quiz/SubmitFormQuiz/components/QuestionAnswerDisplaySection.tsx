@@ -9,7 +9,7 @@ import {
   UseFormWatch,
 } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
-import { isEmpty } from 'lodash';
+import { isEmpty, isNumber } from 'lodash';
 import { TextInput } from '~/baseComponents/Input';
 import { useBaseHook } from '~/hooks';
 import { spacing } from '~/theme';
@@ -17,23 +17,28 @@ import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { FormGenerateQuiz } from '~/interfaces/IQuiz';
 import { MAX_QUESTIONS, MAX_ANSWERS, validateIntegerNumber } from '../../helper';
+import useQuizzesStore from '~/store/entities/quizzes';
 
 type QuestionAnswerDisplaySectionProps = {
   control: Control<FormGenerateQuiz>;
   watch: UseFormWatch<FormGenerateQuiz>;
   trigger: UseFormTrigger<FormGenerateQuiz>;
+  questionsLength: number;
 };
 
 const QuestionAnswerDisplaySection: FC<QuestionAnswerDisplaySectionProps> = ({
   control,
   watch,
   trigger,
+  questionsLength,
 }) => {
   const { t } = useBaseHook();
   const theme = useTheme();
   const styles = createStyle(theme);
 
-  const question = watch('numberOfQuestions');
+  const quizzesStoreActions = useQuizzesStore((state) => state.actions);
+
+  // const question = watch('numberOfQuestions');
   // const answer = watch('numberOfAnswers');
 
   // useEffect(() => {
@@ -58,7 +63,12 @@ const QuestionAnswerDisplaySection: FC<QuestionAnswerDisplaySectionProps> = ({
       placeholder={t('quiz:input_number_question_placeholder', {
         max: MAX_QUESTIONS,
       })}
-      onChangeText={onChange}
+      onChangeText={(text) => {
+        quizzesStoreActions.setFormGenerateQuiz({
+          numberOfQuestionsDisplay: text,
+        });
+        onChange(text);
+      }}
       error={!!error && !!error.message}
       helperText={!!error && error.message}
       keyboardType="number-pad"
@@ -83,7 +93,7 @@ const QuestionAnswerDisplaySection: FC<QuestionAnswerDisplaySectionProps> = ({
     greaterThan0: (value) => isEmpty(value)
       || (!isEmpty(value) && Number(value) > 0)
       || t('quiz:the_question_must_be_greater_than_0'),
-    lessThan: (value) => Number(value) <= Number(question)
+    lessThan: (value) => Number(value) <= questionsLength
       || t('quiz:cannot_exceed_the_number_of_questions_above'),
   };
 
