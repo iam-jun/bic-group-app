@@ -35,13 +35,15 @@ const SearchResults = ({
 
   const renderItemUser = ({ item }: { item: string; index: number }) => {
     const isSelected = selectedUsers.includes(item);
+    const isUnselectedAndReachedMax = selectedUsers.length === WARNING_SECTION.MAX && !isSelected;
     const isDisabledCheckbox
-      = (selectedUsers.length === WARNING_SECTION.MAX || loadingView) && isSelected
+      = loadingView && isSelected
         ? 'disabled-auto-selected'
-        : selectedUsers.length === WARNING_SECTION.MAX || loadingView
+        : (loadingView && !isSelected) || isUnselectedAndReachedMax
           ? 'disabled'
           : undefined;
-    const isDisabledText = selectedUsers.length === WARNING_SECTION.MAX || loadingView;
+
+    const isDisabledText = isUnselectedAndReachedMax || loadingView;
     const colorText = loadingView ? colors.transparent1 : colors.neutral70;
     const currentUser = data[item];
     const { fullname, avatar } = currentUser;
