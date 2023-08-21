@@ -43,10 +43,10 @@ export const buildGenerateQuizParams = (data: FormGenerateQuiz, contentId?: stri
     numberOfAnswers: Number(numberOfAnswers),
     numberOfQuestionsDisplay: !!numberOfQuestionsDisplay
       ? Number(numberOfQuestionsDisplay)
-      : undefined,
+      : null,
     numberOfAnswersDisplay: !!numberOfAnswersDisplay
       ? Number(numberOfAnswersDisplay)
-      : undefined,
+      : null,
     contentId,
     isRandom: true,
   };
