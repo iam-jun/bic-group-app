@@ -117,6 +117,7 @@ const InvitePeopleToYourGroup = (props: InvitePeopleToYourGroupProps) => {
       <TextSelectedPeople selectedUsers={selectedUsers} loading={loading} />
       <View style={styles.inputIconContainer}>
         <SearchInput
+          autoFocus
           editable={!loading}
           value={searchText}
           autoComplete="off"
