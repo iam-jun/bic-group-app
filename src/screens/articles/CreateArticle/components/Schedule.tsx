@@ -27,7 +27,7 @@ const Schedule: FC<ScheduleProps> = ({ articleId, isFromReviewSchedule }) => {
     validButtonPublish,
     validateSeriesTags,
     handleSave,
-    resetPublishedAt,
+    resetScheduledAt,
   } = useCreateArticle({ articleId });
 
   const disabled = !validButtonPublish || isValidating;
@@ -68,7 +68,7 @@ const Schedule: FC<ScheduleProps> = ({ articleId, isFromReviewSchedule }) => {
     modalActions.hideModal();
     actions.setErrorScheduleSubmiting('');
     actions.setIsScheduleSubmitingSuccess(false);
-    resetPublishedAt();
+    resetScheduledAt();
   };
 
   const modalizeProps = {

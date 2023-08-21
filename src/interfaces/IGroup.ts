@@ -249,6 +249,8 @@ export interface IGetCommunityGroup {
   listBy?: 'tree' | 'flat';
   limit?: number;
   offset?: number;
+  includeRootGroup?: boolean;
+  sort?: string;
 }
 
 export interface IPayloadGroupSchemeAssignments {

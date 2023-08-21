@@ -1,5 +1,6 @@
 import groupApi from '~/api/GroupApi';
 import appConfig from '~/configs/appConfig';
+import useAdvancedNotiSettingsStore from '~/screens/Notification/AdvancedSettings/store';
 
 const getYourCommunities
   = (set, get) => async (isRefreshing?: boolean) => {
@@ -7,7 +8,6 @@ const getYourCommunities
       const { ids, items, hasNextPage } = get();
 
       if (!isRefreshing && !hasNextPage) return;
-
       set(
         {
           loading: !isRefreshing,
@@ -48,6 +48,10 @@ const getYourCommunities
         },
         'getYourCommunitiesSuccess',
       );
+      if (isRefreshing) {
+        useAdvancedNotiSettingsStore.getState().actions.setSelectedCommunity(data[0]);
+        useAdvancedNotiSettingsStore.getState().actions.setIsLoading(false);
+      }
     } catch (e) {
       console.error(
         '\x1b[31m🐣️ getYourCommunities error: ',
@@ -61,6 +65,7 @@ const getYourCommunities
         },
         'getYourCommunitiesFailed',
       );
+      useAdvancedNotiSettingsStore.getState().actions.setIsLoading(false);
     }
   };
 

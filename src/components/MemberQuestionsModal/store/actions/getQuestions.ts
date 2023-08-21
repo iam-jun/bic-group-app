@@ -51,7 +51,7 @@ const getQuestions = (set, _get) => async (groupId: string, callBackError: ()=> 
       }, 1000,
     );
   } catch (error) {
-    console.error('\x1b[31m🐣️ action getTerms error: ', error, '\x1b[0m');
+    console.error('\x1b[31m🐣️ action getQuestions error: ', error, '\x1b[0m');
     set((state: IMemberQuestionsState) => {
       state.loading = false;
       state.questions = {};

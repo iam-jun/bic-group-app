@@ -1,5 +1,5 @@
 import { View, StyleSheet } from 'react-native';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/baseComponents/Text';
@@ -14,31 +14,74 @@ import { Button } from '~/baseComponents';
 import { IconType } from '~/resources/icons';
 import Icon from '~/baseComponents/Icon';
 import PreviewMembers from '../PreviewMembers';
+import Terms from '~/components/TermsModal/components/Terms';
+import useTermStore from '~/components/TermsModal/store';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import { IGroupSettings, ITypeGroup } from '~/interfaces/common';
+import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
+import useCommunitiesStore from '~/store/entities/communities';
 
 type AboutContentProps = {
   profileInfo: {
     description?: string;
     userCount?: number;
     privacy?: GroupPrivacyType;
-    members?: IPreviewMember[]
+    members?: IPreviewMember[];
+    affectedSettings?: IGroupSettings
   };
+  groupId?: string;
+  communityId?: string;
+  typeGroup?: ITypeGroup;
   showPrivate?: boolean;
   onPressMember?: () => void;
 }
 
 export const CONTAINER_HORIZONTAL_PADDING = spacing.padding.large;
 
-const AboutContent: FC<AboutContentProps> = ({ profileInfo, showPrivate, onPressMember }) => {
+const AboutContent: FC<AboutContentProps> = ({
+  profileInfo, showPrivate, groupId, communityId, typeGroup, onPressMember,
+}) => {
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const { colors } = theme;
 
   const {
-    description, userCount, privacy, members,
+    description, userCount, privacy, members, affectedSettings,
   } = profileInfo;
   const privacyData = GroupPrivacyDetail[privacy] || {};
   const { icon: iconPrivacy, privacyTitle }: any = privacyData;
+  const { isActiveGroupTerms } = affectedSettings || {};
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { getTermsData, clearTermsByGroupId } = useTermStore((state) => state.actions);
+  const getGroupDetail = useGroupDetailStore((state) => state.actions.getGroupDetail);
+  const getCommunity = useCommunitiesStore((state) => state.actions.getCommunity);
+
+  useEffect(() => {
+    (async () => {
+      await _getData();
+      setIsLoading(false);
+    })();
+    return () => {
+      clearTermsByGroupId(groupId);
+    };
+  }, []);
+
+  const _getData = async () => {
+    await Promise.all([getTermsData(groupId), _getGroupDetail()]);
+  };
+
+  const _getGroupDetail = () => {
+    if (typeGroup === ITypeGroup.GROUP) {
+      getGroupDetail({ groupId });
+    }
+    if (typeGroup === ITypeGroup.COMMUNITY) {
+      getCommunity(communityId);
+    }
+    return null;
+  };
 
   const renderDescription = () => {
     if (!description) return null;
@@ -56,10 +99,13 @@ const AboutContent: FC<AboutContentProps> = ({ profileInfo, showPrivate, onPress
     );
   };
 
+  if (isLoading) return <LoadingIndicator style={styles.loading} size="large" />;
+
   if (showPrivate) {
     return (
-      <View testID="about_content" style={styles.container}>
+      <View testID="about_content_private" style={styles.container}>
         {renderDescription()}
+        <Terms style={styles.termsInPrivate} groupId={groupId} isActiveGroupTerms={isActiveGroupTerms} />
       </View>
     );
   }
@@ -105,6 +151,7 @@ const AboutContent: FC<AboutContentProps> = ({ profileInfo, showPrivate, onPress
         })}
         <PreviewMembers userCount={userCount} members={members} />
       </View>
+      <Terms style={styles.terms} groupId={groupId} isActiveGroupTerms={isActiveGroupTerms} />
     </View>
   );
 };
@@ -137,6 +184,15 @@ const createStyle = (theme: ExtendedTheme) => {
     itemContentText: {
       marginHorizontal: spacing.margin.small,
       flex: 1,
+    },
+    loading: {
+      marginTop: spacing.margin.large,
+    },
+    terms: {
+      marginTop: spacing.margin.large,
+    },
+    termsInPrivate: {
+      padding: 0,
     },
   });
 };

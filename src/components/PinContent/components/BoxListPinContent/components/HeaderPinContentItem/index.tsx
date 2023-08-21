@@ -29,8 +29,10 @@ const HeaderPinContentItem: React.FC<HeaderPinContentItemProps> = ({
   const { name } = useRoute();
   const isReorderScreen = name === homeStack.reorderedPinContent;
 
-  const { createdAt, actor } = data || {};
+  const { publishedAt, createdAt, actor } = data || {};
   const { avatar, fullname, isVerified } = actor || {};
+  // prevent publishedAt null, use createdAt instead
+  const timeDisplay = publishedAt || createdAt;
 
   const { showMenu } = usePinContentItemMenu(data?.id, id);
 
@@ -48,7 +50,7 @@ const HeaderPinContentItem: React.FC<HeaderPinContentItemProps> = ({
           </View>
           <ViewSpacing height={spacing.margin.xSmall} />
           <TimeView
-            time={createdAt}
+            time={timeDisplay}
             textProps={{ color: colors.neutral40, variant: 'bodyXS' }}
           />
           <ViewSpacing height={spacing.margin.xTiny} />

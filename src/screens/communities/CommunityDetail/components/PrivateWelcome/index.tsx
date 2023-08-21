@@ -58,7 +58,7 @@ const PrivateWelcome = ({
       </View>
 
       <Divider size={spacing.margin.large} color={colors.gray5} />
-      <AboutContent profileInfo={community as any} showPrivate />
+      <AboutContent profileInfo={community as any} showPrivate groupId={community?.groupId} />
     </Animated.ScrollView>
   );
 };

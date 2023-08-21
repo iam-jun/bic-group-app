@@ -36,7 +36,7 @@ const GroupPrivateWelcome = ({
   const { id: groupId } = groupData || {};
 
   const _onRefresh = async () => {
-    await onRefresh({ setIsRefreshing, groupId });
+    await onRefresh({ setIsRefreshing, groupId, isPrivacyGroup: true });
   };
 
   return (
@@ -59,7 +59,7 @@ const GroupPrivateWelcome = ({
       </View>
 
       <Divider size={spacing.margin.large} color={colors.gray5} />
-      <AboutContent profileInfo={infoDetail as any} showPrivate />
+      <AboutContent profileInfo={infoDetail as any} showPrivate groupId={groupId} />
     </Animated.ScrollView>
   );
 };

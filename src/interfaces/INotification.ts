@@ -1,3 +1,5 @@
+import { IGroup } from './IGroup';
+
 export interface IDeleteNotifications {
   notiGroupIds: string[];
 }
@@ -59,7 +61,7 @@ export interface INotiChannel {
 }
 
 export interface IEditNotificationSetting {
-  name: string;
+  name?: string;
   enable?: boolean;
   channels?: INotiChannel;
 }
@@ -77,4 +79,31 @@ export interface INotiSettings {
 export enum InvitationTargetType {
   GROUP = 'GROUP',
   COMMUNITY = 'COMMUNITY',
+}
+
+export interface IAdvancedNotificationSettings {
+  communityId: string;
+  id: string;
+  groupId?: string;
+  name?: string;
+  enable?: boolean;
+  channels?: INotiChannel;
+  flag?: {
+    label: string;
+    value: boolean;
+  }
+}
+
+export interface IAdvancedSetting {
+  name: string;
+  enable: boolean;
+  channels?: INotiChannel;
+  flag?: {
+    label: string;
+    value: boolean;
+  }
+}
+
+export interface IGroupNotificationSetting extends IGroup{
+  setting: IAdvancedSetting;
 }

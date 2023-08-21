@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.3.3</string>
+	<string>0.3.4</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -63,7 +63,9 @@
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Allow $(PRODUCT_NAME) to save photo to your Photo Library</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Upload photos and video to BIC or save them to your device. Open Settings to grant BIC Read and Write access to your photo and video library</string>
+	<string>Allow "BIC Group" to access your photo library is required to attach photos or videos to posts or to change profile images
+
+Please go to Settings &gt; Privacy &gt; Photos and set BIC Group to ON</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>JetBrainsMono-Regular.ttf</string>
