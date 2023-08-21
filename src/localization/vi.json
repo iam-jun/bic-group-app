@@ -243,7 +243,11 @@
     "button_cancel_invite": "Huỷ lời mời",
     "text_invited_you_to_join_this_group": "đã mời bạn tham gia nhóm này.",
     "text_invited_you_to_join_this_community": "đã mời bạn tham gia cộng đồng này.",
-    "text_invited": "Đã mời"
+    "text_invited": "Đã mời",
+    "page_not_found": {
+      "title": "Không tìm thấy trang",
+      "description": "Rất tiếc, chúng tôi không tìm thấy trang bạn yêu cầu. Vui lòng quay lại trang chủ"
+    }
   },
   "auth": {
     "text_kickout_title": "Notice",

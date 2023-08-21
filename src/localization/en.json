@@ -117,7 +117,6 @@
     "message_remove_member_success": "{n} has been removed from this group",
     "title_mention_all": "All members in this group",
     "text_search_no_results": "Sorry, we couldn’t find anything\nrelated to your search.",
-    "title_page_not_found": "Page Not Found",
     "text_edit_success": "Profile updated successfully",
     "text_edit_fail": "Failed to update profile!",
     "text_info": "Info",
@@ -272,7 +271,11 @@
     "button_cancel_invite": "Cancel Invite",
     "text_invited_you_to_join_this_group": "invited you to join this group.",
     "text_invited_you_to_join_this_community": "invited you to join this community.",
-    "text_invited": "Invited"
+    "text_invited": "Invited",
+    "page_not_found": {
+      "title": "Page Not Found",
+      "description": "We're sorry, the page you requested could not be found. Please go back to the homepage"
+    }
   },
   "auth": {
     "text_kickout_title": "Notice",
