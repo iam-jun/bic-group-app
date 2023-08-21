@@ -42,6 +42,7 @@ import BadgeCollectionHeader from './fragments/BadgeCollection/BadgeCollectionHe
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import InvitationList from './fragments/InvitationList';
 import useMyInvitationsStore from './fragments/InvitationList/store';
+import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 
 export const USER_TABS = [
   { id: USER_TABS_TYPES.USER_ABOUT, text: 'user:user_tab_types:title_about' },
@@ -92,6 +93,7 @@ const UserProfile = (props: any) => {
   const hasNewBadge = useUserBadge((state) => state.hasNewBadge);
   const userBadgeActions = useUserBadge((state) => state.actions);
   const invitationActions = useMyInvitationsStore((state) => state.actions);
+  const { rootNavigation } = useRootNavigation();
 
   useEffect(() => {
     isFocused && userProfileActions.getUserProfile({ userId, params });
@@ -99,10 +101,6 @@ const UserProfile = (props: any) => {
     if (userId === currentUserId) {
       userBadgeActions.getOwnedBadges();
     }
-    return () => {
-      resetUserBadge();
-      reset();
-    };
   }, [isFocused, userId]);
 
   useEffect(() => {
@@ -123,6 +121,22 @@ const UserProfile = (props: any) => {
       }
     }
   }, [myProfileData]);
+
+  const onPressBack = () => {
+    if (isCurrentUser) {
+      resetUserBadge();
+      reset();
+    } else {
+      resetUserBadge();
+      reset();
+      userProfileActions.getUserProfile({ userId: currentUserId });
+      userProfileActions.getWorkExperience(currentUserId);
+      userBadgeActions.getOwnedBadges();
+    }
+    rootNavigation.goBack();
+  };
+
+  useBackPressListener(onPressBack);
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -267,7 +281,7 @@ const UserProfile = (props: any) => {
 
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
-      <Header />
+      <Header onPressBack={onPressBack} />
       {Boolean(isCurrentUser) && Boolean(selectedIndex === 2)
       && (
       <Animated.View style={[styles.badgesHeader, headerAnimated]}>
