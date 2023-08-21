@@ -3,15 +3,22 @@ import { StyleSheet } from 'react-native';
 import useCommunitiesStore from '~/store/entities/communities';
 import useNotiInvitationsStore from '~/screens/Notification/components/NotificationItem/store';
 import InvitationGroupButtons from '../InvitationGroupButtons';
+import { ITypeGroup } from '~/interfaces/common';
+import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
+import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 
 type ButtonCommunityInvitationCardProps = {
   communityId: string;
+  groupId: string | '';
+  type?: ITypeGroup;
   invitationId: string;
   isSearch?: boolean;
 };
 
 const ButtonCommunityInvitationCard: FC<ButtonCommunityInvitationCardProps> = ({
   communityId,
+  groupId,
+  type = ITypeGroup.COMMUNITY,
   invitationId,
   isSearch = false,
 }) => {
@@ -33,9 +40,16 @@ const ButtonCommunityInvitationCard: FC<ButtonCommunityInvitationCardProps> = ({
     setIsLoadingAccept(false);
   };
 
-  const callback = () => {
-    const { getCommunity } = useCommunitiesStore.getState().actions;
-    getCommunity(communityId);
+  const callback = async () => {
+    if (type === ITypeGroup.GROUP) {
+      const { getGroupDetail } = useGroupDetailStore.getState().actions;
+      const repsonse = await getGroupDetail({ groupId });
+      const joinStatus = repsonse?.data?.joinStatus;
+      useDiscoverGroupsStore.getState().actions.setGroupStatus(groupId, joinStatus);
+    } else {
+      const { getCommunity } = useCommunitiesStore.getState().actions;
+      getCommunity(communityId);
+    }
   };
 
   return (

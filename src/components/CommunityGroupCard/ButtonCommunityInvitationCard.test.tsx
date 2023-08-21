@@ -2,10 +2,13 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
 import ButtonCommunityInvitationCard from './ButtonCommunityInvitationCard';
 import useNotiInvitationsStore from '~/screens/Notification/components/NotificationItem/store';
+import { ITypeGroup } from '~/interfaces/common';
 
 describe('ButtonCommunityInvitationCard', () => {
   const props = {
     communityId: 'test',
+    groupId: 'test',
+    type: ITypeGroup.COMMUNITY,
     invitationId: 'test',
   };
 

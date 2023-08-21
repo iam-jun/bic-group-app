@@ -17,11 +17,13 @@ import { formatLargeNumber } from '~/utils/formatter';
 import ButtonCommunityGroupCard from './ButtonCommunityGroupCard';
 import useModalStore from '~/store/modal';
 import ButtonCommunityInvitationCard from './ButtonCommunityInvitationCard';
+import { ITypeGroup } from '~/interfaces/common';
 
 type CommunityGroupCardProps = {
   item: any;
   testID?: string;
   shouldShowAlertJoinTheCommunityFirst?: boolean;
+  type?: ITypeGroup;
   onJoin?: (payload: { id: string, name: string, icon: string, privacy: string, userCount: number })=>void;
   onCancel?: (id: string, groupId: string, isGroup?: boolean)=>void;
 };
@@ -30,6 +32,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
   item,
   testID,
   shouldShowAlertJoinTheCommunityFirst,
+  type = ITypeGroup.COMMUNITY,
   onJoin,
   onCancel,
 }) => {
@@ -116,6 +119,8 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
       return (
         <ButtonCommunityInvitationCard
           communityId={id}
+          groupId={id}
+          type={type}
           invitationId={invitation.id}
         />
       );

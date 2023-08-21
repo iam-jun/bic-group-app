@@ -38,7 +38,7 @@ const SearchDiscoverCommunityItem = ({
 
   const renderButton = () => {
     if (joinStatus === GroupJoinStatus.BE_INVITED) {
-      return <ButtonCommunityInvitationCard communityId={id} invitationId={invitation.id} isSearch />;
+      return <ButtonCommunityInvitationCard communityId={id} groupId="" invitationId={invitation.id} isSearch />;
     }
     return (
       <ButtonCommunityGroupCard
