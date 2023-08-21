@@ -21,9 +21,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Header from '~/beinComponents/Header';
-import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
-import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
-import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -58,7 +55,7 @@ import usePinContentStore from '~/components/PinContent/store';
 import TermsView from '~/components/TermsModal';
 import MemberQuestionsModal from '~/components/MemberQuestionsModal';
 import FloatingCreatePost from '~/screens/Home/components/FloatingCreatePost';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -78,8 +75,8 @@ const GroupDetail = (props: any) => {
     loadingGroupDetail,
     actions: { getGroupDetail },
   } = useGroupDetailStore((state) => state);
-  const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
-  const { group: groupInfo, joinStatus } = groups[currentGroupId] || {};
+  const { groups } = useGroupsStore((state: IGroupsState) => state);
+  const { group: groupInfo, joinStatus } = groups[groupId] || {};
   const {
     name, privacy, teamName, slug,
   } = groupInfo || {};
@@ -88,8 +85,7 @@ const GroupDetail = (props: any) => {
   const headerRef = useRef<any>();
   const [groupInfoHeight, setGroupInfoHeight] = useState(300);
 
-  const currentCommunityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
-  const communityId = paramCommunityId || currentCommunityId;
+  const communityId = paramCommunityId;
   const communityDetail = useCommunitiesStore(
     useCallback((state: ICommunitiesState) => state.data[communityId], [communityId, groupId]),
   );
@@ -104,8 +100,6 @@ const GroupDetail = (props: any) => {
   // const isLoadingGroup = useKeySelector(groupsKeySelector.loadingPage);
   // const hasNoDataInStore = !groupInfo;
   // const shouldShowPlaceholder = hasNoDataInStore && isLoadingGroup;
-
-  const shouldShowPlaceholder = currentGroupId !== groupId && !isLoadingGroupDetailError;
 
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
   const canSetting = shouldHavePermission(groupId, [
@@ -167,12 +161,6 @@ const GroupDetail = (props: any) => {
     }
     getGroupDetail({ groupId });
   }, [groupId]);
-
-  useEffect(() => () => {
-    useGroupsStore.setState({
-      currentGroupId: '',
-    });
-  }, []);
 
   useEffect(() => {
     if (isEmpty(timelines[groupId]) && isEmpty(groupPost?.ids)) {
@@ -325,29 +313,20 @@ const GroupDetail = (props: any) => {
           onGetInfoLayout={onGetInfoLayout}
           infoDetail={groupInfo}
           community={communityDetail}
+          groupId={groupId}
         />
       );
     }
 
     return (
       <GroupContent
+        groupId={groupId}
         community={communityDetail}
         onScroll={onScrollHandler}
         onGetInfoLayout={onGetInfoLayout}
       />
     );
   };
-
-  const renderPlaceholder = () => (
-    <View style={styles.contentContainer} testID="group_detail.placeholder">
-      <View>
-        <GroupProfilePlaceholder disableRandom />
-        <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
-        <PostViewPlaceholder disableRandom />
-        <PostViewPlaceholder disableRandom />
-      </View>
-    </View>
-  );
 
   const renderGroupDetail = () => {
     if (isLoadingGroupDetailError) return <NotFound testID="no_group_found" onGoBack={onGoBackOnNotFound} />;
@@ -391,7 +370,7 @@ const GroupDetail = (props: any) => {
           {renderGroupContent()}
         </Animated.View>
         <Animated.View onLayout={onButtonBottomLayout} style={[styles.button, buttonStyle]}>
-          <GroupJoinCancelButton style={styles.joinBtn} />
+          <GroupJoinCancelButton style={styles.joinBtn} groupId={groupId} />
         </Animated.View>
         <ContentSearch groupId={groupId} />
         <MemberQuestionsModal />
@@ -403,7 +382,7 @@ const GroupDetail = (props: any) => {
 
   return (
     <View style={styles.screenContainer}>
-      {shouldShowPlaceholder ? renderPlaceholder() : renderGroupDetail()}
+      {renderGroupDetail()}
     </View>
   );
 };

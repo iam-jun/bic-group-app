@@ -23,12 +23,14 @@ import { BoxListPinContent } from '~/components/PinContent/components';
 import { onRefresh } from './helper';
 
 interface GroupContentProps {
+  groupId: string;
   community: ICommunity;
   onScroll: (e: any) => void;
   onGetInfoLayout: (e: any) => void;
 }
 
 const GroupContent = ({
+  groupId,
   community,
   onScroll,
   onGetInfoLayout,
@@ -40,9 +42,9 @@ const GroupContent = ({
 
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
-  const { group: groupData, joinStatus } = groups[currentGroupId] || {};
-  const { id: groupId, teamName } = groupData || {};
+  const groups = useGroupsStore((state: IGroupsState) => state.groups);
+  const { group: groupData, joinStatus } = groups[groupId] || {};
+  const { teamName } = groupData || {};
 
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
   const communityId = community?.id;
@@ -103,7 +105,7 @@ const GroupContent = ({
         communityId={communityId}
         teamName={teamName}
       />
-      <GroupJoinCancelButton />
+      <GroupJoinCancelButton groupId={groupId} />
       <BoxListPinContent id={groupId} />
       <FilterFeedButtonGroup
         contentFilter={contentFilter}

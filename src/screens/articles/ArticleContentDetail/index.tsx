@@ -7,7 +7,7 @@ import { StyleSheet } from 'react-native';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Header from '~/beinComponents/Header';
 import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import { ArticleFooter } from '~/components/articles';
 import ArticleWebview, {
   ArticleWebviewRef,

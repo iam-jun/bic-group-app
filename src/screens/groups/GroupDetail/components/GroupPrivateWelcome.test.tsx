@@ -9,6 +9,7 @@ import { communityDetailData } from '~/test/mock_data/communities';
 describe('GroupPrivateWelcome component', () => {
   const baseProps = {
     infoDetail: groupDetailData as unknown as IGroup,
+    groupId: groupDetailData.group.id,
     isMember: false,
     community: communityDetailData,
     onScroll: jest.fn(),

@@ -4,7 +4,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Header from '~/beinComponents/Header';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import PostDetailContent from './components/PostDetailContent';
 
 const PostDetail = (props: any) => {

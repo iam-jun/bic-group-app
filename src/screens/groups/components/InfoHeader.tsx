@@ -29,7 +29,7 @@ const _InfoHeader = ({
 
   const {
     name, userCount, backgroundImgUrl, icon, privacy,
-  } = infoDetail;
+  } = infoDetail || {};
   const privacyData = GroupPrivacyDetail[privacy] || {};
   const { icon: iconPrivacy, privacyTitle }: any = privacyData;
 

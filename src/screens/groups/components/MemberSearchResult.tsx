@@ -18,6 +18,7 @@ interface MemberSearchResultProps {
   canManageMember: boolean;
   memberSearchData: {loading: boolean; canLoadMore: boolean; data: any[]};
   isAdminRole: boolean;
+  communityId: string;
   onLoadMore?: () => void;
   onRefresh?: () => void;
   onPressMenu: (item: any) => void;
@@ -27,6 +28,7 @@ const MemberSearchResult = ({
   canManageMember,
   memberSearchData,
   isAdminRole,
+  communityId,
   onLoadMore,
   onRefresh,
   onPressMenu,
@@ -38,6 +40,7 @@ const MemberSearchResult = ({
   const renderItem = ({ item }: {item: any}) => (
     <MemberItem
       item={item}
+      communityId={communityId}
       isAdminRole={isAdminRole}
       canManageMember={canManageMember}
       onPressMenu={onPressMenu}

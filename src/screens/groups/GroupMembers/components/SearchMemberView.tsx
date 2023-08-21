@@ -11,6 +11,7 @@ import useGroupMemberStore from '../store';
 
 interface SearchMemberViewProps {
   groupId: string;
+  communityId: string;
   isOpen: boolean;
   placeholder?: string;
   onClose?: () => void;
@@ -20,6 +21,7 @@ interface SearchMemberViewProps {
 const SearchMemberView = ({
   isOpen,
   groupId,
+  communityId,
   placeholder,
   onClose,
   onPressMenu,
@@ -80,6 +82,7 @@ const SearchMemberView = ({
     >
       {!!searchText?.trim?.() && (
         <MemberSearchResult
+          communityId={communityId}
           canManageMember={canManageMember}
           memberSearchData={groupSearchMembers}
           isAdminRole={isAdminRole}

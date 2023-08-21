@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import { StyleSheet } from 'react-native';
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import { BottomListItemProps } from '~/components/BottomList/BottomListItem';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -33,6 +33,7 @@ import { USER_TABS } from '../Menu/UserProfile';
 import { USER_TABS_TYPES } from '../Menu/UserProfile/constants';
 import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
 
 const NOT_SHOW_DELETE_OPTION_LIST = [
   NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME,
@@ -317,19 +318,10 @@ const Notification = () => {
             case NOTIFICATION_TYPE.GROUP_ADDED_TO_GROUP_TO_USER_IN_ONE_GROUP:
             case NOTIFICATION_TYPE.LEAVE_COMMUNITY_TO_USER:
               if (act?.community?.id) {
-                rootNavigation.navigate(
-                  groupStack.communityDetail, {
-                    communityId: act.community.id,
-                  },
-                );
+                navigateToCommunityDetail({ communityId: act.community.id });
               }
               if (act?.group?.id) {
-                rootNavigation.navigate(
-                  groupStack.groupDetail, {
-                    groupId: act.group.id,
-                    communityId: act?.group?.communityId,
-                  },
-                );
+                navigateToGroupDetail({ groupId: act.group.id, communityId: act?.group?.communityId });
               }
               break;
             case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN:
@@ -407,12 +399,7 @@ const Notification = () => {
             }
             case NOTIFICATION_TYPE.LEAVE_GROUP_TO_USER:
               if (!!act?.group?.[0]?.id) {
-                rootNavigation.navigate(
-                  groupStack.groupDetail, {
-                    groupId: act.group[0].id,
-                    communityId: act?.group?.[0]?.communityId,
-                  },
-                );
+                navigateToGroupDetail({ groupId: act.group[0].id, communityId: act?.group?.[0]?.communityId });
               }
               break;
             case NOTIFICATION_TYPE.REMOVE_ARTICLE_TO_USER:

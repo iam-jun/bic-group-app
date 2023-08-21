@@ -12,12 +12,6 @@ export interface ICommunitiesState extends IBaseState {
     * */
   requestings: IObject<boolean>;
   data: IObject<ICommunity>;
-  /**
-   * Set currentCommunityId when call doGetCommunity
-   * The screens in the same stack can access
-   * through store (no need to set param when navigating)
-   */
-  currentCommunityId?: string;
   errors: IObject<any>;
   actions: {
     getCommunity: (id: string) => Promise<void>;
