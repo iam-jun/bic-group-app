@@ -56,6 +56,9 @@ import TermsView from '~/components/TermsModal';
 import MemberQuestionsModal from '~/components/MemberQuestionsModal';
 import FloatingCreatePost from '~/screens/Home/components/FloatingCreatePost';
 import ScreenWrapper from '~/baseComponents/ScreenWrapper';
+import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
+import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
+import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -94,12 +97,8 @@ const GroupDetail = (props: any) => {
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
   const isMemberCommunity = joinStatusCommunity === GroupJoinStatus.MEMBER;
 
-  // Temporarily comment this snippet code
-  // Because old data will show up before being replaced by new data
-  // This is considered a bug by tester
-  // const isLoadingGroup = useKeySelector(groupsKeySelector.loadingPage);
-  // const hasNoDataInStore = !groupInfo;
-  // const shouldShowPlaceholder = hasNoDataInStore && isLoadingGroup;
+  const hasNoDataInStore = !groupInfo;
+  const shouldShowPlaceholder = hasNoDataInStore && !isLoadingGroupDetailError;
 
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
   const canSetting = shouldHavePermission(groupId, [
@@ -328,6 +327,17 @@ const GroupDetail = (props: any) => {
     );
   };
 
+  const renderPlaceholder = () => (
+    <View style={styles.contentContainer} testID="group_detail.placeholder">
+      <View>
+        <GroupProfilePlaceholder disableRandom />
+        <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
+        <PostViewPlaceholder disableRandom />
+        <PostViewPlaceholder disableRandom />
+      </View>
+    </View>
+  );
+
   const renderGroupDetail = () => {
     if (isLoadingGroupDetailError) return <NotFound testID="no_group_found" onGoBack={onGoBackOnNotFound} />;
 
@@ -382,7 +392,7 @@ const GroupDetail = (props: any) => {
 
   return (
     <View style={styles.screenContainer}>
-      {renderGroupDetail()}
+      {shouldShowPlaceholder ? renderPlaceholder() : renderGroupDetail()}
     </View>
   );
 };

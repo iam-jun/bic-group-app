@@ -20,6 +20,12 @@ describe('GroupDetail component', () => {
     <GroupDetail route={{ params: { groupId: groupDetailData.group.id } }} />
   );
 
+  it('renders Placeholder  correctly', () => {
+    const { getByTestId } = renderWithRedux(<MockedNavigator component={component} />);
+    const placeholder = getByTestId('group_detail.placeholder');
+    expect(placeholder).toBeDefined();
+  });
+
   it('renders GroupPrivateWelcome when user is a visitor to a private group', () => {
     useGroupsStore.getState().actions.addToGroups({
       ...groupDetailData,
