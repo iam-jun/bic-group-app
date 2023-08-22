@@ -332,6 +332,7 @@ exports[`PublishQuiz should render correctly 1`] = `
           </View>
         </View>
         <RCTScrollView
+          alwaysBounceVertical={false}
           automaticallyAdjustContentInsets={false}
           contentContainerStyle={
             Object {
@@ -568,25 +569,34 @@ exports[`PublishQuiz should render correctly 1`] = `
                     value=""
                   />
                 </View>
-                <Text
+                <View
                   style={
-                    Array [
-                      Object {
-                        "color": "#212745",
-                        "fontFamily": "BeVietnamPro-Light",
-                        "fontSize": 11,
-                      },
-                      Object {
-                        "color": "#BAC0DE",
-                      },
-                      Object {
-                        "alignSelf": "flex-end",
-                      },
-                    ]
+                    Object {
+                      "flexDirection": "row",
+                      "justifyContent": "space-between",
+                      "marginTop": 4,
+                    }
                   }
                 >
-                  0/255
-                </Text>
+                  <View />
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 11,
+                        },
+                        Object {
+                          "color": "#BAC0DE",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    0/255
+                  </Text>
+                </View>
               </View>
             </View>
             <View
@@ -768,128 +778,6 @@ exports[`PublishQuiz should render correctly 1`] = `
                   }
                 }
               />
-            </View>
-            <View
-              accessibilityState={
-                Object {
-                  "disabled": true,
-                }
-              }
-              accessible={true}
-              collapsable={false}
-              focusable={false}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "opacity": 1,
-                }
-              }
-              testID="button_wrapper"
-            >
-              <View
-                style={
-                  Object {
-                    "flexDirection": "row",
-                  }
-                }
-              >
-                <View
-                  accessibilityState={
-                    Object {
-                      "disabled": true,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={false}
-                  hitSlop={
-                    Object {
-                      "bottom": 10,
-                      "left": 10,
-                      "right": 10,
-                      "top": 10,
-                    }
-                  }
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    Object {
-                      "opacity": 1,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        },
-                        undefined,
-                        Object {
-                          "backgroundColor": undefined,
-                        },
-                      ]
-                    }
-                  >
-                    <View
-                      style={
-                        Array [
-                          undefined,
-                          undefined,
-                          undefined,
-                        ]
-                      }
-                    >
-                      <View />
-                    </View>
-                  </View>
-                </View>
-                <View
-                  style={
-                    Object {
-                      "height": undefined,
-                      "paddingHorizontal": undefined,
-                      "paddingVertical": undefined,
-                      "width": 12,
-                    }
-                  }
-                />
-                <View
-                  style={
-                    Object {
-                      "flex": 1,
-                    }
-                  }
-                >
-                  <Text
-                    style={
-                      Array [
-                        Object {
-                          "color": "#212745",
-                          "fontFamily": "BeVietnamPro-Light",
-                          "fontSize": 13,
-                        },
-                        Object {},
-                        undefined,
-                      ]
-                    }
-                  >
-                    Do you want to randomize the questions and answers or not?
-                  </Text>
-                </View>
-              </View>
             </View>
           </View>
         </RCTScrollView>

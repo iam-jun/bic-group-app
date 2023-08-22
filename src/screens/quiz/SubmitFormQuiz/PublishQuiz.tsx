@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable unused-imports/no-unused-imports */
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -87,6 +89,7 @@ const PublishQuiz: FC<PublishQuizProps> = (props) => {
       <KeyboardAwareScrollView
         style={styles.container}
         contentContainerStyle={styles.containerContent}
+        alwaysBounceVertical={false}
       >
         <TitleDescriptionSection control={control} />
         <QuestionAnswerDisplaySection
@@ -95,7 +98,7 @@ const PublishQuiz: FC<PublishQuizProps> = (props) => {
           trigger={trigger}
           questionsLength={questions.length}
         />
-        <CheckmarkGenerateRandomQuiz />
+        {/* <CheckmarkGenerateRandomQuiz /> */}
       </KeyboardAwareScrollView>
     </View>
   );
