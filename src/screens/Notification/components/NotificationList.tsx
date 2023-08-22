@@ -14,7 +14,7 @@ import { FlashListProps } from '@shopify/flash-list/src/FlashListProps';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Divider from '~/beinComponents/Divider';
-import NotificationItem from '~/beinComponents/list/items/NotificationItem';
+import NotificationItem from '~/screens/Notification/components/NotificationItem';
 import Text from '~/baseComponents/Text';
 import i18n from '~/localization';
 import NoNotificationFound from '~/screens/Notification/components/NoNotificationFound';
@@ -177,6 +177,7 @@ const NotificationList = ({
           onEndReached={loadMoreNotifications}
           ListFooterComponent={renderListFooter}
           ItemSeparatorComponent={renderItemSeparatorComponent}
+          // @ts-ignore
           contentContainerStyle={styles.listContainer}
         />
       ) : renderEmpty() }

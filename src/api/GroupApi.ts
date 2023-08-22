@@ -498,6 +498,16 @@ export const groupsApiConfig = {
     method: 'post',
     data: params?.settings,
   }),
+  acceptInvitation: (invitationId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}invitations/${invitationId}/accept`,
+    method: 'put',
+  }),
+  declineInvitation: (invitationId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}invitations/${invitationId}/decline`,
+    method: 'put',
+  }),
 };
 
 const groupApi = {
@@ -784,6 +794,8 @@ const groupApi = {
   previewSettings: (params: IPayloadPreviewSettings) => withHttpRequestPromise(
     groupsApiConfig.previewSettings, params,
   ),
+  acceptInvitation: (invitationId: string) => withHttpRequestPromise(groupsApiConfig.acceptInvitation, invitationId),
+  declineInvitation: (invitationId: string) => withHttpRequestPromise(groupsApiConfig.declineInvitation, invitationId),
 };
 
 export default groupApi;

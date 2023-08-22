@@ -102,3 +102,8 @@ export interface IAdvancedSetting {
 export interface IGroupNotificationSetting extends IGroup{
   setting: IAdvancedSetting;
 }
+
+export enum InvitationTargetType {
+  GROUP = 'GROUP',
+  COMMUNITY = 'COMMUNITY',
+}

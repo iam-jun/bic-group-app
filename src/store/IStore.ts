@@ -61,6 +61,7 @@ import { IMembershipPolicySettingsState } from '~/screens/groups/MembershipPolic
 import { IPreviewJoinableGroupState } from '~/components/PreviewJoinableGroup/store';
 import { INotiSettingsStore } from '~/screens/Notification/NotiSettings/store';
 import { IAdvancedNotiSettingsStore } from '~/screens/Notification/AdvancedSettings/store';
+import { INotiInvitationsStore } from '~/screens/Notification/components/NotificationItem/store';
 
 export interface BicStore {
   entities: {
@@ -170,6 +171,7 @@ export interface BicStore {
     notificationStore: INotificationsState;
     INotiSettingsStore: INotiSettingsStore;
     IAdvancedNotiSettingsStore: IAdvancedNotiSettingsStore;
+    INotiInvitationsStore: INotiInvitationsStore;
   };
   Draft: {
     DraftArticle: {
