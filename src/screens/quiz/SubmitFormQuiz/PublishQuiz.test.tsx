@@ -55,6 +55,14 @@ describe('PublishQuiz', () => {
       mockGenerateQuizResponse.data as IQuiz,
     );
 
+    result.current.actions.setFormGenerateQuiz(
+      {
+        title: mockGenerateQuizResponse.data.title,
+        description: mockGenerateQuizResponse.data.description,
+        numberOfQuestionsDisplay: mockGenerateQuizResponse.data.numberOfQuestionsDisplay,
+      },
+    );
+
     const wrapper = renderWithRedux(
       <MockedNavigator
         component={() => (
@@ -87,7 +95,7 @@ describe('PublishQuiz', () => {
 
       expect(title).toBe('test');
       expect(description).toBe(null);
-      expect(numberOfQuestionsDisplay).toBeUndefined();
+      expect(numberOfQuestionsDisplay).toBeNull();
     });
 
     await waitFor(() => {
@@ -125,12 +133,20 @@ describe('PublishQuiz', () => {
       fakeQuiz.data as IQuiz,
     );
 
+    result.current.actions.setFormGenerateQuiz(
+      {
+        title: fakeQuiz.data.title,
+        description: fakeQuiz.data.description,
+        numberOfQuestionsDisplay: fakeQuiz.data.numberOfQuestionsDisplay,
+      },
+    );
+
     const wrapper = renderWithRedux(
       <MockedNavigator
         component={() => (
           <PublishQuiz
             route={{
-              params: { quizId: mockGenerateQuizResponse.data.id },
+              params: { quizId: fakeQuiz.data.id },
             }}
           />
         )}
