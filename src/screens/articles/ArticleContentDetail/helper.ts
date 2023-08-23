@@ -1,8 +1,7 @@
-import { withNavigation } from '~/router/helper';
+import { navigateToCommunityDetail, navigateToGroupDetail, withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import mainStack from '~/router/navigator/MainStack/stack';
 import topicStack from '~/router/navigator/MainStack/stacks/topic/stack';
-import useCommunitiesStore from '~/store/entities/communities';
 import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import { IMentionUser, IPost } from '~/interfaces/IPost';
 import { openUrl } from '~/utils/link';
@@ -60,12 +59,9 @@ export const onPressAudiences = (payload: any) => {
 
   const { id, communityId, isCommunity } = payload || {};
   if (isCommunity && communityId) {
-    rootNavigation.navigate(mainStack.communityDetail, { communityId });
+    navigateToCommunityDetail({ communityId });
   } else {
-    rootNavigation.navigate(mainStack.groupDetail, {
-      groupId: id,
-      communityId,
-    });
+    navigateToGroupDetail({ groupId: id, communityId });
   }
 };
 
@@ -84,10 +80,8 @@ export const onPressTopics = (payload: any) => {
 export const onPressTags = (payload: any) => {
   if (!payload) return;
 
-  const communityId = useCommunitiesStore.getState().currentCommunityId;
   rootNavigation.navigate(tagsStack.tagDetail, {
     tagData: payload,
-    communityId,
   });
 };
 

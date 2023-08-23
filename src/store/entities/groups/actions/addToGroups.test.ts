@@ -8,7 +8,6 @@ describe('addToGroups', () => {
     act(() => {
       result.current.actions.addToGroups(groupDetailData);
     });
-    expect(result.current.currentGroupId).toBe(groupDetailData.group.id);
     expect(result.current.groups[groupDetailData.group.id]).toBe(groupDetailData);
   });
 });

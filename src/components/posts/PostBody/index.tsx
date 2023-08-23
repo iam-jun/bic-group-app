@@ -21,7 +21,6 @@ import spacing from '~/theme/spacing';
 import { escapeMarkDown } from '~/utils/formatter';
 import PostVideoPlayer from '../PostVideoPlayer';
 import { ITag } from '~/interfaces/ITag';
-import useCommunitiesStore from '~/store/entities/communities';
 import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import TagsView from '~/components/TagsView';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
@@ -78,8 +77,7 @@ const _PostBody: FC<PostBodyProps> = ({
   }, [status, postId, totalUsersSeen]);
 
   const goToTagDetail = (tagData: ITag) => {
-    const communityId = useCommunitiesStore.getState().currentCommunityId;
-    rootNavigation.navigate(tagsStack.tagDetail, { tagData, communityId });
+    rootNavigation.navigate(tagsStack.tagDetail, { tagData });
   };
 
   const renderContent = () => {

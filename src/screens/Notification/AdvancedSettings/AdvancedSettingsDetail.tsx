@@ -8,8 +8,8 @@ import Animated from 'react-native-reanimated';
 
 import { debounce } from 'lodash';
 import Tooltip from 'react-native-walkthrough-tooltip';
+import {ScreenWrapper} from "~/baseComponents";
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';

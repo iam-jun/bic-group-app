@@ -24,13 +24,15 @@ import { USER_TABS } from '~/screens/Menu/UserProfile';
 import { USER_TABS_TYPES } from '~/screens/Menu/UserProfile/constants';
 import useAuthController from '~/screens/auth/store';
 import quizStack from './navigator/MainStack/stacks/quizStack/stack';
+import groupStack from './navigator/MainStack/stacks/groupStack/stack';
+import { rootNavigationRef } from './refs';
 
 export const isNavigationRefReady: any = React.createRef();
-
 export interface Props {
   current?: NavigationContainerRef<any> | null;
   canGoBack: boolean | undefined;
   navigate: (name: string, params?: IObject<unknown>) => void;
+  push: (name: string, params?: IObject<unknown>) => void;
   replace: (name: string, params?: IObject<unknown>) => void;
   replaceListScreenByNewScreen: (replaces: string[], newScreen: RouteProp<any>) => void;
   goBack: () => void;
@@ -59,6 +61,23 @@ export const withNavigation = (navigationRef: RefObject<NavigationContainerRef<a
         () => navigationRef?.current?.navigate(
           name, params,
         ), 100,
+      );
+    }
+  };
+
+  const push = (
+    name: string, params?: IObject<unknown>,
+  ): void => {
+    if (isNavigationRefReady?.current && navigationRef?.current) {
+      navigationRef?.current?.dispatch(StackActions.push(
+        name, params,
+      ));
+    } else {
+      setTimeout(
+        () => navigationRef?.current?.dispatch(StackActions.push(
+          name, params,
+        )),
+        100,
       );
     }
   };
@@ -141,6 +160,7 @@ export const withNavigation = (navigationRef: RefObject<NavigationContainerRef<a
     current: navigationRef?.current,
     canGoBack,
     navigate,
+    push,
     replace,
     replaceListScreenByNewScreen,
     goBack,
@@ -419,7 +439,7 @@ const navigateGroupMembers = ({ groupId, communityId }) => {
 const navigateGroupDetail = ({ groupId, communityId }) => {
   if (!!groupId) {
     return {
-      screen: 'group-detail',
+      screen: groupStack.groupDetail,
       params: {
         groupId,
         communityId: communityId || '',
@@ -428,7 +448,7 @@ const navigateGroupDetail = ({ groupId, communityId }) => {
   }
   if (!!communityId) {
     return {
-      screen: 'community-detail',
+      screen: groupStack.communityDetail,
       params: {
         communityId,
       },
@@ -456,6 +476,18 @@ const navigatePostDetailWithContentType = ({ contentType, contentId }) => {
 
 export const hideSplashScreen = async () => {
   await SplashScreen.hideAsync();
+};
+
+const rootNavigation = withNavigation?.(rootNavigationRef);
+
+export const navigateToGroupDetail = (params: { groupId: string; communityId?: string }) => {
+  const { groupId, communityId } = params;
+  return rootNavigation.push(mainStack.groupDetail, { groupId, communityId });
+};
+
+export const navigateToCommunityDetail = (params: { communityId: string }) => {
+  const { communityId } = params;
+  return rootNavigation.push(mainStack.communityDetail, { communityId });
 };
 
 export default routerHelper;

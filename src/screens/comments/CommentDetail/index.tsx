@@ -4,7 +4,7 @@ import React, {
 import { StyleSheet } from 'react-native';
 import { ExtendedTheme, useIsFocused, useTheme } from '@react-navigation/native';
 
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 
 import Header from '~/beinComponents/Header';
 import usePostsStore from '~/store/entities/posts';

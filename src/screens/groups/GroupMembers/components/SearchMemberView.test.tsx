@@ -5,6 +5,7 @@ import SearchMemberView from './SearchMemberView';
 
 describe('SearchMemberView component', () => {
   const groupId = '1';
+  const communityId = 'test';
   const isOpen = true;
   const onPressMenu = jest.fn();
 
@@ -16,6 +17,7 @@ describe('SearchMemberView component', () => {
 
     const wrapper = renderWithRedux(
       <SearchMemberView
+        communityId={communityId}
         groupId={groupId}
         isOpen={isOpen}
         onPressMenu={onPressMenu}

@@ -368,11 +368,13 @@ jest.mock('~/router/helper', () => ({
       navigate: jest.fn(),
       replace: jest.fn(),
       goBack: jest.fn(),
+      push: jest.fn(),
     }),
   },
   withNavigation: jest.fn().mockReturnValue({
     navigate: jest.fn(),
     replace: jest.fn(),
     goBack: jest.fn(),
+    push: jest.fn(),
   }),
 }));

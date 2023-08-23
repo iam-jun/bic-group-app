@@ -12,7 +12,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { isEmpty } from 'lodash';
 import moment from 'moment';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import Text from '~/baseComponents/Text';
 

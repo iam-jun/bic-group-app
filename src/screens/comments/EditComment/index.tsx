@@ -19,7 +19,7 @@ import { ResourceUploadType } from '~/interfaces/IUpload';
 import { fontFamilies } from '~/theme/fonts';
 
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import UploadingImage from '~/beinComponents/UploadingImage';
 import dimension from '~/theme/dimension';
 import { IGiphy } from '~/interfaces/IGiphy';

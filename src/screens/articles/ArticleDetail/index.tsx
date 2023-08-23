@@ -11,7 +11,7 @@ import { IAudienceGroup } from '~/interfaces/IPost';
 
 import Header from '~/beinComponents/Header';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import { ArticlePlaceholder, ArticleView } from '~/components/articles';
 import CommentInputView from '~/screens/comments/components/CommentInputView';
 import useMounted from '~/hooks/mounted';

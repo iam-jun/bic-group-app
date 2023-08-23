@@ -3,7 +3,7 @@ import { RefreshControl, ScrollView } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
@@ -14,17 +14,28 @@ import useTermStore from '~/components/TermsModal/store';
 import useGroupDetailStore from '../GroupDetail/store';
 import { ITypeGroup } from '~/interfaces/common';
 
-const GroupAbout = () => {
+interface GroupAboutProps {
+  route: {
+    params: {
+      groupId: string;
+    },
+  }
+}
+
+const GroupAbout = (props: GroupAboutProps) => {
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
-  const { group: groupInfo, joinStatus } = groups[currentGroupId] || {};
-  const { name, id } = groupInfo || {};
+
+  const { params } = props?.route || {};
+  const { groupId } = params || {};
+  const { groups } = useGroupsStore((state: IGroupsState) => state);
+  const { group: groupInfo, joinStatus } = groups[groupId] || {};
+  const { name, id, communityId } = groupInfo || {};
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
 
   const onPressTotalMember = () => {
-    rootNavigation.navigate(groupStack.groupMembers, { groupId: id, isMember });
+    rootNavigation.navigate(groupStack.groupMembers, { groupId: id, isMember, communityId });
   };
 
   const [isRefresh, setIsRefresh] = useState(false);

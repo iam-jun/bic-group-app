@@ -23,7 +23,6 @@ import { getTotalReactions } from '~/helpers/post';
 import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import TagsView from '~/components/TagsView';
-import useCommunitiesStore from '~/store/entities/communities';
 import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import { ITag } from '~/interfaces/ITag';
 import Divider from '~/beinComponents/Divider';
@@ -95,8 +94,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
     focusComment: true,
   });
   const goToTagDetail = (tagData: ITag) => {
-    const communityId = useCommunitiesStore.getState().currentCommunityId;
-    rootNavigation.navigate(tagsStack.tagDetail, { tagData, communityId });
+    rootNavigation.navigate(tagsStack.tagDetail, { tagData });
   };
 
   const renderImportant = () => (
