@@ -34,7 +34,7 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
   const { colors } = theme;
   const styles = createStyle(theme);
   const { t } = useBaseHook();
-  const { rootNavigation } = useRootNavigation();
+  const { goHome } = useRootNavigation();
 
   const {
     isPrepareTakingQuiz,
@@ -54,7 +54,7 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
   useEffect(() => () => resetQuestionIndex(), []);
 
   const goBack = () => {
-    rootNavigation.goBack();
+    goHome();
     resetQuestionIndex();
   };
 

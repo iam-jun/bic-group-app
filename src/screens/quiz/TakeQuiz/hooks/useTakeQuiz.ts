@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Platform } from 'react-native';
 import { isEqual } from 'lodash';
 import { useRootNavigation } from '~/hooks/navigation';
 import useTakeQuizStore from '../store';
@@ -166,20 +167,30 @@ const useTakeQuiz = (quizId: string, contentId: string) => {
   };
 
   const navigateResult = () => {
-    setTimeout(() => {
-      rootNavigation.replaceListScreenByNewScreen(
-        [quizStack.takeQuiz, quizStack.takeQuizReview],
-        {
-          key: quizStack.takeQuizResult,
-          name: quizStack.takeQuizResult,
-          params: {
-            quizId,
-            participantId: currentParticipantId,
-            contentId,
+    // in first time, replaceListScreenByNewScreen to Result screen will be error
+    // so we need to use navigate instead on Android
+    if (Platform.OS === 'ios') {
+      setTimeout(() => {
+        rootNavigation.replaceListScreenByNewScreen(
+          [quizStack.takeQuiz, quizStack.takeQuizReview],
+          {
+            key: quizStack.takeQuizResult,
+            name: quizStack.takeQuizResult,
+            params: {
+              quizId,
+              participantId: currentParticipantId,
+              contentId,
+            },
           },
-        },
-      );
-    }, 50);
+        );
+      }, 50);
+    }
+
+    rootNavigation.navigate(quizStack.takeQuizResult, {
+      quizId,
+      participantId: currentParticipantId,
+      contentId,
+    });
   };
 
   const clearCountDownTakeQuiz = () => {
