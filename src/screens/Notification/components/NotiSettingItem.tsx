@@ -9,7 +9,6 @@ import { INotiSettings } from '~/interfaces/INotification';
 import Icon from '~/baseComponents/Icon';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { IconType } from '~/resources/icons';
-import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 
 interface NotiSettingItemProps {
     item: INotiSettings;
@@ -42,15 +41,12 @@ const NotiSettingItem = ({
   const { title, enable, subtitle = '' } = item;
   const disable = Boolean(isDisable);
 
-  const renderLoading = () => (
-    <LoadingIndicator size="small" />
-  );
-
   const renderRightComponent = () => {
     if (Boolean(onPressToggle)) {
       return (
         <Toggle
           testID="notification_settings.item.toggle"
+          loading={isLoading}
           isChecked={enable}
           disabled={isDisableToggle}
           onValueChanged={onPressToggle}
@@ -90,7 +86,7 @@ const NotiSettingItem = ({
         </View>
       </View>
       <ViewSpacing width={spacing.margin.large} />
-      {Boolean(isLoading) ? renderLoading() : renderRightComponent()}
+      {renderRightComponent()}
     </TouchableOpacity>
   );
 };
