@@ -61,7 +61,7 @@ const notificationItemMenu = (set, get) => ({
           newTargetType = SpecificNotificationType.group;
         }
       } else {
-        const contentType = act?.contentType || '';
+        const contentType = act?.contentType?.toLowerCase?.() || '';
         const contentId = act?.id || '';
         if (contentType === ContentType.POST && !!contentId) {
           newTargetId = contentId;
