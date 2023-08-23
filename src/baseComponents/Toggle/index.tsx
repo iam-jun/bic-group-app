@@ -90,7 +90,7 @@ const Toggle = ({
     <TouchableOpacity
       testID={testID}
       style={[styles.container, style]}
-      disabled={!!disabled}
+      disabled={!!disabled || loading}
       onPress={onPress}
     >
       {Boolean(loading) ? <CircleSpinner size={circle} />

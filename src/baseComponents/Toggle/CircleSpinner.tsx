@@ -39,7 +39,7 @@ const CircleSpinner = ({ size }: CircleSpinnerProps) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View testID="circle_spinner" style={styles.container}>
       <Animated.View style={[styles.circle, animatedStyle, circleStyle]} />
     </View>
   );
