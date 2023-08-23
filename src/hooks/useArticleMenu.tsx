@@ -66,10 +66,14 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
 
   const shouldBeHiddenCreateQuizOption
     = !!quiz || audienceListCannotCRUDPostArticle.length > 0;
-  const shouldBeHiddenEditOrDeleteQuizOption
+  const shouldBeHiddenEditQuizOption
     = !quiz
     || quiz.status !== QuizStatus.PUBLISHED
     || audienceListCannotCRUDPostArticle.length > 0;
+  const shouldBeHiddenDeleteQuizOption
+    = !quiz
+    || audienceListCannotCRUDPostArticle.length > 0;
+  const isShowBorderTopDeleteQuizOption = !!quiz && quiz.status !== QuizStatus.PUBLISHED;
 
   const onPressEdit = () => {
     modalActions.hideBottomList();
@@ -302,7 +306,7 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       leftIcon: 'FilePen',
       title: i18next.t('quiz:edit_quiz'),
       requireIsActor: true,
-      shouldBeHidden: shouldBeHiddenEditOrDeleteQuizOption,
+      shouldBeHidden: shouldBeHiddenEditQuizOption,
       onPress: onPressEditQuiz,
       isShowBorderTop: true,
     },
@@ -312,8 +316,9 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       leftIcon: 'TrashCan',
       title: i18next.t('quiz:delete_quiz'),
       requireIsActor: true,
-      shouldBeHidden: shouldBeHiddenEditOrDeleteQuizOption,
+      shouldBeHidden: shouldBeHiddenDeleteQuizOption,
       onPress: onPressDeleteQuiz,
+      isShowBorderTop: isShowBorderTopDeleteQuizOption,
       isShowBorderBottom: true,
     },
     {
