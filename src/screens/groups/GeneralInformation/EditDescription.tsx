@@ -4,7 +4,7 @@ import { StyleSheet, TextInput, View } from 'react-native';
 import Divider from '~/beinComponents/Divider';
 
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Text from '~/baseComponents/Text';
 import useCommunityController from '~/screens/communities/store';
 import dimension from '~/theme/dimension';

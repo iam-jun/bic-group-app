@@ -313,3 +313,8 @@ export interface IPayloadPreviewSettings {
   groupId: string;
   settings: IGroupSettings;
 }
+
+export interface IPayloadPreviewPrivacy {
+  groupId: string;
+  data: IGroupDetailEdit;
+}

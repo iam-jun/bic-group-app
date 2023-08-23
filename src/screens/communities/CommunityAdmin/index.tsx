@@ -4,7 +4,7 @@ import {
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import Divider from '~/beinComponents/Divider';
 

@@ -23,15 +23,15 @@ const GroupTabHeader = ({
   const { rootNavigation } = useRootNavigation();
 
   const onPressAbout = () => {
-    rootNavigation.navigate(groupStack.groupAbout);
+    rootNavigation.navigate(groupStack.groupAbout, { groupId });
   };
 
   const onPressMembers = () => {
-    rootNavigation.navigate(groupStack.groupMembers, { groupId, isMemberCommunity });
+    rootNavigation.navigate(groupStack.groupMembers, { groupId, isMemberCommunity, communityId });
   };
 
   const onPressTags = () => {
-    rootNavigation.navigate(mainTabStack.tags, { type: 'group' });
+    rootNavigation.navigate(mainTabStack.tags, { type: 'group', groupId });
   };
 
   return (

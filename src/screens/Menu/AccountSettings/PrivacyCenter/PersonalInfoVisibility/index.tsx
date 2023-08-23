@@ -5,10 +5,9 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { t } from 'i18next';
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import spacing from '~/theme/spacing';
 import Text from '~/baseComponents/Text';
-import { Radio } from '~/baseComponents';
+import { Radio, ScreenWrapper } from '~/baseComponents';
 import useVisibilityPrivacyStore from '../store';
 import { PERSONAL_INFORMATION_VISIBILITY_TYPE, PERSONAL_INFORMATION_VISIBILITY_TYPES } from '~/constants/privacyCenter';
 import Divider from '~/beinComponents/Divider';
