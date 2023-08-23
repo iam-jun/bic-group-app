@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import useScoreboardStore from './store';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import Summary from './components/Summary';
 import UsersParticipants from './components/UsersParticipants';

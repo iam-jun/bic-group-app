@@ -15,7 +15,7 @@ import { throttle } from 'lodash';
 
 import { spacing } from '~/theme';
 import { homeHeaderTabHeight, homeHeaderContentContainerHeight } from '~/theme/dimension';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import Tab from '~/baseComponents/Tab';
 import QuizzesContentList from './components/QuizzesContentList';

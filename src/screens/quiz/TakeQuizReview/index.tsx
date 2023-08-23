@@ -4,7 +4,7 @@ import {
   View, StyleSheet, FlatList, ListRenderItem, Platform,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import { useBaseHook } from '~/hooks';
