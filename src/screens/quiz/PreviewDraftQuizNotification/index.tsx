@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { ExtendedTheme, useIsFocused, useTheme } from '@react-navigation/native';
 import { RefreshControl, ScrollView } from 'react-native';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import usePostsStore from '~/store/entities/posts';
 import useArticlesStore from '~/screens/articles/ArticleDetail/store';

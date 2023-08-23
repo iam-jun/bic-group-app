@@ -6,7 +6,7 @@ import {
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation, useBackPressListener } from '~/hooks/navigation';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import { Button } from '~/baseComponents';
 import Header from '~/beinComponents/Header';
 import { spacing } from '~/theme';
