@@ -34,11 +34,7 @@ import { USER_TABS_TYPES } from '../Menu/UserProfile/constants';
 import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
 import NotificationMenu from './components/NotificationMenu';
-
-const NOT_SHOW_DELETE_OPTION_LIST = [
-  NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME,
-  NOTIFICATION_TYPE.CHANGE_LOGS,
-];
+import useNotificationItemMenu, { INotificationItemMenuStore } from './components/NotificationMenu/store';
 
 const Notification = () => {
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
@@ -53,6 +49,7 @@ const Notification = () => {
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const modalActions = useModalStore((state) => state.actions);
+  const specifictNotiActions = useNotificationItemMenu((state: INotificationItemMenuStore) => state.actions);
 
   useEffect(
     () => {
@@ -64,15 +61,6 @@ const Notification = () => {
 
   const onPressFilterItem = (index: number) => {
     setActiveIndex(index);
-  };
-
-  const handleMarkNotification = (data: any) => {
-    if (!data?.isRead) {
-      notiActions.markAsRead(data?.id);
-    } else {
-      notiActions.markAsUnRead(data?.id);
-    }
-    modalActions.hideBottomList();
   };
 
   const clearToastDeleteNoti = () => {
@@ -114,41 +102,11 @@ const Notification = () => {
     modalActions.hideBottomList();
   };
 
-  const checkShowDeleteOption = (type: string) => {
-    if (!type) return false;
-    const index = NOT_SHOW_DELETE_OPTION_LIST.findIndex((item) => item === type);
-    return !(index === -1);
-  };
-
   const onPressItemOption = ({ item }: {item: any}) => {
+    specifictNotiActions.setSelectedNotificationId(item?.id);
     clearToastDeleteNoti();
     notiActions.deleteAllWaitingNotification();
     notifMenuRef.current?.open?.();
-
-    // const type = item?.extra?.type || undefined;
-    // const menuData: any[] = [{
-    //   id: 1,
-    //   testID: 'notification.mark_notification_read_or_unread',
-    //   leftIcon: 'MessageCheck',
-    //   title: i18next.t(!item?.isRead
-    //     ? 'notification:mark_as_read'
-    //     : 'notification:mark_as_unread'),
-    //   requireIsActor: true,
-    //   onPress: () => { handleMarkNotification(item); },
-    // }, {
-    //   id: 2,
-    //   testID: 'notifications.remove_notification',
-    //   leftIcon: 'TrashCan',
-    //   title: i18next.t('notification:text_remove_notification'),
-    //   requireIsActor: true,
-    //   onPress: () => { handleRemoveNotification(item?.id); },
-    // }];
-    // if (checkShowDeleteOption(type)) {
-    //   menuData.splice(1, 1);
-    // }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    // modalActions.showBottomList({ data: menuData } as BottomListItemProps);
   };
 
   const onCloseItemMenu = () => {

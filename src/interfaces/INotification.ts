@@ -112,5 +112,9 @@ export enum SpecificNotificationType {
   post = 'post',
   article = 'article',
   group = 'group',
-  community = 'community',
+}
+
+export interface IParamUpdateSpecificNotificationSettings {
+  enable: boolean;
+  contentType: SpecificNotificationType;
 }

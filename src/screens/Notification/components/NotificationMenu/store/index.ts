@@ -17,6 +17,8 @@ export interface INotificationItemMenuStore extends IBaseState {
   notificationType: string;
 
   actions: {
+    setSelectedNotificationId: (id: string) => void;
+    setLoading: (loading: boolean) => void;
     getSeperateNotificationSettings: (targetId: string) => void;
     editNotificationSettings: (targetId: string, enable: boolean) => void;
   }
@@ -52,10 +54,10 @@ const notificationItemMenu = (set, get) => ({
         const targetType = invitationData?.type || '';
         if (targetType === InvitationTargetType.COMMUNITY && !!communityId) {
           newTargetId = communityId;
-          newTargetType = SpecificNotificationType.community;
+          newTargetType = SpecificNotificationType.group;
         }
         if (targetType === InvitationTargetType.GROUP && !!groupId) {
-          newTargetId = communityId;
+          newTargetId = groupId;
           newTargetType = SpecificNotificationType.group;
         }
       } else {

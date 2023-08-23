@@ -244,7 +244,8 @@
     "text_send_request_join_successfully": "Sent request successfully",
     "edit_settings": "Edit Settings",
     "text_new": "New",
-    "text_empty": "Empty"
+    "text_empty": "Empty",
+    "text_please_try_again": "Please try again"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -1208,8 +1209,6 @@
     "text_turn_on_noti_for_article": "Turn on notification about this article",
     "text_turn_off_noti_for_group": "Turn off notifications about invitations in this group",
     "text_turn_on_noti_for_group": "Turn on notifications about invitations in this group",
-    "text_turn_off_noti_for_community": "Turn off notifications about invitations in this community",
-    "text_turn_on_noti_for_community": "Turn on notifications about invitations in this community",
     "notification_settings": {
       "title": "Notification Settings",
       "screen_title": "General Settings",

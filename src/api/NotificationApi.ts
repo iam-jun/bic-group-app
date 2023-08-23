@@ -1,7 +1,7 @@
 import { Method } from 'axios';
 import { makeHttpRequest, withHttpRequestPromise } from '~/api/apiRequest';
 import { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
-import { IEditNotificationSetting, IParamGetNotifications } from '~/interfaces/INotification';
+import { IEditNotificationSetting, IParamGetNotifications, IParamUpdateSpecificNotificationSettings } from '~/interfaces/INotification';
 import { IGetCommunityGroup } from '~/interfaces/IGroup';
 
 const LIMIT = 20;
@@ -124,11 +124,12 @@ export const notificationApiConfig = {
     ...defaultConfig,
     url: `${provider.url}settings/specific/${targetId}`,
   }),
-  editSpecificNotificationSettings: (targetId: string, enable: boolean): HttpApiRequestConfig => ({
+  editSpecificNotificationSettings: (targetId: string,
+    data: IParamUpdateSpecificNotificationSettings): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}settings/specific/${targetId}`,
     method: 'put',
-    data: { enable },
+    data,
   }),
 };
 
@@ -182,8 +183,11 @@ const notificationApi = {
   getSpecificNotificationSettings: (targetId: string) => withHttpRequestPromise(
     notificationApiConfig.getSpecificNotificationSettings, targetId,
   ),
-  editSpecificNotificationSettings: (targetId: string, enable: boolean) => withHttpRequestPromise(
-    notificationApiConfig.editSpecificNotificationSettings, targetId, enable,
+  editSpecificNotificationSettings: (
+    targetId: string,
+    data: IParamUpdateSpecificNotificationSettings,
+  ) => withHttpRequestPromise(
+    notificationApiConfig.editSpecificNotificationSettings, targetId, data,
   ),
 };
 

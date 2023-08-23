@@ -16,9 +16,6 @@ export const getTextFromSpecificNotificationTargetType = (
   type: SpecificNotificationType, enable: boolean,
 ) => {
   switch (type) {
-    case SpecificNotificationType.community:
-      return !enable ? 'notification:text_turn_on_noti_for_community'
-        : 'notification:text_turn_off_noti_for_community';
     case SpecificNotificationType.group:
       return !enable ? 'notification:text_turn_on_noti_for_group'
         : 'notification:text_turn_off_noti_for_group';

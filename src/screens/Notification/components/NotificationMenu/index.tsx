@@ -54,6 +54,12 @@ const NotificationMenu = ({
     reset();
   };
 
+  const onRemoveNotification = () => {
+    handleRemoveNotification(notificationId);
+    onClose();
+    reset();
+  };
+
   const isHideDeleteOption = checkHideDeleteOption(type);
   const specificText = getTextFromSpecificNotificationTargetType(targetType, enableSettings);
 
@@ -70,7 +76,7 @@ const NotificationMenu = ({
           testID="notification.remove_notification"
           leftIcon="TrashCan"
           title={t('notification:text_remove_notification')}
-          onPress={() => handleRemoveNotification(notificationId)}
+          onPress={onRemoveNotification}
         />
       )}
       {Boolean(specificText) && Boolean(targetId) && (
