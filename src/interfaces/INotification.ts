@@ -107,3 +107,10 @@ export enum InvitationTargetType {
   GROUP = 'GROUP',
   COMMUNITY = 'COMMUNITY',
 }
+
+export enum SpecificNotificationType {
+  post = 'post',
+  article = 'article',
+  group = 'group',
+  community = 'community',
+}

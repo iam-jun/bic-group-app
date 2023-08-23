@@ -1,6 +1,7 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React from 'react';
 import {
+  ActivityIndicator,
   StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle,
 } from 'react-native';
 import Icon, { IconProps } from '~/baseComponents/Icon';
@@ -23,6 +24,7 @@ export interface BottomListItemProps {
   style?: StyleProp<ViewStyle>;
   upcoming?: boolean;
   badge?: string;
+  loading?: boolean;
 
   onPress?: () => void;
 }
@@ -38,6 +40,7 @@ const BottomListItem: React.FC<BottomListItemProps> = ({
   testID,
   upcoming,
   badge,
+  loading,
   onPress,
 }: BottomListItemProps) => {
   const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
@@ -48,10 +51,17 @@ const BottomListItem: React.FC<BottomListItemProps> = ({
 
   return (
     <TouchableOpacity
-      disabled={!isInternetReachable || disabled || !onPress}
+      disabled={!isInternetReachable || disabled || !onPress || loading}
       onPress={onPress}
       testID={testID}
     >
+      {
+        Boolean(loading) && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="small" color={colors.neutral20} />
+          </View>
+        )
+      }
       <View style={[styles.container, style]}>
         {!!leftIcon && (
         <Icon
@@ -110,6 +120,18 @@ const themeStyles = (theme: ExtendedTheme) => StyleSheet.create({
     borderRadius: spacing.borderRadius.pill,
     paddingHorizontal: spacing.padding.tiny,
     paddingVertical: spacing.padding.xTiny,
+  },
+  loadingContainer: {
+    position: 'absolute',
+    zIndex: 1,
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    backgroundColor: theme.colors.white,
+    opacity: 0.5,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

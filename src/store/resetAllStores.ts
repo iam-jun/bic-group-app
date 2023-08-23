@@ -71,6 +71,7 @@ import usePreviewJoinableGroupStore from '~/components/PreviewJoinableGroup/stor
 import useNotiSettingsStore from '~/screens/Notification/NotiSettings/store';
 import useAdvancedNotiSettingsStore from '~/screens/Notification/AdvancedSettings/store';
 import useNotiInvitationsStore from '~/screens/Notification/components/NotificationItem/store';
+import useNotificationItemMenu from '~/screens/Notification/components/NotificationMenu/store';
 
 export const excludedStore = [
   useAuthController,
@@ -159,6 +160,7 @@ const stores = [
   useNotiSettingsStore,
   useAdvancedNotiSettingsStore,
   useNotiInvitationsStore,
+  useNotificationItemMenu,
 ];
 
 export const resetAllStores = () => {

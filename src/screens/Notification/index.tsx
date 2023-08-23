@@ -33,6 +33,7 @@ import { USER_TABS } from '../Menu/UserProfile';
 import { USER_TABS_TYPES } from '../Menu/UserProfile/constants';
 import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
+import NotificationMenu from './components/NotificationMenu';
 
 const NOT_SHOW_DELETE_OPTION_LIST = [
   NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME,
@@ -48,6 +49,7 @@ const Notification = () => {
   const userId = useUserIdAuth();
   const { t } = useBaseHook();
   const timeOutRef = useRef<any>();
+  const notifMenuRef = useRef<any>();
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const modalActions = useModalStore((state) => state.actions);
@@ -121,31 +123,36 @@ const Notification = () => {
   const onPressItemOption = ({ item }: {item: any}) => {
     clearToastDeleteNoti();
     notiActions.deleteAllWaitingNotification();
+    notifMenuRef.current?.open?.();
 
-    const type = item?.extra?.type || undefined;
-    const menuData: any[] = [{
-      id: 1,
-      testID: 'notification.mark_notification_read_or_unread',
-      leftIcon: 'MessageCheck',
-      title: i18next.t(!item?.isRead
-        ? 'notification:mark_as_read'
-        : 'notification:mark_as_unread'),
-      requireIsActor: true,
-      onPress: () => { handleMarkNotification(item); },
-    }, {
-      id: 2,
-      testID: 'notifications.remove_notification',
-      leftIcon: 'TrashCan',
-      title: i18next.t('notification:text_remove_notification'),
-      requireIsActor: true,
-      onPress: () => { handleRemoveNotification(item?.id); },
-    }];
-    if (checkShowDeleteOption(type)) {
-      menuData.splice(1, 1);
-    }
+    // const type = item?.extra?.type || undefined;
+    // const menuData: any[] = [{
+    //   id: 1,
+    //   testID: 'notification.mark_notification_read_or_unread',
+    //   leftIcon: 'MessageCheck',
+    //   title: i18next.t(!item?.isRead
+    //     ? 'notification:mark_as_read'
+    //     : 'notification:mark_as_unread'),
+    //   requireIsActor: true,
+    //   onPress: () => { handleMarkNotification(item); },
+    // }, {
+    //   id: 2,
+    //   testID: 'notifications.remove_notification',
+    //   leftIcon: 'TrashCan',
+    //   title: i18next.t('notification:text_remove_notification'),
+    //   requireIsActor: true,
+    //   onPress: () => { handleRemoveNotification(item?.id); },
+    // }];
+    // if (checkShowDeleteOption(type)) {
+    //   menuData.splice(1, 1);
+    // }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    modalActions.showBottomList({ data: menuData } as BottomListItemProps);
+    // modalActions.showBottomList({ data: menuData } as BottomListItemProps);
+  };
+
+  const onCloseItemMenu = () => {
+    notifMenuRef.current?.close?.();
   };
 
   const handleMarkAllAsRead = () => {
@@ -562,6 +569,11 @@ const Notification = () => {
         onPressItemOption={onPressItemOption}
         onChangeTab={onPressFilterItem}
         onRefresh={onRefresh}
+      />
+      <NotificationMenu
+        menuRef={notifMenuRef}
+        onClose={onCloseItemMenu}
+        handleRemoveNotification={handleRemoveNotification}
       />
     </ScreenWrapper>
   );

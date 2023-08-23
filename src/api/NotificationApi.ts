@@ -120,6 +120,16 @@ export const notificationApiConfig = {
     ...defaultConfig,
     url: `${provider.url}settings/advanced/generate`,
   }),
+  getSpecificNotificationSettings: (targetId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/specific/${targetId}`,
+  }),
+  editSpecificNotificationSettings: (targetId: string, enable: boolean): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/specific/${targetId}`,
+    method: 'put',
+    data: { enable },
+  }),
 };
 
 const notificationApi = {
@@ -169,6 +179,12 @@ const notificationApi = {
     notificationApiConfig.getGroupsAndGroupsSettings, communityId, params,
   ),
   generateAdvancedSettings: () => withHttpRequestPromise(notificationApiConfig.generateAdvancedSettings),
+  getSpecificNotificationSettings: (targetId: string) => withHttpRequestPromise(
+    notificationApiConfig.getSpecificNotificationSettings, targetId,
+  ),
+  editSpecificNotificationSettings: (targetId: string, enable: boolean) => withHttpRequestPromise(
+    notificationApiConfig.editSpecificNotificationSettings, targetId, enable,
+  ),
 };
 
 export default notificationApi;
