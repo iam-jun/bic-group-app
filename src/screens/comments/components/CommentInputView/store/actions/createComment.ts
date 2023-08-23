@@ -9,6 +9,7 @@ import useCommentsStore from '~/store/entities/comments';
 import usePostsStore from '~/store/entities/posts';
 import showToastError from '~/store/helper/showToastError';
 import ICommentInputState from '../Interface';
+import useLoadMoreCommentsController from '~/components/LoadMoreComment/store';
 
 const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
   const {
@@ -19,7 +20,6 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
     userId,
     preComment,
     onSuccess,
-    isCommentLevel1Screen,
     viewMore,
   } = payload || {};
   if (
@@ -64,11 +64,8 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
         });
       }
     }
-    if (!isCommentLevel1Screen) {
-      usePostsStore.getState().actions.setScrollToLatestItem({ parentCommentId });
-    } else {
-      usePostsStore.getState().actions.setScrollCommentsPosition({ position: 'bottom' });
-    }
+
+    usePostsStore.getState().actions.setScrollToLatestItem(true);
 
     usePostsStore.getState().actions.setPostDetailReplyingComment();
 
@@ -101,6 +98,17 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
       onSuccess?.(); // call second time to make sure content is cleared on low performance device
       return;
     }
+    if (!!viewMore && !parentCommentId) {
+      // case comment level 1
+      useLoadMoreCommentsController.getState().actions.getCommentsByPostId({
+        params: {
+          postId,
+          order: 'DESC',
+        },
+        isGetLastComments: true,
+      });
+    }
+
     // update comment_count
     const allPosts = usePostsStore.getState().posts || {};
     const newAllPosts = cloneDeep(allPosts);

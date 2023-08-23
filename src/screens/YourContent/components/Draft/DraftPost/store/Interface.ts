@@ -5,9 +5,9 @@ import IFetchingState from '~/store/interfaces/IFetchingState';
 interface IDraftPostState extends IBaseState, IFetchingState{
   posts: IPost[],
   hasNextPage: boolean,
+  endCursor: string,
   loading: boolean,
   refreshing: boolean,
-  total: number,
 
   actions?:{
     getDraftPosts?: (payload: IPayloadGetDraftContents) => void;

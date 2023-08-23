@@ -36,6 +36,7 @@ export interface ArticleItemProps {
   isLite?: boolean;
   shouldHideBannerImportant?: boolean;
   shouldShowDraftQuiz?: boolean;
+  onPressComment?: () => void;
 }
 
 const ArticleItem: FC<ArticleItemProps> = ({
@@ -43,6 +44,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
   isLite,
   shouldHideBannerImportant,
   shouldShowDraftQuiz = false,
+  onPressComment,
 }: ArticleItemProps) => {
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
@@ -54,6 +56,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
     audience,
     actor,
     createdAt,
+    publishedAt,
     commentsCount,
     reactionsCount,
     setting,
@@ -111,6 +114,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
       data={data}
       actor={actor}
       createdAt={createdAt}
+      publishedAt={publishedAt}
       audience={audience}
     />
   );
@@ -158,6 +162,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
         commentsCount={commentsCount}
         reactionsCount={reactionsCount}
         ownerReactions={ownerReactions}
+        onPressComment={onPressComment}
       />
     );
   };

@@ -248,6 +248,8 @@ export interface IGetCommunityGroup {
   listBy?: 'tree' | 'flat';
   limit?: number;
   offset?: number;
+  includeRootGroup?: boolean;
+  sort?: string;
 }
 
 export interface IPayloadGroupSchemeAssignments {
@@ -305,6 +307,9 @@ export interface IPayloadDeclineSingleGroupMemberRequest {
 
 export interface IPayloadUpdateGroupJoinSetting {
   groupId: string;
-  isJoinApproval?: boolean;
-  isInvitedOnly?: boolean;
+  settings: IGroupSettings;
+}
+export interface IPayloadPreviewSettings {
+  groupId: string;
+  settings: IGroupSettings;
 }

@@ -216,6 +216,10 @@ import { faRectangleHistory } from '@fortawesome/pro-regular-svg-icons/faRectang
 import { faUserLargeSlash as faUserLargeSlashSolid } from '@fortawesome/pro-solid-svg-icons/faUserLargeSlash';
 import { faChevronDown } from '@fortawesome/pro-regular-svg-icons/faChevronDown';
 import { faChevronUp } from '@fortawesome/pro-regular-svg-icons/faChevronUp';
+import { faAt } from '@fortawesome/pro-regular-svg-icons/faAt';
+import { faThumbsUp } from '@fortawesome/pro-regular-svg-icons/faThumbsUp';
+import { faGrid2 } from '@fortawesome/pro-regular-svg-icons/faGrid2';
+import { faWindow } from '@fortawesome/pro-regular-svg-icons/faWindow';
 import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons';
 import { faRotate as faRotateSolid } from '@fortawesome/pro-solid-svg-icons/faRotate';
 import { faMemoCircleInfo as faMemoCircleInfoSolid } from '@fortawesome/pro-solid-svg-icons/faMemoCircleInfo';
@@ -225,6 +229,7 @@ import { faSquareList as faSquareListSolid } from '@fortawesome/pro-solid-svg-ic
 import { faCaretDown as faCaretDownSolid } from '@fortawesome/pro-solid-svg-icons/faCaretDown';
 import { faCaretRight as faCaretRightSolid } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
 import { faBlockQuestion as faBlockQuestionSolid } from '@fortawesome/pro-solid-svg-icons/faBlockQuestion';
+import { faUnlock as faUnlockSolid } from '@fortawesome/pro-solid-svg-icons/faUnlock';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -463,6 +468,10 @@ export const initFontAwesomeIcon = () => {
     faChevronUp,
     faBadgeCheck,
     faRotateSolid,
+    faAt,
+    faThumbsUp,
+    faGrid2,
+    faWindow,
     faMemoCircleInfoSolid,
     faChevronRight,
     faUsersMedicalSolid,
@@ -470,6 +479,7 @@ export const initFontAwesomeIcon = () => {
     faCaretDownSolid,
     faCaretRightSolid,
     faBlockQuestionSolid,
+    faUnlockSolid,
   );
 };
 
@@ -693,6 +703,10 @@ export const fontAwesomeIcons = {
   ChevronUp: 'fa-regular fa-chevron-up',
   BadgeCheck: 'fa-solid fa-badge-check',
   RotateSolid: 'fa-solid fa-rotate',
+  At: 'fa-regular fa-at',
+  ThumbsUp: 'fa-regular fa-thumbs-up',
+  Grid2: 'fa-regular fa-grid-2',
+  Window: 'fa-regular fa-window',
   MemoCircleInfoSolid: 'fa-solid fa-memo-circle-info',
   ChevronRight: 'fa-regular fa-chevron-right',
   UsersMedicalSolid: 'fa-solid fa-users-medical',
@@ -700,6 +714,7 @@ export const fontAwesomeIcons = {
   CaretDownSolid: 'fa-solid fa-caret-down',
   CaretRightSolid: 'fa-solid fa-caret-right',
   BlockQuestionSolid: 'fa-solid fa-block-question',
+  UnlockSolid: 'fa-solid fa-unlock',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

@@ -32,6 +32,9 @@ import usePostsInProgressStore from './components/VideoProcessingNotice/store';
 import useFeedSearchStore from './HomeSearch/store';
 import useAppStore from '~/store/app';
 import { chatSchemes } from '~/constants/chat';
+import Icon from '~/baseComponents/Icon';
+import Text from '~/baseComponents/Text';
+import useRemoteConfigStore from '~/store/remoteConfig';
 
 const Home = () => {
   const [lossInternet, setLossInternet] = useState(false);
@@ -70,6 +73,7 @@ const Home = () => {
   const isFocused = useIsFocused();
   const redirectUrl = useAppStore((state) => state.redirectUrl);
   const appActions = useAppStore((state) => state.actions);
+  const appStoreUrlChat = useRemoteConfigStore((state) => state.appStoreUrlChat);
 
   useEffect(
     () => {
@@ -177,11 +181,34 @@ const Home = () => {
     actionsFeedSearch.setNewsfeedSearch({ isShow: true });
   };
 
+  const HeaderImageComponent = (
+    <View style={styles.iconChatContainer}>
+      <Icon
+        icon="iconBeinChat"
+        size={64}
+        style={styles.iconChat}
+      />
+    </View>
+  );
+
   const navigateToChat = () => {
     openUrl(chatSchemes.FULL_DEEPLINK, () => {
       showAlert({
+        HeaderImageComponent,
+        headerStyle: styles.alertHeaderStyle,
+        cancelBtn: true,
+        buttonViewStyle: styles.buttonViewStyle,
         title: t('home:title_install_chat'),
+        titleProps: { style: { flex: 1, textAlign: 'center' }, variant: 'h4' },
         content: t('home:text_desc_install_chat'),
+        ContentComponent: Text.BodyM,
+        cancelLabel: t('common:text_not_now'),
+        cancelBtnProps: { style: { marginEnd: 0 } },
+        confirmLabel: t('home:text_get_bic_chat'),
+        confirmBtnProps: { style: { marginBottom: spacing.margin.small } },
+        onConfirm: () => {
+          !!appStoreUrlChat && openUrl(appStoreUrlChat);
+        },
       });
     });
   };
@@ -263,6 +290,25 @@ const createStyle = (theme: ExtendedTheme) => {
       right: 0,
       zIndex: 1,
       ...elevations.e2,
+    },
+    iconChatContainer: {
+      alignItems: 'center',
+      paddingVertical: spacing.padding.extraLarge,
+    },
+    iconChat: {
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    alertHeaderStyle: {
+      marginBottom: 0,
+      borderBottomWidth: 0,
+    },
+    buttonViewStyle: {
+      borderTopWidth: 0,
+      flexDirection: 'column-reverse',
+      justifyContent: 'center',
+      paddingHorizontal: spacing.padding.extraLarge,
+      paddingBottom: spacing.padding.extraLarge,
     },
   });
 };

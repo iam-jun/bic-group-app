@@ -14,6 +14,11 @@ import update from './actions/update';
 import INotificationsState from './Interface';
 import handleNotiBackground from './actions/handleNotiBackground';
 import getChangelogNotification from './actions/getChangelogNotification';
+import deleteNotification from './actions/deleteNotification';
+import deleteNotificationLocal from './actions/deleteNotificationLocal';
+import undoDeleteNotificationLocal from './actions/undoDeleteNotificationLocal';
+import deleteAllWaitingNotification from './actions/deleteAllWaitingNotification';
+import generateAdvancedSettings from './actions/generateAdvancedSettings';
 
 const initState: INotificationsState = {
   loading: false,
@@ -43,6 +48,7 @@ const initState: INotificationsState = {
     isLoadingMore: false,
     noMoreData: false,
   },
+  waitingForDelete: [],
 };
 
 const notificationStore = (set, get) => ({
@@ -75,6 +81,11 @@ const notificationStore = (set, get) => ({
         state.changelogsInfo = { title: '', content: '' };
       }, 'resetChangelogNoti');
     },
+    deleteNotification: deleteNotification(set, get),
+    deleteNotificationLocal: deleteNotificationLocal(set, get),
+    undoDeleteNotificationLocal: undoDeleteNotificationLocal(set, get),
+    deleteAllWaitingNotification: deleteAllWaitingNotification(set, get),
+    generateAdvancedSettings: generateAdvancedSettings(set, get),
   },
 
   reset: () => resetStore(initState, set),
@@ -85,7 +96,9 @@ const useNotificationStore = createStore<INotificationsState>(notificationStore,
     persist: {
       name: 'NotiStorage',
       storage: createJSONStorage(() => AsyncStorage),
-      partialize: (state) => ({ pushToken: state.pushToken }),
+      partialize: (state) => ({
+        pushToken: state.pushToken,
+      }),
     },
   });
 

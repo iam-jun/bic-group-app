@@ -5,7 +5,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/baseComponents/Text';
 import useAuthController from '~/screens/auth/store';
 import AppVersion from '~/screens/Menu/components/AppVersion';
-import CheckUpdate from '~/screens/Menu/components/CheckUpdate';
 import { getActions } from '~/store/selectors';
 import spacing from '~/theme/spacing';
 import Icon from '~/baseComponents/Icon';
@@ -24,6 +23,7 @@ import { POLICY_URL } from '~/constants/url';
 import AccordionMenu from './AccordionMenu';
 import { ISettings, SettingsAndPrivacyType } from '~/interfaces/IMenu';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
+import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 
 const REPORT_URL = 'https://report.beincom.com/';
 
@@ -76,6 +76,12 @@ const MenuSettings = () => {
       case SettingsAndPrivacyType.BLOCKING:
         rootNavigation.navigate(menuStack.blocking);
         break;
+      case SettingsAndPrivacyType.PRIVACY:
+        rootNavigation.navigate(menuStack.privacyCenter);
+        break;
+      case SettingsAndPrivacyType.NOTIFICATIONS:
+        rootNavigation.navigate(notiStack.notiSettings);
+        break;
       default:
         break;
     }
@@ -94,10 +100,22 @@ const MenuSettings = () => {
           onPress: () => onPressSettingsAndPrivacy(SettingsAndPrivacyType.SECURITY),
         },
         {
+          type: SettingsAndPrivacyType.PRIVACY,
+          title: 'settings:privacy_center:menu_item_title',
+          icon: 'UnlockSolid',
+          onPress: () => onPressSettingsAndPrivacy(SettingsAndPrivacyType.PRIVACY),
+        },
+        {
           type: SettingsAndPrivacyType.BLOCKING,
           title: 'settings:title_blocking',
           icon: 'UserSlashSolid',
           onPress: () => onPressSettingsAndPrivacy(SettingsAndPrivacyType.BLOCKING),
+        },
+        {
+          type: SettingsAndPrivacyType.NOTIFICATIONS,
+          title: 'tabs:notification',
+          icon: 'BellSolid',
+          onPress: () => onPressSettingsAndPrivacy(SettingsAndPrivacyType.NOTIFICATIONS),
         },
         /**
          * Temporarily hidden language in task BEIN-13338
@@ -158,7 +176,6 @@ const MenuSettings = () => {
 
   return (
     <View style={styles.container} testID="menu_settings">
-      <CheckUpdate />
       {settingItems.map(renderItem)}
       <Button testID="menu_setting.logout" style={[styles.itemContainer, styles.itemLogout]} onPress={onLogout}>
         <Icon tintColor={theme.colors.neutral20} size={22} icon="ArrowRightFromBracket" />

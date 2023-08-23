@@ -110,14 +110,10 @@ const PostDraftView: FC<PostDraftViewProps> = ({
     modalActions.hideModal();
     if (id) {
       streamApi
-        .deletePost(
-          id,
-        )
+        .deletePost(id)
         .then((response) => {
-          if (response?.data) {
-            showToastSuccess(response);
-            refreshDraftPosts();
-          }
+          showToastSuccess(response);
+          refreshDraftPosts();
         })
         .catch((e) => {
           showToastError(e);

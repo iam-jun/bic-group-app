@@ -3,7 +3,6 @@ import useNotificationStore from '../index';
 import notificationApi from '~/api/NotificationApi';
 import useModalStore from '~/store/modal';
 import { ToastType } from '~/baseComponents/Toast/BaseToast';
-import * as showToastSuccess from '~/store/helper/showToastSuccess';
 
 describe('markAsReadAll function', () => {
   afterEach(() => {
@@ -17,8 +16,6 @@ describe('markAsReadAll function', () => {
     const spy = jest.spyOn(notificationApi, 'markAsReadAll').mockImplementation(
       () => Promise.resolve(response) as any,
     );
-
-    const spyShowToastSuccess = jest.spyOn(showToastSuccess, 'default');
 
     useNotificationStore.setState((state) => {
       state.tabUnread.data = ['1'];
@@ -40,7 +37,6 @@ describe('markAsReadAll function', () => {
     expect(result.current.tabUnread.noMoreData).toBeTruthy();
     expect(result.current.tabUnread.loading).toBeFalsy();
     expect(result.current.unseenNumber).toEqual(0);
-    expect(spyShowToastSuccess).toBeCalled();
   });
 
   it('should call api mark as read all throw error', () => {

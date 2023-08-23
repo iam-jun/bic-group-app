@@ -10,7 +10,6 @@ import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IAudienceGroup, IPayloadGetPostDetail } from '~/interfaces/IPost';
 import { rootSwitch } from '~/router/stack';
-import { defaultList, getSectionData } from '~/helpers/post';
 import useCommentsStore from '~/store/entities/comments';
 import commentsSelector from '~/store/entities/comments/selectors';
 import usePostsStore, { IPostsState } from '~/store/entities/posts';
@@ -25,6 +24,7 @@ const usePostDetailContent = ({
   notificationId,
   HeaderImageComponent,
   isReported,
+  commentId,
 }) => {
   const { t } = useBaseHook();
   const { rootNavigation, goHome } = useRootNavigation();
@@ -58,6 +58,12 @@ const usePostDetailContent = ({
   const commentEndCursor = usePostsStore(
     useCallback(postsSelector.getCommentEndCursor(postId), [postId]),
   );
+  const commentStartCursor = usePostsStore(
+    useCallback(postsSelector.getCommentStartCursor(postId), [postId]),
+  );
+  const commentHasPreviousPage = usePostsStore(
+    useCallback(postsSelector.getCommentHasPreviousPage(postId), [postId]),
+  );
   const setting = usePostsStore(
     useCallback(postsSelector.getSetting(postId), [postId]),
   );
@@ -72,19 +78,17 @@ const usePostDetailContent = ({
     putMarkSeenPost,
     getPostDetail: actionGetPostDetail,
     setCommentErrorCode,
+    clearComments,
   } = usePostsStore((state: IPostsState) => state.actions);
 
-  const comments = useCommentsStore(
+  const { reset: resetCommentsStore } = useCommentsStore((state) => state);
+  const listComments = useCommentsStore(
     useCallback(commentsSelector.getCommentsByParentId(postId), [postId]),
   );
   const commentError = usePostsStore((state) => state.commentErrorCode);
 
-  const commentSectionData = useMemo(
-    () => getSectionData(comments),
-    [comments],
-  );
-  const sectionData
-    = deleted || !setting?.canComment ? defaultList : commentSectionData;
+  const comments
+    = deleted || !setting?.canComment ? [] : listComments;
 
   const [refreshing, setRefreshing] = useState(false);
   const [isEmptyContent, setIsEmptyContent] = useState(false);
@@ -133,6 +137,8 @@ const usePostDetailContent = ({
     onPressMarkSeenPost();
     return () => {
       setCommentErrorCode(false);
+      resetCommentsStore();
+      clearComments(postId);
     };
   }, []);
 
@@ -183,6 +189,7 @@ const usePostDetailContent = ({
         callbackLoading,
         showToast: !!notificationId,
         isReported,
+        commentId,
       };
       actionGetPostDetail(payload);
     }
@@ -199,9 +206,10 @@ const usePostDetailContent = ({
     audience,
     commentLeft,
     commentEndCursor,
+    commentStartCursor,
+    commentHasPreviousPage,
     groupIds,
     comments,
-    sectionData,
     errorContent,
 
     onRefresh,

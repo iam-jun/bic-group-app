@@ -6,9 +6,9 @@ import getDraftContents from './actions/getDraftContents';
 export interface IDraftContentsState extends IBaseState {
   posts: IPost[]
   hasNextPage: boolean
+  endCursor: string,
   loading: boolean
   refreshing: boolean
-  total: number
   actions:{
     getDraftContents: (payload: IPayloadGetDraftContents) => void;
   }
@@ -17,9 +17,9 @@ export interface IDraftContentsState extends IBaseState {
 const initState: InitStateType<IDraftContentsState> = {
   posts: [],
   hasNextPage: true,
+  endCursor: '',
   loading: false,
   refreshing: false,
-  total: 0,
 };
 
 const draftContentsStore = (set, get): IDraftContentsState => ({

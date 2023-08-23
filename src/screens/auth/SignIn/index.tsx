@@ -43,6 +43,7 @@ import { authErrorMessage, authErrors } from '~/constants/authConstants';
 import { useBaseHook } from '~/hooks';
 import useModalStore from '~/store/modal';
 import { FieldNameType } from '~/interfaces/IAuth';
+import PrivacyAndTerms from './components/PrivacyAndTerms';
 
 const { EMAIL, PASSWORD } = FieldNameType;
 
@@ -350,6 +351,7 @@ const SignIn = () => {
             {renderButtonSignIn()}
           </View>
         </TouchableWithoutFeedback>
+        <PrivacyAndTerms />
       </ScrollView>
       {renderLoading()}
     </ScreenWrapper>
@@ -372,8 +374,11 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     contentContainer: {
       flex: 1,
+      height: '100%',
     },
-    flex1: { flex: 1 },
+    flex1: {
+      flex: 1,
+    },
     paddingView: {
       flex: 1,
       paddingHorizontal: spacing.padding.big,

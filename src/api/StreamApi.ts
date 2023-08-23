@@ -52,7 +52,7 @@ import {
   QuestionItem,
 } from '~/interfaces/IQuiz';
 
-const DEFAULT_LIMIT = 10;
+export const DEFAULT_LIMIT = 10;
 
 const provider = apiProviders.beinFeed;
 const defaultConfig = {
@@ -125,8 +125,8 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}content/draft`,
     params: {
-      offset: params?.offset || 0,
-      limit: params?.limit || 10,
+      limit: params?.limit || DEFAULT_LIMIT,
+      after: params?.endCursor,
       isProcessing: params?.isProcessing || false,
       type: params?.type,
     },
@@ -295,8 +295,8 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}comments/${commentId}`,
     params: {
-      limit: 1,
-      targetChildLimit: params?.targetChildLimit || 10,
+      limit: params?.limit || 1,
+      targetChildLimit: params?.targetChildLimit || DEFAULT_LIMIT,
     },
   }),
   getUsersInterestedPost: (
@@ -386,12 +386,12 @@ export const streamApiConfig = {
     url: `${provider.url}series`,
     params,
   }),
-  scheduleArticle: (draftArticleId: string, publishedAt: string): HttpApiRequestConfig => ({
+  scheduleArticle: (draftArticleId: string, scheduledAt: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}articles/${draftArticleId}/schedule`,
     method: 'put',
     data: {
-      publishedAt,
+      scheduledAt,
     },
   }),
   deleteArticle: (id: string): HttpApiRequestConfig => ({
@@ -774,25 +774,9 @@ const streamApi = {
   },
 
   getPostDetail: (params: IParamGetPostDetail) => withHttpRequestPromise(streamApiConfig.getPostDetail, params),
-  getDraftContents: async (param: IParamGetDraftContents) => {
-    try {
-      const response: any = await makeHttpRequest(
-        streamApiConfig.getDraftContents(param),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve({
-          data: response?.data?.data?.list || [],
-          canLoadMore:
-            (param?.offset || 0) + (param?.limit || DEFAULT_LIMIT)
-            <= response?.data?.data?.meta?.total,
-          total: response?.data?.data?.meta?.total,
-        });
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  getDraftContents: (params: IParamGetDraftContents) => withHttpRequestPromise(
+    streamApiConfig.getDraftContents, params,
+  ),
   getCommentDetail: (commentId: string, params: IRequestGetPostComment) => withHttpRequestPromise(
     streamApiConfig.getCommentDetail, commentId, params,
   ),
@@ -808,8 +792,8 @@ const streamApi = {
   getArticleDetailByAdmin: (id: string, params?: IParamGetArticleDetail) => withHttpRequestPromise(
     streamApiConfig.getArticleDetailByAdmin, id, params,
   ),
-  scheduleArticle: (draftArticleId: string, publishedAt: string) => withHttpRequestPromise(
-    streamApiConfig.scheduleArticle, draftArticleId, publishedAt,
+  scheduleArticle: (draftArticleId: string, scheduledAt: string) => withHttpRequestPromise(
+    streamApiConfig.scheduleArticle, draftArticleId, scheduledAt,
   ),
   deleteArticle: (id: string) => withHttpRequestPromise(
     streamApiConfig.deleteArticle, id,

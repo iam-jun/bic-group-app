@@ -20,6 +20,7 @@ interface INotificationsState extends IBaseState, IFetchingState{
   tabImportant?: INotificationTab,
   changelogsInfo?: INotiChangeLogsInfo,
   changelogsInfoLoading?: boolean,
+  waitingForDelete?: string[],
 
   actions?: {
     getTabData?: (payload?: IParamGetNotifications) => void,
@@ -38,6 +39,11 @@ interface INotificationsState extends IBaseState, IFetchingState{
     handleNotiBackground: (remoteMessage: any) => void;
     getChangelogNotification: (notificationId: string) => void;
     resetChangelogNoti: () => void;
+    deleteNotification: (notificationId: string) => void;
+    deleteNotificationLocal: (notificationId: string) => void;
+    undoDeleteNotificationLocal: (notificationId: string) => void;
+    deleteAllWaitingNotification: () => void;
+    generateAdvancedSettings: () => void;
   }
 
 }

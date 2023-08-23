@@ -9,9 +9,9 @@ import IFetchingState from '~/store/interfaces/IFetchingState';
 export interface IDraftArticleState extends IBaseState, IFetchingState {
   articles: IPost[],
   hasNextPage: boolean,
+  endCursor: string,
   loading: boolean,
   refreshing: boolean,
-  total: number,
   isPublishing: boolean;
 
   actions?:{
@@ -23,9 +23,9 @@ export interface IDraftArticleState extends IBaseState, IFetchingState {
 const initialState: IDraftArticleState = {
   articles: [],
   hasNextPage: true,
+  endCursor: '',
   loading: false,
   refreshing: false,
-  total: 0,
   isPublishing: false,
 };
 

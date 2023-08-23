@@ -1,8 +1,8 @@
 import React, {
-  ForwardRefRenderFunction, useImperativeHandle, useRef,
+  ForwardRefRenderFunction, useImperativeHandle, useRef, useState,
 } from 'react';
 import {
-  Platform, ScrollView, Share, StyleSheet,
+  Platform, Pressable, ScrollView, Share, StyleSheet,
 } from 'react-native';
 import i18next from 'i18next';
 import { Modalize } from 'react-native-modalize';
@@ -19,6 +19,7 @@ const ImageGalleryMenu: ForwardRefRenderFunction<any, ImageGalleryMenuProps> = (
   const modalizeRef = useRef<Modalize>(null);
   const insets = useSafeAreaInsets();
   const styles = createStyles(insets);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useImperativeHandle(ref, () => ({
     openModal,
@@ -26,10 +27,12 @@ const ImageGalleryMenu: ForwardRefRenderFunction<any, ImageGalleryMenuProps> = (
   }));
 
   const openModal = () => {
+    setIsMenuOpen(true);
     modalizeRef.current?.open();
   };
 
   const closeModal = () => {
+    setIsMenuOpen(false);
     modalizeRef.current?.close();
   };
 
@@ -96,14 +99,16 @@ const ImageGalleryMenu: ForwardRefRenderFunction<any, ImageGalleryMenuProps> = (
   );
 
   return (
-    <Modalize
-      ref={modalizeRef}
-      adjustToContentHeight
-      modalStyle={[styles.modalStyle]}
-      childrenStyle={[styles.childrenStyle]}
-    >
-      {renderListData()}
-    </Modalize>
+    <Pressable pointerEvents={isMenuOpen ? 'auto' : 'none'} style={{ ...StyleSheet.absoluteFillObject }} onPress={closeModal}>
+      <Modalize
+        ref={modalizeRef}
+        adjustToContentHeight
+        modalStyle={[styles.modalStyle]}
+        childrenStyle={[styles.childrenStyle]}
+      >
+        {renderListData()}
+      </Modalize>
+    </Pressable>
   );
 };
 

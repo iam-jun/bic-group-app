@@ -16,7 +16,9 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import TitleComponent from '../fragments/TitleComponent';
 import Button from '~/beinComponents/Button';
-import { dataMapping, maxBirthday } from './helper';
+import {
+  checkFullName, dataMapping, maxBirthday,
+} from './helper';
 import spacing from '~/theme/spacing';
 import RELATIONSHIP_STATUS from '~/constants/relationshipStatus';
 import { DateInput, TextInput } from '~/baseComponents/Input';
@@ -53,7 +55,7 @@ const EditBasicInfo = () => {
   const [relationshipState, setRelationshipState]
     = useState<RELATIONSHIP_TYPE>(relationshipStatus);
 
-  const [error, setError] = useState<boolean>(false);
+  const [errorText, setErrorText] = useState<string>('');
   const actions = useMenuController((state) => state.actions);
 
   const relationshipStatusList = dataMapping(RELATIONSHIP_STATUS);
@@ -69,7 +71,7 @@ const EditBasicInfo = () => {
     || birthday !== birthdayState
     || !isEqual(language, languageState)
     || relationshipStatus !== relationshipState)
-    && nameState?.trim?.()?.length > 0;
+    && nameState?.trim?.()?.length > 0 && !errorText;
 
   const isValid = checkIsValid(
     nameState,
@@ -138,11 +140,8 @@ const EditBasicInfo = () => {
   const onChangeName = (text: string) => {
     const newName = text?.trim?.();
     setNameState(newName);
-    if (newName) {
-      error && setError(false);
-    } else {
-      setError(true);
-    }
+    const newErrorText = checkFullName(newName, errorText);
+    setErrorText(newErrorText);
   };
 
   return (
@@ -153,7 +152,7 @@ const EditBasicInfo = () => {
         buttonText="common:text_save"
         buttonProps={{
           useI18n: true,
-          disabled: !isValid,
+          disabled: Boolean(!isValid),
           testID: 'edit_basic_info.save',
           style: styles.btnRightHeader,
         }}
@@ -170,10 +169,8 @@ const EditBasicInfo = () => {
           value={fullname}
           label={t('settings:title_name')}
           onChangeText={onChangeName}
-          error={error}
-          helperText={
-            error ? t('profile:text_name_must_not_be_empty') : undefined
-          }
+          error={Boolean(errorText?.length > 0)}
+          helperText={errorText}
           maxLength={64}
           placeholder={t('settings:enter_name')}
           editable={!isVerified}

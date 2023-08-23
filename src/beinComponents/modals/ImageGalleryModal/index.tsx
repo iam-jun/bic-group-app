@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable unused-imports/no-unused-imports */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FC, useState, useRef } from 'react';
 import {
@@ -5,16 +7,16 @@ import {
   Modal,
   View,
   FlatList,
-  TouchableOpacity,
   Platform,
   TouchableWithoutFeedback,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import PagerView from 'react-native-pager-view';
-import ImageZoom from 'react-native-image-pan-zoom';
 import { debounce } from 'lodash';
 
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Modalize } from 'react-native-modalize';
+import { Portal } from 'react-native-portalize';
 import Icon from '~/baseComponents/Icon';
 import { ImageGalleryModalProps } from '~/beinComponents/modals/ImageGalleryModal/IImageGalleryModalProps';
 import Image from '~/components/Image';
@@ -24,6 +26,7 @@ import dimension from '~/theme/dimension';
 import ImageGalleryMenu from './ImageGalleryMenu';
 import AlertModal from '../AlertModal';
 import Toast from '~/baseComponents/Toast';
+import ImageZoomable from '~/components/Image/ImageZoomable';
 
 const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   visible,
@@ -34,7 +37,6 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   isShowImgName = true,
 }: ImageGalleryModalProps) => {
   const [activeIndex, _setActiveIndex] = useState(initIndex);
-  const [isFocus, setIsFocus] = useState(false);
 
   const pagerRef = useRef<any>();
   const footerListRef = useRef<any>();
@@ -48,20 +50,11 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   const imageUrls = getImageUrls(source);
 
   const onRequestClose = () => {
-    if (isFocus) {
-      setIsFocus(false);
-    } else {
-      onPressClose?.();
-    }
+    onPressClose?.();
   };
 
   const onPressMenu = () => {
     modalizeRef.current?.openModal?.();
-  };
-
-  // for Android
-  const closeModal = () => {
-    modalizeRef.current?.closeModal?.();
   };
 
   const setActiveIndex = debounce(
@@ -185,24 +178,26 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
     );
   };
 
+  const onSwipe = (isFromRightToLeft: boolean) => {
+    if (isFromRightToLeft) {
+      onPressNext();
+    } else {
+      onPressBack();
+    }
+  };
+
   const renderScreen = (item: any, index: number) => (
-    <TouchableOpacity
-      key={`${index}`}
-      activeOpacity={0.8}
-      onPress={() => setIsFocus(true)}
-      onLongPress={onPressMenu}
-    >
-      <Image
-        width={dimension.deviceWidth}
-        style={styles.screenImage}
-        source={{ uri: item?.url }}
-        resizeMode="contain"
+    <View key={`${index}`} style={{ flex: 1 }}>
+      <ImageZoomable
+        imageProps={{ source: { uri: item?.url } }}
+        onSwipe={onSwipe}
+        onLongPressTap={onPressMenu}
       />
-    </TouchableOpacity>
+    </View>
   );
 
   const renderControlButton = () => (
-    <View style={styles.buttonControlContainer}>
+    <View pointerEvents="box-none" style={styles.buttonControlContainer}>
       <View>
         {activeIndex > 0 && (
           <Button style={styles.buttonControl} onPress={onPressBack}>
@@ -220,57 +215,33 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
     </View>
   );
 
-  const renderFocusScreen = () => (
-    <View style={styles.focusScreenContainer}>
-      <ImageZoom
-        cropWidth={dimension.deviceWidth}
-        cropHeight={dimension.deviceHeight}
-        imageWidth={dimension.deviceWidth}
-        imageHeight={dimension.deviceHeight}
-        onClick={() => setIsFocus(false)}
-        maxScale={3}
-      >
-        <Image
-          resizeMode="contain"
-          style={{
-            width: '100%',
-            height: '100%',
-          }}
-          source={{ uri: imageUrls?.[activeIndex]?.url }}
-        />
-      </ImageZoom>
-    </View>
-  );
-
   return (
     <Modal testID="image_gallery_modal" visible={visible} transparent onRequestClose={onRequestClose}>
       {visible && (
-        <TouchableWithoutFeedback onPress={closeModal}>
-          <View style={styles.container}>
-            {renderHeader()}
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <PagerView
-                ref={pagerRef}
-                style={{ flex: 1 }}
-                initialPage={initIndex}
-                onPageSelected={onPageSelected}
+      <View style={styles.container}>
+        {renderHeader()}
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+          <PagerView
+            ref={pagerRef}
+            style={{ flex: 1 }}
+            initialPage={initIndex}
+            onPageSelected={onPageSelected}
                 // for unit test
-                layoutDirection="ltr"
-              >
-                {imageUrls.map(renderScreen)}
-              </PagerView>
-              {renderControlButton()}
-            </View>
-            {renderFooter()}
-            {isFocus && renderFocusScreen()}
-            <ImageGalleryMenu
-              photo={imageUrls[activeIndex]}
-              ref={modalizeRef}
-            />
-            <AlertModal />
-            <Toast />
-          </View>
-        </TouchableWithoutFeedback>
+            layoutDirection="ltr"
+            scrollEnabled={false}
+          >
+            {imageUrls.map(renderScreen)}
+          </PagerView>
+          {renderControlButton()}
+        </View>
+        {renderFooter()}
+        <ImageGalleryMenu
+          photo={imageUrls[activeIndex]}
+          ref={modalizeRef}
+        />
+        <AlertModal />
+        <Toast />
+      </View>
       )}
     </Modal>
   );
@@ -345,8 +316,10 @@ const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
       backgroundColor: 'rgba(41, 39, 42, 0.2)',
     },
     focusScreenContainer: {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
       backgroundColor: colors.gray40,
-      ...StyleSheet.absoluteFillObject,
     },
   });
 };

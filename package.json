@@ -13,6 +13,7 @@
     "build-ios-staging": "./scripts/build.sh ipa staging",
     "build-ios-prerelease": "./scripts/build.sh ipa prerelease",
     "build-ios-production": "./scripts/build.sh ipa production",
+    "bundle-aab": "./scripts/build.sh aab",
     "clean": "./scripts/clean.sh",
     "codepush-ios": "appcenter codepush release-react -a Beincom/BIC-Group-iOS -d Staging --plist-file=\"ios/bic_group/Info.plist\"",
     "codepush-android": "appcenter codepush release-react -a Beincom/BIC-Group -d Staging",

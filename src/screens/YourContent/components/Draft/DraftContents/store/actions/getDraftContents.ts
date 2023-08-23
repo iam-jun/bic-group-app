@@ -9,6 +9,7 @@ const getDraftContents = (set, get) => async (payload: IPayloadGetDraftContents)
   const {
     posts: draftPosts,
     hasNextPage,
+    endCursor,
     refreshing,
     loading,
   } = data || {};
@@ -18,24 +19,24 @@ const getDraftContents = (set, get) => async (payload: IPayloadGetDraftContents)
       set((state: IDraftContentsState) => {
         if (isRefresh) {
           state.refreshing = true;
-          state.total = 0;
         } else {
           state.loading = true;
         }
       }, 'getDraftContents');
 
-      const offset = isRefresh ? 0 : draftPosts?.length;
-      const response = await streamApi.getDraftContents({ offset });
+      const endCursorParams = isRefresh ? null : endCursor;
+      const response = await streamApi.getDraftContents({ endCursor: endCursorParams });
 
       const newPosts = isRefresh
-        ? response?.data || []
-        : draftPosts.concat(response?.data || []);
+        ? response?.data?.list || []
+        : draftPosts.concat(response?.data?.list || []);
+
       set((state: IDraftContentsState) => {
         state.posts = newPosts;
-        state.hasNextPage = response?.canLoadMore;
+        state.hasNextPage = response?.data?.meta?.hasNextPage;
+        state.endCursor = response?.data?.meta?.endCursor;
         state.refreshing = false;
         state.loading = false;
-        state.total = response?.total;
       }, 'getDraftContentsSuccess');
       usePostsStore.getState().actions.addToPosts({ data: newPosts });
     } else {
@@ -45,6 +46,7 @@ const getDraftContents = (set, get) => async (payload: IPayloadGetDraftContents)
     set((state: IDraftContentsState) => {
       state.refreshing = false;
       state.loading = false;
+      state.endCursor = null;
     }, 'getDraftContentsFailed');
     console.error('\x1b[31m🐣️ action getDraftContents error: ', e, '\x1b[0m');
   }

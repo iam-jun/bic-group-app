@@ -1,7 +1,8 @@
 import { Method } from 'axios';
 import { makeHttpRequest, withHttpRequestPromise } from '~/api/apiRequest';
 import { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
-import { IParamGetNotifications } from '~/interfaces/INotification';
+import { IEditNotificationSetting, IParamGetNotifications } from '~/interfaces/INotification';
+import { IGetCommunityGroup } from '~/interfaces/IGroup';
 
 const LIMIT = 20;
 
@@ -66,6 +67,59 @@ export const notificationApiConfig = {
     ...defaultConfig,
     url: `${provider.url}notifications/${id}?type=changelogs`,
   }),
+  getConfigSettings: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings`,
+  }),
+  updateSettings: (params: IEditNotificationSetting): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings`,
+    method: 'patch',
+    data: params,
+  }),
+  getCommunitySettings: (communityId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/advanced/${communityId}`,
+  }),
+  getGroupSettings: (communityId: string, groupIds: string[]): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/advanced/${communityId}`,
+    method: 'post',
+    data: { groupIds },
+  }),
+  updateCommunitySettings: (communityId: string, params: IEditNotificationSetting): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/advanced/${communityId}`,
+    method: 'patch',
+    data: params,
+  }),
+  updateGroupSettings: (
+    communityId: string,
+    groupId: string,
+    params: IEditNotificationSetting,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/advanced/${communityId}/${groupId}`,
+    method: 'patch',
+    data: params,
+  }),
+  deleteNotification: (id: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}notifications/${id}`,
+    method: 'delete',
+  }),
+  getGroupsAndGroupsSettings: (communityId: string, otherParams: IGetCommunityGroup): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/advanced/${communityId}/groups`,
+    params: {
+      ...otherParams,
+      key: otherParams?.key?.trim?.() ? otherParams.key : undefined,
+    },
+  }),
+  generateAdvancedSettings: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/advanced/generate`,
+  }),
 };
 
 const notificationApi = {
@@ -90,6 +144,31 @@ const notificationApi = {
     notificationApiConfig.putMarkAsUnReadById, activityId,
   ),
   getChangelogNotification: (id: string) => withHttpRequestPromise(notificationApiConfig.getChangelogNotification, id),
+  getConfigSettings: () => withHttpRequestPromise(notificationApiConfig.getConfigSettings),
+  updateSettings: (params: IEditNotificationSetting) => withHttpRequestPromise(
+    notificationApiConfig.updateSettings, params,
+  ),
+  getCommunitySettings: (communityId: string) => withHttpRequestPromise(
+    notificationApiConfig.getCommunitySettings, communityId,
+  ),
+  getGroupSettings: (communityId: string, groupIds: string[]) => withHttpRequestPromise(
+    notificationApiConfig.getGroupSettings, communityId, groupIds,
+  ),
+  updateCommunitySettings: (communityId: string, params: IEditNotificationSetting) => withHttpRequestPromise(
+    notificationApiConfig.updateCommunitySettings, communityId, params,
+  ),
+  updateGroupSettings: (
+    communityId: string,
+    groupId: string,
+    params: IEditNotificationSetting,
+  ) => withHttpRequestPromise(
+    notificationApiConfig.updateGroupSettings, communityId, groupId, params,
+  ),
+  deleteNotification: (id: string) => withHttpRequestPromise(notificationApiConfig.deleteNotification, id),
+  getGroupsAndGroupsSettings: (communityId: string, params: IGetCommunityGroup) => withHttpRequestPromise(
+    notificationApiConfig.getGroupsAndGroupsSettings, communityId, params,
+  ),
+  generateAdvancedSettings: () => withHttpRequestPromise(notificationApiConfig.generateAdvancedSettings),
 };
 
 export default notificationApi;

@@ -72,6 +72,7 @@ export interface IPost {
   isReported?: boolean;
   isHidden?: boolean;
   publishedAt?: string;
+  scheduledAt?: string;
   wordCount?: number;
   quiz?: QuizPost;
   quizHighestScore?: QuizHighestScore;
@@ -309,7 +310,6 @@ export interface IPayloadCreateComment {
   localId?: string | number[]; // used when retry adding new comment
   preComment?: ICommentData;
   onSuccess?: () => void;
-  isCommentLevel1Screen?: boolean;
   viewMore?: boolean;
 }
 
@@ -363,6 +363,7 @@ export interface IPayloadGetPostDetail extends IParamGetPostDetail {
   callbackLoading?: (loading: boolean, success: boolean) => void;
   showToast?: boolean;
   isReported?: boolean;
+  commentId?: string;
 }
 
 export type IReactionKind = 'comment' | 'seen' | ReactionType;
@@ -397,6 +398,7 @@ export interface IPayloadGetCommentsById {
   commentId?: string;
   params?: IRequestGetPostComment;
   isReported?: boolean;
+  isGetLastComments?: boolean;
   callbackLoading?: (loading: boolean, canLoadMore?: boolean) => void;
 }
 
@@ -516,6 +518,7 @@ export interface IParamGetDraftContents {
   order?: 'ASC';
   offset?: number;
   limit?: number;
+  endCursor?: string;
   idGte?: string;
   idLte?: string;
   idGt?: string;

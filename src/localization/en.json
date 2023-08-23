@@ -213,7 +213,7 @@
     "btn_go_back": "Back",
     "text_unsupport_feature": "We are not supporting this feature on mobile. Please see the detail on web version",
     "text_maintenance_title": "We are under maintenance.",
-    "text_maintenance_content": "We will be back at ",
+    "text_maintenance_content": "The platform is temporarily unavailable during maintenance time. We will be back at **(endAt)**\nWe apologize for any inconvenience and appreciate your continued support.",
     "text_select_file": "Select File",
     "content_unavailable": {
       "title": "This content isn’t available right now",
@@ -234,8 +234,8 @@
     "settings": "Settings",
     "pin_unpin": "Pin/Unpin",
     "text_i_agree": "I agree",
-    "text_group_terms": "Group Terms & Conditions",
-    "text_community_terms": "Community Terms & Conditions",
+    "text_group_terms": "Terms & Conditions",
+    "text_community_terms": "Terms & Conditions",
     "text_sorry_something_went_wrong": "Sorry, something went wrong",
     "text_pull_to_refresh": "Please pull down to refresh the page and try again",
     "text_answer_title": "Membership questions",
@@ -261,8 +261,8 @@
     "text_sign_out_content": "Do you want to Log Out?",
     "input_label_first_name": "First Name",
     "input_label_last_name": "Last Name",
-    "input_label_username": "User name",
-    "input_label_username_placeholder": "Your user name",
+    "input_label_username": "Username",
+    "input_label_username_placeholder": "Your username",
     "text_warning_username": "You can not change your username after success creating account.",
     "input_label_full_name": "Full name",
     "input_label_full_name_placeholder": "Your full name",
@@ -301,7 +301,7 @@
     "text_err_password_format": "Password must be eight characters, at least one number!",
     "text_err_email_blank": "Email is required!",
     "text_err_email_format": "Wrong Email format",
-    "text_err_username_blank": "User name is required!",
+    "text_err_username_blank": "Username is required!",
     "text_err_code": "Code must have 6 numbers!",
     "text_err_new_password_must_differ_from_current": "New password must be different from the current password.",
     "text_err_confirm_password_not_matched": "Confirmed password doesn’t match.",
@@ -349,6 +349,7 @@
     "text_err_email_exist": "This email already exists. Please try another.",
     "text_agree_to_our": "Agree to our ",
     "text_privacy_terms": "Privacy & Terms",
+    "text_agree_to_terms_sigin": "By signing in to BIC Group, you agree to",
     "text_you_have_an_account": "You have an account? ",
     "text_sign_in_now": "Sign In now",
     "title_sign_up_success_modal": "Your account has been created successfully",
@@ -557,15 +558,38 @@
         "cancel": "Cancel",
         "turn_off": "Turn off"
       },
-      "tooltip": {
-        "private": "Can’t be turned off because your {{type}} privacy is Private",
-        "secret": "Can’t select this option because your group privacy is Secret",
-        "default_group_set_toggle": "Can’t be turned on because your group is in the default group set",
-        "default_group_set_radio": "Can’t select this option because your group is in the default group set"
-      },
       "community": "community",
-      "group": "group"
-    }
+      "group": "group",
+      "change_settings": {
+        "title_membership_approval": "Turn on the membership approval for inner groups?",
+        "title_policy_setting": "Change the policy setting for inner groups?",
+        "content_first_with_group": "{{count}} inner group of ",
+        "content_first_with_groups": "{{count}} inner groups of ",
+        "content_membership_approval": " will be turned on the membership approval.",
+        "content_policy_setting": " will be changed to only invited people can join.",
+        "button_change": "Change",
+        "button_turn_on": "Turn On",
+        "button_more_details": "More details",
+        "button_show_less": "Show less"
+      }
+    },
+    "privacy_center": {
+      "menu_item_title": "Privacy",
+      "screen_title": "Privacy Center",
+      "screen_description": "Manage and control your personal privacy that is right for you.",
+      "personal_information_visibility": {
+        "title": "Personal Information Visibility",
+        "description": "Control who can see your personal information in your profile.",
+        "everyone_type": "Everyone",
+        "everyone_description": "Everyone can see your information.",
+        "community_members_type": "Community Members",
+        "community_members_description": "People in the same community with you can see your information.",
+        "only_me_type": "Only Me",
+        "only_me_description": "No one can see your information."
+      }
+    },
+    "text_no_experience_to_show": "No experience to show",
+    "text_no_contact_to_show": "No contact to show"
   },
   "languages": {
     "title_en": "English",
@@ -583,8 +607,9 @@
     "title_feed_content_posts": "Posts",
     "title_feed_content_articles": "Articles",
     "title_feed_content_series": "Series",
-    "title_install_chat": "App not found",
-    "text_desc_install_chat": "Please install BIC Chat",
+    "title_install_chat": "BIC Chat Not Found",
+    "text_desc_install_chat": "To utilize our Chat feature, you need to have the BIC Chat app on your device.",
+    "text_get_bic_chat": "Get BIC Chat",
     "newsfeed_search": {
       "text_cta_see_result_for_search_text": "See result for \"%SEARCH_TEXT%\"",
       "clear": "Clear all",
@@ -1112,7 +1137,18 @@
     "title_edit_profile": "Edit Profile",
     "title_direct_message": "Direct Message",
     "title_view_profile": "View Profile",
-    "text_name_must_not_be_empty": "Name must not be empty"
+    "text_name_must_not_be_empty": "Name must not be empty",
+    "fullname_rule": {
+      "not_allow_special_character": "Full name can not contain special characters",
+      "not_allow_number": "Full name can not contain numbers",
+      "character_length": "Full name must be between 3 to 64 characters"
+    },
+    "username_rule": {
+      "character_length": "Username must be between 5 to 50 characters",
+      "not_allow_special_character": "Username can not contain special characters, including whitespaces",
+      "not_allow_uppercase": "Username can not contain uppercase characters",
+      "not_allow_start_with_number_or_dot": "Username must start with a letter"
+    }
   },
   "right_col": {
     "about_bein": "About Bein",
@@ -1130,7 +1166,6 @@
     "mark_all_as_read": "Mark all as Read",
     "mark_all_as_read_success": "All notifications marked as read",
     "turn_off_notification": "Turn off Notification",
-    "notification_settings": "Notification Settings",
     "created_a_post": "created a post",
     "mentioned_you_in_a_post": "mentioned you in a post",
     "mentioned_you_in_a_comment": "mentioned you in a comment",
@@ -1158,7 +1193,41 @@
     "seen_all_notifications": "You have seen it all",
     "text_scheduled": "Scheduled Maintenance Downtime",
     "content_scheduled_maintenance_downtime": "We’ll improve the platform to enhance your experience. During maintenance, it may be temporarily unavailable or have limited functionality.\n \nMaintenance will start at **(startAt)** in about **(duration)**.\n \nWe apologize for any inconvenience and appreciate your continued support.",
-    "text_bic_team": "BIC team"
+    "text_bic_team": "BIC team",
+    "text_remove_notification": "Remove this notification",
+    "text_remove_notification_success": "Notification removed successfully",
+    "notification_settings": {
+      "title": "Notification Settings",
+      "screen_title": "General Settings",
+      "description": "We may still send you important notification about your account outside of your settings",
+      "error_title": "Sorry, we can’t get the data here",
+      "error_description": "Please refresh the page or try again later",
+      "allow_notifications": "Allow notifications",
+      "in_app_text": "In-app",
+      "push_text": "Push",
+      "default_text": "General Settings",
+      "off_text": "Off",
+      "not_joined_the_community": {
+        "title": "Nothing to set up",
+        "description": "Join a community then set up the settings here."
+      }
+    },
+    "advanced_notifications_settings": {
+      "title": "Advanced Notification Settings",
+      "screen_title": "Advanced Settings",
+      "content": "Specific notification settings for each community and its inner groups",
+      "title_setup_community": "Set up for your communities",
+      "title_setup_group": "Set up for your groups",
+      "description_setup_group": "Default settings use your general notification settings until you set up specifically.",
+      "title_reset_to_default": "Reset to General settings",
+      "reset_to_default_tooltip": "Reset to use your general notification settings",
+      "text_enable_settings": "Enable settings",
+      "enable_settings_tooltip": "Use settings for this\nspecific group",
+      "search_community_title": "Select your community",
+      "search_placeholder": "Search community",
+      "search_group_placeholder": "Search group",
+      "search_group_title": "Select your group"
+    }
   },
   "new_feature": {
     "title": "New feature",
@@ -1602,5 +1671,12 @@
     "add_answer": "Add answer",
     "this_field_must_not_be_empty": "This field must not be empty",
     "please_select_correct_answer": "Please select the correct answer for the question"
+  },
+  "previewJoinableGroup": {
+    "title": "Join all outer groups?",
+    "description_1": "By joining ",
+    "description_2": ", you’ll join all its outer groups.",
+    "text_join_group_button": "Join",
+    "text_you_are_asking_to_join": "You’re asking to join"
   }
 }
