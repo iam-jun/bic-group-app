@@ -41,6 +41,7 @@ const InvitePeopleToYourGroup = (props: InvitePeopleToYourGroupProps) => {
   const {
     data, selectedUsers, loading, actions, searchText,
   } = useGroupJoinableUsersStore((state) => state);
+  const { loading: loadingUsers, hasNextPage } = useGroupJoinableUsersStore((state) => state.users);
 
   const shouldDisableButton = selectedUsers.length === 0;
 
@@ -49,6 +50,7 @@ const InvitePeopleToYourGroup = (props: InvitePeopleToYourGroupProps) => {
   };
 
   const onLoadMore = () => {
+    if (!hasNextPage || loadingUsers) return null;
     getData(searchText, true);
   };
 

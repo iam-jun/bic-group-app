@@ -363,7 +363,7 @@ export enum IInvitationsStatus {
 
 export interface IParamsGetInvitations {
   limit: number,
-  offset: number,
+  cursor: string | null,
 }
 
 export interface IInvitation {

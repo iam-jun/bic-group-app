@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { RefreshControl } from 'react-native-gesture-handler';
 import {
-  ActivityIndicator, FlatList, StyleSheet, View,
+  ActivityIndicator, StyleSheet, View,
 } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native-gesture-handler';
 import { spacing } from '~/theme';
 import { IInvitedPeople } from '~/interfaces/IGroup';
 import Invitee from './components/Invitee';
@@ -24,30 +24,31 @@ const CommunityInvitedPeople = ({ groupId, type }: CommunityInvitedPeopleProps) 
 
   const invitedPeople = useGroupJoinableUsersStore((state) => state.invitedPeople);
   const {
-    data, canLoadMore, isLoading, isRefreshing,
+    data, isLoading, isRefreshing, cursors,
   } = invitedPeople;
+  const { next: canLoadMore } = cursors || {};
   const { getInvitations, clearInvitedPeople } = useGroupJoinableUsersStore((state) => state.actions);
 
   useEffect(() => {
     (async () => {
-      await getData();
+      getData();
     })();
     return () => {
       clearInvitedPeople();
     };
   }, []);
 
-  const getData = async (isRefresh?: boolean) => {
-    await getInvitations(groupId, isRefresh);
+  const getData = (isRefresh?: boolean) => {
+    getInvitations(groupId, isRefresh);
   };
 
   const onRefresh = async () => {
-    await getData(true);
+    getData(true);
   };
 
   const onLoadMore = async () => {
-    if (!canLoadMore) return;
-    await getData();
+    if (!canLoadMore || isLoading) return;
+    getData();
   };
 
   const renderItem = ({ item }: { item: IInvitedPeople }) => <Invitee item={item} />;
@@ -62,8 +63,7 @@ const CommunityInvitedPeople = ({ groupId, type }: CommunityInvitedPeopleProps) 
   const renderFooterComponent = () => {
     if (data.length === 0) {
       return null;
-    }
-    if (!canLoadMore && data.length > 0) {
+    } if (!canLoadMore) {
       return (
         <Text.BodyM
           testID="flatlist.text_you_have_seen_it_all"
@@ -93,12 +93,11 @@ const CommunityInvitedPeople = ({ groupId, type }: CommunityInvitedPeopleProps) 
       testID="flatlist"
       data={data}
       renderItem={renderItem}
-      initialNumToRender={15}
       keyExtractor={keyExtractor}
       ListFooterComponent={renderFooterComponent}
       ListEmptyComponent={renderEmptyComponent}
       onEndReached={onLoadMore}
-      onEndReachedThreshold={0.2}
+      onEndReachedThreshold={0.5}
       refreshControl={
         <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} tintColor={theme.colors.gray40} />
       }

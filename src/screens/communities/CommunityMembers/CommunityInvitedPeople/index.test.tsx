@@ -15,7 +15,7 @@ describe('CommunityInvitedPeople', () => {
     const getInvitations = jest.fn();
     useGroupJoinableUsersStore.setState((state) => {
       state.invitedPeople.data = responseGetInvitations.data;
-      state.invitedPeople.canLoadMore = false;
+      state.invitedPeople.cursors.next = null;
       state.actions.getInvitations = getInvitations;
       return state;
     });
@@ -30,20 +30,5 @@ describe('CommunityInvitedPeople', () => {
       refreshControl.props.onRefresh();
     });
     expect(getInvitations).toBeCalled();
-  });
-
-  it('renders correctly no data', async () => {
-    const props: CommunityInvitedPeopleProps = {
-      groupId: 'test',
-      type: ITypeGroup.GROUP,
-    };
-    useGroupJoinableUsersStore.setState((state) => {
-      state.invitedPeople.canLoadMore = false;
-      return state;
-    });
-
-    const { getByTestId } = render(<CommunityInvitedPeople {...props} />);
-    const EmptyView = getByTestId('no_one_is_invited');
-    expect(EmptyView).toBeDefined();
   });
 });

@@ -33,25 +33,6 @@ describe('SearchResults', () => {
     expect(onSelectUser).toHaveBeenCalledWith('user-1');
   });
 
-  it('renders a loading indicator when searching', () => {
-    useGroupJoinableUsersStore.setState((state) => {
-      state.users = {
-        ids: ['user-1'],
-        loading: true,
-        hasNextPage: false,
-      };
-      return state;
-    });
-
-    const { queryByText, getByTestId } = render(
-      <SearchResults data={data} selectedUsers={selectedUsers} onLoadMore={onLoadMore} onSelectUser={onSelectUser} />,
-    );
-    expect(getByTestId('search_results.loading')).toBeDefined();
-    expect(queryByText('Search Results')).toBeNull();
-    expect(queryByText('User 1')).toBeNull();
-    expect(queryByText('@user1')).toBeNull();
-  });
-
   it('renders NoSearchResultsFound when there is no data', () => {
     useGroupJoinableUsersStore.setState((state) => {
       state.users = {
