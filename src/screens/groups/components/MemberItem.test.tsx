@@ -10,6 +10,7 @@ import mainStack from '~/router/navigator/MainStack/stack';
 describe('MemberItem component', () => {
   const canManageMember = true;
   const onPressMenu = jest.fn();
+  const communityId = 'test';
 
   it('should render data correctly for own item and not have admin role', () => {
     const item = { ...adminDetail };
@@ -20,6 +21,7 @@ describe('MemberItem component', () => {
     const { getByTestId, queryByTestId } = render(
       <MemberItem
         item={item}
+        communityId={communityId}
         isAdminRole
         canManageMember={false}
         onPressMenu={onPressMenu}
@@ -44,6 +46,7 @@ describe('MemberItem component', () => {
     const { getByTestId, queryByTestId } = render(
       <MemberItem
         item={item}
+        communityId={communityId}
         isAdminRole={false}
         canManageMember={false}
         onPressMenu={onPressMenu}
@@ -68,6 +71,7 @@ describe('MemberItem component', () => {
     const { getByTestId, queryByTestId } = render(
       <MemberItem
         item={item}
+        communityId={communityId}
         isAdminRole
         canManageMember={false}
         onPressMenu={onPressMenu}
@@ -96,6 +100,7 @@ describe('MemberItem component', () => {
     const wrapper = render(
       <MemberItem
         item={item}
+        communityId={communityId}
         isAdminRole={false}
         canManageMember={canManageMember}
         onPressMenu={onPressMenu}

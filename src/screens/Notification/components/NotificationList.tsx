@@ -73,7 +73,7 @@ const NotificationList = ({
 
   useEffect(
     () => {
-      if (notificationList?.length < 1 && activeIndex) {
+      if ((notificationList?.length < 1 && activeIndex) || (activeIndex && type === 'UNREAD')) {
         // @ts-ignore
         notiActions.getTabData({ flag: type, keyValue });
       }

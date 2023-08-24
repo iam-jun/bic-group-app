@@ -26,19 +26,19 @@ interface MemberItemProps {
   item: ICommunityMembers | IGroupMembers;
   isAdminRole: boolean;
   canManageMember: boolean;
+  communityId: string;
   onPressMenu: (item: any) => void;
 }
 
 const MemberItem = ({
-  item, isAdminRole, canManageMember, onPressMenu,
+  item, isAdminRole, canManageMember, communityId, onPressMenu,
 }: MemberItemProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const user = useAuthController(useCallback((state: IAuthState) => state.authUser, []));
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
-  const currentCommunityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
-  const community = useCommunitiesStore((state: ICommunitiesState) => state.data[currentCommunityId]);
+  const community = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
 
   const { listRelationship } = useBlockingStore();
   const isBlockedUser = listRelationship.some((userId) => userId === item.id);

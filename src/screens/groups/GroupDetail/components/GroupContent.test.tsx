@@ -15,7 +15,12 @@ describe('GroupContent component', () => {
     useGroupsStore.getState().actions.addToGroups(groupDetailData);
 
     const wrapper = renderWithRedux(
-      <GroupContent community={community} onScroll={onScroll} onGetInfoLayout={onGetInfoLayout} />,
+      <GroupContent
+        groupId={communityDetailData.groupId}
+        community={community}
+        onScroll={onScroll}
+        onGetInfoLayout={onGetInfoLayout}
+      />,
     );
     const component = wrapper.getByTestId('flatlist');
     expect(component).toBeDefined();

@@ -12,8 +12,8 @@ import Avatar from '~/baseComponents/Avatar';
 import mainStack from '~/router/navigator/MainStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import useCommonController from '~/screens/store';
-import InlineText from './InlineText';
 import UserBadge from '../UserProfile/components/UserBadge';
+import VerifiedView from '~/components/VerifiedView';
 
 const PADDING_INFO = spacing.padding.large * 2 + dimension.avatarSizes.large;
 
@@ -44,10 +44,13 @@ const MenuHeader = () => {
           style={styles.nameContainer}
           onPress={() => goToProfile()}
         >
-          <InlineText
-            testID="menu_header.full_name.text"
-            text={fullname}
+          <Text.H5 color={colors.neutral} style={styles.fullName}>
+            {fullname}
+          </Text.H5>
+          <VerifiedView
             isVerified={isVerified}
+            disabled={false}
+            placement="bottom"
           />
         </TouchableOpacity>
         <TouchableOpacity
@@ -120,6 +123,9 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     userBadge: {
       paddingTop: spacing.padding.small,
+    },
+    fullName: {
+      flexShrink: 1,
     },
   });
 };

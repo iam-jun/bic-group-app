@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import appConfig from '~/configs/appConfig';
 
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import spacing from '~/theme/spacing';
 import { useBaseHook } from '~/hooks';
 import { SearchInput } from '~/baseComponents/Input';

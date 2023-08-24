@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import { StyleSheet } from 'react-native';
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import { BottomListItemProps } from '~/components/BottomList/BottomListItem';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -35,6 +35,7 @@ import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
 import NotificationMenu from './components/NotificationMenu';
 import useNotificationItemMenu, { INotificationItemMenuStore } from './components/NotificationMenu/store';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
 
 const Notification = () => {
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
@@ -89,7 +90,6 @@ const Notification = () => {
       buttonText: t('common:text_undo'),
       onButtonPress: () => { onPressUndo(id); },
       duration: 3000,
-      onClose: () => { onPressDelete(id); },
     };
     showToast(toastMessage);
 
@@ -284,19 +284,10 @@ const Notification = () => {
             case NOTIFICATION_TYPE.GROUP_ADDED_TO_GROUP_TO_USER_IN_ONE_GROUP:
             case NOTIFICATION_TYPE.LEAVE_COMMUNITY_TO_USER:
               if (act?.community?.id) {
-                rootNavigation.navigate(
-                  groupStack.communityDetail, {
-                    communityId: act.community.id,
-                  },
-                );
+                navigateToCommunityDetail({ communityId: act.community.id });
               }
               if (act?.group?.id) {
-                rootNavigation.navigate(
-                  groupStack.groupDetail, {
-                    groupId: act.group.id,
-                    communityId: act?.group?.communityId,
-                  },
-                );
+                navigateToGroupDetail({ groupId: act.group.id, communityId: act?.group?.communityId });
               }
               break;
             case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN:
@@ -374,12 +365,7 @@ const Notification = () => {
             }
             case NOTIFICATION_TYPE.LEAVE_GROUP_TO_USER:
               if (!!act?.group?.[0]?.id) {
-                rootNavigation.navigate(
-                  groupStack.groupDetail, {
-                    groupId: act.group[0].id,
-                    communityId: act?.group?.[0]?.communityId,
-                  },
-                );
+                navigateToGroupDetail({ groupId: act.group[0].id, communityId: act?.group?.[0]?.communityId });
               }
               break;
             case NOTIFICATION_TYPE.REMOVE_ARTICLE_TO_USER:

@@ -5,13 +5,12 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 import EmptyScreen from '~/components/EmptyScreen';
 import images from '~/resources/images';
-import { Button } from '~/baseComponents';
+import { Button, ScreenWrapper } from '~/baseComponents';
 import Text from '~/baseComponents/Text';
 import Image from '~/components/Image';
 import ViewSpacing from '~/beinComponents/ViewSpacing';

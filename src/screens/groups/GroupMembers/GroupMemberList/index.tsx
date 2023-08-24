@@ -9,10 +9,11 @@ import useBlockingStore from '~/store/blocking';
 
 interface GroupMemberListProps {
   groupId: string;
+  communityId: string;
   onPressMenu: (item: IGroupMembers) => void;
 }
 
-const GroupMemberList = ({ groupId, onPressMenu }: GroupMemberListProps) => {
+const GroupMemberList = ({ groupId, communityId, onPressMenu }: GroupMemberListProps) => {
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
   const canManageMember = shouldHavePermission(
     groupId,
@@ -69,6 +70,7 @@ const GroupMemberList = ({ groupId, onPressMenu }: GroupMemberListProps) => {
   return (
     <MemberList
       type="group"
+      communityId={communityId}
       isAdminRole={isAdminRole}
       canManageMember={canManageMember}
       onLoadMore={onLoadMore}
