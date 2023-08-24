@@ -480,7 +480,7 @@ PODS:
   - React-jsinspector (0.68.5)
   - React-logger (0.68.5):
     - glog
-  - react-native-cameraroll (5.7.2):
+  - react-native-cameraroll (5.6.0):
     - React-Core
   - react-native-config (1.5.1):
     - react-native-config/App (= 1.5.1)
@@ -648,7 +648,7 @@ PODS:
     - RNFBApp
   - RNFlashList (1.5.0):
     - React-Core
-  - RNGestureHandler (2.12.1):
+  - RNGestureHandler (2.9.0):
     - React-Core
   - RNImageCropPicker (0.38.1):
     - React-Core
@@ -1124,7 +1124,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 45c0496ca8cef6b02d9fa0274c25cf458fe91a56
   React-jsinspector: eb202e43b3879aba9a14f3f65788aec85d4e1ea9
   React-logger: 98f663b292a60967ebbc6d803ae96c1381183b6d
-  react-native-cameraroll: 134805127580aed23403b8c2cb1548920dd77b3a
+  react-native-cameraroll: 755bcc628148a90a7c9cf3f817a252be3a601bc5
   react-native-config: 86038147314e2e6d10ea9972022aa171e6b1d4d8
   react-native-document-picker: 5663fe4bcdb646200683a41790464d2793307ac8
   react-native-flipper: cc9cdf47db2bbe0d9227eeec4f93e2290e55674b
@@ -1163,7 +1163,7 @@ SPEC CHECKSUMS:
   RNFBMessaging: 3ecfc67d5f14a51d48aac55c5f7c15b29e4f5fe8
   RNFBRemoteConfig: 5b047d4de8a7789f3a87d85304e62ec12d6a7f7d
   RNFlashList: 25b0e092b4470c84db0386d4f5316dc34123bb6d
-  RNGestureHandler: c0d04458598fcb26052494ae23dda8f8f5162b13
+  RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
   RNImageCropPicker: 648356d68fbf9911a1016b3e3723885d28373eda
   RNInAppBrowser: e36d6935517101ccba0e875bac8ad7b0cb655364
   RNPermissions: bcd846e8f5a7f39e921cc7ca7172e2de0e698b6f
