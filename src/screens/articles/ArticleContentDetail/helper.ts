@@ -7,6 +7,8 @@ import { IMentionUser, IPost } from '~/interfaces/IPost';
 import { openUrl } from '~/utils/link';
 import { goToContentInseries } from '~/components/RelatedContentsInSeries/helper';
 import { EventType } from '~/components/articles/ArticleWebview';
+import { QuizPost, QuizStatus } from '~/interfaces/IQuiz';
+import { onPressTakeQuiz } from '~/components/quiz/TakePartInAQuiz/helper';
 
 const rootNavigation = withNavigation?.(rootNavigationRef);
 
@@ -15,9 +17,10 @@ export const handleMessage = (data: {
   listImage: any[];
   setInitIndex: (value: number) => void;
   setGalleryVisible: (value: boolean) => void;
+  id?: string;
 }) => {
   const {
-    message, listImage, setInitIndex, setGalleryVisible,
+    message, listImage, setInitIndex, setGalleryVisible, id,
   } = data;
   const payload = message?.payload;
 
@@ -44,6 +47,8 @@ export const handleMessage = (data: {
       return onPressLink(payload);
     case EventType.ON_NAVIGATE:
       return onNavigateArticle(payload);
+    case EventType.ON_PRESS_QUIZ:
+      return onPressQuiz(payload, id);
     default:
       return console.warn('Article webview onMessage unhandled', message);
   }
@@ -130,4 +135,15 @@ export const getListImage = (node: any) => {
 
 const onNavigateArticle = (payload: IPost) => {
   goToContentInseries(payload);
+};
+
+const onPressQuiz = (payload: QuizPost, articleId: string) => {
+  const { id, status } = payload;
+  const canTakeQuiz = status === QuizStatus.PUBLISHED;
+
+  if (!id) return;
+
+  if (canTakeQuiz) {
+    onPressTakeQuiz(id, articleId);
+  }
 };

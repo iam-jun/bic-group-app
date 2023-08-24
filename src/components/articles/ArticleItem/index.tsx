@@ -11,7 +11,10 @@ import { ButtonMarkAsRead, PostImportant } from '~/components/posts';
 import ArticleHeader from '../ArticleHeader';
 import ArticleFooter from '../ArticleFooter';
 import ArticleReadingTime from '../ArticleReadingTime';
-import { ContentFooterLite, ContentInterestedUserCount } from '~/components/ContentView';
+import {
+  ContentFooterLite,
+  ContentInterestedUserCount,
+} from '~/components/ContentView';
 import { Button, PlaceHolderRemoveContent } from '~/baseComponents';
 import { IPost, PostType } from '~/interfaces/IPost';
 import { formatLargeNumber } from '~/utils/formatter';
@@ -27,11 +30,14 @@ import DeletedItem from '~/components/DeletedItem';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
 import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
+import DraftQuizFooter from '~/components/quiz/DraftQuizFooter';
+import TakePartInAQuiz from '~/components/quiz/TakePartInAQuiz';
 
 export interface ArticleItemProps {
   data: IPost;
   isLite?: boolean;
   shouldHideBannerImportant?: boolean;
+  shouldShowDraftQuiz?: boolean;
   onPressComment?: () => void;
 }
 
@@ -39,6 +45,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
   data = {},
   isLite,
   shouldHideBannerImportant,
+  shouldShowDraftQuiz = false,
   onPressComment,
 }: ArticleItemProps) => {
   const { rootNavigation } = useRootNavigation();
@@ -68,14 +75,15 @@ const ArticleItem: FC<ArticleItemProps> = ({
     deleted = false,
     isHidden,
     wordCount,
+    quiz,
+    quizHighestScore,
   } = data || {};
 
-  const {
-    isImportant, importantExpiredAt,
-  } = setting || {};
+  const { isImportant, importantExpiredAt } = setting || {};
 
   const titleArticle = isLite && titleHighlight ? titleHighlight : title;
-  const summaryArticle = isLite && summaryHighlight ? summaryHighlight : summary;
+  const summaryArticle
+    = isLite && summaryHighlight ? summaryHighlight : summary;
 
   const numberOfReactions = formatLargeNumber(
     getTotalReactions(reactionsCount, 'user'),
@@ -127,36 +135,31 @@ const ArticleItem: FC<ArticleItemProps> = ({
   const renderPreviewSummary = () => (
     <View style={styles.contentContainer}>
       <ArticleTitle text={titleArticle} />
-      {(!!summaryArticle) && (
+      {!!summaryArticle && (
         <>
           <ViewSpacing height={spacing.margin.small} />
           <ArticleSummary text={summaryArticle} />
         </>
       )}
-      {tags?.length > 0 && (
-        <TagsView data={tags} onPressTag={goToTagDetail} />
-      )}
+      {tags?.length > 0 && <TagsView data={tags} onPressTag={goToTagDetail} />}
     </View>
   );
 
-  const renderInterestedBy = () => (
-    !isHidden && (
-      <>
-        <View style={styles.boxInterested}>
-          <ArticleReadingTime numberWords={wordCount} />
-          <ContentInterestedUserCount
-            id={id}
-            testIDPrefix="article_item"
-            interestedUserCount={totalUsersSeen}
-          />
-        </View>
-        <Divider style={styles.divider} />
-      </>
-    )
+  const renderInterestedBy = () => !isHidden && (
+    <View style={styles.boxInterested}>
+      <ArticleReadingTime numberWords={wordCount} />
+      <ContentInterestedUserCount
+        id={id}
+        testIDPrefix="article_item"
+        interestedUserCount={totalUsersSeen}
+      />
+    </View>
   );
 
-  const renderFooter = () => (
-    !isHidden && (
+  const renderFooter = () => {
+    if (shouldShowDraftQuiz || isHidden) return null;
+
+    return (
       <ArticleFooter
         articleId={id}
         canReact={setting?.canReact}
@@ -166,9 +169,14 @@ const ArticleItem: FC<ArticleItemProps> = ({
         ownerReactions={ownerReactions}
         onPressComment={onPressComment}
       />
+    );
+  };
 
-    )
-  );
+  const renderDivider = () => {
+    if (isHidden || shouldShowDraftQuiz) return null;
+
+    return <Divider style={styles.divider} />;
+  };
 
   const renderLite = () => (
     <>
@@ -183,12 +191,34 @@ const ArticleItem: FC<ArticleItemProps> = ({
     </>
   );
 
-  const renderMarkAsRead = () => (
-    <ButtonMarkAsRead
-      postId={id}
-      markedReadPost={markedReadPost}
-      isImportant={isImportant}
-      expireTime={importantExpiredAt}
+  const renderMarkAsRead = () => {
+    if (shouldShowDraftQuiz) return null;
+
+    return (
+      <ButtonMarkAsRead
+        postId={id}
+        markedReadPost={markedReadPost}
+        isImportant={isImportant}
+        expireTime={importantExpiredAt}
+      />
+    );
+  };
+
+  const renderDraftQuizFooter = () => {
+    if (!shouldShowDraftQuiz) return null;
+
+    return (
+      <DraftQuizFooter data={data} />
+    );
+  };
+
+  const renderTakePartInAQuiz = () => (
+    <TakePartInAQuiz
+      quiz={quiz}
+      contentId={id}
+      quizHighestScore={quizHighestScore}
+      actor={actor}
+      shouldShowDraftQuiz={shouldShowDraftQuiz}
     />
   );
 
@@ -197,7 +227,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
   }
 
   if (reported) {
-    return (<PlaceHolderRemoveContent label="common:text_article_reported" />);
+    return <PlaceHolderRemoveContent label="common:text_article_reported" />;
   }
 
   return (
@@ -210,8 +240,11 @@ const ArticleItem: FC<ArticleItemProps> = ({
       </Button>
       {isLite && renderLite()}
       {!isLite && renderInterestedBy()}
+      {!isLite && renderTakePartInAQuiz()}
+      {!isLite && renderDivider()}
       {!isLite && renderFooter()}
       {!isLite && renderMarkAsRead()}
+      {renderDraftQuizFooter()}
     </View>
   );
 };

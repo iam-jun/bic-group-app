@@ -41,7 +41,7 @@ const getPublishContent = (set, get) => async (payload: IPayloadGetPublishConten
     const response = await streamApi.getNewsfeed(params);
 
     const result = response?.list || [];
-    usePostsStore.getState().actions.addToPosts({ data: result, handleComment: true });
+    usePostsStore.getState().actions.addToPosts({ data: result });
 
     const newIds = result.map((item) => item.id);
     const currentIds = currentContents.ids || [];

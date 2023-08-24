@@ -24,12 +24,15 @@ import { ITag } from '~/interfaces/ITag';
 import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import TagsView from '~/components/TagsView';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import TakePartInAQuiz from '~/components/quiz/TakePartInAQuiz';
 
 export interface PostBodyProps {
   data: IPost;
   isLite?: boolean;
   isEmptyPost?: boolean;
   isPostDetail: boolean;
+  shouldShowDraftQuiz?: boolean;
+
   onPressMarkSeenPost?: () => void;
 }
 
@@ -38,12 +41,15 @@ const _PostBody: FC<PostBodyProps> = ({
   isLite,
   isEmptyPost,
   isPostDetail,
+  shouldShowDraftQuiz,
+
   onPressMarkSeenPost,
 }: PostBodyProps) => {
   const { rootNavigation } = useRootNavigation();
 
   const {
-    id: postId, mentions, status, media, content: postContent, highlight, linkPreview, totalUsersSeen, tags,
+    id: postId, mentions, status, media, content: postContent, highlight, linkPreview, totalUsersSeen, tags, quiz,
+    quizHighestScore, actor,
   } = data;
 
   const { images, videos, files } = media || {};
@@ -127,7 +133,7 @@ const _PostBody: FC<PostBodyProps> = ({
 
   const hasNoAttachment = isEmpty(images) && isEmpty(videos) && isEmpty(files);
   /* only show link previewer when there aren't any attachments */
-  const showLinkPreviewer = hasNoAttachment && !!linkPreview;
+  const isShowLinkPreviewer = hasNoAttachment && !!linkPreview;
 
   const isShowVideoPlayer = videos?.[0]?.thumbnails?.length > 0;
 
@@ -169,7 +175,16 @@ const _PostBody: FC<PostBodyProps> = ({
           onPressDownload={onPressMarkSeenPost}
           collapsible={!isPostDetail}
         />
-        {showLinkPreviewer && <LinkPreview data={linkPreview} />}
+        {isShowLinkPreviewer && <LinkPreview data={linkPreview} />}
+        {!isLite && (
+          <TakePartInAQuiz
+            quiz={quiz}
+            contentId={postId}
+            quizHighestScore={quizHighestScore}
+            actor={actor}
+            shouldShowDraftQuiz={shouldShowDraftQuiz}
+          />
+        )}
       </>
     </View>
   );

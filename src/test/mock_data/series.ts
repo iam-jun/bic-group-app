@@ -366,3 +366,148 @@ export const seriesWithItemsResponse = {
     message: 'OK',
   },
 };
+
+export const seriesDetail = {
+  code: 'api.ok',
+  data: {
+    items: [
+      {
+        id: '6befcaeb-2bae-43c3-b36e-bfe61af806b1',
+        content: 'Membership approval was automatically turned on for \\*inner1\\* due to a privacy change in \\*Group1\\* by _Andy Nguyen_.\n\nTimestamp: [Thời gian]',
+        createdAt: '2023-08-15T11:17:24.708Z',
+        publishedAt: '2023-08-15T11:17:29.167Z',
+        setting: {
+          isImportant: false,
+          importantExpiredAt: null,
+          canComment: true,
+          canReact: true,
+        },
+        type: 'POST',
+        actor: {
+          id: 'b4313683-bc44-463a-9e85-d1d77ec69ff1',
+          username: 'tuyet2',
+          fullname: 'Đỗ Thị Tuyết 2',
+          email: 'tuyet2@mailinator.com',
+          avatar: 'https://media.beincom.app/image/variants/user/avatar/6f85f497-fa89-4013-ab6a-586d9163564c',
+          isDeactivated: false,
+          isVerified: true,
+          showingBadges: [
+            {
+              id: 'd7f5b806-ed26-47dd-ae9a-b488bfcec9a9',
+              name: '23',
+              iconUrl: 'https://media.beincom.app/image/variants/badge/ded44889-fac3-47cd-a99b-84c76666e16a',
+              community: {
+                id: '8e6b39d2-5bc0-4a82-bf81-f90509080c47',
+                name: 'BA_tuyet2',
+              },
+            },
+            {
+              id: '80033db5-dda8-4f2e-b473-6563697c0fde',
+              name: 'BIC whales',
+              iconUrl: 'https://media.beincom.app/image/variants/badge/cd3ce7ed-510a-4b3e-9a7e-c0725fad3d9f',
+              community: {
+                id: '8e6b39d2-5bc0-4a82-bf81-f90509080c47',
+                name: 'BA_tuyet2',
+              },
+            },
+          ],
+        },
+        isSaved: false,
+        media: {
+          files: [],
+          images: [],
+          videos: [],
+        },
+      },
+    ],
+    id: 'e2e1e557-adbb-4c75-872a-3bf18f817f1e',
+    title: 'Các loài hoa',
+    summary: 'Hoa  tuyết',
+    audience: {
+      groups: [
+        {
+          id: 'f84e82b5-18c6-4291-8f3a-9bf4da714e99',
+          name: 'Cộng đồng học đầu tư CK',
+          icon: 'https://media.beincom.app/image/variants/group/avatar/05eb182f-8066-4b1b-882d-77659d07e845',
+          communityId: '1e3febd6-b3c5-4e97-b493-b64caf834764',
+          isCommunity: true,
+          privacy: 'OPEN',
+          rootGroupId: 'f84e82b5-18c6-4291-8f3a-9bf4da714e99',
+        },
+      ],
+    },
+    createdAt: '2023-05-08T11:43:37.698Z',
+    updatedAt: '2023-08-03T15:44:45.987Z',
+    publishedAt: '2023-05-08T11:43:37.698Z',
+    createdBy: 'b4313683-bc44-463a-9e85-d1d77ec69ff1',
+    coverMedia: {
+      id: 'bde606b6-e11c-4a67-b27f-3c819c52ef5c',
+      src: '/image/variants/series/cover/bde606b6-e11c-4a67-b27f-3c819c52ef5c',
+      url: 'https://media.beincom.app/image/variants/series/cover/bde606b6-e11c-4a67-b27f-3c819c52ef5c',
+      width: 1024,
+      height: 768,
+      status: 'DONE',
+      mimeType: 'image/jpeg',
+      resource: 'series:cover',
+      createdBy: 'b4313683-bc44-463a-9e85-d1d77ec69ff1',
+    },
+    communities: [
+      {
+        id: 'f84e82b5-18c6-4291-8f3a-9bf4da714e99',
+        name: 'Cộng đồng học đầu tư CK',
+        icon: 'https://media.beincom.app/image/variants/group/avatar/05eb182f-8066-4b1b-882d-77659d07e845',
+        communityId: '1e3febd6-b3c5-4e97-b493-b64caf834764',
+        isCommunity: true,
+        privacy: 'OPEN',
+        rootGroupId: 'f84e82b5-18c6-4291-8f3a-9bf4da714e99',
+      },
+    ],
+    actor: {
+      id: 'b4313683-bc44-463a-9e85-d1d77ec69ff1',
+      username: 'tuyet2',
+      fullname: 'Đỗ Thị Tuyết 2',
+      email: 'tuyet2@mailinator.com',
+      avatar: 'https://media.beincom.app/image/variants/user/avatar/6f85f497-fa89-4013-ab6a-586d9163564c',
+      isDeactivated: false,
+      isVerified: true,
+      showingBadges: [
+        {
+          id: 'd7f5b806-ed26-47dd-ae9a-b488bfcec9a9',
+          name: '23',
+          iconUrl: 'https://media.beincom.app/image/variants/badge/ded44889-fac3-47cd-a99b-84c76666e16a',
+          community: {
+            id: '8e6b39d2-5bc0-4a82-bf81-f90509080c47',
+            name: 'BA_tuyet2',
+          },
+        },
+        {
+          id: '80033db5-dda8-4f2e-b473-6563697c0fde',
+          name: 'BIC whales',
+          iconUrl: 'https://media.beincom.app/image/variants/badge/cd3ce7ed-510a-4b3e-9a7e-c0725fad3d9f',
+          community: {
+            id: '8e6b39d2-5bc0-4a82-bf81-f90509080c47',
+            name: 'BA_tuyet2',
+          },
+        },
+      ],
+    },
+    status: 'PUBLISHED',
+    type: 'SERIES',
+    privacy: 'OPEN',
+    isHidden: false,
+    setting: {
+      isImportant: false,
+      importantExpiredAt: '2023-06-01T07:27:37.686Z',
+      canComment: true,
+      canReact: true,
+    },
+    commentsCount: 0,
+    totalUsersSeen: 0,
+    markedReadPost: false,
+    isSaved: false,
+    isReported: false,
+  },
+  meta: {
+    message: 'OK',
+  },
+};
