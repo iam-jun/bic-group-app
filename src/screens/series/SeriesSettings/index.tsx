@@ -74,6 +74,7 @@ const SeriesSettings = ({ route }: SeriesSettingsProps) => {
     item, titleProps, onPress = undefined, showAvatar = true,
   }: {item: any, titleProps?: any, showAvatar?:boolean, onPress?: any}) => (
     <PrimaryItem
+      testID="post_settings.item"
       title={item?.name || item.title}
       showAvatar={showAvatar}
       avatar={showAvatar ? (item?.icon || images.img_user_avatar_default) : null}
@@ -95,6 +96,7 @@ const SeriesSettings = ({ route }: SeriesSettingsProps) => {
 
   const renderAudiencesSheet = () => (
     <FlatList
+      testID="series_settings.list_audience"
       style={[styles.expireTimeSheet, styles.audiencesSheet]}
       data={listAudiencesWithoutPermission.slice(2)}
       keyExtractor={keyExtractor}
@@ -104,6 +106,7 @@ const SeriesSettings = ({ route }: SeriesSettingsProps) => {
 
   const renderExpireTimeSheet = () => (
     <FlatList
+      testID="series_settings.list_suggest_expire_time"
       style={styles.expireTimeSheet}
       data={timeSuggest}
       keyExtractor={keyExtractor}

@@ -90,7 +90,7 @@ const Toggle = ({
       disabled={!!disabled}
       onPress={onPress}
     >
-      <View style={[styles.rectangle, rectangleStyle]}>
+      <View testID="toggle.view" style={[styles.rectangle, rectangleStyle]}>
         <View style={[styles.circle, circleStyle]} />
       </View>
     </TouchableOpacity>
