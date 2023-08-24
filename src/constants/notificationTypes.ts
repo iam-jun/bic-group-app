@@ -324,4 +324,7 @@ export const NOTIFICATION_TYPE = {
 
   GROUP_INVITATION_FEEDBACK: 'group.invitation_feedback',
   GROUP_INVITATION: 'group.invitation',
+
+  GROUP_SET_INVITATION: 'group_set.invitation',
+  GROUP_SET_DEFAULT_INVITATION: 'group_set_default.invitation',
 };

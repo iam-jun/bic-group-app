@@ -33,6 +33,8 @@ import { USER_TABS } from '../Menu/UserProfile';
 import { USER_TABS_TYPES } from '../Menu/UserProfile/constants';
 import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
+import useGroupSetInvitationsStore from '~/beinComponents/InvitationGroupSet/store';
+import InvitationGroupSet from '~/beinComponents/InvitationGroupSet';
 
 const NOT_SHOW_DELETE_OPTION_LIST = [
   NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME,
@@ -51,6 +53,7 @@ const Notification = () => {
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const modalActions = useModalStore((state) => state.actions);
+  const groupSetActions = useGroupSetInvitationsStore((state) => state.actions);
 
   useEffect(
     () => {
@@ -516,6 +519,23 @@ const Notification = () => {
                   isMember: true,
                 });
               }
+              break;
+            }
+            case NOTIFICATION_TYPE.GROUP_SET_INVITATION:
+            case NOTIFICATION_TYPE.GROUP_SET_DEFAULT_INVITATION: {
+              const invitationId = act?.invitation?.invitationId || '';
+              const invitor = act?.invitation?.invitor || {};
+              groupSetActions.getGroups(invitationId);
+              modalActions.showModal({
+                isOpen: true,
+                isFullScreen: true,
+                headerFullScreenProps: { title: t('common:btn_go_back') },
+                ContentComponent: <InvitationGroupSet
+                  isFullScreen
+                  inviter={invitor}
+                  invitaionId={invitationId}
+                />,
+              });
               break;
             }
             default:

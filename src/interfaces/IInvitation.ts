@@ -10,6 +10,7 @@ export interface ITargetInfo {
     id: string;
     name: string;
     isRootGroup: boolean;
+    isDefaultGroupSet: boolean;
 }
 
 export enum IInvitationsStatus {
@@ -19,11 +20,16 @@ export enum IInvitationsStatus {
   CANCELLED = 'CANCELLED',
 }
 
+export enum IInvitationsTargetType {
+  GROUP = 'GROUP',
+  GROUP_SET = 'GROUP_SET',
+}
+
 export interface IInvitation {
   id: string,
   inviter: IInviter,
   invitee: IInviter,
-  targetType: string;
+  targetType: IInvitationsTargetType;
   targetInfo: ITargetInfo;
   status: IInvitationsStatus;
   createdAt: string;

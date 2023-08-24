@@ -61,6 +61,7 @@ import { IMembershipPolicySettingsState } from '~/screens/groups/MembershipPolic
 import { IPreviewJoinableGroupState } from '~/components/PreviewJoinableGroup/store';
 import { INotiSettingsStore } from '~/screens/Notification/NotiSettings/store';
 import { INotiInvitationsStore } from '~/screens/Notification/components/NotificationItem/store';
+import { IGroupSetInvitationsStore } from '~/beinComponents/InvitationGroupSet/store';
 
 export interface BicStore {
   entities: {
@@ -208,4 +209,5 @@ export interface BicStore {
   maintenanceStore: IMaintenanceState;
   pinContent: IPinContentState;
   previewJoinableGroupStore: IPreviewJoinableGroupState;
+  IGroupSetInvitationsStore: IGroupSetInvitationsStore;
 }

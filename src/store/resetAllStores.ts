@@ -71,6 +71,7 @@ import usePreviewJoinableGroupStore from '~/components/PreviewJoinableGroup/stor
 import useNotiSettingsStore from '~/screens/Notification/NotiSettings/store';
 import useNotiInvitationsStore from '~/screens/Notification/components/NotificationItem/store';
 import useMyInvitationsStore from '~/screens/Menu/UserProfile/fragments/InvitationList/store';
+import useGroupSetInvitationsStore from '~/beinComponents/InvitationGroupSet/store';
 
 export const excludedStore = [
   useAuthController,
@@ -159,6 +160,7 @@ const stores = [
   useNotiSettingsStore,
   useNotiInvitationsStore,
   useMyInvitationsStore,
+  useGroupSetInvitationsStore,
 ];
 
 export const resetAllStores = () => {
