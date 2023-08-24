@@ -48,6 +48,8 @@ export enum ContentType {
   post = 'post',
   article = 'article',
   series = 'series',
+  comment = 'comment',
+  childComment = 'child_comment',
 }
 
 export interface INotiChangeLogsInfo {

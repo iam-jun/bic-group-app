@@ -1,6 +1,5 @@
-import { ContentType } from '~/components/SelectAudience';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
-import { SpecificNotificationType } from '~/interfaces/INotification';
+import { ContentType, SpecificNotificationType } from '~/interfaces/INotification';
 
 const NOT_SHOW_DELETE_OPTION_LIST = [
   NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME,
@@ -23,7 +22,10 @@ export const checkHideDeleteOption = (type: string) => {
 export const checkIsSpecificNotification = (notiTarget: string, type: string) => {
   const _notiTarget = notiTarget?.toLowerCase?.() || '';
   const isNotSpecific = NOT_IS_SPECIFIC_NOTIFICATION.findIndex((item) => item === type);
-  const isSpecificContent = _notiTarget === ContentType.POST || _notiTarget === ContentType.ARTICLE;
+  const isSpecificContent = _notiTarget === ContentType.post
+   || _notiTarget === ContentType.article || _notiTarget === ContentType.comment
+   || _notiTarget === ContentType.childComment;
+
   return (isNotSpecific === -1) && isSpecificContent;
 };
 
