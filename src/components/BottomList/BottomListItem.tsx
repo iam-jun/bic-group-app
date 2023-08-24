@@ -107,6 +107,7 @@ const themeStyles = (theme: ExtendedTheme) => StyleSheet.create({
     marginRight: spacing.margin.small,
   },
   title: {
+    flexShrink: 1,
   },
   upcomingStyle: {
     backgroundColor: theme.colors.purple2,
