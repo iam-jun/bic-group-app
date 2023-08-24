@@ -13,17 +13,25 @@ export interface ContentItemProps extends Partial<PostViewProps> {
   btnCommentTestID?: string;
   hasReactPermission?: boolean;
   shouldHideBannerImportant?: boolean;
+  shouldShowDraftQuiz?: boolean;
 }
 
 const ContentItem = ({
   id,
   shouldHideBannerImportant,
+  shouldShowDraftQuiz,
   ...props
 }: ContentItemProps) => {
   const data = usePostsStore(useCallback(postsSelector.getPost(id, {}), [id]));
 
   if (data?.type === PostType.ARTICLE) {
-    return <ArticleItem data={data} shouldHideBannerImportant={shouldHideBannerImportant} />;
+    return (
+      <ArticleItem
+        data={data}
+        shouldHideBannerImportant={shouldHideBannerImportant}
+        shouldShowDraftQuiz={shouldShowDraftQuiz}
+      />
+    );
   }
 
   if (data?.type === PostType.SERIES) {
@@ -35,6 +43,7 @@ const ContentItem = ({
       {...props}
       data={data}
       shouldHideBannerImportant={shouldHideBannerImportant}
+      shouldShowDraftQuiz={shouldShowDraftQuiz}
     />
   );
 };
