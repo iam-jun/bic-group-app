@@ -8,11 +8,12 @@ import useNotificationStore from '../../store';
 import INotificationsState from '../../store/Interface';
 import useNotificationItemMenu, { INotificationItemMenuStore } from './store';
 import { checkHideDeleteOption, getTextFromSpecificNotificationTargetType } from '~/helpers/notification';
+import notiSelector from '../../store/selectors';
 
 export interface NotificationMenuProps {
   menuRef: any;
   onClose: () => void;
-  handleRemoveNotification: (id: string) => void;
+  handleRemoveNotification: (itemValue: any) => void;
 }
 
 const NotificationMenu = ({
@@ -35,6 +36,7 @@ const NotificationMenu = ({
   const targetId = useNotificationItemMenu((state: INotificationItemMenuStore) => state.targetId);
   const loading = useNotificationItemMenu((state: INotificationItemMenuStore) => state.loading);
   const reset = useNotificationItemMenu((state: INotificationItemMenuStore) => state.reset);
+  const itemValue = useNotificationStore(notiSelector.getNotificationById(notificationId)) || {};
 
   const handleMarkNotification = () => {
     if (!isRead) {
@@ -55,7 +57,7 @@ const NotificationMenu = ({
   };
 
   const onRemoveNotification = () => {
-    handleRemoveNotification(notificationId);
+    handleRemoveNotification(itemValue);
     onClose();
     reset();
   };
