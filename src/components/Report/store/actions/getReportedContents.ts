@@ -37,7 +37,7 @@ const getReportedContents = (set, get) => async (isRefresh: boolean) => {
     }
 
     const dataList = response.data.list;
-    usePostsStore.getState().actions.addToPosts({ data: dataList, handleComment: true });
+    usePostsStore.getState().actions.addToPosts({ data: dataList });
     actions.addToReportDetailsPost(dataList);
 
     const dataIds = dataList.map((item: IPost) => item.id);
