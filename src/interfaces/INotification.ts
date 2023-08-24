@@ -102,3 +102,19 @@ export interface IAdvancedSetting {
 export interface IGroupNotificationSetting extends IGroup{
   setting: IAdvancedSetting;
 }
+
+export enum InvitationTargetType {
+  GROUP = 'GROUP',
+  COMMUNITY = 'COMMUNITY',
+}
+
+export enum SpecificNotificationType {
+  post = 'post',
+  article = 'article',
+  group = 'group',
+}
+
+export interface IParamUpdateSpecificNotificationSettings {
+  enable: boolean;
+  contentType: SpecificNotificationType;
+}

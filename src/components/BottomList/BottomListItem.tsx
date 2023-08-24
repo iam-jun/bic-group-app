@@ -1,11 +1,8 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React from 'react';
 import {
-  StyleProp,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  ViewStyle,
+  ActivityIndicator,
+  StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle,
 } from 'react-native';
 import Icon, { IconProps } from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
@@ -30,6 +27,7 @@ export interface BottomListItemProps {
   isShowBorderTop?: boolean;
   isShowBorderBottom?: boolean;
   isDanger?: boolean;
+  loading?: boolean;
 
   onPress?: () => void;
 }
@@ -45,6 +43,7 @@ const BottomListItem: React.FC<BottomListItemProps> = ({
   testID,
   upcoming,
   badge,
+  loading,
   onPress,
   isShowBorderTop,
   isShowBorderBottom,
@@ -60,10 +59,17 @@ const BottomListItem: React.FC<BottomListItemProps> = ({
 
   return (
     <TouchableOpacity
-      disabled={!isInternetReachable || disabled || !onPress}
+      disabled={!isInternetReachable || disabled || !onPress || loading}
       onPress={onPress}
       testID={testID}
     >
+      {
+        Boolean(loading) && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="small" color={colors.neutral20} />
+          </View>
+        )
+      }
       <View
         style={[
           styles.container,
@@ -138,6 +144,18 @@ const themeStyles = (theme: ExtendedTheme) => StyleSheet.create({
   borderBottom: {
     borderBottomColor: theme.colors.neutral5,
     borderBottomWidth: 1,
+  },
+  loadingContainer: {
+    position: 'absolute',
+    zIndex: 1,
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    backgroundColor: theme.colors.white,
+    opacity: 0.5,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

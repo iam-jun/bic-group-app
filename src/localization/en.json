@@ -137,6 +137,7 @@
     "text_privacy": "Privacy",
     "btn_approve": "Approve",
     "btn_decline": "Decline",
+    "btn_accept": "Accept",
     "btn_approve_all": "Approve All",
     "btn_decline_all": "Decline All",
     "btn_submit": "Submit",
@@ -245,7 +246,8 @@
     "text_send_request_join_successfully": "Sent request successfully",
     "edit_settings": "Edit Settings",
     "text_new": "New",
-    "text_empty": "Empty"
+    "text_empty": "Empty",
+    "text_please_try_again": "Please try again"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -1225,6 +1227,17 @@
     "text_bic_team": "BIC team",
     "text_remove_notification": "Remove this notification",
     "text_remove_notification_success": "Notification removed successfully",
+    "text_invitation_accepted": "Invitation accepted",
+    "text_invitation_declined": "Invitation declined",
+    "text_you_have_previously_joined": "You have previously joined",
+    "text_you_have_previously_declined": "You have previously declined to join",
+    "text_invitation_has_been_canceled": "The invitation has been canceled",
+    "text_turn_off_noti_for_post": "Turn off notification about this post",
+    "text_turn_off_noti_for_article": "Turn off notification about this article",
+    "text_turn_on_noti_for_post": "Turn on notification about this post",
+    "text_turn_on_noti_for_article": "Turn on notification about this article",
+    "text_turn_off_noti_for_group": "Turn off notifications about invitations in this group",
+    "text_turn_on_noti_for_group": "Turn on notifications about invitations in this group",
     "notification_settings": {
       "title": "Notification Settings",
       "screen_title": "General Settings",

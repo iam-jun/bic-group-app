@@ -18,7 +18,7 @@ import { TargetType } from '~/interfaces/IPost';
 import homeStack from './navigator/MainStack/stacks/homeStack/stack';
 import menuStack from './navigator/MainStack/stacks/menuStack/stack';
 import mainStack from './navigator/MainStack/stack';
-import { ContentType } from '~/interfaces/INotification';
+import { ContentType, InvitationTargetType } from '~/interfaces/INotification';
 import notiStack from './navigator/MainStack/stacks/notiStack/stack';
 import { USER_TABS } from '~/screens/Menu/UserProfile';
 import { USER_TABS_TYPES } from '~/screens/Menu/UserProfile/constants';
@@ -183,7 +183,7 @@ export const getActiveRouteState = (route?: NavigationState | PartialState<Navig
 
 export const getScreenAndParams = (data: {
   type: string;
-  target: string;
+  target: string | any;
   postId: string;
   commentId: string;
   childCommentId: string;
@@ -368,6 +368,31 @@ export const getScreenAndParams = (data: {
         (item: { id: string; text: string }) => item.id === USER_TABS_TYPES.USER_BADGE_COLLECTION,
       );
       return { screen: mainStack.userProfile, params: { userId, targetIndex } };
+    }
+    case NOTIFICATION_TYPE.GROUP_INVITATION: {
+      const communityId = target?.communityId || '';
+      const groupId = target?.id || '';
+      const targetType = target?.type || '';
+      if (targetType === InvitationTargetType.COMMUNITY && !!communityId) {
+        return navigateGroupDetail({ groupId, communityId });
+      }
+      if (targetType === InvitationTargetType.GROUP && !!groupId && communityId) {
+        return navigateGroupDetail({ groupId, communityId });
+      }
+      break;
+    }
+    case NOTIFICATION_TYPE.GROUP_INVITATION_FEEDBACK: {
+      const communityId = target?.communityId || '';
+      const groupId = target?.id || '';
+      const targetType = target?.type || '';
+      if (targetType === InvitationTargetType.COMMUNITY && !!communityId) {
+        return navigateGroupMembers({ groupId, communityId });
+      }
+
+      if (targetType === InvitationTargetType.GROUP && !!groupId) {
+        return navigateGroupMembers({ groupId, communityId });
+      }
+      break;
     }
 
     case NOTIFICATION_TYPE.QUIZ_GENERATE_SUCCESSFUL:
