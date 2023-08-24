@@ -76,6 +76,9 @@ const MenuSettings = () => {
       case SettingsAndPrivacyType.BLOCKING:
         rootNavigation.navigate(menuStack.blocking);
         break;
+      case SettingsAndPrivacyType.PRIVACY:
+        rootNavigation.navigate(menuStack.privacyCenter);
+        break;
       case SettingsAndPrivacyType.NOTIFICATIONS:
         rootNavigation.navigate(notiStack.notiSettings);
         break;
@@ -95,6 +98,12 @@ const MenuSettings = () => {
           title: 'settings:title_security',
           icon: 'ShieldCheckSolid',
           onPress: () => onPressSettingsAndPrivacy(SettingsAndPrivacyType.SECURITY),
+        },
+        {
+          type: SettingsAndPrivacyType.PRIVACY,
+          title: 'settings:privacy_center:menu_item_title',
+          icon: 'UnlockSolid',
+          onPress: () => onPressSettingsAndPrivacy(SettingsAndPrivacyType.PRIVACY),
         },
         {
           type: SettingsAndPrivacyType.BLOCKING,

@@ -6,12 +6,12 @@ import { renderWithRedux } from '~/test/testUtils';
 
 describe('ArticleBoxScheduleTime component', () => {
   const normalProps = {
-    publishedAt: '2023-03-13T05:30:00.982Z',
+    scheduledAt: '2023-03-13T05:30:00.982Z',
     status: PostStatus.WAITING_SCHEDULE,
   };
 
   const failProps = {
-    publishedAt: '2023-03-13T05:30:00.982Z',
+    scheduledAt: '2023-03-13T05:30:00.982Z',
     status: PostStatus.SCHEDULE_FAILED,
   };
 

@@ -9,10 +9,10 @@ import AboutContent from '~/screens/communities/CommunityDetail/components/About
 import spacing from '~/theme/spacing';
 import InfoHeader from '../../components/InfoHeader';
 import GroupJoinCancelButton from './GroupJoinCancelButton';
-import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 import { onRefresh } from './helper';
 
 interface GroupPrivateWelcomeProps {
+  groupId: string;
   infoDetail: IGroup;
   community: ICommunity;
   onScroll: (e: any) => void;
@@ -20,19 +20,15 @@ interface GroupPrivateWelcomeProps {
 }
 
 const GroupPrivateWelcome = ({
-  infoDetail, community, onScroll, onGetInfoLayout,
+  groupId, infoDetail, community, onScroll, onGetInfoLayout,
 }: GroupPrivateWelcomeProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
-  const { group: groupData } = groups[currentGroupId] || {};
-  const { id: groupId } = groupData || {};
-
   const _onRefresh = async () => {
-    await onRefresh({ setIsRefreshing, groupId });
+    await onRefresh({ setIsRefreshing, groupId, isPrivacyGroup: true });
   };
 
   return (
@@ -50,10 +46,10 @@ const GroupPrivateWelcome = ({
           insideCommunityName={community?.name}
         />
         <View style={styles.space} />
-        <GroupJoinCancelButton />
+        <GroupJoinCancelButton groupId={groupId} />
       </View>
 
-      <AboutContent profileInfo={infoDetail as any} showPrivate />
+      <AboutContent profileInfo={infoDetail as any} showPrivate groupId={groupId} />
     </Animated.ScrollView>
   );
 };

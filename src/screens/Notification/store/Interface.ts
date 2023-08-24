@@ -43,6 +43,7 @@ interface INotificationsState extends IBaseState, IFetchingState{
     deleteNotificationLocal: (notificationId: string) => void;
     undoDeleteNotificationLocal: (notificationId: string) => void;
     deleteAllWaitingNotification: () => void;
+    generateAdvancedSettings: () => void;
   }
 
 }

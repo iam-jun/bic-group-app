@@ -6,12 +6,15 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import TabButtonHeader from '../../../../groups/components/TabButtonHeader';
 
 interface CommunityTabHeaderProps {
+  groupId: string;
   communityId: string;
   isMember: boolean;
   teamName: string;
 }
 
-const CommunityTabHeader = ({ communityId, isMember, teamName }: CommunityTabHeaderProps) => {
+const CommunityTabHeader = ({
+  groupId, communityId, isMember, teamName,
+}: CommunityTabHeaderProps) => {
   const { rootNavigation } = useRootNavigation();
 
   const onPressDiscover = () => {
@@ -27,7 +30,7 @@ const CommunityTabHeader = ({ communityId, isMember, teamName }: CommunityTabHea
   };
 
   const onPressTags = () => {
-    rootNavigation.navigate(mainTabStack.tags, { id: communityId, type: 'community' });
+    rootNavigation.navigate(mainTabStack.tags, { id: communityId, groupId, type: 'community' });
   };
 
   return (

@@ -219,7 +219,11 @@ exports[`Group Item component renders correctly 1`] = `
             <FastImageView
               onFastImageError={[Function]}
               resizeMode="cover"
-              source={Object {}}
+              source={
+                Object {
+                  "testUri": "../../../assets/images/user_avatar_default.png",
+                }
+              }
               style={
                 Object {
                   "bottom": 0,
@@ -553,7 +557,11 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
             <FastImageView
               onFastImageError={[Function]}
               resizeMode="cover"
-              source={Object {}}
+              source={
+                Object {
+                  "testUri": "../../../assets/images/user_avatar_default.png",
+                }
+              }
               style={
                 Object {
                   "bottom": 0,
@@ -803,7 +811,11 @@ exports[`Group Item component should render default prop 1`] = `
             <FastImageView
               onFastImageError={[Function]}
               resizeMode="cover"
-              source={Object {}}
+              source={
+                Object {
+                  "testUri": "../../../assets/images/user_avatar_default.png",
+                }
+              }
               style={
                 Object {
                   "bottom": 0,
@@ -1124,7 +1136,11 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
             <FastImageView
               onFastImageError={[Function]}
               resizeMode="cover"
-              source={Object {}}
+              source={
+                Object {
+                  "testUri": "../../../assets/images/user_avatar_default.png",
+                }
+              }
               style={
                 Object {
                   "bottom": 0,

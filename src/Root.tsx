@@ -21,6 +21,7 @@ import { initFontAwesomeIcon } from '~/services/fontAwesomeIcon';
 import localStorage from '~/services/localStorage';
 import { parseSafe } from './utils/common';
 import useMaintenanceStore from './store/maintenance';
+import groupStack from './router/navigator/MainStack/stacks/groupStack/stack';
 
 moment.updateLocale(
   'en', moments.en,
@@ -94,13 +95,17 @@ const Root = (): React.ReactElement => {
     const data = handleMessageData(remoteMessage);
 
     if (data) {
-      rootNavigation.navigate(
-        data.screen || 'main',
-        {
+      if (data.screen === groupStack.groupDetail || data.screen === groupStack.communityDetail) {
+        rootNavigation.push(data.screen, {
           ...(data?.params || {}),
           initial: false,
-        },
-      );
+        });
+      } else {
+        rootNavigation.navigate(data.screen || 'main', {
+          ...(data?.params || {}),
+          initial: false,
+        });
+      }
     }
   };
 

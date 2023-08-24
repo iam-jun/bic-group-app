@@ -13,7 +13,7 @@ interface CommunityMemberListProps {
 }
 
 const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProps) => {
-  const { groupId } = community;
+  const { groupId, id } = community;
   const actions = useCommunityMemberStore((state) => state.actions);
   const canLoadMore = useCommunityMemberStore((state) => state.communityMembers.canLoadMore);
 
@@ -68,6 +68,7 @@ const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProp
   return (
     <MemberList
       type="community"
+      communityId={id}
       isAdminRole={isAdminRole}
       canManageMember={canManageMember}
       onLoadMore={onLoadMore}

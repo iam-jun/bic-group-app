@@ -15,6 +15,8 @@ const AppVersion = () => {
 
   const updateDescription = getEnv('UPDATE_DESC');
 
+  const textUpdateDesc = !isProduction && !!updateDescription && updateDescription !== '(0)' && ` ${updateDescription}`;
+
   const onPressAppVersion = () => {
     rootNavigation.navigate(menuStack.componentCollection);
   };
@@ -24,7 +26,7 @@ const AppVersion = () => {
       <Text.BodyS>
         {t('common:text_version')}
         {getEnv('APP_VERSION')}
-        {!!updateDescription && updateDescription !== '(0)' && ` ${updateDescription}`}
+        {textUpdateDesc}
       </Text.BodyS>
     </Button>
   );

@@ -1,4 +1,3 @@
-import { isEmpty } from 'lodash';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -12,6 +11,7 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import AddButton from '../../components/AddButton';
 import useMenuController from '~/screens/Menu/store';
 import useUserProfileStore from '../../store';
+import Text from '~/baseComponents/Text';
 
 type ExperiencesProps = {
   isCurrentUser: boolean;
@@ -24,8 +24,6 @@ const Experiences: FC<ExperiencesProps> = ({ isCurrentUser }) => {
 
   const menuControllerActions = useMenuController((state) => state.actions);
   const userWorkExperience = useUserProfileStore((state) => state.userWorkExperience);
-
-  if (!isCurrentUser && isEmpty(userWorkExperience)) return null;
 
   const addExperience = () => {
     menuControllerActions.setSelectedWorkItem(null);
@@ -50,7 +48,7 @@ const Experiences: FC<ExperiencesProps> = ({ isCurrentUser }) => {
         rightTitle={BtnAddExperience}
         style={styles.infoContainer}
       >
-        {userWorkExperience.map((item: IUserWorkExperience, index) => (
+        {userWorkExperience?.length > 0 ? userWorkExperience.map((item: IUserWorkExperience, index) => (
           <View key={`${item?.id} ${item?.company}`}>
             <ItemExperience
               item={item}
@@ -60,7 +58,10 @@ const Experiences: FC<ExperiencesProps> = ({ isCurrentUser }) => {
               <Divider style={{ marginBottom: spacing.margin.large }} />
             )}
           </View>
-        ))}
+        ))
+          : (
+            <Text.BodyM useI18n color={colors.neutral30}>settings:text_no_experience_to_show</Text.BodyM>
+          )}
       </InfoCard>
     </View>
   );

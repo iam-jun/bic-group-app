@@ -70,8 +70,8 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
   const data = useCreateArticleStore((state) => state.data, useShallow) || {};
   const loading = useCreateArticleStore((state) => state.loading);
   const isDraft = useCreateArticleStore((state) => state.isDraft);
-  const publishedAt = useCreateArticleStore(
-    (state) => state.schedule.publishedAt,
+  const scheduledAt = useCreateArticleStore(
+    (state) => state.schedule.scheduledAt,
   );
   const chooseAudiences = useCreateArticleStore((state) => state.chooseAudiences);
   const { getAudienceListWithNoPermission } = useMyPermissionsStore(
@@ -102,7 +102,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
 
   const { t } = useBaseHook();
 
-  const isValidScheduleTime = () => moment(publishedAt).isSameOrAfter(moment());
+  const isValidScheduleTime = () => moment(scheduledAt).isSameOrAfter(moment());
 
   // auto save for draft article, so no need to check if content is empty
   const isDraftContentUpdated = article.content !== data.content;
@@ -209,7 +209,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
       series,
       tags,
       status,
-      publishedAt,
+      scheduledAt,
       setting,
       wordCount,
     } = article;
@@ -241,7 +241,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     actions.setIsDraft(isDraft);
     actions.setIsSchedule(isSchedule);
     if (isSchedule) {
-      actions.setPublishedAt(publishedAt || '');
+      actions.setScheduledAt(scheduledAt || '');
     }
 
     // setChooseAudiences for handle article settings
@@ -267,8 +267,8 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     actions.setTitle(newTitle);
   };
 
-  const resetPublishedAt = () => {
-    actions.setPublishedAt(article?.publishedAt || '');
+  const resetScheduledAt = () => {
+    actions.setScheduledAt(article?.scheduledAt || '');
   };
 
   const updateMentions = () => {
@@ -466,7 +466,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     handlePublish,
     handleSchedule,
     validateSeriesTags,
-    resetPublishedAt,
+    resetScheduledAt,
   };
 };
 

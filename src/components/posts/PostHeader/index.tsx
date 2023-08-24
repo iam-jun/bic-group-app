@@ -37,7 +37,7 @@ const PostHeader: FC<PostHeaderProps> = ({
   const postActions = usePostsStore((state) => state.actions);
 
   const {
-    id: postId, actor, audience, createdAt,
+    id: postId, actor, audience, createdAt, publishedAt,
   } = data;
 
   const userId = useUserIdAuth();
@@ -122,6 +122,7 @@ const PostHeader: FC<PostHeaderProps> = ({
       actor={actor}
       audience={audience}
       createdAt={createdAt}
+      publishedAt={publishedAt}
       disabled={disabled}
       onPressHeader={_onPressHeader}
       onPressMenu={onPressMenu}

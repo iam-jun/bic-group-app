@@ -41,6 +41,8 @@
     "btn_done": "Done",
     "btn_next": "Next",
     "btn_confirm": "Confirm",
+    "btn_show_less": "Show less",
+    "btn_more_details": "More details",
     "btn_create": "Create",
     "btn_join": "Join",
     "btn_view": "View",
@@ -261,8 +263,8 @@
     "text_sign_out_content": "Do you want to Log Out?",
     "input_label_first_name": "First Name",
     "input_label_last_name": "Last Name",
-    "input_label_username": "User name",
-    "input_label_username_placeholder": "Your user name",
+    "input_label_username": "Username",
+    "input_label_username_placeholder": "Your username",
     "text_warning_username": "You can not change your username after success creating account.",
     "input_label_full_name": "Full name",
     "input_label_full_name_placeholder": "Your full name",
@@ -301,7 +303,7 @@
     "text_err_password_format": "Password must be eight characters, at least one number!",
     "text_err_email_blank": "Email is required!",
     "text_err_email_format": "Wrong Email format",
-    "text_err_username_blank": "User name is required!",
+    "text_err_username_blank": "Username is required!",
     "text_err_code": "Code must have 6 numbers!",
     "text_err_new_password_must_differ_from_current": "New password must be different from the current password.",
     "text_err_confirm_password_not_matched": "Confirmed password doesn’t match.",
@@ -568,11 +570,55 @@
         "content_membership_approval": " will be turned on the membership approval.",
         "content_policy_setting": " will be changed to only invited people can join.",
         "button_change": "Change",
-        "button_turn_on": "Turn On",
-        "button_more_details": "More details",
-        "button_show_less": "Show less"
+        "button_turn_on": "Turn On"
       }
-    }
+    },
+    "privacy_impact": {
+      "default_group_set_and_membership_approval": {
+        "title": "Privacy change impacts the default group set & the membership approval of inner groups?",
+        "content": "Please be aware that your group is in a default group set, this change also turn on the membership approval of {{prefix}}{{count}} inner group.",
+        "contents": "Please be aware that your group is in a default group set, this change also turn on the membership approval of {{prefix}}{{count}} inner groups.",
+        "title_default_group_set": "The default group set:",
+        "title_membership_approval": "The inner group:",
+        "title_membership_approval_s": "The inner groups:"
+      },
+      "membership_approval": {
+        "title": "Turn on the membership approval for inner groups?",
+        "content": "{{prefix}}{{count}} inner group will be turned on the membership approval.",
+        "contents": "{{prefix}}{{count}} inner groups will be turned on the membership approval."
+      },
+      "default_group_set": {
+        "title": "Privacy change impacts the default group set",
+        "content": "Please be aware that your group is in the default group set "
+      },
+      "default_group_set_and_badge": {
+        "title": "Privacy change impacts default group set & the badge",
+        "content": "Please be aware that your group is in a default group set, this change also unassigns a badge from your group.",
+        "title_default_group_set": "The default group set:",
+        "title_badge": "The badge:"
+      },
+      "badge": {
+        "title": "Unassign the group badge?",
+        "content": "To protect the privacy of group members, the badge will be unassigned from your group."
+      }
+    },
+    "privacy_center": {
+      "menu_item_title": "Privacy",
+      "screen_title": "Privacy Center",
+      "screen_description": "Manage and control your personal privacy that is right for you.",
+      "personal_information_visibility": {
+        "title": "Personal Information Visibility",
+        "description": "Control who can see your personal information in your profile.",
+        "everyone_type": "Everyone",
+        "everyone_description": "Everyone can see your information.",
+        "community_members_type": "Community Members",
+        "community_members_description": "People in the same community with you can see your information.",
+        "only_me_type": "Only Me",
+        "only_me_description": "No one can see your information."
+      }
+    },
+    "text_no_experience_to_show": "No experience to show",
+    "text_no_contact_to_show": "No contact to show"
   },
   "languages": {
     "title_en": "English",
@@ -1120,7 +1166,18 @@
     "title_edit_profile": "Edit Profile",
     "title_direct_message": "Direct Message",
     "title_view_profile": "View Profile",
-    "text_name_must_not_be_empty": "Name must not be empty"
+    "text_name_must_not_be_empty": "Name must not be empty",
+    "fullname_rule": {
+      "not_allow_special_character": "Full name can not contain special characters",
+      "not_allow_number": "Full name can not contain numbers",
+      "character_length": "Full name must be between 3 to 64 characters"
+    },
+    "username_rule": {
+      "character_length": "Username must be between 5 to 50 characters",
+      "not_allow_special_character": "Username can not contain special characters, including whitespaces",
+      "not_allow_uppercase": "Username can not contain uppercase characters",
+      "not_allow_start_with_number_or_dot": "Username must start with a letter"
+    }
   },
   "right_col": {
     "about_bein": "About Bein",
@@ -1170,12 +1227,35 @@
     "text_remove_notification_success": "Notification removed successfully",
     "notification_settings": {
       "title": "Notification Settings",
+      "screen_title": "General Settings",
       "description": "We may still send you important notification about your account outside of your settings",
       "error_title": "Sorry, we can’t get the data here",
       "error_description": "Please refresh the page or try again later",
       "allow_notifications": "Allow notifications",
       "in_app_text": "In-app",
-      "push_text": "Push"
+      "push_text": "Push",
+      "default_text": "General Settings",
+      "off_text": "Off",
+      "not_joined_the_community": {
+        "title": "Nothing to set up",
+        "description": "Join a community then set up the settings here."
+      }
+    },
+    "advanced_notifications_settings": {
+      "title": "Advanced Notification Settings",
+      "screen_title": "Advanced Settings",
+      "content": "Specific notification settings for each community and its inner groups",
+      "title_setup_community": "Set up for your communities",
+      "title_setup_group": "Set up for your groups",
+      "description_setup_group": "Default settings use your general notification settings until you set up specifically.",
+      "title_reset_to_default": "Reset to General settings",
+      "reset_to_default_tooltip": "Reset to use your general notification settings",
+      "text_enable_settings": "Enable settings",
+      "enable_settings_tooltip": "Use settings for this\nspecific group",
+      "search_community_title": "Select your community",
+      "search_placeholder": "Search community",
+      "search_group_placeholder": "Search group",
+      "search_group_title": "Select your group"
     }
   },
   "new_feature": {

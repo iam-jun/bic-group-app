@@ -12,14 +12,13 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
 import SearchDiscoverCommunityItem from './SearchDiscoverCommunityItem';
-import { useRootNavigation } from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import useDiscoverCommunitiesSearchStore from './store';
 import useCommunityController from '~/screens/communities/store';
 import useCommunitiesStore from '~/store/entities/communities';
 import useTermStore, { TermsInfo } from '~/components/TermsModal/store';
 import useMemberQuestionsStore, { MembershipQuestionsInfo } from '~/components/MemberQuestionsModal/store';
 import { ITypeGroup } from '~/interfaces/common';
+import { navigateToCommunityDetail } from '~/router/helper';
 
 interface SearchDiscoverCommunityResultsProps {
   onLoadMore?: () => void;
@@ -52,7 +51,6 @@ const SearchDiscoverCommunityItemContainer: FC<
 const SearchDiscoverCommunityResults = ({
   onLoadMore,
 }: SearchDiscoverCommunityResultsProps) => {
-  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
 
   const { hasNextPage, loading, ids } = useDiscoverCommunitiesSearchStore();
@@ -62,9 +60,7 @@ const SearchDiscoverCommunityResults = ({
   const termsActions = useTermStore((state) => state.actions);
 
   const onView = (item: any) => {
-    rootNavigation.navigate(groupStack.communityDetail, {
-      communityId: item.id,
-    });
+    navigateToCommunityDetail({ communityId: item.id });
   };
 
   const onJoin = (item: any) => {

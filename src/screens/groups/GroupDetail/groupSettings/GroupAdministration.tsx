@@ -8,7 +8,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { IconType } from '~/resources/icons';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import Text from '~/baseComponents/Text';
 import Divider from '~/beinComponents/Divider';
@@ -26,8 +26,8 @@ const GroupAdministration = (props: any) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const { rootNavigation } = useRootNavigation();
-  const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
-  const { group } = groups[currentGroupId] || {};
+  const groups = useGroupsStore((state: IGroupsState) => state.groups);
+  const { group } = groups[groupId] || {};
   const { name } = group || {};
 
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);

@@ -377,12 +377,12 @@ export const streamApiConfig = {
     url: `${provider.url}series`,
     params,
   }),
-  scheduleArticle: (draftArticleId: string, publishedAt: string): HttpApiRequestConfig => ({
+  scheduleArticle: (draftArticleId: string, scheduledAt: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}articles/${draftArticleId}/schedule`,
     method: 'put',
     data: {
-      publishedAt,
+      scheduledAt,
     },
   }),
   deleteArticle: (id: string): HttpApiRequestConfig => ({
@@ -693,8 +693,8 @@ const streamApi = {
   getArticleDetailByAdmin: (id: string, params?: IParamGetArticleDetail) => withHttpRequestPromise(
     streamApiConfig.getArticleDetailByAdmin, id, params,
   ),
-  scheduleArticle: (draftArticleId: string, publishedAt: string) => withHttpRequestPromise(
-    streamApiConfig.scheduleArticle, draftArticleId, publishedAt,
+  scheduleArticle: (draftArticleId: string, scheduledAt: string) => withHttpRequestPromise(
+    streamApiConfig.scheduleArticle, draftArticleId, scheduledAt,
   ),
   deleteArticle: (id: string) => withHttpRequestPromise(
     streamApiConfig.deleteArticle, id,

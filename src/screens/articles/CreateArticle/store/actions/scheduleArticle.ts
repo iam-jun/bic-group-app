@@ -15,7 +15,7 @@ const scheduleArticle = (set, get) => async () => {
     }, 'scheduleArticle');
 
     const { schedule, data }: ICreateArticleState = get();
-    await streamApi.scheduleArticle(data.id, schedule.publishedAt);
+    await streamApi.scheduleArticle(data.id, schedule.scheduledAt);
 
     // tracking event
     const eventContentPublishedProperties: TrackingEventContentPublishedProperties = {

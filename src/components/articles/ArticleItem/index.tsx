@@ -20,7 +20,6 @@ import { getTotalReactions } from '~/helpers/post';
 import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import TagsView from '~/components/TagsView';
-import useCommunitiesStore from '~/store/entities/communities';
 import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import { ITag } from '~/interfaces/ITag';
 import Divider from '~/beinComponents/Divider';
@@ -52,6 +51,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
     audience,
     actor,
     createdAt,
+    publishedAt,
     commentsCount,
     reactionsCount,
     setting,
@@ -93,8 +93,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
   };
   const goToDetail = () => rootNavigation.navigate(articleStack.articleDetail, { articleId: id, focusComment: true });
   const goToTagDetail = (tagData: ITag) => {
-    const communityId = useCommunitiesStore.getState().currentCommunityId;
-    rootNavigation.navigate(tagsStack.tagDetail, { tagData, communityId });
+    rootNavigation.navigate(tagsStack.tagDetail, { tagData });
   };
 
   const renderImportant = () => (
@@ -112,6 +111,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
       data={data}
       actor={actor}
       createdAt={createdAt}
+      publishedAt={publishedAt}
       audience={audience}
     />
   );
