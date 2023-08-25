@@ -61,7 +61,7 @@ import { IMembershipPolicySettingsState } from '~/screens/groups/MembershipPolic
 import { IPreviewJoinableGroupState } from '~/components/PreviewJoinableGroup/store';
 import { INotiSettingsStore } from '~/screens/Notification/NotiSettings/store';
 import { INotiInvitationsStore } from '~/screens/Notification/components/NotificationItem/store';
-import { IGroupSetInvitationsStore } from '~/beinComponents/InvitationGroupSet/store';
+import { IGroupSetInvitationsStore } from '~/components/InvitationGroupSet/store';
 
 export interface BicStore {
   entities: {

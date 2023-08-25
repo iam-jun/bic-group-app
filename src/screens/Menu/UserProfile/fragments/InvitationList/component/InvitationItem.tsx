@@ -13,9 +13,9 @@ import DeactivatedView from '~/components/DeactivatedView';
 import InvitationGroupButtons from '~/components/InvitationGroupButtons';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useBaseHook } from '~/hooks';
-import useGroupSetInvitationsStore from '~/beinComponents/InvitationGroupSet/store';
+import useGroupSetInvitationsStore from '~/components/InvitationGroupSet/store';
 import useModalStore from '~/store/modal';
-import InvitationGroupSet from '~/beinComponents/InvitationGroupSet';
+import InvitationGroupSet from '~/components/InvitationGroupSet';
 
 interface Props {
 id: string;

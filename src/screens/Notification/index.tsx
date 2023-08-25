@@ -33,8 +33,8 @@ import { USER_TABS } from '../Menu/UserProfile';
 import { USER_TABS_TYPES } from '../Menu/UserProfile/constants';
 import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
-import useGroupSetInvitationsStore from '~/beinComponents/InvitationGroupSet/store';
-import InvitationGroupSet from '~/beinComponents/InvitationGroupSet';
+import useGroupSetInvitationsStore from '~/components/InvitationGroupSet/store';
+import InvitationGroupSet from '~/components/InvitationGroupSet';
 
 const NOT_SHOW_DELETE_OPTION_LIST = [
   NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME,
