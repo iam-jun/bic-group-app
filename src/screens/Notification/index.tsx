@@ -35,6 +35,7 @@ import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
 import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
+import { trackEvent } from '~/services/tracking';
 
 const NOT_SHOW_DELETE_OPTION_LIST = [
   NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME,
@@ -94,7 +95,22 @@ const Notification = () => {
     notiActions.deleteNotification(id);
   };
 
-  const handleRemoveNotification = (id: string) => {
+  const trackEventNoti = (eventName: string, item: any) => {
+    const type = item?.extra?.type || undefined;
+    const act = item?.activities?.[0];
+    trackEvent({
+      event: eventName,
+      properties: {
+        content_type: act?.contentType,
+        is_read: item?.isRead,
+        type,
+      },
+    });
+  };
+
+  const handleRemoveNotification = (item: any) => {
+    const id = item?.id || '';
+    if (!id) return;
     notiActions.deleteNotificationLocal(id);
     const toastMessage: IToastMessage = {
       content: t('notification:text_remove_notification_success'),
@@ -111,6 +127,7 @@ const Notification = () => {
     );
 
     modalActions.hideBottomList();
+    trackEventNoti('Notification Removed', item);
   };
 
   const checkShowDeleteOption = (type: string) => {
@@ -139,7 +156,7 @@ const Notification = () => {
       leftIcon: 'TrashCan',
       title: i18next.t('notification:text_remove_notification'),
       requireIsActor: true,
-      onPress: () => { handleRemoveNotification(item?.id); },
+      onPress: () => { handleRemoveNotification(item); },
     }];
     if (checkShowDeleteOption(type)) {
       menuData.splice(1, 1);
@@ -496,6 +513,7 @@ const Notification = () => {
           '\x1b[0m',
         );
       }
+      trackEventNoti('Notification Opened', item);
 
       // finally mark the notification as read
       notiActions.markAsRead(item.id);
