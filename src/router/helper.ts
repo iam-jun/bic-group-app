@@ -478,6 +478,21 @@ export const hideSplashScreen = async () => {
   await SplashScreen.hideAsync();
 };
 
+export const isFromNotificationScreen = (navigation: any) => {
+  const { routes = [] } = navigation.getState();
+  const previousRoute = routes[routes.length - 2] || {};
+  const { name, state = {} } = previousRoute || {};
+
+  if (name !== 'main') return false;
+
+  if (state.index === 2) {
+    // from notification screen
+    return true;
+  }
+
+  return false;
+};
+
 const rootNavigation = withNavigation?.(rootNavigationRef);
 
 export const navigateToGroupDetail = (params: { groupId: string; communityId?: string }) => {
