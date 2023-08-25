@@ -24,3 +24,21 @@ export enum SettingsAndPrivacyType {
   LANGUAGE = 'language',
   PRIVACY = 'privacy',
 }
+
+export interface IMenu {
+  canEdit?: boolean;
+  canEditSetting?: boolean;
+  canSave?: boolean;
+  canUnsave?: boolean;
+  canCopyLink?: boolean,
+  canViewReactions?: boolean,
+  canViewSeries?: boolean,
+  canPinContent?: boolean,
+  canCreateQuiz?: boolean,
+  canDeleteQuiz?: boolean,
+  canEditQuiz?: boolean,
+  canDelete?: boolean,
+  canReportContent?: boolean,
+  canReportMember?: boolean,
+  enableSpecificNotifications?: boolean
+}

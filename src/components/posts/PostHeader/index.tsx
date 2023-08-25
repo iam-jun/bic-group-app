@@ -9,11 +9,12 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 import usePostMenu from '~/hooks/usePostMenu';
-import { IAudienceGroup } from '~/interfaces/IPost';
+import { IAudienceGroup, PostType } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import AlertDeleteAudiences from '../AlertDeleteAudiences';
 import useModalStore from '~/store/modal';
 import usePostsStore from '~/store/entities/posts';
+import MenuContent from '~/components/MenuContent';
 
 export interface PostHeaderProps extends Partial<ContentHeaderProps> {
   data: any,
@@ -30,7 +31,7 @@ const PostHeader: FC<PostHeaderProps> = ({
   const route = useRoute();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
-  const { showAlert } = useModalStore((state) => state.actions);
+  const { showAlert, showModal } = useModalStore((state) => state.actions);
   const postActions = usePostsStore((state) => state.actions);
 
   const {
@@ -105,6 +106,18 @@ const PostHeader: FC<PostHeaderProps> = ({
 
   const onPressMenu = useDefaultMenu ? showMenu : undefined;
 
+  const onShowMenu = () => {
+    showModal({
+      isOpen: true,
+      ContentComponent: (
+        <MenuContent
+          contentId={postId}
+          contentType={PostType.POST}
+        />
+      ),
+    });
+  };
+
   return (
     <ContentHeader
       {...props}
@@ -115,7 +128,7 @@ const PostHeader: FC<PostHeaderProps> = ({
       publishedAt={publishedAt}
       disabled={disabled}
       onPressHeader={_onPressHeader}
-      onPressMenu={onPressMenu}
+      onPressMenu={onShowMenu}
     />
   );
 };
