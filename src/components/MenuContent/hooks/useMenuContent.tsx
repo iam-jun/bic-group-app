@@ -7,10 +7,10 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { Keyboard } from 'react-native';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { generateLink, LinkGeneratorTypes } from '~/utils/link';
-import { IPost } from '~/interfaces/IPost';
+import { IPost, PostType } from '~/interfaces/IPost';
 import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
 import { Button } from '~/baseComponents';
-import { useRootNavigation } from './navigation';
+import { useRootNavigation } from '../../../hooks/navigation';
 import { BottomListProps } from '~/components/BottomList';
 import ReportContent from '~/components/Report/ReportContent';
 import SeriesContentModal from '~/components/series/SeriesContentModal';
@@ -25,11 +25,16 @@ import { onPressReportThisMember } from '~/helpers/blocking';
 import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 import useQuizzesStore from '~/store/entities/quizzes';
 import { QuizStatus } from '~/interfaces/IQuiz';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
+import { getCopyLinkType } from '../helper';
 
 const useMenuContent = (
   data: IPost,
-  isActor: boolean,
-  isPostDetail: boolean,
+  contentType: PostType,
+  isFromDetail: boolean,
+
+  handleConfirmDeleteSeries?: () => void,
   handleDeletePostError?: (listAudiences: string[]) => void,
 ) => {
   const { rootNavigation } = useRootNavigation();
@@ -40,17 +45,17 @@ const useMenuContent = (
 
   const { deletePost } = usePostsStore((state: IPostsState) => state.actions);
 
-  const { getAudienceListWithNoPermission } = useMyPermissionsStore(
-    (state) => state.actions,
-  );
+  const copyLinkType = getCopyLinkType(contentType);
+  // const { getAudienceListWithNoPermission } = useMyPermissionsStore(
+  //   (state) => state.actions,
+  // );
 
   if (!data) return null;
 
   const {
-    id: postId,
+    id: contentId,
     reactionsCount,
-    isSaved,
-    type,
+    // isSaved,
     audience,
     actor,
     quiz,
@@ -58,90 +63,121 @@ const useMenuContent = (
 
   const groupAudience = audience?.groups || [];
 
-  const audienceListCannotCRUDPostArticle = getAudienceListWithNoPermission(
-    groupAudience,
-    PermissionKey.CRUD_POST_ARTICLE,
-  );
+  // const audienceListCannotCRUDPostArticle = getAudienceListWithNoPermission(
+  //   groupAudience,
+  //   PermissionKey.CRUD_POST_ARTICLE,
+  // );
 
-  const audienceListCannotEditSettings = getAudienceListWithNoPermission(
-    groupAudience,
-    PermissionKey.EDIT_OWN_CONTENT_SETTING,
-  );
+  // const audienceListCannotEditSettings = getAudienceListWithNoPermission(
+  //   groupAudience,
+  //   PermissionKey.EDIT_OWN_CONTENT_SETTING,
+  // );
 
-  const audienceListCannotPinContent = getAudienceListWithNoPermission(
-    groupAudience,
-    [PermissionKey.FULL_PERMISSION, PermissionKey.PIN_CONTENT],
-  );
+  // const audienceListCannotPinContent = getAudienceListWithNoPermission(
+  //   groupAudience,
+  //   [PermissionKey.FULL_PERMISSION, PermissionKey.PIN_CONTENT],
+  // );
 
-  const shouldBeHiddenCreateQuizOption
-    = !!quiz || audienceListCannotCRUDPostArticle.length > 0;
-  const shouldBeHiddenEditQuizOption
-    = !quiz
-    || quiz.status !== QuizStatus.PUBLISHED
-    || audienceListCannotCRUDPostArticle.length > 0;
-  const shouldBeHiddenDeleteQuizOption
-    = !quiz
-    || audienceListCannotCRUDPostArticle.length > 0;
+  // const shouldBeHiddenCreateQuizOption
+  //   = !!quiz || audienceListCannotCRUDPostArticle.length > 0;
+  // const shouldBeHiddenEditQuizOption
+  //   = !quiz
+  //   || quiz.status !== QuizStatus.PUBLISHED
+  //   || audienceListCannotCRUDPostArticle.length > 0;
+  // const shouldBeHiddenDeleteQuizOption
+  //   = !quiz
+  //   || audienceListCannotCRUDPostArticle.length > 0;
   const isShowBorderTopDeleteQuizOption = !!quiz && quiz.status !== QuizStatus.PUBLISHED;
 
   const onPressEdit = () => {
-    modalActions.hideBottomList();
-    rootNavigation?.navigate?.(homeStack.createPost, {
-      postId,
-      replaceWithDetail: !isPostDetail,
-    });
+    modalActions.hideModal();
+    if (contentType === PostType.POST) {
+      rootNavigation?.navigate?.(homeStack.createPost, {
+        postId: contentId,
+        replaceWithDetail: !isFromDetail,
+      });
+    }
+
+    if (contentType === PostType.ARTICLE) {
+      rootNavigation.navigate(articleStack.createArticle, { articleId: contentId });
+    }
+
+    if (contentType === PostType.SERIES) {
+      rootNavigation?.navigate?.(
+      seriesStack.createSeries, {
+        seriesId: contentId,
+        isFromDetail,
+      },
+    );
+    }
   };
 
   const onPressEditSettings = () => {
-    modalActions.hideBottomList();
-    rootNavigation?.navigate?.(homeStack.postSettings, {
-      postId,
-      isFromPostMenuSettings: true,
-    });
+    modalActions.hideModal();
+    if (contentType === PostType.POST) {
+      rootNavigation?.navigate?.(homeStack.postSettings, {
+        postId: contentId,
+        isFromPostMenuSettings: true,
+      });
+    }
+
+    if (contentType === PostType.ARTICLE) {
+      rootNavigation?.navigate?.(articleStack.createArticleSettings, {
+        articleId: contentId,
+        isFromArticleMenuSettings: true
+      });
+    }
+
+    if (contentType === PostType.SERIES) {
+      rootNavigation?.navigate?.(seriesStack.seriesSettings, {
+        seriesId: contentId,
+        isFromSeriesMenuSettings: true
+      });
+    }
   };
 
-  const onPressSave = () => {
-    modalActions.hideBottomList();
+  const onPressSave = (isSaved: boolean) => {
+    modalActions.hideModal();
     if (isSaved) {
-      commonActions.unsavePost(postId, type);
+      commonActions.unsavePost(contentId, contentType);
     } else {
-      commonActions.savePost(postId, type);
+      commonActions.savePost(contentId, contentType);
     }
   };
 
   const onPressCopyLink = () => {
-    modalActions.hideBottomList();
-    Clipboard.setString(generateLink(LinkGeneratorTypes.POST, postId));
+    modalActions.hideModal();
+    Clipboard.setString(generateLink(copyLinkType, contentId));
     modalActions.showToast({ content: 'common:text_link_copied_to_clipboard' });
   };
 
   const onPressViewReactions = () => {
-    modalActions.hideBottomList();
+    modalActions.hideModal();
     const firstReact = reactionsCount[0];
     if (!!firstReact && !isEmpty(firstReact)) {
       const initReaction = Object.keys(firstReact)[0];
       const payload: IPayloadReactionDetailBottomSheet = {
         reactionsCount,
         initReaction,
-        getDataParam: { target: 'POST', targetId: postId },
+        getDataParam: { target: 'POST', targetId: contentId },
       };
       modalActions.showReactionDetailBottomSheet(payload);
     }
   };
 
   const onPressViewSeries = () => {
-    modalActions.hideBottomList();
+    modalActions.hideModal();
 
     modalActions.showModal({
       isOpen: true,
       isFullScreen: true,
       titleFullScreen: i18next.t('common:btn_view_series'),
-      ContentComponent: <SeriesContentModal id={postId} />,
+      ContentComponent: <SeriesContentModal id={contentId} />,
     });
   };
 
   const onPressDelete = () => {
-    modalActions.hideBottomList();
+    modalActions.hideModal();
     modalActions.showAlert({
       title: i18next.t('post:title_delete_post'),
       content: i18next.t('post:content_delete_post'),
@@ -150,7 +186,7 @@ const useMenuContent = (
       ConfirmBtnComponent: Button.Danger,
       confirmBtnProps: { type: 'ghost' },
       onConfirm: () => deletePost({
-        id: postId,
+        id: contentId,
         // callbackError: handleDeletePostError,
       }),
     });
@@ -159,14 +195,16 @@ const useMenuContent = (
   const onPressReport = () => {
     const rootGroupIds = getRootGroupids(audience);
 
-    modalActions.hideBottomList();
+    modalActions.hideModal();
+
+    // xem xet dung timeout vi tren android hideModal xong hien len luon se ko dc
 
     // in this sprint default reportTo is COMMUNITY
     modalActions.showModal({
       isOpen: true,
       ContentComponent: (
         <ReportContent
-          targetId={postId}
+          targetId={contentId}
           targetType={TargetType.POST}
           groupIds={rootGroupIds}
           reportTo={ReportTo.COMMUNITY}
@@ -181,12 +219,12 @@ const useMenuContent = (
 
   const onPressPin = () => {
     modalActions.hideBottomList();
-    rootNavigation?.navigate?.(homeStack.pinContent, { postId });
+    rootNavigation?.navigate?.(homeStack.pinContent, { postId: contentId });
   };
 
   const onPressCUDQuiz = () => {
     modalActions.hideBottomList();
-    rootNavigation?.navigate?.(quizStack.entryQuiz, { postId });
+    rootNavigation?.navigate?.(quizStack.entryQuiz, { postId: contentId });
   };
 
   const onConfirmEditQuiz = () => {
@@ -221,7 +259,7 @@ const useMenuContent = (
       ConfirmBtnComponent: Button.Danger,
       confirmBtnProps: { type: 'ghost' },
       onConfirm: () => {
-        actionsQuizzesStore.deleteQuiz(quiz?.id, postId);
+        actionsQuizzesStore.deleteQuiz(quiz?.id, contentId);
       },
     });
   };
@@ -241,14 +279,14 @@ const useMenuContent = (
       leftIcon: 'Sliders',
       title: i18next.t('common:edit_settings'),
       requireIsActor: false,
-      shouldBeHidden: audienceListCannotEditSettings.length > 0,
+      // shouldBeHidden: audienceListCannotEditSettings.length > 0,
       onPress: onPressEditSettings,
     },
     {
       id: 3,
       testID: 'post_view_menu.save_unsave',
-      leftIcon: isSaved ? 'BookmarkSlash' : 'Bookmark',
-      title: i18next.t(`post:post_menu_${isSaved ? 'unsave' : 'save'}`),
+      // leftIcon: isSaved ? 'BookmarkSlash' : 'Bookmark',
+      // title: i18next.t(`post:post_menu_${isSaved ? 'unsave' : 'save'}`),
       requireIsActor: false,
       onPress: onPressSave,
     },
@@ -283,8 +321,8 @@ const useMenuContent = (
       leftIcon: 'Thumbtack',
       title: i18next.t('common:pin_unpin'),
       requireIsActor: false,
-      shouldBeHidden:
-        audienceListCannotPinContent.length === groupAudience.length,
+      // shouldBeHidden:
+      //   audienceListCannotPinContent.length === groupAudience.length,
       onPress: onPressPin,
     },
     {
@@ -293,7 +331,7 @@ const useMenuContent = (
       leftIcon: 'Flag',
       title: i18next.t('common:btn_report_content'),
       requireIsActor: false,
-      notShowForActor: isActor,
+      // notShowForActor: isActor,
       onPress: onPressReport,
     },
     {
@@ -302,7 +340,7 @@ const useMenuContent = (
       leftIcon: 'UserXmark',
       title: i18next.t('groups:member_menu:label_report_member'),
       requireIsActor: false,
-      notShowForActor: isActor,
+      // notShowForActor: isActor,
       onPress: _onPressReportThisMember,
     },
     {
@@ -311,7 +349,7 @@ const useMenuContent = (
       leftIcon: 'BallotCheck',
       title: i18next.t('quiz:create_quiz'),
       requireIsActor: true,
-      shouldBeHidden: shouldBeHiddenCreateQuizOption,
+      // shouldBeHidden: shouldBeHiddenCreateQuizOption,
       onPress: onPressCUDQuiz,
       isShowBorderTop: true,
       isShowBorderBottom: true,
@@ -322,7 +360,7 @@ const useMenuContent = (
       leftIcon: 'FilePen',
       title: i18next.t('quiz:edit_quiz'),
       requireIsActor: true,
-      shouldBeHidden: shouldBeHiddenEditQuizOption,
+      // shouldBeHidden: shouldBeHiddenEditQuizOption,
       onPress: onPressEditQuiz,
       isShowBorderTop: true,
     },
@@ -332,7 +370,7 @@ const useMenuContent = (
       leftIcon: 'TrashCan',
       title: i18next.t('quiz:delete_quiz'),
       requireIsActor: true,
-      shouldBeHidden: shouldBeHiddenDeleteQuizOption,
+      // shouldBeHidden: shouldBeHiddenDeleteQuizOption,
       onPress: onPressDeleteQuiz,
       isShowBorderTop: isShowBorderTopDeleteQuizOption,
       isShowBorderBottom: true,
@@ -348,15 +386,20 @@ const useMenuContent = (
     },
   ];
 
-  const menus = getPostMenus(defaultData, isActor, reactionsCount);
+  // const menus = getPostMenus(defaultData, isActor, reactionsCount);
 
-  const showMenu = () => {
-    Keyboard.dismiss();
-    modalActions.showBottomList({ data: menus } as BottomListProps);
-  };
+  // const showMenu = () => {
+  //   Keyboard.dismiss();
+  //   modalActions.showBottomList({ data: menus } as BottomListProps);
+  // };
 
   return {
-    showMenu,
+    onPressEdit,
+    onPressEditSettings,
+    onPressSave,
+    onPressCopyLink,
+    onPressViewReactions,
+    
   };
 };
 

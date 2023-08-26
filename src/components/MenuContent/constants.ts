@@ -13,7 +13,6 @@ export const MENU_KEYS = {
   EDIT: 'canEdit',
   EDIT_SETTING: 'canEditSetting',
   SAVE: 'canSave',
-  UNSAVE: 'canUnsave',
   COPY_LINK: 'canCopyLink',
   VIEW_REACTIONS: 'canViewReactions',
   VIEW_SERIES: 'canViewSeries',

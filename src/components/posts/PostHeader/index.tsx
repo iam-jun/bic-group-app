@@ -111,8 +111,10 @@ const PostHeader: FC<PostHeaderProps> = ({
       isOpen: true,
       ContentComponent: (
         <MenuContent
-          contentId={postId}
+          data={data}
           contentType={PostType.POST}
+          isFromDetail={isPostDetailScreen}
+          handleDeletePostError={handleDeletePostError}
         />
       ),
     });

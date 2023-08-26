@@ -29,7 +29,6 @@ export interface IMenu {
   canEdit?: boolean;
   canEditSetting?: boolean;
   canSave?: boolean;
-  canUnsave?: boolean;
   canCopyLink?: boolean,
   canViewReactions?: boolean,
   canViewSeries?: boolean,
