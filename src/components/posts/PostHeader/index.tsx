@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { Keyboard } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { Button } from '~/baseComponents';
 
@@ -8,7 +9,6 @@ import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
-import usePostMenu from '~/hooks/usePostMenu';
 import { IAudienceGroup, PostType } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import AlertDeleteAudiences from '../AlertDeleteAudiences';
@@ -102,16 +102,14 @@ const PostHeader: FC<PostHeaderProps> = ({
     }
   };
 
-  const { showMenu } = usePostMenu(data, isActor, isPostDetailScreen, handleDeletePostError);
-
-  const onPressMenu = useDefaultMenu ? showMenu : undefined;
-
   const onShowMenu = () => {
+    Keyboard.dismiss();
     showModal({
       isOpen: true,
       ContentComponent: (
         <MenuContent
           data={data}
+          isActor={isActor}
           contentType={PostType.POST}
           isFromDetail={isPostDetailScreen}
           handleDeletePostError={handleDeletePostError}

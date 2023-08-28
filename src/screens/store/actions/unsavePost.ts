@@ -1,6 +1,6 @@
 import streamApi from '~/api/StreamApi';
-import { IPayloadAddToAllPost, PostType } from '~/interfaces/IPost';
-import usePostsStore from '~/store/entities/posts';
+import { PostType } from '~/interfaces/IPost';
+import useMenuStore from '~/store/entities/menus';
 import useHomeStore from '~/screens/Home/store';
 import { AttributeFeed, ContentFeed } from '~/interfaces/IFeed';
 import showToastSuccess from '~/store/helper/showToastSuccess';
@@ -9,12 +9,14 @@ import showToastError from '~/store/helper/showToastError';
 const unsavePost = (_set, _get) => async (id: string, type: PostType) => {
   try {
     const repsonse = await streamApi.postUnsaveContent(id);
-    const post = usePostsStore.getState()?.posts?.[id] || {};
-    const newPost = {
-      ...post,
-      isSaved: false,
+
+    const menu = useMenuStore.getState().menus?.[id] || {};
+    const newMenu = {
+      ...menu,
+      isSave: false,
     };
-    usePostsStore.getState().actions.addToPosts({ data: newPost } as IPayloadAddToAllPost);
+    useMenuStore.getState().actions.addOrUpdateMenus(id, newMenu);
+
     switch (type) {
       case PostType.ARTICLE:
         updateDataFeedSaved(id, ContentFeed.ALL);

@@ -18,7 +18,7 @@ const getMenuContent = (set, get) => async (contentId: string) => {
     }, 'getMenuContent');
 
     const response = await streamApi.getMenuContent(contentId);
-    await timeOut(300);
+    await timeOut(200);
 
     if (response?.data) {
       actions.addOrUpdateMenus(contentId, response.data);

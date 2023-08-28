@@ -1,19 +1,25 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { IPost, PostType } from '~/interfaces/IPost';
 import useMenuStore from '~/store/entities/menus';
 import BottomListItem from '~/components/BottomList/BottomListItem';
 import CircleSpinner from '~/baseComponents/Toggle/CircleSpinner';
 import { MENU_KEYS } from './constants';
-import { IconType } from '~/resources/icons';
 import { useBaseHook } from '~/hooks';
 import { isEmpty } from 'lodash';
 import useMenuContent from './hooks/useMenuContent';
 import { spacing } from '~/theme';
+import useMyPermissionsStore from '~/store/permissions';
+import { PermissionKey } from '~/constants/permissionScheme';
+import { QuizStatus } from '~/interfaces/IQuiz';
+import { IOptionsRenderMenu } from '~/interfaces/IMenu';
+import { getEnableNotificationType, getTitleContent } from './helper';
+import { getTextFromSpecificNotificationTargetType } from '~/helpers/notification';
 
 interface MenuContentProps {
   data: IPost,
   contentType: PostType;
+  isActor: boolean,
   isFromDetail?: boolean,
 
   handleConfirmDeleteSeries?: () => void,
@@ -23,14 +29,23 @@ interface MenuContentProps {
 const MenuContent: React.FC<MenuContentProps> = ({
   data,
   contentType,
+  isActor,
   isFromDetail,
 
   handleConfirmDeleteSeries,
   handleDeletePostError,
 }) => {
-  const { id: contentId } = data || {};
+  const {
+    id: contentId,
+    reactionsCount,
+    audience,
+    quiz,
+  } = data || {};
 
   const { t } = useBaseHook();
+  const { getAudienceListWithNoPermission } = useMyPermissionsStore(
+    (state) => state.actions,
+  );
   const actions = useMenuStore((state) => state.actions);
   const isLoadingGetMenu = useMenuStore((state) => state.isLoadingGetMenu);
   const menu = useMenuStore((state) => state.menus[contentId]);
@@ -40,7 +55,15 @@ const MenuContent: React.FC<MenuContentProps> = ({
     onPressSave,
     onPressCopyLink,
     onPressViewReactions,
-
+    onPressViewSeries,
+    onPressPin,
+    onPressReport,
+    _onPressReportThisMember,
+    onPressCUDQuiz,
+    onPressEditQuiz,
+    onPressDeleteQuiz,
+    onPressDeleteContent,
+    onPressNotificationSettingContent,
   } = useMenuContent(
     data,
     contentType,
@@ -49,75 +72,66 @@ const MenuContent: React.FC<MenuContentProps> = ({
     handleDeletePostError,
   );
 
+  const hasReaction = reactionsCount && reactionsCount.length > 0;
+  const groupAudience = audience?.groups || [];
+  const audienceListCannotPinContent = getAudienceListWithNoPermission(
+    groupAudience,
+    [PermissionKey.FULL_PERMISSION, PermissionKey.PIN_CONTENT],
+  );
+  const shouldBeHiddenPinOption = audienceListCannotPinContent.length === groupAudience.length;
+  const audienceListCannotCRUDPostArticle = getAudienceListWithNoPermission(
+    groupAudience,
+    PermissionKey.CRUD_POST_ARTICLE,
+  );
+  const shouldBeHiddenCreateQuizOption
+    = !!quiz
+    || audienceListCannotCRUDPostArticle.length > 0
+    || contentType === PostType.SERIES
+    || !isActor;
+  const audienceListCannotEditSettings = getAudienceListWithNoPermission(
+    groupAudience,
+    PermissionKey.EDIT_OWN_CONTENT_SETTING,
+  );
+  const shouldBeHiddenEditSettingsOption = audienceListCannotEditSettings.length > 0;
+  const shouldBeHiddenEditQuizOption
+    = !quiz
+    || quiz.status !== QuizStatus.PUBLISHED
+    || audienceListCannotCRUDPostArticle.length > 0
+    || !isActor;
+  const shouldBeHiddenDeleteQuizOption
+    = !quiz
+    || audienceListCannotCRUDPostArticle.length > 0
+    || !isActor;
+  const isShowBorderTopDeleteQuizOption = !!quiz && quiz.status !== QuizStatus.PUBLISHED;
+  const contentTargetType = getEnableNotificationType(contentType);
+  const specificText
+    = getTextFromSpecificNotificationTargetType(contentTargetType, menu?.[MENU_KEYS.ENABLE_NOTIFICATIONS]);
+  const alwaysShowEnableNoti = contentType !== PostType.SERIES ? true : false;
+  const titleEditContent = getTitleContent(contentType, MENU_KEYS.EDIT);
+  const titleSaveContent = getTitleContent(contentType, MENU_KEYS.SAVE, menu?.[MENU_KEYS.SAVE]);
+  const titleDeleteContent = getTitleContent(contentType, MENU_KEYS.DELETE);
+
   useEffect(() => {
     if (isEmpty(menu) || !menu) {
       actions.getMenuContent(contentId);
     }
   }, [contentId]);
 
-  const renderItem = (keyMenu: string) => {
-    switch (keyMenu) {
-      case MENU_KEYS.EDIT:
-        return renderMenuItem(
-          keyMenu,
-          'FilePen',
-          t('post:post_menu_edit'),
-          onPressEdit,
-        );
-      
-      case MENU_KEYS.EDIT_SETTING:
-        return renderMenuItem(
-          keyMenu,
-          'Sliders',
-          t('common:edit_settings'),
-          onPressEditSettings,
-        );
-      
-      case MENU_KEYS.SAVE:
-        console.log('menu key check: -----------', menu[keyMenu])
-        return renderMenuItem(
-          keyMenu,
-          !menu[keyMenu] ? 'BookmarkSlash' : 'Bookmark',
-          t(`post:post_menu_${!menu[keyMenu] ? 'unsave' : 'save'}`),
-          () => onPressSave(!menu[keyMenu]),
-          true,
-        );
-      
-      case MENU_KEYS.COPY_LINK:
-        return renderMenuItem(
-          keyMenu,
-          'LinkHorizontal',
-          t('post:post_menu_copy'),
-          onPressCopyLink,
-        );
+  const renderMenuItem = (options: IOptionsRenderMenu) => {
+    const {
+      keyMenu,
+      leftIcon,
+      title,
+      onPress,
+      alwaysShow = false,
+      shouldBeHidden = false,
+      isShowBorderTop = false,
+      isShowBorderBottom = false,
+      isDanger = false,
+    } = options || {};
 
-      case MENU_KEYS.VIEW_REACTIONS:
-        return renderMenuItem(
-          keyMenu,
-          'iconReact',
-          t('post:post_menu_view_reactions'),
-          onPressViewReactions,
-        );
+    if (shouldBeHidden) return null;
 
-      
-
-
-
-        
-
-      default:
-        console.warn(`Menu key ${keyMenu} have not defined`);
-        break;
-    }
-  };
-
-  const renderMenuItem = (
-    keyMenu: string,
-    leftIcon: IconType,
-    title: string,
-    onPress: () => void,
-    alwaysShow: boolean = false,
-  ) => {
     if (!menu[keyMenu] && !alwaysShow) return null;
     
     return (
@@ -127,13 +141,155 @@ const MenuContent: React.FC<MenuContentProps> = ({
         leftIcon={leftIcon}
         title={title}
         onPress={onPress}
+        isShowBorderTop={isShowBorderTop}
+        isShowBorderBottom={isShowBorderBottom}
+        isDanger={isDanger}
       />
     );
   };
 
-  const renderDefaultMenu = () => {
-    return <></>
-  };
+  const renderListMenu = () => (
+    <ScrollView>
+      {
+        renderMenuItem({
+          keyMenu: MENU_KEYS.EDIT,
+          leftIcon: 'FilePen',
+          title: titleEditContent,
+          onPress: onPressEdit,
+          shouldBeHidden: !isActor,
+        })
+      }
+      {
+        renderMenuItem({
+          keyMenu: MENU_KEYS.EDIT_SETTING,
+          leftIcon: 'Sliders',
+          title: t('common:edit_settings'),
+          onPress: onPressEditSettings,
+          alwaysShow: !shouldBeHiddenEditSettingsOption,
+          shouldBeHidden: shouldBeHiddenEditSettingsOption,
+        })
+      }
+      {
+        renderMenuItem({
+          keyMenu: MENU_KEYS.SAVE,
+          leftIcon: menu[MENU_KEYS.SAVE] ? 'BookmarkSlash' : 'Bookmark',
+          title: titleSaveContent,
+          onPress: () => onPressSave(menu[MENU_KEYS.SAVE]),
+          alwaysShow: true,
+        })
+      }
+      {
+        renderMenuItem({
+          keyMenu: MENU_KEYS.COPY_LINK,
+          leftIcon: 'LinkHorizontal',
+          title: t('post:post_menu_copy'),
+          onPress: onPressCopyLink,
+        })
+      }
+      {
+        renderMenuItem({
+          keyMenu: MENU_KEYS.VIEW_REACTIONS,
+          leftIcon: 'iconReact',
+          title: t('post:post_menu_view_reactions'),
+          onPress: onPressViewReactions,
+          alwaysShow: hasReaction,
+        })
+      }
+      {
+        renderMenuItem({
+          keyMenu: MENU_KEYS.VIEW_SERIES,
+          leftIcon: 'RectangleHistory',
+          title: t('common:btn_view_series'),
+          onPress: onPressViewSeries,
+        })
+      }
+      {
+        renderMenuItem({
+          keyMenu: MENU_KEYS.PIN_CONTENT,
+          leftIcon: 'Thumbtack',
+          title: t('common:pin_unpin'),
+          onPress: onPressPin,
+          alwaysShow: !shouldBeHiddenPinOption,
+          shouldBeHidden: shouldBeHiddenPinOption,
+        })
+      }
+      {
+        renderMenuItem({
+          keyMenu: MENU_KEYS.REPORT_CONTENT,
+          leftIcon: 'Flag',
+          title: t('common:btn_report_content'),
+          onPress: onPressReport,
+        })
+      }
+      {
+        renderMenuItem({
+          keyMenu: MENU_KEYS.REPORT_MEMBER,
+          leftIcon: 'UserXmark',
+          title: t('groups:member_menu:label_report_member'),
+          onPress: _onPressReportThisMember,
+        })
+      }
+      {
+        renderMenuItem({
+          keyMenu: MENU_KEYS.CREATE_QUIZ,
+          leftIcon: 'BallotCheck',
+          title: t('quiz:create_quiz'),
+          onPress: onPressCUDQuiz,
+          alwaysShow: !shouldBeHiddenCreateQuizOption,
+          shouldBeHidden: shouldBeHiddenCreateQuizOption,
+          isShowBorderTop: true,
+          isShowBorderBottom: true,
+        })
+      }
+      {
+        renderMenuItem({
+          keyMenu: MENU_KEYS.EDIT_QUIZ,
+          leftIcon: 'FilePen',
+          title: t('quiz:edit_quiz'),
+          onPress: onPressEditQuiz,
+          alwaysShow: !shouldBeHiddenEditQuizOption,
+          shouldBeHidden: shouldBeHiddenEditQuizOption,
+          isShowBorderTop: true,
+        })
+      }
+      {
+        renderMenuItem({
+          keyMenu: MENU_KEYS.DELETE_QUIZ,
+          leftIcon: 'TrashCan',
+          title: t('quiz:delete_quiz'),
+          onPress: onPressDeleteQuiz,
+          alwaysShow: !shouldBeHiddenDeleteQuizOption,
+          shouldBeHidden: shouldBeHiddenDeleteQuizOption,
+          isShowBorderTop: isShowBorderTopDeleteQuizOption,
+          isShowBorderBottom: true,
+        })
+      }
+      {
+        renderMenuItem({
+          keyMenu: MENU_KEYS.DELETE,
+          leftIcon: 'TrashCan',
+          title: titleDeleteContent,
+          onPress: onPressDeleteContent,
+          isDanger: true,
+        })
+      }
+      {
+        renderMenuItem({
+          keyMenu: MENU_KEYS.ENABLE_NOTIFICATIONS,
+          leftIcon:
+            menu[MENU_KEYS.ENABLE_NOTIFICATIONS] ? 'BellSlash' : 'Bell',
+          title: specificText,
+          onPress:
+            () => onPressNotificationSettingContent(
+              menu[MENU_KEYS.ENABLE_NOTIFICATIONS],
+              contentTargetType,
+            ),
+          alwaysShow: alwaysShowEnableNoti,
+          shouldBeHidden: !alwaysShowEnableNoti,
+        })
+      }
+    </ScrollView>
+  );
 
   const renderContent = () => {
     if (isLoadingGetMenu || !menu) {
@@ -146,15 +302,15 @@ const MenuContent: React.FC<MenuContentProps> = ({
 
     // render default menu is copy link whenever api error or no data
     if (!isLoadingGetMenu && !menu) {
-      return renderMenuItem(
-        MENU_KEYS.COPY_LINK,
-        'LinkHorizontal',
-        t('post:post_menu_copy'),
-        onPressCopyLink,
-      );
+      return renderMenuItem({
+        keyMenu: MENU_KEYS.COPY_LINK,
+        leftIcon: 'LinkHorizontal',
+        title: t('post:post_menu_copy'),
+        onPress: onPressCopyLink,
+      });
     }
 
-    return Object.keys(menu).map(renderItem);
+    return renderListMenu();
   }
 
   return (
@@ -167,9 +323,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
 export default MenuContent;
 
 const styles = StyleSheet.create({
-  container: {
-
-  },
+  container: {},
   loadingView: {
     marginTop: spacing.margin.large,
   },

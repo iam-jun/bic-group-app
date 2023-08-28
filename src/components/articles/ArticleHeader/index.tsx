@@ -1,11 +1,13 @@
 import React, { FC } from 'react';
+import { Keyboard } from 'react-native';
 
 import { ContentHeader, ContentHeaderProps } from '~/components/ContentView';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
-import { IPost } from '~/interfaces/IPost';
-import useArticleMenu from '~/hooks/useArticleMenu';
+import { IPost, PostType } from '~/interfaces/IPost';
+import useModalStore from '~/store/modal';
+import MenuContent from '~/components/MenuContent';
 
 export interface ArticleHeaderProps extends ContentHeaderProps {
   data: IPost;
@@ -18,6 +20,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({
   onPressHeader,
   ...props
 }) => {
+  const { showModal } = useModalStore((state) => state.actions);
   const { rootNavigation } = useRootNavigation();
   const userId = useUserIdAuth();
   const isCreator = actor?.id == userId;
@@ -31,7 +34,19 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({
     }
   };
 
-  const { showMenu } = useArticleMenu(data, isCreator);
+  const onShowMenu = () => {
+    Keyboard.dismiss();
+    showModal({
+      isOpen: true,
+      ContentComponent: (
+        <MenuContent
+          data={data}
+          isActor={isCreator}
+          contentType={PostType.ARTICLE}
+        />
+      ),
+    });
+  };
 
   return (
     <ContentHeader
@@ -40,7 +55,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({
       actor={actor}
       disabled={disabled}
       onPressHeader={_onPressHeader}
-      onPressMenu={showMenu}
+      onPressMenu={onShowMenu}
     />
   );
 };

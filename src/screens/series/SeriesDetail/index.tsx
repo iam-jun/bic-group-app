@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { ExtendedTheme, useTheme, useIsFocused } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList, Keyboard } from 'react-native';
 import { isEmpty } from 'lodash';
 import { Button } from '~/baseComponents';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useUserIdAuth } from '~/hooks/auth';
-import { IAudienceGroup } from '~/interfaces/IPost';
+import { IAudienceGroup, PostType } from '~/interfaces/IPost';
 import AlertDeleteAudiencesConfirmContent from '~/components/posts/AlertDeleteAudiences';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
@@ -16,7 +16,6 @@ import DeletedItem from '../../../components/DeletedItem';
 import SeriesDetailHeader from './components/SeriesDetailHeader';
 import SeriesDetailItem from './components/SeriesDetailItem';
 import useSeriesStore, { ISeriesState } from '../store';
-import useSeriesMenu from '~/hooks/useSeriesMenu';
 import { spacing } from '~/theme';
 import AddArticles from './components/AddArticles';
 import { PermissionKey } from '~/constants/permissionScheme';
@@ -24,6 +23,7 @@ import useMyPermissionsStore from '~/store/permissions';
 import ContentUnavailable from '~/components/ContentUnavailable';
 import useMounted from '~/hooks/mounted';
 import useModalStore from '~/store/modal';
+import MenuContent from '~/components/MenuContent';
 
 const SeriesDetail = ({ route }: any) => {
   const { params } = route || {};
@@ -36,7 +36,7 @@ const SeriesDetail = ({ route }: any) => {
   const { goHome } = useRootNavigation();
 
   const [isOpenSearch, setIsOpenSearch] = useState(false);
-  const { showAlert } = useModalStore((state) => state.actions);
+  const { showAlert, showModal } = useModalStore((state) => state.actions);
 
   const series = usePostsStore(
     useCallback(postsSelector.getPost(seriesId, {}), [seriesId]),
@@ -131,12 +131,20 @@ const SeriesDetail = ({ route }: any) => {
     );
   };
 
-  const { showMenu } = useSeriesMenu(
-    series,
-    isActor,
-    true,
-    handleConfirmDelete,
-  );
+  const onShowMenu = () => {
+    Keyboard.dismiss();
+    showModal({
+      isOpen: true,
+      ContentComponent: (
+        <MenuContent
+          data={series}
+          isActor={isActor}
+          contentType={PostType.SERIES}
+          handleConfirmDeleteSeries={handleConfirmDelete}
+        />
+      ),
+    });
+  };
 
   if (deleted) {
     return (
@@ -171,7 +179,7 @@ const SeriesDetail = ({ route }: any) => {
     <View style={styles.wrapper}>
       <Header
         rightIcon="menu"
-        onRightPress={showMenu}
+        onRightPress={onShowMenu}
         icon={isActor ? 'Plus' : undefined}
         onPressIcon={onPressSearch}
       />
