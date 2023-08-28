@@ -21,7 +21,7 @@ const editNotificationSettings = (set, get) => async (
       contentType: targetType,
     };
     const response = await notificationApi.editSpecificNotificationSettings(targetId, data);
-    
+
     if (contentTargetType !== SpecificNotificationType.group) {
       const menu = useMenuStore.getState().menus?.[targetId] || {};
       const newMenu = {
@@ -30,7 +30,7 @@ const editNotificationSettings = (set, get) => async (
       };
       useMenuStore.getState().actions.addOrUpdateMenus(targetId, newMenu);
     }
-    
+
     if (response?.meta?.message) {
       showToast({ content: response.meta.message });
     }

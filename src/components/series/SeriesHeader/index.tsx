@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FC } from 'react';
+import { Keyboard } from 'react-native';
 import { Button } from '~/baseComponents';
 import { ContentHeader } from '~/components/ContentView';
 import { useBaseHook } from '~/hooks';
@@ -12,7 +13,6 @@ import useSeriesStore, { ISeriesState } from '~/screens/series/store';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 import useModalStore from '~/store/modal';
-import { Keyboard } from 'react-native';
 import MenuContent from '~/components/MenuContent';
 
 type SeriesHeaderProps = {

@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
+import { isEmpty } from 'lodash';
 import { IPost, PostType } from '~/interfaces/IPost';
 import useMenuStore from '~/store/entities/menus';
 import BottomListItem from '~/components/BottomList/BottomListItem';
 import CircleSpinner from '~/baseComponents/Toggle/CircleSpinner';
 import { MENU_KEYS } from './constants';
 import { useBaseHook } from '~/hooks';
-import { isEmpty } from 'lodash';
 import useMenuContent from './hooks/useMenuContent';
 import { spacing } from '~/theme';
 import useMyPermissionsStore from '~/store/permissions';
@@ -23,7 +23,7 @@ interface MenuContentProps {
   isFromDetail?: boolean,
 
   handleConfirmDeleteSeries?: () => void,
-  handleDeletePostError?: (listAudiences: string[]) => void,  
+  handleDeletePostError?: (listAudiences: string[]) => void,
 }
 
 const MenuContent: React.FC<MenuContentProps> = ({
@@ -106,7 +106,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
   const contentTargetType = getEnableNotificationType(contentType);
   const specificText
     = getTextFromSpecificNotificationTargetType(contentTargetType, menu?.[MENU_KEYS.ENABLE_NOTIFICATIONS]);
-  const alwaysShowEnableNoti = contentType !== PostType.SERIES ? true : false;
+  const alwaysShowEnableNoti = contentType !== PostType.SERIES;
   const titleEditContent = getTitleContent(contentType, MENU_KEYS.EDIT);
   const titleSaveContent = getTitleContent(contentType, MENU_KEYS.SAVE, menu?.[MENU_KEYS.SAVE]);
   const titleDeleteContent = getTitleContent(contentType, MENU_KEYS.DELETE);
@@ -133,7 +133,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
     if (shouldBeHidden) return null;
 
     if (!menu[keyMenu] && !alwaysShow) return null;
-    
+
     return (
       <BottomListItem
         key={`menu_item_${keyMenu}`}
@@ -311,7 +311,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
     }
 
     return renderListMenu();
-  }
+  };
 
   return (
     <View style={styles.container}>

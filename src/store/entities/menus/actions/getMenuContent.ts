@@ -1,7 +1,7 @@
-import streamApi from "~/api/StreamApi";
-import { IMenuState } from "..";
-import { isEmpty } from "lodash";
-import { timeOut } from "~/utils/common";
+import { isEmpty } from 'lodash';
+import streamApi from '~/api/StreamApi';
+import { IMenuState } from '..';
+import { timeOut } from '~/utils/common';
 
 const getMenuContent = (set, get) => async (contentId: string) => {
   const { actions, menus }: IMenuState = get();
@@ -33,6 +33,6 @@ const getMenuContent = (set, get) => async (contentId: string) => {
     }, 'getMenuContent fail');
     console.error('getMenuContent fail', error);
   }
-}
+};
 
 export default getMenuContent;

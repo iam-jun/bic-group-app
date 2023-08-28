@@ -1,8 +1,8 @@
-import { SpecificNotificationType } from "~/interfaces/INotification";
-import { PostType } from "~/interfaces/IPost";
-import { TargetType } from "~/interfaces/IReport";
+import { SpecificNotificationType } from '~/interfaces/INotification';
+import { PostType } from '~/interfaces/IPost';
+import { TargetType } from '~/interfaces/IReport';
 import { LinkGeneratorTypes } from '~/utils/link';
-import { MENU_KEYS } from "./constants";
+import { MENU_KEYS } from './constants';
 
 export const getCopyLinkType = (contentType) => {
   if (contentType === PostType.POST) {
@@ -48,7 +48,7 @@ export const getTitleContent = (contentType, menuType, isSave = false) => {
     }
     if (menuType === MENU_KEYS.DELETE) {
       return 'post:post_menu_delete';
-    }    
+    }
   }
 
   if (contentType === PostType.ARTICLE) {
@@ -60,7 +60,7 @@ export const getTitleContent = (contentType, menuType, isSave = false) => {
     }
     if (menuType === MENU_KEYS.DELETE) {
       return 'article:menu:delete';
-    }   
+    }
   }
 
   if (contentType === PostType.SERIES) {
@@ -72,6 +72,6 @@ export const getTitleContent = (contentType, menuType, isSave = false) => {
     }
     if (menuType === MENU_KEYS.DELETE) {
       return 'series:menu_text_delete_series';
-    }   
+    }
   }
 };

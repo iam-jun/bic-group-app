@@ -72,11 +72,11 @@ const useMenuContent = (
 
     if (contentType === PostType.SERIES) {
       rootNavigation?.navigate?.(
-      seriesStack.createSeries, {
-        seriesId: contentId,
-        isFromDetail,
-      },
-    );
+        seriesStack.createSeries, {
+          seriesId: contentId,
+          isFromDetail,
+        },
+      );
     }
   };
 
@@ -92,14 +92,14 @@ const useMenuContent = (
     if (contentType === PostType.ARTICLE) {
       rootNavigation?.navigate?.(articleStack.createArticleSettings, {
         articleId: contentId,
-        isFromArticleMenuSettings: true
+        isFromArticleMenuSettings: true,
       });
     }
 
     if (contentType === PostType.SERIES) {
       rootNavigation?.navigate?.(seriesStack.seriesSettings, {
         seriesId: contentId,
-        isFromSeriesMenuSettings: true
+        isFromSeriesMenuSettings: true,
       });
     }
   };
@@ -247,7 +247,7 @@ const useMenuContent = (
         ),
       });
     }
-  
+
     if (contentType === PostType.SERIES) {
       modalActions.showAlert({
         title: i18next.t('series:menu_text_delete_series'),
@@ -266,7 +266,7 @@ const useMenuContent = (
     contentTargetType: SpecificNotificationType,
   ) => {
     modalActions.hideModal();
-    
+
     specifictNotiActions.editNotificationSettings(contentId, !isEnable, contentTargetType);
   };
 

@@ -436,7 +436,7 @@ const Notification = () => {
               const groupId = invitationData?.id || '';
               const targetType = invitationData?.type || '';
 
-                 if (targetType === InvitationTargetType.COMMUNITY && !!communityId) {
+              if (targetType === InvitationTargetType.COMMUNITY && !!communityId) {
                 rootNavigation.navigate(groupStack.communityDetail, { communityId });
               }
               if (targetType === InvitationTargetType.GROUP && !!groupId && communityId) {

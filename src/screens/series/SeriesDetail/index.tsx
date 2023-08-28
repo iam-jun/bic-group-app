@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { ExtendedTheme, useTheme, useIsFocused } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, View, FlatList, Keyboard } from 'react-native';
+import {
+  StyleSheet, View, FlatList, Keyboard,
+} from 'react-native';
 import { isEmpty } from 'lodash';
 import { Button } from '~/baseComponents';
 import Header from '~/beinComponents/Header';
