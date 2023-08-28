@@ -11,7 +11,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button } from '~/baseComponents';
 import Icon from '~/baseComponents/Icon';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Text from '~/baseComponents/Text';
 import { forgotPasswordStages } from '~/constants/authConstants';
 import { useRootNavigation } from '~/hooks/navigation';

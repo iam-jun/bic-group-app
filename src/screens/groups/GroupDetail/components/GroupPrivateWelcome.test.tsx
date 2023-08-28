@@ -9,6 +9,7 @@ import { communityDetailData } from '~/test/mock_data/communities';
 describe('GroupPrivateWelcome component', () => {
   const baseProps = {
     infoDetail: groupDetailData as unknown as IGroup,
+    groupId: groupDetailData.group.id,
     isMember: false,
     community: communityDetailData,
     onScroll: jest.fn(),
@@ -22,7 +23,7 @@ describe('GroupPrivateWelcome component', () => {
 
   it('renders GroupAboutContent component correctly', () => {
     const wrapper = renderWithRedux(<GroupPrivateWelcome {...baseProps} />);
-    const component = wrapper.getByTestId('about_content');
+    const component = wrapper.queryByTestId('about_content_private');
     expect(component).toBeDefined();
   });
 });

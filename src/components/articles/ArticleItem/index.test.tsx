@@ -1,10 +1,8 @@
 import React from 'react';
 
-import { act } from 'react-test-renderer';
 import {
   createTestStore,
   fireEvent,
-  renderHook,
   renderWithRedux,
 } from '~/test/testUtils';
 import { IPost } from '~/interfaces/IPost';
@@ -15,7 +13,6 @@ import * as navigationHook from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import { mockTagsInArticle } from '~/test/mock_data/tags';
-import useCommunitiesStore from '~/store/entities/communities';
 
 describe('ArticleItem Component', () => {
   const state = { ...initialState };
@@ -109,20 +106,10 @@ describe('ArticleItem Component', () => {
 
   it('should navigate to tag detail', () => {
     const tagData = mockTagsInArticle[0];
-    let communityId = '';
 
     const navigate = jest.fn();
     const rootNavigation = { navigate };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
-
-    jest.useFakeTimers();
-    const { result } = renderHook(() => useCommunitiesStore((state) => state));
-    act(() => {
-      communityId = result.current.currentCommunityId;
-    });
-    act(() => {
-      jest.runAllTimers();
-    });
 
     const store = createTestStore({ ...initialState });
     const wrapper = renderWithRedux(<ArticleItem isLite data={article} />, store);
@@ -130,6 +117,6 @@ describe('ArticleItem Component', () => {
 
     expect(tagItem).not.toBeNull();
     fireEvent.press(tagItem);
-    expect(navigate).toBeCalledWith(tagsStack.tagDetail, { tagData, communityId });
+    expect(navigate).toBeCalledWith(tagsStack.tagDetail, { tagData });
   });
 });

@@ -226,6 +226,7 @@ import { faUsersMedical as faUsersMedicalSolid } from '@fortawesome/pro-solid-sv
 import { faSquareList as faSquareListSolid } from '@fortawesome/pro-solid-svg-icons/faSquareList';
 import { faCaretDown as faCaretDownSolid } from '@fortawesome/pro-solid-svg-icons/faCaretDown';
 import { faCaretRight as faCaretRightSolid } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
+import { faUnlock as faUnlockSolid } from '@fortawesome/pro-solid-svg-icons/faUnlock';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -472,6 +473,7 @@ export const initFontAwesomeIcon = () => {
     faSquareListSolid,
     faCaretDownSolid,
     faCaretRightSolid,
+    faUnlockSolid,
   );
 };
 
@@ -693,16 +695,17 @@ export const fontAwesomeIcons = {
   ChevronDown: 'fa-regular fa-chevron-down',
   ChevronUp: 'fa-regular fa-chevron-up',
   BadgeCheck: 'fa-solid fa-badge-check',
-  ChevronRight: 'fa-regular fa-chevron-right',
   At: 'fa-regular fa-at',
   ThumbsUp: 'fa-regular fa-thumbs-up',
   Grid2: 'fa-regular fa-grid-2',
   Window: 'fa-regular fa-window',
   MemoCircleInfoSolid: 'fa-solid fa-memo-circle-info',
+  ChevronRight: 'fa-regular fa-chevron-right',
   UsersMedicalSolid: 'fa-solid fa-users-medical',
   SquareListSolid: 'fa-solid fa-square-list',
   CaretDownSolid: 'fa-solid fa-caret-down',
   CaretRightSolid: 'fa-solid fa-caret-right',
+  UnlockSolid: 'fa-solid fa-unlock',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

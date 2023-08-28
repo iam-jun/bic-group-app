@@ -7,7 +7,7 @@ import { StyleSheet } from 'react-native';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Header from '~/beinComponents/Header';
 import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import { ArticleFooter } from '~/components/articles';
 import ArticleWebview, {
   ArticleWebviewRef,
@@ -54,7 +54,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
   const [initIndex, setInitIndex] = useState(0);
 
   const {
-    content, title, summary, coverMedia, createdAt, audience, wordCount,
+    content, title, summary, coverMedia, publishedAt, audience, wordCount,
     series, categories, actor, setting, reactionsCount, commentsCount, ownerReactions, tags,
   } = data;
 
@@ -62,6 +62,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
 
   const seriesIds = series?.map((item) => item.id) || [];
 
+  // for publish article use publishedAt
   const initScript = {
     type: 'initView',
     payload: {
@@ -69,7 +70,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
       title,
       summary,
       coverUrl: coverMedia?.url,
-      createdAt,
+      time: publishedAt,
       audience,
       series,
       categories,

@@ -1,6 +1,5 @@
 import { ISelectAudienceState } from '~/components/SelectAudience/store';
 import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
-import { ICodePushState } from '~/store/codePush';
 import { INetworkState } from '~/store/network';
 import { IPostsState } from './entities/posts';
 import ICommentsState from '~/store/entities/comments/Interface';
@@ -57,9 +56,11 @@ import { ITermState } from '~/components/TermsModal/store';
 import { IDraftContentsState } from '~/screens/YourContent/components/Draft/DraftContents/store';
 import { IPublishState } from '~/screens/YourContent/components/Publish/store';
 import { IUserBadgesState } from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
+import { IPersonalInfoVisibilityState } from '~/screens/Menu/AccountSettings/PrivacyCenter/store';
 import { IMembershipPolicySettingsState } from '~/screens/groups/MembershipPolicySettings/store';
 import { IPreviewJoinableGroupState } from '~/components/PreviewJoinableGroup/store';
 import { INotiSettingsStore } from '~/screens/Notification/NotiSettings/store';
+import { IAdvancedNotiSettingsStore } from '~/screens/Notification/AdvancedSettings/store';
 
 export interface BicStore {
   entities: {
@@ -158,6 +159,9 @@ export interface BicStore {
       Blocking: {
         blockingStore: IBlockingState;
       };
+      PersonalInformationVisibility: {
+        personalInfoVisibilityStore: IPersonalInfoVisibilityState;
+      };
     };
     userBadge: IUserBadgesState;
   };
@@ -165,6 +169,7 @@ export interface BicStore {
   Notifications: {
     notificationStore: INotificationsState;
     INotiSettingsStore: INotiSettingsStore;
+    IAdvancedNotiSettingsStore: IAdvancedNotiSettingsStore;
   };
   Draft: {
     DraftArticle: {
@@ -189,7 +194,6 @@ export interface BicStore {
   // others
   chat: IChatState;
   giphy: IGiphyState;
-  codePush: ICodePushState;
   myPermissions: IMyPermissionsState;
   network: INetworkState;
   tags: ITagsState;

@@ -11,7 +11,7 @@ const scheduleArticle = (set, get) => async () => {
     }, 'scheduleArticle');
 
     const { schedule, data }: ICreateArticleState = get();
-    await streamApi.scheduleArticle(data.id, schedule.publishedAt);
+    await streamApi.scheduleArticle(data.id, schedule.scheduledAt);
 
     set((state: ICreateArticleState) => {
       state.schedule.isSubmiting = false;

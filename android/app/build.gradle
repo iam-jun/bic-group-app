@@ -98,7 +98,6 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
-apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 apply from: "../../node_modules/@sentry/react-native/sentry.gradle"
 
 /**
@@ -169,7 +168,7 @@ android {
         applicationId project.env.get("APP_ID")
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 32
+        versionCode 35
         versionName project.env.get("APP_VERSION")
         testBuildType System.getProperty('testBuildType', 'debug')  // This will later be used to control the test apk build type
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'

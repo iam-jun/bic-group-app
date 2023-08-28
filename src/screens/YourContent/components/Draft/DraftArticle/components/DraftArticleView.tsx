@@ -27,7 +27,6 @@ import { PostImportant } from '~/components/posts';
 import useModalStore from '~/store/modal';
 import TagsView from '~/components/TagsView';
 import { ITag } from '~/interfaces/ITag';
-import useCommunitiesStore from '~/store/entities/communities';
 import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 
 interface DraftViewProps {
@@ -115,8 +114,7 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
   };
 
   const goToTagDetail = (tagData: ITag) => {
-    const communityId = useCommunitiesStore.getState().currentCommunityId;
-    rootNavigation.navigate(tagsStack.tagDetail, { tagData, communityId });
+    rootNavigation.navigate(tagsStack.tagDetail, { tagData });
   };
 
   const renderImportant = () => (

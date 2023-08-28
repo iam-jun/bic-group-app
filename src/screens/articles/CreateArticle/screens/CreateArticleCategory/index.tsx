@@ -68,7 +68,7 @@ const CreateArticleCategory: FC<CreateArticleProps> = ({ route }: CreateArticleP
   };
 
   const renderItem = ({ item }) => {
-    const isChecked = selectedCategories.findIndex((selected) => selected.id === item.id) > -1;
+    const isChecked = selectedCategories?.findIndex((selected) => selected.id === item.id) > -1;
     return (
       <ItemCheckbox
         data={item}
