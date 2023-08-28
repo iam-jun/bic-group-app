@@ -141,7 +141,7 @@ const SeriesDetail = ({ route }: any) => {
         <MenuContent
           data={series}
           isActor={isActor}
-          isFromDetail={true}
+          isFromDetail
           contentType={PostType.SERIES}
           handleConfirmDeleteSeries={handleConfirmDelete}
         />
