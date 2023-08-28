@@ -38,7 +38,7 @@ const updateData = (set, get) => (
 ) => {
   try {
     if (!postId) return;
-    const data:IPostsInProgressState = get();
+    const data: IPostsInProgressState = get();
     const { total = 0, data: posts = [] } = data;
 
     const newPosts = posts.filter?.((p: any) => p?.id !== postId);
