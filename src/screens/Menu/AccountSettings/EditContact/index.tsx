@@ -42,7 +42,7 @@ const EditContact = () => {
   const [cityState, setCityState] = useState<string>(city);
 
   const useFormData = useForm();
-  const phoneNumber = useWatch({ control: useFormData.control, name: PHONE_INPUT_NAME }) || phone;
+  const phoneNumber = useWatch({ control: useFormData.control, name: PHONE_INPUT_NAME });
   const { errors } = useFormState({ control: useFormData.control, name: PHONE_INPUT_NAME });
 
   const navigateBack = () => {
@@ -56,7 +56,7 @@ const EditContact = () => {
     actions.editMyProfile({
       data: {
         id,
-        phone: phoneNumber,
+        phone: phoneNumber || null,
         countryCode: phoneNumber ? countryCodeState : null,
         city: cityState,
       },
@@ -83,9 +83,13 @@ const EditContact = () => {
     countryCodeState: string,
     cityState: string,
     phoneNumber: string,
-  ) => countryCode !== countryCodeState
-    || city !== cityState
-    || (phone !== phoneNumber && !errors?.phoneNumber?.message);
+  ) => {
+    const isPhoneNumberValid = !errors?.phoneNumber?.message && (
+      (phone === null && phoneNumber?.trim?.()?.length > 6)
+    || (phone?.length > 0 && phone !== phoneNumber
+      && (phoneNumber?.trim?.()?.length > 6 || phoneNumber?.trim?.()?.length === 0)));
+    return countryCode !== countryCodeState || city !== cityState || isPhoneNumberValid;
+  };
 
   const isValid = checkIsValid(
     countryCodeState,

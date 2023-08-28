@@ -29,6 +29,7 @@ import dimension from '~/theme/dimension';
 import useMenuController from '~/screens/Menu/store';
 import useUserProfileStore from '../../UserProfile/store';
 import Button from '~/beinComponents/Button';
+import useCommonController from '~/screens/store';
 
 const AddWork = () => {
   const theme: ExtendedTheme = useTheme();
@@ -42,6 +43,8 @@ const AddWork = () => {
 
   const selectedWorkItem = useMenuController((state) => state.selectedWorkItem);
   const userProfileActions = useUserProfileStore((state) => state.actions);
+  const myProfile = useCommonController((state) => state.myProfile);
+  const myProfileActions = useCommonController((state) => state.actions);
 
   const {
     id,
@@ -121,6 +124,8 @@ const AddWork = () => {
   }, [startDateValue, endDateValue]);
 
   const navigateBack = () => {
+    userProfileActions.getWorkExperience(myProfile.id);
+    myProfileActions.getMyProfile({ userId: myProfile.id, silentLoading: true });
     Keyboard.dismiss();
     if (rootNavigation.canGoBack) {
       rootNavigation.goBack();
