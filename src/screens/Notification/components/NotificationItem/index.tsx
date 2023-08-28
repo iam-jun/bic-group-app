@@ -37,6 +37,7 @@ const NOT_SHOW_AVATAR_LIST = [
   NOTIFICATION_TYPE.APPROVED_KYC,
   NOTIFICATION_TYPE.CHANGE_LOGS,
   NOTIFICATION_TYPE.CHANGE_USER_BADGE_COLLECTION,
+  NOTIFICATION_TYPE.GROUP_SET_DEFAULT_INVITATION,
 ];
 
 const SHOW_INVITATION_BUTTONS = [
@@ -91,7 +92,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   if (!id || isEmpty(itemValue)) return null;
 
   const {
-    isRead, updatedAt, extra, actorCount, deleted,
+    isRead, updatedAt, extra, actorCount = 0, deleted,
   }: any = itemValue || {};
 
   if (isEmpty(itemValue) || Boolean(deleted)) return null;

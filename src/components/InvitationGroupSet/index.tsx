@@ -32,7 +32,7 @@ const InvitationGroupSet = ({
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
 
-  const { fullname } = inviter || {};
+  const { fullname = '' } = inviter || {};
 
   const data = useGroupSetInvitationsStore((state) => state.data);
   const loading = useGroupSetInvitationsStore((state) => state.loading);
@@ -74,7 +74,10 @@ const InvitationGroupSet = ({
     );
   };
 
-  const textInvited = `${t('user:text_invited_to_join')} ${totalGroups} ${t('post:label_groups').toLowerCase()}`;
+  const shouldShowInviter = Boolean(inviter?.id);
+  const textInvited = shouldShowInviter
+    ? `${t('user:text_has_invited_you_to_join')} ${totalGroups} ${t('post:label_groups').toLowerCase()}`
+    : `${t('user:text_you_have_been_invited_to')} ${totalGroups} ${t('post:label_groups').toLowerCase()}`;
 
   return (
     <View style={[styles.container, !isFullScreen && styles.notFullContainer]}>
@@ -85,12 +88,20 @@ const InvitationGroupSet = ({
       </Text.H3>
       )}
       <View style={[styles.headerContainer]}>
-        <Text.SubtitleM>
-          {`${fullname} `}
-          <Text.BodyM>
-            {` ${textInvited}`}
-          </Text.BodyM>
-        </Text.SubtitleM>
+        {Boolean(shouldShowInviter)
+          ? (
+            <Text.SubtitleM>
+              {`${fullname} `}
+              <Text.BodyM>
+                {` ${textInvited}`}
+              </Text.BodyM>
+            </Text.SubtitleM>
+          )
+          : (
+            <Text.BodyM>
+              {textInvited}
+            </Text.BodyM>
+          )}
       </View>
       <GroupList
         mode="tree"

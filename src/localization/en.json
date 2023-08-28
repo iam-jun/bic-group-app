@@ -1562,7 +1562,9 @@
     "text_default_group_set": "You have been invited to a",
     "text_as_you_join": "as you join",
     "text_no_invitations_found": "No invitations found",
-    "text_invitation_detail": "Invitation Details"
+    "text_invitation_detail": "Invitation Details",
+    "text_has_invited_you_to_join": "has invited you to join",
+    "text_you_have_been_invited_to": "You have been invited to"
   },
   "previewJoinableGroup": {
     "title": "Join all outer groups?",

@@ -4,7 +4,9 @@ import { View, StyleSheet } from 'react-native';
 import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
 import useMyInvitationsStore from '../store';
-import { IInvitation, IInvitationsTargetType, ITargetInfo } from '~/interfaces/IInvitation';
+import {
+  IInvitation, IInvitationsTargetType, IInviter, ITargetInfo,
+} from '~/interfaces/IInvitation';
 import mainTabStack from '~/router/navigator/MainStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import { Avatar, Button } from '~/baseComponents';
@@ -54,7 +56,6 @@ const InvitationItem = ({ id, groupedId }: Props) => {
     name, isRootGroup, id: groupId,
   } = targetInfo || {};
   const isGroupSet = targetType === IInvitationsTargetType.GROUP_SET;
-  const isDefaultGroupSet = targetInfo?.isDefaultGroupSet;
 
   const onPressTarget = (textName: string) => {
     if (textName === name) {
@@ -105,8 +106,8 @@ const InvitationItem = ({ id, groupedId }: Props) => {
   if (isHideItem) return null;
 
   const textColor = isDeactivated ? colors.grey40 : colors.neutral60;
-  const textInvited = t(`${getInvitatedText(targetType, targetInfo)}`);
-  const shouldHideAvatarInvitor = shouldHideAvatar(targetType, targetInfo);
+  const textInvited = t(`${getInvitatedText({ targetType, targetInfo, inviter })}`);
+  const shouldHideAvatarInvitor = shouldHideAvatar({ targetType, targetInfo, inviter });
   const textName = isGroupSet ? t('user:text_set_of_groups') : name;
 
   return (
@@ -143,7 +144,7 @@ const InvitationItem = ({ id, groupedId }: Props) => {
             >
               {` ${textName}`}
             </Text.SubtitleM>
-            {Boolean(isDefaultGroupSet) && (
+            {Boolean(shouldHideAvatarInvitor) && (
               <>
                 <Text.BodyM>
                   {` ${t('user:text_as_you_join')} `}
@@ -171,19 +172,22 @@ const InvitationItem = ({ id, groupedId }: Props) => {
   );
 };
 
-const getInvitatedText = (targetType: IInvitationsTargetType, targetInfo: ITargetInfo) => {
+const getInvitatedText = ({
+  targetType, targetInfo, inviter,
+}:{targetType: IInvitationsTargetType, targetInfo: ITargetInfo, inviter: IInviter}) => {
   if (!targetType || !targetInfo) return '';
   if (targetType === IInvitationsTargetType.GROUP_SET) {
-    if (targetInfo?.isDefaultGroupSet) return 'user:text_default_group_set';
+    if (targetInfo?.isDefaultGroupSet && !inviter?.id) return 'user:text_default_group_set';
     return 'user:text_invited_you_to_join_a';
   }
   return 'user:text_invited_to_join';
 };
 
-const shouldHideAvatar = (
-  targetType: IInvitationsTargetType,
-  targetInfo: ITargetInfo,
-) => targetType === IInvitationsTargetType.GROUP_SET && targetInfo?.isDefaultGroupSet;
+const shouldHideAvatar = ({
+  targetType, targetInfo, inviter,
+}:{targetType: IInvitationsTargetType, targetInfo: ITargetInfo, inviter: IInviter}) => (
+  targetType === IInvitationsTargetType.GROUP_SET && targetInfo?.isDefaultGroupSet && !inviter?.id
+);
 
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;

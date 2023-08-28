@@ -20,7 +20,7 @@ export interface IGroupSetInvitationsStore extends IBaseState, IFetchingState {
 const initialState: InitStateType<IGroupSetInvitationsStore> = {
   data: [],
   loading: false,
-  totalGroups: 1,
+  totalGroups: 0,
   isRefresing: false,
 };
 

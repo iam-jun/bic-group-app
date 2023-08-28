@@ -1503,7 +1503,9 @@
     "text_default_group_set": "YBạn đã được mời đến một",
     "text_as_you_join": "khi bạn tham gia",
     "text_no_invitations_found": "Không tìm thấy lời mời nào",
-    "text_invitation_detail": "Chi tiết lời mời"
+    "text_invitation_detail": "Chi tiết lời mời",
+    "text_has_invited_you_to_join": "đã mời bạn tham gia",
+    "text_you_have_been_invited_to": "Bạn đã được mời đến"
   },
   "previewJoinableGroup": {
     "title": "Tham gia tất cả các nhóm bên ngoài?",
