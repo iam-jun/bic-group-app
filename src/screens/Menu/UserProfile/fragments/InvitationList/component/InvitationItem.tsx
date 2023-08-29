@@ -53,12 +53,12 @@ const InvitationItem = ({ id, groupedId }: Props) => {
 
   const { fullname, avatar, isDeactivated } = inviter || {};
   const {
-    name, isRootGroup, id: groupId,
+    name, isRootGroup, id: groupId, communityName,
   } = targetInfo || {};
   const isGroupSet = targetType === IInvitationsTargetType.GROUP_SET;
 
   const onPressTarget = (textName: string) => {
-    if (textName === name) {
+    if (textName === name || textName === communityName) {
       if (!isRootGroup && groupId && communityId) {
         rootNavigation.navigate(
           groupStack.groupDetail, {
@@ -152,9 +152,9 @@ const InvitationItem = ({ id, groupedId }: Props) => {
                 <Text.SubtitleM
                   color={colors.neutral60}
                   testID="invitation_item.target_name"
-                  onPress={() => onPressTarget(name)}
+                  onPress={() => onPressTarget(communityName)}
                 >
-                  {` ${name}`}
+                  {` ${communityName}`}
                 </Text.SubtitleM>
               </>
             )}

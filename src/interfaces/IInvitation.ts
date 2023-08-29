@@ -10,6 +10,7 @@ export interface ITargetInfo {
     id: string;
     name: string;
     isRootGroup: boolean;
+    communityName: string;
 }
 
 export enum IInvitationsStatus {
