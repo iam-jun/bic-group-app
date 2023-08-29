@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash';
 import notificationApi from '~/api/NotificationApi';
 import { INotificationItemMenuStore } from '../index';
 import showToast from '~/store/helper/showToast';
@@ -24,6 +25,11 @@ const editNotificationSettings = (set, get) => async (
 
     if (contentTargetType !== SpecificNotificationType.group) {
       const menu = useMenuStore.getState().menus?.[targetId]?.data || {};
+      // in the first time, menu is empty so we need to init it
+      if (isEmpty(menu)) {
+        useMenuStore.getState().actions.getMenuContent(targetId);
+      }
+
       const newMenu = {
         ...menu,
         isEnableNotifications: enable,
