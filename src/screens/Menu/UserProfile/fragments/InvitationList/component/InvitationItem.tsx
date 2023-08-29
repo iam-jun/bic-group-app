@@ -107,7 +107,7 @@ const InvitationItem = ({ id, groupedId }: Props) => {
 
   const textColor = isDeactivated ? colors.grey40 : colors.neutral60;
   const textInvited = t(`${getInvitatedText({ targetType, targetInfo, inviter })}`);
-  const shouldHideAvatarInvitor = shouldHideAvatar({ targetType, targetInfo, inviter });
+  const shouldHideAvatarInvitor = shouldHideAvatar({ targetType, inviter });
   const textName = isGroupSet ? t('user:text_set_of_groups') : name;
 
   return (
@@ -177,16 +177,16 @@ const getInvitatedText = ({
 }:{targetType: IInvitationsTargetType, targetInfo: ITargetInfo, inviter: IInviter}) => {
   if (!targetType || !targetInfo) return '';
   if (targetType === IInvitationsTargetType.GROUP_SET) {
-    if (targetInfo?.isDefaultGroupSet && !inviter?.id) return 'user:text_default_group_set';
+    if (!inviter?.id) return 'user:text_default_group_set';
     return 'user:text_invited_you_to_join_a';
   }
   return 'user:text_invited_to_join';
 };
 
 const shouldHideAvatar = ({
-  targetType, targetInfo, inviter,
-}:{targetType: IInvitationsTargetType, targetInfo: ITargetInfo, inviter: IInviter}) => (
-  targetType === IInvitationsTargetType.GROUP_SET && targetInfo?.isDefaultGroupSet && !inviter?.id
+  targetType, inviter,
+}:{targetType: IInvitationsTargetType, inviter: IInviter}) => (
+  targetType === IInvitationsTargetType.GROUP_SET && !inviter?.id
 );
 
 const createStyles = (theme: ExtendedTheme) => {

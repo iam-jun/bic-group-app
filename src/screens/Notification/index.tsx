@@ -2,6 +2,7 @@ import { useIsFocused } from '@react-navigation/native';
 
 import i18next from 'i18next';
 import React, {
+  FC,
   useCallback, useEffect, useRef, useState,
 } from 'react';
 import { StyleSheet } from 'react-native';
@@ -41,7 +42,17 @@ const NOT_SHOW_DELETE_OPTION_LIST = [
   NOTIFICATION_TYPE.CHANGE_LOGS,
 ];
 
-const Notification = () => {
+export interface NotificationProps {
+  route?: {
+    params?: {
+      notificationData?: any;
+    };
+  };
+}
+
+const Notification: FC<NotificationProps> = ({ route }: NotificationProps) => {
+  const notificationData = route?.params?.notificationData || {};
+
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
   const { showToast, clearToast } = useModalStore((state) => state.actions);
 
@@ -62,6 +73,36 @@ const Notification = () => {
       }
     }, [isFocused],
   );
+
+  useEffect(() => {
+    if (notificationData?.type) {
+      switch (notificationData.type) {
+        case NOTIFICATION_TYPE.GROUP_INVITATION_FEEDBACK: {
+          const { invitationId, target } = notificationData || {};
+          const targetType = target?.type;
+          if (targetType === InvitationTargetType.GROUP_SET
+                 || targetType === InvitationTargetType.GROUP_SET_DEFAULT) {
+            groupSetActions.getGroups(invitationId);
+            modalActions.showModal({
+              isOpen: true,
+              isFullScreen: true,
+              headerFullScreenProps: { title: t('common:btn_go_back') },
+              ContentComponent: <InvitationGroupSet
+                isFullScreen
+                isHideInviter
+                inviter={undefined}
+                invitaionId={invitationId}
+              />,
+            });
+          }
+          break;
+        }
+
+        default:
+          break;
+      }
+    }
+  }, [notificationData]);
 
   const onPressFilterItem = (index: number) => {
     setActiveIndex(index);
@@ -517,6 +558,23 @@ const Notification = () => {
                 rootNavigation.navigate(groupStack.groupMembers, {
                   groupId,
                   isMember: true,
+                });
+              }
+
+              if (targetType === InvitationTargetType.GROUP_SET
+                 || targetType === InvitationTargetType.GROUP_SET_DEFAULT) {
+                const invitationId = act?.invitation?.invitationId || '';
+                groupSetActions.getGroups(invitationId);
+                modalActions.showModal({
+                  isOpen: true,
+                  isFullScreen: true,
+                  headerFullScreenProps: { title: t('common:btn_go_back') },
+                  ContentComponent: <InvitationGroupSet
+                    isFullScreen
+                    isHideInviter
+                    inviter={undefined}
+                    invitaionId={invitationId}
+                  />,
                 });
               }
               break;

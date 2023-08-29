@@ -31,6 +31,7 @@ export interface IMyInvitationsStore extends IBaseState, IFetchingState {
 }
 
 const initialState = {
+  loading: false,
   requestingsAccept: {},
   requestingsDecline: {},
   requestSent: {},

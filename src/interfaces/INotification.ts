@@ -77,4 +77,6 @@ export interface INotiSettings {
 export enum InvitationTargetType {
   GROUP = 'GROUP',
   COMMUNITY = 'COMMUNITY',
+  GROUP_SET = 'GROUP_SET',
+  GROUP_SET_DEFAULT = 'GROUP_SET_DEFAULT',
 }

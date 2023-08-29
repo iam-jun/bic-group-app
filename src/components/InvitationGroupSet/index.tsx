@@ -17,12 +17,14 @@ import useModalStore from '~/store/modal';
 
 interface Props {
    isFullScreen?: boolean;
+   isHideInviter?: boolean;
    inviter: IInviter;
    invitaionId: string;
 }
 
 const InvitationGroupSet = ({
   isFullScreen = false,
+  isHideInviter = false,
   inviter,
   invitaionId,
 }: Props) => {
@@ -87,6 +89,8 @@ const InvitationGroupSet = ({
         user:text_invitation_detail
       </Text.H3>
       )}
+      {!Boolean(isHideInviter)
+      && (
       <View style={[styles.headerContainer]}>
         {Boolean(shouldShowInviter)
           ? (
@@ -103,6 +107,7 @@ const InvitationGroupSet = ({
             </Text.BodyM>
           )}
       </View>
+      )}
       <GroupList
         mode="tree"
         resetOnHide={false}

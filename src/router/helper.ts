@@ -388,6 +388,10 @@ export const getScreenAndParams = (data: {
       if (targetType === InvitationTargetType.GROUP && !!groupId) {
         return navigateGroupMembers({ groupId, communityId });
       }
+
+      if (targetType === InvitationTargetType.GROUP_SET || targetType === InvitationTargetType.GROUP_SET_DEFAULT) {
+        return { screen: mainStack.notification, params: { notificationData: data } };
+      }
       break;
     }
 
