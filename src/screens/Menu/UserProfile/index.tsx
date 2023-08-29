@@ -163,9 +163,6 @@ const UserProfile = (props: any) => {
     </View>
   );
 
-  if (error) return <NoUserFound />;
-  // TODO: to handle more error cases in the future
-
   const renderContent = () => {
     if (selectedIndex === 0) {
       return <UserInfo isCurrentUser={isCurrentUser} />;
@@ -201,6 +198,9 @@ const UserProfile = (props: any) => {
       onPress={() => onPressTab(index)}
     />
   );
+
+  if (error) return <NoUserFound />;
+  // TODO: to handle more error cases in the future
 
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>

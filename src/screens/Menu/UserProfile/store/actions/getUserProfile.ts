@@ -11,6 +11,7 @@ const getUserProfile
       if (!silentLoading) {
         set((state: IUserProfileState) => {
           state.loading = true;
+          state.error = null;
         }, 'getUserProfile');
       }
 
