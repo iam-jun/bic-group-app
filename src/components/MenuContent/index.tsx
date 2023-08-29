@@ -47,8 +47,8 @@ const MenuContent: React.FC<MenuContentProps> = ({
     (state) => state.actions,
   );
   const actions = useMenuStore((state) => state.actions);
-  const isLoadingGetMenu = useMenuStore((state) => state.isLoadingGetMenu);
-  const menu = useMenuStore((state) => state.menus[contentId]);
+  const isLoadingGetMenu = useMenuStore((state) => state.menus[contentId]?.loading);
+  const menu = useMenuStore((state) => state.menus[contentId]?.data);
   const {
     onPressEdit,
     onPressEditSettings,
@@ -112,7 +112,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
   const titleDeleteContent = getTitleContent(contentType, MENU_KEYS.DELETE);
 
   useEffect(() => {
-    if (isEmpty(menu) || !menu) {
+    if (isEmpty(menu)) {
       actions.getMenuContent(contentId);
     }
   }, [contentId]);
@@ -292,7 +292,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
   );
 
   const renderContent = () => {
-    if (isLoadingGetMenu || !menu) {
+    if (isLoadingGetMenu || isEmpty(menu)) {
       return (
         <View style={styles.loadingView}>
           <CircleSpinner size={24} />
@@ -301,7 +301,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
     }
 
     // render default menu is copy link whenever api error or no data
-    if (!isLoadingGetMenu && !menu) {
+    if (!isLoadingGetMenu && isEmpty(menu)) {
       return renderMenuItem({
         keyMenu: MENU_KEYS.COPY_LINK,
         leftIcon: 'LinkHorizontal',

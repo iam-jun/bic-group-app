@@ -23,7 +23,7 @@ const editNotificationSettings = (set, get) => async (
     const response = await notificationApi.editSpecificNotificationSettings(targetId, data);
 
     if (contentTargetType !== SpecificNotificationType.group) {
-      const menu = useMenuStore.getState().menus?.[targetId] || {};
+      const menu = useMenuStore.getState().menus?.[targetId]?.data || {};
       const newMenu = {
         ...menu,
         isEnableNotifications: enable,

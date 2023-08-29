@@ -14,7 +14,7 @@ const getMenuContent = (set, get) => async (contentId: string) => {
 
   try {
     set((state: IMenuState) => {
-      state.isLoadingGetMenu = true;
+      state.menus[contentId].loading = true;
     }, 'getMenuContent');
 
     const response = await streamApi.getMenuContent(contentId);
@@ -25,11 +25,11 @@ const getMenuContent = (set, get) => async (contentId: string) => {
     }
 
     set((state: IMenuState) => {
-      state.isLoadingGetMenu = false;
+      state.menus[contentId].loading = false;
     }, 'getMenuContent success');
   } catch (error) {
     set((state: IMenuState) => {
-      state.isLoadingGetMenu = false;
+      state.menus[contentId].loading = false;
     }, 'getMenuContent fail');
     console.error('getMenuContent fail', error);
   }

@@ -4,9 +4,11 @@ import { IMenu } from '~/interfaces/IMenu';
 import getMenuContent from './actions/getMenuContent';
 
 export interface IMenuState extends IBaseState {
-  isLoadingGetMenu: boolean;
   menus: {
-    [contentId: string]: IMenu;
+    [contentId: string]: {
+      loading: boolean;
+      data: IMenu
+    };
   };
 
   actions: {
@@ -17,7 +19,6 @@ export interface IMenuState extends IBaseState {
 }
 
 const initState: InitStateType<IMenuState> = {
-  isLoadingGetMenu: true,
   menus: {},
 };
 
@@ -27,13 +28,13 @@ const menuStore = (set, get) => ({
   actions: {
     getMenuContent: getMenuContent(set, get),
     initMenuContent: (contentId: string) => {
-      set((state: IMenuState) => {
+      set((state) => {
         state.menus[contentId] = {};
       }, 'initMenuContent');
     },
     addOrUpdateMenus: (contentId: string, menu: IMenu) => {
       set((state: IMenuState) => {
-        state.menus[contentId] = menu;
+        state.menus[contentId].data = menu;
       }, 'addOrUpdateMenus');
     },
   },

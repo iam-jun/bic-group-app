@@ -10,7 +10,7 @@ const unsavePost = (_set, _get) => async (id: string, type: PostType) => {
   try {
     const repsonse = await streamApi.postUnsaveContent(id);
 
-    const menu = useMenuStore.getState().menus?.[id] || {};
+    const menu = useMenuStore.getState().menus?.[id]?.data || {};
     const newMenu = {
       ...menu,
       isSave: false,

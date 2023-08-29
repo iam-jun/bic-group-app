@@ -8,7 +8,7 @@ const savePost = (_set, _get) => async (id: string, _type: PostType) => {
   try {
     const response = await streamApi.postSaveContent(id);
 
-    const menu = useMenuStore.getState().menus?.[id] || {};
+    const menu = useMenuStore.getState().menus?.[id]?.data || {};
     const newMenu = {
       ...menu,
       isSave: true,
