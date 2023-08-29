@@ -4,6 +4,7 @@ import showToastError from '~/store/helper/showToastError';
 import { IGroupedInvitations, IMyInvitationsStore } from '../index';
 import groupApi from '~/api/GroupApi';
 import { IInvitation, IInvitationsStatus } from '~/interfaces/IInvitation';
+import appConfig from '~/configs/appConfig';
 
 const formatDate = (inputDate:string) => {
   const currentDate = moment();
@@ -49,16 +50,17 @@ const groupInvitationsByCreatedAt = (
 const getInvitations = (set, get) => async (isRefresh?: boolean) => {
   try {
     const {
-      groupedInvitations, currentInvitationIds, hasNextPage, loading,
+      groupedInvitations, currentInvitationIds, cursors, loading,
     }: IMyInvitationsStore = get();
-    if ((!hasNextPage && !isRefresh) || loading) return;
+    if (!isRefresh || loading) return;
 
     set((state: IMyInvitationsStore) => {
       state.loading = true;
     }, 'getInvitations');
 
     const payload = {
-      offset: isRefresh ? 0 : currentInvitationIds,
+      limit: appConfig.recordsPerPage,
+      cursor: isRefresh ? null : cursors?.next,
     };
 
     const response = await groupApi.getMyInvitations(payload);
@@ -79,7 +81,7 @@ const getInvitations = (set, get) => async (isRefresh?: boolean) => {
       state.groupedInvitations = newGroupedInvitations;
       state.currentInvitationIds = newCurrentInvitationIds;
       state.invitationData = { ...state.invitationData, ...newItems };
-      state.hasNextPage = meta.hasNextPage;
+      state.cursors = meta?.cursors;
     }, 'getInvitationsSuccess');
   } catch (err) {
     set((state: IMyInvitationsStore) => {

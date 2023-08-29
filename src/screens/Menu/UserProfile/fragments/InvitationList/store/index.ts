@@ -15,6 +15,10 @@ export interface IGroupedInvitations {
 }
 
 export interface IMyInvitationsStore extends IBaseState, IFetchingState {
+  cursors: {
+    next: string | null,
+    prev: string | null,
+  },
   groupedInvitations: IGroupedInvitations[];
   invitationData: {[id: string]: IInvitation};
   currentInvitationIds: number;
@@ -39,6 +43,10 @@ const initialState = {
   invitationData: {},
   hasNextPage: true,
   currentInvitationIds: 0,
+  cursors: {
+    next: null,
+    prev: null,
+  },
 };
 
 const myInvitationsStore = (set, get) => ({
