@@ -1,23 +1,25 @@
-import React from "react";
-import i18next from "i18next";
-import streamApi from "~/api/StreamApi";
-import { act, fireEvent, renderWithRedux, waitFor } from "~/test/testUtils";
-import MenuContent from ".";
-import useMenuStore from "~/store/entities/menus";
+import React from 'react';
+import i18next from 'i18next';
+import streamApi from '~/api/StreamApi';
+import {
+  act, fireEvent, renderWithRedux, waitFor,
+} from '~/test/testUtils';
+import MenuContent from '.';
+import useMenuStore from '~/store/entities/menus';
 import { postWithQuiz, articleWithQuiz, mockGenerateQuizResponse } from '~/test/mock_data/quiz';
 import { seriesDetail } from '~/test/mock_data/series';
 import { MENU_CONTENT } from '~/test/mock_data/menu';
-import { PostType } from "~/interfaces/IPost";
+import { PostType } from '~/interfaces/IPost';
 import * as navigationHook from '~/hooks/navigation';
-import homeStack from "~/router/navigator/MainStack/stacks/homeStack/stack";
-import articleStack from "~/router/navigator/MainStack/stacks/articleStack/stack";
-import seriesStack from "~/router/navigator/MainStack/stacks/series/stack";
-import useMyPermissionsStore from "~/store/permissions";
-import { PermissionKey } from "~/constants/permissionScheme";
-import useModalStore from "~/store/modal";
-import quizStack from "~/router/navigator/MainStack/stacks/quizStack/stack";
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
+import useMyPermissionsStore from '~/store/permissions';
+import { PermissionKey } from '~/constants/permissionScheme';
+import useModalStore from '~/store/modal';
+import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 
-describe("MenuContent component", () => {
+describe('MenuContent component', () => {
   const doMockPermissionsPost = () => {
     useMyPermissionsStore.setState((state) => ({
       ...state,
@@ -80,7 +82,7 @@ describe("MenuContent component", () => {
     }));
   };
 
-  it("renders correctly with type POST", () => {
+  it('renders correctly with type POST', () => {
     useMenuStore.setState((state) => {
       state.menus[postWithQuiz.data.id] = {
         loading: false,
@@ -92,17 +94,17 @@ describe("MenuContent component", () => {
 
     const rendered = renderWithRedux(
       <MenuContent
-        data={postWithQuiz.data as any} 
+        data={postWithQuiz.data as any}
         contentType={PostType.POST}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
-    const content = rendered.getByTestId("menu_content.content");
+    const content = rendered.getByTestId('menu_content.content');
     expect(content).toBeDefined();
   });
 
-  it("renders correctly with type ARTICLE", () => {
+  it('renders correctly with type ARTICLE', () => {
     useMenuStore.setState((state) => {
       state.menus[postWithQuiz.data.id] = {
         loading: false,
@@ -114,17 +116,17 @@ describe("MenuContent component", () => {
 
     const rendered = renderWithRedux(
       <MenuContent
-        data={postWithQuiz.data as any} 
+        data={postWithQuiz.data as any}
         contentType={PostType.ARTICLE}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
-    const content = rendered.getByTestId("menu_content.content");
+    const content = rendered.getByTestId('menu_content.content');
     expect(content).toBeDefined();
   });
 
-  it("renders correctly with type SERIES", () => {
+  it('renders correctly with type SERIES', () => {
     useMenuStore.setState((state) => {
       state.menus[postWithQuiz.data.id] = {
         loading: false,
@@ -136,37 +138,37 @@ describe("MenuContent component", () => {
 
     const rendered = renderWithRedux(
       <MenuContent
-        data={postWithQuiz.data as any} 
+        data={postWithQuiz.data as any}
         contentType={PostType.SERIES}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
-    const content = rendered.getByTestId("menu_content.content");
+    const content = rendered.getByTestId('menu_content.content');
     expect(content).toBeDefined();
   });
 
-  it("should call getMenuContent success", () => {
+  it('should call getMenuContent success', () => {
     jest.useFakeTimers();
 
     const response = {
-      code: "api.ok",
+      code: 'api.ok',
       data: MENU_CONTENT,
       meta: {
-       message: "Get menu settings successfully",
+        message: 'Get menu settings successfully',
       },
-    }
+    };
 
     const spyGetMenuContent = jest.spyOn(streamApi, 'getMenuContent').mockImplementation(
       () => Promise.resolve(response),
     );
-    
+
     renderWithRedux(
       <MenuContent
-        data={postWithQuiz.data as any} 
+        data={postWithQuiz.data as any}
         contentType={PostType.POST}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
     act(() => {
@@ -178,7 +180,7 @@ describe("MenuContent component", () => {
     expect(useMenuStore.getState().menus[postWithQuiz.data.id].data).toEqual(MENU_CONTENT);
   });
 
-  it("should call getMenuContent error", () => {
+  it('should call getMenuContent error', () => {
     jest.useFakeTimers();
 
     const error = 'internal error';
@@ -186,13 +188,13 @@ describe("MenuContent component", () => {
     const spyGetMenuContent = jest.spyOn(streamApi, 'getMenuContent').mockImplementation(
       () => Promise.reject(error) as any,
     );
-    
+
     renderWithRedux(
       <MenuContent
-        data={postWithQuiz.data as any} 
+        data={postWithQuiz.data as any}
         contentType={PostType.POST}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
     act(() => {
@@ -204,7 +206,7 @@ describe("MenuContent component", () => {
     expect(useMenuStore.getState().menus[postWithQuiz.data.id].data).toBeFalsy();
   });
 
-  it("should not call getMenuContent when data empty", () => {
+  it('should not call getMenuContent when data empty', () => {
     jest.useFakeTimers();
 
     const error = 'internal error';
@@ -212,13 +214,13 @@ describe("MenuContent component", () => {
     const spyGetMenuContent = jest.spyOn(streamApi, 'getMenuContent').mockImplementation(
       () => Promise.reject(error) as any,
     );
-    
+
     renderWithRedux(
       <MenuContent
-        data={{} as any} 
+        data={{} as any}
         contentType={PostType.POST}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
     act(() => {
@@ -229,7 +231,7 @@ describe("MenuContent component", () => {
     expect(spyGetMenuContent).not.toBeCalled();
   });
 
-  it("should navigate EditPost", () => {
+  it('should navigate EditPost', () => {
     const navigate = jest.fn();
     const rootNavigation = { navigate };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(
@@ -247,13 +249,13 @@ describe("MenuContent component", () => {
 
     const rendered = renderWithRedux(
       <MenuContent
-        data={postWithQuiz.data as any} 
+        data={postWithQuiz.data as any}
         contentType={PostType.POST}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
-    const editMenu = rendered.getByTestId("menu_item_canEdit");  
+    const editMenu = rendered.getByTestId('menu_item_canEdit');
 
     expect(editMenu).toBeDefined();
     fireEvent.press(editMenu);
@@ -263,7 +265,7 @@ describe("MenuContent component", () => {
     });
   });
 
-  it("should navigate EditArticle", () => {
+  it('should navigate EditArticle', () => {
     const navigate = jest.fn();
     const rootNavigation = { navigate };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(
@@ -281,13 +283,13 @@ describe("MenuContent component", () => {
 
     const rendered = renderWithRedux(
       <MenuContent
-        data={articleWithQuiz.data as any} 
+        data={articleWithQuiz.data as any}
         contentType={PostType.ARTICLE}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
-    const editMenu = rendered.getByTestId("menu_item_canEdit");  
+    const editMenu = rendered.getByTestId('menu_item_canEdit');
 
     expect(editMenu).toBeDefined();
     fireEvent.press(editMenu);
@@ -296,7 +298,7 @@ describe("MenuContent component", () => {
     });
   });
 
-  it("should navigate EditSeries", () => {
+  it('should navigate EditSeries', () => {
     const navigate = jest.fn();
     const rootNavigation = { navigate };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(
@@ -314,13 +316,13 @@ describe("MenuContent component", () => {
 
     const rendered = renderWithRedux(
       <MenuContent
-        data={seriesDetail.data as any} 
+        data={seriesDetail.data as any}
         contentType={PostType.SERIES}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
-    const editMenu = rendered.getByTestId("menu_item_canEdit");  
+    const editMenu = rendered.getByTestId('menu_item_canEdit');
 
     expect(editMenu).toBeDefined();
     fireEvent.press(editMenu);
@@ -329,7 +331,7 @@ describe("MenuContent component", () => {
     });
   });
 
-  it("should navigate EditSettingPost", () => {
+  it('should navigate EditSettingPost', () => {
     doMockPermissionsPost();
 
     const navigate = jest.fn();
@@ -349,13 +351,13 @@ describe("MenuContent component", () => {
 
     const rendered = renderWithRedux(
       <MenuContent
-        data={postWithQuiz.data as any} 
+        data={postWithQuiz.data as any}
         contentType={PostType.POST}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
-    const editMenu = rendered.getByTestId("menu_item_canEditSetting");  
+    const editMenu = rendered.getByTestId('menu_item_canEditSetting');
 
     expect(editMenu).toBeDefined();
     fireEvent.press(editMenu);
@@ -365,7 +367,7 @@ describe("MenuContent component", () => {
     });
   });
 
-  it("should navigate EditSettingArticle", () => {
+  it('should navigate EditSettingArticle', () => {
     doMockPermissionsArticle();
 
     const navigate = jest.fn();
@@ -385,13 +387,13 @@ describe("MenuContent component", () => {
 
     const rendered = renderWithRedux(
       <MenuContent
-        data={articleWithQuiz.data as any} 
+        data={articleWithQuiz.data as any}
         contentType={PostType.ARTICLE}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
-    const editMenu = rendered.getByTestId("menu_item_canEditSetting");  
+    const editMenu = rendered.getByTestId('menu_item_canEditSetting');
 
     expect(editMenu).toBeDefined();
     fireEvent.press(editMenu);
@@ -401,7 +403,7 @@ describe("MenuContent component", () => {
     });
   });
 
-  it("should navigate EditSettingSeries", () => {
+  it('should navigate EditSettingSeries', () => {
     doMockPermissionsSeries();
 
     const navigate = jest.fn();
@@ -421,13 +423,13 @@ describe("MenuContent component", () => {
 
     const rendered = renderWithRedux(
       <MenuContent
-        data={seriesDetail.data as any} 
+        data={seriesDetail.data as any}
         contentType={PostType.SERIES}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
-    const editMenu = rendered.getByTestId("menu_item_canEditSetting");  
+    const editMenu = rendered.getByTestId('menu_item_canEditSetting');
 
     expect(editMenu).toBeDefined();
     fireEvent.press(editMenu);
@@ -437,7 +439,7 @@ describe("MenuContent component", () => {
     });
   });
 
-  it("should save content", () => {
+  it('should save content', () => {
     const NEW_MENU_CONTENT = { ...MENU_CONTENT, isSave: false };
 
     const commonActions = {
@@ -457,20 +459,20 @@ describe("MenuContent component", () => {
 
     const rendered = renderWithRedux(
       <MenuContent
-        data={seriesDetail.data as any} 
+        data={seriesDetail.data as any}
         contentType={PostType.SERIES}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
-    const saveContent = rendered.getByTestId("menu_item_isSave");  
+    const saveContent = rendered.getByTestId('menu_item_isSave');
 
     expect(saveContent).toBeDefined();
     fireEvent.press(saveContent);
     expect(commonActions.savePost).toBeCalled();
   });
 
-  it("should unSave content", () => {
+  it('should unSave content', () => {
     const commonActions = {
       unsavePost: jest.fn(),
     };
@@ -488,20 +490,20 @@ describe("MenuContent component", () => {
 
     const rendered = renderWithRedux(
       <MenuContent
-        data={seriesDetail.data as any} 
+        data={seriesDetail.data as any}
         contentType={PostType.SERIES}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
-    const unSaveContent = rendered.getByTestId("menu_item_isSave");  
+    const unSaveContent = rendered.getByTestId('menu_item_isSave');
 
     expect(unSaveContent).toBeDefined();
     fireEvent.press(unSaveContent);
     expect(commonActions.unsavePost).toBeCalled();
   });
 
-  it("should copyLink content", () => {
+  it('should copyLink content', () => {
     useMenuStore.setState((state) => {
       state.menus[seriesDetail.data.id] = {
         loading: false,
@@ -513,13 +515,13 @@ describe("MenuContent component", () => {
 
     const rendered = renderWithRedux(
       <MenuContent
-        data={seriesDetail.data as any} 
+        data={seriesDetail.data as any}
         contentType={PostType.SERIES}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
-    const copyContent = rendered.getByTestId("menu_item_canCopyLink");  
+    const copyContent = rendered.getByTestId('menu_item_canCopyLink');
 
     expect(copyContent).toBeDefined();
     fireEvent.press(copyContent);
@@ -528,7 +530,7 @@ describe("MenuContent component", () => {
     );
   });
 
-  it("should viewReactions content", () => {
+  it('should viewReactions content', () => {
     useMenuStore.setState((state) => {
       state.menus[postWithQuiz.data.id] = {
         loading: false,
@@ -540,13 +542,13 @@ describe("MenuContent component", () => {
 
     const rendered = renderWithRedux(
       <MenuContent
-        data={postWithQuiz.data as any} 
+        data={postWithQuiz.data as any}
         contentType={PostType.POST}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
-    const viewReactions = rendered.getByTestId("menu_item_canViewReactions");  
+    const viewReactions = rendered.getByTestId('menu_item_canViewReactions');
 
     expect(viewReactions).toBeDefined();
     fireEvent.press(viewReactions);
@@ -555,7 +557,7 @@ describe("MenuContent component", () => {
     ).toBeTruthy();
   });
 
-  it("should ViewSeries content", () => {
+  it('should ViewSeries content', () => {
     useMenuStore.setState((state) => {
       state.menus[postWithQuiz.data.id] = {
         loading: false,
@@ -567,13 +569,13 @@ describe("MenuContent component", () => {
 
     const rendered = renderWithRedux(
       <MenuContent
-        data={postWithQuiz.data as any} 
+        data={postWithQuiz.data as any}
         contentType={PostType.POST}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
-    const viewSeries = rendered.getByTestId("menu_item_canViewSeries");  
+    const viewSeries = rendered.getByTestId('menu_item_canViewSeries');
 
     expect(viewSeries).toBeDefined();
     fireEvent.press(viewSeries);
@@ -582,7 +584,7 @@ describe("MenuContent component", () => {
     );
   });
 
-  it("should pin content", () => {
+  it('should pin content', () => {
     doMockPermissionsPost();
 
     const navigate = jest.fn();
@@ -602,13 +604,13 @@ describe("MenuContent component", () => {
 
     const rendered = renderWithRedux(
       <MenuContent
-        data={postWithQuiz.data as any} 
+        data={postWithQuiz.data as any}
         contentType={PostType.POST}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
-    const pin = rendered.getByTestId("menu_item_canPinContent");  
+    const pin = rendered.getByTestId('menu_item_canPinContent');
 
     expect(pin).toBeDefined();
     fireEvent.press(pin);
@@ -617,7 +619,7 @@ describe("MenuContent component", () => {
     });
   });
 
-  it("should report content", () => {
+  it('should report content', () => {
     useMenuStore.setState((state) => {
       state.menus[postWithQuiz.data.id] = {
         loading: false,
@@ -629,20 +631,20 @@ describe("MenuContent component", () => {
 
     const rendered = renderWithRedux(
       <MenuContent
-        data={postWithQuiz.data as any} 
+        data={postWithQuiz.data as any}
         contentType={PostType.POST}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
-    const report = rendered.getByTestId("menu_item_canReportContent");  
+    const report = rendered.getByTestId('menu_item_canReportContent');
 
     expect(report).toBeDefined();
     fireEvent.press(report);
     expect(useModalStore.getState().modal.isOpen).toBeTruthy();
   });
 
-  it("should report member", () => {
+  it('should report member', () => {
     useMenuStore.setState((state) => {
       state.menus[postWithQuiz.data.id] = {
         loading: false,
@@ -654,20 +656,20 @@ describe("MenuContent component", () => {
 
     const rendered = renderWithRedux(
       <MenuContent
-        data={postWithQuiz.data as any} 
+        data={postWithQuiz.data as any}
         contentType={PostType.POST}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
-    const report = rendered.getByTestId("menu_item_canReportMember");  
+    const report = rendered.getByTestId('menu_item_canReportMember');
 
     expect(report).toBeDefined();
     fireEvent.press(report);
     expect(useModalStore.getState().modal.isOpen).toBeTruthy();
   });
 
-  it("should create quiz", () => {
+  it('should create quiz', () => {
     const { quiz, ...postNoQuiz } = postWithQuiz.data;
     doMockPermissionsPost();
 
@@ -688,13 +690,13 @@ describe("MenuContent component", () => {
 
     const rendered = renderWithRedux(
       <MenuContent
-        data={postNoQuiz as any} 
+        data={postNoQuiz as any}
         contentType={PostType.POST}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
-    const createQuiz = rendered.getByTestId("menu_item_canCreateQuiz");  
+    const createQuiz = rendered.getByTestId('menu_item_canCreateQuiz');
 
     expect(createQuiz).toBeDefined();
     fireEvent.press(createQuiz);
@@ -702,8 +704,8 @@ describe("MenuContent component", () => {
       postId: postWithQuiz.data.id,
     });
   });
-  
-  it("should edit quiz", async () => {
+
+  it('should edit quiz', async () => {
     doMockPermissionsPost();
 
     const navigate = jest.fn();
@@ -713,7 +715,7 @@ describe("MenuContent component", () => {
     );
 
     jest.spyOn(streamApi, 'getQuizDetail').mockImplementation(
-        () => Promise.resolve(mockGenerateQuizResponse) as any,
+      () => Promise.resolve(mockGenerateQuizResponse) as any,
     );
 
     useMenuStore.setState((state) => {
@@ -727,13 +729,13 @@ describe("MenuContent component", () => {
 
     const rendered = renderWithRedux(
       <MenuContent
-        data={postWithQuiz.data as any} 
+        data={postWithQuiz.data as any}
         contentType={PostType.POST}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
-    const editQuiz = rendered.getByTestId("menu_item_canEditQuiz");  
+    const editQuiz = rendered.getByTestId('menu_item_canEditQuiz');
 
     expect(editQuiz).toBeDefined();
     fireEvent.press(editQuiz);
@@ -747,7 +749,7 @@ describe("MenuContent component", () => {
     });
   });
 
-  it("should delete quiz", async () => {
+  it('should delete quiz', async () => {
     doMockPermissionsPost();
 
     const mockQuizAction = {
@@ -773,13 +775,13 @@ describe("MenuContent component", () => {
 
     const rendered = renderWithRedux(
       <MenuContent
-        data={postWithQuiz.data as any} 
+        data={postWithQuiz.data as any}
         contentType={PostType.POST}
-        isActor={true}
-      />
+        isActor
+      />,
     );
 
-    const deleteQuiz = rendered.getByTestId("menu_item_canDeleteQuiz");  
+    const deleteQuiz = rendered.getByTestId('menu_item_canDeleteQuiz');
 
     expect(deleteQuiz).toBeDefined();
     fireEvent.press(deleteQuiz);
