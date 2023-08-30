@@ -23,6 +23,7 @@ import notiStack from './navigator/MainStack/stacks/notiStack/stack';
 import { USER_TABS } from '~/screens/Menu/UserProfile';
 import { USER_TABS_TYPES } from '~/screens/Menu/UserProfile/constants';
 import useAuthController from '~/screens/auth/store';
+import quizStack from './navigator/MainStack/stacks/quizStack/stack';
 import groupStack from './navigator/MainStack/stacks/groupStack/stack';
 import { rootNavigationRef } from './refs';
 
@@ -195,6 +196,7 @@ export const getScreenAndParams = (data: {
   duration: number;
   startAt: string;
   notificationId: string;
+  quizId: string;
 }) => {
   if (isEmpty(data)) {
     return null;
@@ -215,6 +217,7 @@ export const getScreenAndParams = (data: {
     duration = 0,
     startAt = '',
     notificationId = '',
+    quizId = '',
   } = data || {};
 
   if (duration) {
@@ -367,6 +370,17 @@ export const getScreenAndParams = (data: {
       return { screen: mainStack.userProfile, params: { userId, targetIndex } };
     }
 
+    case NOTIFICATION_TYPE.QUIZ_GENERATE_SUCCESSFUL:
+    case NOTIFICATION_TYPE.QUIZ_GENERATE_UNSUCCESSFUL:
+      return {
+        screen: quizStack.previewDraftQuizNotification,
+        params: {
+          quizId,
+          contentId,
+          contentType,
+        },
+      };
+
     default:
       console.warn(`Notification type ${type} have not implemented yet`);
       return { screen: homeStack.postDetail, params: { post_id: postId } };
@@ -462,6 +476,21 @@ const navigatePostDetailWithContentType = ({ contentType, contentId }) => {
 
 export const hideSplashScreen = async () => {
   await SplashScreen.hideAsync();
+};
+
+export const isFromNotificationScreen = (navigation: any) => {
+  const { routes = [] } = navigation.getState();
+  const previousRoute = routes[routes.length - 2] || {};
+  const { name, state = {} } = previousRoute || {};
+
+  if (name !== 'main') return false;
+
+  if (state.index === 2) {
+    // from notification screen
+    return true;
+  }
+
+  return false;
 };
 
 const rootNavigation = withNavigation?.(rootNavigationRef);

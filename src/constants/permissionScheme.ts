@@ -56,5 +56,8 @@ export enum PermissionKey {
   ROLE_GROUP_ADMIN = 'role_GROUP_ADMIN',
 
   // pin content
-  PIN_CONTENT = 'pin_content'
+  PIN_CONTENT = 'pin_content',
+
+  // quiz
+  CUD_QUIZ = 'cud_quiz'
 }

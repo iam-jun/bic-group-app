@@ -55,7 +55,8 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
 
   const {
     content, title, summary, coverMedia, publishedAt, audience, wordCount,
-    series, categories, actor, setting, reactionsCount, commentsCount, ownerReactions, tags,
+    series, categories, actor, setting, reactionsCount, commentsCount, ownerReactions, tags, quiz,
+    quizHighestScore, quizDoing,
   } = data;
 
   const { isError, code } = errorContent || {};
@@ -79,6 +80,9 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
       tags,
       seriesWithItems: relatedContentsInSeries,
       wordCount,
+      quiz,
+      quizHighestScore,
+      quizDoing,
     },
   };
 
@@ -173,7 +177,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
 
   const onMessage = (message: any) => {
     handleMessage({
-      message, listImage, setInitIndex, setGalleryVisible,
+      message, listImage, setInitIndex, setGalleryVisible, id,
     });
   };
 

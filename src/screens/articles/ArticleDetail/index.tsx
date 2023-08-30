@@ -7,7 +7,7 @@ import {
 
 import { ExtendedTheme, useTheme, useIsFocused } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
-import { IAudienceGroup } from '~/interfaces/IPost';
+import { IAudienceGroup, PostType } from '~/interfaces/IPost';
 
 import Header from '~/beinComponents/Header';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
@@ -29,8 +29,13 @@ import BannerReport from '~/components/Report/BannerReport';
 import APIErrorCode from '~/constants/apiErrorCode';
 import ContentNoPermission from '~/components/ContentNoPermission';
 import LoadMoreComment from '~/components/LoadMoreComment';
+import { isFromNotificationScreen } from '~/router/helper';
+import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
 const _ArticleDetail: FC<IRouteParams> = (props) => {
+  const navigation = props?.navigation;
   const { params } = props.route;
   const { articleId: id, commentId } = params || {};
 
@@ -104,6 +109,19 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   useEffect(() => () => {
     resetCommentsStore();
     clearComments(id);
+  }, []);
+
+  useEffect(() => {
+    if (navigation) {
+      if (isFromNotificationScreen(navigation)) {
+        // tracking event
+        const eventContentReadProperties: TrackingEventContentReadProperties = {
+          content_type: PostType.ARTICLE,
+          action: TrackingEventContentReadAction.NOTIFICATION,
+        };
+        trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
+      }
+    }
   }, []);
 
   const onRefresh = () => {

@@ -37,7 +37,7 @@ const getPosts = (set, get) => async (id: string, isRefresh = false) => {
     const response = await streamApi.getTimelinePosts(id, params);
     await timeOut(200);
     const result = response.data?.list || [];
-    usePostsStore.getState().actions.addToPosts({ data: result, handleComment: true });
+    usePostsStore.getState().actions.addToPosts({ data: result });
 
     const newIds = result.map((item) => item.id);
     const currentIds = currentPosts.ids || [];

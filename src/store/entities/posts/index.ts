@@ -10,6 +10,7 @@ import {
   IPayloadReplying,
   IErrorContent,
   IPutEditSettingsParams,
+  PostType,
 } from '~/interfaces/IPost';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
@@ -21,6 +22,7 @@ import putEditPost from './actions/putEditPost';
 import putEditSettings from './actions/putEditSettings';
 import putMarkSeenPost from './actions/putMarkSeenPost';
 import removeAudiencesFromPost from './actions/removeAudiencesFromPost';
+import getContentDetail from './actions/getContentDetail';
 
 export interface IPostsState extends IBaseState {
   isLoadingGetPostDetail: boolean;
@@ -48,6 +50,7 @@ export interface IPostsState extends IBaseState {
     addToErrorContents: (id: string, payload: IErrorContent) => void;
     clearComments: (id: string) => void;
     putEditSettings: (params: IPutEditSettingsParams) => void;
+    getContentDetail: (contentId: string, contentType?: PostType) => void;
   };
 }
 
@@ -114,6 +117,7 @@ const postsStore = (set, get) => ({
       }, 'clearComments');
     },
     putEditSettings: putEditSettings(set, get),
+    getContentDetail: getContentDetail(set, get),
   },
 
   reset: () => resetStore(initState, set),

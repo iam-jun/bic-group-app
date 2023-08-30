@@ -42,7 +42,11 @@ const Contact = ({
     />
   );
 
-  const isNothingToShow = Boolean(typeof city === 'undefined');
+  const shouldHideCity = Boolean(typeof city === 'undefined');
+  const shouldHideEmail = Boolean(typeof email === 'undefined');
+  const shouldHidePhone = Boolean(typeof phone === 'undefined');
+
+  const isNothingToShow = shouldHideCity && shouldHideEmail && shouldHidePhone;
 
   return (
     <InfoCard
@@ -51,24 +55,22 @@ const Contact = ({
       rightTitle={BtnEditContact}
       style={styles.container}
     >
-      {isCurrentUser && (
-        <>
-          <InfoItem title="settings:title_email" value={email} />
-          <InfoItem
-            title="settings:title_phone_number"
-            value={formatPhoneNumber(phone, countryCode)}
-          />
-        </>
-      )}
       {
         isNothingToShow
           ? <Text.BodyM useI18n color={colors.neutral30}>settings:text_no_contact_to_show</Text.BodyM>
           : (
-            <InfoItem
-              title="settings:title_location"
-              value={city}
-              style={{ paddingBottom: 0 }}
-            />
+            <>
+              <InfoItem title="settings:title_email" value={email} />
+              <InfoItem
+                title="settings:title_phone_number"
+                value={formatPhoneNumber(phone, countryCode)}
+              />
+              <InfoItem
+                title="settings:title_location"
+                value={city}
+                style={{ paddingBottom: 0 }}
+              />
+            </>
           )
       }
     </InfoCard>
