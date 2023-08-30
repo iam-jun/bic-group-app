@@ -149,7 +149,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
   };
 
   const renderListMenu = () => (
-    <ScrollView>
+    <ScrollView testID="menu_content.content" >
       {
         renderMenuItem({
           keyMenu: MENU_KEYS.EDIT,
