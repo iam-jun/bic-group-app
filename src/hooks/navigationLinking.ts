@@ -137,6 +137,17 @@ export const onReceiveURL = async ({
         });
         break;
       }
+
+      case DeepLinkTypes.USER_BLOCKING: {
+        const navigateToUserBlockingList = () => navigation?.navigate?.(
+          mainStack.blocking,
+        );
+        redirectToScreenWithSignIn({
+          userId, url, navigateCallback: navigateToUserBlockingList,
+        });
+        break;
+      }
+
       case DeepLinkTypes.APP:
         break;
       default:
