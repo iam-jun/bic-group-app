@@ -23,6 +23,7 @@ import { INotiSettings } from '~/interfaces/INotification';
 import useAdvancedNotiSettingsStore from '../AdvancedSettings/store';
 import useYourCommunitiesStore from '~/screens/communities/Communities/components/YourCommunities/store';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const NotificationSettings = () => {
   const theme: ExtendedTheme = useTheme();
@@ -64,7 +65,7 @@ const NotificationSettings = () => {
 
     actions.updateSettings(payload, dataUpdate);
     trackEvent({
-      event: 'Master Noti Changed',
+      event: TrackingEvent.MASTER_NOTI_CHANGED,
       sendWithUserId: true,
       properties: { state: isChecked },
     });

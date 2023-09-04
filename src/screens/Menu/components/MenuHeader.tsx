@@ -15,6 +15,7 @@ import useCommonController from '~/screens/store';
 import UserBadge from '../UserProfile/components/UserBadge';
 import VerifiedView from '~/components/VerifiedView';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const PADDING_INFO = spacing.padding.large * 2 + dimension.avatarSizes.large;
 
@@ -34,7 +35,7 @@ const MenuHeader = () => {
       mainStack.userProfile, { userId: id, targetIndex },
     );
     if (targetIndex !== 1) {
-      trackEvent({ event: 'Own Profile Viewed', sendWithUserId: true });
+      trackEvent({ event: TrackingEvent.OWN_PROFILE_VIEWED, sendWithUserId: true });
     }
   };
 

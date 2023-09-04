@@ -21,6 +21,7 @@ import { ICityResponseItem } from '~/interfaces/IAuth';
 import useCommonController from '~/screens/store';
 import useMenuController from '../../store';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const PHONE_INPUT_NAME = 'phoneNumber';
 
@@ -63,7 +64,7 @@ const EditContact = () => {
       },
       callback: navigateBack,
     });
-    trackEvent({ event: 'Contact Info Updated', sendWithUserId: true });
+    trackEvent({ event: TrackingEvent.CONTACT_INFO_UPDATED, sendWithUserId: true });
   };
 
   const onEditLocationOpen = (e: any) => {

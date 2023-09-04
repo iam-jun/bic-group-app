@@ -139,7 +139,7 @@ const Notification = () => {
     );
 
     modalActions.hideBottomList();
-    trackEventNoti('Notification Removed', item);
+    trackEventNoti(TrackingEvent.NOTIFICATION_REMOVED, item);
   };
 
   const onPressItemOption = ({ item }: {item: any}) => {
@@ -540,7 +540,7 @@ const Notification = () => {
           '\x1b[0m',
         );
       }
-      trackEventNoti('Notification Opened', item);
+      trackEventNoti(TrackingEvent.NOTIFICATION_OPENED, item);
 
       // finally mark the notification as read
       notiActions.markAsRead(item.id);
