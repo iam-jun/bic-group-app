@@ -137,6 +137,7 @@
     "text_remove": "Loại bỏ",
     "btn_approve": "Phê duyệt",
     "btn_decline": "Từ chối",
+    "btn_accept": "Chấp nhận",
     "btn_approve_all": "Phê duyệt tất cả",
     "btn_decline_all": "Từ chối tất cả",
     "btn_submit": "Gửi",
@@ -215,7 +216,8 @@
     "text_send_request_join_successfully": "Gửi yêu cầu thành công",
     "edit_settings": "Cài đặt",
     "text_new": "Mới",
-    "text_empty": "Rỗng"
+    "text_empty": "Rỗng",
+    "text_please_try_again": "Vui lòng thử lại"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -1178,6 +1180,17 @@
     "text_bic_team": "BIC team",
     "text_remove_notification": "Xóa thông báo này",
     "text_remove_notification_success": "Đã xóa thông báo thành công",
+    "text_invitation_accepted": "Lời mời đã được chấp nhận",
+    "text_invitation_declined": "Lời mời đã bị từ chối",
+    "text_you_have_previously_joined": "Bạn đã tham gia rồi",
+    "text_you_have_previously_declined": "Trước đây bạn đã từ chối tham gia",
+    "text_invitation_has_been_canceled": "Lời mời đã bị hủy",
+    "text_turn_off_noti_for_post": "Tắt thông báo về bài đăng này",
+    "text_turn_off_noti_for_article": "Tắt thông báo về bài viết này",
+    "text_turn_on_noti_for_post": "Bật thông báo về bài đăng này",
+    "text_turn_on_noti_for_article": "Bật thông báo về bài viết này",
+    "text_turn_off_noti_for_group": "Tắt thông báo về lời mời trong nhóm này",
+    "text_turn_on_noti_for_group": "Bật thông báo về lời mời trong nhóm này",
     "notification_settings": {
       "title": "Cài đặt thông báo",
       "screen_title": "Cài đặt chung",

@@ -26,7 +26,7 @@ import useNotificationStore from './store';
 import INotificationsState from './store/Interface';
 import spacing from '~/theme/spacing';
 import useModalStore from '~/store/modal';
-import { ContentType } from '~/interfaces/INotification';
+import { ContentType, InvitationTargetType } from '~/interfaces/INotification';
 import { useUserIdAuth } from '~/hooks/auth';
 import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 import { USER_TABS } from '../Menu/UserProfile';
@@ -34,14 +34,11 @@ import { USER_TABS_TYPES } from '../Menu/UserProfile/constants';
 import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
+import NotificationMenu from './components/NotificationMenu';
+import useNotificationItemMenu, { INotificationItemMenuStore } from './components/NotificationMenu/store';
 import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEvent } from '~/services/tracking/constants';
-
-const NOT_SHOW_DELETE_OPTION_LIST = [
-  NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME,
-  NOTIFICATION_TYPE.CHANGE_LOGS,
-];
 
 const Notification = () => {
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
@@ -52,9 +49,11 @@ const Notification = () => {
   const userId = useUserIdAuth();
   const { t } = useBaseHook();
   const timeOutRef = useRef<any>();
+  const notifMenuRef = useRef<any>();
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const modalActions = useModalStore((state) => state.actions);
+  const specifictNotiActions = useNotificationItemMenu((state: INotificationItemMenuStore) => state.actions);
 
   useEffect(
     () => {
@@ -87,15 +86,6 @@ const Notification = () => {
         trackEventChangeTab(TrackingEvent.ALL_NOTI_VIEWED);
         break;
     }
-  };
-
-  const handleMarkNotification = (data: any) => {
-    if (!data?.isRead) {
-      notiActions.markAsRead(data?.id);
-    } else {
-      notiActions.markAsUnRead(data?.id);
-    }
-    modalActions.hideBottomList();
   };
 
   const clearToastDeleteNoti = () => {
@@ -152,40 +142,15 @@ const Notification = () => {
     trackEventNoti('Notification Removed', item);
   };
 
-  const checkShowDeleteOption = (type: string) => {
-    if (!type) return false;
-    const index = NOT_SHOW_DELETE_OPTION_LIST.findIndex((item) => item === type);
-    return !(index === -1);
-  };
-
   const onPressItemOption = ({ item }: {item: any}) => {
+    specifictNotiActions.setSelectedNotificationId(item?.id);
     clearToastDeleteNoti();
     notiActions.deleteAllWaitingNotification();
+    notifMenuRef.current?.open?.();
+  };
 
-    const type = item?.extra?.type || undefined;
-    const menuData: any[] = [{
-      id: 1,
-      testID: 'notification.mark_notification_read_or_unread',
-      leftIcon: 'MessageCheck',
-      title: i18next.t(!item?.isRead
-        ? 'notification:mark_as_read'
-        : 'notification:mark_as_unread'),
-      requireIsActor: true,
-      onPress: () => { handleMarkNotification(item); },
-    }, {
-      id: 2,
-      testID: 'notifications.remove_notification',
-      leftIcon: 'TrashCan',
-      title: i18next.t('notification:text_remove_notification'),
-      requireIsActor: true,
-      onPress: () => { handleRemoveNotification(item); },
-    }];
-    if (checkShowDeleteOption(type)) {
-      menuData.splice(1, 1);
-    }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    modalActions.showBottomList({ data: menuData } as BottomListItemProps);
+  const onCloseItemMenu = () => {
+    notifMenuRef.current?.close?.();
   };
 
   const handleMarkAllAsRead = () => {
@@ -224,6 +189,7 @@ const Notification = () => {
       const type = item?.extra?.type || undefined;
       const act = item?.activities?.[0];
       const target = item?.target;
+      const invitationData = act?.invitation?.target || {};
       clearToastDeleteNoti();
 
       try {
@@ -504,7 +470,6 @@ const Notification = () => {
               rootNavigation.navigate(mainStack.userProfile, { userId, targetIndex });
               break;
             }
-
             case NOTIFICATION_TYPE.QUIZ_GENERATE_SUCCESSFUL:
             case NOTIFICATION_TYPE.QUIZ_GENERATE_UNSUCCESSFUL:
               rootNavigation.navigate(quizStack.previewDraftQuizNotification, {
@@ -513,6 +478,46 @@ const Notification = () => {
                 contentType: act?.quizInfo?.contentType,
               });
               break;
+
+            case NOTIFICATION_TYPE.GROUP_INVITATION: {
+              const communityId = invitationData?.communityId || '';
+              const groupId = invitationData?.id || '';
+              const targetType = invitationData?.type || '';
+
+              if (targetType === InvitationTargetType.COMMUNITY && !!communityId) {
+                rootNavigation.navigate(groupStack.communityDetail, { communityId });
+              }
+              if (targetType === InvitationTargetType.GROUP && !!groupId && communityId) {
+                rootNavigation.navigate(
+                  groupStack.groupDetail, {
+                    groupId,
+                    communityId,
+                  },
+                );
+              }
+              break;
+            }
+
+            case NOTIFICATION_TYPE.GROUP_INVITATION_FEEDBACK: {
+              const communityId = invitationData?.communityId || '';
+              const groupId = invitationData?.id || '';
+              const targetType = invitationData?.type || '';
+
+              if (targetType === InvitationTargetType.COMMUNITY && !!communityId) {
+                rootNavigation.navigate(groupStack.communityMembers, {
+                  communityId,
+                  isMember: true,
+                });
+              }
+
+              if (targetType === InvitationTargetType.GROUP && !!groupId) {
+                rootNavigation.navigate(groupStack.groupMembers, {
+                  groupId,
+                  isMember: true,
+                });
+              }
+              break;
+            }
 
             default:
               console.warn(`Notification type ${type} have not implemented yet`);
@@ -559,6 +564,11 @@ const Notification = () => {
         onPressItemOption={onPressItemOption}
         onChangeTab={onPressFilterItem}
         onRefresh={onRefresh}
+      />
+      <NotificationMenu
+        menuRef={notifMenuRef}
+        onClose={onCloseItemMenu}
+        handleRemoveNotification={handleRemoveNotification}
       />
     </ScreenWrapper>
   );

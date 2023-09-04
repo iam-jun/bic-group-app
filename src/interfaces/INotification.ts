@@ -48,6 +48,8 @@ export enum ContentType {
   post = 'post',
   article = 'article',
   series = 'series',
+  comment = 'comment',
+  childComment = 'child_comment',
 }
 
 export interface INotiChangeLogsInfo {
@@ -101,4 +103,20 @@ export interface IAdvancedSetting {
 
 export interface IGroupNotificationSetting extends IGroup{
   setting: IAdvancedSetting;
+}
+
+export enum InvitationTargetType {
+  GROUP = 'GROUP',
+  COMMUNITY = 'COMMUNITY',
+}
+
+export enum SpecificNotificationType {
+  post = 'post',
+  article = 'article',
+  group = 'group',
+}
+
+export interface IParamUpdateSpecificNotificationSettings {
+  enable: boolean;
+  contentType: SpecificNotificationType;
 }
