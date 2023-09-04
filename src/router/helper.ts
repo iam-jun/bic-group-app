@@ -377,6 +377,8 @@ export const getScreenAndParams = (data: {
       }
       break;
     }
+    case NOTIFICATION_TYPE.GROUP_SET_INVITATION:
+    case NOTIFICATION_TYPE.GROUP_SET_DEFAULT_INVITATION:
     case NOTIFICATION_TYPE.GROUP_INVITATION_FEEDBACK: {
       const communityId = target?.communityId || '';
       const groupId = target?.id || '';

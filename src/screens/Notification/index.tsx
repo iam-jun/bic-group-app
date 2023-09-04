@@ -77,6 +77,8 @@ const Notification: FC<NotificationProps> = ({ route }: NotificationProps) => {
   useEffect(() => {
     if (notificationData?.type) {
       switch (notificationData.type) {
+        case NOTIFICATION_TYPE.GROUP_SET_INVITATION:
+        case NOTIFICATION_TYPE.GROUP_SET_DEFAULT_INVITATION:
         case NOTIFICATION_TYPE.GROUP_INVITATION_FEEDBACK: {
           const { invitationId, target } = notificationData || {};
           const targetType = target?.type;
