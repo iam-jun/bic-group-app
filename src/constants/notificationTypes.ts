@@ -321,4 +321,8 @@ export const NOTIFICATION_TYPE = {
 
   // Group badge
   CHANGE_USER_BADGE_COLLECTION: 'change.user_badge_collection',
+
+  // Quiz
+  QUIZ_GENERATE_SUCCESSFUL: 'quiz.generate.successful',
+  QUIZ_GENERATE_UNSUCCESSFUL: 'quiz.generate.unsuccessful',
 };

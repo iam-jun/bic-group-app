@@ -40,12 +40,12 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
 
   const actions = useCreateArticleStore((state) => state.actions);
   const {
-    publishedAt, isSubmiting, isSubmitingSuccess, errorSubmiting,
+    scheduledAt, isSubmiting, isSubmitingSuccess, errorSubmiting,
   } = useCreateArticleStore((state) => state.schedule);
   const modalActions = useModalStore((state) => state.actions);
 
-  const [isSetTime, setIsSetTime] = useState(!!publishedAt);
-  const [isSetDate, setIsSetDate] = useState(!!publishedAt);
+  const [isSetTime, setIsSetTime] = useState(!!scheduledAt);
+  const [isSetDate, setIsSetDate] = useState(!!scheduledAt);
 
   const hasResultSchedule
     = isSubmitingSuccess || !!errorSubmiting;
@@ -86,11 +86,11 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
   const handleChangeDatePicker = (datetime?: Date) => {
     setIsSetDate(true);
     const selectedDate = moment(datetime || minDateTime);
-    const newPublishedAt = moment(publishedAt || minDateTime)
+    const newScheduledAt = moment(scheduledAt || minDateTime)
       .year(selectedDate.year())
       .month(selectedDate.month())
       .date(selectedDate.date());
-    actions.setPublishedAt(newPublishedAt.toISOString());
+    actions.setScheduledAt(newScheduledAt.toISOString());
   };
 
   const handleChangeTimePicker = (datetime?: Date) => {
@@ -98,16 +98,16 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
     // on Android, timepicker doesn't support min time,
     // so we need to recheck valid selected time here
     if (Platform.OS === 'android' && !isValidTime(datetime)) {
-      pickedTime = new Date(publishedAt || minDateTime);
+      pickedTime = new Date(scheduledAt || minDateTime);
     }
     setIsSetTime(true);
     const selectedTime = moment(pickedTime || minDateTime);
-    const newPublishedAt = moment(publishedAt || minDateTime)
+    const newScheduledAt = moment(scheduledAt || minDateTime)
       .hour(selectedTime.hour())
       .minute(selectedTime.minute())
       .second(0)
       .millisecond(0);
-    actions.setPublishedAt(newPublishedAt.toISOString());
+    actions.setScheduledAt(newScheduledAt.toISOString());
   };
 
   const renderHeader = () => (
@@ -127,7 +127,7 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
       <View style={styles.datetimeContainer}>
         <DateInput
           mode="date"
-          value={publishedAt || minDateTime.toISOString()}
+          value={scheduledAt || minDateTime.toISOString()}
           minDate={minDateTime}
           label={t('common:text_date')}
           onConfirm={handleChangeDatePicker}
@@ -138,7 +138,7 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
         <ViewSpacing width={16} />
         <DateInput
           mode="time"
-          value={publishedAt || minDateTime.toISOString()}
+          value={scheduledAt || minDateTime.toISOString()}
           minDate={minDateTime}
           label={t('common:text_time')}
           onConfirm={handleChangeTimePicker}

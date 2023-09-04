@@ -5,12 +5,11 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { t } from 'i18next';
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import spacing from '~/theme/spacing';
 import { useRootNavigation } from '~/hooks/navigation';
 import Text from '~/baseComponents/Text';
 import Icon from '~/baseComponents/Icon';
-import { Button } from '~/baseComponents';
+import { Button, ScreenWrapper } from '~/baseComponents';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 
 const PrivacyCenter = () => {

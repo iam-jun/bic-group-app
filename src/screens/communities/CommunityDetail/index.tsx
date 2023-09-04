@@ -51,6 +51,7 @@ import usePinContentStore from '~/components/PinContent/store';
 import TermsView from '~/components/TermsModal';
 import MemberQuestionsModal from '~/components/MemberQuestionsModal';
 import FloatingCreatePost from '~/screens/Home/components/FloatingCreatePost';
+import useTermStore from '~/components/TermsModal/store';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -100,6 +101,7 @@ const CommunityDetail = (props: any) => {
 
   const actionsFeedSearch = useFeedSearchStore((state) => state.actions);
   const actionPinContent = usePinContentStore((state) => state.actions);
+  const actionTerms = useTermStore((state) => state.actions);
 
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
 
@@ -137,21 +139,10 @@ const CommunityDetail = (props: any) => {
   }, [groupId, isMember, privacy, isLoadingCommunity, community, contentFilter, attributeFilter]);
 
   useEffect(() => {
-    // only update currentCommunityId when navigating to the community profile
-    useCommunitiesStore.setState({
-      currentCommunityId: communityId,
-    });
-
     if (isMounted) {
       getCommunityDetail();
     }
-  }, [isMounted, communityId]);
-
-  useEffect(() => () => {
-    useCommunitiesStore.setState({
-      currentCommunityId: '',
-    });
-  }, []);
+  }, [isMounted]);
 
   useEffect(() => {
     if (isEmpty(timelines[groupId]) && isEmpty(communityPost?.ids)) {
@@ -194,6 +185,7 @@ const CommunityDetail = (props: any) => {
       timelineActions.getPosts(groupId, true);
     }
     actionPinContent.getPinContentsGroup(groupId);
+    isPrivateCommunity && actionTerms.getTermsData(groupId);
     getCommunityDetail();
   }, [groupId, contentFilter, attributeFilter]);
 
@@ -335,6 +327,7 @@ const CommunityDetail = (props: any) => {
           communityId={communityId}
           isMember={isMember}
           teamName={community?.teamName}
+          groupId={groupId}
         />
         <FilterFeedButtonGroup
           contentFilter={contentFilter}

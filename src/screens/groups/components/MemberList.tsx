@@ -23,6 +23,7 @@ interface MemberListProps {
   type: 'group' | 'community';
   isAdminRole: boolean;
   canManageMember: boolean;
+  communityId: string;
   onLoadMore: () => void;
   onPressMenu: (item: any) => void;
   onRefresh: () => void;
@@ -32,6 +33,7 @@ const MemberList = ({
   type,
   isAdminRole,
   canManageMember,
+  communityId,
   onLoadMore,
   onPressMenu,
   onRefresh,
@@ -80,6 +82,7 @@ const MemberList = ({
   const renderItem = ({ item }: {item: any}) => (
     <MemberItem
       item={item}
+      communityId={communityId}
       isAdminRole={isAdminRole}
       canManageMember={canManageMember}
       onPressMenu={onPressMenu}

@@ -1,0 +1,151 @@
+workflows:
+  build-ios-staging:
+    name: Build iOS Staging Workflow
+    max_build_duration: 120
+    instance_type: mac_mini_m1
+    environment:
+      groups:
+        - module_credentials
+      node: v16.11.1
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - &setup-build-env
+        name: Setup build environment
+        script: |
+          brew install imagemagick
+      - &prepare-resources
+        name: Prepare build resources
+        script: |
+          echo "${MOBILE_SECRET_SSH_KEY}" > /tmp/ssh_key
+          chmod 600 /tmp/ssh_key
+          eval `ssh-agent -s`
+          ssh-add /tmp/ssh_key
+          npm run clone-secret
+          echo "${BUILD_RESOURCES_SSH_KEY}" > /tmp/ssh_key
+          chmod 600 /tmp/ssh_key
+          eval `ssh-agent -s`
+          ssh-add /tmp/ssh_key
+          npm run clone-build-resources
+          npm run prepare-resources
+      - name: Run build
+        script: |
+          # prepare ssh for clone ios certificate
+          echo "${IOS_CERT_SSH_KEY}" > /tmp/ssh_key
+          chmod 600 /tmp/ssh_key
+          eval `ssh-agent -s`
+          ssh-add /tmp/ssh_key
+          npm run build-ios-staging
+
+  build-ios-prerelease:
+    name: Build iOS Prerelease Workflow
+    max_build_duration: 120
+    instance_type: mac_mini_m1
+    environment:
+      groups:
+        - module_credentials
+      node: v16.11.1
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - *setup-build-env
+      - *prepare-resources
+      - name: Run build
+        script: |
+          # prepare ssh for clone ios certificate
+          echo "${IOS_CERT_SSH_KEY}" > /tmp/ssh_key
+          chmod 600 /tmp/ssh_key
+          eval `ssh-agent -s`
+          ssh-add /tmp/ssh_key
+          npm run build-ios-prerelease
+
+  build-ios-production:
+    name: Build iOS Production Workflow
+    max_build_duration: 120
+    instance_type: mac_mini_m1
+    environment:
+      groups:
+        - module_credentials
+      node: v16.11.1
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - *setup-build-env
+      - *prepare-resources
+      - name: Run build
+        script: |
+          # prepare ssh for clone ios certificate
+          echo "${IOS_CERT_SSH_KEY}" > /tmp/ssh_key
+          chmod 600 /tmp/ssh_key
+          eval `ssh-agent -s`
+          ssh-add /tmp/ssh_key
+          npm run build-ios-production
+
+  build-android-staging:
+    name: Build Android Staging Workflow
+    max_build_duration: 120
+    instance_type: mac_mini_m1
+    environment:
+      groups:
+        - module_credentials
+      node: v16.11.1
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - *setup-build-env
+      - *prepare-resources
+      - name: Run build
+        script: |
+          npm run build-android-staging
+
+  build-android-prerelease:
+    name: Build Android Prerelease Workflow
+    max_build_duration: 120
+    instance_type: mac_mini_m1
+    environment:
+      groups:
+        - module_credentials
+      node: v16.11.1
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - *setup-build-env
+      - *prepare-resources
+      - name: Run build
+        script: |
+          npm run build-android-prerelease
+
+  build-android-production:
+    name: Build Android Production Workflow
+    max_build_duration: 120
+    instance_type: mac_mini_m1
+    environment:
+      groups:
+        - module_credentials
+      node: v16.11.1
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - *setup-build-env
+      - *prepare-resources
+      - name: Run build
+        script: |
+          npm run build-android-production
+
+  bundle-aab-production:
+    name: Bundle AAB Production Workflow
+    max_build_duration: 120
+    instance_type: mac_mini_m1
+    environment:
+      groups:
+        - module_credentials
+      node: v16.11.1
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - *setup-build-env
+      - *prepare-resources
+      - name: Run build
+        script: |
+          npm run bundle-aab
+

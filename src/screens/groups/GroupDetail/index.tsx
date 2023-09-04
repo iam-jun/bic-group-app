@@ -21,9 +21,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Header from '~/beinComponents/Header';
-import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
-import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
-import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -58,7 +55,10 @@ import usePinContentStore from '~/components/PinContent/store';
 import TermsView from '~/components/TermsModal';
 import MemberQuestionsModal from '~/components/MemberQuestionsModal';
 import FloatingCreatePost from '~/screens/Home/components/FloatingCreatePost';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
+import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
+import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
+import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -78,8 +78,8 @@ const GroupDetail = (props: any) => {
     loadingGroupDetail,
     actions: { getGroupDetail },
   } = useGroupDetailStore((state) => state);
-  const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
-  const { group: groupInfo, joinStatus } = groups[currentGroupId] || {};
+  const { groups } = useGroupsStore((state: IGroupsState) => state);
+  const { group: groupInfo, joinStatus } = groups[groupId] || {};
   const {
     name, privacy, teamName, slug,
   } = groupInfo || {};
@@ -88,8 +88,7 @@ const GroupDetail = (props: any) => {
   const headerRef = useRef<any>();
   const [groupInfoHeight, setGroupInfoHeight] = useState(300);
 
-  const currentCommunityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
-  const communityId = paramCommunityId || currentCommunityId;
+  const communityId = paramCommunityId;
   const communityDetail = useCommunitiesStore(
     useCallback((state: ICommunitiesState) => state.data[communityId], [communityId, groupId]),
   );
@@ -98,14 +97,8 @@ const GroupDetail = (props: any) => {
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
   const isMemberCommunity = joinStatusCommunity === GroupJoinStatus.MEMBER;
 
-  // Temporarily comment this snippet code
-  // Because old data will show up before being replaced by new data
-  // This is considered a bug by tester
-  // const isLoadingGroup = useKeySelector(groupsKeySelector.loadingPage);
-  // const hasNoDataInStore = !groupInfo;
-  // const shouldShowPlaceholder = hasNoDataInStore && isLoadingGroup;
-
-  const shouldShowPlaceholder = currentGroupId !== groupId && !isLoadingGroupDetailError;
+  const hasNoDataInStore = !groupInfo;
+  const shouldShowPlaceholder = hasNoDataInStore && !isLoadingGroupDetailError;
 
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
   const canSetting = shouldHavePermission(groupId, [
@@ -167,12 +160,6 @@ const GroupDetail = (props: any) => {
     }
     getGroupDetail({ groupId });
   }, [groupId]);
-
-  useEffect(() => () => {
-    useGroupsStore.setState({
-      currentGroupId: '',
-    });
-  }, []);
 
   useEffect(() => {
     if (isEmpty(timelines[groupId]) && isEmpty(groupPost?.ids)) {
@@ -325,12 +312,14 @@ const GroupDetail = (props: any) => {
           onGetInfoLayout={onGetInfoLayout}
           infoDetail={groupInfo}
           community={communityDetail}
+          groupId={groupId}
         />
       );
     }
 
     return (
       <GroupContent
+        groupId={groupId}
         community={communityDetail}
         onScroll={onScrollHandler}
         onGetInfoLayout={onGetInfoLayout}
@@ -391,7 +380,7 @@ const GroupDetail = (props: any) => {
           {renderGroupContent()}
         </Animated.View>
         <Animated.View onLayout={onButtonBottomLayout} style={[styles.button, buttonStyle]}>
-          <GroupJoinCancelButton style={styles.joinBtn} />
+          <GroupJoinCancelButton style={styles.joinBtn} groupId={groupId} />
         </Animated.View>
         <ContentSearch groupId={groupId} />
         <MemberQuestionsModal />

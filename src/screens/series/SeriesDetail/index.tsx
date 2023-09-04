@@ -8,7 +8,7 @@ import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useUserIdAuth } from '~/hooks/auth';
-import { IAudienceGroup } from '~/interfaces/IPost';
+import { IAudienceGroup, PostType } from '~/interfaces/IPost';
 import AlertDeleteAudiencesConfirmContent from '~/components/posts/AlertDeleteAudiences';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
@@ -24,8 +24,12 @@ import useMyPermissionsStore from '~/store/permissions';
 import ContentUnavailable from '~/components/ContentUnavailable';
 import useMounted from '~/hooks/mounted';
 import useModalStore from '~/store/modal';
+import { isFromNotificationScreen } from '~/router/helper';
+import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
-const SeriesDetail = ({ route }: any) => {
+const SeriesDetail = ({ route, navigation }: any) => {
   const { params } = route || {};
   const { seriesId } = params || {};
   const theme = useTheme();
@@ -63,6 +67,19 @@ const SeriesDetail = ({ route }: any) => {
       goHome();
     }
   }, [deleted, isFocused]);
+
+  useEffect(() => {
+    if (navigation) {
+      if (isFromNotificationScreen(navigation)) {
+        // tracking event
+        const eventContentReadProperties: TrackingEventContentReadProperties = {
+          content_type: PostType.SERIES,
+          action: TrackingEventContentReadAction.NOTIFICATION,
+        };
+        trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
+      }
+    }
+  }, []);
 
   const onPressSearch = () => {
     setIsOpenSearch(true);

@@ -50,7 +50,7 @@ const CreateArticleSummary: FC<CreateArticleProps> = ({ route }: CreateArticlePr
         value={summary}
         placeholder={t('common:text_input_summary')}
         style={styles.textInputContainer}
-        inputStyle={styles.textInput}
+        inputStyleContainer={styles.textInput}
         onChangeText={onChangeText}
         showCountLength={false}
       />

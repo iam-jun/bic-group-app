@@ -8,6 +8,7 @@ import seriesScreens from './stacks/series/screens';
 import topicScreens from './stacks/topic/screens';
 import tagsScreens from './stacks/tagsStack/screens';
 import ConfirmUser from '~/screens/auth/VerifyEmail/ConfirmUser';
+import quizScreens from './stacks/quizStack/screens';
 
 const mainTabScreens: any = {
   ...groupScreens,
@@ -19,6 +20,7 @@ const mainTabScreens: any = {
   ...seriesScreens,
   ...topicScreens,
   ...tagsScreens,
+  ...quizScreens,
   'confirm-user': ConfirmUser,
 };
 

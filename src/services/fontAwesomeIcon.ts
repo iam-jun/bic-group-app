@@ -60,6 +60,7 @@ import { faImages } from '@fortawesome/pro-regular-svg-icons/faImages';
 import { faPenLine } from '@fortawesome/pro-regular-svg-icons/faPenLine';
 import { faPenLine as faPenLineSolid } from '@fortawesome/pro-solid-svg-icons/faPenLine';
 import { faPen } from '@fortawesome/pro-regular-svg-icons/faPen';
+import { faPen as faPenSolid } from '@fortawesome/pro-solid-svg-icons/faPen';
 import { faPaperclip } from '@fortawesome/pro-regular-svg-icons/faPaperclip';
 import { faBell } from '@fortawesome/pro-regular-svg-icons/faBell';
 import { faBell as faBellSolid } from '@fortawesome/pro-solid-svg-icons/faBell';
@@ -220,12 +221,14 @@ import { faThumbsUp } from '@fortawesome/pro-regular-svg-icons/faThumbsUp';
 import { faGrid2 } from '@fortawesome/pro-regular-svg-icons/faGrid2';
 import { faWindow } from '@fortawesome/pro-regular-svg-icons/faWindow';
 import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons';
+import { faRotate as faRotateSolid } from '@fortawesome/pro-solid-svg-icons/faRotate';
 import { faMemoCircleInfo as faMemoCircleInfoSolid } from '@fortawesome/pro-solid-svg-icons/faMemoCircleInfo';
 import { faChevronRight } from '@fortawesome/pro-regular-svg-icons/faChevronRight';
 import { faUsersMedical as faUsersMedicalSolid } from '@fortawesome/pro-solid-svg-icons/faUsersMedical';
 import { faSquareList as faSquareListSolid } from '@fortawesome/pro-solid-svg-icons/faSquareList';
 import { faCaretDown as faCaretDownSolid } from '@fortawesome/pro-solid-svg-icons/faCaretDown';
 import { faCaretRight as faCaretRightSolid } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
+import { faBlockQuestion as faBlockQuestionSolid } from '@fortawesome/pro-solid-svg-icons/faBlockQuestion';
 import { faUnlock as faUnlockSolid } from '@fortawesome/pro-solid-svg-icons/faUnlock';
 
 /**
@@ -308,6 +311,7 @@ export const initFontAwesomeIcon = () => {
     faPenLine,
     faPenLineSolid,
     faPen,
+    faPenSolid,
     faPaperclip,
     faBell,
     faBellSolid,
@@ -463,6 +467,7 @@ export const initFontAwesomeIcon = () => {
     faChevronDown,
     faChevronUp,
     faBadgeCheck,
+    faRotateSolid,
     faAt,
     faThumbsUp,
     faGrid2,
@@ -473,6 +478,7 @@ export const initFontAwesomeIcon = () => {
     faSquareListSolid,
     faCaretDownSolid,
     faCaretRightSolid,
+    faBlockQuestionSolid,
     faUnlockSolid,
   );
 };
@@ -539,6 +545,7 @@ export const fontAwesomeIcons = {
   PenLine: 'fa-regular fa-pen-line',
   PenLineSolid: 'fa-solid fa-pen-line',
   Pen: 'fa-regular fa-pen',
+  PenSolid: 'fa-solid fa-pen',
   Paperclip: 'fa-regular fa-paperclip',
   Bell: 'fa-regular fa-bell',
   BellSolid: 'fa-solid fa-bell',
@@ -695,16 +702,18 @@ export const fontAwesomeIcons = {
   ChevronDown: 'fa-regular fa-chevron-down',
   ChevronUp: 'fa-regular fa-chevron-up',
   BadgeCheck: 'fa-solid fa-badge-check',
-  ChevronRight: 'fa-regular fa-chevron-right',
+  RotateSolid: 'fa-solid fa-rotate',
   At: 'fa-regular fa-at',
   ThumbsUp: 'fa-regular fa-thumbs-up',
   Grid2: 'fa-regular fa-grid-2',
   Window: 'fa-regular fa-window',
   MemoCircleInfoSolid: 'fa-solid fa-memo-circle-info',
+  ChevronRight: 'fa-regular fa-chevron-right',
   UsersMedicalSolid: 'fa-solid fa-users-medical',
   SquareListSolid: 'fa-solid fa-square-list',
   CaretDownSolid: 'fa-solid fa-caret-down',
   CaretRightSolid: 'fa-solid fa-caret-right',
+  BlockQuestionSolid: 'fa-solid fa-block-question',
   UnlockSolid: 'fa-solid fa-unlock',
 };
 

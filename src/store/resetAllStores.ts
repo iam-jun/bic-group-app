@@ -1,7 +1,6 @@
 import useSelectAudienceStore from '~/components/SelectAudience/store';
 import useAuthController from '~/screens/auth/store';
 import useCommunityJoinedGroupTreeStore from '~/screens/groups/components/CommunityJoinedGroupTree/store';
-import useCodePushStore from '~/store/codePush';
 import useCommentsStore from '~/store/entities/comments';
 import usePostsStore from './entities/posts';
 import useHomeStore from '~/screens/Home/store';
@@ -67,9 +66,12 @@ import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftC
 import usePublishStore from '~/screens/YourContent/components/Publish/store';
 import useUserBadge from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
 import usePersonalPrivacy from '~/screens/Menu/AccountSettings/PrivacyCenter/store';
+import useYourQuizStore from '~/screens/quiz/YourQuiz/store';
+import useTakeQuizStore from '~/screens/quiz/TakeQuiz/store';
 import useMembershipPolicySettingsStore from '~/screens/groups/MembershipPolicySettings/store';
 import usePreviewJoinableGroupStore from '~/components/PreviewJoinableGroup/store';
 import useNotiSettingsStore from '~/screens/Notification/NotiSettings/store';
+import useAdvancedNotiSettingsStore from '~/screens/Notification/AdvancedSettings/store';
 
 export const excludedStore = [
   useAuthController,
@@ -107,6 +109,8 @@ const stores = [
   useArticleScheduleContentStore,
   useCreatePostStore,
   useGroupJoinableUsersStore,
+  useYourQuizStore,
+  useTakeQuizStore,
 
   // others
   useChatStore,
@@ -127,7 +131,6 @@ const stores = [
   useSearchJoinedCommunitiesStore,
   useGiphyStore,
   useSeriesStore,
-  useCodePushStore,
   useAddArticlesStore,
   useForgotPasswordStore,
   useChangePasswordStore,
@@ -157,6 +160,7 @@ const stores = [
   useMembershipPolicySettingsStore,
   usePreviewJoinableGroupStore,
   useNotiSettingsStore,
+  useAdvancedNotiSettingsStore,
 ];
 
 export const resetAllStores = () => {
