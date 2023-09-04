@@ -36,6 +36,7 @@ import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
 import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const NOT_SHOW_DELETE_OPTION_LIST = [
   NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME,
@@ -63,8 +64,29 @@ const Notification = () => {
     }, [isFocused],
   );
 
+  const trackEventChangeTab = (eventName: string) => {
+    trackEvent({
+      event: eventName,
+      sendWithUserId: true,
+    });
+  };
+
   const onPressFilterItem = (index: number) => {
     setActiveIndex(index);
+    switch (index) {
+      case 1:
+        trackEventChangeTab(TrackingEvent.UNREAD_NOTI_VIEWED);
+        break;
+      case 2:
+        trackEventChangeTab(TrackingEvent.MENTION_NOTI_VIEWED);
+        break;
+      case 3:
+        trackEventChangeTab(TrackingEvent.IMPORTANT_NOTI_VIEWED);
+        break;
+      default:
+        trackEventChangeTab(TrackingEvent.ALL_NOTI_VIEWED);
+        break;
+    }
   };
 
   const handleMarkNotification = (data: any) => {
