@@ -59,7 +59,7 @@ const InvitationItem = ({ id, groupedId }: Props) => {
 
   const onPressTarget = (textName: string) => {
     if (textName === name || textName === communityName) {
-      if (!isRootGroup && groupId && communityId) {
+      if (!isRootGroup && groupId && communityId && textName !== communityName) {
         rootNavigation.navigate(
           groupStack.groupDetail, {
             groupId,
