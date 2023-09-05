@@ -207,7 +207,7 @@ const NotiSettingDetail: FC<IRouteParams> = (props) => {
       <View key={item.name} style={styles.childContainer}>
         <Text.BodyMMedium
           testID="notification_settings_detail.child.title"
-          color={!Boolean(enable) ? colors.neutral30 : colors.neutral80}
+          color={enable ? colors.neutral80 : colors.neutral30}
           style={styles.childHeader}
         >
           {title}
