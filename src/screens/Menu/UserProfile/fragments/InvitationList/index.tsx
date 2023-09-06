@@ -22,7 +22,7 @@ const InvitationList = () => {
   const actions = useMyInvitationsStore((state) => state.actions);
   const data = useMyInvitationsStore((state) => state.groupedInvitations);
   const loading = useMyInvitationsStore((state) => state.loading);
-  const hasNextPage = useMyInvitationsStore((state) => state.hasNextPage);
+  const hasNextPage = useMyInvitationsStore((state) => state.cursors?.next);
 
   useEffect(() => {
     actions.getInvitations(true);
