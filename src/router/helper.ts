@@ -386,6 +386,8 @@ export const getScreenAndParams = (data: {
       }
       break;
     }
+    case NOTIFICATION_TYPE.GROUP_SET_INVITATION:
+    case NOTIFICATION_TYPE.GROUP_SET_DEFAULT_INVITATION:
     case NOTIFICATION_TYPE.GROUP_INVITATION_FEEDBACK: {
       const communityId = target?.communityId || '';
       const groupId = target?.id || '';
@@ -396,6 +398,10 @@ export const getScreenAndParams = (data: {
 
       if (targetType === InvitationTargetType.GROUP && !!groupId) {
         return navigateGroupMembers({ groupId, communityId });
+      }
+
+      if (targetType === InvitationTargetType.GROUP_SET || targetType === InvitationTargetType.GROUP_SET_DEFAULT) {
+        return { screen: mainStack.notification, params: { notificationData: data } };
       }
       break;
     }

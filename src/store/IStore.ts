@@ -64,6 +64,7 @@ import { INotiSettingsStore } from '~/screens/Notification/NotiSettings/store';
 import { IGroupJoinableUsersState } from '~/components/InvitePeopleToYourGroup/store';
 import { INotiInvitationsStore } from '~/screens/Notification/components/NotificationItem/store';
 import { IAdvancedNotiSettingsStore } from '~/screens/Notification/AdvancedSettings/store';
+import { IGroupSetInvitationsStore } from '~/components/InvitationGroupSet/store';
 
 export interface BicStore {
   entities: {
@@ -220,4 +221,5 @@ export interface BicStore {
   maintenanceStore: IMaintenanceState;
   pinContent: IPinContentState;
   previewJoinableGroupStore: IPreviewJoinableGroupState;
+  IGroupSetInvitationsStore: IGroupSetInvitationsStore;
 }

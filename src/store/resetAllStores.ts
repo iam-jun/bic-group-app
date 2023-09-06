@@ -74,6 +74,7 @@ import useGroupJoinableUsersStore from '~/components/InvitePeopleToYourGroup/sto
 import useNotiInvitationsStore from '~/screens/Notification/components/NotificationItem/store';
 import useMyInvitationsStore from '~/screens/Menu/UserProfile/fragments/InvitationList/store';
 import useAdvancedNotiSettingsStore from '~/screens/Notification/AdvancedSettings/store';
+import useGroupSetInvitationsStore from '~/components/InvitationGroupSet/store';
 
 export const excludedStore = [
   useAuthController,
@@ -166,6 +167,7 @@ const stores = [
   useNotiInvitationsStore,
   useMyInvitationsStore,
   useAdvancedNotiSettingsStore,
+  useGroupSetInvitationsStore,
 ];
 
 export const resetAllStores = () => {
