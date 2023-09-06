@@ -12,7 +12,15 @@
       "short_week": "w",
       "short_year": "y",
       "minutes": "mins",
-      "hours": "hours"
+      "hours": "hours",
+      "long_min": "minute ago",
+      "long_mins": "minutes ago",
+      "long_hour": "hour ago",
+      "long_hours": "hours ago",
+      "long_day": "day ago",
+      "long_days": "days ago",
+      "long_week": "week ago",
+      "long_weeks": "weeks ago"
     },
     "text_update_title": "New update",
     "text_update_content": "System optimization, faster, more convenient",
@@ -100,7 +108,6 @@
     "label_discard_changes": "Discard Changes",
     "text_not_saved_changes_warning": "Your changes haven’t been saved. Are you sure to discard changes?",
     "text_discard_warning": "If you discard now, you'll lose any changes that you've made",
-    "text_invite": "Invite",
     "text_search_not_found": "Not found",
     "title_group_add_member": {
       "1": "This person will be added to this group chat and group {0} also. Do you want to continue?",
@@ -245,7 +252,25 @@
     "text_send_request_join_successfully": "Sent request successfully",
     "edit_settings": "Edit Settings",
     "text_new": "New",
-    "text_empty": "Empty"
+    "text_empty": "Empty",
+    "text_invite_people_to_your_group": "Invite people to your group",
+    "text_invite_people_to_your_community": "Invite people to your community",
+    "text_search_for_people": "Search for people",
+    "text_selected_people": "Selected people",
+    "text_invite": "Invite",
+    "text_maximum": "Maximum {{count}}",
+    "text_you_have_seen_it_all": "You have seen it all",
+    "alert_quit_without_completing": {
+      "title": "Quit without completing?",
+      "content": "Invites won’t be sent and your selections won’t be saved.",
+      "button_keep_editing": "Keep Editing",
+      "button_quit": "Quit"
+    },
+    "text_no_one_is_invited": "No one is invited!",
+    "text_invite_someone": "Invite someone",
+    "text_to_see_them_here": "to see them here",
+    "text_invited_by": "Invited by",
+    "button_cancel_invite": "Cancel Invite"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -1061,6 +1086,7 @@
     "search_results": "Search results",
     "all_groups": "All groups",
     "text_search_member": "Search member...",
+    "text_search_for_members": "Search for members",
     "group_menu": {
       "label_admin_tools": "Admin Tools",
       "label_copy_group_link": "Copy Link",
@@ -1384,7 +1410,8 @@
     "text_search_communities": "Search...",
     "member_tab_types": {
       "title_member_list": "Member List",
-      "title_member_requests": "Member Requests"
+      "title_member_requests": "Member Requests",
+      "title_invited_people": "Invited People"
     },
     "join_request_setting": {
       "title": "Joining Approval Required",

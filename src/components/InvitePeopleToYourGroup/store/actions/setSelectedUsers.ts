@@ -1,4 +1,4 @@
-import { IGroupJoinableUsersState } from '..';
+import { IGroupJoinableUsersState } from '../index';
 
 const setSelectedUsers = (set, get) => (userId: string) => {
   const { selectedUsers }: IGroupJoinableUsersState = get();

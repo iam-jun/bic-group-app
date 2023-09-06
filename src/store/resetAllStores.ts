@@ -52,7 +52,6 @@ import useCreatePostStore from '~/screens/post/CreatePost/store';
 import useLinkPreviewStore from './linkPreview';
 import useSeriesContentModalStore from '~/components/series/SeriesContentModal/store';
 import useAppStore from './app';
-import useGroupJoinableUsersStore from '~/screens/groups/GroupMembers/AddMembersToGroup/store';
 import useSelectSeriesStore from '~/components/SelectSeries/store';
 import useSelectTagsStore from '~/components/SelectTags/store';
 import useValidateSeriesTagsStore from '~/components/ValidateSeriesTags/store';
@@ -71,6 +70,7 @@ import useVisibilityPrivacyStore from '~/screens/Menu/AccountSettings/PrivacyCen
 import useMembershipPolicySettingsStore from '~/screens/groups/MembershipPolicySettings/store';
 import usePreviewJoinableGroupStore from '~/components/PreviewJoinableGroup/store';
 import useNotiSettingsStore from '~/screens/Notification/NotiSettings/store';
+import useGroupJoinableUsersStore from '~/components/InvitePeopleToYourGroup/store';
 import useAdvancedNotiSettingsStore from '~/screens/Notification/AdvancedSettings/store';
 
 export const excludedStore = [
@@ -89,6 +89,7 @@ const stores = [
 
   // components
   useReportContentStore,
+  useGroupJoinableUsersStore,
 
   // screens
   useHomeStore,

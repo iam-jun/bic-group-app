@@ -3,7 +3,7 @@ import appConfig from '~/configs/appConfig';
 import { IJoinableUsers, IParamsGetJoinableUsers } from '~/interfaces/IGroup';
 import { mapItems } from '~/screens/groups/helper/mapper';
 import showToastError from '~/store/helper/showToastError';
-import { IGroupJoinableUsersState } from '..';
+import { IGroupJoinableUsersState } from '../index';
 
 const getGroupJoinableUsers = (set, get) => async (payload: IParamsGetJoinableUsers) => {
   const { groupId, key, isLoadMore } = payload;

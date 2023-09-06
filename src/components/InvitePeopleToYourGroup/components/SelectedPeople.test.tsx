@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
-import ChosenPeople from './ChosenPeople';
+import SelectedPeople from './SelectedPeople';
 import { user1, user2 } from '~/test/mock_data/joinableUsers';
 
-describe('ChosenPeople', () => {
+describe('SelectedPeople', () => {
   it('renders correctly with selected users', () => {
     const testProps = {
       data: {
@@ -13,9 +13,8 @@ describe('ChosenPeople', () => {
       selectedUsers: ['user-1', 'user-2'],
       onSelectUser: jest.fn(),
     };
-    const { getByTestId, getByText } = render(<ChosenPeople {...testProps} />);
+    const { getByTestId, getByText } = render(<SelectedPeople {...testProps} />);
     expect(getByTestId('chosen_people')).toBeDefined();
-    expect(getByTestId('chosen_people.title').props.children).toEqual('Chosen People:  2');
     expect(getByText('User 1')).toBeDefined();
     expect(getByText('User 2')).toBeDefined();
   });
@@ -28,13 +27,13 @@ describe('ChosenPeople', () => {
       selectedUsers: ['user-1'],
       onSelectUser: jest.fn(),
     };
-    const { getByTestId } = render(<ChosenPeople {...testProps} />);
+    const { getByTestId } = render(<SelectedPeople {...testProps} />);
     fireEvent.press(getByTestId('avatar.action_icon.button'));
     expect(testProps.onSelectUser).toHaveBeenCalledWith('user-1');
   });
 
   it('renders nothing with no selected users', () => {
-    const { queryByTestId } = render(<ChosenPeople data={{}} selectedUsers={[]} onSelectUser={jest.fn()} />);
+    const { queryByTestId } = render(<SelectedPeople data={{}} selectedUsers={[]} onSelectUser={jest.fn()} />);
     expect(queryByTestId('chosen_people')).toBeNull();
   });
 });

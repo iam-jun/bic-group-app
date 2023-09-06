@@ -1,5 +1,5 @@
 import { StyleSheet, FlatList, View } from 'react-native';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { spacing } from '~/theme';
@@ -7,27 +7,45 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Text from '~/baseComponents/Text';
 import Avatar from '~/baseComponents/Avatar';
 import images from '~/resources/images';
-import { useBaseHook } from '~/hooks';
 import { IJoinableUsers } from '~/interfaces/IGroup';
 import { IObject } from '~/interfaces/common';
 
 interface Props {
   data: IObject<IJoinableUsers>;
   selectedUsers: string[];
+  loading?: boolean;
   onSelectUser: (userId: string) => void;
 }
 
-const ChosenPeople = ({ data, selectedUsers, onSelectUser }: Props) => {
-  const { t } = useBaseHook();
+const SelectedPeople = ({
+  data, selectedUsers, loading = false, onSelectUser,
+}: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles();
 
-  const renderItem = ({ item }: {item: string; index: number}) => {
+  const refFlatList = useRef(null);
+  const refValue = useRef(selectedUsers.length);
+
+  const pointerEvents = loading ? 'none' : 'auto';
+  const colorText = loading ? theme.colors.transparent1 : theme.colors.neutral40;
+
+  const [isAdd, setIsAdd] = useState(false);
+
+  useEffect(() => {
+    if (refValue.current < selectedUsers.length) {
+      setIsAdd(true);
+    } else {
+      setIsAdd(false);
+    }
+    refValue.current = selectedUsers.length;
+  }, [selectedUsers.length]);
+
+  const renderItem = ({ item }: { item: string; index: number }) => {
     const currentUser = data[item];
     const { avatar, fullname } = currentUser;
 
     return (
-      <View style={styles.itemSelectedUser}>
+      <View pointerEvents={pointerEvents} style={styles.itemSelectedUser}>
         <Avatar.Base
           isRounded
           source={avatar}
@@ -36,7 +54,7 @@ const ChosenPeople = ({ data, selectedUsers, onSelectUser }: Props) => {
           onPressAction={() => onSelectUser(item)}
         />
         <ViewSpacing height={spacing.margin.small} />
-        <Text.BodyS maxLength={10} color={theme.colors.neutral40}>
+        <Text.BodyS numberOfLines={1} color={colorText}>
           {fullname}
         </Text.BodyS>
       </View>
@@ -45,25 +63,23 @@ const ChosenPeople = ({ data, selectedUsers, onSelectUser }: Props) => {
 
   if (selectedUsers.length === 0) return null;
 
+  const onContentSizeChange = () => {
+    if (isAdd) {
+      refFlatList.current.scrollToEnd();
+    }
+  };
+
   return (
     <View style={styles.container} testID="chosen_people">
-      <Text.SubtitleM
-        testID="chosen_people.title"
-        color={theme.colors.neutral60}
-        style={styles.marginHorizontal}
-        useI18n
-      >
-        {`${t('common:text_chosen')}:  ${selectedUsers.length}`}
-      </Text.SubtitleM>
-
       <FlatList
+        ref={refFlatList}
         horizontal
-        style={styles.marginHorizontal}
         data={selectedUsers}
         showsHorizontalScrollIndicator={false}
         renderItem={renderItem}
         ItemSeparatorComponent={() => <ViewSpacing width={spacing.margin.base} />}
         keyboardShouldPersistTaps="handled"
+        onContentSizeChange={onContentSizeChange}
       />
     </View>
   );
@@ -71,15 +87,13 @@ const ChosenPeople = ({ data, selectedUsers, onSelectUser }: Props) => {
 
 const createStyles = () => StyleSheet.create({
   container: {
-    marginBottom: spacing.margin.extraLarge,
+    marginTop: spacing.margin.large,
   },
   itemSelectedUser: {
     alignItems: 'center',
-    paddingTop: spacing.padding.base,
-  },
-  marginHorizontal: {
-    marginHorizontal: spacing.margin.large,
+    marginTop: spacing.margin.small,
+    width: 77,
   },
 });
 
-export default ChosenPeople;
+export default SelectedPeople;

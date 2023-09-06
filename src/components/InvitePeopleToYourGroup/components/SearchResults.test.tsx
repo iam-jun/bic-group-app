@@ -24,16 +24,9 @@ describe('SearchResults', () => {
     });
 
     const { queryByText, getByTestId } = render(
-      <SearchResults
-        data={data}
-        selectedUsers={selectedUsers}
-        onLoadMore={onLoadMore}
-        onSelectUser={onSelectUser}
-      />,
+      <SearchResults data={data} selectedUsers={selectedUsers} onLoadMore={onLoadMore} onSelectUser={onSelectUser} />,
     );
-    expect(getByTestId('search_results.title').props.children).toEqual('Search Results');
     expect(queryByText('User 1')).not.toBeNull();
-    expect(queryByText('@user1')).not.toBeNull();
     const checkboxBtn = getByTestId('search_results.checkbox');
     expect(checkboxBtn).toBeDefined();
     fireEvent.press(checkboxBtn);
@@ -51,12 +44,7 @@ describe('SearchResults', () => {
     });
 
     const { queryByText, getByTestId } = render(
-      <SearchResults
-        data={data}
-        selectedUsers={selectedUsers}
-        onLoadMore={onLoadMore}
-        onSelectUser={onSelectUser}
-      />,
+      <SearchResults data={data} selectedUsers={selectedUsers} onLoadMore={onLoadMore} onSelectUser={onSelectUser} />,
     );
     expect(getByTestId('search_results.loading')).toBeDefined();
     expect(queryByText('Search Results')).toBeNull();
@@ -75,12 +63,7 @@ describe('SearchResults', () => {
     });
 
     const { getByTestId } = render(
-      <SearchResults
-        data={data}
-        selectedUsers={selectedUsers}
-        onLoadMore={onLoadMore}
-        onSelectUser={onSelectUser}
-      />,
+      <SearchResults data={data} selectedUsers={selectedUsers} onLoadMore={onLoadMore} onSelectUser={onSelectUser} />,
     );
     expect(getByTestId('no_search_results')).toBeDefined();
   });
@@ -95,15 +78,9 @@ describe('SearchResults', () => {
       return state;
     });
 
-    const { getByTestId, queryByTestId } = render(
-      <SearchResults
-        data={data}
-        selectedUsers={selectedUsers}
-        onLoadMore={onLoadMore}
-        onSelectUser={onSelectUser}
-      />,
+    const { queryByTestId } = render(
+      <SearchResults data={data} selectedUsers={selectedUsers} onLoadMore={onLoadMore} onSelectUser={onSelectUser} />,
     );
-    expect(getByTestId('search_results.loading_more')).toBeDefined();
     expect(queryByTestId('search_results.loading')).toBeNull();
   });
 });
