@@ -250,7 +250,8 @@
     "page_not_found": {
       "title": "Không tìm thấy trang",
       "description": "Rất tiếc, chúng tôi không tìm thấy trang bạn yêu cầu. Vui lòng quay lại trang chủ"
-    }
+    },
+    "text_please_try_again": "Vui lòng thử lại"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -1219,6 +1220,12 @@
     "text_you_have_previously_joined": "Bạn đã tham gia rồi",
     "text_you_have_previously_declined": "Trước đây bạn đã từ chối tham gia",
     "text_invitation_has_been_canceled": "Lời mời đã bị hủy",
+    "text_turn_off_noti_for_post": "Tắt thông báo về bài đăng này",
+    "text_turn_off_noti_for_article": "Tắt thông báo về bài viết này",
+    "text_turn_on_noti_for_post": "Bật thông báo về bài đăng này",
+    "text_turn_on_noti_for_article": "Bật thông báo về bài viết này",
+    "text_turn_off_noti_for_group": "Tắt thông báo về lời mời trong nhóm này",
+    "text_turn_on_noti_for_group": "Bật thông báo về lời mời trong nhóm này",
     "notification_settings": {
       "title": "Cài đặt thông báo",
       "screen_title": "Cài đặt chung",

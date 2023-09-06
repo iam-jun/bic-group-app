@@ -278,7 +278,8 @@
     "page_not_found": {
       "title": "Page Not Found",
       "description": "We're sorry, the page you requested could not be found. Please go back to the homepage"
-    }
+    },
+    "text_please_try_again": "Please try again"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -1273,6 +1274,12 @@
     "text_you_have_previously_joined": "You have previously joined",
     "text_you_have_previously_declined": "You have previously declined to join",
     "text_invitation_has_been_canceled": "The invitation has been canceled",
+    "text_turn_off_noti_for_post": "Turn off notification about this post",
+    "text_turn_off_noti_for_article": "Turn off notification about this article",
+    "text_turn_on_noti_for_post": "Turn on notification about this post",
+    "text_turn_on_noti_for_article": "Turn on notification about this article",
+    "text_turn_off_noti_for_group": "Turn off notifications about invitations in this group",
+    "text_turn_on_noti_for_group": "Turn on notifications about invitations in this group",
     "notification_settings": {
       "title": "Notification Settings",
       "screen_title": "General Settings",
