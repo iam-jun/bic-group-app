@@ -6,6 +6,7 @@ import {
 } from '~/test/testUtils';
 import Tags from '.';
 import useTagsControllerStore from '../store';
+import { ITypeGroup } from '~/interfaces/common';
 
 describe('Tags screen', () => {
   it('render correctly with default state', () => {
@@ -28,7 +29,8 @@ describe('Tags screen', () => {
     const wrapper = renderWithRedux(<Tags route={{
       params: {
         id: '123',
-        type: 'community',
+        groupId: '123',
+        type: ITypeGroup.COMMUNITY,
       },
     }}
     />);

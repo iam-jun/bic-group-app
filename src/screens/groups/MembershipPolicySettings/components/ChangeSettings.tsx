@@ -98,9 +98,7 @@ const ChangeSettings = (props: ChangeSettingsProps) => {
   const renderButtonShowMore = () => (
     <TouchableOpacity style={styles.buttonShowMore} onPress={onPressShowMore}>
       <Text.LinkM color={colors.blue50}>
-        {isShowMore
-          ? t('settings:membership_policy_settings:change_settings:button_show_less')
-          : t('settings:membership_policy_settings:change_settings:button_more_details')}
+        {isShowMore ? t('common:btn_show_less') : t('common:btn_more_details')}
       </Text.LinkM>
       <Icon style={styles.icon} size={12} icon={isShowMore ? 'ChevronUp' : 'ChevronDown'} tintColor={colors.blue50} />
     </TouchableOpacity>

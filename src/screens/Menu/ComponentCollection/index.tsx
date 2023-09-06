@@ -1,7 +1,7 @@
 import React from 'react';
 import StorybookUIRoot from '../../../../.ondevice/Storybook';
 
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 
 const ComponentCollection = (): React.ReactElement => {

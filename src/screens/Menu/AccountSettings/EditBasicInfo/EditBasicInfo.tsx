@@ -12,7 +12,7 @@ import {
 import OptionMenu from './fragments/OptionMenu';
 import { useRootNavigation } from '~/hooks/navigation';
 
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import TitleComponent from '../fragments/TitleComponent';
 import Button from '~/beinComponents/Button';
@@ -30,6 +30,7 @@ import useCommonController from '~/screens/store';
 import useMenuController from '../../store';
 import useModalStore from '~/store/modal';
 import { formatDate } from '~/utils/formatter';
+import { trackEvent } from '~/services/tracking';
 
 const EditBasicInfo = () => {
   const theme: ExtendedTheme = useTheme();
@@ -95,6 +96,7 @@ const EditBasicInfo = () => {
       },
       callback: () => rootNavigation.goBack(),
     });
+    trackEvent({ event: 'Basic Info Updated', sendWithUserId: true });
   };
 
   const onRelationshipItemPress = (item: IRelationshipItem) => {

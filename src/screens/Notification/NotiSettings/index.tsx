@@ -6,7 +6,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Animated from 'react-native-reanimated';
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
@@ -22,6 +22,7 @@ import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 import { INotiSettings } from '~/interfaces/INotification';
 import useAdvancedNotiSettingsStore from '../AdvancedSettings/store';
 import useYourCommunitiesStore from '~/screens/communities/Communities/components/YourCommunities/store';
+import { trackEvent } from '~/services/tracking';
 
 const NotificationSettings = () => {
   const theme: ExtendedTheme = useTheme();
@@ -62,6 +63,11 @@ const NotificationSettings = () => {
     const dataUpdate = { ...generic, enable: isChecked };
 
     actions.updateSettings(payload, dataUpdate);
+    trackEvent({
+      event: 'Master Noti Changed',
+      sendWithUserId: true,
+      properties: { state: isChecked },
+    });
   };
 
   const handlePressItem = (item: INotiSettings) => {

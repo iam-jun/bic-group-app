@@ -15,11 +15,13 @@ const VideoProcessingNotice = () => {
   const styles = createStyle(theme);
   const { t } = useBaseHook();
   const total = usePostsInProgressStore((state) => state.total);
+  const hasNextPage = usePostsInProgressStore((state) => state.hasNextPage);
   const actions = usePostsInProgressStore((state) => state.actions);
+  const showPlus = hasNextPage && total >= 10;
 
   const text = total > 1 ? t('home:notice_posts_video_uploading').replace(
     '{count}',
-    `${total}`,
+    `${total}${showPlus ? '+' : ''}`,
   ) : t('home:notice_post_video_uploading');
 
   const onClose = () => {

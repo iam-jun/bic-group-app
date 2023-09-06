@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import { StyleSheet } from 'react-native';
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import { BottomListItemProps } from '~/components/BottomList/BottomListItem';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -31,8 +31,11 @@ import { useUserIdAuth } from '~/hooks/auth';
 import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 import { USER_TABS } from '../Menu/UserProfile';
 import { USER_TABS_TYPES } from '../Menu/UserProfile/constants';
+import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
+import { trackEvent } from '~/services/tracking';
 
 const NOT_SHOW_DELETE_OPTION_LIST = [
   NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME,
@@ -92,14 +95,28 @@ const Notification = () => {
     notiActions.deleteNotification(id);
   };
 
-  const handleRemoveNotification = (id: string) => {
+  const trackEventNoti = (eventName: string, item: any) => {
+    const type = item?.extra?.type || undefined;
+    const act = item?.activities?.[0];
+    trackEvent({
+      event: eventName,
+      properties: {
+        content_type: act?.contentType,
+        is_read: item?.isRead,
+        type,
+      },
+    });
+  };
+
+  const handleRemoveNotification = (item: any) => {
+    const id = item?.id || '';
+    if (!id) return;
     notiActions.deleteNotificationLocal(id);
     const toastMessage: IToastMessage = {
       content: t('notification:text_remove_notification_success'),
       buttonText: t('common:text_undo'),
       onButtonPress: () => { onPressUndo(id); },
       duration: 3000,
-      onClose: () => { onPressDelete(id); },
     };
     showToast(toastMessage);
 
@@ -110,6 +127,7 @@ const Notification = () => {
     );
 
     modalActions.hideBottomList();
+    trackEventNoti('Notification Removed', item);
   };
 
   const checkShowDeleteOption = (type: string) => {
@@ -138,7 +156,7 @@ const Notification = () => {
       leftIcon: 'TrashCan',
       title: i18next.t('notification:text_remove_notification'),
       requireIsActor: true,
-      onPress: () => { handleRemoveNotification(item?.id); },
+      onPress: () => { handleRemoveNotification(item); },
     }];
     if (checkShowDeleteOption(type)) {
       menuData.splice(1, 1);
@@ -318,19 +336,10 @@ const Notification = () => {
             case NOTIFICATION_TYPE.GROUP_ADDED_TO_GROUP_TO_USER_IN_ONE_GROUP:
             case NOTIFICATION_TYPE.LEAVE_COMMUNITY_TO_USER:
               if (act?.community?.id) {
-                rootNavigation.navigate(
-                  groupStack.communityDetail, {
-                    communityId: act.community.id,
-                  },
-                );
+                navigateToCommunityDetail({ communityId: act.community.id });
               }
               if (act?.group?.id) {
-                rootNavigation.navigate(
-                  groupStack.groupDetail, {
-                    groupId: act.group.id,
-                    communityId: act?.group?.communityId,
-                  },
-                );
+                navigateToGroupDetail({ groupId: act.group.id, communityId: act?.group?.communityId });
               }
               break;
             case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN:
@@ -408,12 +417,7 @@ const Notification = () => {
             }
             case NOTIFICATION_TYPE.LEAVE_GROUP_TO_USER:
               if (!!act?.group?.[0]?.id) {
-                rootNavigation.navigate(
-                  groupStack.groupDetail, {
-                    groupId: act.group[0].id,
-                    communityId: act?.group?.[0]?.communityId,
-                  },
-                );
+                navigateToGroupDetail({ groupId: act.group[0].id, communityId: act?.group?.[0]?.communityId });
               }
               break;
             case NOTIFICATION_TYPE.REMOVE_ARTICLE_TO_USER:
@@ -479,6 +483,15 @@ const Notification = () => {
               break;
             }
 
+            case NOTIFICATION_TYPE.QUIZ_GENERATE_SUCCESSFUL:
+            case NOTIFICATION_TYPE.QUIZ_GENERATE_UNSUCCESSFUL:
+              rootNavigation.navigate(quizStack.previewDraftQuizNotification, {
+                quizId: act?.quizInfo?.quizId,
+                contentId: act?.quizInfo?.contentId,
+                contentType: act?.quizInfo?.contentType,
+              });
+              break;
+
             default:
               console.warn(`Notification type ${type} have not implemented yet`);
               break;
@@ -500,6 +513,7 @@ const Notification = () => {
           '\x1b[0m',
         );
       }
+      trackEventNoti('Notification Opened', item);
 
       // finally mark the notification as read
       notiActions.markAsRead(item.id);

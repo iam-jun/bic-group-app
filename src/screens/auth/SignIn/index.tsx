@@ -19,7 +19,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Text from '~/baseComponents/Text';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 

@@ -12,7 +12,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { isEmpty } from 'lodash';
 import moment from 'moment';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import Text from '~/baseComponents/Text';
 
@@ -29,6 +29,7 @@ import dimension from '~/theme/dimension';
 import useMenuController from '~/screens/Menu/store';
 import useUserProfileStore from '../../UserProfile/store';
 import Button from '~/beinComponents/Button';
+import { trackEvent } from '~/services/tracking';
 
 const AddWork = () => {
   const theme: ExtendedTheme = useTheme();
@@ -140,6 +141,7 @@ const AddWork = () => {
     selectedWorkItem
       ? userProfileActions.editWorkExperience(id, data, navigateBack)
       : userProfileActions.addWorkExperience(data, navigateBack);
+    trackEvent({ event: 'Work Info Updated', sendWithUserId: true });
   };
 
   const onChangeCompany = (text: string) => {

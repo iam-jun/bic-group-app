@@ -1,4 +1,3 @@
-import { IPayloadAddToAllPost } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
@@ -38,7 +37,7 @@ const updateData = (set, get) => (
 ) => {
   try {
     if (!postId) return;
-    const data:IPostsInProgressState = get();
+    const data: IPostsInProgressState = get();
     const { total = 0, data: posts = [] } = data;
 
     const newPosts = posts.filter?.((p: any) => p?.id !== postId);
@@ -61,9 +60,8 @@ const updateData = (set, get) => (
             ...homePosts,
           ] as any;
           if (postData) {
-            usePostsStore.getState().actions.addToPosts({
-              data: { ...postData },
-            } as IPayloadAddToAllPost);
+            // get detail post cause noti socket dont give full data of post
+            usePostsStore.getState().actions.getPostDetail({ postId });
           }
           useHomeStore
             .getState()
