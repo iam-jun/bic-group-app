@@ -69,17 +69,17 @@ const NotificationContent = ({
         />
         )}
       </View>
-      {!!content && (
-      <Markdown
-        testID="notification_content.content"
-        value={content}
-      />
-      )}
-      { Boolean(textNote) && (
-      <Text.BodyM useI18n style={styles.invitationText}>
-        {textNote}
-      </Text.BodyM>
-      )}
+      { Boolean(textNote) ? (
+        <Text.BodyM useI18n style={styles.invitationText}>
+          {textNote}
+        </Text.BodyM>
+      )
+        : Boolean(content) ? (
+          <Markdown
+            testID="notification_content.content"
+            value={content}
+          />
+        ) : null}
       <View style={[styles.row, styles.timeCreated]}>
         {
         Boolean(!isRead)
