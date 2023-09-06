@@ -56,9 +56,9 @@ import TermsView from '~/components/TermsModal';
 import MemberQuestionsModal from '~/components/MemberQuestionsModal';
 import FloatingCreatePost from '~/screens/Home/components/FloatingCreatePost';
 import ScreenWrapper from '~/baseComponents/ScreenWrapper';
-import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
-import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
-import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import GroupProfilePlaceholder from '~/components/placeholder/GroupProfilePlaceholder';
+import HeaderCreatePostPlaceholder from '~/components/placeholder/HeaderCreatePostPlaceholder';
+import PostViewPlaceholder from '~/components/placeholder/PostViewPlaceholder';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
