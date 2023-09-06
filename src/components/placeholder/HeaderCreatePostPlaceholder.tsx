@@ -9,7 +9,7 @@ import dimension from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
 import { useSkeletonAnimation } from '~/hooks/useSkeletonAnimation';
-import ViewSpacing from '../ViewSpacing';
+import ViewSpacing from '../../beinComponents/ViewSpacing';
 
 export interface CreatePostHeaderPlaceholderProps {
   style?: StyleProp<ViewStyle>;

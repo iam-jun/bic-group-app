@@ -11,7 +11,7 @@ import { getRandomInt } from '~/utils/generator';
 import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';
 import { useSkeletonAnimation } from '~/hooks/useSkeletonAnimation';
-import ViewSpacing from '../ViewSpacing';
+import ViewSpacing from '../../beinComponents/ViewSpacing';
 
 export interface PostViewPlaceholderProps {
   style?: StyleProp<ViewStyle>;

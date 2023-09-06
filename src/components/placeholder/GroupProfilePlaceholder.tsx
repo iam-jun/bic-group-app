@@ -8,7 +8,7 @@ import Animated from 'react-native-reanimated';
 import spacing from '~/theme/spacing';
 import { getRandomInt } from '~/utils/generator';
 import { useSkeletonAnimation } from '~/hooks/useSkeletonAnimation';
-import ViewSpacing from '../ViewSpacing';
+import ViewSpacing from '../../beinComponents/ViewSpacing';
 
 export interface GroupProfilePlaceholderProps {
   style?: StyleProp<ViewStyle>;

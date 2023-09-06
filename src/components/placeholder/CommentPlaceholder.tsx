@@ -10,7 +10,7 @@ import dimension from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 import { getRandomInt } from '~/utils/generator';
 import { useSkeletonAnimation } from '~/hooks/useSkeletonAnimation';
-import ViewSpacing from '../ViewSpacing';
+import ViewSpacing from '../../beinComponents/ViewSpacing';
 
 export interface CommentPlaceholderProps {
   style?: StyleProp<ViewStyle>;
