@@ -19,6 +19,8 @@ import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 import { ContentFeed, AttributeFeed } from '~/interfaces/IFeed';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import { BoxListPinContent } from '~/components/PinContent/components';
+import InvitationView from '../InvitationView';
+import { ITypeGroup } from '~/interfaces/common';
 
 interface CommunityContentViewProps {
   community: ICommunity;
@@ -48,13 +50,13 @@ const _CommunityContentView = ({
   onButtonLayout,
 }: CommunityContentViewProps) => {
   const theme: ExtendedTheme = useTheme();
-  const { colors } = theme;
+  const { colors, elevations } = theme;
   const styles = createStyles();
   // const isMounted = useMounted();
   const isMounted = true;
 
   const {
-    id, teamName, groupId,
+    id, teamName, groupId, invitation,
   } = community;
 
   const timelineActions = useTimelineStore((state: ITimelineState) => state.actions);
@@ -130,9 +132,10 @@ const _CommunityContentView = ({
       scrollEventThrottle={16}
       ListHeaderComponentStyle={styles.listHeaderComponentStyle}
       ListHeaderComponent={(
-        <View onLayout={onButtonLayout}>
+        <View onLayout={onButtonLayout} style={elevations.e2}>
           <InfoHeader infoDetail={community} />
           <CommunityTabHeader communityId={id} groupId={groupId} isMember={isMember} teamName={teamName} />
+          <InvitationView data={invitation} type={ITypeGroup.COMMUNITY} communityId={id} groupId="" />
           <CommunityJoinCancelButton community={community} isMember={isMember} />
           <BoxListPinContent id={groupId} />
           <FilterFeedButtonGroup

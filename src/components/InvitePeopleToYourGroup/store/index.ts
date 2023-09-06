@@ -26,15 +26,17 @@ export interface IGroupJoinableUsersState extends IBaseState {
     data: IInvitedPeople[],
     isLoading: boolean,
     isRefreshing: boolean,
-    canLoadMore: boolean,
-    offset: number;
+    cursors: {
+      next: string | null,
+      prev: string | null,
+    },
   }
 
   actions: {
     getGroupJoinableUsers: (payload: IParamsGetJoinableUsers) => void;
     setSelectedUsers: (userId: string) => void;
     invitations: (params: IParamsInvitations) => void;
-    getInvitations: (groupId: string, isRefreshing?: boolean) => Promise<void>;
+    getInvitations: (groupId: string, isRefreshing?: boolean) => void;
     cancelInvitation: (invitationId: string) => Promise<void>;
     clearInviteData: () => void;
     clearInvitedPeople: () => void;
@@ -47,17 +49,19 @@ const initialState: InitStateType<IGroupJoinableUsersState> = {
   loading: false,
   users: {
     ids: [],
-    loading: false,
+    loading: true,
     hasNextPage: false,
   },
   selectedUsers: [],
   searchText: '',
   invitedPeople: {
     data: [],
-    isLoading: false,
+    isLoading: true,
     isRefreshing: false,
-    canLoadMore: true,
-    offset: 0,
+    cursors: {
+      next: null,
+      prev: null,
+    },
   },
 };
 

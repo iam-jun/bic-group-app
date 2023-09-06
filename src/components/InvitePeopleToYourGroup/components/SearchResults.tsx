@@ -1,9 +1,10 @@
 import {
-  StyleSheet, View, FlatList, ActivityIndicator,
+  StyleSheet, View, ActivityIndicator,
 } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
+import { FlatList } from 'react-native-gesture-handler';
 import Text from '~/baseComponents/Text';
 import { dimension, spacing } from '~/theme';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
@@ -31,20 +32,31 @@ const SearchResults = ({
 
   const { ids, loading, hasNextPage } = useGroupJoinableUsersStore((state) => state.users);
 
-  const renderEmpty = () => (!!loading ? null : <NoSearchResultsFound />);
+  const renderEmpty = () => {
+    if (loading) {
+      return (
+        <View style={styles.container} testID="search_results.loading">
+          <ActivityIndicator color={colors.neutral40} />
+        </View>
+      );
+    }
+    return <NoSearchResultsFound />;
+  };
 
   const renderItemUser = ({ item }: { item: string; index: number }) => {
     const isSelected = selectedUsers.includes(item);
+    const isUnselectedAndReachedMax = selectedUsers.length === WARNING_SECTION.MAX && !isSelected;
     const isDisabledCheckbox
-      = (selectedUsers.length === WARNING_SECTION.MAX || loadingView) && isSelected
+      = loadingView && isSelected
         ? 'disabled-auto-selected'
-        : selectedUsers.length === WARNING_SECTION.MAX || loadingView
+        : (loadingView && !isSelected) || isUnselectedAndReachedMax
           ? 'disabled'
           : undefined;
-    const isDisabledText = selectedUsers.length === WARNING_SECTION.MAX || loadingView;
+
+    const isDisabledText = isUnselectedAndReachedMax || loadingView;
     const colorText = loadingView ? colors.transparent1 : colors.neutral70;
     const currentUser = data[item];
-    const { fullname, avatar } = currentUser;
+    const { fullname, avatar } = currentUser || {};
 
     return (
       <PrimaryItem
@@ -66,8 +78,10 @@ const SearchResults = ({
   };
 
   const renderFooterComponent = () => {
-    if (ids.length === 0) return null;
-    if (!hasNextPage && ids.length > 0) {
+    if (ids.length === 0) {
+      return null;
+    }
+    if (!hasNextPage) {
       return (
         <Text.BodyM style={styles.footerContainer} color={colors.neutral30} useI18n>
           common:text_you_have_seen_it_all
@@ -81,24 +95,15 @@ const SearchResults = ({
     );
   };
 
-  if (loading) {
-    return (
-      <View style={styles.container} testID="search_results.loading">
-        <ActivityIndicator color={colors.neutral40} />
-      </View>
-    );
-  }
-
   return (
     <FlatList
       data={ids}
       style={styles.container}
-      initialNumToRender={15}
       ListEmptyComponent={renderEmpty}
       ListFooterComponent={renderFooterComponent}
       renderItem={renderItemUser}
       onEndReached={onLoadMore}
-      onEndReachedThreshold={0.2}
+      onEndReachedThreshold={0.5}
       keyboardShouldPersistTaps="handled"
     />
   );

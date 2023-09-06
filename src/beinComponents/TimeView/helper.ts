@@ -14,19 +14,19 @@ export const formatShortTime = (
   if (deltaSecond < 60) {
     result = i18next.t('common:time:now');
   } else if (deltaSecond < 60 * 60) {
-    result = `${Math.round(deltaSecond / 60)}${
+    result = `${Math.floor(deltaSecond / 60)}${
       lang === 'vi' ? ' ' : ''
     }${i18next.t('common:time:short_min')}`;
   } else if (deltaSecond < 60 * 60 * 24) {
-    result = `${Math.round(deltaSecond / (60 * 60))}${
+    result = `${Math.floor(deltaSecond / (60 * 60))}${
       lang === 'vi' ? ' ' : ''
     }${i18next.t('common:time:short_hour')}`;
   } else if (deltaSecond < 60 * 60 * 24 * 7) {
-    result = `${Math.round(deltaSecond / (60 * 60 * 24))}${
+    result = `${Math.floor(deltaSecond / (60 * 60 * 24))}${
       lang === 'vi' ? ' ' : ''
     }${i18next.t('common:time:short_day')}`;
   } else if (deltaSecond < 60 * 60 * 24 * 7 * 52) {
-    result = `${Math.round(deltaSecond / (60 * 60 * 24 * 7))}${
+    result = `${Math.floor(deltaSecond / (60 * 60 * 24 * 7))}${
       lang === 'vi' ? ' ' : ''
     }${i18next.t('common:time:short_week')}`;
   } else {
@@ -52,25 +52,17 @@ export const formatLongTime = (
   if (deltaSecond < 60) {
     result = i18next.t('common:time:now');
   } else if (deltaSecond < 60 * 60) {
-    const min = Math.round(deltaSecond / 60);
-    result = `${min}${
-      lang === 'vi' ? ' ' : ' '
-    }${min === 1 ? i18next.t('common:time:long_min') : i18next.t('common:time:long_mins')}`;
+    const min = Math.floor(deltaSecond / 60);
+    result = `${min} ${min === 1 ? i18next.t('common:time:long_min') : i18next.t('common:time:long_mins')}`;
   } else if (deltaSecond < 60 * 60 * 24) {
-    const hour = Math.round(deltaSecond / (60 * 60));
-    result = `${hour}${
-      lang === 'vi' ? ' ' : ' '
-    }${hour === 1 ? i18next.t('common:time:long_hour') : i18next.t('common:time:long_hours')}`;
+    const hour = Math.floor(deltaSecond / (60 * 60));
+    result = `${hour} ${hour === 1 ? i18next.t('common:time:long_hour') : i18next.t('common:time:long_hours')}`;
   } else if (deltaSecond < 60 * 60 * 24 * 7) {
-    const day = Math.round(deltaSecond / (60 * 60 * 24));
-    result = `${day}${
-      lang === 'vi' ? ' ' : ' '
-    }${day === 1 ? i18next.t('common:time:long_day') : i18next.t('common:time:long_days')}`;
+    const day = Math.floor(deltaSecond / (60 * 60 * 24));
+    result = `${day} ${day === 1 ? i18next.t('common:time:long_day') : i18next.t('common:time:long_days')}`;
   } else if (deltaSecond < 60 * 60 * 24 * 7 * 52) {
-    const week = Math.round(deltaSecond / (60 * 60 * 24 * 7));
-    result = `${week}${
-      lang === 'vi' ? ' ' : ' '
-    }${week === 1 ? i18next.t('common:time:long_week') : i18next.t('common:time:long_weeks')}`;
+    const week = Math.floor(deltaSecond / (60 * 60 * 24 * 7));
+    result = `${week} ${week === 1 ? i18next.t('common:time:long_week') : i18next.t('common:time:long_weeks')}`;
   } else {
     const formats = [moment.ISO_8601, 'MM/DD/YYYY'];
     const d = moment(

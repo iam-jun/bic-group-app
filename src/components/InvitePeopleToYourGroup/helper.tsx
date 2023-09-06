@@ -22,8 +22,9 @@ export const onPressButtonInvite = (params: IParams) => {
 };
 
 export const onCloseModalInvitePeopleToYourGroup = (params: IParams) => {
-  const { selectedUsers } = useGroupJoinableUsersStore.getState();
-  if (selectedUsers.length > 0) {
+  const { selectedUsers, loading } = useGroupJoinableUsersStore.getState();
+
+  if (selectedUsers.length > 0 && !loading) {
     const { showAlert } = useModalStore.getState().actions;
     showAlert({
       title: t('common:alert_quit_without_completing:title'),

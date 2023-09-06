@@ -26,7 +26,7 @@ import useNotificationStore from './store';
 import INotificationsState from './store/Interface';
 import spacing from '~/theme/spacing';
 import useModalStore from '~/store/modal';
-import { ContentType } from '~/interfaces/INotification';
+import { ContentType, InvitationTargetType } from '~/interfaces/INotification';
 import { useUserIdAuth } from '~/hooks/auth';
 import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 import { USER_TABS } from '../Menu/UserProfile';
@@ -202,6 +202,7 @@ const Notification = () => {
       const type = item?.extra?.type || undefined;
       const act = item?.activities?.[0];
       const target = item?.target;
+      const invitationData = act?.invitation?.target || {};
       clearToastDeleteNoti();
 
       try {
@@ -492,6 +493,45 @@ const Notification = () => {
               });
               break;
 
+            case NOTIFICATION_TYPE.GROUP_INVITATION: {
+              const communityId = invitationData?.communityId || '';
+              const groupId = invitationData?.id || '';
+              const targetType = invitationData?.type || '';
+
+              if (targetType === InvitationTargetType.COMMUNITY && !!communityId) {
+                rootNavigation.navigate(groupStack.communityDetail, { communityId });
+              }
+              if (targetType === InvitationTargetType.GROUP && !!groupId && communityId) {
+                rootNavigation.navigate(
+                  groupStack.groupDetail, {
+                    groupId,
+                    communityId,
+                  },
+                );
+              }
+              break;
+            }
+
+            case NOTIFICATION_TYPE.GROUP_INVITATION_FEEDBACK: {
+              const communityId = invitationData?.communityId || '';
+              const groupId = invitationData?.id || '';
+              const targetType = invitationData?.type || '';
+
+              if (targetType === InvitationTargetType.COMMUNITY && !!communityId) {
+                rootNavigation.navigate(groupStack.communityMembers, {
+                  communityId,
+                  isMember: true,
+                });
+              }
+
+              if (targetType === InvitationTargetType.GROUP && !!groupId) {
+                rootNavigation.navigate(groupStack.groupMembers, {
+                  groupId,
+                  isMember: true,
+                });
+              }
+              break;
+            }
             default:
               console.warn(`Notification type ${type} have not implemented yet`);
               break;

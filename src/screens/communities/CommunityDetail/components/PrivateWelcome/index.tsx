@@ -9,6 +9,9 @@ import CommunityJoinCancelButton from '../CommunityJoinCancelButton';
 import { spacing } from '~/theme';
 import { ICommunity } from '~/interfaces/ICommunity';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
+import InvitationView from '../InvitationView';
+import { ITypeGroup } from '~/interfaces/common';
+import Divider from '~/beinComponents/Divider';
 
 interface PrivateWelcomeProps {
   isFetching: boolean;
@@ -25,10 +28,11 @@ const PrivateWelcome = ({
   onButtonLayout,
   onRefresh,
 }: PrivateWelcomeProps) => {
-  const { joinStatus } = community;
+  const { joinStatus, invitation, id } = community;
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
 
   const theme = useTheme();
+  const { colors, elevations } = theme;
   const styles = createStyles(theme);
 
   return (
@@ -47,11 +51,13 @@ const PrivateWelcome = ({
         ) : undefined
       }
     >
-      <View onLayout={onButtonLayout}>
+      <View onLayout={onButtonLayout} style={elevations.e2}>
         <InfoHeader infoDetail={community} />
+        <InvitationView data={invitation} communityId={id} groupId="" type={ITypeGroup.COMMUNITY} style={styles.invitationView} />
         <CommunityJoinCancelButton style={styles.btnJoin} community={community} isMember={isMember} />
       </View>
 
+      <Divider size={spacing.margin.large} color={colors.gray5} />
       <AboutContent profileInfo={community as any} showPrivate groupId={community?.groupId} />
     </Animated.ScrollView>
   );
@@ -61,13 +67,17 @@ export default PrivateWelcome;
 
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
+
   return StyleSheet.create({
     container: {
-      backgroundColor: colors.neutral,
+      backgroundColor: colors.gray5,
     },
     btnJoin: {
       paddingTop: spacing.padding.base,
       paddingBottom: spacing.padding.large,
+    },
+    invitationView: {
+      marginTop: spacing.margin.base,
     },
   });
 };

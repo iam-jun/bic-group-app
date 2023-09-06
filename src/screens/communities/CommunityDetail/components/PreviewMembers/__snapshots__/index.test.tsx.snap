@@ -88,7 +88,7 @@ Array [
     stickyHeaderIndices={Array []}
     style={
       Object {
-        "marginTop": 4,
+        "marginVertical": 16,
       }
     }
     testID="flatlist"
@@ -1436,7 +1436,7 @@ Array [
     stickyHeaderIndices={Array []}
     style={
       Object {
-        "marginTop": 4,
+        "marginVertical": 16,
       }
     }
     testID="flatlist"
@@ -1778,7 +1778,7 @@ Array [
     stickyHeaderIndices={Array []}
     style={
       Object {
-        "marginTop": 4,
+        "marginVertical": 16,
       }
     }
     testID="flatlist"

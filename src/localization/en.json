@@ -119,7 +119,6 @@
     "message_remove_member_success": "{n} has been removed from this group",
     "title_mention_all": "All members in this group",
     "text_search_no_results": "Sorry, we couldn’t find anything\nrelated to your search.",
-    "title_page_not_found": "Page Not Found",
     "text_edit_success": "Profile updated successfully",
     "text_edit_fail": "Failed to update profile!",
     "text_info": "Info",
@@ -144,6 +143,7 @@
     "text_privacy": "Privacy",
     "btn_approve": "Approve",
     "btn_decline": "Decline",
+    "btn_accept": "Accept",
     "btn_approve_all": "Approve All",
     "btn_decline_all": "Decline All",
     "btn_submit": "Submit",
@@ -270,7 +270,14 @@
     "text_invite_someone": "Invite someone",
     "text_to_see_them_here": "to see them here",
     "text_invited_by": "Invited by",
-    "button_cancel_invite": "Cancel Invite"
+    "button_cancel_invite": "Cancel Invite",
+    "text_invited_you_to_join_this_group": "invited you to join this group.",
+    "text_invited_you_to_join_this_community": "invited you to join this community.",
+    "text_invited": "Invited",
+    "page_not_found": {
+      "title": "Page Not Found",
+      "description": "We're sorry, the page you requested could not be found. Please go back to the homepage"
+    }
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -640,6 +647,15 @@
         "community_members_description": "People in the same community with you can see your information.",
         "only_me_type": "Only Me",
         "only_me_description": "No one can see your information."
+      },
+      "invitation_privacy": {
+        "title": "Invitation Privacy",
+        "screen_description": "Manage the invitation from the group or community in the way you want.",
+        "manual_acceptance_type": "Manual Acceptance",
+        "manual_acceptance_description": "You can review and decide whether accept or decline.",
+        "hide_all_inviations_type": "Hide All Invitations",
+        "hide_all_inviations_description": "Turn off all notifications about invitations, you can still review them later.",
+        "view_all_inviations": "View all Invitations"
       }
     },
     "text_no_experience_to_show": "No experience to show",
@@ -1251,6 +1267,11 @@
     "text_bic_team": "BIC team",
     "text_remove_notification": "Remove this notification",
     "text_remove_notification_success": "Notification removed successfully",
+    "text_invitation_accepted": "Invitation accepted",
+    "text_invitation_declined": "Invitation declined",
+    "text_you_have_previously_joined": "You have previously joined",
+    "text_you_have_previously_declined": "You have previously declined to join",
+    "text_invitation_has_been_canceled": "The invitation has been canceled",
     "notification_settings": {
       "title": "Notification Settings",
       "screen_title": "General Settings",
@@ -1610,7 +1631,8 @@
   "user": {
     "user_tab_types": {
       "title_about": "About",
-      "title_badge_collection": "Badge Collection"
+      "title_badge_collection": "Badge Collection",
+      "title_invitations": "Invitations"
     },
     "empty_badge_collection": {
       "title": "You don't have any badges yet",
@@ -1627,7 +1649,15 @@
       "search_placeholder": "Search for badges name"
     },
     "edit_showing_badges_title": "Edit Showing Badges",
-    "badge_tooltip_placeholder": "Tap here to add a badge"
+    "badge_tooltip_placeholder": "Tap here to add a badge",
+    "text_invitation_privacy_settings": "Invitation Privacy Settings",
+    "invitation_description": "Review the invitations for you to decide whether to accept or decline.",
+    "text_invited_to_join": "invited you to join",
+    "text_invited_you_to_join_a": "invited you to join a",
+    "text_set_of_groups": "set of groups",
+    "text_default_group_set": "You have been invited to a",
+    "text_as_you_join": "as you join",
+    "text_no_invitations_found": "No invitations found"
   },
   "quiz": {
     "create_quiz": "Create Quiz",

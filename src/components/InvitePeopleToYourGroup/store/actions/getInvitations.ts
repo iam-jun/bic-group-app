@@ -8,11 +8,7 @@ const getInvitations
   = (set, get) => async (groupId: string, isRefreshing = false) => {
     try {
       const { invitedPeople }: IGroupJoinableUsersState = get();
-      const {
-        canLoadMore, offset, data,
-      } = invitedPeople || {};
-
-      if (!isRefreshing && !canLoadMore) return;
+      const { cursors, data } = invitedPeople || {};
 
       set((state: IGroupJoinableUsersState) => {
         if (isRefreshing) {
@@ -24,7 +20,7 @@ const getInvitations
 
       const params: IParamsGetInvitations = {
         limit: appConfig.recordsPerPage,
-        offset: isRefreshing ? 0 : offset,
+        cursor: isRefreshing ? null : cursors?.next,
       };
 
       const response = await groupApi.getInvitations(groupId, params);
@@ -32,8 +28,7 @@ const getInvitations
       const members = response.data;
       const newData: IGroupJoinableUsersState['invitedPeople'] = {
         data: isRefreshing ? members : data.concat(members),
-        canLoadMore: !!response?.meta?.hasNextPage,
-        offset: isRefreshing ? members.length : offset + members.length,
+        cursors: response?.meta?.cursors,
         isLoading: false,
         isRefreshing: false,
       };

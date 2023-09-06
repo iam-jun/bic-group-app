@@ -41,6 +41,7 @@ const InvitePeopleToYourGroup = (props: InvitePeopleToYourGroupProps) => {
   const {
     data, selectedUsers, loading, actions, searchText,
   } = useGroupJoinableUsersStore((state) => state);
+  const { loading: loadingUsers, hasNextPage } = useGroupJoinableUsersStore((state) => state.users);
 
   const shouldDisableButton = selectedUsers.length === 0;
 
@@ -49,6 +50,7 @@ const InvitePeopleToYourGroup = (props: InvitePeopleToYourGroupProps) => {
   };
 
   const onLoadMore = () => {
+    if (!hasNextPage || loadingUsers) return null;
     getData(searchText, true);
   };
 
@@ -117,6 +119,7 @@ const InvitePeopleToYourGroup = (props: InvitePeopleToYourGroupProps) => {
       <TextSelectedPeople selectedUsers={selectedUsers} loading={loading} />
       <View style={styles.inputIconContainer}>
         <SearchInput
+          autoFocus
           editable={!loading}
           value={searchText}
           autoComplete="off"

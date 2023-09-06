@@ -12,6 +12,7 @@ const menuStack = {
   blocking: 'blocking',
   privacyCenter: 'privacy-center',
   personalInfoVisibility: 'personal-info-visibility',
+  invitationPrivacy: 'invitation-privacy',
 };
 
 export default menuStack;
