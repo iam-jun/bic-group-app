@@ -1,0 +1,371 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TakePartInAQuiz should render correctly 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+    }
+  }
+  testID="take_part_in_quiz.content"
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "borderColor": "#E3E6F2",
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "marginHorizontal": 16,
+          "marginVertical": 8,
+          "padding": 16,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "overflow": "hidden",
+          },
+          Array [
+            Object {
+              "height": 64,
+              "width": 64,
+            },
+            false,
+          ],
+        ]
+      }
+    >
+      <FastImageView
+        onFastImageError={[Function]}
+        resizeMode="cover"
+        source={
+          Object {
+            "testUri": "../../../assets/images/img_thumbnail_take_part_in_a_quiz.png",
+          }
+        }
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "height": undefined,
+          "paddingHorizontal": undefined,
+          "paddingVertical": undefined,
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 15,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            undefined,
+          ]
+        }
+      >
+        testse
+      </Text>
+      <View
+        style={
+          Object {
+            "height": 4,
+            "paddingHorizontal": undefined,
+            "paddingVertical": undefined,
+            "width": undefined,
+          }
+        }
+      />
+      <Text
+        numberOfLines={2}
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 11,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            undefined,
+          ]
+        }
+      >
+        ahihihi
+      </Text>
+      <View
+        style={
+          Object {
+            "height": 4,
+            "paddingHorizontal": undefined,
+            "paddingVertical": undefined,
+            "width": undefined,
+          }
+        }
+      />
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#181C32",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 13,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            undefined,
+          ]
+        }
+      >
+        Let’s get started!
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "height": undefined,
+          "paddingHorizontal": undefined,
+          "paddingVertical": undefined,
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "marginRight": 4,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "justifyContent": "center",
+            },
+            Object {
+              "height": 48,
+              "width": 48,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "position": "absolute",
+              },
+              Object {
+                "borderBottomWidth": 4,
+                "borderLeftWidth": 4,
+                "borderRadius": 24,
+                "borderRightWidth": 4,
+                "borderTopWidth": 4,
+                "height": 48,
+                "width": 48,
+              },
+              Object {
+                "borderColor": "#E3E6F2",
+                "borderWidth": 4,
+              },
+            ]
+          }
+        />
+        <View
+          style={
+            Array [
+              Object {
+                "borderBottomColor": "transparent",
+                "borderLeftColor": "transparent",
+                "position": "absolute",
+              },
+              Object {
+                "transform": Array [
+                  Object {
+                    "rotateZ": "45deg",
+                  },
+                ],
+              },
+              Object {
+                "borderBottomWidth": 4,
+                "borderLeftWidth": 4,
+                "borderRadius": 24,
+                "borderRightWidth": 4,
+                "borderTopWidth": 4,
+                "height": 48,
+                "width": 48,
+              },
+              Object {
+                "borderRightColor": "#7335C0",
+                "borderTopColor": "#7335C0",
+              },
+              Object {
+                "borderRightWidth": 4,
+                "borderTopWidth": 4,
+              },
+            ]
+          }
+        />
+        <View
+          style={
+            Array [
+              Object {
+                "borderBottomColor": "transparent",
+                "borderLeftColor": "transparent",
+                "position": "absolute",
+              },
+              Object {
+                "transform": Array [
+                  Object {
+                    "rotateZ": "153deg",
+                  },
+                ],
+              },
+              Object {
+                "borderBottomWidth": 4,
+                "borderLeftWidth": 4,
+                "borderRadius": 24,
+                "borderRightWidth": 4,
+                "borderTopWidth": 4,
+                "height": 48,
+                "width": 48,
+              },
+              Object {
+                "borderRightColor": "#7335C0",
+                "borderTopColor": "#7335C0",
+              },
+            ]
+          }
+        />
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 14,
+              },
+              Object {},
+              Array [
+                Object {
+                  "position": "absolute",
+                },
+                Object {
+                  "color": "#7335C0",
+                  "fontSize": 10,
+                  "fontWeight": "bold",
+                },
+              ],
+            ]
+          }
+        >
+          80
+          %
+        </Text>
+      </View>
+    </View>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      hitSlop={
+        Object {
+          "bottom": 10,
+          "left": 10,
+          "right": 10,
+          "top": 10,
+        }
+      }
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+            },
+            undefined,
+            Object {
+              "backgroundColor": undefined,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              undefined,
+              undefined,
+              undefined,
+            ]
+          }
+        >
+          <View />
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

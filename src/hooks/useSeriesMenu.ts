@@ -34,7 +34,7 @@ const useSeriesMenu = (
   if (!data) return null;
 
   const {
-    id: seriesId, reactionsCount, isSaved, type, actor, audience,
+    id: seriesId, isSaved, type, actor, audience,
   } = data;
 
   const groupAudience = audience?.groups || [];
@@ -171,7 +171,7 @@ const useSeriesMenu = (
     },
   ];
 
-  const menus = getPostMenus(defaultData, isActor, reactionsCount);
+  const menus = getPostMenus(defaultData, isActor);
 
   const showMenu = () => {
     Keyboard.dismiss();

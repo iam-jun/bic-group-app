@@ -2,6 +2,9 @@ import { IPayloadAddToAllPost, IPayloadPutMarkAsRead } from '~/interfaces/IPost'
 import streamApi from '~/api/StreamApi';
 import showToastError from '~/store/helper/showToastError';
 import usePostsStore from '~/store/entities/posts';
+import { trackEvent } from '~/services/tracking';
+import { TrackingEventImportantMarkedProperties } from '~/services/tracking/Interface';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const putMarkAsRead = () => async (payload: IPayloadPutMarkAsRead) => {
   const { postId, callback } = payload;
@@ -24,6 +27,12 @@ const putMarkAsRead = () => async (payload: IPayloadPutMarkAsRead) => {
         markedReadSuccess: true,
       },
     } as IPayloadAddToAllPost);
+
+    // tracking event
+    const eventImportantMarkedProperties: TrackingEventImportantMarkedProperties = {
+      content_type: post.type,
+    };
+    trackEvent({ event: TrackingEvent.IMPORTANT_MARKED, properties: eventImportantMarkedProperties });
   } catch (error) {
     callback?.(false);
     showToastError(error);

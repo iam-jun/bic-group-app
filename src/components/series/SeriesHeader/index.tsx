@@ -5,7 +5,7 @@ import { ContentHeader } from '~/components/ContentView';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
-import { IAudienceGroup, IPost } from '~/interfaces/IPost';
+import { IAudienceGroup, IPost, PostType } from '~/interfaces/IPost';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { AlertDeleteAudiences } from '~/components/posts';
 import useSeriesStore, { ISeriesState } from '~/screens/series/store';
@@ -13,6 +13,9 @@ import useSeriesMenu from '~/hooks/useSeriesMenu';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 import useModalStore from '~/store/modal';
+import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
 type SeriesHeaderProps = {
   series: IPost;
@@ -41,6 +44,13 @@ const SeriesHeader: FC<SeriesHeaderProps> = ({ series, disabled }) => {
 
   const onPressHeader = () => {
     goToSeriesDetail();
+
+    // tracking event
+    const eventContentReadProperties: TrackingEventContentReadProperties = {
+      content_type: PostType.SERIES,
+      action: TrackingEventContentReadAction.CONTENT_HEADER,
+    };
+    trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
   };
 
   const handleError = (listIdAudiences: string[]) => {

@@ -22,6 +22,7 @@ import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 import { INotiSettings } from '~/interfaces/INotification';
 import useAdvancedNotiSettingsStore from '../AdvancedSettings/store';
 import useYourCommunitiesStore from '~/screens/communities/Communities/components/YourCommunities/store';
+import { trackEvent } from '~/services/tracking';
 
 const NotificationSettings = () => {
   const theme: ExtendedTheme = useTheme();
@@ -62,6 +63,11 @@ const NotificationSettings = () => {
     const dataUpdate = { ...generic, enable: isChecked };
 
     actions.updateSettings(payload, dataUpdate);
+    trackEvent({
+      event: 'Master Noti Changed',
+      sendWithUserId: true,
+      properties: { state: isChecked },
+    });
   };
 
   const handlePressItem = (item: INotiSettings) => {

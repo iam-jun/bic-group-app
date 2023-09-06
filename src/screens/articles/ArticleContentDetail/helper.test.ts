@@ -14,6 +14,7 @@ describe('ArticleContentDetail helper', () => {
   const listImage = [];
   const setInitIndex = jest.fn();
   const setGalleryVisible = jest.fn();
+  const id = '123';
 
   it('should navigate to userProfile when onPressMentionAudience', () => {
     const messageClone = { ...message };
@@ -24,6 +25,7 @@ describe('ArticleContentDetail helper', () => {
       listImage,
       setInitIndex,
       setGalleryVisible,
+      id,
     });
     expect(fn).toBeUndefined();
   });
@@ -37,6 +39,7 @@ describe('ArticleContentDetail helper', () => {
       listImage,
       setInitIndex,
       setGalleryVisible,
+      id,
     });
     expect(fn).toBeUndefined();
   });
@@ -50,6 +53,7 @@ describe('ArticleContentDetail helper', () => {
       listImage,
       setInitIndex,
       setGalleryVisible,
+      id,
     });
     expect(fn).toBeUndefined();
   });
@@ -65,6 +69,7 @@ describe('ArticleContentDetail helper', () => {
       listImage,
       setInitIndex,
       setGalleryVisible,
+      id,
     });
     expect(fn).toBeUndefined();
   });
@@ -78,6 +83,7 @@ describe('ArticleContentDetail helper', () => {
       listImage,
       setInitIndex,
       setGalleryVisible,
+      id,
     });
     expect(fn).toBeUndefined();
   });
@@ -91,6 +97,7 @@ describe('ArticleContentDetail helper', () => {
       listImage,
       setInitIndex,
       setGalleryVisible,
+      id,
     });
     expect(fn).toBeUndefined();
   });
@@ -104,6 +111,7 @@ describe('ArticleContentDetail helper', () => {
       listImage,
       setInitIndex,
       setGalleryVisible,
+      id,
     });
     expect(fn).toBeUndefined();
 
@@ -122,6 +130,7 @@ describe('ArticleContentDetail helper', () => {
       listImage,
       setInitIndex,
       setGalleryVisible,
+      id,
     });
     expect(fn).toBeUndefined();
   });
@@ -136,6 +145,7 @@ describe('ArticleContentDetail helper', () => {
       listImage,
       setInitIndex,
       setGalleryVisible,
+      id,
     });
     expect(fn).toBeUndefined();
     expect(spyOpenUrl).toBeCalled();
