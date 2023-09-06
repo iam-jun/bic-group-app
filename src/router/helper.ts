@@ -10,6 +10,7 @@ import {
 
 import { isEmpty, isNumber } from 'lodash';
 import * as SplashScreen from 'expo-splash-screen';
+import { t } from 'i18next';
 import { IObject } from '~/interfaces/common';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import seriesStack from './navigator/MainStack/stacks/series/stack';
@@ -23,6 +24,10 @@ import notiStack from './navigator/MainStack/stacks/notiStack/stack';
 import { USER_TABS } from '~/screens/Menu/UserProfile';
 import { USER_TABS_TYPES } from '~/screens/Menu/UserProfile/constants';
 import useAuthController from '~/screens/auth/store';
+import { openUrl } from '~/utils/link';
+import useRemoteConfigStore from '~/store/remoteConfig';
+import showAlert from '~/store/helper/showAlert';
+import useModalStore from '~/store/modal';
 import quizStack from './navigator/MainStack/stacks/quizStack/stack';
 import groupStack from './navigator/MainStack/stacks/groupStack/stack';
 import { rootNavigationRef } from './refs';
@@ -476,6 +481,28 @@ const navigatePostDetailWithContentType = ({ contentType, contentId }) => {
 
 export const hideSplashScreen = async () => {
   await SplashScreen.hideAsync();
+};
+
+export const updateRequired = () => {
+  const onConfirm = () => {
+    const { appStoreUrl } = useRemoteConfigStore.getState();
+    openUrl(appStoreUrl);
+    onCancel();
+  };
+
+  const onCancel = () => {
+    useModalStore.getState().actions.hideUpdateRequiredAlert();
+  };
+
+  return showAlert({
+    title: t('update_required:title'),
+    content: t('update_required:description'),
+    cancelBtn: true,
+    cancelLabel: t('common:btn_not_now'),
+    confirmLabel: t('common:btn_update'),
+    onConfirm,
+    onCancel,
+  });
 };
 
 export const isFromNotificationScreen = (navigation: any) => {
