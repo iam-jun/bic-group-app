@@ -2,7 +2,7 @@ import React, {
   useRef, useEffect, useCallback, useState,
 } from 'react';
 import { StyleSheet } from 'react-native';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import { IRouteParams } from '~/interfaces/IRouter';
 import Header from '~/beinComponents/Header';
 import ArticleWebview, { ArticleWebviewRef } from '~/components/articles/ArticleWebview';
@@ -49,7 +49,7 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
     categories,
     actor,
     tags,
-    publishedAt,
+    scheduledAt,
     status,
     deleted,
   } = data;
@@ -60,13 +60,14 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
 
   const { rootNavigation } = useRootNavigation();
 
+  // for waiting schedule article use createdAt
   const initScript = {
     type: 'initView',
     payload: {
       title,
       summary,
       coverUrl: coverMedia?.url,
-      createdAt,
+      time: createdAt,
       audience,
       series,
       categories,
@@ -159,11 +160,11 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
   };
 
   const renderArticleBoxScheduleTime = () => {
-    if (!isMounted || !publishedAt) return null;
+    if (!isMounted || !scheduledAt) return null;
 
     return (
       <ArticleBoxScheduleTime
-        publishedAt={publishedAt}
+        scheduledAt={scheduledAt}
         status={status}
       />
     );

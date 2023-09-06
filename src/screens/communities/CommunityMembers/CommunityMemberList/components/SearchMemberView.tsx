@@ -34,7 +34,7 @@ const SearchMemberView = ({
 
   const [searchText, setSearchText] = useState('');
 
-  const { groupId } = community;
+  const { groupId, id } = community;
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
   const canManageMember = shouldHavePermission(groupId, [
     PermissionKey.REMOVE_MEMBER,
@@ -92,6 +92,7 @@ const SearchMemberView = ({
       return (
         <MemberSearchResult
           canManageMember={canManageMember}
+          communityId={id}
           memberSearchData={communitySearchMembers}
           isAdminRole={isAdminRole}
           onLoadMore={onLoadMore}

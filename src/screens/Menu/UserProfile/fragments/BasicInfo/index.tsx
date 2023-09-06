@@ -46,6 +46,10 @@ const BasicInfo = ({
     />
   );
 
+  const shouldShowGender = !Boolean(typeof gender === 'undefined');
+  const shouldShowRelationship = !Boolean(typeof relationship === 'undefined');
+  const shouldShowLanguage = shouldShowGender && shouldShowRelationship;
+
   return (
     <InfoCard
       testID="user_profile.basic_info"
@@ -54,19 +58,23 @@ const BasicInfo = ({
       style={styles.container}
     >
       <InfoItem title="settings:title_name" value={fullname} />
-      <InfoItem title="settings:title_gender" value={genders[gender]} />
+      {shouldShowGender && <InfoItem title="settings:title_gender" value={genders[gender]} />}
       {isCurrentUser && (
         <InfoItem
           title="settings:title_birthday"
           value={formattedBirthday}
         />
       )}
+      {shouldShowLanguage && (
       <InfoItem title="settings:title_language" value={getLanguages(language)} />
-      <InfoItem
-        title="settings:title_relationship_status"
-        value={RELATIONSHIP_STATUS[relationship]}
-        style={{ paddingBottom: 0 }}
-      />
+      )}
+      {shouldShowRelationship && (
+        <InfoItem
+          title="settings:title_relationship_status"
+          value={RELATIONSHIP_STATUS[relationship]}
+          style={{ paddingBottom: 0 }}
+        />
+      )}
     </InfoCard>
   );
 };

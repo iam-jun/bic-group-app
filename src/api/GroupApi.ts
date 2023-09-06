@@ -8,6 +8,7 @@ import {
   IParamsGetManagedCommunityAndGroup,
   IPayloadGroupSchemeAssignments,
   IPayloadInvitations,
+  IPayloadPreviewPrivacy,
   IPayloadPreviewSettings,
   IPayloadUpdateGroupJoinSetting,
   IScheme,
@@ -341,6 +342,16 @@ export const groupsApiConfig = {
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
+  searchJoinedCommunitiesOnly: (
+    params: IParamGetCommunities,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/communities`,
+    params: {
+      ...params,
+      key: params?.key?.trim?.() ? params.key : undefined,
+    },
+  }),
   getJoinedCommunities: (params: {
     previewMembers?: boolean;
     managed?: boolean;
@@ -472,6 +483,14 @@ export const groupsApiConfig = {
     method: 'delete',
     data: {
       badgeIds,
+    },
+  }),
+  previewPrivacy: (params: IPayloadPreviewPrivacy): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}groups/${params?.groupId}/profile/preview`,
+    method: 'put',
+    data: {
+      ...params?.data,
     },
   }),
   getSettings: (groupId: string): HttpApiRequestConfig => ({
@@ -780,6 +799,12 @@ const groupApi = {
   getOwnedBadges: () => withHttpRequestPromise(groupsApiConfig.getOwnedBadges),
   putShowingBadges: (badgeIds: string[]) => withHttpRequestPromise(groupsApiConfig.putShowingBadges, badgeIds),
   markNewBadge: (badgeIds: string[]) => withHttpRequestPromise(groupsApiConfig.markNewBadge, badgeIds),
+  previewPrivacy: (params: IPayloadPreviewPrivacy) => withHttpRequestPromise(
+    groupsApiConfig.previewPrivacy, params,
+  ),
+  searchJoinedCommunitiesOnly: (params?: IParamGetCommunities) => withHttpRequestPromise(
+    groupsApiConfig.searchJoinedCommunitiesOnly, params,
+  ),
   getSettings: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getSettings, groupId),
   previewSettings: (params: IPayloadPreviewSettings) => withHttpRequestPromise(
     groupsApiConfig.previewSettings, params,

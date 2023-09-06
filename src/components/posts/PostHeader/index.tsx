@@ -9,11 +9,14 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 import usePostMenu from '~/hooks/usePostMenu';
-import { IAudienceGroup } from '~/interfaces/IPost';
+import { IAudienceGroup, PostType } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import AlertDeleteAudiences from '../AlertDeleteAudiences';
 import useModalStore from '~/store/modal';
 import usePostsStore from '~/store/entities/posts';
+import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
 export interface PostHeaderProps extends Partial<ContentHeaderProps> {
   data: any,
@@ -34,7 +37,7 @@ const PostHeader: FC<PostHeaderProps> = ({
   const postActions = usePostsStore((state) => state.actions);
 
   const {
-    id: postId, actor, audience, createdAt,
+    id: postId, actor, audience, createdAt, publishedAt,
   } = data;
 
   const userId = useUserIdAuth();
@@ -53,6 +56,13 @@ const PostHeader: FC<PostHeaderProps> = ({
       onPressHeader?.();
     } else {
       rootNavigation.navigate(homeStack.postDetail, { post_id: postId });
+
+      // tracking event
+      const eventContentReadProperties: TrackingEventContentReadProperties = {
+        content_type: PostType.POST,
+        action: TrackingEventContentReadAction.CONTENT_HEADER,
+      };
+      trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
     }
   };
 
@@ -112,6 +122,7 @@ const PostHeader: FC<PostHeaderProps> = ({
       actor={actor}
       audience={audience}
       createdAt={createdAt}
+      publishedAt={publishedAt}
       disabled={disabled}
       onPressHeader={_onPressHeader}
       onPressMenu={onPressMenu}

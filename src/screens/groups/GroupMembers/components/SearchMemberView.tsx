@@ -18,11 +18,13 @@ interface SearchMemberViewProps {
   groupId: string;
   placeholder: string;
   isMemberCommunity: boolean;
+  communityId: string;
   onPressMenu: (item: IGroupMembers) => void;
 }
 
 const SearchMemberView = ({
   groupId,
+  communityId,
   placeholder,
   isMemberCommunity,
   onPressMenu,
@@ -104,6 +106,7 @@ const SearchMemberView = ({
     if (!!searchText?.trim?.()) {
       return (
         <MemberSearchResult
+          communityId={communityId}
           canManageMember={canManageMember}
           memberSearchData={groupSearchMembers}
           isAdminRole={isAdminRole}
@@ -112,7 +115,7 @@ const SearchMemberView = ({
         />
       );
     }
-    return <GroupMemberList groupId={groupId} onPressMenu={onPressMenu} />;
+    return <GroupMemberList communityId={communityId} groupId={groupId} onPressMenu={onPressMenu} />;
   };
 
   return (

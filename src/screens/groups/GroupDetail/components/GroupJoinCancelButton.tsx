@@ -14,15 +14,15 @@ import { ITypeGroup } from '~/interfaces/common';
 import { getPreviewJoinableGroup } from '~/components/PreviewJoinableGroup/store/helper';
 
 interface GroupJoinCancelButtonProps {
+  groupId: string;
   style?: StyleProp<ViewStyle>;
 }
 
-const GroupJoinCancelButton = ({ style }: GroupJoinCancelButtonProps) => {
-  const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
-  const { group: infoDetail, joinStatus } = groups[currentGroupId] || {};
+const GroupJoinCancelButton = ({ style, groupId }: GroupJoinCancelButtonProps) => {
+  const groups = useGroupsStore((state: IGroupsState) => state.groups);
+  const { group: infoDetail, joinStatus } = groups[groupId] || {};
   const {
     privacy,
-    id: groupId,
     affectedSettings,
     name,
     icon,

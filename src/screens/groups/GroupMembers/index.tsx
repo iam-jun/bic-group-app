@@ -5,7 +5,7 @@ import { t } from 'i18next';
 
 import { IGroupMembers } from '~/interfaces/IGroup';
 
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import useNetworkStore from '~/store/network';
 import networkSelectors from '~/store/network/selectors';
@@ -24,7 +24,9 @@ import CommunityInvitedPeople from '~/screens/communities/CommunityMembers/Commu
 import { ITypeGroup } from '~/interfaces/common';
 
 const _GroupMembers = ({ route }: any) => {
-  const { groupId, targetIndex, isMemberCommunity } = route.params;
+  const {
+    groupId, targetIndex, isMemberCommunity, communityId,
+  } = route.params;
 
   const [selectedMember, setSelectedMember] = useState<IGroupMembers>();
   const [selectedIndex, setSelectedIndex] = useState<number>(targetIndex || 0);
@@ -103,6 +105,7 @@ const _GroupMembers = ({ route }: any) => {
             placeholder={t('groups:text_search_for_members')}
             onPressMenu={onPressMenu}
             groupId={groupId}
+            communityId={communityId}
           />
         );
       case 1:

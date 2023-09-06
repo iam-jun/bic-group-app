@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/baseComponents/Text';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import spacing from '~/theme/spacing';
 import Icon from '~/baseComponents/Icon';
 import { Button } from '~/baseComponents';
@@ -13,12 +13,12 @@ import { IGroup } from '~/interfaces/IGroup';
 import { dimension } from '~/theme';
 import useModalStore from '~/store/modal';
 import { ICommunity } from '~/interfaces/ICommunity';
-import { useRootNavigation } from '~/hooks/navigation';
-import mainStack from '~/router/navigator/MainStack/stack';
 import useMemberQuestionsStore, { MembershipQuestionsInfo } from '../MemberQuestionsModal/store';
 import useTermStore, { TermsInfo } from '../TermsModal/store';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 import { ITypeGroup } from '~/interfaces/common';
+import { isGroup } from '~/helpers/groups';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
 
 interface PreviewJoinableGroupProps {
   group: IGroup;
@@ -27,7 +27,6 @@ interface PreviewJoinableGroupProps {
 const PreviewJoinableGroup = (props: PreviewJoinableGroupProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyle(theme);
-  const { rootNavigation } = useRootNavigation();
 
   const { group } = props;
   const {
@@ -50,10 +49,10 @@ const PreviewJoinableGroup = (props: PreviewJoinableGroupProps) => {
   const onPressGroup = (group: IGroup | ICommunity) => {
     const { id: groupId, communityId } = group || {};
     hideModal();
-    if (group?.level === 0) {
-      rootNavigation.navigate(mainStack.communityDetail, { communityId });
+    if (!isGroup(group)) {
+      navigateToCommunityDetail({ communityId });
     } else {
-      rootNavigation.navigate(mainStack.groupDetail, { groupId, communityId });
+      navigateToGroupDetail({ groupId, communityId });
     }
   };
 

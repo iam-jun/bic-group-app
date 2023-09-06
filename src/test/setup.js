@@ -325,7 +325,7 @@ jest.mock('react-hook-form', () => ({
       value: defaultValue,
     },
   }),
-  Controller: ({ children }) => [children],
+  // Controller: ({ children }) => [children],
   useSubscribe: () => ({
     r: { current: { subject: { subscribe: () => jest.fn() } } },
   }),
@@ -350,6 +350,12 @@ jest.mock('mixpanel-react-native', () => ({
   })),
 }));
 
+// jest.mock('react-native-fast-image', () => ({
+//   __esModule: true,
+//   default: {
+//     preload: jest.fn(),
+//   },
+// }));
 // Fix case - TypeError: Cannot read properties of undefined (reading 'now')
 global.ReanimatedDataMock = {
   now: () => 0,
@@ -361,10 +367,14 @@ jest.mock('~/router/helper', () => ({
     withNavigation: jest.fn().mockReturnValue({
       navigate: jest.fn(),
       replace: jest.fn(),
+      goBack: jest.fn(),
+      push: jest.fn(),
     }),
   },
   withNavigation: jest.fn().mockReturnValue({
     navigate: jest.fn(),
     replace: jest.fn(),
+    goBack: jest.fn(),
+    push: jest.fn(),
   }),
 }));

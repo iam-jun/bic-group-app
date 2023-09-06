@@ -7,10 +7,12 @@ import { adminDetail, memberDetail } from '~/test/mock_data/communities';
 describe('MemberSearchResult component', () => {
   const onPressMenu = jest.fn();
   const onLoadMore = jest.fn();
+  const communityId = 'test';
 
   it('should NOT render empty screen correctly when loading', () => {
     const wrapper = renderWithRedux(
       <MemberSearchResult
+        communityId={communityId}
         canManageMember
         memberSearchData={{ loading: true, canLoadMore: true, data: [] }}
         isAdminRole
@@ -25,6 +27,7 @@ describe('MemberSearchResult component', () => {
   it('should NOT render empty screen correctly when having data and NOT loading', () => {
     const wrapper = renderWithRedux(
       <MemberSearchResult
+        communityId={communityId}
         canManageMember
         memberSearchData={{
           loading: false,
@@ -43,6 +46,7 @@ describe('MemberSearchResult component', () => {
   it('should render empty screen correctly when having NO data and NO loading', () => {
     const wrapper = renderWithRedux(
       <MemberSearchResult
+        communityId={communityId}
         canManageMember
         memberSearchData={{
           loading: false,
@@ -61,6 +65,7 @@ describe('MemberSearchResult component', () => {
   it('should render loading more indicator correctly', () => {
     const wrapper = renderWithRedux(
       <MemberSearchResult
+        communityId={communityId}
         canManageMember
         memberSearchData={{
           loading: false,
@@ -81,6 +86,7 @@ describe('MemberSearchResult component', () => {
   it('should NOT render loading more indicator correctly', () => {
     const wrapper = renderWithRedux(
       <MemberSearchResult
+        communityId={communityId}
         canManageMember
         memberSearchData={{
           loading: true,
@@ -101,6 +107,7 @@ describe('MemberSearchResult component', () => {
   it('should render data correctly', () => {
     const wrapper = renderWithRedux(
       <MemberSearchResult
+        communityId={communityId}
         canManageMember
         memberSearchData={{
           loading: false,

@@ -3,7 +3,7 @@ import {
   View, StyleSheet, ScrollView, FlatList,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import spacing from '~/theme/spacing';
 import MarkImportant from '~/components/ContentSettings/MarkImportant';

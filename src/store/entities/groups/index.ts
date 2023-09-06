@@ -6,7 +6,6 @@ import addToGroups from './actions/addToGroups';
 
 export interface IGroupsState extends IBaseState {
   groups: IObject<IGroupDetail>;
-  currentGroupId: string;
 
   actions: {
     addToGroups: (payload: IGroupDetail) => void;
@@ -15,7 +14,6 @@ export interface IGroupsState extends IBaseState {
 
 const initState: InitStateType<IGroupsState> = {
   groups: {},
-  currentGroupId: '',
 };
 
 const groupsStore = (set, get) => ({

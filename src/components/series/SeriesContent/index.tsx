@@ -12,7 +12,10 @@ import { Button } from '~/baseComponents';
 import { ContentInterestedUserCount } from '~/components/ContentView';
 import { useRootNavigation } from '~/hooks/navigation';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
-import { IPost } from '~/interfaces/IPost';
+import { IPost, PostType } from '~/interfaces/IPost';
+import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
 const LIMIT_ITEM = 3;
 
@@ -44,10 +47,25 @@ const SeriesContent: FC<SeriesContentProps> = ({ series, isLite }) => {
 
   const goToSeriesDetail = () => {
     rootNavigation.navigate(seriesStack.seriesDetail, { seriesId: id });
+
+    // tracking event
+    const eventContentReadProperties: TrackingEventContentReadProperties = {
+      content_type: PostType.SERIES,
+      action: TrackingEventContentReadAction.BODY,
+    };
+    trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
   };
 
   const onToggleShowItem = () => {
     setItemShowAll(!itemShowAll);
+    // tracking event
+    if (itemShowAll) {
+      const eventContentReadProperties: TrackingEventContentReadProperties = {
+        content_type: PostType.SERIES,
+        action: TrackingEventContentReadAction.SEE_MORE,
+      };
+      trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
+    }
   };
 
   const renderListItem = () => (

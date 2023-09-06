@@ -5,7 +5,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { t } from 'i18next';
 import { debounce } from 'lodash';
 import Text from '~/baseComponents/Text';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import spacing from '~/theme/spacing';
 import { Button } from '~/baseComponents';
 import { dimension } from '~/theme';

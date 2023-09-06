@@ -21,7 +21,7 @@ lane :notice_build_task do |options|
 
   root = "beincom/"
   env = options[:env]
-  repo = "bic-chat-app-v2"
+  repo = "bic-group-app"
   commit_hash = sh("git rev-parse HEAD", log: false).strip
   message = "#{root}#{env}-#{repo}:#{commit_hash}"
 
@@ -62,7 +62,7 @@ platform :android do
         groups: "bicteam",
     )
 
-    build_name = "🟡🤖 BIC Group Staging Android v#{appVersionText} (#{updateDesc})"
+    build_name = "🟡🤖 BIC Group Staging Android v#{appVersionText} #{updateDesc}"
     notice_build_task(env: 'stg', status: true, build_name: build_name)
 
   end
@@ -95,7 +95,7 @@ platform :android do
           groups: "bicteam",
       )
 
-    build_name = "🔵🤖 BIC Group Release Android v#{appVersionText} (#{updateDesc})"
+    build_name = "🔵🤖 BIC Group Release Android v#{appVersionText} #{updateDesc}"
     notice_build_task(env: 'rel', status: true, build_name: build_name)
 
     end
@@ -128,7 +128,7 @@ platform :android do
       groups: "bicteam",
     )
 
-    build_name = "🟢🤖 BIC Group Production Android v#{appVersionText} (#{updateDesc})"
+    build_name = "🟢🤖 BIC Group Production Android v#{appVersionText} #{updateDesc}"
     notice_build_task(env: 'pro', status: true, build_name: build_name)
 
   end
@@ -244,7 +244,7 @@ platform :ios do
       changelog: "Staging version #{ENV['APP_VERSION']}",
     )
 
-    build_name = "🟡🍎 BIC Group Staging iOS v#{appVersionText} (#{updateDesc})"
+    build_name = "🟡🍎 BIC Group Staging iOS v#{appVersionText} #{updateDesc}"
     notice_build_task(env: 'stg', status: true, build_name: build_name)
 
   end
@@ -296,7 +296,7 @@ platform :ios do
       changelog: "Release version #{ENV['APP_VERSION']}",
     )
 
-    build_name = "🔵🍎 BIC Group Release iOS v#{appVersionText} (#{updateDesc})"
+    build_name = "🔵🍎 BIC Group Release iOS v#{appVersionText} #{updateDesc}"
     notice_build_task(env: 'rel', status: true, build_name: build_name)
 
   end
@@ -345,7 +345,7 @@ platform :ios do
       changelog: "Production version #{ENV['APP_VERSION']}",
     )
 
-    build_name = "🟢🍎 BIC Group Production iOS v#{appVersionText} (#{updateDesc})"
+    build_name = "🟢🍎 BIC Group Production iOS v#{appVersionText} #{updateDesc}"
     notice_build_task(env: 'pro', status: true, build_name: build_name)
 
   end

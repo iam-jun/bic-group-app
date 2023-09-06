@@ -26,18 +26,23 @@ const InputFullName = ({
   const { t } = useBaseHook();
 
   const rules = {
-    required: t('auth:text_err_full_name_required'),
+    required: t('profile:fullname_rule:character_length'),
     maxLength: {
       value: 64,
-      message: t('auth:text_err_full_name'),
+      message: t('profile:fullname_rule:character_length'),
     },
     minLength: {
       value: 3,
-      message: t('auth:text_err_full_name'),
+      message: t('profile:fullname_rule:character_length'),
     },
-    pattern: {
-      value: validation.fullNameRegex,
-      message: t('auth:text_err_full_name'),
+    validate: () => {
+      const fullName = useFormData.getValues(FieldNameType.FULL_NAME);
+      if (/\d/.test(fullName)) {
+        return t('profile:fullname_rule:not_allow_number');
+      }
+      if (fullName?.length > 0 && !validation.fullNameRegex.test(fullName)) {
+        return t('profile:fullname_rule:not_allow_special_character');
+      }
     },
   };
 

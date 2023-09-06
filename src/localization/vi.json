@@ -50,6 +50,8 @@
     "btn_done": "Xong",
     "btn_next": "Tiếp tục",
     "btn_confirm": "Xác nhận",
+    "btn_show_less": "Hiển thị ít hơn",
+    "btn_more_details": "Hiển thị nhiều hơn",
     "btn_create": "Tạo",
     "btn_join": "Tham gia",
     "btn_view": "Xem",
@@ -555,11 +557,55 @@
         "content_membership_approval": " sẽ được bật phê duyệt tư cách thành viên.",
         "content_policy_setting": " sẽ được thay đổi thành chỉ những người được mời mới có thể tham gia.",
         "button_change": "Thay đổi",
-        "button_turn_on": "Bật",
-        "button_more_details": "Hiển thị nhiều hơn",
-        "button_show_less": "Hiển thị ít hơn"
+        "button_turn_on": "Bật"
       }
-    }
+    },
+    "privacy_impact": {
+      "default_group_set_and_membership_approval": {
+        "title": "Thay đổi quyền riêng tư có tác động đến nhóm mặc định & sự chấp thuận thành viên của các nhóm bên trong?",
+        "content": "Xin lưu ý rằng nhóm của bạn nằm trong nhóm mặc định, thay đổi này cũng bật tính năng phê duyệt tư cách thành viên của {{prefix}}{{count}} nhóm bên trong.",
+        "contents": "Xin lưu ý rằng nhóm của bạn nằm trong nhóm mặc định, thay đổi này cũng bật tính năng phê duyệt tư cách thành viên của {{prefix}}{{count}} nhóm bên trong.",
+        "title_default_group_set": "Nhóm mặc định được đặt:",
+        "title_membership_approval": "Nhóm bên trong:",
+        "title_membership_approval_s": "Các nhóm bên trong:"
+      },
+      "membership_approval": {
+        "title": "Bật phê duyệt thành viên cho các nhóm nội bộ?",
+        "content": "{{prefix}}{{count}} nhóm bên trong sẽ được bật phê duyệt thành viên.",
+        "contents": "{{prefix}}{{count}} nhóm bên trong sẽ được bật phê duyệt thành viên."
+      },
+      "default_group_set": {
+        "title": "Thay đổi quyền riêng tư tác động đến nhóm mặc định",
+        "content": "Xin lưu ý rằng nhóm của bạn nằm trong nhóm mặc định "
+      },
+      "default_group_set_and_badge": {
+        "title": "Thay đổi quyền riêng tư tác động đến nhóm mặc định & huy hiệu",
+        "content": "Xin lưu ý rằng nhóm của bạn nằm trong nhóm mặc định, thay đổi này cũng hủy chỉ định huy hiệu khỏi nhóm của bạn.",
+        "title_default_group_set": "Nhóm mặc định được đặt:",
+        "title_badge": "Huy hiệu:"
+      },
+      "badge": {
+        "title": "Bỏ gán huy hiệu nhóm?",
+        "content": "Để bảo vệ quyền riêng tư của các thành viên trong nhóm, huy hiệu sẽ không được gán cho nhóm của bạn."
+      }
+    },
+    "privacy_center": {
+      "menu_item_title": "Sự riêng tư",
+      "screen_title": "Trung tâm bảo mật",
+      "screen_description": "Quản lý và kiểm soát quyền riêng tư cá nhân phù hợp với bạn.",
+      "personal_information_visibility": {
+        "title": "Hiển thị thông tin cá nhân",
+        "description": "Kiểm soát ai có thể xem thông tin cá nhân của bạn trong hồ sơ của bạn.",
+        "everyone_type": "Mọi người",
+        "everyone_description": "Mọi người đều có thể xem thông tin của bạn.",
+        "community_members_type": "Thành viên cộng đồng",
+        "community_members_description": "Những người trong cùng một cộng đồng với bạn có thể xem thông tin của bạn.",
+        "only_me_type": "Chỉ mình tôi",
+        "only_me_description": "Không ai có thể xem thông tin của bạn."
+      }
+    },
+    "text_no_experience_to_show": "Không có kinh nghiệm để hiển thị",
+    "text_no_contact_to_show": "Không có liên hệ để hiển thị"
   },
   "languages": {
     "title_en": "English",
@@ -1089,7 +1135,19 @@
   "profile": {
     "title_edit_profile": "Chỉnh sửa thông tin",
     "title_direct_message": "Gửi tin nhắn",
-    "title_view_profile": "Xem trang cá nhân"
+    "title_view_profile": "Xem trang cá nhân",
+    "text_name_must_not_be_empty": "Tên không được để trống",
+    "fullname_rule": {
+      "not_allow_special_character": "Họ và tên không được chứa ký tự đặc biệt",
+      "not_allow_number": "Tên đầy đủ không được chứa số",
+      "character_length": "Tên đầy đủ phải từ 3 đến 64 ký tự"
+    },
+    "username_rule": {
+      "character_length": "Tên người dùng phải từ 5 đến 50 ký tự",
+      "not_allow_special_character": "Tên Người dùng không thể chứa ký tự đặc biệt kể cả khoảng trắng",
+      "not_allow_uppercase": "Tên người dùng không được chứa các ký tự viết hoa",
+      "not_allow_start_with_number_or_dot": "Tên người dùng phải bắt đầu bằng một chữ cái"
+    }
   },
   "right_col": {
     "about_bein": "About Bein",
@@ -1140,12 +1198,35 @@
     "text_remove_notification_success": "Đã xóa thông báo thành công",
     "notification_settings": {
       "title": "Cài đặt thông báo",
+      "screen_title": "Cài đặt chung",
       "description": "Chúng tôi vẫn có thể gửi cho bạn thông báo quan trọng về tài khoản của bạn ngoài cài đặt của bạn",
       "error_title": "Xin lỗi, chúng tôi không thể lấy dữ liệu ở đây",
       "error_description": "Xin vui lòng làm mới trang hoặc thử lại lần sau",
       "allow_notifications": "Cho phép thông báo",
       "in_app_text": "Trong ứng dụng",
-      "push_text": "Ngoài ứng dụng"
+      "push_text": "Ngoài ứng dụng",
+      "default_text": "Mặc định",
+      "off_text": "Tắt",
+      "not_joined_the_community": {
+        "title": "Không có gì để thiết lập",
+        "description": "Tham gia một cộng đồng sau đó thiết lập cài đặt tại đây."
+      }
+    },
+    "advanced_notifications_settings": {
+      "title": "Cài đặt thông báo nâng cao",
+      "screen_title": "Cài đặt nâng cao",
+      "content": "Cài đặt thông báo cụ thể cho từng cộng đồng và các nhóm bên trong cộng đồng đó",
+      "title_setup_community": "Thiết lập cho cộng đồng của bạn",
+      "title_setup_group": "Thiết lập cho các nhóm của bạn",
+      "description_setup_group": "Cài đặt mặc định sử dụng cài đặt thông báo chung của bạn cho đến khi bạn thiết lập cụ thể.",
+      "title_reset_to_default": "Đặt lại về mặc định",
+      "reset_to_default_tooltip": "Đặt lại về mặc định để sử dụng cài đặt thông báo chung của bạn.",
+      "text_enable_settings": "Bật cài đặt",
+      "enable_settings_tooltip": "Bật cài đặt để thiết lập riêng cho nhóm của bạn",
+      "search_community_title": "Chọn cộng đồng của bạn",
+      "search_placeholder": "Tìm kiếm cộng đồng",
+      "search_group_placeholder": "Tìm kiếm nhóm",
+      "search_group_title": "Chọn nhóm của bạn"
     }
   },
   "new_feature": {
@@ -1490,6 +1571,103 @@
     },
     "edit_showing_badges_title": "Chỉnh sửa huy hiệu đang hiển thị",
     "badge_tooltip_placeholder": "Nhấn vào đây để thêm huy hiệu"
+  },
+  "quiz": {
+    "create_quiz": "Tạo Quiz",
+    "input_title": "Tiêu đề",
+    "input_title_placeholder": "Nhập tiêu đề quiz",
+    "input_description": "Mô tả",
+    "input_description_placeholder": "Mô tả quiz",
+    "input_title_number_question": "Câu hỏi",
+    "input_number_question_placeholder": "Nhập số 1-{{max}}",
+    "input_title_number_answer": "Câu trả lời",
+    "input_number_answer_placeholder": "Nhập số 1-{{max}}",
+    "the_question_must_be_greater_than_0": "Số câu hỏi phải lớn hơn 0",
+    "number_of_questions_should_not_exceed": "Số câu hỏi không quá {{max}}",
+    "the_answers_must_be_greater_than_0": "Số câu trả lời phải lớn hơn 0",
+    "number_of_answers_should_not_exceed": "Số câu trả lời không quá {{max}}",
+    "enter_number_of_questions_answers_quiz": "Nhập số câu hỏi và câu trả lời cho quiz của bạn",
+    "title_is_required": "Tiêu đề là bắt buộc",
+    "question_is_required": "Câu hỏi là bắt buộc",
+    "answer_is_required": "Câu trả lời là bắt buộc",
+    "title_describe_question_answer_display": "Nhập số lượng câu hỏi và câu trả lời hiển thị cho người dùng trên mỗi câu hỏi trong bài quiz",
+    "title_describe_question_display": "Nhập số lượng câu hỏi hiển thị cho thành viên.",
+    "cannot_exceed_the_number_of_questions_above": "Không thể lớn hơn số câu hỏi ở trên",
+    "cannot_exceed_the_number_of_answers_above": "Không thể lớn hơn số câu trả lời ở trên",
+    "title_check_generate_random_quiz": "Bạn có muốn tạo câu hỏi và câu trả lời ngẫu nhiên không?",
+    "the_question": "Câu hỏi",
+    "question": "Câu hỏi",
+    "successfully_created_a_quiz": "Tạo quiz thành công",
+    "quiz_review": "Quiz Review",
+    "edit_the_question_number": "Sửa câu hỏi số {{number}}",
+    "enter_question_placeholder": "Nhập câu hỏi",
+    "enter_answer_placeholder": "Nhập câu trả lời",
+    "alert_title_delete_question": "Xoá câu hỏi số {{number}}",
+    "alert_content_delete_question": "Bạn có muốn xoá câu hỏi số {{number}}?",
+    "title_alert_take_quiz": "Bắt đầu Quiz",
+    "content_alert_take_quiz": "Bài quiz sẽ được lưu thành bản nháp! Bạn đã sẵn sàng để bắt đầu làm bài quiz?",
+    "btn_start": "Bắt đầu",
+    "the_ai_is_carefully_crafting_your_questions": "AI đang tạo câu hỏi cho bạn...",
+    "this_may_take_up_to_a_few_minute": "Điều này sẽ mất khoảng vài phút, nhưng đáng để chờ ! Nếu bạn thoát, Quiz sẽ tự động lưu vào",
+    "something_went_wrong": "Oops! Có gì đó sai",
+    "sorry_an_error_has_occurred": "Xin lỗi, đã xảy ra lỗi. Vui lòng thử lại sau.",
+    "regenerate": "Sinh lại",
+    "quiz_information": "Thông tin quiz",
+    "draft_quiz": "Bản nháp quiz",
+    "quiz_saved_to_draft": "Quiz đã được lưu vào nháp",
+    "title_take_quiz": "Làm bài quiz",
+    "alert_title_discard_quiz": "Hủy bài Quiz",
+    "alert_content_discard_quiz": "Rời trang này mà không lưu sẽ dẫn tới quá trình làm bài Quiz hiện tại bị mất. Bạn có chắc muốn thoát?",
+    "btn_exit": "Thoát",
+    "btn_next": "Tiếp theo",
+    "btn_previous": "Trước đó",
+    "title_quiz_review": "Xem lại",
+    "title_quiz_result": "Kết quả",
+    "btn_retake": "Làm lại",
+    "btn_retry": "Thử lại",
+    "btn_go_home": "Trở lại Home",
+    "alert_content_submit_quiz": "Bạn có chắc muốn nộp bài làm quiz?",
+    "text_dont_give_up": "Đừng từ bỏ!",
+    "text_study_more": "Học lại lần nữa và làm đúng hết tất cả các câu!",
+    "text_awesome": "Bạn thật tuyệt vời!",
+    "text_congrats": "Chúc mừng bạn đã trả lời đúng hết tất cả các câu!",
+    "highest_score": "Điểm cao nhất",
+    "time_take_quiz": "Số lần làm",
+    "enter_an_integer": "Vui lòng nhập số nguyên",
+    "title_quiz": "Quiz",
+    "text_no_quiz_content": "Không có Quiz!",
+    "text_start_quiz": "Bắt đầu thôi!",
+    "text_view_report": "Xem báo cáo",
+    "title_score_board": "Bảng điểm",
+    "text_total": "Tổng",
+    "text_status": "Trạng thái",
+    "text_value": "Giá trị",
+    "text_passed": "Đạt",
+    "text_failed": "Thất bại",
+    "text_name": "Tên",
+    "text_percentage": "Tỉ lệ",
+    "title_empty_result": "Không có kết quả!",
+    "text_empty_result": "Không có bất kỳ người tham gia trong bài kiểm tra. Vui lòng quay lại sau.",
+    "gen_status_quiz_process_fail": "Quá trình tạo quiz thất bại.",
+    "gen_status_quiz_processing": "Đang trong quá trình tạo quiz.",
+    "gen_status_quiz_waiting_process": "Chuẩn bị tạo quiz.",
+    "edit_quiz": "Sửa quiz",
+    "delete_quiz": "Xoá quiz",
+    "label_quiz_deleted": "Quiz đã bị xóa",
+    "alert_delete": {
+      "header": "Xoá Quiz",
+      "content": "Bạn có chắc muốn xoá quiz không?"
+    },
+    "alert_edit": {
+      "header": "Sửa quiz",
+      "content": "Bạn có chắc muốn sửa quiz không?"
+    },
+    "continue": "Tiếp tục",
+    "pass_quiz": "PASS",
+    "add_question": "Thêm câu hỏi",
+    "add_answer": "Thêm câu trả lời",
+    "this_field_must_not_be_empty": "Trường này không được để trống",
+    "please_select_correct_answer": "Vui lòng chọn câu trả lời đúng"
   },
   "previewJoinableGroup": {
     "title": "Tham gia tất cả các nhóm bên ngoài?",

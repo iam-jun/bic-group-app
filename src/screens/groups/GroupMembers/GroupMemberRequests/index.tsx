@@ -16,8 +16,8 @@ const GroupMemberRequests = ({
   groupId,
   canApproveRejectJoiningRequests,
 }: GroupMemberRequestsProps) => {
-  const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
-  const { group } = groups[currentGroupId] || {};
+  const groups = useGroupsStore((state: IGroupsState) => state.groups);
+  const { group } = groups[groupId] || {};
   const { id } = group || {};
   const {
     actions: { getGroupDetail },

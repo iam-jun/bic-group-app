@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import spacing from '~/theme/spacing';
 import ChosenAudiences from './components/ChosenAudiences';
 import CoverImage from './components/CoverImage';
@@ -165,7 +165,7 @@ const CreateSeries = ({ route }: CreationSeriesProps) => {
             maxLength={255}
             placeholder={t('common:text_input_summary')}
             style={styles.summary}
-            inputStyle={styles.textInput}
+            inputStyleContainer={styles.textInput}
             onChangeText={handleSummaryChange}
             onFocus={onFoucusInput}
           />

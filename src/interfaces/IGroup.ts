@@ -248,6 +248,8 @@ export interface IGetCommunityGroup {
   listBy?: 'tree' | 'flat';
   limit?: number;
   offset?: number;
+  includeRootGroup?: boolean;
+  sort?: string;
 }
 
 export interface IPayloadGroupSchemeAssignments {
@@ -311,6 +313,7 @@ export interface IPayloadPreviewSettings {
   groupId: string;
   settings: IGroupSettings;
 }
+
 export interface IPayloadInvitations {
   targetId: string,
   targetType: InvitationsTargetType,
@@ -361,4 +364,9 @@ export enum IInvitationsStatus {
 export interface IParamsGetInvitations {
   limit: number,
   offset: number,
+}
+
+export interface IPayloadPreviewPrivacy {
+  groupId: string;
+  data: IGroupDetailEdit;
 }

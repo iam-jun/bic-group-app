@@ -22,7 +22,7 @@ const ArticleScheduleItem: React.FC<ArticleScheduleItemProps> = ({ data, showAva
     actor,
     id,
     audience,
-    publishedAt,
+    scheduledAt,
     status,
   } = data || {};
 
@@ -36,7 +36,7 @@ const ArticleScheduleItem: React.FC<ArticleScheduleItemProps> = ({ data, showAva
       testID="article_schedule.btn_content"
     >
       <ArticleBoxScheduleTime
-        publishedAt={publishedAt}
+        scheduledAt={scheduledAt}
         status={status}
       />
       <ContentArticle

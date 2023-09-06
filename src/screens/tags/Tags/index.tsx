@@ -12,27 +12,31 @@ import { spacing } from '~/theme';
 import ListTags from './components/ListTags';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 import useTagsControllerStore from '../store';
+import { ITypeGroup } from '~/interfaces/common';
 
 type TagsProps = {
-    route: {
-        params: {
-            id: string;
-            type: 'community' | 'group';
-        },
-    }
+  route: {
+    params: {
+      id: string;
+      groupId: string;
+      type: ITypeGroup;
+    },
+  }
 }
 
 const Tags: FC<TagsProps> = (props) => {
   const { params } = props.route || {};
-  const { id, type } = params || {};
+  const { id, type, groupId } = params || {};
 
-  const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
-  const { group } = groups[currentGroupId] || {};
+  const groups = useGroupsStore((state: IGroupsState) => state.groups);
+  const { group } = groups[groupId] || {};
   const { name: nameGroup, communityId } = group || {};
+
+  const isCommunity = type === ITypeGroup.COMMUNITY;
 
   const community = useCommunitiesStore(useCallback((
     state: ICommunitiesState,
-  ) => state.data[type === 'community' ? id : communityId] || {} as ICommunity, [id, type]));
+  ) => state.data[isCommunity ? id : communityId] || {} as ICommunity, [id, type]));
 
   const {
     name: nameCommunity, id: idCommunity,
@@ -47,7 +51,7 @@ const Tags: FC<TagsProps> = (props) => {
     [idCommunity],
   ));
 
-  const titleHeader = type === 'community' ? nameCommunity : nameGroup;
+  const titleHeader = isCommunity ? nameCommunity : nameGroup;
 
   useEffect(() => {
     actions.getCommunityCUDTagPermission(idCommunity);

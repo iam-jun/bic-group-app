@@ -33,15 +33,23 @@ const InputUserName = ({
     required: t('auth:text_err_user_name_required'),
     maxLength: {
       value: 50,
-      message: t('auth:text_err_user_name'),
+      message: t('profile:username_rule:character_length'),
     },
     minLength: {
       value: 5,
-      message: t('auth:text_err_user_name'),
+      message: t('profile:username_rule:character_length'),
     },
-    pattern: {
-      value: validation.userNameRegex,
-      message: t('auth:text_err_user_name'),
+    validate: () => {
+      const userName = useFormData.getValues(FieldNameType.USER_NAME);
+      if (userName !== userName?.toLowerCase?.()) {
+        return t('profile:username_rule:not_allow_uppercase');
+      }
+      if (userName?.length > 0 && !validation.userNameRegex.test(userName[0])) {
+        return t('profile:username_rule:not_allow_start_with_number_or_dot');
+      }
+      if (userName?.length > 0 && !validation.userNameRegex.test(userName)) {
+        return t('profile:username_rule:not_allow_special_character');
+      }
     },
   };
 
