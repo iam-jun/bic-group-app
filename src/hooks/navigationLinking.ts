@@ -137,6 +137,10 @@ export const onReceiveURL = async ({
         });
         break;
       }
+      case DeepLinkTypes.RESET_PASSOWRD:
+        if (userId) return;
+        navigation?.navigate?.(authStacks.forgotPassword, { data: match.params });
+        break;
       case DeepLinkTypes.APP:
         break;
       default:

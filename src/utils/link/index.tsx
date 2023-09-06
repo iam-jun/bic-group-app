@@ -27,6 +27,7 @@ export enum DeepLinkTypes {
   USER_PROFILE = 'user_profile',
   APP = 'APP',
   DISCOVER_COMMUNITIES = 'discover-communities',
+  RESET_PASSOWRD = 'reset-password',
 }
 
 export enum LinkGeneratorTypes {
@@ -275,6 +276,17 @@ export const matchDeepLink = (url: string) => {
   if (match) {
     return { type: DeepLinkTypes.USER_PROFILE, userName: match[1] };
   }
+
+  // bic:///reset-password?email=thuquyen%2B1%40evol.vn&code=479824&confirm_password=true
+  match = new RegExp(
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?reset-password\\?(\\S+)$`,
+  ).exec(deepLinkUrl);
+  if (match) {
+    const urlParams = match[1];
+    const newParams = getURLParams(urlParams);
+    return { type: DeepLinkTypes.RESET_PASSOWRD, params: newParams };
+  }
+
   if (new RegExp(`^${PREFIX_DEEPLINK_GROUP}`).test(deepLinkUrl)) {
     return { type: DeepLinkTypes.APP };
   }

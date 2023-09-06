@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   StyleSheet,
@@ -19,8 +19,12 @@ import CodeInputView from '~/screens/auth/ForgotPassword/components/CodeInputVie
 import EmailInputView from '~/screens/auth/ForgotPassword/components/EmailInputView';
 import spacing from '~/theme/spacing';
 import useForgotPasswordStore, { IForgotPasswordState } from './store';
+import { FieldNameType } from '~/interfaces/IAuth';
+import { IRouteParams } from '~/interfaces/IRouter';
 
-const ForgotPassword = () => {
+const ForgotPassword: FC<IRouteParams> = (props) => {
+  const params = props?.route?.params || {};
+
   const theme: ExtendedTheme = useTheme();
   const { rootNavigation } = useRootNavigation();
 
@@ -32,8 +36,17 @@ const ForgotPassword = () => {
   const reset = useForgotPasswordStore((state: IForgotPasswordState) => state.reset);
 
   useEffect(() => {
-    reset();
-  }, []);
+    if (!params?.data?.email) {
+      reset();
+    } else {
+      const { email, code } = params.data;
+      const newEmail = decodeURIComponent(email);
+      useFormData.setValue(FieldNameType.EMAIL, newEmail);
+      useFormData.setValue(FieldNameType.CODE, code);
+      actions.setScreenCurrentStage(forgotPasswordStages.INPUT_CODE_PW);
+      actions.setErrorConfirm();
+    }
+  }, [params]);
 
   const goBack = () => {
     if (currentPasswordStage === forgotPasswordStages.INPUT_CODE_PW) {
