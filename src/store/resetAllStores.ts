@@ -75,6 +75,7 @@ import useNotiInvitationsStore from '~/screens/Notification/components/Notificat
 import useMyInvitationsStore from '~/screens/Menu/UserProfile/fragments/InvitationList/store';
 import useAdvancedNotiSettingsStore from '~/screens/Notification/AdvancedSettings/store';
 import useGroupSetInvitationsStore from '~/components/InvitationGroupSet/store';
+import useNotificationItemMenu from '~/screens/Notification/components/NotificationMenu/store';
 
 export const excludedStore = [
   useAuthController,
@@ -168,6 +169,7 @@ const stores = [
   useMyInvitationsStore,
   useAdvancedNotiSettingsStore,
   useGroupSetInvitationsStore,
+  useNotificationItemMenu,
 ];
 
 export const resetAllStores = () => {
