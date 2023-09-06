@@ -76,6 +76,11 @@ export interface INotiSettings {
   channels?: INotiChannel;
 }
 
+export enum InvitationTargetType {
+  GROUP = 'GROUP',
+  COMMUNITY = 'COMMUNITY',
+}
+
 export interface IAdvancedNotificationSettings {
   communityId: string;
   id: string;

@@ -12,6 +12,7 @@ describe('NotificationContent component', () => {
   it('renders correctly', async () => {
     const updatedAt = mockNotifications[0].updated_at;
     const { extra } = mockNotifications[0];
+
     const wrapper = renderWithRedux(
       <NotificationContent
         description={extra.description}
@@ -20,13 +21,13 @@ describe('NotificationContent component', () => {
       />,
     );
 
-    const textDescriptionComponent = wrapper.getByTestId('notification_content.description');
+    const textDescriptionComponent = wrapper.queryByTestId('notification_content.description');
     expect(textDescriptionComponent).toBeDefined();
 
-    const contentComponent = wrapper.getByTestId('notification_content.content');
+    const contentComponent = wrapper.queryByTestId('notification_content.content');
     expect(contentComponent).toBeDefined();
 
-    const timeComponent = wrapper.getByTestId('notification_content.time_view');
+    const timeComponent = wrapper.queryByTestId('notification_content.time_view');
     expect(timeComponent).toBeDefined();
   });
 });

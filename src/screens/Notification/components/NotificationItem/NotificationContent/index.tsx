@@ -7,6 +7,8 @@ import spacing from '~/theme/spacing';
 import Icon from '~/baseComponents/Icon';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import Markdown from '~/beinComponents/Markdown';
+import Text from '~/baseComponents/Text';
+import { fontFamilies } from '~/theme/fonts';
 
 const LIST_NOTI_SHOW_ICON = [
   {
@@ -21,6 +23,7 @@ interface Props {
   updatedAt: string;
   type?: string;
   isRead?: boolean;
+  textNote?: string;
 }
 
 const NotificationContent = ({
@@ -29,6 +32,7 @@ const NotificationContent = ({
   updatedAt,
   type = '',
   isRead = false,
+  textNote = '',
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
@@ -71,6 +75,11 @@ const NotificationContent = ({
         value={content}
       />
       )}
+      { Boolean(textNote) && (
+      <Text.BodyM useI18n style={styles.invitationText}>
+        {textNote}
+      </Text.BodyM>
+      )}
       <View style={[styles.row, styles.timeCreated]}>
         {
         Boolean(!isRead)
@@ -109,6 +118,9 @@ const createStyles = (theme: ExtendedTheme) => {
       borderRadius: spacing.borderRadius.circle,
       backgroundColor: colors.purple50,
       marginRight: spacing.margin.xSmall,
+    },
+    invitationText: {
+      fontFamily: fontFamilies.BeVietnamProLightItalic,
     },
   });
 };

@@ -9,16 +9,11 @@ const getGroupJoinableUsers = (set, get) => async (payload: IParamsGetJoinableUs
   const { groupId, key, isLoadMore } = payload;
   try {
     const { users, data }: IGroupJoinableUsersState = get();
-    const { ids, hasNextPage } = users;
-    if (isLoadMore && !hasNextPage) return;
+    const { ids } = users;
 
-    if (!isLoadMore) {
-      // clear data every time user types a new search text
-      set((state: IGroupJoinableUsersState) => {
-        state.users.ids = [];
-        state.users.loading = true;
-      }, 'getGroupJoinableUsersLoading');
-    }
+    set((state: IGroupJoinableUsersState) => {
+      state.users.loading = true;
+    }, 'getGroupJoinableUsers Fetching');
 
     const params = {
       key,
@@ -41,12 +36,12 @@ const getGroupJoinableUsers = (set, get) => async (payload: IParamsGetJoinableUs
         ids: newUserIds,
         hasNextPage: !!response?.meta?.hasNextPage,
       };
-    }, 'getGroupJoinableUsersSuccess');
+    }, 'getGroupJoinableUsers Success');
   } catch (error) {
     console.error('getGroupJoinableUsers error:', error);
     set((state: IGroupJoinableUsersState) => {
       state.users.loading = false;
-    }, 'getGroupJoinableUsersError');
+    }, 'getGroupJoinableUsers Failed');
     showToastError(error);
   }
 };

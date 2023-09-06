@@ -39,6 +39,9 @@ const Group = {
   JOIN_REQUEST_ALREADY_SENT: 'group.joining_request.already_sent',
   TERMS_NOT_FOUND: 'group_terms.get.not_found',
   MISSIING_MEMBERSHIP_ANSWERS: 'joining_request.missing.membership_answers',
+  INVITATION_IS_ALREADY_SENT_ACCEPTED: 'invitation.status.accepted',
+  INVITATION_IS_ALREADY_SENT_DECLINED: 'invitation.status.declined',
+  INVITATION_IS_ALREADY_CANCELLED: 'invitation.status.cancelled',
 };
 
 const APIErrorCode = {

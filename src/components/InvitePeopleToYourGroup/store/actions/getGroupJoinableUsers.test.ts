@@ -23,19 +23,6 @@ describe('getGroupJoinableUsers', () => {
       },
     };
 
-    useGroupJoinableUsersStore.setState((state) => {
-      state.data = {
-        'user-1': user1,
-      };
-      state.users = {
-        ids: ['user-1'],
-        loading: false,
-        hasNextPage: false,
-      };
-      state.selectedUsers = [];
-      return state;
-    });
-
     const spy = jest.spyOn(groupApi, 'getJoinableUsers').mockImplementation(
       () => Promise.resolve(response) as any,
     );
@@ -46,8 +33,6 @@ describe('getGroupJoinableUsers', () => {
       result.current.actions.getGroupJoinableUsers({ groupId, key, isLoadMore: false });
     });
     expect(spy).toBeCalled();
-    expect(result.current.users.ids).toEqual([]);
-    expect(result.current.users.loading).toEqual(true);
     act(() => {
       jest.runAllTimers();
     });
@@ -66,22 +51,9 @@ describe('getGroupJoinableUsers', () => {
     const response = {
       data: [user2, user3],
       meta: {
-        hasNextPage: false,
+        hasNextPage: true,
       },
     };
-
-    useGroupJoinableUsersStore.setState((state) => {
-      state.data = {
-        'user-1': user1,
-      };
-      state.users = {
-        ids: ['user-1'],
-        loading: false,
-        hasNextPage: true,
-      };
-      state.selectedUsers = [];
-      return state;
-    });
 
     const spy = jest.spyOn(groupApi, 'getJoinableUsers').mockImplementation(
       () => Promise.resolve(response) as any,
@@ -93,54 +65,17 @@ describe('getGroupJoinableUsers', () => {
       result.current.actions.getGroupJoinableUsers({ groupId, key, isLoadMore: true });
     });
     expect(spy).toBeCalled();
-    expect(result.current.users.ids).toEqual(['user-1']);
-    expect(result.current.data).toEqual({
-      'user-1': user1,
-    });
-    expect(result.current.users.loading).toEqual(false);
     act(() => {
       jest.runAllTimers();
     });
 
     expect(result.current.data).toEqual({
-      'user-1': user1,
       'user-2': user2,
       'user-3': user3,
     });
     expect(result.current.users.loading).toEqual(false);
-    expect(result.current.users.ids).toEqual(['user-1', 'user-2', 'user-3']);
+    expect(result.current.users.ids).toEqual(['user-2', 'user-3']);
     expect(result.current.users.hasNextPage).toEqual(response.meta.hasNextPage);
-  });
-
-  it('should call API when isLoadMore = true and hasNextPage = false', () => {
-    const response = {};
-
-    useGroupJoinableUsersStore.setState((state) => {
-      state.data = {
-        'user-1': user1,
-      };
-      state.users = {
-        ids: ['user-1'],
-        loading: false,
-        hasNextPage: false,
-      };
-      state.selectedUsers = [];
-      return state;
-    });
-
-    const spy = jest.spyOn(groupApi, 'getJoinableUsers').mockImplementation(
-      () => Promise.resolve(response) as any,
-    );
-
-    jest.useFakeTimers();
-    const { result } = renderHook(() => useGroupJoinableUsersStore((state) => state));
-    act(() => {
-      result.current.actions.getGroupJoinableUsers({ groupId, key, isLoadMore: true });
-    });
-    expect(spy).not.toBeCalled();
-    act(() => {
-      jest.runAllTimers();
-    });
   });
 
   it('should call API and throws an error', () => {

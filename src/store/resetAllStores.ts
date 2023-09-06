@@ -66,11 +66,13 @@ import usePublishStore from '~/screens/YourContent/components/Publish/store';
 import useUserBadge from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
 import useYourQuizStore from '~/screens/quiz/YourQuiz/store';
 import useTakeQuizStore from '~/screens/quiz/TakeQuiz/store';
-import useVisibilityPrivacyStore from '~/screens/Menu/AccountSettings/PrivacyCenter/store';
+import usePersonalPrivacy from '~/screens/Menu/AccountSettings/PrivacyCenter/store';
 import useMembershipPolicySettingsStore from '~/screens/groups/MembershipPolicySettings/store';
 import usePreviewJoinableGroupStore from '~/components/PreviewJoinableGroup/store';
 import useNotiSettingsStore from '~/screens/Notification/NotiSettings/store';
 import useGroupJoinableUsersStore from '~/components/InvitePeopleToYourGroup/store';
+import useNotiInvitationsStore from '~/screens/Notification/components/NotificationItem/store';
+import useMyInvitationsStore from '~/screens/Menu/UserProfile/fragments/InvitationList/store';
 import useAdvancedNotiSettingsStore from '~/screens/Notification/AdvancedSettings/store';
 
 export const excludedStore = [
@@ -157,10 +159,12 @@ const stores = [
   useDraftContentsStore,
   usePublishStore,
   useUserBadge,
-  useVisibilityPrivacyStore,
+  usePersonalPrivacy,
   useMembershipPolicySettingsStore,
   usePreviewJoinableGroupStore,
   useNotiSettingsStore,
+  useNotiInvitationsStore,
+  useMyInvitationsStore,
   useAdvancedNotiSettingsStore,
 ];
 

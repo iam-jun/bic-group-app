@@ -40,7 +40,6 @@ import { useBaseHook } from '~/hooks';
 import GroupJoinCancelButton from './components/GroupJoinCancelButton';
 import { getHeaderMenu } from '~/screens/communities/CommunityDetail/helper';
 import { BottomListProps } from '~/components/BottomList';
-import NotFound from '~/screens/NotFound/components/NotFound';
 import { GroupPrivacyType } from '~/constants/privacyTypes';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import useTimelineStore, { ITimelineState } from '~/store/timeline';
@@ -59,6 +58,7 @@ import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import PageNotFound from '~/screens/NotFound/components/PageNotFound';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -108,7 +108,7 @@ const GroupDetail = (props: any) => {
   ]);
   const showPrivate
     = !isMember
-    && (privacy === GroupPrivacyType.PRIVATE
+    && (privacy === GroupPrivacyType.PRIVATE || privacy === GroupPrivacyType.SECRET
       || (!isMemberCommunity && privacy === GroupPrivacyType.CLOSED));
 
   // post
@@ -339,7 +339,7 @@ const GroupDetail = (props: any) => {
   );
 
   const renderGroupDetail = () => {
-    if (isLoadingGroupDetailError) return <NotFound testID="no_group_found" onGoBack={onGoBackOnNotFound} />;
+    if (isLoadingGroupDetailError) return <PageNotFound testID="no_group_found" onGoBack={onGoBackOnNotFound} />;
 
     return (
       <ScreenWrapper isFullView backgroundColor={colors.gray5}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   StyleSheet, View, Dimensions,
 } from 'react-native';
@@ -14,6 +14,8 @@ import spacing from '~/theme/spacing';
 import ButtonWrapper from '~/baseComponents/Button/ButtonWrapper';
 import notiSelector from '~/screens/Notification/store/selectors';
 import useNotificationStore from '~/screens/Notification/store';
+import InvitationGroupButtons from '../../../../components/InvitationGroupButtons';
+import useNotiInvitationsStore from './store';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -39,6 +41,10 @@ const NOT_SHOW_AVATAR_LIST = [
   NOTIFICATION_TYPE.QUIZ_GENERATE_SUCCESSFUL,
 ];
 
+const SHOW_INVITATION_BUTTONS = [
+  NOTIFICATION_TYPE.GROUP_INVITATION,
+];
+
 export interface NotificationItemProps {
   onPress: (...params: any) => void;
   onPressOption: (...params: any) => void;
@@ -56,6 +62,31 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   const { colors } = theme;
 
   const itemValue = useNotificationStore(notiSelector.getNotificationById(id)) || {};
+  const notiActions = useNotificationStore((state) => state.actions);
+  const actions = useNotiInvitationsStore((state) => state.actions);
+  const requestingsAccept = useNotiInvitationsStore(
+    useCallback((state) => state.requestingsAccept?.[id], [id]),
+  );
+  const requestingsDecline = useNotiInvitationsStore(
+    useCallback((state) => state.requestingsDecline?.[id], [id]),
+  );
+
+  const isShouldHideButton = useNotiInvitationsStore(
+    useCallback((state) => state.needToChangeNote?.[id], [id]),
+  );
+  const textNote = useNotiInvitationsStore(
+    useCallback((state) => state.textNotedList?.[id], [id]),
+  );
+
+  const onAccept = () => {
+    notiActions.markAsRead(id);
+    actions.acceptInvitation(itemValue);
+  };
+
+  const onDecline = () => {
+    notiActions.markAsRead(id);
+    actions.declineInvitation(itemValue);
+  };
 
   if (!id || isEmpty(itemValue)) return null;
 
@@ -70,7 +101,15 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     const isNotShowAvatar = NOT_SHOW_AVATAR_LIST.findIndex((item) => item === extra.type);
     return isNotShowAvatar === -1;
   };
+
+  const checkShowInvitationButtons = () => {
+    if (!extra?.type || isShouldHideButton) return false;
+    const isShowInvitationButtons = SHOW_INVITATION_BUTTONS.findIndex((item) => item === extra.type);
+    return isShowInvitationButtons !== -1;
+  };
+
   const showAvatar = checkShowAvatar();
+  const showInvitationButtons = checkShowInvitationButtons();
 
   return (
     <Animated.View exiting={FadeOutDown}>
@@ -86,47 +125,62 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           },
         ]}
       >
-        {showAvatar ? (
-          <View style={styles.flex1}>
-            <NotificationAvatar
-              actors={extra.actors}
-              actorCount={actorCount}
-            />
+        <View style={styles.contentContainer}>
+          {showAvatar ? (
+            <View style={styles.flex1}>
+              <NotificationAvatar
+                actors={extra.actors}
+                actorCount={actorCount}
+              />
+              <NotificationContent
+                isRead={isRead}
+                description={extra?.description || ''}
+                content={extra?.content || ''}
+                updatedAt={updatedAt}
+                type={extra.type}
+                textNote={textNote}
+              />
+            </View>
+          ) : (
             <NotificationContent
               isRead={isRead}
               description={extra?.description || ''}
               content={extra?.content || ''}
               updatedAt={updatedAt}
+              type={extra.type}
+              textNote={textNote}
             />
-          </View>
-        ) : (
-          <NotificationContent
-            isRead={isRead}
-            description={extra?.description || ''}
-            content={extra?.content || ''}
-            updatedAt={updatedAt}
-            type={extra.type}
+          )}
+          <ButtonWrapper
+            testID="notification.menu_button"
+            style={styles.icon}
+            activeOpacity={0.2}
+            onPress={(e: any) => onPressOption && onPressOption({ e, item: itemValue })}
+            hitSlop={{
+              bottom: 20,
+              left: 20,
+              right: 20,
+              top: 20,
+            }}
+          >
+            <Icon
+              icon="menu"
+              size={20}
+              tintColor={colors.neutral40}
+              testID="notification.menu_button.icon"
+            />
+          </ButtonWrapper>
+        </View>
+        {
+          Boolean(showInvitationButtons) && (
+          <InvitationGroupButtons
+            isLoadingAccept={requestingsAccept}
+            isLoadingDecline={requestingsDecline}
+            onAccept={onAccept}
+            onDecline={onDecline}
           />
-        )}
-        <ButtonWrapper
-          testID="notification.menu_button"
-          style={styles.icon}
-          activeOpacity={0.2}
-          onPress={(e: any) => onPressOption && onPressOption({ e, item: itemValue })}
-          hitSlop={{
-            bottom: 20,
-            left: 20,
-            right: 20,
-            top: 20,
-          }}
-        >
-          <Icon
-            icon="menu"
-            size={20}
-            tintColor={colors.neutral40}
-            testID="notification.menu_button.icon"
-          />
-        </ButtonWrapper>
+          )
+        }
       </ButtonWrapper>
     </Animated.View>
   );
@@ -134,12 +188,14 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
     paddingHorizontal: spacing.padding.large,
     paddingVertical: spacing.padding.base,
     width: screenWidth,
+  },
+  contentContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
   },
   flex1: {
     flex: 1,
