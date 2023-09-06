@@ -12,6 +12,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import DeactivatedView from '~/components/DeactivatedView';
 import InvitationGroupButtons from '~/components/InvitationGroupButtons';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
+import { useBaseHook } from '~/hooks';
 
 interface Props {
 id: string;
@@ -23,6 +24,7 @@ const InvitationItem = ({ id, groupedId }: Props) => {
   const { colors } = theme;
   const styles = createStyles(theme);
   const { rootNavigation } = useRootNavigation();
+  const { t } = useBaseHook();
 
   const data: IInvitation = useMyInvitationsStore((state) => state.invitationData?.[id]);
   const actions = useMyInvitationsStore((state) => state.actions);
@@ -85,6 +87,7 @@ const InvitationItem = ({ id, groupedId }: Props) => {
   if (isHideItem) return null;
 
   const textColor = isDeactivated ? colors.grey40 : colors.neutral60;
+  const textInvited = t('user:text_invited_to_join');
 
   return (
     <View testID="invitation_item.container" style={[styles.row, styles.container]}>
@@ -94,25 +97,26 @@ const InvitationItem = ({ id, groupedId }: Props) => {
       <ViewSpacing width={spacing.margin.small} />
       <View style={styles.flex1}>
         <View style={[styles.row, styles.contentContainer]}>
-          <Button testID="invitation_item.actor_name" style={styles.btnActor} onPress={onPressActor}>
+          <Text.SubtitleM>
             <Text.SubtitleM
+              testID="invitation_item.actor_name"
               color={textColor}
+              onPress={onPressActor}
             >
-              {fullname}
+              {`${fullname} `}
             </Text.SubtitleM>
-          </Button>
-          {isDeactivated && <DeactivatedView style={styles.deactivatedView} />}
-          <Text.BodyM useI18n>
-            user:text_invited_to_join
-          </Text.BodyM>
-          <ViewSpacing width={spacing.margin.tiny} />
-          <Button testID="invitation_item.target_name" onPress={onPressTarget}>
+            {!isDeactivated && <DeactivatedView style={styles.deactivatedView} />}
+            <Text.BodyM>
+              {` ${textInvited} `}
+            </Text.BodyM>
             <Text.SubtitleM
               color={colors.neutral60}
+              testID="invitation_item.target_name"
+              onPress={onPressTarget}
             >
-              {name}
+              {` ${name}`}
             </Text.SubtitleM>
-          </Button>
+          </Text.SubtitleM>
         </View>
         <ViewSpacing height={spacing.margin.small} />
         <InvitationGroupButtons
