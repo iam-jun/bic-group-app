@@ -1,6 +1,6 @@
 import streamApi from '~/api/StreamApi';
 import { ICategory, IParamGetCategories } from '~/interfaces/IArticle';
-import { ICreateArticleCategoryState } from '..';
+import { ISelectCategoriesState } from '..';
 import showToastError from '~/store/helper/showToastError';
 
 const getCategories = (set, get) => async (isLoadMore) => {
@@ -12,7 +12,7 @@ const getCategories = (set, get) => async (isLoadMore) => {
       return;
     }
 
-    set((state: ICreateArticleCategoryState) => {
+    set((state: ISelectCategoriesState) => {
       state.categories.loading = true;
     }, 'getCategories');
 
@@ -31,13 +31,13 @@ const getCategories = (set, get) => async (isLoadMore) => {
 
       const categories = isLoadMore ? [...categoryData.items, ...listResult] : listResult;
 
-      set((state: ICreateArticleCategoryState) => {
+      set((state: ISelectCategoriesState) => {
         state.categories.loading = false;
         state.categories.items = categories;
         state.categories.hasNextPage = hasNextPage;
       }, 'getCategories');
     } else {
-      set((state: ICreateArticleCategoryState) => {
+      set((state: ISelectCategoriesState) => {
         state.categories.loading = false;
       }, 'getCategories');
       showToastError(response);

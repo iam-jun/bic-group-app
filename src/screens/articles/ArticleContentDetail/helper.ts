@@ -2,13 +2,13 @@ import { navigateToCommunityDetail, navigateToGroupDetail, withNavigation } from
 import { rootNavigationRef } from '~/router/refs';
 import mainStack from '~/router/navigator/MainStack/stack';
 import topicStack from '~/router/navigator/MainStack/stacks/topic/stack';
-import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import { IMentionUser, IPost } from '~/interfaces/IPost';
 import { openUrl } from '~/utils/link';
 import { goToContentInseries } from '~/components/RelatedContentsInSeries/helper';
 import { EventType } from '~/components/articles/ArticleWebview';
 import { QuizPost, QuizStatus } from '~/interfaces/IQuiz';
 import { onPressTakeQuiz } from '~/components/quiz/TakePartInAQuiz/helper';
+import searchStack from '~/router/navigator/MainStack/stacks/searchStack/stack';
 
 const rootNavigation = withNavigation?.(rootNavigationRef);
 
@@ -80,9 +80,7 @@ export const onPressTopics = (payload: any) => {
 export const onPressTags = (payload: any) => {
   if (!payload) return;
 
-  rootNavigation.navigate(tagsStack.tagDetail, {
-    tagData: payload,
-  });
+  rootNavigation.push(searchStack.searchMain, { tag: payload });
 };
 
 export const onPressLink = (payload: any) => {

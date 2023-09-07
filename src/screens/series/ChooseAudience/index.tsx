@@ -6,8 +6,8 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { isEmpty, isEqual } from 'lodash';
 
 import Header from '~/beinComponents/Header';
-import SelectAudience, { ContentType } from '~/components/SelectAudience';
-import useSelectAudienceStore from '~/components/SelectAudience/store';
+import { SelectMultiAudiences } from '~/components/SelectAudience';
+import useSelectAudienceStore, { ContentType } from '~/components/SelectAudience/store';
 import { useBaseHook } from '~/hooks';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import { CreationSeriesProps } from '~/interfaces/ISeries';
@@ -128,7 +128,7 @@ const ChooseSeriesAudience = ({ route }: CreationSeriesProps) => {
         onPressButton={handleSave}
         onPressBack={handleBack}
       />
-      <SelectAudience contentType={ContentType.SERIES} />
+      <SelectMultiAudiences contentType={ContentType.SERIES} />
     </View>
   );
 };

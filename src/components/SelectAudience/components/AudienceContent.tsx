@@ -19,6 +19,7 @@ export interface GroupItemProps {
 
   onPress: (item: IGroup, isChecked: boolean) => void
   shouldBeChecked: (item: IGroup) => boolean;
+  isSingleSelect?: boolean;
 }
 
 const AudienceContent: FC<GroupItemProps> = ({
@@ -28,6 +29,7 @@ const AudienceContent: FC<GroupItemProps> = ({
 
   onPress,
   shouldBeChecked,
+  isSingleSelect,
 }) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles();
@@ -52,12 +54,12 @@ const AudienceContent: FC<GroupItemProps> = ({
 
   const checkBoxStyles = {
     unselect: {
-      iconName: 'Square' as IconType,
-      iconColor: colors.neutral20,
+      iconName: !isSingleSelect && 'Square' as IconType,
+      iconColor: !isSingleSelect && colors.neutral20,
     },
     selected: {
-      iconName: 'SquareCheckSolid' as IconType,
-      iconColor: colors.blue50,
+      iconName: isSingleSelect ? 'Check' : 'SquareCheckSolid' as IconType,
+      iconColor: isSingleSelect ? colors.green50 : colors.blue50,
     },
   };
 
@@ -90,7 +92,9 @@ const AudienceContent: FC<GroupItemProps> = ({
         />
       </View>
       <View>
-        <Icon icon={iconName} size={22} tintColor={iconColor} />
+        {
+          !!iconName && <Icon icon={iconName} size={22} tintColor={iconColor} />
+        }
       </View>
     </Button>
   );

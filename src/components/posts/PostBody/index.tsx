@@ -21,10 +21,10 @@ import spacing from '~/theme/spacing';
 import { escapeMarkDown } from '~/utils/formatter';
 import PostVideoPlayer from '../PostVideoPlayer';
 import { ITag } from '~/interfaces/ITag';
-import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import TagsView from '~/components/TagsView';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import TakePartInAQuiz from '~/components/quiz/TakePartInAQuiz';
+import searchStack from '~/router/navigator/MainStack/stacks/searchStack/stack';
 
 export interface PostBodyProps {
   data: IPost;
@@ -77,7 +77,7 @@ const _PostBody: FC<PostBodyProps> = ({
   }, [status, postId, totalUsersSeen]);
 
   const goToTagDetail = (tagData: ITag) => {
-    rootNavigation.navigate(tagsStack.tagDetail, { tagData });
+    rootNavigation.push(searchStack.searchMain, { tag: tagData });
   };
 
   const renderContent = () => {
@@ -176,15 +176,13 @@ const _PostBody: FC<PostBodyProps> = ({
           collapsible={!isPostDetail}
         />
         {isShowLinkPreviewer && <LinkPreview data={linkPreview} />}
-        {!isLite && (
-          <TakePartInAQuiz
-            quiz={quiz}
-            contentId={postId}
-            quizHighestScore={quizHighestScore}
-            actor={actor}
-            shouldShowDraftQuiz={shouldShowDraftQuiz}
-          />
-        )}
+        <TakePartInAQuiz
+          quiz={quiz}
+          contentId={postId}
+          quizHighestScore={quizHighestScore}
+          actor={actor}
+          shouldShowDraftQuiz={shouldShowDraftQuiz}
+        />
       </>
     </View>
   );

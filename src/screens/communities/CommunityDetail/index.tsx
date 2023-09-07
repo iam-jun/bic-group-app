@@ -1,3 +1,5 @@
+/* eslint-disable unused-imports/no-unused-imports */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {
   useState, useEffect, useRef, useCallback, useMemo,
 } from 'react';
@@ -52,6 +54,7 @@ import TermsView from '~/components/TermsModal';
 import MemberQuestionsModal from '~/components/MemberQuestionsModal';
 import FloatingCreatePost from '~/screens/Home/components/FloatingCreatePost';
 import useTermStore from '~/components/TermsModal/store';
+import searchStack from '~/router/navigator/MainStack/stacks/searchStack/stack';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -295,7 +298,8 @@ const CommunityDetail = (props: any) => {
   };
 
   const onPressSearch = () => {
-    actionsFeedSearch.setNewsfeedSearch({ isShow: true });
+    // actionsFeedSearch.setNewsfeedSearch({ isShow: true });
+    rootNavigation.push(searchStack.searchMain, { group: community });
   };
 
   const hasNoDataInStore = !groupId;
@@ -376,7 +380,7 @@ const CommunityDetail = (props: any) => {
           isMember={isMember}
         />
       </Animated.View>
-      <ContentSearch groupId={groupId} />
+      {/* <ContentSearch groupId={groupId} /> */}
       <MemberQuestionsModal />
       <TermsView />
       {isMember && <FloatingCreatePost />}

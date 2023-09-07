@@ -5,8 +5,8 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { isEmpty, isEqual } from 'lodash';
 import Header from '~/beinComponents/Header';
-import SelectAudience, { ContentType } from '~/components/SelectAudience';
-import useSelectAudienceStore from '~/components/SelectAudience/store';
+import { SelectMultiAudiences } from '~/components/SelectAudience';
+import useSelectAudienceStore, { ContentType } from '~/components/SelectAudience/store';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 
 import { useBaseHook } from '~/hooks';
@@ -90,7 +90,7 @@ const CreateArticleAudience: FC<CreateArticleProps> = ({ route }: CreateArticleP
         onPressButton={onPressSave}
         onPressBack={onBack}
       />
-      <SelectAudience contentType={ContentType.ARTICLE} />
+      <SelectMultiAudiences contentType={ContentType.ARTICLE} />
     </View>
   );
 };

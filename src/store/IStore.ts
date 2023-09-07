@@ -63,6 +63,10 @@ import { IMembershipPolicySettingsState } from '~/screens/groups/MembershipPolic
 import { IPreviewJoinableGroupState } from '~/components/PreviewJoinableGroup/store';
 import { INotiSettingsStore } from '~/screens/Notification/NotiSettings/store';
 import { IAdvancedNotiSettingsStore } from '~/screens/Notification/AdvancedSettings/store';
+import { IQuizzesState } from './entities/quizzes';
+import { ISearchState } from '~/screens/Search/store';
+import { ISearchFilterUsersState } from '~/screens/Search/SearchFilter/SearchFilterUsers/store';
+import { ISearchFilterTagsState } from '~/screens/Search/SearchFilter/SearchFilterTags/store';
 
 export interface BicStore {
   entities: {
@@ -70,6 +74,7 @@ export interface BicStore {
     comments: ICommentsState;
     communities: ICommunitiesState;
     groups: IGroupsState;
+    quiz: IQuizzesState;
   };
 
   // components
@@ -216,4 +221,7 @@ export interface BicStore {
   maintenanceStore: IMaintenanceState;
   pinContent: IPinContentState;
   previewJoinableGroupStore: IPreviewJoinableGroupState;
+  search: ISearchState;
+  searchFilterUsers: ISearchFilterUsersState;
+  searchFilterTags: ISearchFilterTagsState;
 }

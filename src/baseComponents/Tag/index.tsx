@@ -10,6 +10,7 @@ import dimension from '~/theme/dimension';
 import Avatar from '~/baseComponents/Avatar';
 import Icon from '../Icon';
 import Button, { ButtonProps } from '../Button';
+import { AvatarType } from '../Avatar/AvatarComponent';
 
 export type TagType = 'primary' | 'secondary' | 'neutral' | 'tags';
 export type TagSize = 'small' | 'medium' | 'large';
@@ -64,6 +65,8 @@ const Tag: React.FC<TagProps> = ({
   };
   const variant = getVariant();
 
+  const avatarVariant = getAvatarVariant(size);
+
   return (
     <Button
       testID={testID || 'tag.item'}
@@ -75,7 +78,7 @@ const Tag: React.FC<TagProps> = ({
       onPress={() => { onActionPress?.(); }}
       {...buttonProps}
     >
-      {!!avatar && <Avatar.Tiny source={avatar} style={styles.avatar} />}
+      {!!avatar && <Avatar variant={avatarVariant} source={avatar} style={styles.avatar} isRounded />}
       {!!label && (
         <Text variant={variant} testID="tag.label" style={[styles.labelText, textStyle]} {...textProps}>
           {label}
@@ -95,6 +98,19 @@ const Tag: React.FC<TagProps> = ({
       {RightComponent}
     </Button>
   );
+};
+
+const getAvatarVariant = (tagSize?: TagSize): AvatarType => {
+  switch (tagSize) {
+    case 'small':
+      return 'tiny';
+    case 'medium':
+      return 'xSmall';
+    case 'large':
+      return 'small';
+    default:
+      return 'tiny';
+  }
 };
 
 const createStyles = (
@@ -165,7 +181,7 @@ const createStyles = (
     avatar: {
     },
     buttonAvatar: {
-      paddingLeft: spacing.padding.tiny,
+      paddingLeft: 0,
     },
     buttonIcon: {
       paddingRight: spacing.padding.tiny,

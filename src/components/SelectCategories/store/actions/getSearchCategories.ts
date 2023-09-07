@@ -1,10 +1,10 @@
 import streamApi from '~/api/StreamApi';
 import { ICategory } from '~/interfaces/IArticle';
-import { ICreateArticleCategoryState } from '..';
+import { ISelectCategoriesState } from '..';
 import showToastError from '~/store/helper/showToastError';
 
 const getSearchCategories = (set, _get) => async (key: string) => {
-  set((state: ICreateArticleCategoryState) => {
+  set((state: ISelectCategoriesState) => {
     state.search.loading = true;
     state.search.key = key;
   }, 'getSearchCategories');
@@ -16,9 +16,10 @@ const getSearchCategories = (set, _get) => async (key: string) => {
       (category: ICategory) => ({ id: category.id, name: category.name }),
     ) || [];
 
-    set((state: ICreateArticleCategoryState) => {
+    set((state: ISelectCategoriesState) => {
       state.search.items = categories;
       state.search.loading = false;
+      state.search.hasNextPage = response?.data?.meta?.hasNextPage;
     }, 'getSearchCategories');
   } catch (e) {
     console.error('\x1b[35m🐣️ getSearchCategories error: ', e, '\x1b[0m');

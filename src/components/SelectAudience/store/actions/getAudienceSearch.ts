@@ -1,6 +1,5 @@
-import { ContentType } from '~/components/SelectAudience';
 import groupApi from '~/api/GroupApi';
-import { ISelectAudienceState } from '..';
+import { ContentType, ISelectAudienceState } from '..';
 import showToastError from '~/store/helper/showToastError';
 
 const getAudienceSearch = (set, get) => async (

@@ -8,8 +8,8 @@ import {
   renderWithRedux,
   waitFor,
 } from '~/test/testUtils';
-import SelectAudience, { ContentType } from './index';
-import useSelectAudienceStore from './store';
+import SelectMultiAudiences from './SelectMultiAudiences';
+import useSelectAudienceStore, { ContentType } from './store';
 
 describe('SelectAudience component', () => {
   it('should load list audience successfully', async () => {
@@ -20,7 +20,7 @@ describe('SelectAudience component', () => {
     const { result } = renderHook(() => useSelectAudienceStore());
 
     const screen = renderWithRedux(
-      <SelectAudience contentType={ContentType.POST} />,
+      <SelectMultiAudiences contentType={ContentType.POST} />,
     );
 
     await waitFor(() => {
@@ -48,7 +48,7 @@ describe('SelectAudience component', () => {
     const { result } = renderHook(() => useSelectAudienceStore());
 
     const screen = renderWithRedux(
-      <SelectAudience contentType={ContentType.POST} />,
+      <SelectMultiAudiences contentType={ContentType.POST} />,
     );
 
     await waitFor(() => {
@@ -78,7 +78,7 @@ describe('SelectAudience component', () => {
     const { result } = renderHook(() => useSelectAudienceStore());
 
     const screen = renderWithRedux(
-      <SelectAudience contentType={ContentType.POST} />,
+      <SelectMultiAudiences contentType={ContentType.POST} />,
     );
 
     await waitFor(() => {
@@ -119,7 +119,7 @@ describe('SelectAudience component', () => {
     const { result } = renderHook(() => useSelectAudienceStore());
 
     const screen = renderWithRedux(
-      <SelectAudience contentType={ContentType.POST} />,
+      <SelectMultiAudiences contentType={ContentType.POST} />,
     );
 
     await waitFor(() => {
@@ -151,7 +151,7 @@ describe('SelectAudience component', () => {
     const { result } = renderHook(() => useSelectAudienceStore());
 
     const screen = renderWithRedux(
-      <SelectAudience contentType={ContentType.POST} />,
+      <SelectMultiAudiences contentType={ContentType.POST} />,
     );
 
     await waitFor(() => {
@@ -189,7 +189,7 @@ describe('SelectAudience component', () => {
     });
 
     const screen = renderWithRedux(
-      <SelectAudience contentType={ContentType.POST} />,
+      <SelectMultiAudiences contentType={ContentType.POST} />,
     );
 
     await waitFor(() => {

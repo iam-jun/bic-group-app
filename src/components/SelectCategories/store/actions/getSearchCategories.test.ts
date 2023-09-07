@@ -1,7 +1,7 @@
 import streamApi from '~/api/StreamApi';
 import { responseCategory } from '~/test/mock_data/topic';
 import { act, renderHook } from '~/test/testUtils';
-import useCreateArticleCategoryStore from '../index';
+import useSelectCategoriesStore from '../index';
 
 describe('getSearchCategories in article', () => {
   it('should get list categories success:', () => {
@@ -10,7 +10,7 @@ describe('getSearchCategories in article', () => {
     );
 
     jest.useFakeTimers();
-    const { result } = renderHook(() => useCreateArticleCategoryStore((state) => state));
+    const { result } = renderHook(() => useSelectCategoriesStore((state) => state));
 
     act(() => {
       result.current.actions.getSearchCategories('test');

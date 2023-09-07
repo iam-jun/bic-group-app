@@ -1,16 +1,16 @@
 import streamApi from '~/api/StreamApi';
 import { responseCategory } from '~/test/mock_data/topic';
 import { act, renderHook } from '~/test/testUtils';
-import useCreateArticleCategoryStore, { ICreateArticleCategoryState } from '../index';
+import useSelectCategoriesStore, { ISelectCategoriesState } from '../index';
 
 describe('getCategories in article', () => {
   it('should do nothing if hasNextPage = false', () => {
-    useCreateArticleCategoryStore.setState((state: ICreateArticleCategoryState) => {
+    useSelectCategoriesStore.setState((state: ISelectCategoriesState) => {
       state.categories.hasNextPage = false;
       return state;
     });
 
-    const { result } = renderHook(() => useCreateArticleCategoryStore((state) => state));
+    const { result } = renderHook(() => useSelectCategoriesStore((state) => state));
     act(() => {
       result.current.actions.getCategories(true);
     });
@@ -24,7 +24,7 @@ describe('getCategories in article', () => {
     );
 
     jest.useFakeTimers();
-    const { result } = renderHook(() => useCreateArticleCategoryStore((state) => state));
+    const { result } = renderHook(() => useSelectCategoriesStore((state) => state));
 
     act(() => {
       result.current.actions.getCategories();

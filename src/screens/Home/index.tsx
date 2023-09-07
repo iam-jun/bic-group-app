@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable unused-imports/no-unused-imports */
 import { ExtendedTheme, useIsFocused, useTheme } from '@react-navigation/native';
 import React, {
   useCallback, useEffect, useRef, useState,
@@ -35,6 +37,7 @@ import { chatSchemes } from '~/constants/chat';
 import Icon from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
 import useRemoteConfigStore from '~/store/remoteConfig';
+import searchStack from '~/router/navigator/MainStack/stacks/searchStack/stack';
 
 const Home = () => {
   const [lossInternet, setLossInternet] = useState(false);
@@ -177,8 +180,9 @@ const Home = () => {
   useBackPressListener(handleBackPress);
 
   const onPressSearch = () => {
-    DeviceEventEmitter.emit('showHeader', true);
-    actionsFeedSearch.setNewsfeedSearch({ isShow: true });
+    // DeviceEventEmitter.emit('showHeader', true);
+    // actionsFeedSearch.setNewsfeedSearch({ isShow: true });
+    rootNavigation.push(searchStack.searchMain);
   };
 
   const HeaderImageComponent = (
@@ -247,7 +251,7 @@ const Home = () => {
         onPressChat={navigateToChat}
       />
       <View style={styles.statusBar} />
-      <NewsfeedSearch style={styles.searchContainer} />
+      {/* <NewsfeedSearch style={styles.searchContainer} /> */}
     </View>
   );
 };

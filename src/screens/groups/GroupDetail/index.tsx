@@ -1,3 +1,5 @@
+/* eslint-disable unused-imports/no-unused-imports */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   useFocusEffect,
   ExtendedTheme,
@@ -59,6 +61,7 @@ import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import searchStack from '~/router/navigator/MainStack/stacks/searchStack/stack';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -291,7 +294,8 @@ const GroupDetail = (props: any) => {
   };
 
   const onPressSearch = () => {
-    actionsFeedSearch.setNewsfeedSearch({ isShow: true });
+    // actionsFeedSearch.setNewsfeedSearch({ isShow: true });
+    rootNavigation.push(searchStack.searchMain, { group: groupInfo });
   };
 
   const _onPressContentFilterTab = (item: any) => {
@@ -382,7 +386,7 @@ const GroupDetail = (props: any) => {
         <Animated.View onLayout={onButtonBottomLayout} style={[styles.button, buttonStyle]}>
           <GroupJoinCancelButton style={styles.joinBtn} groupId={groupId} />
         </Animated.View>
-        <ContentSearch groupId={groupId} />
+        {/* <ContentSearch groupId={groupId} /> */}
         <MemberQuestionsModal />
         <TermsView />
         {isMember && <FloatingCreatePost />}

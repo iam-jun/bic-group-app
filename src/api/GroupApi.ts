@@ -22,7 +22,7 @@ import {
 } from '~/interfaces/IAuth';
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 import { IParamsReportMember } from '~/interfaces/IReport';
-import { ContentType } from '~/components/SelectAudience';
+import { ContentType } from '~/components/SelectAudience/store';
 
 const provider = apiProviders.bein;
 const defaultConfig = {
@@ -202,6 +202,17 @@ export const groupsApiConfig = {
     provider: apiProviders.bein,
     params: {
       content: params?.contentType,
+      key: params?.key,
+      offset: params?.offset || 0,
+      limit: params?.limit || 25,
+    },
+  }),
+  getAllGroupJoinedSearch: (params: {
+    key: string, offset?: number, limit?: number
+  }): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/search/groups`,
+    params: {
       key: params?.key,
       offset: params?.offset || 0,
       limit: params?.limit || 25,
@@ -668,6 +679,11 @@ const groupApi = {
     contentType: ContentType; key: string, offset?: number, limit?: number
   }) => withHttpRequestPromise(
     groupsApiConfig.getSearchAudiences, params,
+  ),
+  getAllGroupJoinedSearch: (params: {
+    key: string, offset?: number, limit?: number
+  }) => withHttpRequestPromise(
+    groupsApiConfig.getAllGroupJoinedSearch, params,
   ),
   getAudienceTree: () => withHttpRequestPromise(groupsApiConfig.getAudienceTree),
   getGroupMembers: (groupId: string, params: any) => withHttpRequestPromise(

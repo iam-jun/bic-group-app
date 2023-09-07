@@ -1,5 +1,5 @@
 import { useTheme } from '@react-navigation/native';
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Icon from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
@@ -8,7 +8,9 @@ import spacing from '~/theme/spacing';
 import useTagItemMenu from '../useTagItemMenu';
 import { Button } from '~/baseComponents';
 import { useRootNavigation } from '~/hooks/navigation';
-import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
+import { ICommunity } from '~/interfaces/ICommunity';
+import searchStack from '~/router/navigator/MainStack/stacks/searchStack/stack';
 
 type TagItemProps = {
     item: ITag;
@@ -21,6 +23,13 @@ const TagItem: FC<TagItemProps> = ({
   item, isMember, communityId, canCUDTag,
 }) => {
   const { name, totalUsed } = item;
+
+  const community = useCommunitiesStore(
+    useCallback(
+      (state: ICommunitiesState) => state.data[communityId] || ({} as ICommunity),
+      [communityId],
+    ),
+  );
 
   const theme = useTheme();
   const { colors } = theme;
@@ -37,7 +46,7 @@ const TagItem: FC<TagItemProps> = ({
 
   const goToTagsDetail = () => {
     if (!isMember) return;
-    rootNavigation.navigate(tagsStack.tagDetail, { tagData: item, communityId });
+    rootNavigation.push(searchStack.searchMain, { tag: item, group: community });
   };
 
   return (

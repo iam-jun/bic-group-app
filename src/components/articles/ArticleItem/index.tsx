@@ -23,7 +23,6 @@ import { getTotalReactions } from '~/helpers/post';
 import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import TagsView from '~/components/TagsView';
-import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import { ITag } from '~/interfaces/ITag';
 import Divider from '~/beinComponents/Divider';
 import DeletedItem from '~/components/DeletedItem';
@@ -32,6 +31,7 @@ import { TrackingEventContentReadProperties } from '~/services/tracking/Interfac
 import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 import DraftQuizFooter from '~/components/quiz/DraftQuizFooter';
 import TakePartInAQuiz from '~/components/quiz/TakePartInAQuiz';
+import searchStack from '~/router/navigator/MainStack/stacks/searchStack/stack';
 
 export interface ArticleItemProps {
   data: IPost;
@@ -101,7 +101,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
   };
   const goToDetail = () => rootNavigation.navigate(articleStack.articleDetail, { articleId: id, focusComment: true });
   const goToTagDetail = (tagData: ITag) => {
-    rootNavigation.navigate(tagsStack.tagDetail, { tagData });
+    rootNavigation.push(searchStack.searchMain, { tag: tagData });
   };
 
   const renderImportant = () => (
@@ -238,12 +238,12 @@ const ArticleItem: FC<ArticleItemProps> = ({
         {renderImageThumbnail()}
         {renderPreviewSummary()}
       </Button>
-      {isLite && renderLite()}
       {!isLite && renderInterestedBy()}
-      {!isLite && renderTakePartInAQuiz()}
+      {renderTakePartInAQuiz()}
       {!isLite && renderDivider()}
       {!isLite && renderFooter()}
       {!isLite && renderMarkAsRead()}
+      {isLite && renderLite()}
       {renderDraftQuizFooter()}
     </View>
   );

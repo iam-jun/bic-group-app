@@ -30,7 +30,6 @@ import useArticleController from '~/screens/articles/store';
 import useSeriesStore from '~/screens/series/store';
 import useTopicStore from '~/screens/topic/store';
 import useAddArticlesStore from '~/screens/series/SeriesDetail/components/AddArticles/store';
-import useCreateArticleCategoryStore from '~/screens/articles/CreateArticle/screens/CreateArticleCategory/store';
 import useForgotPasswordStore from '~/screens/auth/ForgotPassword/store';
 import useChangePasswordStore from '~/screens/Menu/AccountSettings/SecurityLogin/ChangePassword/store';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
@@ -72,6 +71,11 @@ import useMembershipPolicySettingsStore from '~/screens/groups/MembershipPolicyS
 import usePreviewJoinableGroupStore from '~/components/PreviewJoinableGroup/store';
 import useNotiSettingsStore from '~/screens/Notification/NotiSettings/store';
 import useAdvancedNotiSettingsStore from '~/screens/Notification/AdvancedSettings/store';
+import useSelectCategoriesStore from '~/components/SelectCategories/store';
+import useQuizzesStore from './entities/quizzes';
+import useSearchStore from '~/screens/Search/store';
+import useSearchFilterUsersStore from '~/screens/Search/SearchFilter/SearchFilterUsers/store';
+import useSearchFilterTagsStore from '~/screens/Search/SearchFilter/SearchFilterTags/store';
 
 export const excludedStore = [
   useAuthController,
@@ -118,7 +122,7 @@ const stores = [
   useCommunityMemberStore,
   useGroupMemberStore,
   useCreateArticleStore,
-  useCreateArticleCategoryStore,
+  useSelectCategoriesStore,
   useSelectSeriesStore,
   useArticlesStore,
   useUserInterestedPostStore,
@@ -161,6 +165,10 @@ const stores = [
   usePreviewJoinableGroupStore,
   useNotiSettingsStore,
   useAdvancedNotiSettingsStore,
+  useQuizzesStore,
+  useSearchStore,
+  useSearchFilterUsersStore,
+  useSearchFilterTagsStore,
 ];
 
 export const resetAllStores = () => {

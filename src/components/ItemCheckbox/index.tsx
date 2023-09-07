@@ -6,15 +6,14 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Checkbox from '~/baseComponents/Checkbox';
 
 import Text from '~/baseComponents/Text';
-import { ICategory } from '~/interfaces/IArticle';
 import spacing from '~/theme/spacing';
 
 export interface ItemCheckboxProps {
   data: any;
   isChecked?: boolean;
   disabled?: boolean;
-  onRemoveItem?: (category: ICategory) => void;
-  onAddItem?: (category: ICategory) => void;
+  onRemoveItem?: (item: any) => void;
+  onAddItem?: (item: any) => void;
   testIDCheckbox?: string;
   testIDItem?: string;
 }
