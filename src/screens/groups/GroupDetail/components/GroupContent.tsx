@@ -18,7 +18,7 @@ import ContentItem from '~/components/ContentItem';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 import Divider from '~/beinComponents/Divider';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
-import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import PostViewPlaceholder from '~/components/placeholder/PostViewPlaceholder';
 import { BoxListPinContent } from '~/components/PinContent/components';
 import { onRefresh } from './helper';
 import InvitationView from '~/screens/communities/CommunityDetail/components/InvitationView';
