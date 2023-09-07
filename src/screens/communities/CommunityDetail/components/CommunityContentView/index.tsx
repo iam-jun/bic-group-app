@@ -17,7 +17,7 @@ import useTimelineStore, { ITimelineState } from '~/store/timeline';
 import ContentItem from '~/components/ContentItem';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 import { ContentFeed, AttributeFeed } from '~/interfaces/IFeed';
-import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import PostViewPlaceholder from '~/components/placeholder/PostViewPlaceholder';
 import { BoxListPinContent } from '~/components/PinContent/components';
 import InvitationView from '../InvitationView';
 import { ITypeGroup } from '~/interfaces/common';

@@ -79,7 +79,11 @@ const NotiSettingItem = ({
             {title}
           </Text.BodyMMedium>
           {Boolean(isShowSubTitle) && Boolean(subtitle) && (
-          <Text.BodyS testID="notification_settings.item.sub_title" style={styles.subTitle}>
+          <Text.BodyS
+            testID="notification_settings.item.sub_title"
+            color={disable ? colors.neutral30 : colors.neutral40}
+            style={styles.subTitle}
+          >
             {subtitle}
           </Text.BodyS>
           )}
