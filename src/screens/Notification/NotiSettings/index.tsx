@@ -50,7 +50,7 @@ const NotificationSettings = () => {
   };
 
   useEffect(() => {
-    communityActions.getYourCommunities(true);
+    communityActions.getYourCommunities({ isRefreshing: true, isFromNotificationScreen: true });
     resetAdvancedSettingsStore();
   }, []);
 
