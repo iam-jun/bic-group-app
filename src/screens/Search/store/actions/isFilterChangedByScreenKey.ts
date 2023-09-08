@@ -8,8 +8,6 @@ const isFilterChangedByScreenKey = (_set, get) => (screenKey: string) => {
   const { search }: ISearchState = get();
   const { filter, tempFilter } = search[screenKey] || {};
 
-  if (!filter || !tempFilter) return false;
-
   const {
     contentType = [],
     group,
@@ -17,7 +15,7 @@ const isFilterChangedByScreenKey = (_set, get) => (screenKey: string) => {
     topics = [],
     createdBy = [],
     datePosted,
-  } = filter;
+  } = filter || {};
   const {
     contentType: tempFilterContentType = [],
     group: tempFilterGroup,
@@ -25,7 +23,7 @@ const isFilterChangedByScreenKey = (_set, get) => (screenKey: string) => {
     topics: tempFilterTopics = [],
     createdBy: tempFilterCreatedBy = [],
     datePosted: tempFilterDatePosted,
-  } = tempFilter;
+  } = tempFilter || {};
 
   const isFilterContentTypeChanged = !isEqual(
     sortBy(contentType),
