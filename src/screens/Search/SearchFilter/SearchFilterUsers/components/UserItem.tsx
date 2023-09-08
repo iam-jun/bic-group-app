@@ -8,6 +8,7 @@ import spacing from '~/theme/spacing';
 import { ISearchUser } from '~/interfaces/ISearch';
 import { Avatar } from '~/baseComponents';
 import { getTextNameUserDisplay } from '~/helpers/common';
+import VerifiedView from '~/components/VerifiedView';
 
 export interface UserItemProps {
   data: ISearchUser;
@@ -32,7 +33,7 @@ const UserItem: FC<UserItemProps> = ({
   const styles = createStyle();
   const { colors } = theme;
 
-  const { username, avatar } = data || {};
+  const { username, avatar, isVerified } = data || {};
 
   const onChange = (isChecked: boolean) => {
     if (isChecked) {
@@ -46,9 +47,12 @@ const UserItem: FC<UserItemProps> = ({
     <View testID={testIDItem} style={styles.container}>
       <Avatar.Small source={{ uri: avatar }} isRounded />
       <View style={styles.usernameContainer}>
-        <Text.BodySMedium color={colors.neutral60} numberOfLines={1}>
-          {getTextNameUserDisplay(data)}
-        </Text.BodySMedium>
+        <View style={styles.row}>
+          <Text.BodySMedium style={{ flexShrink: 1 }} color={colors.neutral60} numberOfLines={1}>
+            {getTextNameUserDisplay(data)}
+          </Text.BodySMedium>
+          <VerifiedView size={12} isVerified={isVerified} />
+        </View>
         <Text.BodyXS color={colors.neutral30} numberOfLines={1}>
           {`@${username}`}
         </Text.BodyXS>

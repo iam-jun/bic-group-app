@@ -1701,6 +1701,7 @@
     "search_creator_placeholder": "Tìm kiếm người đăng...",
     "chosen_people": "Đã chọn: {{number}}",
     "input_at_least_3_characters": "Nhập tối thiểu 3 ký tự",
-    "results": "kết quả"
+    "results": "kết quả",
+    "reset": "Xoá"
   }
 }

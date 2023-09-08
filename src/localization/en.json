@@ -1761,6 +1761,7 @@
     "search_creator_placeholder": "Search creator...",
     "chosen_people": "Chosen people: {{number}}",
     "input_at_least_3_characters": "Input at least 3 characters",
-    "results": "results"
+    "results": "results",
+    "reset": "Reset"
   }
 }

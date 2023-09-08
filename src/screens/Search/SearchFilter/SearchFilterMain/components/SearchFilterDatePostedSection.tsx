@@ -28,8 +28,14 @@ const SearchFilterDatePostedSection: FC<SearchFilterDatePostedSectionProps> = ({
     });
   };
 
+  const onReset = () => {
+    actionsSearchStore.updateTempFilterByScreenKey(searchScreenKey, {
+      datePosted: undefined,
+    });
+  };
+
   return (
-    <SectionContainer title="search:filter_date_posted">
+    <SectionContainer title="search:filter_date_posted" onReset={onReset}>
       <FilterDate
         startDate={startDate}
         endDate={endDate}

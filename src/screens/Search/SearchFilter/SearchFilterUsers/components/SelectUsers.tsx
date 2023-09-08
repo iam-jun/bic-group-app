@@ -1,5 +1,5 @@
 import debounce from 'lodash/debounce';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View, StyleSheet, FlatList,
 } from 'react-native';
@@ -18,11 +18,16 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import UserItem from './UserItem';
 import { ISearchUser } from '~/interfaces/ISearch';
+import useCommonController from '~/screens/store';
 
 const SelectUsers = () => {
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
+
+  const [isShowYou, setIsShowYou] = useState(true);
+
+  const userProfileData = useCommonController((state) => state.myProfile) || {};
 
   const searchFilterUsersActions = useSearchFilterUsersStore((state) => state.actions);
   const resetStore = useSearchFilterUsersStore((state) => state.reset);
@@ -50,6 +55,13 @@ const SelectUsers = () => {
 
   const onSearch = debounce((searchText: string) => {
     getData(searchText, true);
+    const query = searchText.trim();
+    if (query.length > 0) {
+      setIsShowYou(false);
+    }
+    if (query.length === 0) {
+      setIsShowYou(true);
+    }
   }, 250);
 
   const onChangeTextSearch = (text: string) => {
@@ -65,7 +77,12 @@ const SelectUsers = () => {
   const renderListEmptyComponent
     = () => (loading || hasNextPage ? null : <NoSearchResultsFound />);
 
-  const renderListHeaderComponent = () => <ViewSpacing height={padding.small} />;
+  const renderListHeaderComponent = () => (
+    <>
+      <ViewSpacing height={padding.small} />
+      {isShowYou && renderItem({ item: userProfileData })}
+    </>
+  );
 
   const renderListFooterComponent = () => (
     <View style={styles.footer}>
