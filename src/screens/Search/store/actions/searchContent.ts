@@ -87,8 +87,10 @@ const searchContent = (set, get) => async (payload: PayloadSearchContent) => {
       ];
     }, 'searchContent success');
   } catch (e) {
-    set((state: IFeedSearchState) => {
+    set((state: ISearchState) => {
       state.search[searchScreenKey].loadingResult = false;
+      state.search[searchScreenKey].endCursor = null;
+      state.search[searchScreenKey].hasNextPage = false;
     }, 'searchContent failed');
     showToastError(e);
   }
