@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { isEmpty } from 'lodash';
 import SectionContainer from './SectionContainer';
 import useSearchStore from '~/screens/Search/store';
 import FilterDate from './FilterDate';
@@ -35,7 +36,7 @@ const SearchFilterDatePostedSection: FC<SearchFilterDatePostedSectionProps> = ({
   };
 
   return (
-    <SectionContainer title="search:filter_date_posted" onReset={onReset}>
+    <SectionContainer title="search:filter_date_posted" onReset={!isEmpty(currentFilterDatePosted) && onReset}>
       <FilterDate
         startDate={startDate}
         endDate={endDate}

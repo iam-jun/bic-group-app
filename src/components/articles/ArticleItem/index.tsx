@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { ExtendedTheme, useRoute, useTheme } from '@react-navigation/native';
 
 import spacing, { margin } from '~/theme/spacing';
 import Image from '~/components/Image';
@@ -32,6 +32,8 @@ import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracki
 import DraftQuizFooter from '~/components/quiz/DraftQuizFooter';
 import TakePartInAQuiz from '~/components/quiz/TakePartInAQuiz';
 import searchStack from '~/router/navigator/MainStack/stacks/searchStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
+import useCommunitiesStore from '~/store/entities/communities';
 
 export interface ArticleItemProps {
   data: IPost;
@@ -49,6 +51,9 @@ const ArticleItem: FC<ArticleItemProps> = ({
   onPressComment,
 }: ArticleItemProps) => {
   const { rootNavigation } = useRootNavigation();
+
+  const route = useRoute();
+
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
@@ -101,7 +106,13 @@ const ArticleItem: FC<ArticleItemProps> = ({
   };
   const goToDetail = () => rootNavigation.navigate(articleStack.articleDetail, { articleId: id, focusComment: true });
   const goToTagDetail = (tagData: ITag) => {
-    rootNavigation.push(searchStack.searchMain, { tag: tagData });
+    if ([groupStack.communityDetail, groupStack.groupDetail].includes(route?.name)) {
+      const { communityId }: any = route.params || {};
+      const community = useCommunitiesStore.getState().data?.[communityId];
+      rootNavigation.push(searchStack.searchMain, { tag: tagData, group: community });
+    } else {
+      rootNavigation.push(searchStack.searchMain, { tag: tagData });
+    }
   };
 
   const renderImportant = () => (

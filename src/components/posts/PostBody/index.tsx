@@ -4,6 +4,7 @@ import React, {
 } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import { useRoute } from '@react-navigation/native';
 import CollapsibleText from '~/baseComponents/Text/CollapsibleText';
 import PostPhotoPreview from '~/components/posts/PostPhotoPreview';
 import { ResourceUploadType } from '~/interfaces/IUpload';
@@ -25,6 +26,8 @@ import TagsView from '~/components/TagsView';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import TakePartInAQuiz from '~/components/quiz/TakePartInAQuiz';
 import searchStack from '~/router/navigator/MainStack/stacks/searchStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
+import useCommunitiesStore from '~/store/entities/communities';
 
 export interface PostBodyProps {
   data: IPost;
@@ -46,6 +49,8 @@ const _PostBody: FC<PostBodyProps> = ({
   onPressMarkSeenPost,
 }: PostBodyProps) => {
   const { rootNavigation } = useRootNavigation();
+
+  const route = useRoute();
 
   const {
     id: postId, mentions, status, media, content: postContent, highlight, linkPreview, totalUsersSeen, tags, quiz,
@@ -77,7 +82,13 @@ const _PostBody: FC<PostBodyProps> = ({
   }, [status, postId, totalUsersSeen]);
 
   const goToTagDetail = (tagData: ITag) => {
-    rootNavigation.push(searchStack.searchMain, { tag: tagData });
+    if ([groupStack.communityDetail, groupStack.groupDetail].includes(route?.name)) {
+      const { communityId }: any = route.params || {};
+      const community = useCommunitiesStore.getState().data?.[communityId];
+      rootNavigation.push(searchStack.searchMain, { tag: tagData, group: community });
+    } else {
+      rootNavigation.push(searchStack.searchMain, { tag: tagData });
+    }
   };
 
   const renderContent = () => {
