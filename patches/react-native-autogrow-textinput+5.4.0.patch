@@ -1,3 +1,16 @@
+diff --git a/node_modules/react-native-autogrow-textinput/android/src/main/java/com/wix/autogrowtextinput/AutoGrowTextInputModule.java b/node_modules/react-native-autogrow-textinput/android/src/main/java/com/wix/autogrowtextinput/AutoGrowTextInputModule.java
+index 07c76d6..b2d1549 100644
+--- a/node_modules/react-native-autogrow-textinput/android/src/main/java/com/wix/autogrowtextinput/AutoGrowTextInputModule.java
++++ b/node_modules/react-native-autogrow-textinput/android/src/main/java/com/wix/autogrowtextinput/AutoGrowTextInputModule.java
+@@ -52,7 +52,7 @@ public class AutoGrowTextInputModule extends ReactContextBaseJavaModule {
+                 if (param.hasKey("maxHeight") && !param.isNull("maxHeight")) {
+                     mMaxHeight = dpToPx(param.getDouble("maxHeight"));
+                 }
+-                editText.setBlurOnSubmit(false);
++                editText.setSubmitBehavior("submit");
+                 editText.setOnTouchListener(new View.OnTouchListener() {
+                     @Override
+                     public boolean onTouch(View v, MotionEvent event) {
 diff --git a/node_modules/react-native-autogrow-textinput/src/AutoGrowingTextInput.js b/node_modules/react-native-autogrow-textinput/src/AutoGrowingTextInput.js
 index 68531dc..fc9be73 100644
 --- a/node_modules/react-native-autogrow-textinput/src/AutoGrowingTextInput.js
