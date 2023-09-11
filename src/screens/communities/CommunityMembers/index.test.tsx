@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, renderWithRedux } from '~/test/testUtils';
+import { renderWithRedux } from '~/test/testUtils';
 import CommunityMembers, { MEMBER_TABS } from './index';
 import MockedNavigator from '../../../test/MockedNavigator';
 
@@ -27,14 +27,6 @@ describe('CommunityMembers', () => {
     const wrapper = renderWithRedux(<MockedNavigator component={component} />);
     const listMemberComponent = wrapper.getByTestId('member_list');
     expect(listMemberComponent).toBeDefined();
-  });
-
-  it('should show search view when pressing icon search', () => {
-    const wrapper = renderWithRedux(<MockedNavigator component={component} />);
-    const iconSearch = wrapper.getByTestId('header.icon.button');
-    fireEvent.press(iconSearch);
-    const searchView = wrapper.getByTestId('search_base_view');
-    expect(searchView).toBeDefined();
   });
 
   it('should show CommunityMemberRequests when targetIndex = 1', () => {

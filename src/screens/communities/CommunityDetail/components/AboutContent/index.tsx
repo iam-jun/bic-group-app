@@ -168,15 +168,13 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     container: {
       backgroundColor: colors.white,
-      paddingTop: spacing.padding.small,
-      paddingBottom: spacing.padding.large,
       paddingHorizontal: CONTAINER_HORIZONTAL_PADDING,
     },
     titleDescription: {
       marginBottom: spacing.margin.small,
     },
     descriptionSection: {
-      marginBottom: spacing.margin.large,
+      marginVertical: spacing.margin.large,
     },
     itemContainer: {
       flexDirection: 'row',

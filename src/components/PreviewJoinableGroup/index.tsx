@@ -178,7 +178,7 @@ const themeStyle = (theme: ExtendedTheme) => {
     },
     list: {
       paddingRight: 0,
-      maxHeight: dimension.deviceHeight < 770 ? dimension.deviceHeight / 3 : dimension.deviceHeight / 2,
+      maxHeight: dimension.heightListInModal,
     },
     listFooter: {
       marginBottom: 0,

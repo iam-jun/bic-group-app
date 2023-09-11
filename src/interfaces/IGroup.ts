@@ -97,6 +97,7 @@ export interface IGroup {
   settings?: IGroupSettings;
   affectedSettings?: IGroupSettings;
   isInDefaultGroupSet?: boolean;
+  invitation?: IInvitation;
 }
 
 export interface IParsedGroup extends IGroup {
@@ -312,6 +313,79 @@ export interface IPayloadUpdateGroupJoinSetting {
 export interface IPayloadPreviewSettings {
   groupId: string;
   settings: IGroupSettings;
+}
+
+export interface IPayloadInvitations {
+  targetId: string,
+  targetType: InvitationsTargetType,
+  inviteeIds: string[]
+}
+
+export interface IParamsInvitations extends IPayloadInvitations {
+  onSuccess: () => void;
+  onError: () => void;
+}
+
+export enum InvitationsTargetType {
+  GROUP = 'GROUP',
+  GROUP_SET = 'GROUP_SET',
+}
+
+export interface IInvitedPeople {
+  id: string,
+  inviter: IUserInfo,
+  invitee: IUserInfo,
+  targetType: InvitationsTargetType,
+  targetInfo: IInvitationsTargetInfo,
+  status: IInvitationsStatus,
+  createdAt: string,
+  updatedAt: string | null,
+}
+
+interface IUserInfo {
+  id: string,
+  username: string,
+  fullname: string,
+  avatar: string,
+  isDeactivated: boolean,
+}
+
+interface IInvitationsTargetInfo {
+  id: string,
+  name: string
+}
+
+export enum IInvitationsStatus {
+  WAITING = 'WAITING',
+  ACCEPTED = 'ACCEPTED',
+  DECLINED = 'DECLINED',
+  CANCELLED = 'CANCELLED',
+}
+
+export interface IParamsGetInvitations {
+  limit: number,
+  cursor: string | null,
+}
+
+export interface IInvitation {
+  id: string;
+  inviter: IUserInfo;
+  invitedAt: string;
+}
+
+export interface IParamsAcceptSingleInvitation {
+  invitationId: string;
+  callback: () => void;
+}
+
+export interface IParamsDeclineSingleInvitation {
+  invitationId: string;
+  callback: () => void;
+}
+
+export interface IPayloadGetInvitations {
+  offset?: number;
+  limit?: number;
 }
 
 export interface IPayloadPreviewPrivacy {
