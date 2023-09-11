@@ -76,6 +76,7 @@ const createStyle = () => StyleSheet.create({
   tagView: {
     marginHorizontal: spacing.margin.xTiny,
     marginVertical: spacing.margin.tiny,
+    flexShrink: 1,
   },
   tag: {
     alignSelf: 'baseline',

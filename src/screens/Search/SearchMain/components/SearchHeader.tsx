@@ -40,7 +40,7 @@ const SearchHeader: FC<SearchHeaderProps> = ({
     if (!numberActiveFilters) return null;
 
     return (
-      <View style={styles.badge}>
+      <View pointerEvents="none" style={styles.badge}>
         <Text.BadgeS color={colors.white}>
           {numberActiveFilters}
         </Text.BadgeS>

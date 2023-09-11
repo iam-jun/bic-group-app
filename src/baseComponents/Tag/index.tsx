@@ -174,9 +174,10 @@ const createStyles = (
     labelText: {
       color: textColor,
       paddingLeft: spacing.margin.tiny,
+      flexShrink: 1,
     },
     icon: {
-      marginStart: spacing?.margin.tiny,
+      marginLeft: spacing?.margin.tiny,
     },
     avatar: {
     },
