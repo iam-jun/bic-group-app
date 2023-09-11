@@ -85,7 +85,11 @@ const _PostBody: FC<PostBodyProps> = ({
     if ([groupStack.communityDetail, groupStack.groupDetail].includes(route?.name)) {
       const { communityId }: any = route.params || {};
       const community = useCommunitiesStore.getState().data?.[communityId];
-      rootNavigation.push(searchStack.searchMain, { tag: tagData, group: community });
+      const rootGroup = {
+        ...community,
+        id: community?.groupId,
+      };
+      rootNavigation.push(searchStack.searchMain, { tag: tagData, group: rootGroup });
     } else {
       rootNavigation.push(searchStack.searchMain, { tag: tagData });
     }

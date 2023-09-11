@@ -65,6 +65,7 @@ const SearchMain: FC<SearchMainProps> = ({ route }) => {
       }
       if (!!group) {
         searchFilter.group = group;
+        searchFilter.isSelectAllInnerGroups = true;
       }
 
       const searchData: UpdateSearchData = {

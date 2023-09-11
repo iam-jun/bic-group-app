@@ -46,7 +46,11 @@ const TagItem: FC<TagItemProps> = ({
 
   const goToTagsDetail = () => {
     if (!isMember) return;
-    rootNavigation.push(searchStack.searchMain, { tag: item, group: community });
+    const rootGroup = {
+      ...community,
+      id: community?.groupId,
+    };
+    rootNavigation.push(searchStack.searchMain, { tag: item, group: rootGroup });
   };
 
   return (
