@@ -8,7 +8,7 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import CommentItem from '~/beinComponents/list/items/CommentItem';
-import CommentViewPlaceholder from '~/beinComponents/placeholder/CommentViewPlaceholder';
+import CommentViewPlaceholder from '~/components/placeholder/CommentViewPlaceholder';
 import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { IAudienceGroup, ICommentData } from '~/interfaces/IPost';
