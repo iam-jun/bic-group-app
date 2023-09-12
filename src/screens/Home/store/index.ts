@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash';
 import { AttributeFeed, ContentFeed } from '~/interfaces/IFeed';
 import getDataFeed from '~/screens/Home/store/actions/getDataFeed';
 import IHomeState, { IHomeFeed } from '~/screens/Home/store/Interface';
@@ -69,7 +70,21 @@ const homeStore = (set, get) => ({
       }, 'refreshHome');
       actions.getDataFeed(true);
     },
+    removeContentFeedImportantById: (contentId: string) => {
+      const { feed }: IHomeState = get();
 
+      Object.keys(feed).forEach((contentFeed) => {
+        const importantFeed = feed[contentFeed][AttributeFeed.IMPORTANT];
+        const { data } = importantFeed || {};
+
+        if (isEmpty(data)) return;
+
+        const newData = data.filter((id: string) => id !== contentId);
+        set((state: IHomeState) => {
+          state.feed[contentFeed][AttributeFeed.IMPORTANT].data = newData;
+        }, 'removeContentFeedImportantById');
+      });
+    },
     getDataFeed: getDataFeed(set, get),
   },
 

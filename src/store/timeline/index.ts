@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash';
 import {
   createStore, resetStore,
 } from '~/store/utils';
@@ -30,6 +31,7 @@ export interface ITimelineState extends IBaseState {
       initDataTimeline: (id: string) => void;
       getPosts: (id: string, isRefresh?: boolean) => void;
       resetTimeline: (id?: string) => void;
+      removeContentFeedImportantById: (contentId: string) => void;
     }
 }
 
@@ -75,6 +77,26 @@ const timelineStore = (set, get) => ({
       set((state) => {
         state.timelines[id] = {};
       }, `resetTimeline Community/Group id: ${id}`);
+    },
+    removeContentFeedImportantById: (contentId: string) => {
+      const { timelines }: ITimelineState = get();
+
+      Object.keys(timelines).forEach((groupId) => {
+        const dataTimeline = timelines[groupId];
+        const { data: dataFeed = {} } = dataTimeline || {};
+
+        Object.keys(dataFeed).forEach((contentFeed) => {
+          const importantFeed = dataFeed[contentFeed][AttributeFeed.IMPORTANT];
+          const { ids } = importantFeed || {};
+
+          if (isEmpty(ids) || !ids.some((id: string) => id === contentId)) return;
+
+          const newIds = ids.filter((id: string) => id !== contentId);
+          set((state: ITimelineState) => {
+            state.timelines[groupId].data[contentFeed][AttributeFeed.IMPORTANT].ids = newIds;
+          }, 'removeContentFeedImportantById');
+        });
+      });
     },
   },
   reset: () => resetStore(initialState, set),
