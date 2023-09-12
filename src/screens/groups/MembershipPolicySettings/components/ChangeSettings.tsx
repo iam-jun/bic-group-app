@@ -145,7 +145,7 @@ const createStyles = (theme: ExtendedTheme) => {
       marginLeft: spacing.margin.tiny,
     },
     list: {
-      maxHeight: dimension.deviceHeight < 770 ? dimension.deviceHeight / 3 : dimension.deviceHeight / 2,
+      maxHeight: dimension.heightListInModal,
     },
     buttonChange: {
       marginTop: spacing.margin.large,

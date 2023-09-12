@@ -17,7 +17,6 @@ const groupStack = {
   editName: 'edit-name',
   editDescription: 'edit-description',
   editPrivacy: 'edit-privacy',
-  addMembers: 'add-members',
   membershipPolicySettings: 'membership-policy-settings',
 
   // group structure removed

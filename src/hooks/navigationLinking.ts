@@ -9,6 +9,7 @@ import {
 } from '~/router/helper';
 import authStacks from '~/router/navigator/AuthStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
+import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 import useAuthController from '~/screens/auth/store';
 import useAppStore from '~/store/app';
 import showToastError from '~/store/helper/showToastError';
@@ -137,6 +138,12 @@ export const onReceiveURL = async ({
         });
         break;
       }
+
+      case DeepLinkTypes.NOTIFICATION_SETTINGS: {
+        navigation?.navigate?.(notiStack.notiSettings);
+        break;
+      }
+
       case DeepLinkTypes.APP:
         break;
       default:

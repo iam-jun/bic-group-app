@@ -1,7 +1,7 @@
 import { Method } from 'axios';
 import { makeHttpRequest, withHttpRequestPromise } from '~/api/apiRequest';
 import { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
-import { IEditNotificationSetting, IParamGetNotifications } from '~/interfaces/INotification';
+import { IEditNotificationSetting, IParamGetNotifications, IParamUpdateSpecificNotificationSettings } from '~/interfaces/INotification';
 import { IGetCommunityGroup } from '~/interfaces/IGroup';
 
 const LIMIT = 20;
@@ -120,6 +120,17 @@ export const notificationApiConfig = {
     ...defaultConfig,
     url: `${provider.url}settings/advanced/generate`,
   }),
+  getSpecificNotificationSettings: (targetId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/specific/${targetId}`,
+  }),
+  editSpecificNotificationSettings: (targetId: string,
+    data: IParamUpdateSpecificNotificationSettings): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/specific/${targetId}`,
+    method: 'put',
+    data,
+  }),
 };
 
 const notificationApi = {
@@ -169,6 +180,15 @@ const notificationApi = {
     notificationApiConfig.getGroupsAndGroupsSettings, communityId, params,
   ),
   generateAdvancedSettings: () => withHttpRequestPromise(notificationApiConfig.generateAdvancedSettings),
+  getSpecificNotificationSettings: (targetId: string) => withHttpRequestPromise(
+    notificationApiConfig.getSpecificNotificationSettings, targetId,
+  ),
+  editSpecificNotificationSettings: (
+    targetId: string,
+    data: IParamUpdateSpecificNotificationSettings,
+  ) => withHttpRequestPromise(
+    notificationApiConfig.editSpecificNotificationSettings, targetId, data,
+  ),
 };
 
 export default notificationApi;
