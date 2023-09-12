@@ -41,6 +41,7 @@ const searchContent = (set, get) => async (payload: PayloadSearchContent) => {
 
     params.limit = appConfig.recordsPerPage;
     params.after = endCursor;
+    params.isIncludedInnerGroups = !!isSelectAllInnerGroups;
 
     if (searchText) {
       params.keyword = searchText;
@@ -50,9 +51,6 @@ const searchContent = (set, get) => async (payload: PayloadSearchContent) => {
     }
     if (group) {
       params.groupId = group.id;
-    }
-    if (isSelectAllInnerGroups) {
-      params.isIncludedInnerGroups = isSelectAllInnerGroups;
     }
     if (tags) {
       params.tags = tags.map((tag) => tag.ids).flat();
