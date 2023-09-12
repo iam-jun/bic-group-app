@@ -299,7 +299,11 @@ const CommunityDetail = (props: any) => {
 
   const onPressSearch = () => {
     // actionsFeedSearch.setNewsfeedSearch({ isShow: true });
-    rootNavigation.push(searchStack.searchMain, { group: community });
+    const rootGroup = {
+      ...community,
+      id: community?.groupId,
+    };
+    rootNavigation.push(searchStack.searchMain, { group: rootGroup });
   };
 
   const hasNoDataInStore = !groupId;
