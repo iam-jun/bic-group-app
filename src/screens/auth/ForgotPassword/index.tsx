@@ -33,12 +33,9 @@ const ForgotPassword: FC<IRouteParams> = (props) => {
   const useFormData = useForm();
   const actions = useForgotPasswordStore((state: IForgotPasswordState) => state.actions);
   const currentPasswordStage = useForgotPasswordStore((state: IForgotPasswordState) => state.screenCurrentStage);
-  const reset = useForgotPasswordStore((state: IForgotPasswordState) => state.reset);
 
   useEffect(() => {
-    if (!params?.data?.email) {
-      reset();
-    } else {
+    if (params?.data?.email) {
       const { email, code } = params.data;
       const newEmail = decodeURIComponent(email);
       useFormData.setValue(FieldNameType.EMAIL, newEmail);
@@ -46,7 +43,7 @@ const ForgotPassword: FC<IRouteParams> = (props) => {
       actions.setScreenCurrentStage(forgotPasswordStages.INPUT_CODE_PW);
       actions.setErrorConfirm();
     }
-  }, [params]);
+  }, [params?.data?.code, params?.data?.email]);
 
   const goBack = () => {
     if (currentPasswordStage === forgotPasswordStages.INPUT_CODE_PW) {

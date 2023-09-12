@@ -9,6 +9,7 @@ import {
 } from '~/router/helper';
 import authStacks from '~/router/navigator/AuthStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
+import useForgotPasswordStore from '~/screens/auth/ForgotPassword/store';
 import useAuthController from '~/screens/auth/store';
 import useAppStore from '~/store/app';
 import showToastError from '~/store/helper/showToastError';
@@ -139,6 +140,7 @@ export const onReceiveURL = async ({
       }
       case DeepLinkTypes.RESET_PASSOWRD:
         if (userId) return;
+        useForgotPasswordStore.getState?.().reset?.();
         navigation?.navigate?.(authStacks.forgotPassword, { data: match.params });
         break;
       case DeepLinkTypes.APP:
