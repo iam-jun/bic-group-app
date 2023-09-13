@@ -7,18 +7,16 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
 import Button from '~/beinComponents/Button';
-import { useRootNavigation } from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { Avatar } from '~/baseComponents';
 import { avatarSizes } from '~/theme/dimension';
 import { ICommunity } from '~/interfaces/ICommunity';
 import useMenuController from '../store';
 import JoinedCommunityPlaceholder from './JoinedCommunityPlaceholder';
+import { navigateToCommunityDetail } from '~/router/helper';
 
 export const MAX_LENGTH = 10;
 
 const MenuDiscoverCommunity = () => {
-  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle();
 
@@ -29,7 +27,7 @@ const MenuDiscoverCommunity = () => {
   }, []);
 
   const onPressCommunity = (item: ICommunity) => {
-    rootNavigation.navigate(groupStack.communityDetail, { communityId: item?.id });
+    navigateToCommunityDetail({ communityId: item?.id });
   };
 
   const renderItem = ({ item, index }) => (

@@ -2,15 +2,14 @@ import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import { IPostAudience } from '~/interfaces/IPost';
-import { useRootNavigation } from '~/hooks/navigation';
 import Text from '~/baseComponents/Text';
 import { spacing } from '~/theme';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useBaseHook } from '~/hooks';
-import mainStack from '~/router/navigator/MainStack/stack';
 import Tag from '~/baseComponents/Tag';
 import { PostAudiencesModal } from '~/components/posts';
 import useModalStore from '~/store/modal';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
 
 interface IAudiences {
   audience: IPostAudience;
@@ -19,25 +18,16 @@ interface IAudiences {
 const Audiences: React.FC<IAudiences> = ({ audience }) => {
   const theme = useTheme();
   const { colors } = theme;
-  const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const { groups = [] } = audience || {};
   const modalActions = useModalStore((state) => state.actions);
 
-  const navigateToGroup = (groupId: any, communityId: any) => {
-    rootNavigation.navigate(mainStack.groupDetail, { groupId, communityId });
-  };
-
-  const navigateToCommunity = (communityId: string) => {
-    rootNavigation.navigate(mainStack.communityDetail, { communityId });
-  };
-
   const onPressAudience = (item: any) => {
     const { id, communityId, isCommunity } = item || {};
     if (isCommunity && communityId) {
-      navigateToCommunity(communityId);
+      navigateToCommunityDetail({ communityId });
     } else {
-      navigateToGroup(id, communityId);
+      navigateToGroupDetail({ groupId: id, communityId });
     }
   };
 

@@ -8,6 +8,6 @@ export interface ISearchJoinedCommunitiesState extends IBaseState, IFetchingStat
     [id: string]: any;
   };
   actions?: {
-    searchJoinedCommunities?: (params: IParamGetCommunities) => void;
+    searchJoinedCommunities?: (params: IParamGetCommunities, isCommunitiesOnly?: boolean) => void;
   };
 }

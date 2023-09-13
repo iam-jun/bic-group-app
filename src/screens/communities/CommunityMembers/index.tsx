@@ -4,14 +4,12 @@ import React, {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { StyleSheet, View } from 'react-native';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 
 import SearchMemberView from './CommunityMemberList/components/SearchMemberView';
 import { ICommunity, ICommunityMembers } from '~/interfaces/ICommunity';
 import { useBaseHook } from '~/hooks';
-import CommunityMemberList from './CommunityMemberList';
-import Tab from '~/baseComponents/Tab';
 import { MEMBER_TAB_TYPES } from '../constants';
 import { spacing } from '~/theme';
 import CommunityMemberRequests from './CommunityMemberRequests';
@@ -20,10 +18,15 @@ import MemberOptionsMenu from './components/CommunityMemberOptionsMenu';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
+import { onPressButtonInvite } from '~/components/InvitePeopleToYourGroup/helper';
+import { renderTabs } from './helper';
+import CommunityInvitedPeople from './CommunityInvitedPeople';
+import { ITypeGroup } from '~/interfaces/common';
 
 export const MEMBER_TABS = [
   { id: MEMBER_TAB_TYPES.MEMBER_LIST, text: 'communities:member_tab_types:title_member_list' },
   { id: MEMBER_TAB_TYPES.MEMBER_REQUESTS, text: 'communities:member_tab_types:title_member_requests' },
+  { id: MEMBER_TAB_TYPES.INVITED_PEOPLE, text: 'communities:member_tab_types:title_invited_people' },
 ];
 
 const CommunityMembers = ({ route }: any) => {
@@ -35,7 +38,6 @@ const CommunityMembers = ({ route }: any) => {
   const { t } = useBaseHook();
 
   const [selectedIndex, setSelectedIndex] = useState<number>(targetIndex || 0);
-  const [isOpen, setIsOpen] = useState(false);
   const [selectedMember, setSelectedMember] = useState<ICommunityMembers>();
   const baseSheetRef: any = useRef();
 
@@ -54,10 +56,10 @@ const CommunityMembers = ({ route }: any) => {
     groupId,
     PermissionKey.EDIT_JOIN_SETTING,
   );
-  // const canAddMember = shouldHavePermission(
-  //   groupId,
-  //   PermissionKey.ADD_MEMBER,
-  // );
+  const canAddMember = shouldHavePermission(
+    groupId,
+    PermissionKey.ADD_MEMBER,
+  );
 
   useEffect(() => {
     // In case there's no data available yet when navigating directly
@@ -80,55 +82,56 @@ const CommunityMembers = ({ route }: any) => {
     setSelectedIndex(index);
   };
 
-  const onPressSearch = () => {
-    setIsOpen(true);
-  };
-
-  const onCloseModal = React.useCallback(() => {
-    setIsOpen(false);
-  }, []);
-
   const renderContent = () => {
-    if (selectedIndex === 0) {
-      return <CommunityMemberList community={community} onPressMenu={onPressMenu} />;
+    switch (selectedIndex) {
+      case 0:
+        return (
+          <SearchMemberView
+            community={community}
+            isMember={isMember}
+            placeholder={t('groups:text_search_for_members')}
+            onPressMenu={onPressMenu}
+          />
+        );
+      case 1:
+        return (
+          <CommunityMemberRequests
+            community={community}
+            canApproveRejectJoiningRequests={canApproveRejectJoiningRequests}
+          />
+        );
+      case 2:
+        return <CommunityInvitedPeople type={ITypeGroup.COMMUNITY} groupId={groupId} />;
+      default:
+        return null;
     }
-
-    if (selectedIndex === 1) {
-      return (
-        <CommunityMemberRequests
-          community={community}
-          canAddMember={false}
-          canApproveRejectJoiningRequests={canApproveRejectJoiningRequests}
-        />
-      );
-    }
-
-    return null;
   };
 
-  const showSearchMember = isMember && {
-    icon: 'search' as IconType,
-    onPressIcon: onPressSearch,
+  const isShowInvitedPeopleTab = canAddMember;
+  const isShowMemberRequestsTab = canApproveRejectJoiningRequests || canEditJoinSetting;
+
+  const showButtonInvite = isShowInvitedPeopleTab && {
+    buttonText: 'common:text_invite',
+    buttonProps: { useI18n: true, icon: 'Plus' as IconType, iconSize: 14 },
+    onPressButton: () => onPressButtonInvite({ groupId, type: ITypeGroup.COMMUNITY }),
   };
+
+  const _renderTabs = () => renderTabs({
+    isShowInvitedPeopleTab,
+    isShowMemberRequestsTab,
+    selectedIndex,
+    onPressTab,
+  });
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.gray5}>
       <Header
         titleTextProps={{ useI18n: true }}
         title="groups:title_members_other"
-        {...showSearchMember}
+        {...showButtonInvite}
       />
 
-      {(!!canApproveRejectJoiningRequests || !!canEditJoinSetting) && (
-        <View style={styles.tabContainer}>
-          <Tab
-            buttonProps={{ size: 'large', type: 'primary', useI18n: true }}
-            data={MEMBER_TABS}
-            onPressTab={onPressTab}
-            activeIndex={selectedIndex}
-          />
-        </View>
-      )}
+      {_renderTabs()}
 
       <View style={styles.memberList}>
         {renderContent()}
@@ -140,14 +143,6 @@ const CommunityMembers = ({ route }: any) => {
         selectedMember={selectedMember || {} as ICommunityMembers}
         onOptionsClosed={clearSelectedMember}
       />
-
-      <SearchMemberView
-        isOpen={isOpen}
-        community={community}
-        onClose={onCloseModal}
-        onPressMenu={onPressMenu}
-        placeholder={t('groups:text_search_member')}
-      />
     </ScreenWrapper>
   );
 };
@@ -155,10 +150,6 @@ const CommunityMembers = ({ route }: any) => {
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
-    tabContainer: {
-      backgroundColor: colors.white,
-      marginTop: spacing.margin.large,
-    },
     memberList: {
       flex: 1,
       marginTop: spacing.margin.large,

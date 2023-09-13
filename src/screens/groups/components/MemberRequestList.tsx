@@ -13,24 +13,19 @@ import Divider from '~/beinComponents/Divider';
 import GroupPendingUserItemWrapper from '~/screens/groups/GroupMembers/GroupMemberRequests/components/GroupPendingUserItemWrapper';
 import CommunityPendingUserItemWrapper from '~/screens/communities/CommunityMembers/CommunityMemberRequests/components/CommunityPendingUserItemWrapper';
 import spacing from '~/theme/spacing';
-import { Button } from '~/baseComponents';
 import useCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
 import useGroupMemberStore from '../GroupMembers/store';
 
 interface MemberRequestListProps {
   id?: string;
   type: 'community' | 'group';
-  canAddMember?: boolean;
   onLoadMore: () => void;
   onRefresh: () => void;
-  onPressAdd: () => void;
 }
 
 const MemberRequestList = ({
   id,
   type,
-  canAddMember,
-  onPressAdd,
   onLoadMore,
   onRefresh,
 }: MemberRequestListProps) => {
@@ -51,10 +46,6 @@ const MemberRequestList = ({
     canLoadMore = communityMemberRequests.canLoadMore;
   }
 
-  const onPressAddMemmbers = () => {
-    onPressAdd?.();
-  };
-
   const renderItem = ({ item: requestId }: {item: string}) => {
     if (id && type === 'community') return <CommunityPendingUserItemWrapper requestId={requestId} organizationId={id} />;
 
@@ -68,19 +59,6 @@ const MemberRequestList = ({
         size={120}
         icon="addUsers"
         title="groups:text_no_pending_members_notice"
-        description={canAddMember ? `groups:text_pending_request_notice_${type}` : ''}
-        ButtonComponent={canAddMember && (
-          <Button.Primary
-            style={styles.buttonAddMembers}
-            size="large"
-            type="solid"
-            icon="Plus"
-            onPress={onPressAddMemmbers}
-            useI18n
-          >
-            groups:title_add_members
-          </Button.Primary>
-        )}
       />
     );
   };

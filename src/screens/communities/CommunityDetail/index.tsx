@@ -32,7 +32,6 @@ import { getHeaderMenu } from './helper';
 import { BottomListProps } from '~/components/BottomList';
 import { useBaseHook } from '~/hooks';
 import Text from '~/baseComponents/Text';
-import NotFound from '~/screens/NotFound/components/NotFound';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import PlaceholderView from './components/PlaceholderView';
 import { ICommunity } from '~/interfaces/ICommunity';
@@ -51,6 +50,8 @@ import usePinContentStore from '~/components/PinContent/store';
 import TermsView from '~/components/TermsModal';
 import MemberQuestionsModal from '~/components/MemberQuestionsModal';
 import FloatingCreatePost from '~/screens/Home/components/FloatingCreatePost';
+import useTermStore from '~/components/TermsModal/store';
+import PageNotFound from '~/screens/NotFound/components/PageNotFound';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -100,6 +101,7 @@ const CommunityDetail = (props: any) => {
 
   const actionsFeedSearch = useFeedSearchStore((state) => state.actions);
   const actionPinContent = usePinContentStore((state) => state.actions);
+  const actionTerms = useTermStore((state) => state.actions);
 
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
 
@@ -137,21 +139,10 @@ const CommunityDetail = (props: any) => {
   }, [groupId, isMember, privacy, isLoadingCommunity, community, contentFilter, attributeFilter]);
 
   useEffect(() => {
-    // only update currentCommunityId when navigating to the community profile
-    useCommunitiesStore.setState({
-      currentCommunityId: communityId,
-    });
-
     if (isMounted) {
       getCommunityDetail();
     }
-  }, [isMounted, communityId]);
-
-  useEffect(() => () => {
-    useCommunitiesStore.setState({
-      currentCommunityId: '',
-    });
-  }, []);
+  }, [isMounted]);
 
   useEffect(() => {
     if (isEmpty(timelines[groupId]) && isEmpty(communityPost?.ids)) {
@@ -194,6 +185,7 @@ const CommunityDetail = (props: any) => {
       timelineActions.getPosts(groupId, true);
     }
     actionPinContent.getPinContentsGroup(groupId);
+    isPrivateCommunity && actionTerms.getTermsData(groupId);
     getCommunityDetail();
   }, [groupId, contentFilter, attributeFilter]);
 
@@ -316,7 +308,7 @@ const CommunityDetail = (props: any) => {
 
   // [TO-DO] Handle other cases
   if (error) {
-    return <NotFound onGoBack={onGoBackOnNotFound} />;
+    return <PageNotFound onGoBack={onGoBackOnNotFound} />;
   }
 
   const _onPressContentFilterTab = (item: any) => {
@@ -335,6 +327,7 @@ const CommunityDetail = (props: any) => {
           communityId={communityId}
           isMember={isMember}
           teamName={community?.teamName}
+          groupId={groupId}
         />
         <FilterFeedButtonGroup
           contentFilter={contentFilter}

@@ -8,13 +8,15 @@ import Text from '~/baseComponents/Text';
 import { INotiSettings } from '~/interfaces/INotification';
 import Icon from '~/baseComponents/Icon';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import { IconType } from '~/resources/icons';
 
 interface NotiSettingItemProps {
     item: INotiSettings;
-    iconName: any;
+    iconName: IconType;
     isDisable?: boolean;
     isDisableToggle?: boolean;
     isShowSubTitle?: boolean;
+    isLoading?: boolean;
     onPressToggle?: (isChecked: boolean) => void;
     onPress?: (item: INotiSettings) => void;
 }
@@ -25,6 +27,7 @@ const NotiSettingItem = ({
   isDisable = false,
   isDisableToggle = false,
   isShowSubTitle = false,
+  isLoading = false,
   onPressToggle,
   onPress,
 }: NotiSettingItemProps) => {
@@ -37,6 +40,28 @@ const NotiSettingItem = ({
   }
   const { title, enable, subtitle = '' } = item;
   const disable = Boolean(isDisable);
+
+  const renderRightComponent = () => {
+    if (Boolean(onPressToggle)) {
+      return (
+        <Toggle
+          testID="notification_settings.item.toggle"
+          loading={isLoading}
+          isChecked={enable}
+          disabled={isDisableToggle}
+          onValueChanged={onPressToggle}
+        />
+      );
+    }
+    return (
+      <Icon
+        testID="notification_settings.item.icon"
+        tintColor={disable ? colors.neutral30 : colors.neutral40}
+        size={14}
+        icon="ChevronRight"
+      />
+    );
+  };
 
   return (
     <TouchableOpacity
@@ -54,29 +79,18 @@ const NotiSettingItem = ({
             {title}
           </Text.BodyMMedium>
           {Boolean(isShowSubTitle) && Boolean(subtitle) && (
-          <Text.BodyS testID="notification_settings.item.sub_title" style={styles.subTitle}>
+          <Text.BodyS
+            testID="notification_settings.item.sub_title"
+            color={disable ? colors.neutral30 : colors.neutral40}
+            style={styles.subTitle}
+          >
             {subtitle}
           </Text.BodyS>
           )}
         </View>
       </View>
       <ViewSpacing width={spacing.margin.large} />
-      {Boolean(onPressToggle)
-        ? (
-          <Toggle
-            testID="notification_settings.item.toggle"
-            isChecked={enable}
-            disabled={isDisableToggle}
-            onValueChanged={onPressToggle}
-          />
-        ) : (
-          <Icon
-            testID="notification_settings.item.icon"
-            tintColor={disable ? colors.neutral30 : colors.neutral40}
-            size={14}
-            icon="ChevronRight"
-          />
-        )}
+      {renderRightComponent()}
     </TouchableOpacity>
   );
 };

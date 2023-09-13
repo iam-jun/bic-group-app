@@ -10,6 +10,7 @@ describe('MemberList component', () => {
   const onLoadMore = jest.fn();
   const onPressMenu = jest.fn();
   const onRefresh = jest.fn();
+  const communityId = 'test';
 
   const canManageMember = true;
 
@@ -37,6 +38,7 @@ describe('MemberList component', () => {
     const wrapper = renderWithRedux(
       <MemberList
         type="community"
+        communityId={communityId}
         isAdminRole
         canManageMember={canManageMember}
         onLoadMore={onLoadMore}
@@ -72,6 +74,7 @@ describe('MemberList component', () => {
     const wrapper = renderWithRedux(
       <MemberList
         type="community"
+        communityId={communityId}
         isAdminRole
         canManageMember={canManageMember}
         onLoadMore={onLoadMore}

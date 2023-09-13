@@ -23,6 +23,7 @@ interface MemberListProps {
   type: 'group' | 'community';
   isAdminRole: boolean;
   canManageMember: boolean;
+  communityId: string;
   onLoadMore: () => void;
   onPressMenu: (item: any) => void;
   onRefresh: () => void;
@@ -32,6 +33,7 @@ const MemberList = ({
   type,
   isAdminRole,
   canManageMember,
+  communityId,
   onLoadMore,
   onPressMenu,
   onRefresh,
@@ -56,13 +58,14 @@ const MemberList = ({
     return <NoSearchResultsFound />;
   };
 
-  const renderSectionHeader = ({ section: { title, userCount } }: any) => (
-    <View style={styles.sectionHeader}>
-      <Text.H4 color={colors.neutral40}>
-        {`${title} · ${formatLargeNumber(userCount)}`}
-      </Text.H4>
-    </View>
-  );
+  const renderSectionHeader = ({ section: { title, userCount } }: any) => {
+    const style = title === 'Group Admins' ? styles.sectionHeaderFirst : styles.sectionHeader;
+    return (
+      <View style={style}>
+        <Text.H4 color={colors.neutral40}>{`${title} · ${formatLargeNumber(userCount)}`}</Text.H4>
+      </View>
+    );
+  };
 
   const renderListFooter = () => {
     if (!loading && !loadingBlocking) return <ViewSpacing height={insets.bottom || spacing.padding.large} />;
@@ -80,6 +83,7 @@ const MemberList = ({
   const renderItem = ({ item }: {item: any}) => (
     <MemberItem
       item={item}
+      communityId={communityId}
       isAdminRole={isAdminRole}
       canManageMember={canManageMember}
       onPressMenu={onPressMenu}
@@ -125,14 +129,19 @@ const createStyles = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     content: {
       backgroundColor: colors.white,
+      marginVertical: spacing.margin.large,
     },
     sectionHeader: {
       paddingHorizontal: spacing.padding.large,
       paddingTop: spacing.padding.large,
       paddingBottom: spacing.padding.base,
     },
+    sectionHeaderFirst: {
+      paddingHorizontal: spacing.padding.large,
+      paddingBottom: spacing.padding.base,
+    },
     listFooter: {
-      height: 100,
+      marginBottom: spacing.margin.large,
       justifyContent: 'center',
       alignItems: 'center',
     },

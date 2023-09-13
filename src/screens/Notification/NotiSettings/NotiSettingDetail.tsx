@@ -3,9 +3,9 @@ import { RefreshControl, StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Animated from 'react-native-reanimated';
 
-import { debounce } from 'lodash';
+import { capitalize, debounce } from 'lodash';
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
@@ -13,7 +13,8 @@ import { IRouteParams } from '~/interfaces/IRouter';
 import useNotiSettingsStore from './store';
 import Text from '~/baseComponents/Text';
 import NotiSettingItem from '../components/NotiSettingItem';
-import { IEditNotificationSetting, INotiChannel, INotiSettings } from '~/interfaces/INotification';
+import { INotiChannel, INotiSettings } from '~/interfaces/INotification';
+import { trackEvent } from '~/services/tracking';
 
 interface IHandleToggleProps {
   isChecked: boolean;
@@ -53,7 +54,7 @@ const NotiSettingDetail: FC<IRouteParams> = (props) => {
   };
 
   const handleUpdateSettings = ({ payload, oldPayload, index }:IHandleUpdateSettings) => {
-    let payloadUpdateStore: IEditNotificationSetting = {
+    let payloadUpdateStore: INotiSettings = {
       name: payload.name,
     };
     if (oldPayload?.enable !== undefined) {
@@ -81,6 +82,13 @@ const NotiSettingDetail: FC<IRouteParams> = (props) => {
     const payload = { ...item, enable: isChecked };
     const oldPayload = { ...item, enable: isChecked };
     handleUpdateSettings({ payload, oldPayload, index });
+    if (index === -1) {
+      trackEvent({
+        event: `${capitalize(name)} Noti Changed`,
+        sendWithUserId: true,
+        properties: { state: isChecked },
+      });
+    }
   };
 
   const handlePressItemInApp = debounce(({ index, item, isChecked }:IHandleToggleProps) => {
@@ -199,7 +207,7 @@ const NotiSettingDetail: FC<IRouteParams> = (props) => {
       <View key={item.name} style={styles.childContainer}>
         <Text.BodyMMedium
           testID="notification_settings_detail.child.title"
-          color={colors.neutral80}
+          color={enable ? colors.neutral80 : colors.neutral30}
           style={styles.childHeader}
         >
           {title}

@@ -7,7 +7,7 @@ import NoUserFoundImg from '../../../../assets/images/no_user_found.svg';
 import Button from '~/beinComponents/Button';
 import Header from '~/beinComponents/Header';
 import SVGIcon from '~/baseComponents/Icon/SvgIcon';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Text from '~/baseComponents/Text';
 import { useRootNavigation } from '~/hooks/navigation';
 

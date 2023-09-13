@@ -17,6 +17,9 @@ export interface IModalState extends IBaseState {
   reactionBottomSheet: IReactionBottomSheet | null;
   reactionDetailBottomSheet: IPayloadReactionDetailBottomSheet | null;
   loadingModal: boolean;
+  updateRequiredAlert: {
+    visible: boolean;
+  }
 
   actions: {
     showToast: (payload: IToastMessage) => void;
@@ -33,6 +36,8 @@ export interface IModalState extends IBaseState {
     setLoadingModal: (payload: boolean) => void;
     showReactionDetailBottomSheet: (payload: IPayloadReactionDetailBottomSheet) => void;
     clearReactionDetailBottomSheet: () => void;
+    showUpdateRequiredAlert: () => void;
+    hideUpdateRequiredAlert: () => void;
   };
 }
 
@@ -61,6 +66,10 @@ const initialState: InitStateType<IModalState> = {
     onCancel: () => {
       // do something
     },
+  },
+
+  updateRequiredAlert: {
+    visible: false,
   },
 };
 
@@ -169,6 +178,16 @@ const modalStore = (set, get) => ({
       set((state: IModalState) => {
         state.reactionDetailBottomSheet = initialState.reactionDetailBottomSheet;
       }, 'setClearReactionDetailBottomSheet');
+    },
+    showUpdateRequiredAlert: () => {
+      set((state: IModalState) => {
+        state.updateRequiredAlert.visible = true;
+      }, 'setShowUpdateRequiredAlert');
+    },
+    hideUpdateRequiredAlert: () => {
+      set((state: IModalState) => {
+        state.updateRequiredAlert.visible = false;
+      }, 'setHideUpdateRequiredAlert');
     },
   },
 

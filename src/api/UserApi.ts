@@ -1,7 +1,9 @@
 import { Method } from 'axios';
 import { HttpApiRequestConfig, apiProviders } from './apiConfig';
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
-import { IParamsSignUp, IUserEdit, IVerifyEmail } from '~/interfaces/IAuth';
+import {
+  IEditPersonalInfoVisibility, IParamsSignUp, IUserEdit, IVerifyEmail,
+} from '~/interfaces/IAuth';
 import { IAddWorkExperienceReq } from '~/interfaces/IWorkExperienceRequest';
 import { IParamSearchMentionAudiences } from '~/interfaces/IPost';
 import { withHttpRequestPromise } from './apiRequest';
@@ -110,6 +112,16 @@ export const userApiConfig = {
     ...defaultConfig,
     url: `${provider.url}/public/users/${email}/verify`,
   }),
+  getPersonalPrivacySettings: () : HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/setting`,
+  }),
+  editPersonalInfoSettings: (data: IEditPersonalInfoVisibility) : HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/setting`,
+    method: 'put',
+    data,
+  }),
 };
 
 const userApi = {
@@ -145,6 +157,10 @@ const userApi = {
   ),
   signUp: (params: IParamsSignUp) => withHttpRequestPromise(userApiConfig.signUp, params),
   getUserNotFoundInfo: (email: string) => withHttpRequestPromise(userApiConfig.getUserNotFoundInfo, email),
+  getPersonalPrivacySettings: () => withHttpRequestPromise(userApiConfig.getPersonalPrivacySettings),
+  editPersonalInfoSettings: (data: IEditPersonalInfoVisibility) => withHttpRequestPromise(
+    userApiConfig.editPersonalInfoSettings, data,
+  ),
 };
 
 export default userApi;

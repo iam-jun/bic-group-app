@@ -1,7 +1,8 @@
 import { Method } from 'axios';
 import { makeHttpRequest, withHttpRequestPromise } from '~/api/apiRequest';
 import { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
-import { IEditNotificationSetting, IParamGetNotifications } from '~/interfaces/INotification';
+import { IEditNotificationSetting, IParamGetNotifications, IParamUpdateSpecificNotificationSettings } from '~/interfaces/INotification';
+import { IGetCommunityGroup } from '~/interfaces/IGroup';
 
 const LIMIT = 20;
 
@@ -76,10 +77,59 @@ export const notificationApiConfig = {
     method: 'patch',
     data: params,
   }),
+  getCommunitySettings: (communityId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/advanced/${communityId}`,
+  }),
+  getGroupSettings: (communityId: string, groupIds: string[]): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/advanced/${communityId}`,
+    method: 'post',
+    data: { groupIds },
+  }),
+  updateCommunitySettings: (communityId: string, params: IEditNotificationSetting): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/advanced/${communityId}`,
+    method: 'patch',
+    data: params,
+  }),
+  updateGroupSettings: (
+    communityId: string,
+    groupId: string,
+    params: IEditNotificationSetting,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/advanced/${communityId}/${groupId}`,
+    method: 'patch',
+    data: params,
+  }),
   deleteNotification: (id: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}notifications/${id}`,
     method: 'delete',
+  }),
+  getGroupsAndGroupsSettings: (communityId: string, otherParams: IGetCommunityGroup): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/advanced/${communityId}/groups`,
+    params: {
+      ...otherParams,
+      key: otherParams?.key?.trim?.() ? otherParams.key : undefined,
+    },
+  }),
+  generateAdvancedSettings: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/advanced/generate`,
+  }),
+  getSpecificNotificationSettings: (targetId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/specific/${targetId}`,
+  }),
+  editSpecificNotificationSettings: (targetId: string,
+    data: IParamUpdateSpecificNotificationSettings): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}settings/specific/${targetId}`,
+    method: 'put',
+    data,
   }),
 };
 
@@ -109,7 +159,36 @@ const notificationApi = {
   updateSettings: (params: IEditNotificationSetting) => withHttpRequestPromise(
     notificationApiConfig.updateSettings, params,
   ),
+  getCommunitySettings: (communityId: string) => withHttpRequestPromise(
+    notificationApiConfig.getCommunitySettings, communityId,
+  ),
+  getGroupSettings: (communityId: string, groupIds: string[]) => withHttpRequestPromise(
+    notificationApiConfig.getGroupSettings, communityId, groupIds,
+  ),
+  updateCommunitySettings: (communityId: string, params: IEditNotificationSetting) => withHttpRequestPromise(
+    notificationApiConfig.updateCommunitySettings, communityId, params,
+  ),
+  updateGroupSettings: (
+    communityId: string,
+    groupId: string,
+    params: IEditNotificationSetting,
+  ) => withHttpRequestPromise(
+    notificationApiConfig.updateGroupSettings, communityId, groupId, params,
+  ),
   deleteNotification: (id: string) => withHttpRequestPromise(notificationApiConfig.deleteNotification, id),
+  getGroupsAndGroupsSettings: (communityId: string, params: IGetCommunityGroup) => withHttpRequestPromise(
+    notificationApiConfig.getGroupsAndGroupsSettings, communityId, params,
+  ),
+  generateAdvancedSettings: () => withHttpRequestPromise(notificationApiConfig.generateAdvancedSettings),
+  getSpecificNotificationSettings: (targetId: string) => withHttpRequestPromise(
+    notificationApiConfig.getSpecificNotificationSettings, targetId,
+  ),
+  editSpecificNotificationSettings: (
+    targetId: string,
+    data: IParamUpdateSpecificNotificationSettings,
+  ) => withHttpRequestPromise(
+    notificationApiConfig.editSpecificNotificationSettings, targetId, data,
+  ),
 };
 
 export default notificationApi;

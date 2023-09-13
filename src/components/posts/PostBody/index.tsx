@@ -21,16 +21,18 @@ import spacing from '~/theme/spacing';
 import { escapeMarkDown } from '~/utils/formatter';
 import PostVideoPlayer from '../PostVideoPlayer';
 import { ITag } from '~/interfaces/ITag';
-import useCommunitiesStore from '~/store/entities/communities';
 import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import TagsView from '~/components/TagsView';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import TakePartInAQuiz from '~/components/quiz/TakePartInAQuiz';
 
 export interface PostBodyProps {
   data: IPost;
   isLite?: boolean;
   isEmptyPost?: boolean;
   isPostDetail: boolean;
+  shouldShowDraftQuiz?: boolean;
+
   onPressMarkSeenPost?: () => void;
 }
 
@@ -39,12 +41,15 @@ const _PostBody: FC<PostBodyProps> = ({
   isLite,
   isEmptyPost,
   isPostDetail,
+  shouldShowDraftQuiz,
+
   onPressMarkSeenPost,
 }: PostBodyProps) => {
   const { rootNavigation } = useRootNavigation();
 
   const {
-    id: postId, mentions, status, media, content: postContent, highlight, linkPreview, totalUsersSeen, tags,
+    id: postId, mentions, status, media, content: postContent, highlight, linkPreview, totalUsersSeen, tags, quiz,
+    quizHighestScore, actor,
   } = data;
 
   const { images, videos, files } = media || {};
@@ -72,8 +77,7 @@ const _PostBody: FC<PostBodyProps> = ({
   }, [status, postId, totalUsersSeen]);
 
   const goToTagDetail = (tagData: ITag) => {
-    const communityId = useCommunitiesStore.getState().currentCommunityId;
-    rootNavigation.navigate(tagsStack.tagDetail, { tagData, communityId });
+    rootNavigation.navigate(tagsStack.tagDetail, { tagData });
   };
 
   const renderContent = () => {
@@ -90,6 +94,7 @@ const _PostBody: FC<PostBodyProps> = ({
           mentions={mentions}
           onPressAudience={onPressMentionAudience}
           onToggleShowTextContent={onPressMarkSeenPost}
+          isTracking={status === PostStatus.PUBLISHED}
         />
       );
     }
@@ -119,6 +124,7 @@ const _PostBody: FC<PostBodyProps> = ({
         BottomRightComponent={BottomRightComponent}
         onPressAudience={onPressMentionAudience}
         onToggleShowTextContent={onPressMarkSeenPost}
+        isTracking={status === PostStatus.PUBLISHED}
       />
     );
   };
@@ -127,7 +133,7 @@ const _PostBody: FC<PostBodyProps> = ({
 
   const hasNoAttachment = isEmpty(images) && isEmpty(videos) && isEmpty(files);
   /* only show link previewer when there aren't any attachments */
-  const showLinkPreviewer = hasNoAttachment && !!linkPreview;
+  const isShowLinkPreviewer = hasNoAttachment && !!linkPreview;
 
   const isShowVideoPlayer = videos?.[0]?.thumbnails?.length > 0;
 
@@ -169,7 +175,16 @@ const _PostBody: FC<PostBodyProps> = ({
           onPressDownload={onPressMarkSeenPost}
           collapsible={!isPostDetail}
         />
-        {showLinkPreviewer && <LinkPreview data={linkPreview} />}
+        {isShowLinkPreviewer && <LinkPreview data={linkPreview} />}
+        {!isLite && (
+          <TakePartInAQuiz
+            quiz={quiz}
+            contentId={postId}
+            quizHighestScore={quizHighestScore}
+            actor={actor}
+            shouldShowDraftQuiz={shouldShowDraftQuiz}
+          />
+        )}
       </>
     </View>
   );

@@ -8,19 +8,21 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { GroupPrivacyDetail } from '~/constants/privacyTypes';
 import { useBaseHook } from '~/hooks';
-import { useRootNavigation } from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { isGroup } from '~/helpers/groups';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import { spacing } from '~/theme';
 import { formatLargeNumber } from '~/utils/formatter';
 import ButtonCommunityGroupCard from './ButtonCommunityGroupCard';
 import useModalStore from '~/store/modal';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
+import ButtonCommunityInvitationCard from './ButtonCommunityInvitationCard';
+import { ITypeGroup } from '~/interfaces/common';
 
 type CommunityGroupCardProps = {
   item: any;
   testID?: string;
   shouldShowAlertJoinTheCommunityFirst?: boolean;
+  type?: ITypeGroup;
   onJoin?: (payload: { id: string, name: string, icon: string, privacy: string, userCount: number })=>void;
   onCancel?: (id: string, groupId: string, isGroup?: boolean)=>void;
 };
@@ -29,10 +31,10 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
   item,
   testID,
   shouldShowAlertJoinTheCommunityFirst,
+  type = ITypeGroup.COMMUNITY,
   onJoin,
   onCancel,
 }) => {
-  const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -48,6 +50,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
     joinStatus,
     description,
     community,
+    invitation,
   } = item || {};
   const privacyData: any = GroupPrivacyDetail[privacy] || {};
   const { icon: privacyIcon, title: privacyTitle } = privacyData;
@@ -61,23 +64,14 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
       // and clear community detail when go back from group detail
       actions.getCommunity(community.id);
 
-      rootNavigation.navigate(
-        groupStack.groupDetail,
-        {
-          groupId: id,
-          communityId: community.id,
-        },
-      );
+      navigateToGroupDetail({ groupId: id, communityId: community.id });
       return;
     }
 
     // if a community has community field, then it is in manage api
     // so need to pick id from community field
     // otherwise pick id by normal
-    rootNavigation.navigate(
-      groupStack.communityDetail,
-      { communityId: community ? community.id : id },
-    );
+    navigateToCommunityDetail({ communityId: community ? community.id : id });
   };
 
   const handleJoin = () => {
@@ -105,8 +99,24 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
   const onViewCommunity = () => {
     if (community) {
       const { id } = community;
-      rootNavigation.navigate(groupStack.communityDetail, { communityId: id });
+      navigateToCommunityDetail({ communityId: id });
     }
+  };
+
+  const renderButton = () => {
+    if (joinStatus === GroupJoinStatus.BE_INVITED) {
+      return (
+        <ButtonCommunityInvitationCard
+          communityId={id}
+          groupId={id}
+          type={type}
+          invitationId={invitation.id}
+        />
+      );
+    }
+    return (
+      <ButtonCommunityGroupCard joinStatus={joinStatus} onView={onView} onJoin={handleJoin} onCancel={handleCancel} />
+    );
   };
 
   return (
@@ -166,12 +176,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
         </View>
       </Button>
       <ViewSpacing height={spacing.margin.base} />
-      <ButtonCommunityGroupCard
-        joinStatus={joinStatus}
-        onView={onView}
-        onJoin={handleJoin}
-        onCancel={handleCancel}
-      />
+      {renderButton()}
     </View>
   );
 };

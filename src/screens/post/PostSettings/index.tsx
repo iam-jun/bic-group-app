@@ -5,7 +5,7 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Text from '~/baseComponents/Text';
 import Toggle from '~/baseComponents/Toggle';
 import MarkImportant from '~/components/ContentSettings/MarkImportant';

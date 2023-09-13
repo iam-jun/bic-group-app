@@ -14,6 +14,7 @@ import useModalStore from '~/store/modal';
 import { mapProfile } from '~/helpers/common';
 import { timeOut } from '~/utils/common';
 import { userApiConfig } from '~/api/UserApi';
+import notificationApi from '~/api/NotificationApi';
 
 const navigation = withNavigation?.(rootNavigationRef);
 
@@ -87,12 +88,14 @@ const handleAuthEvent = (set, get) => async (data: HubCapsule) => {
         email: userResponse.email,
         full_name: userResponse.name,
         username: userResponse.username,
+        user_id: userProfile?.id,
       });
 
       navigation.replace(rootSwitch.mainStack);
       authActions.setSignInLoading(false);
       await timeOut(500);
       useModalStore.getState().actions.setLoadingModal(false);
+      await notificationApi.generateAdvancedSettings();
     }
   } catch (e) {
     console.error('\x1b[35m🐣️ handleAuthEvent  ', e, '\x1b[0m');

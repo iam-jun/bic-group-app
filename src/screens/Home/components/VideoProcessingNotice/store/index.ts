@@ -9,6 +9,7 @@ import { ISocketNotification } from '~/interfaces/INotification';
 export interface IPostsInProgressState extends IBaseState{
   total: number,
   data: any[],
+  hasNextPage: boolean,
 
   actions: {
     setTotal: (newTotal: number) => void;
@@ -20,6 +21,7 @@ export interface IPostsInProgressState extends IBaseState{
 const initialState: InitStateType<IPostsInProgressState> = {
   total: 0,
   data: [],
+  hasNextPage: false,
 };
 
 const postsContainingVideoInProgressStore = (set, get) => ({
@@ -44,9 +46,10 @@ const usePostsInProgressStore = createStore<IPostsInProgressState>(
     persist: {
       name: 'PostContainerStore',
       storage: createJSONStorage(() => AsyncStorage),
-      partialize: (state) => ({
+      partialize: (state: IPostsInProgressState) => ({
         total: state.total,
         data: state.data,
+        hasNextPage: state.hasNextPage,
       }),
     },
   },

@@ -7,7 +7,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { ISetting } from '~/interfaces/common';
 import Header from '~/beinComponents/Header';
 import ListView from '~/beinComponents/list/ListView';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import spacing from '~/theme/spacing';
 import { securityLoginMenu } from './constants';

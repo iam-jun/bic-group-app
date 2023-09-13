@@ -1,3 +1,5 @@
+import { IGroup } from './IGroup';
+
 export interface IDeleteNotifications {
   notiGroupIds: string[];
 }
@@ -46,6 +48,8 @@ export enum ContentType {
   post = 'post',
   article = 'article',
   series = 'series',
+  comment = 'comment',
+  childComment = 'child_comment',
 }
 
 export interface INotiChangeLogsInfo {
@@ -59,7 +63,7 @@ export interface INotiChannel {
 }
 
 export interface IEditNotificationSetting {
-  name: string;
+  name?: string;
   enable?: boolean;
   channels?: INotiChannel;
 }
@@ -72,4 +76,49 @@ export interface INotiSettings {
   subtitle?: string;
   child?: INotiSettings[];
   channels?: INotiChannel;
+}
+
+export enum InvitationTargetType {
+  GROUP = 'GROUP',
+  COMMUNITY = 'COMMUNITY',
+  GROUP_SET = 'GROUP_SET',
+  GROUP_SET_DEFAULT = 'GROUP_SET_DEFAULT',
+}
+
+export interface IAdvancedNotificationSettings {
+  communityId: string;
+  id: string;
+  groupId?: string;
+  name?: string;
+  enable?: boolean;
+  channels?: INotiChannel;
+  flag?: {
+    label: string;
+    value: boolean;
+  }
+}
+
+export interface IAdvancedSetting {
+  name: string;
+  enable: boolean;
+  channels?: INotiChannel;
+  flag?: {
+    label: string;
+    value: boolean;
+  }
+}
+
+export interface IGroupNotificationSetting extends IGroup{
+  setting: IAdvancedSetting;
+}
+
+export enum SpecificNotificationType {
+  post = 'post',
+  article = 'article',
+  group = 'group',
+}
+
+export interface IParamUpdateSpecificNotificationSettings {
+  enable: boolean;
+  contentType: SpecificNotificationType;
 }

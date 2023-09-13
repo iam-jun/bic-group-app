@@ -18,6 +18,7 @@ import deleteNotification from './actions/deleteNotification';
 import deleteNotificationLocal from './actions/deleteNotificationLocal';
 import undoDeleteNotificationLocal from './actions/undoDeleteNotificationLocal';
 import deleteAllWaitingNotification from './actions/deleteAllWaitingNotification';
+import generateAdvancedSettings from './actions/generateAdvancedSettings';
 
 const initState: INotificationsState = {
   loading: false,
@@ -84,6 +85,7 @@ const notificationStore = (set, get) => ({
     deleteNotificationLocal: deleteNotificationLocal(set, get),
     undoDeleteNotificationLocal: undoDeleteNotificationLocal(set, get),
     deleteAllWaitingNotification: deleteAllWaitingNotification(set, get),
+    generateAdvancedSettings: generateAdvancedSettings(set, get),
   },
 
   reset: () => resetStore(initState, set),

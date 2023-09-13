@@ -3,9 +3,13 @@ import { apiProviders, apiVersionId, HttpApiRequestConfig } from '~/api/apiConfi
 import {
   IGetCommunityGroup,
   IGroupDetailEdit,
+  IParamsGetInvitations,
   IParamsGetJoinedAllGroups,
   IParamsGetManagedCommunityAndGroup,
+  IPayloadGetInvitations,
   IPayloadGroupSchemeAssignments,
+  IPayloadInvitations,
+  IPayloadPreviewPrivacy,
   IPayloadPreviewSettings,
   IPayloadUpdateGroupJoinSetting,
   IScheme,
@@ -234,12 +238,6 @@ export const groupsApiConfig = {
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
-  addUsersToGroup: (userIds: string[], groupId: string): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}groups/${groupId}/users/add`,
-    method: 'post',
-    data: { userIds },
-  }),
   removeGroupMembers: (
     groupId: string,
     userIds: string[],
@@ -340,6 +338,16 @@ export const groupsApiConfig = {
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}me/search/groups`,
+    params: {
+      ...params,
+      key: params?.key?.trim?.() ? params.key : undefined,
+    },
+  }),
+  searchJoinedCommunitiesOnly: (
+    params: IParamGetCommunities,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/communities`,
     params: {
       ...params,
       key: params?.key?.trim?.() ? params.key : undefined,
@@ -478,6 +486,14 @@ export const groupsApiConfig = {
       badgeIds,
     },
   }),
+  previewPrivacy: (params: IPayloadPreviewPrivacy): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}groups/${params?.groupId}/profile/preview`,
+    method: 'put',
+    data: {
+      ...params?.data,
+    },
+  }),
   getSettings: (groupId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/settings`,
@@ -487,6 +503,45 @@ export const groupsApiConfig = {
     url: `${provider.url}groups/${params?.groupId}/settings/preview`,
     method: 'post',
     data: params?.settings,
+  }),
+  invitations: (
+    params: IPayloadInvitations,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}invitations`,
+    method: 'post',
+    data: { ...params },
+  }),
+  getInvitations: (groupId: string, params: IParamsGetInvitations): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/invitations`,
+    params,
+  }),
+  cancelInvitation: (
+    invitationId: string,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}invitations/${invitationId}/cancel`,
+    method: 'put',
+  }),
+  getMyInvitations: (params: IPayloadGetInvitations): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/invitations`,
+    params,
+  }),
+  acceptInvitation: (invitationId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}invitations/${invitationId}/accept`,
+    method: 'put',
+  }),
+  declineInvitation: (invitationId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}invitations/${invitationId}/decline`,
+    method: 'put',
+  }),
+  getGroupSetOfInvitation: (invitationId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}invitations/${invitationId}`,
   }),
 };
 
@@ -661,9 +716,6 @@ const groupApi = {
   getJoinableUsers: (groupId: string, params: any) => withHttpRequestPromise(
     groupsApiConfig.getJoinableUsers, groupId, params,
   ),
-  addUsersToGroup: (userIds: string[], groupId: string) => withHttpRequestPromise(
-    groupsApiConfig.addUsersToGroup, userIds, groupId,
-  ),
   removeGroupMembers: (groupId: string, userIds: string[]) => withHttpRequestPromise(
     groupsApiConfig.removeGroupMembers, groupId, userIds,
   ),
@@ -767,9 +819,31 @@ const groupApi = {
   getOwnedBadges: () => withHttpRequestPromise(groupsApiConfig.getOwnedBadges),
   putShowingBadges: (badgeIds: string[]) => withHttpRequestPromise(groupsApiConfig.putShowingBadges, badgeIds),
   markNewBadge: (badgeIds: string[]) => withHttpRequestPromise(groupsApiConfig.markNewBadge, badgeIds),
+  previewPrivacy: (params: IPayloadPreviewPrivacy) => withHttpRequestPromise(
+    groupsApiConfig.previewPrivacy, params,
+  ),
+  searchJoinedCommunitiesOnly: (params?: IParamGetCommunities) => withHttpRequestPromise(
+    groupsApiConfig.searchJoinedCommunitiesOnly, params,
+  ),
   getSettings: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getSettings, groupId),
   previewSettings: (params: IPayloadPreviewSettings) => withHttpRequestPromise(
     groupsApiConfig.previewSettings, params,
+  ),
+  invitations: (params: IPayloadInvitations) => withHttpRequestPromise(
+    groupsApiConfig.invitations, params,
+  ),
+  // eslint-disable-next-line max-len
+  getInvitations: (groupId: string, params: IParamsGetInvitations) => withHttpRequestPromise(groupsApiConfig.getInvitations, groupId, params),
+  cancelInvitation: (invitationId: string) => withHttpRequestPromise(
+    groupsApiConfig.cancelInvitation, invitationId,
+  ),
+  getMyInvitations: (params: IPayloadGetInvitations) => withHttpRequestPromise(
+    groupsApiConfig.getMyInvitations, params,
+  ),
+  acceptInvitation: (invitationId: string) => withHttpRequestPromise(groupsApiConfig.acceptInvitation, invitationId),
+  declineInvitation: (invitationId: string) => withHttpRequestPromise(groupsApiConfig.declineInvitation, invitationId),
+  getGroupSetOfInvitation: (invitationId: string) => withHttpRequestPromise(
+    groupsApiConfig.getGroupSetOfInvitation, invitationId,
   ),
 };
 

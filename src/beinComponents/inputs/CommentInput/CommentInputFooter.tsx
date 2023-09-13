@@ -39,8 +39,8 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
   onPressSend,
 }: CommentInputFooterProps) => {
   const showMentionValue = useSharedValue(0);
-  const showCommentInputFooter = useSharedValue(0);
-  const transformCommentInputFooter = useSharedValue(0);
+  const showCommentInputFooter = useSharedValue(isDisplayNone ? 0 : 1);
+  const transformCommentInputFooter = useSharedValue(isDisplayNone ? -20 : 0);
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -56,7 +56,6 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
   }));
 
   const containerStyle = useAnimatedStyle(() => ({
-    display: isDisplayNone ? 'none' : 'flex',
     opacity: showCommentInputFooter.value,
     transform: [
       { translateX: transformCommentInputFooter.value },
@@ -131,7 +130,7 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
 
   return (
     <Animated.View style={containerStyle}>
-      {renderButtons()}
+      {!isDisplayNone && renderButtons()}
       <Animated.View
         testID="comment_input_footer.mention_bar_container"
         style={mentionContainerStyle}

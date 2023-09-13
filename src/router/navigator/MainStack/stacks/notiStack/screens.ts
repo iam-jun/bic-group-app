@@ -4,6 +4,8 @@ import ChangeLogs from '~/screens/Notification/ChangeLogs';
 import NoNotificationFound from '~/screens/Notification/components/NoNotificationFound';
 import NotificationSettings from '~/screens/Notification/NotiSettings';
 import NotiSettingDetail from '~/screens/Notification/NotiSettings/NotiSettingDetail';
+import AdvancedSettings from '~/screens/Notification/AdvancedSettings';
+import AdvancedSettingsDetail from '~/screens/Notification/AdvancedSettings/AdvancedSettingsDetail';
 
 const notiScreens = {
   notification: Notification,
@@ -12,6 +14,8 @@ const notiScreens = {
   'noti-change-logs-page': ChangeLogs,
   'noti-settings': NotificationSettings,
   'noti-setting-detail': NotiSettingDetail,
+  'advanced-settings': AdvancedSettings,
+  'advanced-settings-detail': AdvancedSettingsDetail,
 };
 
 export default notiScreens;

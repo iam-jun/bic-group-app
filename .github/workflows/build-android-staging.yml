@@ -3,11 +3,13 @@ name: build-android-staging
 on:
   push:
     tags:
-      - 'stg-*'
+      - "*stg-*"
 
 jobs:
   build-android-staging:
+    if: startsWith(github.ref, 'refs/tags/stg-')
     runs-on: self-hosted
+    timeout-minutes: 120
     steps:
       - name: ci/checkout-repo
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
@@ -20,3 +22,14 @@ jobs:
 
       - name: ci/build-android-staging
         run: npm run build-android-staging
+
+  trigger-codemagic-build:
+    if: startsWith(github.ref, 'refs/tags/ci-stg-')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Codemagic build
+        uses: codemagic-ci-cd/trigger-codemagic-workflow-action@v1.0.0
+        with:
+          app-id: 64d5def4bbb38bd520b3dc80
+          workflow-id: build-android-staging
+          token: ${{ secrets.CODEMAGIC_API_TOKEN }}

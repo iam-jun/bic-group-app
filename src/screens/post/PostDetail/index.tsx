@@ -3,9 +3,14 @@ import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Header from '~/beinComponents/Header';
-import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import PostViewPlaceholder from '~/components/placeholder/PostViewPlaceholder';
+import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import PostDetailContent from './components/PostDetailContent';
+import { isFromNotificationScreen } from '~/router/helper';
+import { PostType } from '~/interfaces/IPost';
+import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
 const PostDetail = (props: any) => {
   const [showContent, setShowContent] = useState(false);
@@ -15,6 +20,7 @@ const PostDetail = (props: any) => {
   const { colors } = theme;
   const styles = createStyle(theme);
 
+  const navigation = props?.navigation;
   const params = props?.route?.params;
   const { is_reported: isReported = false } = params || {};
 
@@ -27,6 +33,19 @@ const PostDetail = (props: any) => {
       return () => cancelAnimationFrame(taskId);
     }, [],
   );
+
+  useEffect(() => {
+    if (navigation) {
+      if (isFromNotificationScreen(navigation)) {
+        // tracking event
+        const eventContentReadProperties: TrackingEventContentReadProperties = {
+          content_type: PostType.POST,
+          action: TrackingEventContentReadAction.NOTIFICATION,
+        };
+        trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
+      }
+    }
+  }, []);
 
   const onContentLayout = useCallback(
     () => {

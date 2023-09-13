@@ -18,17 +18,21 @@ import ContentItem from '~/components/ContentItem';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 import Divider from '~/beinComponents/Divider';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
-import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import PostViewPlaceholder from '~/components/placeholder/PostViewPlaceholder';
 import { BoxListPinContent } from '~/components/PinContent/components';
 import { onRefresh } from './helper';
+import InvitationView from '~/screens/communities/CommunityDetail/components/InvitationView';
+import { ITypeGroup } from '~/interfaces/common';
 
 interface GroupContentProps {
+  groupId: string;
   community: ICommunity;
   onScroll: (e: any) => void;
   onGetInfoLayout: (e: any) => void;
 }
 
 const GroupContent = ({
+  groupId,
   community,
   onScroll,
   onGetInfoLayout,
@@ -40,9 +44,9 @@ const GroupContent = ({
 
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const { currentGroupId, groups } = useGroupsStore((state: IGroupsState) => state);
-  const { group: groupData, joinStatus } = groups[currentGroupId] || {};
-  const { id: groupId, teamName } = groupData || {};
+  const groups = useGroupsStore((state: IGroupsState) => state.groups);
+  const { group: groupData, joinStatus } = groups[groupId] || {};
+  const { teamName, invitation } = groupData || {};
 
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
   const communityId = community?.id;
@@ -103,7 +107,8 @@ const GroupContent = ({
         communityId={communityId}
         teamName={teamName}
       />
-      <GroupJoinCancelButton />
+      <GroupJoinCancelButton groupId={groupId} />
+      <InvitationView data={invitation} type={ITypeGroup.GROUP} communityId="" groupId={groupId} />
       <BoxListPinContent id={groupId} />
       <FilterFeedButtonGroup
         contentFilter={contentFilter}
