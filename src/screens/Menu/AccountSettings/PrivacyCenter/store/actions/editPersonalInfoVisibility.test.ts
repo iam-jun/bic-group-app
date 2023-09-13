@@ -1,6 +1,6 @@
 import { act, renderHook } from '~/test/testUtils';
 import useModalStore from '~/store/modal';
-import useVisibilityPrivacyStore from '../index';
+import usePersonalPrivacy from '../index';
 import { mockPersonalInfoVisibilityResponse } from '~/test/mock_data/privacyCenter';
 import userApi from '~/api/UserApi';
 import { PERSONAL_INFORMATION_VISIBILITY_TYPE } from '~/constants/privacyCenter';
@@ -8,18 +8,18 @@ import { PERSONAL_INFORMATION_VISIBILITY_TYPE } from '~/constants/privacyCenter'
 describe('editPersonalInfoVisibility function', () => {
   it('should edit personal info visibility success', () => {
     const response = mockPersonalInfoVisibilityResponse;
-    const spyApi = jest.spyOn(userApi, 'editVisibilityPrivacy').mockImplementation(
+    const spyApi = jest.spyOn(userApi, 'editPersonalInfoSettings').mockImplementation(
       () => Promise.resolve(response) as any,
     );
     const payload = PERSONAL_INFORMATION_VISIBILITY_TYPE.ONLY_ME;
 
-    useVisibilityPrivacyStore.setState((state) => {
+    usePersonalPrivacy.setState((state) => {
       state.visibilityPrivacy = PERSONAL_INFORMATION_VISIBILITY_TYPE.EVERYONE;
       return state;
     });
     jest.useFakeTimers();
 
-    const { result } = renderHook(() => useVisibilityPrivacyStore((state) => state));
+    const { result } = renderHook(() => usePersonalPrivacy((state) => state));
     expect(result.current.visibilityPrivacy).toEqual(PERSONAL_INFORMATION_VISIBILITY_TYPE.EVERYONE);
     act(() => {
       result.current.actions.editPersonalInfoVisibility(payload);
@@ -35,7 +35,7 @@ describe('editPersonalInfoVisibility function', () => {
 
   it('should edit personal info visibility throw error and should show toast', () => {
     const error = 'internal error';
-    const spyApi = jest.spyOn(userApi, 'editVisibilityPrivacy').mockImplementation(
+    const spyApi = jest.spyOn(userApi, 'editPersonalInfoSettings').mockImplementation(
       () => Promise.reject(error) as any,
     );
     const showToast = jest.fn();
@@ -44,13 +44,13 @@ describe('editPersonalInfoVisibility function', () => {
 
     const payload = PERSONAL_INFORMATION_VISIBILITY_TYPE.ONLY_ME;
 
-    useVisibilityPrivacyStore.setState((state) => {
+    usePersonalPrivacy.setState((state) => {
       state.visibilityPrivacy = PERSONAL_INFORMATION_VISIBILITY_TYPE.EVERYONE;
       return state;
     });
 
     jest.useFakeTimers();
-    const { result } = renderHook(() => useVisibilityPrivacyStore((state) => state));
+    const { result } = renderHook(() => usePersonalPrivacy((state) => state));
     expect(result.current.visibilityPrivacy).toEqual(PERSONAL_INFORMATION_VISIBILITY_TYPE.EVERYONE);
 
     act(() => {

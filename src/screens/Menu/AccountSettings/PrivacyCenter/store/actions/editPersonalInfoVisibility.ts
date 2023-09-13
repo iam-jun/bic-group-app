@@ -15,7 +15,7 @@ const editPersonalInfoVisibility = (set, _get) => async (type: PERSONAL_INFORMAT
       state.visibilityPrivacy = type;
       state.loading = false;
     }, 'editPersonalInfoVisibilitySuccess');
-    await userApi.editVisibilityPrivacy(params);
+    await userApi.editPersonalInfoSettings(params);
   } catch (e) {
     set((state: IPersonalInfoVisibilityState) => {
       state.loading = false;

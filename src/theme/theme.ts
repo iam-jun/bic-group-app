@@ -107,6 +107,8 @@ export const light: ExtendedTheme = {
     turquoise50: '#1BC5BD',
     turquoise60: '#18B4AC',
 
+    yellow60: '#E09600',
+
     highlight: '#FDF773',
 
     transparent: 'rgba(255,255,255,0)',
@@ -220,6 +222,8 @@ export const dark: ExtendedTheme = {
     turquoise40: '#28E2D8',
     turquoise50: '#1BC5BD',
     turquoise60: '#18B4AC',
+
+    yellow60: '#E09600',
 
     highlight: '#FDF773',
 
