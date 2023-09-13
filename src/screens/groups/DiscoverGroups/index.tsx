@@ -154,6 +154,7 @@ const DiscoverGroups = ({ route }: any) => {
       <CommunityGroupCard
         item={currentItem}
         testID="discover_groups.items"
+        type={ITypeGroup.GROUP}
         shouldShowAlertJoinTheCommunityFirst
         onJoin={() => { handleJoinGroup(data); }}
         onCancel={handleCancelJoinGroup}

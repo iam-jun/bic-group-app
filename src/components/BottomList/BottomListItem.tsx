@@ -1,8 +1,12 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React from 'react';
 import {
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
   ActivityIndicator,
-  StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle,
 } from 'react-native';
 import Icon, { IconProps } from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
@@ -123,7 +127,9 @@ const themeStyles = (theme: ExtendedTheme) => StyleSheet.create({
   leftIcon: {
     marginRight: spacing.margin.small,
   },
-  title: {},
+  title: {
+    flexShrink: 1,
+  },
   upcomingStyle: {
     backgroundColor: theme.colors.purple2,
     borderRadius: spacing.borderRadius.small,

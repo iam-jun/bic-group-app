@@ -8,6 +8,9 @@ import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack
 import { IPost, PostType } from '~/interfaces/IPost';
 import useModalStore from '~/store/modal';
 import MenuContent from '~/components/MenuContent';
+import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
 export interface ArticleHeaderProps extends ContentHeaderProps {
   data: IPost;
@@ -31,6 +34,13 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({
       onPressHeader?.();
     } else {
       rootNavigation.navigate(articleStack.articleDetail, { articleId });
+
+      // tracking event
+      const eventContentReadProperties: TrackingEventContentReadProperties = {
+        content_type: PostType.ARTICLE,
+        action: TrackingEventContentReadAction.CONTENT_HEADER,
+      };
+      trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
     }
   };
 

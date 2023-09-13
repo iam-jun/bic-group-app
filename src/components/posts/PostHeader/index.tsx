@@ -15,6 +15,9 @@ import AlertDeleteAudiences from '../AlertDeleteAudiences';
 import useModalStore from '~/store/modal';
 import usePostsStore from '~/store/entities/posts';
 import MenuContent from '~/components/MenuContent';
+import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
 export interface PostHeaderProps extends Partial<ContentHeaderProps> {
   data: any,
@@ -54,6 +57,13 @@ const PostHeader: FC<PostHeaderProps> = ({
       onPressHeader?.();
     } else {
       rootNavigation.navigate(homeStack.postDetail, { post_id: postId });
+
+      // tracking event
+      const eventContentReadProperties: TrackingEventContentReadProperties = {
+        content_type: PostType.POST,
+        action: TrackingEventContentReadAction.CONTENT_HEADER,
+      };
+      trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
     }
   };
 

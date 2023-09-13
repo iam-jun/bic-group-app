@@ -20,7 +20,7 @@ const TIME_TO_REDIRECT_SCREEN = 5 * 1000;
 
 const ConfirmUser : FC<IRouteParams> = (props) => {
   const params = props?.route?.params || {};
-  const { confirmationCode, redirectTo, userName } = params?.params || {};
+  const { confirmationCode, redirectTo, username } = params?.params || {};
 
   const { rootNavigation } = useRootNavigation();
   const [isRedirected, setRedirected] = useState<boolean>(false);
@@ -31,8 +31,8 @@ const ConfirmUser : FC<IRouteParams> = (props) => {
   const userProfileData = useCommonController((state) => state.myProfile);
 
   useEffect(() => {
-    actions.confirmSignUp(userName, confirmationCode);
-  }, [confirmationCode, userName]);
+    actions.confirmSignUp(username, confirmationCode);
+  }, [confirmationCode, username]);
 
   useEffect(() => {
     const timerId = setTimeout(() => {

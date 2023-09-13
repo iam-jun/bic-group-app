@@ -34,7 +34,7 @@ const FilterFeedButtonGroup: React.FC<FilterFeedButtonGroupProps> = ({
     <View style={styles.container}>
       <View style={styles.attributeContainer}>
         <Tab
-          style={[styles.tabs, { marginBottom: -spacing.padding.tiny }]}
+          style={styles.tabs}
           buttonProps={{
             size: 'small', type: 'primary', useI18n: true, style: styles.attributeTab,
           }}
@@ -76,20 +76,17 @@ const createStyle = (theme: ExtendedTheme) => {
       marginHorizontal: spacing.margin.large,
     },
     contentFilterTab: {
-      marginLeft: spacing.margin.small,
+      marginRight: spacing.margin.small,
     },
     tabs: {
-      flex: 1,
       alignItems: 'center',
-      flexDirection: 'row',
-      marginLeft: -spacing.margin.small,
     },
     contentContainer: {
       height: homeHeaderContentContainerHeight,
       paddingHorizontal: spacing.padding.large,
     },
     attributeTab: {
-      marginLeft: spacing.margin.small,
+      marginRight: spacing.margin.small,
       paddingHorizontal: spacing.padding.small,
       alignItems: 'center',
       justifyContent: 'center',

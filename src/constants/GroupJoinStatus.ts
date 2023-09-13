@@ -3,7 +3,8 @@ enum GroupJoinStatus {
   VISITOR = 'CAN_JOIN', // users have not joined the group yet
   MEMBER = 'JOINED', // users have joined the group
   REQUESTED = 'WAITING', // users have requested to join
-  INVITED_ONLY = 'INVITED_ONLY' // users have not joined the group yet & membership policy setting of the group = Only invited people
+  INVITED_ONLY = 'INVITED_ONLY', // users have not joined the group yet & membership policy setting of the group = Only invited people
+  BE_INVITED = 'BE_INVITED',
 }
 
 export default GroupJoinStatus;

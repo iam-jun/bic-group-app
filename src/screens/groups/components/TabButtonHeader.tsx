@@ -131,7 +131,7 @@ const createStyles = (theme: ExtendedTheme) => {
     buttonContainer: {
       flexDirection: 'row',
       paddingVertical: spacing.padding.small,
-      paddingHorizontal: spacing.padding.base,
+      paddingHorizontal: spacing.padding.large,
       backgroundColor: colors.white,
     },
   });

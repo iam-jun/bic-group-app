@@ -32,7 +32,6 @@ import { getHeaderMenu } from './helper';
 import { BottomListProps } from '~/components/BottomList';
 import { useBaseHook } from '~/hooks';
 import Text from '~/baseComponents/Text';
-import NotFound from '~/screens/NotFound/components/NotFound';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import PlaceholderView from './components/PlaceholderView';
 import { ICommunity } from '~/interfaces/ICommunity';
@@ -52,6 +51,7 @@ import TermsView from '~/components/TermsModal';
 import MemberQuestionsModal from '~/components/MemberQuestionsModal';
 import FloatingCreatePost from '~/screens/Home/components/FloatingCreatePost';
 import useTermStore from '~/components/TermsModal/store';
+import PageNotFound from '~/screens/NotFound/components/PageNotFound';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -308,7 +308,7 @@ const CommunityDetail = (props: any) => {
 
   // [TO-DO] Handle other cases
   if (error) {
-    return <NotFound onGoBack={onGoBackOnNotFound} />;
+    return <PageNotFound onGoBack={onGoBackOnNotFound} />;
   }
 
   const _onPressContentFilterTab = (item: any) => {

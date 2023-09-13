@@ -1,15 +1,32 @@
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
-import { SpecificNotificationType } from '~/interfaces/INotification';
+import { ContentType, SpecificNotificationType } from '~/interfaces/INotification';
 
 const NOT_SHOW_DELETE_OPTION_LIST = [
   NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME,
   NOTIFICATION_TYPE.CHANGE_LOGS,
 ];
 
+const NOT_IS_SPECIFIC_NOTIFICATION = [
+  NOTIFICATION_TYPE.POST_VIDEO_TO_USER_SUCCESSFUL,
+  NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL,
+  NOTIFICATION_TYPE.QUIZ_GENERATE_SUCCESSFUL,
+  NOTIFICATION_TYPE.QUIZ_GENERATE_UNSUCCESSFUL,
+];
+
 export const checkHideDeleteOption = (type: string) => {
   if (!type) return false;
   const index = NOT_SHOW_DELETE_OPTION_LIST.findIndex((item) => item === type);
   return !(index === -1);
+};
+
+export const checkIsSpecificNotification = (notiTarget: string, type: string) => {
+  const _notiTarget = notiTarget?.toLowerCase?.() || '';
+  const isNotSpecific = NOT_IS_SPECIFIC_NOTIFICATION.findIndex((item) => item === type);
+  const isSpecificContent = _notiTarget === ContentType.post
+   || _notiTarget === ContentType.article || _notiTarget === ContentType.comment
+   || _notiTarget === ContentType.childComment;
+
+  return (isNotSpecific === -1) && isSpecificContent;
 };
 
 export const getTextFromSpecificNotificationTargetType = (

@@ -16,7 +16,7 @@ import {
   ContentInterestedUserCount,
 } from '~/components/ContentView';
 import { Button, PlaceHolderRemoveContent } from '~/baseComponents';
-import { IPost } from '~/interfaces/IPost';
+import { IPost, PostType } from '~/interfaces/IPost';
 import { formatLargeNumber } from '~/utils/formatter';
 import { ArticleSummary, ArticleTitle } from '../ArticleText';
 import { getTotalReactions } from '~/helpers/post';
@@ -27,6 +27,9 @@ import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import { ITag } from '~/interfaces/ITag';
 import Divider from '~/beinComponents/Divider';
 import DeletedItem from '~/components/DeletedItem';
+import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 import DraftQuizFooter from '~/components/quiz/DraftQuizFooter';
 import TakePartInAQuiz from '~/components/quiz/TakePartInAQuiz';
 
@@ -86,13 +89,17 @@ const ArticleItem: FC<ArticleItemProps> = ({
     getTotalReactions(reactionsCount, 'user'),
   );
 
-  const goToContentDetail = () => rootNavigation.navigate(articleStack.articleContentDetail, {
-    articleId: id,
-  });
-  const goToDetail = () => rootNavigation.navigate(articleStack.articleDetail, {
-    articleId: id,
-    focusComment: true,
-  });
+  const goToContentDetail = () => {
+    rootNavigation.navigate(articleStack.articleContentDetail, { articleId: id });
+
+    // tracking event
+    const eventContentReadProperties: TrackingEventContentReadProperties = {
+      content_type: PostType.ARTICLE,
+      action: TrackingEventContentReadAction.BODY,
+    };
+    trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
+  };
+  const goToDetail = () => rootNavigation.navigate(articleStack.articleDetail, { articleId: id, focusComment: true });
   const goToTagDetail = (tagData: ITag) => {
     rootNavigation.navigate(tagsStack.tagDetail, { tagData });
   };

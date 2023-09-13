@@ -26,8 +26,12 @@ import ContentUnavailable from '~/components/ContentUnavailable';
 import useMounted from '~/hooks/mounted';
 import useModalStore from '~/store/modal';
 import MenuContent from '~/components/MenuContent';
+import { isFromNotificationScreen } from '~/router/helper';
+import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
-const SeriesDetail = ({ route }: any) => {
+const SeriesDetail = ({ route, navigation }: any) => {
   const { params } = route || {};
   const { seriesId } = params || {};
   const theme = useTheme();
@@ -65,6 +69,19 @@ const SeriesDetail = ({ route }: any) => {
       goHome();
     }
   }, [deleted, isFocused]);
+
+  useEffect(() => {
+    if (navigation) {
+      if (isFromNotificationScreen(navigation)) {
+        // tracking event
+        const eventContentReadProperties: TrackingEventContentReadProperties = {
+          content_type: PostType.SERIES,
+          action: TrackingEventContentReadAction.NOTIFICATION,
+        };
+        trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
+      }
+    }
+  }, []);
 
   const onPressSearch = () => {
     setIsOpenSearch(true);

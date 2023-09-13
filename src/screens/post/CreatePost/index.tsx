@@ -30,6 +30,7 @@ import useCreatePost from './hooks/useCreatePost';
 import useCreatePostStore from './store';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import useLinkPreviewStore from '~/store/linkPreview';
+import useInsetBottomAvoidingKeyboard from '~/hooks/useInsetBottomAvoidingKeyboard';
 
 export interface CreatePostProps {
   route?: {
@@ -45,6 +46,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     (state: ICommentInputState) => state.actions,
   );
 
+  const insetBottom = useInsetBottomAvoidingKeyboard();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -196,7 +198,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
         onPressButton={onSavePost}
         style={styles.headerStyle}
       />
-      <View style={styles.flex1}>
+      <View style={[styles.flex1, { paddingBottom: insetBottom }]}>
         <View>
           {!!important?.active && (
             <CreateBannerImportant type="post" expiresTime={important.expiresTime} />

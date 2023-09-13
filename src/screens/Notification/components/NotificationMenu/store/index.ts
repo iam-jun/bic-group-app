@@ -6,6 +6,7 @@ import useNotificationStore from '~/screens/Notification/store';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import { InvitationTargetType, SpecificNotificationType } from '~/interfaces/INotification';
 import { ContentType } from '~/components/SelectAudience';
+import { checkIsSpecificNotification } from '~/helpers/notification';
 
 export interface INotificationItemMenuStore extends IBaseState {
   selectedNotificationId: string;
@@ -46,6 +47,9 @@ const notificationItemMenu = (set, get) => ({
       const type = itemValue?.extra?.type || undefined;
       const act = itemValue?.activities?.[0] || {};
       const isRead = itemValue?.isRead || false;
+      const notiTarget = itemValue?.target?.toLowerCase?.() || '';
+
+      const isSpecific = checkIsSpecificNotification(notiTarget, type);
 
       if (type === NOTIFICATION_TYPE.GROUP_INVITATION) {
         const invitationData = act?.invitation?.target || {};
@@ -60,7 +64,7 @@ const notificationItemMenu = (set, get) => ({
           newTargetId = groupId;
           newTargetType = SpecificNotificationType.group;
         }
-      } else {
+      } else if (isSpecific) {
         const contentType = act?.contentType?.toLowerCase?.() || '';
         const contentId = act?.id || '';
         if (contentType === ContentType.POST && !!contentId) {
@@ -71,6 +75,7 @@ const notificationItemMenu = (set, get) => ({
           newTargetType = SpecificNotificationType.article;
         }
       }
+
       set((state: INotificationItemMenuStore) => {
         state.selectedNotificationId = id;
         state.targetId = newTargetId;

@@ -2,6 +2,7 @@ import { useIsFocused } from '@react-navigation/native';
 
 import i18next from 'i18next';
 import React, {
+  FC,
   useCallback, useEffect, useRef, useState,
 } from 'react';
 import { StyleSheet } from 'react-native';
@@ -34,11 +35,24 @@ import { USER_TABS_TYPES } from '../Menu/UserProfile/constants';
 import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
-import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
 import NotificationMenu from './components/NotificationMenu';
 import useNotificationItemMenu, { INotificationItemMenuStore } from './components/NotificationMenu/store';
+import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
+import { trackEvent } from '~/services/tracking';
+import useGroupSetInvitationsStore from '~/components/InvitationGroupSet/store';
+import InvitationGroupSet from '~/components/InvitationGroupSet';
 
-const Notification = () => {
+export interface NotificationProps {
+  route?: {
+    params?: {
+      notificationData?: any;
+    };
+  };
+}
+
+const Notification: FC<NotificationProps> = ({ route }: NotificationProps) => {
+  const notificationData = route?.params?.notificationData || {};
+
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
   const { showToast, clearToast } = useModalStore((state) => state.actions);
 
@@ -51,6 +65,7 @@ const Notification = () => {
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const modalActions = useModalStore((state) => state.actions);
+  const groupSetActions = useGroupSetInvitationsStore((state) => state.actions);
   const specifictNotiActions = useNotificationItemMenu((state: INotificationItemMenuStore) => state.actions);
 
   useEffect(
@@ -60,6 +75,38 @@ const Notification = () => {
       }
     }, [isFocused],
   );
+
+  useEffect(() => {
+    if (notificationData?.type) {
+      switch (notificationData.type) {
+        case NOTIFICATION_TYPE.GROUP_SET_INVITATION:
+        case NOTIFICATION_TYPE.GROUP_SET_DEFAULT_INVITATION:
+        case NOTIFICATION_TYPE.GROUP_INVITATION_FEEDBACK: {
+          const { invitationId, target } = notificationData || {};
+          const targetType = target?.type;
+          if (targetType === InvitationTargetType.GROUP_SET
+                 || targetType === InvitationTargetType.GROUP_SET_DEFAULT) {
+            groupSetActions.getGroups(invitationId);
+            modalActions.showModal({
+              isOpen: true,
+              isFullScreen: true,
+              headerFullScreenProps: { title: t('common:btn_go_back') },
+              ContentComponent: <InvitationGroupSet
+                isFullScreen
+                isHideInviter
+                inviter={undefined}
+                invitaionId={invitationId}
+              />,
+            });
+          }
+          break;
+        }
+
+        default:
+          break;
+      }
+    }
+  }, [notificationData]);
 
   const onPressFilterItem = (index: number) => {
     setActiveIndex(index);
@@ -84,7 +131,22 @@ const Notification = () => {
     notiActions.deleteNotification(id);
   };
 
-  const handleRemoveNotification = (id: string) => {
+  const trackEventNoti = (eventName: string, item: any) => {
+    const type = item?.extra?.type || undefined;
+    const act = item?.activities?.[0];
+    trackEvent({
+      event: eventName,
+      properties: {
+        content_type: act?.contentType,
+        is_read: item?.isRead,
+        type,
+      },
+    });
+  };
+
+  const handleRemoveNotification = (item: any) => {
+    const id = item?.id || '';
+    if (!id) return;
     notiActions.deleteNotificationLocal(id);
     const toastMessage: IToastMessage = {
       content: t('notification:text_remove_notification_success'),
@@ -101,6 +163,7 @@ const Notification = () => {
     );
 
     modalActions.hideBottomList();
+    trackEventNoti('Notification Removed', item);
   };
 
   const onPressItemOption = ({ item }: {item: any}) => {
@@ -171,9 +234,10 @@ const Notification = () => {
             case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER:
             case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER_IN_MULTIPLE_GROUPS:
             {
-              if (target === TargetType.ARTICLE) {
+              const contentType = act?.contentType?.toLowerCase?.() || '';
+              if (target === TargetType.ARTICLE || contentType === ContentType.article) {
                 rootNavigation.navigate(articleStack.articleDetail, { articleId: act.id });
-              } else if (target === TargetType.SERIES) {
+              } else if (target === TargetType.SERIES || contentType === ContentType.series) {
                 rootNavigation.navigate(seriesStack.seriesDetail, { seriesId: act.id });
               } else {
                 rootNavigation.navigate(
@@ -431,6 +495,16 @@ const Notification = () => {
               rootNavigation.navigate(mainStack.userProfile, { userId, targetIndex });
               break;
             }
+
+            case NOTIFICATION_TYPE.QUIZ_GENERATE_SUCCESSFUL:
+            case NOTIFICATION_TYPE.QUIZ_GENERATE_UNSUCCESSFUL:
+              rootNavigation.navigate(quizStack.previewDraftQuizNotification, {
+                quizId: act?.quizInfo?.quizId,
+                contentId: act?.quizInfo?.contentId,
+                contentType: act?.quizInfo?.contentType,
+              });
+              break;
+
             case NOTIFICATION_TYPE.GROUP_INVITATION: {
               const communityId = invitationData?.communityId || '';
               const groupId = invitationData?.id || '';
@@ -477,6 +551,40 @@ const Notification = () => {
                   isMember: true,
                 });
               }
+
+              if (targetType === InvitationTargetType.GROUP_SET
+                 || targetType === InvitationTargetType.GROUP_SET_DEFAULT) {
+                const invitationId = act?.invitation?.invitationId || '';
+                groupSetActions.getGroups(invitationId);
+                modalActions.showModal({
+                  isOpen: true,
+                  isFullScreen: true,
+                  headerFullScreenProps: { title: t('common:btn_go_back') },
+                  ContentComponent: <InvitationGroupSet
+                    isFullScreen
+                    isHideInviter
+                    inviter={undefined}
+                    invitaionId={invitationId}
+                  />,
+                });
+              }
+              break;
+            }
+            case NOTIFICATION_TYPE.GROUP_SET_INVITATION:
+            case NOTIFICATION_TYPE.GROUP_SET_DEFAULT_INVITATION: {
+              const invitationId = act?.invitation?.invitationId || '';
+              const invitor = act?.invitation?.invitor || {};
+              groupSetActions.getGroups(invitationId);
+              modalActions.showModal({
+                isOpen: true,
+                isFullScreen: true,
+                headerFullScreenProps: { title: t('common:btn_go_back') },
+                ContentComponent: <InvitationGroupSet
+                  isFullScreen
+                  inviter={invitor}
+                  invitaionId={invitationId}
+                />,
+              });
               break;
             }
             default:
@@ -500,6 +608,7 @@ const Notification = () => {
           '\x1b[0m',
         );
       }
+      trackEventNoti('Notification Opened', item);
 
       // finally mark the notification as read
       notiActions.markAsRead(item.id);

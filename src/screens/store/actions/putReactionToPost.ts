@@ -4,6 +4,9 @@ import {
 import usePostsStore from '~/store/entities/posts';
 import showToastError from '~/store/helper/showToastError';
 import streamApi from '../../../api/StreamApi';
+import { trackEvent } from '~/services/tracking';
+import { TrackingEventEmojiReactedProperties } from '~/services/tracking/Interface';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const putReactionToPost = (_set, get) => async (
   payload: IPayloadReactToPost,
@@ -83,6 +86,12 @@ const putReactionToPost = (_set, get) => async (
             ...cReactionCounts2,
           ],
         );
+
+        // tracking event
+        const eventEmojiReactedProperties: TrackingEventEmojiReactedProperties = {
+          reaction_name: reactionId,
+        };
+        trackEvent({ event: TrackingEvent.EMOJI_REACTED, properties: eventEmojiReactedProperties });
       }
     }
   } catch (e) {

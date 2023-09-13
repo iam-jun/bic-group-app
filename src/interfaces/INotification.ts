@@ -48,6 +48,8 @@ export enum ContentType {
   post = 'post',
   article = 'article',
   series = 'series',
+  comment = 'comment',
+  childComment = 'child_comment',
 }
 
 export interface INotiChangeLogsInfo {
@@ -76,6 +78,13 @@ export interface INotiSettings {
   channels?: INotiChannel;
 }
 
+export enum InvitationTargetType {
+  GROUP = 'GROUP',
+  COMMUNITY = 'COMMUNITY',
+  GROUP_SET = 'GROUP_SET',
+  GROUP_SET_DEFAULT = 'GROUP_SET_DEFAULT',
+}
+
 export interface IAdvancedNotificationSettings {
   communityId: string;
   id: string;
@@ -101,11 +110,6 @@ export interface IAdvancedSetting {
 
 export interface IGroupNotificationSetting extends IGroup{
   setting: IAdvancedSetting;
-}
-
-export enum InvitationTargetType {
-  GROUP = 'GROUP',
-  COMMUNITY = 'COMMUNITY',
 }
 
 export enum SpecificNotificationType {
