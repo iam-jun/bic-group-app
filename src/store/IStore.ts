@@ -2,6 +2,7 @@ import { ISelectAudienceState } from '~/components/SelectAudience/store';
 import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
 import { INetworkState } from '~/store/network';
 import { IPostsState } from './entities/posts';
+import { IMenuState } from './entities/menus';
 import ICommentsState from '~/store/entities/comments/Interface';
 import IHomeState from '~/screens/Home/store/Interface';
 import IChatState from '~/store/chat/IChatState';
@@ -73,6 +74,7 @@ export interface BicStore {
     comments: ICommentsState;
     communities: ICommunitiesState;
     groups: IGroupsState;
+    menus: IMenuState;
   };
 
   // components

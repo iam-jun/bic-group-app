@@ -48,3 +48,20 @@ export const WORK_EXPERIENCE = [
     titlePosition: 'test 222',
   },
 ];
+
+export const MENU_CONTENT = {
+  canEdit: true,
+  canEditSetting: true,
+  isSave: true,
+  canCopyLink: true,
+  canViewReactions: true,
+  canViewSeries: true,
+  canPinContent: true,
+  canCreateQuiz: false,
+  canDeleteQuiz: true,
+  canEditQuiz: true,
+  canDelete: true,
+  canReportContent: true,
+  canReportMember: true,
+  isEnableNotifications: false,
+};

@@ -3,7 +3,7 @@ import ReportContent from '~/components/Report/ReportContent';
 import { TargetType } from '~/interfaces/IReport';
 
 export const onPressReportThisMember = ({ modalActions, actor }) => {
-  modalActions.hideBottomList();
+  modalActions.hideModal();
 
   const dataReportMember = {
     userId: actor?.id,
