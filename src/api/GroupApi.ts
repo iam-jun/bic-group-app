@@ -3,9 +3,12 @@ import { apiProviders, apiVersionId, HttpApiRequestConfig } from '~/api/apiConfi
 import {
   IGetCommunityGroup,
   IGroupDetailEdit,
+  IParamsGetInvitations,
   IParamsGetJoinedAllGroups,
   IParamsGetManagedCommunityAndGroup,
+  IPayloadGetInvitations,
   IPayloadGroupSchemeAssignments,
+  IPayloadInvitations,
   IPayloadPreviewPrivacy,
   IPayloadPreviewSettings,
   IPayloadUpdateGroupJoinSetting,
@@ -234,12 +237,6 @@ export const groupsApiConfig = {
       ...params,
       key: params?.key?.trim?.() ? params.key : undefined,
     },
-  }),
-  addUsersToGroup: (userIds: string[], groupId: string): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}groups/${groupId}/users/add`,
-    method: 'post',
-    data: { userIds },
   }),
   removeGroupMembers: (
     groupId: string,
@@ -507,6 +504,31 @@ export const groupsApiConfig = {
     method: 'post',
     data: params?.settings,
   }),
+  invitations: (
+    params: IPayloadInvitations,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}invitations`,
+    method: 'post',
+    data: { ...params },
+  }),
+  getInvitations: (groupId: string, params: IParamsGetInvitations): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/invitations`,
+    params,
+  }),
+  cancelInvitation: (
+    invitationId: string,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}invitations/${invitationId}/cancel`,
+    method: 'put',
+  }),
+  getMyInvitations: (params: IPayloadGetInvitations): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/invitations`,
+    params,
+  }),
   acceptInvitation: (invitationId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}invitations/${invitationId}/accept`,
@@ -516,6 +538,10 @@ export const groupsApiConfig = {
     ...defaultConfig,
     url: `${provider.url}invitations/${invitationId}/decline`,
     method: 'put',
+  }),
+  getGroupSetOfInvitation: (invitationId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}invitations/${invitationId}`,
   }),
 };
 
@@ -690,9 +716,6 @@ const groupApi = {
   getJoinableUsers: (groupId: string, params: any) => withHttpRequestPromise(
     groupsApiConfig.getJoinableUsers, groupId, params,
   ),
-  addUsersToGroup: (userIds: string[], groupId: string) => withHttpRequestPromise(
-    groupsApiConfig.addUsersToGroup, userIds, groupId,
-  ),
   removeGroupMembers: (groupId: string, userIds: string[]) => withHttpRequestPromise(
     groupsApiConfig.removeGroupMembers, groupId, userIds,
   ),
@@ -806,8 +829,22 @@ const groupApi = {
   previewSettings: (params: IPayloadPreviewSettings) => withHttpRequestPromise(
     groupsApiConfig.previewSettings, params,
   ),
+  invitations: (params: IPayloadInvitations) => withHttpRequestPromise(
+    groupsApiConfig.invitations, params,
+  ),
+  // eslint-disable-next-line max-len
+  getInvitations: (groupId: string, params: IParamsGetInvitations) => withHttpRequestPromise(groupsApiConfig.getInvitations, groupId, params),
+  cancelInvitation: (invitationId: string) => withHttpRequestPromise(
+    groupsApiConfig.cancelInvitation, invitationId,
+  ),
+  getMyInvitations: (params: IPayloadGetInvitations) => withHttpRequestPromise(
+    groupsApiConfig.getMyInvitations, params,
+  ),
   acceptInvitation: (invitationId: string) => withHttpRequestPromise(groupsApiConfig.acceptInvitation, invitationId),
   declineInvitation: (invitationId: string) => withHttpRequestPromise(groupsApiConfig.declineInvitation, invitationId),
+  getGroupSetOfInvitation: (invitationId: string) => withHttpRequestPromise(
+    groupsApiConfig.getGroupSetOfInvitation, invitationId,
+  ),
 };
 
 export default groupApi;

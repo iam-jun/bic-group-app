@@ -20,7 +20,7 @@ const NotificationAvatar = ({
   actors = [],
   actorCount,
 }: Props) => {
-  if (!actors?.length) return null;
+  if (!actors?.length || actorCount === 0) return null;
 
   const rightActorCount = actorCount >= actors.length ? actorCount : actors.length;
 

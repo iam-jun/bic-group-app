@@ -17,7 +17,9 @@ import InternetConnectionStatus from '~/components/network/InternetConnectionSta
 import SystemIssueModal from '~/components/network/SystemIssueModal';
 import useNetworkStore from '~/store/network';
 import { makeRemovePushTokenRequest } from '~/api/apiRequest';
-import { hideSplashScreen, isNavigationRefReady, withNavigation } from './helper';
+import {
+  hideSplashScreen, isNavigationRefReady, updateRequired, withNavigation,
+} from './helper';
 
 import { rootNavigationRef } from './refs';
 import { rootSwitch } from './stack';
@@ -31,6 +33,7 @@ import { useAuthValidateSession, useUserIdAuth } from '~/hooks/auth';
 import VideoPlayerWebView from '~/components/VideoPlayerWebView';
 import ForceUpdateView from '~/components/ForceUpdateView';
 import Maintenance from '~/screens/Maintenance';
+import useModalStore from '~/store/modal';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -42,6 +45,7 @@ const RootNavigator = (): React.ReactElement => {
   const theme = useTheme();
 
   const networkActions = useNetworkStore((state) => state.actions);
+  const { visible: isShowUpdateRequiredAlert } = useModalStore((state) => state.updateRequiredAlert);
 
   useAuthValidateSession();
 
@@ -78,6 +82,12 @@ const RootNavigator = (): React.ReactElement => {
       };
     }, [],
   );
+
+  useEffect(() => {
+    if (isShowUpdateRequiredAlert) {
+      updateRequired();
+    }
+  }, [isShowUpdateRequiredAlert]);
 
   const navigationTheme = theme.dark ? appTheme.dark : appTheme.light;
 

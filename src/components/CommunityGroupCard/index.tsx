@@ -15,11 +15,14 @@ import { formatLargeNumber } from '~/utils/formatter';
 import ButtonCommunityGroupCard from './ButtonCommunityGroupCard';
 import useModalStore from '~/store/modal';
 import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
+import ButtonCommunityInvitationCard from './ButtonCommunityInvitationCard';
+import { ITypeGroup } from '~/interfaces/common';
 
 type CommunityGroupCardProps = {
   item: any;
   testID?: string;
   shouldShowAlertJoinTheCommunityFirst?: boolean;
+  type?: ITypeGroup;
   onJoin?: (payload: { id: string, name: string, icon: string, privacy: string, userCount: number })=>void;
   onCancel?: (id: string, groupId: string, isGroup?: boolean)=>void;
 };
@@ -28,6 +31,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
   item,
   testID,
   shouldShowAlertJoinTheCommunityFirst,
+  type = ITypeGroup.COMMUNITY,
   onJoin,
   onCancel,
 }) => {
@@ -46,6 +50,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
     joinStatus,
     description,
     community,
+    invitation,
   } = item || {};
   const privacyData: any = GroupPrivacyDetail[privacy] || {};
   const { icon: privacyIcon, title: privacyTitle } = privacyData;
@@ -96,6 +101,22 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
       const { id } = community;
       navigateToCommunityDetail({ communityId: id });
     }
+  };
+
+  const renderButton = () => {
+    if (joinStatus === GroupJoinStatus.BE_INVITED) {
+      return (
+        <ButtonCommunityInvitationCard
+          communityId={id}
+          groupId={id}
+          type={type}
+          invitationId={invitation.id}
+        />
+      );
+    }
+    return (
+      <ButtonCommunityGroupCard joinStatus={joinStatus} onView={onView} onJoin={handleJoin} onCancel={handleCancel} />
+    );
   };
 
   return (
@@ -155,12 +176,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
         </View>
       </Button>
       <ViewSpacing height={spacing.margin.base} />
-      <ButtonCommunityGroupCard
-        joinStatus={joinStatus}
-        onView={onView}
-        onJoin={handleJoin}
-        onCancel={handleCancel}
-      />
+      {renderButton()}
     </View>
   );
 };

@@ -2,6 +2,7 @@ import { useIsFocused } from '@react-navigation/native';
 
 import i18next from 'i18next';
 import React, {
+  FC,
   useCallback, useEffect, useRef, useState,
 } from 'react';
 import { StyleSheet } from 'react-native';
@@ -39,8 +40,20 @@ import useNotificationItemMenu, { INotificationItemMenuStore } from './component
 import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEvent } from '~/services/tracking/constants';
+import useGroupSetInvitationsStore from '~/components/InvitationGroupSet/store';
+import InvitationGroupSet from '~/components/InvitationGroupSet';
 
-const Notification = () => {
+export interface NotificationProps {
+  route?: {
+    params?: {
+      notificationData?: any;
+    };
+  };
+}
+
+const Notification: FC<NotificationProps> = ({ route }: NotificationProps) => {
+  const notificationData = route?.params?.notificationData || {};
+
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
   const { showToast, clearToast } = useModalStore((state) => state.actions);
 
@@ -53,6 +66,7 @@ const Notification = () => {
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const modalActions = useModalStore((state) => state.actions);
+  const groupSetActions = useGroupSetInvitationsStore((state) => state.actions);
   const specifictNotiActions = useNotificationItemMenu((state: INotificationItemMenuStore) => state.actions);
 
   useEffect(
@@ -69,6 +83,38 @@ const Notification = () => {
       sendWithUserId: true,
     });
   };
+
+  useEffect(() => {
+    if (notificationData?.type) {
+      switch (notificationData.type) {
+        case NOTIFICATION_TYPE.GROUP_SET_INVITATION:
+        case NOTIFICATION_TYPE.GROUP_SET_DEFAULT_INVITATION:
+        case NOTIFICATION_TYPE.GROUP_INVITATION_FEEDBACK: {
+          const { invitationId, target } = notificationData || {};
+          const targetType = target?.type;
+          if (targetType === InvitationTargetType.GROUP_SET
+                 || targetType === InvitationTargetType.GROUP_SET_DEFAULT) {
+            groupSetActions.getGroups(invitationId);
+            modalActions.showModal({
+              isOpen: true,
+              isFullScreen: true,
+              headerFullScreenProps: { title: t('common:btn_go_back') },
+              ContentComponent: <InvitationGroupSet
+                isFullScreen
+                isHideInviter
+                inviter={undefined}
+                invitaionId={invitationId}
+              />,
+            });
+          }
+          break;
+        }
+
+        default:
+          break;
+      }
+    }
+  }, [notificationData]);
 
   const onPressFilterItem = (index: number) => {
     setActiveIndex(index);
@@ -516,9 +562,42 @@ const Notification = () => {
                   isMember: true,
                 });
               }
+
+              if (targetType === InvitationTargetType.GROUP_SET
+                 || targetType === InvitationTargetType.GROUP_SET_DEFAULT) {
+                const invitationId = act?.invitation?.invitationId || '';
+                groupSetActions.getGroups(invitationId);
+                modalActions.showModal({
+                  isOpen: true,
+                  isFullScreen: true,
+                  headerFullScreenProps: { title: t('common:btn_go_back') },
+                  ContentComponent: <InvitationGroupSet
+                    isFullScreen
+                    isHideInviter
+                    inviter={undefined}
+                    invitaionId={invitationId}
+                  />,
+                });
+              }
               break;
             }
-
+            case NOTIFICATION_TYPE.GROUP_SET_INVITATION:
+            case NOTIFICATION_TYPE.GROUP_SET_DEFAULT_INVITATION: {
+              const invitationId = act?.invitation?.invitationId || '';
+              const invitor = act?.invitation?.invitor || {};
+              groupSetActions.getGroups(invitationId);
+              modalActions.showModal({
+                isOpen: true,
+                isFullScreen: true,
+                headerFullScreenProps: { title: t('common:btn_go_back') },
+                ContentComponent: <InvitationGroupSet
+                  isFullScreen
+                  inviter={invitor}
+                  invitaionId={invitationId}
+                />,
+              });
+              break;
+            }
             default:
               console.warn(`Notification type ${type} have not implemented yet`);
               break;

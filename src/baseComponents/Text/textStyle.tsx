@@ -63,6 +63,11 @@ export const createTextStyle = (theme: ExtendedTheme) => {
       fontSize: sizes.bodyM,
       color: colors.neutral70,
     },
+    bodyL: {
+      fontFamily: fontFamilies.BeVietnamProLight,
+      fontSize: sizes.bodyL,
+      color: colors.neutral70,
+    },
     bodyMMedium: {
       fontFamily: fontFamilies.BeVietnamProMedium,
       fontSize: sizes.bodyMMedium,

@@ -114,7 +114,7 @@ const PreviewMembers = ({ userCount, members }: Props) => {
 
 const styles = StyleSheet.create({
   listStyle: {
-    marginTop: spacing.margin.tiny,
+    marginVertical: spacing.margin.large,
   },
   memberDescriptionText: {
     marginTop: spacing.margin.xSmall,

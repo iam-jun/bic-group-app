@@ -52,7 +52,6 @@ import useCreatePostStore from '~/screens/post/CreatePost/store';
 import useLinkPreviewStore from './linkPreview';
 import useSeriesContentModalStore from '~/components/series/SeriesContentModal/store';
 import useAppStore from './app';
-import useGroupJoinableUsersStore from '~/screens/groups/GroupMembers/AddMembersToGroup/store';
 import useSelectSeriesStore from '~/components/SelectSeries/store';
 import useSelectTagsStore from '~/components/SelectTags/store';
 import useValidateSeriesTagsStore from '~/components/ValidateSeriesTags/store';
@@ -65,14 +64,17 @@ import useTermStore from '~/components/TermsModal/store';
 import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftContents/store';
 import usePublishStore from '~/screens/YourContent/components/Publish/store';
 import useUserBadge from '~/screens/Menu/UserProfile/fragments/BadgeCollection/store';
-import usePersonalPrivacy from '~/screens/Menu/AccountSettings/PrivacyCenter/store';
 import useYourQuizStore from '~/screens/quiz/YourQuiz/store';
 import useTakeQuizStore from '~/screens/quiz/TakeQuiz/store';
+import usePersonalPrivacy from '~/screens/Menu/AccountSettings/PrivacyCenter/store';
 import useMembershipPolicySettingsStore from '~/screens/groups/MembershipPolicySettings/store';
 import usePreviewJoinableGroupStore from '~/components/PreviewJoinableGroup/store';
 import useNotiSettingsStore from '~/screens/Notification/NotiSettings/store';
-import useAdvancedNotiSettingsStore from '~/screens/Notification/AdvancedSettings/store';
+import useGroupJoinableUsersStore from '~/components/InvitePeopleToYourGroup/store';
 import useNotiInvitationsStore from '~/screens/Notification/components/NotificationItem/store';
+import useMyInvitationsStore from '~/screens/Menu/UserProfile/fragments/InvitationList/store';
+import useAdvancedNotiSettingsStore from '~/screens/Notification/AdvancedSettings/store';
+import useGroupSetInvitationsStore from '~/components/InvitationGroupSet/store';
 import useNotificationItemMenu from '~/screens/Notification/components/NotificationMenu/store';
 
 export const excludedStore = [
@@ -91,6 +93,7 @@ const stores = [
 
   // components
   useReportContentStore,
+  useGroupJoinableUsersStore,
 
   // screens
   useHomeStore,
@@ -162,8 +165,10 @@ const stores = [
   useMembershipPolicySettingsStore,
   usePreviewJoinableGroupStore,
   useNotiSettingsStore,
-  useAdvancedNotiSettingsStore,
   useNotiInvitationsStore,
+  useMyInvitationsStore,
+  useAdvancedNotiSettingsStore,
+  useGroupSetInvitationsStore,
   useNotificationItemMenu,
 ];
 

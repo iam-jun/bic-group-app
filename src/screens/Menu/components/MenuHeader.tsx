@@ -76,7 +76,7 @@ const MenuHeader = () => {
             isCurrentUser
             showingBadges={showingBadges}
             style={styles.userBadge}
-            onPress={() => goToProfile(1)}
+            onPress={() => goToProfile(2)}
           />
         </TouchableOpacity>
       </View>

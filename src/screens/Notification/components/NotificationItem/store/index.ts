@@ -4,6 +4,9 @@ import {
 } from '~/store/utils';
 import acceptInvitation from './actions/acceptInvitation';
 import declineInvitation from './actions/declineInvitation';
+import acceptSingleInvitation from './actions/acceptSingleInvitation';
+import declineSingleInvitation from './actions/declineSingleInvitation';
+import { IParamsAcceptSingleInvitation, IParamsDeclineSingleInvitation } from '~/interfaces/IGroup';
 
 export interface INotiInvitationsStore extends IBaseState {
   requestingsAccept: { [id: string]: boolean };
@@ -14,6 +17,8 @@ export interface INotiInvitationsStore extends IBaseState {
   actions: {
     acceptInvitation: (notiInfo: any) =>void;
     declineInvitation: (notiInfo: any) => void;
+    acceptSingleInvitation: (params: IParamsAcceptSingleInvitation) => Promise<void>;
+    declineSingleInvitation: (params: IParamsDeclineSingleInvitation) => Promise<void>;
   }
 }
 
@@ -29,6 +34,8 @@ const notiInvitationsStore = (set, get) => ({
   actions: {
     acceptInvitation: acceptInvitation(set, get),
     declineInvitation: declineInvitation(set, get),
+    acceptSingleInvitation: acceptSingleInvitation(set, get),
+    declineSingleInvitation: declineSingleInvitation(set, get),
   },
 });
 

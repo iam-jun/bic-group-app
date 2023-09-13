@@ -43,7 +43,6 @@ import { IButtonMarkAsReadState } from '~/components/posts/ButtonMarkAsRead/stor
 import { ICreatePostState } from '~/screens/post/CreatePost/store';
 import { ILinkPreviewState } from './linkPreview';
 import { ISeriesContentModalState } from '~/components/series/SeriesContentModal/store';
-import { IGroupJoinableUsersState } from '~/screens/groups/GroupMembers/AddMembersToGroup/store';
 import { ISelectSeriesState } from '~/components/SelectSeries/store';
 import { ISelectTagsState } from '~/components/SelectTags/store';
 import { IValidateSeriesTags } from '~/components/ValidateSeriesTags/store';
@@ -62,8 +61,10 @@ import { IPersonalInfoVisibilityState } from '~/screens/Menu/AccountSettings/Pri
 import { IMembershipPolicySettingsState } from '~/screens/groups/MembershipPolicySettings/store';
 import { IPreviewJoinableGroupState } from '~/components/PreviewJoinableGroup/store';
 import { INotiSettingsStore } from '~/screens/Notification/NotiSettings/store';
-import { IAdvancedNotiSettingsStore } from '~/screens/Notification/AdvancedSettings/store';
+import { IGroupJoinableUsersState } from '~/components/InvitePeopleToYourGroup/store';
 import { INotiInvitationsStore } from '~/screens/Notification/components/NotificationItem/store';
+import { IAdvancedNotiSettingsStore } from '~/screens/Notification/AdvancedSettings/store';
+import { IGroupSetInvitationsStore } from '~/components/InvitationGroupSet/store';
 import { INotificationItemMenuStore } from '~/screens/Notification/components/NotificationMenu/store';
 
 export interface BicStore {
@@ -86,6 +87,9 @@ export interface BicStore {
       buttonMarkAsReadStore: IButtonMarkAsReadState;
     };
   };
+  InvitePeopleToYourGroup: {
+    groupJoinableUsersStore: IGroupJoinableUsersState;
+  }
 
   // screens
   post: {
@@ -123,7 +127,6 @@ export interface BicStore {
     };
     GroupMembers: {
       groupMemberStore: IGroupMemberState;
-      addMembersToGroupStore: IGroupJoinableUsersState;
     };
     GroupDetail: {
       groupDetailStore: IGroupDetailState;
@@ -173,8 +176,8 @@ export interface BicStore {
   Notifications: {
     notificationStore: INotificationsState;
     INotiSettingsStore: INotiSettingsStore;
-    IAdvancedNotiSettingsStore: IAdvancedNotiSettingsStore;
     INotiInvitationsStore: INotiInvitationsStore;
+    IAdvancedNotiSettingsStore: IAdvancedNotiSettingsStore;
     INotificationItemMenu: INotificationItemMenuStore;
   };
   Draft: {
@@ -220,4 +223,5 @@ export interface BicStore {
   maintenanceStore: IMaintenanceState;
   pinContent: IPinContentState;
   previewJoinableGroupStore: IPreviewJoinableGroupState;
+  IGroupSetInvitationsStore: IGroupSetInvitationsStore;
 }
