@@ -1,80 +1,21 @@
 import React from 'react';
-
 import {
   act, fireEvent, render, waitFor,
 } from '~/test/testUtils';
-import PostSettings from '~/screens/post/PostSettings/index';
-import { POST_DETAIL } from '~/test/mock_data/post';
+import SeriesSettings from './index';
 import MockedNavigator from '~/test/MockedNavigator';
-import streamApi from '~/api/StreamApi';
+import usePostsStore from '~/store/entities/posts';
+import { seriesDetail } from '~/test/mock_data/series';
 import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
 import * as SettingImportantHelper from '~/helpers/settingImportant';
-import usePostsStore from '~/store/entities/posts';
+import streamApi from '~/api/StreamApi';
 import useModalStore from '~/store/modal';
 
-describe('Post Setting Screen', () => {
-  it('should toggle can comment', async () => {
-    jest.spyOn(streamApi, 'getPostDetail').mockReturnValue({ data: POST_DETAIL } as any);
-
-    const wrapper = render(
-      <MockedNavigator
-        component={() => (
-          <PostSettings
-            route={{
-              params: { postId: POST_DETAIL.id, isFromPostMenuSettings: true },
-            }}
-          />
-        )}
-      />,
-    );
-
-    let toggleBtn;
-    await waitFor(() => {
-      toggleBtn = wrapper.getByTestId('post_settings.toggle_can_comment');
-    });
-
-    fireEvent.press(toggleBtn);
-
-    const toggleViews = wrapper.getAllByTestId('toggle.view');
-    await waitFor(() => {
-      const stylesToggleView = toggleViews[1].props.style;
-      expect(stylesToggleView[1].backgroundColor).toBe('#D1D4DB');
-    });
-  });
-
-  it('should toggle can react', async () => {
-    jest.spyOn(streamApi, 'getPostDetail').mockReturnValue({ data: POST_DETAIL } as any);
-
-    const wrapper = render(
-      <MockedNavigator
-        component={() => (
-          <PostSettings
-            route={{
-              params: { postId: POST_DETAIL.id, isFromPostMenuSettings: true },
-            }}
-          />
-        )}
-      />,
-    );
-
-    let toggleBtn;
-    await waitFor(() => {
-      toggleBtn = wrapper.getByTestId('post_settings.toggle_can_react');
-    });
-
-    fireEvent.press(toggleBtn);
-
-    const toggleViews = wrapper.getAllByTestId('toggle.view');
-    await waitFor(() => {
-      const stylesToggleView = toggleViews[2].props.style;
-      expect(stylesToggleView[1].backgroundColor).toBe('#D1D4DB');
-    });
-  });
-
+describe('SeriesSettings screen', () => {
   it('should show audience without permission modal', async () => {
-    const mockPost = {
-      ...POST_DETAIL,
+    const series = {
+      ...seriesDetail.data,
       audience: {
         groups: [
           {
@@ -96,15 +37,14 @@ describe('Post Setting Screen', () => {
         ],
       },
     };
-    jest.spyOn(streamApi, 'getPostDetail').mockReturnValue({ data: mockPost } as any);
-    // usePostsStore.getState().actions.addToPosts({ data: mockPost as any });
+    usePostsStore.getState().actions.addToPosts({ data: series as any });
 
     const wrapper = render(
       <MockedNavigator
         component={() => (
-          <PostSettings
+          <SeriesSettings
             route={{
-              params: { postId: mockPost.id, isFromPostMenuSettings: true },
+              params: { seriesId: series.id, isFromSeriesMenuSettings: true },
             }}
           />
         )}
@@ -126,7 +66,7 @@ describe('Post Setting Screen', () => {
     fireEvent.press(textMoreAudienceWithoutPermission);
 
     await waitFor(() => {
-      expect(wrapper.getByTestId('post_settings.list_audience')).toBeDefined();
+      expect(wrapper.getByTestId('series_settings.list_audience')).toBeDefined();
     });
   });
 
@@ -136,21 +76,20 @@ describe('Post Setting Screen', () => {
       data: {
         ...state.data,
         groups: {
-          1: [
+          'f84e82b5-18c6-4291-8f3a-9bf4da714e99': [
             PermissionKey.EDIT_OWN_CONTENT_SETTING,
           ],
         },
       },
     }));
-    jest.spyOn(streamApi, 'getPostDetail').mockReturnValue({ data: POST_DETAIL } as any);
-    // usePostsStore.getState().actions.addToPosts({ data: mockPost as any });
+    usePostsStore.getState().actions.addToPosts({ data: seriesDetail.data as any });
 
     const wrapper = render(
       <MockedNavigator
         component={() => (
-          <PostSettings
+          <SeriesSettings
             route={{
-              params: { postId: POST_DETAIL.id, isFromPostMenuSettings: true },
+              params: { seriesId: seriesDetail.data.id, isFromSeriesMenuSettings: true },
             }}
           />
         )}
@@ -172,7 +111,7 @@ describe('Post Setting Screen', () => {
     fireEvent.press(importantDateDropdown);
 
     await waitFor(() => {
-      expect(wrapper.getByTestId('post_settings.list_suggest_expire_time')).toBeDefined();
+      expect(wrapper.getByTestId('series_settings.list_suggest_expire_time')).toBeDefined();
     });
   });
 
@@ -184,21 +123,20 @@ describe('Post Setting Screen', () => {
       data: {
         ...state.data,
         groups: {
-          1: [
+          'f84e82b5-18c6-4291-8f3a-9bf4da714e99': [
             PermissionKey.EDIT_OWN_CONTENT_SETTING,
           ],
         },
       },
     }));
-    jest.spyOn(streamApi, 'getPostDetail').mockReturnValue({ data: POST_DETAIL } as any);
-    // usePostsStore.getState().actions.addToPosts({ data: mockPost as any });
+    usePostsStore.getState().actions.addToPosts({ data: seriesDetail.data as any });
 
     const wrapper = render(
       <MockedNavigator
         component={() => (
-          <PostSettings
+          <SeriesSettings
             route={{
-              params: { postId: POST_DETAIL.id, isFromPostMenuSettings: true },
+              params: { seriesId: seriesDetail.data.id, isFromSeriesMenuSettings: true },
             }}
           />
         )}
@@ -220,7 +158,7 @@ describe('Post Setting Screen', () => {
     fireEvent.press(importantDateDropdown);
 
     await waitFor(() => {
-      expect(wrapper.getByTestId('post_settings.list_suggest_expire_time')).toBeDefined();
+      expect(wrapper.getByTestId('series_settings.list_suggest_expire_time')).toBeDefined();
     });
 
     const itemCustomTime = wrapper.getAllByTestId('post_settings.item')[9];
@@ -285,24 +223,35 @@ describe('Post Setting Screen', () => {
   });
 
   it('should save success', async () => {
-    jest.spyOn(streamApi, 'getPostDetail').mockReturnValueOnce({ data: POST_DETAIL } as any).mockReturnValueOnce({
+    usePostsStore.getState().actions.addToPosts({ data: seriesDetail.data as any });
+    useMyPermissionsStore.setState((state) => ({
+      ...state,
       data: {
-        ...POST_DETAIL,
+        ...state.data,
+        groups: {
+          'f84e82b5-18c6-4291-8f3a-9bf4da714e99': [
+            PermissionKey.EDIT_OWN_CONTENT_SETTING,
+          ],
+        },
+      },
+    }));
+    jest.spyOn(streamApi, 'getSeriesDetail').mockReturnValueOnce({
+      data: {
+        ...seriesDetail.data,
         setting: {
-          ...POST_DETAIL.setting,
-          canReact: false,
+          ...seriesDetail.data.setting,
+          isImportant: true,
         },
       },
     } as any);
-    jest.spyOn(streamApi, 'getCommentsByPostId').mockReturnValue({ data: { list: [], meta: {} } } as any);
     jest.spyOn(streamApi, 'putEditSettings').mockReturnValue({} as any);
 
     const wrapper = render(
       <MockedNavigator
         component={() => (
-          <PostSettings
+          <SeriesSettings
             route={{
-              params: { postId: POST_DETAIL.id, isFromPostMenuSettings: true },
+              params: { seriesId: seriesDetail.data.id, isFromSeriesMenuSettings: true },
             }}
           />
         )}
@@ -311,34 +260,43 @@ describe('Post Setting Screen', () => {
 
     let toggleBtn;
     await waitFor(() => {
-      toggleBtn = wrapper.getByTestId('post_settings.toggle_can_react');
+      toggleBtn = wrapper.getByTestId('post_settings.toggle_important');
     });
 
     fireEvent.press(toggleBtn);
 
-    const toggleViews = wrapper.getAllByTestId('toggle.view');
     await waitFor(() => {
-      const stylesToggleView = toggleViews[2].props.style;
-      expect(stylesToggleView[1].backgroundColor).toBe('#D1D4DB');
+      expect(wrapper.getByTestId('mark_important.important_date_dropdown')).toBeDefined();
     });
 
-    const btnSave = wrapper.getByTestId('post_settings.btn_save');
+    const btnSave = wrapper.getByTestId('header.button');
     fireEvent.press(btnSave);
 
     await waitFor(() => {
-      expect(usePostsStore.getState().posts[POST_DETAIL.id].setting.canReact).toBeFalsy();
+      expect(usePostsStore.getState().posts[seriesDetail.data.id].setting.isImportant).toBeTruthy();
     });
   });
 
   it('should show alert when user press back', async () => {
-    jest.spyOn(streamApi, 'getPostDetail').mockReturnValueOnce({ data: POST_DETAIL } as any);
+    usePostsStore.getState().actions.addToPosts({ data: seriesDetail.data as any });
+    useMyPermissionsStore.setState((state) => ({
+      ...state,
+      data: {
+        ...state.data,
+        groups: {
+          'f84e82b5-18c6-4291-8f3a-9bf4da714e99': [
+            PermissionKey.EDIT_OWN_CONTENT_SETTING,
+          ],
+        },
+      },
+    }));
 
     const wrapper = render(
       <MockedNavigator
         component={() => (
-          <PostSettings
+          <SeriesSettings
             route={{
-              params: { postId: POST_DETAIL.id, isFromPostMenuSettings: true },
+              params: { seriesId: seriesDetail.data.id, isFromSeriesMenuSettings: true },
             }}
           />
         )}
@@ -347,15 +305,13 @@ describe('Post Setting Screen', () => {
 
     let toggleBtn;
     await waitFor(() => {
-      toggleBtn = wrapper.getByTestId('post_settings.toggle_can_react');
+      toggleBtn = wrapper.getByTestId('post_settings.toggle_important');
     });
 
     fireEvent.press(toggleBtn);
 
-    const toggleViews = wrapper.getAllByTestId('toggle.view');
     await waitFor(() => {
-      const stylesToggleView = toggleViews[2].props.style;
-      expect(stylesToggleView[1].backgroundColor).toBe('#D1D4DB');
+      expect(wrapper.getByTestId('mark_important.important_date_dropdown')).toBeDefined();
     });
 
     const btnBack = wrapper.getByTestId('header.back');
