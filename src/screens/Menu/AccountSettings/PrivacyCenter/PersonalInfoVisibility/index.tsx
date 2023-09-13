@@ -8,7 +8,7 @@ import Header from '~/beinComponents/Header';
 import spacing from '~/theme/spacing';
 import Text from '~/baseComponents/Text';
 import { Radio, ScreenWrapper } from '~/baseComponents';
-import useVisibilityPrivacyStore from '../store';
+import usePersonalPrivacy from '../store';
 import { PERSONAL_INFORMATION_VISIBILITY_TYPE, PERSONAL_INFORMATION_VISIBILITY_TYPES } from '~/constants/privacyCenter';
 import Divider from '~/beinComponents/Divider';
 
@@ -23,11 +23,11 @@ const PersonalInfoVisibility = () => {
   const styles = createStyle(theme);
   const { colors } = theme;
 
-  const actions = useVisibilityPrivacyStore((state) => state.actions);
-  const visibilityPrivacy = useVisibilityPrivacyStore((state) => state.visibilityPrivacy);
+  const actions = usePersonalPrivacy((state) => state.actions);
+  const visibilityPrivacy = usePersonalPrivacy((state) => state.visibilityPrivacy);
 
   useEffect(() => {
-    actions.getPersonalInfoVisibility();
+    actions.getPersonalPrivacySettings();
   }, []);
 
   const onChangeSetting = (item: IRadioItem) => {

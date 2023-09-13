@@ -28,6 +28,8 @@ const getGroupDetail = (set) => async (payload: { groupId: string }) => {
     }, 'getGroupDetailSuccess');
 
     useGroupsStore.getState().actions.addToGroups(response.data);
+
+    return response;
   } catch (err) {
     console.error('getGroupDetail:', err);
     set((state: IGroupDetailState) => {

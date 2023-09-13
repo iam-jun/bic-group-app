@@ -1,28 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import i18next from 'i18next';
+import { t } from 'i18next';
 
-import { useRootNavigation } from '~/hooks/navigation';
 import { IGroupMembers } from '~/interfaces/IGroup';
 
 import ScreenWrapper from '~/baseComponents/ScreenWrapper';
-import Header, { HeaderProps } from '~/beinComponents/Header';
+import Header from '~/beinComponents/Header';
 import useNetworkStore from '~/store/network';
 import networkSelectors from '~/store/network/selectors';
 import MemberOptionsMenu from './components/GroupMemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
 import spacing from '~/theme/spacing';
-import GroupMemberList from './GroupMemberList';
-import Tab from '~/baseComponents/Tab';
-import { MEMBER_TABS } from '~/screens/communities/CommunityMembers';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import GroupMemberRequests from './GroupMemberRequests';
 import { IconType } from '~/resources/icons';
 import useGroupMemberStore, { IGroupMemberState } from './store';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 import useGroupDetailStore from '../GroupDetail/store';
+import { onPressButtonInvite } from '~/components/InvitePeopleToYourGroup/helper';
+import { renderTabs } from '~/screens/communities/CommunityMembers/helper';
+import CommunityInvitedPeople from '~/screens/communities/CommunityMembers/CommunityInvitedPeople';
+import { ITypeGroup } from '~/interfaces/common';
 
 const _GroupMembers = ({ route }: any) => {
   const {
@@ -30,9 +29,7 @@ const _GroupMembers = ({ route }: any) => {
   } = route.params;
 
   const [selectedMember, setSelectedMember] = useState<IGroupMembers>();
-  const [isOpen, setIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(targetIndex || 0);
-  const { ids } = useGroupMemberStore((state) => state.groupMemberRequests);
 
   const [needReloadWhenReconnected, setNeedReloadWhenReconnected] = useState(false);
   const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
@@ -40,9 +37,11 @@ const _GroupMembers = ({ route }: any) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
-  const { rootNavigation } = useRootNavigation();
   const baseSheetRef: any = useRef();
-  const { actions, groupMembers: { offset } } = useGroupMemberStore((state: IGroupMemberState) => state);
+  const {
+    actions,
+    groupMembers: { offset },
+  } = useGroupMemberStore((state: IGroupMemberState) => state);
   const { getGroupDetail } = useGroupDetailStore((state) => state.actions);
 
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
@@ -93,81 +92,54 @@ const _GroupMembers = ({ route }: any) => {
     baseSheetRef.current?.open();
   };
 
-  const onPressAdd = () => {
-    rootNavigation.navigate(groupStack.addMembers, { groupId });
-  };
-
-  const onPressSearch = () => {
-    setIsOpen(true);
-  };
-
-  const onCloseModal = () => {
-    setIsOpen(false);
-  };
-
   const onPressTab = (item: any, index: number) => {
     setSelectedIndex(index);
   };
 
   const renderContent = () => {
-    if (selectedIndex === 0) {
-      return <GroupMemberList communityId={communityId} groupId={groupId} onPressMenu={onPressMenu} />;
+    switch (selectedIndex) {
+      case 0:
+        return (
+          <SearchMemberView
+            isMemberCommunity={isMemberCommunity}
+            placeholder={t('groups:text_search_for_members')}
+            onPressMenu={onPressMenu}
+            groupId={groupId}
+            communityId={communityId}
+          />
+        );
+      case 1:
+        return (
+          <GroupMemberRequests groupId={groupId} canApproveRejectJoiningRequests={canApproveRejectJoiningRequests} />
+        );
+      case 2:
+        return <CommunityInvitedPeople type={ITypeGroup.GROUP} groupId={groupId} />;
+      default:
+        return null;
     }
-
-    if (selectedIndex === 1) {
-      return (
-        <GroupMemberRequests
-          groupId={groupId}
-          canAddMember={canAddMember}
-          canApproveRejectJoiningRequests={canApproveRejectJoiningRequests}
-          onPressAdd={onPressAdd}
-        />
-      );
-    }
-
-    return null;
   };
 
-  const showAddButton = () => {
-    if (canAddMember) {
-      // don't show button Add on header when there's button Add Members on Member request screen
-      if (selectedIndex === 1 && ids.length === 0) return false;
-      return true;
-    }
+  const isShowInvitedPeopleTab = canAddMember;
+  const isShowMemberRequestsTab = canApproveRejectJoiningRequests || canEditJoinSetting;
 
-    return false;
+  const showButtonInvite = isShowInvitedPeopleTab && {
+    buttonText: 'common:text_invite',
+    buttonProps: { useI18n: true, icon: 'Plus' as IconType, iconSize: 14 },
+    onPressButton: () => onPressButtonInvite({ groupId, type: ITypeGroup.GROUP }),
   };
 
-  const headerProps: HeaderProps = showAddButton() && {
-    buttonText: 'common:text_add',
-    onPressButton: onPressAdd,
-    buttonProps: { icon: 'Plus', style: styles.addButton, useI18n: true },
-  };
-
-  const showSearchMember = isMemberCommunity && {
-    icon: 'search' as IconType,
-    onPressIcon: onPressSearch,
-  };
+  const _renderTabs = () => renderTabs({
+    isShowInvitedPeopleTab,
+    isShowMemberRequestsTab,
+    selectedIndex,
+    onPressTab,
+  });
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.gray5}>
-      <Header
-        titleTextProps={{ useI18n: true }}
-        title="groups:title_members_other"
-        {...showSearchMember}
-        {...headerProps}
-      />
+      <Header titleTextProps={{ useI18n: true }} title="groups:title_members_other" {...showButtonInvite} />
 
-      {(!!canApproveRejectJoiningRequests || !!canEditJoinSetting) && (
-        <View style={styles.tabContainer}>
-          <Tab
-            buttonProps={{ size: 'large', type: 'primary', useI18n: true }}
-            data={MEMBER_TABS}
-            onPressTab={onPressTab}
-            activeIndex={selectedIndex}
-          />
-        </View>
-      )}
+      {_renderTabs()}
 
       <View style={styles.memberList}>
         {renderContent()}
@@ -179,15 +151,6 @@ const _GroupMembers = ({ route }: any) => {
         selectedMember={selectedMember || {}}
         onOptionsClosed={clearSelectedMember}
       />
-
-      <SearchMemberView
-        groupId={groupId}
-        communityId={communityId}
-        isOpen={isOpen}
-        onClose={onCloseModal}
-        onPressMenu={onPressMenu}
-        placeholder={i18next.t('groups:text_search_member')}
-      />
     </ScreenWrapper>
   );
 };
@@ -195,10 +158,6 @@ const _GroupMembers = ({ route }: any) => {
 const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
-    tabContainer: {
-      backgroundColor: colors.white,
-      marginTop: spacing.margin.large,
-    },
     memberList: {
       flex: 1,
       marginTop: spacing.margin.large,

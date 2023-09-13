@@ -17,6 +17,7 @@ export type TextVariant =
   | 'subtitleS'
   | 'subtitleXS'
   | 'bodyM'
+  | 'bodyL'
   | 'bodyMMedium'
   | 'bodyS'
   | 'bodySMedium'
@@ -129,6 +130,9 @@ const SubtitleXS = ({ ...props }: TextProps) => (
 const BodyM = ({ ...props }: TextProps) => (
   <TextComponent variant="bodyM" {...props} />
 );
+const BodyL = ({ ...props }: TextProps) => (
+  <TextComponent variant="bodyL" {...props} />
+);
 const BodyMMedium = ({ ...props }: TextProps) => (
   <TextComponent variant="bodyMMedium" {...props} />
 );
@@ -227,6 +231,7 @@ const Text = Object.assign(
     SubtitleS,
     SubtitleXS,
     BodyM,
+    BodyL,
     BodyMMedium,
     BodyS,
     BodySMedium,

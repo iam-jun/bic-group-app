@@ -9,15 +9,12 @@ describe('CommunityMemberRequests', () => {
     id: 'community-id',
     groupId: 'group-id',
   } as ICommunity;
-  const onPressAdd = jest.fn();
 
   it('should render correctly when canApproveRejectJoiningRequests = true', () => {
     const { getByTestId } = render(
       <CommunityMemberRequests
         community={community}
-        canAddMember
         canApproveRejectJoiningRequests
-        onPressAdd={onPressAdd}
       />,
     );
 
@@ -29,9 +26,7 @@ describe('CommunityMemberRequests', () => {
     const { queryByTestId } = render(
       <CommunityMemberRequests
         community={community}
-        canAddMember
         canApproveRejectJoiningRequests={false}
-        onPressAdd={onPressAdd}
       />,
     );
     const memberList = queryByTestId('member_request_list');
@@ -68,9 +63,7 @@ describe('CommunityMemberRequests', () => {
     const { queryByTestId } = render(
       <CommunityMemberRequests
         community={community}
-        canAddMember
         canApproveRejectJoiningRequests
-        onPressAdd={onPressAdd}
       />,
     );
 
@@ -106,9 +99,7 @@ describe('CommunityMemberRequests', () => {
     const { queryByTestId } = render(
       <CommunityMemberRequests
         community={community}
-        canAddMember
         canApproveRejectJoiningRequests
-        onPressAdd={onPressAdd}
       />,
     );
 
