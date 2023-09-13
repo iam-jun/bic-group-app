@@ -524,15 +524,6 @@ const Notification: FC<NotificationProps> = ({ route }: NotificationProps) => {
               break;
             }
 
-            case NOTIFICATION_TYPE.QUIZ_GENERATE_SUCCESSFUL:
-            case NOTIFICATION_TYPE.QUIZ_GENERATE_UNSUCCESSFUL:
-              rootNavigation.navigate(quizStack.previewDraftQuizNotification, {
-                quizId: act?.quizInfo?.quizId,
-                contentId: act?.quizInfo?.contentId,
-                contentType: act?.quizInfo?.contentType,
-              });
-              break;
-
             case NOTIFICATION_TYPE.GROUP_INVITATION_FEEDBACK: {
               const communityId = invitationData?.communityId || '';
               const groupId = invitationData?.id || '';
