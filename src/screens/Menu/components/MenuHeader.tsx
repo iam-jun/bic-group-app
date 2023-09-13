@@ -14,6 +14,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import useCommonController from '~/screens/store';
 import UserBadge from '../UserProfile/components/UserBadge';
 import VerifiedView from '~/components/VerifiedView';
+import { trackEvent } from '~/services/tracking';
 
 const PADDING_INFO = spacing.padding.large * 2 + dimension.avatarSizes.large;
 
@@ -32,6 +33,9 @@ const MenuHeader = () => {
     rootNavigation.navigate(
       mainStack.userProfile, { userId: id, targetIndex },
     );
+    if (targetIndex !== 1) {
+      trackEvent({ event: 'Own Profile Viewed', sendWithUserId: true });
+    }
   };
 
   return (
@@ -71,7 +75,7 @@ const MenuHeader = () => {
             isCurrentUser
             showingBadges={showingBadges}
             style={styles.userBadge}
-            onPress={() => goToProfile(1)}
+            onPress={() => goToProfile(2)}
           />
         </TouchableOpacity>
       </View>

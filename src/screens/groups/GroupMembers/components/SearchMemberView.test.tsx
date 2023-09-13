@@ -6,7 +6,6 @@ import SearchMemberView from './SearchMemberView';
 describe('SearchMemberView component', () => {
   const groupId = '1';
   const communityId = 'test';
-  const isOpen = true;
   const onPressMenu = jest.fn();
 
   it('should render data list correctly', () => {
@@ -19,7 +18,8 @@ describe('SearchMemberView component', () => {
       <SearchMemberView
         communityId={communityId}
         groupId={groupId}
-        isOpen={isOpen}
+        isMemberCommunity
+        placeholder="test"
         onPressMenu={onPressMenu}
       />,
     );

@@ -30,6 +30,7 @@ import useMenuController from '~/screens/Menu/store';
 import useUserProfileStore from '../../UserProfile/store';
 import Button from '~/beinComponents/Button';
 import useCommonController from '~/screens/store';
+import { trackEvent } from '~/services/tracking';
 
 const AddWork = () => {
   const theme: ExtendedTheme = useTheme();
@@ -145,6 +146,7 @@ const AddWork = () => {
     selectedWorkItem
       ? userProfileActions.editWorkExperience(id, data, navigateBack)
       : userProfileActions.addWorkExperience(data, navigateBack);
+    trackEvent({ event: 'Work Info Updated', sendWithUserId: true });
   };
 
   const onChangeCompany = (text: string) => {

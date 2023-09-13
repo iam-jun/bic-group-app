@@ -7,6 +7,7 @@ import {
   getParamsContentFeed, isFilterWithThisAttributeFeed,
 } from '../helper';
 import IHomeState, { IHomeFeed } from '../Interface';
+import appConfig from '~/configs/appConfig';
 
 const getDataFeed = (set, get) => async (isRefresh?: boolean) => {
   const { contentFilter, attributeFilter } = get();
@@ -22,6 +23,7 @@ const getDataFeed = (set, get) => async (isRefresh?: boolean) => {
   const endCursor = isRefresh ? null : currentEndCursor;
   const requestParams: IParamGetFeed = {
     after: endCursor,
+    limit: appConfig.recordsPerPage,
     isImportant: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.IMPORTANT),
     isSaved: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.SAVED),
     // isMine: isFilterWithThisAttributeFeed(attributeFilter, AttributeFeed.MINE),

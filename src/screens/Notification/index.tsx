@@ -2,6 +2,7 @@ import { useIsFocused } from '@react-navigation/native';
 
 import i18next from 'i18next';
 import React, {
+  FC,
   useCallback, useEffect, useRef, useState,
 } from 'react';
 import { StyleSheet } from 'react-native';
@@ -26,21 +27,32 @@ import useNotificationStore from './store';
 import INotificationsState from './store/Interface';
 import spacing from '~/theme/spacing';
 import useModalStore from '~/store/modal';
-import { ContentType } from '~/interfaces/INotification';
+import { ContentType, InvitationTargetType } from '~/interfaces/INotification';
 import { useUserIdAuth } from '~/hooks/auth';
 import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 import { USER_TABS } from '../Menu/UserProfile';
 import { USER_TABS_TYPES } from '../Menu/UserProfile/constants';
+import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
 import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
+import NotificationMenu from './components/NotificationMenu';
+import useNotificationItemMenu, { INotificationItemMenuStore } from './components/NotificationMenu/store';
 import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
+import { trackEvent } from '~/services/tracking';
+import useGroupSetInvitationsStore from '~/components/InvitationGroupSet/store';
+import InvitationGroupSet from '~/components/InvitationGroupSet';
 
-const NOT_SHOW_DELETE_OPTION_LIST = [
-  NOTIFICATION_TYPE.SCHEDULED_MAINTENANCE_DOWNTIME,
-  NOTIFICATION_TYPE.CHANGE_LOGS,
-];
+export interface NotificationProps {
+  route?: {
+    params?: {
+      notificationData?: any;
+    };
+  };
+}
 
-const Notification = () => {
+const Notification: FC<NotificationProps> = ({ route }: NotificationProps) => {
+  const notificationData = route?.params?.notificationData || {};
+
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
   const { showToast, clearToast } = useModalStore((state) => state.actions);
 
@@ -49,9 +61,12 @@ const Notification = () => {
   const userId = useUserIdAuth();
   const { t } = useBaseHook();
   const timeOutRef = useRef<any>();
+  const notifMenuRef = useRef<any>();
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const modalActions = useModalStore((state) => state.actions);
+  const groupSetActions = useGroupSetInvitationsStore((state) => state.actions);
+  const specifictNotiActions = useNotificationItemMenu((state: INotificationItemMenuStore) => state.actions);
 
   useEffect(
     () => {
@@ -61,17 +76,40 @@ const Notification = () => {
     }, [isFocused],
   );
 
+  useEffect(() => {
+    if (notificationData?.type) {
+      switch (notificationData.type) {
+        case NOTIFICATION_TYPE.GROUP_SET_INVITATION:
+        case NOTIFICATION_TYPE.GROUP_SET_DEFAULT_INVITATION:
+        case NOTIFICATION_TYPE.GROUP_INVITATION_FEEDBACK: {
+          const { invitationId, target } = notificationData || {};
+          const targetType = target?.type;
+          if (targetType === InvitationTargetType.GROUP_SET
+                 || targetType === InvitationTargetType.GROUP_SET_DEFAULT) {
+            groupSetActions.getGroups(invitationId);
+            modalActions.showModal({
+              isOpen: true,
+              isFullScreen: true,
+              headerFullScreenProps: { title: t('common:btn_go_back') },
+              ContentComponent: <InvitationGroupSet
+                isFullScreen
+                isHideInviter
+                inviter={undefined}
+                invitaionId={invitationId}
+              />,
+            });
+          }
+          break;
+        }
+
+        default:
+          break;
+      }
+    }
+  }, [notificationData]);
+
   const onPressFilterItem = (index: number) => {
     setActiveIndex(index);
-  };
-
-  const handleMarkNotification = (data: any) => {
-    if (!data?.isRead) {
-      notiActions.markAsRead(data?.id);
-    } else {
-      notiActions.markAsUnRead(data?.id);
-    }
-    modalActions.hideBottomList();
   };
 
   const clearToastDeleteNoti = () => {
@@ -93,7 +131,22 @@ const Notification = () => {
     notiActions.deleteNotification(id);
   };
 
-  const handleRemoveNotification = (id: string) => {
+  const trackEventNoti = (eventName: string, item: any) => {
+    const type = item?.extra?.type || undefined;
+    const act = item?.activities?.[0];
+    trackEvent({
+      event: eventName,
+      properties: {
+        content_type: act?.contentType,
+        is_read: item?.isRead,
+        type,
+      },
+    });
+  };
+
+  const handleRemoveNotification = (item: any) => {
+    const id = item?.id || '';
+    if (!id) return;
     notiActions.deleteNotificationLocal(id);
     const toastMessage: IToastMessage = {
       content: t('notification:text_remove_notification_success'),
@@ -110,42 +163,18 @@ const Notification = () => {
     );
 
     modalActions.hideBottomList();
-  };
-
-  const checkShowDeleteOption = (type: string) => {
-    if (!type) return false;
-    const index = NOT_SHOW_DELETE_OPTION_LIST.findIndex((item) => item === type);
-    return !(index === -1);
+    trackEventNoti('Notification Removed', item);
   };
 
   const onPressItemOption = ({ item }: {item: any}) => {
+    specifictNotiActions.setSelectedNotificationId(item?.id);
     clearToastDeleteNoti();
     notiActions.deleteAllWaitingNotification();
+    notifMenuRef.current?.open?.();
+  };
 
-    const type = item?.extra?.type || undefined;
-    const menuData: any[] = [{
-      id: 1,
-      testID: 'notification.mark_notification_read_or_unread',
-      leftIcon: 'MessageCheck',
-      title: i18next.t(!item?.isRead
-        ? 'notification:mark_as_read'
-        : 'notification:mark_as_unread'),
-      requireIsActor: true,
-      onPress: () => { handleMarkNotification(item); },
-    }, {
-      id: 2,
-      testID: 'notifications.remove_notification',
-      leftIcon: 'TrashCan',
-      title: i18next.t('notification:text_remove_notification'),
-      requireIsActor: true,
-      onPress: () => { handleRemoveNotification(item?.id); },
-    }];
-    if (checkShowDeleteOption(type)) {
-      menuData.splice(1, 1);
-    }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    modalActions.showBottomList({ data: menuData } as BottomListItemProps);
+  const onCloseItemMenu = () => {
+    notifMenuRef.current?.close?.();
   };
 
   const handleMarkAllAsRead = () => {
@@ -184,6 +213,7 @@ const Notification = () => {
       const type = item?.extra?.type || undefined;
       const act = item?.activities?.[0];
       const target = item?.target;
+      const invitationData = act?.invitation?.target || {};
       clearToastDeleteNoti();
 
       try {
@@ -465,6 +495,88 @@ const Notification = () => {
               break;
             }
 
+            case NOTIFICATION_TYPE.QUIZ_GENERATE_SUCCESSFUL:
+            case NOTIFICATION_TYPE.QUIZ_GENERATE_UNSUCCESSFUL:
+              rootNavigation.navigate(quizStack.previewDraftQuizNotification, {
+                quizId: act?.quizInfo?.quizId,
+                contentId: act?.quizInfo?.contentId,
+                contentType: act?.quizInfo?.contentType,
+              });
+              break;
+
+            case NOTIFICATION_TYPE.GROUP_INVITATION: {
+              const communityId = invitationData?.communityId || '';
+              const groupId = invitationData?.id || '';
+              const targetType = invitationData?.type || '';
+
+              if (targetType === InvitationTargetType.COMMUNITY && !!communityId) {
+                rootNavigation.navigate(groupStack.communityDetail, { communityId });
+              }
+              if (targetType === InvitationTargetType.GROUP && !!groupId && communityId) {
+                rootNavigation.navigate(
+                  groupStack.groupDetail, {
+                    groupId,
+                    communityId,
+                  },
+                );
+              }
+              break;
+            }
+
+            case NOTIFICATION_TYPE.GROUP_INVITATION_FEEDBACK: {
+              const communityId = invitationData?.communityId || '';
+              const groupId = invitationData?.id || '';
+              const targetType = invitationData?.type || '';
+
+              if (targetType === InvitationTargetType.COMMUNITY && !!communityId) {
+                rootNavigation.navigate(groupStack.communityMembers, {
+                  communityId,
+                  isMember: true,
+                });
+              }
+
+              if (targetType === InvitationTargetType.GROUP && !!groupId) {
+                rootNavigation.navigate(groupStack.groupMembers, {
+                  groupId,
+                  isMember: true,
+                });
+              }
+
+              if (targetType === InvitationTargetType.GROUP_SET
+                 || targetType === InvitationTargetType.GROUP_SET_DEFAULT) {
+                const invitationId = act?.invitation?.invitationId || '';
+                groupSetActions.getGroups(invitationId);
+                modalActions.showModal({
+                  isOpen: true,
+                  isFullScreen: true,
+                  headerFullScreenProps: { title: t('common:btn_go_back') },
+                  ContentComponent: <InvitationGroupSet
+                    isFullScreen
+                    isHideInviter
+                    inviter={undefined}
+                    invitaionId={invitationId}
+                  />,
+                });
+              }
+              break;
+            }
+            case NOTIFICATION_TYPE.GROUP_SET_INVITATION:
+            case NOTIFICATION_TYPE.GROUP_SET_DEFAULT_INVITATION: {
+              const invitationId = act?.invitation?.invitationId || '';
+              const invitor = act?.invitation?.invitor || {};
+              groupSetActions.getGroups(invitationId);
+              modalActions.showModal({
+                isOpen: true,
+                isFullScreen: true,
+                headerFullScreenProps: { title: t('common:btn_go_back') },
+                ContentComponent: <InvitationGroupSet
+                  isFullScreen
+                  inviter={invitor}
+                  invitaionId={invitationId}
+                />,
+              });
+              break;
+            }
             default:
               console.warn(`Notification type ${type} have not implemented yet`);
               break;
@@ -486,6 +598,7 @@ const Notification = () => {
           '\x1b[0m',
         );
       }
+      trackEventNoti('Notification Opened', item);
 
       // finally mark the notification as read
       notiActions.markAsRead(item.id);
@@ -509,6 +622,11 @@ const Notification = () => {
         onPressItemOption={onPressItemOption}
         onChangeTab={onPressFilterItem}
         onRefresh={onRefresh}
+      />
+      <NotificationMenu
+        menuRef={notifMenuRef}
+        onClose={onCloseItemMenu}
+        handleRemoveNotification={handleRemoveNotification}
       />
     </ScreenWrapper>
   );

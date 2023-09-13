@@ -22,12 +22,17 @@ import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
+import useQuizzesStore from '~/store/entities/quizzes';
+import quizStack from '~/router/navigator/MainStack/stacks/quizStack/stack';
+import { QuizStatus } from '~/interfaces/IQuiz';
 
 const useArticleMenu = (data: IPost, isActor: boolean) => {
   const { rootNavigation } = useRootNavigation();
 
+  const articleControllerActions = useArticleController((state) => state.actions);
   const commonActions = useCommonController((state) => state.actions);
   const modalActions = useModalStore((state) => state.actions);
+  const actionsQuizzesStore = useQuizzesStore((state) => state.actions);
 
   const { getAudienceListWithNoPermission } = useMyPermissionsStore(
     (state) => state.actions,
@@ -36,10 +41,15 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
   if (!data) return null;
 
   const {
-    id: articleId, reactionsCount, isSaved, type, audience, actor,
+    id: articleId, reactionsCount, isSaved, type, audience, actor, quiz,
   } = data;
 
   const groupAudience = audience?.groups || [];
+
+  const audienceListCannotCRUDPostArticle = getAudienceListWithNoPermission(
+    groupAudience,
+    PermissionKey.CRUD_POST_ARTICLE,
+  );
 
   const audienceListCannotEditSettings = getAudienceListWithNoPermission(
     groupAudience,
@@ -53,6 +63,17 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       PermissionKey.PIN_CONTENT,
     ],
   );
+
+  const shouldBeHiddenCreateQuizOption
+    = !!quiz || audienceListCannotCRUDPostArticle.length > 0;
+  const shouldBeHiddenEditQuizOption
+    = !quiz
+    || quiz.status !== QuizStatus.PUBLISHED
+    || audienceListCannotCRUDPostArticle.length > 0;
+  const shouldBeHiddenDeleteQuizOption
+    = !quiz
+    || audienceListCannotCRUDPostArticle.length > 0;
+  const isShowBorderTopDeleteQuizOption = !!quiz && quiz.status !== QuizStatus.PUBLISHED;
 
   const onPressEdit = () => {
     modalActions.hideBottomList();
@@ -107,11 +128,9 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       confirmLabel: i18next.t('common:btn_delete'),
       ConfirmBtnComponent: Button.Danger,
       confirmBtnProps: { type: 'ghost' },
-      onConfirm: () => useArticleController
-        .getState()
-        .actions.deleteArticle(
-          articleId,
-        ),
+      onConfirm: () => articleControllerActions.deleteArticle(
+        articleId,
+      ),
     });
   };
 
@@ -147,6 +166,48 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       };
       modalActions.showReactionDetailBottomSheet(payload);
     }
+  };
+
+  const onPressCUDQuiz = () => {
+    modalActions.hideBottomList();
+    rootNavigation?.navigate?.(quizStack.entryQuiz, { postId: articleId });
+  };
+
+  const onConfirmEditQuiz = () => {
+    const onSuccess = () => {
+      rootNavigation?.navigate(
+        quizStack.composeQuiz, {
+          quizId: quiz?.id,
+        },
+      );
+    };
+    actionsQuizzesStore.getQuizDetail({ quizId: quiz?.id, onSuccess });
+  };
+
+  const onPressEditQuiz = () => {
+    modalActions.hideBottomList();
+    modalActions.showAlert({
+      title: i18next.t('quiz:alert_edit:header'),
+      content: i18next.t('quiz:alert_edit:content'),
+      cancelBtn: true,
+      confirmLabel: i18next.t('quiz:continue'),
+      onConfirm: onConfirmEditQuiz,
+    });
+  };
+
+  const onPressDeleteQuiz = () => {
+    modalActions.hideBottomList();
+    modalActions.showAlert({
+      title: i18next.t('quiz:alert_delete:header'),
+      content: i18next.t('quiz:alert_delete:content'),
+      cancelBtn: true,
+      confirmLabel: i18next.t('common:btn_delete'),
+      ConfirmBtnComponent: Button.Danger,
+      confirmBtnProps: { type: 'ghost' },
+      onConfirm: () => {
+        actionsQuizzesStore.deleteQuiz(quiz?.id, articleId);
+      },
+    });
   };
 
   const defaultData = [
@@ -212,14 +273,6 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
     },
     {
       id: 8,
-      testID: 'article_view_menu.delete',
-      leftIcon: 'TrashCan',
-      title: i18next.t('article:menu:delete'),
-      requireIsActor: true,
-      onPress: onDelete,
-    },
-    {
-      id: 9,
       testID: 'article_view_menu.report',
       leftIcon: 'Flag',
       title: i18next.t('common:btn_report_content'),
@@ -228,13 +281,54 @@ const useArticleMenu = (data: IPost, isActor: boolean) => {
       onPress: onPressReport,
     },
     {
-      id: 10,
+      id: 9,
       testID: 'article_view_menu.report_this_member',
       leftIcon: 'UserXmark',
       title: i18next.t('groups:member_menu:label_report_member'),
       requireIsActor: false,
       notShowForActor: isActor,
       onPress: _onPressReportThisMember,
+    },
+    {
+      id: 10,
+      testID: 'article_view_menu.quiz',
+      leftIcon: 'BallotCheck',
+      title: i18next.t('quiz:create_quiz'),
+      requireIsActor: true,
+      shouldBeHidden: shouldBeHiddenCreateQuizOption,
+      onPress: onPressCUDQuiz,
+      isShowBorderTop: true,
+      isShowBorderBottom: true,
+    },
+    {
+      id: 11,
+      testID: 'article_view_menu.edit_quiz',
+      leftIcon: 'FilePen',
+      title: i18next.t('quiz:edit_quiz'),
+      requireIsActor: true,
+      shouldBeHidden: shouldBeHiddenEditQuizOption,
+      onPress: onPressEditQuiz,
+      isShowBorderTop: true,
+    },
+    {
+      id: 12,
+      testID: 'article_view_menu.delete_quiz',
+      leftIcon: 'TrashCan',
+      title: i18next.t('quiz:delete_quiz'),
+      requireIsActor: true,
+      shouldBeHidden: shouldBeHiddenDeleteQuizOption,
+      onPress: onPressDeleteQuiz,
+      isShowBorderTop: isShowBorderTopDeleteQuizOption,
+      isShowBorderBottom: true,
+    },
+    {
+      id: 13,
+      testID: 'article_view_menu.delete',
+      leftIcon: 'TrashCan',
+      title: i18next.t('article:menu:delete'),
+      requireIsActor: true,
+      onPress: onDelete,
+      isDanger: true,
     },
   ];
 

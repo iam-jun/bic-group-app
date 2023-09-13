@@ -59,6 +59,22 @@ export const communityDetailData = {
   joinStatus: GroupJoinStatus.MEMBER,
 };
 
+export const communityDetailDataWithInvitation = {
+  ...communityDetailData,
+  joinStatus: GroupJoinStatus.BE_INVITED,
+  invitation: {
+    id: 'test',
+    inviter: {
+      id: 'test',
+      username: 'test',
+      fullname: 'test',
+      avatar: 'test',
+      isDeactivated: false,
+    },
+    invitedAt: '2022-04-26T08:29:58.579Z',
+  },
+};
+
 export const groupDetailData = {
   group: {
     id: '047b81a9-c7e3-4c7c-98a4-ccb4f6eb37ef',

@@ -27,6 +27,7 @@ export enum EventType {
   ON_SCROLL = 'onScroll',
   ON_IMAGE_ERROR = 'onImageError',
   ON_NAVIGATE = 'onNavigate',
+  ON_PRESS_QUIZ = 'onPressQuiz',
 }
 
 const ARTICLE_EDITOR_URL = `https://${getEnv('SELF_DOMAIN')}/article/webview/v1`;
