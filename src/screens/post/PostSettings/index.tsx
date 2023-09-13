@@ -99,6 +99,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
   }:
       {item: any, titleProps?: any, showAvatar?:boolean, onPress?: any}) => (
         <PrimaryItem
+          testID="post_settings.item"
           title={item?.name || item.title}
           showAvatar={showAvatar}
           avatar={showAvatar ? (item?.icon || images.img_user_avatar_default) : null}
@@ -118,6 +119,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
 
   const renderAudiencesSheet = () => (
     <FlatList
+      testID="post_settings.list_audience"
       style={[styles.expireTimeSheet, styles.audiencesSheet]}
       data={listAudiencesWithoutPermission.slice(2)}
       keyExtractor={keyExtractor}
@@ -127,6 +129,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
 
   const renderExpireTimeSheet = () => (
     <FlatList
+      testID="post_settings.list_suggest_expire_time"
       style={styles.expireTimeSheet}
       data={timeSuggest}
       keyExtractor={keyExtractor}

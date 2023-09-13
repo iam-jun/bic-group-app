@@ -20,6 +20,10 @@ const images = {
   logo_beincomm_reverse: require('../../assets/images/logo_beincomm_reverse.png'),
   img_thumbnail_default: require('../../assets/images/img_thumbnail_default.png'),
   no_image_avalable: require('../../assets/images/no_image_avalable.png'),
+  img_thumbnail_take_part_in_a_quiz: require('../../assets/images/img_thumbnail_take_part_in_a_quiz.png'),
+  img_error: require('../../assets/images/img_error.png'),
+  img_congrats: require('../../assets/images/img_congrats.png'),
+  img_empty_result_quiz: require('../../assets/images/img_no_result.png'),
 };
 
 export default images;

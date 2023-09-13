@@ -1,0 +1,263 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CirclePercentage should render correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "justifyContent": "center",
+      },
+      Object {
+        "height": 100,
+        "width": 100,
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "position": "absolute",
+        },
+        Object {
+          "borderBottomWidth": 4,
+          "borderLeftWidth": 4,
+          "borderRadius": 50,
+          "borderRightWidth": 4,
+          "borderTopWidth": 4,
+          "height": 100,
+          "width": 100,
+        },
+        Object {
+          "borderColor": "grey",
+          "borderWidth": 4,
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {
+          "borderBottomColor": "transparent",
+          "borderLeftColor": "transparent",
+          "position": "absolute",
+        },
+        Object {
+          "transform": Array [
+            Object {
+              "rotateZ": "45deg",
+            },
+          ],
+        },
+        Object {
+          "borderBottomWidth": 4,
+          "borderLeftWidth": 4,
+          "borderRadius": 50,
+          "borderRightWidth": 4,
+          "borderTopWidth": 4,
+          "height": 100,
+          "width": 100,
+        },
+        Object {
+          "borderRightColor": "#e7e7e7",
+          "borderTopColor": "#e7e7e7",
+        },
+        Object {
+          "borderRightWidth": 4,
+          "borderTopWidth": 4,
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {
+          "borderBottomColor": "transparent",
+          "borderLeftColor": "transparent",
+          "position": "absolute",
+        },
+        Object {
+          "borderBottomWidth": 4,
+          "borderLeftWidth": 4,
+          "borderRadius": 50,
+          "borderRightWidth": 4,
+          "borderTopWidth": 4,
+          "height": 100,
+          "width": 100,
+        },
+        Object {
+          "borderRightColor": "grey",
+          "borderTopColor": "grey",
+        },
+        Object {
+          "transform": Array [
+            Object {
+              "rotateZ": "-135deg",
+            },
+          ],
+        },
+      ]
+    }
+  />
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#212745",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 14,
+        },
+        Object {},
+        Array [
+          Object {
+            "position": "absolute",
+          },
+          Object {
+            "color": "black",
+            "fontSize": 10,
+            "fontWeight": "bold",
+          },
+        ],
+      ]
+    }
+  >
+    50
+    %
+  </Text>
+</View>
+`;
+
+exports[`CirclePercentage should render correctly with clockwise = false 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "justifyContent": "center",
+      },
+      Object {
+        "height": 100,
+        "width": 100,
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "position": "absolute",
+        },
+        Object {
+          "borderBottomWidth": 4,
+          "borderLeftWidth": 4,
+          "borderRadius": 50,
+          "borderRightWidth": 4,
+          "borderTopWidth": 4,
+          "height": 100,
+          "width": 100,
+        },
+        Object {
+          "borderColor": "grey",
+          "borderWidth": 4,
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {
+          "borderBottomColor": "transparent",
+          "borderLeftColor": "transparent",
+          "position": "absolute",
+        },
+        Object {
+          "transform": Array [
+            Object {
+              "rotateZ": "-135deg",
+            },
+          ],
+        },
+        Object {
+          "borderBottomWidth": 4,
+          "borderLeftWidth": 4,
+          "borderRadius": 50,
+          "borderRightWidth": 4,
+          "borderTopWidth": 4,
+          "height": 100,
+          "width": 100,
+        },
+        Object {
+          "borderRightColor": "#e7e7e7",
+          "borderTopColor": "#e7e7e7",
+        },
+        Object {
+          "borderRightWidth": 4,
+          "borderTopWidth": 4,
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {
+          "borderBottomColor": "transparent",
+          "borderLeftColor": "transparent",
+          "position": "absolute",
+        },
+        Object {
+          "transform": Array [
+            Object {
+              "rotateZ": "189deg",
+            },
+          ],
+        },
+        Object {
+          "borderBottomWidth": 4,
+          "borderLeftWidth": 4,
+          "borderRadius": 50,
+          "borderRightWidth": 4,
+          "borderTopWidth": 4,
+          "height": 100,
+          "width": 100,
+        },
+        Object {
+          "borderRightColor": "#e7e7e7",
+          "borderTopColor": "#e7e7e7",
+        },
+      ]
+    }
+  />
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#212745",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 14,
+        },
+        Object {},
+        Array [
+          Object {
+            "position": "absolute",
+          },
+          Object {
+            "color": "black",
+            "fontSize": 10,
+            "fontWeight": "bold",
+          },
+        ],
+      ]
+    }
+  >
+    60
+    %
+  </Text>
+</View>
+`;

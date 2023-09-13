@@ -1,7 +1,12 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React from 'react';
 import {
-  StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle,
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+  ActivityIndicator,
 } from 'react-native';
 import Icon, { IconProps } from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
@@ -23,6 +28,10 @@ export interface BottomListItemProps {
   style?: StyleProp<ViewStyle>;
   upcoming?: boolean;
   badge?: string;
+  isShowBorderTop?: boolean;
+  isShowBorderBottom?: boolean;
+  isDanger?: boolean;
+  loading?: boolean;
 
   onPress?: () => void;
 }
@@ -38,9 +47,15 @@ const BottomListItem: React.FC<BottomListItemProps> = ({
   testID,
   upcoming,
   badge,
+  loading,
   onPress,
+  isShowBorderTop,
+  isShowBorderBottom,
+  isDanger,
 }: BottomListItemProps) => {
-  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
+  const isInternetReachable = useNetworkStore(
+    networkSelectors.getIsInternetReachable,
+  );
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -48,39 +63,55 @@ const BottomListItem: React.FC<BottomListItemProps> = ({
 
   return (
     <TouchableOpacity
-      disabled={!isInternetReachable || disabled || !onPress}
+      disabled={!isInternetReachable || disabled || !onPress || loading}
       onPress={onPress}
       testID={testID}
     >
-      <View style={[styles.container, style]}>
+      {
+        Boolean(loading) && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="small" color={colors.neutral20} />
+          </View>
+        )
+      }
+      <View
+        style={[
+          styles.container,
+          isShowBorderTop && styles.borderTop,
+          isShowBorderBottom && styles.borderBottom,
+          style,
+        ]}
+      >
         {!!leftIcon && (
-        <Icon
-          icon={leftIcon}
-          size={20}
-          tintColor={colors.neutral20}
-          style={styles.leftIcon}
-          {...leftIconProps}
-        />
+          <Icon
+            icon={leftIcon}
+            size={20}
+            tintColor={isDanger ? colors.red40 : colors.neutral20}
+            style={styles.leftIcon}
+            {...leftIconProps}
+          />
         )}
-        <Text.BodyM style={styles.title} color={colors.neutral60} testID="menu_item.title" useI18n>
+        <Text.BodyM
+          style={styles.title}
+          color={isDanger ? colors.red40 : colors.neutral60}
+          testID="menu_item.title"
+          useI18n
+        >
           {title}
         </Text.BodyM>
-        {!!upcoming
-        && (
-        <View style={styles.upcomingStyle}>
-          <Text.BadgeXS color={colors.purple50} useI18n>common:text_upcoming</Text.BadgeXS>
-        </View>
+        {!!upcoming && (
+          <View style={styles.upcomingStyle}>
+            <Text.BadgeXS color={colors.purple50} useI18n>
+              common:text_upcoming
+            </Text.BadgeXS>
+          </View>
         )}
         {!!badge && (
-        <View style={styles.badge}>
-          <Text.BadgeS color={theme.colors.white}>
-            {badge}
-          </Text.BadgeS>
-        </View>
+          <View style={styles.badge}>
+            <Text.BadgeS color={theme.colors.white}>{badge}</Text.BadgeS>
+          </View>
         )}
-        {
-          rightIcon && <Icon icon={rightIcon} size={20} {...rightIconProps} />
-        }
+        {rightIcon && <Icon icon={rightIcon} size={20} {...rightIconProps} />}
       </View>
     </TouchableOpacity>
   );
@@ -97,6 +128,7 @@ const themeStyles = (theme: ExtendedTheme) => StyleSheet.create({
     marginRight: spacing.margin.small,
   },
   title: {
+    flexShrink: 1,
   },
   upcomingStyle: {
     backgroundColor: theme.colors.purple2,
@@ -110,6 +142,26 @@ const themeStyles = (theme: ExtendedTheme) => StyleSheet.create({
     borderRadius: spacing.borderRadius.pill,
     paddingHorizontal: spacing.padding.tiny,
     paddingVertical: spacing.padding.xTiny,
+  },
+  borderTop: {
+    borderTopColor: theme.colors.neutral5,
+    borderTopWidth: 1,
+  },
+  borderBottom: {
+    borderBottomColor: theme.colors.neutral5,
+    borderBottomWidth: 1,
+  },
+  loadingContainer: {
+    position: 'absolute',
+    zIndex: 1,
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    backgroundColor: theme.colors.white,
+    opacity: 0.5,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

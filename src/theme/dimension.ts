@@ -44,6 +44,7 @@ export const sizes = {
   subtitleS: 13,
   subtitleXS: 11,
   bodyM: 14,
+  bodyL: 16,
   bodyMMedium: 15,
   bodyS: 13,
   bodySMedium: 13,
@@ -197,6 +198,8 @@ const isPhoneWithInsets = Platform.OS === 'ios' && deviceInfoModule.hasNotch();
 
 export const scaleSize = (size: number): number => (DeviceWidth / guidelineBaseWidth) * size;
 
+export const heightListInModal = DeviceHeight < 770 ? DeviceHeight / 3 : DeviceHeight / 2;
+
 export default {
   sizes,
   lineHeights,
@@ -215,4 +218,5 @@ export default {
   deviceWidth: DeviceWidth,
   deviceHeight: DeviceHeight,
   isPhoneWithInsets,
+  heightListInModal,
 };

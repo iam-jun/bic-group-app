@@ -42,6 +42,15 @@ import {
 } from '~/interfaces/ISeries';
 import { IParamGetReportContent, IParamsReportContent } from '~/interfaces/IReport';
 import { CreateTag, EditTag, IParamGetCommunityTags } from '~/interfaces/ITag';
+import {
+  EditQuizParams,
+  GenerateQuizParams,
+  IParamsGetQuizzesContent,
+  RegenerateQuizParams,
+  IParamsUpdateAnwsers,
+  IParamsGetUsersParticipants,
+  QuestionItem,
+} from '~/interfaces/IQuiz';
 
 export const DEFAULT_LIMIT = 10;
 
@@ -553,6 +562,96 @@ export const streamApiConfig = {
       seriesIds,
     },
   }),
+  generateQuiz: (params: GenerateQuizParams): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes`,
+    method: 'post',
+    data: params,
+    timeout: 1000 * 60 * 5, // 5 minutes
+  }),
+  regenerateQuiz: (idQuiz: string, params?: RegenerateQuizParams): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${idQuiz}/generate`,
+    method: 'put',
+    data: params,
+    timeout: 1000 * 60 * 5, // 5 minutes
+  }),
+  editQuiz: (idQuiz: string, params: EditQuizParams): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${idQuiz}`,
+    method: 'put',
+    data: params,
+  }),
+  getQuizzesContent: (params: IParamsGetQuizzesContent): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes`,
+    method: 'get',
+    params: {
+      limit: params?.limit || DEFAULT_LIMIT,
+      after: params?.endCursor,
+      status: params?.status,
+      type: params?.type,
+    },
+  }),
+  startQuiz: (quizId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quiz-participant/${quizId}/start`,
+    method: 'post',
+  }),
+  getQuizParticipant: (quizParticipantId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quiz-participant/${quizParticipantId}`,
+  }),
+  updateAnwsers: (quizParticipantId: string, params: IParamsUpdateAnwsers) => ({
+    ...defaultConfig,
+    url: `${provider.url}quiz-participant/${quizParticipantId}/answers`,
+    method: 'put',
+    data: {
+      isFinished: params?.isFinished || false,
+      answers: params?.answers,
+    },
+  }),
+  getQuizSummary: (contentId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${contentId}/summary`,
+  }),
+  getUsersParticipants: (contentId: string, params: IParamsGetUsersParticipants): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${contentId}/participants`,
+    params: {
+      limit: params?.limit || DEFAULT_LIMIT,
+      after: params?.endCursor,
+    },
+  }),
+  getQuizDetail: (idQuiz: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${idQuiz}`,
+  }),
+  deleteQuiz: (idQuiz: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${idQuiz}`,
+    method: 'delete',
+  }),
+  deleteQuestionQuiz: (idQuiz: string, questionId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${idQuiz}/questions/${questionId}`,
+    method: 'delete',
+  }),
+  createQuestionQuiz: (idQuiz: string, question: QuestionItem): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}quizzes/${idQuiz}/questions`,
+    method: 'post',
+    data: question,
+  }),
+  editQuestionQuiz: (idQuiz: string, question: QuestionItem): HttpApiRequestConfig => {
+    const { id, ...body } = question;
+    return ({
+      ...defaultConfig,
+      url: `${provider.url}quizzes/${idQuiz}/questions/${id}`,
+      method: 'put',
+      data: body,
+    });
+  },
 };
 
 const streamApi = {
@@ -818,6 +917,48 @@ const streamApi = {
   ),
   getContentsInSeries: (seriesIds: string[]) => withHttpRequestPromise(
     streamApiConfig.getContentsInSeries, seriesIds,
+  ),
+  generateQuiz: (params: GenerateQuizParams) => withHttpRequestPromise(
+    streamApiConfig.generateQuiz, params,
+  ),
+  regenerateQuiz: (idQuiz: string, params?: RegenerateQuizParams) => withHttpRequestPromise(
+    streamApiConfig.regenerateQuiz, idQuiz, params,
+  ),
+  editQuiz: (idQuiz: string, params: EditQuizParams) => withHttpRequestPromise(
+    streamApiConfig.editQuiz, idQuiz, params,
+  ),
+  getQuizzesContent: (params: IParamsGetQuizzesContent) => withHttpRequestPromise(
+    streamApiConfig.getQuizzesContent, params,
+  ),
+  startQuiz: (quizId: string) => withHttpRequestPromise(
+    streamApiConfig.startQuiz, quizId,
+  ),
+  getQuizParticipant: (quizParticipantId: string) => withHttpRequestPromise(
+    streamApiConfig.getQuizParticipant, quizParticipantId,
+  ),
+  updateAnwsers: (quizParticipantId: string, params: IParamsUpdateAnwsers) => withHttpRequestPromise(
+    streamApiConfig.updateAnwsers, quizParticipantId, params,
+  ),
+  getQuizSummary: (contentId: string) => withHttpRequestPromise(
+    streamApiConfig.getQuizSummary, contentId,
+  ),
+  getUsersParticipants: (contentId: string, params: IParamsGetUsersParticipants) => withHttpRequestPromise(
+    streamApiConfig.getUsersParticipants, contentId, params,
+  ),
+  getQuizDetail: (idQuiz: string) => withHttpRequestPromise(
+    streamApiConfig.getQuizDetail, idQuiz,
+  ),
+  deleteQuiz: (idQuiz: string) => withHttpRequestPromise(
+    streamApiConfig.deleteQuiz, idQuiz,
+  ),
+  deleteQuestionQuiz: (idQuiz: string, questionId: string) => withHttpRequestPromise(
+    streamApiConfig.deleteQuestionQuiz, idQuiz, questionId,
+  ),
+  createQuestionQuiz: (idQuiz: string, question: QuestionItem) => withHttpRequestPromise(
+    streamApiConfig.createQuestionQuiz, idQuiz, question,
+  ),
+  editQuestionQuiz: (idQuiz: string, question: QuestionItem) => withHttpRequestPromise(
+    streamApiConfig.editQuestionQuiz, idQuiz, question,
   ),
 };
 

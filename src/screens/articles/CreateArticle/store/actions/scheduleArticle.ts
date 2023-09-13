@@ -3,6 +3,10 @@ import streamApi from '~/api/StreamApi';
 import { IPayloadGetScheduleArticles } from '~/interfaces/IArticle';
 import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import { ICreateArticleState } from '..';
+import { PostType } from '~/interfaces/IPost';
+import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentPublishedProperties } from '~/services/tracking/Interface';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const scheduleArticle = (set, get) => async () => {
   try {
@@ -12,6 +16,13 @@ const scheduleArticle = (set, get) => async () => {
 
     const { schedule, data }: ICreateArticleState = get();
     await streamApi.scheduleArticle(data.id, schedule.scheduledAt);
+
+    // tracking event
+    const eventContentPublishedProperties: TrackingEventContentPublishedProperties = {
+      content_type: PostType.ARTICLE,
+      important: !!data?.setting?.isImportant,
+    };
+    trackEvent({ event: TrackingEvent.SCHEDULE, properties: eventContentPublishedProperties });
 
     set((state: ICreateArticleState) => {
       state.schedule.isSubmiting = false;

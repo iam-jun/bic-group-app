@@ -9,7 +9,9 @@ import 'moment/locale/vi';
 
 import Text from '~/baseComponents/Text';
 import { AppContext } from '~/contexts/AppContext';
-import { formatDateTime, formatFullTime, formatShortTime } from './helper';
+import {
+  formatDateTime, formatFullTime, formatLongTime, formatShortTime,
+} from './helper';
 
 const intervalTime = 1000 * 60; // 1 min
 const limitInterval = 1000 * 60 * 60; // 60 mins
@@ -19,7 +21,7 @@ export interface TimeViewProps {
   style?: StyleProp<TextStyle>;
   textProps?: any;
   time: any;
-  type?: 'fullDateTime' | 'dateTime' | 'short';
+  type?: 'fullDateTime' | 'dateTime' | 'short' | 'long';
 }
 
 const TimeView: FC<TimeViewProps> = ({
@@ -46,7 +48,7 @@ const TimeView: FC<TimeViewProps> = ({
       const deltaSecond = Math.max(
         now - date, date - now,
       );
-      if (deltaSecond < limitInterval && type === 'short') {
+      if (deltaSecond < limitInterval && (type === 'short' || type === 'long')) {
         interval = setInterval(
           () => {
             getDisplayTime();
@@ -74,6 +76,10 @@ const TimeView: FC<TimeViewProps> = ({
         );
       } else if (type === 'dateTime') {
         result = formatDateTime(
+          time, language,
+        );
+      } else if (type === 'long') {
+        result = formatLongTime(
           time, language,
         );
       } else {

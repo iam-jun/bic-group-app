@@ -3,10 +3,11 @@ name: build-ios-staging
 on:
   push:
     tags:
-      - 'stg-*'
+      - "*stg-*"
 
 jobs:
   build-ios-staging:
+    if: startsWith(github.ref, 'refs/tags/stg-')
     runs-on: self-hosted
     timeout-minutes: 120
     steps:
@@ -21,3 +22,14 @@ jobs:
 
       - name: ci/build-ios-staging
         run: npm run build-ios-staging
+
+  trigger-codemagic-build:
+    if: startsWith(github.ref, 'refs/tags/ci-stg-')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Codemagic build
+        uses: codemagic-ci-cd/trigger-codemagic-workflow-action@v1.0.0
+        with:
+          app-id: 64d5def4bbb38bd520b3dc80
+          workflow-id: build-ios-staging
+          token: ${{ secrets.CODEMAGIC_API_TOKEN }}
