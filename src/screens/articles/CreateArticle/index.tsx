@@ -29,7 +29,7 @@ import Schedule from './components/Schedule';
 import SettingsButton from '~/components/ContentSettings/SettingsButton';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import { ArticleBoxScheduleTime } from '~/components/articles';
+import { BoxScheduleTime } from '~/components/ScheduleContent/components';
 import CreateBannerImportant from '~/components/ContentSettings/CreateBannerImportant';
 import { PostType } from '~/interfaces/IPost';
 import showToastSuccess from '~/store/helper/showToastSuccess';
@@ -235,7 +235,7 @@ const CreateArticle: FC<CreateArticleProps> = ({
         />
       )}
       {isFromReviewSchedule && (
-        <ArticleBoxScheduleTime
+        <BoxScheduleTime
           scheduledAt={scheduledAt}
           status={status}
         />

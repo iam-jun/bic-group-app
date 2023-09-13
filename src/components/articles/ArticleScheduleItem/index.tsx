@@ -2,7 +2,7 @@ import React from 'react';
 import { IPost } from '~/interfaces/IPost';
 import { Button } from '~/baseComponents';
 import ContentArticle from './ContentArticle';
-import { ArticleBoxScheduleTime } from '~/components/articles';
+import { BoxScheduleTime } from '~/components/ScheduleContent/components';
 import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 
@@ -35,7 +35,7 @@ const ArticleScheduleItem: React.FC<ArticleScheduleItemProps> = ({ data, showAva
       onPress={goToArticleReviewSchedule}
       testID="article_schedule.btn_content"
     >
-      <ArticleBoxScheduleTime
+      <BoxScheduleTime
         scheduledAt={scheduledAt}
         status={status}
       />

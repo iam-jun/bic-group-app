@@ -7,12 +7,12 @@ import Icon from '~/baseComponents/Icon';
 import { PostStatus } from '~/interfaces/IPost';
 import { formatDate } from '~/utils/formatter';
 
-interface ArticleBoxScheduleTimeProps {
+interface BoxScheduleTimeProps {
   scheduledAt: string;
   status: PostStatus;
 }
 
-const ArticleBoxScheduleTime: React.FC<ArticleBoxScheduleTimeProps> = ({
+const BoxScheduleTime: React.FC<BoxScheduleTimeProps> = ({
   scheduledAt,
   status,
 }) => {
@@ -116,4 +116,4 @@ const createStyle = () => StyleSheet.create({
   },
 });
 
-export default ArticleBoxScheduleTime;
+export default BoxScheduleTime;
