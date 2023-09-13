@@ -228,6 +228,7 @@ import { faUsersMedical as faUsersMedicalSolid } from '@fortawesome/pro-solid-sv
 import { faSquareList as faSquareListSolid } from '@fortawesome/pro-solid-svg-icons/faSquareList';
 import { faCaretDown as faCaretDownSolid } from '@fortawesome/pro-solid-svg-icons/faCaretDown';
 import { faCaretRight as faCaretRightSolid } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
+import { faTriangleExclamation } from '@fortawesome/pro-regular-svg-icons/faTriangleExclamation';
 import { faBlockQuestion as faBlockQuestionSolid } from '@fortawesome/pro-solid-svg-icons/faBlockQuestion';
 import { faUnlock as faUnlockSolid } from '@fortawesome/pro-solid-svg-icons/faUnlock';
 
@@ -478,6 +479,7 @@ export const initFontAwesomeIcon = () => {
     faSquareListSolid,
     faCaretDownSolid,
     faCaretRightSolid,
+    faTriangleExclamation,
     faBlockQuestionSolid,
     faUnlockSolid,
   );
@@ -713,6 +715,7 @@ export const fontAwesomeIcons = {
   SquareListSolid: 'fa-solid fa-square-list',
   CaretDownSolid: 'fa-solid fa-caret-down',
   CaretRightSolid: 'fa-solid fa-caret-right',
+  TriangleExclamation: 'fa-regular fa-triangle-exclamation',
   BlockQuestionSolid: 'fa-solid fa-block-question',
   UnlockSolid: 'fa-solid fa-unlock',
 };

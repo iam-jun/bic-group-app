@@ -1,8 +1,8 @@
 import { StyleProp, View, ViewStyle } from 'react-native';
 import React from 'react';
-import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
-import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
-import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import GroupProfilePlaceholder from '~/components/placeholder/GroupProfilePlaceholder';
+import HeaderCreatePostPlaceholder from '~/components/placeholder/HeaderCreatePostPlaceholder';
+import PostViewPlaceholder from '~/components/placeholder/PostViewPlaceholder';
 
 interface Props {
     style?: StyleProp<ViewStyle>;

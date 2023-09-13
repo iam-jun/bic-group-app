@@ -21,3 +21,21 @@ export const PERSONAL_INFORMATION_VISIBILITY_TYPES = [
     description: 'settings:privacy_center:personal_information_visibility:only_me_description',
   },
 ];
+
+export enum INVITATION_PRIVACY_TYPE {
+    MANUALLY_ACCEPT = 'MANUALLY_ACCEPT',
+    HIDE_NOTIFICATION = 'HIDE_NOTIFICATION',
+}
+
+export const INVITATION_PRIVACY_TYPES = [
+  {
+    id: INVITATION_PRIVACY_TYPE.MANUALLY_ACCEPT,
+    title: 'settings:privacy_center:invitation_privacy:manual_acceptance_type',
+    description: 'settings:privacy_center:invitation_privacy:manual_acceptance_description',
+  },
+  {
+    id: INVITATION_PRIVACY_TYPE.HIDE_NOTIFICATION,
+    title: 'settings:privacy_center:invitation_privacy:hide_all_inviations_type',
+    description: 'settings:privacy_center:invitation_privacy:hide_all_inviations_description',
+  },
+];

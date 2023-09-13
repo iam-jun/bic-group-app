@@ -1,11 +1,11 @@
 import { dimension } from '~/theme';
 
-const ASPECT_RATIO = 0.9;
-const DOUBLE_RATIO = 0.5;
-const SQUARE_RATIO = 1;
-const SPACING_IMAGE = 4;
+export const ASPECT_RATIO = 0.9;
+export const DOUBLE_RATIO = 0.5;
+export const SQUARE_RATIO = 1;
+export const SPACING_IMAGE = 4;
 
-const getHeighContainer = (
+export const getHeighContainer = (
   dfSize,
   data,
   imageRatioFirst,
@@ -31,7 +31,7 @@ const getHeighContainer = (
   return dfSize;
 };
 
-const getWidthSmallImage = (
+export const getWidthSmallImage = (
   widthContainer: number,
   numberOfImages: number,
   containerSmallImagesDirection: 'row' | 'column',
@@ -56,7 +56,7 @@ const getWidthSmallImage = (
   );
 };
 
-const getWidthLargeImage = (
+export const getWidthLargeImage = (
   widthContainer: number,
   numberOfImages: number,
   flexDirection: 'row' | 'column',

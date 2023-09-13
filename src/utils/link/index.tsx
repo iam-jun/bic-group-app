@@ -27,6 +27,7 @@ export enum DeepLinkTypes {
   USER_PROFILE = 'user_profile',
   APP = 'APP',
   DISCOVER_COMMUNITIES = 'discover-communities',
+  NOTIFICATION_SETTINGS = 'notification-settings',
 }
 
 export enum LinkGeneratorTypes {
@@ -275,6 +276,14 @@ export const matchDeepLink = (url: string) => {
   if (match) {
     return { type: DeepLinkTypes.USER_PROFILE, userName: match[1] };
   }
+
+  match = new RegExp(
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?settings/notifications`,
+  ).exec(deepLinkUrl);
+  if (match) {
+    return { type: DeepLinkTypes.NOTIFICATION_SETTINGS };
+  }
+
   if (new RegExp(`^${PREFIX_DEEPLINK_GROUP}`).test(deepLinkUrl)) {
     return { type: DeepLinkTypes.APP };
   }

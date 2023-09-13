@@ -25,7 +25,7 @@ import { FlashListProps } from '@shopify/flash-list/src/FlashListProps';
 import dimension from '~/theme/dimension';
 
 import Text from '~/baseComponents/Text';
-import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import PostViewPlaceholder from '~/components/placeholder/PostViewPlaceholder';
 import { useRootNavigation, useTabPressListener } from '~/hooks/navigation';
 import { ITabTypes } from '~/interfaces/IRouter';
 import FloatingCreatePost from '../FloatingCreatePost';

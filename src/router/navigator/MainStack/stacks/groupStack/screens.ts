@@ -4,7 +4,6 @@ import GroupMembers from '~/screens/groups/GroupMembers';
 import GroupAdministration from '~/screens/groups/GroupDetail/groupSettings/GroupAdministration';
 import GeneralInformation from '~/screens/groups/GeneralInformation';
 import EditDescription from '~/screens/groups/GeneralInformation/EditDescription';
-import AddMembersToGroup from '~/screens/groups/GroupMembers/AddMembersToGroup';
 import NewFeature from '~/components/NewFeature';
 
 import Communities from '~/screens/communities/Communities';
@@ -36,7 +35,6 @@ const groupScreens = {
   'edit-name': EditName,
   'edit-description': EditDescription,
   'edit-privacy': EditPrivacy,
-  'add-members': AddMembersToGroup,
   'membership-policy-settings': MembershipPolicySettings,
 
   // group structure removed

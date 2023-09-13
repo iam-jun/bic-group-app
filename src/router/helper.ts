@@ -10,6 +10,7 @@ import {
 
 import { isEmpty, isNumber } from 'lodash';
 import * as SplashScreen from 'expo-splash-screen';
+import { t } from 'i18next';
 import { IObject } from '~/interfaces/common';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import seriesStack from './navigator/MainStack/stacks/series/stack';
@@ -18,11 +19,15 @@ import { TargetType } from '~/interfaces/IPost';
 import homeStack from './navigator/MainStack/stacks/homeStack/stack';
 import menuStack from './navigator/MainStack/stacks/menuStack/stack';
 import mainStack from './navigator/MainStack/stack';
-import { ContentType } from '~/interfaces/INotification';
+import { ContentType, InvitationTargetType } from '~/interfaces/INotification';
 import notiStack from './navigator/MainStack/stacks/notiStack/stack';
 import { USER_TABS } from '~/screens/Menu/UserProfile';
 import { USER_TABS_TYPES } from '~/screens/Menu/UserProfile/constants';
 import useAuthController from '~/screens/auth/store';
+import { openUrl } from '~/utils/link';
+import useRemoteConfigStore from '~/store/remoteConfig';
+import showAlert from '~/store/helper/showAlert';
+import useModalStore from '~/store/modal';
 import quizStack from './navigator/MainStack/stacks/quizStack/stack';
 import groupStack from './navigator/MainStack/stacks/groupStack/stack';
 import { rootNavigationRef } from './refs';
@@ -183,7 +188,7 @@ export const getActiveRouteState = (route?: NavigationState | PartialState<Navig
 
 export const getScreenAndParams = (data: {
   type: string;
-  target: string;
+  target: string | any;
   postId: string;
   commentId: string;
   childCommentId: string;
@@ -369,6 +374,37 @@ export const getScreenAndParams = (data: {
       );
       return { screen: mainStack.userProfile, params: { userId, targetIndex } };
     }
+    case NOTIFICATION_TYPE.GROUP_INVITATION: {
+      const communityId = target?.communityId || '';
+      const groupId = target?.id || '';
+      const targetType = target?.type || '';
+      if (targetType === InvitationTargetType.COMMUNITY && !!communityId) {
+        return navigateGroupDetail({ groupId, communityId });
+      }
+      if (targetType === InvitationTargetType.GROUP && !!groupId && communityId) {
+        return navigateGroupDetail({ groupId, communityId });
+      }
+      break;
+    }
+    case NOTIFICATION_TYPE.GROUP_SET_INVITATION:
+    case NOTIFICATION_TYPE.GROUP_SET_DEFAULT_INVITATION:
+    case NOTIFICATION_TYPE.GROUP_INVITATION_FEEDBACK: {
+      const communityId = target?.communityId || '';
+      const groupId = target?.id || '';
+      const targetType = target?.type || '';
+      if (targetType === InvitationTargetType.COMMUNITY && !!communityId) {
+        return navigateGroupMembers({ groupId, communityId });
+      }
+
+      if (targetType === InvitationTargetType.GROUP && !!groupId) {
+        return navigateGroupMembers({ groupId, communityId });
+      }
+
+      if (targetType === InvitationTargetType.GROUP_SET || targetType === InvitationTargetType.GROUP_SET_DEFAULT) {
+        return { screen: mainStack.notification, params: { notificationData: data } };
+      }
+      break;
+    }
 
     case NOTIFICATION_TYPE.QUIZ_GENERATE_SUCCESSFUL:
     case NOTIFICATION_TYPE.QUIZ_GENERATE_UNSUCCESSFUL:
@@ -476,6 +512,28 @@ const navigatePostDetailWithContentType = ({ contentType, contentId }) => {
 
 export const hideSplashScreen = async () => {
   await SplashScreen.hideAsync();
+};
+
+export const updateRequired = () => {
+  const onConfirm = () => {
+    const { appStoreUrl } = useRemoteConfigStore.getState();
+    openUrl(appStoreUrl);
+    onCancel();
+  };
+
+  const onCancel = () => {
+    useModalStore.getState().actions.hideUpdateRequiredAlert();
+  };
+
+  return showAlert({
+    title: t('update_required:title'),
+    content: t('update_required:description'),
+    cancelBtn: true,
+    cancelLabel: t('common:btn_not_now'),
+    confirmLabel: t('common:btn_update'),
+    onConfirm,
+    onCancel,
+  });
 };
 
 export const isFromNotificationScreen = (navigation: any) => {

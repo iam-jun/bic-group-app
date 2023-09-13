@@ -112,13 +112,13 @@ export const userApiConfig = {
     ...defaultConfig,
     url: `${provider.url}/public/users/${email}/verify`,
   }),
-  getVisibilityPrivacy: () : HttpApiRequestConfig => ({
+  getPersonalPrivacySettings: () : HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}/me/setting`,
+    url: `${provider.url}me/setting`,
   }),
-  editVisibilityPrivacy: (data: IEditPersonalInfoVisibility) : HttpApiRequestConfig => ({
+  editPersonalInfoSettings: (data: IEditPersonalInfoVisibility) : HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}/me/setting`,
+    url: `${provider.url}me/setting`,
     method: 'put',
     data,
   }),
@@ -157,9 +157,9 @@ const userApi = {
   ),
   signUp: (params: IParamsSignUp) => withHttpRequestPromise(userApiConfig.signUp, params),
   getUserNotFoundInfo: (email: string) => withHttpRequestPromise(userApiConfig.getUserNotFoundInfo, email),
-  getVisibilityPrivacy: () => withHttpRequestPromise(userApiConfig.getVisibilityPrivacy),
-  editVisibilityPrivacy: (data: IEditPersonalInfoVisibility) => withHttpRequestPromise(
-    userApiConfig.editVisibilityPrivacy, data,
+  getPersonalPrivacySettings: () => withHttpRequestPromise(userApiConfig.getPersonalPrivacySettings),
+  editPersonalInfoSettings: (data: IEditPersonalInfoVisibility) => withHttpRequestPromise(
+    userApiConfig.editPersonalInfoSettings, data,
   ),
 };
 
