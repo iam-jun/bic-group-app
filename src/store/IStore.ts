@@ -26,7 +26,6 @@ import { IDraftArticleState } from '~/screens/YourContent/components/Draft/Draft
 import { IArticleController } from '~/screens/articles/store';
 import { ISeriesState } from '~/screens/series/store';
 import { ITopicState } from '~/screens/topic/store';
-import { ICreateArticleCategoryState } from '~/screens/articles/CreateArticle/screens/CreateArticleCategory/store';
 import { IGroupDetailState } from '~/screens/groups/GroupDetail/store';
 import { IMyPermissionsState } from './permissions';
 import { ITagsState } from './entities/tags';
@@ -70,6 +69,7 @@ import { ISearchFilterUsersState } from '~/screens/Search/SearchFilter/SearchFil
 import { ISearchFilterTagsState } from '~/screens/Search/SearchFilter/SearchFilterTags/store';
 import { IGroupSetInvitationsStore } from '~/components/InvitationGroupSet/store';
 import { INotificationItemMenuStore } from '~/screens/Notification/components/NotificationMenu/store';
+import { ISelectCategoriesState } from '~/components/SelectCategories/store';
 
 export interface BicStore {
   entities: {
@@ -108,9 +108,6 @@ export interface BicStore {
     articleController: IArticleController;
     EditArticle: {
       editArticleStore: ICreateArticleState;
-      EditArticleCategory: {
-        editArticleCategoryStore: ICreateArticleCategoryState;
-      };
     };
     ArticleScheduleContent: {
       articleScheduleContentStore: IArticleScheduleContentState;
@@ -223,6 +220,7 @@ export interface BicStore {
   linkPreview: ILinkPreviewState;
   selectTags: ISelectTagsState;
   selectSeries: ISelectSeriesState;
+  selectCategories: ISelectCategoriesState;
   validateSeriesTags: IValidateSeriesTags;
   blockingStore: IBlockingState;
   maintenanceStore: IMaintenanceState;
