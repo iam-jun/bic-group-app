@@ -7,6 +7,7 @@ import JoinCancelButton from '../../../../groups/components/JoinCancelButton';
 import useTermStore, { TermsInfo } from '~/components/TermsModal/store';
 import useMemberQuestionsStore, { MembershipQuestionsInfo } from '~/components/MemberQuestionsModal/store';
 import { ITypeGroup } from '~/interfaces/common';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 
 interface CommunityJoinCancelButtonProps {
   style?: StyleProp<ViewStyle>;
@@ -31,7 +32,7 @@ const CommunityJoinCancelButton = ({
   const membershipQuestionActions = useMemberQuestionsStore((state) => state.actions);
   const termsActions = useTermStore((state) => state.actions);
 
-  if (isMember) return null;
+  if (isMember || joinStatus === GroupJoinStatus.BE_INVITED) return null;
 
   const onPressJoin = () => {
     if (affectedSettings?.isActiveMembershipQuestions) {

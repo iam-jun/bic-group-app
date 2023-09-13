@@ -4,6 +4,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { borderRadius } from '~/theme/spacing';
+import CircleSpinner from './CircleSpinner';
 
 interface ToggleProps {
   testID?: string;
@@ -12,6 +13,7 @@ interface ToggleProps {
   disableBuiltInState?: boolean;
   disabled?: boolean;
   size?: 'small' | 'medium';
+  loading?: boolean;
   onValueChanged?: (isChecked?: boolean) => void;
 }
 
@@ -22,6 +24,7 @@ const Toggle = ({
   disableBuiltInState,
   disabled,
   size = 'small',
+  loading,
   onValueChanged,
 }: ToggleProps) => {
   const theme: ExtendedTheme = useTheme();
@@ -87,12 +90,15 @@ const Toggle = ({
     <TouchableOpacity
       testID={testID}
       style={[styles.container, style]}
-      disabled={!!disabled}
+      disabled={!!disabled || loading}
       onPress={onPress}
     >
-      <View style={[styles.rectangle, rectangleStyle]}>
-        <View style={[styles.circle, circleStyle]} />
-      </View>
+      {Boolean(loading) ? <CircleSpinner size={circle} />
+        : (
+          <View testID="toggle.view" style={[styles.rectangle, rectangleStyle]}>
+            <View style={[styles.circle, circleStyle]} />
+          </View>
+        )}
     </TouchableOpacity>
   );
 };

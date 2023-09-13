@@ -49,4 +49,21 @@ describe('Toggle component', () => {
     fireEvent.press(button);
     expect(onPress).not.toBeCalled();
   });
+
+  it('should render circle spinner when loading = true', () => {
+    const rendered = renderWithRedux(<Toggle loading />);
+    const spinnerComponent = rendered.getByTestId('circle_spinner');
+    expect(spinnerComponent).toBeDefined();
+  });
+
+  it('should NOT call onPress when pressing on loading Toggle', () => {
+    const onPress = jest.fn();
+    const wrapper = renderWithRedux(<Toggle onValueChanged={onPress} loading testID="toggle" />);
+    const spinnerComponent = wrapper.getByTestId('circle_spinner');
+    expect(spinnerComponent).toBeDefined();
+
+    const button = wrapper.getByTestId('toggle');
+    fireEvent.press(button);
+    expect(onPress).not.toBeCalled();
+  });
 });
