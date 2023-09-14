@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FC } from 'react';
+import { Keyboard } from 'react-native';
 import { Button } from '~/baseComponents';
 import { ContentHeader } from '~/components/ContentView';
 import { useBaseHook } from '~/hooks';
@@ -9,13 +10,13 @@ import { IAudienceGroup, IPost, PostType } from '~/interfaces/IPost';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { AlertDeleteAudiences } from '~/components/posts';
 import useSeriesStore, { ISeriesState } from '~/screens/series/store';
-import useSeriesMenu from '~/hooks/useSeriesMenu';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 import useModalStore from '~/store/modal';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
 import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
+import MenuContent from '~/components/MenuContent';
 
 type SeriesHeaderProps = {
   series: IPost;
@@ -28,7 +29,7 @@ const SeriesHeader: FC<SeriesHeaderProps> = ({ series, disabled }) => {
   const userId = useUserIdAuth();
   const { t } = useBaseHook();
 
-  const { showAlert } = useModalStore((state) => state.actions);
+  const { showAlert, showModal } = useModalStore((state) => state.actions);
 
   const actions = useSeriesStore((state: ISeriesState) => state.actions);
 
@@ -37,6 +38,7 @@ const SeriesHeader: FC<SeriesHeaderProps> = ({ series, disabled }) => {
     audience?.groups,
     PermissionKey.CRUD_POST_ARTICLE,
   );
+  const isActor = actor?.id == userId;
 
   const goToSeriesDetail = () => {
     rootNavigation.navigate(seriesStack.seriesDetail, { seriesId: id });
@@ -102,7 +104,20 @@ const SeriesHeader: FC<SeriesHeaderProps> = ({ series, disabled }) => {
     );
   };
 
-  const { showMenu } = useSeriesMenu(series, actor?.id == userId, false, handleConfirmDelete);
+  const onShowMenu = () => {
+    Keyboard.dismiss();
+    showModal({
+      isOpen: true,
+      ContentComponent: (
+        <MenuContent
+          data={series}
+          isActor={isActor}
+          contentType={PostType.SERIES}
+          handleConfirmDeleteSeries={handleConfirmDelete}
+        />
+      ),
+    });
+  };
 
   return (
     <ContentHeader
@@ -110,7 +125,7 @@ const SeriesHeader: FC<SeriesHeaderProps> = ({ series, disabled }) => {
       disabled={disabled}
       audience={audience}
       onPressHeader={onPressHeader}
-      onPressMenu={showMenu}
+      onPressMenu={onShowMenu}
     />
   );
 };
