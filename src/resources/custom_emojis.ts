@@ -47,4 +47,5 @@ export default {
   bic_smiling_face_with_hearts: { name: 'bic_smiling_face_with_hearts', path: require('../../assets/emoji/animated/bic_smiling_face_with_hearts.gif') },
   bic_sparkles: { name: 'bic_sparkles', path: require('../../assets/emoji/animated/bic_sparkles.gif') },
   bic_whale: { name: 'bic_whale', path: require('../../assets/emoji/animated/bic_whale.gif') },
+  bic_verified_user: { name: 'bic_verified_user', path: require('../../assets/emoji/static/bic_verified_user.png') },
 };
