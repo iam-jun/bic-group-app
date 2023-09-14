@@ -42,15 +42,15 @@ const SearchSuggestion: FC<SearchSuggestionProps> = ({
   };
 
   return (
-    <ScrollView keyboardShouldPersistTaps="always">
+    <ScrollView testID="search_suggestion" keyboardShouldPersistTaps="always">
       <View style={styles.container}>
         {searchText?.trim().length > 0 ? (
           <TouchableOpacity
-            testID="search_suggestion.btn_search"
+            testID="search_suggestion.btn_text_search"
             style={styles.ctaContainer}
             onPress={onPressSearch}
           >
-            <Text.BodyMMedium testID="text_search" style={styles.ctaText}>{ctaText}</Text.BodyMMedium>
+            <Text.BodyMMedium testID="search_suggestion.text_search" style={styles.ctaText}>{ctaText}</Text.BodyMMedium>
           </TouchableOpacity>
         ) : (
           <RecentSearchKeyword

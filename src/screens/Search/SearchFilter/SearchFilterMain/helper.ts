@@ -1,8 +1,5 @@
 import moment from 'moment';
-import i18n from 'i18next';
 import { TypeFilter } from './constants';
-import { formatDateWithSameDayLabel } from '~/beinComponents/TimeView/helper';
-import useCommonController from '~/screens/store';
 
 export const endOfToday = () => moment().endOf('day').toDate();
 
@@ -76,30 +73,4 @@ export const getCurrentFilterByTimeRange = (
   }
 
   return TypeFilter.FromTo;
-};
-
-export const getTextFilterDateDisplay = (startDate: string, endDate: string) => {
-  const currentFilter = getCurrentFilterByTimeRange(startDate, endDate);
-
-  switch (currentFilter) {
-    case TypeFilter.All:
-      return i18n.t('home:newsfeed_search:filter_date');
-    case TypeFilter.Today:
-      return i18n.t('home:newsfeed_search:today');
-    case TypeFilter.Yesterday:
-      return i18n.t('home:newsfeed_search:yesterday');
-    case TypeFilter.LastSevenDays:
-      return i18n.t('home:newsfeed_search:last_seven_days');
-    case TypeFilter.FromTo:
-      return formatDateWithSameDayLabel(startDate, endDate, i18n.language);
-  }
-};
-
-export const getTextNameUserDisplay = (user: any) => {
-  if (!user) {
-    return `${i18n.t('home:newsfeed_search:filter_post_by')}`;
-  }
-  const userProfileData = useCommonController.getState().myProfile;
-  const textYou = user?.id === userProfileData.id ? ` (${i18n.t('common:text_you')})` : '';
-  return `${user?.fullname}${textYou}`;
 };

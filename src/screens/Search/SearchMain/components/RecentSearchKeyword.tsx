@@ -89,7 +89,7 @@ const RecentSearchKeyword: FC<RecentSearchKeywordProps> = ({
 
   if (!loading && data?.length === 0) {
     return (
-      <Text.BodyS style={styles.textEmpty} useI18n>
+      <Text.BodyS testID="recent_search_keyword.no_result" style={styles.textEmpty} useI18n>
         home:newsfeed_search:no_recent_search
       </Text.BodyS>
     );

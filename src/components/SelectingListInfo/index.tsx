@@ -34,26 +34,29 @@ const SelectingListInfo: React.FC<SelectingListInfoProps> = ({
 
   const infoTitle = title || t('article:text_selecting_will_be_added_to');
 
-  const renderItem = (item, index) => (
-    <Tag
-      key={`selecting_${type}_tag_${item?.id}`}
-      style={[
-        {
-          marginTop: spacing.margin.small,
-          marginLeft: index === 0 ? spacing.margin.large : spacing.margin.small,
-          marginRight: index === data.length - 1 ? spacing.margin.large : 0,
-        },
-      ]}
-      size="large"
-      type="secondary"
-      label={item?.name || item?.title}
-      icon="iconCloseSmall"
-      onPressIcon={() => {
-        onRemoveItem?.(item);
-      }}
-      {...(typeof tagProps === 'function' ? tagProps(item) : tagProps)}
-    />
-  );
+  const renderItem = (item, index) => {
+    const label = typeof item === 'string' ? item : (item?.name || item?.title);
+    return (
+      <Tag
+        key={`selecting_${type}_tag_${item?.id || index}`}
+        style={[
+          {
+            marginTop: spacing.margin.small,
+            marginLeft: index === 0 ? spacing.margin.large : spacing.margin.small,
+            marginRight: index === data.length - 1 ? spacing.margin.large : 0,
+          },
+        ]}
+        size="large"
+        type="secondary"
+        label={label}
+        icon="iconCloseSmall"
+        onPressIcon={() => {
+          onRemoveItem?.(item);
+        }}
+        {...(typeof tagProps === 'function' ? tagProps(item) : tagProps)}
+      />
+    );
+  };
 
   return (
     <View style={styles.container}>

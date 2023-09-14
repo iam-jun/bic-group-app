@@ -80,6 +80,7 @@ const SelectTopics = () => {
         isChecked={isChecked}
         onAddItem={onAddCategory}
         onRemoveItem={onRemoveCategory}
+        testIDCheckbox={`select_topics.item_checkbox_${item.id}`}
       />
     );
   };

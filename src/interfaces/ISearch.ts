@@ -27,16 +27,11 @@ export interface IParamPostNewRecentSearchKeyword {
   target: IRecentSearchTarget;
 }
 
-export interface ITagSearch {
-  ids: string[];
-  name: string;
-}
-
 export interface ISearchFilter {
   contentType?: PostType[];
   group?: IGroup;
   isSelectAllInnerGroups?: boolean;
-  tags?: ITagSearch[];
+  tags?: string[];
   topics?: ICategory[];
   createdBy?: ISearchUser[];
   datePosted?: {
@@ -82,7 +77,7 @@ export type ParamsSearchContent = {
   contentTypes?: PostType[];
   groupId?: string;
   isIncludedInnerGroups?: boolean;
-  tags?: string[];
+  tagNames?: string[];
   topics?: string[];
   actors?: string[];
   startTime?: string;

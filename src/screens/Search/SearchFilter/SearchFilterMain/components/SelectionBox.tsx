@@ -32,7 +32,7 @@ const SelectionBox: FC<SelectionBoxProps> = ({
   );
 
   return (
-    <Button style={styles.container} onPress={onPress}>
+    <Button testID="selection_box.btn" style={styles.container} onPress={onPress}>
       {!!children ? children : renderPlaceholder()}
     </Button>
   );

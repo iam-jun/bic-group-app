@@ -117,7 +117,7 @@ const FilterDate: FC<NFSFilterDateProps> = ({
   startDate,
   endDate,
   onSelect,
-}: NFSFilterDateProps) => {
+}) => {
   const { language } = useContext(AppContext);
   const styles = createStyle();
 
@@ -198,6 +198,7 @@ const FilterDate: FC<NFSFilterDateProps> = ({
     <React.Fragment key={`filter-date-option-${item.key}`}>
       <View style={styles.row}>
         <Radio
+          testID={`filter_date.option_${item.key}`}
           useI18n
           label={item.text}
           isChecked={currentFilter === item.key}
@@ -205,6 +206,7 @@ const FilterDate: FC<NFSFilterDateProps> = ({
         />
         {item.key === TypeFilter.FromTo && currentFilter === item.key && (
         <Tag
+          testID="filter_date.option_custom_tag"
           style={styles.tagContainer}
           type="secondary"
           size="small"
@@ -219,7 +221,7 @@ const FilterDate: FC<NFSFilterDateProps> = ({
     </React.Fragment>
   ));
 
-  return renderFilterDateOptions();
+  return <>{renderFilterDateOptions()}</>;
 };
 
 const createStyle = () => StyleSheet.create({

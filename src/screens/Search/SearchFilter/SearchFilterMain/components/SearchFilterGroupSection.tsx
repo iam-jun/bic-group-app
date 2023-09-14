@@ -61,6 +61,7 @@ const SearchFilterGroupSection: FC<SearchFilterGroupSectionProps> = ({
       </View>
       <ViewSpacing width={spacing.margin.small} />
       <Icon
+        testID="search_filter_group_section.remove"
         icon="Xmark"
         size={16}
         tintColor={colors.neutral40}
@@ -75,6 +76,7 @@ const SearchFilterGroupSection: FC<SearchFilterGroupSectionProps> = ({
         search:selected_all_inner_group
       </Text.BodyMMedium>
       <Toggle
+        testID="search_filter_group_section.toggle"
         disabled={!currentFilterGroup}
         isChecked={currentIsSelectAllInnerGroups}
         onValueChanged={onToggleSelectAllInnerGroup}
