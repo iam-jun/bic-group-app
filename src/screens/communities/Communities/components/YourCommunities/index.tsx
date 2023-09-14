@@ -8,6 +8,7 @@ import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';
 import CommunityGroupCard from '~/components/CommunityGroupCard';
 import useYourCommunitiesStore from './store';
+import ListCommunityPlaceHolder from '~/components/placeholder/ListCommunityPlaceHolder';
 
 const YourCommunities = () => {
   const theme: ExtendedTheme = useTheme();
@@ -35,8 +36,10 @@ const YourCommunities = () => {
   };
 
   const renderEmptyComponent = () => {
-    if (hasNextPage) {
-      return null;
+    if (loading) {
+      return (
+        <ListCommunityPlaceHolder />
+      );
     }
 
     return (
@@ -59,7 +62,9 @@ const YourCommunities = () => {
   };
 
   const renderListFooter = () => {
-    if (!loading) return <Divider color="transparent" size={spacing.padding.large} />;
+    if (ids.length === 0) return null;
+
+    if (!loading || !hasNextPage) return <Divider color="transparent" size={spacing.padding.large} />;
 
     return (
       <View style={styles.listFooter}>

@@ -4,15 +4,12 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import {
-  ShineOverlay,
-  Placeholder,
-  PlaceholderLine,
-  PlaceholderMedia,
-} from 'rn-placeholder';
+import Animated from 'react-native-reanimated';
 import { getRandomInt } from '~/utils/generator';
 import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';
+import { useSkeletonAnimation } from '~/hooks/useSkeletonAnimation';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 export interface ArticlePlaceholderProps {
   testID?: string;
@@ -27,89 +24,87 @@ const ArticlePlaceholder: FC<ArticlePlaceholderProps> = ({
 }: ArticlePlaceholderProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
-
-  const renderContentLeft = (p: any, style: StyleProp<ViewStyle>) => <PlaceholderMedia style={[p.style, style]} />;
+  const animatedStyle = useSkeletonAnimation({ targetOpacityValue: 0.5, speed: 500 });
 
   return (
     <View testID={testID} style={[styles.container, style]}>
-      <Placeholder
-        Animation={ShineOverlay}
-        Left={(p) => renderContentLeft(p, styles.avatar)}
-        style={styles.infoContainer}
-      >
-        <PlaceholderLine
-          width={disableRandom ? 50 : getRandomInt(
-            30, 60,
-          )}
-          style={styles.marginBottomSmall}
-        />
-        <PlaceholderLine
-          width={disableRandom ? 60 : getRandomInt(
-            30, 80,
-          )}
-          style={styles.marginBottomSmall}
-        />
-        <PlaceholderLine
-          width={disableRandom ? 40 : getRandomInt(
-            30, 50,
-          )}
-          style={styles.margin0}
-        />
-      </Placeholder>
-      <Placeholder Animation={ShineOverlay} style={styles.contentContainer}>
+      <View style={[styles.row, styles.infoContainer]}>
+        <Animated.View style={[styles.line, styles.avatar, animatedStyle]} />
+        <View style={styles.flex1}>
+          <Animated.View style={[styles.line, {
+            width: `${disableRandom ? 50 : getRandomInt(
+              30, 60,
+            )}%`,
+          }, animatedStyle]}
+          />
+          <Animated.View style={[styles.line, {
+            width: `${disableRandom ? 60 : getRandomInt(
+              30, 80,
+            )}%`,
+          }, animatedStyle]}
+          />
+          <Animated.View style={[styles.line, {
+            width: `${disableRandom ? 40 : getRandomInt(
+              30, 50,
+            )}%`,
+          }, animatedStyle]}
+          />
+        </View>
+      </View>
+      <View style={styles.contentContainer}>
         {Array.from(Array(disableRandom ? 5 : getRandomInt(
           3, 10,
         )).keys()).map((item) => (
-          <PlaceholderLine
+          <Animated.View
             key={`line_${item}`}
-            style={styles.marginBottomSmall}
+            style={[styles.line, animatedStyle]}
           />
         ))}
-        <PlaceholderLine
-          width={disableRandom ? 45 : getRandomInt(
+        <Animated.View style={[styles.line, {
+          width: `${disableRandom ? 45 : getRandomInt(
             20, 80,
-          )}
-          style={styles.margin0}
+          )}%`,
+        }, animatedStyle]}
         />
-      </Placeholder>
-      <Placeholder Animation={ShineOverlay}>
-        <PlaceholderMedia style={styles.image} />
-      </Placeholder>
-      <Placeholder Animation={ShineOverlay} style={styles.bottomContainer}>
+      </View>
+      <Animated.View
+        style={[styles.line, styles.image, animatedStyle]}
+      />
+      <View style={styles.bottomContainer}>
         {Array.from(Array(disableRandom ? 5 : getRandomInt(
           3, 10,
         )).keys()).map((item) => (
-          <PlaceholderLine
+          <Animated.View
             key={`line_${item}`}
-            style={styles.marginBottomSmall}
+            style={[styles.line, animatedStyle]}
           />
         ))}
-        <PlaceholderLine
-          width={disableRandom ? 45 : getRandomInt(
+        <Animated.View style={[styles.line, {
+          width: `${disableRandom ? 45 : getRandomInt(
             20, 80,
-          )}
-          style={styles.margin0}
+          )}%`,
+        }, animatedStyle]}
         />
-      </Placeholder>
-      <View style={styles.buttonWrapper}>
-        <View style={styles.buttonContainer}>
-          <Placeholder
-            Animation={ShineOverlay}
-            style={styles.buttonContent}
-            Left={(p) => renderContentLeft(p, styles.icon)}
-          >
-            <PlaceholderLine style={styles.margin0} height={14} />
-          </Placeholder>
+      </View>
+      <View style={[styles.row, styles.buttonWrapper]}>
+        <View style={[styles.row, styles.buttonContainer]}>
+          <Animated.View
+            style={[styles.line, styles.icon, animatedStyle]}
+          />
+          <ViewSpacing width={spacing.margin.base} />
+          <Animated.View
+            style={[styles.line, styles.buttonContent, animatedStyle]}
+          />
         </View>
         <Divider horizontal style={styles.divider} />
-        <View style={styles.buttonContainer}>
-          <Placeholder
-            Animation={ShineOverlay}
-            style={styles.buttonContent}
-            Left={(p) => renderContentLeft(p, styles.icon)}
-          >
-            <PlaceholderLine style={styles.margin0} height={14} />
-          </Placeholder>
+        <View style={[styles.row, styles.buttonContainer]}>
+          <Animated.View
+            style={[styles.line, styles.icon, animatedStyle]}
+          />
+          <ViewSpacing width={spacing.margin.base} />
+          <Animated.View
+            style={[styles.line, styles.buttonContent, animatedStyle]}
+          />
         </View>
       </View>
     </View>
@@ -120,8 +115,17 @@ const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     flex1: { flex: 1 },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    line: {
+      height: spacing.margin.base,
+      borderRadius: spacing.margin.tiny,
+      backgroundColor: colors.neutral5,
+      marginVertical: spacing.margin.tiny,
+    },
     margin0: { marginTop: 0, marginBottom: 0 },
-    marginBottomSmall: { marginBottom: spacing.margin.small },
     container: {
       backgroundColor: colors.white,
       marginBottom: spacing.margin.base,
@@ -174,12 +178,10 @@ const createStyle = (theme: ExtendedTheme) => {
       width: 16,
       height: 16,
     },
-    buttonWrapper: { height: 40, flexDirection: 'row', alignItems: 'center' },
+    buttonWrapper: { height: 40 },
     buttonContainer: {
-      flexDirection: 'row',
       flex: 1,
       justifyContent: 'center',
-      alignItems: 'center',
     },
     buttonContent: {
       width: 100,

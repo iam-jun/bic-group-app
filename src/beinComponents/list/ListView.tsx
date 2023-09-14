@@ -14,7 +14,6 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import items, { IListViewItem } from '~/beinComponents/list/items';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import loadings from '~/beinComponents/list/loadings';
 import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import useNetworkStore from '~/store/network';
@@ -109,7 +108,6 @@ const ListView: React.FC<ListViewProps> = ({
   const { colors } = useTheme() as ExtendedTheme;
 
   const ItemComponent = items[type] || PrimaryItem;
-  const LoadingPlaceholder = loadings[type];
 
   const _renderItem = ({ item, index }: {item: any; index: number}) => {
     if (renderItem) {
@@ -173,16 +171,6 @@ const ListView: React.FC<ListViewProps> = ({
 
     if (renderLoading) {
       return renderLoading();
-    }
-
-    if (LoadingPlaceholder) {
-      return (
-        <View testID="list_view.loading_placeholder">
-          {Array.from(Array(10).keys()).map((item) => (
-            <LoadingPlaceholder key={`loading_placeholder_${item}`} />
-          ))}
-        </View>
-      );
     }
 
     return (
