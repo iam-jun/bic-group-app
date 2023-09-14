@@ -1,5 +1,5 @@
 import i18next, { t } from 'i18next';
-import { orderBy } from 'lodash';
+import { isEqual, orderBy, sortBy } from 'lodash';
 import streamApi from '~/api/StreamApi';
 import { ICommunityMembers } from '~/interfaces/ICommunity';
 import { IGroupMembers } from '~/interfaces/IGroup';
@@ -143,6 +143,18 @@ export const isDiffBetweenTwoArraysByProperty = <T>(
     }
   });
   return !isEqual;
+};
+
+export const isDiffBetweenTwoArrays = <T>(
+  arr1: T[] = [],
+  arr2: T[] = [],
+) => {
+  if (arr1?.length !== arr2?.length) return true;
+
+  const sortedArr1 = sortBy(arr1);
+  const sortedArr2 = sortBy(arr2);
+
+  return !isEqual(sortedArr1, sortedArr2);
 };
 
 export const getTextNameUserDisplay = (user: any) => {

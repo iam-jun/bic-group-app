@@ -76,6 +76,7 @@ const SearchHeader: FC<SearchHeaderProps> = ({
         />
         <View>
           <Icon
+            testID="search_header.filter"
             icon="BarsSort"
             onPress={onPressFilter}
             size={24}

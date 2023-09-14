@@ -35,10 +35,10 @@ const Footer: FC<FooterProps> = ({ searchScreenKey }) => {
 
   return (
     <View style={styles.container}>
-      <Button.Neutral type="ghost" useI18n onPress={onPressResetAll} style={styles.btn} isEffect>
+      <Button.Neutral testID="footer.btn_reset" type="ghost" useI18n onPress={onPressResetAll} style={styles.btn} isEffect>
         search:reset_all
       </Button.Neutral>
-      <Button.Primary type="solid" useI18n onPress={onPressConfirm} style={styles.btn}>
+      <Button.Primary testID="footer.btn_confirm" type="solid" useI18n onPress={onPressConfirm} style={styles.btn}>
         search:confirm
       </Button.Primary>
     </View>

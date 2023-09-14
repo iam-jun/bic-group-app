@@ -53,7 +53,7 @@ const searchContent = (set, get) => async (payload: PayloadSearchContent) => {
       params.groupId = group.id;
     }
     if (tags) {
-      params.tags = tags.map((tag) => tag.ids).flat();
+      params.tagNames = tags.map((tag) => tag);
     }
     if (topics) {
       params.topics = topics.map((topic) => topic.id);

@@ -1,11 +1,9 @@
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
-import uuid from 'react-native-uuid';
 import SectionContainer from './SectionContainer';
 import SelectionBox from './SelectionBox';
 import useSearchStore from '~/screens/Search/store';
 import Tag from '~/baseComponents/Tag';
-import { ITagSearch } from '~/interfaces/ISearch';
 import { spacing } from '~/theme';
 import { useRootNavigation } from '~/hooks/navigation';
 import searchStack from '~/router/navigator/MainStack/stacks/searchStack/stack';
@@ -29,9 +27,9 @@ const SearchFilterTagsSection: FC<SearchFilterTagsSectionProps> = ({
     rootNavigation.navigate(searchStack.searchFilterTags, { searchScreenKey });
   };
 
-  const onPressRemoveTagSelected = (tag: ITagSearch) => () => {
+  const onPressRemoveTagSelected = (tag: string) => () => {
     const newFilterTags = currentFilterTags.filter(
-      (tagItem) => tagItem.name !== tag.name,
+      (tagItem) => tagItem !== tag,
     );
     actionsSearchStore.updateTempFilterByScreenKey(searchScreenKey, {
       tags: newFilterTags,
@@ -40,12 +38,13 @@ const SearchFilterTagsSection: FC<SearchFilterTagsSectionProps> = ({
 
   const renderTagsSelected = () => (
     <View style={[styles.row]}>
-      {currentFilterTags.map((tag) => (
-        <View style={styles.tagView} key={`tagview-${uuid.v4()}`}>
+      {currentFilterTags.map((tag, index) => (
+        <View style={styles.tagView} key={`tagview-${index}`}>
           <Tag
+            testID={`search_filter_tags_section.tag_${index}`}
             style={styles.tag}
             type="neutral"
-            label={tag.name}
+            label={tag}
             textProps={{ numberOfLines: 1 }}
             icon="Xmark"
             onPressIcon={onPressRemoveTagSelected(tag)}

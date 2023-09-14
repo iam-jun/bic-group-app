@@ -71,7 +71,7 @@ const SearchResult: FC<SearchResultProps> = ({ searchScreenKey }) => {
       return null;
     }
     return (
-      <View style={styles.emptyContainer}>
+      <View testID="search_result.empty" style={styles.emptyContainer}>
         <Image
           resizeMode="contain"
           style={styles.imgEmpty}
@@ -101,7 +101,7 @@ const SearchResult: FC<SearchResultProps> = ({ searchScreenKey }) => {
   const renderItem: ListRenderItem<string> = ({ item: id }) => (<SearchResultItem id={id} />);
 
   return (
-    <View style={styles.container}>
+    <View testID="search_result" style={styles.container}>
       <View style={styles.bannerView}>
         <Text.BodyM color={colors.neutral60}>
           <Text.SubtitleM color={colors.neutral60}>{totalResults || 0}</Text.SubtitleM>

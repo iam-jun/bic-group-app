@@ -1,7 +1,7 @@
 import { isEqual, sortBy } from 'lodash';
 import { ISearchState } from '..';
-import { ISearchUser, ITagSearch } from '~/interfaces/ISearch';
-import { isDiffBetweenTwoArraysByProperty } from '~/helpers/common';
+import { ISearchUser } from '~/interfaces/ISearch';
+import { isDiffBetweenTwoArrays, isDiffBetweenTwoArraysByProperty } from '~/helpers/common';
 import { ICategory } from '~/interfaces/IArticle';
 
 const isFilterChangedByScreenKey = (_set, get) => (screenKey: string) => {
@@ -30,8 +30,7 @@ const isFilterChangedByScreenKey = (_set, get) => (screenKey: string) => {
     sortBy(tempFilterContentType),
   );
   const isFilterGroupChanged = group?.id !== tempFilterGroup?.id;
-  const isFilterTagsChanged = isDiffBetweenTwoArraysByProperty<ITagSearch>(
-    'name',
+  const isFilterTagsChanged = isDiffBetweenTwoArrays(
     tags,
     tempFilterTags,
   );

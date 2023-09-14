@@ -27,7 +27,7 @@ const SectionContainer: FC<SectionContainerProps> = ({
           {title}
         </Text.H3>
         {!!onReset && (
-          <Button onPress={onReset}>
+          <Button testID="section_container.btn_reset" onPress={onReset}>
             <Text.LinkM useI18n color={colors.purple50}>
               search:reset
             </Text.LinkM>

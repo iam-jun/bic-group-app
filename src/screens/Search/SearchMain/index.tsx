@@ -11,7 +11,6 @@ import { IGroup } from '~/interfaces/IGroup';
 import useSearchStore from '../store';
 import {
   ISearchFilter,
-  ITagSearch,
   UpdateSearchData,
 } from '~/interfaces/ISearch';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -57,11 +56,7 @@ const SearchMain: FC<SearchMainProps> = ({ route }) => {
     if (!!tag || !!group) {
       const searchFilter: ISearchFilter = {};
       if (!!tag) {
-        const searchTag: ITagSearch = {
-          ids: [tag.id],
-          name: tag.name,
-        };
-        searchFilter.tags = [searchTag];
+        searchFilter.tags = [tag.name];
       }
       if (!!group) {
         searchFilter.group = group;

@@ -11,7 +11,6 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import useSearchFilterTagsStore from '../store';
 import ItemCheckbox from '~/components/ItemCheckbox';
-import { ITagSearch } from '~/interfaces/ISearch';
 import SelectingListInfo from '~/components/SelectingListInfo';
 import { SearchInput } from '~/baseComponents/Input';
 import NoSearchResultsFound from '~/components/NoSearchResultsFound';
@@ -74,21 +73,21 @@ const SelectTags = () => {
     </View>
   );
 
-  const onAddItem = (tag: ITagSearch) => {
+  const onAddItem = (tag: string) => {
     const newSelectedTags = [...selectedTags, tag];
     searchFilterTagsActions.updateSelectedTags(newSelectedTags);
   };
 
-  const onRemoveItem = (item: ITagSearch) => {
+  const onRemoveItem = (item: string) => {
     const newSelectedTags = selectedTags.filter(
-      (selectedTag) => selectedTag.name !== item.name,
+      (selectedTag) => selectedTag !== item,
     );
     searchFilterTagsActions.updateSelectedTags(newSelectedTags);
   };
 
-  const renderItem: ListRenderItem<ITagSearch> = ({ item }) => {
+  const renderItem: ListRenderItem<string> = ({ item, index }) => {
     const isChecked = selectedTags.some(
-      (selected) => selected?.name === item.name,
+      (selected) => selected === item,
     );
 
     return (
@@ -97,11 +96,12 @@ const SelectTags = () => {
         isChecked={isChecked}
         onAddItem={onAddItem}
         onRemoveItem={onRemoveItem}
+        testIDCheckbox={`select_tags.item_checkbox_${index}`}
       />
     );
   };
 
-  const keyExtractor = (item: ITagSearch, index: number) => `tags_list_${item?.name}_${index}`;
+  const keyExtractor = (item: string, index: number) => `tags_list_${item}_${index}`;
 
   return (
     <View style={styles.container}>

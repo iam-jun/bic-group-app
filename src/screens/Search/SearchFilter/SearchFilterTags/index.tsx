@@ -8,8 +8,7 @@ import { useBaseHook } from '~/hooks';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import useSearchFilterTagsStore from './store';
 import SelectTags from './components/SelectTags';
-import { isDiffBetweenTwoArraysByProperty } from '~/helpers/common';
-import { ITagSearch } from '~/interfaces/ISearch';
+import { isDiffBetweenTwoArrays } from '~/helpers/common';
 import showAlert from '~/store/helper/showAlert';
 
 type SearchFilterTagsProps = {
@@ -40,7 +39,7 @@ const SearchFilterTags: FC<SearchFilterTagsProps> = ({ route }) => {
     (state) => state.search[searchScreenKey]?.tempFilter?.tags,
   );
 
-  const disabled = !isDiffBetweenTwoArraysByProperty<ITagSearch>('name', currentFilterTags, selectedTags);
+  const disabled = !isDiffBetweenTwoArrays(currentFilterTags, selectedTags);
 
   const onPressSave = () => {
     actionsSearchStore.updateTempFilterByScreenKey(searchScreenKey, {

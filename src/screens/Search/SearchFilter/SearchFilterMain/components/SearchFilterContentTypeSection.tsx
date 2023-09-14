@@ -35,9 +35,9 @@ const data: ContentTypeOption[] = [
   },
 ];
 
-const SearchFilterContentTypeSection: FC<SearchFilterContentTypeSectionProps> = ({
-  searchScreenKey,
-}) => {
+const SearchFilterContentTypeSection: FC<
+  SearchFilterContentTypeSectionProps
+> = ({ searchScreenKey }) => {
   const actionsSearchStore = useSearchStore((state) => state.actions);
   const currentFilterContentType = useSearchStore(
     (state) => state.search[searchScreenKey]?.tempFilter?.contentType || [],
@@ -66,8 +66,16 @@ const SearchFilterContentTypeSection: FC<SearchFilterContentTypeSectionProps> = 
 
   const renderFilterContentType = () => data.map((item, index) => (
     <View key={`filter-content-type-${item.id}`}>
-      <CheckBox isChecked={isChecked(item)} label={item.label} useI18n onPress={onPressContentTypeOption(item)} />
-      {index < (data.length - 1) && <ViewSpacing height={spacing.margin.large} />}
+      <CheckBox
+        testID={`search_filter_content_type_section.checkbox_content_type_${item.id}`}
+        isChecked={isChecked(item)}
+        label={item.label}
+        useI18n
+        onPress={onPressContentTypeOption(item)}
+      />
+      {index < data.length - 1 && (
+      <ViewSpacing height={spacing.margin.large} />
+      )}
     </View>
   ));
 

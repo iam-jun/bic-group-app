@@ -42,6 +42,7 @@ const SearchFilterCreatedBySection: FC<SearchFilterCreatedBySectionProps> = ({
       {currentFilterCreatedBy.map((user) => (
         <View style={styles.tagView} key={`tag-user-view-${user.id}`}>
           <Tag
+            testID={`search_filter_createdby_section.tag_user_${user.id}`}
             style={styles.tag}
             type="neutral"
             avatar={{ uri: user.avatar }}

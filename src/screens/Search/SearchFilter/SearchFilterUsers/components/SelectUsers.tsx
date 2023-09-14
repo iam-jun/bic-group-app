@@ -112,6 +112,7 @@ const SelectUsers = () => {
         isChecked={isChecked}
         onAddItem={onAddUser}
         onRemoveItem={onRemoveUser}
+        testIDCheckbox={`select_users.user_item_checkbox_${item.id}`}
       />
     );
   };

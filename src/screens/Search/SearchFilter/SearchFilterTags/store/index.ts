@@ -1,4 +1,3 @@
-import { ITagSearch } from '~/interfaces/ISearch';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
 import getTags from './actions/getTags';
@@ -8,11 +7,11 @@ export interface ISearchFilterTagsState extends IBaseState {
     key: string;
     loading: boolean;
     hasNextPage: boolean;
-    tags: ITagSearch[];
+    tags: string[];
   };
-  selected: ITagSearch[];
+  selected: string[];
   actions: {
-    updateSelectedTags: (tags: ITagSearch[]) => void;
+    updateSelectedTags: (tags: string[]) => void;
     getTags: (key: string, isRefresh?: boolean) => void;
   };
 }
@@ -30,7 +29,7 @@ export const initState: InitStateType<ISearchFilterTagsState> = {
 const searchFilterTagsStore = (set, get): ISearchFilterTagsState => ({
   ...initState,
   actions: {
-    updateSelectedTags: (tags: ITagSearch[]) => {
+    updateSelectedTags: (tags: string[]) => {
       set((state: ISearchFilterTagsState) => {
         state.selected = [...tags];
       }, 'updateSelectedTags');
