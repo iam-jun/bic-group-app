@@ -20,7 +20,7 @@ describe('BoxScheduleTime component', () => {
       <BoxScheduleTime {...normalProps} />,
     );
 
-    const containerView = rendered.queryByTestId('article_box_schedule_time');
+    const containerView = rendered.queryByTestId('box_schedule_time');
     expect(containerView.props.style[1].backgroundColor).toEqual(
       colors.light.colors.blue2,
     );
@@ -31,7 +31,7 @@ describe('BoxScheduleTime component', () => {
       <BoxScheduleTime {...failProps} />,
     );
 
-    const containerView = rendered.queryByTestId('article_box_schedule_time');
+    const containerView = rendered.queryByTestId('box_schedule_time');
     expect(containerView.props.style[1].backgroundColor).toEqual(
       colors.light.colors.red2,
     );
