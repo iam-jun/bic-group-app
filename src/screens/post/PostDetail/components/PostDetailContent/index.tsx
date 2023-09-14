@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import Header from '~/beinComponents/Header';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
-import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import PostViewPlaceholder from '~/components/placeholder/PostViewPlaceholder';
 import { useBaseHook } from '~/hooks';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 

@@ -76,6 +76,7 @@ const MarkImportant: React.FC<MarkImportantProps> = ({
       <Text.BodyXS color={colors.danger}>
         {` ${list[0]?.name}, ${list[1]?.name}, ${t('post:and')} `}
         <Text.BodyXSMedium
+          testID="mark_important.text_more_audience_without_permission"
           color={colors.danger}
           onPress={onPressAudiences}
         >
@@ -154,7 +155,7 @@ const MarkImportant: React.FC<MarkImportantProps> = ({
 
     return (
       <View>
-        <Button onPress={handleDropDown} style={[styles.row, styles.dropdownStyle]}>
+        <Button testID="mark_important.important_date_dropdown" onPress={handleDropDown} style={[styles.row, styles.dropdownStyle]}>
           <Text.DropdownM
             useI18n
             color={chosenSuggestedTime ? colors.neutral60 : colors.neutral20}

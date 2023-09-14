@@ -19,6 +19,10 @@ import Markdown from '~/beinComponents/Markdown';
 import CopyableView from '../../../beinComponents/CopyableView';
 import { escapeMarkDown } from '~/utils/formatter';
 import spacing from '~/theme/spacing';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { PostType } from '~/interfaces/IPost';
+import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
 export interface CollapsibleTextProps extends TextProps {
   testID?: string;
@@ -34,6 +38,7 @@ export interface CollapsibleTextProps extends TextProps {
   copyEnabled?: boolean;
   mentions?: any;
   BottomRightComponent?: React.ReactNode | React.ReactElement;
+  isTracking?: boolean;
 
   onPress?: () => void;
   onPressAudience?: (audience: any, e?: any) => any;
@@ -55,6 +60,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   parentCommentId,
   copyEnabled,
   BottomRightComponent,
+  isTracking,
   onPress,
   onPressAudience,
   onToggleShowTextContent,
@@ -78,8 +84,18 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
     : 'collapsible_text.level_1.content';
 
   const _onToggleShowTextContent = useCallback(() => {
-    setContentShowAll(!contentShowAll);
+    const toggleContentShowAll = !contentShowAll;
+    setContentShowAll(toggleContentShowAll);
     onToggleShowTextContent?.();
+
+    // tracking event
+    if (toggleContentShowAll && isTracking) {
+      const eventContentReadProperties: TrackingEventContentReadProperties = {
+        content_type: PostType.POST,
+        action: TrackingEventContentReadAction.SEE_MORE,
+      };
+      trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
+    }
   }, [contentShowAll]);
 
   const _onPress = () => {

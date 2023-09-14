@@ -3,9 +3,9 @@ import {
   useIsFocused,
   useTheme,
 } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
-  ActivityIndicator, DeviceEventEmitter, StyleSheet, View,
+  ActivityIndicator, DeviceEventEmitter, RefreshControl, StyleSheet, View,
 } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -40,9 +40,13 @@ import TabButton from '~/baseComponents/Tab/TabButton';
 import Text from '~/baseComponents/Text';
 import BadgeCollectionHeader from './fragments/BadgeCollection/BadgeCollectionHeader';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import InvitationList from './fragments/InvitationList';
+import useMyInvitationsStore from './fragments/InvitationList/store';
+import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 
 export const USER_TABS = [
   { id: USER_TABS_TYPES.USER_ABOUT, text: 'user:user_tab_types:title_about' },
+  { id: USER_TABS_TYPES.USER_INVITATIONS, text: 'user:user_tab_types:title_invitations' },
   { id: USER_TABS_TYPES.USER_BADGE_COLLECTION, text: 'user:user_tab_types:title_badge_collection' },
 ];
 
@@ -74,6 +78,7 @@ const UserProfile = (props: any) => {
   const [bgImgState, setBgImgState] = useState<string>(backgroundImgUrl);
   const [isChangeImg, setIsChangeImg] = useState<string>('');
   const [selectedIndex, setSelectedIndex] = useState<number>(targetIndex || 0);
+  const [refreshing, setRefreshing] = useState(false);
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -87,6 +92,8 @@ const UserProfile = (props: any) => {
   const homeActions = useHomeStore((state) => state.actions);
   const hasNewBadge = useUserBadge((state) => state.hasNewBadge);
   const userBadgeActions = useUserBadge((state) => state.actions);
+  const invitationActions = useMyInvitationsStore((state) => state.actions);
+  const { rootNavigation } = useRootNavigation();
 
   useEffect(() => {
     isFocused && userProfileActions.getUserProfile({ userId, params });
@@ -94,10 +101,6 @@ const UserProfile = (props: any) => {
     if (userId === currentUserId) {
       userBadgeActions.getOwnedBadges();
     }
-    return () => {
-      resetUserBadge();
-      reset();
-    };
   }, [isFocused, userId]);
 
   useEffect(() => {
@@ -118,6 +121,33 @@ const UserProfile = (props: any) => {
       }
     }
   }, [myProfileData]);
+
+  const onPressBack = () => {
+    resetUserBadge();
+    reset();
+    if (!isCurrentUser) {
+      userProfileActions.getUserProfile({ userId: currentUserId });
+      userProfileActions.getWorkExperience(currentUserId);
+      userBadgeActions.getOwnedBadges();
+    }
+    rootNavigation.goBack();
+  };
+
+  useBackPressListener(onPressBack);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    userProfileActions.getUserProfile({ userId, params, silentLoading: true });
+    userId && userProfileActions.getWorkExperience(userId);
+    if (
+      userId?.toString?.() === currentUserId?.toString?.()
+      || userId?.toString?.() === currentUsername?.toString?.()
+    ) {
+      userBadgeActions.getOwnedBadges();
+      invitationActions.getInvitations(true);
+    }
+    setRefreshing(false);
+  };
 
   const handleEditBadge = () => {
     userBadgeActions.setIsEditing(true);
@@ -169,25 +199,29 @@ const UserProfile = (props: any) => {
     }
 
     if (selectedIndex === 1) {
-      return (
-        <BadgeCollection />
-      );
+      return <InvitationList />;
+    }
+
+    if (selectedIndex === 2) {
+      return <BadgeCollection />;
     }
 
     return null;
   };
 
-  const renderTabContainer = (text: string, index: number) => (
-    <Text.TabM
-      color={Boolean(selectedIndex === index) ? colors.purple50 : colors.neutral40}
-    >
-      {t(text)}
-      {'    '}
-      {Boolean(hasNewBadge) && Boolean(index === 1) && (
+  const renderTabContainer = (text: string, index: number) => {
+    const shouldShowDot = Boolean(hasNewBadge) && Boolean(index === 2);
+    return (
+      <Text.TabM
+        color={Boolean(selectedIndex === index) ? colors.purple50 : colors.neutral40}
+      >
+        {`${t(text)}${shouldShowDot ? '    ' : ''}`}
+        {shouldShowDot && (
         <View style={styles.dot} />
-      ) }
-    </Text.TabM>
-  );
+        ) }
+      </Text.TabM>
+    );
+  };
 
   const renderCustomTab = (item: any, index) => (
     <TabButton
@@ -202,10 +236,50 @@ const UserProfile = (props: any) => {
   if (error) return <NoUserFound />;
   // TODO: to handle more error cases in the future
 
+  const renderHeader = useCallback(() => (
+    <>
+      <CoverHeader
+        id={id}
+        isCurrentUser={isCurrentUser}
+        bgImg={bgImgState}
+        avatar={avatarState}
+        uploadCallback={uploadCallback}
+      />
+      <UserHeader
+        id={userId}
+        fullname={fullname}
+        username={username}
+        latestWork={latestWork}
+        isCurrentUser={isCurrentUser}
+        isVerified={isVerified}
+        showingBadges={showingBadges}
+        handleEditBadge={handleEditBadge}
+      />
+      <Divider color={colors.gray5} size={spacing.padding.large} />
+    </>
+  ), [id, avatarState, bgImgState, isCurrentUser, showingBadges]);
+
+  const renderItem = () => {
+    if (Boolean(isCurrentUser)) {
+      return (
+        <>
+          <View style={styles.tabContainer}>
+            <Tab
+              data={USER_TABS}
+              renderCustomTab={renderCustomTab}
+            />
+          </View>
+          <Divider color={colors.gray5} size={spacing.padding.large} />
+        </>
+      );
+    }
+    return null;
+  };
+
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
-      <Header />
-      {Boolean(isCurrentUser) && Boolean(selectedIndex === 1)
+      <Header onPressBack={onPressBack} />
+      {Boolean(isCurrentUser) && Boolean(selectedIndex === 2)
       && (
       <Animated.View style={[styles.badgesHeader, headerAnimated]}>
         <Header />
@@ -216,44 +290,24 @@ const UserProfile = (props: any) => {
       {loading ? (
         renderLoading()
       ) : (
-        <Animated.ScrollView
+        <Animated.FlatList
           style={styles.container}
+          data={[1]}
+          renderItem={renderItem}
+          refreshControl={(
+            <RefreshControl
+              refreshing={!!refreshing}
+              onRefresh={onRefresh}
+              tintColor={colors.gray40}
+            />
+          )}
+          keyExtractor={(item) => `${item?.toString?.()}`}
+          ListHeaderComponent={renderHeader}
+          ListFooterComponent={renderContent}
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={16}
           onScroll={handleScroll}
-        >
-          <CoverHeader
-            id={id}
-            isCurrentUser={isCurrentUser}
-            bgImg={bgImgState}
-            avatar={avatarState}
-            uploadCallback={uploadCallback}
-          />
-          <UserHeader
-            id={userId}
-            fullname={fullname}
-            username={username}
-            latestWork={latestWork}
-            isCurrentUser={isCurrentUser}
-            isVerified={isVerified}
-            showingBadges={showingBadges}
-            handleEditBadge={handleEditBadge}
-          />
-          <Divider color={colors.gray5} size={spacing.padding.large} />
-          {Boolean(isCurrentUser) && (
-            <>
-              <View style={styles.tabContainer}>
-                <Tab
-                  data={USER_TABS}
-                  renderCustomTab={renderCustomTab}
-                />
-              </View>
-              <Divider color={colors.gray5} size={spacing.padding.large} />
-            </>
-          )}
-
-          {renderContent()}
-        </Animated.ScrollView>
+        />
       )}
       <SearchBadgeModal showSearchBox />
     </ScreenWrapper>

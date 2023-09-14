@@ -3,6 +3,7 @@ const Common = {
   SYSTEM_ISSUE: 0,
   MAINTENANCE: 'api.is_under_maintenance',
   FORBIDDEN: 'forbidden',
+  UNSUPPORTED_VERSION: 'api.unsupported_version',
 };
 
 const Auth = {
@@ -23,6 +24,10 @@ const Post = {
   POST_NO_READ_PERMISSION: 'post.no_read_permission',
   ARTICLE_NO_READ_PERMISSION: 'article.no_read_permission',
   COMMENT_IS_REPORTED_AND_DELETED: 'comment.reported_and_deleted',
+  QUIZ_NO_CRUD_PERMISSION_AT_GROUP: 'quiz.no_crud_permission_at_group',
+  QUIZ_DELETED: 'quiz.not_found',
+  QUIZ_OVER_TIME: 'quiz.over_time',
+  QUIZ_PARTICIPANT_NOT_FINISH: 'quiz_participant.not_finished',
   NO_EDIT_SETTING_PERMISSION_AT_GROUP: 'content.no_edit_setting_permission_at_group',
 };
 
@@ -34,6 +39,9 @@ const Group = {
   JOIN_REQUEST_ALREADY_SENT: 'group.joining_request.already_sent',
   TERMS_NOT_FOUND: 'group_terms.get.not_found',
   MISSIING_MEMBERSHIP_ANSWERS: 'joining_request.missing.membership_answers',
+  INVITATION_IS_ALREADY_SENT_ACCEPTED: 'invitation.status.accepted',
+  INVITATION_IS_ALREADY_SENT_DECLINED: 'invitation.status.declined',
+  INVITATION_IS_ALREADY_CANCELLED: 'invitation.status.cancelled',
 };
 
 const APIErrorCode = {

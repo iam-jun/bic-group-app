@@ -10,6 +10,9 @@ import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { Button } from '~/baseComponents';
+import { trackEvent } from '~/services/tracking';
+import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
+import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 
 type SeriesDetailItemProps = {
     item: IPost;
@@ -28,10 +31,24 @@ const SeriesDetailItem: FC<SeriesDetailItemProps> = ({
 
   const goToArticleContentDetail = () => {
     rootNavigation.navigate(articleStack.articleContentDetail, { articleId: item?.id });
+
+    // tracking event
+    const eventContentReadProperties: TrackingEventContentReadProperties = {
+      content_type: PostType.ARTICLE,
+      action: TrackingEventContentReadAction.SERIES_ITEM,
+    };
+    trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
   };
 
   const goToPostDetail = () => {
     rootNavigation.navigate(homeStack.postDetail, { post_id: item?.id });
+
+    // tracking event
+    const eventContentReadProperties: TrackingEventContentReadProperties = {
+      content_type: PostType.POST,
+      action: TrackingEventContentReadAction.SERIES_ITEM,
+    };
+    trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
   };
 
   const onRedirect = () => {
