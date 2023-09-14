@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, ScrollView, RefreshControl } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import ScreenWrapper from '~/baseComponents/ScreenWrapper';
@@ -7,8 +7,8 @@ import usePostsStore from '~/store/entities/posts';
 import { BoxScheduleTime } from '~/components/ScheduleContent/components';
 import postsSelector from '~/store/entities/posts/selectors';
 import { spacing } from '~/theme';
-import ContentItem from '~/components/ContentItem';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import { PostView } from '~/components/posts';
 
 interface PostReviewScheduleProps {
   route?: {
@@ -76,7 +76,8 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
         )}
       >
         <ViewSpacing height={spacing.margin.large} />
-        <ContentItem id={postId} />
+        <PostView data={data} isSchedule />
+        <ViewSpacing height={spacing.margin.big} />
       </ScrollView>
     </ScreenWrapper>
   );
