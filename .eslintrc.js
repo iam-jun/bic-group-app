@@ -1,6 +1,5 @@
 module.exports = {
   extends: [
-    '@react-native',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'airbnb',
