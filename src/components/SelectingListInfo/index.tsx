@@ -35,7 +35,7 @@ const SelectingListInfo: React.FC<SelectingListInfoProps> = ({
   const infoTitle = title || t('article:text_selecting_will_be_added_to');
 
   const renderItem = (item, index) => {
-    const label = item?.name || item?.title || typeof item === 'string' ? item : '';
+    const label = typeof item === 'string' ? item : (item?.name || item?.title);
     return (
       <Tag
         key={`selecting_${type}_tag_${item?.id || index}`}

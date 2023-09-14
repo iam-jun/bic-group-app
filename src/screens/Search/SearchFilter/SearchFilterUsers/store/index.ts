@@ -16,7 +16,6 @@ export interface ISearchFilterUsersState extends IBaseState {
   selected: ISearchUser[];
   actions: {
     updateSelectedUsers: (users: ISearchUser[]) => void;
-    setSearchUser: (search: Partial<SearchUser>) => void;
     searchUsers: (contentSearch?: string, isRefresh?: boolean) => void;
   };
 }
@@ -40,14 +39,6 @@ const searchFilterUsersStore = (set, get) => ({
       set((state: ISearchFilterUsersState) => {
         state.selected = [...users];
       }, 'updateSelectedUsers');
-    },
-    setSearchUser: (search: Partial<SearchUser>) => {
-      set((state: ISearchFilterUsersState) => {
-        state.search = {
-          ...state.search,
-          ...search,
-        };
-      }, 'setSearchUser');
     },
     searchUsers: searchUsers(set, get),
   },
