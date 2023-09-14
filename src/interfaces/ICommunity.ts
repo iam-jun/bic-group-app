@@ -1,7 +1,7 @@
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { CommunityPrivacyType } from '~/constants/privacyTypes';
 import { IGroupSettings, IObject } from '~/interfaces/common';
-import { IJoiningMember } from '~/interfaces/IGroup';
+import { IInvitation, IJoiningMember } from '~/interfaces/IGroup';
 
 export interface ICommunity {
   id: string;
@@ -22,6 +22,7 @@ export interface ICommunity {
   affectedSettings?: IGroupSettings;
   communityId?: string;
   level?: number;
+  invitation?: IInvitation;
 }
 
 export interface IParamGetCommunities {

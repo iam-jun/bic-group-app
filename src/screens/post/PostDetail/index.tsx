@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Header from '~/beinComponents/Header';
-import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import PostViewPlaceholder from '~/components/placeholder/PostViewPlaceholder';
 import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import PostDetailContent from './components/PostDetailContent';
 import { isFromNotificationScreen } from '~/router/helper';

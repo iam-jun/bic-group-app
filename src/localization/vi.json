@@ -12,11 +12,20 @@
       "short_week": "tuần",
       "short_year": "năm",
       "minutes": "phút",
-      "hours": "giờ"
+      "hours": "giờ",
+      "long_min": "phút cách đây",
+      "long_mins": "phút cách đây",
+      "long_hour": "giờ cách đây",
+      "long_hours": "giờ cách đây",
+      "long_day": "ngày cách đây",
+      "long_days": "ngày cách đây",
+      "long_week": "tuần cách đây",
+      "long_weeks": "tuần cách đây"
     },
     "text_update_title": "Đã có bản cập nhật mới",
     "text_update_content": "System optimization, faster, more convenient",
     "btn_update": "Cập nhật",
+    "btn_not_now": "Để sau",
     "text_unconnected_title": "Không có kết nối internet",
     "text_unconnected_content": "Please check your internet connection and try again",
     "btn_try_again": "Thử lại",
@@ -137,6 +146,7 @@
     "text_remove": "Loại bỏ",
     "btn_approve": "Phê duyệt",
     "btn_decline": "Từ chối",
+    "btn_accept": "Chấp nhận",
     "btn_approve_all": "Phê duyệt tất cả",
     "btn_decline_all": "Từ chối tất cả",
     "btn_submit": "Gửi",
@@ -215,7 +225,33 @@
     "text_send_request_join_successfully": "Gửi yêu cầu thành công",
     "edit_settings": "Cài đặt",
     "text_new": "Mới",
-    "text_empty": "Rỗng"
+    "text_empty": "Rỗng",
+    "text_invite_people_to_your_group": "Mời mọi người vào nhóm của bạn",
+    "text_invite_people_to_your_community": "Mời mọi người vào cộng đồng của bạn",
+    "text_search_for_people": "Tìm người",
+    "text_selected_people": "Những người được chọn",
+    "text_invite": "Mời",
+    "text_maximum": "Tối đa {{count}}",
+    "text_you_have_seen_it_all": "Bạn có tất cả",
+    "alert_quit_without_completing": {
+      "title": "Thoát mà không hoàn thành?",
+      "content": "Lời mời sẽ không được gửi và lựa chọn của bạn sẽ không được lưu.",
+      "button_keep_editing": "Tiếp tục chỉnh sửa",
+      "button_quit": "Thoát"
+    },
+    "text_no_one_is_invited": "Không ai được mời!",
+    "text_invite_someone": "Mời ai đó",
+    "text_to_see_them_here": "xem họ tại đây",
+    "text_invited_by": "Được mời bởi",
+    "button_cancel_invite": "Huỷ lời mời",
+    "text_invited_you_to_join_this_group": "đã mời bạn tham gia nhóm này.",
+    "text_invited_you_to_join_this_community": "đã mời bạn tham gia cộng đồng này.",
+    "text_invited": "Đã mời",
+    "page_not_found": {
+      "title": "Không tìm thấy trang",
+      "description": "Rất tiếc, chúng tôi không tìm thấy trang bạn yêu cầu. Vui lòng quay lại trang chủ"
+    },
+    "text_please_try_again": "Vui lòng thử lại"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -576,6 +612,15 @@
         "community_members_description": "Những người trong cùng một cộng đồng với bạn có thể xem thông tin của bạn.",
         "only_me_type": "Chỉ mình tôi",
         "only_me_description": "Không ai có thể xem thông tin của bạn."
+      },
+      "invitation_privacy": {
+        "title": "Quyền riêng tư của lời mời",
+        "screen_description": "Quản lý lời mời từ nhóm hoặc cộng đồng theo cách bạn muốn.",
+        "manual_acceptance_type": "Chấp nhận thủ công",
+        "manual_acceptance_description": "Bạn có thể xem xét và quyết định chấp nhận hay từ chối.",
+        "hide_all_inviations_type": "Ẩn tất cả lời mời",
+        "hide_all_inviations_description": "Tắt tất cả các thông báo về lời mời, bạn vẫn có thể xem lại sau.",
+        "view_all_inviations": "Xem tất cả Thư mời"
       }
     },
     "text_no_experience_to_show": "Không có kinh nghiệm để hiển thị",
@@ -1024,6 +1069,7 @@
     "search_results": "Kết quả tìm kiếm",
     "all_groups": "Tất cả",
     "text_search_member": "Tìm kiếm thành viên...",
+    "text_search_for_members": "Tìm kiếm thành viên",
     "group_menu": {
       "label_admin_tools": "Công cụ quản trị",
       "label_copy_group_link": "Sao chép đường dẫn nhóm",
@@ -1169,6 +1215,17 @@
     "text_bic_team": "BIC team",
     "text_remove_notification": "Xóa thông báo này",
     "text_remove_notification_success": "Đã xóa thông báo thành công",
+    "text_invitation_accepted": "Lời mời đã được chấp nhận",
+    "text_invitation_declined": "Lời mời đã bị từ chối",
+    "text_you_have_previously_joined": "Bạn đã tham gia rồi",
+    "text_you_have_previously_declined": "Trước đây bạn đã từ chối tham gia",
+    "text_invitation_has_been_canceled": "Lời mời đã bị hủy",
+    "text_turn_off_noti_for_post": "Tắt thông báo về bài đăng này",
+    "text_turn_off_noti_for_article": "Tắt thông báo về bài viết này",
+    "text_turn_on_noti_for_post": "Bật thông báo về bài đăng này",
+    "text_turn_on_noti_for_article": "Bật thông báo về bài viết này",
+    "text_turn_off_noti_for_group": "Tắt thông báo về lời mời trong nhóm này",
+    "text_turn_on_noti_for_group": "Bật thông báo về lời mời trong nhóm này",
     "notification_settings": {
       "title": "Cài đặt thông báo",
       "screen_title": "Cài đặt chung",
@@ -1328,7 +1385,8 @@
     "text_search_communities": "Tìm kiếm...",
     "member_tab_types": {
       "title_member_list": " Danh sách thành viên",
-      "title_member_requests": "Yêu cầu tham gia"
+      "title_member_requests": "Yêu cầu tham gia",
+      "title_invited_people": "Người được mời"
     },
     "join_request_setting": {
       "title": "Yêu cầu phê duyệt để được tham gia",
@@ -1525,7 +1583,8 @@
   "user": {
     "user_tab_types": {
       "title_about": "Giới thiệu",
-      "title_badge_collection": "Bộ sưu tập huy hiệu"
+      "title_badge_collection": "Bộ sưu tập huy hiệu",
+      "title_invitations": "Lời mời"
     },
     "empty_badge_collection": {
       "title": "Bạn chưa có huy hiệu nào",
@@ -1542,7 +1601,18 @@
       "search_placeholder": "Tìm huy hiệu theo tên"
     },
     "edit_showing_badges_title": "Chỉnh sửa huy hiệu đang hiển thị",
-    "badge_tooltip_placeholder": "Nhấn vào đây để thêm huy hiệu"
+    "badge_tooltip_placeholder": "Nhấn vào đây để thêm huy hiệu",
+    "text_invitation_privacy_settings": "Cài đặt Quyền riêng tư của Lời mời",
+    "invitation_description": "Xem xét các lời mời để bạn quyết định chấp nhận hay từ chối.",
+    "text_invited_to_join": "mời bạn tham gia",
+    "text_invited_you_to_join_a": "mời bạn tham gia",
+    "text_set_of_groups": "tập hợp các nhóm",
+    "text_default_group_set": "YBạn đã được mời đến một",
+    "text_as_you_join": "khi bạn tham gia",
+    "text_no_invitations_found": "Không tìm thấy lời mời nào",
+    "text_invitation_detail": "Chi tiết lời mời",
+    "text_has_invited_you_to_join": "đã mời bạn tham gia",
+    "text_you_have_been_invited_to": "Bạn đã được mời đến"
   },
   "quiz": {
     "create_quiz": "Tạo Quiz",
@@ -1647,5 +1717,9 @@
     "description_2": ", bạn sẽ tham gia tất cả các nhóm bên ngoài của nó.",
     "text_join_group_button": "Tham gia",
     "text_you_are_asking_to_join": "Bạn đang yêu cầu tham gia"
+  },
+  "update_required": {
+    "title": "Yêu cầu cập nhật",
+    "description": "Tính năng này không còn được hỗ trợ, vui lòng cập nhật phiên bản mới nhất."
   }
 }

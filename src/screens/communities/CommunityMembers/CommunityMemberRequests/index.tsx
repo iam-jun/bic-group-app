@@ -8,16 +8,12 @@ import useCommunityMemberStore from '../store';
 
 interface CommunityMemberRequestsProps {
   community: ICommunity;
-  canAddMember: boolean;
   canApproveRejectJoiningRequests: boolean;
-  onPressAdd?: () => void;
 }
 
 const CommunityMemberRequests = ({
   community,
-  canAddMember,
   canApproveRejectJoiningRequests,
-  onPressAdd,
 }: CommunityMemberRequestsProps) => {
   const { communityMemberRequests, actions: communityMemberActions } = useCommunityMemberStore();
   const { canLoadMore, ids } = communityMemberRequests || {};
@@ -56,10 +52,8 @@ const CommunityMemberRequests = ({
         <>
           <MemberRequestList
             type="community"
-            canAddMember={canAddMember}
             onLoadMore={onLoadMore}
             onRefresh={onRefresh}
-            onPressAdd={onPressAdd}
             id={communityId}
           />
 

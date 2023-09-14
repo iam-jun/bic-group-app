@@ -35,7 +35,7 @@ const GroupJoinCancelButton = ({ style, groupId }: GroupJoinCancelButtonProps) =
   const membershipQuestionActions = useMemberQuestionsStore((state) => state.actions);
   const termsActions = useTermStore((state) => state.actions);
 
-  if (isMember) return null;
+  if (isMember || joinStatus == GroupJoinStatus.BE_INVITED) return null;
 
   const onPressJoin = async () => {
     try {

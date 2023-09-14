@@ -1,58 +1,36 @@
 import React from 'react';
-import { AppConfig } from '~/configs';
 import { communityDetailData } from '~/test/mock_data/communities';
-import {
-  act, fireEvent, render, renderHook, renderWithRedux,
-} from '~/test/testUtils';
-import { timeOut } from '~/utils/common';
+import { act, fireEvent, render } from '~/test/testUtils';
 import useCommunityMemberStore from '../../store';
 import SearchMemberView from './SearchMemberView';
+import { timeOut } from '~/utils/common';
+import { AppConfig } from '~/configs';
 
 describe('SearchMemberView component', () => {
   const community = { ...communityDetailData };
-  const isOpen = true;
   const onPressMenu = jest.fn();
 
-  it('should render data list correctly', () => {
-    const wrapper = renderWithRedux(
-      <SearchMemberView
-        community={community}
-        isOpen={isOpen}
-        initSearch="test"
-        onPressMenu={onPressMenu}
-      />,
-    );
-    const textComponent = wrapper.queryByTestId(
-      'search_member_view.type_search',
-    );
-    expect(textComponent).toBeNull();
-
-    const dataList = wrapper.getByTestId('flatlist');
-    expect(dataList).toBeDefined();
-  });
-
-  it('should call API get community members', async () => {
+  it('should render data list correctly', async () => {
     const searchCommunityMembers = jest.fn();
-    jest.spyOn(useCommunityMemberStore, 'getState').mockImplementation(() => ({ actions: { searchCommunityMembers } } as any));
-    const { result } = renderHook(() => useCommunityMemberStore((state) => state));
-    result.current.actions.searchCommunityMembers = searchCommunityMembers;
-    const searchText = 'test';
+    useCommunityMemberStore.setState((state) => {
+      state.actions.searchCommunityMembers = searchCommunityMembers;
+      return state;
+    });
 
     const wrapper = render(
-      <SearchMemberView
-        community={community}
-        isOpen={isOpen}
-        onPressMenu={onPressMenu}
-      />,
+      <SearchMemberView community={community} isMember placeholder="test" onPressMenu={onPressMenu} />,
     );
 
-    const searchInput = wrapper.getByTestId('search_input.input');
+    const { getByTestId } = wrapper;
 
+    const containerView = getByTestId('search_member_view');
+    expect(containerView).toBeDefined();
+
+    const searchInput = getByTestId('search_input.input');
     act(() => {
-      fireEvent.changeText(searchInput, searchText);
+      fireEvent.changeText(searchInput, 'test');
     });
-    expect(searchInput.props.value).toBe(searchText);
     await timeOut(AppConfig.searchTriggerTime);
-    expect(searchCommunityMembers).toBeCalledWith({ key: searchText, groupId: community.groupId });
+    expect(searchCommunityMembers).toBeCalled();
   });
 });

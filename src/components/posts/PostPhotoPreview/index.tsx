@@ -130,6 +130,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
       <>
         {separate && <ViewSpacing width={spacingImage} height={spacingImage} />}
         <Button
+          testID="post_photo_preview.small_image"
           style={styles.flex1}
           disabled={disabled}
           activeOpacity={0.8}
@@ -166,6 +167,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
       <View style={[styles.container, containerImagesStyle]}>
         <View style={{ flex: data?.length === 2 ? 1 : 2 }}>
           <Button
+            testID="post_photo_preview.first_image"
             disabled={disabled}
             activeOpacity={0.8}
             onPress={(e) => _onPress(e, 0)}
