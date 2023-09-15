@@ -54,9 +54,10 @@ const SearchResults = ({
           : undefined;
 
     const isDisabledText = isUnselectedAndReachedMax || loadingView;
-    const colorText = loadingView ? colors.transparent1 : colors.neutral70;
+    const colorFullname = loadingView ? colors.transparent1 : colors.neutral70;
+    const colorUsername = loadingView ? colors.transparent1 : colors.neutral30;
     const currentUser = data[item];
-    const { fullname, avatar } = currentUser || {};
+    const { fullname, avatar, username } = currentUser || {};
 
     return (
       <PrimaryItem
@@ -65,9 +66,15 @@ const SearchResults = ({
         avatar={avatar || images.img_user_avatar_default}
         avatarProps={{ isRounded: true, variant: 'small' }}
         ContentComponent={(
-          <Text.BodyMMedium ellipsizeMode="middle" color={colorText} numberOfLines={2}>
-            {fullname}
-          </Text.BodyMMedium>
+          <View>
+            <Text.BodyMMedium ellipsizeMode="middle" color={colorFullname} numberOfLines={2}>
+              {fullname}
+            </Text.BodyMMedium>
+            <Text.BodyS ellipsizeMode="middle" color={colorUsername} numberOfLines={1}>
+              @
+              {username}
+            </Text.BodyS>
+          </View>
         )}
         isChecked={isSelected}
         checkboxProps={{ testID: 'search_results.checkbox', disabled: isDisabledCheckbox }}
