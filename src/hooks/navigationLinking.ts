@@ -144,6 +144,26 @@ export const onReceiveURL = async ({
         break;
       }
 
+      case DeepLinkTypes.NOTIFICATION_ADVANCED_SETTINGS: {
+        navigation?.navigate?.(notiStack.advancedSettings);
+        break;
+      }
+
+      case DeepLinkTypes.PRIVACY: {
+        navigation?.navigate?.(mainStack.privacyCenter);
+        break;
+      }
+
+      case DeepLinkTypes.BLOCKING: {
+        navigation?.navigate?.(mainStack.blocking);
+        break;
+      }
+
+      case DeepLinkTypes.COMMUNYTIES_TAB: {
+        navigation?.navigate?.('communities');
+        break;
+      }
+
       case DeepLinkTypes.APP:
         break;
       default:
