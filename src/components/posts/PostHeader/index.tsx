@@ -128,6 +128,8 @@ const PostHeader: FC<PostHeaderProps> = ({
     });
   };
 
+  const onPressMenu = useDefaultMenu ? onShowMenu : undefined;
+
   return (
     <ContentHeader
       {...props}
@@ -138,7 +140,7 @@ const PostHeader: FC<PostHeaderProps> = ({
       publishedAt={publishedAt}
       disabled={disabled}
       onPressHeader={_onPressHeader}
-      onPressMenu={onShowMenu}
+      onPressMenu={onPressMenu}
     />
   );
 };

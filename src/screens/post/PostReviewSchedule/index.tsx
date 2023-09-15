@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, ScrollView, RefreshControl } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import ScreenWrapper from '~/baseComponents/ScreenWrapper';
@@ -9,6 +9,7 @@ import postsSelector from '~/store/entities/posts/selectors';
 import { spacing } from '~/theme';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { PostView } from '~/components/posts';
+import { IPayloadPutEditPost } from '~/interfaces/IPost';
 
 interface PostReviewScheduleProps {
   route?: {
@@ -22,6 +23,7 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
   const { route } = props;
   // const { postId } = route.params || {};
   const postId = 'bafbcbd3-3faf-4549-be83-7038577447b4';
+  const [publishing, setPublishing] = useState(false);
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -32,7 +34,6 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
   const {
     scheduledAt,
     status,
-
   } = data || {};
 
   useEffect(() => {
@@ -47,6 +48,20 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
     postActions.getPostDetail({ postId });
   };
 
+  const onPressPublish = () => {
+    if (postId) {
+      setPublishing(true);
+      const payload: IPayloadPutEditPost = {
+        id: postId,
+        disableNavigate: false,
+        isPublish: true,
+        onError: () => setPublishing(false),
+        isHandleSeriesTagsError: false,
+      };
+      postActions.putEditPost(payload);
+    }
+  };
+
   return (
     <ScreenWrapper
       isFullView
@@ -56,9 +71,14 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
       <Header
         titleTextProps={{ useI18n: true }}
         title="post:title_post_review_schedule"
-        buttonProps={{ loading: false, style: styles.btnPublish, useI18n: true }}
+        buttonProps={{
+          loading: publishing,
+          disabled: publishing,
+          style: styles.btnPublish,
+          useI18n: true
+        }}
         buttonText={('common:btn_publish')}
-        onPressButton={() => {}}
+        onPressButton={onPressPublish}
         removeBorderAndShadow
       />
       <BoxScheduleTime
@@ -84,7 +104,6 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {},
   btnPublish: {
     marginRight: spacing.margin.small,
   },
