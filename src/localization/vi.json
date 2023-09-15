@@ -1015,7 +1015,8 @@
       "delete_post": "Xóa bài viết",
       "view_series": "Hiển thị Series"
     },
-    "text_selecting_will_be_added_to": "Bài đăng của bạn sẽ được thêm vào"
+    "text_selecting_will_be_added_to": "Bài đăng của bạn sẽ được thêm vào",
+    "title_post_review_schedule": "Bài viết đã lên lịch"
   },
   "comment": {
     "placeholder_comment": "Để lại bình luận ...",

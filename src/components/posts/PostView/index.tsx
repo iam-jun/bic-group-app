@@ -33,6 +33,7 @@ export interface PostViewProps {
   data: IPost;
   isLite?: boolean;
   isPostDetail?: boolean;
+  isSchedule?: boolean;
   btnReactTestID?: string;
   btnCommentTestID?: string;
   hasReactPermission?: boolean;
@@ -52,6 +53,7 @@ const _PostView: FC<PostViewProps> = ({
   isLite,
   testID = 'post_view',
   isPostDetail = false,
+  isSchedule = false,
   btnReactTestID,
   btnCommentTestID,
   hasReactPermission = true,
@@ -129,7 +131,7 @@ const _PostView: FC<PostViewProps> = ({
           && dataRelatedContentsInSeriesStore.length > 0;
 
   const renderContent = () => {
-    if (isHidden || shouldShowDraftQuiz) {
+    if (isHidden || shouldShowDraftQuiz || isSchedule) {
       return null;
     }
     return (

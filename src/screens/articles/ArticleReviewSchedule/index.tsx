@@ -6,7 +6,7 @@ import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import { IRouteParams } from '~/interfaces/IRouter';
 import Header from '~/beinComponents/Header';
 import ArticleWebview, { ArticleWebviewRef } from '~/components/articles/ArticleWebview';
-import { ArticleBoxScheduleTime } from '~/components/articles';
+import { BoxScheduleTime, Schedule } from '~/components/ScheduleContent/components';
 import postsSelector from '~/store/entities/posts/selectors';
 import usePostsStore from '~/store/entities/posts';
 import useArticlesStore from '../ArticleDetail/store';
@@ -17,7 +17,6 @@ import useMounted from '~/hooks/mounted';
 import useArticleScheduleMenu from '~/hooks/useArticleScheduleMenu';
 import useCreateArticle from '../CreateArticle/hooks/useCreateArticle';
 import { useUserIdAuth } from '~/hooks/auth';
-import Schedule from '../CreateArticle/components/Schedule';
 import { useBaseHook } from '~/hooks';
 import useDraftArticleStore from '~/screens/YourContent/components/Draft/DraftArticle/store';
 import spacing from '~/theme/spacing';
@@ -159,11 +158,11 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
     rootNavigation.goBack();
   };
 
-  const renderArticleBoxScheduleTime = () => {
+  const renderBoxScheduleTime = () => {
     if (!isMounted || !scheduledAt) return null;
 
     return (
-      <ArticleBoxScheduleTime
+      <BoxScheduleTime
         scheduledAt={scheduledAt}
         status={status}
       />
@@ -195,7 +194,7 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
       testID="article_review_schedule"
     >
       {renderHeader()}
-      {renderArticleBoxScheduleTime()}
+      {renderBoxScheduleTime()}
       <ArticleWebview
         ref={ref}
         initScript={initScript}

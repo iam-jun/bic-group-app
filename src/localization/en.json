@@ -1050,7 +1050,8 @@
       "delete_post": "Remove Post",
       "view_series": "View Series"
     },
-    "text_selecting_will_be_added_to": "Your post will be added to"
+    "text_selecting_will_be_added_to": "Your post will be added to",
+    "title_post_review_schedule": "Post Scheduled"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
