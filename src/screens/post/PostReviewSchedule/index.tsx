@@ -10,6 +10,8 @@ import { spacing } from '~/theme';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { PostView } from '~/components/posts';
 import { IPayloadPutEditPost } from '~/interfaces/IPost';
+import { useRootNavigation } from '~/hooks/navigation';
+import { PlaceHolderRemoveContent } from '~/baseComponents';
 
 interface PostReviewScheduleProps {
   route?: {
@@ -25,6 +27,7 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
   const postId = 'bafbcbd3-3faf-4549-be83-7038577447b4';
   const [publishing, setPublishing] = useState(false);
 
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
 
@@ -34,6 +37,7 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
   const {
     scheduledAt,
     status,
+    deleted,
   } = data || {};
 
   useEffect(() => {
@@ -61,6 +65,30 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
       postActions.putEditPost(payload);
     }
   };
+
+   const handleBack = () => {
+    if (deleted) {
+      // schedulePostActions.getSchedulePost({ isRefresh: true });
+    }
+    rootNavigation.goBack();
+  };
+
+  if (deleted) {
+    return (
+      <ScreenWrapper
+        isFullView
+        testID="post_review_schedule"
+        backgroundColor={colors.neutral5}
+      >
+        <Header
+          onPressBack={handleBack}
+          titleTextProps={{ useI18n: true }}
+          title="post:title_post_review_schedule"
+        />
+        <PlaceHolderRemoveContent label="post:label_post_deleted" />
+      </ScreenWrapper>
+    );
+  }
 
   return (
     <ScreenWrapper
