@@ -64,8 +64,8 @@ const UserProfile = (props: any) => {
 
   const {
     fullname,
-    avatar,
-    backgroundImgUrl,
+    avatar = '',
+    backgroundImgUrl = '',
     username,
     latestWork,
     isVerified,
@@ -104,8 +104,8 @@ const UserProfile = (props: any) => {
   }, [isFocused, userId]);
 
   useEffect(() => {
-    setAvatarState(userProfileData?.avatar);
-    setBgImgState(userProfileData?.backgroundImgUrl);
+    setAvatarState(avatar);
+    setBgImgState(backgroundImgUrl);
   }, [userProfileData]);
 
   useEffect(() => {
@@ -233,9 +233,6 @@ const UserProfile = (props: any) => {
     />
   );
 
-  if (error) return <NoUserFound />;
-  // TODO: to handle more error cases in the future
-
   const renderHeader = useCallback(() => (
     <>
       <CoverHeader
@@ -275,6 +272,9 @@ const UserProfile = (props: any) => {
     }
     return null;
   };
+
+  if (!!error && !loading) return <NoUserFound />;
+  // TODO: to handle more error cases in the future
 
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
