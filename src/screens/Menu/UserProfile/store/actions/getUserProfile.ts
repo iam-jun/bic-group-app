@@ -59,7 +59,7 @@ const getUserProfile
 
       set((state: IUserProfileState) => {
         state.loading = false;
-        state.error = err;
+        state.error = true;
       }, 'getUserProfileError');
     }
   };
