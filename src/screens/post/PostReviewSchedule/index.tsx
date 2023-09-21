@@ -4,7 +4,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import usePostsStore from '~/store/entities/posts';
-import { BoxScheduleTime } from '~/components/ScheduleContent/components';
+import { BoxScheduleTime } from '~/components/ScheduleContent';
 import postsSelector from '~/store/entities/posts/selectors';
 import { spacing } from '~/theme';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
@@ -12,6 +12,7 @@ import { PostView } from '~/components/posts';
 import { IPayloadPutEditPost } from '~/interfaces/IPost';
 import { useRootNavigation } from '~/hooks/navigation';
 import { PlaceHolderRemoveContent } from '~/baseComponents';
+import PostViewPlaceholder from '~/components/placeholder/PostViewPlaceholder';
 
 interface PostReviewScheduleProps {
   route?: {
@@ -23,8 +24,7 @@ interface PostReviewScheduleProps {
 
 const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
   const { route } = props;
-  // const { postId } = route.params || {};
-  const postId = 'bafbcbd3-3faf-4549-be83-7038577447b4';
+  const { postId } = route.params || {};
   const [publishing, setPublishing] = useState(false);
 
   const { rootNavigation } = useRootNavigation();
@@ -33,6 +33,9 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
 
   const postActions = usePostsStore((state) => state.actions);
   const data = usePostsStore(postsSelector.getPost(postId, {}));
+  const postDetailLoadingState = usePostsStore(
+    (state) => state.isLoadingGetPostDetail,
+  );
 
   const {
     scheduledAt,
@@ -43,13 +46,9 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
   useEffect(() => {
     getData();
   }, []);
-
-  const onRefresh = () => {
-    getData();
-  };
   
   const getData = () => {
-    postActions.getPostDetail({ postId });
+    postActions.getPostDetail({ postId, isDraft: true });
   };
 
   const onPressPublish = () => {
@@ -90,6 +89,14 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
     );
   }
 
+  const renderContent = () => {
+    if (postDetailLoadingState) return (
+      <PostViewPlaceholder testID="post_review_schedule.post_view_placeholder" />
+    );
+
+    return <PostView data={data} isSchedule />;
+  }
+
   return (
     <ScreenWrapper
       isFullView
@@ -114,17 +121,9 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
         status={status}
         isBorderTop
       />
-      <ScrollView
-        refreshControl={(
-          <RefreshControl
-            refreshing={false}
-            onRefresh={onRefresh}
-            tintColor={theme.colors.gray40}
-          />
-        )}
-      >
+      <ScrollView>
         <ViewSpacing height={spacing.margin.large} />
-        <PostView data={data} isSchedule />
+        {renderContent()}
         <ViewSpacing height={spacing.margin.big} />
       </ScrollView>
     </ScreenWrapper>

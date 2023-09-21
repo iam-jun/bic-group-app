@@ -228,12 +228,12 @@ const useCreateArticle = (set, get) => ({
     setScheduledAt: (scheduledAt: string) => {
       set((state: ICreateArticleState) => {
         state.schedule.scheduledAt = scheduledAt;
-      }, 'setScheduledAt');
+      }, 'setScheduledAt Article');
     },
     setErrorScheduleSubmiting: (errorScheduleSubmiting: string) => {
       set((state: ICreateArticleState) => {
         state.schedule.errorSubmiting = errorScheduleSubmiting;
-      }, 'setErrorScheduleSubmiting');
+      }, 'setErrorScheduleSubmiting Article');
     },
     setIsScheduleSubmiting: (isScheduleSubmiting: boolean) => {
       set((state: ICreateArticleState) => {
@@ -243,7 +243,7 @@ const useCreateArticle = (set, get) => ({
     setIsScheduleSubmitingSuccess: (isScheduleSubmitingSuccess: boolean) => {
       set((state: ICreateArticleState) => {
         state.schedule.isSubmitingSuccess = isScheduleSubmitingSuccess;
-      }, 'setIsScheduleSubmitingSuccess');
+      }, 'setIsScheduleSubmitingSuccess Article');
     },
     setChooseAudiences: (audiences: IAudience[]) => {
       set((state: ICreateArticleState) => {

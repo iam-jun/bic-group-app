@@ -7,42 +7,59 @@ import moment from 'moment';
 import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { spacing } from '~/theme';
-import useCreateArticle from '../../../screens/articles/CreateArticle/hooks/useCreateArticle';
-import useArticlesStore from '../../../screens/articles/ArticleDetail/store';
 import Icon from '~/baseComponents/Icon';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { DateInput } from '~/baseComponents/Input';
-import useCreateArticleStore from '../../../screens/articles/CreateArticle/store';
+import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import { Button } from '~/baseComponents';
-import { useRootNavigation } from '~/hooks/navigation';
-import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import useModalStore from '~/store/modal';
+import { PostType } from '~/interfaces/IPost';
+import useCreatePostStore from '~/screens/post/CreatePost/store';
 
 type ScheduleModalProps = {
-  articleId: string;
-  isFromReviewSchedule?: boolean;
+  contentType: PostType;
+  // validButtonConfirm: boolean;
+  handleSchedule: () => void;
+  doAfterScheduleSuccess: () => void;
+  setDateSchedule: (date: string) => void;
+  setTimeSchedule: (time: string) => void;
 };
 
 const ScheduleModal: FC<ScheduleModalProps> = ({
-  articleId,
-  isFromReviewSchedule = false,
+  contentType,
+  // validButtonConfirm,
+  handleSchedule,
+  doAfterScheduleSuccess,
+  setDateSchedule,
+  setTimeSchedule,
 }) => {
   const { t } = useBaseHook();
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
-  const { rootNavigation } = useRootNavigation();
-  const articlesActions = useArticlesStore((state) => state.actions);
 
-  const { handleSchedule } = useCreateArticle({
-    articleId,
-  });
-
-  const actions = useCreateArticleStore((state) => state.actions);
   const {
-    scheduledAt, isSubmiting, isSubmitingSuccess, errorSubmiting,
+    scheduledAt: scheduledAtArticle,
+    isSubmiting: isSubmitingArticle,
+    isSubmitingSuccess: isSubmitingSuccessArticle,
+    errorSubmiting: errorSubmitingArticle,
   } = useCreateArticleStore((state) => state.schedule);
+  const {
+    scheduledAt: scheduledAtPost,
+    isSubmiting: isSubmitingPost,
+    isSubmitingSuccess: isSubmitingSuccessPost,
+    errorSubmiting: errorSubmitingPost,
+  } = useCreatePostStore((state) => state.schedule);
   const modalActions = useModalStore((state) => state.actions);
+
+  const scheduledAt
+    = contentType === PostType.ARTICLE ? scheduledAtArticle : scheduledAtPost;
+  const isSubmiting
+    = contentType === PostType.ARTICLE ? isSubmitingArticle : isSubmitingPost;
+  const isSubmitingSuccess
+    = contentType === PostType.ARTICLE ? isSubmitingSuccessArticle : isSubmitingSuccessPost;
+  const errorSubmiting
+    = contentType === PostType.ARTICLE ? errorSubmitingArticle : errorSubmitingPost;
 
   const [isSetTime, setIsSetTime] = useState(!!scheduledAt);
   const [isSetDate, setIsSetDate] = useState(!!scheduledAt);
@@ -54,12 +71,8 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
   const onScheduleSubmitingSuccess = () => {
     setTimeout(() => {
       closeModal();
-      if (isFromReviewSchedule) {
-        articlesActions.getArticleDetail({ articleId });
-      } else {
-        rootNavigation.replace(articleStack.articleReviewSchedule, { articleId });
-      }
-    }, 5000);
+      doAfterScheduleSuccess();
+    }, 3000);
   };
 
   useEffect(() => {
@@ -74,7 +87,8 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
 
   const getMinDateTime = () => {
     const now = moment();
-    const remainder = 30 - (now.minute() % 30);
+    // const remainder = 30 - (now.minute() % 30);
+    const remainder = 30;
     now.add(remainder, 'minutes').second(0).millisecond(0);
     return new Date(now.toISOString());
   };
@@ -90,7 +104,7 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
       .year(selectedDate.year())
       .month(selectedDate.month())
       .date(selectedDate.date());
-    actions.setScheduledAt(newScheduledAt.toISOString());
+    setDateSchedule(newScheduledAt.toISOString());
   };
 
   const handleChangeTimePicker = (datetime?: Date) => {
@@ -107,7 +121,7 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
       .minute(selectedTime.minute())
       .second(0)
       .millisecond(0);
-    actions.setScheduledAt(newScheduledAt.toISOString());
+    setTimeSchedule(newScheduledAt.toISOString());
   };
 
   const renderHeader = () => (
@@ -123,40 +137,47 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
   );
 
   const renderContent = () => (
-    <View style={styles.contentContainer}>
-      <View style={styles.datetimeContainer}>
-        <DateInput
-          mode="date"
-          value={scheduledAt || minDateTime.toISOString()}
-          minDate={minDateTime}
-          label={t('common:text_date')}
-          onConfirm={handleChangeDatePicker}
-          style={styles.flex1}
-          keepPlaceholder={!isSetDate}
-          minuteInterval={30}
-        />
-        <ViewSpacing width={16} />
-        <DateInput
-          mode="time"
-          value={scheduledAt || minDateTime.toISOString()}
-          minDate={minDateTime}
-          label={t('common:text_time')}
-          onConfirm={handleChangeTimePicker}
-          style={styles.flex1}
-          keepPlaceholder={!isSetTime}
-          minuteInterval={30}
-        />
+    <>
+      <View style={styles.notedView}>
+        <Text.BodyM useI18n color={colors.neutral40}>
+          post:text_noted_schedule
+        </Text.BodyM>
       </View>
-      <ViewSpacing height={spacing.margin.large} />
-      <Button.Primary
-        useI18n
-        disabled={disableBtnSchedule}
-        loading={isSubmiting}
-        onPress={handleSchedule}
-      >
-        article:text_schedule
-      </Button.Primary>
-    </View>
+      <View style={styles.contentContainer}>
+        <View style={styles.datetimeContainer}>
+          <DateInput
+            mode="date"
+            value={scheduledAt || minDateTime.toISOString()}
+            minDate={minDateTime}
+            label={t('common:text_date')}
+            onConfirm={handleChangeDatePicker}
+            style={styles.flex1}
+            keepPlaceholder={!isSetDate}
+            minuteInterval={30}
+          />
+          <ViewSpacing width={16} />
+          <DateInput
+            mode="time"
+            value={scheduledAt || minDateTime.toISOString()}
+            minDate={minDateTime}
+            label={t('common:text_time')}
+            onConfirm={handleChangeTimePicker}
+            style={styles.flex1}
+            keepPlaceholder={!isSetTime}
+            minuteInterval={30}
+          />
+        </View>
+        <ViewSpacing height={spacing.margin.large} />
+        <Button.Primary
+          useI18n
+          disabled={disableBtnSchedule}
+          loading={isSubmiting}
+          onPress={handleSchedule}
+        >
+          article:text_schedule
+        </Button.Primary>
+      </View>
+    </>
   );
 
   const renderResultError = () => (
@@ -219,6 +240,11 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingHorizontal: spacing.padding.large,
       paddingTop: spacing.padding.large,
       paddingBottom: spacing.padding.big,
+    },
+    notedView: {
+      paddingHorizontal: spacing.padding.extraLarge,
+      paddingVertical: spacing.padding.small,
+      backgroundColor: colors.neutral2,
     },
     datetimeContainer: {
       flexDirection: 'row',

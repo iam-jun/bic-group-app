@@ -6,7 +6,7 @@ import {
 import { mockArticle } from '~/test/mock_data/article';
 import MockedNavigator from '~/test/MockedNavigator';
 import usePostsStore from '~/store/entities/posts';
-import { IPost, PostStatus } from '~/interfaces/IPost';
+import { IPost, PostStatus, PostType } from '~/interfaces/IPost';
 import Schedule from './Schedule';
 import streamApi from '~/api/StreamApi';
 import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
@@ -24,7 +24,8 @@ describe('Schedule', () => {
       <MockedNavigator
         component={() => (
           <Schedule
-            articleId={article.id}
+            contentId={article.id}
+            contentType={PostType.ARTICLE}
           />
         )}
       />,
@@ -49,7 +50,8 @@ describe('Schedule', () => {
       <MockedNavigator
         component={() => (
           <Schedule
-            articleId={article.id}
+            contentId={article.id}
+            contentType={PostType.ARTICLE}
           />
         )}
       />,
@@ -81,7 +83,8 @@ describe('Schedule', () => {
       <MockedNavigator
         component={() => (
           <Schedule
-            articleId={article.id}
+            contentId={article.id}
+            contentType={PostType.ARTICLE}
           />
         )}
       />,

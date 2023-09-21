@@ -1016,7 +1016,8 @@
       "view_series": "Hiển thị Series"
     },
     "text_selecting_will_be_added_to": "Bài đăng của bạn sẽ được thêm vào",
-    "title_post_review_schedule": "Bài viết đã lên lịch"
+    "title_post_review_schedule": "Bài viết đã lên lịch",
+    "text_noted_schedule": "Bạn chỉ có thể đặt thời gian xuất bản là ít nhất 30 phút kể từ bây giờ."
   },
   "comment": {
     "placeholder_comment": "Để lại bình luận ...",

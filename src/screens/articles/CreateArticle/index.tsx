@@ -28,11 +28,12 @@ import useCreateArticle from './hooks/useCreateArticle';
 import SettingsButton from '~/components/ContentSettings/SettingsButton';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import { BoxScheduleTime, Schedule } from '~/components/ScheduleContent/components';
+import { BoxScheduleTime, Schedule } from '~/components/ScheduleContent';
 import CreateBannerImportant from '~/components/ContentSettings/CreateBannerImportant';
 import { PostType } from '~/interfaces/IPost';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftContents/store';
+import useScheduleArticle from './hooks/useScheduleArticle';
 
 enum SectionName {
   Title,
@@ -126,8 +127,23 @@ const CreateArticle: FC<CreateArticleProps> = ({
 
   const [articleId, setArticleId] = useState(articleIdParams);
 
-  const { handlePublish, validButtonPublish } = useCreateArticle({ articleId });
+  const {
+    isValidating,
+    validButtonPublish,
+    handlePublish,
+    validateSeriesTags,
+    handleSeriesTagsError,
+    handleSave,
+  } = useCreateArticle({ articleId });
   const isPublishing = useDraftArticleStore((state) => state.isPublishing);
+
+  const { handleOpenPopupSchedule } = useScheduleArticle(
+    articleId,
+    validButtonPublish,
+    validateSeriesTags,
+    handleSeriesTagsError,
+    handleSave,
+  );
 
   const resetEditArticleStore = useCreateArticleStore((state) => state.reset);
   const resetMentionInputStore = useMentionInputStore((state) => state.reset);
@@ -173,7 +189,13 @@ const CreateArticle: FC<CreateArticleProps> = ({
   };
 
   const renderBtnSchedule = () => {
-    if (isDraft || isSchedule) return (<Schedule articleId={articleId} />);
+    if (isDraft || isSchedule) return (
+      <Schedule
+        isValidating={isValidating}
+        validButton={validButtonPublish}
+        handleOpenPopupSchedule={handleOpenPopupSchedule}
+      />
+    );
 
     return null;
   };
