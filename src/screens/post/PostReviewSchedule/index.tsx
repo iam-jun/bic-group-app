@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, ScrollView, RefreshControl } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -46,7 +46,7 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
   useEffect(() => {
     getData();
   }, []);
-  
+
   const getData = () => {
     postActions.getPostDetail({ postId, isDraft: true });
   };
@@ -65,7 +65,7 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
     }
   };
 
-   const handleBack = () => {
+  const handleBack = () => {
     if (deleted) {
       // schedulePostActions.getSchedulePost({ isRefresh: true });
     }
@@ -90,12 +90,14 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
   }
 
   const renderContent = () => {
-    if (postDetailLoadingState) return (
-      <PostViewPlaceholder testID="post_review_schedule.post_view_placeholder" />
-    );
+    if (postDetailLoadingState) {
+      return (
+        <PostViewPlaceholder testID="post_review_schedule.post_view_placeholder" />
+      );
+    }
 
     return <PostView data={data} isSchedule />;
-  }
+  };
 
   return (
     <ScreenWrapper
@@ -110,9 +112,9 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
           loading: publishing,
           disabled: publishing,
           style: styles.btnPublish,
-          useI18n: true
+          useI18n: true,
         }}
-        buttonText={('common:btn_publish')}
+        buttonText="common:btn_publish"
         onPressButton={onPressPublish}
         removeBorderAndShadow
       />

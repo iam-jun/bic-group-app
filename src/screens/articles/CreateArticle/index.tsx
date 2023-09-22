@@ -189,13 +189,15 @@ const CreateArticle: FC<CreateArticleProps> = ({
   };
 
   const renderBtnSchedule = () => {
-    if (isDraft || isSchedule) return (
-      <Schedule
-        isValidating={isValidating}
-        validButton={validButtonPublish}
-        handleOpenPopupSchedule={handleOpenPopupSchedule}
-      />
-    );
+    if (isDraft || isSchedule) {
+      return (
+        <Schedule
+          isValidating={isValidating}
+          validButton={validButtonPublish}
+          handleOpenPopupSchedule={handleOpenPopupSchedule}
+        />
+      );
+    }
 
     return null;
   };

@@ -1,17 +1,16 @@
-import React from "react";
+import React from 'react';
 import moment from 'moment';
-import { isEqual } from "lodash";
-import { ScheduleModal } from "~/components/ScheduleContent";
-import { IPostCreatePost, PostType } from "~/interfaces/IPost";
-import { SavePostParams } from "./useSavePost";
-import useModalStore from "~/store/modal";
-import { HandleSeriesTagsErrorParams } from "~/components/ValidateSeriesTags/store";
-import usePostsStore from "~/store/entities/posts";
-import postsSelector from "~/store/entities/posts/selectors";
-import { useBaseHook } from "~/hooks";
-import { useRootNavigation } from "~/hooks/navigation";
-import useCreatePostStore from "../store";
-import homeStack from "~/router/navigator/MainStack/stacks/homeStack/stack";
+import { ScheduleModal } from '~/components/ScheduleContent';
+import { IPostCreatePost, PostType } from '~/interfaces/IPost';
+import { SavePostParams } from './useSavePost';
+import useModalStore from '~/store/modal';
+import { HandleSeriesTagsErrorParams } from '~/components/ValidateSeriesTags/store';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
+import { useBaseHook } from '~/hooks';
+import { useRootNavigation } from '~/hooks/navigation';
+import useCreatePostStore from '../store';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 
 const useSchedulePost = (
   postId: string,
@@ -48,7 +47,7 @@ const useSchedulePost = (
     };
 
     if (!validButtonPublish) return;
-    
+
     if (!isValidScheduleTime()) {
       createPostActions.setErrorScheduleSubmiting(t('article:fail_schedule'));
       return;
@@ -69,7 +68,7 @@ const useSchedulePost = (
     if (isReplace) {
       rootNavigation.replace(homeStack.postReviewSchedule, { postId });
     } else {
-      rootNavigation.goBack()
+      rootNavigation.goBack();
     }
   };
 

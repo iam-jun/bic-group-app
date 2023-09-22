@@ -113,13 +113,15 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   };
 
   const renderBtnSchedule = () => {
-    if (isEditDraftPost || isSchedule) return (
-      <Schedule
-        isValidating={isValidating}
-        validButton={!disableButtonPost}
-        handleOpenPopupSchedule={handleOpenPopupSchedule}
-      />
-    );
+    if (isEditDraftPost || isSchedule) {
+      return (
+        <Schedule
+          isValidating={isValidating}
+          validButton={!disableButtonPost}
+          handleOpenPopupSchedule={handleOpenPopupSchedule}
+        />
+      );
+    }
   };
 
   const userIds: string[] = [];

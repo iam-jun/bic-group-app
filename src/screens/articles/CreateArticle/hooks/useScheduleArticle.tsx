@@ -1,18 +1,17 @@
-import React from "react";
+import React from 'react';
 import moment from 'moment';
-import { isEqual } from "lodash";
-import { ScheduleModal } from "~/components/ScheduleContent";
-import { PostType } from "~/interfaces/IPost";
-import { IHandleSaveOptions } from "./useCreateArticle";
-import useModalStore from "~/store/modal";
-import { HandleSeriesTagsErrorParams } from "~/components/ValidateSeriesTags/store";
-import useCreateArticleStore from "../store";
-import usePostsStore from "~/store/entities/posts";
-import postsSelector from "~/store/entities/posts/selectors";
-import { useBaseHook } from "~/hooks";
-import useArticlesStore from "../../ArticleDetail/store";
-import { useRootNavigation } from "~/hooks/navigation";
-import articleStack from "~/router/navigator/MainStack/stacks/articleStack/stack";
+import { ScheduleModal } from '~/components/ScheduleContent';
+import { PostType } from '~/interfaces/IPost';
+import { IHandleSaveOptions } from './useCreateArticle';
+import useModalStore from '~/store/modal';
+import { HandleSeriesTagsErrorParams } from '~/components/ValidateSeriesTags/store';
+import useCreateArticleStore from '../store';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
+import { useBaseHook } from '~/hooks';
+import useArticlesStore from '../../ArticleDetail/store';
+import { useRootNavigation } from '~/hooks/navigation';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 
 const useScheduleArticle = (
   articleId: string,
@@ -42,7 +41,7 @@ const useScheduleArticle = (
     const isValidScheduleTime = () => moment(scheduleAtUpdated).isSameOrAfter(moment());
 
     if (!validButtonPublish) return;
-    
+
     if (!isValidScheduleTime()) {
       createArticleActions.setErrorScheduleSubmiting(t('article:fail_schedule'));
       return;

@@ -38,7 +38,7 @@ export const useCreatePost = (params?: UseCreatePostParams) => {
   const isEditDraftPost = post?.status === PostStatus.DRAFT;
   const isSchedule = [
     PostStatus.WAITING_SCHEDULE,
-    PostStatus.SCHEDULE_FAILED
+    PostStatus.SCHEDULE_FAILED,
   ].includes(post?.status);
 
   const createPostData = useCreatePostStore((state) => state.createPost);
@@ -46,7 +46,7 @@ export const useCreatePost = (params?: UseCreatePostParams) => {
   const createPostStoreActions = useCreatePostStore((state) => state.actions);
   const validateSeriesTagsActions = useValidateSeriesTags(
     (state) => state.actions,
-  ); 
+  );
   const isValidating = useValidateSeriesTags((state) => state.isValidating);
 
   const {
