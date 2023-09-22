@@ -28,14 +28,6 @@ const useScheduleArticle = (
   const articlesActions = useArticlesStore((state) => state.actions);
   const createArticleActions = useCreateArticleStore((state) => state.actions);
 
-  // const getValidButtonConfirm = () => {
-  //   const scheduleAtUpdated = useCreateArticleStore.getState().schedule.scheduledAt;
-  //   const validButtonConfirm = !isEqual(article?.scheduledAt, scheduleAtUpdated);
-  //   return validButtonConfirm;
-  // };
-
-  // const validButtonConfirm = getValidButtonConfirm();
-
   const handleSchedule = () => {
     const scheduleAtUpdated = useCreateArticleStore.getState().schedule.scheduledAt;
     const isValidScheduleTime = () => moment(scheduleAtUpdated).isSameOrAfter(moment());
@@ -118,8 +110,8 @@ const useScheduleArticle = (
   const onValidateSuccess = () => {
     showModal(
       <ScheduleModal
+        contentId={articleId}
         contentType={PostType.ARTICLE}
-        // validButtonConfirm={validButtonConfirm}
         handleSchedule={handleSchedule}
         doAfterScheduleSuccess={doAfterScheduleSuccess}
         setDateSchedule={setDateSchedule}

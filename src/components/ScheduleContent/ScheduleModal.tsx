@@ -15,10 +15,12 @@ import { Button } from '~/baseComponents';
 import useModalStore from '~/store/modal';
 import { PostType } from '~/interfaces/IPost';
 import useCreatePostStore from '~/screens/post/CreatePost/store';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 
 type ScheduleModalProps = {
+  contentId: string;
   contentType: PostType;
-  // validButtonConfirm: boolean;
   isPostScheduled?: boolean;
   handleSchedule: () => void;
   doAfterScheduleSuccess: (isReplace?: boolean) => void;
@@ -27,9 +29,9 @@ type ScheduleModalProps = {
 };
 
 const ScheduleModal: FC<ScheduleModalProps> = ({
+  contentId,
   contentType,
-  // validButtonConfirm,
-  isPostScheduled,
+  isPostScheduled = false,
   handleSchedule,
   doAfterScheduleSuccess,
   setDateSchedule,
@@ -40,6 +42,7 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
   const { colors } = theme;
   const styles = createStyle(theme);
 
+  const contentData = usePostsStore(postsSelector.getPost(contentId, {}));
   const {
     scheduledAt: scheduledAtArticle,
     isSubmiting: isSubmitingArticle,
@@ -68,7 +71,8 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
 
   const hasResultSchedule
     = isSubmitingSuccess || !!errorSubmiting;
-  const disableBtnSchedule = !(isSetDate && isSetTime) || isSubmiting;
+  const isDataChanged = scheduledAt !== contentData?.scheduledAt;
+  const disableBtnSchedule = !(isSetDate && isSetTime) || isSubmiting || !isDataChanged;
 
   const onScheduleSubmitingSuccess = () => {
     setTimeout(() => {
@@ -93,9 +97,10 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
 
   const getMinDateTime = () => {
     const now = moment();
-    const remainder = 30 - (now.minute() % 30);
-    // const remainder = 30;
+    const extraTime = 30 - (now.minute() % 30);
+    const remainder = 30 + extraTime;
     now.add(remainder, 'minutes').second(0).millisecond(0);
+
     return new Date(now.toISOString());
   };
 
