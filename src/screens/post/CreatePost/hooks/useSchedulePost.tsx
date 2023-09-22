@@ -29,14 +29,6 @@ const useSchedulePost = (
   const postActions = usePostsStore((state) => state.actions);
   const createPostActions = useCreatePostStore((state) => state.actions);
 
-  // const getValidButtonConfirm = () => {
-  //   const scheduleAtUpdated = useCreatePostStore.getState().schedule.scheduledAt;
-  //   const validButtonConfirm = post?.scheduledAt === scheduleAtUpdated;
-  //   return validButtonConfirm;
-  // };
-
-  // const validButtonConfirm = getValidButtonConfirm();
-
   const handleSchedule = () => {
     const scheduleAtUpdated = useCreatePostStore.getState().schedule.scheduledAt;
     const isValidScheduleTime = () => moment(scheduleAtUpdated).isSameOrAfter(moment());
@@ -127,8 +119,8 @@ const useSchedulePost = (
   const onValidateSuccess = () => {
     showModal(
       <ScheduleModal
+        contentId={postId}
         contentType={PostType.POST}
-        // validButtonConfirm={validButtonConfirm}
         isPostScheduled={isPostScheduled}
         handleSchedule={handleSchedule}
         doAfterScheduleSuccess={doAfterScheduleSuccess}
