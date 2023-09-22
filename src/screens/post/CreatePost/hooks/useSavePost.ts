@@ -23,7 +23,7 @@ import {
 import useCreatePostStore from '../store';
 import useLinkPreview from './useLinkPreview';
 
-type SavePostParams = Partial<IPayloadPutEditPost> & {
+export type SavePostParams = Partial<IPayloadPutEditPost> & {
   isToastAutoSave?: boolean;
 };
 
@@ -262,6 +262,7 @@ export const useSavePost = () => {
       isToastAutoSave,
       isPublish = true,
       isCreatingNewPost,
+      onSuccessAutoSave,
     } = params;
     const data = prepareData();
     const newPayload: IPayloadPutEditPost = {
@@ -272,6 +273,7 @@ export const useSavePost = () => {
       onRetry: () => savePost(params),
       isPublish,
       isCreatingNewPost,
+      onSuccessAutoSave,
     };
     try {
       if (isToastAutoSave) {
@@ -386,6 +388,7 @@ export const useSavePost = () => {
     enableButtonSaveSeries,
     isEditPostHasChange,
     startAutoSave,
+    prepareData,
     savePost,
     saveSelectedTags,
     saveSelectedSeries,

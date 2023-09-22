@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, ScrollView, RefreshControl } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import usePostsStore from '~/store/entities/posts';
-import { BoxScheduleTime } from '~/components/ScheduleContent/components';
+import { BoxScheduleTime } from '~/components/ScheduleContent';
 import postsSelector from '~/store/entities/posts/selectors';
 import { spacing } from '~/theme';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { PostView } from '~/components/posts';
 import { IPayloadPutEditPost } from '~/interfaces/IPost';
+import { useRootNavigation } from '~/hooks/navigation';
+import { PlaceHolderRemoveContent } from '~/baseComponents';
+import PostViewPlaceholder from '~/components/placeholder/PostViewPlaceholder';
 
 interface PostReviewScheduleProps {
   route?: {
@@ -21,31 +24,31 @@ interface PostReviewScheduleProps {
 
 const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
   const { route } = props;
-  // const { postId } = route.params || {};
-  const postId = 'bafbcbd3-3faf-4549-be83-7038577447b4';
+  const { postId } = route.params || {};
   const [publishing, setPublishing] = useState(false);
 
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
 
   const postActions = usePostsStore((state) => state.actions);
   const data = usePostsStore(postsSelector.getPost(postId, {}));
+  const postDetailLoadingState = usePostsStore(
+    (state) => state.isLoadingGetPostDetail,
+  );
 
   const {
     scheduledAt,
     status,
+    deleted,
   } = data || {};
 
   useEffect(() => {
     getData();
   }, []);
 
-  const onRefresh = () => {
-    getData();
-  };
-  
   const getData = () => {
-    postActions.getPostDetail({ postId });
+    postActions.getPostDetail({ postId, isDraft: true });
   };
 
   const onPressPublish = () => {
@@ -62,6 +65,40 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
     }
   };
 
+  const handleBack = () => {
+    if (deleted) {
+      // schedulePostActions.getSchedulePost({ isRefresh: true });
+    }
+    rootNavigation.goBack();
+  };
+
+  if (deleted) {
+    return (
+      <ScreenWrapper
+        isFullView
+        testID="post_review_schedule"
+        backgroundColor={colors.neutral5}
+      >
+        <Header
+          onPressBack={handleBack}
+          titleTextProps={{ useI18n: true }}
+          title="post:title_post_review_schedule"
+        />
+        <PlaceHolderRemoveContent label="post:label_post_deleted" />
+      </ScreenWrapper>
+    );
+  }
+
+  const renderContent = () => {
+    if (postDetailLoadingState) {
+      return (
+        <PostViewPlaceholder testID="post_review_schedule.post_view_placeholder" />
+      );
+    }
+
+    return <PostView data={data} isSchedule />;
+  };
+
   return (
     <ScreenWrapper
       isFullView
@@ -75,9 +112,9 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
           loading: publishing,
           disabled: publishing,
           style: styles.btnPublish,
-          useI18n: true
+          useI18n: true,
         }}
-        buttonText={('common:btn_publish')}
+        buttonText="common:btn_publish"
         onPressButton={onPressPublish}
         removeBorderAndShadow
       />
@@ -86,17 +123,9 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
         status={status}
         isBorderTop
       />
-      <ScrollView
-        refreshControl={(
-          <RefreshControl
-            refreshing={false}
-            onRefresh={onRefresh}
-            tintColor={theme.colors.gray40}
-          />
-        )}
-      >
+      <ScrollView>
         <ViewSpacing height={spacing.margin.large} />
-        <PostView data={data} isSchedule />
+        {renderContent()}
         <ViewSpacing height={spacing.margin.big} />
       </ScrollView>
     </ScreenWrapper>

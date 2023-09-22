@@ -30,6 +30,8 @@ import useCreatePost from './hooks/useCreatePost';
 import useCreatePostStore from './store';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import useLinkPreviewStore from '~/store/linkPreview';
+import { Schedule } from '~/components/ScheduleContent';
+import useSchedulePost from './hooks/useSchedulePost';
 
 export interface CreatePostProps {
   route?: {
@@ -70,11 +72,26 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     createPostData,
     isEditPost,
     isEditDraftPost,
+    isSchedule,
+    isValidating,
     disableButtonPost,
     isEditPostHasChange,
+    prepareData,
     savePost,
+    validateSeriesTags,
+    handleSeriesTagsError,
     disableButtonsCreatePostFooter,
   } = useCreatePostData;
+
+  const { handleOpenPopupSchedule, doAfterScheduleSuccess } = useSchedulePost(
+    postId,
+    !disableButtonPost,
+    isSchedule,
+    validateSeriesTags,
+    handleSeriesTagsError,
+    savePost,
+    prepareData,
+  );
 
   const {
     chosenAudiences, id, important, count,
@@ -93,6 +110,18 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     useI18n: true,
     style: { borderWidth: 0 },
     testID: 'create_post.btn_post',
+  };
+
+  const renderBtnSchedule = () => {
+    if (isEditDraftPost || isSchedule) {
+      return (
+        <Schedule
+          isValidating={isValidating}
+          validButton={!disableButtonPost}
+          handleOpenPopupSchedule={handleOpenPopupSchedule}
+        />
+      );
+    }
   };
 
   const userIds: string[] = [];
@@ -147,6 +176,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     handleBack({
       isEditPost,
       isEditPostHasChange,
+      isSchedule,
       hasPostId: !!postId,
       rootNavigation,
       isEditDraftPost,
@@ -163,12 +193,19 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
 
   const onSavePost = () => {
     Keyboard.dismiss();
-    savePost({
-      disableNavigate: false,
-      replaceWithDetail: screenParams.replaceWithDetail,
-      isPublish: true,
-      isCreatingNewPost,
-    });
+    if (isSchedule) {
+      savePost({
+        isPublish: false,
+        onSuccessAutoSave: () => doAfterScheduleSuccess(false),
+      });
+    } else {
+      savePost({
+        disableNavigate: false,
+        replaceWithDetail: screenParams.replaceWithDetail,
+        isPublish: true,
+        isCreatingNewPost,
+      });
+    }
   };
 
   const onPressSettings = () => {
@@ -194,6 +231,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
         buttonProps={buttonPostProps}
         onPressBack={onPressBack}
         onPressButton={onSavePost}
+        renderCustomComponent={renderBtnSchedule}
         style={styles.headerStyle}
       />
       <View style={styles.flex1}>

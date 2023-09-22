@@ -6,7 +6,7 @@ import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import { IRouteParams } from '~/interfaces/IRouter';
 import Header from '~/beinComponents/Header';
 import ArticleWebview, { ArticleWebviewRef } from '~/components/articles/ArticleWebview';
-import { BoxScheduleTime, Schedule } from '~/components/ScheduleContent/components';
+import { BoxScheduleTime } from '~/components/ScheduleContent';
 import postsSelector from '~/store/entities/posts/selectors';
 import usePostsStore from '~/store/entities/posts';
 import useArticlesStore from '../ArticleDetail/store';
@@ -136,8 +136,6 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
     handlePublish();
   };
 
-  const renderBtnSchedule = () => <Schedule articleId={articleId} isFromReviewSchedule />;
-
   const btnPublish = {
     buttonProps: { loading: isPublishing, style: styles.btnPublish },
     buttonText: t('common:btn_publish'),
@@ -145,7 +143,6 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
   };
 
   const headerButton = {
-    renderCustomComponent: renderBtnSchedule,
     ...btnPublish,
   };
 

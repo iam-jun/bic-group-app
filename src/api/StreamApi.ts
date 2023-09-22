@@ -394,6 +394,14 @@ export const streamApiConfig = {
       scheduledAt,
     },
   }),
+  schedulePost: (draftPostId: string, params: IPostCreatePost): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}posts/${draftPostId}/schedule`,
+    method: 'put',
+    data: {
+      ...params,
+    },
+  }),
   deleteArticle: (id: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}articles/${id}`,
@@ -798,6 +806,9 @@ const streamApi = {
   ),
   scheduleArticle: (draftArticleId: string, scheduledAt: string) => withHttpRequestPromise(
     streamApiConfig.scheduleArticle, draftArticleId, scheduledAt,
+  ),
+  schedulePost: (draftPostId: string, params: IPostCreatePost) => withHttpRequestPromise(
+    streamApiConfig.schedulePost, draftPostId, params,
   ),
   deleteArticle: (id: string) => withHttpRequestPromise(
     streamApiConfig.deleteArticle, id,

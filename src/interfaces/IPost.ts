@@ -300,6 +300,7 @@ export interface IPostCreatePost {
   createFromGroupId?: string;
   tags?: string[];
   series?: string[];
+  scheduledAt?: string;
 }
 
 export interface IPayloadCreateComment {
@@ -322,6 +323,7 @@ export interface IPayloadPutEditPost {
   msgError?: string;
   disableNavigate?: boolean;
   onError?: () => void;
+  onSuccessAutoSave?: () => void;
   isPublish?: boolean;
   createFromGroupId?: string;
   isHandleSeriesTagsError?: boolean;
@@ -363,6 +365,7 @@ export interface IPayloadGetPostDetail extends IParamGetPostDetail {
   callbackLoading?: (loading: boolean, success: boolean) => void;
   showToast?: boolean;
   isReported?: boolean;
+  isDraft?: boolean;
   commentId?: string;
 }
 

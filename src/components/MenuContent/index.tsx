@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { isEmpty } from 'lodash';
-import { IPost, PostType } from '~/interfaces/IPost';
+import { IPost, PostStatus, PostType } from '~/interfaces/IPost';
 import useMenuStore from '~/store/entities/menus';
 import BottomListItem from '~/components/BottomList/BottomListItem';
 import CircleSpinner from '~/baseComponents/Toggle/CircleSpinner';
@@ -40,6 +40,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
     reactionsCount,
     audience,
     quiz,
+    status,
   } = data || {};
 
   const { t } = useBaseHook();
@@ -110,6 +111,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
   const titleEditContent = getTitleContent(contentType, MENU_KEYS.EDIT);
   const titleSaveContent = getTitleContent(contentType, MENU_KEYS.SAVE, menu?.[MENU_KEYS.SAVE]);
   const titleDeleteContent = getTitleContent(contentType, MENU_KEYS.DELETE);
+  const isScheduled = [PostStatus.WAITING_SCHEDULE, PostStatus.SCHEDULE_FAILED].includes(status);
 
   useEffect(() => {
     if (isEmpty(menu)) {
@@ -160,7 +162,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
         })
       }
       {
-        renderMenuItem({
+        !isScheduled && renderMenuItem({
           keyMenu: MENU_KEYS.EDIT_SETTING,
           leftIcon: 'Sliders',
           title: t('common:edit_settings'),
@@ -170,7 +172,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
         })
       }
       {
-        renderMenuItem({
+        !isScheduled && renderMenuItem({
           keyMenu: MENU_KEYS.SAVE,
           leftIcon: menu[MENU_KEYS.SAVE] ? 'BookmarkSlash' : 'Bookmark',
           title: titleSaveContent,
@@ -187,7 +189,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
         })
       }
       {
-        renderMenuItem({
+        !isScheduled && renderMenuItem({
           keyMenu: MENU_KEYS.VIEW_REACTIONS,
           leftIcon: 'iconReact',
           title: t('post:post_menu_view_reactions'),
@@ -204,7 +206,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
         })
       }
       {
-        renderMenuItem({
+        !isScheduled && renderMenuItem({
           keyMenu: MENU_KEYS.PIN_CONTENT,
           leftIcon: 'Thumbtack',
           title: t('common:pin_unpin'),
@@ -214,7 +216,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
         })
       }
       {
-        renderMenuItem({
+        !isScheduled && renderMenuItem({
           keyMenu: MENU_KEYS.REPORT_CONTENT,
           leftIcon: 'Flag',
           title: t('common:btn_report_content'),
@@ -222,7 +224,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
         })
       }
       {
-        renderMenuItem({
+        !isScheduled && renderMenuItem({
           keyMenu: MENU_KEYS.REPORT_MEMBER,
           leftIcon: 'UserXmark',
           title: t('groups:member_menu:label_report_member'),
@@ -230,7 +232,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
         })
       }
       {
-        renderMenuItem({
+        !isScheduled && renderMenuItem({
           keyMenu: MENU_KEYS.CREATE_QUIZ,
           leftIcon: 'BallotCheck',
           title: t('quiz:create_quiz'),
@@ -242,7 +244,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
         })
       }
       {
-        renderMenuItem({
+        !isScheduled && renderMenuItem({
           keyMenu: MENU_KEYS.EDIT_QUIZ,
           leftIcon: 'FilePen',
           title: t('quiz:edit_quiz'),
@@ -253,7 +255,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
         })
       }
       {
-        renderMenuItem({
+        !isScheduled && renderMenuItem({
           keyMenu: MENU_KEYS.DELETE_QUIZ,
           leftIcon: 'TrashCan',
           title: t('quiz:delete_quiz'),
@@ -271,10 +273,11 @@ const MenuContent: React.FC<MenuContentProps> = ({
           title: titleDeleteContent,
           onPress: onPressDeleteContent,
           isDanger: true,
+          isShowBorderTop: isScheduled,
         })
       }
       {
-        renderMenuItem({
+        !isScheduled && renderMenuItem({
           keyMenu: MENU_KEYS.ENABLE_NOTIFICATIONS,
           leftIcon:
             menu[MENU_KEYS.ENABLE_NOTIFICATIONS] ? 'BellSlash' : 'Bell',

@@ -2,7 +2,7 @@ import React from 'react';
 import { IPost } from '~/interfaces/IPost';
 import { Button } from '~/baseComponents';
 import ContentArticle from './ContentArticle';
-import { BoxScheduleTime } from '~/components/ScheduleContent/components';
+import { BoxScheduleTime } from '~/components/ScheduleContent';
 import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 

@@ -1051,7 +1051,8 @@
       "view_series": "View Series"
     },
     "text_selecting_will_be_added_to": "Your post will be added to",
-    "title_post_review_schedule": "Post Scheduled"
+    "title_post_review_schedule": "Post Scheduled",
+    "text_noted_schedule": "You can only set the publish time to be at least 30 minutes from now."
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
