@@ -16,6 +16,7 @@ import homeStack from "~/router/navigator/MainStack/stacks/homeStack/stack";
 const useSchedulePost = (
   postId: string,
   validButtonPublish: boolean,
+  isPostScheduled: boolean,
   validateSeriesTags: (onValidateSuccess: () => void, onError: (error: any) => void) => void,
   handleSeriesTagsError: (params: HandleSeriesTagsErrorParams) => void,
   handleSave: (options?: SavePostParams) => void,
@@ -62,10 +63,14 @@ const useSchedulePost = (
     createPostActions.setScheduledAt(post?.scheduledAt || '');
   };
 
-  const doAfterScheduleSuccess = () => {
+  const doAfterScheduleSuccess = (isReplace = true) => {
     // use isDraft for get post detail without get comments
     postActions.getPostDetail({ postId, isDraft: true });
-    rootNavigation.replace(homeStack.postReviewSchedule, { postId });
+    if (isReplace) {
+      rootNavigation.replace(homeStack.postReviewSchedule, { postId });
+    } else {
+      rootNavigation.goBack()
+    }
   };
 
   const setDateSchedule = (date: string) => {
@@ -78,11 +83,10 @@ const useSchedulePost = (
 
   const validateDataBeforeSchedule = () => {
     const doAfterResolveError = () => {
-      // after resolve invalid Series Tags, need to save post
+      // after resolve invalid Series Tags, need to save post (PATCH)
       handleSave({
-        isPublish: true,
-        isCreatingNewPost: false,
-        onSuccess: onValidateSuccess,
+        isPublish: false,
+        onSuccessAutoSave: onValidateSuccess,
       });
     };
     const onError = (error) => {
@@ -126,6 +130,7 @@ const useSchedulePost = (
       <ScheduleModal
         contentType={PostType.POST}
         // validButtonConfirm={validButtonConfirm}
+        isPostScheduled={isPostScheduled}
         handleSchedule={handleSchedule}
         doAfterScheduleSuccess={doAfterScheduleSuccess}
         setDateSchedule={setDateSchedule}
@@ -140,6 +145,7 @@ const useSchedulePost = (
 
   return {
     handleOpenPopupSchedule,
+    doAfterScheduleSuccess,
   };
 };
 

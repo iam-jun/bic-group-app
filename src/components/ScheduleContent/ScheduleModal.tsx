@@ -19,8 +19,9 @@ import useCreatePostStore from '~/screens/post/CreatePost/store';
 type ScheduleModalProps = {
   contentType: PostType;
   // validButtonConfirm: boolean;
+  isPostScheduled?: boolean;
   handleSchedule: () => void;
-  doAfterScheduleSuccess: () => void;
+  doAfterScheduleSuccess: (isReplace?: boolean) => void;
   setDateSchedule: (date: string) => void;
   setTimeSchedule: (time: string) => void;
 };
@@ -28,6 +29,7 @@ type ScheduleModalProps = {
 const ScheduleModal: FC<ScheduleModalProps> = ({
   contentType,
   // validButtonConfirm,
+  isPostScheduled,
   handleSchedule,
   doAfterScheduleSuccess,
   setDateSchedule,
@@ -71,7 +73,11 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
   const onScheduleSubmitingSuccess = () => {
     setTimeout(() => {
       closeModal();
-      doAfterScheduleSuccess();
+      if (isPostScheduled) {
+        doAfterScheduleSuccess(false);
+      } else {
+        doAfterScheduleSuccess();
+      }
     }, 3000);
   };
 
@@ -87,8 +93,8 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
 
   const getMinDateTime = () => {
     const now = moment();
-    // const remainder = 30 - (now.minute() % 30);
-    const remainder = 30;
+    const remainder = 30 - (now.minute() % 30);
+    // const remainder = 30;
     now.add(remainder, 'minutes').second(0).millisecond(0);
     return new Date(now.toISOString());
   };

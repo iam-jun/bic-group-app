@@ -83,9 +83,10 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     disableButtonsCreatePostFooter,
   } = useCreatePostData;
 
-  const { handleOpenPopupSchedule } = useSchedulePost(
+  const { handleOpenPopupSchedule, doAfterScheduleSuccess } = useSchedulePost(
     postId,
     !disableButtonPost,
+    isSchedule,
     validateSeriesTags,
     handleSeriesTagsError,
     savePost,
@@ -173,6 +174,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     handleBack({
       isEditPost,
       isEditPostHasChange,
+      isSchedule,
       hasPostId: !!postId,
       rootNavigation,
       isEditDraftPost,
@@ -189,12 +191,19 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
 
   const onSavePost = () => {
     Keyboard.dismiss();
-    savePost({
-      disableNavigate: false,
-      replaceWithDetail: screenParams.replaceWithDetail,
-      isPublish: true,
-      isCreatingNewPost,
-    });
+    if (isSchedule) {
+      savePost({
+        isPublish: false,
+        onSuccessAutoSave: () => doAfterScheduleSuccess(false),
+      });
+    } else {
+      savePost({
+        disableNavigate: false,
+        replaceWithDetail: screenParams.replaceWithDetail,
+        isPublish: true,
+        isCreatingNewPost,
+      });
+    }
   };
 
   const onPressSettings = () => {

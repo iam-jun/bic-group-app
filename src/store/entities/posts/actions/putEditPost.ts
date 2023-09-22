@@ -29,7 +29,7 @@ const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
   const { important = {} } = useCreatePostStore.getState().createPost;
   const {
     id, data, replaceWithDetail = true, onRetry, disableNavigate, isCreatingNewPost = true,
-    onError, onSuccess, isPublish = true, createFromGroupId, isHandleSeriesTagsError = true, isRefresh = true,
+    onError, onSuccessAutoSave, isPublish = true, createFromGroupId, isHandleSeriesTagsError = true, isRefresh = true,
   } = payload || {};
 
   if (!id) {
@@ -48,6 +48,7 @@ const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
     // if auto save a draft post, then no need to do anything more
     if (!isPublish) {
       await streamApi.putAutoSavePost(params);
+      onSuccessAutoSave?.();
       return;
     }
 
@@ -70,7 +71,6 @@ const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
     const post = response.data;
     actions.addToPosts({ data: post } as IPayloadAddToAllPost);
 
-    onSuccess?.();
     showToastSuccess(response);
 
     if (isCreatingNewPost) {

@@ -262,7 +262,7 @@ export const useSavePost = () => {
       isToastAutoSave,
       isPublish = true,
       isCreatingNewPost,
-      onSuccess,
+      onSuccessAutoSave,
     } = params;
     const data = prepareData();
     const newPayload: IPayloadPutEditPost = {
@@ -273,7 +273,7 @@ export const useSavePost = () => {
       onRetry: () => savePost(params),
       isPublish,
       isCreatingNewPost,
-      onSuccess,
+      onSuccessAutoSave,
     };
     try {
       if (isToastAutoSave) {
