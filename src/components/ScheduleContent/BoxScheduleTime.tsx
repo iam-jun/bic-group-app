@@ -11,12 +11,14 @@ interface BoxScheduleTimeProps {
   scheduledAt: string;
   status: PostStatus;
   isBorderTop?: boolean;
+  isBorderBottomShadow?: boolean;
 }
 
 const BoxScheduleTime: React.FC<BoxScheduleTimeProps> = ({
   scheduledAt,
   status,
   isBorderTop = false,
+  isBorderBottomShadow = false,
 }) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -48,6 +50,7 @@ const BoxScheduleTime: React.FC<BoxScheduleTimeProps> = ({
         styles.container,
         { backgroundColor },
         isBorderTop && styles.borderTop,
+        isBorderBottomShadow && styles.bottomBorderAndShadow,
       ]}
       testID="box_schedule_time"
     >
@@ -86,7 +89,7 @@ const BoxScheduleTime: React.FC<BoxScheduleTimeProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const { colors } = theme;
+  const { colors, elevations } = theme;
 
   return StyleSheet.create({
     container: {
@@ -106,6 +109,9 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     icon: {
       marginRight: spacing.margin.tiny,
+    },
+    bottomBorderAndShadow: {
+      ...elevations.e2,
     },
   });
 };

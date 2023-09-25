@@ -22,6 +22,7 @@ import showToastSuccess from '~/store/helper/showToastSuccess';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentPublishedProperties } from '~/services/tracking/Interface';
 import { TrackingEvent } from '~/services/tracking/constants';
+import useScheduledContentsStore from '~/screens/YourContent/components/Scheduled/store';
 
 const navigation = withNavigation?.(rootNavigationRef);
 
@@ -99,6 +100,7 @@ const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
       };
       useDraftPostStore.getState().actions.getDraftPosts(payloadGetDraftContents);
       useDraftContentsStore.getState().actions.getDraftContents(payloadGetDraftContents);
+      useScheduledContentsStore.getState().actions.refreshAllFeeds();
       useHomeStore.getState().actions.refreshHome();
     }
   } catch (error) {

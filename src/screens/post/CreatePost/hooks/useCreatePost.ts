@@ -21,6 +21,7 @@ import useCreatePostStore, { CreatePost } from '../store';
 import useLinkPreview from './useLinkPreview';
 import useSavePost from './useSavePost';
 import useValidateSeriesTags, { HandleSeriesTagsErrorParams } from '~/components/ValidateSeriesTags/store';
+import { isScheduledContent } from '~/components/ScheduleContent/helper';
 
 type UseCreatePostParams = {
   screenParams?: ICreatePostParams;
@@ -36,10 +37,7 @@ export const useCreatePost = (params?: UseCreatePostParams) => {
 
   const isEditPost = post?.status === PostStatus.PUBLISHED;
   const isEditDraftPost = post?.status === PostStatus.DRAFT;
-  const isSchedule = [
-    PostStatus.WAITING_SCHEDULE,
-    PostStatus.SCHEDULE_FAILED,
-  ].includes(post?.status);
+  const isSchedule = isScheduledContent(post?.status);
 
   const createPostData = useCreatePostStore((state) => state.createPost);
   const isLoadPostDetailDone = useCreatePostStore((state) => state.isLoadPostDetailDone);

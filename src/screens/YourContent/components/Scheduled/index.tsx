@@ -1,42 +1,46 @@
 import React, { useEffect } from 'react';
+import Animated from 'react-native-reanimated';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import {
   View, StyleSheet, ActivityIndicator, RefreshControl,
 } from 'react-native';
-import Animated from 'react-native-reanimated';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
-
+import useYourContentStore from '../../store';
+import { homeHeaderTabHeight, homeHeaderContentContainerHeight } from '~/theme/dimension';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { spacing } from '~/theme';
 import Image from '~/components/Image';
 import images from '~/resources/images';
 import Text from '~/baseComponents/Text';
-import useScheduleArticlesStore from './store';
-import { ArticleScheduleItem } from '~/components/articles';
-import { homeHeaderTabHeight } from '~/theme/dimension';
+import useScheduledContentsStore from './store';
+import ScheduledItem from './ScheduledItem';
 
-interface ScheduledArticlesProps {
-  onScroll: (e: any) => void;
+const HeaderFilterHeight = homeHeaderTabHeight + homeHeaderContentContainerHeight;
+
+interface ScheduledProps {
+    onScroll: (e: any) => void;
 }
 
-const ScheduledArticles: React.FC<ScheduledArticlesProps> = ({ onScroll }) => {
+const Scheduled: React.FC<ScheduledProps> = ({ onScroll }) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle();
 
-  const { scheduleArticles, actions } = useScheduleArticlesStore();
+  const activeScheduledTab = useYourContentStore((state) => state.activeScheduledTab);
+
+  const scheduledFeed = useScheduledContentsStore((state) => state.scheduledFeed);
+  const actions = useScheduledContentsStore((state) => state.actions);
+
+  const data = scheduledFeed[activeScheduledTab];
   const {
-    data,
-    loading,
-    refreshing,
-    hasNextPage,
-  } = scheduleArticles || {};
+    ids, loading, refreshing, hasNextPage,
+  } = data || {};
 
   useEffect(() => {
     getData(true);
-  }, []);
+  }, [activeScheduledTab]);
 
-  const getData = (isRefresh?: boolean) => {
-    actions.getScheduleArticles({ isRefresh });
+  const getData = (isRefresh: boolean) => {
+    actions.getScheduledContents(activeScheduledTab, isRefresh);
   };
 
   const onRefresh = () => {
@@ -49,11 +53,33 @@ const ScheduledArticles: React.FC<ScheduledArticlesProps> = ({ onScroll }) => {
     }
   };
 
+  const renderItem = ({ item }) => (
+    <ScheduledItem idContent={item} />
+  );
+
+  const keyExtractor = (item) => `schedule-content-${item}`;
+
+  const renderHeaderComponent = () => (
+    <View style={styles.header}>
+      <ViewSpacing height={spacing.margin.large} />
+    </View>
+  );
+
+  const renderFooterComponent = () => {
+    if (!loading) return <ViewSpacing height={spacing.padding.extraLarge} />;
+
+    return (
+      <View style={styles.boxFooter}>
+        <ActivityIndicator />
+      </View>
+    );
+  };
+
   const renderEmptyComponent = () => {
     if (hasNextPage) return null;
 
     return (
-      <View style={styles.boxEmpty} testID="schedule_article.empty_view">
+      <View style={styles.boxEmpty} testID="scheduled.empty_view">
         <Image
           resizeMode="contain"
           source={images.img_empty_box}
@@ -66,34 +92,12 @@ const ScheduledArticles: React.FC<ScheduledArticlesProps> = ({ onScroll }) => {
     );
   };
 
-  const renderItem = ({ item }) => (
-    <ArticleScheduleItem data={item} showAvatar={false} />
-  );
-
-  const renderHeaderComponent = () => (
-    <View style={styles.header}>
-      <ViewSpacing height={spacing.margin.large} />
-    </View>
-  );
-
-  const renderFooterComponent = () => {
-    if (!loading) return <ViewSpacing height={spacing.padding.large} />;
-
-    return (
-      <View style={styles.boxFooter}>
-        <ActivityIndicator />
-      </View>
-    );
-  };
-
-  const keyExtractor = (item) => `schedule-article-${item?.id}`;
-
   const renderSeparatorComponent = () => <ViewSpacing height={spacing.margin.large} />;
 
   return (
     <Animated.FlatList
-      testID="schedule_article.content"
-      data={data}
+      testID="scheduled.content"
+      data={ids}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
       ListHeaderComponent={renderHeaderComponent}
@@ -108,7 +112,7 @@ const ScheduledArticles: React.FC<ScheduledArticlesProps> = ({ onScroll }) => {
           refreshing={refreshing}
           onRefresh={onRefresh}
           tintColor={theme.colors.gray40}
-          progressViewOffset={homeHeaderTabHeight}
+          progressViewOffset={HeaderFilterHeight}
         />
             )}
     />
@@ -116,6 +120,9 @@ const ScheduledArticles: React.FC<ScheduledArticlesProps> = ({ onScroll }) => {
 };
 
 const createStyle = () => StyleSheet.create({
+  header: {
+    paddingTop: HeaderFilterHeight,
+  },
   boxFooter: {
     height: 100,
     justifyContent: 'center',
@@ -131,9 +138,6 @@ const createStyle = () => StyleSheet.create({
     aspectRatio: 1,
     marginBottom: spacing.margin.base,
   },
-  header: {
-    paddingTop: homeHeaderTabHeight,
-  },
 });
 
-export default ScheduledArticles;
+export default Scheduled;

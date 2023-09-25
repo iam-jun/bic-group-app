@@ -30,7 +30,6 @@ import useMyPermissionsStore from '~/store/permissions';
 import { rootNavigationRef } from '~/router/refs';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import useDraftArticleStore from '~/screens/YourContent/components/Draft/DraftArticle/store';
-import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import useModalStore from '~/store/modal';
 import { PermissionKey } from '~/constants/permissionScheme';
 import { PostStatus, PostType } from '~/interfaces/IPost';
@@ -39,6 +38,7 @@ import showToastSuccess from '~/store/helper/showToastSuccess';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentPublishedProperties } from '~/services/tracking/Interface';
 import { TrackingEvent } from '~/services/tracking/constants';
+import { isScheduledContent } from '~/components/ScheduleContent/helper';
 
 export interface IHandleSaveOptions {
   isShowLoading?: boolean;
@@ -228,10 +228,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     actions.setData(data);
 
     const isDraft = status === PostStatus.DRAFT;
-    const isSchedule = [
-      PostStatus.WAITING_SCHEDULE,
-      PostStatus.SCHEDULE_FAILED,
-    ].includes(status);
+    const isSchedule = isScheduledContent(status);
     actions.setIsDraft(isDraft);
     actions.setIsSchedule(isSchedule);
     if (isSchedule) {
@@ -397,9 +394,6 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
         trackEvent({ event: TrackingEvent.CONTENT_PUBLISHED, properties: eventContentPublishedProperties });
 
         goToArticleDetail();
-        useScheduleArticlesStore
-          .getState()
-          .actions.getScheduleArticles({ isRefresh: true });
         showToastSuccess(res);
       },
       onError: (error) => handleSeriesTagsError({

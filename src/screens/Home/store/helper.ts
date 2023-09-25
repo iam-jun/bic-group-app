@@ -1,7 +1,7 @@
 import { PostType } from '~/interfaces/IPost';
-import { AttributeFeed, ContentFeed } from '~/interfaces/IFeed';
+import { AttributeFeed, ContentFeed, ScheduledFeed } from '~/interfaces/IFeed';
 
-export const getParamsContentFeed = (contentFilter: ContentFeed) => {
+export const getParamsContentFeed = (contentFilter: ContentFeed | ScheduledFeed) => {
   switch (contentFilter) {
     case ContentFeed.ALL:
       return undefined;

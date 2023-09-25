@@ -23,7 +23,6 @@ import spacing from '~/theme/spacing';
 import useCreateArticleStore from '../CreateArticle/store';
 import PlaceHolderRemoveContent from '~/baseComponents/PlaceHolderRemoveContent';
 import { useRootNavigation } from '~/hooks/navigation';
-import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 
 const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
   const { articleId, isAdmin } = props?.route?.params || {};
@@ -55,7 +54,6 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
   const isPublishing = useDraftArticleStore((state) => state.isPublishing);
   const { handlePublish } = useCreateArticle({ articleId });
   const resetEditArticleStore = useCreateArticleStore((state) => state.reset);
-  const { actions: scheduleArticleActions } = useScheduleArticlesStore();
 
   const { rootNavigation } = useRootNavigation();
 
@@ -149,9 +147,6 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
   const { showMenu } = useArticleScheduleMenu(data, isCreator);
 
   const handleBack = () => {
-    if (deleted) {
-      scheduleArticleActions.getScheduleArticles({ isRefresh: true });
-    }
     rootNavigation.goBack();
   };
 

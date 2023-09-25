@@ -664,6 +664,13 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}content/${contentId}/menu-settings`,
   }),
+  getScheduledContents: (params: IParamGetFeed): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}content/schedule`,
+    params: {
+      ...params,
+    },
+  }),
 };
 
 const streamApi = {
@@ -977,6 +984,9 @@ const streamApi = {
   ),
   getMenuContent: (contentId: string) => withHttpRequestPromise(
     streamApiConfig.getMenuContent, contentId,
+  ),
+  getScheduledContents: async (params: IParamGetFeed) => withHttpRequestPromise(
+    streamApiConfig.getScheduledContents, params,
   ),
 };
 

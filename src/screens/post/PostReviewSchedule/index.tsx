@@ -96,7 +96,7 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
       );
     }
 
-    return <PostView data={data} isSchedule />;
+    return <PostView data={data} />;
   };
 
   return (
