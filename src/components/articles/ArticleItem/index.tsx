@@ -29,7 +29,10 @@ import Divider from '~/beinComponents/Divider';
 import DeletedItem from '~/components/DeletedItem';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
-import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
+import {
+  TrackingEventContentReadAction,
+  TrackingEvent,
+} from '~/services/tracking/constants';
 import DraftQuizFooter from '~/components/quiz/DraftQuizFooter';
 import TakePartInAQuiz from '~/components/quiz/TakePartInAQuiz';
 import { isScheduledContent } from '~/components/ScheduleContent/helper';
@@ -94,22 +97,32 @@ const ArticleItem: FC<ArticleItemProps> = ({
   );
 
   const goToContentDetail = () => {
-    rootNavigation.navigate(articleStack.articleContentDetail, { articleId: id });
+    rootNavigation.navigate(articleStack.articleContentDetail, {
+      articleId: id,
+    });
 
     // tracking event
     const eventContentReadProperties: TrackingEventContentReadProperties = {
       content_type: PostType.ARTICLE,
       action: TrackingEventContentReadAction.BODY,
     };
-    trackEvent({ event: TrackingEvent.CONTENT_READ, properties: eventContentReadProperties });
+    trackEvent({
+      event: TrackingEvent.CONTENT_READ,
+      properties: eventContentReadProperties,
+    });
   };
-  const goToDetail = () => rootNavigation.navigate(articleStack.articleDetail, { articleId: id, focusComment: true });
+  const goToDetail = () => rootNavigation.navigate(articleStack.articleDetail, {
+    articleId: id,
+    focusComment: true,
+  });
   const goToTagDetail = (tagData: ITag) => {
     rootNavigation.navigate(tagsStack.tagDetail, { tagData });
   };
 
   const goToArticleReviewSchedule = () => {
-    rootNavigation.navigate(articleStack.articleReviewSchedule, { articleId: id });
+    rootNavigation.navigate(articleStack.articleReviewSchedule, {
+      articleId: id,
+    });
   };
 
   const renderImportant = () => (
@@ -155,14 +168,16 @@ const ArticleItem: FC<ArticleItemProps> = ({
   );
 
   const renderInterestedBy = () => !isHidden && (
-    <View style={styles.boxInterested}>
-      <ArticleReadingTime numberWords={wordCount} />
-      <ContentInterestedUserCount
-        id={id}
-        testIDPrefix="article_item"
-        interestedUserCount={totalUsersSeen}
-      />
-    </View>
+  <View style={styles.boxInterested}>
+    <ArticleReadingTime numberWords={wordCount} />
+    {!isSchedule && (
+    <ContentInterestedUserCount
+      id={id}
+      testIDPrefix="article_item"
+      interestedUserCount={totalUsersSeen}
+    />
+    )}
+  </View>
   );
 
   const renderFooter = () => {
@@ -216,9 +231,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
   const renderDraftQuizFooter = () => {
     if (!shouldShowDraftQuiz) return null;
 
-    return (
-      <DraftQuizFooter data={data} />
-    );
+    return <DraftQuizFooter data={data} />;
   };
 
   const renderTakePartInAQuiz = () => (
@@ -243,12 +256,15 @@ const ArticleItem: FC<ArticleItemProps> = ({
     <View testID="article_item" style={styles.container}>
       {renderImportant()}
       {renderHeader()}
-      <Button testID="article_item.btn_content" onPress={isSchedule ? goToArticleReviewSchedule : goToContentDetail}>
+      <Button
+        testID="article_item.btn_content"
+        onPress={isSchedule ? goToArticleReviewSchedule : goToContentDetail}
+      >
         {renderImageThumbnail()}
         {renderPreviewSummary()}
       </Button>
       {isLite && renderLite()}
-      {!isLite && !isSchedule && renderInterestedBy()}
+      {!isLite && renderInterestedBy()}
       {!isLite && !isSchedule && renderTakePartInAQuiz()}
       {!isLite && !isSchedule && renderDivider()}
       {!isLite && !isSchedule && renderFooter()}

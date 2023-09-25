@@ -64,7 +64,7 @@ const PreviewDraftQuizNotification: React.FC<PreviewDraftQuizNotificationProps> 
       postActions.getPostDetail({ postId: contentId });
     }
     if (contentType === PostType.ARTICLE) {
-      articleActions.getArticleDetail({ articleId: contentId });
+      articleActions.getArticleDetail({ articleId: contentId, isLoadComment: true });
     }
   };
 

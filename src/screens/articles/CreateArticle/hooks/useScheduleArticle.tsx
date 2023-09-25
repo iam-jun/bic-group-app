@@ -49,8 +49,7 @@ const useScheduleArticle = (
   };
 
   const doAfterScheduleSuccess = () => {
-    // use isDraft for get article detail without get comments
-    articlesActions.getArticleDetail({ articleId, isDraft: true });
+    articlesActions.getArticleDetail({ articleId });
     rootNavigation.replace(articleStack.articleReviewSchedule, { articleId });
   };
 

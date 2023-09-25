@@ -180,6 +180,8 @@ const CreateArticle: FC<CreateArticleProps> = ({
     handlePublish();
   };
 
+  const isShowBannerImportant = !!setting?.isImportant;
+
   const disabled = !validButtonPublish || isPublishing;
 
   const btnPublish = (isDraft && !isFromReviewSchedule) && {
@@ -250,18 +252,18 @@ const CreateArticle: FC<CreateArticleProps> = ({
 
   const renderHeaderComponent = () => (
     <>
-      {!!setting?.isImportant && (
+      {isShowBannerImportant && (
         <CreateBannerImportant
           type="article"
           expiresTime={setting.importantExpiredAt}
           style={styles.bannerImportantTime}
         />
       )}
-      {isFromReviewSchedule && (
-        <BoxScheduleTime
-          scheduledAt={scheduledAt}
-          status={status}
-        />
+      {isSchedule && (
+      <BoxScheduleTime
+        scheduledAt={scheduledAt}
+        status={status}
+      />
       )}
       <ViewSpacing height={spacing.margin.large} />
     </>
@@ -279,7 +281,6 @@ const CreateArticle: FC<CreateArticleProps> = ({
         title={`article:title:${screenTitle}`}
         onPressBack={isFromDraftScreen ? onPressBackToDraft : undefined}
         {...headerButton}
-        removeBorderAndShadow={isFromReviewSchedule}
       />
       <FlatList
         data={options}

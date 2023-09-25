@@ -6,7 +6,9 @@ import {
   IEditArticleTags,
   IPayloadPutEditArticle,
 } from '~/interfaces/IArticle';
-import { IArticleCover, IAudience, IPostSetting } from '~/interfaces/IPost';
+import {
+  IArticleCover, IAudience, IPostSetting, PostStatus,
+} from '~/interfaces/IPost';
 import putEditArticle from './actions/putEditArticle';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
@@ -24,6 +26,7 @@ export interface ICreateArticleState extends IBaseState {
   data: IEditArticleData;
   isDraft: boolean;
   isSchedule: boolean;
+  status?: PostStatus;
   chooseAudiences: IAudience[];
   actions: {
     setLoading: (isLoading: boolean) => void;
@@ -39,6 +42,7 @@ export interface ICreateArticleState extends IBaseState {
     removeCategory: (category: ICategory) => void;
     setIsDraft: (setIsDraft: boolean) => void;
     setIsSchedule: (isSchedule: boolean) => void;
+    setStatus: (status: PostStatus) => void;
     setSeries: (series?: IEditArticleSeries[]) => void;
     addSeries: (series: IEditArticleSeries) => void;
     removeSeries: (series: IEditArticleSeries) => void;
@@ -93,6 +97,7 @@ const initialState: InitStateType<ICreateArticleState> = {
   },
   isDraft: false,
   isSchedule: false,
+  status: undefined,
   chooseAudiences: [],
 };
 
@@ -175,6 +180,11 @@ const useCreateArticle = (set, get) => ({
       set((state: ICreateArticleState) => {
         state.isSchedule = isSchedule;
       }, 'setIsSchedule');
+    },
+    setStatus: (status: PostStatus) => {
+      set((state: ICreateArticleState) => {
+        state.status = status;
+      }, 'setStatus');
     },
     setSeries: (series?: IEditArticleSeries[]) => {
       set((state: ICreateArticleState) => {

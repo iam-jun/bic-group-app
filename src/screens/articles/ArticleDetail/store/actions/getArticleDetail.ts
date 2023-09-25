@@ -8,7 +8,7 @@ import { IArticlesState } from '..';
 
 const getArticleDetail = (set, get) => async (payload: IPayloadGetArticleDetail) => {
   const {
-    articleId: id, isReported, isAdmin, isDraft = false,
+    articleId: id, isReported, isAdmin, isLoadComment = false,
   } = payload || {};
   const { requestings }: IArticlesState = get();
 
@@ -39,7 +39,7 @@ const getArticleDetail = (set, get) => async (payload: IPayloadGetArticleDetail)
         ? await streamApi.getArticleDetailByAdmin(id, params)
         : await streamApi.getArticleDetail(id);
 
-      if (!isDraft) {
+      if (isLoadComment) {
         const responseComments = await streamApi.getCommentsByPostId({ postId: id, order: 'DESC' });
         if (responeArticleDetail?.data) {
           response = {
