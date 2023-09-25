@@ -26,6 +26,7 @@ import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import RelatedContentsInSeries from '~/components/RelatedContentsInSeries';
 import useRelatedContentsInSeriesStore from '~/components/RelatedContentsInSeries/store';
+import { isScheduledContent } from '~/components/ScheduleContent/helper';
 
 export interface PostViewProps {
   style?: any;
@@ -33,7 +34,6 @@ export interface PostViewProps {
   data: IPost;
   isLite?: boolean;
   isPostDetail?: boolean;
-  isSchedule?: boolean;
   btnReactTestID?: string;
   btnCommentTestID?: string;
   hasReactPermission?: boolean;
@@ -53,7 +53,6 @@ const _PostView: FC<PostViewProps> = ({
   isLite,
   testID = 'post_view',
   isPostDetail = false,
-  isSchedule = false,
   btnReactTestID,
   btnCommentTestID,
   hasReactPermission = true,
@@ -86,11 +85,13 @@ const _PostView: FC<PostViewProps> = ({
     totalUsersSeen,
     communities,
     reported,
+    status,
   } = data;
 
   const { isImportant, importantExpiredAt, canReact } = setting || {};
 
   const isEmpty = useMemo(() => isEmptyPost(data), [data]);
+  const isSchedule = isScheduledContent(status);
 
   const {
     onAddReaction,
@@ -129,6 +130,12 @@ const _PostView: FC<PostViewProps> = ({
 
   const showRelatedContentsInSeries = isPostDetail && dataRelatedContentsInSeriesStore
           && dataRelatedContentsInSeriesStore.length > 0;
+
+  const onPressHeaderScheduledPost = () => {
+    rootNavigation.navigate(homeStack.postReviewSchedule, { postId });
+  };
+
+  const onPressHeaderPost = isSchedule ? onPressHeaderScheduledPost : onPressHeader;
 
   const renderContent = () => {
     if (isHidden || shouldShowDraftQuiz || isSchedule) {
@@ -202,7 +209,7 @@ const _PostView: FC<PostViewProps> = ({
           useDefaultMenu
           data={data}
           disabled={!hasReactPermission}
-          onPressHeader={onPressHeader}
+          onPressHeader={onPressHeaderPost}
         />
         <PostBody
           data={data}
@@ -212,7 +219,7 @@ const _PostView: FC<PostViewProps> = ({
           onPressMarkSeenPost={onPressMarkSeenPost}
           shouldShowDraftQuiz={shouldShowDraftQuiz}
         />
-        {!isLite && shouldShowInterested && !isHidden && (
+        {!isLite && shouldShowInterested && !isHidden && !isSchedule && (
           <ContentInterestedUserCount
             id={postId}
             interestedUserCount={totalUsersSeen}

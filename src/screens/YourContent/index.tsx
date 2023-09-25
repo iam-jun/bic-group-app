@@ -18,14 +18,14 @@ import { throttle } from 'lodash';
 import spacing from '~/theme/spacing';
 import Tab from '~/baseComponents/Tab';
 import Header from '~/beinComponents/Header';
-import ScheduledArticles from './components/ScheduledArticles';
 import ReportedContents from './components/ReportedContents';
 import Draft from './components/Draft';
 import Publish from './components/Publish';
 import useReportContentStore from '~/components/Report/store';
 import useYourContentStore from './store';
 import { homeHeaderTabHeight, homeHeaderContentContainerHeight } from '~/theme/dimension';
-import { ContentFeed } from '~/interfaces/IFeed';
+import { ContentFeed, ScheduledFeed } from '~/interfaces/IFeed';
+import Scheduled from './components/Scheduled';
 
 const HEADER_TAB = [
   {
@@ -34,7 +34,7 @@ const HEADER_TAB = [
   },
   {
     id: 'your-content-tab-2',
-    text: 'your_content:title_schedule_article',
+    text: 'your_content:title_scheduled',
   },
   {
     id: 'your-content-tab-3',
@@ -50,6 +50,12 @@ const HEADER_DRAFT_TAB = [
   { id: 'draft-tab-1', text: 'home:title_feed_content_all' },
   { id: 'draft-tab-2', text: 'post:draft:text_posts' },
   { id: 'draft-tab-3', text: 'post:draft:text_articles' },
+];
+
+const HEADER_SCHEDULED_TAB = [
+  { id: ScheduledFeed.ALL, text: 'home:title_feed_content_all' },
+  { id: ScheduledFeed.POST, text: 'home:title_feed_content_posts' },
+  { id: ScheduledFeed.ARTICLE, text: 'home:title_feed_content_articles' },
 ];
 
 const HEADER_PUBLISH_TAB = [
@@ -78,12 +84,15 @@ const YourContent: React.FC<YourContentProps> = ({ route }) => {
   const prevOffsetYShared = useSharedValue(0);
 
   const { clearReportedContents } = useReportContentStore((state) => state.actions);
-  const { activeDraftTab } = useYourContentStore((state) => state);
-  const { activePublishTab } = useYourContentStore((state) => state);
+  const { activeDraftTab, activePublishTab, activeScheduledTab } = useYourContentStore((state) => state);
   const actions = useYourContentStore((state) => state.actions);
   const reset = useYourContentStore((state) => state.reset);
+
   const activePublishSubTab = HEADER_PUBLISH_TAB.findIndex(
     (item) => item.id === activePublishTab,
+  );
+  const activeScheduledSubTab = HEADER_SCHEDULED_TAB.findIndex(
+    (item) => item.id === activeScheduledTab,
   );
 
   useEffect(() => () => {
@@ -101,6 +110,10 @@ const YourContent: React.FC<YourContentProps> = ({ route }) => {
 
   const onPressPublishTab = (item: any) => {
     actions.setActivePublishTab(item.id);
+  };
+
+  const onPressScheduledTab = (item: any) => {
+    actions.setActiveScheduledTab(item.id);
   };
 
   const handleScroll = throttle((offsetY: number) => {
@@ -155,7 +168,7 @@ const YourContent: React.FC<YourContentProps> = ({ route }) => {
 
     if (activeTab === 1) {
       return (
-        <ScheduledArticles
+        <Scheduled
           onScroll={onScrollHandler}
         />
       );
@@ -205,6 +218,22 @@ const YourContent: React.FC<YourContentProps> = ({ route }) => {
             data={HEADER_DRAFT_TAB}
             onPressTab={onPressDraftTab}
             activeIndex={activeDraftTab}
+            type="pill"
+            selectedTypePillTab="primary"
+            unselectedTypePillTab="neutral"
+          />
+        </View>
+      )}
+      {activeTab === 1 && (
+        <View style={styles.boxDraftTab}>
+          <Tab
+            style={[styles.subTabs, { marginLeft: -spacing.margin.small }]}
+            buttonProps={{
+              size: 'medium', useI18n: true, style: styles.contentTab,
+            }}
+            data={HEADER_SCHEDULED_TAB}
+            onPressTab={onPressScheduledTab}
+            activeIndex={activeScheduledSubTab}
             type="pill"
             selectedTypePillTab="primary"
             unselectedTypePillTab="neutral"

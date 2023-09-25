@@ -32,6 +32,7 @@ import { TrackingEventContentReadProperties } from '~/services/tracking/Interfac
 import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 import DraftQuizFooter from '~/components/quiz/DraftQuizFooter';
 import TakePartInAQuiz from '~/components/quiz/TakePartInAQuiz';
+import { isScheduledContent } from '~/components/ScheduleContent/helper';
 
 export interface ArticleItemProps {
   data: IPost;
@@ -77,7 +78,10 @@ const ArticleItem: FC<ArticleItemProps> = ({
     wordCount,
     quiz,
     quizHighestScore,
+    status,
   } = data || {};
+
+  const isSchedule = isScheduledContent(status);
 
   const { isImportant, importantExpiredAt } = setting || {};
 
@@ -104,6 +108,10 @@ const ArticleItem: FC<ArticleItemProps> = ({
     rootNavigation.navigate(tagsStack.tagDetail, { tagData });
   };
 
+  const goToArticleReviewSchedule = () => {
+    rootNavigation.navigate(articleStack.articleReviewSchedule, { articleId: id });
+  };
+
   const renderImportant = () => (
     <PostImportant
       isImportant={!!isImportant}
@@ -121,6 +129,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
       createdAt={createdAt}
       publishedAt={publishedAt}
       audience={audience}
+      onPressHeader={isSchedule && goToArticleReviewSchedule}
     />
   );
 
@@ -234,16 +243,16 @@ const ArticleItem: FC<ArticleItemProps> = ({
     <View testID="article_item" style={styles.container}>
       {renderImportant()}
       {renderHeader()}
-      <Button testID="article_item.btn_content" onPress={goToContentDetail}>
+      <Button testID="article_item.btn_content" onPress={isSchedule ? goToArticleReviewSchedule : goToContentDetail}>
         {renderImageThumbnail()}
         {renderPreviewSummary()}
       </Button>
       {isLite && renderLite()}
-      {!isLite && renderInterestedBy()}
-      {!isLite && renderTakePartInAQuiz()}
-      {!isLite && renderDivider()}
-      {!isLite && renderFooter()}
-      {!isLite && renderMarkAsRead()}
+      {!isLite && !isSchedule && renderInterestedBy()}
+      {!isLite && !isSchedule && renderTakePartInAQuiz()}
+      {!isLite && !isSchedule && renderDivider()}
+      {!isLite && !isSchedule && renderFooter()}
+      {!isLite && !isSchedule && renderMarkAsRead()}
       {renderDraftQuizFooter()}
     </View>
   );

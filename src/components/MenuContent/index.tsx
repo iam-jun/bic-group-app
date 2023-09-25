@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { isEmpty } from 'lodash';
-import { IPost, PostStatus, PostType } from '~/interfaces/IPost';
+import { IPost, PostType } from '~/interfaces/IPost';
 import useMenuStore from '~/store/entities/menus';
 import BottomListItem from '~/components/BottomList/BottomListItem';
 import CircleSpinner from '~/baseComponents/Toggle/CircleSpinner';
@@ -15,6 +15,7 @@ import { QuizStatus } from '~/interfaces/IQuiz';
 import { IOptionsRenderMenu } from '~/interfaces/IMenu';
 import { getEnableNotificationType, getTitleContent } from './helper';
 import { getTextFromSpecificNotificationTargetType } from '~/helpers/notification';
+import { isScheduledContent } from '../ScheduleContent/helper';
 
 interface MenuContentProps {
   data: IPost,
@@ -111,7 +112,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
   const titleEditContent = getTitleContent(contentType, MENU_KEYS.EDIT);
   const titleSaveContent = getTitleContent(contentType, MENU_KEYS.SAVE, menu?.[MENU_KEYS.SAVE]);
   const titleDeleteContent = getTitleContent(contentType, MENU_KEYS.DELETE);
-  const isScheduled = [PostStatus.WAITING_SCHEDULE, PostStatus.SCHEDULE_FAILED].includes(status);
+  const isScheduled = isScheduledContent(status);
 
   useEffect(() => {
     if (isEmpty(menu)) {
