@@ -832,7 +832,8 @@
     "text_selecting_will_be_added_to": "Your article will be added to",
     "reading_time": "Reading time",
     "about_time": "about",
-    "minute": "min"
+    "minute": "min",
+    "article_scheduled": "Article Scheduled"
   },
   "post": {
     "news_feed": "News Feed",

@@ -12,6 +12,7 @@ interface BoxScheduleTimeProps {
   status: PostStatus;
   isBorderTop?: boolean;
   isBorderBottomShadow?: boolean;
+  isMarginBottom?: boolean;
 }
 
 const BoxScheduleTime: React.FC<BoxScheduleTimeProps> = ({
@@ -19,6 +20,7 @@ const BoxScheduleTime: React.FC<BoxScheduleTimeProps> = ({
   status,
   isBorderTop = false,
   isBorderBottomShadow = false,
+  isMarginBottom = false,
 }) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -51,6 +53,7 @@ const BoxScheduleTime: React.FC<BoxScheduleTimeProps> = ({
         { backgroundColor },
         isBorderTop && styles.borderTop,
         isBorderBottomShadow && styles.bottomBorderAndShadow,
+        isMarginBottom && styles.marginBottom,
       ]}
       testID="box_schedule_time"
     >
@@ -112,6 +115,9 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     bottomBorderAndShadow: {
       ...elevations.e2,
+    },
+    marginBottom: {
+      marginBottom: spacing.margin.large,
     },
   });
 };

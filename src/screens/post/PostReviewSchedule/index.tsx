@@ -122,9 +122,9 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
         scheduledAt={scheduledAt}
         status={status}
         isBorderTop
+        isMarginBottom
       />
       <ScrollView>
-        <ViewSpacing height={spacing.margin.large} />
         {renderContent()}
         <ViewSpacing height={spacing.margin.big} />
       </ScrollView>

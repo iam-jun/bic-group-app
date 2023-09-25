@@ -17,7 +17,7 @@ const getContentDetail = (_set, get) => (contentId: string, contentType?: PostTy
     }
 
     if (fetchingContentType === PostType.ARTICLE) {
-      useArticlesStore.getState().actions.getArticleDetail({ articleId: contentId });
+      useArticlesStore.getState().actions.getArticleDetail({ articleId: contentId, isLoadComment: true });
     }
   } catch (error) {
     console.error('getContentDetail error', error);

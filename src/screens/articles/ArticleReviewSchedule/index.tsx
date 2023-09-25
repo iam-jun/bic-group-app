@@ -2,6 +2,7 @@ import React, {
   useRef, useEffect, useCallback, useState,
 } from 'react';
 import { StyleSheet } from 'react-native';
+import { useTheme } from '@react-navigation/native';
 import ScreenWrapper from '~/baseComponents/ScreenWrapper';
 import { IRouteParams } from '~/interfaces/IRouter';
 import Header from '~/beinComponents/Header';
@@ -28,10 +29,13 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
   const { articleId, isAdmin } = props?.route?.params || {};
   const ref = useRef<ArticleWebviewRef>();
   const { t } = useBaseHook();
+  const theme = useTheme();
+  const { colors } = theme;
 
   const [galleryVisible, setGalleryVisible] = useState(false);
   const [listImage, setListImage] = useState([]);
   const [initIndex, setInitIndex] = useState(0);
+  const [isLoadDone, setIsLoadDone] = useState(false);
 
   const userId = useUserIdAuth();
   const actions = useArticlesStore((state) => state.actions);
@@ -96,6 +100,10 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
     ref?.current?.injectJavaScript?.(script);
   };
 
+  const onInitializeEnd = () => {
+    setIsLoadDone(true);
+  };
+
   const getImageUrls = () => {
     const contentParse = content ? JSON.parse(content) : [];
     let listImage = [];
@@ -151,21 +159,38 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
   };
 
   const renderBoxScheduleTime = () => {
-    if (!isMounted || !scheduledAt) return null;
+    if (!isLoadDone || !scheduledAt) return null;
 
     return (
       <BoxScheduleTime
         scheduledAt={scheduledAt}
         status={status}
+        isBorderTop
+        isMarginBottom
       />
     );
   };
 
   const renderHeader = () => {
     if (isAdmin) {
-      return <Header removeBorderAndShadow />;
+      return (
+        <Header
+          titleTextProps={{ useI18n: true }}
+          title="article:article_scheduled"
+          removeBorderAndShadow
+        />
+      );
     }
-    return <Header removeBorderAndShadow rightIcon="menu" onRightPress={showMenu} {...headerButton} />;
+    return (
+      <Header
+        titleTextProps={{ useI18n: true }}
+        title="article:article_scheduled"
+        removeBorderAndShadow
+        rightIcon="menu"
+        onRightPress={showMenu}
+        {...headerButton}
+      />
+    );
   };
 
   if (deleted) {
@@ -184,6 +209,7 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
     <ScreenWrapper
       style={styles.container}
       testID="article_review_schedule"
+      backgroundColor={colors.neutral5}
     >
       {renderHeader()}
       {renderBoxScheduleTime()}
@@ -191,6 +217,7 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
         ref={ref}
         initScript={initScript}
         onMessage={onMessage}
+        onInitializeEnd={onInitializeEnd}
       />
       <ImageGalleryModal
         visible={galleryVisible}

@@ -6,7 +6,7 @@ import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
 import useArticlesStore from '~/screens/articles/ArticleDetail/store';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
-import { PostType } from '~/interfaces/IPost';
+import { PostStatus, PostType } from '~/interfaces/IPost';
 
 const navigation = withNavigation?.(rootNavigationRef);
 
@@ -21,7 +21,7 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
   }
 
   try {
-    const { isDraft } = get();
+    const { isDraft, status } = get();
     const categories = data?.categories?.map?.((category) => category?.id);
     const series = data?.series?.map?.((item) => item?.id);
     const tags = data?.tags?.map?.((item) => item?.id);
@@ -40,9 +40,8 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
       response = await streamApi.putEditArticle(articleId, params);
     }
 
-    // after edit article success, get article detail again with isDraft
-    // if isDraft, get article detail without comments
-    useArticlesStore.getState().actions.getArticleDetail({ articleId, isDraft });
+    // after edit article success, get article detail again
+    useArticlesStore.getState().actions.getArticleDetail({ articleId, isLoadComment: status === PostStatus.PUBLISHED });
 
     set((state: ICreateArticleState) => {
       state.loading = false;
