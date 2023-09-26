@@ -55,8 +55,7 @@ const useSchedulePost = (
   };
 
   const doAfterScheduleSuccess = (isReplace = true) => {
-    // use isDraft for get post detail without get comments
-    postActions.getPostDetail({ postId, isDraft: true });
+    postActions.getPostDetail({ postId });
     if (isReplace) {
       rootNavigation.replace(homeStack.postReviewSchedule, { postId });
     } else {

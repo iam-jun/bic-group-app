@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import { IActivityImportant, IPostSetting, IPutEditSettingsParams } from '~/interfaces/IPost';
+import {
+  IActivityImportant, IPostSetting, IPutEditSettingsParams,
+} from '~/interfaces/IPost';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import {
   getMinDateImportant as getMinDate,

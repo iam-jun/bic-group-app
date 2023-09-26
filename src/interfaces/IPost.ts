@@ -365,7 +365,7 @@ export interface IPayloadGetPostDetail extends IParamGetPostDetail {
   callbackLoading?: (loading: boolean, success: boolean) => void;
   showToast?: boolean;
   isReported?: boolean;
-  isDraft?: boolean;
+  isLoadComment?: boolean;
   commentId?: string;
 }
 
