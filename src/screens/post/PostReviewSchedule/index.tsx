@@ -48,7 +48,7 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
   }, []);
 
   const getData = () => {
-    postActions.getPostDetail({ postId, isDraft: true });
+    postActions.getPostDetail({ postId });
   };
 
   const onPressPublish = () => {

@@ -65,7 +65,7 @@ const getArticleDetail = (set, get) => async (payload: IPayloadGetArticleDetail)
       delete state.requestings[id];
     }, 'getArticlesSuccess');
 
-    usePostsStore.getState().actions.addToPosts({ data: response || {}, handleComment: true });
+    usePostsStore.getState().actions.addToPosts({ data: response || {}, handleComment: isLoadComment });
     usePostsStore.getState().actions.addToErrorContents(id, { isError: false });
   } catch (error) {
     usePostsStore.getState().actions.addToErrorContents(id, {

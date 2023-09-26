@@ -190,6 +190,7 @@ const usePostDetailContent = ({
         showToast: !!notificationId,
         isReported,
         commentId,
+        isLoadComment: true,
       };
       actionGetPostDetail(payload);
     }
