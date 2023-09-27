@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { ExtendedTheme, useTheme, useIsFocused } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
+import {
+  StyleSheet, View, FlatList, Keyboard,
+} from 'react-native';
 import { isEmpty } from 'lodash';
 import { Button } from '~/baseComponents';
 import Header from '~/beinComponents/Header';
@@ -16,7 +18,6 @@ import DeletedItem from '../../../components/DeletedItem';
 import SeriesDetailHeader from './components/SeriesDetailHeader';
 import SeriesDetailItem from './components/SeriesDetailItem';
 import useSeriesStore, { ISeriesState } from '../store';
-import useSeriesMenu from '~/hooks/useSeriesMenu';
 import { spacing } from '~/theme';
 import AddArticles from './components/AddArticles';
 import { PermissionKey } from '~/constants/permissionScheme';
@@ -24,6 +25,7 @@ import useMyPermissionsStore from '~/store/permissions';
 import ContentUnavailable from '~/components/ContentUnavailable';
 import useMounted from '~/hooks/mounted';
 import useModalStore from '~/store/modal';
+import MenuContent from '~/components/MenuContent';
 import { isFromNotificationScreen } from '~/router/helper';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
@@ -40,7 +42,7 @@ const SeriesDetail = ({ route, navigation }: any) => {
   const { goHome } = useRootNavigation();
 
   const [isOpenSearch, setIsOpenSearch] = useState(false);
-  const { showAlert } = useModalStore((state) => state.actions);
+  const { showAlert, showModal } = useModalStore((state) => state.actions);
 
   const series = usePostsStore(
     useCallback(postsSelector.getPost(seriesId, {}), [seriesId]),
@@ -148,12 +150,21 @@ const SeriesDetail = ({ route, navigation }: any) => {
     );
   };
 
-  const { showMenu } = useSeriesMenu(
-    series,
-    isActor,
-    true,
-    handleConfirmDelete,
-  );
+  const onShowMenu = () => {
+    Keyboard.dismiss();
+    showModal({
+      isOpen: true,
+      ContentComponent: (
+        <MenuContent
+          data={series}
+          isActor={isActor}
+          isFromDetail
+          contentType={PostType.SERIES}
+          handleConfirmDeleteSeries={handleConfirmDelete}
+        />
+      ),
+    });
+  };
 
   if (deleted) {
     return (
@@ -188,7 +199,7 @@ const SeriesDetail = ({ route, navigation }: any) => {
     <View style={styles.wrapper}>
       <Header
         rightIcon="menu"
-        onRightPress={showMenu}
+        onRightPress={onShowMenu}
         icon={isActor ? 'Plus' : undefined}
         onPressIcon={onPressSearch}
       />

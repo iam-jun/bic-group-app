@@ -3,15 +3,12 @@ import {
   StyleSheet, View, StyleProp, ViewStyle,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import {
-  ShineOverlay,
-  Placeholder,
-  PlaceholderLine,
-  PlaceholderMedia,
-} from 'rn-placeholder';
 
+import Animated from 'react-native-reanimated';
 import spacing from '~/theme/spacing';
 import { getRandomInt } from '~/utils/generator';
+import { useSkeletonAnimation } from '~/hooks/useSkeletonAnimation';
+import ViewSpacing from '../../beinComponents/ViewSpacing';
 
 export interface GroupProfilePlaceholderProps {
   style?: StyleProp<ViewStyle>;
@@ -24,66 +21,73 @@ const GroupProfilePlaceholder: React.FC<GroupProfilePlaceholderProps> = ({
 }: GroupProfilePlaceholderProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
+  const animatedStyle = useSkeletonAnimation({ targetOpacityValue: 0.5, speed: 500 });
 
   return (
     <View style={[styles.container, style]}>
-      <Placeholder Animation={ShineOverlay}>
-        <PlaceholderMedia style={styles.cover} />
-      </Placeholder>
-
+      <Animated.View style={[styles.line, styles.cover, animatedStyle]} />
       <View style={styles.groupInfoHeaderContainer}>
-        <Placeholder
-          Animation={ShineOverlay}
-          Left={(p) => <PlaceholderMedia style={[p.style, styles.avatar]} />}
-          style={styles.infoContainer}
-        >
-          <PlaceholderLine width={disableRandom ? 50 : getRandomInt(
-            30, 60,
-          )}
-          />
-          <View style={styles.infoText}>
-            <PlaceholderLine width={disableRandom ? 4 : getRandomInt(
-              3, 8,
-            )}
+        <View style={[styles.row, styles.infoContainer]}>
+          <Animated.View style={[styles.line, styles.avatar, animatedStyle]} />
+          <ViewSpacing width={spacing.margin.base} />
+          <View style={styles.flex1}>
+            <Animated.View style={[styles.line, {
+              width: `${disableRandom ? 50 : getRandomInt(
+                30, 60,
+              )}%`,
+            }, animatedStyle]}
             />
-            <PlaceholderLine
-              width={disableRandom ? 12 : getRandomInt(
-                8, 20,
-              )}
-              style={styles.marginLeft}
-            />
-            <PlaceholderLine
-              width={disableRandom ? 10 : getRandomInt(
-                10, 20,
-              )}
-              style={styles.marginLeft}
-            />
+            <View style={styles.infoText}>
+              <Animated.View style={[styles.line, {
+                width: `${disableRandom ? 4 : getRandomInt(
+                  3, 8,
+                )}%`,
+              }, animatedStyle]}
+              />
+              <ViewSpacing width={spacing.margin.small} />
+              <Animated.View style={[styles.line, {
+                width: `${disableRandom ? 25 : getRandomInt(
+                  10, 20,
+                )}%`,
+              }, animatedStyle]}
+              />
+              <ViewSpacing width={spacing.margin.small} />
+              <Animated.View style={[styles.line, {
+                width: `${disableRandom ? 15 : getRandomInt(
+                  10, 20,
+                )}%`,
+              }, animatedStyle]}
+              />
+            </View>
           </View>
-        </Placeholder>
+        </View>
         <View style={styles.tabButton}>
-          <PlaceholderLine
-            width={disableRandom ? 25 : getRandomInt(
+          <Animated.View style={[styles.line, {
+            width: `${disableRandom ? 25 : getRandomInt(
               10, 20,
-            )}
-            style={styles.marginLeft}
+            )}%`,
+          }, animatedStyle]}
           />
-          <PlaceholderLine
-            width={disableRandom ? 15 : getRandomInt(
+          <ViewSpacing width={spacing.margin.small} />
+          <Animated.View style={[styles.line, {
+            width: `${disableRandom ? 15 : getRandomInt(
               10, 20,
-            )}
-            style={styles.marginLeft}
+            )}%`,
+          }, animatedStyle]}
           />
-          <PlaceholderLine
-            width={disableRandom ? 20 : getRandomInt(
+          <ViewSpacing width={spacing.margin.small} />
+          <Animated.View style={[styles.line, {
+            width: `${disableRandom ? 20 : getRandomInt(
               10, 20,
-            )}
-            style={styles.marginLeft}
+            )}%`,
+          }, animatedStyle]}
           />
-          <PlaceholderLine
-            width={disableRandom ? 22 : getRandomInt(
+          <ViewSpacing width={spacing.margin.small} />
+          <Animated.View style={[styles.line, {
+            width: `${disableRandom ? 22 : getRandomInt(
               10, 20,
-            )}
-            style={styles.marginLeft}
+            )}%`,
+          }, animatedStyle]}
           />
         </View>
       </View>
@@ -96,6 +100,17 @@ export default GroupProfilePlaceholder;
 const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
+    flex1: { flex: 1 },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    line: {
+      height: spacing.margin.base,
+      borderRadius: spacing.margin.tiny,
+      backgroundColor: colors.neutral5,
+      marginVertical: spacing.margin.tiny,
+    },
     container: {
       backgroundColor: colors.white,
       marginBottom: spacing.margin.small,
@@ -116,7 +131,7 @@ const createStyle = (theme: ExtendedTheme) => {
     infoContainer: {
       paddingTop: spacing.padding.small,
       paddingHorizontal: spacing.padding.base,
-      paddingBottom: spacing.padding.base,
+      paddingBottom: spacing.padding.xSmall,
       alignItems: 'center',
     },
     marginLeft: {
@@ -124,7 +139,8 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     tabButton: {
       flexDirection: 'row',
-      marginHorizontal: spacing.margin.tiny,
+      marginHorizontal: spacing.margin.base,
+      marginBottom: spacing.margin.base,
     },
     infoText: { flexDirection: 'row' },
   });

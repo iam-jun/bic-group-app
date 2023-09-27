@@ -145,6 +145,8 @@ def reactNativeArchitectures() {
     return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
 }
 
+def appVersionCode = Integer.valueOf(project.env.get("ANDROID_VERSION_CODE") ?: 1)
+
 android {
     ndkVersion rootProject.ext.ndkVersion
 
@@ -168,7 +170,7 @@ android {
         applicationId project.env.get("APP_ID")
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 37
+        versionCode appVersionCode
         versionName project.env.get("APP_VERSION")
         testBuildType System.getProperty('testBuildType', 'debug')  // This will later be used to control the test apk build type
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'

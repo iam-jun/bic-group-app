@@ -30,7 +30,7 @@ const BlockedUserItem = ({ item }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const {
-    fullname, avatar, id, createdAt, username, isVerified,
+    fullname, avatar, id, updatedAt, username, isVerified,
   } = item || {};
 
   const onConfirm = async () => {
@@ -95,7 +95,7 @@ const BlockedUserItem = ({ item }: Props) => {
       <Text.BodyXS color={colors.neutral40} style={styles.time}>
         {t('settings:text_blocked_at')}
         {' '}
-        {formatDate(createdAt, 'MMMM DD, YYYY')}
+        {formatDate(updatedAt, 'MMM DD, YYYY')}
       </Text.BodyXS>
       {renderButtonUnblock()}
     </View>

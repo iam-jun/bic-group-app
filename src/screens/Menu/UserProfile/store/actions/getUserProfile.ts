@@ -12,6 +12,7 @@ const getUserProfile
       if (!silentLoading) {
         set((state: IUserProfileState) => {
           state.loading = true;
+          state.error = null;
         }, 'getUserProfile');
       }
 
@@ -58,7 +59,7 @@ const getUserProfile
 
       set((state: IUserProfileState) => {
         state.loading = false;
-        state.error = err;
+        state.error = true;
       }, 'getUserProfileError');
     }
   };
