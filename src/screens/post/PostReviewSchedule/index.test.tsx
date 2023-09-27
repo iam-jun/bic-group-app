@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 import { act, renderWithRedux } from '~/test/testUtils';
 import PostReviewSchedule from './index';
-import usePostsStore from "~/store/entities/posts";
+import usePostsStore from '~/store/entities/posts';
 import { POST_DETAIL } from '~/test/mock_data/post';
-import { PostStatus } from "~/interfaces/IPost";
-import MockedNavigator from "~/test/MockedNavigator";
+import { PostStatus } from '~/interfaces/IPost';
+import MockedNavigator from '~/test/MockedNavigator';
 
 describe('PostReviewSchedule', () => {
   it('should render correctly', () => {
@@ -26,7 +26,7 @@ describe('PostReviewSchedule', () => {
             }}
           />
         )}
-      />
+      />,
     );
 
     const content = wrapper.getByTestId('post_review_schedule');
@@ -55,7 +55,7 @@ describe('PostReviewSchedule', () => {
             }}
           />
         )}
-      />
+      />,
     );
 
     const content = wrapper.getByTestId('post_review_schedule.deleted');
