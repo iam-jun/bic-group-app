@@ -195,8 +195,11 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     Keyboard.dismiss();
     if (isSchedule) {
       savePost({
-        isPublish: false,
-        onSuccessAutoSave: () => doAfterScheduleSuccess(false),
+        disableNavigate: true,
+        replaceWithDetail: false,
+        isPublish: true,
+        isCreatingNewPost: false,
+        onSuccessPutEdit: () => doAfterScheduleSuccess(false),
       });
     } else {
       savePost({

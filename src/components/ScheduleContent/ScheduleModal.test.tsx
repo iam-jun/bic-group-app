@@ -6,7 +6,7 @@ import MockedNavigator from '~/test/MockedNavigator';
 import usePostsStore from '~/store/entities/posts';
 import { IPost, PostStatus } from '~/interfaces/IPost';
 import ScheduleModal from './ScheduleModal';
-import useCreateArticleStore from '../../../screens/articles/CreateArticle/store';
+import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 
 describe('ScheduleModal', () => {
   it('should render correctly', () => {

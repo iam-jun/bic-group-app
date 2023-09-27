@@ -97,7 +97,8 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
 
   const getMinDateTime = () => {
     const now = moment();
-    const extraTime = 30 - (now.minute() % 30);
+    const extraTime = (now.minutes() === 0 || now.minutes() === 30)
+      ? 0 : 30 - (now.minute() % 30);
     const remainder = 30 + extraTime;
     now.add(remainder, 'minutes').second(0).millisecond(0);
 

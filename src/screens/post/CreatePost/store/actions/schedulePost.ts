@@ -26,8 +26,6 @@ const schedulePost = (set, get) => async (postId: string, payload: IPostCreatePo
       state.schedule.isSubmiting = false;
       state.schedule.isSubmitingSuccess = true;
     }, 'schedulePost success');
-
-    // ...getSchedulePosts to refresh list in YourContent
   } catch (e) {
     set((state: ICreatePostState) => {
       state.schedule.isSubmiting = false;
