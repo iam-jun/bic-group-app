@@ -30,7 +30,8 @@ const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
   const { important = {} } = useCreatePostStore.getState().createPost;
   const {
     id, data, replaceWithDetail = true, onRetry, disableNavigate, isCreatingNewPost = true,
-    onError, onSuccessAutoSave, isPublish = true, createFromGroupId, isHandleSeriesTagsError = true, isRefresh = true,
+    onError, onSuccessAutoSave, onSuccessPutEdit, isPublish = true, createFromGroupId,
+    isHandleSeriesTagsError = true, isRefresh = true,
   } = payload || {};
 
   if (!id) {
@@ -73,6 +74,7 @@ const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
     actions.addToPosts({ data: post } as IPayloadAddToAllPost);
 
     showToastSuccess(response);
+    onSuccessPutEdit?.();
 
     if (isCreatingNewPost) {
       // tracking event

@@ -324,6 +324,7 @@ export interface IPayloadPutEditPost {
   disableNavigate?: boolean;
   onError?: () => void;
   onSuccessAutoSave?: () => void;
+  onSuccessPutEdit?: () => void;
   isPublish?: boolean;
   createFromGroupId?: string;
   isHandleSeriesTagsError?: boolean;

@@ -10,7 +10,6 @@ import { spacing } from '~/theme';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { PostView } from '~/components/posts';
 import { IPayloadPutEditPost } from '~/interfaces/IPost';
-import { useRootNavigation } from '~/hooks/navigation';
 import { PlaceHolderRemoveContent } from '~/baseComponents';
 import PostViewPlaceholder from '~/components/placeholder/PostViewPlaceholder';
 
@@ -27,7 +26,6 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
   const { postId } = route.params || {};
   const [publishing, setPublishing] = useState(false);
 
-  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
 
@@ -65,22 +63,14 @@ const PostReviewSchedule: React.FC<PostReviewScheduleProps> = (props) => {
     }
   };
 
-  const handleBack = () => {
-    if (deleted) {
-      // schedulePostActions.getSchedulePost({ isRefresh: true });
-    }
-    rootNavigation.goBack();
-  };
-
   if (deleted) {
     return (
       <ScreenWrapper
         isFullView
-        testID="post_review_schedule"
+        testID="post_review_schedule.deleted"
         backgroundColor={colors.neutral5}
       >
         <Header
-          onPressBack={handleBack}
           titleTextProps={{ useI18n: true }}
           title="post:title_post_review_schedule"
         />
