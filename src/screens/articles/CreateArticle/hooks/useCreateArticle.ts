@@ -231,7 +231,6 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     const isSchedule = isScheduledContent(status);
     actions.setIsDraft(isDraft);
     actions.setIsSchedule(isSchedule);
-    actions.setStatus(status);
     if (isSchedule) {
       actions.setScheduledAt(scheduledAt || '');
     }
