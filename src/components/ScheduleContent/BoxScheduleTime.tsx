@@ -76,7 +76,7 @@ const BoxScheduleTime: React.FC<BoxScheduleTimeProps> = ({
         </Text>
         <View style={styles.boxRow}>
           <Text.BodyMMedium color={labelTimeColor}>
-            {formatDate(scheduledAt, 'hh:mm')}
+            {formatDate(scheduledAt, 'HH:mm')}
           </Text.BodyMMedium>
         </View>
       </View>
