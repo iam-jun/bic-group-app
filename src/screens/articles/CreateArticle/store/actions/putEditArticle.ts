@@ -6,7 +6,7 @@ import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
 import useArticlesStore from '~/screens/articles/ArticleDetail/store';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
-import { PostStatus, PostType } from '~/interfaces/IPost';
+import { PostType } from '~/interfaces/IPost';
 
 const navigation = withNavigation?.(rootNavigationRef);
 
@@ -21,7 +21,7 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
   }
 
   try {
-    const { isDraft, status } = get();
+    const { isDraft } = get();
     const categories = data?.categories?.map?.((category) => category?.id);
     const series = data?.series?.map?.((item) => item?.id);
     const tags = data?.tags?.map?.((item) => item?.id);
@@ -41,7 +41,7 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
     }
 
     // after edit article success, get article detail again
-    useArticlesStore.getState().actions.getArticleDetail({ articleId, isLoadComment: status === PostStatus.PUBLISHED });
+    useArticlesStore.getState().actions.getArticleDetail({ articleId });
 
     set((state: ICreateArticleState) => {
       state.loading = false;
