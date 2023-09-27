@@ -22,7 +22,7 @@ interface MenuContentProps {
   contentType: PostType;
   isActor: boolean,
   isFromDetail?: boolean,
-
+  currentScreen?: string,
   handleConfirmDeleteSeries?: () => void,
   handleDeletePostError?: (listAudiences: string[]) => void,
 }
@@ -32,7 +32,7 @@ const MenuContent: React.FC<MenuContentProps> = ({
   contentType,
   isActor,
   isFromDetail,
-
+  currentScreen,
   handleConfirmDeleteSeries,
   handleDeletePostError,
 }) => {
@@ -43,7 +43,6 @@ const MenuContent: React.FC<MenuContentProps> = ({
     quiz,
     status,
   } = data || {};
-
   const { t } = useBaseHook();
   const { getAudienceListWithNoPermission } = useMyPermissionsStore(
     (state) => state.actions,
@@ -67,11 +66,14 @@ const MenuContent: React.FC<MenuContentProps> = ({
     onPressDeleteContent,
     onPressNotificationSettingContent,
   } = useMenuContent(
-    data,
-    contentType,
-    isFromDetail,
-    handleConfirmDeleteSeries,
-    handleDeletePostError,
+    {
+      data,
+      contentType,
+      isFromDetail,
+      currentScreen,
+      handleConfirmDeleteSeries,
+      handleDeletePostError,
+    },
   );
 
   const hasReaction = reactionsCount && reactionsCount.length > 0;
