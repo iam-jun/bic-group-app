@@ -3,6 +3,6 @@
 #import <UIKit/UIKit.h>
 #import <Firebase.h>
 
-@interface AppDelegate : RCTAppDelegate
+@interface AppDelegate : EXAppDelegateWrapper
 
 @end
