@@ -138,7 +138,9 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
 
   const renderHeader = () => (
     <View style={styles.headerContainer}>
-      <Text.H4 useI18n>article:article_schedule_title</Text.H4>
+      <Text.H4 useI18n>
+        {contentType === PostType.ARTICLE ? 'article:article_schedule_title' : 'post:post_schedule_title'}
+      </Text.H4>
       <Icon
         size={18}
         tintColor={colors.neutral40}

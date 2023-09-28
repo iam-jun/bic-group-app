@@ -75,6 +75,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     isSchedule,
     isValidating,
     disableButtonPost,
+    disableButtonScheduledPost,
     isEditPostHasChange,
     prepareData,
     savePost,
@@ -106,7 +107,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
 
   const buttonPostProps = {
     loading,
-    disabled: disableButtonPost,
+    disabled: isSchedule ? disableButtonScheduledPost : disableButtonPost,
     useI18n: true,
     style: { borderWidth: 0 },
     testID: 'create_post.btn_post',
