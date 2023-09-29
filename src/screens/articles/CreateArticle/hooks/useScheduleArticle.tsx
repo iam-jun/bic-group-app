@@ -13,13 +13,24 @@ import useArticlesStore from '../../ArticleDetail/store';
 import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 
-const useScheduleArticle = (
-  articleId: string,
-  validButtonPublish: boolean,
-  validateSeriesTags: (onValidateSuccess: () => void, onError: (error: any) => void) => void,
-  handleSeriesTagsError: (params: HandleSeriesTagsErrorParams) => void,
-  handleSave: (options?: IHandleSaveOptions) => void,
-) => {
+export type ScheduleArticleHookParams = {
+  articleId: string;
+  validButtonPublish: boolean;
+  validateSeriesTags: (
+    onValidateSuccess: () => void,
+    onError: (error: any) => void
+  ) => void;
+  handleSeriesTagsError: (params: HandleSeriesTagsErrorParams) => void;
+  handleSave: (options?: IHandleSaveOptions) => void;
+};
+
+const useScheduleArticle = ({
+  articleId,
+  validButtonPublish,
+  validateSeriesTags,
+  handleSeriesTagsError,
+  handleSave,
+}: ScheduleArticleHookParams) => {
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
 
@@ -29,13 +40,16 @@ const useScheduleArticle = (
   const createArticleActions = useCreateArticleStore((state) => state.actions);
 
   const handleSchedule = () => {
-    const scheduleAtUpdated = useCreateArticleStore.getState().schedule.scheduledAt;
+    const scheduleAtUpdated
+      = useCreateArticleStore.getState().schedule.scheduledAt;
     const isValidScheduleTime = () => moment(scheduleAtUpdated).isSameOrAfter(moment());
 
     if (!validButtonPublish) return;
 
     if (!isValidScheduleTime()) {
-      createArticleActions.setErrorScheduleSubmiting(t('article:fail_schedule'));
+      createArticleActions.setErrorScheduleSubmiting(
+        t('article:fail_schedule'),
+      );
       return;
     }
 

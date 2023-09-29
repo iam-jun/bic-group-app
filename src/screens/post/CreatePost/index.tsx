@@ -42,6 +42,11 @@ export interface CreatePostProps {
 const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   const toolbarRef = useRef<any>();
   const screenParams = route?.params || {};
+  const {
+    postId: screenParamsPostId,
+    draftPostId: screenParamsDraftPostId,
+    replaceWithDetail,
+  } = screenParams;
 
   const commentInputStoreActions = useCommentInputStore(
     (state: ICommentInputState) => state.actions,
@@ -52,7 +57,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   const styles = themeStyles(theme);
 
   const [postId, setPostId] = useState(
-    screenParams?.postId || screenParams?.draftPostId,
+    screenParamsPostId || screenParamsDraftPostId,
   );
 
   const useCreatePostData = useCreatePost({
@@ -84,15 +89,15 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     disableButtonsCreatePostFooter,
   } = useCreatePostData;
 
-  const { handleOpenPopupSchedule, doAfterScheduleSuccess } = useSchedulePost(
+  const { handleOpenPopupSchedule, doAfterScheduleSuccess } = useSchedulePost({
     postId,
-    !disableButtonPost,
-    isSchedule,
+    validButtonPublish: !disableButtonPost,
+    replaceWithDetail,
     validateSeriesTags,
     handleSeriesTagsError,
-    savePost,
+    handleSave: savePost,
     prepareData,
-  );
+  });
 
   const {
     chosenAudiences, id, important, count,
@@ -168,7 +173,10 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
       resetMentionInputStore();
       resetLinkPreviewStore();
       // clear comment because of comment input view listen emit event change text
-      commentInputStoreActions.setCreateComment({ content: '', loading: false });
+      commentInputStoreActions.setCreateComment({
+        content: '',
+        loading: false,
+      });
     },
     [],
   );
@@ -205,7 +213,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     } else {
       savePost({
         disableNavigate: false,
-        replaceWithDetail: screenParams.replaceWithDetail,
+        replaceWithDetail,
         isPublish: true,
         isCreatingNewPost,
       });
@@ -241,7 +249,10 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
       <View style={styles.flex1}>
         <View>
           {!!important?.active && (
-            <CreateBannerImportant type="post" expiresTime={important.expiresTime} />
+            <CreateBannerImportant
+              type="post"
+              expiresTime={important.expiresTime}
+            />
           )}
           <CreatePostChosenAudiences disabled={loading} />
           <Divider color={theme.colors.neutral5} />

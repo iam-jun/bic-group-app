@@ -12,15 +12,28 @@ import { useRootNavigation } from '~/hooks/navigation';
 import useCreatePostStore from '../store';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 
-const useSchedulePost = (
-  postId: string,
-  validButtonPublish: boolean,
-  isPostScheduled: boolean,
-  validateSeriesTags: (onValidateSuccess: () => void, onError: (error: any) => void) => void,
-  handleSeriesTagsError: (params: HandleSeriesTagsErrorParams) => void,
-  handleSave: (options?: SavePostParams) => void,
-  prepareData: () => IPostCreatePost,
-) => {
+export type SchedulePostHookParams = {
+  postId: string;
+  validButtonPublish: boolean;
+  replaceWithDetail?: boolean;
+  validateSeriesTags: (
+    onValidateSuccess: () => void,
+    onError: (error: any) => void
+  ) => void;
+  handleSeriesTagsError: (params: HandleSeriesTagsErrorParams) => void;
+  handleSave: (options?: SavePostParams) => void;
+  prepareData: () => IPostCreatePost;
+};
+
+const useSchedulePost = ({
+  postId,
+  validButtonPublish,
+  replaceWithDetail = true,
+  validateSeriesTags,
+  handleSeriesTagsError,
+  handleSave,
+  prepareData,
+}: SchedulePostHookParams) => {
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
 
@@ -30,7 +43,8 @@ const useSchedulePost = (
   const createPostActions = useCreatePostStore((state) => state.actions);
 
   const handleSchedule = () => {
-    const scheduleAtUpdated = useCreatePostStore.getState().schedule.scheduledAt;
+    const scheduleAtUpdated
+      = useCreatePostStore.getState().schedule.scheduledAt;
     const isValidScheduleTime = () => moment(scheduleAtUpdated).isSameOrAfter(moment());
     const dataCreatePost = prepareData();
     const dataSchedule = {
@@ -120,7 +134,7 @@ const useSchedulePost = (
       <ScheduleModal
         contentId={postId}
         contentType={PostType.POST}
-        isPostScheduled={isPostScheduled}
+        replaceWithDetail={replaceWithDetail}
         handleSchedule={handleSchedule}
         doAfterScheduleSuccess={doAfterScheduleSuccess}
         setDateSchedule={setDateSchedule}
