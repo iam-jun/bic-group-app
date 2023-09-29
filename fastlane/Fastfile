@@ -385,12 +385,14 @@ end
 def insert_app_version_to_env(data)
     UI.message("Replace APP_VERSION from base env")
     appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+    androidVersionCode = ENV['ANDROID_VERSION_CODE'].length > 0 ? ENV['ANDROID_VERSION_CODE'] : 1
 
     env = data[:env]
     env_file_path = get_env_file_path({:env => env})
     env_content = File.read(env_file_path)
 
-    new_line = "APP_VERSION=#{appVersionText}"
-    modified_content = "#{env_content}\n#{new_line}"
+    new_line_app_version = "APP_VERSION=#{appVersionText}"
+    new_line_android_code = "ANDROID_VERSION_CODE=#{androidVersionCode}"
+    modified_content = "#{env_content}\n#{new_line_app_version}\n#{new_line_android_code}"
     File.write(env_file_path, modified_content)
 end

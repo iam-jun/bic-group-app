@@ -28,6 +28,7 @@ export enum DeepLinkTypes {
   APP = 'APP',
   DISCOVER_COMMUNITIES = 'discover-communities',
   NOTIFICATION_SETTINGS = 'notification-settings',
+  USER_BLOCKING = 'user-blocking'
 }
 
 export enum LinkGeneratorTypes {
@@ -284,9 +285,18 @@ export const matchDeepLink = (url: string) => {
     return { type: DeepLinkTypes.NOTIFICATION_SETTINGS };
   }
 
+  match = new RegExp(
+    // follow the url from web
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?settings\\/?blocking$`,
+  ).exec(deepLinkUrl);
+  if (match) {
+    return { type: DeepLinkTypes.USER_BLOCKING };
+  }
+
   if (new RegExp(`^${PREFIX_DEEPLINK_GROUP}`).test(deepLinkUrl)) {
     return { type: DeepLinkTypes.APP };
   }
+
   return null;
 };
 

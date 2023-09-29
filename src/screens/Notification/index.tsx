@@ -234,9 +234,10 @@ const Notification: FC<NotificationProps> = ({ route }: NotificationProps) => {
             case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER:
             case NOTIFICATION_TYPE.ADD_CONTENT_TO_USER_IN_MULTIPLE_GROUPS:
             {
-              if (target === TargetType.ARTICLE) {
+              const contentType = act?.contentType?.toLowerCase?.() || '';
+              if (target === TargetType.ARTICLE || contentType === ContentType.article) {
                 rootNavigation.navigate(articleStack.articleDetail, { articleId: act.id });
-              } else if (target === TargetType.SERIES) {
+              } else if (target === TargetType.SERIES || contentType === ContentType.series) {
                 rootNavigation.navigate(seriesStack.seriesDetail, { seriesId: act.id });
               } else {
                 rootNavigation.navigate(

@@ -5,7 +5,7 @@ import { IYourGroupsState } from './Interface';
 const initYourGroupsState: IYourGroupsState = {
   ids: [],
   items: {},
-  loading: false,
+  loading: true,
   hasNextPage: true,
   refreshing: false,
 };

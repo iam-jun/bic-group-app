@@ -663,6 +663,10 @@ export const streamApiConfig = {
       data: body,
     });
   },
+  getMenuContent: (contentId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}content/${contentId}/menu-settings`,
+  }),
 };
 
 const streamApi = {
@@ -984,6 +988,9 @@ const streamApi = {
   ),
   editQuestionQuiz: (idQuiz: string, question: QuestionItem) => withHttpRequestPromise(
     streamApiConfig.editQuestionQuiz, idQuiz, question,
+  ),
+  getMenuContent: (contentId: string) => withHttpRequestPromise(
+    streamApiConfig.getMenuContent, contentId,
   ),
 };
 
