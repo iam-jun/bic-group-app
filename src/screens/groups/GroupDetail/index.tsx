@@ -1,5 +1,3 @@
-/* eslint-disable unused-imports/no-unused-imports */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   useFocusEffect,
   ExtendedTheme,
@@ -45,13 +43,11 @@ import { BottomListProps } from '~/components/BottomList';
 import { GroupPrivacyType } from '~/constants/privacyTypes';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import useTimelineStore, { ITimelineState } from '~/store/timeline';
-import ContentSearch from '~/screens/Home/HomeSearch';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useGroupDetailStore from './store';
 import useGroupsStore, { IGroupsState } from '~/store/entities/groups';
 import useModalStore from '~/store/modal';
-import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
 import usePinContentStore from '~/components/PinContent/store';
 import TermsView from '~/components/TermsModal';
 import MemberQuestionsModal from '~/components/MemberQuestionsModal';
@@ -126,7 +122,6 @@ const GroupDetail = (props: any) => {
     ]),
   );
 
-  const actionsFeedSearch = useFeedSearchStore((state) => state.actions);
   const actionPinContent = usePinContentStore((state) => state.actions);
 
   const buttonShow = useSharedValue(0);
@@ -294,7 +289,6 @@ const GroupDetail = (props: any) => {
   };
 
   const onPressSearch = () => {
-    // actionsFeedSearch.setNewsfeedSearch({ isShow: true });
     rootNavigation.push(searchStack.searchMain, { group: groupInfo });
   };
 
@@ -386,7 +380,6 @@ const GroupDetail = (props: any) => {
         <Animated.View onLayout={onButtonBottomLayout} style={[styles.button, buttonStyle]}>
           <GroupJoinCancelButton style={styles.joinBtn} groupId={groupId} />
         </Animated.View>
-        {/* <ContentSearch groupId={groupId} /> */}
         <MemberQuestionsModal />
         <TermsView />
         {isMember && <FloatingCreatePost />}

@@ -38,7 +38,6 @@ import { IModalState } from './modal';
 import { IScheduleArticlesState } from '~/screens/YourContent/components/ScheduledArticles/store';
 import { IPostsInProgressState } from '~/screens/Home/components/VideoProcessingNotice/store';
 import { IArticleScheduleContentState } from '~/screens/articles/ArticleScheduleContent/store';
-import { IFeedSearchState } from '~/screens/Home/HomeSearch/store';
 import { IButtonMarkAsReadState } from '~/components/posts/ButtonMarkAsRead/store';
 import { ICreatePostState } from '~/screens/post/CreatePost/store';
 import { ILinkPreviewState } from './linkPreview';
@@ -161,7 +160,6 @@ export interface BicStore {
   terms: ITermState;
   Home: {
     homeStore: IHomeState;
-    feedSearch: IFeedSearchState;
   };
   Menu: {
     joinedCommunitiesStore: IJoinedCommunitiesState;

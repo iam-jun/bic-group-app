@@ -26,7 +26,7 @@ export interface ISelectCategoriesState extends IBaseState {
 const initialState = {
   categories: {
     loading: false,
-    items: undefined,
+    items: [],
     hasNextPage: true,
   },
   search: {
