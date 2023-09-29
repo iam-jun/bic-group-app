@@ -44,7 +44,7 @@ const PostHeader: FC<PostHeaderProps> = ({
   const userId = useUserIdAuth();
   const isActor = actor?.id === userId;
 
-  const isPostDetailScreen = route.name === homeStack.postDetail;
+  const isPostDetailScreen = [homeStack.postDetail, homeStack.postReviewSchedule].includes(route.name);
 
   const { shouldHavePermissionOnSomeAudience } = useMyPermissionsStore((state) => state.actions);
   const canDeleteOwnPost = shouldHavePermissionOnSomeAudience(

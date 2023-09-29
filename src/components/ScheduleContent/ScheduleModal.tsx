@@ -21,7 +21,7 @@ import postsSelector from '~/store/entities/posts/selectors';
 type ScheduleModalProps = {
   contentId: string;
   contentType: PostType;
-  isPostScheduled?: boolean;
+  replaceWithDetail?: boolean;
   handleSchedule: () => void;
   doAfterScheduleSuccess: (isReplace?: boolean) => void;
   setDateSchedule: (date: string) => void;
@@ -31,7 +31,7 @@ type ScheduleModalProps = {
 const ScheduleModal: FC<ScheduleModalProps> = ({
   contentId,
   contentType,
-  isPostScheduled = false,
+  replaceWithDetail = true,
   handleSchedule,
   doAfterScheduleSuccess,
   setDateSchedule,
@@ -77,10 +77,10 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
   const onScheduleSubmitingSuccess = () => {
     setTimeout(() => {
       closeModal();
-      if (isPostScheduled) {
-        doAfterScheduleSuccess(false);
-      } else {
+      if (replaceWithDetail) {
         doAfterScheduleSuccess();
+      } else {
+        doAfterScheduleSuccess(false);
       }
     }, 3000);
   };

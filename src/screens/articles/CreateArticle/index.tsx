@@ -137,18 +137,20 @@ const CreateArticle: FC<CreateArticleProps> = ({
   } = useCreateArticle({ articleId });
   const isPublishing = useDraftArticleStore((state) => state.isPublishing);
 
-  const { handleOpenPopupSchedule } = useScheduleArticle(
+  const { handleOpenPopupSchedule } = useScheduleArticle({
     articleId,
     validButtonPublish,
     validateSeriesTags,
     handleSeriesTagsError,
     handleSave,
-  );
+  });
 
   const resetEditArticleStore = useCreateArticleStore((state) => state.reset);
   const resetMentionInputStore = useMentionInputStore((state) => state.reset);
 
-  const draftContentsStoreActions = useDraftContentsStore((state) => state.actions);
+  const draftContentsStoreActions = useDraftContentsStore(
+    (state) => state.actions,
+  );
 
   useEffect(() => {
     if (isCreateNewArticle) actions.createArticle();
@@ -184,8 +186,13 @@ const CreateArticle: FC<CreateArticleProps> = ({
 
   const disabled = !validButtonPublish || isPublishing;
 
-  const btnPublish = (isDraft && !isFromReviewSchedule) && {
-    buttonProps: { disabled, loading: isPublishing, style: styles.btnPublish },
+  const btnPublish = isDraft
+    && !isFromReviewSchedule && {
+    buttonProps: {
+      disabled,
+      loading: isPublishing,
+      style: styles.btnPublish,
+    },
     buttonText: t('common:btn_publish'),
     onPressButton: onPressPublish,
   };
@@ -204,7 +211,9 @@ const CreateArticle: FC<CreateArticleProps> = ({
     return null;
   };
 
-  const renderBtnSettings = () => (<SettingsButton type={PostType.ARTICLE} articleId={articleId} />);
+  const renderBtnSettings = () => (
+    <SettingsButton type={PostType.ARTICLE} articleId={articleId} />
+  );
 
   const renderCustomComponent = () => (
     <>
@@ -260,10 +269,7 @@ const CreateArticle: FC<CreateArticleProps> = ({
         />
       )}
       {isSchedule && (
-      <BoxScheduleTime
-        scheduledAt={scheduledAt}
-        status={status}
-      />
+        <BoxScheduleTime scheduledAt={scheduledAt} status={status} />
       )}
       <ViewSpacing height={spacing.margin.large} />
     </>
