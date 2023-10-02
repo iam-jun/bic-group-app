@@ -386,6 +386,10 @@ export const streamApiConfig = {
     url: `${provider.url}series`,
     params,
   }),
+  getSeriesContent: (contentId: string) => ({
+    ...defaultConfig,
+    url: `${provider.url}content/${contentId}/series`,
+  }),
   scheduleArticle: (draftArticleId: string, scheduledAt: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}articles/${draftArticleId}/schedule`,
@@ -841,6 +845,7 @@ const streamApi = {
   ),
   getTotalDraft: () => withHttpRequestPromise(streamApiConfig.getTotalDraft),
   searchSeries: (params?: IGetSeries) => withHttpRequestPromise(streamApiConfig.searchSeries, params),
+  getSeriesContent: (contentId: string) => withHttpRequestPromise(streamApiConfig.getSeriesContent, contentId),
   postSaveContent: (id: string) => withHttpRequestPromise(streamApiConfig.postSaveContent, id),
   postUnsaveContent: (id: string) => withHttpRequestPromise(streamApiConfig.postUnsaveContent, id),
   reorderItemsInSeries: (id: string, data: IReorderItems) => withHttpRequestPromise(
