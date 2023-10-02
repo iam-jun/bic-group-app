@@ -9,6 +9,7 @@ import {
 } from '~/router/helper';
 import authStacks from '~/router/navigator/AuthStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
+import useForgotPasswordStore from '~/screens/auth/ForgotPassword/store';
 import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 import useAuthController from '~/screens/auth/store';
 import useAppStore from '~/store/app';
@@ -138,6 +139,11 @@ export const onReceiveURL = async ({
         });
         break;
       }
+      case DeepLinkTypes.RESET_PASSOWRD:
+        if (userId) return;
+        useForgotPasswordStore.getState?.().reset?.();
+        navigation?.navigate?.(authStacks.forgotPassword, { data: match.params });
+        break;
 
       case DeepLinkTypes.NOTIFICATION_SETTINGS: {
         navigation?.navigate?.(notiStack.notiSettings);
