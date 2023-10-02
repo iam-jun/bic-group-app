@@ -103,7 +103,7 @@
     "emoji-datasource": "^14.0.0",
     "emoji-regex": "^10.1.0",
     "expo": "49.0.9",
-    "expo-av": "13.6.0",
+    "expo-av": "13.4.1",
     "expo-splash-screen": "0.20.5",
     "fuse.js": "^6.6.2",
     "i18next": "21.6.3",
