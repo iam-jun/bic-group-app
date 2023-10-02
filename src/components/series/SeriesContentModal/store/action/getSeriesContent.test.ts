@@ -3,7 +3,6 @@ import { act, renderHook } from '~/test/testUtils';
 import useSeriesContentModalStore, { ISeriesContentModalState } from '../index';
 import { mockSeries } from '~/test/mock_data/series';
 import { mockArticle } from '~/test/mock_data/article';
-import { IGetSeries } from '~/interfaces/ISeries';
 
 describe('getSeriesContent', () => {
   afterEach(() => {
