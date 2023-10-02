@@ -39,6 +39,7 @@ import NotificationMenu from './components/NotificationMenu';
 import useNotificationItemMenu, { INotificationItemMenuStore } from './components/NotificationMenu/store';
 import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEvent } from '~/services/tracking/constants';
 import useGroupSetInvitationsStore from '~/components/InvitationGroupSet/store';
 import InvitationGroupSet from '~/components/InvitationGroupSet';
 
@@ -76,6 +77,13 @@ const Notification: FC<NotificationProps> = ({ route }: NotificationProps) => {
     }, [isFocused],
   );
 
+  const trackEventChangeTab = (eventName: string) => {
+    trackEvent({
+      event: eventName,
+      sendWithUserId: true,
+    });
+  };
+
   useEffect(() => {
     if (notificationData?.type) {
       switch (notificationData.type) {
@@ -110,6 +118,20 @@ const Notification: FC<NotificationProps> = ({ route }: NotificationProps) => {
 
   const onPressFilterItem = (index: number) => {
     setActiveIndex(index);
+    switch (index) {
+      case 1:
+        trackEventChangeTab(TrackingEvent.UNREAD_NOTI_VIEWED);
+        break;
+      case 2:
+        trackEventChangeTab(TrackingEvent.MENTION_NOTI_VIEWED);
+        break;
+      case 3:
+        trackEventChangeTab(TrackingEvent.IMPORTANT_NOTI_VIEWED);
+        break;
+      default:
+        trackEventChangeTab(TrackingEvent.ALL_NOTI_VIEWED);
+        break;
+    }
   };
 
   const clearToastDeleteNoti = () => {
@@ -163,7 +185,7 @@ const Notification: FC<NotificationProps> = ({ route }: NotificationProps) => {
     );
 
     modalActions.hideBottomList();
-    trackEventNoti('Notification Removed', item);
+    trackEventNoti(TrackingEvent.NOTIFICATION_REMOVED, item);
   };
 
   const onPressItemOption = ({ item }: {item: any}) => {
@@ -495,7 +517,6 @@ const Notification: FC<NotificationProps> = ({ route }: NotificationProps) => {
               rootNavigation.navigate(mainStack.userProfile, { userId, targetIndex });
               break;
             }
-
             case NOTIFICATION_TYPE.QUIZ_GENERATE_SUCCESSFUL:
             case NOTIFICATION_TYPE.QUIZ_GENERATE_UNSUCCESSFUL:
               rootNavigation.navigate(quizStack.previewDraftQuizNotification, {
@@ -599,7 +620,7 @@ const Notification: FC<NotificationProps> = ({ route }: NotificationProps) => {
           '\x1b[0m',
         );
       }
-      trackEventNoti('Notification Opened', item);
+      trackEventNoti(TrackingEvent.NOTIFICATION_OPENED, item);
 
       // finally mark the notification as read
       notiActions.markAsRead(item.id);

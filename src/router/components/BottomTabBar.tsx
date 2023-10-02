@@ -26,6 +26,8 @@ import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
 import useNotificationStore from '~/screens/Notification/store';
 import INotificationsState from '~/screens/Notification/store/Interface';
+import { trackEvent } from '~/services/tracking';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const BottomTabBar: FC<BottomTabBarProps> = ({
   state,
@@ -113,6 +115,10 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
 
       if (!isFocused && !event.defaultPrevented) {
         navigation.navigate(route.name);
+        trackEvent({
+          event: TrackingEvent?.[`${route.name?.toUpperCase?.()}_NAVIGATED`],
+          sendWithUserId: true,
+        });
       }
 
       // avoid quick scroll in newsfeed then click tab noti => hide bottom tab in screen noti

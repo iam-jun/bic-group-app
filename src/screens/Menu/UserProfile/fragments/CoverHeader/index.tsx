@@ -13,6 +13,8 @@ import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import useBaseHook from '~/hooks/baseHook';
 import { AppConfig } from '~/configs';
 import { PermissionTypes, checkPermission } from '~/utils/permission';
+import { trackEvent } from '~/services/tracking';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 interface Props {
   id: string;
@@ -52,6 +54,7 @@ const CoverHeader = ({
       uploadCallback('avatar');
       actions.editMyProfile({
         data: { id, avatarId: uploadedAvatar?.id },
+        callback: () => { trackUploadImage(TrackingEvent.AVATAR_CHANGED); },
       });
       setSelectedAvatar(null);
     }
@@ -69,6 +72,7 @@ const CoverHeader = ({
       setSelectedCover(null);
       actions.editMyProfile({
         data: { id, backgroundImgId: uploadedCover?.id },
+        callback: () => { trackUploadImage(TrackingEvent.COVER_PHOTO_CHANGED); },
       });
       uploadCallback('backgroundImgUrl');
     }
@@ -80,6 +84,13 @@ const CoverHeader = ({
       showToast({ content, type: ToastType.ERROR });
     }
   }, [uploadCoverError]);
+
+  const trackUploadImage = (eventName: string) => {
+    trackEvent({
+      event: eventName,
+      sendWithUserId: true,
+    });
+  };
 
   const onEditCover = async () => {
     await checkPermission(PermissionTypes.photo, async (canOpenPicker: boolean) => {

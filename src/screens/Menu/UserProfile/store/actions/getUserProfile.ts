@@ -5,6 +5,7 @@ import useCommonController from '~/screens/store';
 import useUserBadge, { MAX_BADGES } from '../../fragments/BadgeCollection/store';
 import userApi from '~/api/UserApi';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const getUserProfile
   = (set) => async ({ userId, params, silentLoading }: IGetUserProfile) => {
@@ -47,7 +48,7 @@ const getUserProfile
       } else {
         useUserBadge.getState().actions.setShowingBadges(showingBadges, false);
         trackEvent({
-          event: 'Another Profile Viewed',
+          event: TrackingEvent.ANOTHER_PROFILE_VIEWED,
           properties: {
             actor: { user_id: myId },
             user_info: { user_id: userId },
