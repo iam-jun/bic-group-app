@@ -206,4 +206,8 @@ describe('CreatePost screen', () => {
       expect(useModalStore.getState().alert?.title).toBe(i18next.t('post:post_setting_permissions_alert:title'));
     });
   });
+
+  it('should validate series vs tags when press button schedule', () => {
+
+  });
 });
