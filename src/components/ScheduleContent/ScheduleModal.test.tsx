@@ -123,7 +123,7 @@ describe('ScheduleModal', () => {
     const setDateScheduleMock = jest.fn();
     const setTimeScheduleMock = jest.fn();
 
-    const wrapper = renderWithRedux(
+    renderWithRedux(
       <MockedNavigator
         component={() => (
           <ScheduleModal

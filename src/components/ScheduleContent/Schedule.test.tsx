@@ -1,12 +1,11 @@
 import React from 'react';
 import {
-  act, fireEvent, renderWithRedux,
+  act, renderWithRedux,
 } from '~/test/testUtils';
-import streamApi from '~/api/StreamApi';
 import { mockArticle } from '~/test/mock_data/article';
 import MockedNavigator from '~/test/MockedNavigator';
 import usePostsStore from '~/store/entities/posts';
-import { IPost, PostStatus, PostType } from '~/interfaces/IPost';
+import { IPost, PostStatus } from '~/interfaces/IPost';
 import Schedule from './Schedule';
 
 describe('Schedule', () => {
