@@ -16,7 +16,7 @@ describe('Your Content screen', () => {
     expect(tabDraft).toBeDefined();
     fireEvent.press(tabDraft);
 
-    const tabScheduleArticle = wrapper.queryByTestId('tab-button-your_content:title_schedule_article-selected');
+    const tabScheduleArticle = wrapper.queryByTestId('tab-button-your_content:title_scheduled-selected');
     expect(tabScheduleArticle).toBeDefined();
 
     const tabReportedContent = wrapper.queryByTestId('tab-button-your_content:title_report_content-notselected');
@@ -41,7 +41,7 @@ describe('Your Content screen', () => {
     expect(tabDraftPost).toBeDefined();
     fireEvent.press(tabDraftPost);
 
-    const tabDraftArticle = wrapper.queryByTestId('tab-button-your_content:title_schedule_article-notselected');
+    const tabDraftArticle = wrapper.queryByTestId('tab-button-your_content:title_scheduled-notselected');
     expect(tabDraftArticle).toBeDefined();
     fireEvent.press(tabDraftArticle);
   });
@@ -63,7 +63,7 @@ describe('Your Content screen', () => {
     expect(tabPulishContents).toBeDefined();
     fireEvent.press(tabPulishContents);
 
-    const tabDraftArticle = wrapper.queryByTestId('tab-button-your_content:title_schedule_article-notselected');
+    const tabDraftArticle = wrapper.queryByTestId('tab-button-your_content:title_scheduled-notselected');
     expect(tabDraftArticle).toBeDefined();
     fireEvent.press(tabDraftArticle);
   });
@@ -73,7 +73,7 @@ describe('Your Content screen', () => {
       <YourContent />,
     );
 
-    const flatList = wrapper.getByTestId('schedule_article.content');
+    const flatList = wrapper.getByTestId('scheduled.content');
     const headerFilter = wrapper.getByTestId('your_content.header_filter');
 
     expect(flatList).toBeDefined();
