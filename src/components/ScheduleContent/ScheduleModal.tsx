@@ -91,6 +91,10 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
     }
   }, [isSubmitingSuccess]);
 
+  useEffect(() => {
+    forceUpdateMinTime();
+  }, [scheduledAt]);
+
   const closeModal = () => {
     modalActions.hideModal();
   };
@@ -107,7 +111,15 @@ const ScheduleModal: FC<ScheduleModalProps> = ({
 
   const minDateTime = getMinDateTime();
 
-  const isValidTime = (time: Date) => moment(time).isSameOrAfter(minDateTime);
+  const isValidTime = (time: Date | string) => moment(time).isSameOrAfter(minDateTime);
+
+  // when date is today, if scheduleAt time is before minDateTime,
+  // we need to force update scheduleAt to minDateTime
+  const forceUpdateMinTime = () => {
+    if (!!scheduledAt && !isValidTime(scheduledAt)) {
+      setTimeSchedule(minDateTime.toISOString());
+    }
+  };
 
   const handleChangeDatePicker = (datetime?: Date) => {
     setIsSetDate(true);
