@@ -1,12 +1,14 @@
 import React from 'react';
 
-import { act, fireEvent, renderWithRedux } from '~/test/testUtils';
+import { act, renderWithRedux } from '~/test/testUtils';
 import { mockArticle } from '~/test/mock_data/article';
 import MockedNavigator from '~/test/MockedNavigator';
 import usePostsStore from '~/store/entities/posts';
-import { IPost, PostStatus } from '~/interfaces/IPost';
+import { IPost, PostStatus, PostType } from '~/interfaces/IPost';
 import ScheduleModal from './ScheduleModal';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
+import { timeOut } from '~/utils/common';
+import useModalStore from '~/store/modal';
 
 describe('ScheduleModal', () => {
   it('should render correctly', () => {
@@ -17,11 +19,21 @@ describe('ScheduleModal', () => {
       usePostsStore.getState().actions.addToPosts({ data: article as IPost });
     });
 
+    const handleScheduleMock = jest.fn();
+    const doAfterScheduleSuccessMock = jest.fn();
+    const setDateScheduleMock = jest.fn();
+    const setTimeScheduleMock = jest.fn();
+
     const wrapper = renderWithRedux(
       <MockedNavigator
         component={() => (
           <ScheduleModal
-            articleId={article.id}
+            contentId={article.id}
+            contentType={PostType.ARTICLE}
+            handleSchedule={handleScheduleMock}
+            doAfterScheduleSuccess={doAfterScheduleSuccessMock}
+            setDateSchedule={setDateScheduleMock}
+            setTimeSchedule={setTimeScheduleMock}
           />
         )}
       />,
@@ -40,11 +52,21 @@ describe('ScheduleModal', () => {
       useCreateArticleStore.getState().actions.setScheduledAt(article.scheduledAt);
     });
 
+    const handleScheduleMock = jest.fn();
+    const doAfterScheduleSuccessMock = jest.fn();
+    const setDateScheduleMock = jest.fn();
+    const setTimeScheduleMock = jest.fn();
+
     const wrapper = renderWithRedux(
       <MockedNavigator
         component={() => (
           <ScheduleModal
-            articleId={article.id}
+            contentId={article.id}
+            contentType={PostType.ARTICLE}
+            handleSchedule={handleScheduleMock}
+            doAfterScheduleSuccess={doAfterScheduleSuccessMock}
+            setDateSchedule={setDateScheduleMock}
+            setTimeSchedule={setTimeScheduleMock}
           />
         )}
       />,
@@ -52,32 +74,7 @@ describe('ScheduleModal', () => {
 
     const btn = wrapper.getByTestId('button.content');
     expect(btn).toBeDefined();
-    expect(btn.props?.style?.[2]?.backgroundColor).toBe('#7335C0');
-  });
-
-  it('should show error if date time is smaller than current', () => {
-    const article = { ...mockArticle };
-    article.status = PostStatus.DRAFT;
-
-    act(() => {
-      usePostsStore.getState().actions.addToPosts({ data: article as IPost });
-      useCreateArticleStore.getState().actions.setScheduledAt('2023-01-11T11:00:00.963Z');
-    });
-
-    const wrapper = renderWithRedux(
-      <MockedNavigator
-        component={() => (
-          <ScheduleModal
-            articleId={article.id}
-          />
-        )}
-      />,
-    );
-
-    const btn = wrapper.getByTestId('button.content');
-    expect(btn).toBeDefined();
-    fireEvent.press(btn);
-    expect(useCreateArticleStore.getState().schedule.errorSubmiting).toBeTruthy();
+    expect(btn.props?.style?.[2]?.backgroundColor).toBe('#F4EFFB');
   });
 
   it('should show success if schedule success', () => {
@@ -89,16 +86,59 @@ describe('ScheduleModal', () => {
       useCreateArticleStore.getState().actions.setIsScheduleSubmitingSuccess(true);
     });
 
+    const handleScheduleMock = jest.fn();
+    const doAfterScheduleSuccessMock = jest.fn();
+    const setDateScheduleMock = jest.fn();
+    const setTimeScheduleMock = jest.fn();
+
     const wrapper = renderWithRedux(
       <MockedNavigator
         component={() => (
           <ScheduleModal
-            articleId={article.id}
+            contentId={article.id}
+            contentType={PostType.ARTICLE}
+            handleSchedule={handleScheduleMock}
+            doAfterScheduleSuccess={doAfterScheduleSuccessMock}
+            setDateSchedule={setDateScheduleMock}
+            setTimeSchedule={setTimeScheduleMock}
           />
         )}
       />,
     );
 
     expect(wrapper).toMatchSnapshot();
+  });
+
+  it('should closeModal modal after schedule success 3s', async () => {
+    const article = { ...mockArticle };
+    article.status = PostStatus.DRAFT;
+
+    act(() => {
+      usePostsStore.getState().actions.addToPosts({ data: article as IPost });
+      useCreateArticleStore.getState().actions.setIsScheduleSubmitingSuccess(true);
+    });
+
+    const handleScheduleMock = jest.fn();
+    const doAfterScheduleSuccessMock = jest.fn();
+    const setDateScheduleMock = jest.fn();
+    const setTimeScheduleMock = jest.fn();
+
+    renderWithRedux(
+      <MockedNavigator
+        component={() => (
+          <ScheduleModal
+            contentId={article.id}
+            contentType={PostType.ARTICLE}
+            handleSchedule={handleScheduleMock}
+            doAfterScheduleSuccess={doAfterScheduleSuccessMock}
+            setDateSchedule={setDateScheduleMock}
+            setTimeSchedule={setTimeScheduleMock}
+          />
+        )}
+      />,
+    );
+
+    await timeOut(3000);
+    expect(useModalStore.getState().modal).toBeNull();
   });
 });

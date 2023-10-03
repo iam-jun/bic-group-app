@@ -75,11 +75,11 @@ exports[`Schedule should render correctly 1`] = `
         <View
           accessibilityState={
             Object {
-              "disabled": true,
+              "disabled": false,
             }
           }
           accessible={true}
-          focusable={false}
+          focusable={true}
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}

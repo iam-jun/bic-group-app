@@ -22,7 +22,7 @@ describe('BoxScheduleTime component', () => {
 
     const containerView = rendered.queryByTestId('box_schedule_time');
     expect(containerView.props.style[1].backgroundColor).toEqual(
-      colors.light.colors.blue2,
+      colors.light.colors.white,
     );
   });
 
