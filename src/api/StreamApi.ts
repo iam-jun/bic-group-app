@@ -51,6 +51,7 @@ import {
   IParamsGetUsersParticipants,
   QuestionItem,
 } from '~/interfaces/IQuiz';
+import { ParamsSearchContent, ParamsSearchTags } from '~/interfaces/ISearch';
 
 export const DEFAULT_LIMIT = 10;
 
@@ -91,6 +92,11 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}posts`,
     params: { ...param },
+  }),
+  searchContent: (params: ParamsSearchContent): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}content`,
+    params: { ...params },
   }),
   getRecentSearchKeyword: (param: IParamGetRecentSearchKeywords): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -457,6 +463,11 @@ export const streamApiConfig = {
     url: `${provider.url}tags`,
     params,
   }),
+  searchTags: (params?: ParamsSearchTags): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}tags/search`,
+    params,
+  }),
   validateSeriesTags: (params: IParamsValidateSeriesTags): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}content/validate-series-tags`,
@@ -652,6 +663,10 @@ export const streamApiConfig = {
       data: body,
     });
   },
+  getMenuContent: (contentId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}content/${contentId}/menu-settings`,
+  }),
 };
 
 const streamApi = {
@@ -670,6 +685,17 @@ const streamApi = {
   getSearchPost: async (param: IParamGetSearchPost) => {
     try {
       const response: any = await makeHttpRequest(streamApiConfig.getSearchPost(param));
+      if (response && response?.data) {
+        return Promise.resolve(response?.data?.data);
+      }
+      return Promise.reject(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  searchContent: async (params: ParamsSearchContent) => {
+    try {
+      const response: any = await makeHttpRequest(streamApiConfig.searchContent(params));
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
       }
@@ -855,6 +881,9 @@ const streamApi = {
   searchTagsInAudiences: (params?: IGetSearchTags) => withHttpRequestPromise(
     streamApiConfig.searchTagsInAudiences, params,
   ),
+  searchTags: (params?: ParamsSearchTags) => withHttpRequestPromise(
+    streamApiConfig.searchTags, params,
+  ),
   validateSeriesTags: (params: IParamsValidateSeriesTags) => withHttpRequestPromise(
     streamApiConfig.validateSeriesTags, params,
   ),
@@ -959,6 +988,9 @@ const streamApi = {
   ),
   editQuestionQuiz: (idQuiz: string, question: QuestionItem) => withHttpRequestPromise(
     streamApiConfig.editQuestionQuiz, idQuiz, question,
+  ),
+  getMenuContent: (contentId: string) => withHttpRequestPromise(
+    streamApiConfig.getMenuContent, contentId,
   ),
 };
 

@@ -12,7 +12,6 @@ import DescriptionSection from '~/components/series/SeriesContent/DescriptionSec
 import Icon from '~/baseComponents/Icon';
 import { IPost, IPostAudience } from '~/interfaces/IPost';
 import { useRootNavigation } from '~/hooks/navigation';
-import { ContentInterestedUserCount } from '~/components/ContentView';
 import { ButtonMarkAsRead, PostImportant } from '~/components/posts';
 import { useUserIdAuth } from '~/hooks/auth';
 import { navigateToCommunityDetail, navigateToGroupDetail } from '~/router/helper';
@@ -121,7 +120,6 @@ const SeriesDetailHeader: FC<SeriesDetailHeaderProps> = ({ series }) => {
     summary,
     coverMedia,
     items,
-    totalUsersSeen,
     setting,
     communities,
     markedReadPost,
@@ -172,12 +170,6 @@ const SeriesDetailHeader: FC<SeriesDetailHeaderProps> = ({ series }) => {
               { items?.length }
             </Text.BodyMMedium>
           </View>
-          <ContentInterestedUserCount
-            labelColor={colors.white}
-            id={id}
-            interestedUserCount={totalUsersSeen}
-            style={styles.interestedUserCount}
-          />
         </View>
       </View>
       <View style={styles.container}>
@@ -240,13 +232,6 @@ const createStyle = (theme: ExtendedTheme) => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-    },
-    interestedUserCount: {
-      paddingTop: 0,
-      paddingBottom: 0,
-      paddingHorizontal: 0,
-      margin: 0,
-      alignItems: 'flex-end',
     },
     markAsReadView: {
       paddingHorizontal: 0,

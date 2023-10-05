@@ -21,7 +21,7 @@ export interface INotificationItemMenuStore extends IBaseState {
     setSelectedNotificationId: (id: string) => void;
     setLoading: (loading: boolean) => void;
     getSeperateNotificationSettings: (targetId: string) => void;
-    editNotificationSettings: (targetId: string, enable: boolean) => void;
+    editNotificationSettings: (targetId: string, enable: boolean, contentTargetType?: SpecificNotificationType) => void;
   }
 }
 

@@ -9,7 +9,6 @@ import ListItem from './ListItem';
 
 import { spacing } from '~/theme';
 import { Button } from '~/baseComponents';
-import { ContentInterestedUserCount } from '~/components/ContentView';
 import { useRootNavigation } from '~/hooks/navigation';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { IPost, PostType } from '~/interfaces/IPost';
@@ -34,7 +33,6 @@ const SeriesContent: FC<SeriesContentProps> = ({ series, isLite }) => {
     updatedAt,
     coverMedia,
     summary,
-    totalUsersSeen,
     items,
     titleHighlight,
     summaryHighlight,
@@ -74,8 +72,8 @@ const SeriesContent: FC<SeriesContentProps> = ({ series, isLite }) => {
     />
   );
 
-  const renderRowOptions = () => (
-    <View style={[styles.default, items?.length > LIMIT_ITEM && styles.row, !!isLite && styles.rowLite]}>
+  const renderOptions = () => (
+    <View style={[styles.default, !!isLite && styles.viewLite]}>
       {items?.length > LIMIT_ITEM && (
         <Text.SubtitleM
           testID="series_content.short_content"
@@ -88,11 +86,6 @@ const SeriesContent: FC<SeriesContentProps> = ({ series, isLite }) => {
             : 'common:text_see_more'}
         </Text.SubtitleM>
       )}
-      <ContentInterestedUserCount
-        id={id}
-        interestedUserCount={totalUsersSeen}
-        style={styles.interestedUserCount}
-      />
     </View>
   );
 
@@ -108,7 +101,7 @@ const SeriesContent: FC<SeriesContentProps> = ({ series, isLite }) => {
       </Button>
       <DescriptionSection description={summarySection} />
       {renderListItem()}
-      {renderRowOptions()}
+      {renderOptions()}
     </View>
   );
 };
@@ -123,11 +116,6 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.padding.base,
     marginTop: spacing.margin.base,
   },
-  row: {
-    flexDirection: 'row',
-    alignContent: 'center',
-    justifyContent: 'space-between',
-  },
   interestedUserCount: {
     paddingTop: 0,
     paddingBottom: 0,
@@ -135,7 +123,7 @@ const styles = StyleSheet.create({
     margin: 0,
     alignItems: 'flex-end',
   },
-  rowLite: {
+  viewLite: {
     paddingVertical: 0,
   },
 });

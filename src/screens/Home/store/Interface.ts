@@ -26,6 +26,7 @@ interface IHomeState extends IBaseState {
 
     getDataFeed?: (isRefresh?: boolean) => void;
     refreshHome?: () => void;
+    removeContentFeedImportantById: (contentId: string) => void;
   };
 }
 

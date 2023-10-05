@@ -55,14 +55,14 @@ const EditPhoneNumber = ({
 
   const phoneRules = {
     required: false,
-    maxLength: {
-      value: 12,
-      message: t('settings:text_invalid_phone_length'),
-    },
-    minLength: {
-      value: 7,
-      message: t('settings:text_invalid_phone_length'),
-    },
+    // maxLength: {
+    //   value: 12,
+    //   message: t('settings:text_invalid_phone_length'),
+    // },
+    // minLength: {
+    //   value: 7,
+    //   message: t('settings:text_invalid_phone_length'),
+    // },
     pattern: {
       value: validation.phoneNumberRegex,
       message: t('settings:text_wrong_phone_number_format'),
@@ -158,16 +158,15 @@ const EditPhoneNumber = ({
         value={value}
         testID="edit_phone_number.phone"
         onChangeText={(text: string) => {
-          if (!!text && text?.trim?.()?.length > 0) {
-            onChange(formatTextRemoveSpace(text));
-            validateInputs();
-          }
+          onChange(formatTextRemoveSpace(text));
+          validateInputs();
         }}
         error={errors?.phoneNumber}
         helperContent={errors?.phoneNumber?.message}
         helperTextProps={{ style: styles.textErrorPhoneNumber }}
         keyboardType="numeric"
         autoCapitalize="none"
+        maxLength={12}
         activeOutlineColor={theme.colors.purple50}
         outlineColor={theme.colors.neutral5}
         style={styles.inputContainer}

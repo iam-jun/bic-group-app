@@ -21,7 +21,7 @@ const leaveCommunity = (_set, _get) => async (payload: IRequestLeaveCommunity) =
 
     // refresh joined communities
     useMenuController.getState().actions.getJoinedCommunities();
-    useYourCommunitiesStore.getState().actions.getYourCommunities(true);
+    useYourCommunitiesStore.getState().actions.getYourCommunities({ isRefreshing: true });
 
     // refresh permissions
     useMyPermissionsStore.getState().actions.getMyPermissions();

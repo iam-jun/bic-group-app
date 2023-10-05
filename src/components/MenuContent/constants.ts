@@ -1,0 +1,16 @@
+export const MENU_KEYS = {
+  EDIT: 'canEdit',
+  EDIT_SETTING: 'canEditSetting',
+  SAVE: 'isSave',
+  COPY_LINK: 'canCopyLink',
+  VIEW_REACTIONS: 'canViewReactions',
+  VIEW_SERIES: 'canViewSeries',
+  PIN_CONTENT: 'canPinContent',
+  CREATE_QUIZ: 'canCreateQuiz',
+  DELETE_QUIZ: 'canDeleteQuiz',
+  EDIT_QUIZ: 'canEditQuiz',
+  DELETE: 'canDelete',
+  REPORT_CONTENT: 'canReportContent',
+  REPORT_MEMBER: 'canReportMember',
+  ENABLE_NOTIFICATIONS: 'isEnableNotifications',
+};

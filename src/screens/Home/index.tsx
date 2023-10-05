@@ -18,7 +18,6 @@ import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useBackPressListener, useRootNavigation, useTabPressListener } from '~/hooks/navigation';
 import { ITabTypes } from '~/interfaces/IRouter';
-import NewsfeedSearch from '~/screens/Home/HomeSearch';
 import useNetworkStore from '~/store/network';
 import networkSelectors from '~/store/network/selectors';
 import spacing from '~/theme/spacing';
@@ -26,20 +25,18 @@ import { openUrl } from '~/utils/link';
 import HomeHeader from '~/screens/Home/components/HomeHeader';
 import useHomeStore from '~/screens/Home/store';
 import useCommonController from '../store';
-import useFilterToolbarStore from '~/components/FilterToolbar/store';
 import useModalStore from '~/store/modal';
 import usePostsInProgressStore from './components/VideoProcessingNotice/store';
-import useFeedSearchStore from './HomeSearch/store';
 import useAppStore from '~/store/app';
 import { chatSchemes } from '~/constants/chat';
 import Icon from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
 import useRemoteConfigStore from '~/store/remoteConfig';
+import searchStack from '~/router/navigator/MainStack/stacks/searchStack/stack';
 
 const Home = () => {
   const [lossInternet, setLossInternet] = useState(false);
   const listRef = useRef<any>();
-  const headerRef = useRef<any>();
   const yShared = useSharedValue(0);
 
   const { rootNavigation } = useRootNavigation();
@@ -48,13 +45,8 @@ const Home = () => {
   const styles = createStyle(theme);
 
   const commonActions = useCommonController((state) => state.actions);
-  const resetFilter = useFilterToolbarStore((state) => state.reset);
   const { showAlert } = useModalStore((state) => state.actions);
   const postContainingVideoInProgressActions = usePostsInProgressStore((state) => state.actions);
-
-  const actionsFeedSearch = useFeedSearchStore((state) => state.actions);
-  const isShowSearch = useFeedSearchStore((state) => state.newsfeedSearch.isShow);
-  const resetFeedSearchStore = useFeedSearchStore((state) => state.reset);
 
   const token = useAuthController(getAuthToken);
 
@@ -101,23 +93,9 @@ const Home = () => {
     (tabName: ITabTypes) => {
       if (tabName === 'home') {
         listRef?.current?.scrollToOffset?.({ animated: true, offset: 0 });
-        headerRef?.current?.hideSearch?.();
-      }
-
-      if (tabName !== 'home' && isShowSearch) {
-        /**
-         * The issue happens when a user opens search content modal on newsfeed,
-         * then move to tab `Communities` without closing it, and goes to community profile,
-         * the search modal is then shown unexpectedly.
-         *
-         * That's why we need to clear and close current search on newsfeed first before
-         * moving to another screen.
-         */
-        resetFeedSearchStore();
-        resetFilter();
       }
     },
-    [listRef, isShowSearch],
+    [listRef],
   );
 
   useEffect(
@@ -164,10 +142,7 @@ const Home = () => {
   );
 
   const handleBackPress = () => {
-    if (isShowSearch) {
-      resetFeedSearchStore();
-      resetFilter();
-    } else if (rootNavigation.canGoBack) {
+    if (rootNavigation.canGoBack) {
       rootNavigation.goBack();
     } else {
       BackHandler.exitApp();
@@ -177,8 +152,7 @@ const Home = () => {
   useBackPressListener(handleBackPress);
 
   const onPressSearch = () => {
-    DeviceEventEmitter.emit('showHeader', true);
-    actionsFeedSearch.setNewsfeedSearch({ isShow: true });
+    rootNavigation.push(searchStack.searchMain);
   };
 
   const HeaderImageComponent = (
@@ -247,7 +221,6 @@ const Home = () => {
         onPressChat={navigateToChat}
       />
       <View style={styles.statusBar} />
-      <NewsfeedSearch style={styles.searchContainer} />
     </View>
   );
 };

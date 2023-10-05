@@ -24,6 +24,8 @@ import useSearchJoinedCommunitiesStore from '~/screens/communities/Communities/c
 import SearchCommunityView from './components/SearchCommunityView';
 import SearchGroupView from './components/SearchGroupView';
 import { IGroupNotificationSetting } from '~/interfaces/INotification';
+import { trackEvent } from '~/services/tracking';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const _AdvancedSettings = () => {
   const theme: ExtendedTheme = useTheme();
@@ -66,7 +68,7 @@ const _AdvancedSettings = () => {
 
   const getData = () => {
     advancedSettingsActions.setIsLoading(true);
-    actions.getYourCommunities(true);
+    actions.getYourCommunities({ isRefreshing: true, isFromNotificationScreen: true });
   };
 
   const onRefresh = () => {
@@ -86,6 +88,11 @@ const _AdvancedSettings = () => {
       id: comId,
     };
     advancedSettingsActions.updateCommunitySettings(payload, dataUpdateStore);
+    trackEvent({
+      event: TrackingEvent.COMMUNITY_NOTI_CHANGED,
+      properties: { community_name: selectedCommunity?.name || '' },
+      sendWithUserId: true,
+    });
   };
 
   const onPressCommuntiyItem = (item: any) => {

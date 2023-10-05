@@ -9,6 +9,7 @@ import i18n from '~/localization';
 import showToastError from '~/store/helper/showToastError';
 import showToast from '~/store/helper/showToast';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const navigation = withNavigation?.(rootNavigationRef);
 
@@ -37,7 +38,7 @@ const changePassword = (set, _get) => async (payload: IChangePasswordPayload) =>
       state.errorText = '';
       state.loading = false;
     }, 'changePasswordSuccess');
-    trackEvent({ event: 'Password Changed', sendWithUserId: true });
+    trackEvent({ event: TrackingEvent.PASSWORD_CHANGED, sendWithUserId: true });
   } catch (error) {
     console.error('changePassword error:', error);
     let errCurrentPassword = '';

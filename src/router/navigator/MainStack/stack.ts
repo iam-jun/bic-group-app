@@ -8,6 +8,7 @@ import seriesStack from './stacks/series/stack';
 import topicStack from './stacks/topic/stack';
 import tagsStack from './stacks/tagsStack/stack';
 import quizStack from './stacks/quizStack/stack';
+import searchStack from './stacks/searchStack/stack';
 
 const mainTabStack = {
   ...groupStack,
@@ -20,6 +21,7 @@ const mainTabStack = {
   ...topicStack,
   ...tagsStack,
   ...quizStack,
+  ...searchStack,
   confirmUser: 'confirm-user',
 };
 

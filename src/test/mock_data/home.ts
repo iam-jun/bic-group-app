@@ -450,3 +450,28 @@ export const userSearchResult = {
     },
   ],
 };
+
+export const userSearchResult2 = {
+  code: 'api.ok',
+  meta: {
+    message: 'Success',
+    total: 1,
+    offset: 0,
+    limit: 25,
+    hasNextPage: false,
+  },
+  data: [
+    {
+      id: '92a1a9de-9cbb-41ee-b1d5-973ac3690e28',
+      email: 'khang2@mailinator.com',
+      avatar: 'https://bic-stg-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/user/default-avatar.png',
+      username: 'khang2',
+      fullname: 'Khang2',
+      createdAt: '2022-05-20T04:40:42.093Z',
+      updatedAt: '2023-01-09T07:41:04.188Z',
+      chatUserId: '6dswbr953jgd5qtytfnngcp69r',
+      beinStaffRole: null,
+      backgroundImgUrl: 'https://evolgroup.vn/wp-content/uploads/sites/18/2020/04/Thumb-EVOL.jpg',
+    },
+  ],
+};

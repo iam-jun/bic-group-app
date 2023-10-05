@@ -15,6 +15,7 @@ import { mapProfile } from '~/helpers/common';
 import { timeOut } from '~/utils/common';
 import { userApiConfig } from '~/api/UserApi';
 import notificationApi from '~/api/NotificationApi';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const navigation = withNavigation?.(rootNavigationRef);
 
@@ -84,12 +85,14 @@ const handleAuthEvent = (set, get) => async (data: HubCapsule) => {
 
       mixPanelManager.updateUser(userResponse.email);
 
-      mixPanelManager.trackEvent('Signed In', {
-        email: userResponse.email,
-        full_name: userResponse.name,
-        username: userResponse.username,
-        user_id: userProfile?.id,
-      });
+      mixPanelManager.trackEvent(
+        TrackingEvent.SIGNED_IN, {
+          email: userResponse.email,
+          full_name: userResponse.name,
+          username: userResponse.username,
+          user_id: userProfile?.id,
+        },
+      );
 
       navigation.replace(rootSwitch.mainStack);
       authActions.setSignInLoading(false);

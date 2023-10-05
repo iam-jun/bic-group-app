@@ -7,6 +7,8 @@ import showToastSuccess from '~/store/helper/showToastSuccess';
 import ContentAlertPermissionSettings from '~/components/ContentSettings/ContentAlertPermissionSettings';
 import showAlert from '~/store/helper/showAlert';
 import showToastError from '~/store/helper/showToastError';
+import useHomeStore from '~/screens/Home/store';
+import useTimelineStore from '~/store/timeline';
 
 const putEditSettings
   = (_set, _get) => async (params: IPutEditSettingsParams) => {
@@ -25,6 +27,11 @@ const putEditSettings
       };
       const res = await streamApi.putEditSettings(data);
 
+      // remove this content from important feed when isImportant is set to false
+      if (setting && setting.isImportant !== undefined && !setting.isImportant) {
+        useHomeStore.getState().actions.removeContentFeedImportantById(id);
+        useTimelineStore.getState().actions.removeContentFeedImportantById(id);
+      }
       onSuccess?.();
       showToastSuccess(res);
     } catch (error) {

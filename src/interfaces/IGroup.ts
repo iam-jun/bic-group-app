@@ -392,3 +392,8 @@ export interface IPayloadPreviewPrivacy {
   groupId: string;
   data: IGroupDetailEdit;
 }
+
+export interface IParamsGetYourCommunities {
+  isRefreshing?: boolean;
+  isFromNotificationScreen?: boolean
+}

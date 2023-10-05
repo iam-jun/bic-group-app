@@ -31,6 +31,7 @@ import useMenuController from '../../store';
 import useModalStore from '~/store/modal';
 import { formatDate } from '~/utils/formatter';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const EditBasicInfo = () => {
   const theme: ExtendedTheme = useTheme();
@@ -96,7 +97,7 @@ const EditBasicInfo = () => {
       },
       callback: () => rootNavigation.goBack(),
     });
-    trackEvent({ event: 'Basic Info Updated', sendWithUserId: true });
+    trackEvent({ event: TrackingEvent.BASIC_INFO_UPDATED, sendWithUserId: true });
   };
 
   const onRelationshipItemPress = (item: IRelationshipItem) => {

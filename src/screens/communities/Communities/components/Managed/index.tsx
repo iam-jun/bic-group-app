@@ -14,6 +14,7 @@ import { spacing } from '~/theme';
 import Divider from '~/beinComponents/Divider';
 import EmptyScreen from '~/components/EmptyScreen';
 import useManagedStore from './store';
+import ListCommunityPlaceHolder from '~/components/placeholder/ListCommunityPlaceHolder';
 
 type GroupItemProps = {
   id: string;
@@ -123,6 +124,7 @@ const Managed = () => {
 
   const renderSectionFooter = ({ section: { title, data } }) => {
     if (data.length !== 0) return null;
+    if (data.length === 0 && loading) return <ListCommunityPlaceHolder />;
 
     return (
       <ListEmpty
