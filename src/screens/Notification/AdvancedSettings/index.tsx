@@ -68,7 +68,7 @@ const _AdvancedSettings = () => {
 
   const getData = () => {
     advancedSettingsActions.setIsLoading(true);
-    actions.getYourCommunities(true);
+    actions.getYourCommunities({ isRefreshing: true, isFromNotificationScreen: true });
   };
 
   const onRefresh = () => {
