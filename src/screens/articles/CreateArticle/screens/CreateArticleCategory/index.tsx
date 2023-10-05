@@ -7,6 +7,7 @@ import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import ItemCheckbox from '~/components/ItemCheckbox';
+import useSelectCategoriesStore from '~/components/SelectCategories/store';
 import SelectingListInfo from '~/components/SelectingListInfo';
 
 import { useBaseHook } from '~/hooks';
@@ -15,7 +16,6 @@ import { CreateArticleProps, ICategory } from '~/interfaces/IArticle';
 import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import spacing from '~/theme/spacing';
-import useCreateArticleCategoryStore from './store';
 
 const CreateArticleCategory: FC<CreateArticleProps> = ({ route }: CreateArticleProps) => {
   const articleId = route?.params?.articleId;
@@ -24,15 +24,15 @@ const CreateArticleCategory: FC<CreateArticleProps> = ({ route }: CreateArticleP
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const categoryActions = useCreateArticleCategoryStore((state) => state.actions);
+  const categoryActions = useSelectCategoriesStore((state) => state.actions);
 
   const selectedCategories = useCreateArticleStore((state) => state.data.categories);
   const editArticleActions = useCreateArticleStore((state) => state.actions);
 
-  const categoriesData = useCreateArticleCategoryStore((state) => state.categories);
+  const categoriesData = useSelectCategoriesStore((state) => state.categories);
   const { items: categoryItems, loading: loadingCategories } = categoriesData || {};
 
-  const searchData = useCreateArticleCategoryStore((state) => state.search);
+  const searchData = useSelectCategoriesStore((state) => state.search);
   const { key: searchKey, items: searchItems } = searchData || {};
 
   const listData = searchKey ? searchItems : categoryItems;

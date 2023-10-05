@@ -72,6 +72,7 @@ exports[`SelectingListInfo Component renders correctly 1`] = `
               Array [
                 Object {
                   "color": "#007AFF",
+                  "flexShrink": 1,
                   "paddingLeft": 4,
                 },
                 undefined,
@@ -120,7 +121,7 @@ exports[`SelectingListInfo Component renders correctly 1`] = `
                   "flexDirection": "row",
                 },
                 Object {
-                  "marginStart": 4,
+                  "marginLeft": 4,
                 },
                 Object {
                   "backgroundColor": undefined,
@@ -185,6 +186,7 @@ exports[`SelectingListInfo Component renders correctly 1`] = `
               Array [
                 Object {
                   "color": "#007AFF",
+                  "flexShrink": 1,
                   "paddingLeft": 4,
                 },
                 undefined,
@@ -233,7 +235,7 @@ exports[`SelectingListInfo Component renders correctly 1`] = `
                   "flexDirection": "row",
                 },
                 Object {
-                  "marginStart": 4,
+                  "marginLeft": 4,
                 },
                 Object {
                   "backgroundColor": undefined,
@@ -298,6 +300,7 @@ exports[`SelectingListInfo Component renders correctly 1`] = `
               Array [
                 Object {
                   "color": "#007AFF",
+                  "flexShrink": 1,
                   "paddingLeft": 4,
                 },
                 undefined,
@@ -346,7 +349,7 @@ exports[`SelectingListInfo Component renders correctly 1`] = `
                   "flexDirection": "row",
                 },
                 Object {
-                  "marginStart": 4,
+                  "marginLeft": 4,
                 },
                 Object {
                   "backgroundColor": undefined,
@@ -411,6 +414,7 @@ exports[`SelectingListInfo Component renders correctly 1`] = `
               Array [
                 Object {
                   "color": "#007AFF",
+                  "flexShrink": 1,
                   "paddingLeft": 4,
                 },
                 undefined,
@@ -459,7 +463,7 @@ exports[`SelectingListInfo Component renders correctly 1`] = `
                   "flexDirection": "row",
                 },
                 Object {
-                  "marginStart": 4,
+                  "marginLeft": 4,
                 },
                 Object {
                   "backgroundColor": undefined,
@@ -524,6 +528,7 @@ exports[`SelectingListInfo Component renders correctly 1`] = `
               Array [
                 Object {
                   "color": "#007AFF",
+                  "flexShrink": 1,
                   "paddingLeft": 4,
                 },
                 undefined,
@@ -572,7 +577,7 @@ exports[`SelectingListInfo Component renders correctly 1`] = `
                   "flexDirection": "row",
                 },
                 Object {
-                  "marginStart": 4,
+                  "marginLeft": 4,
                 },
                 Object {
                   "backgroundColor": undefined,
@@ -637,6 +642,7 @@ exports[`SelectingListInfo Component renders correctly 1`] = `
               Array [
                 Object {
                   "color": "#007AFF",
+                  "flexShrink": 1,
                   "paddingLeft": 4,
                 },
                 undefined,
@@ -685,7 +691,7 @@ exports[`SelectingListInfo Component renders correctly 1`] = `
                   "flexDirection": "row",
                 },
                 Object {
-                  "marginStart": 4,
+                  "marginLeft": 4,
                 },
                 Object {
                   "backgroundColor": undefined,
@@ -750,6 +756,7 @@ exports[`SelectingListInfo Component renders correctly 1`] = `
               Array [
                 Object {
                   "color": "#007AFF",
+                  "flexShrink": 1,
                   "paddingLeft": 4,
                 },
                 undefined,
@@ -798,834 +805,7 @@ exports[`SelectingListInfo Component renders correctly 1`] = `
                   "flexDirection": "row",
                 },
                 Object {
-                  "marginStart": 4,
-                },
-                Object {
-                  "backgroundColor": undefined,
-                },
-              ]
-            }
-          >
-            <View
-              style={
-                Array [
-                  undefined,
-                  undefined,
-                  undefined,
-                ]
-              }
-            >
-              <View
-                testID="tag.icon"
-              />
-            </View>
-          </View>
-        </View>
-      </View>
-    </View>
-  </RCTScrollView>
-</View>
-`;
-
-exports[`SelectingListInfo Component renders correctly 1`] = `
-<View
-  style={
-    Object {
-      "paddingBottom": 8,
-    }
-  }
->
-  <Text
-    style={
-      Array [
-        Object {
-          "color": "#212745",
-          "fontFamily": "BeVietnamPro-Medium",
-          "fontSize": 17,
-        },
-        Object {},
-        Object {
-          "paddingHorizontal": 16,
-        },
-      ]
-    }
-    testID="aritcles.slecting_list_info.info_title"
-  >
-    Your article will be added to
-  </Text>
-  <RCTScrollView
-    horizontal={true}
-    showsHorizontalScrollIndicator={false}
-  >
-    <View>
-      <View
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#EBF4FF",
-            "borderRadius": 100,
-            "flexDirection": "row",
-            "height": 32,
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "marginRight": 0,
-            "marginTop": 8,
-            "opacity": 1,
-            "paddingLeft": 4,
-            "paddingRight": 4,
-          }
-        }
-        testID="tag.item"
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#212745",
-                "fontFamily": "BeVietnamPro-Light",
-                "fontSize": 14,
-              },
-              Object {},
-              Array [
-                Object {
-                  "color": "#007AFF",
-                  "paddingLeft": 4,
-                },
-                undefined,
-              ],
-            ]
-          }
-          testID="tag.label"
-        >
-          tag 1
-        </Text>
-        <View
-          accessibilityState={
-            Object {
-              "disabled": false,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          hitSlop={
-            Object {
-              "bottom": 10,
-              "left": 10,
-              "right": 10,
-              "top": 10,
-            }
-          }
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                },
-                Object {
-                  "marginStart": 4,
-                },
-                Object {
-                  "backgroundColor": undefined,
-                },
-              ]
-            }
-          >
-            <View
-              style={
-                Array [
-                  undefined,
-                  undefined,
-                  undefined,
-                ]
-              }
-            >
-              <View
-                testID="tag.icon"
-              />
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#EBF4FF",
-            "borderRadius": 100,
-            "flexDirection": "row",
-            "height": 32,
-            "justifyContent": "center",
-            "marginLeft": 8,
-            "marginRight": 0,
-            "marginTop": 8,
-            "opacity": 1,
-            "paddingLeft": 4,
-            "paddingRight": 4,
-          }
-        }
-        testID="tag.item"
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#212745",
-                "fontFamily": "BeVietnamPro-Light",
-                "fontSize": 14,
-              },
-              Object {},
-              Array [
-                Object {
-                  "color": "#007AFF",
-                  "paddingLeft": 4,
-                },
-                undefined,
-              ],
-            ]
-          }
-          testID="tag.label"
-        >
-          tag 2
-        </Text>
-        <View
-          accessibilityState={
-            Object {
-              "disabled": false,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          hitSlop={
-            Object {
-              "bottom": 10,
-              "left": 10,
-              "right": 10,
-              "top": 10,
-            }
-          }
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                },
-                Object {
-                  "marginStart": 4,
-                },
-                Object {
-                  "backgroundColor": undefined,
-                },
-              ]
-            }
-          >
-            <View
-              style={
-                Array [
-                  undefined,
-                  undefined,
-                  undefined,
-                ]
-              }
-            >
-              <View
-                testID="tag.icon"
-              />
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#EBF4FF",
-            "borderRadius": 100,
-            "flexDirection": "row",
-            "height": 32,
-            "justifyContent": "center",
-            "marginLeft": 8,
-            "marginRight": 0,
-            "marginTop": 8,
-            "opacity": 1,
-            "paddingLeft": 4,
-            "paddingRight": 4,
-          }
-        }
-        testID="tag.item"
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#212745",
-                "fontFamily": "BeVietnamPro-Light",
-                "fontSize": 14,
-              },
-              Object {},
-              Array [
-                Object {
-                  "color": "#007AFF",
-                  "paddingLeft": 4,
-                },
-                undefined,
-              ],
-            ]
-          }
-          testID="tag.label"
-        >
-          tag 3
-        </Text>
-        <View
-          accessibilityState={
-            Object {
-              "disabled": false,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          hitSlop={
-            Object {
-              "bottom": 10,
-              "left": 10,
-              "right": 10,
-              "top": 10,
-            }
-          }
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                },
-                Object {
-                  "marginStart": 4,
-                },
-                Object {
-                  "backgroundColor": undefined,
-                },
-              ]
-            }
-          >
-            <View
-              style={
-                Array [
-                  undefined,
-                  undefined,
-                  undefined,
-                ]
-              }
-            >
-              <View
-                testID="tag.icon"
-              />
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#EBF4FF",
-            "borderRadius": 100,
-            "flexDirection": "row",
-            "height": 32,
-            "justifyContent": "center",
-            "marginLeft": 8,
-            "marginRight": 0,
-            "marginTop": 8,
-            "opacity": 1,
-            "paddingLeft": 4,
-            "paddingRight": 4,
-          }
-        }
-        testID="tag.item"
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#212745",
-                "fontFamily": "BeVietnamPro-Light",
-                "fontSize": 14,
-              },
-              Object {},
-              Array [
-                Object {
-                  "color": "#007AFF",
-                  "paddingLeft": 4,
-                },
-                undefined,
-              ],
-            ]
-          }
-          testID="tag.label"
-        >
-          tag 4
-        </Text>
-        <View
-          accessibilityState={
-            Object {
-              "disabled": false,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          hitSlop={
-            Object {
-              "bottom": 10,
-              "left": 10,
-              "right": 10,
-              "top": 10,
-            }
-          }
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                },
-                Object {
-                  "marginStart": 4,
-                },
-                Object {
-                  "backgroundColor": undefined,
-                },
-              ]
-            }
-          >
-            <View
-              style={
-                Array [
-                  undefined,
-                  undefined,
-                  undefined,
-                ]
-              }
-            >
-              <View
-                testID="tag.icon"
-              />
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#EBF4FF",
-            "borderRadius": 100,
-            "flexDirection": "row",
-            "height": 32,
-            "justifyContent": "center",
-            "marginLeft": 8,
-            "marginRight": 0,
-            "marginTop": 8,
-            "opacity": 1,
-            "paddingLeft": 4,
-            "paddingRight": 4,
-          }
-        }
-        testID="tag.item"
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#212745",
-                "fontFamily": "BeVietnamPro-Light",
-                "fontSize": 14,
-              },
-              Object {},
-              Array [
-                Object {
-                  "color": "#007AFF",
-                  "paddingLeft": 4,
-                },
-                undefined,
-              ],
-            ]
-          }
-          testID="tag.label"
-        >
-          tag 5
-        </Text>
-        <View
-          accessibilityState={
-            Object {
-              "disabled": false,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          hitSlop={
-            Object {
-              "bottom": 10,
-              "left": 10,
-              "right": 10,
-              "top": 10,
-            }
-          }
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                },
-                Object {
-                  "marginStart": 4,
-                },
-                Object {
-                  "backgroundColor": undefined,
-                },
-              ]
-            }
-          >
-            <View
-              style={
-                Array [
-                  undefined,
-                  undefined,
-                  undefined,
-                ]
-              }
-            >
-              <View
-                testID="tag.icon"
-              />
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#EBF4FF",
-            "borderRadius": 100,
-            "flexDirection": "row",
-            "height": 32,
-            "justifyContent": "center",
-            "marginLeft": 8,
-            "marginRight": 0,
-            "marginTop": 8,
-            "opacity": 1,
-            "paddingLeft": 4,
-            "paddingRight": 4,
-          }
-        }
-        testID="tag.item"
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#212745",
-                "fontFamily": "BeVietnamPro-Light",
-                "fontSize": 14,
-              },
-              Object {},
-              Array [
-                Object {
-                  "color": "#007AFF",
-                  "paddingLeft": 4,
-                },
-                undefined,
-              ],
-            ]
-          }
-          testID="tag.label"
-        >
-          tag 6
-        </Text>
-        <View
-          accessibilityState={
-            Object {
-              "disabled": false,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          hitSlop={
-            Object {
-              "bottom": 10,
-              "left": 10,
-              "right": 10,
-              "top": 10,
-            }
-          }
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                },
-                Object {
-                  "marginStart": 4,
-                },
-                Object {
-                  "backgroundColor": undefined,
-                },
-              ]
-            }
-          >
-            <View
-              style={
-                Array [
-                  undefined,
-                  undefined,
-                  undefined,
-                ]
-              }
-            >
-              <View
-                testID="tag.icon"
-              />
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#EBF4FF",
-            "borderRadius": 100,
-            "flexDirection": "row",
-            "height": 32,
-            "justifyContent": "center",
-            "marginLeft": 8,
-            "marginRight": 16,
-            "marginTop": 8,
-            "opacity": 1,
-            "paddingLeft": 4,
-            "paddingRight": 4,
-          }
-        }
-        testID="tag.item"
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#212745",
-                "fontFamily": "BeVietnamPro-Light",
-                "fontSize": 14,
-              },
-              Object {},
-              Array [
-                Object {
-                  "color": "#007AFF",
-                  "paddingLeft": 4,
-                },
-                undefined,
-              ],
-            ]
-          }
-          testID="tag.label"
-        >
-          tag 7
-        </Text>
-        <View
-          accessibilityState={
-            Object {
-              "disabled": false,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          hitSlop={
-            Object {
-              "bottom": 10,
-              "left": 10,
-              "right": 10,
-              "top": 10,
-            }
-          }
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                },
-                Object {
-                  "marginStart": 4,
+                  "marginLeft": 4,
                 },
                 Object {
                   "backgroundColor": undefined,

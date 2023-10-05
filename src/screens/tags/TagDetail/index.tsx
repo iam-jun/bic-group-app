@@ -15,7 +15,6 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import appConfig from '~/configs/appConfig';
 import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
 
 const TagDetail: React.FC<any> = ({ route }) => {
   const { params } = route || {};
@@ -39,8 +38,6 @@ const TagDetail: React.FC<any> = ({ route }) => {
   const community = useCommunitiesStore((state) => state.data[communityId]);
   const { groupId, name: communityName } = community || {};
 
-  const resetFeedSearchStore = useFeedSearchStore((state) => state.reset);
-
   useEffect(() => {
     resetTag();
     getData();
@@ -49,9 +46,6 @@ const TagDetail: React.FC<any> = ({ route }) => {
   useEffect(() => () => {
     resetTag();
     resetFilter();
-    // in case of going to TagDetail from FeedSearch
-    // when navigate back need to reset
-    resetFeedSearchStore();
   }, [tagId]);
 
   const getData = (isLoadMore = false) => {

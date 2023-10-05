@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { ExtendedTheme, useRoute, useTheme } from '@react-navigation/native';
 
 import spacing, { margin } from '~/theme/spacing';
 import Image from '~/components/Image';
@@ -23,7 +23,6 @@ import { getTotalReactions } from '~/helpers/post';
 import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import TagsView from '~/components/TagsView';
-import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import { ITag } from '~/interfaces/ITag';
 import Divider from '~/beinComponents/Divider';
 import DeletedItem from '~/components/DeletedItem';
@@ -32,6 +31,9 @@ import { TrackingEventContentReadProperties } from '~/services/tracking/Interfac
 import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
 import DraftQuizFooter from '~/components/quiz/DraftQuizFooter';
 import TakePartInAQuiz from '~/components/quiz/TakePartInAQuiz';
+import searchStack from '~/router/navigator/MainStack/stacks/searchStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
+import useCommunitiesStore from '~/store/entities/communities';
 
 export interface ArticleItemProps {
   data: IPost;
@@ -49,6 +51,9 @@ const ArticleItem: FC<ArticleItemProps> = ({
   onPressComment,
 }: ArticleItemProps) => {
   const { rootNavigation } = useRootNavigation();
+
+  const route = useRoute();
+
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
@@ -101,7 +106,17 @@ const ArticleItem: FC<ArticleItemProps> = ({
   };
   const goToDetail = () => rootNavigation.navigate(articleStack.articleDetail, { articleId: id, focusComment: true });
   const goToTagDetail = (tagData: ITag) => {
-    rootNavigation.navigate(tagsStack.tagDetail, { tagData });
+    if ([groupStack.communityDetail, groupStack.groupDetail].includes(route?.name)) {
+      const { communityId }: any = route.params || {};
+      const community = useCommunitiesStore.getState().data?.[communityId];
+      const rootGroup = {
+        ...community,
+        id: community?.groupId,
+      };
+      rootNavigation.push(searchStack.searchMain, { tag: tagData, group: rootGroup });
+    } else {
+      rootNavigation.push(searchStack.searchMain, { tag: tagData });
+    }
   };
 
   const renderImportant = () => (
@@ -238,12 +253,12 @@ const ArticleItem: FC<ArticleItemProps> = ({
         {renderImageThumbnail()}
         {renderPreviewSummary()}
       </Button>
-      {isLite && renderLite()}
       {!isLite && renderInterestedBy()}
-      {!isLite && renderTakePartInAQuiz()}
+      {renderTakePartInAQuiz()}
       {!isLite && renderDivider()}
       {!isLite && renderFooter()}
       {!isLite && renderMarkAsRead()}
+      {isLite && renderLite()}
       {renderDraftQuizFooter()}
     </View>
   );
