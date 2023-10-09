@@ -40,17 +40,16 @@ import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import useMounted from '~/hooks/mounted';
 import useTimelineStore, { ITimelineState } from '~/store/timeline';
 import useCommunityController from '../store';
-import ContentSearch from '~/screens/Home/HomeSearch';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 import useModalStore from '~/store/modal';
-import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
 import usePinContentStore from '~/components/PinContent/store';
 import TermsView from '~/components/TermsModal';
 import MemberQuestionsModal from '~/components/MemberQuestionsModal';
 import FloatingCreatePost from '~/screens/Home/components/FloatingCreatePost';
 import useTermStore from '~/components/TermsModal/store';
+import searchStack from '~/router/navigator/MainStack/stacks/searchStack/stack';
 import PageNotFound from '~/screens/NotFound/components/PageNotFound';
 
 const CommunityDetail = (props: any) => {
@@ -99,7 +98,6 @@ const CommunityDetail = (props: any) => {
     ]),
   );
 
-  const actionsFeedSearch = useFeedSearchStore((state) => state.actions);
   const actionPinContent = usePinContentStore((state) => state.actions);
   const actionTerms = useTermStore((state) => state.actions);
 
@@ -295,7 +293,11 @@ const CommunityDetail = (props: any) => {
   };
 
   const onPressSearch = () => {
-    actionsFeedSearch.setNewsfeedSearch({ isShow: true });
+    const rootGroup = {
+      ...community,
+      id: community?.groupId,
+    };
+    rootNavigation.push(searchStack.searchMain, { group: rootGroup });
   };
 
   const hasNoDataInStore = !groupId;
@@ -376,7 +378,6 @@ const CommunityDetail = (props: any) => {
           isMember={isMember}
         />
       </Animated.View>
-      <ContentSearch groupId={groupId} />
       <MemberQuestionsModal />
       <TermsView />
       {isMember && <FloatingCreatePost />}

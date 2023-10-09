@@ -29,7 +29,9 @@ import dimension from '~/theme/dimension';
 import useMenuController from '~/screens/Menu/store';
 import useUserProfileStore from '../../UserProfile/store';
 import Button from '~/beinComponents/Button';
+import useCommonController from '~/screens/store';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const AddWork = () => {
   const theme: ExtendedTheme = useTheme();
@@ -43,6 +45,8 @@ const AddWork = () => {
 
   const selectedWorkItem = useMenuController((state) => state.selectedWorkItem);
   const userProfileActions = useUserProfileStore((state) => state.actions);
+  const myProfile = useCommonController((state) => state.myProfile);
+  const myProfileActions = useCommonController((state) => state.actions);
 
   const {
     id,
@@ -122,6 +126,8 @@ const AddWork = () => {
   }, [startDateValue, endDateValue]);
 
   const navigateBack = () => {
+    userProfileActions.getWorkExperience(myProfile.id);
+    myProfileActions.getMyProfile({ userId: myProfile.id, silentLoading: true });
     Keyboard.dismiss();
     if (rootNavigation.canGoBack) {
       rootNavigation.goBack();
@@ -141,7 +147,7 @@ const AddWork = () => {
     selectedWorkItem
       ? userProfileActions.editWorkExperience(id, data, navigateBack)
       : userProfileActions.addWorkExperience(data, navigateBack);
-    trackEvent({ event: 'Work Info Updated', sendWithUserId: true });
+    trackEvent({ event: TrackingEvent.WORK_INFO_UPDATED, sendWithUserId: true });
   };
 
   const onChangeCompany = (text: string) => {

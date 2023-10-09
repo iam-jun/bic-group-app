@@ -14,10 +14,10 @@ import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import AlertDeleteAudiences from '../AlertDeleteAudiences';
 import useModalStore from '~/store/modal';
 import usePostsStore from '~/store/entities/posts';
+import MenuContent from '~/components/MenuContent';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
 import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
-import MenuContent from '~/components/MenuContent';
 
 export interface PostHeaderProps extends Partial<ContentHeaderProps> {
   data: any,

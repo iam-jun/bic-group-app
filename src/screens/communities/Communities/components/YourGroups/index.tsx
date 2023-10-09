@@ -13,6 +13,7 @@ import EmptyScreen from '~/components/EmptyScreen';
 import spacing from '~/theme/spacing';
 import CommunityGroupCard from '~/components/CommunityGroupCard';
 import useYourGroupsStore from './store';
+import ListCommunityPlaceHolder from '~/components/placeholder/ListCommunityPlaceHolder';
 
 type GroupItemProps = {
   id: string;
@@ -33,11 +34,13 @@ const GroupItem: FC<GroupItemProps> = ({ id }) => {
 
 const renderEmptyComponent = () => {
   const {
-    hasNextPage,
+    loading,
   } = useYourGroupsStore();
 
-  if (hasNextPage) {
-    return null;
+  if (loading) {
+    return (
+      <ListCommunityPlaceHolder shouldShowCommunityInHeader />
+    );
   }
 
   return (
@@ -51,10 +54,12 @@ const renderEmptyComponent = () => {
 
 const renderListFooter = () => {
   const {
-    loading,
+    loading, hasNextPage, ids,
   } = useYourGroupsStore();
 
-  if (!loading) return <Separator />;
+  if (ids.length === 0 && loading) return null;
+
+  if (!loading || !hasNextPage) return <Separator />;
 
   return (
     <View style={styles.listFooter} testID="your_groups.loading_more_indicator">

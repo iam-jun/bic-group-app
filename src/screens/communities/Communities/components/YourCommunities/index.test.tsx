@@ -34,7 +34,7 @@ describe('YourCommunities Screen', () => {
       }, false);
     });
     act(() => {
-      result.current.actions.getYourCommunities(true);
+      result.current.actions.getYourCommunities({ isRefreshing: true });
     });
     expect(result.current.loading).toBe(false);
     expect(result.current.refreshing).toBe(true);

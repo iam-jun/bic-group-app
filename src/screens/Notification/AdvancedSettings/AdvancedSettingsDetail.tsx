@@ -21,6 +21,8 @@ import useAdvancedNotiSettingsStore from './store';
 import ButtonWrapper from '~/baseComponents/Button/ButtonWrapper';
 import Icon from '~/baseComponents/Icon';
 import Divider from '~/beinComponents/Divider';
+import { trackEvent } from '~/services/tracking';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const topAdjustment = Platform.OS === 'android' ? -StatusBar.currentHeight : 0;
 const defaultData = { enable: true, channels: { inApp: true, push: true } };
@@ -65,6 +67,14 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
       },
     };
     actions.updateGroupSettings(payload, dataUpdateStore);
+    trackEvent({
+      event: TrackingEvent.GROUP_NOTI_CHANGED,
+      properties: {
+        group_name: name || '',
+        state: isChecked,
+      },
+      sendWithUserId: true,
+    });
   };
 
   const handlePressItemInApp = debounce((isChecked :boolean) => {
@@ -130,6 +140,13 @@ const AdvancedSettingsDetail: FC<IRouteParams> = (props) => {
         },
       };
       actions.updateGroupSettings(payload, dataUpdateStore, true);
+      trackEvent({
+        event: TrackingEvent.GROUP_NOTI_ENABLED,
+        properties: {
+          group_name: name || '',
+        },
+        sendWithUserId: true,
+      });
       return;
     }
     // reset to default (not config)

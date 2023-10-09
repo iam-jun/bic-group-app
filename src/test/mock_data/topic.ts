@@ -145,3 +145,25 @@ export const responseCategory = {
     message: 'Get category successfully',
   },
 };
+
+export const responseSearchCategory = {
+  code: 'api.ok',
+  data: {
+    list: [
+      {
+        id: '0d58df6d-d30a-45ea-bbbd-eeab54ec3dbc',
+        name: 'Fashion & Beauty',
+        slug: 'fashion-beauty',
+        created_at: '2022-09-12T08:33:58.741Z',
+      },
+    ],
+    meta: {
+      hasNextPage: false,
+      limit: 25,
+      offset: 0,
+    },
+  },
+  meta: {
+    message: 'Get category successfully',
+  },
+};

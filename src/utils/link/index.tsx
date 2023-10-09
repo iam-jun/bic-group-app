@@ -27,7 +27,9 @@ export enum DeepLinkTypes {
   USER_PROFILE = 'user_profile',
   APP = 'APP',
   DISCOVER_COMMUNITIES = 'discover-communities',
+  RESET_PASSOWRD = 'reset-password',
   NOTIFICATION_SETTINGS = 'notification-settings',
+  USER_BLOCKING = 'user-blocking'
 }
 
 export enum LinkGeneratorTypes {
@@ -277,6 +279,16 @@ export const matchDeepLink = (url: string) => {
     return { type: DeepLinkTypes.USER_PROFILE, userName: match[1] };
   }
 
+  // bic:///reset-password?email=thuquyen%2B1%40evol.vn&code=479824&confirm_password=true
+  match = new RegExp(
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?reset-password\\?(\\S+)$`,
+  ).exec(deepLinkUrl);
+  if (match) {
+    const urlParams = match[1];
+    const newParams = getURLParams(urlParams);
+    return { type: DeepLinkTypes.RESET_PASSOWRD, params: newParams };
+  }
+
   match = new RegExp(
     `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?settings/notifications`,
   ).exec(deepLinkUrl);
@@ -284,9 +296,18 @@ export const matchDeepLink = (url: string) => {
     return { type: DeepLinkTypes.NOTIFICATION_SETTINGS };
   }
 
+  match = new RegExp(
+    // follow the url from web
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?settings\\/?blocking$`,
+  ).exec(deepLinkUrl);
+  if (match) {
+    return { type: DeepLinkTypes.USER_BLOCKING };
+  }
+
   if (new RegExp(`^${PREFIX_DEEPLINK_GROUP}`).test(deepLinkUrl)) {
     return { type: DeepLinkTypes.APP };
   }
+
   return null;
 };
 

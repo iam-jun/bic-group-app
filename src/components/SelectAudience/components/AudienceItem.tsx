@@ -8,12 +8,14 @@ interface AudienceItemProps {
     item: IGroup;
     shouldBeChecked: (item: IGroup) => boolean;
     onCheckboxPress: (item: IGroup, isChecked: boolean) => void;
+    isSingleSelect?: boolean;
 }
 
 const AudienceItem: React.FC<AudienceItemProps> = ({
   item,
   shouldBeChecked,
   onCheckboxPress,
+  isSingleSelect,
 }) => {
   const styles = createStyle();
 
@@ -24,6 +26,7 @@ const AudienceItem: React.FC<AudienceItemProps> = ({
         onPress={onCheckboxPress}
         style={styles.itemContainer}
         item={item}
+        isSingleSelect={isSingleSelect}
       />
     </View>
   );

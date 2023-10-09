@@ -141,6 +141,7 @@ const createStyle = (
     },
     placeholder: {
       marginLeft: commentId ? 36 : 0,
+      overflow: 'hidden',
     },
     icon: {
       marginLeft: spacing.margin.small,

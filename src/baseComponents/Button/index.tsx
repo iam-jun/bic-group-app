@@ -2,7 +2,7 @@ import React from 'react';
 import {
   ActivityIndicator,
   Insets,
-  StyleProp, StyleSheet, TouchableHighlight, View, ViewStyle,
+  StyleProp, StyleSheet, TouchableHighlight, TouchableOpacity, View, ViewStyle,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import ButtonWrapper, { ButtonWrapperProps } from './ButtonWrapper';
@@ -28,6 +28,7 @@ export interface ButtonProps extends ButtonWrapperProps {
   icon?: IconType;
   iconSize?: number;
   hitSlop?: Insets;
+  isEffect?: boolean;
 }
 
 export const ButtonComponent: React.FC<ButtonProps> = ({
@@ -41,6 +42,7 @@ export const ButtonComponent: React.FC<ButtonProps> = ({
   useI18n,
   icon,
   iconSize,
+  isEffect = false,
   children,
   ...props
 }: ButtonProps) => {
@@ -91,7 +93,7 @@ export const ButtonComponent: React.FC<ButtonProps> = ({
   return (
     <ButtonWrapper
       {...props}
-      TouchableComponent={TouchableHighlight}
+      TouchableComponent={isEffect ? TouchableOpacity : TouchableHighlight}
       disabled={loading || disabled}
       underlayColor={buttonColors.loading}
       style={[styles.wrapper, style]}

@@ -95,7 +95,7 @@ const Toggle = ({
     >
       {Boolean(loading) ? <CircleSpinner size={circle} />
         : (
-          <View style={[styles.rectangle, rectangleStyle]}>
+          <View testID="toggle.view" style={[styles.rectangle, rectangleStyle]}>
             <View style={[styles.circle, circleStyle]} />
           </View>
         )}

@@ -6,15 +6,14 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Checkbox from '~/baseComponents/Checkbox';
 
 import Text from '~/baseComponents/Text';
-import { ICategory } from '~/interfaces/IArticle';
 import spacing from '~/theme/spacing';
 
 export interface ItemCheckboxProps {
   data: any;
   isChecked?: boolean;
   disabled?: boolean;
-  onRemoveItem?: (category: ICategory) => void;
-  onAddItem?: (category: ICategory) => void;
+  onRemoveItem?: (item: any) => void;
+  onAddItem?: (item: any) => void;
   testIDCheckbox?: string;
   testIDItem?: string;
 }
@@ -27,6 +26,8 @@ const ItemCheckbox: FC<ItemCheckboxProps> = ({
 
   const { name } = data || {};
 
+  const label = typeof data === 'string' ? data : name;
+
   const onChange = (isChecked) => {
     if (isChecked) {
       onAddItem?.(data);
@@ -37,7 +38,7 @@ const ItemCheckbox: FC<ItemCheckboxProps> = ({
 
   return (
     <View testID={testIDItem} style={styles.container}>
-      <Text testID="item_checkbox.text" style={styles.textName}>{name}</Text>
+      <Text testID="item_checkbox.text" style={styles.textName}>{label}</Text>
       <Checkbox
         testID={testIDCheckbox}
         isChecked={isChecked}

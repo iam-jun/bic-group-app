@@ -32,6 +32,7 @@ import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import useLinkPreviewStore from '~/store/linkPreview';
 import { Schedule } from '~/components/ScheduleContent';
 import useSchedulePost from './hooks/useSchedulePost';
+import useInsetBottomAvoidingKeyboard from '~/hooks/useInsetBottomAvoidingKeyboard';
 
 export interface CreatePostProps {
   route?: {
@@ -52,6 +53,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     (state: ICommentInputState) => state.actions,
   );
 
+  const insetBottom = useInsetBottomAvoidingKeyboard();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -246,7 +248,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
         renderCustomComponent={renderBtnSchedule}
         style={styles.headerStyle}
       />
-      <View style={styles.flex1}>
+      <View style={[styles.flex1, { paddingBottom: insetBottom }]}>
         <View>
           {!!important?.active && (
             <CreateBannerImportant

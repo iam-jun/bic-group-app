@@ -27,7 +27,6 @@ import { IDraftArticleState } from '~/screens/YourContent/components/Draft/Draft
 import { IArticleController } from '~/screens/articles/store';
 import { ISeriesState } from '~/screens/series/store';
 import { ITopicState } from '~/screens/topic/store';
-import { ICreateArticleCategoryState } from '~/screens/articles/CreateArticle/screens/CreateArticleCategory/store';
 import { IGroupDetailState } from '~/screens/groups/GroupDetail/store';
 import { IMyPermissionsState } from './permissions';
 import { ITagsState } from './entities/tags';
@@ -38,7 +37,6 @@ import { IGroupsState } from './entities/groups';
 import { IModalState } from './modal';
 import { IPostsInProgressState } from '~/screens/Home/components/VideoProcessingNotice/store';
 import { IArticleScheduleContentState } from '~/screens/articles/ArticleScheduleContent/store';
-import { IFeedSearchState } from '~/screens/Home/HomeSearch/store';
 import { IButtonMarkAsReadState } from '~/components/posts/ButtonMarkAsRead/store';
 import { ICreatePostState } from '~/screens/post/CreatePost/store';
 import { ILinkPreviewState } from './linkPreview';
@@ -64,9 +62,14 @@ import { INotiSettingsStore } from '~/screens/Notification/NotiSettings/store';
 import { IGroupJoinableUsersState } from '~/components/InvitePeopleToYourGroup/store';
 import { INotiInvitationsStore } from '~/screens/Notification/components/NotificationItem/store';
 import { IAdvancedNotiSettingsStore } from '~/screens/Notification/AdvancedSettings/store';
+import { IQuizzesState } from './entities/quizzes';
+import { ISearchState } from '~/screens/Search/store';
+import { ISearchFilterUsersState } from '~/screens/Search/SearchFilter/SearchFilterUsers/store';
+import { ISearchFilterTagsState } from '~/screens/Search/SearchFilter/SearchFilterTags/store';
 import { IGroupSetInvitationsStore } from '~/components/InvitationGroupSet/store';
 import { INotificationItemMenuStore } from '~/screens/Notification/components/NotificationMenu/store';
 import { IScheduledContentsState } from '~/screens/YourContent/components/Scheduled/store';
+import { ISelectCategoriesState } from '~/components/SelectCategories/store';
 
 export interface BicStore {
   entities: {
@@ -74,6 +77,7 @@ export interface BicStore {
     comments: ICommentsState;
     communities: ICommunitiesState;
     groups: IGroupsState;
+    quiz: IQuizzesState;
     menus: IMenuState;
   };
 
@@ -105,9 +109,6 @@ export interface BicStore {
     articleController: IArticleController;
     EditArticle: {
       editArticleStore: ICreateArticleState;
-      EditArticleCategory: {
-        editArticleCategoryStore: ICreateArticleCategoryState;
-      };
     };
     ArticleScheduleContent: {
       articleScheduleContentStore: IArticleScheduleContentState;
@@ -159,7 +160,6 @@ export interface BicStore {
   terms: ITermState;
   Home: {
     homeStore: IHomeState;
-    feedSearch: IFeedSearchState;
   };
   Menu: {
     joinedCommunitiesStore: IJoinedCommunitiesState;
@@ -220,10 +220,14 @@ export interface BicStore {
   linkPreview: ILinkPreviewState;
   selectTags: ISelectTagsState;
   selectSeries: ISelectSeriesState;
+  selectCategories: ISelectCategoriesState;
   validateSeriesTags: IValidateSeriesTags;
   blockingStore: IBlockingState;
   maintenanceStore: IMaintenanceState;
   pinContent: IPinContentState;
   previewJoinableGroupStore: IPreviewJoinableGroupState;
+  search: ISearchState;
+  searchFilterUsers: ISearchFilterUsersState;
+  searchFilterTags: ISearchFilterTagsState;
   IGroupSetInvitationsStore: IGroupSetInvitationsStore;
 }

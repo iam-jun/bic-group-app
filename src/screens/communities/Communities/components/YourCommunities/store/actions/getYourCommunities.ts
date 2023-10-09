@@ -1,9 +1,12 @@
 import groupApi from '~/api/GroupApi';
 import appConfig from '~/configs/appConfig';
+import { IParamsGetYourCommunities } from '~/interfaces/IGroup';
 import useAdvancedNotiSettingsStore from '~/screens/Notification/AdvancedSettings/store';
 
 const getYourCommunities
-  = (set, get) => async (isRefreshing?: boolean) => {
+  = (set, get) => async (params?: IParamsGetYourCommunities) => {
+    const { isRefreshing, isFromNotificationScreen } = params || {};
+
     try {
       const { ids, items, hasNextPage } = get();
 
@@ -16,13 +19,13 @@ const getYourCommunities
         'getYourCommunitiesFetching',
       );
 
-      const params = {
+      const paramsForApi = {
         managed: false,
         previewMembers: true,
         limit: appConfig.recordsPerPage,
         offset: isRefreshing ? 0 : ids.length,
       };
-      const response = await groupApi.getJoinedCommunities(params);
+      const response = await groupApi.getJoinedCommunities(paramsForApi);
 
       if (!response.data) {
         throw new Error('Incorrect response');
@@ -48,7 +51,7 @@ const getYourCommunities
         },
         'getYourCommunitiesSuccess',
       );
-      if (isRefreshing) {
+      if (isFromNotificationScreen) {
         useAdvancedNotiSettingsStore.getState().actions.setSelectedCommunity(data[0]);
         useAdvancedNotiSettingsStore.getState().actions.setIsLoading(false);
       }
@@ -65,7 +68,9 @@ const getYourCommunities
         },
         'getYourCommunitiesFailed',
       );
-      useAdvancedNotiSettingsStore.getState().actions.setIsLoading(false);
+      if (isFromNotificationScreen) {
+        useAdvancedNotiSettingsStore.getState().actions.setIsLoading(false);
+      }
     }
   };
 

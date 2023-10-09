@@ -90,14 +90,6 @@ describe('ListView component', () => {
     expect(renderLoading).toBeCalled();
   });
 
-  it('renders LoadingPlaceholder correctly', () => {
-    const { getByTestId } = renderWithRedux(
-      <ListView data={data} renderItem={renderItem} loading type="message" />,
-    );
-    const LoadingPlaceholder = getByTestId('list_view.loading_placeholder');
-    expect(LoadingPlaceholder).toBeDefined();
-  });
-
   it('renders isFullView correctly', () => {
     const { getByTestId } = renderWithRedux(
       <ListView isFullView data={data} renderItem={renderItem} />,

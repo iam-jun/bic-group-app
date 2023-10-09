@@ -1,4 +1,3 @@
-import { ContentType } from '~/components/SelectAudience';
 import { IGroup } from '~/interfaces/IGroup';
 import IBaseState from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
@@ -6,6 +5,13 @@ import getAudienceTree from './actions/getAudienceTree';
 import getAudienceSearch from './actions/getAudienceSearch';
 import { IUser } from '~/interfaces/IAuth';
 import { getAudienceIdsFromSelecting } from './helper';
+import getAllGroupJoinedSearch from './actions/getAllGroupJoinedSearch';
+
+export enum ContentType {
+  POST = 'post',
+  ARTICLE = 'article',
+  SERIES = 'series',
+}
 
 export interface ISelectAudienceState extends IBaseState {
   selectedAudiences: {
@@ -25,11 +31,12 @@ export interface ISelectAudienceState extends IBaseState {
     data: any[] | undefined,
     loading: boolean,
     hasNextPage: boolean,
-    contentType: ContentType,
+    contentType?: ContentType,
   };
   actions?: {
     getAudienceTree?: () => void;
     getAudienceSearch?: (key: string, contentType: ContentType, isRefresh: boolean) => void;
+    getAllGroupJoinedSearch: (key: string, isRefresh: boolean) => void;
     setSelectedAudiences: (selectedAudiences) => void;
     updateItemSelection: (group: IGroup | IUser, isSelected: boolean) => void;
   };
@@ -103,6 +110,7 @@ const selectAudienceStore = (set, get) => ({
     },
     getAudienceTree: getAudienceTree(set, get),
     getAudienceSearch: getAudienceSearch(set, get),
+    getAllGroupJoinedSearch: getAllGroupJoinedSearch(set, get),
   },
   reset: () => resetStore(initState, set),
 });

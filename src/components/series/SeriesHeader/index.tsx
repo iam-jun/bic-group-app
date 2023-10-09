@@ -13,10 +13,10 @@ import useSeriesStore, { ISeriesState } from '~/screens/series/store';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 import useModalStore from '~/store/modal';
+import MenuContent from '~/components/MenuContent';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
 import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
-import MenuContent from '~/components/MenuContent';
 
 type SeriesHeaderProps = {
   series: IPost;

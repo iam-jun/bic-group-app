@@ -49,7 +49,7 @@ global.__reanimatedWorkletInit = jest.fn();
 
 const languages = require('~/localization/en.json');
 
-require('react-native-reanimated/lib/reanimated2/jestUtils').setUpTests();
+require('react-native-reanimated/src/reanimated2/jestUtils').setUpTests();
 
 jest.mock('@react-native-clipboard/clipboard');
 

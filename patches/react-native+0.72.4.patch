@@ -1,0 +1,24 @@
+diff --git a/node_modules/react-native/Libraries/Utilities/setAndForwardRef.js b/node_modules/react-native/Libraries/Utilities/setAndForwardRef.js
+new file mode 100644
+index 0000000..ad7777e
+--- /dev/null
++++ b/node_modules/react-native/Libraries/Utilities/setAndForwardRef.js
+@@ -0,0 +1,17 @@
++function setAndForwardRef({ getForwardedRef, setLocalRef }) {
++  return function forwardRef(ref) {
++    const forwardedRef = getForwardedRef();
++
++    setLocalRef(ref);
++
++    // Forward to user ref prop (if one has been specified)
++    if (typeof forwardedRef === 'function') {
++      // Handle function-based refs. String-based refs are handled as functions.
++      forwardedRef(ref);
++    } else if (typeof forwardedRef === 'object' && forwardedRef != null) {
++      // Handle createRef-based refs
++      forwardedRef.current = ref;
++    }
++  };
++}
++export default setAndForwardRef;
+\ No newline at end of file

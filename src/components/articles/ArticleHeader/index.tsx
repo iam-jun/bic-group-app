@@ -6,11 +6,11 @@ import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import { IPost, PostType } from '~/interfaces/IPost';
+import useModalStore from '~/store/modal';
+import MenuContent from '~/components/MenuContent';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
 import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
-import useModalStore from '~/store/modal';
-import MenuContent from '~/components/MenuContent';
 
 export interface ArticleHeaderProps extends ContentHeaderProps {
   data: IPost;
