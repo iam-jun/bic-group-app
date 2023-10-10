@@ -25,11 +25,11 @@ import useMyPermissionsStore from '~/store/permissions';
 import ContentUnavailable from '~/components/ContentUnavailable';
 import useMounted from '~/hooks/mounted';
 import useModalStore from '~/store/modal';
-import MenuContent from '~/components/MenuContent';
 import { isFromNotificationScreen } from '~/router/helper';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentReadProperties } from '~/services/tracking/Interface';
 import { TrackingEventContentReadAction, TrackingEvent } from '~/services/tracking/constants';
+import MenuContent from '~/components/MenuContent';
 
 const SeriesDetail = ({ route, navigation }: any) => {
   const { params } = route || {};

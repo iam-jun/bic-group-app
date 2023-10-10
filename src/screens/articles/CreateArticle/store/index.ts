@@ -6,7 +6,9 @@ import {
   IEditArticleTags,
   IPayloadPutEditArticle,
 } from '~/interfaces/IArticle';
-import { IArticleCover, IAudience, IPostSetting } from '~/interfaces/IPost';
+import {
+  IArticleCover, IAudience, IPostSetting,
+} from '~/interfaces/IPost';
 import putEditArticle from './actions/putEditArticle';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
@@ -228,12 +230,12 @@ const useCreateArticle = (set, get) => ({
     setScheduledAt: (scheduledAt: string) => {
       set((state: ICreateArticleState) => {
         state.schedule.scheduledAt = scheduledAt;
-      }, 'setScheduledAt');
+      }, 'setScheduledAt Article');
     },
     setErrorScheduleSubmiting: (errorScheduleSubmiting: string) => {
       set((state: ICreateArticleState) => {
         state.schedule.errorSubmiting = errorScheduleSubmiting;
-      }, 'setErrorScheduleSubmiting');
+      }, 'setErrorScheduleSubmiting Article');
     },
     setIsScheduleSubmiting: (isScheduleSubmiting: boolean) => {
       set((state: ICreateArticleState) => {
@@ -243,7 +245,7 @@ const useCreateArticle = (set, get) => ({
     setIsScheduleSubmitingSuccess: (isScheduleSubmitingSuccess: boolean) => {
       set((state: ICreateArticleState) => {
         state.schedule.isSubmitingSuccess = isScheduleSubmitingSuccess;
-      }, 'setIsScheduleSubmitingSuccess');
+      }, 'setIsScheduleSubmitingSuccess Article');
     },
     setChooseAudiences: (audiences: IAudience[]) => {
       set((state: ICreateArticleState) => {

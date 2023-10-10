@@ -30,6 +30,8 @@ import useCreatePost from './hooks/useCreatePost';
 import useCreatePostStore from './store';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import useLinkPreviewStore from '~/store/linkPreview';
+import { Schedule } from '~/components/ScheduleContent';
+import useSchedulePost from './hooks/useSchedulePost';
 import useInsetBottomAvoidingKeyboard from '~/hooks/useInsetBottomAvoidingKeyboard';
 
 export interface CreatePostProps {
@@ -41,6 +43,11 @@ export interface CreatePostProps {
 const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   const toolbarRef = useRef<any>();
   const screenParams = route?.params || {};
+  const {
+    postId: screenParamsPostId,
+    draftPostId: screenParamsDraftPostId,
+    replaceWithDetail,
+  } = screenParams;
 
   const commentInputStoreActions = useCommentInputStore(
     (state: ICommentInputState) => state.actions,
@@ -52,7 +59,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   const styles = themeStyles(theme);
 
   const [postId, setPostId] = useState(
-    screenParams?.postId || screenParams?.draftPostId,
+    screenParamsPostId || screenParamsDraftPostId,
   );
 
   const useCreatePostData = useCreatePost({
@@ -72,11 +79,27 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     createPostData,
     isEditPost,
     isEditDraftPost,
+    isSchedule,
+    isValidating,
     disableButtonPost,
+    disableButtonScheduledPost,
     isEditPostHasChange,
+    prepareData,
     savePost,
+    validateSeriesTags,
+    handleSeriesTagsError,
     disableButtonsCreatePostFooter,
   } = useCreatePostData;
+
+  const { handleOpenPopupSchedule, doAfterScheduleSuccess } = useSchedulePost({
+    postId,
+    validButtonPublish: !disableButtonPost,
+    replaceWithDetail,
+    validateSeriesTags,
+    handleSeriesTagsError,
+    handleSave: savePost,
+    prepareData,
+  });
 
   const {
     chosenAudiences, id, important, count,
@@ -91,10 +114,22 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
 
   const buttonPostProps = {
     loading,
-    disabled: disableButtonPost,
+    disabled: isSchedule ? disableButtonScheduledPost : disableButtonPost,
     useI18n: true,
     style: { borderWidth: 0 },
     testID: 'create_post.btn_post',
+  };
+
+  const renderBtnSchedule = () => {
+    if (isEditDraftPost || isSchedule) {
+      return (
+        <Schedule
+          isValidating={isValidating}
+          validButton={!disableButtonPost}
+          handleOpenPopupSchedule={handleOpenPopupSchedule}
+        />
+      );
+    }
   };
 
   const userIds: string[] = [];
@@ -140,7 +175,10 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
       resetMentionInputStore();
       resetLinkPreviewStore();
       // clear comment because of comment input view listen emit event change text
-      commentInputStoreActions.setCreateComment({ content: '', loading: false });
+      commentInputStoreActions.setCreateComment({
+        content: '',
+        loading: false,
+      });
     },
     [],
   );
@@ -149,6 +187,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     handleBack({
       isEditPost,
       isEditPostHasChange,
+      isSchedule,
       hasPostId: !!postId,
       rootNavigation,
       isEditDraftPost,
@@ -165,12 +204,22 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
 
   const onSavePost = () => {
     Keyboard.dismiss();
-    savePost({
-      disableNavigate: false,
-      replaceWithDetail: screenParams.replaceWithDetail,
-      isPublish: true,
-      isCreatingNewPost,
-    });
+    if (isSchedule) {
+      savePost({
+        disableNavigate: true,
+        replaceWithDetail: false,
+        isPublish: true,
+        isCreatingNewPost: false,
+        onSuccessPutEdit: () => doAfterScheduleSuccess(false),
+      });
+    } else {
+      savePost({
+        disableNavigate: false,
+        replaceWithDetail,
+        isPublish: true,
+        isCreatingNewPost,
+      });
+    }
   };
 
   const onPressSettings = () => {
@@ -196,12 +245,16 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
         buttonProps={buttonPostProps}
         onPressBack={onPressBack}
         onPressButton={onSavePost}
+        renderCustomComponent={renderBtnSchedule}
         style={styles.headerStyle}
       />
       <View style={[styles.flex1, { paddingBottom: insetBottom }]}>
         <View>
           {!!important?.active && (
-            <CreateBannerImportant type="post" expiresTime={important.expiresTime} />
+            <CreateBannerImportant
+              type="post"
+              expiresTime={important.expiresTime}
+            />
           )}
           <CreatePostChosenAudiences disabled={loading} />
           <Divider color={theme.colors.neutral5} />

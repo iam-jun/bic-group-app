@@ -4,7 +4,6 @@ import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
 import useArticlesStore from '~/screens/articles/ArticleDetail/store';
-import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
 import { PostType } from '~/interfaces/IPost';
@@ -41,13 +40,8 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
       response = await streamApi.putEditArticle(articleId, params);
     }
 
-    // after edit article success, get article detail again with isDraft
-    // if isDraft, get article detail without comments
-    useArticlesStore.getState().actions.getArticleDetail({ articleId, isDraft });
-    useScheduleArticlesStore.getState().actions.getScheduleArticles({
-      isRefresh: true,
-      isShowToast: false,
-    });
+    // after edit article success, get article detail again
+    useArticlesStore.getState().actions.getArticleDetail({ articleId });
 
     set((state: ICreateArticleState) => {
       state.loading = false;

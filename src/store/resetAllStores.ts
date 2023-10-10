@@ -41,7 +41,6 @@ import useGeneralInformationStore from '~/screens/groups/GeneralInformation/stor
 import useRemoteConfigStore from './remoteConfig';
 import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
 import useCommentInputStore from '~/screens/comments/components/CommentInputView/store';
-import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import useReportContentStore from '~/components/Report/store';
 import useNetworkStore from '~/store/network';
 import useModalStore from '~/store/modal';
@@ -80,6 +79,7 @@ import useSearchFilterUsersStore from '~/screens/Search/SearchFilter/SearchFilte
 import useSearchFilterTagsStore from '~/screens/Search/SearchFilter/SearchFilterTags/store';
 import useGroupSetInvitationsStore from '~/components/InvitationGroupSet/store';
 import useNotificationItemMenu from '~/screens/Notification/components/NotificationMenu/store';
+import useScheduledContentsStore from '~/screens/YourContent/components/Scheduled/store';
 
 export const excludedStore = [
   useAuthController,
@@ -114,7 +114,7 @@ const stores = [
   useDraftArticleStore,
   useArticleController,
   useTopicStore,
-  useScheduleArticlesStore,
+  useScheduledContentsStore,
   useYourContentStore,
   useArticleScheduleContentStore,
   useCreatePostStore,

@@ -4,6 +4,7 @@ import i18next from 'i18next';
 import { isEmpty } from 'lodash';
 import Clipboard from '@react-native-clipboard/clipboard';
 
+import { useNavigationState } from '@react-navigation/native';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { generateLink } from '~/utils/link';
 import { IPost, PostType } from '~/interfaces/IPost';
@@ -27,22 +28,36 @@ import useArticleController from '~/screens/articles/store';
 import useNotificationItemMenu from '~/screens/Notification/components/NotificationMenu/store';
 import { SpecificNotificationType } from '~/interfaces/INotification';
 
-const useMenuContent = (
-  data: IPost,
-  contentType: PostType,
-  isFromDetail: boolean,
+export type MenuContentHookParams = {
+  data: IPost;
+  contentType: PostType;
+  isFromDetail: boolean;
+  currentScreen?: string;
+  handleConfirmDeleteSeries?: () => void;
+  handleDeletePostError?: (listAudiences: string[]) => void;
+};
 
-  handleConfirmDeleteSeries?: () => void,
-  handleDeletePostError?: (listAudiences: string[]) => void,
-) => {
+const useMenuContent = ({
+  data,
+  contentType,
+  isFromDetail,
+  currentScreen,
+  handleConfirmDeleteSeries,
+  handleDeletePostError,
+}: MenuContentHookParams) => {
+  const state = useNavigationState((state) => state);
   const { rootNavigation } = useRootNavigation();
 
   const commonActions = useCommonController((state) => state.actions);
   const modalActions = useModalStore((state) => state.actions);
   const actionsQuizzesStore = useQuizzesStore((state) => state.actions);
-  const articleControllerActions = useArticleController((state) => state.actions);
+  const articleControllerActions = useArticleController(
+    (state) => state.actions,
+  );
   const { deletePost } = usePostsStore((state: IPostsState) => state.actions);
-  const specifictNotiActions = useNotificationItemMenu((state) => state.actions);
+  const specifictNotiActions = useNotificationItemMenu(
+    (state) => state.actions,
+  );
 
   const copyLinkType = getCopyLinkType(contentType);
   const reportContentType = getReportContentType(contentType);
@@ -50,11 +65,7 @@ const useMenuContent = (
   if (!data) return null;
 
   const {
-    id: contentId,
-    reactionsCount,
-    audience,
-    actor,
-    quiz,
+    id: contentId, reactionsCount, audience, actor, quiz, status,
   } = data;
 
   const onPressEdit = () => {
@@ -67,16 +78,23 @@ const useMenuContent = (
     }
 
     if (contentType === PostType.ARTICLE) {
-      rootNavigation.navigate(articleStack.createArticle, { articleId: contentId });
+      if (currentScreen === articleStack.articleReviewSchedule) {
+        rootNavigation.replace(articleStack.createArticle, {
+          articleId: contentId,
+          isFromReviewSchedule: true,
+        });
+      } else {
+        rootNavigation.navigate(articleStack.createArticle, {
+          articleId: contentId,
+        });
+      }
     }
 
     if (contentType === PostType.SERIES) {
-      rootNavigation?.navigate?.(
-        seriesStack.createSeries, {
-          seriesId: contentId,
-          isFromDetail,
-        },
-      );
+      rootNavigation?.navigate?.(seriesStack.createSeries, {
+        seriesId: contentId,
+        isFromDetail,
+      });
     }
   };
 
@@ -179,11 +197,9 @@ const useMenuContent = (
 
   const onConfirmEditQuiz = () => {
     const onSuccess = () => {
-      rootNavigation?.navigate(
-        quizStack.composeQuiz, {
-          quizId: quiz?.id,
-        },
-      );
+      rootNavigation?.navigate(quizStack.composeQuiz, {
+        quizId: quiz?.id,
+      });
     };
     actionsQuizzesStore.getQuizDetail({ quizId: quiz?.id, onSuccess });
   };
@@ -242,9 +258,7 @@ const useMenuContent = (
         confirmLabel: i18next.t('common:btn_delete'),
         ConfirmBtnComponent: Button.Danger,
         confirmBtnProps: { type: 'ghost' },
-        onConfirm: () => articleControllerActions.deleteArticle(
-          contentId,
-        ),
+        onConfirm: () => articleControllerActions.deleteArticle(contentId),
       });
     }
 
@@ -267,7 +281,11 @@ const useMenuContent = (
   ) => {
     modalActions.hideModal();
 
-    specifictNotiActions.editNotificationSettings(contentId, !isEnable, contentTargetType);
+    specifictNotiActions.editNotificationSettings(
+      contentId,
+      !isEnable,
+      contentTargetType,
+    );
   };
 
   return {

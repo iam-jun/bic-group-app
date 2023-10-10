@@ -11,3 +11,9 @@ export enum ContentFeed {
   ARTICLE = 'ARTICLE',
   SERIES = 'SERIES',
 }
+
+export enum ScheduledFeed {
+  ALL = 'ALL',
+  POST = 'POST',
+  ARTICLE = 'ARTICLE',
+}

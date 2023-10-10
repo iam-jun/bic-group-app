@@ -13,6 +13,7 @@ import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNo
 import { IDraftArticleState } from '..';
 import useDraftContentsStore from '../../../DraftContents/store';
 import showToastSuccess from '~/store/helper/showToastSuccess';
+import useScheduledContentsStore from '~/screens/YourContent/components/Scheduled/store';
 
 const navigation = withNavigation?.(rootNavigationRef);
 
@@ -65,6 +66,7 @@ const publishDraftArticle = (set, get) => async (payload: IPayloadPublishDraftAr
     useHomeStore.getState().actions.refreshHome();
     actions.getDraftArticles(payloadGetDraftArticles);
     useDraftContentsStore.getState().actions.getDraftContents({ isRefresh: true });
+    useScheduledContentsStore.getState().actions.refreshAllFeeds();
   } catch (error) {
     console.error('publishDraftArticle error:', error);
     set((state: IDraftArticleState) => {

@@ -747,7 +747,7 @@
   },
   "your_content": {
     "title_draft": "Drafted",
-    "title_schedule_article": "Scheduled",
+    "title_scheduled": "Scheduled",
     "title_published": "Published",
     "title_report_content": "Reported",
     "text_empty": "There are no scheduled content yet!",
@@ -832,7 +832,8 @@
     "text_selecting_will_be_added_to": "Your article will be added to",
     "reading_time": "Reading time",
     "about_time": "about",
-    "minute": "min"
+    "minute": "min",
+    "article_scheduled": "Article Scheduled"
   },
   "post": {
     "news_feed": "News Feed",
@@ -1050,7 +1051,10 @@
       "delete_post": "Remove Post",
       "view_series": "View Series"
     },
-    "text_selecting_will_be_added_to": "Your post will be added to"
+    "text_selecting_will_be_added_to": "Your post will be added to",
+    "title_post_review_schedule": "Post Scheduled",
+    "text_noted_schedule": "You can only set the publish time to be at least 30 minutes from now.",
+    "post_schedule_title": "Post Schedule"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

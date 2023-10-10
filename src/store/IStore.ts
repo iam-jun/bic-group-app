@@ -35,7 +35,6 @@ import { IRemoteConfigState } from './remoteConfig';
 import { IReportContentState } from '~/components/Report/store';
 import { IGroupsState } from './entities/groups';
 import { IModalState } from './modal';
-import { IScheduleArticlesState } from '~/screens/YourContent/components/ScheduledArticles/store';
 import { IPostsInProgressState } from '~/screens/Home/components/VideoProcessingNotice/store';
 import { IArticleScheduleContentState } from '~/screens/articles/ArticleScheduleContent/store';
 import { IButtonMarkAsReadState } from '~/components/posts/ButtonMarkAsRead/store';
@@ -69,6 +68,7 @@ import { ISearchFilterUsersState } from '~/screens/Search/SearchFilter/SearchFil
 import { ISearchFilterTagsState } from '~/screens/Search/SearchFilter/SearchFilterTags/store';
 import { IGroupSetInvitationsStore } from '~/components/InvitationGroupSet/store';
 import { INotificationItemMenuStore } from '~/screens/Notification/components/NotificationMenu/store';
+import { IScheduledContentsState } from '~/screens/YourContent/components/Scheduled/store';
 import { ISelectCategoriesState } from '~/components/SelectCategories/store';
 
 export interface BicStore {
@@ -198,7 +198,7 @@ export interface BicStore {
   };
   YourContent: {
     yourContentStore: IYourContentState;
-    scheduleArticleStore: IScheduleArticlesState;
+    scheduledContentsStore: IScheduledContentsState;
     publishStore: IPublishState;
   };
   YourQuiz: {

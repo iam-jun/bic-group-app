@@ -2,11 +2,11 @@ import React, {
   useRef, useEffect, useCallback, useState,
 } from 'react';
 import { StyleSheet } from 'react-native';
+import { useTheme } from '@react-navigation/native';
 import ScreenWrapper from '~/baseComponents/ScreenWrapper';
-import { IRouteParams } from '~/interfaces/IRouter';
 import Header from '~/beinComponents/Header';
 import ArticleWebview, { ArticleWebviewRef } from '~/components/articles/ArticleWebview';
-import { ArticleBoxScheduleTime } from '~/components/articles';
+import { BoxScheduleTime } from '~/components/ScheduleContent';
 import postsSelector from '~/store/entities/posts/selectors';
 import usePostsStore from '~/store/entities/posts';
 import useArticlesStore from '../ArticleDetail/store';
@@ -14,26 +14,40 @@ import { parseSafe } from '~/utils/common';
 import { handleMessage } from '../ArticleContentDetail/helper';
 import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
 import useMounted from '~/hooks/mounted';
-import useArticleScheduleMenu from '~/hooks/useArticleScheduleMenu';
 import useCreateArticle from '../CreateArticle/hooks/useCreateArticle';
 import { useUserIdAuth } from '~/hooks/auth';
-import Schedule from '../CreateArticle/components/Schedule';
 import { useBaseHook } from '~/hooks';
 import useDraftArticleStore from '~/screens/YourContent/components/Draft/DraftArticle/store';
 import spacing from '~/theme/spacing';
 import useCreateArticleStore from '../CreateArticle/store';
 import PlaceHolderRemoveContent from '~/baseComponents/PlaceHolderRemoveContent';
 import { useRootNavigation } from '~/hooks/navigation';
-import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
+import MenuContent from '~/components/MenuContent';
+import { PostType } from '~/interfaces/IPost';
+import useModalStore from '~/store/modal';
 
-const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
-  const { articleId, isAdmin } = props?.route?.params || {};
+export type ArticleReviewScheduleProps = {
+  route: {
+    name: string;
+    params: { [x: string]: any };
+  };
+}
+
+const ArticleReviewSchedule: React.FC<ArticleReviewScheduleProps> = (props) => {
+  const { params, name } = props?.route || {};
+  const { articleId, isAdmin } = params || {};
+
   const ref = useRef<ArticleWebviewRef>();
   const { t } = useBaseHook();
+  const theme = useTheme();
+  const { colors } = theme;
+
+  const { showModal } = useModalStore((state) => state.actions);
 
   const [galleryVisible, setGalleryVisible] = useState(false);
   const [listImage, setListImage] = useState([]);
   const [initIndex, setInitIndex] = useState(0);
+  const [isLoadDone, setIsLoadDone] = useState(false);
 
   const userId = useUserIdAuth();
   const actions = useArticlesStore((state) => state.actions);
@@ -43,7 +57,6 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
     title,
     summary,
     coverMedia,
-    createdAt,
     audience,
     series,
     categories,
@@ -52,11 +65,11 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
     scheduledAt,
     status,
     deleted,
+    wordCount,
   } = data;
   const isPublishing = useDraftArticleStore((state) => state.isPublishing);
   const { handlePublish } = useCreateArticle({ articleId });
   const resetEditArticleStore = useCreateArticleStore((state) => state.reset);
-  const { actions: scheduleArticleActions } = useScheduleArticlesStore();
 
   const { rootNavigation } = useRootNavigation();
 
@@ -67,13 +80,13 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
       title,
       summary,
       coverUrl: coverMedia?.url,
-      time: createdAt,
       audience,
       series,
       categories,
       contentState: parseSafe(content),
       actor,
       tags,
+      wordCount,
     },
   };
 
@@ -97,6 +110,10 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
 
   const injectJavaScript = (script: any) => {
     ref?.current?.injectJavaScript?.(script);
+  };
+
+  const onInitializeEnd = () => {
+    setIsLoadDone(true);
   };
 
   const getImageUrls = () => {
@@ -137,8 +154,6 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
     handlePublish();
   };
 
-  const renderBtnSchedule = () => <Schedule articleId={articleId} isFromReviewSchedule />;
-
   const btnPublish = {
     buttonProps: { loading: isPublishing, style: styles.btnPublish },
     buttonText: t('common:btn_publish'),
@@ -146,35 +161,60 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
   };
 
   const headerButton = {
-    renderCustomComponent: renderBtnSchedule,
     ...btnPublish,
   };
 
-  const { showMenu } = useArticleScheduleMenu(data, isCreator);
+  const onShowMenu = () => {
+    showModal({
+      isOpen: true,
+      ContentComponent: (
+        <MenuContent
+          data={data}
+          isActor={isCreator}
+          contentType={PostType.ARTICLE}
+          currentScreen={name}
+        />
+      ),
+    });
+  };
 
   const handleBack = () => {
-    if (deleted) {
-      scheduleArticleActions.getScheduleArticles({ isRefresh: true });
-    }
     rootNavigation.goBack();
   };
 
-  const renderArticleBoxScheduleTime = () => {
-    if (!isMounted || !scheduledAt) return null;
+  const renderBoxScheduleTime = () => {
+    if (!isLoadDone || !scheduledAt) return null;
 
     return (
-      <ArticleBoxScheduleTime
+      <BoxScheduleTime
         scheduledAt={scheduledAt}
         status={status}
+        isBorderTop
+        isMarginBottom
       />
     );
   };
 
   const renderHeader = () => {
     if (isAdmin) {
-      return <Header removeBorderAndShadow />;
+      return (
+        <Header
+          titleTextProps={{ useI18n: true }}
+          title="article:article_scheduled"
+          removeBorderAndShadow
+        />
+      );
     }
-    return <Header removeBorderAndShadow rightIcon="menu" onRightPress={showMenu} {...headerButton} />;
+    return (
+      <Header
+        titleTextProps={{ useI18n: true }}
+        title="article:article_scheduled"
+        removeBorderAndShadow
+        rightIcon="menu"
+        onRightPress={onShowMenu}
+        {...headerButton}
+      />
+    );
   };
 
   if (deleted) {
@@ -193,13 +233,15 @@ const ArticleReviewSchedule: React.FC<IRouteParams> = (props) => {
     <ScreenWrapper
       style={styles.container}
       testID="article_review_schedule"
+      backgroundColor={colors.neutral5}
     >
       {renderHeader()}
-      {renderArticleBoxScheduleTime()}
+      {renderBoxScheduleTime()}
       <ArticleWebview
         ref={ref}
         initScript={initScript}
         onMessage={onMessage}
+        onInitializeEnd={onInitializeEnd}
       />
       <ImageGalleryModal
         visible={galleryVisible}

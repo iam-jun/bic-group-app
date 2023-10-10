@@ -89,7 +89,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const isMounted = useMounted();
 
   useEffect(() => {
-    if (isMounted) { actions.getArticleDetail({ articleId: id }); }
+    if (isMounted) { actions.getArticleDetail({ articleId: id, isLoadComment: true }); }
   }, [isMounted]);
 
   useEffect(() => {
@@ -126,7 +126,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
 
   const onRefresh = () => {
     setRefreshing(false);
-    actions.getArticleDetail({ articleId: id });
+    actions.getArticleDetail({ articleId: id, isLoadComment: true });
   };
 
   const onPressMarkSeenPost = useCallback(() => {

@@ -171,5 +171,5 @@ export interface IPayloadGetArticleDetail {
   articleId: string;
   isReported?: boolean;
   isAdmin?: boolean;
-  isDraft?: boolean;
+  isLoadComment?: boolean;
 }

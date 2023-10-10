@@ -14,7 +14,7 @@ import showToastError from '~/store/helper/showToastError';
 
 const getPostDetail = (_set, get) => async (payload: IPayloadGetPostDetail) => {
   const {
-    callbackLoading, postId, isReported, commentId, ...restParams
+    callbackLoading, postId, isReported, isLoadComment = false, commentId, ...restParams
   } = payload || {};
   const { actions }: IPostsState = get();
 
@@ -27,12 +27,12 @@ const getPostDetail = (_set, get) => async (payload: IPayloadGetPostDetail) => {
     actions.setIsLoadingGetPostDetail(true);
 
     const response = await callApi({
-      isReported, postId, commentId, restParams,
+      isReported, isLoadComment, postId, commentId, restParams,
     });
 
     actions.addToPosts({
       data: response || {},
-      handleComment: true,
+      handleComment: isLoadComment,
     } as IPayloadAddToAllPost);
     actions.addToErrorContents(postId, { isError: false });
     callbackLoading?.(false, true);
@@ -67,9 +67,11 @@ const getPostDetail = (_set, get) => async (payload: IPayloadGetPostDetail) => {
   }
 };
 
-const callApi = async (params: { isReported: boolean, postId: string, commentId: string, restParams: any }) => {
+const callApi = async (params: {
+  isReported: boolean, isLoadComment: boolean, postId: string, commentId: string, restParams: any
+}) => {
   const {
-    isReported, postId, commentId, restParams,
+    isReported, isLoadComment, postId, commentId, restParams,
   } = params;
   let response = null;
   if (isReported) {
@@ -97,22 +99,33 @@ const callApi = async (params: { isReported: boolean, postId: string, commentId:
     };
 
     const responePostDetail = await streamApi.getPostDetail(params);
-    let responseComments = null;
-    if (commentId) {
-      responseComments = await streamApi.getCommentDetail(commentId, { postId, limit: DEFAULT_LIMIT });
+
+    if (isLoadComment) {
+      let responseComments = null;
+      if (commentId) {
+        responseComments = await streamApi.getCommentDetail(commentId, { postId, limit: DEFAULT_LIMIT });
+      } else {
+        responseComments = await streamApi.getCommentsByPostId({ postId, order: 'DESC' });
+      }
+      const { list, meta } = responseComments?.data || {};
+      if (responePostDetail?.data && responseComments?.data) {
+        response = {
+          ...responePostDetail.data,
+          comments: {
+            list: list || [],
+            meta,
+          },
+        };
+        return response;
+      }
     } else {
-      responseComments = await streamApi.getCommentsByPostId({ postId, order: 'DESC' });
-    }
-    const { list, meta } = responseComments?.data || {};
-    if (responePostDetail?.data && responseComments?.data) {
       response = {
         ...responePostDetail.data,
         comments: {
-          list: list || [],
-          meta,
+          list: [],
+          meta: {},
         },
       };
-
       return response;
     }
   }

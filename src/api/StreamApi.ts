@@ -392,12 +392,24 @@ export const streamApiConfig = {
     url: `${provider.url}series`,
     params,
   }),
+  getSeriesContent: (contentId: string) => ({
+    ...defaultConfig,
+    url: `${provider.url}content/${contentId}/series`,
+  }),
   scheduleArticle: (draftArticleId: string, scheduledAt: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}articles/${draftArticleId}/schedule`,
     method: 'put',
     data: {
       scheduledAt,
+    },
+  }),
+  schedulePost: (draftPostId: string, params: IPostCreatePost): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}posts/${draftPostId}/schedule`,
+    method: 'put',
+    data: {
+      ...params,
     },
   }),
   deleteArticle: (id: string): HttpApiRequestConfig => ({
@@ -667,6 +679,13 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}content/${contentId}/menu-settings`,
   }),
+  getScheduledContents: (params: IParamGetFeed): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}content/schedule`,
+    params: {
+      ...params,
+    },
+  }),
 };
 
 const streamApi = {
@@ -821,6 +840,9 @@ const streamApi = {
   scheduleArticle: (draftArticleId: string, scheduledAt: string) => withHttpRequestPromise(
     streamApiConfig.scheduleArticle, draftArticleId, scheduledAt,
   ),
+  schedulePost: (draftPostId: string, params: IPostCreatePost) => withHttpRequestPromise(
+    streamApiConfig.schedulePost, draftPostId, params,
+  ),
   deleteArticle: (id: string) => withHttpRequestPromise(
     streamApiConfig.deleteArticle, id,
   ),
@@ -845,6 +867,7 @@ const streamApi = {
   ),
   getTotalDraft: () => withHttpRequestPromise(streamApiConfig.getTotalDraft),
   searchSeries: (params?: IGetSeries) => withHttpRequestPromise(streamApiConfig.searchSeries, params),
+  getSeriesContent: (contentId: string) => withHttpRequestPromise(streamApiConfig.getSeriesContent, contentId),
   postSaveContent: (id: string) => withHttpRequestPromise(streamApiConfig.postSaveContent, id),
   postUnsaveContent: (id: string) => withHttpRequestPromise(streamApiConfig.postUnsaveContent, id),
   reorderItemsInSeries: (id: string, data: IReorderItems) => withHttpRequestPromise(
@@ -991,6 +1014,9 @@ const streamApi = {
   ),
   getMenuContent: (contentId: string) => withHttpRequestPromise(
     streamApiConfig.getMenuContent, contentId,
+  ),
+  getScheduledContents: async (params: IParamGetFeed) => withHttpRequestPromise(
+    streamApiConfig.getScheduledContents, params,
   ),
 };
 

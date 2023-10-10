@@ -168,6 +168,33 @@ exports[`ScheduleModal should render correctly 1`] = `
         <View
           style={
             Object {
+              "backgroundColor": "#F1F2F8",
+              "paddingHorizontal": 24,
+              "paddingVertical": 8,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 14,
+                },
+                Object {
+                  "color": "#353E6E",
+                },
+                undefined,
+              ]
+            }
+          >
+            You can only set the publish time to be at least 30 minutes from now.
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
               "paddingBottom": 32,
               "paddingHorizontal": 16,
               "paddingTop": 16,
@@ -718,6 +745,33 @@ exports[`ScheduleModal should show success if schedule success 1`] = `
               </View>
             </View>
           </View>
+        </View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "#F1F2F8",
+              "paddingHorizontal": 24,
+              "paddingVertical": 8,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 14,
+                },
+                Object {
+                  "color": "#353E6E",
+                },
+                undefined,
+              ]
+            }
+          >
+            You can only set the publish time to be at least 30 minutes from now.
+          </Text>
         </View>
         <View
           style={

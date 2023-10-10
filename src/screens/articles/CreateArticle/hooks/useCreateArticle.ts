@@ -4,7 +4,6 @@ import {
 } from 'react';
 import { Keyboard } from 'react-native';
 
-import moment from 'moment';
 import { useShallow } from '~/store/utils';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
@@ -31,17 +30,17 @@ import useMyPermissionsStore from '~/store/permissions';
 import { rootNavigationRef } from '~/router/refs';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import useDraftArticleStore from '~/screens/YourContent/components/Draft/DraftArticle/store';
-import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import useModalStore from '~/store/modal';
 import { PermissionKey } from '~/constants/permissionScheme';
 import { PostStatus, PostType } from '~/interfaces/IPost';
-import useValidateSeriesTags from '~/components/ValidateSeriesTags/store';
+import useValidateSeriesTags, { HandleSeriesTagsErrorParams } from '~/components/ValidateSeriesTags/store';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentPublishedProperties } from '~/services/tracking/Interface';
 import { TrackingEvent } from '~/services/tracking/constants';
+import { isScheduledContent } from '~/components/ScheduleContent/helper';
 
-interface IHandleSaveOptions {
+export interface IHandleSaveOptions {
   isShowLoading?: boolean;
   isNavigateBack?: boolean;
   isShowToast?: boolean;
@@ -70,9 +69,6 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
   const data = useCreateArticleStore((state) => state.data, useShallow) || {};
   const loading = useCreateArticleStore((state) => state.loading);
   const isDraft = useCreateArticleStore((state) => state.isDraft);
-  const scheduledAt = useCreateArticleStore(
-    (state) => state.schedule.scheduledAt,
-  );
   const chooseAudiences = useCreateArticleStore((state) => state.chooseAudiences);
   const { getAudienceListWithNoPermission } = useMyPermissionsStore(
     (state) => state.actions,
@@ -101,8 +97,6 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
   const disableArticleSettings = chooseAudiences.length === 0 || audiencesWithNoPermission.length > 0;
 
   const { t } = useBaseHook();
-
-  const isValidScheduleTime = () => moment(scheduledAt).isSameOrAfter(moment());
 
   // auto save for draft article, so no need to check if content is empty
   const isDraftContentUpdated = article.content !== data.content;
@@ -234,10 +228,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     actions.setData(data);
 
     const isDraft = status === PostStatus.DRAFT;
-    const isSchedule = [
-      PostStatus.WAITING_SCHEDULE,
-      PostStatus.SCHEDULE_FAILED,
-    ].includes(status);
+    const isSchedule = isScheduledContent(status);
     actions.setIsDraft(isDraft);
     actions.setIsSchedule(isSchedule);
     if (isSchedule) {
@@ -265,10 +256,6 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
 
   const handleTitleChange = (newTitle: string) => {
     actions.setTitle(newTitle);
-  };
-
-  const resetScheduledAt = () => {
-    actions.setScheduledAt(article?.scheduledAt || '');
   };
 
   const updateMentions = () => {
@@ -336,6 +323,10 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     validateSeriesTagsActions.validateSeriesTags(validateParams, onSuccess, onError);
   };
 
+  const handleSeriesTagsError = (params: HandleSeriesTagsErrorParams) => {
+    validateSeriesTagsActions.handleSeriesTagsError(params);
+  };
+
   const handleSave = (options?: IHandleSaveOptions) => {
     Keyboard.dismiss();
     const {
@@ -365,7 +356,7 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     if (shouldValidateSeriesTags) {
       const onSuccess = () => actions.putEditArticle(putEditArticleParams);
       const onError = (error) => {
-        validateSeriesTagsActions.handleSeriesTagsError({
+        handleSeriesTagsError({
           error,
           onNext: () => handleSave(options),
           titleAlert,
@@ -403,29 +394,15 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
         trackEvent({ event: TrackingEvent.CONTENT_PUBLISHED, properties: eventContentPublishedProperties });
 
         goToArticleDetail();
-        useScheduleArticlesStore
-          .getState()
-          .actions.getScheduleArticles({ isRefresh: true });
         showToastSuccess(res);
       },
-      onError: (error) => validateSeriesTagsActions.handleSeriesTagsError({
+      onError: (error) => handleSeriesTagsError({
         error,
         onNext: onHandleSaveErrorDone,
         postType: PostType.ARTICLE,
       }),
     };
     useDraftArticleStore.getState().actions.publishDraftArticle(payload);
-  };
-
-  const handleSchedule = () => {
-    if (!validButtonPublish) return;
-
-    if (!isValidScheduleTime()) {
-      actions.setErrorScheduleSubmiting(t('article:fail_schedule'));
-      return;
-    }
-
-    actions.scheduleArticle();
   };
 
   const handleBack = (shouldShowAlert = false) => {
@@ -464,9 +441,8 @@ const useCreateArticle = ({ articleId }: IUseEditArticle) => {
     handleBack,
     handleAudiencesChange,
     handlePublish,
-    handleSchedule,
     validateSeriesTags,
-    resetScheduledAt,
+    handleSeriesTagsError,
   };
 };
 

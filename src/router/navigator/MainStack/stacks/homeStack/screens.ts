@@ -10,6 +10,7 @@ import CreatePostTags from '~/screens/post/CreatePostTags';
 import CreatePostSeries from '~/screens/post/CreatePostSeries';
 import PinContent from '~/screens/PinContent';
 import ReorderedPinContent from '~/screens/PinContent/Reordered';
+import PostReviewSchedule from '~/screens/post/PostReviewSchedule';
 
 const homeScreens = {
   'post-detail': PostDetail,
@@ -24,6 +25,7 @@ const homeScreens = {
   'comment-detail': CommentDetail,
   'pin-content': PinContent,
   'reordered-pin-content': ReorderedPinContent,
+  'post-review-schedule': PostReviewSchedule,
 };
 
 export default homeScreens;
