@@ -29,7 +29,10 @@ export enum DeepLinkTypes {
   DISCOVER_COMMUNITIES = 'discover-communities',
   RESET_PASSOWRD = 'reset-password',
   NOTIFICATION_SETTINGS = 'notification-settings',
-  USER_BLOCKING = 'user-blocking'
+  USER_BLOCKING = 'user-blocking',
+  NOTIFICATION_ADVANCED_SETTINGS = 'notification-advanced-settings',
+  PRIVACY = 'settings-privacy',
+  COMMUNYTIES_TAB = 'communyties-tab',
 }
 
 export enum LinkGeneratorTypes {
@@ -290,6 +293,13 @@ export const matchDeepLink = (url: string) => {
   }
 
   match = new RegExp(
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?settings/notifications/advanced`,
+  ).exec(deepLinkUrl);
+  if (match) {
+    return { type: DeepLinkTypes.NOTIFICATION_ADVANCED_SETTINGS };
+  }
+
+  match = new RegExp(
     `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?settings/notifications`,
   ).exec(deepLinkUrl);
   if (match) {
@@ -302,6 +312,20 @@ export const matchDeepLink = (url: string) => {
   ).exec(deepLinkUrl);
   if (match) {
     return { type: DeepLinkTypes.USER_BLOCKING };
+  }
+
+  match = new RegExp(
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?settings/privacy`,
+  ).exec(deepLinkUrl);
+  if (match) {
+    return { type: DeepLinkTypes.PRIVACY };
+  }
+
+  match = new RegExp(
+    `^${PREFIX_DEEPLINK_GROUP}\\/(?:[a-z]{2})?\\/?communities\\/(\\S+)$`,
+  ).exec(deepLinkUrl);
+  if (match) {
+    return { type: DeepLinkTypes.COMMUNYTIES_TAB };
   }
 
   if (new RegExp(`^${PREFIX_DEEPLINK_GROUP}`).test(deepLinkUrl)) {
