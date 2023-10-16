@@ -10,6 +10,7 @@ import {
 import authStacks from '~/router/navigator/AuthStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
 import useForgotPasswordStore from '~/screens/auth/ForgotPassword/store';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 import useAuthController from '~/screens/auth/store';
 import useAppStore from '~/store/app';
@@ -157,6 +158,20 @@ export const onReceiveURL = async ({
         redirectToScreenWithSignIn({
           userId, url, navigateCallback: navigateToUserBlockingList,
         });
+        break;
+      }
+      case DeepLinkTypes.NOTIFICATION_ADVANCED_SETTINGS: {
+        navigation?.navigate?.(notiStack.advancedSettings);
+        break;
+      }
+
+      case DeepLinkTypes.PRIVACY: {
+        navigation?.navigate?.(mainStack.privacyCenter);
+        break;
+      }
+
+      case DeepLinkTypes.COMMUNYTIES_TAB: {
+        navigation?.navigate?.(groupStack.communities);
         break;
       }
 
