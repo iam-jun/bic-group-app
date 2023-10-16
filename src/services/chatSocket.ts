@@ -131,9 +131,7 @@ class WebSocketClient {
       if (reliableWebSockets) {
         // Add connection id, and last_sequence_number to the query param.
         // We cannot also send it as part of the auth_challenge, because the session cookie is already sent with the request.
-        url = `${connectionUrl}?connection_id=${this.connectionId}&sequence_number=${this.serverSequence}&access_token=${this.token}`;
-      } else {
-        url += `?access_token=${this.token}`;
+        url = `${connectionUrl}?connection_id=${this.connectionId}&sequence_number=${this.serverSequence}`;
       }
 
       if (this.connectFailCount === 0) {
@@ -142,7 +140,10 @@ class WebSocketClient {
 
       //@ts-ignore
       this.conn = new WebSocket(url, [], {
-        headers: { origin },
+        headers: {
+          origin,
+          authorization: this.token,
+        },
         ...(additionalOptions || {}),
       });
       this.connectionUrl = connectionUrl;
