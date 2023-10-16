@@ -8,6 +8,7 @@ import useCommonController from '~/screens/store';
 import { IUserProfile } from '~/interfaces/IAuth';
 import { IUserBadge } from '~/interfaces/IEditUser';
 import { trackEvent } from '~/services/tracking';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const sortChoosingBadgesByOrder = (choosingBadges: IUserBadge[], choosingBadgesOrder: number[]) => {
   const newChoosingBadges = [];
@@ -48,7 +49,7 @@ const editShowingBadges = (set, get) => async () => {
 
     const response = await groupApi.putShowingBadges(ids);
     trackEvent({
-      event: 'Badges Saved',
+      event: TrackingEvent.BADGES_SAVED,
       sendWithUserId: true,
       properties: { showing_badge: badgesName },
     });

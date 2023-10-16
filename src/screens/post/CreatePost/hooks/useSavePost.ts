@@ -22,8 +22,9 @@ import {
 } from '../helper';
 import useCreatePostStore from '../store';
 import useLinkPreview from './useLinkPreview';
+import { isScheduledContent } from '~/components/ScheduleContent/helper';
 
-type SavePostParams = Partial<IPayloadPutEditPost> & {
+export type SavePostParams = Partial<IPayloadPutEditPost> & {
   isToastAutoSave?: boolean;
 };
 
@@ -71,6 +72,7 @@ export const useSavePost = () => {
 
   const isEditPost = post?.status === PostStatus.PUBLISHED;
   const isEditDraftPost = post?.status === PostStatus.DRAFT;
+  const isSchedule = isScheduledContent(post?.status);
 
   const users: any[] = [];
   const groups: any[] = [];
@@ -159,6 +161,18 @@ export const useSavePost = () => {
     || chosenAudiences.length === 0
     || isLoadingLinkPreview
     || (isEditPost && !isEditPostHasChange && !isEditDraftPost);
+
+  // Disable button post if loading, empty content, empty audience or edit scheduled post but nothing changed
+  const disableButtonScheduledPost
+      = loading
+    || imageUploading
+    || videoUploading
+    || fileUploading
+    || !!fileError
+    || isEmptyData
+    || chosenAudiences.length === 0
+    || isLoadingLinkPreview
+    || (isSchedule && !isEditPostHasChange && !isEditDraftPost);
 
   const startAutoSave = () => {
     setIsAutoSave(true);
@@ -262,6 +276,8 @@ export const useSavePost = () => {
       isToastAutoSave,
       isPublish = true,
       isCreatingNewPost,
+      onSuccessAutoSave,
+      onSuccessPutEdit,
     } = params;
     const data = prepareData();
     const newPayload: IPayloadPutEditPost = {
@@ -272,6 +288,8 @@ export const useSavePost = () => {
       onRetry: () => savePost(params),
       isPublish,
       isCreatingNewPost,
+      onSuccessAutoSave,
+      onSuccessPutEdit,
     };
     try {
       if (isToastAutoSave) {
@@ -382,10 +400,12 @@ export const useSavePost = () => {
   return {
     isShowToastAutoSave,
     disableButtonPost,
+    disableButtonScheduledPost,
     enableButtonSaveTags,
     enableButtonSaveSeries,
     isEditPostHasChange,
     startAutoSave,
+    prepareData,
     savePost,
     saveSelectedTags,
     saveSelectedSeries,

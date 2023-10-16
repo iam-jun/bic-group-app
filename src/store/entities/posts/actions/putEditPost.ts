@@ -22,6 +22,7 @@ import showToastSuccess from '~/store/helper/showToastSuccess';
 import { trackEvent } from '~/services/tracking';
 import { TrackingEventContentPublishedProperties } from '~/services/tracking/Interface';
 import { TrackingEvent } from '~/services/tracking/constants';
+import useScheduledContentsStore from '~/screens/YourContent/components/Scheduled/store';
 
 const navigation = withNavigation?.(rootNavigationRef);
 
@@ -29,7 +30,8 @@ const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
   const { important = {} } = useCreatePostStore.getState().createPost;
   const {
     id, data, replaceWithDetail = true, onRetry, disableNavigate, isCreatingNewPost = true,
-    onError, isPublish = true, createFromGroupId, isHandleSeriesTagsError = true, isRefresh = true,
+    onError, onSuccessAutoSave, onSuccessPutEdit, isPublish = true, createFromGroupId,
+    isHandleSeriesTagsError = true, isRefresh = true,
   } = payload || {};
 
   if (!id) {
@@ -48,6 +50,7 @@ const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
     // if auto save a draft post, then no need to do anything more
     if (!isPublish) {
       await streamApi.putAutoSavePost(params);
+      onSuccessAutoSave?.();
       return;
     }
 
@@ -71,6 +74,7 @@ const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
     actions.addToPosts({ data: post } as IPayloadAddToAllPost);
 
     showToastSuccess(response);
+    onSuccessPutEdit?.();
 
     if (isCreatingNewPost) {
       // tracking event
@@ -98,6 +102,7 @@ const putEditPost = (_set, get) => async (payload: IPayloadPutEditPost) => {
       };
       useDraftPostStore.getState().actions.getDraftPosts(payloadGetDraftContents);
       useDraftContentsStore.getState().actions.getDraftContents(payloadGetDraftContents);
+      useScheduledContentsStore.getState().actions.refreshAllFeeds();
       useHomeStore.getState().actions.refreshHome();
     }
   } catch (error) {

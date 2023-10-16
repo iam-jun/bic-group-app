@@ -2,6 +2,8 @@ import showToastError from '~/store/helper/showToastError';
 import userApi from '~/api/UserApi';
 import { IPersonalInfoVisibilityState } from '../index';
 import { PERSONAL_INFORMATION_VISIBILITY_TYPE } from '~/constants/privacyCenter';
+import { trackEvent } from '~/services/tracking';
+import { TrackingEvent } from '~/services/tracking/constants';
 
 const editPersonalInfoVisibility = (set, _get) => async (type: PERSONAL_INFORMATION_VISIBILITY_TYPE) => {
   try {
@@ -16,6 +18,11 @@ const editPersonalInfoVisibility = (set, _get) => async (type: PERSONAL_INFORMAT
       state.loading = false;
     }, 'editPersonalInfoVisibilitySuccess');
     await userApi.editPersonalInfoSettings(params);
+    trackEvent({
+      event: TrackingEvent.PERSONAL_PRIVACY_CHANGED,
+      properties: { option: type },
+      sendWithUserId: true,
+    });
   } catch (e) {
     set((state: IPersonalInfoVisibilityState) => {
       state.loading = false;

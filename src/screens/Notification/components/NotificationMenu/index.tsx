@@ -9,6 +9,8 @@ import INotificationsState from '../../store/Interface';
 import useNotificationItemMenu, { INotificationItemMenuStore } from './store';
 import { checkHideDeleteOption, getTextFromSpecificNotificationTargetType } from '~/helpers/notification';
 import notiSelector from '../../store/selectors';
+import { TrackingEvent } from '~/services/tracking/constants';
+import { trackEvent } from '~/services/tracking';
 
 export interface NotificationMenuProps {
   menuRef: any;
@@ -52,6 +54,14 @@ const NotificationMenu = ({
     specifictNotiActions.editNotificationSettings(
       targetId, !enableSettings,
     );
+    trackEvent({
+      event: TrackingEvent.SPECIFIC_NOTI_CHANGED,
+      properties: {
+        content_type: targetType || '',
+        status: !enableSettings,
+      },
+      sendWithUserId: true,
+    });
     onClose();
     reset();
   };

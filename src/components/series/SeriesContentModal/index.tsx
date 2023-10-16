@@ -10,12 +10,11 @@ import images from '~/resources/images';
 import Text from '~/baseComponents/Text';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import useSeriesContentModalStore from './store';
-import { IGetSeries } from '~/interfaces/ISeries';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import useModalStore from '~/store/modal';
 
 interface ISeriesContentModalProps {
-    id: string;
+  id: string;
 }
 
 const SeriesContentModal: React.FC<ISeriesContentModalProps> = ({ id }) => {
@@ -36,14 +35,7 @@ const SeriesContentModal: React.FC<ISeriesContentModalProps> = ({ id }) => {
   }, []);
 
   const getData = () => {
-    const payload: IGetSeries = {
-      itemIds: [id],
-    };
-    actions.getSeriesByItems(payload);
-  };
-
-  const onLoadMore = () => {
-    getData();
+    actions.getSeriesContent(id);
   };
 
   const onPressClose = () => {
@@ -92,8 +84,6 @@ const SeriesContentModal: React.FC<ISeriesContentModalProps> = ({ id }) => {
         keyExtractor={keyExtractor}
         ListEmptyComponent={renderEmptyComponent}
         ListHeaderComponent={renderHeaderComponent}
-        onEndReached={onLoadMore}
-        onEndReachedThreshold={0.1}
       />
     </View>
   );

@@ -11,6 +11,7 @@ import useLinkPreviewStore from '~/store/linkPreview';
 import useMyPermissionsStore from '~/store/permissions';
 import { IGetFile } from '~/store/uploader';
 import {
+  getParamsValidateSeriesTags,
   getTotalFileSize,
   validateFiles,
   validateImages,
@@ -19,6 +20,8 @@ import {
 import useCreatePostStore, { CreatePost } from '../store';
 import useLinkPreview from './useLinkPreview';
 import useSavePost from './useSavePost';
+import useValidateSeriesTags, { HandleSeriesTagsErrorParams } from '~/components/ValidateSeriesTags/store';
+import { isScheduledContent } from '~/components/ScheduleContent/helper';
 
 type UseCreatePostParams = {
   screenParams?: ICreatePostParams;
@@ -34,10 +37,15 @@ export const useCreatePost = (params?: UseCreatePostParams) => {
 
   const isEditPost = post?.status === PostStatus.PUBLISHED;
   const isEditDraftPost = post?.status === PostStatus.DRAFT;
+  const isSchedule = isScheduledContent(post?.status);
 
   const createPostData = useCreatePostStore((state) => state.createPost);
   const isLoadPostDetailDone = useCreatePostStore((state) => state.isLoadPostDetailDone);
   const createPostStoreActions = useCreatePostStore((state) => state.actions);
+  const validateSeriesTagsActions = useValidateSeriesTags(
+    (state) => state.actions,
+  );
+  const isValidating = useValidateSeriesTags((state) => state.isValidating);
 
   const {
     linkPreview,
@@ -50,9 +58,11 @@ export const useCreatePost = (params?: UseCreatePostParams) => {
     isShowToastAutoSave,
     startAutoSave,
     disableButtonPost,
+    disableButtonScheduledPost,
     enableButtonSaveTags,
     enableButtonSaveSeries,
     isEditPostHasChange,
+    prepareData,
     savePost,
     saveSelectedTags,
     saveSelectedSeries,
@@ -182,7 +192,7 @@ export const useCreatePost = (params?: UseCreatePostParams) => {
 
   const initDataStore = () => {
     const {
-      id, content, media, linkPreview, tags, series,
+      id, content, media, linkPreview, tags, series, scheduledAt,
     } = post;
 
     const linkPreviewPost = linkPreview;
@@ -218,6 +228,7 @@ export const useCreatePost = (params?: UseCreatePostParams) => {
       tags: tags || [],
       series: series || [],
     });
+    createPostStoreActions.setScheduledAt(scheduledAt || '');
   };
 
   useEffect(() => {
@@ -260,6 +271,19 @@ export const useCreatePost = (params?: UseCreatePostParams) => {
     });
   };
 
+  const validateSeriesTags = (
+    onSuccess: (response) => void,
+    onError: (error) => void,
+  ) => {
+    const dataUpdate = useCreatePostStore.getState().createPost;
+    const params = getParamsValidateSeriesTags(dataUpdate.chosenAudiences);
+    validateSeriesTagsActions.validateSeriesTags(params, onSuccess, onError);
+  };
+
+  const handleSeriesTagsError = (params: HandleSeriesTagsErrorParams) => {
+    validateSeriesTagsActions.handleSeriesTagsError(params);
+  };
+
   return {
     images,
     video: selectingVideo,
@@ -267,6 +291,8 @@ export const useCreatePost = (params?: UseCreatePostParams) => {
     createPostData,
     isEditPost,
     isEditDraftPost,
+    isSchedule,
+    isValidating,
     handleChangeContent,
     linkPreview,
     onCloseLinkPreview,
@@ -275,9 +301,11 @@ export const useCreatePost = (params?: UseCreatePostParams) => {
     handleUploadFileSuccess,
     isShowToastAutoSave,
     disableButtonPost,
+    disableButtonScheduledPost,
     enableButtonSaveTags,
     enableButtonSaveSeries,
     isEditPostHasChange,
+    prepareData,
     savePost,
     disableButtonsCreatePostFooter,
     audienceListWithNoPermission,
@@ -285,6 +313,8 @@ export const useCreatePost = (params?: UseCreatePostParams) => {
     saveSelectedSeries,
     handleBackWhenSelectingTags,
     handleBackWhenSelectingSeries,
+    validateSeriesTags,
+    handleSeriesTagsError,
   };
 };
 

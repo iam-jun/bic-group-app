@@ -24,6 +24,7 @@ import useModalStore from '~/store/modal';
 import DeactivatedView from '~/components/DeactivatedView';
 import VerifiedView from '~/components/VerifiedView';
 import UserBadge from '~/screens/Menu/UserProfile/components/UserBadge';
+import { isScheduledContent } from '~/components/ScheduleContent/helper';
 
 export interface ContentHeaderProps {
   style?: StyleProp<ViewStyle>;
@@ -58,9 +59,14 @@ const ContentHeader: FC<ContentHeaderProps> = ({
   const { colors } = useTheme();
   const { rootNavigation } = useRootNavigation();
 
-  const isInternetReachable = useNetworkStore(networkSelectors.getIsInternetReachable);
+  const isInternetReachable = useNetworkStore(
+    networkSelectors.getIsInternetReachable,
+  );
   const isHidden = usePostsStore(postsSelector.getIsHidden(postId));
+  const status = usePostsStore(postsSelector.getStatus(postId));
   const modalActions = useModalStore((state) => state.actions);
+
+  const isSchedule = isScheduledContent(status);
 
   const textAudiences = getAudiencesText(audience, t);
   // prevent publishedAt null, use createdAt instead
@@ -68,16 +74,18 @@ const ContentHeader: FC<ContentHeaderProps> = ({
   const timeDisplay = publishedAt || createdAt;
 
   const {
-    avatar, fullname: actorName, isDeactivated, isVerified, showingBadges = [],
+    avatar,
+    fullname: actorName,
+    isDeactivated,
+    isVerified,
+    showingBadges = [],
   } = actor || {};
 
   const onPressActor = () => {
     if (!actor.id || isDeactivated) return;
 
     const payload = { userId: actor.id };
-    rootNavigation.navigate(
-      mainTabStack.userProfile, payload,
-    );
+    rootNavigation.navigate(mainTabStack.userProfile, payload);
   };
 
   const onPressAudience = () => {
@@ -106,7 +114,11 @@ const ContentHeader: FC<ContentHeaderProps> = ({
     if (isHidden) {
       return (
         <>
-          <Icon icon="iconCircleExclamation" size={14} tintColor={colors.neutral40} />
+          <Icon
+            icon="iconCircleExclamation"
+            size={14}
+            tintColor={colors.neutral40}
+          />
           {' '}
         </>
       );
@@ -124,17 +136,11 @@ const ContentHeader: FC<ContentHeaderProps> = ({
       onPress={onPressHeader}
       activeOpacity={1}
     >
-      <Button
-        style={styles.avatar}
-        onPress={onPressActor}
-      >
+      <Button style={styles.avatar} onPress={onPressActor}>
         <Avatar.Medium isRounded source={avatar} />
       </Button>
       <View style={styles.flex1}>
-        <Button
-          style={styles.btnActor}
-          onPress={onPressActor}
-        >
+        <Button style={styles.btnActor} onPress={onPressActor}>
           <Text.SubtitleM
             style={styles.actorName}
             color={colorActorName}
@@ -167,12 +173,14 @@ const ContentHeader: FC<ContentHeaderProps> = ({
             {textAudiences}
           </Text.SubtitleS>
         </View>
-        <View style={styles.rowCenter}>
-          <TimeView
-            textProps={{ variant: 'bodyXS', color: colors.neutral40 }}
-            time={timeDisplay}
-          />
-        </View>
+        {!isSchedule && (
+          <View style={styles.rowCenter}>
+            <TimeView
+              textProps={{ variant: 'bodyXS', color: colors.neutral40 }}
+              time={timeDisplay}
+            />
+          </View>
+        )}
       </View>
       {onPressMenu && (
         <View>
@@ -194,11 +202,11 @@ const styles = StyleSheet.create({
     paddingTop: spacing?.margin.small,
     marginHorizontal: spacing.margin.large,
   },
-  flex1: { flex: 1 },
-  rowCenter: { flexDirection: 'row', alignItems: 'center' },
+  flex1: { flex: 1, justifyContent: 'center' },
+  rowCenter: { flexDirection: 'row', alignItems: 'center', marginTop: spacing.margin.tiny },
   textToAudience: {
     flexDirection: 'row',
-    marginVertical: spacing.margin.tiny,
+    marginTop: spacing.margin.tiny,
     alignItems: 'center',
   },
   textTo: {

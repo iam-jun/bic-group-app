@@ -1,3 +1,4 @@
+import { IParamsGetYourCommunities } from '~/interfaces/IGroup';
 import IBaseState from '~/store/interfaces/IBaseState';
 import IFetchingState from '~/store/interfaces/IFetchingState';
 
@@ -7,6 +8,6 @@ export interface IYourCommunitiesState extends IBaseState, IFetchingState {
     [id: string]: any;
   };
   actions?: {
-    getYourCommunities?: (isRefreshing?: boolean) => void;
+    getYourCommunities?: (params?: IParamsGetYourCommunities) => void;
   };
 }

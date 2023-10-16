@@ -44,7 +44,7 @@ const PostHeader: FC<PostHeaderProps> = ({
   const userId = useUserIdAuth();
   const isActor = actor?.id === userId;
 
-  const isPostDetailScreen = route.name === homeStack.postDetail;
+  const isPostDetailScreen = [homeStack.postDetail, homeStack.postReviewSchedule].includes(route.name);
 
   const { shouldHavePermissionOnSomeAudience } = useMyPermissionsStore((state) => state.actions);
   const canDeleteOwnPost = shouldHavePermissionOnSomeAudience(
@@ -128,6 +128,8 @@ const PostHeader: FC<PostHeaderProps> = ({
     });
   };
 
+  const onPressMenu = useDefaultMenu ? onShowMenu : undefined;
+
   return (
     <ContentHeader
       {...props}
@@ -138,7 +140,7 @@ const PostHeader: FC<PostHeaderProps> = ({
       publishedAt={publishedAt}
       disabled={disabled}
       onPressHeader={_onPressHeader}
-      onPressMenu={onShowMenu}
+      onPressMenu={onPressMenu}
     />
   );
 };

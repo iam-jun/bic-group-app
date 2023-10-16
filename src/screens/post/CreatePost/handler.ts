@@ -10,6 +10,7 @@ import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftC
 export const handleBack = ({
   isEditPost,
   isEditPostHasChange,
+  isSchedule,
   hasPostId,
   rootNavigation,
   isEditDraftPost,
@@ -17,6 +18,7 @@ export const handleBack = ({
 }: {
   isEditPost: boolean | undefined;
   isEditPostHasChange: boolean | undefined;
+  isSchedule: boolean | undefined;
   hasPostId: boolean | undefined;
   rootNavigation: any;
   isEditDraftPost: boolean | undefined;
@@ -52,13 +54,16 @@ export const handleBack = ({
       });
       return;
     }
-    useDraftPostStore.getState().actions.getDraftPosts({ isRefresh: true });
-    useDraftContentsStore.getState().actions.getDraftContents({ isRefresh: true });
-    showToast({
-      content: 'post:saved_to_draft',
-      buttonText: isEditDraftPost ? i18next.t('home:draft_post') : '',
-      onButtonPress: onPressDraftPost,
-    });
+    if (!isSchedule) {
+      useDraftPostStore.getState().actions.getDraftPosts({ isRefresh: true });
+      useDraftContentsStore.getState().actions.getDraftContents({ isRefresh: true });
+      showToast({
+        content: 'post:saved_to_draft',
+        buttonText: isEditDraftPost ? i18next.t('home:draft_post') : '',
+        onButtonPress: onPressDraftPost,
+      });
+    }
   }
+
   rootNavigation?.goBack();
 };

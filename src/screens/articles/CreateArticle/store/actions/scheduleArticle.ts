@@ -1,7 +1,5 @@
 import i18n from 'i18next';
 import streamApi from '~/api/StreamApi';
-import { IPayloadGetScheduleArticles } from '~/interfaces/IArticle';
-import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import { ICreateArticleState } from '..';
 import { PostType } from '~/interfaces/IPost';
 import { trackEvent } from '~/services/tracking';
@@ -28,11 +26,6 @@ const scheduleArticle = (set, get) => async () => {
       state.schedule.isSubmiting = false;
       state.schedule.isSubmitingSuccess = true;
     }, 'scheduleArticle success');
-
-    const payloadGetScheduleArticles: IPayloadGetScheduleArticles = {
-      isRefresh: true,
-    };
-    useScheduleArticlesStore.getState().actions.getScheduleArticles(payloadGetScheduleArticles);
   } catch (e) {
     set((state: ICreateArticleState) => {
       state.schedule.isSubmiting = false;

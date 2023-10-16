@@ -25,15 +25,15 @@ import TagsSection from './screens/CreateArticleTags/TagsSection';
 import ContentSection from './screens/CreateArticleContent/ContentSection';
 import { useBaseHook } from '~/hooks';
 import useCreateArticle from './hooks/useCreateArticle';
-import Schedule from './components/Schedule';
 import SettingsButton from '~/components/ContentSettings/SettingsButton';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import { ArticleBoxScheduleTime } from '~/components/articles';
+import { BoxScheduleTime, Schedule } from '~/components/ScheduleContent';
 import CreateBannerImportant from '~/components/ContentSettings/CreateBannerImportant';
 import { PostType } from '~/interfaces/IPost';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 import useDraftContentsStore from '~/screens/YourContent/components/Draft/DraftContents/store';
+import useScheduleArticle from './hooks/useScheduleArticle';
 
 enum SectionName {
   Title,
@@ -127,13 +127,30 @@ const CreateArticle: FC<CreateArticleProps> = ({
 
   const [articleId, setArticleId] = useState(articleIdParams);
 
-  const { handlePublish, validButtonPublish } = useCreateArticle({ articleId });
+  const {
+    isValidating,
+    validButtonPublish,
+    handlePublish,
+    validateSeriesTags,
+    handleSeriesTagsError,
+    handleSave,
+  } = useCreateArticle({ articleId });
   const isPublishing = useDraftArticleStore((state) => state.isPublishing);
+
+  const { handleOpenPopupSchedule } = useScheduleArticle({
+    articleId,
+    validButtonPublish,
+    validateSeriesTags,
+    handleSeriesTagsError,
+    handleSave,
+  });
 
   const resetEditArticleStore = useCreateArticleStore((state) => state.reset);
   const resetMentionInputStore = useMentionInputStore((state) => state.reset);
 
-  const draftContentsStoreActions = useDraftContentsStore((state) => state.actions);
+  const draftContentsStoreActions = useDraftContentsStore(
+    (state) => state.actions,
+  );
 
   useEffect(() => {
     if (isCreateNewArticle) actions.createArticle();
@@ -165,21 +182,38 @@ const CreateArticle: FC<CreateArticleProps> = ({
     handlePublish();
   };
 
+  const isShowBannerImportant = !!setting?.isImportant;
+
   const disabled = !validButtonPublish || isPublishing;
 
-  const btnPublish = (isDraft && !isFromReviewSchedule) && {
-    buttonProps: { disabled, loading: isPublishing, style: styles.btnPublish },
+  const btnPublish = isDraft
+    && !isFromReviewSchedule && {
+    buttonProps: {
+      disabled,
+      loading: isPublishing,
+      style: styles.btnPublish,
+    },
     buttonText: t('common:btn_publish'),
     onPressButton: onPressPublish,
   };
 
   const renderBtnSchedule = () => {
-    if (isDraft || isSchedule) return (<Schedule articleId={articleId} />);
+    if (isDraft || isSchedule) {
+      return (
+        <Schedule
+          isValidating={isValidating}
+          validButton={validButtonPublish}
+          handleOpenPopupSchedule={handleOpenPopupSchedule}
+        />
+      );
+    }
 
     return null;
   };
 
-  const renderBtnSettings = () => (<SettingsButton type={PostType.ARTICLE} articleId={articleId} />);
+  const renderBtnSettings = () => (
+    <SettingsButton type={PostType.ARTICLE} articleId={articleId} />
+  );
 
   const renderCustomComponent = () => (
     <>
@@ -227,18 +261,15 @@ const CreateArticle: FC<CreateArticleProps> = ({
 
   const renderHeaderComponent = () => (
     <>
-      {!!setting?.isImportant && (
+      {isShowBannerImportant && (
         <CreateBannerImportant
           type="article"
           expiresTime={setting.importantExpiredAt}
           style={styles.bannerImportantTime}
         />
       )}
-      {isFromReviewSchedule && (
-        <ArticleBoxScheduleTime
-          scheduledAt={scheduledAt}
-          status={status}
-        />
+      {isSchedule && (
+        <BoxScheduleTime scheduledAt={scheduledAt} status={status} />
       )}
       <ViewSpacing height={spacing.margin.large} />
     </>
@@ -256,7 +287,6 @@ const CreateArticle: FC<CreateArticleProps> = ({
         title={`article:title:${screenTitle}`}
         onPressBack={isFromDraftScreen ? onPressBackToDraft : undefined}
         {...headerButton}
-        removeBorderAndShadow={isFromReviewSchedule}
       />
       <FlatList
         data={options}

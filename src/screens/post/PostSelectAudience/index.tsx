@@ -21,8 +21,8 @@ import { ICreatePostParams, PostType } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import spacing from '~/theme/spacing';
 import useMounted from '~/hooks/mounted';
-import SelectAudience, { ContentType } from '~/components/SelectAudience';
-import useSelectAudienceStore from '~/components/SelectAudience/store';
+import { SelectMultiAudiences } from '~/components/SelectAudience';
+import useSelectAudienceStore, { ContentType } from '~/components/SelectAudience/store';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import useModalStore from '~/store/modal';
 import useCreatePostStore from '../CreatePost/store';
@@ -174,7 +174,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
           onPressButton={onPressSave}
           onPressBack={onPressBack}
         />
-        <SelectAudience contentType={ContentType.POST} />
+        <SelectMultiAudiences contentType={ContentType.POST} />
       </View>
       <KeyboardSpacer iosOnly />
     </ScreenWrapper>

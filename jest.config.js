@@ -6,6 +6,7 @@ module.exports = {
   modulePathIgnorePatterns: ['<rootDir>/src/storeRedux/'],
   moduleNameMapper: {
     '\\.svg': '<rootDir>/__mocks__/svgMock.js',
+    uuid: require.resolve('uuid'),
   },
   clearMocks: true,
   testPathIgnorePatterns: ['/node_modules/'],

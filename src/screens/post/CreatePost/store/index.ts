@@ -8,6 +8,7 @@ import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
 import createNewPost from './actions/createNewPost';
 import getPostDetail from './actions/getPostDetail';
+import schedulePost from './actions/schedulePost';
 
 export type CreatePost = {
   id?: string;
@@ -56,9 +57,16 @@ export interface ICreatePostState extends IBaseState {
   createPost: CreatePost;
   prevUpdate: PrevUpdate;
   tempData: TempData;
+  schedule: {
+    scheduledAt: string;
+    errorSubmiting: string;
+    isSubmitingSuccess: boolean;
+    isSubmiting: boolean;
+  };
   actions: {
     getPostDetail: (postId: string) => void;
     createNewPost: (payload: IPostCreatePost) => void;
+    schedulePost: (postId: string, payload: IPostCreatePost) => void;
     updateCreatePost: (payload: Partial<CreatePost>) => void;
     updatePrevUpdate: (payload: Partial<PrevUpdate>) => void;
     setLoadPostDetailDone: (payload: boolean) => void;
@@ -73,6 +81,11 @@ export interface ICreatePostState extends IBaseState {
     removeSeriesTempData: (series: ICreatePostSeries) => void;
     clearSeriesTempData: () => void;
     removeSeries: (series: ICreatePostSeries) => void;
+    setScheduledAt: (scheduledAt: string) => void;
+    setErrorScheduleSubmiting: (errorScheduleSubmiting: string) => void;
+    setIsScheduleSubmitingSuccess: (
+      isScheduleSubmitingSuccess: boolean
+    ) => void;
   };
 }
 
@@ -120,6 +133,12 @@ const initialState: InitStateType<ICreatePostState> = {
     tags: [],
     series: [],
   },
+  schedule: {
+    scheduledAt: '',
+    errorSubmiting: '',
+    isSubmitingSuccess: false,
+    isSubmiting: false,
+  },
 };
 
 const createPostStore = (
@@ -131,6 +150,7 @@ const createPostStore = (
   actions: {
     getPostDetail: getPostDetail(set, get),
     createNewPost: createNewPost(set, get),
+    schedulePost: schedulePost(set, get),
     updateCreatePost: (payload: Partial<CreatePost>) => {
       set((state: ICreatePostState) => {
         state.createPost = {
@@ -227,6 +247,21 @@ const createPostStore = (
       set((state) => {
         state.createPost.series = newSelecting;
       }, 'removeSeries');
+    },
+    setScheduledAt: (scheduledAt: string) => {
+      set((state: ICreatePostState) => {
+        state.schedule.scheduledAt = scheduledAt;
+      }, 'setScheduledAt Post');
+    },
+    setErrorScheduleSubmiting: (errorScheduleSubmiting: string) => {
+      set((state: ICreatePostState) => {
+        state.schedule.errorSubmiting = errorScheduleSubmiting;
+      }, 'setErrorScheduleSubmiting Post');
+    },
+    setIsScheduleSubmitingSuccess: (isScheduleSubmitingSuccess: boolean) => {
+      set((state: ICreatePostState) => {
+        state.schedule.isSubmitingSuccess = isScheduleSubmitingSuccess;
+      }, 'setIsScheduleSubmitingSuccess Post');
     },
   },
 

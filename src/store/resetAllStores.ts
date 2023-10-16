@@ -31,7 +31,6 @@ import useArticleController from '~/screens/articles/store';
 import useSeriesStore from '~/screens/series/store';
 import useTopicStore from '~/screens/topic/store';
 import useAddArticlesStore from '~/screens/series/SeriesDetail/components/AddArticles/store';
-import useCreateArticleCategoryStore from '~/screens/articles/CreateArticle/screens/CreateArticleCategory/store';
 import useForgotPasswordStore from '~/screens/auth/ForgotPassword/store';
 import useChangePasswordStore from '~/screens/Menu/AccountSettings/SecurityLogin/ChangePassword/store';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
@@ -42,12 +41,10 @@ import useGeneralInformationStore from '~/screens/groups/GeneralInformation/stor
 import useRemoteConfigStore from './remoteConfig';
 import usePostsInProgressStore from '~/screens/Home/components/VideoProcessingNotice/store';
 import useCommentInputStore from '~/screens/comments/components/CommentInputView/store';
-import useScheduleArticlesStore from '~/screens/YourContent/components/ScheduledArticles/store';
 import useReportContentStore from '~/components/Report/store';
 import useNetworkStore from '~/store/network';
 import useModalStore from '~/store/modal';
 import useArticleScheduleContentStore from '~/screens/articles/ArticleScheduleContent/store';
-import useFeedSearchStore from '~/screens/Home/HomeSearch/store';
 import useButtonMarkAsReadStore from '~/components/posts/ButtonMarkAsRead/store';
 import useCreatePostStore from '~/screens/post/CreatePost/store';
 import useLinkPreviewStore from './linkPreview';
@@ -75,8 +72,14 @@ import useGroupJoinableUsersStore from '~/components/InvitePeopleToYourGroup/sto
 import useNotiInvitationsStore from '~/screens/Notification/components/NotificationItem/store';
 import useMyInvitationsStore from '~/screens/Menu/UserProfile/fragments/InvitationList/store';
 import useAdvancedNotiSettingsStore from '~/screens/Notification/AdvancedSettings/store';
+import useSelectCategoriesStore from '~/components/SelectCategories/store';
+import useQuizzesStore from './entities/quizzes';
+import useSearchStore from '~/screens/Search/store';
+import useSearchFilterUsersStore from '~/screens/Search/SearchFilter/SearchFilterUsers/store';
+import useSearchFilterTagsStore from '~/screens/Search/SearchFilter/SearchFilterTags/store';
 import useGroupSetInvitationsStore from '~/components/InvitationGroupSet/store';
 import useNotificationItemMenu from '~/screens/Notification/components/NotificationMenu/store';
+import useScheduledContentsStore from '~/screens/YourContent/components/Scheduled/store';
 
 export const excludedStore = [
   useAuthController,
@@ -111,7 +114,7 @@ const stores = [
   useDraftArticleStore,
   useArticleController,
   useTopicStore,
-  useScheduleArticlesStore,
+  useScheduledContentsStore,
   useYourContentStore,
   useArticleScheduleContentStore,
   useCreatePostStore,
@@ -125,7 +128,7 @@ const stores = [
   useCommunityMemberStore,
   useGroupMemberStore,
   useCreateArticleStore,
-  useCreateArticleCategoryStore,
+  useSelectCategoriesStore,
   useSelectSeriesStore,
   useArticlesStore,
   useUserInterestedPostStore,
@@ -149,7 +152,6 @@ const stores = [
   useRemoteConfigStore,
   usePostsInProgressStore,
   useCommentInputStore,
-  useFeedSearchStore,
   useLinkPreviewStore,
   useSeriesContentModalStore,
   useAppStore,
@@ -170,6 +172,10 @@ const stores = [
   useNotiInvitationsStore,
   useMyInvitationsStore,
   useAdvancedNotiSettingsStore,
+  useQuizzesStore,
+  useSearchStore,
+  useSearchFilterUsersStore,
+  useSearchFilterTagsStore,
   useGroupSetInvitationsStore,
   useNotificationItemMenu,
 ];

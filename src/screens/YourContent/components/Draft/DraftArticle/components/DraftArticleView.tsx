@@ -27,7 +27,7 @@ import { PostImportant } from '~/components/posts';
 import useModalStore from '~/store/modal';
 import TagsView from '~/components/TagsView';
 import { ITag } from '~/interfaces/ITag';
-import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
+import searchStack from '~/router/navigator/MainStack/stacks/searchStack/stack';
 
 interface DraftViewProps {
   data: IPost;
@@ -114,7 +114,7 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
   };
 
   const goToTagDetail = (tagData: ITag) => {
-    rootNavigation.navigate(tagsStack.tagDetail, { tagData });
+    rootNavigation.push(searchStack.searchMain, { tag: tagData });
   };
 
   const renderImportant = () => (

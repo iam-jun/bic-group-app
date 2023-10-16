@@ -11,6 +11,7 @@ const homeStack = {
   commentDetail: 'comment-detail',
   pinContent: 'pin-content',
   reorderedPinContent: 'reordered-pin-content',
+  postReviewSchedule: 'post-review-schedule',
 };
 
 export default homeStack;

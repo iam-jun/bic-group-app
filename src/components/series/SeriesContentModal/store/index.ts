@@ -1,18 +1,16 @@
 import { createStore, resetStore } from '~/store/utils';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { IPost } from '~/interfaces/IPost';
-import getSeriesByItems from './action/getSeriesByItems';
-import { IGetSeries } from '~/interfaces/ISeries';
+import getSeriesContent from './action/getSeriesContent';
 
 export interface ISeriesContentModalState extends IBaseState {
     series: {
-        data: IPost[];
-        loading: boolean;
-        hasNextPage: boolean;
+      data: IPost[];
+      loading: boolean;
     };
 
     actions: {
-        getSeriesByItems: (payload: IGetSeries) => void;
+      getSeriesContent: (contentId: string) => void;
     };
 }
 
@@ -20,7 +18,6 @@ const initState: InitStateType<ISeriesContentModalState> = {
   series: {
     data: [],
     loading: false,
-    hasNextPage: true,
   },
 };
 
@@ -28,7 +25,7 @@ const seriesContentModalStore = (set, get) => ({
   ...initState,
 
   actions: {
-    getSeriesByItems: getSeriesByItems(set, get),
+    getSeriesContent: getSeriesContent(set, get),
   },
 
   reset: () => resetStore(initState, set),

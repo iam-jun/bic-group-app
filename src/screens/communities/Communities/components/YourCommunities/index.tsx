@@ -32,7 +32,7 @@ const YourCommunities = () => {
   };
 
   const onRefresh = () => {
-    actions.getYourCommunities(true);
+    actions.getYourCommunities({ isRefreshing: true });
   };
 
   const renderEmptyComponent = () => {

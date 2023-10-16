@@ -4,6 +4,7 @@ import React, {
   useState,
   useImperativeHandle,
   RefObject,
+  useRef,
 } from 'react';
 import {
   StyleSheet, View, TextInput, StyleProp, ViewStyle,
@@ -40,6 +41,8 @@ const SearchInput: React.FC<SearchInputProps> = ({
 }: SearchInputProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
+
+  const textInputRef = useRef<any>();
 
   const [text, setText] = useState<string>('');
   const [isFocused, setFocused] = useState(false);
@@ -81,6 +84,11 @@ const SearchInput: React.FC<SearchInputProps> = ({
     }
   };
 
+  const _onClearTextInput = () => {
+    _onChangeText('');
+    textInputRef?.current?.focus?.();
+  };
+
   return (
     <View
       testID="search_input"
@@ -101,7 +109,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         <TextInput
           {...props}
           testID="search_input.input"
-          ref={inputRef}
+          ref={inputRef || textInputRef}
           style={styles.textInput}
           value={text}
           autoComplete="off"
@@ -120,7 +128,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
             icon="iconClose"
             size={8}
             tintColor={theme.colors.neutral40}
-            onPress={() => _onChangeText('')}
+            onPress={_onClearTextInput}
           />
         )}
       </View>
