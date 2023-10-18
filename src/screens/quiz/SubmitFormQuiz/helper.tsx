@@ -16,9 +16,9 @@ export const showAlertAudienceListWithNoPermissionQuiz = (audiences: IAudience[]
     title: i18next.t('post:post_setting_permissions_alert:title'),
     children: (
       <Text.BodyM style={styles.childrenText}>
-        {i18next.t('post:post_setting_permissions_alert:description_1')}
+        {`${i18next.t('post:post_setting_permissions_alert:description_1')}`}
         <Text.BodyMMedium>{lstAudienceNamesNotPermit}</Text.BodyMMedium>
-        {i18next.t('post:post_setting_permissions_alert:description_2')}
+        {`${i18next.t('post:post_setting_permissions_alert:description_2')}`}
       </Text.BodyM>
     ),
     onConfirm: null,

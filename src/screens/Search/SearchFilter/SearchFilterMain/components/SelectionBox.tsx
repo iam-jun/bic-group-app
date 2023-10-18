@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
 import { spacing } from '~/theme';
@@ -12,7 +12,7 @@ type SelectionBoxProps = {
   onPress: () => void;
 };
 
-const SelectionBox: FC<SelectionBoxProps> = ({
+const SelectionBox: FC<PropsWithChildren<SelectionBoxProps>> = ({
   placeholder,
   isShowCaret = false,
   onPress,

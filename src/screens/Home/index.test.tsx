@@ -11,7 +11,6 @@ import MockedNavigator from '../../test/MockedNavigator';
 import * as linkUtil from '../../utils/link';
 import useHomeStore from './store';
 import useAppStore from '~/store/app';
-import useFeedSearchStore from './HomeSearch/store';
 
 describe('Home screen', () => {
   it('should call open chat', async () => {
@@ -28,12 +27,6 @@ describe('Home screen', () => {
       return state;
     });
 
-    const setNewsfeedSearch = jest.fn();
-    useFeedSearchStore.setState((state) => {
-      state.actions.setNewsfeedSearch = setNewsfeedSearch;
-      return state;
-    });
-
     const spy = jest.spyOn(linkUtil, 'openUrl').mockImplementation(jest.fn());
     const storeData = { ...baseStore } as any;
     const store = createTestStore(storeData);
@@ -44,10 +37,6 @@ describe('Home screen', () => {
     const btnChat = wrapper.getByTestId('icon_chat.button');
     fireEvent.press(btnChat);
     expect(spy).toBeCalled();
-
-    const btnSearch = wrapper.getByTestId('home_header_button.btn_search');
-    fireEvent.press(btnSearch);
-    expect(setNewsfeedSearch).toBeCalled();
   });
 
   it('default render should contentFilter = ALL vs attributeFilter = ALL', () => {

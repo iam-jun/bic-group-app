@@ -4,8 +4,7 @@ import getSeperateNotificationSettings from './actions/getSpecificNotificationSe
 import editNotificationSettings from './actions/editSpecificNotificationSettings';
 import useNotificationStore from '~/screens/Notification/store';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
-import { InvitationTargetType, SpecificNotificationType } from '~/interfaces/INotification';
-import { ContentType } from '~/components/SelectAudience';
+import { ContentType, InvitationTargetType, SpecificNotificationType } from '~/interfaces/INotification';
 import { checkIsSpecificNotification } from '~/helpers/notification';
 
 export interface INotificationItemMenuStore extends IBaseState {
@@ -67,10 +66,10 @@ const notificationItemMenu = (set, get) => ({
       } else if (isSpecific) {
         const contentType = act?.contentType?.toLowerCase?.() || '';
         const contentId = act?.id || '';
-        if (contentType === ContentType.POST && !!contentId) {
+        if (contentType === ContentType.post && !!contentId) {
           newTargetId = contentId;
           newTargetType = SpecificNotificationType.post;
-        } if (contentType === ContentType.ARTICLE && !!contentId) {
+        } if (contentType === ContentType.article && !!contentId) {
           newTargetId = contentId;
           newTargetType = SpecificNotificationType.article;
         }
