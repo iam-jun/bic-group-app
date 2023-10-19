@@ -53,9 +53,9 @@ export interface NewsfeedListProps {
   onScrollY?: (y: number) => void;
 }
 
-const AnimatedFlashList = Animated.createAnimatedComponent<
-  React.ComponentType<FlashListProps<any>>
->(FlashList as any);
+const FlashListWithRef = React.forwardRef<any, FlashListProps<any>>((props, ref) => <FlashList ref={ref} {...props} />);
+
+const AnimatedFlashList = Animated.createAnimatedComponent(FlashListWithRef);
 
 const screenHeight = Dimensions.get('window').height;
 
