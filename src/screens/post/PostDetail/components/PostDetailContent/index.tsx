@@ -3,6 +3,7 @@ import {
   useTheme,
 } from '@react-navigation/native';
 import React, {
+  FC,
   memo,
   useMemo,
   useRef,
@@ -32,7 +33,7 @@ import ContentNoPermission from '~/components/ContentNoPermission';
 import ContentUnavailable from '~/components/ContentUnavailable';
 import LoadMoreComment from '~/components/LoadMoreComment';
 
-const _PostDetailContent = (props) => {
+const _PostDetailContent: FC<any> = (props) => {
   const { t } = useBaseHook();
   const { rootNavigation, goHome } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
 import { spacing } from '~/theme';
@@ -11,7 +11,7 @@ type SectionContainerProps = {
   onReset?: () => void;
 };
 
-const SectionContainer: FC<SectionContainerProps> = ({
+const SectionContainer: FC<PropsWithChildren<SectionContainerProps>> = ({
   title,
   onReset,
   children,

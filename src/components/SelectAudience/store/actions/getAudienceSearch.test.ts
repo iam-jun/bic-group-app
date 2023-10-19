@@ -1,8 +1,7 @@
 import { act, renderHook, waitFor } from '~/test/testUtils';
 import groupApi from '~/api/GroupApi';
 import { mockResponseFlatAudiences } from '~/test/mock_data/audiences';
-import useSelectAudienceStore from '../index';
-import { ContentType } from '../..';
+import useSelectAudienceStore, { ContentType } from '../index';
 
 describe('action getAudienceSearch', () => {
   it('given isRefresh = true should refresh data', async () => {
